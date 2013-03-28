@@ -36,6 +36,21 @@
 				
 				//
 			}
+
+			//enable plugins on formelements
+			if(options.enablePlugins) {
+				var i=0,plug=null;
+				while(plug=options.enablePlugins[i++]) {
+					switch(plug) {
+						case "date" :
+						console.log(this);
+							this.find("[data-type=date]").datepicker({});
+							break;
+						case "slider" :
+							break;
+					}
+				}
+			}
 			
 		},
 		getElements : function() {
@@ -111,109 +126,110 @@ var Validator = function () {
 		var el = e.data;
 		var input = $(this);
 
-	
-		with(el) {
-			//required has highest priority so this will be tested first
-			if(validation.required && (input.val() == "" || el.type == "checkbox" && !input.is(":checked"))) {
-				el.triggerError('required');
-			}
-			//if not required we need to test for valid format
-			else {
-				//check emailfield
-				if(validation.email) {
-					var s_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-					if (!s_regex.test(input.val())) {
-						el.triggerError('email');
-						return true;
-					}
-					else {
-						el.removeError('email');
-					}
+		if(el.validation) {
+			with(el) {
+				//required has highest priority so this will be tested first
+				if(validation.required && (input.val() == "" || el.type == "checkbox" && !input.is(":checked"))) {
+					el.triggerError('required');
 				}
-				//check numberfield
-				if(validation.int) {
-					if(isNaN(val()) || input.val() == 0) {
-						el.triggerError('int');
-						return true;						
+				//if not required we need to test for valid format
+				else {
+					//check emailfield
+					if(validation.email) {
+						var s_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+						if (!s_regex.test(input.val())) {
+							el.triggerError('email');
+							return true;
+						}
+						else {
+							el.removeError('email');
+						}
 					}
-					else {
-						el.removeError('int');
-					}
-
-				}
-				//check datefield
-				if(validation.date) {
-					//no validation defined yet, because date uses the Required validator only. We can add specific validation later
-					if(1==0) {
-						el.triggerError('date');
-						return true;
-					}
-					else {
-						el.removeError('date');
-					}
-				}	
-
-				//check numberfield
-				if(validation.url) {
-					//(([a-zA-Z0-9-])+.)
-					// /(^https?:\/\/)+(([a-zA-Z0-9-]))[.]/;					
-					//if(val().search("http://") == -1 && val().search("https://") == -1) {
-					var s_regex = /^https?:\/\/[a-zA-Z0-9-]+[.][a-zA-Z0-9]{2,4}/;
-					if (!s_regex.test(input.val())) {
-						el.triggerError('url');
-						return true;						
-					}
-					else {
-						el.removeError('url');
-					}
-
-				}		
-
-				//password match rule
-				if(validation.passwordmatch) {
-					var field = el.id.split("_")[0];
-					var field1 = $("input[name='" + field + "']");
-					var field2 = $("input[name='" + field + "_repeat']");
-					
-					//find fields with password. This code expects that there is only one form active with one pair of passsword fields
-					if((field1.val() !=  "" && field2.val() != "") && field1.val() != field2.val()) {
-						el.triggerError('passwordmatch');
-						return true;
-					}
-					else
-						el.removeError('passwordmatch');
-				}
-
-				//custom valiation rule
-				if(validation.custom) {
-					var result = true;
-					$.ajax({
-						type:'get',
-						url: validation.custom.url,
-						dataType:'json',
-						async: true,
-						success: function(data){
-							if(data)
-								result = data;
-						},
-						error : function(){
-
+					//check numberfield
+					if(validation.int) {
+						if(isNaN(val()) || input.val() == 0) {
+							el.triggerError('int');
+							return true;						
+						}
+						else {
+							el.removeError('int');
 						}
 
-					});
-					
-					if(!result) {
-						el.triggerError('custom');
-						return true;
 					}
-					else
-						el.removeError('custom');
-				}
-			
-				//remove error if none of the above checks are applicable
-				el.removeError('required');
-			}
+					//check datefield
+					if(validation.date) {
+						//no validation defined yet, because date uses the Required validator only. We can add specific validation later
+						if(1==0) {
+							el.triggerError('date');
+							return true;
+						}
+						else {
+							el.removeError('date');
+						}
+					}	
 
+					//check numberfield
+					if(validation.url) {
+						//(([a-zA-Z0-9-])+.)
+						// /(^https?:\/\/)+(([a-zA-Z0-9-]))[.]/;					
+						//if(val().search("http://") == -1 && val().search("https://") == -1) {
+						var s_regex = /^https?:\/\/[a-zA-Z0-9-]+[.][a-zA-Z0-9]{2,4}/;
+						if (!s_regex.test(input.val())) {
+							el.triggerError('url');
+							return true;						
+						}
+						else {
+							el.removeError('url');
+						}
+
+					}		
+
+					//password match rule
+					if(validation.passwordmatch) {
+						var field = el.id.split("_")[0];
+						var field1 = $("input[name='" + field + "']");
+						var field2 = $("input[name='" + field + "_repeat']");
+						
+						//find fields with password. This code expects that there is only one form active with one pair of passsword fields
+						if((field1.val() !=  "" && field2.val() != "") && field1.val() != field2.val()) {
+							el.triggerError('passwordmatch');
+							return true;
+						}
+						else
+							el.removeError('passwordmatch');
+					}
+
+					//custom valiation rule
+					if(validation.custom) {
+						var result = true;
+						$.ajax({
+							type:'get',
+							url: validation.custom.url,
+							dataType:'json',
+							async: true,
+							success: function(data){
+								if(data)
+									result = data;
+							},
+							error : function(){
+
+							}
+
+						});
+
+						if(!result) {
+							el.triggerError('custom');
+							return true;
+						}
+						else
+							el.removeError('custom');
+					}
+				
+					//remove error if none of the above checks are applicable
+					el.removeError('required');
+				}
+
+			}
 		}
 	};
 	

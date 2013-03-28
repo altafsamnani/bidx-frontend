@@ -1,20 +1,42 @@
 /*
 Theme Name: BiDX
-Author: bidX
+Author: Mattijs Spierings
+Company: BiDX;
 */
 
-/* 
-	Global styles
-*/
+/*******************************************************************************************
+*
+*	Global styles
+*
+********************************************************************************************/
 html, body {
 	margin:0px;
 	padding: 0px;
 	font-family:'weblysleek_ui_normalregular',sans-serif,Arial;
 }
 
+::-webkit-input-placeholder {
+   color: #333333;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #333333;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #333333;
+   opacity: 0.5;
+}
+
+:-ms-input-placeholder {  
+   color: #333333;
+}
+
 h1 {
 	font-family: 'weblysleek_uisemibold',sans-serif,Arial;
-	font-size: 46px
+	font-size: 40px;
+	margin: 0 0 20px 0;
+
 }
 	h1 span {
 		display: block;
@@ -38,9 +60,14 @@ p {
 	font-family: 'weblysleek_ui_normalregular',sans-serif,Arial;
 }
 
+input, button, select, textarea {
+	font-family: 'weblysleek_ui_normalregular',sans-serif,Arial;
+}
 a, a:hover, a:visited, a:link  {
 	text-decoration: none;
 }
+
+
 
 
 .button {
@@ -104,13 +131,26 @@ a, a:hover, a:visited, a:link  {
 .sprite{
     background:url(assets/img/sprite.png) no-repeat;
 }
-/* 
-	End Global styles 
-*/
 
-/*  #################################
-	header styles
-	################################# */
+.box {
+	margin:50px auto;
+	width:50%;
+	
+	background: url(assets/img/hero_bg.jpg) repeat-x top left #EDEDED;
+	-webkit-border-radius:10px ;
+	-moz-border-radius:10px ;
+	border-radius: 10px ;
+	padding:40px;
+}
+
+
+/* End Global styles */
+
+/*******************************************************************************************
+*
+*	Header styles
+*
+********************************************************************************************/
 
 header{
 	background-color: #FFF;
@@ -235,7 +275,7 @@ header .logo {
 				/* override bootstrap style */
 				.menu .open > .dropdown-toggle, 
 				.menu .dropdown:hover > .dropdown-toggle {
-    				background-color: #F6F6F6;
+    				background-color: #F6F6F6 !important;
     				color: #555555;
     				-moz-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
 					-webkit-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
@@ -271,13 +311,13 @@ header .logo {
 					.menu .dropdown-menu li {
 						text-align: left;
 					}
-				.menu .dropdown.active .dropdown-toggle, .menu .dropdown.active:hover .dropdown-toggle {
-					-webkit-border-radius:4px;
-					-moz-border-radius:4px;
-					border-radius: 4px;
-					-moz-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-					-webkit-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-					box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
+				.menu .dropdown.active .dropdown-toggle, .menu .dropdown.active:hover .dropdown-toggle, .menu .active a {
+					-webkit-border-radius:4px!important;
+					-moz-border-radius:4px!important;
+					border-radius: 4px!important;
+					-moz-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2)!important;
+					-webkit-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2)!important;
+					box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2)!important;
 					background-color: #F6F6F6 !important;
 				}
 				.menu .dropdown.active:hover .dropdown-toggle {
@@ -344,9 +384,11 @@ header .logo {
 
 /* end footer styles */
 
-/* 
-	intro styles 
-*/
+/*******************************************************************************************
+*
+*	Intro styles
+*
+********************************************************************************************/
 .hero-block {
 	background: url(assets/img/hero_bg.jpg) repeat-x top left;
 	
@@ -494,21 +536,47 @@ header .logo {
 
 /* end intro styles */
 
-/*
-	Form styles
-*/
 
-	input[type="text"], input[type="password"], input[type="email"]  {
+
+/*******************************************************************************************
+*
+*	Form styles
+*
+********************************************************************************************/
+
+	form br {
+		display: none;
+	}
+
+	form input, form select {
+		width: 100%;
+	}
+	input[type="text"], input[type="password"], input[type="email"], input[type="url"],select {
 	    color: #333333;
 	    font-size: 16px;
 	    height: 55px;
 	    line-height: 55px;
-	    padding:0px 20px; /*override bootstrap padding */
+	    padding: 0px 20px; /*override bootstrap padding */
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		-ms-box-sizing: border-box;
 		box-sizing: border-box;
 		margin-bottom:0px;
+	}
+
+	.chris input, .chris select {
+		height:30px;
+		line-height: 30px;
+		padding:0px;
+	}
+	select {
+		padding: 15px 20px;
+
+	}
+	
+	form label {
+		font-weight: 700;
+		color: #9DA09C;
 	}
 	
 
@@ -544,30 +612,19 @@ header .logo {
 /* 
 	fonts 
 */
-/*
-@font-face {
-	font-family: 'Helvetica';
-	src: url('webfonts/helvetica.eot');
-	src: url('webfonts/helvetica.eot?#iefix') format('embedded-opentype'),
-			 url('webfonts/helvetica.woff') format('woff'),
-			 url('webfonts/helvetica.ttf') format('truetype'),
-			 url('webfonts/helvetica.svg#helvetica') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
+
 
 @font-face {
-    font-family: 'helvetica-lightregular';
-    src: url('webfonts/helvetica_light_0-webfont.eot');
-    src: url('webfonts/helvetica_light_0-webfont.eot?#iefix') format('embedded-opentype'),
-         url('webfonts/helvetica_light_0-webfont.woff') format('woff'),
-         url('webfonts/helvetica_light_0-webfont.ttf') format('truetype'),
-         url('webfonts/helvetica_light_0-webfont.svg#helvetica-lightregular') format('svg');
+    font-family: 'weblysleek_ui_normalregular';
+    src: url('assets/css/webfonts/weblysleek_ui_normal-webfont.eot');
+    src: url('assets/css/webfonts/weblysleek_ui_normal-webfont.eot?#iefix') format('embedded-opentype'),
+         url('assets/css/webfonts/weblysleek_ui_normal-webfont.woff') format('woff'),
+         url('assets/css/webfonts/weblysleek_ui_normal-webfont.ttf') format('truetype'),
+         url('assets/css/webfonts/weblysleek_ui_normal-webfont.svg#weblysleek_uisemilight') format('svg');
     font-weight: normal;
     font-style: normal;
 
 }
-*/
 
 @font-face {
     font-family: 'weblysleek_uisemilight';
@@ -614,10 +671,11 @@ header .logo {
 
 
 
-/*
-	responsive overrides
-*/
-
+/*******************************************************************************************
+*
+*	Responsive breakpoints
+*
+********************************************************************************************/
 /* defautlt */
 .container,
 .navbar-static-top .container,
@@ -637,15 +695,21 @@ header .logo {
 
 /* large display*/
 @media (min-width: 980px) {
+/*@media (min-width: 61.25em) {*/
+	
 	.container,
 	.navbar-static-top .container,
 	.navbar-fixed-top .container,
 	.navbar-fixed-bottom .container {
 		width: 975px;
+		/*width: 60.9375em;*/
+		/*width:60.938em;*/
+
 	}
 }
 /* all other devices*/
 @media (max-width: 979px) {
+/*@media (max-width: 61.188em) {	*/
 	.container,
 	.navbar-static-top .container,
 	.navbar-fixed-top .container,

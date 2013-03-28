@@ -18,6 +18,7 @@ function roots_scripts() {
   wp_enqueue_style('roots_bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.css', false, null);
   wp_enqueue_style('roots_bootstrap_responsive', get_template_directory_uri() . '/assets/css/bootstrap-responsive.css', array('roots_bootstrap'), null);
   wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css', false, null);  
+wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/assets/css/jqueryUI/jquery-ui-1.10.2.custom.min.css', false, null);
 
 
   // Load style.css from child theme
