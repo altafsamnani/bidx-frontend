@@ -28,8 +28,6 @@
 				var validated=true;
 			  	//bind call to action button to click
 				$(options.callToAction).click(function(){
-					
-					
 					if(validated)
 						methods.submitForm();
 				});	
@@ -43,7 +41,6 @@
 				while(plug=options.enablePlugins[i++]) {
 					switch(plug) {
 						case "date" :
-						console.log(this);
 							this.find("[data-type=date]").datepicker({});
 							break;
 						case "slider" :
@@ -312,12 +309,12 @@ var Element = function (_formfield) {
 		this.input = $(this.formfield.find(":input"));
 		this.groupname = this.input.attr("name");
 		this.type = this.input.attr("type");
+		
 		if(this.formfield.data("validation")) {
 			$.extend(this,val = {
 					validation: this.formfield.data("validation")
 			});
 		}
-				
 		this.input.bind("change",this,this.validate);
 		
 		return this;

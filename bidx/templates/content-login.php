@@ -1,9 +1,9 @@
 <div class="block-odd">
 	<div class="container">
-		<div class="box">
+		<div class="block-login">
 			<?php while (have_posts()) : the_post(); ?>
 			  <?php the_content(); ?>
-			  <a href="#" class="button primary jsLogin">Login</a>
+			  
 			<?php endwhile; ?>
 		</div>
 	</div>

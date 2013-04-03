@@ -6,15 +6,27 @@
 
   <?php
     do_action('get_header');
-    // Use Bootstrap's navbar if enabled in config.php
-    if (current_theme_supports('bootstrap-top-navbar')) {
-      get_template_part('templates/header-top-navbar');
+    //if user logged in  
+    if(isset($_GET['loggedin'])) {
+      get_template_part('templates/header-group-dashboard');
+
     }
+  // Use Bootstrap's navbar if enabled in config.php
+    else if (current_theme_supports('bootstrap-top-navbar')) {
+      get_template_part('templates/header-anonymous');
+    }
+
   ?>
 
-  <?php include roots_template_path(); ?><!-- includes page -->
-  
-  <?php get_template_part('templates/footer'); ?>  
+  <?php include roots_template_path(); 
+    //if user logged in  
+    if(isset($_GET['loggedin'])) {
+      get_template_part('templates/footer-group-dashboard');
+    } 
+    else {
+      get_template_part('templates/footer-anonymous');
+    }
+ ?>  
   
 </body>
 </html>
