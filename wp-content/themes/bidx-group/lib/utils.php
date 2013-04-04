@@ -27,9 +27,8 @@ class Roots_Wrapping {
     if (self::$base === 'index') {
       self::$base = false;
     }
-    $subdomain_name = get_subdomain();
-    $baseFile = ($subdomain_name == 'bidx') ? 'base.php' : 'base-group.php';
-    $templates = array($baseFile);
+
+    $templates = array('base.php');
 
     if (self::$base) {
       array_unshift($templates, sprintf('base-%s.php', self::$base));
@@ -131,4 +130,3 @@ function is_element_empty($element) {
   $element = trim($element);
   return empty($element) ? false : true;
 }
-
