@@ -7,14 +7,13 @@
   <?php
     do_action('get_header');
     get_template_part('templates/header');
-  
 
   ?>
 
-  <?php include roots_template_path(); 
-    get_template_part('templates/footer');
+  <?php include roots_template_path(); ?><!-- includes page -->
   
- ?>  
+  <?php get_template_part('templates/footer'); ?>  
+  
   
 </body>
 </html>
