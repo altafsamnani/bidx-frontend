@@ -132,20 +132,3 @@ function is_element_empty($element) {
   return empty($element) ? false : true;
 }
 
-function get_subdomain($echo = false) {
- $hostAddress = explode ( '.', $_SERVER ["HTTP_HOST"] );
- if (is_array ( $hostAddress )) {
-  if (eregi ( "^www$", $hostAddress [0] )) {
-   $passBack = 1;
-  } else {
-   $passBack = 0;
-  }
-  if ($echo == false) {
-   return ($hostAddress [$passBack]);
-  } else {
-   echo ($hostAddress [$passBack]);
-  }
- } else {
-  return (false);
- }
-}
