@@ -6,15 +6,17 @@
 
 (function($) {
 	
-	
+	var globalOptions = null;
+	var srcElement = null;
 	var methods = {
 		/*
 			Init method
 		*/
 		init : function(options) {
 			var that = this;
+			srcElement = that;
 			this.data.elements = {};//collection of form elements
-
+			globalOptions = options;
 			//create form element objects of each formfield element in the object
 			this.find(".formfield").each(function(){
 				var el = new Element($(this)).init();
@@ -57,9 +59,22 @@
 			return this.data.elements[el];
 		},
 		submitForm : function() {
-			console.log("do submit");
-
 			//xhr post 
+			$.ajax({
+				type:'post',
+				url: globalOptions.url,
+				dataType:'json',
+				data: $(srcElement).serialize(),
+				async: true,
+				success: function(data){
+					if(data)
+						result = data;
+				},
+				error : function(){
+
+				}
+
+			});
 
 			//or
 

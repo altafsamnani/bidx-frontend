@@ -23,7 +23,7 @@
 				</div>
 				<div class="signup">
 					<!-- ##### Widget Signup Start ######-->
-					<div class="fieldset">
+					<form class="fieldset">
 						<div><!-- this div is necessary for container overflow issue IE7 -->
 							<div class="title">Start your free 3 week trial today</div>
 						
@@ -45,13 +45,14 @@
 								<a href="#" class="button secondary">Login</a>
 							</div>
 						</div>
-					</div>
+					</form>
 					<script type="text/javascript">
 				    	$(function(){
 				    		$(".fieldset").form({
 				    			callToAction : '.jsCreateGroup',
 				    			errorClass : 'error',
-				    			url : '/handler'
+				    			url : '/handler/creategroup',
+
 				    		});
 
 				    		(function() {
