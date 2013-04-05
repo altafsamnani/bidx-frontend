@@ -31,7 +31,7 @@
 								<input type="text" name="groupname" placeholder="Your group name" class="highlight">
 							</div>
 														
-							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email":{"text":"This is not a valid e-mail address"}}'>
+							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email":{"text":"This is not a valid e-mail address"},"custom":{"url":"/customhandler","text":"Custom check went wrong"}}'>
 								<input type="email" name="email" placeholder="Your email address" >
 							</div>
 					
@@ -48,10 +48,21 @@
 					</form>
 					<script type="text/javascript">
 				    	$(function(){
+				    		/*
+				    			if handler sends back response it can include the following json:
+				    			{
+									status: 'OK',
+									redirect:'<URL to redirect too>'
+								},
+								{ //not yet implemented
+									status: 'ERROR',
+									fields: [{field:fieldname,error:errormessage}[,]]
+								}
+				    		*/
 				    		$(".fieldset").form({
-				    			callToAction : '.jsCreateGroup',
-				    			errorClass : 'error',
-				    			url : '/handler/creategroup',
+				    			callToAction : '.jsCreateGroup', // the selector for submit button
+				    			errorClass : 'error', //the css class used as error message
+				    			url : '/handler/creategroup', //the handler where to post to
 
 				    		});
 

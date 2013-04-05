@@ -7,22 +7,21 @@
 (function($) {
 	
 	var globalOptions = null;
-	var srcElement = null;
+	var form = null;
 	var methods = {
 		/*
 			Init method
 		*/
 		init : function(options) {
-			var that = this;
-			srcElement = that;
-			this.data.elements = {};//collection of form elements
+			form = this;
+			form.data.elements = {};//collection of form elements
 			globalOptions = options;
 			//create form element objects of each formfield element in the object
 			this.find(".formfield").each(function(){
 				var el = new Element($(this)).init();
 				//register form element
 				el.errorClass= options.errorClass;
-				that.data.elements[el.groupname]=el;
+				form.data.elements[el.groupname]=el;
 			});
 
 			//set callToAction button
@@ -30,7 +29,7 @@
 				var validated=true;
 			  	//bind call to action button to click
 				$(options.callToAction).click(function(){
-					if(validated)
+					if(methods.validateForm())
 						methods.submitForm();
 				});	
 				
@@ -53,10 +52,10 @@
 			
 		},
 		getElements : function() {
-			return this.data.elements;
+			return form.data.elements;
 		},
 		getElement : function(el) {
-			return this.data.elements[el];
+			return form.data.elements[el];
 		},
 		submitForm : function() {
 			//xhr post 
@@ -64,11 +63,18 @@
 				type:'post',
 				url: globalOptions.url,
 				dataType:'json',
-				data: $(srcElement).serialize(),
+				data: $(form).serialize(),
 				async: true,
 				success: function(data){
-					if(data)
-						result = data;
+					if(data) {
+						if(data.status == 'OK') {
+							if(data.redirect) {
+								document.location=data.redirect;
+							}
+						}
+
+					}
+					
 				},
 				error : function(){
 
@@ -78,9 +84,25 @@
 
 			//or
 
-			//form submit
+		},
+		validateForm : function(){
+			//first trigger validation check on all fields
+			$(form).find(":input").trigger("change");
+			//no check if there are errors
+			
+			
+			
+			var field=null;
+			for(field in form.data.elements) {
+				//console.log(form.data.elements[field].validation);
+			
+				$.map(form.data.elements[field].validation, function(val,i){
+					console.log(val);
+				});
+				
+			}
 
-
+			
 		}
 	}
 
@@ -98,17 +120,19 @@
   		$.error( 'Method ' +  method + ' does not exist on jQuery Form' );
   	}
 
-	
-			
+
+
 	/*
 
 	function doValidate() {
 
 	}
-
+	
 	function validate() {
-
+	
 	}
+
+
 
 	function triggerError() {
 
@@ -220,11 +244,12 @@ var Validator = function () {
 							dataType:'json',
 							async: true,
 							success: function(data){
-								if(data)
-									result = data;
+								/*if(data)
+									result = data;*/
+								el.triggerError('custom');
 							},
 							error : function(){
-
+							el.triggerError('custom');
 							}
 
 						});
@@ -243,6 +268,7 @@ var Validator = function () {
 
 			}
 		}
+
 	};
 	
 	/**
