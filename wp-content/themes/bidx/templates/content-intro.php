@@ -54,7 +54,7 @@
 				    		$(".fieldset").form({
 				    			callToAction : '.jsCreateGroup', // the selector for submit button
 				    			errorClass : 'error', //the css class used as error message
-				    			url : '/wp-admin/admin-ajax.php?action=ajax_registration'
+				    			url : '/wp-admin/admin-ajax.php?action=bidx_request'
 
 				    		});
 

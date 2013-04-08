@@ -360,7 +360,7 @@ function ajax_submit_action() {
 	die(); // stop executing script
 }
 
-add_action( 'wp_ajax_nopriv_ajax_registration', 'ajax_submit_action' ); // ajax for logged in users
+add_action( 'wp_ajax_nopriv_bidx_request', 'ajax_submit_action' ); // ajax for logged in users
 add_action('wp_authenticate', 'bidx_auth_check_login', 1, 2 );
 //add_action('lost_password', 'disable_function');
 //add_action('user_register', 'disable_function');
