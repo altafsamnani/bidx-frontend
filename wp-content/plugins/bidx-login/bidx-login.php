@@ -42,15 +42,15 @@ if ( !function_exists('htmlspecialchars_decode') )
  * @return Loggedin User
  */
 
-function call_bidx_service($urlservice,$body) {
+function call_bidx_service($urlservice,$body,$method='POST') {
 
   $authUsername = 'bidx'; // Bidx Auth login
   $authPassword = 'gobidx'; // Bidx Auth password
   $url = 'http://test.bidx.net/api/v1/'.$urlservice.'?groupKey=bidxTestGroupKey&csrf=false';
   $headers = array('Authorization' => 'Basic ' . base64_encode("$authUsername:$authPassword"));  
   $request = new WP_Http;
-  
-  $result = $request->request($url, array('method' => 'POST',
+  $bidxMethod = (strtolower($method) == 'get') ? 'GET':'POST';
+  $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
     'headers' => $headers
       ));
@@ -266,16 +266,16 @@ function disable_function() {
  */
 
 function get_redirect( $url ) {
-
+ $redirectUrl = NULL;
   switch( $url ) {
     case 'members':
       $redirectUrl =  '/group-creation-success';
       break;
     case 'groups':
-      $redirectUrl =  '';
+      //$redirectUrl =  '';
       break;
     case 'sessions':
-      $redirectUrl =  '';
+     //$redirectUrl =  '';
       break;
   }
   return $redirectUrl;
@@ -294,8 +294,9 @@ function bidx_check_redirect($result,$url) {
   
   $requestData = json_decode($result['body']);
 
-  if(!empty($url) && $url != NULL) {
-    $requestData->redirect = get_redirect($url);
+  $wpRedirect = get_redirect($url);
+  if($wpRedirect != NULL) {
+    $requestData->redirect = $wpRedirect;
   }
   
 
@@ -349,12 +350,13 @@ function bidx_wordpress_function($url) {
 function ajax_submit_action() {	
 	
   $url = $_POST['apiurl'];
+  $method = $_POST['apimethod'];
   //1 Do wordpress stuff and get the params
   $body        = bidx_wordpress_function($url);
 
   //2 Talk to Bidx Api and get the response
-  $result      = call_bidx_service($url,$body);
-
+  $result      = call_bidx_service($url,$body,$method);
+  
   //3 Check validation error and include redirect logic
   $jsonDisplay = bidx_check_redirect($result,$url);
 
