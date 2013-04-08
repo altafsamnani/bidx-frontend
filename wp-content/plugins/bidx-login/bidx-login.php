@@ -293,8 +293,11 @@ function get_redirect( $url ) {
 function bidx_check_redirect($result,$url) {
   
   $requestData = json_decode($result['body']);
+
+  if(!empty($url) && $url != NULL) {
+    $requestData->redirect = get_redirect($url);
+  }
   
-  (!empty($url)) ? $requestData->redirect = get_redirect($url):"";
 
   $jsonData = json_encode($requestData);
 
