@@ -29,7 +29,7 @@
 				var validated=true;
 			  	//bind call to action button to click
 				$(options.callToAction).click(function(){
-					if(methods.validateForm())
+					if(!methods.validateForm())
 						methods.submitForm();
 				});	
 				
@@ -63,7 +63,7 @@
 				type:'post',
 				url: globalOptions.url,
 				dataType:'json',
-				data: $(form).serialize(),
+				data: $(form).serialize() + "&apiurl=" + globalOptions.apiurl,
 				async: true,
 				success: function(data){
 					if(data) {
@@ -72,37 +72,29 @@
 								document.location=data.redirect;
 							}
 						}
-
 					}
-					
 				},
 				error : function(){
 
 				}
 
 			});
-
-			//or
-
 		},
 		validateForm : function(){
 			//first trigger validation check on all fields
 			$(form).find(":input").trigger("change");
-			//no check if there are errors
-			
-			
-			
+			//now check if there are errors per field
 			var field=null;
+			var result = false;
 			for(field in form.data.elements) {
-				//console.log(form.data.elements[field].validation);
-			
-				$.map(form.data.elements[field].validation, function(val,i){
-					console.log(val);
-				});
-				
+				for(key in form.data.elements[field].validation) {
+					if(form.data.elements[field].validation[key].error) {
+						result = true;
+						break;
+					}
+				}
 			}
-
-			
+			return result;
 		}
 	}
 
@@ -165,11 +157,12 @@ var Validator = function () {
 		if(el.validation) {
 			with(el) {
 				//required has highest priority so this will be tested first
-				if(validation.required && (input.val() == "" || el.type == "checkbox" && !input.is(":checked"))) {
-					el.triggerError('required');
+				if(validation.required && (input.val() == "" || type == "checkbox" && !input.is(":checked"))) {
+					triggerError('required');
 				}
 				//if not required we need to test for valid format
 				else {
+
 					//check emailfield
 					if(validation.email) {
 						var s_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -236,19 +229,23 @@ var Validator = function () {
 					}
 
 					//custom valiation rule
-					if(validation.custom) {
+/*					if(validation.custom) {
 						var result = true;
+						
 						$.ajax({
-							type:'get',
+							type:'post',
 							url: validation.custom.url,
 							dataType:'json',
+							username:'bidx',
+							password:'gobidx',
+							//headers: {"Authorization": "Basic bidx:gobidx"},
 							async: true,
 							success: function(data){
-								/*if(data)
-									result = data;*/
+								console.log(data)
 								el.triggerError('custom');
 							},
-							error : function(){
+							error : function(a,b,c){
+								console.log(a);
 							el.triggerError('custom');
 							}
 
@@ -260,7 +257,7 @@ var Validator = function () {
 						}
 						else
 							el.removeError('custom');
-					}
+					}*/
 				
 					//remove error if none of the above checks are applicable
 					el.removeError('required');

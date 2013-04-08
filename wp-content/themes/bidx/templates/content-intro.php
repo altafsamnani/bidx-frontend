@@ -45,26 +45,40 @@
 								<a href="#" class="button secondary">Login</a>
 							</div>
 						</div>
-            <input type="hidden" name="apiurl" value ="members">
 					</form>
+
 					<script type="text/javascript">
 
 				    	$(function(){
-				    		
+				    		/*
+				    			if handler sends back response it can include the following json:
+				    			{
+									status: 'OK',
+									redirect:'<URL to redirect too>'
+								},
+								{ //not yet implemented
+									status: 'ERROR',
+									fields: [{field:fieldname,error:errormessage}[,]]
+								}
+				    		*/
 				    		$(".fieldset").form({
 				    			callToAction : '.jsCreateGroup', // the selector for submit button
 				    			errorClass : 'error', //the css class used as error message
-				    			url : '/wp-admin/admin-ajax.php?action=bidx_request'
+				    			url : '/wp-admin/admin-ajax.php?action=bidx_request',
+				    			apiurl : 'members'
+
 
 				    		});
 
 				    		(function() {
 				    			/*custom event to fix field positioning when validation kicks in*/
 				    			var fs = $(".fieldset");
+				    			console.log(fs);
 				    			var startMargin = parseInt(fs.css("margin-top").replace("px",""));
  								//when change occurs count error messages for this fieldset an calculate margin correction
 					    		$(".fieldset :input").change(function(){
 					    			var removeMargin = 0;
+					    			//exclude
 									var fields = fs.find(":input").map(function(){
 					    				return $(this).attr("name")}).each(function(i,name){
 					    					var match = JSON.stringify($(".fieldset").form("getElement",name).validation).match(/"error":true/g);
@@ -95,7 +109,7 @@
 	<?php add_action('wp_footer', 'addToFooter',200);
 
 		function addToFooter() {
-			$content = '<script type="text/javascript" src="/'.THEME_PATH.'/assets/js/form.js"></script>';
+			$content = '<script type="text/javascript" src="/wp-content/themes/plugins/form.js"></script>';
 			echo $content;
 		}
 	 ?>

@@ -22,7 +22,7 @@ define('DB_NAME', 'bidx');
 define('DB_USER', 'bidx');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'bidx12345');
+define('DB_PASSWORD', 'bidx');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
@@ -78,17 +78,7 @@ define('WPLANG', '');
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
-define('WP_DEBUG_DISPLAY', false);
-
-define('WP_DEBUG', true);
-
-define('WP_DEBUG_LOG', true); 
-
-define('SAVEQUERIES', true);
-
-define('FS_METHOD','direct');
-
-/* Multisite */
+define('WP_DEBUG', false);
 define('WP_ALLOW_MULTISITE', true);
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', true);
@@ -96,7 +86,7 @@ define('DOMAIN_CURRENT_SITE', 'bidx.dev');
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
-
+define('FS_METHOD','direct');
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
