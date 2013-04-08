@@ -31,8 +31,8 @@
 								<input type="text" name="groupname" placeholder="Your group name" class="highlight">
 							</div>
 														
-							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email":{"text":"This is not a valid e-mail address"},"custom":{"url":"/customhandler","text":"Custom check went wrong"}}'>
-								<input type="email" name="email" placeholder="Your email address" >
+							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email":{"text":"This is not a valid e-mail address"}}'>
+								<input type="email" name="emailAddress" placeholder="Your email address" >
 							</div>
 					
 							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"}}'>
@@ -45,24 +45,16 @@
 								<a href="#" class="button secondary">Login</a>
 							</div>
 						</div>
+            <input type="hidden" name="apiurl" value ="members">
 					</form>
 					<script type="text/javascript">
+
 				    	$(function(){
-				    		/*
-				    			if handler sends back response it can include the following json:
-				    			{
-									status: 'OK',
-									redirect:'<URL to redirect too>'
-								},
-								{ //not yet implemented
-									status: 'ERROR',
-									fields: [{field:fieldname,error:errormessage}[,]]
-								}
-				    		*/
+				    		
 				    		$(".fieldset").form({
 				    			callToAction : '.jsCreateGroup', // the selector for submit button
 				    			errorClass : 'error', //the css class used as error message
-				    			url : '/handler/creategroup', //the handler where to post to
+				    			url : '/wp-admin/admin-ajax.php?action=ajax_registration'
 
 				    		});
 

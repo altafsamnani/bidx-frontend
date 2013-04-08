@@ -30,6 +30,33 @@ if ( !function_exists('htmlspecialchars_decode') )
         return strtr($text, array_flip(get_html_translation_table(HTML_SPECIALCHARS)));
     }
 }
+/*
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Authenticate the user using the username and password with Bidx Data.
+ *
+ * @param String $username
+ * @param String $password
+ *
+ * @return Loggedin User
+ */
+
+function call_bidx_service($urlservice,$body) {
+
+  $authUsername = 'bidx'; // Bidx Auth login
+  $authPassword = 'gobidx'; // Bidx Auth password
+  $url = 'http://test.bidx.net/api/v1/'.$urlservice.'?groupKey=bidxTestGroupKey&csrf=false';
+  $headers = array('Authorization' => 'Basic ' . base64_encode("$authUsername:$authPassword"));  
+  $request = new WP_Http;
+  
+  $result = $request->request($url, array('method' => 'POST',
+    'body' => $body,
+    'headers' => $headers
+      ));
+  return $result;
+}
+
 
 /*
  * @author Altaf Samnani
@@ -46,8 +73,9 @@ if ( !function_exists('htmlspecialchars_decode') )
 function bidx_auth_check_login($username, $password) {
   require_once('./wp-includes/registration.php');
 
+  global $ext_error;
   //Get the group name from  Subdomain
-  $groupName = get_subdomain( );
+  $groupName = get_bidx_subdomain( );
 
   $body = array(
     'username' => $username,
@@ -57,65 +85,74 @@ function bidx_auth_check_login($username, $password) {
   //Check if Username and password and User logged in is 
   if ($username && $password) {
     // Check external bidx check for username and password credentials
-    $authUsername = 'bidx'; // Bidx Auth login
-    $authPassword = 'gobidx'; // Bidx Auth password
-    $headers = array('Authorization' => 'Basic ' . base64_encode("$authUsername:$authPassword"));
+    $url = 'session';
+  //$url = 'http://test.bidx.net/api/v1/session?csrf=false&groupKey='.$groupName;
+    $result = call_bidx_service($url,$body);
 
-    $url = 'http://test.bidx.net/api/v1/session?csrf=false&groupKey=bidxTestGroupKey';
-    //$url = 'http://test.bidx.net/api/v1/session?csrf=false&groupKey='.$groupName;
-    $request = new WP_Http;
-    $result = $request->request($url, array('method' => 'POST',
-      'body' => $body,
-      'headers' => $headers
-        ));
     // test $result['response'] and if OK do something with $result['body']
-
     $requestData = json_decode($result['body']);
-    $displayData = $requestData->data;
+    $responseCode = $result['response']['code'];
 
-    // If we get data in return
-    if (!$ext_error && isset($displayData)) {    //create/update wp account from external database if login/pw exact match exists in that db
-      $process = TRUE;
-
-      //check role and assign logged in wp username if present.
-      if (!empty($displayData->roles)) {
-        $roleArray = $displayData->roles;
-        if (in_array("SysAdmin", $roleArray)) {
-          //$username = 'admin';
-          $username = $groupName.'groupadmin';
-        } else if(in_array(array("GroupAdmin","GroupOwner"), $roleArray)) {
-          $username = $groupName.'groupadmin';
-        } else if(in_array("Member", $roleArray)) {
-          $username = $groupName.'subscriber';
-        }
-      }
-      else {
-        $username = NULL;
-        $ext_error = "wrongrole";
-        $process = FALSE;
-      }
- 
-      //only continue, if login/pw is valid AND, if used, proper role perms
-      if ($process) {
-
-        //looks like wp functions clean up data before entry, so I'm not going to try to clean out fields beforehand.
-        if ($user_id = username_exists($username)) {   //just do an update     
-         // userdata will contain all information about the user
-         $userdata = get_userdata($user_id);
-         $user = set_current_user($user_id,$username);
-         // this will actually make the user authenticated as soon as the cookie is in the browser
-         wp_set_auth_cookie($user_id);
-         // the wp_login action is used by a lot of plugins, just decide if you need it
-         do_action('wp_login',$userdata->ID);
-         // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
-         header("Location:".get_page_link(MY_PROFILE_PAGE));
-        }
-      }
-    }
-    else { //username exists but wrong password...
-      global $ext_error;
+    switch($responseCode) {
+      case '401' :
       $ext_error = "wrongpw";
       $username = NULL;
+      break;
+
+      case '404' :
+      $ext_error = "wrongusr";
+      $username = NULL;
+      break;
+
+      case '200':
+      $displayData = $requestData->data;
+      $bidxAuthCookie = $result['cookies'][0];
+      // If we get data in return
+      if (!$ext_error && isset($displayData)) {    //create/update wp account from external database if login/pw exact match exists in that db
+        $process = TRUE;
+
+        //check role and assign logged in wp username if present.
+        if (!empty($displayData->roles)) {
+          $roleArray = $displayData->roles;
+          if (in_array("SysAdmin", $roleArray)) {
+            //$username = 'admin';
+            $username = 'admin';
+          }
+          else if (in_array(array("GroupAdmin", "GroupOwner"), $roleArray)) {
+            $username = $groupName . 'groupadmin';
+          }
+          else if (in_array("Member", $roleArray)) {
+            $username = $groupName . 'subscriber';
+          }
+        }
+        else {
+          $username = NULL;
+          $ext_error = "wrongrole";
+          $process = FALSE;
+        }
+
+
+        //only continue, if login/pw is valid AND, if used, proper role perms
+        if ($process) {
+          //echo $username;exit;
+          //looks asdlike wp functions clean up data before entry, so I'm not going to try to clean out fields beforehand.
+          if ($user_id = username_exists($username)) {   //just do an update
+            // userdata will contain all information about the user
+            $userdata = get_userdata($user_id);
+            $user = set_current_user($user_id, $username);
+            // this will actually make the user authenticated as soon as the cookie is in the browser
+            wp_set_auth_cookie($user_id);
+            //Set Cookie for Bidx
+            setcookie($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, 'bidx.dev', FALSE, $bidxAuthCookie->httponly);
+
+            // the wp_login action is used by a lot of plugins, just decide if you need it
+            do_action('wp_login', $userdata->ID);
+            // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
+            header("Location:" . get_page_link(MY_PROFILE_PAGE));
+          }
+        }
+      }
+      break;
     }
   }
 }
@@ -136,7 +173,7 @@ function bidx_auth_warning() {
  *
  * @param bool $echo
  */
-function get_subdomain($echo = false) {
+function get_bidx_subdomain($echo = false) {
 	$hostAddress = explode ( '.', $_SERVER ["HTTP_HOST"] );
 	if (is_array ( $hostAddress )) {
 		if (eregi ( "^www$", $hostAddress [0] )) {
@@ -163,6 +200,8 @@ function bidx_errors() {
 		return "<strong>ERROR:</strong> You don't have permissions to log in.";
 	else if ($ext_error == "wrongpw")
 		return "<strong>ERROR:</strong> Invalid password.";
+  else if ($ext_error == "wrongusr")
+		return "<strong>ERROR:</strong> User not found.";
 	else if ($ext_error == "nocurl")
     return "<strong>ERROR:</strong> Bidx needs the CURL PHP extension. Contact your server adminsitrator!";
   else if ($ext_error == "nohttps")
@@ -206,16 +245,128 @@ function disable_function() {
 	exit();
 }
 
+//function enqueue_scripts_styles_init() {
+	//wp_enqueue_script( 'ajax-script', get_stylesheet_directory_uri().'/js/script.js', array('jquery'), 1.0 ); // jQuery will be included automatically
+	// get_template_directory_uri() . '/js/script.js'; // Inside a parent theme
+	// get_stylesheet_directory_uri() . '/js/script.js'; // Inside a child theme
+	// plugins_url( '/js/script.js', __FILE__ ); // Inside a plugin
+	//wp_localize_script( 'ajax-script', 'ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); // setting ajaxurl
+//}
+//add_action('init', 'enqueue_scripts_styles_init');
+
+// Reference http://www.jackreichert.com/2013/03/24/using-ajax-in-wordpress-development-the-quickstart-guide/
+// http://web-profile.com.ua/wordpress/dev/ajax-in-wordpress/
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Check Bidx Get Redirect
+ *
+ * @param bool $echo
+ */
+
+function get_redirect( $url ) {
+
+  switch( $url ) {
+    case 'members':
+      $redirectUrl =  '/group-creation-success';
+      break;
+    case 'groups':
+      $redirectUrl =  '';
+      break;
+    case 'sessions':
+      $redirectUrl =  '';
+      break;
+  }
+  return $redirectUrl;
+}
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Check Bidx Service Response
+ *
+ * @param bool $echo
+ */
+
+function bidx_check_redirect($result,$url) {
+  
+  $requestData = json_decode($result['body']);
+  
+  $requestData->redirect = get_redirect($url);
+
+  $jsonData = json_encode($requestData);
+
+  return $jsonData;
+
+}
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Registratin Ajax Call
+ *
+ * @param bool $echo
+ */
+
+function bidx_wordpress_function($url) {
+
+  switch($url) {
+
+    case 'members' :
+      $body = array('emailAddress' => $_POST['emailAddress'],
+                'firstName'    => $_POST['groupname'],
+                'lastName'     => 'group',
+                'countryCode'  => 'nl' );
+      break;
+    
+    case 'groups' :
+      $body = array('name'   =>$_POST['groupname'],
+                    'domain' =>"http://my-group.bidx.net",
+                    'locale' => 'en' );
+      break;
+  }
+  
+  return $body;
+  
+}
 
 
-//add_action('admin_init', 'bidx_auth_init' );
-//add_action('admin_menu', 'bidx_auth_add_menu');
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Registratin Ajax Call
+ *
+ * @param bool $echo
+ */
+
+function ajax_submit_action() {	
+	
+  $url = $_POST['apiurl'];
+  //1 Do wordpress stuff and get the params
+  $body        = bidx_wordpress_function($url);
+
+  //2 Talk to Bidx Api and get the response
+  $result      = call_bidx_service($url,$body);
+
+  //3 Check validation error and include redirect logic
+  $jsonDisplay = bidx_check_redirect($result,$url);
+
+  echo $jsonDisplay;
+  
+	die(); // stop executing script
+}
+
+add_action( 'wp_ajax_nopriv_ajax_registration', 'ajax_submit_action' ); // ajax for logged in users
 add_action('wp_authenticate', 'bidx_auth_check_login', 1, 2 );
-add_action('lost_password', 'disable_function');
-add_action('user_register', 'disable_function');
-add_action('register_form', 'disable_function_register');
-add_action('retrieve_password', 'disable_function');
-add_action('password_reset', 'disable_function');
+//add_action('lost_password', 'disable_function');
+//add_action('user_register', 'disable_function');
+//add_action('register_form', 'disable_function_register');
+//add_action('retrieve_password', 'disable_function');
+//add_action('password_reset', 'disable_function');
 //add_action('profile_personal_options','bidx_warning');
 add_filter('login_errors','bidx_errors');
 //add_filter('show_password_fields','bidx_show_password_fields');
