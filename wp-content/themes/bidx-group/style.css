@@ -153,183 +153,29 @@ a, a:hover, a:visited, a:link  {
 *
 ********************************************************************************************/
 
-	/********************BIDX HOMEPAGE*********************/
 	header {
 		background-color: #FFF;
 		
 		height:auto;
 		z-index:200;
 	}
-
-	header .logo {
-		margin-top:13px;
-		width:134px;
-		height: 82px;
-		display: block;
-		float: left;
-		position: relative;
-		z-index: 500; /*relative and zindex necessary otherwise navbar is on top of logo and blocks href function*/
 		
-
-	}
-
-		header .navbar {
+		header .subheader .branding {
+			width:70%;
+			float: left;
+			height: 80px;
+		}
+		header .subheader .account-access {
+			width:30%;
 			text-align: right;
-			z-index:200;
+			float:right;
 		}
 
-
-			.navbar .navbar-inner-bidX {
-
-			}
-				/* language selector */
-					#languageSelector .dropdown {
-						display: -moz-inline-block;    
-						display:inline-block;
-						zoom: 1;
-						*display: inline;
-					}
-					#languageSelector .dropdown-toggle {
-						display: block;
-						margin-top:5px;
-						background-color: #fff;
-						color:#000;
-						text-shadow: 0 1px 0 #FFFFFF;
-						padding: 5px 15px;
-					}
-					#languageSelector .open > .dropdown-toggle, #languageSelector .dropdown:hover > .dropdown-toggle {
-					
-						background-color: #F6F6F6;
-	    				color: #555555;
-
-	    				-webkit-border-radius:4px 4px 0px 0px;
-						-moz-border-radius:4px 4px 0px 0px;
-						border-radius: 4px 4px 0px 0px;
-
-	    				-moz-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						-webkit-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						
-						
-	    				text-decoration: none;
-	    				text-shadow: 0 1px 0 #FFFFFF;
-	    				
-					
-					}
-
-					#languageSelector .dropdown:hover > .dropdown-menu {
-	    				display: block;
-					}
-				
-					#languageSelector .dropdown-menu {
-						background-color: #F6F6F6;
-						margin-top:0px;					
-						-webkit-border-radius:0px 4px 4px 4px;
-						-moz-border-radius:0px 4px 4px 4px;
-						border-radius: 0px 4px 4px 4px;
-						border:1px solid #F6F6F6;
-						
-						-moz-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						-webkit-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-					
-
-					}
-
-
-
-				
-
-				#languageSelector .dropdown-menu {
-					min-width: 150px;
-					text-align: left;
-				}
-					#languageSelector .dropdown-menu  > li > a {
-						padding:3px 14px;
-				}
-				#languageSelector .language{
-					padding-left:50px;
-					display: -moz-inline-block;    
-					display:inline-block;
-					zoom: 1;
-					*display: inline;
-				}
-				#languageSelector .en {
-					background-position: -204px 0px;
-				}
-				#languageSelector .es {
-					background-position: -204px -22px;
-				}
-
-				/* top menu */
-				.navbar-inner-bidX .menu {
-					
-					float:right;
-					margin:20px 0 0px 0;
-				}
-
-
-					.menu a {
-						font-family: 'weblysleek_uisemilight',sans-serif,Arial;
-						font-size: 14px;
-					}
-
-					/* override bootstrap style */
-					.menu .open > .dropdown-toggle, 
-					.menu .dropdown:hover > .dropdown-toggle {
-	    				background-color: #F6F6F6 !important;
-	    				color: #555555;
-	    				-moz-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						-webkit-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						-webkit-border-radius: 4px 4px 0 0;
-						-moz-border-radius: 4px 4px 0 0;
-						border-radius: 4px 4px 0 0;
-					}
-					.menu .dropdown:hover > .dropdown-menu {
-	    				display: block;
-					}
-
-					.menu .dropdown-menu {
-						background-color: #F6F6F6;
-						margin-top:0px;					
-						-webkit-border-radius:0px 4px 4px 4px;
-						-moz-border-radius:0px 4px 4px 4px;
-						border-radius: 0px 4px 4px 4px;
-						border:1px solid #F6F6F6;
-						
-						-moz-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						-webkit-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2);
-						/*min-width: 120px;*/
-
-					}
-					.menu .dropdown-menu:before {
-						display:none!important;
-					}
-					.menu .dropdown-menu:after {
-						display:none !important;
-					}
-						.menu .dropdown-menu li {
-							text-align: left;
-						}
-					.menu .dropdown.active .dropdown-toggle, .menu .dropdown.active:hover .dropdown-toggle, .menu .active a {
-						-webkit-border-radius:4px!important;
-						-moz-border-radius:4px!important;
-						border-radius: 4px!important;
-						-moz-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2)!important;
-						-webkit-box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2)!important;
-						box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2)!important;
-						background-color: #F6F6F6 !important;
-					}
-					.menu .dropdown.active:hover .dropdown-toggle {
-						-webkit-border-radius: 4px 4px 0 0;
-						-moz-border-radius: 4px 4px 0 0;
-						border-radius: 4px 4px 0 0;
-					}
-					/* End override bootstrap style */
-
-	/************** GROUP HOMEPAGE *************************/
+		header .nav-wrapper {
+			background-color: #323232;
+		}
+	
+	/************** GROUP DASHBARD *************************/
 
 		/*override general and bootstrap styles*/
 		.navbar-search .search-query {
@@ -347,29 +193,7 @@ a, a:hover, a:visited, a:link  {
 *
 ********************************************************************************************/
 
-
-	footer .footer-links .span3 {
-		padding:20px;
-	}
-		.footer-links ul {
-			padding: 0px;
-			margin:0px;
-		}
-		.footer-links ul li {
-			list-style-type: none;
-			font-size:12px;
-			color:#666;
-		}
-
-		.footer-links  ul li a, .footer-links  ul li a:hover, ul li a:focus {
-			color: #999;
-		}
-
-		.footer-links h3 {
-			margin-top: 0px; /*override topmargin in footerlinks*/
-		}
-
-	footer .sub-footer {
+footer .sub-footer {
 		background-color: #000;
 		height:30px;
 		
@@ -394,6 +218,7 @@ a, a:hover, a:visited, a:link  {
 		.sub-footer ul li a, .sub-footer ul li a:hover, ul li a:focus {
 			color: #999;
 		}
+	
 
 
 /* end footer styles */
@@ -417,115 +242,7 @@ a, a:hover, a:visited, a:link  {
 }
 */
 
-	.hero {
-		height: 400px;
-		z-index:100;
-		
-	}
-
-		.hero .pay-off {
-			width:61.94872%;
-			height: 100%;
-			float:left;
-			position: relative;
-		}
-			.hero .pay-off .slider {
-				margin-top:100px;
-			}
-
-			.hero .pay-off .slider-nav {
-				position:absolute;
-				bottom: 30px;
-				left:0px;
-			}
-
-			.hero .pay-off .slider-nav ul {
-				margin: 0px;
-				padding: 0px;
-			}
-
-			.hero .pay-off .slider-nav li{
-				list-style-type: none;
-				background:url(assets/img/sprite.png) no-repeat;
-				width:15px;
-				height:15px;
-				background-position:-23px -90px;
-				float:left;
-				margin:3px;
-			}
-
-			.hero .pay-off .slider-nav li.active{
-				background-position: 0px -90px;
-			}
-
-			.hero .pay-off .slider-nav li:hover {
-				position: relative;
-				top:1px;
-				cursor: pointer;
-				cursor: hand;
-			}
-
-		.hero .signup {
-			height: 100%;		
-			color:#e4e3e3;
-			/*width:38.05128%;*/
-			width: 37.847%;
-			background-color: #353535;
-			float:right;
-			
-		}
-
-			.hero .signup .fieldset {
-				/*margin:10px 0px;*/
-				width:100%;
-				margin-top:40px;
-			}
-
-
-			.hero .signup .fieldset > div {
-				padding: 0 20px;
-			}
-			.hero .signup .title {
-				display: block;
-				font-weight: bold;
-				margin:10px 0;
-			}
-
-			.hero .signup .login {
-				margin:20px 0;
-				text-align: right;
-			}
-
-			.hero .signup input {
-				width: 100%;
-				
-			}
-
-			.lt-ie8 .hero .signup input {
-				width:86.9% !important;
-				
-			}
-
-
-/*
-.shade-top {
-	position:absolute;
-	top:0;
-	width:100%;
-	height:22px;
-	background: url(../img/block-shade-top.png) no-repeat center top;
-	opacity: 0.5;
-	filter:alpha(opacity=50); 
-}
-.shade-bottom {
-	position:absolute;
-	bottom:0;
-	width:100%;
-	height:22px;	
-	background: url(../img/block-shade-bottom.png) no-repeat center top;
-	opacity: 0.5;
-	filter:alpha(opacity=50); 
-}*/
+	
 .top-border, .bottom-border {
 	border-top: 1px solid #CCCCCC;
 	height: 1px;

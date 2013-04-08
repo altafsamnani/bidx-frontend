@@ -27,8 +27,8 @@
 						<div><!-- this div is necessary for container overflow issue IE7 -->
 							<div class="title">Start your free 3 week trial today</div>
 						
-							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"validateUsername", "text":"Custom check went wrong"}}'>
-								<input type="text" name="groupname" placeholder="Your group name" class="highlight">
+							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get", "text":"Custom check went wrong"}}'>
+								<input type="text" name="groupName" placeholder="Your group name" class="highlight">
 							</div>
 														
 							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email":{"text":"This is not a valid e-mail address"}}'>

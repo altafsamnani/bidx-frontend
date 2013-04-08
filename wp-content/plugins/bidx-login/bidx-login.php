@@ -46,14 +46,16 @@ function call_bidx_service($urlservice,$body,$method='POST') {
 
   $authUsername = 'bidx'; // Bidx Auth login
   $authPassword = 'gobidx'; // Bidx Auth password
-  $url = 'http://test.bidx.net/api/v1/'.$urlservice.'?groupKey=bidxTestGroupKey&csrf=false';
+  $url = 'http://test.bidx.net/api/v1/'.$urlservice.'?csrf=false';
   $headers = array('Authorization' => 'Basic ' . base64_encode("$authUsername:$authPassword"));  
   $request = new WP_Http;
   $bidxMethod = (strtolower($method) == 'get') ? 'GET':'POST';
+ 
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
     'headers' => $headers
       ));
+  
   return $result;
 }
 
@@ -320,7 +322,7 @@ function bidx_wordpress_function($url) {
 
     case 'members' :
       $body = array('emailAddress' => $_POST['emailAddress'],
-                'firstName'    => $_POST['groupname'],
+                'firstName'    => $_POST['groupName'],
                 'lastName'     => 'group',
                 'countryCode'  => 'nl' );
       break;
@@ -330,6 +332,9 @@ function bidx_wordpress_function($url) {
                     'domain' =>"http://my-group.bidx.net",
                     'locale' => 'en' );
       break;
+    default:
+	$body = $_POST;
+	
   }
   
   return $body;

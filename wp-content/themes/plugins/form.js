@@ -234,6 +234,9 @@ var Validator = function () {
 						var data = {};
 						data[el.name]=input.val();
 						data["apiurl"]=validation.custom.apiurl;
+						if(validation.custom.apimethod)
+							data["apimethod"]=validation.custom.apimethod;
+	
 						$.ajax({
 							type:'post',
 							url: validation.custom.url,
