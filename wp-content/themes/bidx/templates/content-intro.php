@@ -27,15 +27,15 @@
 						<div><!-- this div is necessary for container overflow issue IE7 -->
 							<div class="title">Start your free 3 week trial today</div>
 						
-							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get", "text":"Custom check went wrong"}}'>
+							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory1"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}'>
 								<input type="text" name="groupName" placeholder="Your group name" class="highlight">
 							</div>
 														
-							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email":{"text":"This is not a valid e-mail address"}}'>
-								<input type="email" name="emailAddress" placeholder="Your email address" >
+							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory2"},"email":{"text":"This is not a valid e-mail address"}}'>
+								<input type="email" name="username" placeholder="Your email address" >
 							</div>
 					
-							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"}}'>
+							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory3"}}'>
 								<input type="password" name="password" placeholder="Your password">
 								
 							</div>
@@ -73,7 +73,7 @@
 				    		(function() {
 				    			/*custom event to fix field positioning when validation kicks in*/
 				    			var fs = $(".fieldset");
-				    			console.log(fs);
+				    			
 				    			var startMargin = parseInt(fs.css("margin-top").replace("px",""));
  								//when change occurs count error messages for this fieldset an calculate margin correction
 					    		$(".fieldset :input").change(function(){

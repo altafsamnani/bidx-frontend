@@ -82,12 +82,15 @@
 		},
 		validateForm : function(){
 			//first trigger validation check on all fields
-			$(form).find(":input").trigger("change");
+			//$(form).find(":input").trigger("change");
 			//now check if there are errors per field
 			var field=null;
 			var result = false;
 			for(field in form.data.elements) {
+
 				for(key in form.data.elements[field].validation) {
+					if(typeof form.data.elements[field].validation[key].error == "undefined")
+						form.data.elements[field].validate({data:form.data.elements[field]});
 					if(form.data.elements[field].validation[key].error) {
 						result = true;
 						break;
@@ -231,12 +234,13 @@ var Validator = function () {
 					//custom valiation rule
 					if(validation.custom) {
 						var result = true;
+						//create datapackage
 						var data = {};
 						data[el.name]=input.val();
 						data["apiurl"]=validation.custom.apiurl;
 						if(validation.custom.apimethod)
 							data["apimethod"]=validation.custom.apimethod;
-	
+						//post
 						$.ajax({
 							type:'post',
 							url: validation.custom.url,
@@ -245,7 +249,10 @@ var Validator = function () {
 							async: true,
 							success: function(data){
 								console.log(data)
-								el.triggerError('custom');
+								if(data.status == "ERROR") {
+									el.validation.custom.text=data.text;
+									el.triggerError('custom');
+								}
 							},
 							error : function(a,b,c){
 								console.log(a);

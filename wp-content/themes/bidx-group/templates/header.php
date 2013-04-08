@@ -3,8 +3,8 @@
 		<div class="subheader clearfix">
 			<div class="branding">GROUP NAME COMES HERE (when no logo is available)</DIV>
 			<div class="account-access">
-				<a href="#" class="button primary">Register</a>
-				<a href="#" class="button secondary">Login</a>
+				<a href="/register" class="button primary">Register</a>
+				<a href="/login" class="button secondary">Login</a>
 			</div>
 		</div>
 	</div>
