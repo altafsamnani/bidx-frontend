@@ -21,7 +21,7 @@
 				var el = new Element($(this)).init();
 				//register form element
 				el.errorClass= options.errorClass;
-				form.data.elements[el.groupname]=el;
+				form.data.elements[el.name]=el;
 			});
 
 			//set callToAction button
@@ -153,7 +153,7 @@ var Validator = function () {
 	this.validate = function (e) {
 		var el = e.data;
 		var input = $(this);
-
+		
 		if(el.validation) {
 			with(el) {
 				//required has highest priority so this will be tested first
@@ -171,17 +171,17 @@ var Validator = function () {
 							return true;
 						}
 						else {
-							el.removeError('email');
+							removeError('email');
 						}
 					}
 					//check numberfield
 					if(validation.int) {
 						if(isNaN(val()) || input.val() == 0) {
-							el.triggerError('int');
+							triggerError('int');
 							return true;						
 						}
 						else {
-							el.removeError('int');
+							removeError('int');
 						}
 
 					}
@@ -229,16 +229,16 @@ var Validator = function () {
 					}
 
 					//custom valiation rule
-/*					if(validation.custom) {
+					if(validation.custom) {
 						var result = true;
-						
+						var data = {};
+						data[el.name]=input.val();
+						data["apiurl"]=validation.custom.apiurl;
 						$.ajax({
 							type:'post',
 							url: validation.custom.url,
+							data : data,
 							dataType:'json',
-							username:'bidx',
-							password:'gobidx',
-							//headers: {"Authorization": "Basic bidx:gobidx"},
 							async: true,
 							success: function(data){
 								console.log(data)
@@ -257,7 +257,7 @@ var Validator = function () {
 						}
 						else
 							el.removeError('custom');
-					}*/
+					}
 				
 					//remove error if none of the above checks are applicable
 					el.removeError('required');
@@ -337,7 +337,7 @@ var Validator = function () {
 var Element = function (_formfield) {
 	var that = this;
 	this.formfield = _formfield;
-	this.groupname = "";
+	this.name = "";
 	this.type = "";
 	this.input = null;
 	this.errorClass = "";
@@ -345,7 +345,7 @@ var Element = function (_formfield) {
 
 	this.init = function() {
 		this.input = $(this.formfield.find(":input"));
-		this.groupname = this.input.attr("name");
+		this.name = this.input.attr("name");
 		this.type = this.input.attr("type");
 		
 		if(this.formfield.data("validation")) {
