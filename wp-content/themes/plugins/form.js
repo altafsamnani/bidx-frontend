@@ -14,6 +14,7 @@
 		*/
 		init : function(options) {
 			form = this;
+			console.log(form);
 			form.data.elements = {};//collection of form elements
 			globalOptions = options;
 			//create form element objects of each formfield element in the object
@@ -24,11 +25,14 @@
 				form.data.elements[el.name]=el;
 			});
 
+
+
 			//set callToAction button
 			if(options.callToAction) {
 				var validated=true;
 			  	//bind call to action button to click
-				$(options.callToAction).click(function(){
+				$(options.callToAction).click(function(e){
+					e.preventDefault();
 					if(!methods.validateForm())
 						methods.submitForm();
 				});	
@@ -58,27 +62,35 @@
 			return form.data.elements[el];
 		},
 		submitForm : function() {
-			//xhr post 
-			$.ajax({
-				type:'post',
-				url: globalOptions.url,
-				dataType:'json',
-				data: $(form).serialize() + "&apiurl=" + globalOptions.apiurl,
-				async: true,
-				success: function(data){
-					if(data) {
-						if(data.status == 'OK') {
-							if(data.redirect) {
-								document.location=data.redirect;
+			
+			
+			if(globalOptions.url) {
+
+				//xhr post 
+				$.ajax({
+					type:'post',
+					url: globalOptions.url,
+					dataType:'json',
+					data: $(form).serialize() + "&apiurl=" + globalOptions.apiurl,
+					async: true,
+					success: function(data){
+						if(data) {
+							if(data.status == 'OK') {
+								if(data.redirect) {
+									document.location=data.redirect;
+								}
 							}
 						}
+					},
+					error : function(){
+
 					}
-				},
-				error : function(){
 
-				}
-
-			});
+				});
+			}
+			else {
+				form.submit();
+			}
 		},
 		validateForm : function(){
 			//first trigger validation check on all fields
@@ -170,7 +182,7 @@ var Validator = function () {
 					if(validation.email) {
 						var s_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 						if (!s_regex.test(input.val())) {
-							el.triggerError('email');
+							triggerError('email');
 							return true;
 						}
 						else {
@@ -192,11 +204,11 @@ var Validator = function () {
 					if(validation.date) {
 						//no validation defined yet, because date uses the Required validator only. We can add specific validation later
 						if(1==0) {
-							el.triggerError('date');
+							triggerError('date');
 							return true;
 						}
 						else {
-							el.removeError('date');
+							removeError('date');
 						}
 					}	
 
@@ -211,7 +223,7 @@ var Validator = function () {
 							return true;						
 						}
 						else {
-							el.removeError('url');
+							removeError('url');
 						}
 
 					}		
@@ -224,16 +236,17 @@ var Validator = function () {
 						
 						//find fields with password. This code expects that there is only one form active with one pair of passsword fields
 						if((field1.val() !=  "" && field2.val() != "") && field1.val() != field2.val()) {
-							el.triggerError('passwordmatch');
+							triggerError('passwordmatch');
 							return true;
 						}
 						else
-							el.removeError('passwordmatch');
+							removeError('passwordmatch');
 					}
 
 					//custom valiation rule
 					if(validation.custom) {
 						var result = true;
+						toggleAjaxLoader();
 						//create datapackage
 						var data = {};
 						data[el.name]=input.val();
@@ -248,7 +261,8 @@ var Validator = function () {
 							dataType:'json',
 							async: true,
 							success: function(data){
-								console.log(data)
+								//console.log(data)
+								el.toggleAjaxLoader();
 								if(data.status == "ERROR") {
 									el.validation.custom.text=data.text;
 									el.triggerError('custom');
@@ -262,15 +276,15 @@ var Validator = function () {
 						});
 
 						if(!result) {
-							el.triggerError('custom');
+							triggerError('custom');
 							return true;
 						}
 						else
-							el.removeError('custom');
+							removeError('custom');
 					}
 				
 					//remove error if none of the above checks are applicable
-					el.removeError('required');
+					removeError('required');
 				}
 
 			}
@@ -336,6 +350,18 @@ var Validator = function () {
 			val("");
 		}					
 	};
+
+	this.toggleAjaxLoader = function () {
+		//add wrapper for positioning
+		if(!this.ajaxloader) {
+			var wrapper = $(this.input).wrap("<div class=\"ajaxwrapper\"></div>").after("<div class=\"ajaxloader\"></div>");
+			this.ajaxloader = true;
+		}
+		else {
+			$(this.input).unwrap().next().remove();
+			this.ajaxloader = false;
+		}
+	}
 };
 
 
@@ -356,7 +382,7 @@ var Element = function (_formfield) {
 	this.init = function() {
 		this.input = $(this.formfield.find(":input"));
 		this.name = this.input.attr("name");
-		this.type = this.input.attr("type");
+		this.type = this.input.prop("tagName").toLowerCase();
 		
 		if(this.formfield.data("validation")) {
 			$.extend(this,val = {
@@ -364,7 +390,14 @@ var Element = function (_formfield) {
 			});
 		}
 		this.input.bind("change",this,this.validate);
-		
+	
+		/*Correct IE specific issues that can not be done with css only*/
+		if($("html").hasClass("lt-ie8")) {
+			//Select needs to have padding-right removed to be inline with other fields
+			if(this.type == "select")
+				this.formfield.addClass("ie8-padding-correction");
+		}
+
 		return this;
 	}
 }

@@ -21,6 +21,7 @@
 						</ul>
 					</div>
 				</div>
+				
 				<div class="signup">
 					<!-- ##### Widget Signup Start ######-->
 					<form class="fieldset">
@@ -31,7 +32,7 @@
 								<input type="text" name="groupName" placeholder="Your group name" class="highlight">
 							</div>
 														
-							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory2"},"email":{"text":"This is not a valid e-mail address"}}'>
+							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory2"},"email":{"text":"This is not a valid e-mail address"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}'>
 								<input type="email" name="username" placeholder="Your email address" >
 							</div>
 					
@@ -65,7 +66,7 @@
 				    			callToAction : '.jsCreateGroup', // the selector for submit button
 				    			errorClass : 'error', //the css class used as error message
 				    			url : '/wp-admin/admin-ajax.php?action=bidx_request',
-				    			apiurl : 'members'
+				    			apiurl : 'groups'
 
 
 				    		});

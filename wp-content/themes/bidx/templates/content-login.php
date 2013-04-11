@@ -13,8 +13,8 @@
 	$(function(){
 		$("form").form({
 			callToAction : '.jsLogin',
-			errorClass : 'error',
-			url : '/dologin'
+			errorClass : 'error'
+			
 			
 		});
 	});
@@ -24,7 +24,7 @@
 <?php add_action('wp_footer', 'addToFooter',200);
 
 	function addToFooter() {
-		$content = '<script type="text/javascript" src="/'.THEME_PATH.'/assets/js/form.js"></script>';
+		$content = '<script type="text/javascript" src="/wp-content/themes/plugins/form.js"></script>';
 		echo $content;
 	}
  ?>
