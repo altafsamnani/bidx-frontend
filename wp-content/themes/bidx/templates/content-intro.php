@@ -29,7 +29,7 @@
 							<div class="title">Start your free 3 week trial today</div>
 						
 							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory1"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}'>
-								<input type="text" name="name" placeholder="Your group name" class="highlight">
+								<input type="text" name="groupName" placeholder="Your group name" class="highlight">
 							</div>
 														
 							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory2"},"email":{"text":"This is not a valid e-mail address"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}'>

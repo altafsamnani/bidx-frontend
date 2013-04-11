@@ -39,100 +39,110 @@
 		</div>
 		<div class="span8 block">
 			<h3>About your group</h3>
-			<div class="formfield" >
-				<label>Group Name</label>
-				<input type="text" name="businessGroupName"  placeholder="Please type your group name" />
+			<div class="row-fluid">
+				<div class="span6">
+					
+					<div class="formfield" >
+						<label>Group Name</label>
+						<input type="text" name="businessGroupName"  placeholder="Please type your group name" />
+					</div>
+
+					<div class="formfield">
+						<label>Define your group in 15 words</label>
+						<textarea name="slogan" placeholder="Define your group"></textarea>
+					</div>
+
+					<div class="formfield">
+						<label>Short description</label>
+						<textarea name="shortDescription" placeholder="Place provide a short description"></textarea>
+					</div>
+
+					<div class="formfield">
+						<label>Location</label>
+						<input type="text" name="companyLocation" placeholder="Please type your location" />
+					</div>
+				</div>
+				<div class="span6">
+					<div class="formfield">
+						<label>Company</label>
+						<input type="text" name="company" placeholder="Please type your company name" />
+					</div>
+
+					<div class="formfield">
+						<label>Website</label>
+						<input type="text" name="webSite" data-type="date" placeholder="Please type your website" />
+					</div>
+
+					<div class="formfield">
+						<label>Focus industry</label>
+						<select name="focusIndustry" >
+							<option value="">Please select your focus industry</option>
+							<option value="AccountingAuditorsTaxBookkeepers">Accounting, Auditors, Tax & Bookkeepers</option>
+							<option value="AdvertisingPublicRelations">Advertising & Public Relations</option>
+							<option value="AgricultureProductsServices">Agriculture Products & Services</option>
+							<option value="AnimalProducts">Animal Products</option>
+							<option value="ApparelAccessoriesTextiles">Apparel / Accessories / Textiles</option>
+							<option value="ArchitecturalEngineeringTechnical">Architectural, Engineering & Technical</option>
+							<option value="BankingFinancialServices">Banking & Financial Services</option>
+							<option value="BeveragesAlcoholicNon-alcoholic">Beverages, Alcoholic & Non-alcoholic</option>
+							<option value="BuildingSystemsMaterialsFixtures">Building Systems / Materials / Fixtures</option>
+							<option value="BusinessConsultancyAdvisory">Business Consultancy & Advisory</option>
+							<option value="Chemicals">Chemicals</option>
+							<option value="ComputerITProductsServices">Computer & IT Products & Services</option>
+							<option value="ConstructionGeneral">Construction General</option>
+							<option value="EducationTraining">Education & Training</option>
+							<option value="EntertainmentRecreation">Entertainment & Recreation</option>
+							<option value="EnvironmentalProductsServices">Environmental Products & Services</option>
+							<option value="ExecutiveSearchPersonnelRecruitment">Executive Search & Personnel Recruitment</option>
+							<option value="FarmEquipment">Farm Equipment</option>
+							<option value="FoodManufacturingDistributionServices">Food Manufacturing / Distribution / Services</option>
+							<option value="GasesNaturalProcessed">Gases, Natural & Processed</option>
+							<option value="HealthHygieneProductsServices">Health / Hygiene Products & Services</option>
+							<option value="HotelsRestaurantsCaterers">Hotels / Restaurants / Caterers</option>
+							<option value="IndustrialEquipment">Industrial Equipment</option>
+							<option value="InformationCommunicationsTechnology">Information & Communications Technology</option>
+							<option value="InspectionSafetySecurity">Inspection, Safety & Security</option>
+							<option value="Insurance">Insurance</option>
+							<option value="LegalPractice">Legal Practice</option>
+							<option value="MarketingCommunications">Marketing & Communications</option>
+							<option value="OutplacementServices">Outplacement Services</option>
+							<option value="PetroleumPetroleumProducts">Petroleum & Petroleum Products</option>
+							<option value="PharmaceuticalMedicinalProducts">Pharmaceutical & Medicinal Products</option>
+							<option value="PowerElectrical">Power & Electrical</option>
+							<option value="PrintingPublishing">Printing & Publishing</option>
+							<option value="PropertyRealEstateServices">Property & Real Estate Services</option>
+							<option value="RetailConsumerProducts">Retail Consumer Products</option>
+							<option value="ScientificMedicalInstruments">Scientific & Medical Instruments</option>
+							<option value="SecurityInvestigativeServicesProducts">Security, Investigative Services & Products</option>
+							<option value="SourcingTradingBuying">Sourcing, Trading & Buying</option>
+							<option value="TransportVehiclesParts">Transport Vehicles & Parts</option>
+							<option value="TransportationLogistics">Transportation & Logistics</option>
+							<option value="TravelTourism">Travel & Tourism</option>
+							<option value="WaterSanitation">Water & Sanitation</option>
+						</select>
+					</div>
+
+					<div class="formfield">
+						<label>Roles</label>
+						<select name="role">
+							<option value="">On which roles does your group focus</option>
+							<option value="">All</option>
+							<option value="">Investors</option>
+							<option value="">Entrepeneurs</option>
+						</select>
+					</div>
+
+					<div class="formfield">
+						<label>Focus Theme</label>
+						<input type="text" name="theme" placeholder="Please type your focus theme" />
+					</div>
+				</div>
 			</div>
 
-			<div class="formfield">
-				<label>Define your group in 15 words</label>
-				<textarea name="slogan" placeholder="Define your group"></textarea>
-			</div>
-
-			<div class="formfield">
-				<label>Short description</label>
-				<textarea name="shortDescription" placeholder="Place provide a short description"></textarea>
-			</div>
-
-			<div class="formfield">
-				<label>Location</label>
-				<input type="text" name="companyLocation" placeholder="Please type your location" />
-			</div>
-
-			<div class="formfield">
-				<label>Company</label>
-				<input type="text" name="company" placeholder="Please type your company name" />
-			</div>
-
-			<div class="formfield">
-				<label>Website</label>
-				<input type="text" name="webSite" data-type="date" placeholder="Please type your website" />
-			</div>
-
-			<div class="formfield">
-				<label>Focus industry</label>
-				<select name="focusIndustry" >
-					<option value="">Please select your focus industry</option>
-					<option value="AccountingAuditorsTaxBookkeepers">Accounting, Auditors, Tax & Bookkeepers</option>
-					<option value="AdvertisingPublicRelations">Advertising & Public Relations</option>
-					<option value="AgricultureProductsServices">Agriculture Products & Services</option>
-					<option value="AnimalProducts">Animal Products</option>
-					<option value="ApparelAccessoriesTextiles">Apparel / Accessories / Textiles</option>
-					<option value="ArchitecturalEngineeringTechnical">Architectural, Engineering & Technical</option>
-					<option value="BankingFinancialServices">Banking & Financial Services</option>
-					<option value="BeveragesAlcoholicNon-alcoholic">Beverages, Alcoholic & Non-alcoholic</option>
-					<option value="BuildingSystemsMaterialsFixtures">Building Systems / Materials / Fixtures</option>
-					<option value="BusinessConsultancyAdvisory">Business Consultancy & Advisory</option>
-					<option value="Chemicals">Chemicals</option>
-					<option value="ComputerITProductsServices">Computer & IT Products & Services</option>
-					<option value="ConstructionGeneral">Construction General</option>
-					<option value="EducationTraining">Education & Training</option>
-					<option value="EntertainmentRecreation">Entertainment & Recreation</option>
-					<option value="EnvironmentalProductsServices">Environmental Products & Services</option>
-					<option value="ExecutiveSearchPersonnelRecruitment">Executive Search & Personnel Recruitment</option>
-					<option value="FarmEquipment">Farm Equipment</option>
-					<option value="FoodManufacturingDistributionServices">Food Manufacturing / Distribution / Services</option>
-					<option value="GasesNaturalProcessed">Gases, Natural & Processed</option>
-					<option value="HealthHygieneProductsServices">Health / Hygiene Products & Services</option>
-					<option value="HotelsRestaurantsCaterers">Hotels / Restaurants / Caterers</option>
-					<option value="IndustrialEquipment">Industrial Equipment</option>
-					<option value="InformationCommunicationsTechnology">Information & Communications Technology</option>
-					<option value="InspectionSafetySecurity">Inspection, Safety & Security</option>
-					<option value="Insurance">Insurance</option>
-					<option value="LegalPractice">Legal Practice</option>
-					<option value="MarketingCommunications">Marketing & Communications</option>
-					<option value="OutplacementServices">Outplacement Services</option>
-					<option value="PetroleumPetroleumProducts">Petroleum & Petroleum Products</option>
-					<option value="PharmaceuticalMedicinalProducts">Pharmaceutical & Medicinal Products</option>
-					<option value="PowerElectrical">Power & Electrical</option>
-					<option value="PrintingPublishing">Printing & Publishing</option>
-					<option value="PropertyRealEstateServices">Property & Real Estate Services</option>
-					<option value="RetailConsumerProducts">Retail Consumer Products</option>
-					<option value="ScientificMedicalInstruments">Scientific & Medical Instruments</option>
-					<option value="SecurityInvestigativeServicesProducts">Security, Investigative Services & Products</option>
-					<option value="SourcingTradingBuying">Sourcing, Trading & Buying</option>
-					<option value="TransportVehiclesParts">Transport Vehicles & Parts</option>
-					<option value="TransportationLogistics">Transportation & Logistics</option>
-					<option value="TravelTourism">Travel & Tourism</option>
-					<option value="WaterSanitation">Water & Sanitation</option>
-				</select>
-			</div>
-
-			<div class="formfield">
-				<label>Roles</label>
-				<select name="role">
-					<option value="">On which roles does your group focus</option>
-					<option value="">All</option>
-					<option value="">Investors</option>
-					<option value="">Entrepeneurs</option>
-				</select>
-			</div>
-
-			<div class="formfield">
-				<label>Focus Theme</label>
-				<input type="text" name="theme" placeholder="Please type your focus theme" />
-			</div>
 		</div>
+		<div class="span8 save-block">
+			<a href="#" class="button primary">Save Profile</a>
+		<div>
 	</div>
 	
 
@@ -142,8 +152,8 @@
 		$("form").form({
 			callToAction : '.jsCreateGroup',
 			errorClass : 'error',
-			url : '/handler',
-			enablePlugins: ['date','slider','location']
+			url : '/wp-admin/admin-ajax.php?action=bidx_register',
+			enablePlugins: ['date','location']
 		});
 	});
 </script>

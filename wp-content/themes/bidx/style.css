@@ -562,6 +562,13 @@ header .logo {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
+
+.save-block {
+	text-align: right;
+	padding:25px;
+
+
+}
 /* end intro styles */
 
 
