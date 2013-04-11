@@ -10,18 +10,6 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-	$(function(){
-		$("form").form({
-			callToAction : '.jsCreateGroup',
-			errorClass : 'error',
-			url : '/handler',
-			enablePlugins: ['date','slider']
-		});
-	});
-</script>
-
-
 <?php add_action('wp_footer', 'addToFooter',200);
 
 	function addToFooter() {

@@ -1,7 +1,7 @@
 <form action="">
 	
 	<div class="row-fluid">
-		<div class="span4">
+		<div class="span4 block">
 			<h3>Complete your profile</h3>
 			<div class="formfield" >
 				<label>First name</label>
@@ -20,7 +20,8 @@
 
 			<div class="formfield">
 				<label>What is your location?</label>
-				<input type="text" name="location" id="memberLocation" placeholder="Please type your location" />
+				<input type="text" name="location" placeholder="Please type your location" data-type="location" data-map-dimensionds="height:250px;width:100%" />
+				
 				<input type="hidden" name="personalDetails.address[0].location">
 				<input type="hidden" name="personalDetails.address[0].street">
 				<input type="hidden" name="personalDetails.address[0].streetNumber">
@@ -29,42 +30,43 @@
 				<input type="hidden" name="personalDetails.address[0].country">
 				<input type="hidden" name="personalDetails.address[0].postalCode">
 				<input type="hidden" name="personalDetails.address[0].postBox">
+
 			</div>
-			 <div id="map-canvas" style="width:300px;height:300px;"></div>
+			 
 
 			
 
 		</div>
-		<div class="span8">
+		<div class="span8 block">
 			<h3>About your group</h3>
 			<div class="formfield" >
 				<label>Group Name</label>
-				<input type="text" name="businessGroupName" placeholder="Please type your first name" />
+				<input type="text" name="businessGroupName"  placeholder="Please type your group name" />
 			</div>
 
 			<div class="formfield">
 				<label>Define your group in 15 words</label>
-				<textarea name="slogan" rows="2" cols="50" ></textarea>
+				<textarea name="slogan" placeholder="Define your group"></textarea>
 			</div>
 
 			<div class="formfield">
 				<label>Short description</label>
-				<textarea name="shortDescription" rows="2" cols="50" ></textarea>
+				<textarea name="shortDescription" placeholder="Place provide a short description"></textarea>
 			</div>
 
 			<div class="formfield">
 				<label>Location</label>
-				<input type="text" name="group-location" placeholder="Please type your location" />
+				<input type="text" name="companyLocation" placeholder="Please type your location" />
 			</div>
 
 			<div class="formfield">
 				<label>Company</label>
-				<input type="text" name="group-location" placeholder="Please type your companyname" />
+				<input type="text" name="company" placeholder="Please type your company name" />
 			</div>
 
 			<div class="formfield">
 				<label>Website</label>
-				<input type="text" name="group-location" placeholder="Please type your website" />
+				<input type="text" name="webSite" data-type="date" placeholder="Please type your website" />
 			</div>
 
 			<div class="formfield">
@@ -118,7 +120,7 @@
 
 			<div class="formfield">
 				<label>Roles</label>
-				<select name="">
+				<select name="role">
 					<option value="">On which roles does your group focus</option>
 					<option value="">All</option>
 					<option value="">Investors</option>
@@ -135,77 +137,14 @@
 	
 
 </form>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-<script class="javascript">
-	var mapOptions = {
-		center: new google.maps.LatLng(-33.8688, 151.2195),
-		zoom: 13,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
-	var map = new google.maps.Map(document.getElementById('map-canvas'),
-		mapOptions);
-
-	var input = document.getElementById('memberLocation');
-	var autocomplete = new google.maps.places.Autocomplete(input, options);
-	var options = {
-	  types: ['(cities)']
-	};
-	 	
-	autocomplete.bindTo('bounds', map);
-
-   var marker = new google.maps.Marker({
-          map: map
-        });
-
-	 google.maps.event.addListener(autocomplete, 'place_changed', function() {
-          marker.setVisible(false);
-          input.className = '';
-          var place = autocomplete.getPlace();
-          setGeoData(place);
-          if (!place.geometry) {
-            // Inform the user that the place was not found and return.
-            input.className = 'notfound';
-            return;
-          }
-
-          // If the place has a geometry, then present it on a map.
-          if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-          } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
-          }
-          var image = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-          };
-          marker.setIcon(image);
-          marker.setPosition(place.geometry.location);
-          marker.setVisible(true);
-   
-
-          
-        });[]
-
-	function setGeoData(location) {
-		var i=0,el=null;
-		while(el=location.address_components[i++]) {
-			hasValue("route",el.types) ? $("[name='personalDetails.address[0].street']").val(el.long_name):null;
-			hasValue("street_nunber",el.types) ? $("[name='personalDetails.address[0].streetNumber']").val(el.long_name):null;
-			hasValue("sublocality",el.types) ? $("[name='personalDetails.address[0].neighborhood']").val(el.long_name):null;
-			hasValue("locality",el.types) ? $("[name='personalDetails.address[0].cityTown']").val(el.long_name):null;
-			hasValue("country",el.types) ? $("[name='personalDetails.address[0].country']").val(el.long_name):null;
-			hasValue("postal_code",el.types) ? $("[name='personalDetails.address[0].postalCode']").val(el.long_name):null;
-			
-			
-		}
-		console.log(location);
-	}
-
-	function hasValue(key, arr) {
-		return $.inArray(key,arr) == 0;
-	}
+<script type="text/javascript">
+	$(function(){
+		$("form").form({
+			callToAction : '.jsCreateGroup',
+			errorClass : 'error',
+			url : '/handler',
+			enablePlugins: ['date','slider','location']
+		});
+	});
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
