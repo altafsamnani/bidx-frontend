@@ -1,0 +1,211 @@
+<form action="">
+	
+	<div class="row-fluid">
+		<div class="span4">
+			<h3>Complete your profile</h3>
+			<div class="formfield" >
+				<label>First name</label>
+				<input type="text" name="personalDetails.firstName" placeholder="Please type your first name" />
+			</div>
+
+			<div class="formfield">
+				<label>Last name</label>
+				<input type="text" name="personalDetails.lastName" placeholder="Please type your last name" />
+			</div>
+
+			<div class="formfield">
+				<label>E-mail</label>
+				<input type="email" readonly="true" name="email"/>
+			</div>
+
+			<div class="formfield">
+				<label>What is your location?</label>
+				<input type="text" name="location" id="memberLocation" placeholder="Please type your location" />
+				<input type="hidden" name="personalDetails.address[0].location">
+				<input type="hidden" name="personalDetails.address[0].street">
+				<input type="hidden" name="personalDetails.address[0].streetNumber">
+				<input type="hidden" name="personalDetails.address[0].neighborhood">
+				<input type="hidden" name="personalDetails.address[0].cityTown">
+				<input type="hidden" name="personalDetails.address[0].country">
+				<input type="hidden" name="personalDetails.address[0].postalCode">
+				<input type="hidden" name="personalDetails.address[0].postBox">
+			</div>
+			 <div id="map-canvas" style="width:300px;height:300px;"></div>
+
+			
+
+		</div>
+		<div class="span8">
+			<h3>About your group</h3>
+			<div class="formfield" >
+				<label>Group Name</label>
+				<input type="text" name="businessGroupName" placeholder="Please type your first name" />
+			</div>
+
+			<div class="formfield">
+				<label>Define your group in 15 words</label>
+				<textarea name="slogan" rows="2" cols="50" ></textarea>
+			</div>
+
+			<div class="formfield">
+				<label>Short description</label>
+				<textarea name="shortDescription" rows="2" cols="50" ></textarea>
+			</div>
+
+			<div class="formfield">
+				<label>Location</label>
+				<input type="text" name="group-location" placeholder="Please type your location" />
+			</div>
+
+			<div class="formfield">
+				<label>Company</label>
+				<input type="text" name="group-location" placeholder="Please type your companyname" />
+			</div>
+
+			<div class="formfield">
+				<label>Website</label>
+				<input type="text" name="group-location" placeholder="Please type your website" />
+			</div>
+
+			<div class="formfield">
+				<label>Focus industry</label>
+				<select name="focusIndustry" >
+					<option value="">Please select your focus industry</option>
+					<option value="AccountingAuditorsTaxBookkeepers">Accounting, Auditors, Tax & Bookkeepers</option>
+					<option value="AdvertisingPublicRelations">Advertising & Public Relations</option>
+					<option value="AgricultureProductsServices">Agriculture Products & Services</option>
+					<option value="AnimalProducts">Animal Products</option>
+					<option value="ApparelAccessoriesTextiles">Apparel / Accessories / Textiles</option>
+					<option value="ArchitecturalEngineeringTechnical">Architectural, Engineering & Technical</option>
+					<option value="BankingFinancialServices">Banking & Financial Services</option>
+					<option value="BeveragesAlcoholicNon-alcoholic">Beverages, Alcoholic & Non-alcoholic</option>
+					<option value="BuildingSystemsMaterialsFixtures">Building Systems / Materials / Fixtures</option>
+					<option value="BusinessConsultancyAdvisory">Business Consultancy & Advisory</option>
+					<option value="Chemicals">Chemicals</option>
+					<option value="ComputerITProductsServices">Computer & IT Products & Services</option>
+					<option value="ConstructionGeneral">Construction General</option>
+					<option value="EducationTraining">Education & Training</option>
+					<option value="EntertainmentRecreation">Entertainment & Recreation</option>
+					<option value="EnvironmentalProductsServices">Environmental Products & Services</option>
+					<option value="ExecutiveSearchPersonnelRecruitment">Executive Search & Personnel Recruitment</option>
+					<option value="FarmEquipment">Farm Equipment</option>
+					<option value="FoodManufacturingDistributionServices">Food Manufacturing / Distribution / Services</option>
+					<option value="GasesNaturalProcessed">Gases, Natural & Processed</option>
+					<option value="HealthHygieneProductsServices">Health / Hygiene Products & Services</option>
+					<option value="HotelsRestaurantsCaterers">Hotels / Restaurants / Caterers</option>
+					<option value="IndustrialEquipment">Industrial Equipment</option>
+					<option value="InformationCommunicationsTechnology">Information & Communications Technology</option>
+					<option value="InspectionSafetySecurity">Inspection, Safety & Security</option>
+					<option value="Insurance">Insurance</option>
+					<option value="LegalPractice">Legal Practice</option>
+					<option value="MarketingCommunications">Marketing & Communications</option>
+					<option value="OutplacementServices">Outplacement Services</option>
+					<option value="PetroleumPetroleumProducts">Petroleum & Petroleum Products</option>
+					<option value="PharmaceuticalMedicinalProducts">Pharmaceutical & Medicinal Products</option>
+					<option value="PowerElectrical">Power & Electrical</option>
+					<option value="PrintingPublishing">Printing & Publishing</option>
+					<option value="PropertyRealEstateServices">Property & Real Estate Services</option>
+					<option value="RetailConsumerProducts">Retail Consumer Products</option>
+					<option value="ScientificMedicalInstruments">Scientific & Medical Instruments</option>
+					<option value="SecurityInvestigativeServicesProducts">Security, Investigative Services & Products</option>
+					<option value="SourcingTradingBuying">Sourcing, Trading & Buying</option>
+					<option value="TransportVehiclesParts">Transport Vehicles & Parts</option>
+					<option value="TransportationLogistics">Transportation & Logistics</option>
+					<option value="TravelTourism">Travel & Tourism</option>
+					<option value="WaterSanitation">Water & Sanitation</option>
+				</select>
+			</div>
+
+			<div class="formfield">
+				<label>Roles</label>
+				<select name="">
+					<option value="">On which roles does your group focus</option>
+					<option value="">All</option>
+					<option value="">Investors</option>
+					<option value="">Entrepeneurs</option>
+				</select>
+			</div>
+
+			<div class="formfield">
+				<label>Focus Theme</label>
+				<input type="text" name="theme" placeholder="Please type your focus theme" />
+			</div>
+		</div>
+	</div>
+	
+
+</form>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script class="javascript">
+	var mapOptions = {
+		center: new google.maps.LatLng(-33.8688, 151.2195),
+		zoom: 13,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	var map = new google.maps.Map(document.getElementById('map-canvas'),
+		mapOptions);
+
+	var input = document.getElementById('memberLocation');
+	var autocomplete = new google.maps.places.Autocomplete(input, options);
+	var options = {
+	  types: ['(cities)']
+	};
+	 	
+	autocomplete.bindTo('bounds', map);
+
+   var marker = new google.maps.Marker({
+          map: map
+        });
+
+	 google.maps.event.addListener(autocomplete, 'place_changed', function() {
+          marker.setVisible(false);
+          input.className = '';
+          var place = autocomplete.getPlace();
+          setGeoData(place);
+          if (!place.geometry) {
+            // Inform the user that the place was not found and return.
+            input.className = 'notfound';
+            return;
+          }
+
+          // If the place has a geometry, then present it on a map.
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+          }
+          var image = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+          };
+          marker.setIcon(image);
+          marker.setPosition(place.geometry.location);
+          marker.setVisible(true);
+   
+
+          
+        });[]
+
+	function setGeoData(location) {
+		var i=0,el=null;
+		while(el=location.address_components[i++]) {
+			hasValue("route",el.types) ? $("[name='personalDetails.address[0].street']").val(el.long_name):null;
+			hasValue("street_nunber",el.types) ? $("[name='personalDetails.address[0].streetNumber']").val(el.long_name):null;
+			hasValue("sublocality",el.types) ? $("[name='personalDetails.address[0].neighborhood']").val(el.long_name):null;
+			hasValue("locality",el.types) ? $("[name='personalDetails.address[0].cityTown']").val(el.long_name):null;
+			hasValue("country",el.types) ? $("[name='personalDetails.address[0].country']").val(el.long_name):null;
+			hasValue("postal_code",el.types) ? $("[name='personalDetails.address[0].postalCode']").val(el.long_name):null;
+			
+			
+		}
+		console.log(location);
+	}
+
+	function hasValue(key, arr) {
+		return $.inArray(key,arr) == 0;
+	}
+</script>
