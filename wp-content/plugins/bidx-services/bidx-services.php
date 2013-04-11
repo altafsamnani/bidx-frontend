@@ -258,16 +258,6 @@ function disable_function() {
   exit();
 }
 
-//function enqueue_scripts_styles_init() {
-//wp_enqueue_script( 'ajax-script', get_stylesheet_directory_uri().'/js/script.js', array('jquery'), 1.0 ); // jQuery will be included automatically
-// get_template_directory_uri() . '/js/script.js'; // Inside a parent theme
-// get_stylesheet_directory_uri() . '/js/script.js'; // Inside a child theme
-// plugins_url( '/js/script.js', __FILE__ ); // Inside a plugin
-//wp_localize_script( 'ajax-script', 'ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); // setting ajaxurl
-//}
-//add_action('init', 'enqueue_scripts_styles_init');
-// Reference http://www.jackreichert.com/2013/03/24/using-ajax-in-wordpress-development-the-quickstart-guide/
-// http://web-profile.com.ua/wordpress/dev/ajax-in-wordpress/
 /**
  * @author Altaf Samnani
  * @version 1.0
@@ -304,7 +294,7 @@ function bidx_wordpress_post_action($result, $url, $body) {
   $requestData = json_decode($result['body']);
   $httpCode = $result['response']['code'];
   $redirectUrl = NULL;
-
+  
   //Check the Http response and decide the status of request whether its error or ok
 
   if ($httpCode >= 200 && $httpCode < 300) {
@@ -322,21 +312,29 @@ function bidx_wordpress_post_action($result, $url, $body) {
   switch ($url) {
     case 'groups' :
     case 'members' :
+
       //Delete the wordpress group site if Bidx says its Error
       global $current_site;
       $site_id = $body['response']['site_id'];
-
+      $user_id = $body['response']['user_id'];
       if (strtolower($requestData->status) == 'error') {
+        //Delete Wordpress Site
         if ($site_id != '0' && $site_id != $current_site->blog_id) {
           wpmu_delete_blog($site_id, true);
         }
-      } else {
-        $requestData->redirect = '/group-creation-success';
-      }     
+        //Delete Wordpress User
+        if ($user_id != '0' && $user_id != '1') {
+          wpmu_delete_user($user_id);
+        }
+      }
+      else {
+        $domain = $body['response']['domain'];
+        $requestData->redirect = 'http://'.$domain.'/registration';
+
+      }
 
       break;
   }
-
 
   return $requestData;
 }
@@ -391,7 +389,11 @@ Name: %3$s'), $current_user->user_login, get_site_url($id), stripslashes($title)
     }
   }
 
-  $siteCreation = array('status' => $status, 'text' => $text, 'site_id' => $id);
+  $siteCreation = array('status'  => $status,
+                        'text'    => $text,
+                        'site_id' => $id,
+                        'user_id' => $user_id,
+                        'domain'  => $newdomain);
   return $siteCreation;
 }
 
@@ -416,20 +418,9 @@ function bidx_wordpress_pre_action($url) {
       $wp_site = create_bidx_wp_site($params['name'], $params['username']);
       $response = array('status' => $wp_site['status'],
         'text' => $wp_site['text'],
-        'site_id' => $wp_site['site_id']);
-      break;
-
-    case 'members' :
-      $params = array('emailAddress' => $_POST['username'],
-        'firstName' => $_POST['groupName'],
-        'lastName' => 'group',
-        'countryCode' => 'nl');
-
-      //Create Wordpress group.bidx.net website
-      $wp_site = create_bidx_wp_site($params['firstName'], $params['emailAddress']);
-      $response = array('status' => $wp_site['status'],
-        'text' => $wp_site['text'],
-        'site_id' => $wp_site['site_id']);
+        'site_id' => $wp_site['site_id'],
+        'user_id' => $wp_site['user_id'],
+        'domain'  => $wp_site['domain']);
       break;
 
     default:
@@ -437,7 +428,7 @@ function bidx_wordpress_pre_action($url) {
       $response['status'] = 'ok';
       break;
   }
-  
+
   unset($params['apiurl']);
   unset($params['apimethod']);
 
@@ -454,8 +445,11 @@ function bidx_wordpress_pre_action($url) {
  *
  * @param bool $echo
  */
-function ajax_submit_action() {
 
+add_action('wp_ajax_nopriv_bidx_request', 'ajax_submit_action'); // ajax for logged in users
+
+function ajax_submit_action() {
+ 
   $url = $_POST['apiurl'];
   $method = $_POST['apimethod'];
 
@@ -482,20 +476,145 @@ function ajax_submit_action() {
   die(); // stop executing script
 }
 
-add_action('wp_ajax_nopriv_bidx_request', 'ajax_submit_action'); // ajax for logged in users
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Registratin Ajax Call
+ *
+ * @param bool $echo
+ */
+
+add_action('wp_ajax_nopriv_bidx_register', 'ajax_register_action'); 
+
+function ajax_register_action() {
+
+  $url = $_POST['apiurl'];
+  $method = $_POST['apimethod'];
+
+  //1 Do wordpress stuff and get the params
+  $body = bidx_wordpress_pre_action($url);
+
+  if ($body['response']['status'] == 'ok') {
+
+    //2 Talk to Bidx Api and get the response
+    $params = $body['params'];
+    $result = call_bidx_service($url, $params, $method);
+
+    //3 Check validation error and include redirect logic
+    $requestData = bidx_wordpress_post_action($result, $url, $body);
+
+    
+  }
+  else {
+    $requestData->status = $body['response']['status'];
+    $requestData->text = $body['response']['text'];
+  }
+
+  $jsonData = json_encode($requestData);
+  echo $jsonData;
+
+  die(); // stop executing script
+}
 
 
-add_action('wpmu_new_blog', 'assign_bidxgroup_theme');
 
-function assign_bidxgroup_theme($blog_id) {
-switch_to_blog($blog_id);
+
+/* Assign theme/pages/metadata when site is created
+ * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
+ * @author Altaf Samnani
+ * @version 1.0
+ * @description  Assign theme/pages/metadata when site is created
+ * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
+ *
+ * Add Custom Page attributes
+ *
+ * @param bool $echo
+ */
+
+
+add_action('wpmu_new_blog', 'assign_bidxgroup_theme_page');
+
+function assign_bidxgroup_theme_page($blog_id) {
+  switch_to_blog($blog_id);
 
 // Do all the work
-switch_theme('bidx-group');
+  switch_theme('bidx-group');
+  global $wpdb;  
+  
+  $wpws_values = array('sc_posts'   => 1,
+                       'sc_widgets' => 1,
+                       'on_error'   => 'error_hide');
+  update_option( 'wpws_options',$wpws_values );
+// Add Default Bidx Pages to render
+  $querystr = "SELECT wposts.*,wpostmeta2.meta_value as template_value
+    FROM wp_posts AS wposts
+    INNER JOIN wp_postmeta AS wpostmeta ON wpostmeta.post_id = wposts.ID
+    LEFT JOIN wp_postmeta AS wpostmeta2 ON  wpostmeta2.post_id = wposts.ID AND wpostmeta2.meta_key = '_wp_page_template'
+    WHERE wpostmeta.meta_key = 'page_group'
+    AND wpostmeta.meta_value = '1'";
 
-restore_current_blog();
+ $pages_to_create = $wpdb->get_results($querystr, OBJECT);
+ 
+ foreach ($pages_to_create as $page) {
 
+    unset($page->ID);
+    unset($page->guid);
+    /* Reference http://codex.wordpress.org/Function_Reference/wp_insert_post */
+    $post_id = wp_insert_post($page);
+    update_post_meta($post_id, '_wp_page_template', $page->template_value);
+  }
+
+
+
+  restore_current_blog();
 }
+
+/* Start Add Custom Page attribute whether you want to add page in Group site creation
+ * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Add Custom Page attributes 
+ *
+ * @param bool $echo
+ */
+
+add_action('add_meta_boxes', 'add_page_group_metabox');
+
+function add_page_group_metabox() {
+  add_meta_box('page-group-id', 'Group Page', 'group_callback', 'page', 'side', 'core');
+}
+
+function group_callback($post) {
+  $values = get_post_custom($post->ID);
+  $selected = isset($values['page_group']) ? $values['page_group'][0] : '';
+  ?>
+  <label class="screen-reader-text" for="page_group"><?php _e('Group page') ?></label>
+  <select name="page_group" id="page_group">
+    <option <?php echo ($selected == '1') ? 'selected' : '' ?> value='1'><?php _e('Yes'); ?></option>
+    <option <?php echo ($selected == '0') ? 'selected' : '' ?> value='0'><?php _e('No'); ?></option>
+  </select>
+  <?php
+}
+
+add_action('save_post', 'page_group_save');
+
+function page_group_save($post_id) {
+  // Bail if we're doing an auto save
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+    return;
+
+  // Probably a good idea to make sure your data is set
+
+  if (isset($_POST['page_group']))
+    update_post_meta($post_id, 'page_group', $_POST['page_group']);
+}
+
+/* End Add Page attribute whether you want to add page in Group site creation */
+
+
 /* Login Start */
 //add_action('wp_authenticate', 'bidx_auth_check_login', 1, 2);
 //add_filter('login_errors', 'bidx_errors');
@@ -512,3 +631,7 @@ restore_current_blog();
 //add_filter('login_message','bidx_auth_warning');
 
 //register_activation_hook( __FILE__, 'bidx_auth_activate' );
+
+
+
+
