@@ -23,7 +23,7 @@
 							<span class="sprite language en">English</span>
 							<span class="caret"></span>
 						</a>
-						<ul class="dropdown-menu" role="menu" >
+						<ul class="dropdown-menu" >
 							<li class="hidden"><a href="#"><span class="sprite language en">English</span></a></li>
 							<li><a href="#"><span class="sprite language es">Spanish</span></a></li>
 						</ul>

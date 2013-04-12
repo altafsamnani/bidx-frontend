@@ -1,0 +1,151 @@
+<form>
+	
+	<div class="row-fluid">
+		<div class="span4 block">
+			<h3>Complete your profile</h3>
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
+				<label>First name</label>
+				<input type="text" name="personalDetails.firstName" placeholder="Please type your first name" />
+			</div>
+
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
+				<label>Last name</label>
+				<input type="text" name="personalDetails.lastName" placeholder="Please type your last name" />
+			</div>
+
+			<div class="formfield">
+				<label>E-mail</label>
+				<input type="email" readonly="readonly" name="email" value="[!EMAIL!]"/>
+			</div>
+
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
+				<label>What is your location?</label>
+				<input type="text" name="location" placeholder="Please type your location" data-type="location" data-map-dimensionds="height:250px;width:100%" />
+				
+				<input type="hidden" name="personalDetails.address[0].location">
+				<input type="hidden" name="personalDetails.address[0].street">
+				<input type="hidden" name="personalDetails.address[0].streetNumber">
+				<input type="hidden" name="personalDetails.address[0].neighborhood">
+				<input type="hidden" name="personalDetails.address[0].cityTown">
+				<input type="hidden" name="personalDetails.address[0].country">
+				<input type="hidden" name="personalDetails.address[0].postalCode">
+				<input type="hidden" name="personalDetails.address[0].postBox">
+
+			</div>
+		</div>
+		<div class="span8 block">
+			<h3>About your group</h3>
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
+				<label>Group Name</label>
+				<input type="text" name="businessGroupName"  placeholder="Please type your group name" />
+			</div>
+
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
+				<label>Define your group in 15 words</label>
+				<textarea name="slogan" placeholder="Define your group"></textarea>
+			</div>
+
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
+				<label>Short description</label>
+				<textarea name="shortDescription" placeholder="Place provide a short description"></textarea>
+			</div>
+<!-- 
+			<div class="formfield">
+				<label>Location</label>
+				<input type="text" name="companyLocation" placeholder="Please type your location" />
+			</div> -->
+		
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
+				<label>Company</label>
+				<input type="text" name="company" placeholder="Please type your company name" />
+			</div>
+
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"url":{"text":"Please fill in a valid URL"}}'>
+				<label>Website</label>
+				<input type="text" name="webSite"  placeholder="Please type your website" />
+			</div>
+
+			<div class="formfield">
+				<label>Focus industry</label>
+				<select name="focusIndustry" >
+					<option value="">Please select your focus industry</option>
+					<option value="AccountingAuditorsTaxBookkeepers">Accounting, Auditors, Tax & Bookkeepers</option>
+					<option value="AdvertisingPublicRelations">Advertising & Public Relations</option>
+					<option value="AgricultureProductsServices">Agriculture Products & Services</option>
+					<option value="AnimalProducts">Animal Products</option>
+					<option value="ApparelAccessoriesTextiles">Apparel / Accessories / Textiles</option>
+					<option value="ArchitecturalEngineeringTechnical">Architectural, Engineering & Technical</option>
+					<option value="BankingFinancialServices">Banking & Financial Services</option>
+					<option value="BeveragesAlcoholicNon-alcoholic">Beverages, Alcoholic & Non-alcoholic</option>
+					<option value="BuildingSystemsMaterialsFixtures">Building Systems / Materials / Fixtures</option>
+					<option value="BusinessConsultancyAdvisory">Business Consultancy & Advisory</option>
+					<option value="Chemicals">Chemicals</option>
+					<option value="ComputerITProductsServices">Computer & IT Products & Services</option>
+					<option value="ConstructionGeneral">Construction General</option>
+					<option value="EducationTraining">Education & Training</option>
+					<option value="EntertainmentRecreation">Entertainment & Recreation</option>
+					<option value="EnvironmentalProductsServices">Environmental Products & Services</option>
+					<option value="ExecutiveSearchPersonnelRecruitment">Executive Search & Personnel Recruitment</option>
+					<option value="FarmEquipment">Farm Equipment</option>
+					<option value="FoodManufacturingDistributionServices">Food Manufacturing / Distribution / Services</option>
+					<option value="GasesNaturalProcessed">Gases, Natural & Processed</option>
+					<option value="HealthHygieneProductsServices">Health / Hygiene Products & Services</option>
+					<option value="HotelsRestaurantsCaterers">Hotels / Restaurants / Caterers</option>
+					<option value="IndustrialEquipment">Industrial Equipment</option>
+					<option value="InformationCommunicationsTechnology">Information & Communications Technology</option>
+					<option value="InspectionSafetySecurity">Inspection, Safety & Security</option>
+					<option value="Insurance">Insurance</option>
+					<option value="LegalPractice">Legal Practice</option>
+					<option value="MarketingCommunications">Marketing & Communications</option>
+					<option value="OutplacementServices">Outplacement Services</option>
+					<option value="PetroleumPetroleumProducts">Petroleum & Petroleum Products</option>
+					<option value="PharmaceuticalMedicinalProducts">Pharmaceutical & Medicinal Products</option>
+					<option value="PowerElectrical">Power & Electrical</option>
+					<option value="PrintingPublishing">Printing & Publishing</option>
+					<option value="PropertyRealEstateServices">Property & Real Estate Services</option>
+					<option value="RetailConsumerProducts">Retail Consumer Products</option>
+					<option value="ScientificMedicalInstruments">Scientific & Medical Instruments</option>
+					<option value="SecurityInvestigativeServicesProducts">Security, Investigative Services & Products</option>
+					<option value="SourcingTradingBuying">Sourcing, Trading & Buying</option>
+					<option value="TransportVehiclesParts">Transport Vehicles & Parts</option>
+					<option value="TransportationLogistics">Transportation & Logistics</option>
+					<option value="TravelTourism">Travel & Tourism</option>
+					<option value="WaterSanitation">Water & Sanitation</option>
+				</select>
+			</div>
+
+			<div class="formfield">
+				<label>Roles</label>
+				<select name="role">
+					<option value="">On which roles does your group focus</option>
+					<option value="">All</option>
+					<option value="">Investors</option>
+					<option value="">Entrepeneurs</option>
+				</select>
+			</div>
+
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
+				<label>Focus Theme</label>
+				<input type="text" name="theme" placeholder="Please type your focus theme" />
+			</div>
+			
+		</div>
+		<div class="save-block">
+			<a href="#" class="button primary jsSave">Save Profile</a>
+		</div>
+	</div>
+	
+
+</form>
+<script type="text/javascript">
+	$(function(){
+		$("form").form({
+			callToAction : '.jsSave',
+			errorClass : 'error',
+			url : '/wp-admin/admin-ajax.php?action=bidx_register',
+			enablePlugins: ['date','location']
+		});
+	});
+</script>
+<script type="text/javascript" src="/wp-content/themes/plugins/form.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"></script>

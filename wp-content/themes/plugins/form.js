@@ -3,7 +3,7 @@
 	Description: Form validation plugin
 	Date: 26/03/2013
 */
-
+$(function(){
 (function($) {
 	
 	var globalOptions = null;
@@ -15,6 +15,7 @@
 		init : function(options) {
 			form = this;
 			form.data.elements = {};//collection of form elements
+			form.data.valid=false;
 			globalOptions = options;
 			//create form element objects of each formfield element in the object
 			this.find(".formfield").each(function(){
@@ -28,11 +29,12 @@
 
 			//set callToAction button
 			if(options.callToAction) {
-				var validated=true;
+				
 			  	//bind call to action button to click
 				$(options.callToAction).click(function(e){
 					e.preventDefault();
-					if(!methods.validateForm())
+					form.data.valid=methods.validateForm();
+					if(form.data.valid)
 						methods.submitForm();
 				});	
 				
@@ -58,6 +60,9 @@
 
 			
 		},
+		formValidated : function () {
+			return form.data.valid;
+		},
 		getElements : function() {
 			return form.data.elements;
 		},
@@ -68,7 +73,8 @@
 			
 			
 			if(globalOptions.url) {
-
+				if(globalOptions.beforeSubmit)
+					globalOptions.beforeSubmit();
 				//xhr post 
 				$.ajax({
 					type:'post',
@@ -100,14 +106,14 @@
 			//$(form).find(":input").trigger("change");
 			//now check if there are errors per field
 			var field=null;
-			var result = false;
+			var result = true;
 			for(field in form.data.elements) {
 
 				for(key in form.data.elements[field].validation) {
 					if(typeof form.data.elements[field].validation[key].error == "undefined")
 						form.data.elements[field].validate({data:form.data.elements[field]});
 					if(form.data.elements[field].validation[key].error) {
-						result = true;
+						result = false;
 						break;
 					}
 				}
@@ -146,13 +152,23 @@
 
  			return this.each(function(){
  				var $this = $(this);
+
 				var mapId="map-canvas-" + $this.attr("name");
 				var mapDimensions = "width:100%;height:250px;";
 				//set maps dimensions
 				if($this.data("map-dimensions"))
 					mapDimensions=$this.data("map-dimensions");
-				$this.after("<div id=\"" + mapId + "\" class=\"location-map\" style=\"" + mapDimensions + "\"></div>");
+				$this.after("<div id=\"" + mapId + "\" class=\"location-map jqHidden\" style=\"" + mapDimensions + "\"></div>");
+				//send handler to show map on focus
+				$this.focus(function(){
+ 					$("#" + mapId).fadeIn('fast', function(){
+				
+	 					google.maps.event.trigger(map,'resize');
+	 					map.setCenter(new google.maps.LatLng(-33.8688, 151.2195));
 
+ 					});
+
+ 				});
 				//set map init options
 				var mapOptions = {
 					center: new google.maps.LatLng(-33.8688, 151.2195),
@@ -174,7 +190,7 @@
 				var marker = new google.maps.Marker({
 					map: map
 				});
-
+				
 				google.maps.event.addListener(autocomplete, 'place_changed', function() {
 					marker.setVisible(false);
 					input.className = '';
@@ -265,8 +281,8 @@ var Validator = function () {
 
 					//check emailfield
 					if(validation.email) {
-						var s_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-						if (!s_regex.test(input.val())) {
+						var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+						if (!regex.test(input.val())) {
 							triggerError('email');
 							return true;
 						}
@@ -299,11 +315,8 @@ var Validator = function () {
 
 					//check numberfield
 					if(validation.url) {
-						//(([a-zA-Z0-9-])+.)
-						// /(^https?:\/\/)+(([a-zA-Z0-9-]))[.]/;					
-						//if(val().search("http://") == -1 && val().search("https://") == -1) {
-						var s_regex = /^https?:\/\/[a-zA-Z0-9-]+[.][a-zA-Z0-9]{2,4}/;
-						if (!s_regex.test(input.val())) {
+						var regex = /^https?:\/\/[a-zA-Z0-9-]+[.][a-zA-Z0-9]{2,6}/;
+						if (!regex.test(input.val())) {
 							el.triggerError('url');
 							return true;						
 						}
@@ -487,3 +500,5 @@ var Element = function (_formfield) {
 	}
 }
 Element.prototype = new Validator();
+
+});

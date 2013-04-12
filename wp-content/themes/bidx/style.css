@@ -144,6 +144,9 @@ a, a:hover, a:visited, a:link  {
 	padding:40px;
 }
 
+.jqHidden {
+	display:none;
+}
 
 /* End Global styles */
 
@@ -564,11 +567,19 @@ header .logo {
 }
 
 .save-block {
+	clear:left;
 	text-align: right;
 	padding:25px;
 
 
 }
+
+.create-group-loader {
+  background: url("assets/img/group-create-loader.gif") no-repeat scroll center 13px transparent;
+  height: 40px;
+  width: 169px;
+}
+
 /* end intro styles */
 
 

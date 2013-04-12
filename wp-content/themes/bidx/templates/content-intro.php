@@ -28,15 +28,15 @@
 						<div><!-- this div is necessary for container overflow issue IE7 -->
 							<div class="title">Start your free 3 week trial today</div>
 						
-							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory1"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}'>
+							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}'>
 								<input type="text" name="groupName" placeholder="Your group name" class="highlight">
 							</div>
 														
-							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory2"},"email":{"text":"This is not a valid e-mail address"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}'>
+							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email":{"text":"This is not a valid e-mail address"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}'>
 								<input type="email" name="username" placeholder="Your email address" >
 							</div>
 					
-							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory3"}}'>
+							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"}}'>
 								<input type="password" name="password" placeholder="Your password">
 								
 							</div>
@@ -66,7 +66,14 @@
 				    			callToAction : '.jsCreateGroup', // the selector for submit button
 				    			errorClass : 'error', //the css class used as error message
 				    			url : '/wp-admin/admin-ajax.php?action=bidx_request',
-				    			apiurl : 'groups'
+				    			apiurl : 'groups',
+				    			beforeSubmit : function(){
+									var $this=$(".jsCreateGroup");
+						    		$this.fadeOut("fast", function(){
+						    			$this.after("<div class=\"create-group-loader\"></div>");
+						    		});
+				    			}
+
 
 
 				    		});
@@ -77,19 +84,24 @@
 				    			
 				    			var startMargin = parseInt(fs.css("margin-top").replace("px",""));
  								//when change occurs count error messages for this fieldset an calculate margin correction
-					    		$(".fieldset :input").change(function(){
-					    			var removeMargin = 0;
+					    		$(".fieldset :input").change(correctMargins);
+					    		$(".jsCreateGroup").click(correctMargins);
+				    			function correctMargins() {
+				    				var removeMargin = 0;
 					    			//exclude
+
 									var fields = fs.find(":input").map(function(){
 					    				return $(this).attr("name")}).each(function(i,name){
 					    					var match = JSON.stringify($(".fieldset").form("getElement",name).validation).match(/"error":true/g);
+					    				//	console.log(match);
 					    					if(match != null)
 					    						removeMargin += 10;
 					    				});
 			    					fs.animate({
 										"margin-top":startMargin-removeMargin
 									}, 'fast');
-					    		});
+				    			}
+
 							})();
 						});				    		
 				    </script> 
