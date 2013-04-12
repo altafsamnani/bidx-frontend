@@ -4,7 +4,20 @@
 		<?php get_template_part('templates/page', 'header'); ?>
 		
 		<?php while (have_posts()) : the_post(); ?>
-		  <?php the_content(); ?>
+		  <?php
+       //the_content();
+      $bidxUname = urldecode($wp_query->query_vars['buname']);
+      $bidxGid   = urldecode($wp_query->query_vars['bgid']);
+      $bidxGroupName   = urldecode($wp_query->query_vars['bname']);
+      
+      $content = get_the_content( );
+      $content = apply_filters('the_content', $content);
+      $content = str_replace(']]>', ']]&gt;', $content);
+      $content = str_replace('[!EMAIL!]', $bidxUname, $content);
+      $content = str_replace('[!GROUPNAME!]', $bidxGroupName, $content);
+      echo $content;
+
+      ?>
 		  <?php wp_link_pages(array('before' => '<nav class="pagination">', 'after' => '</nav>')); ?>
 		<?php endwhile; ?>
 	</div>
