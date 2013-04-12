@@ -37,7 +37,7 @@
 			<h3>About your group</h3>
 			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
 				<label>Group Name</label>
-				<input type="text" name="businessGroupName"  placeholder="Please type your group name" />
+				<input type="text" name="businessGroupName" readonly="readonly" placeholder="Please type your group name" value="[!GROUPNAME!]"/>
 			</div>
 
 			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
@@ -143,7 +143,10 @@
 			callToAction : '.jsSave',
 			errorClass : 'error',
 			url : '/wp-admin/admin-ajax.php?action=bidx_register',
-			enablePlugins: ['date','location']
+			enablePlugins: ['date','location'],
+			beforeSubmit : function () {
+				document.location = "/group-creation-success/"
+			}
 		});
 	});
 </script>
