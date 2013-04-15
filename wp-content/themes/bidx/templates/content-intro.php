@@ -47,6 +47,11 @@
 							</div>
 						</div>
 					</form>
+					<div class="group-creation-progress">
+						<div class="text">Your group is being created</div>
+						<div class="loader"></div>
+						<div class="text sub">This might take a moment of your time</div>
+					</div>
 
 					<script type="text/javascript">
 
@@ -68,9 +73,9 @@
 				    			url : '/wp-admin/admin-ajax.php?action=bidx_request',
 				    			apiurl : 'groups',
 				    			beforeSubmit : function(){
-									var $this=$(".jsCreateGroup");
+									var $this=$(".fieldset");
 						    		$this.fadeOut("fast", function(){
-						    			$this.after("<div class=\"create-group-loader\"></div>");
+						    			$(".group-creation-progress").fadeIn('fast');
 						    		});
 				    			}
 

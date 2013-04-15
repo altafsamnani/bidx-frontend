@@ -3,7 +3,7 @@
 	Description: Form validation plugin
 	Date: 26/03/2013
 */
-$(function(){
+
 (function($) {
 	
 	var globalOptions = null;
@@ -97,9 +97,10 @@ $(function(){
 
 				});
 			}
-			else {
+			else if(form.attr("action")){
 				form.submit();
 			}
+			else alert("no url or form action defined");
 		},
 		validateForm : function(){
 			//first trigger validation check on all fields
@@ -501,4 +502,3 @@ var Element = function (_formfield) {
 }
 Element.prototype = new Validator();
 
-});

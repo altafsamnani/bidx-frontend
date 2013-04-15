@@ -11,3 +11,10 @@
 			</ul>
 		</div>
 </footer>
+<?php wp_footer(); ?><!-- this includes the script libraries defined in the lib/script file -->
+
+<script type="text/javascript">
+	//load all functions from queue
+	
+	$.each(q, function(index,f){$(f);});
+</script>

@@ -145,6 +145,10 @@ a, a:hover, a:visited, a:link  {
 }
 
 
+.jqHidden {
+	display:none;
+}
+
 /* End Global styles */
 
 /*******************************************************************************************
@@ -159,20 +163,30 @@ a, a:hover, a:visited, a:link  {
 		height:auto;
 		z-index:200;
 	}
-		
+		header .subheader {
+			margin :20px 0;
+		}
 		header .subheader .branding {
 			width:70%;
 			float: left;
-			height: 80px;
+			
+			
 		}
 		header .subheader .account-access {
 			width:30%;
 			text-align: right;
 			float:right;
+			
 		}
 
 		header .nav-wrapper {
 			background-color: #323232;
+			min-height: 30px;
+			margin-bottom:20px;
+		}
+
+		header .nav-wrapper nav ul {
+			margin-bottom: 0px;
 		}
 	
 	/************** GROUP DASHBARD *************************/
@@ -265,6 +279,24 @@ footer .sub-footer {
 	border-bottom: 1px solid #eaeaea;	
 }
 
+.block {
+	background-color: #f6f6f6;
+	border: 1px solid #eaeaea;
+	padding:25px;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.save-block {
+	clear:left;
+	text-align: right;
+	padding:25px;
+
+
+}
+
 /* end intro styles */
 
 
@@ -276,10 +308,11 @@ footer .sub-footer {
 *
 ********************************************************************************************/
 
-	form input, form select {
+
+	form input, form select, form textarea {
 		width: 100%;
 	}
-	input[type="text"], input[type="password"], input[type="email"], input[type="url"],select {
+	input[type="text"], input[type="password"], input[type="email"], input[type="url"],select , textarea {
 	    color: #333333;
 	    font-size: 16px;
 	    height: 55px;
@@ -291,12 +324,12 @@ footer .sub-footer {
 		box-sizing: border-box;
 		margin-bottom:0px;
 	}
-
-	.chris input, .chris select {
-		height:30px;
-		line-height: 30px;
-		padding:0px;
+	textarea {
+		padding-right:0px;
+		/*height:auto;*/
+		min-height: 100px;
 	}
+
 	select {
 		padding: 15px 20px;
 
@@ -306,7 +339,6 @@ footer .sub-footer {
 		font-weight: 700;
 		color: #9DA09C;
 	}
-	
 
 	.highlight {
 		box-shadow: 0 0 0 3px #DFDFDF inset !important;
@@ -342,6 +374,30 @@ footer .sub-footer {
 		text-align: left;
 	}
 
+	
+	.location-map {
+		margin-top:10px;
+		border:1px solid #777;
+	}
+
+	/*IE hacks*/
+	.lt-ie8 .formfield {
+		padding-right:42px;
+	}
+	 .lt-ie8 textarea {
+		padding-right:20px;
+		min-height: 100px;
+	}
+	.lt-ie8 .ajaxwrapper .ajaxloader {
+		right:-30px;
+	}
+	.lt-ie8 .ie8-padding-correction {
+		padding-right:0px;
+	}
+
+	.lt-ie8 .span8 {
+		width:55%;
+	}
 /* 
 	fonts 
 */

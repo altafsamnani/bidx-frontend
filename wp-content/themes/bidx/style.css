@@ -574,11 +574,30 @@ header .logo {
 
 }
 
-.create-group-loader {
-  background: url("assets/img/group-create-loader.gif") no-repeat scroll center 13px transparent;
-  height: 40px;
-  width: 169px;
+.group-creation-progress {
+	text-align: center;
+	width: 100%;
+	display: none;
 }
+	.group-creation-progress .loader{
+		background: url("assets/img/group-creation-progress.gif") no-repeat scroll center center transparent;
+		width: 100px;
+		height:100px;
+		margin: 0px auto;
+	}
+	.group-creation-progress div.text{
+		margin-top:100px;
+		color: white;
+		font-size:16px;
+		colr:#E4E3E3;
+		line-height: 40px;
+		font-weight: bold
+	}
+	.group-creation-progress div.text.sub {
+		margin-top:0px;
+		font-weight: normal;
+		font-size: 12px;
+	}
 
 /* end intro styles */
 
