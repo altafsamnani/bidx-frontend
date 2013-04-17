@@ -15,3 +15,4 @@ require_once locate_template('/lib/htaccess.php');        // HTML5 Boilerplate .
 require_once locate_template('/lib/widgets.php');         // Sidebars and widgets
 require_once locate_template('/lib/scripts.php');         // Scripts and stylesheets
 require_once locate_template('/lib/custom.php');          // Custom functions
+require_once locate_template('../functions/form.php'); //custom form json to html converter

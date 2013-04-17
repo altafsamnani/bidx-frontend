@@ -355,6 +355,24 @@ footer .sub-footer {
 		
 	}
 
+
+	.formfield .ajaxloader, .formfield-error .ajaxloader {
+		background: url("assets/img/ajax-loader.gif") no-repeat top right transparent;
+		height:24px;
+		margin-top:-12px; /*margin-top should always be half the height of the ajaxloader */
+		margin-right:10px;
+		position: absolute;
+		top:50%;
+		display:block;
+		right: 0;
+		width: 100%;
+		
+
+	}
+	.formfield .ajaxwrapper, .formfield-error .ajaxwrapper {
+		position:relative;
+	}
+
 	.buttonwrapper {
 		margin:20px 0;
 	}

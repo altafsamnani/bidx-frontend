@@ -28,12 +28,16 @@
 						<div><!-- this div is necessary for container overflow issue IE7 -->
 							<div class="title">Start your free 3 week trial today</div>
 						
-							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}'>
-								<input type="text" name="groupName" placeholder="Your group name" class="highlight">
+							<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}]}'>
+							<!-- 	  <div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}'> -->
+								<input type="text" name="groupName" placeholder="Your group name" class="highlight" value="">
 							</div>
 														
-							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email":{"text":"This is not a valid e-mail address"},"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}'>
-								<input type="email" name="username" placeholder="Your email address" >
+							<!-- <div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"}}'> -->
+							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
+								<!-- <div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'> -->
+								
+								<input type="email" name="username" placeholder="Your email address">
 							</div>
 					
 							<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"}}'>
@@ -67,6 +71,7 @@
 									fields: [{field:fieldname,error:errormessage}[,]]
 								}
 				    		*/
+
 				    		$(".fieldset").form({
 				    			callToAction : '.jsCreateGroup', // the selector for submit button
 				    			errorClass : 'error', //the css class used as error message

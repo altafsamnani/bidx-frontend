@@ -663,7 +663,7 @@ header .logo {
 		
 	}
 
-	.formfield .ajaxloader {
+	.formfield .ajaxloader, .formfield-error .ajaxloader {
 		background: url("assets/img/ajax-loader.gif") no-repeat top right transparent;
 		height:24px;
 		margin-top:-12px; /*margin-top should always be half the height of the ajaxloader */
@@ -676,7 +676,7 @@ header .logo {
 		
 
 	}
-	.formfield .ajaxwrapper {
+	.formfield .ajaxwrapper, .formfield-error .ajaxwrapper {
 		position:relative;
 	}
 

@@ -2,6 +2,29 @@
 	Author: Mattijs Spierings
 	Description: Form validation plugin
 	Date: 26/03/2013
+
+	Description:
+
+	Example of validation rule for a formfield.
+	Add this to the <DIV> with the formfield class as attribute data-validation (without spaces):
+	{
+	    "required": {
+	        "text": "This fields is mandatory"
+	    },
+	    "typecheck": [
+	        {
+	            "email": {
+	                "text": "This is not a valid e-mail address"
+	            }
+	        }, {
+	            "custom": {
+	                "url": "/wp-admin/admin-ajax.php?action=bidx_request",
+	                "apiurl": "members/validateUsername",
+	                "apimethod": "get"
+	            }
+	        }
+	    ]
+	}
 */
 
 (function($) {
@@ -101,23 +124,22 @@
 				form.submit();
 			}
 			else alert("no url or form action defined");
+			
 		},
 		validateForm : function(){
-			//first trigger validation check on all fields
-			//$(form).find(":input").trigger("change");
 			//now check if there are errors per field
-			var field=null;
-			var result = true;
+			var field=null, result = true;
 			for(field in form.data.elements) {
-
-				for(key in form.data.elements[field].validation) {
-					if(typeof form.data.elements[field].validation[key].error == "undefined")
+				if(!form.data.elements[field].validated) {
+					//if value is NULL field has not been validated yet
+					if(form.data.elements[field].validated == null) {
 						form.data.elements[field].validate({data:form.data.elements[field]});
-					if(form.data.elements[field].validation[key].error) {
-						result = false;
-						break;
+						result = result && form.data.elements[field].validated
 					}
+					else
+						result = result && form.data.elements[field].validated
 				}
+
 			}
 			return result;
 		}
@@ -224,6 +246,18 @@
 					marker.setIcon(image);
 					marker.setPosition(place.geometry.location);
 					marker.setVisible(true);
+
+					// Add circle overlay and bind to marker
+					var circle = new google.maps.Circle({
+					  map: map,
+					  radius: 1693,    // 10 miles in metres
+					  fillColor: '#69E853',
+					    editable:true,
+					  center_changed: function(){
+					  	console.log(this.getCenter());
+					  }
+					});
+					circle.bindTo('center', marker, 'position');
 				});[]
 			});
 		},
@@ -262,7 +296,7 @@
 
 
 /*==============================================================================================
-										VALIDATOR CLASS
+										VALIDATOR OBJECT
 ===============================================================================================*/
 
 var Validator = function () {
@@ -270,151 +304,180 @@ var Validator = function () {
 	this.validate = function (e) {
 		var el = e.data;
 		var input = $(this);
-		
+
+		el.validated=false;
+
 		if(el.validation) {
 			with(el) {
 				//required has highest priority so this will be tested first
-				if(validation.required && (input.val() == "" || type == "checkbox" && !input.is(":checked"))) {
-					triggerError('required');
+				if(validation.required) {
+					//chcek if value is empty
+					if(input.val() == "" || (type == "checkbox" && !input.is(":checked"))) {
+						var rule = validation.required;
+						triggerError({"required":rule},'required');
+					}
+					// not empty 
+					else {
+						//there is no typecheck
+						if(!doTypeCheck()) {
+							//if there was a required error, remove it
+							if(validation.required.error) {
+								var rule = validation.required;
+								removeError({"required":rule},'required');
+							}
+							//else set element as validated
+							else
+								el.validated=true;
+						}
+					}
 				}
-				//if not required we need to test for valid format
+				//not required
 				else {
+					doTypeCheck();
+				}
+			}
+		}
 
-					//check emailfield
-					if(validation.email) {
+		/*
+			This function does the type checking of the formfield input
+		*/
+		function doTypeCheck (){
+			if(el.validation.typecheck && el.validation.typecheck.length > 0) {
+	
+				//now loop through typechecks
+				el.validation.typecheck.every(function(rule, index, array){
+
+					//email validation
+					if(rule.email) {
 						var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-						if (!regex.test(input.val())) {
-							triggerError('email');
-							return true;
-						}
-						else {
-							removeError('email');
-						}
+						if (el.input.val() != "" && !regex.test(el.input.val())) 
+							return el.triggerError(rule,'email');
+						else 
+							return el.removeError(rule,'email');
 					}
+
 					//check numberfield
-					if(validation.int) {
-						if(isNaN(val()) || input.val() == 0) {
-							triggerError('int');
-							return true;						
+					if(rule.int) {
+						if(el.input.val() != "" && (isNaN(el.input.val()) || el.input.val() == 0)) {
+							return el.triggerError(rule,'int');
 						}
 						else {
-							removeError('int');
+							return el.removeError(rule,'int');
 						}
 
 					}
+
 					//check datefield
-					if(validation.date) {
+					if(rule.date) {
 						//no validation defined yet, because date uses the Required validator only. We can add specific validation later
 						if(1==0) {
-							triggerError('date');
-							return true;
+							return el.triggerError(rule,'date');
 						}
 						else {
-							removeError('date');
+							return el.removeError(rule,'date');
 						}
 					}	
 
 					//check numberfield
-					if(validation.url) {
+					if(rule.url) {
 						var regex = /^https?:\/\/[a-zA-Z0-9-]+[.][a-zA-Z0-9]{2,6}/;
-						if (!regex.test(input.val())) {
-							el.triggerError('url');
-							return true;						
+						if (el.input.val() != "" && !regex.test(input.val())) {
+							return el.triggerError(rule,'url');
 						}
 						else {
-							removeError('url');
+							return el.removeError(rule,'url');
 						}
 
 					}		
+					
+					//password strength /form rule
+					if(rule.password) {
+						//not defined yet
+						return true;
+					}
 
 					//password match rule
-					if(validation.passwordmatch) {
+					if(rule.passwordmatch) {
 						var field = el.id.split("_")[0];
 						var field1 = $("input[name='" + field + "']");
 						var field2 = $("input[name='" + field + "_repeat']");
 						
 						//find fields with password. This code expects that there is only one form active with one pair of passsword fields
 						if((field1.val() !=  "" && field2.val() != "") && field1.val() != field2.val()) {
-							triggerError('passwordmatch');
-							return true;
+							return el.triggerError(rule,'passwordmatch');
 						}
 						else
-							removeError('passwordmatch');
-					}
+							return el.removeError(rule,'passwordmatch');
+					}					
 
-					//custom valiation rule
-					if(validation.custom) {
-						var result = true;
-						toggleAjaxLoader();
+					//custom validation rule
+					if(rule.custom) {
+						//if value is empty, kick out of custom validation
+						if(el.input.val() == "")
+							return true;
+						el.validated=false;//set validation to false
+						el.toggleAjaxLoader();
 						//create datapackage
 						var data = {};
-						data[el.name]=input.val();
-						data["apiurl"]=validation.custom.apiurl;
-						if(validation.custom.apimethod)
-							data["apimethod"]=validation.custom.apimethod;
+						data[el.name]=el.input.val();
+						data["apiurl"]=rule.custom.apiurl;
+						if(rule.custom.apimethod)
+							data["apimethod"]=rule.custom.apimethod;
 						//post
 						$.ajax({
 							type:'post',
-							url: validation.custom.url,
+							url: rule.custom.url,
 							data : data,
 							dataType:'json',
 							async: true,
 							success: function(data){
-								//console.log(data)
 								el.toggleAjaxLoader();
 								if(data.status == "ERROR") {
-									el.validation.custom.text=data.text;
-									el.triggerError('custom');
+									rule.custom.text=data.text;
+									return el.triggerError(rule,'custom');
 								}
+								else
+									return el.removeError(rule,'custom');
 							},
 							error : function(a,b,c){
-								console.log(a);
-							el.triggerError('custom');
+								return el.triggerError(rule,'custom');
 							}
-
 						});
-
-						if(!result) {
-							triggerError('custom');
-							return true;
-						}
-						else
-							removeError('custom');
+						return false; // not sure this one is necessary
 					}
-				
-					//remove error if none of the above checks are applicable
-					removeError('required');
-				}
-
+				});
+				return true;
 			}
+			else 
+				return false;
 		}
-
 	};
 	
 	/**
 	 * Trigger error function. Uses the 'error' class to search for an existing error message. 
 	 * If it exists, text will be updated. Otherwise error message will slidedown
 	 **/
-	this.triggerError = function (key) {
-		
-		
-		if(this.validation[key])
+	this.triggerError = function (rule,key) {
+		if(rule[key])
 		{
-			//mark error
-			this.validation[key].error = true;
+			this.validated=false;//set formelement to not validated
+			//flag error
+			rule[key].error = true;
 			if(this.formfield.find("." + this.errorClass).length == 0) {
 				//create error div
-				var errorfield=$("<div class=\"" + this.errorClass + " " + (this.addedErrorClass ? this.addedErrorClass:"") +  "\" style=\"display: none;\">" + this.validation[key].text + "</div>");
+				var errorfield=$("<div class=\"" + this.errorClass + " " + (this.addedErrorClass ? this.addedErrorClass:"") +  "\" style=\"display: none;\">" + rule[key].text + "</div>");
 				this.formfield.append(errorfield);
 				//show error
 				
 				this.formfield.switchClass("formfield","formfield-error", 'fast');
 				errorfield.slideDown('fast');
+
 			}
 			else {
 				//error already displayed. Update error message
-				this.formfield.find("." + this.errorClass).text(this.validation[key].text);
+				this.formfield.find("." + this.errorClass).text(rule[key].text);
 			}
+			return false;
 		}
 		else alert("validation key \'" + key + "\' does not exist in formfield definition for the element \'" + this.id +  "\'");
 		
@@ -423,14 +486,15 @@ var Validator = function () {
 	/**
 	 * Remove error function. 
 	 **/
-	this.removeError = function (key) {
+	this.removeError = function (rule, key) {
 		//unmark error
-		if(this.validation[key])
+		if(rule[key])
 		{
-
-			if(this.validation[key].error)
-				this.validation[key].error = false;
-
+			
+			//unflag error
+			if(rule[key].error)
+				rule[key].error = false;
+			this.validated=true;//set formelement to validated
 			this.formfield.removeClass("hasError");	
 			this.formfield.switchClass("formfield-error","formfield", 'fast');
 			var el = this.formfield.find("." + this.errorClass);
@@ -438,6 +502,7 @@ var Validator = function () {
 			el.slideUp('fast',function(){
 				el.remove();
 			});
+			return true;
 		}
 		else alert("validation key \'" + key + "\' does not exist in formfield definition for the element \'" + this.id +  "\'");
 	}
@@ -457,6 +522,7 @@ var Validator = function () {
 			this.ajaxloader = true;
 		}
 		else {
+
 			$(this.input).unwrap().next().remove();
 			this.ajaxloader = false;
 		}
@@ -476,6 +542,7 @@ var Element = function (_formfield) {
 	this.type = "";
 	this.input = null;
 	this.errorClass = "";
+	this.validated = null;//initital state. This means that fields has not been validated yet
 	
 
 	this.init = function() {
@@ -502,3 +569,31 @@ var Element = function (_formfield) {
 }
 Element.prototype = new Validator();
 
+/*==============================================================================================
+										HELPER CLASSES
+===============================================================================================*/
+
+if (!Array.prototype.every)
+{
+  Array.prototype.every = function(fun /*, thisp */)
+  {
+    "use strict";
+ 
+    if (this == null)
+      throw new TypeError();
+ 
+    var t = Object(this);
+    var len = t.length >>> 0;
+    if (typeof fun != "function")
+      throw new TypeError();
+ 
+    var thisp = arguments[1];
+    for (var i = 0; i < len; i++)
+    {
+      if (i in t && !fun.call(thisp, t[i], i, t))
+        return false;
+    }
+ 
+    return true;
+  };
+}
