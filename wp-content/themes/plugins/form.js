@@ -94,7 +94,6 @@
 		},
 		submitForm : function() {
 			
-			
 			if(globalOptions.url) {
 				if(globalOptions.beforeSubmit)
 					globalOptions.beforeSubmit();
@@ -550,11 +549,16 @@ var Element = function (_formfield) {
 		this.name = this.input.attr("name");
 		this.type = this.input.prop("tagName").toLowerCase();
 		
+		//if formelement requires validation
 		if(this.formfield.data("validation")) {
 			$.extend(this,val = {
 					validation: this.formfield.data("validation")
 			});
 		}
+		//no validation, set to validated
+		else
+			this.validated=true;
+
 		this.input.bind("change",this,this.validate);
 	
 		/*Correct IE specific issues that can not be done with css only*/
