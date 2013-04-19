@@ -77,6 +77,7 @@
 				    			errorClass : 'error', //the css class used as error message
 				    			url : '/wp-admin/admin-ajax.php?action=bidx_request',
 				    			apiurl : 'groups',
+				    			apimethod : 'post',
 				    			beforeSubmit : function(){
 									var $this=$(".fieldset");
 						    		$this.fadeOut("fast", function(){

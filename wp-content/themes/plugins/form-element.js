@@ -12,34 +12,34 @@ var Validator = function () {
 		el.validated=false;
 
 		if(el.validation) {
-			with(el) {
-				//required has highest priority so this will be tested first
-				if(validation.required) {
-					//chcek if value is empty
-					if(input.val() == "" || (type == "checkbox" && !input.is(":checked"))) {
-						var rule = validation.required;
-						triggerError({"required":rule},'required');
-					}
-					// not empty 
-					else {
-						//there is no typecheck
-						if(!doTypeCheck()) {
-							//if there was a required error, remove it
-							if(validation.required.error) {
-								var rule = validation.required;
-								removeError({"required":rule},'required');
-							}
-							//else set element as validated
-							else
-								el.validated=true;
-						}
-					}
+			
+			//required has highest priority so this will be tested first
+			if(el.validation.required) {
+				//chcek if value is empty
+				if(input.val() == "" || (el.type == "checkbox" && !input.is(":checked"))) {
+					var rule = el.validation.required;
+					el.triggerError({"required":rule},'required');
 				}
-				//not required
+				// not empty 
 				else {
-					doTypeCheck();
+					//there is no typecheck
+					if(!doTypeCheck()) {
+						//if there was a required error, remove it
+						if(el.validation.required.error) {
+							var rule = el.validation.required;
+							el.removeError({"required":rule},'required');
+						}
+						//else set element as validated
+						else
+							el.validated=true;
+					}
 				}
 			}
+			//not required
+			else {
+				doTypeCheck();
+			}
+		
 		}
 
 		/*
@@ -54,10 +54,12 @@ var Validator = function () {
 					//email validation
 					if(rule.email) {
 						var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-						if (el.input.val() != "" && !regex.test(el.input.val())) 
+						if (el.input.val() != "" && !regex.test(el.input.val())) {
 							return el.triggerError(rule,'email');
-						else 
+						}
+						else {
 							return el.removeError(rule,'email');
+						}
 					}
 
 					//check numberfield
@@ -145,6 +147,7 @@ var Validator = function () {
 							},
 							error : function(a,b,c){
 								el.toggleAjaxLoader();
+								rule.custom.text="Something went wrong";
 								return el.triggerError(rule,'custom');
 							}
 						});
@@ -153,8 +156,9 @@ var Validator = function () {
 				});
 				return true;
 			}
-			else 
+			else {
 				return false;
+			}
 		}
 	};
 	
@@ -214,10 +218,10 @@ var Validator = function () {
 	
 	//* !!!! this function need also to reset the error boolean
 	this.reset = function () {
-		with($(this)) {
-			parent().find(".error").remove();
-			val("");
-		}					
+		var $this=$(this);
+		$this.parent().find(".error").remove();
+		$this.val("");
+							
 	};
 
 	this.toggleAjaxLoader = function () {

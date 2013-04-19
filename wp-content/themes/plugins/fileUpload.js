@@ -27,7 +27,10 @@
 		},
 		uploadFile : function(){
 			var $this=$(this);
-			console.log(this.options);
+			
+			console.log(window.FormData === undefined );
+
+
 			var formData = new FormData();
 			formData.append($this.attr("name"),this.files[0]);
 			if(this.options.addFields) {

@@ -31,7 +31,8 @@
 (function($) {
 	
 	var globalOptions = {
-		path: "/wp-content/themes/plugins/"
+		path: "/wp-content/themes/plugins/",
+		apimethod : "post"
 	};
 	var form = null;
 	var methods = {
@@ -134,7 +135,7 @@
 					type:'post',
 					url: globalOptions.url,
 					dataType:'json',
-					data: $(form).serialize() + "&apiurl=" + globalOptions.apiurl,
+					data: $(form).serialize() + "&apiurl=" + globalOptions.apiurl +  "&apimethod=" + globalOptions.apimethod,
 					async: true,
 					success: function(data){
 						if(data) {
