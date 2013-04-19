@@ -87,12 +87,9 @@ function call_bidx_service($urlservice, $body, $method = 'POST') {
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
     'headers' => $headers,
-   // 'cookies' => $cookieArr
+    'cookies' => $cookieArr
       ));
-  
-  if(count($cookieArr)){
-    $result['cookies'] = $cookieArr;
-  }
+
 
   /* Set Cookies if Exist */  
 
