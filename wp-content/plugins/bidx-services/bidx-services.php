@@ -50,7 +50,8 @@ function call_bidx_service($urlservice, $body, $method = 'POST') {
   $bidx_get_params = "";
   $cookie_string = "";
   $sendDomain = (WP_DEVELOPMENT == FALSE) ? 'bidx.dev' : 'bidx.net';
-  //1 Decide method to use
+  $cookieArr =  array();
+//1 Decide method to use
   if ($bidxMethod == 'GET') {
     $bidx_get_params = '&' . http_build_query($body);
     $body = NULL;
