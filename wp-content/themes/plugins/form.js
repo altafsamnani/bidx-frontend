@@ -97,7 +97,8 @@
 			if(globalOptions.url) {
 				if(globalOptions.beforeSubmit)
 					globalOptions.beforeSubmit();
-				//xhr post 
+				//xhr post
+            
 				$.ajax({
 					type:'post',
 					url: globalOptions.url,
@@ -107,9 +108,24 @@
 					success: function(data){
 						if(data) {
 							if(data.status == 'OK') {
-								if(data.redirect) {
-									document.location=data.redirect;
-								}
+								if(data.submit) {
+
+                                                                        var dynamicdata = data.data;
+                                                                        var dyninput ;
+                                                                        /* Parsing Bidx Variables and adding them as a hidden field to post to the new form*/
+                                                                        jQuery.each(dynamicdata, function(apikey, val) {
+                                                                            /* it doesnt pass name variable so rename it to gname and proceed */
+                                                                           apikey = (apikey=='name') ? 'dynname': apikey;
+                                                                           dyninput = '<input type="hidden" name="'+apikey+'" id="'+apikey+'" value="'+val+'" />';
+                                                                           $(form).append(dyninput);                                                                           
+                                                                        });
+									/*document.location=data.redirect; */
+                                                                         $(form).attr('action', data.submit);
+                                                                         $(form).attr('method', 'POST');
+                                                                         $(form).submit();
+								} else if (data.redirect) {
+                                                                    document.location=data.redirect;
+                                                                }
 							}
 						}
 					},

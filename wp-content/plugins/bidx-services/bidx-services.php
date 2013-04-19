@@ -46,25 +46,59 @@ function call_bidx_service($urlservice, $body, $method = 'POST') {
 
   $authUsername = 'bidx'; // Bidx Auth login
   $authPassword = 'gobidx'; // Bidx Auth password
-
+  $bidxMethod = strtoupper($method);
   $bidx_get_params = "";
-
-  if (strtolower($method) == 'get') {
+  $cookie_string = "";
+  $sendDomain = (WP_DEVELOPMENT == FALSE) ? 'bidx.dev' : 'bidx.net';
+  //1 Decide method to use
+  if ($bidxMethod == 'GET') {
     $bidx_get_params = '&' . http_build_query($body);
     $body = NULL;
   }
+  else if ($bidxMethod == 'PUT') {
+    $bidxMethod = 'PUT';
+  }
+  else {
+    $bidxMethod = 'POST';
+  }
 
+  //2 Retrieve Bidx Cookies and send back to api to check
+  $cookieInfo = $_COOKIE;
+  foreach ($_COOKIE as $cookieKey => $cookieValue) {
+    if (preg_match("/^bidx/i", $cookieKey)) {
+   
+   // $cookie_string .= $cookieKey.'="'.$cookieValue.'"; ';
+      $cookieArr[] = new WP_Http_Cookie(array('name'=>$cookieKey,'value'=>$cookieValue,'domain'=>$sendDomain));
+    }
+  }
+  //$cookie_string = 'bidx-auth-test='.urlencode($_COOKIE['bidx-auth-test']).'; ';
+  //Remove stray delimiters
+  //$cookie_string = trim($cookie_string, '; ');
+
+ // $cookie_string = 'bidx-auth-test'."=".$_COOKIE['bidx-auth-test'].";";
   $url = 'http://test.bidx.net/api/v1/' . $urlservice . '?groupKey=bidxTestGroupKey&csrf=false' . $bidx_get_params;
 
-  $headers = array('Authorization' => 'Basic ' . base64_encode("$authUsername:$authPassword"));
+  $headers = array('Authorization' => 'Basic ' . base64_encode("$authUsername:$authPassword"),
+   // 'Cookie' => $cookie_string
+   );
   $request = new WP_Http;
-  $bidxMethod = (strtolower($method) == 'get') ? 'GET' : 'POST';
 
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
-    'headers' => $headers
+    'headers' => $headers,
+    'cookies' => $cookieArr
       ));
 
+  /* Set Cookies if Exist */  
+
+    $cookies = $result['cookies'];
+    if(count($cookies)) {
+      foreach ($cookies as $bidxAuthCookie) {
+      $cookieDomain = (WP_DEVELOPMENT == TRUE) ? 'bidx.dev' : $bidxAuthCookie->domain;
+      setcookie($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
+    }
+   }
+  
   return $result;
 }
 
@@ -286,15 +320,32 @@ function get_redirect($url) {
  * @author Altaf Samnani
  * @version 1.0
  *
+ * Add timeout for Bidx Services
+ *
+ * @param bool $echo
+ */
+function bidx_request_timeout_time($time) {
+  $time = 50; //new number of seconds
+
+  return $time;
+}
+
+add_filter('http_request_timeout', 'bidx_request_timeout_time');
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
  * Check Bidx Service Response
  *
  * @param bool $echo
  */
 function bidx_wordpress_post_action($result, $url, $body) {
+
   $requestData = json_decode($result['body']);
   $httpCode = $result['response']['code'];
   $redirectUrl = NULL;
-  
+
   //Check the Http response and decide the status of request whether its error or ok
 
   if ($httpCode >= 200 && $httpCode < 300) {
@@ -311,7 +362,6 @@ function bidx_wordpress_post_action($result, $url, $body) {
   //Write logic what If error and what if its ok (ex Redirect)
   switch ($url) {
     case 'groups' :
-    case 'members' :
 
       //Delete the wordpress group site if Bidx says its Error
       global $current_site;
@@ -328,14 +378,17 @@ function bidx_wordpress_post_action($result, $url, $body) {
         }
       }
       else {
-        $domain = $body['response']['domain'];
-        $requestData->redirect = 'http://'.$domain.'/registration';
 
+        $domain = $body['response']['domain'];
+        $domain = 'site1.bidx.dev';
+        //$qparam = base64_encode('name='.$requestData->data->name.'&gid='.$requestData->data->currentGroupId.'&uname='.$requestData->data->username);
+        // $requestData->redirect = 'http://'.$domain.'/registration?bname='.$requestData->data->name.'&bgid='.$requestData->data->currentGroupId.'&buname='.$requestData->data->username;
+        $requestData->submit = 'http://' . $domain . '/registration/';
       }
 
       break;
+    default :
   }
-
   return $requestData;
 }
 
@@ -389,11 +442,12 @@ Name: %3$s'), $current_user->user_login, get_site_url($id), stripslashes($title)
     }
   }
 
-  $siteCreation = array('status'  => $status,
-                        'text'    => $text,
-                        'site_id' => $id,
-                        'user_id' => $user_id,
-                        'domain'  => $newdomain);
+  $siteCreation = array('status' => $status,
+    'text' => $text,
+    'site_id' => $id,
+    'user_id' => $user_id,
+    'domain' => $newdomain,
+    'subdomain' => $groupName);
   return $siteCreation;
 }
 
@@ -405,14 +459,15 @@ Name: %3$s'), $current_user->user_login, get_site_url($id), stripslashes($title)
  *
  * @param String $url
  */
-function bidx_wordpress_pre_action($url) {
+function bidx_wordpress_pre_action($url = 'default') {
+
+  $params = $_POST;
+
 
   switch ($url) {
 
     case 'groups' :
-      $params = array('username' => $_POST['username'],
-        'name' => $_POST['groupName'],
-        'password' => $_POST['password']);
+      $params['name'] = $_POST['groupName'];
 
       //Create Wordpress group.bidx.net website
       $wp_site = create_bidx_wp_site($params['name'], $params['username']);
@@ -420,17 +475,37 @@ function bidx_wordpress_pre_action($url) {
         'text' => $wp_site['text'],
         'site_id' => $wp_site['site_id'],
         'user_id' => $wp_site['user_id'],
-        'domain'  => $wp_site['domain']);
+        'domain' => $wp_site['domain']
+      );
+      $params['domain'] = $wp_site['group_domain'];
+      break;
+
+    case 'entitygroup' :
+      $params['bidxEntityType'] = 'bidxBusinessGroup';
+      $params['businessGroupName'] = 'true';
+      $params['bidxEntityId'] = $params['groupProfileId'];
+      break;
+
+    case 'entityprofile':
+      $params['bidxEntityType'] = 'bidxMemberProfile';
+      $params['isMember'] = 'true';
+      $params['bidxEntityId'] = $params['creatorProfileId'];
       break;
 
     default:
-      $params = $_POST;
       $response['status'] = 'ok';
       break;
   }
 
+  //Unset this variables this doesnt need to be send
   unset($params['apiurl']);
   unset($params['apimethod']);
+
+  //Replace dynamice dynname to name as it is created thrugh form.js on fly as a hidden field so js doesnt accept name=name
+  if (isset($params['dynname'])) {
+    $params['name'] = $params['dynname'];
+    unset($params['dynname']);
+  }
 
   $data['params'] = $params;
   $data['response'] = $response;
@@ -445,11 +520,10 @@ function bidx_wordpress_pre_action($url) {
  *
  * @param bool $echo
  */
-
 add_action('wp_ajax_nopriv_bidx_request', 'ajax_submit_action'); // ajax for logged in users
 
 function ajax_submit_action() {
- 
+
   $url = $_POST['apiurl'];
   $method = $_POST['apimethod'];
 
@@ -476,6 +550,27 @@ function ajax_submit_action() {
   die(); // stop executing script
 }
 
+function bidx_register_response($requestEntityMember, $requestEntityGroup, $requestGroupData) {
+
+  $requestData = NULL;
+
+  if ($requestEntityMember->status == 'ERROR') {
+    $requestData = $requestEntityMember;
+  }
+  else if ($requestEntityGroup->status == 'ERROR') {
+    $requestData = $requestEntityGroup;
+  }
+  else if ($requestGroupData->status == 'ERROR') {
+    $requestData = $requestGroupData;
+  }
+  else {
+    $requestData->status = 'OK';
+    $requestData->redirect = '/group-creation-success';
+    //Logs the user in and show the group dashboard
+  }
+
+  return $requestData;
+}
 
 /**
  * @author Altaf Samnani
@@ -485,41 +580,43 @@ function ajax_submit_action() {
  *
  * @param bool $echo
  */
-
-add_action('wp_ajax_nopriv_bidx_register', 'ajax_register_action'); 
+add_action('wp_ajax_nopriv_bidx_register', 'ajax_register_action');
 
 function ajax_register_action() {
 
   $url = $_POST['apiurl'];
   $method = $_POST['apimethod'];
 
-  //1 Do wordpress stuff and get the params
-  $body = bidx_wordpress_pre_action($url);
+  //2 Edit Member Entity
+  $bodyProfile = bidx_wordpress_pre_action('entityprofile');
+  $paramsProfile = $bodyProfile['params'];
 
-  if ($body['response']['status'] == 'ok') {
+  $resultEntityMember = call_bidx_service('entity/' . $paramsProfile['creatorProfileId'], $paramsProfile, 'PUT');
+  $requestEntityMember = bidx_wordpress_post_action($resultEntityMember, 'groupmembers', $bodyProfile);
 
-    //2 Talk to Bidx Api and get the response
-    $params = $body['params'];
-    $result = call_bidx_service($url, $params, $method);
 
-    //3 Check validation error and include redirect logic
-    $requestData = bidx_wordpress_post_action($result, $url, $body);
+  //2 Edit Group Entity
+  $bodyGroup = bidx_wordpress_pre_action('entitygroup');
+  $paramsGroup = $bodyGroup['params'];
 
-    
-  }
-  else {
-    $requestData->status = $body['response']['status'];
-    $requestData->text = $body['response']['text'];
-  }
+  $resultEntityGroup = call_bidx_service('entity/' . $paramsGroup['groupProfileId'], $paramsGroup, 'PUT');
+  $requestEntityGroup = bidx_wordpress_post_action($resultEntityGroup, 'groupmembers', $bodyGroup);
+
+  //3 Edit Group Data
+  $bodyGrpData = bidx_wordpress_pre_action();
+  $paramsGrpData = $bodyGrpData['params'];
+  $resultGrpData = call_bidx_service('groups/' . $paramsGrpData['id'], $paramsGrpData, 'PUT');
+  $requestGrpData = bidx_wordpress_post_action($resultGrpData, 'groupmembers', $bodyGrpData);
+
+  //exit;
+  $requestData = bidx_register_response($requestEntityMember, $requestEntityGroup, $requestGrpData);
+
 
   $jsonData = json_encode($requestData);
   echo $jsonData;
 
   die(); // stop executing script
 }
-
-
-
 
 /* Assign theme/pages/metadata when site is created
  * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
@@ -537,17 +634,22 @@ function ajax_register_action() {
 add_action('wpmu_new_blog', 'assign_bidxgroup_theme_page');
 
 function assign_bidxgroup_theme_page($blog_id) {
-  switch_to_blog($blog_id);
+  global $wpdb;
 
-// Do all the work
+  //Login to the site
+  switch_to_blog($blog_id);
+  // Action 1 Switch theme to assign
   switch_theme('bidx-group');
-  global $wpdb;  
-  
-  $wpws_values = array('sc_posts'   => 1,
-                       'sc_widgets' => 1,
-                       'on_error'   => 'error_hide');
-  update_option( 'wpws_options',$wpws_values );
-// Add Default Bidx Pages to render
+
+  //Action 2 Default Enable WP Scrapper Plugin
+  $wpws_values = array('sc_posts' => 1, 'sc_widgets' => 1, 'on_error' => 'error_hide');
+
+  update_option('wpws_options', $wpws_values);
+
+  //Action 3 Enable Plugin Bidx Api Services
+  $result = activate_plugin('bidx-services/bidx-services.php');
+
+  //Action 4 Add Default Bidx Pages to render
   $querystr = "SELECT wposts.*,wpostmeta2.meta_value as template_value
     FROM wp_posts AS wposts
     INNER JOIN wp_postmeta AS wpostmeta ON wpostmeta.post_id = wposts.ID
@@ -555,9 +657,9 @@ function assign_bidxgroup_theme_page($blog_id) {
     WHERE wpostmeta.meta_key = 'page_group'
     AND wpostmeta.meta_value = '1'";
 
- $pages_to_create = $wpdb->get_results($querystr, OBJECT);
- 
- foreach ($pages_to_create as $page) {
+  $pages_to_create = $wpdb->get_results($querystr, OBJECT);
+
+  foreach ($pages_to_create as $page) {
 
     unset($page->ID);
     unset($page->guid);
@@ -565,8 +667,6 @@ function assign_bidxgroup_theme_page($blog_id) {
     $post_id = wp_insert_post($page);
     update_post_meta($post_id, '_wp_page_template', $page->template_value);
   }
-
-
 
   restore_current_blog();
 }
@@ -634,4 +734,13 @@ function page_group_save($post_id) {
 
 
 
+//function add_query_vars($aVars) {
+//$aVars[] = "bname"; // represents the name of the product category as shown in the URL
+//$aVars[] = "bgid";
+//$aVars[] = "buname";
+//return $aVars;
+//}
+//
+//// hook add_query_vars function into query_vars
+//add_filter('query_vars', 'add_query_vars');
 
