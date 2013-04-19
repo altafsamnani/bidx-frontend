@@ -6,24 +6,29 @@
 
   <?php
   	$authenticated=false;
-   	if (isset($_GET['signedin'])) 
+   	if (isset($_GET['signedin'])) {
   		$authenticated=true;
-
+    }
+    
     do_action('get_header');
-    if($authenticated)
+    if($authenticated) {
     	get_template_part('templates/header-dashboard');
-    else
+    }
+    else {
     	get_template_part('templates/header');
+    }
   
 
   ?>
 
   <?php include roots_template_path(); 
   
-	if($authenticated)
-		get_template_part('templates/footer-dashboard');
-	else
+	if($authenticated) {
+	 get_template_part('templates/footer-dashboard');
+  }
+	else {
 		get_template_part('templates/footer');
+  }
   
  ?>  
   

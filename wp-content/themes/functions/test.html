@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+		<link rel="stylesheet" href="/wp-includes/css/admin-bar.min.css?ver=3.5.1">
+<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/css/bootstrap.css">
+<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/css/bootstrap-responsive.css">
+<link rel="stylesheet" href="/wp-content/themes/bidx-group/style.css">
+<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/css/jqueryUI/jquery-ui-1.10.2.custom.min.css">
+</head>
+<body>
+<div class="block">
+<form action="">
+	
+	<div class="formfield">
+		<label>Logo</label>
+		<input type="file" name="logo" data-type="fileUpload" data-type-arguments='{"addFields":["creatorProfileId"]}' value=""/>
+	</div>
+	<a href="#" class="button primary jsSave">Submit</a>
+	<input type="hidden" value="491" name="creatorProfileId">
+</form>
+<div>
+<script type="text/javascript" src="/wp-content/themes/bidx/assets/js/plugins.js"></script>
+<script type="text/javascript" src="/wp-content/themes/plugins/form.js"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		$("form").form({
+			callToAction : '.jsSave',
+			errorClass : 'error',
+			url : '/wp-admin/admin-ajax.php?action=bidx_register',
+			enablePlugins: ['fileUpload'],
+			apiurl : 'test'
+			
+		});
+	});
+</script>	
+</body>
+</html>

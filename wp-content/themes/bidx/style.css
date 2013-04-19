@@ -641,7 +641,9 @@ header .logo {
 		color: #9DA09C;
 	}
 
-
+	form label.radio {
+		font-weight: normal;
+	}
 	
 
 	.highlight {

@@ -20,7 +20,7 @@
 
 			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
 				<label>What is your location?</label>
-				<input type="text" name="location" placeholder="Please type your location" data-type="location" data-map-dimensionds="height:250px;width:100%" />
+				<input type="text" name="location" placeholder="Please type your location" data-type="location" data-type-arguments='{"showMap":"false"}'/>
 				
 				<input type="hidden" name="personalDetails.address[0].location">
 				<input type="hidden" name="personalDetails.address[0].street">
@@ -60,7 +60,7 @@
 				<input type="text" name="company" placeholder="Please type your company name" />
 			</div>
 
-			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"url":{"text":"Please fill in a valid URL"}}'>
+			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"typecheck": [{"url":{"text":"Please fill in a valid URL"}}]}'>
 				<label>Website</label>
 				<input type="text" name="webSite"  placeholder="Please type your website" />
 			</div>
@@ -126,7 +126,36 @@
 
 			<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"}}'>
 				<label>Focus Theme</label>
-				<input type="text" name="theme" data-type="location" placeholder="Please type your focus theme" />
+				<input type="text" name="theme" placeholder="Please type your focus theme" />
+			</div>
+			<div class="formfield">
+				<label>Is the location of your focus based on a:</label>
+				<label class="radio"><input type="radio" name="location-type" value="city" checked> city (or a number of cities)?</label>
+				<label class="radio"><input type="radio" name="location-type" value="country"> country (or a number of countries)?</label>
+				<label class="radio"><input type="radio" name="location-type" value="coord"> specific location (or a number of specific locations)?</label>
+
+				<div class="location-list">
+
+					<div class="explanation">EXPLANATION OF HOW TO THIS OPTION</div>
+					<div>
+						<input type="text" name="location-selector-list-cities" data-type="location" data-type-arguments='{"showMap":"false","list-results":"true","list-id":"location-list", "filter":"cities"}' placeholder="Please type your focus theme" />
+						<!-- <input type="text" name="location-selector-list-countries" data-type="location" data-type-arguments='{"showMap":"false","list-results":"true","list-id":"location-list", "filter":"countries"}' placeholder="Please type your focus theme" />						 -->
+					</div>
+					<div class="list">
+						<ul id="location-list" class="clearfix">
+							<li>
+								<div class="label empty">Add a location</div>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+				<div class="location-map jqHidden">
+					<div class="explanation">EXPLANATION OF HOW TO USE THE MAP</div>
+					<div>
+						<input type="text" name="location-selector-map" data-type="location" data-type-arguments='{"map-dimensions":"width:100%;height:400px;","set-markers":"true", "draw-circle":"true"}' placeholder="Please type your focus theme" />
+					</div>
+				</div>				
 			</div>
 			
 		</div>
@@ -149,6 +178,33 @@
 				/*document.location = "/group-creation-success/" */
 			}
 		});
+
+		$("[name=location-selector-list]")
+
+		$("[name=location-type]").click(function(e){
+			var $this=$(this);
+			if ($this.val() == "city"){
+				$(".location-map").fadeOut('fast',function(){
+					/*$("[name=location-selector-list-cities]").show();
+					$("[name=location-selector-list-countries]").hide();*/
+					$(".location-list").fadeIn('fast');	
+				});
+			}
+			else if ($this.val() == "country"){
+				$(".location-map").fadeOut('fast',function(){
+					/*$("[name=location-selector-list-cities]").hide();
+					$("[name=location-selector-list-countries]").show();*/
+					$(".location-list").fadeIn('fast');	
+				});
+			}
+			else if ($this.val() == "coord"){
+				$(".location-list").fadeOut('fast',function(){
+					$(".location-map").fadeIn('fast');	
+				});
+			}
+		});
+
+
 	});
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"></script>

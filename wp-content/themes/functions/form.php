@@ -4,7 +4,7 @@
 		//set authentication
 		$authUsername = 'bidx'; // Bidx Auth login
 		$authPassword = 'gobidx'; // Bidx Auth password
-		$url = 'http://test.bidx.net/api/v1/entity/13?csrf=false&groupDomain=beta&schema=true';
+		$url = 'http://test.bidx.net/api/v1/entity/13?csrf=false&groupDomain=beta&schema=true&newSchema';
 		
 		$curl = curl_init($url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -25,6 +25,7 @@
 		
 		$response = getSchema();	
 		$data =  $response -> data;
+		//new dBug($data);
 		//$fields = $schema->metadata->schema->personalDetails->properties;
 		$schema = $response->metadata->schema;
 		//new dBug ($fields);
@@ -33,7 +34,7 @@
 			Available types:
 			    array (minItems, maxItems, uniqueItems, items)
 			    boolean
-			    coordinates (comma-seperated latitude, longitude in decimal degrees)
+			    coordinates (comma-seperated latitude, longitude in decimal degrees) <deprecated: moved to type=string format=location>
 			    hidden
 			    integer (format, minimum, exclusiveMinimum, maximum, exclusiveMaximum)
 			    number (format, minimum, exclusiveMinimum, maximum, exclusiveMaximum)
@@ -45,56 +46,96 @@
 		$output = "";
 
 		//new dBug($schema);
-		/*echo "<pre>";
-		print_r(traverseSchema($schema, ""));
-		echo "</pre>";*/
-		$res = traverseSchema($schema, "start", "");
+	
+		$res = traverseSchema($schema, $data, "", "");
 		echo $res;
 
 	}
 
-	function traverseSchema($schema, $output, $parent) {
+	function traverseSchema($schema, $data, $output, $parent) {
 		
-
-
+		//loop 	
 		foreach ($schema as $key => $el) {
-			echo "key: " . $key . "<BR>";
-			//new dBug($el);
+		//	new dBug($el);
 
-			//there is a collection
-			if(isset($el->properties)) {
-				$output = traverseSchema($el->properties,$output, $key);
+
+			if($el->type == "object") {
+				//there is a collection
+				if(isset($el->properties)) {
+							
+					$output = traverseSchema(
+						$el->properties,
+						$data, 
+						$output, 
+						$parent != "" ? $parent . "." . $key : $key
+					);
+				}
+				else if(isset($el->items)) {//this option will be removed and changed to properties
+					$output = traverseSchema(
+						$el->items, 
+						$data, 
+						$output, 
+						$parent != "" ? $parent . "." . $key : $key
+					);
+				}
+
 			}
-			//else it is an element
 			else {
-				$options=isset($el->options) ? true:false;
+				$hasOptions=isset($el->options) ? true:false;
 				$placeholder=isset($el->placeholder) ? $el->placeholder : "Please type your " . $el->title;
 				$fieldname = $parent != "" ? $parent . "." . $key: $key;
+
 				//set HTML wrapper for formfields
 				$wrapper_start = "<div class=\"formfield\"><label>" . $el->title . "</label>";
 				$wrapper_end = "</div>";
 				
 				if(isset($el->type)) {
+					$type = $hasOptions ? "select": $el->type;
+
+
 					//create HTML for formfield element
-					switch ($el->type) {
+					switch ($type) {
 						case 'hidden': 
 							$output.= "<input type=\"hidden\" name=\"" . $fieldname ."\"/>";
 							break;
 						case 'string':
-							$element = 	"<input type=\"text\" name=\"" . $fieldname . "\" placeholder=\"" . $placeholder . "\" />";
+							$dataType="";
+							if(isset($el->format)) {
+								$dataType = "data-type=\"" . $el->format . "\"";
+								/*switch ($el->format) {
+									case 'date':
+										$dataType = "data-type=\"date\"";
+										break;
+									case 'location':
+										$dataType = "data-type=\"location\"";
+										break;
+								}*/
+							}
+							
+							$element = 	"<input type=\"text\" name=\"" . $fieldname . "\" value=\"" . "\" placeholder=\"" . $placeholder . "\" " . $dataType . "/>";
 							$output.= $wrapper_start . $element . $wrapper_end;
 							break;
-						
+						case 'select':
+							$options="";
+							foreach ($el->options as $i => $opt) {
+								$options .= "<option value=\"" . $opt->value . "\">" . $opt->label . "</option>";
+							}
+							unset($opt);
+							$element = "<select name=\"" . $fieldname ."\"/>" . $options . "</select>";
+							$output.= $wrapper_start . $element . $wrapper_end;
+							break;
 						default:
 							# code...
 							break;
 					}
 				}
 				else {
-					$output .= $wrapper_start . "<marquee style=\"color:red\">NO TYPE DEFINED IN SCHEMA</marquee>" . $wrapper_end;
+					$output .= "<marquee style=\"color:red\">ELEMENT: " . $el->title . " NO TYPE DEFINED IN SCHEMA</marquee>";
 				}
-
 			}
+
+			
+
 		}
 		return $output;
 	}
