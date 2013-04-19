@@ -86,8 +86,12 @@ function call_bidx_service($urlservice, $body, $method = 'POST') {
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
     'headers' => $headers,
-    'cookies' => $cookieArr
+   // 'cookies' => $cookieArr
       ));
+  
+  if(count($cookieArr)){
+    $result['cookies'] = $cookieArr;
+  }
 
   /* Set Cookies if Exist */  
 
@@ -459,10 +463,9 @@ Name: %3$s'), $current_user->user_login, get_site_url($id), stripslashes($title)
  *
  * @param String $url
  */
-function bidx_wordpress_pre_action($url = 'default') {
+function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
 
   $params = $_POST;
-
 
   switch ($url) {
 
@@ -481,17 +484,26 @@ function bidx_wordpress_pre_action($url = 'default') {
       break;
 
     case 'entitygroup' :
+      $response['status'] = 'ok';
       $params['bidxEntityType'] = 'bidxBusinessGroup';
       $params['businessGroupName'] = 'true';
       $params['bidxEntityId'] = $params['groupProfileId'];
       break;
 
     case 'entityprofile':
+      $response['status'] = 'ok';
       $params['bidxEntityType'] = 'bidxMemberProfile';
       $params['isMember'] = 'true';
       $params['bidxEntityId'] = $params['creatorProfileId'];
       break;
-
+    
+    case 'logo' :
+      $response['status'] = 'ok';
+      $params['path']    = 'logo';
+      $params['purpose'] = 'logo';
+      $params['fileContent'] = '@'.$file_values["tmp_name"];
+      break;
+    
     default:
       $response['status'] = 'ok';
       break;
@@ -565,11 +577,49 @@ function bidx_register_response($requestEntityMember, $requestEntityGroup, $requ
   }
   else {
     $requestData->status = 'OK';
-    $requestData->redirect = '/group-creation-success';
+    $requestData->submit = '/group-creation-success';
     //Logs the user in and show the group dashboard
   }
 
   return $requestData;
+}
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Upload Handler
+ *
+ * @param bool $echo
+ */
+add_action('wp_ajax_nopriv_file_upload', 'bidx_upload_action');
+function bidx_upload_action() {
+  $type = 'logo';
+  echo "<pre>";
+  print_r($_FILES);
+  echo "</pre>";
+  exit;
+  foreach($_FILES as $file_name => $file_values) {
+
+    switch( $file_values['type'] ) {
+
+      case (preg_match("/^image/i", $file_values['type']) ? true : false ) :
+
+        bidx_wordpress_pre_action($type,$file_values);
+        echo "<pre>";
+        print_r($file_values);
+        echo "</pre>";
+        exit;
+        break;
+
+      case 'imgupload' :
+        echo 'imgupload';
+        break;
+    }
+
+  }
+
+  
 }
 
 /**
