@@ -36,6 +36,10 @@
 		<div class="span8 block">
 			<h3>About your group</h3>
 			<div class="formfield">
+				<label>Logo</label>
+				<input type="file" name="logo" data-type="fileUpload" data-type-arguments='{"url":"/wp-content/themes/functions/test.php", "addFields":["creatorProfileId"]}' value=""/>
+			</div>			
+			<div class="formfield">
 				<label>Group Name</label>
 				<input type="text" name="businessGroupName" readonly="readonly" placeholder="Please type your group name" value="[!GROUPNAME!]"/>
 			</div>
@@ -173,7 +177,7 @@
 			callToAction : '.jsSave',
 			errorClass : 'error',
 			url : '/wp-admin/admin-ajax.php?action=bidx_register',
-			enablePlugins: ['date','location'],
+			enablePlugins: ['date','location','fileUpload'],
 			beforeSubmit : function () {
 				/*document.location = "/group-creation-success/" */
 			}

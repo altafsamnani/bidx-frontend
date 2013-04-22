@@ -1,7 +1,19 @@
 
 /*==============================================================================================
-										FILEUPLOAD EXTENTSION PLUGIN
-											uses xhr or iframe post
+							FILEUPLOAD EXTENTSION PLUGIN
+							Description: uses xhr or iframe post
+							Author: Mattijs Spierings
+							Date: 22/4/2013
+							Example:
+
+							<input 
+								type="file" 
+								name="logo" 
+								data-type="fileUpload" 
+								data-type-arguments='{"url":"/uploadhandler.php", "addFields":["groupId"]}' 
+								value=""
+							/>
+							<input type="hidden" name="groupId" value="14">
 ===============================================================================================*/
 (function($){
 
@@ -14,6 +26,7 @@
  				var $this = $(this);
  				var that = this; //lock reference to input
  				this.options = {};//local collection of plugin options
+ 				$.extend(this.options, options);
 
  				$this.bind("change", methods.uploadFile);
  				//any arguments for this plugin should be placed in this attribute
@@ -28,24 +41,83 @@
 		uploadFile : function(){
 			var $this=$(this);
 			
-			console.log(window.FormData === undefined );
-
-
-			var formData = new FormData();
-			formData.append($this.attr("name"),this.files[0]);
-			if(this.options.addFields) {
-				var i=0,it=null;
-				while(it=this.options.addFields[i++]) {
-					formData.append(it,$("[name=" + it + "]").val());
+			
+			if(window.FormData !== undefined) {
+				var formData = new FormData();
+				formData.append($this.attr("name"),this.files[0]);
+				if(this.options.addFields) {
+					var i=0,it=null;
+					while(it=this.options.addFields[i++]) {
+						formData.append(it,$("[name=" + it + "]").val());
+					}
 				}
+				//formData.append("data",)
+				$.ajax(this.options.url, {
+						type:"post",
+					    processData: false,
+					    contentType: false,
+					    data: formData
+					})
+					.always(methods.done);
 			}
-			//formData.append("data",)
-			jQuery.ajax('/wp-content/themes/functions/test.php', {
-				type:"post",
-			    processData: false,
-			    contentType: false,
-			    data: formData
-			});
+			else {
+				//create iframe for posting
+				var $frame = $("<iframe name=\"uploadHandler\" width=\"0\" height=\"0\" style=\"display:none\"/>"); //create frame with jQ because IE7 doesnt allow nameing of dom-elements
+				var form = document.createElement("form");
+				//place this form after the existing form
+				var parentForm = !this.options.parentForm ? $("form:first") : $(this.options.parentForm);
+				parentForm.after(form);
+				$this.after($frame);
+				$form=$(form);
+								
+				//create callback handler in window scope
+				window.fileuploadCallBack = function (args) {
+					alert(args.result);
+					//remove temp form and iframe
+					$form.remove();
+					$frame.remove();
+				};
+				
+				//move the filefield over to temp form
+				var hook = $this.parent();
+				$form.append($this.detach());
+				//create hiddenfields for all fields that are to be posted
+				if(this.options.addFields) {
+					var i=0,it=null, temp=null;
+					while(it=this.options.addFields[i++]) {
+						temp = document.createElement("input");
+						temp.name = it;
+						temp.type="hidden";
+						temp.value = $("[name=" + it + "]").val();
+						$form.append(temp);
+					}
+					//add hidenfield so that application layer add padding to json result
+					temp = document.createElement("input");
+					temp.name = "jsonp";
+					temp.type="hidden";
+					temp.value = 1;
+					$form.append(temp);
+				}
+
+				
+				$form.attr("method","post");
+				$form.attr("target","uploadHandler");
+				$form.attr("enctype","multipart/form-data");
+				$form.attr("action", this.options.url);
+				$form.submit();
+				hook.find("label").after($this.detach());
+				
+			}
+		},
+		//define done handler
+		done : function(data,status,c,d) {
+			if(status == "success") {
+
+			}
+			else if(status == "error") {
+
+			}
+			
 		}
 	}
 

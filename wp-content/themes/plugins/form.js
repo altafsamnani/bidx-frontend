@@ -40,6 +40,10 @@
 			Init method
 		*/
 		init : function(options) {
+			if(this.prop("tagName").toLowerCase() != "form") {
+				alert("Please use this form plugin on a form tag only")
+				return false;
+			}
 			form = this;
 			form.data.elements = {};//collection of form elements
 			form.data.valid=false;
@@ -84,6 +88,7 @@
 				while(plug=options.enablePlugins[i++]) {
 					switch(plug) {
 						case "date" :
+							//activate all datepickers in this plugin
 							this.find("[data-type=date]").datepicker({});
 							break;
 						case "slider" :
@@ -95,6 +100,7 @@
 								url: globalOptions.path + "location.js",
 								dataType: 'script'
 							});	
+							//get all location elements and activate plugin
 							this.find("[data-type=location]").location({});
 							break;
 						case "fileUpload" :
@@ -103,8 +109,9 @@
 								type: "GET",
 								url: globalOptions.path + "fileUpload.js",
 								dataType: 'script'
-							});	
-							this.find("[data-type=fileUpload]").fileUpload({});
+							});
+							//get all fileuploads in this form and activate plugin
+							this.find("[data-type=fileUpload]").fileUpload({"parentForm":this});
 							break;							
 					}
 				}

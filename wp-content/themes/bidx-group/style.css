@@ -318,7 +318,7 @@ footer .sub-footer {
 	form input, form select, form textarea {
 		width: 100%;
 	}
-	input[type="text"], input[type="password"], input[type="email"], input[type="url"],select , textarea {
+	input[type="text"], input[type="password"], input[type="email"], input[type="url"], select , textarea {
 	    color: #333333;
 	    font-size: 16px;
 	    height: 55px;
@@ -329,6 +329,9 @@ footer .sub-footer {
 		-ms-box-sizing: border-box;
 		box-sizing: border-box;
 		margin-bottom:0px;
+	}
+	input[type="file"] {
+		height: auto;
 	}
 	textarea {
 		padding-right:0px;
