@@ -30,7 +30,7 @@ function bidx_filter($content) {
     }
   }
   // Add variables as hidden that cant be replaced from Post Variables to keep the previous state
-  $content = str_replace('<!--HIDDEN-->', $hiddenElement, $content);
+  $content = str_replace('</form>', $hiddenElement.'</form>', $content);
 
   // Debug the Get/Post params
   if (WP_DEVELOPMENT == true) {

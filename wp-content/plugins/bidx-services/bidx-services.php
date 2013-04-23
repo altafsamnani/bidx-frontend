@@ -42,16 +42,17 @@ if (!function_exists('htmlspecialchars_decode')) {
  * @return Loggedin User
  */
 
-function call_bidx_service($urlservice, $body, $method = 'POST') {
+function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload = false) {
 
   $authUsername = 'bidx'; // Bidx Auth login
   $authPassword = 'gobidx'; // Bidx Auth password
   $bidxMethod = strtoupper($method);
   $bidx_get_params = "";
   $cookie_string = "";
-  $sendDomain = (WP_DEVELOPMENT == FALSE) ? 'bidx.dev' : 'bidx.net';
+  $sendDomain = (WP_DEVELOPMENT) ? 'bidx.net' : 'bidx.net';
   $cookieArr =  array();
-//1 Decide method to use
+
+  /*********** Decide method to use***************/
   if ($bidxMethod == 'GET') {
     $bidx_get_params = '&' . http_build_query($body);
     $body = NULL;
@@ -63,36 +64,51 @@ function call_bidx_service($urlservice, $body, $method = 'POST') {
     $bidxMethod = 'POST';
   }
 
-  //2 Retrieve Bidx Cookies and send back to api to check
+  /***********Retrieve Bidx Cookies and send back to api to check ********/
   $cookieInfo = $_COOKIE;
   foreach ($_COOKIE as $cookieKey => $cookieValue) {
     if (preg_match("/^bidx/i", $cookieKey)) {
-   
-   // $cookie_string .= $cookieKey.'="'.$cookieValue.'"; ';
-      $cookieArr[] = new WP_Http_Cookie(array('name'=>$cookieKey,'value'=>$cookieValue,'domain'=>$sendDomain));
+     $cookieArr[] = new WP_Http_Cookie(array('name'=>$cookieKey,'value'=>  urlencode($cookieValue),'domain'=>$sendDomain));
     }
+  }  
+
+  /*****************Set Headers *********************************/
+  //For Authentication
+  $headers['Authorization'] = 'Basic ' . base64_encode("$authUsername:$authPassword");
+  
+  // Is Form Upload
+  if($is_form_upload) {
+    $headers['Content-Type'] = 'multipart/form-data';
+  } else {
+    $bidx_get_params.= '&groupKey=bidxTestGroupKey';
   }
-  //$cookie_string = 'bidx-auth-test='.urlencode($_COOKIE['bidx-auth-test']).'; ';
-  //Remove stray delimiters
-  //$cookie_string = trim($cookie_string, '; ');
+  
+  // Set the group domain header 
+  if(isset($body['domain'])) {
+    //$headers['X-Bidx-Group-Domain'] = $body['domain'];
+    $bidx_get_params.= '&groupDomain='.$body['domain'];
+  }
 
- // $cookie_string = 'bidx-auth-test'."=".$_COOKIE['bidx-auth-test'].";";
-  $url = 'http://test.bidx.net/api/v1/' . $urlservice . '?groupKey=bidxTestGroupKey&csrf=false' . $bidx_get_params;
 
-  $headers = array('Authorization' => 'Basic ' . base64_encode("$authUsername:$authPassword"),
-   // 'Cookie' => $cookie_string
-   );
+  /************* WP Http Request ********************************/
+
+    $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
+
+//  echo $url;
+//  echo "<pre>";
+//  print_r($headers);
+//  print_r($body);
+//  print_r($cookieArr);
+//  echo "</pre>";
+//  exit;
   $request = new WP_Http;
-
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
     'headers' => $headers,
     'cookies' => $cookieArr
       ));
 
-
-  /* Set Cookies if Exist */  
-
+  /************* Set Cookies if Exist **************************/
     $cookies = $result['cookies'];
     if(count($cookies)) {
       foreach ($cookies as $bidxAuthCookie) {
@@ -328,6 +344,8 @@ function get_redirect($url) {
  */
 function bidx_request_timeout_time($time) {
   $time = 50; //new number of seconds
+  $requestData->status = 'ERROR';
+  $requestData->text = 'Check with bidx backend guys.';
 
   return $time;
 }
@@ -381,14 +399,16 @@ function bidx_wordpress_post_action($result, $url, $body) {
       }
       else {
 
-        $domain = $body['response']['domain'];
-        $domain = 'site1.bidx.dev';
+        $domain = (WP_DEVELOPMENT) ? 'site1.bidx.dev' : $body['response']['domain'];
+
         //$qparam = base64_encode('name='.$requestData->data->name.'&gid='.$requestData->data->currentGroupId.'&uname='.$requestData->data->username);
         // $requestData->redirect = 'http://'.$domain.'/registration?bname='.$requestData->data->name.'&bgid='.$requestData->data->currentGroupId.'&buname='.$requestData->data->username;
         $requestData->submit = 'http://' . $domain . '/registration/';
       }
 
-      break;
+      case 'logo':
+        $requestData->url = IMG_URL.'/565/whatever';
+    
     default :
   }
   return $requestData;
@@ -422,7 +442,7 @@ function create_bidx_wp_site($groupName, $email) {
   }
   else {
     $wpdb->hide_errors();
-    $id = wpmu_create_blog($newdomain, $path, $title, $user_id, array('public' => 1), $current_site->id);
+    $id = wpmu_create_blog($newdomain, $path, $groupName, $user_id, array('public' => 1), $current_site->id);
     $wpdb->show_errors();
     if (!is_wp_error($id)) {
       if (!get_user_option('primary_blog', $user_id)) {
@@ -431,7 +451,7 @@ function create_bidx_wp_site($groupName, $email) {
       $content_mail = sprintf(__('New site created by %1$s
 
 Address: %2$s
-Name: %3$s'), $current_user->user_login, get_site_url($id), stripslashes($title));
+Name: %3$s'), $userName, get_site_url($id), stripslashes($groupName));
       //wp_mail(get_site_option('admin_email'), sprintf(__('[%s] New Site Created'), $current_site->site_name), $content_mail, 'From: "Site Admin" <' . get_site_option('admin_email') . '>');
       wp_mail('altaf.samnani@bidnetwork.org', sprintf(__('[%s] New Site Created'), $current_site->site_name), $content_mail, 'From: "Site Admin" <' . get_site_option('admin_email') . '>');
 
@@ -478,7 +498,7 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
         'user_id' => $wp_site['user_id'],
         'domain' => $wp_site['domain']
       );
-      $params['domain'] = $wp_site['group_domain'];
+      $params['domain'] = $wp_site['subdomain'];
       break;
 
     case 'entitygroup' :
@@ -497,9 +517,20 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
     
     case 'logo' :
       $response['status'] = 'ok';
-      $params['path']    = 'logo';
+      $id = $params['groupProfileId'];
+      $domain = $params['domain'];
+      unset($params);
+      $params['path']    = '/logo';
       $params['purpose'] = 'logo';
-      $params['fileContent'] = '@'.$file_values["tmp_name"];
+
+      //$params['fileContent'] = $file_values;
+      $params['fileContent'] = "@".$file_values["tmp_name"].';filename='.$file_values["name"].';type='.$file_values["type"];
+     // $params['fileContent'] = "@/home/altaf/Desktop/dirk_heuff.png;filename=dirk_heuff;type=image/png'";
+      //';filename='.$file_values["name"].';name='.$file_values["name"].';type='.$file_values["type"];
+      //.';empty=false;originalFilename='.$file_values["name"].';size='.$file_values["size"].';contentType='.$file_values["type"];
+      //Altaftest
+      $params['id'] = $id;
+      $params['domain'] = $domain;
       break;
     
     default:
@@ -534,8 +565,8 @@ add_action('wp_ajax_nopriv_bidx_request', 'ajax_submit_action'); // ajax for log
 
 function ajax_submit_action() {
 
-  $url = $_POST['apiurl'];
-  $method = $_POST['apimethod'];
+  $url = (isset($_POST['apiurl'])) ? $_POST['apiurl'] : NULL;
+  $method = (isset($_POST['apimethod'])) ? $_POST['apimethod'] : NULL;
 
   //1 Do wordpress stuff and get the params
   $body = bidx_wordpress_pre_action($url);
@@ -590,34 +621,68 @@ function bidx_register_response($requestEntityMember, $requestEntityGroup, $requ
  *
  * @param bool $echo
  */
+
 add_action('wp_ajax_nopriv_file_upload', 'bidx_upload_action');
+
 function bidx_upload_action() {
+  
   $type = 'logo';
-  echo "<pre>";
-  print_r($_FILES);
-  echo "</pre>";
-  exit;
+  $is_ie_wrapper = (isset($_POST['jsonp'])) ?  $_POST['jsonp']:0;
+  
   foreach($_FILES as $file_name => $file_values) {
 
     switch( $file_values['type'] ) {
-
+      /* For Image Upload */
       case (preg_match("/^image/i", $file_values['type']) ? true : false ) :
 
-        bidx_wordpress_pre_action($type,$file_values);
-        echo "<pre>";
-        print_r($file_values);
-        echo "</pre>";
-        exit;
-        break;
+       $body   = bidx_wordpress_pre_action($type, $file_values);
 
-      case 'imgupload' :
-        echo 'imgupload';
-        break;
+
+       $params = $body['params'];
+
+       $result = call_bidx_service('entity/'.$params['id'].'/document', $params, 'POST', true);
+       echo "<pre>";
+       print_r($result);
+       echo "</pre>";
+       exit;
+       $request = bidx_wordpress_post_action($result, $type, $body);
+
+       $jsonData = json_encode($request);
+       
+       $json_display = ($is_ie_wrapper) ? bidx_wrapper_response($type,$jsonData): $jsonData;
+
+       break;
+
+     /* For Document Upload */
+      case (preg_match("/^text/i", $file_values['type']) ? true : false ) :
+
+      break;
+
     }
 
+    echo $json_display;
+
+    die(); // stop executing script
+
+  }  
+}
+
+function bidx_wrapper_response($type,$jsonData) {
+
+
+  switch ($type) {
+
+    case 'logo' :
+
+      $with_wrapper_data = "<script type='text/javascript'>
+  parent.window.fileuploadCallBack({
+   {$jsonData}
+  });";
+
+    break;
   }
 
-  
+  return $with_wrapper_data;
 }
 
 /**

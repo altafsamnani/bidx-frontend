@@ -1,4 +1,4 @@
-<form id="registration" name="registration">
+<form id="registration"  name="registration">
 	
 	<div class="row-fluid">
 		<div class="span4 block">
@@ -37,7 +37,7 @@
 			<h3>About your group</h3>
 			<div class="formfield">
 				<label>Logo</label>
-				<input type="file" name="logo" data-type="fileUpload" data-type-arguments='{"url":"/wp-content/themes/functions/test.php", "addFields":["creatorProfileId"]}' value=""/>
+				<input type="file" name="logo" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["groupProfileId","domain"]}' value=""/>
 			</div>			
 			<div class="formfield">
 				<label>Group Name</label>
@@ -164,7 +164,7 @@
 			
 		</div>
 		<div class="save-block">
-			<a href="#" class="button primary jsSave">Save Profile</a>
+			<a href="#" class="button primary jsSave">Save Profile</a>                       
 		</div>
 	</div>
 	
