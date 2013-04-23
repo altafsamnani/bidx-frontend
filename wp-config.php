@@ -33,6 +33,12 @@ define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
+/** Bidx API */
+define('API_URL','http://test.bidx.net/api/v1/');
+
+/** Bidx Document Upload */
+define('IMG_URL','https://test.bidx.net/dl/document/');
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
