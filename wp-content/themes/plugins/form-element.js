@@ -259,19 +259,20 @@ var Element = function (_formfield) {
 		this.name = this.input.attr("name");
 		this.type = this.input.prop("tagName").toLowerCase();
 		
+
 		//if formelement requires validation
 		if(this.formfield.data("validation")) {
 			$.extend(this,val = {
 					validation: this.formfield.data("validation")
 			});
+			this.input.bind("change",this,this.validate);
 		}
 		//no validation, set to validated
 		else {
 			this.validated=true;
 		}
 
-		this.input.bind("change",this,this.validate);
-	
+
 		/*Correct IE specific issues that can not be done with css only*/
 		if($("html").hasClass("lt-ie8")) {
 			//Select needs to have padding-right removed to be inline with other fields
@@ -285,29 +286,3 @@ var Element = function (_formfield) {
 }
 Element.prototype = new Validator();
 
-/*==============================================================================================
-										HELPER CLASSES
-===============================================================================================*/
-
-if (!Array.prototype.every) {
-	Array.prototype.every = function(fun /*, thisp */) {
-		"use strict";
-		if (this == null) {
-			throw new TypeError();
-		}
-
-		var t = Object(this);
-		var len = t.length >>> 0;
-		if (typeof fun != "function") {
-			throw new TypeError();
-		}
-
-		var thisp = arguments[1];
-		for (var i = 0; i < len; i++) {
-			if (i in t && !fun.call(thisp, t[i], i, t)) {
-				return false;
-			}
-		}
-		return true;
-	};
-}

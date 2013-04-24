@@ -6,8 +6,8 @@
 
   <?php
   	$authenticated=false;
-   	if (isset($_GET['signedin'])) {
-  		$authenticated=true;
+    if ($_COOKIE['bidx-auth-test']) {
+   	  $authenticated=true;
     }
     
     do_action('get_header');
