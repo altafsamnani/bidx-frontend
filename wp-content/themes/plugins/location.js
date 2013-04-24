@@ -174,45 +174,49 @@
 							$this.val("");
 						});
 
-						if(!that.options["listId"]) {
+						/*if(!that.options["listId"]) {
 							alert("Please define list id by adding \"list-id\":\"[listid]\" to data-type-arguments for field '" + $this.attr("name") + "'");
 							return false;
-						}
+						}*/
 
 						//nothing has been selected in autocomplete, cancel request
 						if(!place.address_components) {
 							return true;
 							//THIS NEEDS TO BE REPLACE BY SELECTING THE FIRST SUGGESTION FROM AUTCOMPLETE (example: http://jsfiddle.net/Ut2U4/1/  OR use autocompleteprediction service https://developers.google.com/maps/documentation/javascript/reference#AutocompleteService)
 						}
-
-						$list=$("#" + that.options["listId"]);
 						
-											
-						if($list.find("." + that.options.emptyClass))
-							$list.find("." + that.options.emptyClass).hide();
-						
-						var $li=$("<li><div class=\"label\">" + place.formatted_address + "<span class=\"control icon-remove icon-white\"></div></li>");
-						
-						$li.find(".control.icon-remove").click(function(){
-							$li.fadeOut('fast', function(){
-								methods.removeLocationData($this, $li.index(), $list.find("li > div:not(." + that.options.emptyClass + ")").length);
-								$li.remove();
-								
-								if($list.find("li > div:not(." + that.options.emptyClass + ")").length == 0)
-									$list.find("." + that.options.emptyClass).fadeIn('fast');
-							});
+						if(that.options["listId"]) {
 
-
+							$list=$("#" + that.options["listId"]);
 							
-						});
-						//add item to list
-						$list.append($li);
+												
+							if($list.find("." + that.options.emptyClass))
+								$list.find("." + that.options.emptyClass).hide();
+							
+							var $li=$("<li><div class=\"label\">" + place.formatted_address + "<span class=\"control icon-remove icon-white\"></div></li>");
+							
+							$li.find(".control.icon-remove").click(function(){
+								$li.fadeOut('fast', function(){
+									methods.removeLocationData($this, $li.index(), $list.find("li > div:not(." + that.options.emptyClass + ")").length);
+									$li.remove();
+									
+									if($list.find("li > div:not(." + that.options.emptyClass + ")").length == 0)
+										$list.find("." + that.options.emptyClass).fadeIn('fast');
+								});
 
-						methods.setLocationData($this, place, ($list.find("li > div:not(." + that.options.emptyClass + ")").length -1));
+
+								
+							});
+							//add item to list
+							$list.append($li);
+
+							methods.setLocationData($this, place, ($list.find("li > div:not(." + that.options.emptyClass + ")").length -1));
+						}
 						//exterme hack to clear the autocomplete field after you mouse click in result
 						setTimeout(function(){
 							$this.val("");
 						},10);
+
 					}
 
 

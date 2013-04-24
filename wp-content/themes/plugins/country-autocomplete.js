@@ -19,10 +19,10 @@
 				if($this.data("type-arguments")) 
  					$.extend(this.options,$this.data("type-arguments"));
  				
-				if(!this.options["listId"]) {
+/*				if(!this.options["listId"]) {
 					alert("Please define list id by adding \"list-id\":\"[listid]\" to data-type-arguments for field '" + $this.attr("name") + "'");
 					return false;
-				}
+				}*/
 				
 				//set emptyClass if not provided.
  				if(!this.options.emptyClass) {
@@ -32,37 +32,45 @@
 				$this.autocomplete({
 					source: methods.getCountryList(),
 					select: function(event, ui) {
-		        		event.preventDefault();
-
-		        		$this.val(ui.item.label);
-		    			$list=$("#" + that.options["listId"]);
-							
-						if($list.find(".empty"))
-							$list.find(".empty").hide();
-						
-						var $li=$("<li><div class=\"label\">" + ui.item.label + "<span class=\"control icon-remove icon-white\"></div></li>");
-						
-						//add delete handler						
-						$li.find(".control.icon-remove").click(function(){
-							$li.fadeOut('fast', function(){
-								methods.removeLocationData($this, $li.index(), $list.find("li > div:not(." + that.options.emptyClass + ")").length);
-								$li.remove();
+						event.preventDefault();
+		        		
+						//if listId is available, the selected autocomplete value will be added to a list
+		        		if(this.options["listId"]) {
+		        			
+			        		$this.val(ui.item.label);
+			    			$list=$("#" + that.options["listId"]);
 								
-								if($list.find("li > div:not(.empty)").length == 0)
-									$list.find(".empty").fadeIn('fast');
-							});
+							if($list.find(".empty"))
+								$list.find(".empty").hide();
 							
-						});
-						//add item to list
-						$list.append($li);
-						this.value = "";
-						//create hidden bidx addressfields
-						methods.setLocationData($this, ui.item.value, ($list.find("li > div:not(." + that.options.emptyClass + ")").length -1));
-						
+							var $li=$("<li><div class=\"label\">" + ui.item.label + "<span class=\"control icon-remove icon-white\"></div></li>");
+							
+							//add delete handler						
+							$li.find(".control.icon-remove").click(function(){
+								$li.fadeOut('fast', function(){
+									methods.removeLocationData($this, $li.index(), $list.find("li > div:not(." + that.options.emptyClass + ")").length);
+									$li.remove();
+									
+									if($list.find("li > div:not(.empty)").length == 0)
+										$list.find(".empty").fadeIn('fast');
+								});
+								
+							});
+							//add item to list
+							$list.append($li);
+							this.value = "";
+							//create hidden bidx addressfields
+							methods.setLocationData($this, ui.item.value, ($list.find("li > div:not(." + that.options.emptyClass + ")").length -1));
+						}
+						else {
+							$this.val(ui.item.label);
+						}
 		    		},
 		    		focus: function(event, ui) {
-		        		event.preventDefault();
+		    			event.preventDefault();
 		        		$this.val(ui.item.label);
+		        		
+
 		    		}
 				});
 			});
