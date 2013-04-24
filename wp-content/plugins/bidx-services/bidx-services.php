@@ -376,7 +376,7 @@ function get_redirect($url, $requestData, $domain = NULL) {
  */
 function bidx_request_timeout_time($time) {
   $time = 50; //new number of seconds
-  
+
   return $time;
 }
 
@@ -394,7 +394,7 @@ function bidx_wordpress_post_action($url, $result, $body) {
 
   $requestData = json_decode($result['body']);
   $httpCode = $result['response']['code'];
-  $groupName = $body['domain'];
+  $groupName = (isset($body['domain'])) ? $body['domain'] : NULL;
   $redirectUrl = NULL;
 
   /*   * ***Check the Http response and decide the status of request whether its error or ok * */
@@ -698,6 +698,18 @@ function bidx_register_response($requestEntityMember, $requestEntityGroup, $requ
   return $requestData;
 }
 
+function allowed_file_extension($type, $file_type) {
+  $is_allowed = false;
+  switch ($type) {
+    case 'logo' :
+      if (preg_match("/^image/i", $file_type)) {
+        $is_allowed = true;
+      }
+      break;
+  }
+  return $is_allowed;
+}
+
 /**
  * @author Altaf Samnani
  * @version 1.0
@@ -715,33 +727,37 @@ function bidx_upload_action() {
 
   foreach ($_FILES as $file_name => $file_values) {
 
-    switch ($file_values['type']) {
-      /* For Image Upload */
-      case (preg_match("/^image/i", $file_values['type']) ? true : false ) :
+    $file_extension = allowed_file_extension($type, $file_values['type']);
 
-        $body = bidx_wordpress_pre_action($type, $file_values);
+    if ($file_extension) {
+      switch ($file_values['type']) {
+        /* For Image Upload */
+        case (preg_match("/^image/i", $file_values['type']) ? true : false ) :
+
+          $body = bidx_wordpress_pre_action($type, $file_values);
 
 
-        $params = $body['params'];
+          $params = $body['params'];
 
-        $result = call_bidx_service('entity/' . $params['id'] . '/document', $params, 'POST', true);
-        echo "<pre>";
-        print_r($result);
-        echo "</pre>";
-        exit;
-        $request = bidx_wordpress_post_action($type, $result, $body);
+          $result = call_bidx_service('entity/' . $params['id'] . '/document', $params, 'POST', true);
 
-        $jsonData = json_encode($request);
+          $request = bidx_wordpress_post_action($type, $result, $body);          
 
-        $json_display = ($is_ie_wrapper) ? bidx_wrapper_response($type, $jsonData) : $jsonData;
+          break;
 
-        break;
+        /* For Document Upload */
+        case (preg_match("/^text/i", $file_values['type']) ? true : false ) :
 
-      /* For Document Upload */
-      case (preg_match("/^text/i", $file_values['type']) ? true : false ) :
-
-        break;
+          break;
+      }
+    } else {
+      $request->status = 'ERROR';
+      $request->text   = "The uploaded file doesn't seem to be an image.";
     }
+
+    $jsonData = json_encode($request);
+
+    $json_display = ($is_ie_wrapper) ? bidx_wrapper_response($type, $jsonData) : $jsonData;
 
     echo $json_display;
 
@@ -762,6 +778,8 @@ function bidx_wrapper_response($type, $jsonData) {
   });";
 
       break;
+    default :
+      $with_wrapper_data = $jsonData;
   }
 
   return $with_wrapper_data;
