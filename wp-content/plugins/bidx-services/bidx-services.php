@@ -376,9 +376,7 @@ function get_redirect($url, $requestData, $domain = NULL) {
  */
 function bidx_request_timeout_time($time) {
   $time = 50; //new number of seconds
-  $requestData->status = 'ERROR';
-  $requestData->text = 'Check with bidx backend guys.';
-
+  
   return $time;
 }
 
