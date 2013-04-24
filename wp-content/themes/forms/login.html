@@ -1,6 +1,6 @@
 
 <form action="http://bidx.dev/wp-login.php" method="post">
-	<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"email2":{"text":"This is not a valid e-mail address"}}'>
+	<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
 		<label>Email address</label>
 		<input type="text" name="log" placeholder="Type your email address" />
 	</div>
@@ -18,7 +18,7 @@
 
 	</p>
 	
-		<input type="button" name="wp-submit"  value="Log In" />
+		<!-- <input type="button" name="wp-submit"  value="Log In" /> -->
 		<input type="hidden" name="redirect_to" value="http://bidx.dev/member-profile/" />
 		<input type="hidden" name="testcookie" value="1" />
 </form>
@@ -28,7 +28,6 @@
 			callToAction : '.jsLogin',
 			errorClass : 'error',
 			url : '/wp-admin/admin-ajax.php?action=bidx_signin'
-
 		});
 	});
 </script>

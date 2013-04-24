@@ -393,17 +393,37 @@ footer .sub-footer {
 	.formfield-error {
 		margin-bottom: 0px;
 	}
+	.formfield-error input {
+		-webkit-border-radius: 4px 4px 0px 0px;
+		-moz-border-radius: 4px 4px 0px 0px;
+		border-radius: 4px 4px 0px 0px;
+	}
 
 	.error {
 		
-		color: red;
+		color: #E83E3E;
 		padding:4px;
 
-		
-		
+		-webkit-border-radius: 0px 0px 4px 4px;
+		-moz-border-radius: 0px 0px 4px 4px;
+		border-radius: 0px 0px 4px 4px;
+		background-color: #DBD9D9;
 		display: none;
 		text-align: left;
 	}
+
+	.error_separate {
+		background-color: #DBD9D9;
+		border: 1px solid #FFA8A8;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		color: #E83E3E;
+		padding: 4px 10px;
+		margin:5px 0px;
+	}
+
+
 
 	
 

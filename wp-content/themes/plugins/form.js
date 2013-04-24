@@ -154,8 +154,8 @@
 					url: globalOptions.url,
 					dataType:'json',
 					data: $(form).find(":input:not(.ignore)").serialize() + "&apiurl=" + globalOptions.apiurl +  "&apimethod=" + globalOptions.apimethod,
-					async: true,
-					success: function(data){
+					async: true})
+					.always(function(data){
 						if(data) {
 							if(data.status == 'OK') {
 								if(data.submit) {
@@ -177,13 +177,19 @@
 									document.location=data.redirect;
 								}
 							}
+							else {
+								var message="Something went wrong";
+								if(data.text) {
+									message=data.text;
+								}
+								$button=$(globalOptions.callToAction);
+								$error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
+								$button.parent().after($error);
+								$error.fadeIn('fast');
+							}
 						}
-					},
-					error : function(){
 
-					}
-
-				});
+					});
 			}
 			else if(form.attr("action")){
 				form.submit();
