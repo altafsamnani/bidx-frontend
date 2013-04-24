@@ -153,7 +153,7 @@
 					type:'post',
 					url: globalOptions.url,
 					dataType:'json',
-					data: $(form).find(":input:(.ignore)").serialize() + "&apiurl=" + globalOptions.apiurl +  "&apimethod=" + globalOptions.apimethod,
+					data: $(form).find(":input:not(.ignore)").serialize() + "&apiurl=" + globalOptions.apiurl +  "&apimethod=" + globalOptions.apimethod,
 					async: true,
 					success: function(data){
 						if(data) {
