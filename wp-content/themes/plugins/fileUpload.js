@@ -58,8 +58,16 @@
 					    contentType: false,
 					    data: formData
 					})
-					.always(methods.done);
+					.always(function(data,status, xhr){
+						var ret = {
+							el:$this,
+							status:status
+						};
+						$.extend(ret,$.parseJSON(data));
+						methods.done(ret);
+					});
 			}
+			//FOR < IE10
 			else {
 				//create iframe for posting
 				var $frame = $("<iframe name=\"uploadHandler\" width=\"0\" height=\"0\" style=\"display:none\"/>"); //create frame with jQ because IE7 doesnt allow nameing of dom-elements
@@ -110,12 +118,21 @@
 			}
 		},
 		//define done handler
-		done : function(data,status,c,d) {
-			if(status == "success") {
-
-			}
-			else if(status == "error") {
-
+		done : function(result) {
+			
+			if(result.status == "OK") {
+			
+				switch(result.data.contentType.split("/")[0]) {
+					case "image":
+						result.el.parent().html("<img src=\"" + result.url +  "\" style=\"width:100%;\">");
+						break;
+					default :
+						alert("no content type returned from server");
+						break;
+				}
+			}	
+			else if(result.status == "ERROR") {
+				alert("Image upload failed");
 			}
 			
 		}

@@ -44,6 +44,7 @@
 				alert("Please use this form plugin on a form tag only")
 				return false;
 			}
+
 			form = this;
 			form.data.elements = {};//collection of form elements
 			form.data.valid=false;
@@ -55,6 +56,7 @@
 			$.ajax({
 				async: false,
 				type: "GET",
+				cache: false,
 				url: globalOptions.path + "form-element.js",
 				dataType: 'script'
 			});	
@@ -98,6 +100,7 @@
 							$.ajax({
 								async: false,
 								type: "GET",
+								cache: false,
 								url: globalOptions.path + "location.js",
 								dataType: 'script'
 							});	
@@ -108,6 +111,7 @@
 							$.ajax({
 								async: false,
 								type: "GET",
+								cache: false,
 								url: globalOptions.path + "country-autocomplete.js",
 								dataType: 'script'
 							});	
@@ -118,6 +122,7 @@
 							$.ajax({
 								async: false,
 								type: "GET",
+								cache: false,
 								url: globalOptions.path + "fileUpload.js",
 								dataType: 'script'
 							});
@@ -182,10 +187,16 @@
 								if(data.text) {
 									message=data.text;
 								}
+
 								$button=$(globalOptions.callToAction);
-								$error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
-								$button.parent().after($error);
-								$error.fadeIn('fast');
+								if($(".error_separate").length == 0) {
+									$error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
+									$button.parent().after($error);
+									$error.fadeIn('fast');
+								}
+								else {
+									$(".error_separate").text(message);
+								}
 							}
 						}
 
