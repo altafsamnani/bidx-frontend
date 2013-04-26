@@ -169,16 +169,18 @@
 						if(data) {
 							if(data.status == 'OK') {
 								if(data.submit) {
-                                    var dynamicdata = data.data;
                                     var dyninput=null;
-                                    /* Parsing Bidx Variables and adding them as a hidden field to post to the new form*/
-                                    jQuery.each(dynamicdata, function(apikey, val) {
-                                        /* it doesnt pass name variable so rename it to gname and proceed */
-                                       apikey = (apikey=='name') ? 'dynname': apikey;
-                                       dyninput = '<input type="hidden" name="'+apikey+'" id="'+apikey+'" value="'+val+'" />';
-                                       $(form).append(dyninput);                                                                           
-                                    });
-
+                                    if(data.data) {
+	                                    /* Parsing Bidx Variables and adding them as a hidden field to post to the new form*/
+	                                    jQuery.each(data.data, function(apikey, val) {
+	                                        /* it doesnt pass name variable so rename it to gname and proceed */
+	                                       apikey = (apikey=='name') ? 'dynname': apikey;
+	                                       dyninput = '<input type="hidden" name="'+apikey+'" id="'+apikey+'" value="'+val+'" />';
+	                                       $(form).append(dyninput);                                                                           
+	                                    });
+	
+                                    }
+                                    
                                      $(form).attr('action', data.submit);
                                      $(form).attr('method', 'POST');
                                      $(form).submit();
