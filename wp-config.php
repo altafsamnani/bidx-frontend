@@ -22,7 +22,7 @@ define('DB_NAME', 'bidx');
 define('DB_USER', 'bidx');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'bidx');
+define('DB_PASSWORD', 'bidx12345');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
@@ -32,12 +32,6 @@ define('DB_CHARSET', 'utf8');
 
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
-
-/** Bidx API */
-define('API_URL','http://test.bidx.net/api/v1/');
-
-/** Bidx Document Upload */
-define('IMG_URL','https://test.bidx.net/dl/document/');
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -84,7 +78,21 @@ define('WPLANG', '');
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
-define('WP_DEBUG', false);
+define('WP_DEBUG_DISPLAY', false);
+
+define('WP_DEBUG', true);
+
+define('WP_DEBUG_LOG', true); 
+
+define('SAVEQUERIES', true);
+
+define('FS_METHOD','direct');
+
+define('API_URL','http://test.bidx.net/api/v1/');
+
+define('IMG_URL','https://test.bidx.net/dl/document/');
+
+/* Multisite */
 define('WP_ALLOW_MULTISITE', true);
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', true);
@@ -93,6 +101,9 @@ define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
 define('FS_METHOD','direct');
+//define('DOMAIN_CURRENT_SITE','beta.bidx.net');
+
+define('WP_DEVELOPMENT', true);
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */

@@ -755,7 +755,7 @@ function ajax_submit_action() {
 
 function bidx_register_response($requestEntityMember, $requestEntityGroup, $requestGroupData) {
 
-  $requestData = NULL;
+  $requestData = new stdClass();
 
   if ($requestEntityMember->status == 'ERROR') {
     $requestData = $requestEntityMember;
