@@ -851,9 +851,9 @@ function bidx_wrapper_response($type, $jsonData) {
     case 'logo' :
 
       $with_wrapper_data = "<script type='text/javascript'>
-  parent.window.fileuploadCallBack({
+  parent.window.fileuploadCallBack(
    {$jsonData}
-  });
+  );
    </script>";
 
       break;
