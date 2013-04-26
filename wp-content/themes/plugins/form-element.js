@@ -7,7 +7,7 @@ var Validator = function () {
 		
 	this.validate = function (e) {
 		var el = e.data;
-		var input = $(this);
+		var input = el.input;
 
 		el.validated=false;
 
