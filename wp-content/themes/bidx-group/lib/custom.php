@@ -29,6 +29,12 @@ function bidx_filter($content) {
       $hiddenElement .= '<input type="hidden" name="'. $key. '" value="'. $value. '">';
     }
   }
+
+  //Replace the redirect variable
+  if (isset($_GET['q'])) {
+    $redirect = $_GET['q'];
+    $content  = str_replace('[!Q!]', $redirect, $content);
+  }
   // Add variables as hidden that cant be replaced from Post Variables to keep the previous state
   $content = str_replace('</form>', $hiddenElement.'</form>', $content);
 

@@ -30,6 +30,57 @@ if (!function_exists('htmlspecialchars_decode')) {
   }
 
 }
+/*
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Check the Bidx Session
+ *
+ * @param String $username
+ * @param String $password
+ *
+ * @return Loggedin User
+ */
+
+function bidx_process_mail() {
+
+ 
+  //$is_session = bidx_check_session();
+ // if($is_session) {
+ //   echo 'session milaaa';exit;
+  //}
+
+  $pre_data = bidx_wordpress_pre_action('mailer');
+  $params = $pre_data['params'];
+
+  $result = call_bidx_service($params['action'], $params['data'], $params['protocol']);
+
+  $requestData = bidx_wordpress_post_action('mailer', $result, $params['data']);
+
+  echo 'with session';
+
+  return;
+}
+
+/*
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Bidx Logn redirect for Not Logged in users
+ *
+ * @param String $username
+ * @param String $password
+ *
+ * @return Loggedin User
+ */
+function bidx_redirect_login ($groupDomain) {
+  wp_clear_auth_cookie();
+  $current_url = 'http://'  . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+  $redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode($current_url);
+
+  header("Location: $redirect_url");
+}
+
 
 
 /*
@@ -44,21 +95,27 @@ if (!function_exists('htmlspecialchars_decode')) {
  * @return Loggedin User
  */
 
-function check_bidx_session() {
+function bidx_login_session() {
 
   $body['domain'] = get_bidx_subdomain();
 
-  $result = call_bidx_service('session', $body, $method = 'GET');
+  $get_redirect = ($_GET['q']) ? $_GET['q'] : NULL;
 
-  $requestData = bidx_wordpress_post_action('sessionactive', $result, $body);
+  /*   * ** Assumed if redirect in Get means session is already checked and is asking for uname/pass and then redirect ** */
+  if (!$get_redirect) {
 
-  $requestData->redirect = NULL;
-  // If Bidx Session and Wp Session is there then redirect else clear the wp cache
-  if ($requestData->redirect) {
-    wp_redirect($requestData->redirect);
-  }
-  else {
-    wp_clear_auth_cookie();
+    $result = call_bidx_service('session', $body, $method = 'GET');
+
+    $requestData = bidx_wordpress_post_action('sessionactive', $result, $body);
+
+    // If Bidx Session and Wp Session is there then redirect else clear the wp cache
+    if ($requestData->redirect && is_user_logged_in()) {
+      wp_redirect($requestData->redirect);
+    }
+    else {
+      bidx_signout();
+      wp_clear_auth_cookie();
+    }
   }
 
   return;
@@ -88,7 +145,7 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
 
 
 
-  /*   * *********Retrieve Bidx Cookies and send back to api to check ******* */
+  /*   * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
   $cookieInfo = $_COOKIE;
   foreach ($_COOKIE as $cookieKey => $cookieValue) {
     if (preg_match("/^bidx/i", $cookieKey)) {
@@ -96,29 +153,31 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
     }
   }
 
-  /*   * ***************Set Headers ******************************** */
+  /*   * *********2. Set Headers ******************************** */
   //For Authentication
   $headers['Authorization'] = 'Basic ' . base64_encode("$authUsername:$authPassword");
 
-  // Is Form Upload
+  // 2.1 Is Form Upload
   if ($is_form_upload) {
     $headers['Content-Type'] = 'multipart/form-data';
   }
 
 
-  // Set the group domain header
+  // 2.2 Set the group domain header
   if (isset($body['domain'])) {
     $headers['X-Bidx-Group-Domain'] = $body['domain'];
+
     //$bidx_get_params.= '&groupDomain=' . $body['domain'];
   }
 
-  /*   * ********* Decide method to use************** */
+  /*   * ********* 3. Decide method to use************** */
   if ($bidxMethod == 'GET') {
     $bidx_get_params = ($body) ? '&' . http_build_query($body) : '';
     $body = NULL;
   }
 
-  /*   * *********** WP Http Request ******************************* */
+ 
+  /*   * *********** 4. WP Http Request ******************************* */
 
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
@@ -129,7 +188,7 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
     'cookies' => $cookieArr
       ));
 
-  /*   * *********** Set Cookies if Exist ************************* */
+  /*   * *********** 5. Set Cookies if Exist ************************* */
   $cookies = $result['cookies'];
   if (count($cookies)) {
     foreach ($cookies as $bidxAuthCookie) {
@@ -268,7 +327,7 @@ function clear_bidx_cookies() {
 
 /**
  * @author Altaf Samnani
- * @version 1.0 
+ * @version 1.0
  *
  * Grab the subdomain portion of the URL. If there is no sub-domain, the root
  * domain is passed back. By default, this function *returns* the value as a
@@ -344,12 +403,11 @@ function get_redirect($url, $requestData, $domain = NULL) {
   $domain = (WP_DEVELOPMENT) ? 'site1.bidx.dev' : $domain;
   $redirect = NULL;
   /*   * **** If have a particular Redirect in params *************** */
-  if (isset($_GET['redirect'])) {
-    $redirect = $_GET['redirect'];
+  if (isset($_POST['redirect_to'])) {
+    $redirect_to = $_POST['redirect_to'];
+    $redirect = base64_decode($redirect_to);
+
   }
-  //else if (isset($_POST['redirect_to'])) {
-  //  $redirect = $_POST['redirect_to'];
-  //}
 
   /*   * ***** Decide on Redirect/Submit Logic ********** */
   switch ($url) {
@@ -406,8 +464,16 @@ function bidx_wordpress_post_action($url, $result, $body) {
   else if ($httpCode >= 300 && $httpCode < 400) {
     $requestData->status = 'ERROR';
   }
-  else {
+  else if($httpCode == 401 ){
     $requestData->status = 'ERROR';
+    //If user not logged in and its not ajax call then redirect him to the login screen
+    $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
+          strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+
+    if( !$is_ajax ) {
+      bidx_redirect_login($groupName);
+
+    }
   }
 
   //Write logic what If error and what if its ok (ex Redirect)
@@ -492,7 +558,6 @@ function bidx_wordpress_post_action($url, $result, $body) {
 
     case 'logo':
 
-      $requestData->url = IMG_URL . '/565/whatever';
       break;
     default :
   }
@@ -586,6 +651,17 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
       $params['domain'] = $wp_site['subdomain'];
       break;
 
+    case 'mailer' :
+      $get_data = $_GET;
+      $params['protocol'] = $get_data['protocol'];
+      $params['action'] = $get_data['action'];
+      $get_data['domain'] = $get_data['groupDomain'];
+      unset($get_data['protocol']);
+      unset($get_data['action']);
+      unset($get_data['groupDomain']);
+      $params['data'] = $get_data;
+      break;
+
     case 'entitygroup' :
       $response['status'] = 'ok';
       $params['bidxEntityType'] = 'bidxBusinessGroup';
@@ -617,6 +693,7 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
       $params['id'] = $id;
       $params['domain'] = $domain;
       break;
+
 
     default:
       $response['status'] = 'ok';
@@ -741,7 +818,7 @@ function bidx_upload_action() {
 
           $result = call_bidx_service('entity/' . $params['id'] . '/document', $params, 'POST', true);
 
-          $request = bidx_wordpress_post_action($type, $result, $body);          
+          $request = bidx_wordpress_post_action($type, $result, $body);
 
           break;
 
@@ -750,9 +827,10 @@ function bidx_upload_action() {
 
           break;
       }
-    } else {
+    }
+    else {
       $request->status = 'ERROR';
-      $request->text   = "The uploaded file doesn't seem to be an image.";
+      $request->text = "The uploaded file doesn't seem to be an image.";
     }
 
     $jsonData = json_encode($request);
@@ -831,23 +909,6 @@ function ajax_register_action() {
   die(); // stop executing script
 }
 
-/* Assign theme/pages/metadata when site is created
- * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
- * @author Altaf Samnani
- * @version 1.0
- * @description  Assign theme/pages/metadata when site is created
- * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
- * http://bigbigtech.com/2009/07/wordpress-mu-cross-posting-with-switch_to_blog/
- * http://wordpress.org/support/topic/sharing-page-content-across-networked-install?replies=6
- *
- * Add Custom Page attributes
- *
- * @param bool $echo
- */
-//
-
-add_action('wpmu_new_blog', 'assign_bidxgroup_theme_page');
-
 function assign_bidxgroup_theme_page($blog_id) {
   global $wpdb;
 
@@ -891,7 +952,7 @@ function assign_bidxgroup_theme_page($blog_id) {
  * @author Altaf Samnani
  * @version 1.0
  *
- * Add Custom Page attributes 
+ * Add Custom Page attributes
  *
  * @param bool $echo
  */

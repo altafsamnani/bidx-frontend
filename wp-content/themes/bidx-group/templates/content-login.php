@@ -3,8 +3,7 @@
 		<div class="block-login">
 			<?php while (have_posts()) : the_post(); ?>
 			  <?php
-        check_bidx_session();
-        
+        bidx_login_session();
         the_content();
 
         ?>
@@ -13,7 +12,6 @@
 		</div>
 	</div>
 </div>
-
 
 <?php add_action('wp_footer', 'addToFooter',200);
 
