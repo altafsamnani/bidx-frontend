@@ -41,7 +41,7 @@
 		uploadFile : function(){
 			var $this=$(this);
 			
-			
+			methods.toggleAjaxLoader($this);
 			if(window.FormData !== undefined) {
 				var formData = new FormData();
 				formData.append($this.attr("name"),this.files[0]);
@@ -121,10 +121,10 @@
 		done : function(result) {
 			
 			if(result.status == "OK") {
-			
+				console.log(result);
 				switch(result.data.contentType.split("/")[0]) {
 					case "image":
-						result.el.parent().html("<img src=\"" + result.url +  "\" style=\"width:100%;\">");
+						result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
 						break;
 					default :
 						alert("no content type returned from server");
@@ -135,6 +135,18 @@
 				alert("Image upload failed");
 			}
 			
+		},
+		toggleAjaxLoader : function (el) {
+			//add wrapper for positioning
+			if(!el.ajaxloader) {
+				var wrapper = el.wrap("<div class=\"ajaxwrapper\"></div>").after("<div class=\"ajaxloader\"></div>");
+				el.ajaxloader = true;
+			}
+			else {
+
+				el.unwrap().next().remove();
+				el.ajaxloader = false;
+			}
 		}
 	}
 

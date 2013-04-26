@@ -1,396 +1,945 @@
 
+
 <form>
-	<div class="formfield">
-		<label>Business summary name</label>
-		<input type="text" name="name" placeholder="Please type your business summary name" />
-	</div>
 
-	<div class="formfield">
-		<label>Tagline or slogan</label>
-		<textarea name="slogan" rows="2" cols="50" ></textarea>
-	</div>
+<div class="formfield">
+<label>Business summary name</label>
+<input type="text" name="name" placeholder="Please type your business summary name" />
+</div>
 
-	<div class="formfield">
-		<label>Summary</label>
-		<textarea name="summary" rows="3" cols="50" ></textarea>
-	</div>
+<div class="formfield">
+<label>Tagline or slogan</label>
+<textarea name="slogan" rows="2" cols="50" >
+</textarea>
+</div>
 
-	<div class="formfield">
-		<label>Reason for entry into line of business</label>
-		<textarea name="reasonForEntry" rows="3" cols="50" ></textarea>
-	</div>
+<div class="formfield">
+<label>Summary</label>
+<textarea name="summary" rows="3" cols="50" >
+</textarea>
+</div>
 
-	<div class="formfield">
-	<label>Focus industry</label>
-		<select name="focusIndustry" multiple="true" >
-			<option value="">Please select your focus industry</option>
-			<option value="AccountingAuditorsTaxBookkeepers">Accounting, Auditors, Tax & Bookkeepers</option>
-			<option value="AdvertisingPublicRelations">Advertising & Public Relations</option>
-			<option value="AgricultureProductsServices">Agriculture Products & Services</option>
-			<option value="AnimalProducts">Animal Products</option>
-			<option value="ApparelAccessoriesTextiles">Apparel / Accessories / Textiles</option>
-			<option value="ArchitecturalEngineeringTechnical">Architectural, Engineering & Technical</option>
-			<option value="BankingFinancialServices">Banking & Financial Services</option>
-			<option value="BeveragesAlcoholicNon-alcoholic">Beverages, Alcoholic & Non-alcoholic</option>
-			<option value="BuildingSystemsMaterialsFixtures">Building Systems / Materials / Fixtures</option>
-			<option value="BusinessConsultancyAdvisory">Business Consultancy & Advisory</option>
-			<option value="Chemicals">Chemicals</option>
-			<option value="ComputerITProductsServices">Computer & IT Products & Services</option>
-			<option value="ConstructionGeneral">Construction General</option>
-			<option value="EducationTraining">Education & Training</option>
-			<option value="EntertainmentRecreation">Entertainment & Recreation</option>
-			<option value="EnvironmentalProductsServices">Environmental Products & Services</option>
-			<option value="ExecutiveSearchPersonnelRecruitment">Executive Search & Personnel Recruitment</option>
-			<option value="FarmEquipment">Farm Equipment</option>
-			<option value="FoodManufacturingDistributionServices">Food Manufacturing / Distribution / Services</option>
-			<option value="GasesNaturalProcessed">Gases, Natural & Processed</option>
-			<option value="HealthHygieneProductsServices">Health / Hygiene Products & Services</option>
-			<option value="HotelsRestaurantsCaterers">Hotels / Restaurants / Caterers</option>
-			<option value="IndustrialEquipment">Industrial Equipment</option>
-			<option value="InformationCommunicationsTechnology">Information & Communications Technology</option>
-			<option value="InspectionSafetySecurity">Inspection, Safety & Security</option>
-			<option value="Insurance">Insurance</option>
-			<option value="LegalPractice">Legal Practice</option>
-			<option value="MarketingCommunications">Marketing & Communications</option>
-			<option value="OutplacementServices">Outplacement Services</option>
-			<option value="PetroleumPetroleumProducts">Petroleum & Petroleum Products</option>
-			<option value="PharmaceuticalMedicinalProducts">Pharmaceutical & Medicinal Products</option>
-			<option value="PowerElectrical">Power & Electrical</option>
-			<option value="PrintingPublishing">Printing & Publishing</option>
-			<option value="PropertyRealEstateServices">Property & Real Estate Services</option>
-			<option value="RetailConsumerProducts">Retail Consumer Products</option>
-			<option value="ScientificMedicalInstruments">Scientific & Medical Instruments</option>
-			<option value="SecurityInvestigativeServicesProducts">Security, Investigative Services & Products</option>
-			<option value="SourcingTradingBuying">Sourcing, Trading & Buying</option>
-			<option value="TransportVehiclesParts">Transport Vehicles & Parts</option>
-			<option value="TransportationLogistics">Transportation & Logistics</option>
-			<option value="TravelTourism">Travel & Tourism</option>
-			<option value="WaterSanitation">Water & Sanitation</option>
-		</select>
-	</div>
+<div class="formfield">
+<label>Reason for submission</label>
+<select name="reasonForSubmission" multiple="true" >
+<option value="">Please select your reason</option>
+<option value="finance">Finance</option>
+<option value="coaching">Coaching</option>
+<option value="competition">Competitiop</option>
+<option value="findBuyer">Find buyer</option>
+<option value="findSupplier">Find supplier</option>
+</select>
+</div>
 
-	<div class="formfield">
-		<label>Country of operation</label>
-		<select name="countryOperation" multiple="true" >
-			<option value="">Please select your country of operation</option>
-			<option value="AD">Andorra</option>
-			<option value="AF">Afghanistan</option>
-			<option value="AX">Åland Islands</option>
-			<option value="AL">Albania</option>
-			<option value="DZ">Algeria</option>
-			<option value="AS">American Samoa</option>
-			<option value="AO">Angola</option>
-			<option value="AI">Anguilla</option>
-			<option value="AQ">Antarctica</option>
-			<option value="AG">Antigua and Barbuda</option>
-			<option value="AR">Argentina</option>
-			<option value="AM">Armenia</option>
-			<option value="AW">Aruba</option>
-			<option value="AU">Australia</option>
-			<option value="AT">Austria</option>
-			<option value="AZ">Azerbaijan</option>
-			<option value="BS">Bahamas</option>
-			<option value="BH">Bahrain</option>
-			<option value="BD">Bangladesh</option>
-			<option value="BB">Barbados</option>
-			<option value="BY">Belarus</option>
-			<option value="BE">Belgium</option>
-			<option value="BZ">Belize</option>
-			<option value="BJ">Benin</option>
-			<option value="BM">Bermuda</option>
-			<option value="BT">Bhutan</option>
-			<option value="BO">Bolivia</option>
-			<option value="BQ">Bonaire</option>
-			<option value="BA">Bosnia and Herzegovina</option>
-			<option value="BW">Botswana</option>
-			<option value="BV">Bouvet Island</option>
-			<option value="BR">Brazil</option>
-			<option value="IO">British Indian Ocean Territory</option>
-			<option value="VG">British Virgin Islands</option>
-			<option value="BN">Brunei</option>
-			<option value="BG">Bulgaria</option>
-			<option value="BF">Burkina Faso</option>
-			<option value="BI">Burundi</option>
-			<option value="KH">Cambodia</option>
-			<option value="CM">Cameroon</option>
-			<option value="CA">Canada</option>
-			<option value="CV">Cape Verde</option>
-			<option value="KY">Cayman Islands</option>
-			<option value="CF">Central African Republic</option>
-			<option value="TD">Chad</option>
-			<option value="CL">Chile</option>
-			<option value="CN">China</option>
-			<option value="CX">Christmas Island</option>
-			<option value="CC">Cocos Islands</option>
-			<option value="CO">Colombia</option>
-			<option value="KM">Comoros</option>
-			<option value="CG">Congo</option>
-			<option value="CK">Cook Islands</option>
-			<option value="CR">Costa Rica</option>
-			<option value="CI">Côte d'Ivoire</option>
-			<option value="HR">Croatia</option>
-			<option value="CU">Cuba</option>
-			<option value="CW">Curaçao</option>
-			<option value="CY">Cyprus</option>
-			<option value="CZ">Czech Republic</option>
-			<option value="DK">Denmark</option>
-			<option value="DJ">Djibouti</option>
-			<option value="DM">Dominica</option>
-			<option value="DO">Dominican Republic</option>
-			<option value="EC">Ecuador</option>
-			<option value="EG">Egypt</option>
-			<option value="SV">El Salvador</option>
-			<option value="GQ">Equatorial Guinea</option>
-			<option value="ER">Eritrea</option>
-			<option value="EE">Estonia</option>
-			<option value="ET">Ethiopia</option>
-			<option value="FK">Falkland Islands</option>
-			<option value="FO">Faroe Islands</option>
-			<option value="FJ">Fiji</option>
-			<option value="FI">Finland</option>
-			<option value="FR">France</option>
-			<option value="GF">French Guiana</option>
-			<option value="PF">French Polynesia</option>
-			<option value="TF">French Southern Territories</option>
-			<option value="GA">Gabon</option>
-			<option value="GM">Gambia</option>
-			<option value="GE">Georgia</option>
-			<option value="DE">Germany</option>
-			<option value="GH">Ghana</option>
-			<option value="GI">Gibraltar</option>
-			<option value="GR">Greece</option>
-			<option value="GL">Greenland</option>
-			<option value="GD">Grenada</option>
-			<option value="GP">Guadeloupe</option>
-			<option value="GU">Guam</option>
-			<option value="GT">Guatemala</option>
-			<option value="GG">Guernsey</option>
-			<option value="GN">Guinea</option>
-			<option value="GW">Guinea-Bissau</option>
-			<option value="GY">Guyana</option>
-			<option value="HT">Haiti</option>
-			<option value="HM">Heard Island And McDonald Islands</option>
-			<option value="HN">Honduras</option>
-			<option value="HK">Hong Kong</option>
-			<option value="HU">Hungary</option>
-			<option value="IS">Iceland</option>
-			<option value="IN">India</option>
-			<option value="ID">Indonesia</option>
-			<option value="IR">Iran</option>
-			<option value="IQ">Iraq</option>
-			<option value="IE">Ireland</option>
-			<option value="IM">Isle Of Man</option>
-			<option value="IL">Israel</option>
-			<option value="IT">Italy</option>
-			<option value="JM">Jamaica</option>
-			<option value="JP">Japan</option>
-			<option value="JE">Jersey</option>
-			<option value="JO">Jordan</option>
-			<option value="KZ">Kazakhstan</option>
-			<option value="KE">Kenya</option>
-			<option value="KI">Kiribati</option>
-			<option value="KW">Kuwait</option>
-			<option value="KG">Kyrgyzstan</option>
-			<option value="LA">Laos</option>
-			<option value="LV">Latvia</option>
-			<option value="LB">Lebanon</option>
-			<option value="LS">Lesotho</option>
-			<option value="LR">Liberia</option>
-			<option value="LY">Libya</option>
-			<option value="LI">Liechtenstein</option>
-			<option value="LT">Lithuania</option>
-			<option value="LU">Luxembourg</option>
-			<option value="MO">Macao</option>
-			<option value="MK">Macedonia</option>
-			<option value="MG">Madagascar</option>
-			<option value="MW">Malawi</option>
-			<option value="MY">Malaysia</option>
-			<option value="MV">Maldives</option>
-			<option value="ML">Mali</option>
-			<option value="MT">Malta</option>
-			<option value="MH">Marshall Islands</option>
-			<option value="MQ">Martinique</option>
-			<option value="MR">Mauritania</option>
-			<option value="MU">Mauritius</option>
-			<option value="YT">Mayotte</option>
-			<option value="MX">Mexico</option>
-			<option value="FM">Micronesia</option>
-			<option value="MD">Moldova</option>
-			<option value="MC">Monaco</option>
-			<option value="MN">Mongolia</option>
-			<option value="ME">Montenegro</option>
-			<option value="MS">Montserrat</option>
-			<option value="MA">Morocco</option>
-			<option value="MZ">Mozambique</option>
-			<option value="MM">Myanmar</option>
-			<option value="NA">Namibia</option>
-			<option value="NR">Nauru</option>
-			<option value="NP">Nepal</option>
-			<option value="NL">Netherlands</option>
-			<option value="AN">Netherlands Antilles</option>
-			<option value="NC">New Caledonia</option>
-			<option value="NZ">New Zealand</option>
-			<option value="NI">Nicaragua</option>
-			<option value="NE">Niger</option>
-			<option value="NG">Nigeria</option>
-			<option value="NU">Niue</option>
-			<option value="NF">Norfolk Island</option>
-			<option value="KP">North Korea</option>
-			<option value="MP">Northern Mariana Islands</option>
-			<option value="NO">Norway</option>
-			<option value="OM">Oman</option>
-			<option value="PK">Pakistan</option>
-			<option value="PW">Palau</option>
-			<option value="PS">Palestine</option>
-			<option value="PA">Panama</option>
-			<option value="PG">Papua New Guinea</option>
-			<option value="PY">Paraguay</option>
-			<option value="PE">Peru</option>
-			<option value="PH">Philippines</option>
-			<option value="PN">Pitcairn</option>
-			<option value="PL">Poland</option>
-			<option value="PT">Portugal</option>
-			<option value="PR">Puerto Rico</option>
-			<option value="QA">Qatar</option>
-			<option value="RE">Reunion</option>
-			<option value="RO">Romania</option>
-			<option value="RU">Russia</option>
-			<option value="RW">Rwanda</option>
-			<option value="BL">Saint Barthélemy</option>
-			<option value="SH">Saint Helena</option>
-			<option value="KN">Saint Kitts And Nevis</option>
-			<option value="LC">Saint Lucia</option>
-			<option value="MF">Saint Martin</option>
-			<option value="PM">Saint Pierre And Miquelon</option>
-			<option value="VC">Saint Vincent And The Grenadines</option>
-			<option value="WS">Samoa</option>
-			<option value="SM">San Marino</option>
-			<option value="ST">Sao Tome And Principe</option>
-			<option value="SA">Saudi Arabia</option>
-			<option value="SN">Senegal</option>
-			<option value="RS">Serbia</option>
-			<option value="SC">Seychelles</option>
-			<option value="SL">Sierra Leone</option>
-			<option value="SG">Singapore</option>
-			<option value="SX">Sint Maarten (Dutch part)</option>
-			<option value="SK">Slovakia</option>
-			<option value="SI">Slovenia</option>
-			<option value="SB">Solomon Islands</option>
-			<option value="SO">Somalia</option>
-			<option value="ZA">South Africa</option>
-			<option value="GS">South Georgia And The South Sandwich Islands</option>
-			<option value="KR">South Korea</option>
-			<option value="ES">Spain</option>
-			<option value="LK">Sri Lanka</option>
-			<option value="SD">Sudan</option>
-			<option value="SR">Suriname</option>
-			<option value="SJ">Svalbard And Jan Mayen</option>
-			<option value="SZ">Swaziland</option>
-			<option value="SE">Sweden</option>
-			<option value="CH">Switzerland</option>
-			<option value="SY">Syria</option>
-			<option value="TW">Taiwan</option>
-			<option value="TJ">Tajikistan</option>
-			<option value="TZ">Tanzania</option>
-			<option value="TH">Thailand</option>
-			<option value="CD">The Democratic Republic Of Congo</option>
-			<option value="TL">Timor-Leste</option>
-			<option value="TG">Togo</option>
-			<option value="TK">Tokelau</option>
-			<option value="TO">Tonga</option>
-			<option value="TT">Trinidad and Tobago</option>
-			<option value="TN">Tunisia</option>
-			<option value="TR">Turkey</option>
-			<option value="TM">Turkmenistan</option>
-			<option value="TC">Turks And Caicos Islands</option>
-			<option value="TV">Tuvalu</option>
-			<option value="VI">U.S. Virgin Islands</option>
-			<option value="UG">Uganda</option>
-			<option value="UA">Ukraine</option>
-			<option value="AE">United Arab Emirates</option>
-			<option value="GB">United Kingdom</option>
-			<option value="US">United States</option>
-			<option value="UM">United States Minor Outlying Islands</option>
-			<option value="UY">Uruguay</option>
-			<option value="UZ">Uzbekistan</option>
-			<option value="VU">Vanuatu</option>
-			<option value="VA">Vatican</option>
-			<option value="VE">Venezuela</option>
-			<option value="VN">Vietnam</option>
-			<option value="WF">Wallis And Futuna</option>
-			<option value="EH">Western Sahara</option>
-			<option value="YE">Yemen</option>
-			<option value="ZM">Zambia</option>
-			<option value="ZW">Zimbabwe</option>
-		</select>
-	</div>
+<!-- business summary can have more than 1 industry -->
+<div class="formfield">
+<label>Focus industry (top level)</label>
+<select name="focusIndustryTopLevel" multiple="true" >
+<option value="">Please select your top level focus industry</option>
+<option value="utilities">Utilities</option>
+<option value="agriFood">Agriculture and food</option>
+<option value="ict">ICT</option>
+<option value="manufacturing">Manufacturing</option>
+</select>
+</div>
 
-	<div class="formfield">
-		<label>Stage of business</label>
-		<label for="sb-startup" class="radio"><input type="radio" id="sb-startup" name="stageBusiness" /> Startup</label>
-		<label for="sb-established" class="radio"><input type="radio" id="sb-established" name="stageBusiness"/> Established</label>
-	</div>
+<!-- uiser must select one of the following -->
+<div class="formfield">
+<label>Focus industry</label>
+<select name="focusIndustry" multiple="true" >
+<option value="">Please select your focus industry</option>
+<option value="utilities">Utilities</option>
+<option value="water">------  Water</option>
+<option value="sanitation">------  Sanitation</option>
+<option value="irrigation">------  Irrigation</option>
+<option value="waste">------  Waste</option>
+<option value="recyling">------  Recycling</option>
+<option value="renewableEnergy">------  Renewable energy</option>
+<option value="energyDistribution">------  Energy distribution</option>
+<option value="energyStorage">------  Energy storage</option>
+<option value="solarEnergy">------  Solar energy</option>
+<option value="biogas">------  Biogas</option>
+<option value="hydroEnergy">------  Hydro energy</option>
+<option value="windEnergy">------  Wind energy</option>
+<option value="agriFood">Agriculture and food</option>
+<option value="primaryAgriculture">------  Primary agriculture</option>
+<option value="forestry">------  Forestry</option>
+<option value="dairy">------  Primary agriculture</option>
+<option value="distribution">------  Distribution</option>
+<option value="fishery">------  Fishery</option>
+<option value="foodProcessing">------  Food processing</option>
+<option value="storage">------  Storage</option>
+<option value="services">Services</option>
+<option value="education">------  Education</option>
+<option value="finance">------  Finance</option>
+<option value="housing">------  Housing</option>
+<option value="healthCare">------  Health care</option>
+<option value="recycling">------  Recycling</option>
+<option value="tourism">------  Tourism</option>
+<option value="retail">------  Retail</option>
+<option value="wholesale">------  Wholesale</option>
+<option value="insurance">------  Insurance</option>
+<option value="legal">------  Legal</option>
+<option value="transport">------  Transport</option>
+<option value="cultureMedia">------  Culture media</option>
+<option value="research">------  Research</option>
+<option value="ict">ICT</option>
+<option value="hardware">------  Hardware</option>
+<option value="software">------  Software</option>
+<option value="mobile">------  Mobile</option>
+<option value="services">------  Services</option>
+<option value="manufacturing">Manufacturing</option>
+<option value="metal">------  Metal</option>
+<option value="chemical">------  Chemical</option>
+<option value="electronics">------  Electronics</option>
+<option value="machinery">------  Machinery</option>
+<option value="equipement">------  Equipement</option>
+<option value="furniture">------  Furniture</option>
+<option value="textiles">------  Textiles</option>
+<option value="recyling">------  Recycling</option>
+</select>
+</div>
 
-	<div class="formfield">
-		<label>Video pitch</label>
-		<input type="file" name="videoPitch" />
-	</div>
+<div class="formfield">
+<label>Suggested industry</label>
+<input type="text" name="suggestedIndustry" placeholder="Please type your suggested industry for inclusion" />
+</div>
 
-	<div class="formfield">
-		<label>External video pitch</label>
-		<input type="url" name="externalVideoPitch" placeholder="Please type your video link" />
-	</div>
+<!-- this should be an auto complete field where the user can add a new item -->
+<div class="formfield">
+<label>Focus industry</label>
+<select name="focusIndustry" multiple="true" >
+<option value="">Please select your focus industry</option>
+<option value="111 ">Growing of cereals (except rice), leguminous crops and oil seeds</option>
+<option value="112 ">Growing of rice</option>
+<option value="113 ">Growing of vegetables and melons, roots and tubers</option>
+<option value="114 ">Growing of sugar cane</option>
+<option value="115 ">Growing of tobacco</option>
+<option value="116 ">Growing of fibre crops</option>
+<option value="119 ">Growing of other non-perennial crops</option>
+<option value="121 ">Growing of grapes</option>
+<option value="122 ">Growing of tropical and subtropical fruits</option>
+<option value="123 ">Growing of citrus fruits</option>
+<option value="124 ">Growing of pome fruits and stone fruits</option>
+<option value="125 ">Growing of other tree and bush fruits and nuts</option>
+<option value="126 ">Growing of oleaginous fruits</option>
+<option value="127 ">Growing of beverage crops</option>
+<option value="128 ">Growing of spices, aromatic, drug and pharmaceutical crops</option>
+<option value="129 ">Growing of other perennial crops</option>
+<option value="130 ">Plant propagation</option>
+<option value="141 ">Raising of cattle and buffaloes</option>
+<option value="142 ">Raising of horses and other equines</option>
+<option value="143 ">Raising of camels and camelids</option>
+<option value="144 ">Raising of sheep and goats</option>
+<option value="145 ">Raising of swine or pigs</option>
+<option value="146 ">Raising of poultry</option>
+<option value="149 ">Raising of other animals</option>
+<option value="150 ">Mixed farming</option>
+<option value="161 ">Support activities for crop production</option>
+<option value="162 ">Support activities for animal production</option>
+<option value="163 ">Post-harvest crop activities</option>
+<option value="164 ">Seed processing for propagation</option>
+<option value="170 ">Hunting, trapping and related service activities</option>
+<option value="210 ">Silviculture and other forestry activities</option>
+<option value="220 ">Logging</option>
+<option value="230 ">Gathering of non-wood forest products</option>
+<option value="240 ">Support services to forestry</option>
+<option value="311 ">Marine fishing</option>
+<option value="312 ">Freshwater fishing</option>
+<option value="321 ">Marine aquaculture</option>
+<option value="322 ">Freshwater aquaculture</option>
+<option value="510 ">Mining of hard coal</option>
+<option value="520 ">Mining of lignite</option>
+<option value="610 ">Extraction of crude petroleum</option>
+<option value="620 ">Extraction of natural gas</option>
+<option value="710 ">Mining of iron ores</option>
+<option value="721 ">Mining of uranium and thorium ores</option>
+<option value="729 ">Mining of other non-ferrous metal ores</option>
+<option value="810 ">Quarrying of stone, sand and clay</option>
+<option value="891 ">Mining of chemical and fertilizer minerals</option>
+<option value="892 ">Extraction of peat</option>
+<option value="893 ">Extraction of salt</option>
+<option value="899 ">Other mining and quarrying n.e.c.</option>
+<option value="910 ">Support activities for petroleum and natural gas extraction</option>
+<option value="990 ">Support activities for other mining and quarrying</option>
+<option value="1010">Processing and preserving of meat</option>
+<option value="1020">Processing and preserving of fish, crustaceans and molluscs</option>
+<option value="1030">Processing and preserving of fruit and vegetables</option>
+<option value="1040">Manufacture of vegetable and animal oils and fats</option>
+<option value="1050">Manufacture of dairy products</option>
+<option value="1061">Manufacture of grain mill products</option>
+<option value="1062">Manufacture of starches and starch products</option>
+<option value="1071">Manufacture of bakery products</option>
+<option value="1072">Manufacture of sugar</option>
+<option value="1073">Manufacture of cocoa, chocolate and sugar confectionery</option>
+<option value="1074">Manufacture of macaroni, noodles, couscous and similar farinaceous products</option>
+<option value="1075">Manufacture of prepared meals and dishes</option>
+<option value="1079">Manufacture of other food products n.e.c.</option>
+<option value="1080">Manufacture of prepared animal feeds</option>
+<option value="1101">Distilling, rectifying and blending of spirits</option>
+<option value="1102">Manufacture of wines</option>
+<option value="1103">Manufacture of malt liquors and malt</option>
+<option value="1104">Manufacture of soft drinks; production of mineral waters and other bottled waters</option>
+<option value="1200">Manufacture of tobacco products</option>
+<option value="1311">Preparation and spinning of textile fibres</option>
+<option value="1312">Weaving of textiles</option>
+<option value="1313">Finishing of textiles</option>
+<option value="1391">Manufacture of knitted and crocheted fabrics</option>
+<option value="1392">Manufacture of made-up textile articles, except apparel</option>
+<option value="1393">Manufacture of carpets and rugs</option>
+<option value="1394">Manufacture of cordage, rope, twine and netting</option>
+<option value="1399">Manufacture of other textiles n.e.c.</option>
+<option value="1410">Manufacture of wearing apparel, except fur apparel</option>
+<option value="1420">Manufacture of articles of fur</option>
+<option value="1430">Manufacture of knitted and crocheted apparel</option>
+<option value="1511">Tanning and dressing of leather; dressing and dyeing of fur</option>
+<option value="1512">Manufacture of luggage, handbags and the like, saddlery and harness</option>
+<option value="1520">Manufacture of footwear</option>
+<option value="1610">Sawmilling and planing of wood</option>
+<option value="1621">Manufacture of veneer sheets and wood-based panels</option>
+<option value="1622">Manufacture of builders' carpentry and joinery</option>
+<option value="1623">Manufacture of wooden containers</option>
+<option value="1629">Manufacture of other products of wood; manufacture of articles of cork, straw and plaiting materials</option>
+<option value="1701">Manufacture of pulp, paper and paperboard</option>
+<option value="1702">Manufacture of corrugated paper and paperboard and of containers of paper and paperboard</option>
+<option value="1709">Manufacture of other articles of paper and paperboard</option>
+<option value="1811">Printing</option>
+<option value="1812">Service activities related to printing</option>
+<option value="1820">Reproduction of recorded media</option>
+<option value="1910">Manufacture of coke oven products</option>
+<option value="1920">Manufacture of refined petroleum products</option>
+<option value="2011">Manufacture of basic chemicals</option>
+<option value="2012">Manufacture of fertilizers and nitrogen compounds</option>
+<option value="2013">Manufacture of plastics and synthetic rubber in primary forms</option>
+<option value="2021">Manufacture of pesticides and other agrochemical products</option>
+<option value="2022">Manufacture of paints, varnishes and similar coatings, printing ink and mastics</option>
+<option value="2023">Manufacture of soap and detergents, cleaning and polishing preparations, perfumes and toilet preparations</option>
+<option value="2029">Manufacture of other chemical products n.e.c.</option>
+<option value="2030">Manufacture of man-made fibres</option>
+<option value="2100">Manufacture of pharmaceuticals, medicinal chemical and botanical products</option>
+<option value="2211">Manufacture of rubber tyres and tubes; retreading and rebuilding of rubber tyres</option>
+<option value="2219">Manufacture of other rubber products</option>
+<option value="2220">Manufacture of plastics products</option>
+<option value="2310">Manufacture of glass and glass products</option>
+<option value="2391">Manufacture of refractory products</option>
+<option value="2392">Manufacture of clay building materials</option>
+<option value="2393">Manufacture of other porcelain and ceramic products</option>
+<option value="2394">Manufacture of cement, lime and plaster</option>
+<option value="2395">Manufacture of articles of concrete, cement and plaster</option>
+<option value="2396">Cutting, shaping and finishing of stone</option>
+<option value="2399">Manufacture of other non-metallic mineral products n.e.c.</option>
+<option value="2410">Manufacture of basic iron and steel</option>
+<option value="2420">Manufacture of basic precious and other non-ferrous metals</option>
+<option value="2431">Casting of iron and steel</option>
+<option value="2432">Casting of non-ferrous metals</option>
+<option value="2511">Manufacture of structural metal products</option>
+<option value="2512">Manufacture of tanks, reservoirs and containers of metal</option>
+<option value="2513">Manufacture of steam generators, except central heating hot water boilers</option>
+<option value="2520">Manufacture of weapons and ammunition</option>
+<option value="2591">Forging, pressing, stamping and roll-forming of metal; powder metallurgy</option>
+<option value="2592">Treatment and coating of metals; machining</option>
+<option value="2593">Manufacture of cutlery, hand tools and general hardware</option>
+<option value="2599">Manufacture of other fabricated metal products n.e.c.</option>
+<option value="2610">Manufacture of electronic components and boards</option>
+<option value="2620">Manufacture of computers and peripheral equipment</option>
+<option value="2630">Manufacture of communication equipment</option>
+<option value="2640">Manufacture of consumer electronics</option>
+<option value="2651">Manufacture of measuring, testing, navigating and control equipment</option>
+<option value="2652">Manufacture of watches and clocks</option>
+<option value="2660">Manufacture of irradiation, electromedical and electrotherapeutic equipment</option>
+<option value="2670">Manufacture of optical instruments and photographic equipment</option>
+<option value="2680">Manufacture of magnetic and optical media</option>
+<option value="2710">Manufacture of electric motors, generators, transformers and electricity distribution and control apparatus</option>
+<option value="2720">Manufacture of batteries and accumulators</option>
+<option value="2731">Manufacture of fibre optic cables</option>
+<option value="2732">Manufacture of other electronic and electric wires and cables</option>
+<option value="2733">Manufacture of wiring devices</option>
+<option value="2740">Manufacture of electric lighting equipment</option>
+<option value="2750">Manufacture of domestic appliances</option>
+<option value="2790">Manufacture of other electrical equipment</option>
+<option value="2811">Manufacture of engines and turbines, except aircraft, vehicle and cycle engines</option>
+<option value="2812">Manufacture of fluid power equipment</option>
+<option value="2813">Manufacture of other pumps, compressors, taps and valves</option>
+<option value="2814">Manufacture of bearings, gears, gearing and driving elements</option>
+<option value="2815">Manufacture of ovens, furnaces and furnace burners</option>
+<option value="2816">Manufacture of lifting and handling equipment</option>
+<option value="2817">Manufacture of office machinery and equipment (except computers and peripheral equipment)</option>
+<option value="2818">Manufacture of power-driven hand tools</option>
+<option value="2819">Manufacture of other general-purpose machinery</option>
+<option value="2821">Manufacture of agricultural and forestry machinery</option>
+<option value="2822">Manufacture of metal-forming machinery and machine tools</option>
+<option value="2823">Manufacture of machinery for metallurgy</option>
+<option value="2824">Manufacture of machinery for mining, quarrying and construction</option>
+<option value="2825">Manufacture of machinery for food, beverage and tobacco processing</option>
+<option value="2826">Manufacture of machinery for textile, apparel and leather production</option>
+<option value="2829">Manufacture of other special-purpose machinery</option>
+<option value="2910">Manufacture of motor vehicles</option>
+<option value="2920">Manufacture of bodies (coachwork) for motor vehicles; manufacture of trailers and semi-trailers</option>
+<option value="2930">Manufacture of parts and accessories for motor vehicles</option>
+<option value="3011">Building of ships and floating structures</option>
+<option value="3012">Building of pleasure and sporting boats</option>
+<option value="3020">Manufacture of railway locomotives and rolling stock</option>
+<option value="3030">Manufacture of air and spacecraft and related machinery</option>
+<option value="3040">Manufacture of military fighting vehicles</option>
+<option value="3091">Manufacture of motorcycles</option>
+<option value="3092">Manufacture of bicycles and invalid carriages</option>
+<option value="3099">Manufacture of other transport equipment n.e.c.</option>
+<option value="3100">Manufacture of furniture</option>
+<option value="3211">Manufacture of jewellery and related articles</option>
+<option value="3212">Manufacture of imitation jewellery and related articles</option>
+<option value="3220">Manufacture of musical instruments</option>
+<option value="3230">Manufacture of sports goods</option>
+<option value="3240">Manufacture of games and toys</option>
+<option value="3250">Manufacture of medical and dental instruments and supplies</option>
+<option value="3290">Other manufacturing n.e.c.</option>
+<option value="3311">Repair of fabricated metal products</option>
+<option value="3312">Repair of machinery</option>
+<option value="3313">Repair of electronic and optical equipment</option>
+<option value="3314">Repair of electrical equipment</option>
+<option value="3315">Repair of transport equipment, except motor vehicles</option>
+<option value="3319">Repair of other equipment</option>
+<option value="3320">Installation of industrial machinery and equipment</option>
+<option value="3510">Electric power generation, transmission and distribution</option>
+<option value="3520">Manufacture of gas; distribution of gaseous fuels through mains</option>
+<option value="3530">Steam and air conditioning supply</option>
+<option value="3600">Water collection, treatment and supply</option>
+<option value="3700">Sewerage</option>
+<option value="3811">Collection of non-hazardous waste</option>
+<option value="3812">Collection of hazardous waste</option>
+<option value="3821">Treatment and disposal of non-hazardous waste</option>
+<option value="3822">Treatment and disposal of hazardous waste</option>
+<option value="3830">Materials recovery</option>
+<option value="3900">Remediation activities and other waste management services</option>
+<option value="4100">Construction of buildings</option>
+<option value="4210">Construction of roads and railways</option>
+<option value="4220">Construction of utility projects</option>
+<option value="4290">Construction of other civil engineering projects</option>
+<option value="4311">Demolition</option>
+<option value="4312">Site preparation</option>
+<option value="4321">Electrical installation</option>
+<option value="4322">Plumbing, heat and air-conditioning installation</option>
+<option value="4329">Other construction installation</option>
+<option value="4330">Building completion and finishing</option>
+<option value="4390">Other specialized construction activities</option>
+<option value="4510">Sale of motor vehicles</option>
+<option value="4520">Maintenance and repair of motor vehicles</option>
+<option value="4530">Sale of motor vehicle parts and accessories</option>
+<option value="4540">Sale, maintenance and repair of motorcycles and related parts and accessories</option>
+<option value="4610">Wholesale on a fee or contract basis</option>
+<option value="4620">Wholesale of agricultural raw materials and live animals</option>
+<option value="4630">Wholesale of food, beverages and tobacco</option>
+<option value="4641">Wholesale of textiles, clothing and footwear</option>
+<option value="4649">Wholesale of other household goods</option>
+<option value="4651">Wholesale of computers, computer peripheral equipment and software</option>
+<option value="4652">Wholesale of electronic and telecommunications equipment and parts</option>
+<option value="4653">Wholesale of agricultural machinery, equipment and supplies</option>
+<option value="4659">Wholesale of other machinery and equipment</option>
+<option value="4661">Wholesale of solid, liquid and gaseous fuels and related products</option>
+<option value="4662">Wholesale of metals and metal ores</option>
+<option value="4663">Wholesale of construction materials, hardware, plumbing and heating equipment and supplies</option>
+<option value="4669">Wholesale of waste and scrap and other products n.e.c.</option>
+<option value="4690">Non-specialized wholesale trade</option>
+<option value="4711">Retail sale in non-specialized stores with food, beverages or tobacco predominating</option>
+<option value="4719">Other retail sale in non-specialized stores</option>
+<option value="4721">Retail sale of food in specialized stores</option>
+<option value="4722">Retail sale of beverages in specialized stores</option>
+<option value="4723">Retail sale of tobacco products in specialized stores</option>
+<option value="4730">Retail sale of automotive fuel in specialized stores</option>
+<option value="4741">Retail sale of computers, peripheral units, software and telecommunications equipment in specialized stores</option>
+<option value="4742">Retail sale of audio and video equipment in specialized stores</option>
+<option value="4751">Retail sale of textiles in specialized stores</option>
+<option value="4752">Retail sale of hardware, paints and glass in specialized stores</option>
+<option value="4753">Retail sale of carpets, rugs, wall and floor coverings in specialized stores</option>
+<option value="4759">Retail sale of electrical household appliances, furniture, lighting equipment and other household articles in specialized stores</option>
+<option value="4761">Retail sale of books, newspapers and stationary in specialized stores</option>
+<option value="4762">Retail sale of music and video recordings in specialized stores</option>
+<option value="4763">Retail sale of sporting equipment in specialized stores</option>
+<option value="4764">Retail sale of games and toys in specialized stores</option>
+<option value="4771">Retail sale of clothing, footwear and leather articles in specialized stores</option>
+<option value="4772">Retail sale of pharmaceutical and medical goods, cosmetic and toilet articles in specialized stores</option>
+<option value="4773">Other retail sale of new goods in specialized stores</option>
+<option value="4774">Retail sale of second-hand goods</option>
+<option value="4781">Retail sale via stalls and markets of food, beverages and tobacco products</option>
+<option value="4782">Retail sale via stalls and markets of textiles, clothing and footwear</option>
+<option value="4789">Retail sale via stalls and markets of other goods</option>
+<option value="4791">Retail sale via mail order houses or via Internet</option>
+<option value="4799">Other retail sale not in stores, stalls or markets</option>
+<option value="4911">Passenger rail transport, interurban</option>
+<option value="4912">Freight rail transport</option>
+<option value="4921">Urban and suburban passenger land transport</option>
+<option value="4922">Other passenger land transport</option>
+<option value="4923">Freight transport by road</option>
+<option value="4930">Transport via pipeline</option>
+<option value="5011">Sea and coastal passenger water transport</option>
+<option value="5012">Sea and coastal freight water transport</option>
+<option value="5021">Inland passenger water transport</option>
+<option value="5022">Inland freight water transport</option>
+<option value="5110">Passenger air transport</option>
+<option value="5120">Freight air transport</option>
+<option value="5210">Warehousing and storage</option>
+<option value="5221">Service activities incidental to land transportation</option>
+<option value="5222">Service activities incidental to water transportation</option>
+<option value="5223">Service activities incidental to air transportation</option>
+<option value="5224">Cargo handling</option>
+<option value="5229">Other transportation support activities</option>
+<option value="5310">Postal activities</option>
+<option value="5320">Courier activities</option>
+<option value="5510">Short term accommodation activities</option>
+<option value="5520">Camping grounds, recreational vehicle parks and trailer parks</option>
+<option value="5590">Other accommodation</option>
+<option value="5610">Restaurants and mobile food service activities</option>
+<option value="5621">Event catering</option>
+<option value="5629">Other food service activities</option>
+<option value="5630">Beverage serving activities</option>
+<option value="5811">Book publishing</option>
+<option value="5812">Publishing of directories and mailing lists</option>
+<option value="5813">Publishing of newspapers, journals and periodicals</option>
+<option value="5819">Other publishing activities</option>
+<option value="5820">Software publishing</option>
+<option value="5911">Motion picture, video and television programme production activities</option>
+<option value="5912">Motion picture, video and television programme post-production activities</option>
+<option value="5913">Motion picture, video and television programme distribution activities</option>
+<option value="5914">Motion picture projection activities</option>
+<option value="5920">Sound recording and music publishing activities</option>
+<option value="6010">Radio broadcasting</option>
+<option value="6020">Television programming and broadcasting activities</option>
+<option value="6110">Wired telecommunications activities</option>
+<option value="6120">Wireless telecommunications activities</option>
+<option value="6130">Satellite telecommunications activities</option>
+<option value="6190">Other telecommunications activities</option>
+<option value="6201">Computer programming activities</option>
+<option value="6202">Computer consultancy and computer facilities management activities</option>
+<option value="6209">Other information technology and computer service activities</option>
+<option value="6311">Data processing, hosting and related activities</option>
+<option value="6312">Web portals</option>
+<option value="6391">News agency activities</option>
+<option value="6399">Other information service activities n.e.c.</option>
+<option value="6411">Central banking</option>
+<option value="6419">Other monetary intermediation</option>
+<option value="6420">Activities of holding companies</option>
+<option value="6430">Trusts, funds and similar financial entities</option>
+<option value="6491">Financial leasing</option>
+<option value="6492">Other credit granting</option>
+<option value="6499">Other financial service activities, except insurance and pension funding activities, n.e.c.</option>
+<option value="6511">Life insurance</option>
+<option value="6512">Non-life insurance</option>
+<option value="6520">Reinsurance</option>
+<option value="6530">Pension funding</option>
+<option value="6611">Administration of financial markets</option>
+<option value="6612">Security and commodity contracts brokerage</option>
+<option value="6619">Other activities auxiliary to financial service activities</option>
+<option value="6621">Risk and damage evaluation</option>
+<option value="6622">Activities of insurance agents and brokers</option>
+<option value="6629">Other activities auxiliary to insurance and pension funding</option>
+<option value="6630">Fund management activities</option>
+<option value="6810">Real estate activities with own or leased property</option>
+<option value="6820">Real estate activities on a fee or contract basis</option>
+<option value="6910">Legal activities</option>
+<option value="6920">Accounting, bookkeeping and auditing activities; tax consultancy</option>
+<option value="7010">Activities of head offices</option>
+<option value="7020">Management consultancy activities</option>
+<option value="7110">Architectural and engineering activities and related technical consultancy</option>
+<option value="7120">Technical testing and analysis</option>
+<option value="7210">Research and experimental development on natural sciences and engineering</option>
+<option value="7220">Research and experimental development on social sciences and humanities</option>
+<option value="7310">Advertising</option>
+<option value="7320">Market research and public opinion polling</option>
+<option value="7410">Specialized design activities</option>
+<option value="7420">Photographic activities</option>
+<option value="7490">Other professional, scientific and technical activities n.e.c.</option>
+<option value="7500">Veterinary activities</option>
+<option value="7710">Renting and leasing of motor vehicles</option>
+<option value="7721">Renting and leasing of recreational and sports goods</option>
+<option value="7722">Renting of video tapes and disks</option>
+<option value="7729">Renting and leasing of other personal and household goods</option>
+<option value="7730">Renting and leasing of other machinery, equipment and tangible goods</option>
+<option value="7740">Leasing of intellectual property and similar products, except copyrighted works</option>
+<option value="7810">Activities of employment placement agencies</option>
+<option value="7820">Temporary employment agency activities</option>
+<option value="7830">Other human resources provision</option>
+<option value="7911">Travel agency activities</option>
+<option value="7912">Tour operator activities</option>
+<option value="7990">Other reservation service and related activities</option>
+<option value="8010">Private security activities</option>
+<option value="8020">Security systems service activities</option>
+<option value="8030">Investigation activities</option>
+<option value="8110">Combined facilities support activities</option>
+<option value="8121">General cleaning of buildings</option>
+<option value="8129">Other building and industrial cleaning activities</option>
+<option value="8130">Landscape care and maintenance service activities</option>
+<option value="8211">Combined office administrative service activities</option>
+<option value="8219">Photocopying, document preparation and other specialized office support activities</option>
+<option value="8220">Activities of call centres</option>
+<option value="8230">Organization of conventions and trade shows</option>
+<option value="8291">Activities of collection agencies and credit bureaus</option>
+<option value="8292">Packaging activities</option>
+<option value="8299">Other business support service activities n.e.c.</option>
+<option value="8411">General public administration activities</option>
+<option value="8412">Regulation of the activities of providing health care, education, cultural services and other social services, excluding social security</option>
+<option value="8413">Regulation of and contribution to more efficient operation of businesses</option>
+<option value="8421">Foreign affairs</option>
+<option value="8422">Defence activities</option>
+<option value="8423">Public order and safety activities</option>
+<option value="8430">Compulsory social security activities</option>
+<option value="8510">Pre-primary and primary education</option>
+<option value="8521">General secondary education</option>
+<option value="8522">Technical and vocational secondary education</option>
+<option value="8530">Higher education</option>
+<option value="8541">Sports and recreation education</option>
+<option value="8542">Cultural education</option>
+<option value="8549">Other education n.e.c.</option>
+<option value="8550">Educational support activities</option>
+<option value="8610">Hospital activities</option>
+<option value="8620">Medical and dental practice activities</option>
+<option value="8690">Other human health activities</option>
+<option value="8710">Residential nursing care facilities</option>
+<option value="8720">Residential care activities for mental retardation, mental health and substance abuse</option>
+<option value="8730">Residential care activities for the elderly and disabled</option>
+<option value="8790">Other residential care activities</option>
+<option value="8810">Social work activities without accommodation for the elderly and disabled</option>
+<option value="8890">Other social work activities without accommodation</option>
+<option value="9000">Creative, arts and entertainment activities</option>
+<option value="9101">Library and archives activities</option>
+<option value="9102">Museums activities and operation of historical sites and buildings</option>
+<option value="9103">Botanical and zoological gardens and nature reserves activities</option>
+<option value="9200">Gambling and betting activities</option>
+<option value="9311">Operation of sports facilities</option>
+<option value="9312">Activities of sports clubs</option>
+<option value="9319">Other sports activities</option>
+<option value="9321">Activities of amusement parks and theme parks</option>
+<option value="9329">Other amusement and recreation activities n.e.c.</option>
+<option value="9411">Activities of business and employers membership organizations</option>
+<option value="9412">Activities of professional membership organizations</option>
+<option value="9420">Activities of trade unions</option>
+<option value="9491">Activities of religious organizations</option>
+<option value="9492">Activities of political organizations</option>
+<option value="9499">Activities of other membership organizations n.e.c.</option>
+<option value="9511">Repair of computers and peripheral equipment</option>
+<option value="9512">Repair of communication equipment</option>
+<option value="9521">Repair of consumer electronics</option>
+<option value="9522">Repair of household appliances and home and garden equipment</option>
+<option value="9523">Repair of footwear and leather goods</option>
+<option value="9524">Repair of furniture and home furnishings</option>
+<option value="9529">Repair of other personal and household goods</option>
+<option value="9601">Washing and (dry-) cleaning of textile and fur products</option>
+<option value="9602">Hairdressing and other beauty treatment</option>
+<option value="9603">Funeral and related activities</option>
+<option value="9609">Other personal service activities n.e.c.</option>
+<option value="9700">Activities of households as employers of domestic personnel</option>
+<option value="9810">Undifferentiated goods-producing activities of private households for own use</option>
+<option value="9820">Undifferentiated service-producing activities of private households for own use</option>
+<option value="9900">Activities of extraterritorial organizations and bodies</option>
+</select>
+</div>
 
-	<div class="formfield">
-		<label>Audio pitch</label>
-		<input type="file" name="audioPitch" />
-	</div>
+<div class="formfield">
+<label>Suggested product service</label>
+<input type="text" name="suggestedProductService" placeholder="Please type your product service for inclusion" />
+</div>
 
-	<div class="formfield">
-		<label>Personal role</label>
-		<textarea name="personalRole" rows="2" cols="50" ></textarea>
-	</div>
+<div class="formfield">
+<label>Social impact</label>
+<select name="socialImpact" multiple="true" >
+<option value="">Please select your social impact</option>
+<option value="povertyReduction">Poverty reduction</option>      
+<option value="jobCreation">Job creation</option>       
+<option value="womenBusiness">Women in business</option>
+<option value="socialInclusion">Social inclusion</option>
+<option value="urbanRegeneration">Urban regeneration</option>
+<option value="education">Education</option>
+<option value="health">Health</option>
+<option value="housing">Housing</option>
+<option value="drinkingWater">Drinking water</option>
+<option value="energy">Energy</option>
+<option value="maternalHealth">maternalHealth</option>
+<option value="childCare">Child care</option>
+<option value="safety">Safety</option>
+<option value="other">Other social benefits</option>
+</select>
+</div>
 
-	<div class="formfield">
-		<label>Personal expertise</label>
-		<textarea name="personalExpertise" rows="2" cols="50" ></textarea>
-	</div>
+<div class="formfield">
+<label>Envionmental impact</label>
+<select name="envImpact" multiple="true" >
+<option value="">Please select your envionmental impact</option>
+<option value="pollutionReduction">Pollution reduction</option>
+<option value="carbonMitigation">Carbon mitigation</option>
+<option value="biodiversity">Biodiversity</option>
+<option value="reforestation">Reforestation</option>
+<option value="soilEnrichment">Soil enrichment</option>
+<option value="natureConservation">Nature conservation</option>
+<option value="waterResources">Water resources</option>
+</select>
+</div>
 
-	<div class="formfield">
-		<label>Summary of financing needed</label>
-		<textarea name="summaryFinancingNeeded" rows="2" cols="50" ></textarea>
-	</div>
+<div class="formfield">
+<label>Country of operation</label>
+<select name="countryOperation" multiple="true" >
+<option value="">Please select your country of operation</option>
+<option value="AD">Andorra</option>
+<option value="AF">Afghanistan</option>
+<option value="AX">Åland Islands</option>
+<option value="AL">Albania</option>
+<option value="DZ">Algeria</option>
+<option value="AS">American Samoa</option>
+<option value="AO">Angola</option>
+<option value="AI">Anguilla</option>
+<option value="AQ">Antarctica</option>
+<option value="AG">Antigua and Barbuda</option>
+<option value="AR">Argentina</option>
+<option value="AM">Armenia</option>
+<option value="AW">Aruba</option>
+<option value="AU">Australia</option>
+<option value="AT">Austria</option>
+<option value="AZ">Azerbaijan</option>
+<option value="BS">Bahamas</option>
+<option value="BH">Bahrain</option>
+<option value="BD">Bangladesh</option>
+<option value="BB">Barbados</option>
+<option value="BY">Belarus</option>
+<option value="BE">Belgium</option>
+<option value="BZ">Belize</option>
+<option value="BJ">Benin</option>
+<option value="BM">Bermuda</option>
+<option value="BT">Bhutan</option>
+<option value="BO">Bolivia</option>
+<option value="BQ">Bonaire</option>
+<option value="BA">Bosnia and Herzegovina</option>
+<option value="BW">Botswana</option>
+<option value="BV">Bouvet Island</option>
+<option value="BR">Brazil</option>
+<option value="IO">British Indian Ocean Territory</option>
+<option value="VG">British Virgin Islands</option>
+<option value="BN">Brunei</option>
+<option value="BG">Bulgaria</option>
+<option value="BF">Burkina Faso</option>
+<option value="BI">Burundi</option>
+<option value="KH">Cambodia</option>
+<option value="CM">Cameroon</option>
+<option value="CA">Canada</option>
+<option value="CV">Cape Verde</option>
+<option value="KY">Cayman Islands</option>
+<option value="CF">Central African Republic</option>
+<option value="TD">Chad</option>
+<option value="CL">Chile</option>
+<option value="CN">China</option>
+<option value="CX">Christmas Island</option>
+<option value="CC">Cocos Islands</option>
+<option value="CO">Colombia</option>
+<option value="KM">Comoros</option>
+<option value="CG">Congo</option>
+<option value="CK">Cook Islands</option>
+<option value="CR">Costa Rica</option>
+<option value="CI">Côte d'Ivoire</option>
+<option value="HR">Croatia</option>
+<option value="CU">Cuba</option>
+<option value="CW">Curaçao</option>
+<option value="CY">Cyprus</option>
+<option value="CZ">Czech Republic</option>
+<option value="DK">Denmark</option>
+<option value="DJ">Djibouti</option>
+<option value="DM">Dominica</option>
+<option value="DO">Dominican Republic</option>
+<option value="EC">Ecuador</option>
+<option value="EG">Egypt</option>
+<option value="SV">El Salvador</option>
+<option value="GQ">Equatorial Guinea</option>
+<option value="ER">Eritrea</option>
+<option value="EE">Estonia</option>
+<option value="ET">Ethiopia</option>
+<option value="FK">Falkland Islands</option>
+<option value="FO">Faroe Islands</option>
+<option value="FJ">Fiji</option>
+<option value="FI">Finland</option>
+<option value="FR">France</option>
+<option value="GF">French Guiana</option>
+<option value="PF">French Polynesia</option>
+<option value="TF">French Southern Territories</option>
+<option value="GA">Gabon</option>
+<option value="GM">Gambia</option>
+<option value="GE">Georgia</option>
+<option value="DE">Germany</option>
+<option value="GH">Ghana</option>
+<option value="GI">Gibraltar</option>
+<option value="GR">Greece</option>
+<option value="GL">Greenland</option>
+<option value="GD">Grenada</option>
+<option value="GP">Guadeloupe</option>
+<option value="GU">Guam</option>
+<option value="GT">Guatemala</option>
+<option value="GG">Guernsey</option>
+<option value="GN">Guinea</option>
+<option value="GW">Guinea-Bissau</option>
+<option value="GY">Guyana</option>
+<option value="HT">Haiti</option>
+<option value="HM">Heard Island And McDonald Islands</option>
+<option value="HN">Honduras</option>
+<option value="HK">Hong Kong</option>
+<option value="HU">Hungary</option>
+<option value="IS">Iceland</option>
+<option value="IN">India</option>
+<option value="ID">Indonesia</option>
+<option value="IR">Iran</option>
+<option value="IQ">Iraq</option>
+<option value="IE">Ireland</option>
+<option value="IM">Isle Of Man</option>
+<option value="IL">Israel</option>
+<option value="IT">Italy</option>
+<option value="JM">Jamaica</option>
+<option value="JP">Japan</option>
+<option value="JE">Jersey</option>
+<option value="JO">Jordan</option>
+<option value="KZ">Kazakhstan</option>
+<option value="KE">Kenya</option>
+<option value="KI">Kiribati</option>
+<option value="KW">Kuwait</option>
+<option value="KG">Kyrgyzstan</option>
+<option value="LA">Laos</option>
+<option value="LV">Latvia</option>
+<option value="LB">Lebanon</option>
+<option value="LS">Lesotho</option>
+<option value="LR">Liberia</option>
+<option value="LY">Libya</option>
+<option value="LI">Liechtenstein</option>
+<option value="LT">Lithuania</option>
+<option value="LU">Luxembourg</option>
+<option value="MO">Macao</option>
+<option value="MK">Macedonia</option>
+<option value="MG">Madagascar</option>
+<option value="MW">Malawi</option>
+<option value="MY">Malaysia</option>
+<option value="MV">Maldives</option>
+<option value="ML">Mali</option>
+<option value="MT">Malta</option>
+<option value="MH">Marshall Islands</option>
+<option value="MQ">Martinique</option>
+<option value="MR">Mauritania</option>
+<option value="MU">Mauritius</option>
+<option value="YT">Mayotte</option>
+<option value="MX">Mexico</option>
+<option value="FM">Micronesia</option>
+<option value="MD">Moldova</option>
+<option value="MC">Monaco</option>
+<option value="MN">Mongolia</option>
+<option value="ME">Montenegro</option>
+<option value="MS">Montserrat</option>
+<option value="MA">Morocco</option>
+<option value="MZ">Mozambique</option>
+<option value="MM">Myanmar</option>
+<option value="NA">Namibia</option>
+<option value="NR">Nauru</option>
+<option value="NP">Nepal</option>
+<option value="NL">Netherlands</option>
+<option value="AN">Netherlands Antilles</option>
+<option value="NC">New Caledonia</option>
+<option value="NZ">New Zealand</option>
+<option value="NI">Nicaragua</option>
+<option value="NE">Niger</option>
+<option value="NG">Nigeria</option>
+<option value="NU">Niue</option>
+<option value="NF">Norfolk Island</option>
+<option value="KP">North Korea</option>
+<option value="MP">Northern Mariana Islands</option>
+<option value="NO">Norway</option>
+<option value="OM">Oman</option>
+<option value="PK">Pakistan</option>
+<option value="PW">Palau</option>
+<option value="PS">Palestine</option>
+<option value="PA">Panama</option>
+<option value="PG">Papua New Guinea</option>
+<option value="PY">Paraguay</option>
+<option value="PE">Peru</option>
+<option value="PH">Philippines</option>
+<option value="PN">Pitcairn</option>
+<option value="PL">Poland</option>
+<option value="PT">Portugal</option>
+<option value="PR">Puerto Rico</option>
+<option value="QA">Qatar</option>
+<option value="RE">Reunion</option>
+<option value="RO">Romania</option>
+<option value="RU">Russia</option>
+<option value="RW">Rwanda</option>
+<option value="BL">Saint Barthélemy</option>
+<option value="SH">Saint Helena</option>
+<option value="KN">Saint Kitts And Nevis</option>
+<option value="LC">Saint Lucia</option>
+<option value="MF">Saint Martin</option>
+<option value="PM">Saint Pierre And Miquelon</option>
+<option value="VC">Saint Vincent And The Grenadines</option>
+<option value="WS">Samoa</option>
+<option value="SM">San Marino</option>
+<option value="ST">Sao Tome And Principe</option>
+<option value="SA">Saudi Arabia</option>
+<option value="SN">Senegal</option>
+<option value="RS">Serbia</option>
+<option value="SC">Seychelles</option>
+<option value="SL">Sierra Leone</option>
+<option value="SG">Singapore</option>
+<option value="SX">Sint Maarten (Dutch part)</option>
+<option value="SK">Slovakia</option>
+<option value="SI">Slovenia</option>
+<option value="SB">Solomon Islands</option>
+<option value="SO">Somalia</option>
+<option value="ZA">South Africa</option>
+<option value="GS">South Georgia And The South Sandwich Islands</option>
+<option value="KR">South Korea</option>
+<option value="ES">Spain</option>
+<option value="LK">Sri Lanka</option>
+<option value="SD">Sudan</option>
+<option value="SR">Suriname</option>
+<option value="SJ">Svalbard And Jan Mayen</option>
+<option value="SZ">Swaziland</option>
+<option value="SE">Sweden</option>
+<option value="CH">Switzerland</option>
+<option value="SY">Syria</option>
+<option value="TW">Taiwan</option>
+<option value="TJ">Tajikistan</option>
+<option value="TZ">Tanzania</option>
+<option value="TH">Thailand</option>
+<option value="CD">The Democratic Republic Of Congo</option>
+<option value="TL">Timor-Leste</option>
+<option value="TG">Togo</option>
+<option value="TK">Tokelau</option>
+<option value="TO">Tonga</option>
+<option value="TT">Trinidad and Tobago</option>
+<option value="TN">Tunisia</option>
+<option value="TR">Turkey</option>
+<option value="TM">Turkmenistan</option>
+<option value="TC">Turks And Caicos Islands</option>
+<option value="TV">Tuvalu</option>
+<option value="VI">U.S. Virgin Islands</option>
+<option value="UG">Uganda</option>
+<option value="UA">Ukraine</option>
+<option value="AE">United Arab Emirates</option>
+<option value="GB">United Kingdom</option>
+<option value="US">United States</option>
+<option value="UM">United States Minor Outlying Islands</option>
+<option value="UY">Uruguay</option>
+<option value="UZ">Uzbekistan</option>
+<option value="VU">Vanuatu</option>
+<option value="VA">Vatican</option>
+<option value="VE">Venezuela</option>
+<option value="VN">Vietnam</option>
+<option value="WF">Wallis And Futuna</option>
+<option value="EH">Western Sahara</option>
+<option value="YE">Yemen</option>
+<option value="ZM">Zambia</option>
+<option value="ZW">Zimbabwe</option>
+</select>
+</div>
 
-	<fieldset name="personalDetails">
-		<legend>Personal details</legend>
+<div class="formfield">
+<label>Number of years of sales and/or costs</label>
+<input type="text" name="numYearsSalesCosts" placeholder="Please type your number of years of sales and/or costs" />
+</div>
 
-		<div class="formfield">
-		<label>Personal Detail</label>
-		<input type="text" name="person" placeholder="Please type your person" />
-		</div>
+<div class="formfield">
+<label>Stage of business</label>
+<input type="radio" id="startup" name="stageBusiness" />
+<label for="sb-startup">Startup</label>
+<input type="radio" id="established" name="stageBusiness"/>
+<label for="sb-established">Established</label>
+</div>
 
-		<div class="formfield">
-		<label>Role</label>
-		<input type="text" name="role" placeholder="Please type your role" />
-		</div>
+<div class="formfield">
+<label>Video pitch</label>
+<input type="file" name="videoPitch" />
+</div>
 
-		<div class="formfield">
-		<label>Expertise</label>
-		<textarea name="expertise" rows="2" cols="50" >
-		</textarea>
-		</div>
+<div class="formfield">
+<label>External video pitch</label>
+<input type="url" name="externalVideoPitch" placeholder="Please type your video link" />
+</div>
 
-	</fieldset>
+<div class="formfield">
+<label>Audio pitch</label>
+<input type="file" name="audioPitch" />
+</div>
+
+<div class="formfield">
+<label>Personal role</label>
+<textarea name="personalRole" rows="2" cols="50" >
+</textarea>
+</div>
+
+<div class="formfield">
+<label>Personal expertise</label>
+<textarea name="personalExpertise" rows="2" cols="50" >
+</textarea>
+</div>
 
 
-	<div class="formfield">
-		<label>Company</label>
-		<input type="text" name="company" placeholder="Please type your company" />
-	</div>
 
-	<div class="formfield">
-		<label>Financials</label>
-		<input type="text" name="financials" placeholder="Please type your financials" />
-	</div>
+<fieldset name="personalDetails">
+<legend>Personal details</legend>
+<!-- we can have more than 1 person linked to a business summary -->
+<iframe src="member-profile.html" width="650" height="850" ></iframe>
+
+<div class="formfield">
+<label>Role</label>
+<textarea name="role" rows="2" cols="50" >
+</textarea>
+</div>
+
+<div class="formfield">
+<label>Expertise</label>
+<textarea name="expertise" rows="2" cols="50" >
+</textarea>
+</div>
+
+</fieldset>
+
+
+<div class="formfield">
+<label>Consumer type</label>
+<select name="consumerType" multiple="true" >
+<option value="">Please select your consumer type</option>
+<option value="B2B">The business sells mainly to other businesses (B2B)</option>
+<option value="B2C">The business sells mainly to people/ customers (B2C)</option>
+<option value="exportHardCurrency">The business exports (in hard currency i.e. USD, EUR, GBP,..)</option>
+<option value="exportLocalCurrency">The business exports (in local currencies)</option>
+</select>
+</div>
+
+<div class="formfield">
+<label>Summary of financing needed</label>
+<input type="text" name="financingNeeded" placeholder="Please type your financing need" />
+</div>
+
+<div class="formfield">
+<label>Investment type</label>
+<select name="investmentType" multiple="true" >
+<option value="">Please select type of investment you are looking for</option>
+<option value="equity">Equity</option>
+<option value="loan">Loan</option>
+<option value="mezzFinancing">Mezzanine Financing</option>
+<option value="other">Other</option>
+</select>
+</div>
+
+<div class="formfield">
+<label>Equity retained (%)</label>
+<input type="text" name="equityRetained" placeholder="Please type your equity retained" />
+</div>
+
+<fieldset name="attachments">
+<legend>Attachments</legend>
+<!-- we can have multiple attachments -->
+<iframe src="attachment.html" width="450" height="100" ></iframe>
+</fieldset>
+
+
+<fieldset name="company">
+<legend>Company</legend>
+<!-- we can have only 1 company -->
+<iframe src="company-profile.html" width="650" height="600" ></iframe>
+</fieldset>
+
+<fieldset name="financial">
+<legend>Financials</legend>
+<!-- we can have only 1 financials -->
+<iframe src="financials.html" width="2050" height="550" ></iframe>
+</fieldset>
 
 </form>
+
