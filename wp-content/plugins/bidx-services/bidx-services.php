@@ -853,7 +853,8 @@ function bidx_wrapper_response($type, $jsonData) {
       $with_wrapper_data = "<script type='text/javascript'>
   parent.window.fileuploadCallBack({
    {$jsonData}
-  });";
+  });
+   </script>";
 
       break;
     default :
