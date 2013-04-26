@@ -24,9 +24,9 @@
 				var geocoder = new google.maps.Geocoder();       
 
  				//any arguments for this plugin should be placed in this attribute
- 				if($this.data("type-arguments")) 
+ 				if($this.data("type-arguments")) {
  					$.extend(this.options,$this.data("type-arguments"));
-
+				}
  				//set emptyClass if not provided.
  				if(!this.options.emptyClass) {
  					this.options.emptyClass="empty";
@@ -36,8 +36,9 @@
 				var mapDimensions = "width:100%;height:250px;";
 
 				//set maps dimensions
-				if(this.options["mapDimensions"])
+				if(this.options["mapDimensions"]) {
 					mapDimensions=this.options["mapDimensions"];
+				}
 				$this.after("<div id=\"" + mapId + "\" class=\"map jqHidden\" style=\"" + mapDimensions + "\"></div>");
 				
 				
@@ -63,10 +64,10 @@
 					mapOptions);
 
 				var input = $this[0];
-				var options = {}
-				if(this.options["filter"])
+				var options = {};
+				if(this.options["filter"]) {
 					options["types"]= ['(' + this.options["filter"] + ')'];
-				
+				}
 				var autoComplete = new google.maps.places.Autocomplete(input, options);
 				autoComplete.bindTo('bounds', map);
 
@@ -87,8 +88,8 @@
 
 					if(that.options["setMarkers"]) {
 						var marker = new google.maps.Marker({
-							map: map
-							 ,draggable: true,
+							map: map,
+							draggable: true
 						});
 						markersArray.push(marker);
 						marker.setVisible(false);
@@ -97,7 +98,7 @@
 						if (!place.geometry) {
 							// Inform the user that the place was not found and return.
 							input.className = 'notfound';
-							return;
+							return false;
 						}
 
 						// If the place has a geometry, then present it on a map.
@@ -191,8 +192,9 @@
 							$list=$("#" + that.options["listId"]);
 							
 												
-							if($list.find("." + that.options.emptyClass))
+							if($list.find("." + that.options.emptyClass)) {
 								$list.find("." + that.options.emptyClass).hide();
+							}
 							
 							var $li=$("<li><div class=\"label\">" + place.formatted_address + "<span class=\"control icon-remove icon-white\"></div></li>");
 							
@@ -201,8 +203,9 @@
 									methods.removeLocationData($this, $li.index(), $list.find("li > div:not(." + that.options.emptyClass + ")").length);
 									$li.remove();
 									
-									if($list.find("li > div:not(." + that.options.emptyClass + ")").length == 0)
+									if($list.find("li > div:not(." + that.options.emptyClass + ")").length === 0) {
 										$list.find("." + that.options.emptyClass).fadeIn('fast');
+									}
 								});
 
 
@@ -294,14 +297,14 @@
 
 		//check for key in array
 		hasValue : function(key, arr) {
-			return arr.indexOf(key, 0)!= -1
+			return arr.indexOf(key, 0)!= -1;
 		},
 
 		//create hiddenfield for bidX address storage
 		createHiddenField : function(input, name, val) {
 			var fieldname = input.attr("name") + name;
 			//check if hiddenfield already exists
-			if(input.nextAll("[name='" + fieldname + "']").length == 0) {
+			if(input.nextAll("[name='" + fieldname + "']").length === 0) {
 				input.after("<input type=\"hidden\" name=\"" + input.attr("name") + name + "\" value=\"" + val + "\">");
 			}
 			//if exists, update value
@@ -314,13 +317,14 @@
 	}
 
 	$.fn.location = function(method) {
-		if(methods[method])
+		if(methods[method]) {
 			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		}
 		else if(typeof method === 'object' || !method) {
 			return methods.init.apply(this, arguments);
 		}
 		else {
 			$.error( 'Method ' +  method + ' does not exist on jQuery Form' );
 		}
-  	};
+  	}
 })(jQuery);

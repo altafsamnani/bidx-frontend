@@ -8,7 +8,7 @@ var Validator = function () {
 	this.validate = function (e) {
 		var el = e.data;
 		var input = el.input;
-
+		var rule = null;
 		el.validated=false;
 
 		if(el.validation) {
@@ -17,7 +17,7 @@ var Validator = function () {
 			if(el.validation.required) {
 				//chcek if value is empty
 				if(input.val() == "" || (el.type == "checkbox" && !input.is(":checked"))) {
-					var rule = el.validation.required;
+					rule = el.validation.required;
 					el.triggerError({"required":rule},'required');
 				}
 				// not empty 
@@ -26,12 +26,13 @@ var Validator = function () {
 					if(!doTypeCheck()) {
 						//if there was a required error, remove it
 						if(el.validation.required.error) {
-							var rule = el.validation.required;
+							rule = el.validation.required;
 							el.removeError({"required":rule},'required');
 						}
 						//else set element as validated
-						else
+						else {
 							el.validated=true;
+						}
 					}
 				}
 			}
@@ -61,7 +62,6 @@ var Validator = function () {
 							return el.removeError(rule,'email');
 						}
 					}
-
 					//check numberfield
 					if(rule.int) {
 						if(el.input.val() != "" && (isNaN(el.input.val()) || el.input.val() == 0)) {

@@ -40,8 +40,10 @@
 		},
 		uploadFile : function(){
 			var $this=$(this);
-			
+			//set spinner
 			methods.toggleAjaxLoader($this);
+
+			//check if XHR FormData is supported
 			if(window.FormData !== undefined) {
 				var formData = new FormData();
 				formData.append($this.attr("name"),this.files[0]);
@@ -54,6 +56,7 @@
 				//formData.append("data",)
 				$.ajax(this.options.url, {
 						type:"post",
+						dataType:"json",
 					    processData: false,
 					    contentType: false,
 					    data: formData
@@ -63,31 +66,37 @@
 							el:$this,
 							status:status
 						};
-						$.extend(ret,$.parseJSON(data));
+						$.extend(ret,data);
 						methods.done(ret);
 					});
 			}
-			//FOR < IE10
+			//FOR < IE10 do IFRAME post
 			else {
 				//create iframe for posting
 				var $frame = $("<iframe name=\"uploadHandler\" width=\"0\" height=\"0\" style=\"display:none\"/>"); //create frame with jQ because IE7 doesnt allow nameing of dom-elements
 				var form = document.createElement("form");
+						
 				//place this form after the existing form
 				var parentForm = !this.options.parentForm ? $("form:first") : $(this.options.parentForm);
 				parentForm.after(form);
 				$this.after($frame);
 				$form=$(form);
-								
+				
 				//create callback handler in window scope
 				window.fileuploadCallBack = function (args) {
-					alert(args.result);
+					
+					var ret = {
+						el:$this
+					};
+					$.extend(ret,args);
+					methods.done(ret);
 					//remove temp form and iframe
 					$form.remove();
 					$frame.remove();
 				};
 				
-				//move the filefield over to temp form
-				var hook = $this.parent();
+				//store a reference to the filefield container
+				var hook = $this.parents(".formfield");
 				$form.append($this.detach());
 				//create hiddenfields for all fields that are to be posted
 				if(this.options.addFields) {
@@ -113,15 +122,14 @@
 				$form.attr("enctype","multipart/form-data");
 				$form.attr("action", this.options.url);
 				$form.submit();
+				//return filefield to original position
 				hook.find("label").after($this.detach());
 				
 			}
 		},
 		//define done handler
 		done : function(result) {
-			
 			if(result.status == "OK") {
-				console.log(result);
 				switch(result.data.contentType.split("/")[0]) {
 					case "image":
 						result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
@@ -132,6 +140,7 @@
 				}
 			}	
 			else if(result.status == "ERROR") {
+				methods.toggleAjaxLoader(result.el);
 				alert("Image upload failed");
 			}
 			
@@ -151,8 +160,9 @@
 	}
 
 	$.fn.fileUpload = function(method) {
-		if(methods[method])
+		if(methods[method]) {
 			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		}
 		else if(typeof method === 'object' || !method) {
 			return methods.init.apply(this, arguments);
 		}

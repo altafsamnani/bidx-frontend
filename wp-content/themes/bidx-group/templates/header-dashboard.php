@@ -21,7 +21,7 @@
 					<li><a href="#">Your Roles</a></li>
 		    	</ul>
 			</div>
-		</nav>
+		</div>
 	</div>
 	<div>GROUP DASHBOARD</div>
 </header>

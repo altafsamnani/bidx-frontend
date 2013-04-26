@@ -41,7 +41,7 @@
 		*/
 		init : function(options) {
 			if(this.prop("tagName").toLowerCase() != "form") {
-				alert("Please use this form plugin on a form tag only")
+				alert("Please use this form plugin on a form tag only");
 				return false;
 			}
 
@@ -49,9 +49,9 @@
 			form.data.elements = {};//collection of form elements
 			form.data.valid=false;
 			//extend options
-			if(options) 
+			if(options) {
 				$.extend(globalOptions, options);
-
+			}
 			//load form element extention
 			$.ajax({
 				async: false,
@@ -78,8 +78,9 @@
 					e.preventDefault();
 					form.data.valid=methods.validateForm();
 
-					if(form.data.valid)
+					if(form.data.valid) {
 						methods.submitForm();
+					}
 				});	
 				
 				//
@@ -87,14 +88,15 @@
 
 			//enable plugins in the form elemtns that required those
 			if(options.enablePlugins) {
-				var i=0,plug=null;
-				while(plug=options.enablePlugins[i++]) {
-					switch(plug) {
+				var i=0,plugin=null;
+				while(plugin=options.enablePlugins[i++]) {
+					switch(plugin) {
 						case "date" :
 							//activate all datepickers in this plugin
 							this.find("[data-type=date]").datepicker({});
 							break;
 						case "slider" :
+
 							break;
 						case "location" :
 							$.ajax({
@@ -128,7 +130,9 @@
 							});
 							//get all fileuploads in this form and activate plugin
 							this.find("[data-type=fileUpload]").fileUpload({"parentForm":this});
-							break;							
+							break;
+						default:
+							break;
 					}
 				}
 			}
@@ -150,8 +154,9 @@
 		submitForm : function() {
 
 			if(globalOptions.url) {
-				if(globalOptions.beforeSubmit)
+				if(globalOptions.beforeSubmit) {
 					globalOptions.beforeSubmit();
+				}
 				//xhr post
             
 				$.ajax({
@@ -189,7 +194,7 @@
 								}
 
 								$button=$(globalOptions.callToAction);
-								if($(".error_separate").length == 0) {
+								if($(".error_separate").length === 0) {
 									$error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
 									$button.parent().after($error);
 									$error.fadeIn('fast');
@@ -205,7 +210,9 @@
 			else if(form.attr("action")){
 				form.submit();
 			}
-			else alert("no url or form action defined");
+			else {
+				alert("no url or form action defined");	
+			} 
 			
 		},
 		validateForm : function(){
@@ -215,12 +222,13 @@
 				if(!form.data.elements[field].validated) {
 					//if(this.formfield.data("validation")) {
 					//if value is NULL field has not been validated yet
-					if(form.data.elements[field].validated == null) {
+					if(form.data.elements[field].validated === null) {
 						form.data.elements[field].validate({data:form.data.elements[field]});
 						result = result && form.data.elements[field].validated
 					}
-					else
+					else {
 						result = result && form.data.elements[field].validated
+					}
 				}
 			}
 			return result;
@@ -232,8 +240,9 @@
   	var that = this; //store reference to top object
   	var elements = {};
 
-  	if(methods[method])
+  	if(methods[method]) {
   		return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+  	}
   	else if(typeof method === 'object' || !method) {
   		return methods.init.apply(this, arguments);
   	}

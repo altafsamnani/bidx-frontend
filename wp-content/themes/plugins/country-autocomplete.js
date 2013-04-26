@@ -16,9 +16,9 @@
  				var that = this; //lock reference to input
  				this.options = {};//local collection of plugin options
 
-				if($this.data("type-arguments")) 
+				if($this.data("type-arguments")) {
  					$.extend(this.options,$this.data("type-arguments"));
- 				
+ 				}
 /*				if(!this.options["listId"]) {
 					alert("Please define list id by adding \"list-id\":\"[listid]\" to data-type-arguments for field '" + $this.attr("name") + "'");
 					return false;
@@ -40,8 +40,9 @@
 			        		$this.val(ui.item.label);
 			    			$list=$("#" + that.options["listId"]);
 								
-							if($list.find(".empty"))
+							if($list.find(".empty")) {
 								$list.find(".empty").hide();
+							}
 							
 							var $li=$("<li><div class=\"label\">" + ui.item.label + "<span class=\"control icon-remove icon-white\"></div></li>");
 							
@@ -51,8 +52,9 @@
 									methods.removeLocationData($this, $li.index(), $list.find("li > div:not(." + that.options.emptyClass + ")").length);
 									$li.remove();
 									
-									if($list.find("li > div:not(.empty)").length == 0)
+									if($list.find("li > div:not(.empty)").length == 0) {
 										$list.find(".empty").fadeIn('fast');
+									}
 								});
 								
 							});
@@ -871,8 +873,9 @@
 	}
 
 	$.fn.countryAutocomplete = function(method) {
-		if(methods[method])
+		if(methods[method]) {
 			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		}
 		else if(typeof method === 'object' || !method) {
 			return methods.init.apply(this, arguments);
 		}
