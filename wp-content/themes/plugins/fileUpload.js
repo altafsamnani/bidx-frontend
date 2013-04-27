@@ -21,21 +21,18 @@
 
 		init : function (options){
 
- 			return this.each(function(){
- 				
- 				var $this = $(this);
- 				var that = this; //lock reference to input
- 				this.options = {};//local collection of plugin options
- 				$.extend(this.options, options);
+			return this.each(function(){
 
- 				$this.bind("change", methods.uploadFile);
- 				//any arguments for this plugin should be placed in this attribute
- 				if($this.data("type-arguments")) {
- 					$.extend(this.options,$this.data("type-arguments"));
- 				}
+				var $this = $(this);
+				var that = this; //lock reference to input
+				this.options = {};//local collection of plugin options
+				$.extend(this.options, options);
 
-				
-				
+				$this.bind("change", methods.uploadFile);
+				//any arguments for this plugin should be placed in this attribute
+				if($this.data("type-arguments")) {
+					$.extend(this.options,$this.data("type-arguments"));
+				}
 			});
 		},
 		uploadFile : function(){
@@ -57,9 +54,9 @@
 				$.ajax(this.options.url, {
 						type:"post",
 						dataType:"json",
-					    processData: false,
-					    contentType: false,
-					    data: formData
+						processData: false,
+						contentType: false,
+						data: formData
 					})
 					.always(function(data,status, xhr){
 						var ret = {
@@ -75,16 +72,15 @@
 				//create iframe for posting
 				var $frame = $("<iframe name=\"uploadHandler\" width=\"0\" height=\"0\" style=\"display:none\"/>"); //create frame with jQ because IE7 doesnt allow nameing of dom-elements
 				var form = document.createElement("form");
-						
+
 				//place this form after the existing form
 				var parentForm = !this.options.parentForm ? $("form:first") : $(this.options.parentForm);
 				parentForm.after(form);
 				$this.after($frame);
-				$form=$(form);
-				
+				var $form=$(form);
+
 				//create callback handler in window scope
 				window.fileuploadCallBack = function (args) {
-					
 					var ret = {
 						el:$this
 					};
@@ -94,7 +90,7 @@
 					$form.remove();
 					$frame.remove();
 				};
-				
+
 				//store a reference to the filefield container
 				var hook = $this.parents(".formfield");
 				$form.append($this.detach());
@@ -116,7 +112,6 @@
 					$form.append(temp);
 				}
 
-				
 				$form.attr("method","post");
 				$form.attr("target","uploadHandler");
 				$form.attr("enctype","multipart/form-data");
@@ -124,12 +119,12 @@
 				$form.submit();
 				//return filefield to original position
 				hook.find("label").after($this.detach());
-				
+
 			}
 		},
 		//define done handler
 		done : function(result) {
-			if(result.status == "OK") {
+			if(result.status === "OK") {
 				switch(result.data.contentType.split("/")[0]) {
 					case "image":
 						result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
@@ -138,12 +133,12 @@
 						alert("no content type returned from server");
 						break;
 				}
-			}	
-			else if(result.status == "ERROR") {
+			}
+			else if(result.status === "ERROR") {
 				methods.toggleAjaxLoader(result.el);
 				alert("Image upload failed");
 			}
-			
+
 		},
 		toggleAjaxLoader : function (el) {
 			//add wrapper for positioning
@@ -157,7 +152,7 @@
 				el.ajaxloader = false;
 			}
 		}
-	}
+	};
 
 	$.fn.fileUpload = function(method) {
 		if(methods[method]) {
@@ -169,5 +164,5 @@
 		else {
 			$.error( 'Method ' +  method + ' does not exist on jQuery Form' );
 		}
-  	};
+	};
 })(jQuery);
