@@ -83,7 +83,15 @@
 						    		$this.fadeOut("fast", function(){
 						    			$(".group-creation-progress").fadeIn('fast');
 						    		});
+				    			},
+				    			//custom error message for frontend registration in case group creation fails
+				    			error: function(data){
+				    				$(".group-creation-progress").html("<div class=\"text sub\">Group creation failed. Please reload the page and try again.<br/> If the problem persists, please contact us.");
+				    				if(data.text) {
+				    					$(".group-creation-progress").append(data.text);
+				    				}
 				    			}
+
 
 				    		});
 

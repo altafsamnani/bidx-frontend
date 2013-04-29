@@ -184,20 +184,34 @@
 								}
 							}
 							else {
-								var message="Something went wrong";
-								if(data.text) {
-									message=data.text;
+								//if error handler is defined, use this one
+								if(globalOptions.error) {
+									globalOptions.error(data);
+								}
+								//otherwise show general error message in form
+								else {
+									var message="Something went wrong";
+									if(data.text) {
+										message=data.text;
+									}
+									//add separate error message under button
+									var $button=$(globalOptions.callToAction);
+									if($(".error_separate").length === 0) {
+										var $error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
+										$button.parent().after($error);
+										$error.fadeIn('fast');
+									}
+									else {
+										//error box already there, replace text
+										$(".error_separate").text(message);
+									}
 								}
 
-								$button=$(globalOptions.callToAction);
-								if($(".error_separate").length === 0) {
-									$error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
-									$button.parent().after($error);
-									$error.fadeIn('fast');
-								}
-								else {
-									$(".error_separate").text(message);
-								}
+							}
+						}
+						else {
+							if(globalOptions.error) {
+								globalOptions.error(data?data:{});
 							}
 						}
 

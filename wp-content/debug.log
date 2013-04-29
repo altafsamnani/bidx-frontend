@@ -6971,3 +6971,21 @@
 [26-Apr-2013 15:20:25 UTC] PHP Notice:  Undefined index: selector in /home/matti/workspace/bidx/wp-content/plugins/wp-web-scrapper/wpws-includes/functions.php on line 74
 [26-Apr-2013 15:20:25 UTC] PHP Notice:  Undefined index: xpath in /home/matti/workspace/bidx/wp-content/plugins/wp-web-scrapper/wpws-includes/functions.php on line 74
 [26-Apr-2013 15:20:25 UTC] PHP Notice:  Undefined index: headers in /home/matti/workspace/bidx/wp-content/plugins/wp-web-scrapper/wpws-includes/functions.php on line 221
+[29-Apr-2013 07:13:31 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:16:49 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:17:23 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:19:50 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:20:42 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:21:33 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:23:01 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:24:05 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:24:19 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:24:31 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:24:50 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:27:15 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:27:25 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:27:51 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:29:12 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:29:39 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:30:05 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
+[29-Apr-2013 07:32:00 UTC] PHP Notice:  Use of undefined constant php - assumed 'php' in /home/matti/workspace/bidx/wp-content/themes/bidx/page-intro.php on line 7
