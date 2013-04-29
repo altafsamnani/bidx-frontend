@@ -10,8 +10,8 @@ Company: bidX;
 *
 ********************************************************************************************/
 html, body {
-	margin:0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	font-family:'weblysleek_ui_normalregular',sans-serif,Arial;
 }
 
@@ -28,7 +28,7 @@ html, body {
    opacity: 0.5;
 }
 
-:-ms-input-placeholder {  
+:-ms-input-placeholder {
    color: #333333;
 }
 
@@ -81,14 +81,14 @@ li {
     font-weight: bold;
     text-shadow:0 -1px 0 #1d701d;
 
-	display: -moz-inline-block;    
+	display: -moz-inline-block;
     display:inline-block;
     zoom: 1;
 	*display: inline;
-    
+
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	border-radius: 5px;    
+	border-radius: 5px;
 }
 
 .primary {
@@ -107,7 +107,7 @@ li {
     background:-o-linear-gradient(top, #339933 5%, #3ebd3e 30%, #3ebd3e 70%, #339933 95%);
     background:-ms-linear-gradient(top, #339933 5%, #3ebd3e 30%, #3ebd3e 70%, #339933 95%);
     background:linear-gradient(to bottom, #339933 5%, #3ebd3e 30%, #3ebd3e 70%, #339933 95%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#339933', endColorstr='#3ebd3e',GradientType=0);    
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#339933', endColorstr='#3ebd3e',GradientType=0);
 }
 
 .secondary {
@@ -125,7 +125,7 @@ li {
     background:-o-linear-gradient(top, #666666 5%, #767676 30%, #767676 70%, #666666 95%);
     background:-ms-linear-gradient(top, #666666 5%, #767676 30%, #767676 70%, #666666 95%);
     background:linear-gradient(to bottom, #666666 5%, #767676 30%, #767676 70%, #666666 95%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#767676',GradientType=0);    
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#767676',GradientType=0);
 }
 .primary:active, .secondary:active  {
 	position: relative;
@@ -142,12 +142,12 @@ li {
 .block-login {
 	margin:50px auto;
 	width:50%;
-	
+
 	background: url(assets/img/hero_bg.jpg) repeat-x top left #EDEDED;
 	-webkit-border-radius:10px ;
 	-moz-border-radius:10px ;
 	border-radius: 10px ;
-	padding:40px;
+	padding: 40px;
 }
 
 
@@ -165,7 +165,7 @@ li {
 
 	header {
 		background-color: #FFF;
-		
+
 		height:auto;
 		z-index:200;
 	}
@@ -175,14 +175,14 @@ li {
 		header .subheader .branding {
 /*			width:70%;*/
 			float: left;
-			
-			
+
+
 		}
 		header .subheader .account-access {
 			width:30%;
 			text-align: right;
 			float:right;
-			
+
 		}
 
 		header .nav-wrapper {
@@ -192,9 +192,9 @@ li {
 		}
 
 		header .nav-wrapper nav ul {
-			margin-bottom: 0px;
+			margin-bottom: 0;
 		}
-	
+
 	/************** GROUP DASHBARD *************************/
 
 		/*override general and bootstrap styles*/
@@ -216,12 +216,12 @@ li {
 footer .sub-footer {
 		background-color: #000;
 		height:30px;
-		
+
 	}
-	
+
 		 .sub-footer ul {
-			margin:0px;
-			padding: 0px;
+			margin: 0;
+			padding: 0;
 			text-align: center;
 
 		}
@@ -232,13 +232,13 @@ footer .sub-footer {
 			line-height:30px;
 			color: #666;
 			display:inline;
-			margin:0px 5px;
+			margin: 0 5px;
 		}
 
 		.sub-footer ul li a, .sub-footer ul li a:hover, ul li a:focus {
 			color: #999;
 		}
-	
+
 
 
 /* end footer styles */
@@ -250,7 +250,7 @@ footer .sub-footer {
 ********************************************************************************************/
 .hero-block {
 	background: url(assets/img/hero_bg.jpg) repeat-x top left;
-	
+
 	position: relative;
 }
 /*
@@ -262,7 +262,7 @@ footer .sub-footer {
 }
 */
 
-	
+
 .top-border, .bottom-border {
 	border-top: 1px solid #CCCCCC;
 	height: 1px;
@@ -282,7 +282,7 @@ footer .sub-footer {
 .block-even {
 	background-color: #f6f6f6;
 	border-top: 1px solid #eaeaea;
-	border-bottom: 1px solid #eaeaea;	
+	border-bottom: 1px solid #eaeaea;
 }
 
 .block {
@@ -323,18 +323,18 @@ footer .sub-footer {
 	    font-size: 16px;
 	    height: 55px;
 	    line-height: 55px;
-	    padding: 0px 20px; /*override bootstrap padding */
+	    padding: 0 20px; /*override bootstrap padding */
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		-ms-box-sizing: border-box;
 		box-sizing: border-box;
-		margin-bottom:0px;
+		margin-bottom: 0;
 	}
 	input[type="file"] {
 		height: auto;
 	}
 	textarea {
-		padding-right:0px;
+		padding-right: 0;
 		/*height:auto;*/
 		min-height: 100px;
 	}
@@ -343,7 +343,7 @@ footer .sub-footer {
 		padding: 15px 20px;
 
 	}
-	
+
 	form label {
 		font-weight: 700;
 		color: #9DA09C;
@@ -358,14 +358,14 @@ footer .sub-footer {
 	}
 
 	.formfield  {
-		
+
 		position:relative;
 		margin-bottom:10px;
-		
+
 	}
 	.formfield input {
-		
-		
+
+
 	}
 
 
@@ -379,7 +379,7 @@ footer .sub-footer {
 		display:block;
 		right: 0;
 		width: 100%;
-		
+
 
 	}
 	.formfield .ajaxwrapper, .formfield-error .ajaxwrapper {
@@ -391,22 +391,22 @@ footer .sub-footer {
 	}
 
 	.formfield-error {
-		margin-bottom: 0px;
+		margin-bottom: 0;
 	}
 	.formfield-error input {
-		-webkit-border-radius: 4px 4px 0px 0px;
-		-moz-border-radius: 4px 4px 0px 0px;
-		border-radius: 4px 4px 0px 0px;
+		-webkit-border-radius: 4px 4px 0 0;
+		-moz-border-radius: 4px 4px 0 0;
+		border-radius: 4px 4px 0 0;
 	}
 
 	.error {
-		
-		color: #E83E3E;
-		padding:4px;
 
-		-webkit-border-radius: 0px 0px 4px 4px;
-		-moz-border-radius: 0px 0px 4px 4px;
-		border-radius: 0px 0px 4px 4px;
+		color: #E83E3E;
+		padding:4px 8px;
+
+		-webkit-border-radius: 0 0 4px 4px;
+		-moz-border-radius: 0 0 4px 4px;
+		border-radius: 0 0 4px 4px;
 		background-color: #DBD9D9;
 		display: none;
 		text-align: left;
@@ -420,12 +420,12 @@ footer .sub-footer {
 		border-radius: 4px;
 		color: #E83E3E;
 		padding: 4px 10px;
-		margin:5px 0px;
+		margin:5px 0;
 	}
 
 
 
-	
+
 
 	/*IE hacks*/
 	.lt-ie8 .formfield {
@@ -458,10 +458,10 @@ footer .sub-footer {
 			-moz-border-radius: 4px;
 			border-radius: 4px;
 		}
-		
+
 		.location-list ul li .label  {
 			margin:2px;
-			
+
 			position: relative;
 			display: block;
 		}
@@ -478,8 +478,8 @@ footer .sub-footer {
 		}
 	/* END LOCATION PLUGIN*/
 
-/* 
-	fonts 
+/*
+	fonts
 */
 
 
@@ -565,7 +565,7 @@ footer .sub-footer {
 /* large display*/
 @media (min-width: 980px) {
 /*@media (min-width: 61.25em) {*/
-	
+
 	.container,
 	.navbar-static-top .container,
 	.navbar-fixed-top .container,

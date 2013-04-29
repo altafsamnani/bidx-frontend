@@ -6,11 +6,11 @@
 							Date: 22/4/2013
 							Example:
 
-							<input 
-								type="file" 
-								name="logo" 
-								data-type="fileUpload" 
-								data-type-arguments='{"url":"/uploadhandler.php", "addFields":["groupId"]}' 
+							<input
+								type="file"
+								name="logo"
+								data-type="fileUpload"
+								data-type-arguments='{"url":"/uploadhandler.php", "addFields":["groupId"]}'
 								value=""
 							/>
 							<input type="hidden" name="groupId" value="14">
@@ -124,6 +124,7 @@
 		},
 		//define done handler
 		done : function(result) {
+
 			if(result.status === "OK") {
 				switch(result.data.contentType.split("/")[0]) {
 					case "image":
@@ -134,7 +135,7 @@
 						break;
 				}
 			}
-			else if(result.status === "ERROR") {
+			else if(result.status === "ERROR" || result.status === "success") { //status succes is triggered when handler has not been called correctly
 				methods.toggleAjaxLoader(result.el);
 				alert("Image upload failed");
 			}

@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 	function getSchema() {
 		//set authentication
 		$authUsername = 'bidx'; // Bidx Auth login
 		$authPassword = 'gobidx'; // Bidx Auth password
 		$url = 'http://test.bidx.net/api/v1/entity/13?csrf=false&groupDomain=beta&schema=true&newSchema';
-		
+
 		$curl = curl_init($url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl,CURLOPT_HTTPHEADER,array('Authorization: Basic ' . base64_encode("$authUsername:$authPassword")));
@@ -19,18 +19,18 @@
 		curl_close($curl);
 		return json_decode($curl_response);
 	}
-	
+
 	function generateFormFields($entity, $fields) {
 		include "dbug.php";
-		
-		$response = getSchema();	
+
+		$response = getSchema();
 		$data =  $response -> data;
 		//new dBug($data);
 		//$fields = $schema->metadata->schema->personalDetails->properties;
 		$schema = $response->metadata->schema;
 		//new dBug ($fields);
 
-		/* 
+		/*
 			Available types:
 			    array (minItems, maxItems, uniqueItems, items)
 			    boolean
@@ -46,15 +46,15 @@
 		$output = "";
 
 		//new dBug($schema);
-	
+
 		$res = traverseSchema($schema, $data, "", "");
 		echo $res;
 
 	}
 
 	function traverseSchema($schema, $data, $output, $parent) {
-		
-		//loop 	
+
+		//loop
 		foreach ($schema as $key => $el) {
 		//	new dBug($el);
 
@@ -62,19 +62,19 @@
 			if($el->type == "object") {
 				//there is a collection
 				if(isset($el->properties)) {
-							
+
 					$output = traverseSchema(
 						$el->properties,
-						$data, 
-						$output, 
+						$data,
+						$output,
 						$parent != "" ? $parent . "." . $key : $key
 					);
 				}
 				else if(isset($el->items)) {//this option will be removed and changed to properties
 					$output = traverseSchema(
-						$el->items, 
-						$data, 
-						$output, 
+						$el->items,
+						$data,
+						$output,
 						$parent != "" ? $parent . "." . $key : $key
 					);
 				}
@@ -88,14 +88,14 @@
 				//set HTML wrapper for formfields
 				$wrapper_start = "<div class=\"formfield\"><label>" . $el->title . "</label>";
 				$wrapper_end = "</div>";
-				
+
 				if(isset($el->type)) {
 					$type = $hasOptions ? "select": $el->type;
 
 
 					//create HTML for formfield element
 					switch ($type) {
-						case 'hidden': 
+						case 'hidden':
 							$output.= "<input type=\"hidden\" name=\"" . $fieldname ."\"/>";
 							break;
 						case 'string':
@@ -111,7 +111,7 @@
 										break;
 								}*/
 							}
-							
+
 							$element = 	"<input type=\"text\" name=\"" . $fieldname . "\" value=\"" . "\" placeholder=\"" . $placeholder . "\" " . $dataType . "/>";
 							$output.= $wrapper_start . $element . $wrapper_end;
 							break;
@@ -134,7 +134,7 @@
 				}
 			}
 
-			
+
 
 		}
 		return $output;
