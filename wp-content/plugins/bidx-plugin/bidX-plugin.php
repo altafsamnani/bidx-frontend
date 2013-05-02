@@ -18,25 +18,27 @@ function validateFrontpageLogin() {
 	}	
 }
 
+//
 //Rewrites for urls
 //
 add_action('init', 'add_bidx_plugin_rewrites');
-function add_bidx_plugin_rewrites()
-{
+function add_bidx_plugin_rewrites() {
+	
 	//Memberprofile app
-	add_rewrite_rule('^profile/([^/]*)/?','apps/memberprofile/memberprofile.php?member_id=$matches[1]','top');
-	add_rewrite_rule('^profile/?','apps/memberprofile/memberprofile.php','top');
+	add_rewrite_rule( '^member/([^/]*)/?', plugins_url( 'apps/memberprofile/memberprofile.php?member_id=$matches[1]' ), 'top' );
+	add_rewrite_rule( '^member/?', plugins_url( 'apps/memberprofile/memberprofile.php'),'top');
 	
 	//Businessplan app
-	add_rewrite_rule('^businessplan/([^/]*)/?','apps/businessplan/businessplan.php?bp_id=$matches[1]','top');
-	add_rewrite_rule('^businessplan/?','apps/businessplan/businessplan.php','top');
+	add_rewrite_rule( '^businessplan/([^/]*)/?', plugins_url( 'apps/businessplan/businessplan.php?bp_id=$matches[1]'), 'top' );
+	add_rewrite_rule( '^businessplan/?', plugins_url( 'apps/businessplan/businessplan.php'), 'top' );
 	
 	//Dashboard app
-	add_rewrite_rule('^dashboard/([^/]*)/?','apps/dashboard/dashboard.php?dashboard_id=$matches[1]','top');
-	add_rewrite_rule('^dashboard/?','apps/dashboard/dashboard.php','top');
+	add_rewrite_rule( '^home/([^/]*)/?', plugins_url( 'apps/dashboard/dashboard.php?dashboard_id=$matches[1]'), 'top' );
+	add_rewrite_rule( '^home/?', plugins_url( 'apps/dashboard/dashboard.php' ), 'top' );
 	
 	//Search app
-	add_rewrite_rule('^search/([^/]*)/?','apps/search/search.php?q=$matches[1]','top');
-	add_rewrite_rule('^search/?','apps/search/search.php','top');
+	add_rewrite_rule( '^search/([^/]*)/?', plugins_url( 'apps/search/search.php?q=$matches[1]'), 'top' );
+	add_rewrite_rule( '^search/?', plugins_url( 'apps/search/search.php'), 'top' );
+	
 }
 ?>
