@@ -1,30 +1,23 @@
 <?php
 
-//register dependencies first
-//according to: http://wp.tutsplus.com/articles/how-to-include-javascript-and-css-in-your-wordpress-themes-and-plugins/
-//TODO check if this must be in method or this is early enough
+require_once( '../generic.php' );
 
-//load script : name (unique name), location (relative to plugin url), deps (other libs), version (date), footer
-wp_register_script( 'bootstrap', plugins_url( 'static/vendor/bootstrap/js/bootstrap.min.js' ), array(), '20130501', TRUE );
-wp_enqueue_script( 'bootstrap' );
-
-wp_register_script( 'businessplan', plugins_url( 'static/js/businessplan.js', __FILE__ ), array(bootstrap), '20130501', TRUE );
-wp_enqueue_script( 'businessplan' );
-
-//load css : name (unique name), location (relative to plugin url), deps (other libs), version (date), media type (all, print, screen, handheld)
-wp_register_style( 'bootstrap', plugins_url( 'static/vendor/bootstrap/css/bootstrap.min.css' ), array(), '20130501', 'all' );
-wp_enqueue_style( 'bootstrap' );
-
-wp_register_style( 'bootstrap-responsive', plugins_url( 'static/vendor/bootstrap/css/bootstrap-responsive.min.css' ), array(), '20130501', 'all' );
-wp_enqueue_style( 'bootstrap-responsive' );
-
-wp_register_style( 'businessplan', plugins_url( 'static/css/businessplan.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
-wp_enqueue_style( 'businessplan' );
+function register_businessplan_bidx_ui_libs()
+{
+	wp_register_script( 'businessplan', plugins_url( 'static/js/businessplan.js', __FILE__ ), array(bootstrap), '20130501', TRUE );
+	wp_enqueue_script( 'businessplan' );
+	
+	wp_register_style( 'businessplan', plugins_url( 'static/css/businessplan.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+	wp_enqueue_style( 'businessplan' );
+}
+add_action('wp_enqueue_scripts', 'register_businessplan_bidx_ui_libs');
 ?>
+
+
 
 <h1>Businessplan</h1>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget tristique dui. 
+<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget tristique dui. 
 Curabitur feugiat bibendum ipsum vitae porta. Fusce tempus turpis a eros elementum at dignissim libero vulputate. 
 Sed tempus vulputate lorem, sed rutrum orci varius in. Suspendisse gravida pharetra libero, non egestas risus blandit eget. 
 Ut sed iaculis sem. Fusce blandit condimentum malesuada.</p>
