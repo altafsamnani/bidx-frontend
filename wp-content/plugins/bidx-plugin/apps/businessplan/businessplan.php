@@ -1,19 +1,18 @@
 <?php
 
-require_once( '../generic.php' );
+// require_once( '../generic.php' );
 
-function register_businessplan_bidx_ui_libs()
-{
-	wp_register_script( 'businessplan', plugins_url( 'static/js/businessplan.js', __FILE__ ), array(bootstrap), '20130501', TRUE );
-	wp_enqueue_script( 'businessplan' );
+// function register_businessplan_bidx_ui_libs()
+// {
+// 	wp_register_script( 'businessplan', plugins_url( 'static/js/businessplan.js', __FILE__ ), array(bootstrap), '20130501', TRUE );
+// 	wp_enqueue_script( 'businessplan' );
 	
-	wp_register_style( 'businessplan', plugins_url( 'static/css/businessplan.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
-	wp_enqueue_style( 'businessplan' );
-}
-add_action('wp_enqueue_scripts', 'register_businessplan_bidx_ui_libs');
+// 	wp_register_style( 'businessplan', plugins_url( 'static/css/businessplan.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+// 	wp_enqueue_style( 'businessplan' );
+// }
+
+// add_action('wp_enqueue_scripts', 'register_businessplan_bidx_ui_libs');
 ?>
-
-
 
 <h1>Businessplan</h1>
 
