@@ -140,7 +140,7 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
   $bidxMethod = strtoupper($method);
   $bidx_get_params = "";
   $cookie_string = "";
-  $sendDomain = (WP_DEVELOPMENT) ? 'bidx.net' : 'bidx.net';
+  $sendDomain = 'bidx.net';
   $cookieArr = array();
 
 
@@ -165,8 +165,8 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
 
   // 2.2 Set the group domain header
   if (isset($body['domain'])) {
-    $headers['X-Bidx-Group-Domain'] = $body['domain'];
-
+    //Talk with arjan for domain on first page registration it will be blank when it goes live
+    $headers['X-Bidx-Group-Domain'] = ($urlservice == 'groups' && $bidxMethod == 'POST') ? 'beta' : $body['domain'];
     //$bidx_get_params.= '&groupDomain=' . $body['domain'];
   }
 
@@ -176,10 +176,11 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
     $body = NULL;
   }
 
- 
+
   /*   * *********** 4. WP Http Request ******************************* */
 
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
+
 
   $request = new WP_Http;
   $result = $request->request($url, array('method' => $bidxMethod,
@@ -192,10 +193,11 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
   $cookies = $result['cookies'];
   if (count($cookies)) {
     foreach ($cookies as $bidxAuthCookie) {
-      $cookieDomain = (WP_DEVELOPMENT == TRUE) ? 'bidx.dev' : $bidxAuthCookie->domain;
+      $cookieDomain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'bidx.dev' : $bidxAuthCookie->domain;
       setcookie($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
     }
   }
+
 
   return $result;
 }
@@ -400,7 +402,7 @@ function disable_function() {
  */
 function get_redirect($url, $requestData, $domain = NULL) {
   $redirectUrl = NULL;
-  $domain = (WP_DEVELOPMENT) ? 'site1.bidx.dev' : $domain;
+  $domain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'site1.bidx.dev' : $domain;
   $redirect = NULL;
   /*   * **** If have a particular Redirect in params *************** */
   if (isset($_POST['redirect_to'])) {
@@ -413,7 +415,7 @@ function get_redirect($url, $requestData, $domain = NULL) {
   switch ($url) {
     case 'sessionactive':
     case 'session':
-      $redirect = ($redirect) ? $redirect : '/profile/';
+      $redirect = ($redirect) ? $redirect : '/wp-content/plugins/bidx-plugin/apps/memberprofile/memberprofile.php';
       $requestData->redirect = $redirect;
       break;
 
@@ -575,8 +577,9 @@ function bidx_wordpress_post_action($url, $result, $body) {
 function create_bidx_wp_site($groupName, $email) {
   global $wpdb, $current_site;
   $status = 'ok';
-  if (preg_match('|^([a-zA-Z0-9-])+$|', $groupName))
-    $groupName = strtolower($groupName);
+  $groupName = str_replace(" ","",strtolower($groupName));
+  //if (preg_match('|^([a-zA-Z0-9-])+$|', $groupName))
+   // $groupName = str_replace(" ","",strtolower($groupName));
 
   $newdomain = $groupName . '.' . preg_replace('|^www\.|', '', $current_site->domain);
   $path = $current_site->path;
@@ -649,6 +652,7 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
         'domain' => $wp_site['domain']
       );
       $params['domain'] = $wp_site['subdomain'];
+  
       break;
 
     case 'mailer' :
@@ -768,7 +772,7 @@ function bidx_register_response($requestEntityMember, $requestEntityGroup, $requ
   }
   else {
     $requestData->status = 'OK';
-    $requestData->submit = '/group-creation-success';
+    $requestData->submit = '/wp-content/plugins/bidx-plugin/apps/memberprofile/memberprofile.php';
     //Logs the user in and show the group dashboard
   }
 
@@ -909,6 +913,27 @@ function ajax_register_action() {
 
   die(); // stop executing script
 }
+
+
+
+
+
+/* Assign theme/pages/metadata when site is created
+ * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
+ * @author Altaf Samnani
+ * @version 1.0
+ * @description  Assign theme/pages/metadata when site is created
+ * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
+ * http://bigbigtech.com/2009/07/wordpress-mu-cross-posting-with-switch_to_blog/
+ * http://wordpress.org/support/topic/sharing-page-content-across-networked-install?replies=6
+ *
+ * Add Custom Page attributes
+ *
+ * @param bool $echo
+ */
+
+add_action('wpmu_new_blog', 'assign_bidxgroup_theme_page');
+
 
 function assign_bidxgroup_theme_page($blog_id) {
   global $wpdb;

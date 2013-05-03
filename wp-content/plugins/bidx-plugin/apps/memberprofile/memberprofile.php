@@ -1,5 +1,12 @@
 <?php
 require_once( '../generic.php' );
+require_once( '../../services/session-service.php' );
+
+/* Checks session and injects the js code */
+$sessionObj = new SessionService();
+
+$sessionObj->isLoggedIn();
+
 function register_memberprofile_bidx_ui_libs()
 {
 wp_register_script( 'memberprofile', plugins_url( 'static/js/memberprofile.js', __FILE__ ), array(bootstrap), '20130501', TRUE );
