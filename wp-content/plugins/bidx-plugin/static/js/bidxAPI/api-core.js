@@ -221,15 +221,19 @@
                     url:            url
                 ,   method:         options.method
                 ,   dataType:       "json"
-                ,   contentType:    "application/json"
                 ,   success:        options.success
                 ,   error:          options.error
                 }
             ;
 
+            if ( !options.form )
+            {
+                params.contentType = "application/json";
+            }
+
             if ( options.data )
             {
-                params.data = JSON.stringify( options.data );
+                params.data = options.form ? options.data : JSON.stringify( options.data );
             }
 
             $.ajax( params );
