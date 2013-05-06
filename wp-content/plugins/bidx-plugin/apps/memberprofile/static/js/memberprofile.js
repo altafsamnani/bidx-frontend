@@ -258,7 +258,7 @@ $( document ).ready( function()
     //
     var _init = function()
     {
-        memberId    = bidx.utils.getQueryParameter( "memberid" ) || bidx.utils.getValue( bidxConfig, "context.memberProfileId" );
+        memberId    = bidx.utils.getQueryParameter( "memberProfileId" ) || bidx.utils.getValue( bidxConfig, "context.memberProfileId" );
         groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getGroupDomain();
 
         if ( !memberId )
