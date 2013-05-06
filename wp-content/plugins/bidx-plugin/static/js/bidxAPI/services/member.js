@@ -4,7 +4,8 @@
  */
 ;(function( $ )
 {
-    var api     = window.bidx.api
+    var bidx    = window.bidx
+    ,   api     = bidx.api
     ,   member  = {}
     ,   baseUrl = "/api/v1/entity"
     ,   params  = []
