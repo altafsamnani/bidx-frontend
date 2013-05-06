@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xml:lang="en" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="" />
+
+    <link rel="stylesheet" href="/wp-content/plugins/bidx-plugin/static/vendor/bootstrap/css/bootstrap.css">
+
+    <style>
+        label > span {
+            display:        inline-block;
+            width:          200px;
+        }
+
+        #lastResponse {
+            font-size:      10px;
+        }
+
+    </style>
+
+    <script>
+        var bidxConfig = bidxConfig || {};
+
+        // Information about the current page context. In case of showing:
+        // - member (profile): member_id
+        // - group (startpage/profile/dashboard): group_id
+        // - company: company_id
+        // - business summary: entity_id
+        //
+        bidxConfig.context = {
+        };
+
+        // Dump response of the session-api
+        //
+        bidxConfig.session = {
+        };
+
+        bidxConfig.authenticated = false;          // true / false
+
+    </script>
+
+</head>
+<body>
+
+    <div id="login">
+
+        <h1>Login</h1>
+
+        <p><strong>Caution! Retrieve this file / login only on a *.bidx.net domain since the session cookie set by the API has a cookie domain of bidx.net</strong></p>
+
+        <label><span>Group domain</span><input type="text" name="groupDomain" value="beta"></label>
+
+        <div class="view viewLogin">
+            <form id="frmLogin">
+                <ul class="unstyled">
+                    <li><label><span>Username</span><input type="text" name="username"></label>
+                    <li><label><span>Password</span><input type="text" name="password"></label>
+                    <li><button type="submit" class="btnSubmit">Login</button>
+                </ul>
+            </form>
+        </div>
+
+        <div class="view viewNav">
+            <ul>
+                <li><a href="#login">Back to login</a>
+                <li><a href="#memberprofile">Member profile</a>
+            </ul>
+        </div>
+
+        <button type="button" class="btnGetSession">Get session</button>
+
+        <h2>Last service response</h2>
+        <pre id="lastResponse"></pre>
+
+    </div>
+
+    <!-- central vendor libs -->
+    <script src="../static/vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../static/vendor/underscore/underscore-1.4.4.js"></script>
+    <script src="../static/vendor/backbone/backbone-1.0.0.js"></script>
+
+    <!-- central bidx libs -->
+    <script src="../static/js/utils.js"></script>
+
+    <script>
+        window.bidx = bidx || {};
+
+        window.bidx.api = {
+            settings:
+            {
+                servicesPath:   "../static/js/bidxAPI/services/"
+            }
+        };
+    </script>
+    <script src="../static/js/bidxAPI/api-core.js"></script>
+
+    <!-- app -->
+    <script>
+
+        $( document ).ready( function()
+        {
+
+            var $element            = $( "#login" )
+            ,   $views              = $element.children( ".view" )
+            ,   $frmLogin           = $element.find( "form#frmLogin" )
+            ,   $lastResponse       = $element.find( "#lastResponse" )
+            ,   $btnGetSession      = $element.find( ".btnGetSession" )
+            ,   $btnSubmit          = $element.find( ".btnSubmit" )
+
+            ,   $inputGroupDomain   = $element.find( "input[name='groupDomain']"   )
+
+            ,   baseUrl             = document.location.href.substr( 0, document.location.href.lastIndexOf( "/" ) + 1 )
+            ;
+
+            var memberData;
+
+            $btnGetSession.click( function( e )
+            {
+                e.preventDefault();
+
+                var groupDomain = $inputGroupDomain.val()
+                ;
+
+                $btnGetSession.prop( "disabled", true );
+
+                bidx.api.call(
+                    "session.fetch"
+                ,   {
+                        groupDomain:        groupDomain
+                    ,   success:        function( response )
+                        {
+                            memberData = bidx.utils.getValue( response, "data" );
+                            $lastResponse.text( JSON.stringify( response, null, 2 ));
+
+                            $btnGetSession.prop( "disabled", false );
+                        }
+                    ,   error:          function( jqXhr, textStatus )
+                        {
+                            memberData = null;
+
+                            var status = bidx.utils.getValue( jqXhr.status ) || textStatus;
+
+                            alert( "error while authenticating " + status );
+
+                            $btnGetSession.prop( "disabled", false );
+                        }
+                    }
+                );
+            } );
+
+            $frmLogin.submit( function( e )
+            {
+                e.preventDefault();
+
+                var username    = $frmLogin.find( "input[name='username']"      ).val()
+                ,   password    = $frmLogin.find( "input[name='password']"      ).val()
+                ,   groupDomain = $inputGroupDomain.val()
+                ;
+
+                memberData = null;
+
+                $btnSubmit.prop( "disabled", true );
+
+                bidx.api.call(
+                    "session.save"
+                ,   {
+                        groupDomain:    groupDomain
+                    ,   data:
+                        {
+                            username:       username
+                        ,   password:       password
+                        }
+                    ,   success:        function( response )
+                        {
+                            memberData = bidx.utils.getValue( response, "data" );
+
+                            $lastResponse.text( JSON.stringify( response, null, 2 ));
+                            _showView( "nav" );
+
+                            $btnSubmit.prop( "disabled", false );
+                        }
+                    ,   error:          function( jqXhr, textStatus )
+                        {
+                            var status = bidx.utils.getValue( jqXhr.status ) || textStatus;
+
+                            alert( "error while authenticating " + status );
+
+                            $btnSubmit.prop( "disabled", false );
+                        }
+                    }
+                );
+
+                return false;
+            } );
+
+            // ROUTER
+            //
+            var AppRouter = Backbone.Router.extend(
+            {
+                routes: {
+                    'memberprofile':    'memberprofile'
+                ,   '*path':            'login'
+                }
+            ,   memberprofile:           function()
+                {
+                    if ( !memberData )
+                    {
+                        alert( "No valid memberdata! Login first" );
+                        return;
+                    }
+
+                    var memberProfileId = bidx.utils.getValue( memberData, "bidxMemberProfile.bidxProfileId" );
+
+                    if ( !memberProfileId )
+                    {
+                        alert( "Unable to find member profile id from member data" );
+                        return;
+                    }
+
+                    var url = baseUrl
+                        + "memberprofile/memberprofile.html?memberProfileId="
+                        + memberProfileId
+                        + "&bidxGroupDomain="
+                        + encodeURIComponent( $inputGroupDomain.val() )
+                    ;
+
+                    document.location.href = url;
+                }
+            ,   login:           function()
+                {
+                    _showView( "login" );
+                }
+            } );
+
+            var router = new AppRouter();
+            Backbone.history.start();
+
+
+            function _showView( v )
+            {
+                $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
+            }
+        } );
+
+    </script>
+
+</body>
+</html>
