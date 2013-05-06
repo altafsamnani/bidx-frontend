@@ -65,15 +65,13 @@
                     <li><button type="submit" class="btnSubmit">Login</button>
                 </ul>
             </form>
-        </div>
 
-        <div class="view viewNav">
             <ul>
-                <li><a href="#login">Back to login</a>
-                <li><a href="#memberprofile">Member profile</a>
+                <li><a href="#memberprofile">To member profile page</a>
             </ul>
         </div>
 
+        <button type="button" class="btnLogout">Logout</button>
         <button type="button" class="btnGetSession">Get session</button>
 
         <h2>Last service response</h2>
@@ -113,6 +111,7 @@
             ,   $lastResponse       = $element.find( "#lastResponse" )
             ,   $btnGetSession      = $element.find( ".btnGetSession" )
             ,   $btnSubmit          = $element.find( ".btnSubmit" )
+            ,   $btnLogout          = $element.find( ".btnLogout" )
 
             ,   $inputGroupDomain   = $element.find( "input[name='groupDomain']"   )
 
@@ -121,6 +120,8 @@
 
             var memberData;
 
+            // Get current session (if any)
+            //
             $btnGetSession.click( function( e )
             {
                 e.preventDefault();
@@ -129,6 +130,9 @@
                 ;
 
                 $btnGetSession.prop( "disabled", true );
+
+                $lastResponse.text( "" );
+                memberData = null;
 
                 bidx.api.call(
                     "session.fetch"
@@ -145,9 +149,24 @@
                         {
                             memberData = null;
 
-                            var status = bidx.utils.getValue( jqXhr.status ) || textStatus;
+                            var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                            alert( "error while authenticating " + status );
+
+                            if ( jqXhr && jqXhr.responseText )
+                            {
+                                try
+                                {
+                                    var response = $.parseJSON( jqXhr.responseText );
+
+                                    $lastResponse.text( JSON.stringify( response, null, 2 ));
+                                }
+                                catch ( e )
+                                {
+                                    $lastResponse.text( "Problem parsing response" );
+                                }
+                            }
+
+                            alert( "Error while getting session " + status );
 
                             $btnGetSession.prop( "disabled", false );
                         }
@@ -155,6 +174,58 @@
                 );
             } );
 
+            // Logout
+            //
+            $btnLogout.click( function( e )
+            {
+                e.preventDefault();
+
+                var groupDomain = $inputGroupDomain.val()
+                ;
+
+                $btnLogout.prop( "disabled", true );
+
+                $lastResponse.text( "" );
+                memberData = null;
+
+                bidx.api.call(
+                    "session.destroy"
+                ,   {
+                        groupDomain:        groupDomain
+                    ,   success:        function( response )
+                        {
+                            $lastResponse.text( JSON.stringify( response, null, 2 ));
+
+                            $btnLogout.prop( "disabled", false );
+                        }
+                    ,   error:          function( jqXhr, textStatus )
+                        {
+                            var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                            if ( jqXhr && jqXhr.responseText )
+                            {
+                                try
+                                {
+                                    var response = $.parseJSON( jqXhr.responseText );
+
+                                    $lastResponse.text( JSON.stringify( response, null, 2 ));
+                                }
+                                catch ( e )
+                                {
+                                    $lastResponse.text( "Problem parsing response" );
+                                }
+                            }
+
+                            alert( "Error while getting session " + status );
+
+                            $btnLogout.prop( "disabled", false );
+                        }
+                    }
+                );
+            } );
+
+            // Login
+            //
             $frmLogin.submit( function( e )
             {
                 e.preventDefault();
@@ -164,6 +235,7 @@
                 ,   groupDomain = $inputGroupDomain.val()
                 ;
 
+                $lastResponse.text( "" );
                 memberData = null;
 
                 $btnSubmit.prop( "disabled", true );
@@ -182,13 +254,25 @@
                             memberData = bidx.utils.getValue( response, "data" );
 
                             $lastResponse.text( JSON.stringify( response, null, 2 ));
-                            _showView( "nav" );
 
                             $btnSubmit.prop( "disabled", false );
                         }
                     ,   error:          function( jqXhr, textStatus )
                         {
-                            var status = bidx.utils.getValue( jqXhr.status ) || textStatus;
+                            var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                            if ( jqXhr && jqXhr.responseText )
+                            {
+                                try
+                                {
+                                    var response = $.parseJSON( jqXhr.responseText );
+                                    $lastResponse.text( JSON.stringify( response, null, 2 ));
+                                }
+                                catch ( e )
+                                {
+                                    $lastResponse.text( "Problem parsing response" );
+                                }
+                            }
 
                             alert( "error while authenticating " + status );
 
@@ -206,13 +290,13 @@
             {
                 routes: {
                     'memberprofile':    'memberprofile'
-                ,   '*path':            'login'
                 }
             ,   memberprofile:           function()
                 {
                     if ( !memberData )
                     {
                         alert( "No valid memberdata! Login first" );
+                        router.navigate( "" );
                         return;
                     }
 
@@ -221,6 +305,7 @@
                     if ( !memberProfileId )
                     {
                         alert( "Unable to find member profile id from member data" );
+                        router.navigate( "" );
                         return;
                     }
 
@@ -232,10 +317,6 @@
                     ;
 
                     document.location.href = url;
-                }
-            ,   login:           function()
-                {
-                    _showView( "login" );
                 }
             } );
 
