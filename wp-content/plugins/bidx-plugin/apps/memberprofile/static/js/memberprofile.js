@@ -1,6 +1,6 @@
 $( document ).ready( function()
 {
-    var $element        = $( "#member" )
+    var $element        = $( "#memberEdit" )
     ,   $views          = $element.find( ".view" )
     ,   $editForm       = $views.filter( ".viewEdit" ).find( "form" )
     ,   member
@@ -258,13 +258,12 @@ $( document ).ready( function()
     //
     var _init = function()
     {
-        memberId    = bidx.utils.getQueryParameter( "memberid" );
-        groupDomain = bidx.utils.getGroupDomain();
+        memberId    = bidx.utils.getQueryParameter( "memberid" ) || bidx.utils.getValue( bidxConfig, "context.memberProfileId" );
+        groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getGroupDomain();
 
         if ( !memberId )
         {
-            $views.filter( ".viewError" ).find( ".errorMsg" ).text( "There is no memberid parameter on the url" );
-            _showView( "error" );
+            _showError( "No member (profile) id found to be retrieved from API!" );
             return;
         }
 
@@ -330,15 +329,17 @@ $( document ).ready( function()
                 {
                     member = response;
 
-                    bidx.utils.log( "member", member );
+                    bidx.utils.log( "bidx::member", member );
 
                     _populateForm();
 
                     _showView( "edit" );
                 }
-            ,   error:          function()
+            ,   error:          function( jqXhr, textStatus )
                 {
-                    alert( "Something went wrong while retrieving the member" );
+                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                    _showError( "Something went wrong while retrieving the member: " + status );
                 }
             }
         );
@@ -391,14 +392,45 @@ $( document ).ready( function()
 
     // Private functions
     //
+    function _showError( msg )
+    {
+        $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
+        _showView( "error" );
+    }
+
     function _showView( v )
     {
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
     }
 
-    // Engage!
+    // ROUTER
     //
-    _init();
+    var $btnEdit    = $( "[href$=#edit]" );
+
+    var AppRouter = Backbone.Router.extend(
+    {
+        routes: {
+            'edit':         'edit'
+        ,   '*path':        'show'
+        }
+    ,   edit:           function()
+        {
+            $element.show();
+            _showView( "load" );
+
+            $btnEdit.hide();
+
+            _init();
+        }
+    ,   show:           function()
+        {
+            $element.hide();
+            $btnEdit.show();
+        }
+    } );
+
+    var router = new AppRouter();
+    Backbone.history.start();
 
     // Expose
     //
