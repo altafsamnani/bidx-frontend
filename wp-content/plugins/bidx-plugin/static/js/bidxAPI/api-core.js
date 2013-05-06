@@ -8,7 +8,7 @@
  */
 ;(function( $ )
 {
-    var api         = {}
+    var api
     ,   bidx
     ;
 
@@ -18,7 +18,10 @@
     }
 
     bidx        = window.bidx;
-    bidx.api    = api;
+    bidx.api    = bidx.api || {};
+
+    api = bidx.api;
+
 
     api.buildNr = /* @@build-nr-start@@ */ new Date().getTime()/* @@build-nr-end@@ */;
 
