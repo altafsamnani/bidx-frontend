@@ -36,7 +36,7 @@
          * <dt>timeout</dt>        <dd>(integer) The timeout used when waiting for API calls</dd>
          * </dl>
          *
-         * @fieldOf essAPI
+         * @fieldOf bidxAPI
          */
         api.settings = $.extend(
         {
@@ -98,7 +98,7 @@
             service = bidx.utils.getValue( api, method );
             if ( service )
             {
-                bidx.utils.log( "[essAPI] calling service", method );
+                bidx.utils.log( "[bidxAPI] calling service", method );
                 service( params );
             }
             else
@@ -129,7 +129,7 @@
         /**
          * Loads a method for the API
          *
-         * @memberOf essAPI
+         * @memberOf bidxAPI
          *
          */
         var currentlyLoading = {};
