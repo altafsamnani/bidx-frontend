@@ -28,6 +28,11 @@
 
     function getValue( obj, path, forceArray )
     {
+        if ( typeof path === "undefined" )
+        {
+            return;
+        }
+
         var aPath = path.split( "." )
         ,   value = obj
         ,   key   = aPath.shift()
