@@ -199,8 +199,21 @@ $( document ).ready( function()
                 break;
 
                 default:
-                    value = $input.val();
+                    switch ( $input.attr( "type" ) )
+                    {
+                        case "radio":
+                            value = $input.filter( ":checked" ).val();
+                        break;
+
+                        case "checkbox":
+                            value = $input.is( ":checked" ) ? $input.val() : null;
+                        break;
+
+                        default:
+                            value = $input.val();
+                    }
             }
+
 
             if ( value === "true" )
             {
@@ -224,8 +237,6 @@ $( document ).ready( function()
         } );
 
         // Collect the nested objects
-        //
-        // Now the nested objects
         //
         $.each( [ "address", "languageDetail", "contactDetail" ], function()
         {
@@ -333,6 +344,9 @@ $( document ).ready( function()
 
                     _populateForm();
 
+                    $btnSave.show();
+                    $btnCancel.show();
+
                     _showView( "edit" );
                 }
             ,   error:          function( jqXhr, textStatus )
@@ -377,6 +391,8 @@ $( document ).ready( function()
             ,   data:           member
             ,   success:        function( response )
                 {
+                    bidx.utils.log( "member.save::success::response", response );
+
                     var url = document.location.href.split( "#" ).shift();
 
                     document.location.href = url;
@@ -405,12 +421,28 @@ $( document ).ready( function()
 
     // ROUTER
     //
-    var $btnEdit    = $( "[href$=#edit]" );
+    var $controls   = $( ".memberEditControl" )
+    ,   $btnEdit    = $controls.filter( "[href$=#edit]" )
+    ,   $btnSave    = $controls.filter( "[href$=#save]" )
+    ,   $btnCancel  = $controls.filter( "[href$=#cancel]" )
+    ;
 
+    // Wire the submit button which can be anywhere in the DOM
+    //
+    $btnSave.click( function( e )
+    {
+        e.preventDefault();
+
+        $editForm.submit();
+    } );
+
+    // Router for main state
+    //
     var AppRouter = Backbone.Router.extend(
     {
         routes: {
             'edit':         'edit'
+        ,   'cancel':       'show'
         ,   '*path':        'show'
         }
     ,   edit:           function()
@@ -426,6 +458,9 @@ $( document ).ready( function()
         {
             $element.hide();
             $btnEdit.show();
+
+            $btnCancel.hide();
+            $btnSave.hide();
         }
     } );
 

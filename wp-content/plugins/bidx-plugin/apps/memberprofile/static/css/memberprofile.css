@@ -9,3 +9,7 @@
 .viewLoad {
     display:                block;
 }
+
+.memberEditControl {
+    display:                none;
+}
