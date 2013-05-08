@@ -23,6 +23,24 @@ class memberprofile {
 	  wp_register_style( 'memberprofile', plugins_url( 'static/css/memberprofile.css', __FILE__ ), array(), '20130501', 'all' );
 	  wp_enqueue_style( 'memberprofile' );
 	}
+
+
+
+/**
+ * Add script block to footer
+ */
+function bidx_memberprofile_add_to_footer() {
+
+echo "<script>
+      window.bidx = bidx || {};
+      window.bidx.api = {
+        settings: {
+                  servicesPath:   '../../static/js/bidxAPI/services/'
+                }
+        };
+    </script>";
+
+}
 	/**
 	 * Load the content.
 	 * Dynamic action needs to be added here
@@ -38,10 +56,12 @@ class memberprofile {
     require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
     $memberObj = new MemberService();
 
+    /* 3. Render Member Profile Services for Initial View Display */
     $memberData = $memberObj->getMemberDetails();
     $view->data = $memberData->data;
 
-    /* 3. Component */
+    /* 4. Call the Display Component */
+    add_action( 'wp_footer', array( &$this ,'bidx_memberprofile_add_to_footer' ) );
 		require_once ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );
 	}
 }
