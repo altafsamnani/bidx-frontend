@@ -1,14 +1,22 @@
 <div class="block-odd">
-	<div class="container">
+  <div class="container">
 
-		<div class="">
-			<h1>Member-profile</h1>
-		</div>
+    <div class="">
+      <h1>Member-profile</h1>
+    </div>
 
-		<a class="btn btn-primary" href="#edit">Edit</a>
+    <a class="btn btn-primary" href="#edit">Edit</a>
 
-<?php
-$view -> render('view-member.phtml');
-$view -> render('edit-member.phtml'); ?>
-	</div>
+
+    <div class="row-fluid">
+      <div class="span8">
+        <?php $view->render('view-member.phtml'); ?>
+      </div>
+      <div class="span4">
+        <?php $view->render('view-group.phtml'); ?>
+      </div>
+    </div>
+
+
+  </div>
 </div>

@@ -35,7 +35,7 @@ class MemberService extends SessionService {
 
     
     //Call member profile
-    $result = $this->callBidxAPI($this->memberUrl.'/'.$data->memberProfileId, array(), 'GET'); //.$data->memberProfileId 4
+    $result = $this->callBidxAPI($this->memberUrl.'/4', array(), 'GET'); //.$data->memberProfileId 4
     // Will use it with Wordpress Action/theming
     //add_action( 'wp_head', array($this, 'injectJsVariables') );
     
