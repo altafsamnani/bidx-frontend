@@ -3,14 +3,14 @@
 class memberprofile {
 
 	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
-	
+
 	/**
 	 * Constructor
 	 */
-	function __construct() {
-		add_action( 'wp_enqueue_scripts', array( &$this, 'register_memberprofile_bidx_ui_libs' ) );
-	}
-
+  	function __construct() {
+		add_action( 'wp_enqueue_scripts', array( &$this, 'register_memberprofile_bidx_ui_libs' ) );    
+        }
+	
 	/**
 	 * Register scripts and styles
 	 */
@@ -29,6 +29,19 @@ class memberprofile {
 	 * @param $atts
 	 */
 	function load($atts) {
-		require ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );
+
+    /* 1 Template Rendering */
+     require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
+     $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/memberprofile/templates/');
+
+    /* 2. Service MemberProfile*/
+    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
+    $memberObj = new MemberService();
+
+    $memberData = $memberObj->getMemberDetails();
+    $view->data = $memberData->data;
+
+    /* 3. Component */
+		require_once ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );
 	}
 }

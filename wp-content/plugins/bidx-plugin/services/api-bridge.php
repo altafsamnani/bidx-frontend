@@ -32,8 +32,8 @@ abstract class APIbridge {
     $cookie_string = "";
     $sendDomain = 'bidx.net';
     $cookieArr = array();
-
-
+    $groupDomain = $this->getBidxSubdomain();
+    $groupDomain = "site1";
 
     /*     * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
     $cookieInfo = $_COOKIE;
@@ -54,9 +54,9 @@ abstract class APIbridge {
 
 
     // 2.2 Set the group domain header
-    if (isset($body['domain'])) {
+    if ( $groupDomain ) {
       //Talk with arjan for domain on first page registration it will be blank when it goes live
-      $headers['X-Bidx-Group-Domain'] = ($urlService == 'groups' && $bidxMethod == 'POST') ? 'beta' : $body['domain'];
+      $headers['X-Bidx-Group-Domain'] = ($urlService == 'groups' && $bidxMethod == 'POST') ? 'beta' : $groupDomain;
       //$bidx_get_params.= '&groupDomain=' . $body['domain'];
     }
 
@@ -70,7 +70,6 @@ abstract class APIbridge {
     /*     * *********** 4. WP Http Request ******************************* */
 
     $url = API_URL . $urlService . '?csrf=false' . $bidx_get_params;
-
 
     $request = new WP_Http;
     $result = $request->request($url, array('method' => $bidxMethod,
@@ -88,7 +87,7 @@ abstract class APIbridge {
       }
     }
 
-    $requestData = $this->processResponse($urlService, $result);
+    $requestData = $this->processResponse($urlService, $result,$groupDomain);
 
    
     return $requestData;
@@ -103,11 +102,10 @@ abstract class APIbridge {
    *
 	 * @return Array $requestData response from Bidx API
 	 */
-  public function processResponse($urlService, $result) {
+  public function processResponse($urlService, $result,$groupDomain) {
 
     $requestData = json_decode($result['body']);
     $httpCode = $result['response']['code'];
-    $groupName = (isset($body['domain'])) ? $body['domain'] : NULL;
     $redirectUrl = NULL;
 
     /*     * ***Check the Http response and decide the status of request whether its error or ok * */
@@ -124,11 +122,98 @@ abstract class APIbridge {
     else if ($httpCode == 401) {
       $requestData->status = 'ERROR';
       $requestData->authenticated = 'false';
+       $this->bidxRedirectLogin($groupDomain);
     }
 
 
     return $requestData;
   }
+
+
+
+  /**
+	 * Injects Bidx Api response as JS variables
+   * @Author Altaf Samnani
+	 * @param Array $result bidx response as array
+	 *
+	 * @return String Injects js variables
+	 */
+  function injectJsVariables( $sessionData, $result ) {
+
+    //Session Response data
+    $jsSessionVars = (isset($sessionData->data)) ? json_encode($sessionData->data) :'{}';
+
+    //Api Resposne data
+    $jsApiVars = (isset($result)) ? json_encode($result) :'{}';
+
+ 
+
+    $scriptJs = " <script>
+            var bidxConfig = bidxConfig || {};
+
+            bidxConfig.context =  $jsApiVars ;
+
+            /* Dump response of the session-api */
+            bidxConfig.session = $jsSessionVars ;
+
+            bidxConfig.authenticated = {$sessionData->authenticated};
+</script>";
+    echo $scriptJs;
+    //return $scriptJs;
+    return;
+
+  }
+
+  /**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Grab the subdomain portion of the URL. If there is no sub-domain, the root
+ * domain is passed back. By default, this function *returns* the value as a
+ * string. Calling the function with echo = true prints the response directly to
+ * the screen.
+ *
+ * @param bool $echo
+ */
+function getBidxSubdomain($echo = false) {
+  $hostAddress = explode('.', $_SERVER ["HTTP_HOST"]);
+  if (is_array($hostAddress)) {
+    if (eregi("^www$", $hostAddress [0])) {
+      $passBack = 1;
+    }
+    else {
+      $passBack = 0;
+    }
+    if ($echo == false) {
+      return ($hostAddress [$passBack]);
+    }
+    else {
+      echo ($hostAddress [$passBack]);
+    }
+  }
+  else {
+    return (false);
+  }
+}
+
+/*
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Bidx Logn redirect for Not Logged in users
+ *
+ * @param String $username
+ * @param String $password
+ *
+ * @return Loggedin User
+ */
+function bidxRedirectLogin ($groupDomain) {
+  wp_clear_auth_cookie();
+  $current_url = 'http://'  . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+  $redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode($current_url);
+
+  header("Location: $redirect_url");
+}
 
 }
 

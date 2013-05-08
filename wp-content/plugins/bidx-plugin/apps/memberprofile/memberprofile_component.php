@@ -1,5 +1,4 @@
 <?php
-require_once( BIDX_PLUGIN_DIR .'/../services/session-service.php' );
 
 add_action( 'wp_footer', 'bidx_memberprofile_add_to_footer' );
 
@@ -18,6 +17,9 @@ function bidx_memberprofile_add_to_footer() {
 </script>
 	<?php
 }
+
+$view -> render('view.phtml');
+
 
 ?>
 <div class="block-odd">

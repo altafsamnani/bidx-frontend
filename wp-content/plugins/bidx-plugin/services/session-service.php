@@ -10,7 +10,7 @@ require('api-bridge.php');
  */
 class SessionService extends APIBridge {
 
-  private $apiUrl = 'session';
+  public $sessionUrl = 'session';
 
 
   public function __construct(){
@@ -28,44 +28,9 @@ class SessionService extends APIBridge {
 	 */	
 	function isLoggedIn( )
 	{
-    $result = $this->callBidxAPI($this->apiUrl, array(), 'GET');
-   
-    // Will use it with Wordpress Action/theming
-    //add_action( 'wp_head', array($this, 'inject_js_variables') );
-
-    $resultDisplay = $this->inject_js_variables($result);
-
-    return;
+    $result = $this->callBidxAPI($this->sessionUrl, array(), 'GET');
+     
+    return $result;
 	}
-
-  /**
-	 * Injects Bidx Api response as JS variables
-   * @Author Altaf Samnani
-	 * @param Array $result bidx response as array
-	 *
-	 * @return String Injects js variables 
-	 */
-  function inject_js_variables( $result ) {
-    $data = (isset($result->data)) ? json_encode($result->data) :'{}';
-
-    //Set other data language/authenticated/
-    unset($result->data);
-
-    $otherData = json_encode($result);  
-
-    echo " <script>
-            var bidxConfig = bidxConfig || {};
-
-            bidxConfig.context =  $data ; 
-
-            /* Dump response of the session-api */
-            bidxConfig.session = $otherData ;
-
-            bidxConfig.authenticated = {$result->authenticated};
-</script>";
-            return;    
-  
-  }
-	
 }
 ?>

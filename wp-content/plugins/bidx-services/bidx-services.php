@@ -179,6 +179,7 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
 
   /*   * *********** 4. WP Http Request ******************************* */
 
+
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
 
@@ -415,7 +416,7 @@ function get_redirect($url, $requestData, $domain = NULL) {
   switch ($url) {
     case 'sessionactive':
     case 'session':
-      $redirect = ($redirect) ? $redirect : '/wp-content/plugins/bidx-plugin/apps/memberprofile/memberprofile.php';
+      $redirect = ($redirect) ? $redirect : '/member';
       $requestData->redirect = $redirect;
       break;
 
@@ -476,6 +477,8 @@ function bidx_wordpress_post_action($url, $result, $body) {
       bidx_redirect_login($groupName);
 
     }
+  } else {
+    $requestData->status = 'ERROR';
   }
 
   //Write logic what If error and what if its ok (ex Redirect)
@@ -772,7 +775,7 @@ function bidx_register_response($requestEntityMember, $requestEntityGroup, $requ
   }
   else {
     $requestData->status = 'OK';
-    $requestData->submit = '/wp-content/plugins/bidx-plugin/apps/memberprofile/memberprofile.php';
+    $requestData->submit = '/member';
     //Logs the user in and show the group dashboard
   }
 

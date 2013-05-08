@@ -18,6 +18,7 @@ include ('apps/util.php' );
 //
 require (BIDX_PLUGIN_DIR . '/rewrite.php' );
 require (BIDX_PLUGIN_DIR . '/shortcode.php');
+require (BIDX_PLUGIN_DIR . '/templatelibrary.php');
 
 $ruleitems = array( 
 					'member' => 'memberprofile',
