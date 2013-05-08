@@ -27,7 +27,7 @@ class BidxRewrite
 	public static function addMappingArray($ruleitems)
 	{
 		BidxRewrite :: $ruleitems = $ruleitems;
-		Logger :: getLogger('rewrite') -> trace( 'Added mapping array ' . BidxRewrite :: $ruleitems );
+		Logger :: getLogger('rewrite') -> trace( 'Added mapping array ' . serialize( BidxRewrite :: $ruleitems ) );
 	}
 	
 	/**

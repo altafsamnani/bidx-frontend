@@ -20,7 +20,7 @@ require (BIDX_PLUGIN_DIR . '/rewrite.php' );
 require (BIDX_PLUGIN_DIR . '/shortcode.php');
 
 $ruleitems = array( 
-	//				'member' => 'memberprofile',
+					'member' => 'memberprofile',
 					'businessplan',
 					'mydashboard' => 'dashboard',
 					'search' 

@@ -19,11 +19,8 @@ class dashboard {
 	 */
 	function register_dashboard_bidx_ui_libs()
 	{
-		wp_register_script( 'dashboard', plugins_url( 'static/js/dashboard.js', __FILE__ ), array('bootstrap'), '20130501', TRUE );
-//		wp_enqueue_script( 'dashboard' );
-		
+		wp_register_script( 'dashboard', plugins_url( 'static/js/dashboard.js', __FILE__ ), array('bootstrap'), '20130501', TRUE );	
 		wp_register_style( 'dashboard', plugins_url( 'static/css/dashboard.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
-//		wp_enqueue_style( 'dashboard' );
 	}
 
 	/**

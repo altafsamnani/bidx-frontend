@@ -51,7 +51,6 @@ $logAppenders = array();
 // FILE
 //
 $log_file_name = BIDX_PLUGIN_DIR . '/debug.log';
-error_log ($log_file_name);
 
 $logAppenders[ 'file' ] = array(
 		'class'		=> 'LoggerAppenderDailyFile',
@@ -80,5 +79,10 @@ Logger::configure(
 	)
 );
 
+Logger::getLogger ( 'util' ) -> trace("Defined BIDX_THEME_DIR : ". BIDX_THEME_DIR);
+Logger::getLogger ( 'util' ) -> trace("Defined BIDX_PLUGIN_NAME : ". BIDX_PLUGIN_NAME);
+Logger::getLogger ( 'util' ) -> trace("Defined BIDX_PLUGIN_DIR : ". BIDX_PLUGIN_DIR);
+Logger::getLogger ( 'util' ) -> trace("Defined BIDX_PLUGIN_URL : ". BIDX_PLUGIN_URL);
+Logger::getLogger ( 'util' ) -> trace("Defined BIDX_version : ". BIDX_VERSION_NUM);
 
 ?>
