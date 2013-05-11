@@ -82,7 +82,6 @@ class BidxShortcode {
 		
 		$exec = self :: $mapping[$appname];
 		return $exec :: load( $atts );
-		
 	}
 	
 	/**
