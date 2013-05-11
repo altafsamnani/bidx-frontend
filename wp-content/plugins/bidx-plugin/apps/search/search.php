@@ -24,6 +24,7 @@ class search {
 
 	/**
 	 * Load the content.
+	 * The search is a static page where the content is loaded dynamically from the UI.
 	 * Dynamic action needs to be added here
 	 * @param $atts 
 	 */
