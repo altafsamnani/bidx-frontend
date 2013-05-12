@@ -9,16 +9,17 @@ Author URI: http://bidx.net/plugin/bidx-plugin
 License: Commercial
 */
 
-//Generic config for paths : standard util object?
-
+//
+//Generic config for paths
+//
 include ('apps/util.php' );
 
 //
 // Activation of frontend apps
 //
-require (BIDX_PLUGIN_DIR . '/rewrite.php' );
-require (BIDX_PLUGIN_DIR . '/shortcode.php');
-require (BIDX_PLUGIN_DIR . '/templatelibrary.php');
+require ( BIDX_PLUGIN_DIR . '/rewrite.php' );
+require ( BIDX_PLUGIN_DIR . '/shortcode.php' );
+require ( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 
 $ruleitems = array( 
 					'member' => 'memberprofile',
@@ -28,9 +29,10 @@ $ruleitems = array(
 				  );
 
 $rewrite = new BidxRewrite();
-$rewrite -> addMappingArray($ruleitems);
+$rewrite -> addMappingArray( $ruleitems );
 register_activation_hook( __FILE__, array( 'BidxRewrite', 'bidx_register_rewrite' ) );
 register_deactivation_hook( __FILE__, array( 'BidxRewrite', 'bidx_deregister_rewrite' ) );	
+
 $shortcode = new BidxShortCode();
 $shortcode -> addMappingArray($ruleitems);
 

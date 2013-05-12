@@ -66,8 +66,9 @@ class BidxShortcode {
 	}
 	
 	/**
-	 * Shortcode is called for a page
-	 * @param array $atts
+	 * Shortcode is called for a page.
+	 * If appname is not available a not found message is shown.
+	 * @param array $atts attributes as part og the shortcode mapping
 	 */
 	 function handle_bidx_shortcode($atts) {
 	 	
@@ -78,20 +79,26 @@ class BidxShortcode {
 		$appname = $atts['app'];
 		self :: $script_id = $appname;
 		
-		//TODO: handle condition if appname is not available
-		
-		$exec = self :: $mapping[$appname];
-		return $exec :: load( $atts );
+		if ( array_key_exists( $appname, self::$mapping ) ) {
+			$exec = self::$mapping[$appname];
+			Logger :: getLogger( 'shortcode' ) -> trace( "Invoking bidX app '" . $appname . "'." );
+			return $exec :: load( $atts );			
+		}
+		else {
+			Logger :: getLogger( 'shortcode' ) -> trace( "bidX app '" . $appname . "' does not exist." );
+			return "Bidx app ;'" . $appname . "' does not exist.";
+		}
 	}
 	
 	/**
 	 * Register the scripts to be used.
-	 * We will load jquery and bootstrap as default
+	 * We will load jquery and bootstrap as default : 
+	 * 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 
+	 * 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 
+	 * 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete'
 	 */
 	 function register_script() {
-		
-	 	//'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete'
-	 	
+			 	
 	 	//vendor scripts
 		wp_register_script( 'jquery', plugins_url( '../static/vendor/jquery/jquery-1.9.1.js', __FILE__ ), array(), '20130501', TRUE );
 		wp_register_script( 'jqueryui', plugins_url( '../static/vendor/jqueryUI/jqueryUI-1.10.2.js', __FILE__ ), array(), '20130501', TRUE );
@@ -100,7 +107,7 @@ class BidxShortcode {
 		wp_register_script( 'backbone', plugins_url( '../static/vendor/backbone/backbone-1.0.0.js', __FILE__ ), array('jquery'), '20130501', TRUE );
 		wp_register_script( 'json2', plugins_url( '../static/vendor/json2/json2.js', __FILE__ ), array('jquery'), '20130501', TRUE );
 
-		//Bidx scripts
+		//bidX scripts
 		wp_register_script( 'bidx-api-core', plugins_url( '../static/js/bidxAPI/api-core.js', __FILE__ ), array('jquery'), '20130501', TRUE );
 		wp_register_script( 'bidx-fileupload', plugins_url( '../static/js/fileUpload.js', __FILE__ ), array('jquery'), '20130501', TRUE );
 		wp_register_script( 'bidx-form', plugins_url( '../static/js/form.js', __FILE__ ), array('jquery'), '20130501', TRUE );
@@ -108,6 +115,7 @@ class BidxShortcode {
 		wp_register_script( 'bidx-location', plugins_url( '../static/js/location.js', __FILE__ ), array('jquery'), '20130501', TRUE );
 		wp_register_script( 'bidx-utils', plugins_url( '../static/js/utils.js', __FILE__ ), array('jquery'), '20130501', TRUE );
  		wp_register_script( 'bidx-country-autocomplete', plugins_url( '../static/js/country-autocomplete.js', __FILE__ ), array('jquery'), '20130501', TRUE );
+
 	 }
 	
 	/**
@@ -122,6 +130,8 @@ class BidxShortcode {
 		}
 		Logger :: getLogger('shortcode') -> trace( 'Add script ok, printing scripts : ' . self::$script_id );
 		wp_print_scripts( self::$script_id );
-	}
+
+	 }
+	 
 }
 ?>

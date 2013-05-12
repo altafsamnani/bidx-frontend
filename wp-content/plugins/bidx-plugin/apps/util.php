@@ -4,6 +4,9 @@
  * - easy configuration support
  * - autoloading support
  * - configuration of logger
+ * 
+ * @author Jaap Gorjup
+ * @version 1.0
  */
 
 require 'vendor/log4php/Logger.php';

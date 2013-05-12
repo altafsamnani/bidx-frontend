@@ -19,7 +19,7 @@ class search {
 	 */
 	public function register_search_bidx_ui_libs() {
 		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ), array('bootstrap'), '20130501', TRUE );
-		wp_register_style( 'search', plugins_url( 'static/css/search.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+//		wp_register_style( 'search', plugins_url( 'static/css/search.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
 	}
 
 	/**
