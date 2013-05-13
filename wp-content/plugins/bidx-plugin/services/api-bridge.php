@@ -110,7 +110,7 @@ abstract class APIbridge {
     
     /** Add Domain **/
     $requestData->bidxGroupDomain = $groupDomain;
-
+   
     /*     * ***Check the Http response and decide the status of request whether its error or ok * */
 
     if ($httpCode >= 200 && $httpCode < 300) {
@@ -125,7 +125,7 @@ abstract class APIbridge {
     else if ($httpCode == 401) {
       $requestData->status = 'ERROR';
       $requestData->authenticated = 'false';
-       $this->bidxRedirectLogin($groupDomain);
+      ($urlService != 'session') ? $this->bidxRedirectLogin($groupDomain) : '';
     }
 
 
@@ -177,12 +177,18 @@ function getBidxSubdomain($echo = false) {
  * @return Loggedin User
  */
 function bidxRedirectLogin ($groupDomain) {
-  wp_clear_auth_cookie();
+  //wp_clear_auth_cookie();
   $current_url = 'http://'  . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-  $redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode($current_url);
 
-  header("Location: $redirect_url");
+  $redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode($current_url);
+  $redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login';
+
+
+  header("Location: ".$redirect_url);
+  exit;
 }
+
+
 
 }
 

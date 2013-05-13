@@ -57,7 +57,11 @@
                     
                   </div>
                 </div>
-                <div class="span2"><a class="btn btn-primary" href="#edit">Edit</a></div>
+                <div class="span2">
+                 <?php if ($this->data->bidxCanEdit) { ?>
+                   <a class="btn btn-primary" href="#edit">Edit</a>
+                <?php } ?>
+                </div>
               </div>
             </fieldset>
           
