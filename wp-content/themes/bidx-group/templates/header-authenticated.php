@@ -3,14 +3,66 @@
 	    display: 					block;
 	}
 
-	header .brand a {
+	header.banner .navbar-inner {
+		min-height: 				120px;
+	}
+
+	header.banner .brand a {
 		margin-right: 				10px;
 	}
 
-	header .brand h1 {
+	header.banner .brand h1 {
 		font-size: 					30px;
 		display: 					inline;
 	}
+
+	header.banner .topNav {
+		margin-top: 				20px;
+	}
+
+	header.banner .mainNav {
+		margin-top: 				20px;
+	}
+
+	header.banner .navbar-search {
+		margin-top: 				8px;
+		margin-right: 				12px;
+	}
+
+	header.banner .nav.pull-right {
+		margin-right: 				10px;
+	}
+
+	header.banner .navbar-search select {
+		width: 						auto;
+		height: 					20px;
+		font-size: 					13px;
+		margin-bottom: 				0;
+	}
+
+	header.banner .navbar-search button {
+		height: 					21px;
+	}
+
+	header.banner .nav-pills > li > a {
+		color: 						#555;
+		text-decoration: 			none;
+		background-color: 			#e5e5e5;
+		-webkit-box-shadow: 		inset 0 3px 8px rgba(0,0,0,0.125);
+		-moz-box-shadow: 			inset 0 3px 8px rgba(0,0,0,0.125);
+		box-shadow: 				inset 0 3px 8px rgba(0,0,0,0.125);
+
+		float: 						none;
+		padding: 					10px 15px 10px;
+		text-shadow: 				0 1px 0 #fff;
+
+		margin-top: 				2px;
+		margin-bottom: 				2px;
+		-webkit-border-radius: 		5px;
+		-moz-border-radius: 		5px;
+		border-radius: 				5px;
+	}
+
 </style>
 
 <header class="banner navbar navbar-static-top" role="banner">
@@ -24,23 +76,32 @@
 			</div>
 
 			<div class="pull-right">
-				<div>
+				<div class="topNav clearfix">
 					<form class="navbar-search">
 			    		<input type="text" class="search-query" placeholder="Search">
+			    		<select>
+			    			<option>Any</option>
+			    			<option>Person</option>
+							<option>Group</option>
+							<option>Company</option>
+			    		</select>
+			    		<button type="submit"><i class="icon-search"></i></button>
 			    	</form>
-			    	<div class="memberInfo dropdown dropdown-hover pull-right">
-			    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">My profile</a>
-			    		<ul class="dropdown-menu">
-							<li><a href="#">Inbox</a></li>
-							<li><a href="#">Profile</a></li>
-							<li><a href="#">Contacts</a></li>
-							<li><a href="#">Account</a></li>
-							<li><a href="#">Logout</a></li>
-			    		</ul>
-			    	</div>
+			    	<ul class="memberInfo pull-right nav nav-pills">
+						<li class="dropdown dropdown-hover">
+				    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">My profile</a>
+				    		<ul class="dropdown-menu">
+								<li><a href="#">Inbox</a></li>
+								<li><a href="#">Profile</a></li>
+								<li><a href="#">Contacts</a></li>
+								<li><a href="#">Account</a></li>
+								<li><a href="#">Logout</a></li>
+				    		</ul>
+				    	</li>
+			    	</ul>
 				</div>
 
-				<nav class="nav-main pull-right" role="navigation">
+				<nav class="nav-main mainNav pull-right" role="navigation">
 					<ul class="nav nav-pills">
 						<li class="active"><a href="#">Home</a></li>
 						<li class="dropdown dropdown-hover">
@@ -52,7 +113,7 @@
 								<li><a href="#">Contact group admin</a></li>
 							</ul>
 						</li>
-						<li class="dropdown dropdown-hover">
+						<li class="dropdown dropdown-hover active">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Create and grow</a>
 							<ul class="dropdown-menu">
 								<li><a href="#">Create a group</a></li>
