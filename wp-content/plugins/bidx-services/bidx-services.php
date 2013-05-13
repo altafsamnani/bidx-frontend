@@ -421,6 +421,9 @@ function get_redirect($url, $requestData, $domain = NULL) {
       break;
 
     case 'groups':
+ 
+      $requestData->data->id = $requestData->data->group->id;
+      $requestData->data->domain = $requestData->data->group->domain;
       $requestData->submit = 'http://' . $domain . '/registration/';
       break;
   }
@@ -898,8 +901,8 @@ function ajax_register_action() {
   $bodyGroup = bidx_wordpress_pre_action('entitygroup');
   $paramsGroup = $bodyGroup['params'];
 
-  $resultEntityGroup = call_bidx_service('entity/' . $paramsGroup['groupProfileId'], $paramsGroup, 'PUT');
-  $requestEntityGroup = bidx_wordpress_post_action('groupmembers', $resultEntityGroup, $bodyGroup);
+  //$resultEntityGroup = call_bidx_service('entity/' . $paramsGroup['groupProfileId'], $paramsGroup, 'PUT');
+  //$requestEntityGroup = bidx_wordpress_post_action('groupmembers', $resultEntityGroup, $bodyGroup);
 
   //3 Edit Group Data
   $bodyGrpData = bidx_wordpress_pre_action();
