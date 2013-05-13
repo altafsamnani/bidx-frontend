@@ -1,9 +1,9 @@
 <!-- bidxAPI config wasn't loaded anymore properly, added it here to be at least before the js include of it but it should be fixed properly... -->
 <script>
-  window.bidx = bidx || {};
+  window.bidx = window.bidx || {};
   window.bidx.api = {
     settings: {
-              servicesPath:   '../../static/js/bidxAPI/services/'
+              servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
             }
     };
 </script>
