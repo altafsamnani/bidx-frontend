@@ -3,12 +3,21 @@
 	    display: 					block;
 	}
 
+	body {
+		padding-top: 				120px;
+	}
+
 	header.banner .navbar-inner {
 		min-height: 				120px;
+		height: 					120px;
 	}
 
 	header.banner .brand a {
 		margin-right: 				10px;
+	}
+
+	header.banner .brand img {
+		max-height: 				100px;
 	}
 
 	header.banner .brand h1 {
@@ -65,12 +74,12 @@
 
 </style>
 
-<header class="banner navbar navbar-static-top" role="banner">
+<header class="banner navbar navbar-fixed-top" role="banner">
   	<div class="navbar-inner">
 		<div class="container">
 
 			<div class="brand">
-				<a href="<?php echo home_url(); ?>/"><img src="http://placehold.it/200x100" class="img-rounded"></a>
+				<a href="<?php echo home_url(); ?>/"><img src="http://placehold.it/200x100" class="logo img-rounded"></a>
 
 				<h1>GroupNameX</h1>
 			</div>
