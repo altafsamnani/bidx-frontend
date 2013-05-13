@@ -185,17 +185,26 @@
 		</div>
 
 		<div class="sidebar span4">
-			<div class="location row-fluid">
-				<img src="http://placehold.it/300x175&text=GoogleMaps" class="img-rounded">
-			</div>
+				
 			<div class="facetnavigation row-fluid">
+				<div>
+					Search in:
+					<div class="btn-group" data-toggle="buttons-radio">
+					  <button class="btn" name="selection" value="1">This Group</button>
+					  <button class="btn" name="selection" value="2">All My Groups</button>
+					  <button class="btn" name="selection" value="3">All Groups</button>
+					</div>
+				</div>
+				<div>
+					Filter results on:
+				</div>
 				<div class="accordion" id="accordion2">
 					<div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse"
 								data-parent="#accordion2" href="#collapseOne"> People </a>
 						</div>
-						<div id="collapseOne" class="accordion-body collapse in">
+						<div id="collapseOne" class="accordion-body collapse">
 							<div class="accordion-inner">
 								<h4>Filter on role</h4>
 								<label class="checkbox"> 
@@ -235,6 +244,7 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </div>
