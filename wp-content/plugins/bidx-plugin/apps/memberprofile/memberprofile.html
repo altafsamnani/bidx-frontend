@@ -46,7 +46,7 @@
     </script>
 
 </head>
-<body class="page page-id-16 page-template page-template-page-form-php member-profile">
+<body class="page page-id-16 page-template page-template-page-form-php member-profile" data-spy="scroll" data-target=".nav-memberEdit">
 
     <header>
     <div class="container">
@@ -85,7 +85,7 @@
 
 <!-- START OF APP -->
 
-    <div id="memberEdit" class="row">
+    <div id="memberEdit" class="row-fluid">
 
         <!-- LOAD -->
         <div class="view viewLoad span12">
@@ -108,13 +108,23 @@
 
             <form id="frmMemberEdit">
 
-                <div class="span8">
+                <div class="span3">
+                    <ul data-spy="affix" data-offset-top="200" class="nav nav-list nav-memberEdit">
+                        <li><a href="#edit/personalDetail">Personal detail</a>
+                        <li><a href="#edit/language">Language</a>
+                        <li><a href="#edit/currentAddress">Current address</a>
+                        <li><a href="#edit/contactDetails">Contact details</a>
+                        <li><a href="#edit/documents">Documents</a>
+                    </ul>
+                </div>
 
-                        <fieldset>
+                <div class="span9">
+
+                        <fieldset id="edit/personalDetail">
                             <legend>Personal detail</legend>
 
-                            <div class="row">
-                                <div class="span4">
+                            <div class="row-fluid">
+                                <div class="span6">
 
                                     <div class="control-group formfield">
                                         <label class="control-label">First name</label>
@@ -136,6 +146,22 @@
                                             <input type="text" name="personalDetails.professionalTitle" placeholder="Please type your professional title">
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="span6">
+                                    <div class="control-group formfield">
+                                        <label class="control-label">Profile image</label>
+                                        <div class="controls">
+                                            <img src="http://placehold.it/350x150&text=Profile%20image" alt="Profile image" class="profileImage"/>
+                                            <input type="file" name="personalDetails.profilePicture" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["memberProfileId","domain"]}'/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span6">
 
                                     <div class="control-group formfield">
                                         <label class="control-label">Gender</label>
@@ -144,6 +170,24 @@
                                             <label class="radio inline"><input type="radio" value="f" name="personalDetails.gender"/> Female</label>
                                         </div>
                                     </div>
+
+                                </div>
+                                <div class="span6">
+
+                                    <div class="control-group formfield">
+                                        <label class="control-label">Date of birth</label>
+                                        <div class="controls">
+                                            <input type="text" name="personalDetails.dateOfBirth" data-type="date" placeholder="Please type your date of birth">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row-fluid">
+                                <div class="span6">
+
 
                                     <div class="control-group formfield">
                                         <label class="control-label">Nationality</label>
@@ -403,38 +447,8 @@
                                         </div> <!-- // controls -->
                                     </div> <!-- // control-group -->
 
-
-                                    <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"Please fill in a valid email address"}}]}'>
-                                        <label class="control-label">Email address</label>
-                                        <div class="controls">
-                                            <input type="email" name="personalDetails.emailAddress" placeholder="Please type your email address" />
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group formfield">
-                                        <label class="control-label">Skype</label>
-                                        <div class="controls">
-                                            <input type="text" name="personalDetails.skype" placeholder="Please type your Skype identifier" />
-                                        </div>
-                                    </div>
-
-                                </div><!-- // span4 - left form column -->
-
-                                <div class="span4">
-
-                                    <div class="control-group formfield">
-                                        <label class="control-label">Profile image</label>
-                                        <div class="controls">
-                                            <input type="file" name="personalDetails.profilePicture" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["memberProfileId","domain"]}'/>
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group formfield">
-                                        <label class="control-label">Date of birth</label>
-                                        <div class="controls">
-                                            <input type="text" name="personalDetails.dateOfBirth" data-type="date" placeholder="Please type your date of birth">
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="span6">
 
                                     <div class="control-group formfield">
                                         <label class="control-label">Highest Education</label>
@@ -451,22 +465,76 @@
                                         </div>
                                     </div>
 
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span6">
+
+                                    <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"Please fill in a valid email address"}}]}'>
+                                        <label class="control-label">Email address</label>
+                                        <div class="controls">
+                                            <input type="email" name="personalDetails.emailAddress" placeholder="Please type your email address" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="span6">
+
                                     <div class="control-group formfield" data-validation='{"typecheck": [{"url":{"text":"Please fill in a valid URL"}}]}'>
                                         <label class="control-label">LinkedIn profile</label>
                                         <div class="controls">
                                             <input type="url" name="personalDetails.linkedIn" placeholder="Please type your LinkedIn profile url" />
                                         </div>
                                     </div>
+                                </div>
+                            </div>
 
-                                </div><!-- // span4 - right form column -->
+                            <div class="row-fluid">
+                                <div class="span6">
+
+                                    <div class="control-group formfield">
+                                        <label class="control-label">Skype</label>
+                                        <div class="controls">
+                                            <input type="text" name="personalDetails.skype" placeholder="Please type your Skype identifier" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="span6">
+
+                                    <div class="control-group formfield" data-validation='{"typecheck": [{"url":{"text":"Please fill in a valid URL"}}]}'>
+                                        <label class="control-label">Facebook profile</label>
+                                        <div class="controls">
+                                            <input type="url" name="personalDetails.facebook" placeholder="Please type your Facebook profile url" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span6">
+
+                                    <div class="control-group formfield">
+                                        <label class="control-label">Twitter</label>
+                                        <div class="controls">
+                                            <input type="text" name="personalDetails.twitter" placeholder="Please type your Twitter identifier" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="span6">
+
+                                </div>
                             </div>
                         </fieldset>
 
-                        <fieldset>
+                        <fieldset id="edit/language">
                             <legend>Language</legend>
 
-                            <div class="row">
-                                <div class="span8">
+                            <div class="row-fluid">
+                                <div class="span12">
                                     <div class="control-group formfield">
                                         <label class="control-label">Set language</label>
                                         <div class="controls">
@@ -563,11 +631,11 @@
                             </div>
                         </fieldset>
 
-                        <fieldset>
+                        <fieldset id="edit/currentAddress">
                             <legend>What is your current address?</legend>
 
-                            <div class="row">
-                                <div class="span4">
+                            <div class="row-fluid">
+                                <div class="span6">
 
                                     <div class="control-group formfield">
                                         <label class="control-label">ETR</label>
@@ -885,17 +953,17 @@
 
                                 </div>
 
-                                <div class="span4">
+                                <div class="span6">
                                     <p>google maps</p>
                                 </div>
                             </div>
                         </fieldset>
 
-                        <fieldset>
+                        <fieldset id="edit/contactDetails">
                             <legend>What is your contact details?</legend>
 
-                            <div class="row">
-                                <div class="span4">
+                            <div class="row-fluid">
+                                <div class="span6">
 
                                     <div class="control-group formfield">
                                         <label class="control-label">Landline</label>
@@ -918,38 +986,37 @@
                                         </div>
                                     </div>
 
-                                </div><!-- // span4 - left form column -->
+                                </div><!-- // span6 - left form column -->
 
-                                <div class="span4">
+                                <div class="span6">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset id="edit/documents">
+                            <legend>Documents</legend>
+
+                            <div class="row-fluid">
+                                <div class="span6 group">
+                                </div>
+
+                                <div class="span6">
                                 </div>
                             </div>
                         </fieldset>
 
                 </div>
 
-                <div class="span4">
-                </div>
-
-
-<!--             <fieldset name="attachments">
-            <legend>Attachments</legend>
-                we can have multiple attachments
-                <div class="group"></div>
-            </fieldset>
- -->
-            <div class="pull-right">
-                <button class="btn btn-primary btnSubmit" type="submit">Save changes</button>
-            </div>
-
             </form>
-
 
             <script type="text/html" id="template_attachment">
                 <!--
                 <div class="group">
-                    <div class="formfield">
-                        <label>Attachement</label>
-                        <input type="file" name="document" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["memberProfileId","domain"]}'/>
+                    <div class="control-group formfield">
+                        <label class="control-label">Attachement</label>
+                        <div class="controls">
+                            <input type="file" name="document" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["memberProfileId","domain"]}'/>
+                        </div>
                     </div>
                 </div>
                 <a href="#" class="add">Add another attachment</a>
