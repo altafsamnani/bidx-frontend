@@ -101,7 +101,7 @@
 				    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">My profile</a>
 				    		<ul class="dropdown-menu">
 								<li><a href="#">Inbox</a></li>
-								<li><a href="#">Profile</a></li>
+								<li><a href="/member">Profile</a></li>
 								<li><a href="#">Contacts</a></li>
 								<li><a href="#">Account</a></li>
 								<li><a href="#">Logout</a></li>
