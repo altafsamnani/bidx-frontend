@@ -7,7 +7,7 @@
     var bidx    = window.bidx
     ,   api     = bidx.api
     ,   member  = {}
-    ,   baseUrl = "/api/v1/entity"
+    ,   baseUrl = "/api/v1/members"
     ,   params  = []
     ;
 
