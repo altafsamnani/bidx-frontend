@@ -108,7 +108,7 @@ class BidxShortcode {
 		wp_deregister_script( 'underscore' );
 		wp_register_script( 'underscore', BIDX_PLUGIN_URI . '/../static/vendor/underscore/underscore-1.4.4.js', array('jquery'), '20130501', TRUE );
 		wp_deregister_script( 'backbone' );
-		wp_register_script( 'backbone', BIDX_PLUGIN_URI . '/../static/vendor/backbone/backbone-1.0.0.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'backbone', BIDX_PLUGIN_URI . '/../static/vendor/backbone/backbone-1.0.0.js', array('underscore'), '20130501', TRUE );
 		wp_register_script( 'json2', BIDX_PLUGIN_URI . '/../static/vendor/json2/json2.js', array('jquery'), '20130501', TRUE );
 
 		//bidX scripts
@@ -120,8 +120,6 @@ class BidxShortcode {
 		wp_register_script( 'bidx-utils', BIDX_PLUGIN_URI . '/../static/js/utils.js', array('jquery'), '20130501', TRUE );
  		wp_register_script( 'bidx-country-autocomplete', BIDX_PLUGIN_URI . '/../static/js/country-autocomplete.js', array('jquery'), '20130501', TRUE );
 
- 		
- 		Logger::getLogger('shortcode') -> trace( 'Footer print_script called' );
 	 }
 	
 	/**
