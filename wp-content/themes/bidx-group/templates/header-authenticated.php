@@ -11,7 +11,6 @@
 		font-size: 					30px;
 		display: 					inline;
 	}
-
 </style>
 
 <header class="banner navbar navbar-static-top" role="banner">
@@ -30,7 +29,7 @@
 			    		<input type="text" class="search-query" placeholder="Search">
 			    	</form>
 			    	<div class="memberInfo dropdown dropdown-hover pull-right">
-			    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">My name</a>
+			    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">My profile</a>
 			    		<ul class="dropdown-menu">
 							<li><a href="#">Inbox</a></li>
 							<li><a href="#">Profile</a></li>
