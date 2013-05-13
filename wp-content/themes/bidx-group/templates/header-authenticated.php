@@ -43,8 +43,8 @@
 		margin-right: 				12px;
 	}
 
-	header.banner .nav.pull-right {
-		margin-right: 				10px;
+	header.banner .nav {
+		margin-right: 				0px;
 	}
 
 	header.banner .navbar-search select {

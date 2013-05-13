@@ -1,6 +1,7 @@
 $( document ).ready( function()
 {
     var $element        = $( "#memberEdit" )
+    ,   $controls       = $( ".editControls" )
     ,   $views          = $element.find( ".view" )
     ,   $editForm       = $views.filter( ".viewEdit" ).find( "form" )
     ,   member
@@ -260,12 +261,17 @@ $( document ).ready( function()
 
                 var item = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + nest, true );
 
-                if ( !item[ i ] )
+                // When undefined, leave it untouched for now...
+                //
+                if ( item )
                 {
-                    item[ i ] = {};
-                }
+                    if ( !item[ i ] )
+                    {
+                        item[ i ] = {};
+                    }
 
-                bidx.utils.setValue( item[ i ], f, value );
+                    bidx.utils.setValue( item[ i ], f, value );
+                }
             } );
         } );
     };
@@ -283,6 +289,28 @@ $( document ).ready( function()
             return;
         }
 
+
+        // Inject the save and button into the controls
+        //
+        var $btnSave    = $( "<a />", { class: "btn btn-primary", href: "#save",   disabled: "true" } )
+        ,   $btnCancel  = $( "<a />", { class: "btn btn-primary", href: "#cancel", disabled: "true" } )
+        ;
+
+        $btnSave.text( "Save profile" );
+        $btnCancel.text( "Cancel" );
+
+        $controls.append( $btnSave );
+        $controls.append( $btnCancel );
+
+        // Wire the submit button which can be anywhere in the DOM
+        //
+        $btnSave.click( function( e )
+        {
+            e.preventDefault();
+
+            $editForm.submit();
+        } );
+
         // Setup form
         //
         $editForm.form(
@@ -295,21 +323,22 @@ $( document ).ready( function()
         {
             e.preventDefault();
 
-            var $btnSubmit = $editForm.find( ".btnSubmit" );
-
-            if ( $btnSubmit.prop( "disbabled" ))
+            if ( $btnSave.prop( "disabled" ))
             {
                 return;
             }
 
-            $btnSubmit.prop( "disabled", true );
+            $btnSave.prop( "disabled", true );
+            $btnCancel.prop( "disabled", true );
 
             _save(
             {
                 error: function()
                 {
-                    $btnSubmit.prop( "disabled", false );
                     alert( "Something went wrong during save" );
+
+                    $btnSave.removeAttr( "disabled" );
+                    $btnCancel.removeAttr( "disabled" );
                 }
             } );
         } );
@@ -349,8 +378,8 @@ $( document ).ready( function()
 
                     _populateForm();
 
-                    $btnSave.show();
-                    $btnCancel.show();
+                    $btnSave.removeAttr( "disabled" );
+                    $btnCancel.removeAttr( "disabled" );
 
                     _showView( "edit" );
                 }
@@ -375,14 +404,22 @@ $( document ).ready( function()
 
         // Remove profile picture
         //
-        delete member.personalDetails.profilePicture;
+        if ( bidx.utils.getValue( member, "member.bidxMemberProfile.personalDetails.profilePicture" ) )
+        {
+            delete member.bidxMemberProfile.personalDetails.profilePicture;
+        }
 
         // Force current (0) set to be the current one
         //
-        member.personalDetails.contactDetail = [
+        var contactDetail = bidx.utils.getValue( member, "member.bidxMemberProfile.personalDetails.contactDetail", true );
+
+        if ( contactDetail && contactDetail.length )
         {
-            "currentContactDetails": true
-        }];
+            member.personalDetails.contactDetail = [
+            {
+                "currentContactDetails": true
+            }];
+        }
 
         // Update the member object
         //
@@ -431,20 +468,7 @@ $( document ).ready( function()
 
     // ROUTER
     //
-    var $controls   = $( ".memberEditControl" )
-    ,   $btnEdit    = $controls.filter( "[href$=#edit]" )
-    ,   $btnSave    = $controls.filter( "[href$=#save]" )
-    ,   $btnCancel  = $controls.filter( "[href$=#cancel]" )
-    ;
 
-    // Wire the submit button which can be anywhere in the DOM
-    //
-    $btnSave.click( function( e )
-    {
-        e.preventDefault();
-
-        $editForm.submit();
-    } );
 
     var state;
 
@@ -473,8 +497,6 @@ $( document ).ready( function()
             $element.show();
             _showView( "load" );
 
-            $btnEdit.hide();
-
             _init();
         }
     ,   show:           function( section )
@@ -489,12 +511,10 @@ $( document ).ready( function()
             state = "show";
 
             $element.hide();
-            $btnEdit.show();
 
             _showMainState( "show" );
 
-            $btnCancel.hide();
-            $btnSave.hide();
+            $controls.empty();
         }
     } );
 
