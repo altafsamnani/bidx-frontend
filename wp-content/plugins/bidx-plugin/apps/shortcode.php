@@ -24,7 +24,7 @@ class BidxShortcode {
 	 */
 	function __construct() {
 		
-		Logger :: getLogger( 'shortcode' ) -> trace( 'Constructing bidx shortcode instance' );
+		Logger :: getLogger( 'shortcode' ) -> trace( 'Constructing bidx shortcode instance for ' . get_bloginfo() );
 		add_shortcode( 'bidx', array( &$this, 'handle_bidx_shortcode' ) );
  		add_action( 'init', array( &$this, 'register_script' ) );
 		add_action( 'wp_footer', array( &$this, 'print_script' ) );
@@ -86,8 +86,9 @@ class BidxShortcode {
 		}
 		else {
 			Logger :: getLogger( 'shortcode' ) -> trace( "bidX app '" . $appname . "' does not exist." );
-			return "Bidx app ;'" . $appname . "' does not exist.";
+			return "Bidx app '" . $appname . "' does not exist.";
 		}
+		
 	}
 	
 	/**
@@ -100,22 +101,24 @@ class BidxShortcode {
 	 function register_script() {
 			 	
 	 	//vendor scripts
-		wp_register_script( 'jquery', plugins_url( '../static/vendor/jquery/jquery-1.9.1.js', __FILE__ ), array(), '20130501', TRUE );
-		wp_register_script( 'jqueryui', plugins_url( '../static/vendor/jqueryUI/jqueryUI-1.10.2.js', __FILE__ ), array(), '20130501', TRUE );
-		wp_register_script( 'bootstrap', plugins_url( '../static/vendor/bootstrap/js/bootstrap.min.js', __FILE__ ), array('jquery'), '20130501', TRUE );
-		wp_register_script( 'underscore', plugins_url( '../static/vendor/underscore/underscore-1.4.4.js', __FILE__ ), array('jquery'), '20130501', TRUE );
-		wp_register_script( 'backbone', plugins_url( '../static/vendor/backbone/backbone-1.0.0.js', __FILE__ ), array('jquery'), '20130501', TRUE );
-		wp_register_script( 'json2', plugins_url( '../static/vendor/json2/json2.js', __FILE__ ), array('jquery'), '20130501', TRUE );
+		wp_register_script( 'jquery', BIDX_PLUGIN_URI . '/../static/vendor/jquery/jquery-1.9.1.js', array(), '20130501', TRUE );
+		wp_register_script( 'jqueryui', BIDX_PLUGIN_URI . '/../static/vendor/jqueryUI/jqueryUI-1.10.2.js', array(), '20130501', TRUE );
+		wp_register_script( 'bootstrap', BIDX_PLUGIN_URI . '/../static/vendor/bootstrap/js/bootstrap.min.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'underscore', BIDX_PLUGIN_URI . '/../static/vendor/underscore/underscore-1.4.4.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'backbone', BIDX_PLUGIN_URI . '/../static/vendor/backbone/backbone-1.0.0.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'json2', BIDX_PLUGIN_URI . '/../static/vendor/json2/json2.js', array('jquery'), '20130501', TRUE );
 
 		//bidX scripts
-		wp_register_script( 'bidx-api-core', plugins_url( '../static/js/bidxAPI/api-core.js', __FILE__ ), array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-fileupload', plugins_url( '../static/js/fileUpload.js', __FILE__ ), array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-form', plugins_url( '../static/js/form.js', __FILE__ ), array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-form-element', plugins_url( '../static/js/form-element.js', __FILE__ ), array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-location', plugins_url( '../static/js/location.js', __FILE__ ), array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-utils', plugins_url( '../static/js/utils.js', __FILE__ ), array('jquery'), '20130501', TRUE );
- 		wp_register_script( 'bidx-country-autocomplete', plugins_url( '../static/js/country-autocomplete.js', __FILE__ ), array('jquery'), '20130501', TRUE );
+		wp_register_script( 'bidx-api-core', BIDX_PLUGIN_URI . '/../static/js/bidxAPI/api-core.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'bidx-fileupload', BIDX_PLUGIN_URI . '/../static/js/fileUpload.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'bidx-form', BIDX_PLUGIN_URI . '/../static/js/form.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'bidx-form-element', BIDX_PLUGIN_URI . '/../static/js/form-element.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'bidx-location', BIDX_PLUGIN_URI . '/../static/js/location.js', array('jquery'), '20130501', TRUE );
+		wp_register_script( 'bidx-utils', BIDX_PLUGIN_URI . '/../static/js/utils.js', array('jquery'), '20130501', TRUE );
+ 		wp_register_script( 'bidx-country-autocomplete', BIDX_PLUGIN_URI . '/../static/js/country-autocomplete.js', array('jquery'), '20130501', TRUE );
 
+ 		
+ 		Logger::getLogger('shortcode') -> trace( 'Footer print_script called' );
 	 }
 	
 	/**

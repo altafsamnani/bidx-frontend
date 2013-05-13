@@ -40,8 +40,8 @@ class BidxRewrite
 		$args = array(
 				'public' => true,
 				'exclude_from_search' => true,
-				'show_ui' => false, //for managing the plugin in the future?
-				'show_in_menu' => false, //for managing the plugin in the future?
+				'show_ui' => true, //for managing the plugin in the future?
+				'show_in_menu' => true, //for managing the plugin in the future?
 				'query_var' => true,
 				'rewrite' => false, //handled manually for now
 				'capability_type' => 'page',

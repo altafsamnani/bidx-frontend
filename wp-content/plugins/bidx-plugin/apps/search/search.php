@@ -7,6 +7,8 @@
  */
 class search {
 
+	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
+	
 	/**
 	 * Constructor
 	 */
@@ -18,7 +20,7 @@ class search {
 	 * Registers the search specific javascript and css files
 	 */
 	public function register_search_bidx_ui_libs() {
-		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ), array('bootstrap'), '20130501', TRUE );
+		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
 //		wp_register_style( 'search', plugins_url( 'static/css/search.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
 	}
 

@@ -9,6 +9,17 @@
 		<div class="span12"><h2>Search results ({$data.numFound})</h2></div>
 	</div>
 	<div class="row-fluid">
+		<div class="alert">
+			 <button type="button" class="close" data-dismiss="alert">&times;</button>
+			 <strong>Warning!</strong> {$data.errorMessage}
+		</div>
+		<div class="alert alert-error">
+			 <button type="button" class="close" data-dismiss="alert">&times;</button>
+			 <strong>Warning!</strong> {$data.errorMessage}
+		</div>
+		
+	</div>
+	<div class="row-fluid">
 		<div class="search-result-container span8">
 			<div class="search-result-item well">
 				<div class="row-fluid">
@@ -56,13 +67,128 @@
 				</div>
 			</div>
 
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>									
+						
 		</div>
 
 		<div class="sidebar span4">
-			<div class="location">
-				<img src="http://placehold.it/175x1	75" class="img-rounded">
+			<div class="location row-fluid">
+				<img src="http://placehold.it/300x175&text=GoogleMaps" class="img-rounded">
 			</div>
-			<div class="facetnavigation">
+			<div class="facetnavigation row-fluid">
 				<div class="accordion" id="accordion2">
 					<div class="accordion-group">
 						<div class="accordion-heading">
@@ -101,9 +227,9 @@
 					<div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse"
-								data-parent="#accordion2" href="#collapseTwo"> Group </a>
+								data-parent="#accordion3" href="#collapseThree"> Group </a>
 						</div>
-						<div id="collapseTwo" class="accordion-body collapse">
+						<div id="collapseThree" class="accordion-body collapse">
 							<div class="accordion-inner">Anim pariatur cliche...</div>
 						</div>
 					</div>
@@ -112,6 +238,3 @@
 		</div>
 	</div>
 </div>
-<script>
-$('#sidebar').affix();
-</script>

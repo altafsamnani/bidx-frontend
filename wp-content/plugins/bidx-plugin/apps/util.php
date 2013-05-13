@@ -27,6 +27,9 @@ if ( !defined( 'BIDX_PLUGIN_DIR') ) {
 if ( !defined( 'BIDX_PLUGIN_URL' ) ) {
 	define( 'BIDX_PLUGIN_URL', WP_PLUGIN_URL . '/' . BIDX_PLUGIN_NAME );
 }
+if ( !defined( 'BIDX_PLUGIN_URI' ) ) {
+	define( 'BIDX_PLUGIN_URI', '/plugin/' . BIDX_PLUGIN_NAME );
+}
 //Versioning config
 if ( !defined( 'BIDX_VERSION_KEY') ) {
 	define( 'BIDX_VERSION_KEY', 'BIDX_version' );
