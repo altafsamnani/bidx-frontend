@@ -1,4 +1,4 @@
-    <?php get_template_part('templates/head'); ?>
+<?php get_template_part('templates/head'); ?>
 <?php include_once("lib/dBug.php")?>
 <body <?php body_class(); ?>>
 
