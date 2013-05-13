@@ -57,7 +57,7 @@ abstract class APIbridge {
     if ( $groupDomain ) {
       //Talk with arjan for domain on first page registration it will be blank when it goes live
       $headers['X-Bidx-Group-Domain'] = ($urlService == 'groups' && $bidxMethod == 'POST') ? 'beta' : $groupDomain;
-      //$bidx_get_params.= '&groupDomain=' . $body['domain'];
+      //$bidx_get_params.= '&bidxGroupDomain=' . $body['domain'];
     }
 
     /*     * ********* 3. Decide method to use************** */
@@ -107,6 +107,9 @@ abstract class APIbridge {
     $requestData = json_decode($result['body']);
     $httpCode = $result['response']['code'];
     $redirectUrl = NULL;
+    
+    /** Add Domain **/
+    $requestData->bidxGroupDomain = $groupDomain;
 
     /*     * ***Check the Http response and decide the status of request whether its error or ok * */
 
@@ -128,41 +131,7 @@ abstract class APIbridge {
 
     return $requestData;
   }
-
-
-
-  /**
-	 * Injects Bidx Api response as JS variables
-   * @Author Altaf Samnani
-	 * @param Array $result bidx response as array
-	 *
-	 * @return String Injects js variables
-	 */
-  function injectJsVariables( $sessionData, $result ) {
-
-    //Session Response data
-    $jsSessionVars = (isset($sessionData->data)) ? json_encode($sessionData->data) :'{}';
-
-    //Api Resposne data
-    $jsApiVars = (isset($result)) ? json_encode($result) :'{}';
-
- 
-
-    $scriptJs = " <script>
-            var bidxConfig = bidxConfig || {};
-
-            bidxConfig.context =  $jsApiVars ;
-
-            /* Dump response of the session-api */
-            bidxConfig.session = $jsSessionVars ;
-
-            bidxConfig.authenticated = {$sessionData->authenticated};
-</script>";
-    echo $scriptJs;
-    //return $scriptJs;
-    return;
-
-  }
+  
 
   /**
  * @author Altaf Samnani

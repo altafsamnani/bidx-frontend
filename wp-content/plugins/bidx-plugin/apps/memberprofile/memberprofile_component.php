@@ -5,9 +5,6 @@
       <h1>Member-profile</h1>
     </div>
 
-    <a class="btn btn-primary" href="#edit">Edit</a>
-
-
     <div class="row-fluid">
       <div class="span8">
         <?php $view->render('view-member.phtml'); ?>

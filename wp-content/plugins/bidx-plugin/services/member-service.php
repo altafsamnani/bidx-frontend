@@ -29,18 +29,19 @@ class MemberService extends SessionService {
 	function getMemberDetails( )
 	{
     //Session Service
-    $sessionData = $this->isLoggedIn();
-
-    $data->memberProfileId = $sessionData->data->id;
+    $sessionData = $this->isLoggedIn();   
 
     
     //Call member profile
-    $result = $this->callBidxAPI($this->memberUrl.'/4', array(), 'GET'); //.$data->memberProfileId 4
+    $result = $this->callBidxAPI($this->memberUrl.'/'.$data->memberId, array(), 'GET'); //.$data->memberProfileId 4
     // Will use it with Wordpress Action/theming
     //add_action( 'wp_head', array($this, 'injectJsVariables') );
-    
+//    echo "<pre>";
+//    print_r($result);
+//    echo "</pre>";
+//    exit;
 
-    $resultDisplay = $this->injectJsVariables($sessionData, $data);
+    
 
     
 

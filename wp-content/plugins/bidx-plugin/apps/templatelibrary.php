@@ -3,7 +3,7 @@
 /**
  * Rendering of variables into template
  * It renders the variables assigned them through load method through main app.php file
- *
+ * http://coding.smashingmagazine.com/2011/10/17/getting-started-with-php-templating/
  *
  *
  * @author Altaf Samnani
