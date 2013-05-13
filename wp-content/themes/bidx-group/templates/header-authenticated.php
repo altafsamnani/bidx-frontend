@@ -12,6 +12,11 @@
 		height: 					120px;
 	}
 
+	span.scrollPositionMarker {
+		position: 					absolute;
+		top: 						-120px;
+	}
+
 	header.banner .brand a {
 		margin-right: 				10px;
 	}
