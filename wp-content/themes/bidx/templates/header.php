@@ -1,6 +1,6 @@
 
 <header>
-	<div class="container">
+	<div>
 		<!-- Main Nav to go here -->  
 		<div class="navbar">
 			<div class="navbar-inner-bidX">
