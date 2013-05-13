@@ -9,6 +9,8 @@ $( document ).ready( function()
     ,   bidx            = window.bidx
     ;
 
+    var $mainStates     = $( ".mainState" );
+
     // Form fields
     //
     var fields =
@@ -141,7 +143,7 @@ $( document ).ready( function()
         $.each( fields.personalDetails, function( i, f )
         {
             var $input  = $editForm.find( "[name='personalDetails." + f + "']" )
-            ,   value   = bidx.utils.getValue( member, "personalDetails." + f )
+            ,   value   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + f )
             ;
 
             $input.each( function()
@@ -155,23 +157,26 @@ $( document ).ready( function()
         $.each( [ "address", "languageDetail", "contactDetail" ], function()
         {
             var nest    = this
-            ,   items   = bidx.utils.getValue( member, "personalDetails." + nest, true )
+            ,   items   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + nest, true )
             ;
 
-            $.each( items, function( i, item )
+            if ( items )
             {
-                $.each( fields[ nest ], function( j, f )
+                $.each( items, function( i, item )
                 {
-                    var $input  = $editForm.find( "[name='personalDetails." + nest + "[" + i + "]." + f + "']" )
-                    ,   value   = bidx.utils.getValue( item, f )
-                    ;
-
-                    $input.each( function()
+                    $.each( fields[ nest ], function( j, f )
                     {
-                        _setElementValue( $( this ), value  );
+                        var $input  = $editForm.find( "[name='personalDetails." + nest + "[" + i + "]." + f + "']" )
+                        ,   value   = bidx.utils.getValue( item, f )
+                        ;
+
+                        $input.each( function()
+                        {
+                            _setElementValue( $( this ), value  );
+                        } );
                     } );
                 } );
-            } );
+            }
         } );
     };
 
@@ -233,7 +238,7 @@ $( document ).ready( function()
             ,   value   = _getElementValue( $input )
             ;
 
-            bidx.utils.setValue( member, "personalDetails." + f, value );
+            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + f, value );
         } );
 
         // Collect the nested objects
@@ -253,7 +258,7 @@ $( document ).ready( function()
                 ,   value   = _getElementValue( $input )
                 ;
 
-                var item = bidx.utils.getValue( member, "personalDetails." + nest, true );
+                var item = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + nest, true );
 
                 if ( !item[ i ] )
                 {
@@ -269,8 +274,8 @@ $( document ).ready( function()
     //
     var _init = function()
     {
-        memberId    = bidx.utils.getQueryParameter( "memberProfileId" ) || bidx.utils.getValue( bidxConfig, "context.memberProfileId" );
-        groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getGroupDomain();
+        memberId    = bidx.utils.getQueryParameter( "memberProfileId" ) || bidx.utils.getValue( bidxConfig, "context.membersId" ) || bidx.utils.getValue( bidxConfig, "context.memberId" );
+        groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain();
 
         if ( !memberId )
         {
@@ -419,6 +424,11 @@ $( document ).ready( function()
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
     }
 
+    function _showMainState( s )
+    {
+        $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
+    }
+
     // ROUTER
     //
     var $controls   = $( ".memberEditControl" )
@@ -436,17 +446,30 @@ $( document ).ready( function()
         $editForm.submit();
     } );
 
+    var state;
+
     // Router for main state
     //
     var AppRouter = Backbone.Router.extend(
     {
         routes: {
-            'edit':         'edit'
-        ,   'cancel':       'show'
-        ,   '*path':        'show'
+            'memberEdit(/:section)':        'edit'
+        ,   'cancel':                       'show'
+        ,   '*path':                        'show'
         }
-    ,   edit:           function()
+    ,   edit:           function( section )
         {
+            bidx.utils.log( "MemberEdit::AppRouter::edit", section );
+
+            if ( state === "edit" )
+            {
+                return;
+            }
+
+            state = "edit";
+
+            _showMainState( "memberEdit" );
+
             $element.show();
             _showView( "load" );
 
@@ -454,10 +477,21 @@ $( document ).ready( function()
 
             _init();
         }
-    ,   show:           function()
+    ,   show:           function( section )
         {
+            bidx.utils.log( "MemberEdit::AppRouter::show", section );
+
+            if ( state === "show" )
+            {
+                return;
+            }
+
+            state = "show";
+
             $element.hide();
             $btnEdit.show();
+
+            _showMainState( "show" );
 
             $btnCancel.hide();
             $btnSave.hide();
