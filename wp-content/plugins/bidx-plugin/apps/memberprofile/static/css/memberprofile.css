@@ -2,14 +2,36 @@
     display:                none;
 }
 
-.view {
+#memberEdit .view {
     display:                none;
 }
 
-.viewLoad {
+#memberEdit .viewLoad {
     display:                block;
 }
 
-.memberEditControl {
+#memberEdit .memberEditControl {
     display:                none;
 }
+
+#memberEdit .profileImage {
+    width:                  100%
+}
+
+#memberEdit .nav-memberEdit {
+    top:                    140px;
+}
+
+#memberEdit input,
+#memberEdit select {
+    width:                  100%;
+}
+
+#memberEdit label.radio input {
+    width:                  auto;
+}
+
+#memberEdit form fieldset {
+    position:               relative;
+}
+
