@@ -2,7 +2,7 @@
   <div class="container">
 
     <div class="">
-      <h1>Member-profile</h1>
+      <h1><?php echo $view->data->displayName; ?></h1>
     </div>
 
     <div class="row-fluid">
