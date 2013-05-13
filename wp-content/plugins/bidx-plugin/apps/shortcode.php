@@ -101,10 +101,13 @@ class BidxShortcode {
 	 function register_script() {
 			 	
 	 	//vendor scripts
+	 	wp_deregister_script( 'jquery' );
 		wp_register_script( 'jquery', BIDX_PLUGIN_URI . '/../static/vendor/jquery/jquery-1.9.1.js', array(), '20130501', TRUE );
 		wp_register_script( 'jqueryui', BIDX_PLUGIN_URI . '/../static/vendor/jqueryUI/jqueryUI-1.10.2.js', array(), '20130501', TRUE );
 		wp_register_script( 'bootstrap', BIDX_PLUGIN_URI . '/../static/vendor/bootstrap/js/bootstrap.min.js', array('jquery'), '20130501', TRUE );
+		wp_deregister_script( 'underscore' );
 		wp_register_script( 'underscore', BIDX_PLUGIN_URI . '/../static/vendor/underscore/underscore-1.4.4.js', array('jquery'), '20130501', TRUE );
+		wp_deregister_script( 'backbone' );
 		wp_register_script( 'backbone', BIDX_PLUGIN_URI . '/../static/vendor/backbone/backbone-1.0.0.js', array('jquery'), '20130501', TRUE );
 		wp_register_script( 'json2', BIDX_PLUGIN_URI . '/../static/vendor/json2/json2.js', array('jquery'), '20130501', TRUE );
 
