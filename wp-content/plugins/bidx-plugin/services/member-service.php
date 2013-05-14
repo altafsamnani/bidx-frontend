@@ -25,26 +25,21 @@ class MemberService  extends APIbridge{
    * In case of no API service check, the data in the Session profile will be very limited.
    * @return boolean if user is logged in
    */
-  function getMemberDetails($sessionData) {
+  function getMemberDetails( ) {
     //Session Service
     //$sessionData = $this->isLoggedIn();
-
-  
+   $sessionData = BidxCommon::$staticSession;
+   $memberId    = $sessionData->memberId;
+   
     //If its get param else its own profile
-    $getParam = 2;
-    $memberId = ($getParam ) ? $getParam : $sessionData->data->id;
-
+    
     
     //Call member profile
     $result = $this->callBidxAPI($this->memberUrl . '/' . $memberId, array(), 'GET'); //.$memberId 4
     //If edit rights inject js and render edit button
     if ($result->bidxCanEdit) {
-
-      $data->memberId = $memberId;
-      $data->bidxGroupDomain = $sessionData->bidxGroupDomain;
-      
-
-      $result->isMyProfile  = ($memberId == $sessionData->data->id) ? true:false;
+     
+      $result->isMyProfile  = ($memberId == $sessionData->data->id) ? true : false;
       // Will use it with Wordpress Action/theming
     //add_action( 'wp_head', array($this, 'injectJsVariables') );
     }

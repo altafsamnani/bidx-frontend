@@ -182,7 +182,11 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
 
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
-
+  if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
+      $body['username'] = 'admin@bidnetwork.org';
+      $body['password'] = 'admin123';
+  }
+  
   $request = new WP_Http;
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
@@ -219,7 +223,7 @@ add_action('wp_ajax_nopriv_bidx_signin', 'ajax_submit_signin');
 
 function ajax_submit_signin() {
   //require_once('./wp-includes/registration.php');
-
+ 
   global $error;
 
   //Get the group name from  Subdomain

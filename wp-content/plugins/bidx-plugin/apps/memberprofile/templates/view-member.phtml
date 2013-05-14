@@ -1,3 +1,9 @@
+<?php 
+
+$personalDetails = $this->data->bidxMemberProfile->personalDetails;
+
+?>
+
 
             <fieldset>
               <legend>Member</legend>
@@ -5,21 +11,21 @@
                 <div class="span3"><img src="http://placehold.it/150x175" class="img-rounded"></div>
                 <div class="span7">
                   <div class="row-fluid">
-                    <div class="span12"><h4><?php echo $this->data->personalDetails->firstName.' '.$this->data->personalDetails->lastName; ?></h4></div>
+                    <div class="span12"><h4><?php echo ucwords($personalDetails->firstName.' '.$personalDetails->lastName); ?></h4></div>
                       <!-- Personal details 6/6 Start -->
                       <div class="row-fluid">
                         <?php
                           //NO language variable
-                          $languageDetails = $this->getMultiValues($this->data->personalDetails->languageDetail, ', ', 'language') ;
-                          $address = $this->data->personalDetails->address[0]->street.' '.$this->data->personalDetails->address[0]->streetNumber;
-                          $address .= $this->data->personalDetails->address[0]->cityTown.'<br/>'.$this->data->personalDetails->address[0]->country.''.$this->data->personalDetails->address[0]->postalCode ;
+                          $languageDetails = $this->getMultiValues($personalDetails->languageDetail, ', ', 'language') ;
+                          $address = $personalDetails->address[0]->street.' '.$personalDetails->address[0]->streetNumber;
+                          $address .= $personalDetails->address[0]->cityTown.'<br/>'.$personalDetails->address[0]->country.''.$personalDetails->address[0]->postalCode ;
 
-                          $rowValues = array($this->data->personalDetails->professionalTitle,
-                                             $this->data->personalDetails->gender,
-                                             $this->data->personalDetails->nationality,
-                                             $this->data->personalDetails->dateOfBirth,
-                                             $this->data->personalDetails->highestEducation,
-                                             $this->data->personalDetails->nationality,
+                          $rowValues = array($personalDetails->professionalTitle,
+                                             $personalDetails->gender,
+                                             $personalDetails->nationality,
+                                             $personalDetails->dateOfBirth,
+                                             $personalDetails->highestEducation,
+                                             $personalDetails->nationality,
                                             'I speak '.$languageDetails,
                                             $address,
                                             'CV Name');
@@ -30,27 +36,27 @@
                   
                       <div class="row-fluid">
                         <?php 
-                        $rowValues = array('E-mail'=>$this->data->personalDetails->emailAddress,
-                                           'Skype'=>$this->data->personalDetails->skype
+                        $rowValues = array('E-mail'=>$personalDetails->emailAddress,
+                                           'Skype'=>$personalDetails->skype
                                            );
                         echo $this->addRowsWithLabel('3','3',$rowValues,'label label-info'); ?>                       
                       </div>
                       <div class="row-fluid">
                         <?php 
-                        $rowValues = array('Mobile'=> $this->getMultiValues($this->data->personalDetails->contactDetail, ', ', 'mobile'),
-                                           'Facebook'=>$this->data->personalDetails->facebook);
+                        $rowValues = array('Mobile'=> $this->getMultiValues($personalDetails->contactDetail, ', ', 'mobile'),
+                                           'Facebook'=>$personalDetails->facebook);
                         echo $this->addRowsWithLabel('3','3',$rowValues,'label label-info'); ?>                       
                       </div>
                       <div class="row-fluid">
                            <?php 
-                        $rowValues = array('Landline'=>$this->getMultiValues($this->data->personalDetails->contactDetail, ', ', 'landLine'),
-                                           'Twitter'=>$this->data->personalDetails->twitter);
+                        $rowValues = array('Landline'=>$this->getMultiValues($personalDetails->contactDetail, ', ', 'landLine'),
+                                           'Twitter'=>$personalDetails->twitter);
                         echo $this->addRowsWithLabel('3','3',$rowValues,'label label-info'); ?>                       
                        </div>
                       <div class="row-fluid">
                         <?php 
                         $rowValues = array('Fax'=>$this->data->contactDetail->fax,
-                                           'Linkedin'=>$this->data->personalDetails->linkedIn);
+                                           'Linkedin'=>$personalDetails->linkedIn);
                         echo $this->addRowsWithLabel('3','3',$rowValues,'label label-info'); ?>                       
                        
                       </div>

@@ -1,7 +1,7 @@
 <?php
 require_once(BIDX_PLUGIN_DIR .'/../apps/common.php' );
 
-class memberprofile{
+class memberprofile {
 
 	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
 
@@ -70,7 +70,7 @@ echo "<script>
   
     
     /* 3. Render Member Profile Services for Initial View Display */
-    $memberData = $memberObj->getMemberDetails( BidxCommon::$staticSession );
+    $memberData = $memberObj->getMemberDetails(  );
     $view->data = $memberData->data;
 
     /* 4. Call the Display Component */

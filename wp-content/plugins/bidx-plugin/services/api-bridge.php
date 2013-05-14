@@ -34,7 +34,7 @@ abstract class APIbridge {
     $cookieArr = array();
     $groupDomain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'site1' : $this->getBidxSubdomain();
    
-
+    
     /*     * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
     $cookieInfo = $_COOKIE;
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
@@ -65,7 +65,6 @@ abstract class APIbridge {
       $bidx_get_params = ($body) ? '&' . http_build_query($body) : '';
       $body = NULL;
     }
-
 
     /*     * *********** 4. WP Http Request ******************************* */
 
