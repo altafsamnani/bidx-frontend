@@ -19,7 +19,7 @@ class BidxCommon {
     static public function checkSession() {
         $sessionObj = new SessionService();
         self::$staticSession = $sessionObj->isLoggedIn();
-        
+    
         self::injectJsVariables( self::$staticSession );
         //Add JS Variables for Frontend
         //add_action('wp_head', array(&$this, 'injectJsVariables'));
@@ -44,7 +44,7 @@ class BidxCommon {
         $memberId = ( $getParam ) ? $getParam : $jsSessionData->data->id;
         
         $data->memberId = $memberId;
-        $data->bidxGroupDomain = $sessionData->bidxGroupDomain;
+        $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
       
         self::$staticSession->memberId = $memberId;
 
@@ -54,11 +54,11 @@ class BidxCommon {
         $jsApiVars = (isset($data)) ? json_encode($data) : '{}';
 
 
-        //bidxConfig.context =  $jsApiVars ;
+       
         $scriptJs = " <head><script>
             var bidxConfig = bidxConfig || {};
 
-
+            bidxConfig.context =  $jsApiVars ;
 
             /* Dump response of the session-api */
             bidxConfig.session = $jsSessionVars ;
