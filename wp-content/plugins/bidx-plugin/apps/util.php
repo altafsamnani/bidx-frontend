@@ -1,10 +1,10 @@
 <?php
 /**
- * Utility file to be included in root plugin for 
+ * Utility file to be included in root plugin for
  * - easy configuration support
  * - autoloading support
  * - configuration of logger
- * 
+ *
  * @author Jaap Gorjup
  * @version 1.0
  */
@@ -39,7 +39,7 @@ if ( !defined('BIDX_VERSION_NUM') ) {
 }
 add_option( BIDX_VERSION_KEY, BIDX_VERSION_NUM );
 
-/** 
+/**
  * Logging configuration
  */
 
@@ -68,14 +68,14 @@ $logAppenders[ 'file' ] = array(
 	                        	'conversionPattern' => '%date %logger %-5level %msg%n'
 	                        )
                 		),
-                		
+
 		)
 	   ,'params' => array(
 				'file'	=> $log_file_name
 		)
-); 
+);
 
-Logger::configure( 
+Logger::configure(
 	array(
 		'rootLogger'    => array(
 			'appenders'     => array_keys( $logAppenders )
@@ -90,5 +90,9 @@ Logger::getLogger ( 'util' ) -> trace("Defined BIDX_PLUGIN_NAME : ". BIDX_PLUGIN
 Logger::getLogger ( 'util' ) -> trace("Defined BIDX_PLUGIN_DIR : ". BIDX_PLUGIN_DIR);
 Logger::getLogger ( 'util' ) -> trace("Defined BIDX_PLUGIN_URL : ". BIDX_PLUGIN_URL);
 Logger::getLogger ( 'util' ) -> trace("Defined BIDX_version : ". BIDX_VERSION_NUM);
+
+// Do not show the default WordPress admin bar on top of the page after you have logged as admin
+//
+add_filter( 'show_admin_bar', '__return_false' );
 
 ?>
