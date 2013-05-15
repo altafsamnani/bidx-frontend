@@ -11,141 +11,239 @@
  */
 class TemplateLibrary {
 
-    protected $template_dir = 'templates/';
-    protected $vars = array();
+  protected $template_dir = 'templates/';
+  protected $vars = array();
 
-    /**
-     * Constructor.
-     * Assign the templates directory
-     */
-    public function __construct($template_dir = null) {
-        if ($template_dir !== null) {
-            // Check here whether this directory really exists
-            $this->template_dir = $template_dir;
+  /**
+   * Constructor.
+   * Assign the templates directory
+   */
+  public function __construct($template_dir = null) {
+    if ($template_dir !== null) {
+      // Check here whether this directory really exists
+      $this->template_dir = $template_dir;
+    }
+  }
+
+  /**
+   * Renders the file to display content
+   * @param string $template_file file to display
+   *
+   */
+  public function render($template_file) {
+    if (file_exists($this->template_dir . $template_file)) {
+      include $this->template_dir . $template_file;
+    }
+    else {
+      throw new Exception('no template file ' . $template_file . ' present in directory ' . $this->template_dir);
+    }
+  }
+
+  /**
+   * PHP Magicmethod to assign variables
+   * @param string $name name of the variable
+   * @param string $value value of the variable
+   *
+   */
+  public function __set($name, $value) {
+    $this->vars[$name] = $value;
+  }
+
+  /**
+   * PHP Magicmethods to get variables value
+   * @param string $name name of the variable
+   *
+   */
+  public function __get($name) {
+    return $this->vars[$name];
+  }
+
+  /**
+   * Add bootstrap rows through views
+   * @param int $gridColumnVal length of spangrid
+   * @param String $rowValues Row values to be displayed
+   * @param String $className Row class name
+   *
+   * @return String $rowHtml Row html
+   *
+   */
+  public function addRows($gridColumnVal, $rowValues, $className = "") {
+
+    $rowHtml = "<div class='span" . $gridColumnVal . "'>";
+    $className = ($className) ? " class = '" . $className . "' " : '';
+
+    foreach ($rowValues as $label => $values) {
+      $values = $this->addExtraLabelsToRows($label, $values);
+      if ($values && $values != 'null') {
+        $rowHtml .= "<div " . $className . " > " . $values . " </div>";
+      }
+    }
+
+    $rowHtml .= "</div>";
+
+    return $rowHtml;
+  }
+
+  public function addExtraLabelsToRows($label, $values) {
+
+    switch ($label) {
+
+      case 'gender':
+        if ($values == 'm') {
+          $values = 'Male';
         }
-    }
-
-    /**
-     * Renders the file to display content
-     * @param string $template_file file to display
-     *
-     */
-    public function render($template_file) {
-        if (file_exists($this->template_dir . $template_file)) {
-            include $this->template_dir . $template_file;
-        } else {
-            throw new Exception('no template file ' . $template_file . ' present in directory ' . $this->template_dir);
+        elseif ($values == 'f') {
+          $values = 'Female';
         }
+        break;
+
+       case 'language':
+         $values = ($values) ? 'I Speak '. $values:'';
+         break;
+
     }
 
-    /**
-     * PHP Magicmethod to assign variables
-     * @param string $name name of the variable
-     * @param string $value value of the variable
-     *
-     */
-    public function __set($name, $value) {
-        $this->vars[$name] = $value;
-    }
+    return $values;
+  }
 
-    /**
-     * PHP Magicmethods to get variables value
-     * @param string $name name of the variable
-     *
-     */
-    public function __get($name) {
-        return $this->vars[$name];
-    }
+  public function getMultiReplacedValues($label, $values) {
 
-    /**
-     * Add bootstrap rows through views
-     * @param int $gridColumnVal length of spangrid
-     * @param String $rowValues Row values to be displayed
-     * @param String $className Row class name
-     *
-     * @return String $rowHtml Row html
-     *
-     */
-    public function addRows($gridColumnVal, $rowValues, $className = "") {
+    switch ($label) {
 
-        $rowHtml = "<div class='span" . $gridColumnVal . "'>";
-        $className = ($className) ? " class = '" . $className . "' " : '';
-
-        foreach ($rowValues as $values) {
-            if ($values && $values != 'null') {
-                $rowHtml .= "<div " . $className . " > " . $values . " </div>";
-            }
+      case 'gender':
+        if ($values == 'm') {
+          $values = 'Male';
+        }
+        elseif ($values == 'f') {
+          $values = 'Female';
         }
 
+        break;
+
+      case 'language' :
+        $values = $this->getLanguagesValue($values);
+
+        break;
+
+      case 'country':
+        $values = $this->getCountryValue($values);
+
+        break;
+      default:
+    }
+    return $values;
+  }
+
+  public function getLanguagesValue($value) {
+
+    $languageArr = array('en' => 'English',
+      'nl' => 'Dutch');
+    $languageKey = strtolower($value);
+    $returnLanguage = (isset($languageArr[$languageKey]) ? $languageArr[$languageKey] : $value);
+
+    return $returnLanguage;
+  }
+
+  public function getCountryValue($value) {
+
+    $countryArr = array('en' => 'United Kingdom',
+                         'nl' => 'The Netherlands');
+    $countryKey = strtolower($value);
+    $returnCountry = (isset($countryArr[$countryKey]) ? $countryArr[$countryKey] : $value);
+
+    return $returnCountry;
+  }
+
+  /**
+   * Add bootstrap rows values/labels through views
+   * @param int $gridColumnVal length of spangrid
+   * @param String $rowValues Row values to be displayed
+   * @param String $classLabel Row class label value
+   * @param String $className Row class name
+   *
+   * @return String $rowHtml Row html
+   *
+   */
+  public function addRowsWithLabel($gridLabel, $gridValue, $rowValues, $classLabel = "", $classValue = "") {
+
+    $rowHtml = "";
+    $classLabel = ($classLabel) ? " class = '" . $classLabel . "' " : '';
+    $classValue = ($classValue) ? " class = '" . $classValue . "' " : '';
+
+    foreach ($rowValues as $label => $value) {
+      if ($value && $value != 'null') {
+        //Display Label
+        $rowHtml .= "<div class='span" . $gridLabel . "'>";
+        $rowHtml .= "<div " . $classLabel . " > " . $label . " </div>";
         $rowHtml .= "</div>";
-
-        return $rowHtml;
+        //Display Value
+        $rowHtml .= "<div class='span" . $gridValue . "'>";
+        $rowHtml .= "<div " . $classValue . " > " . $value . " </div>";
+        $rowHtml .= "</div>";
+      }
     }
 
-    /**
-     * Add bootstrap rows values/labels through views
-     * @param int $gridColumnVal length of spangrid
-     * @param String $rowValues Row values to be displayed
-     * @param String $classLabel Row class label value
-     * @param String $className Row class name
-     *
-     * @return String $rowHtml Row html
-     *
-     */
-    public function addRowsWithLabel($gridLabel, $gridValue, $rowValues, $classLabel = "", $classValue = "") {
+    return $rowHtml;
+  }
 
-        $rowHtml = "";
-        $classLabel = ($classLabel) ? " class = '" . $classLabel . "' " : '';
-        $classValue = ($classValue) ? " class = '" . $classValue . "' " : '';
+  /**
+   * Iterate mutivalued variable and make html row
+   * @param int $data Variable to iterate
+   * @param String $seperator Seperator value
+   * @param String $elementKey Variable to fetch
+   *
+   * @return String $rowHtml Row html
+   *
+   */
+  public function getMultiValues($data, $seperator, $elementKey = NULL) {
 
-        foreach ($rowValues as $label => $value) {
-            if ($value && $value != 'null') {
-                //Display Label
-                $rowHtml .= "<div class='span" . $gridLabel . "'>";
-                $rowHtml .= "<div " . $classLabel . " > " . $label . " </div>";
-                $rowHtml .= "</div>";
-                //Display Value
-                $rowHtml .= "<div class='span" . $gridValue . "'>";
-                $rowHtml .= "<div " . $classValue . " > " . $value . " </div>";
-                $rowHtml .= "</div>";
-            }
-        }
+    $sep = '';
+    $htmlDisplay = '';
 
-        return $rowHtml;
+    //If comma and 2 values then make seperator And
+    if (trim($seperator) == ',' && count($data) == 2) {
+      $seperator = ' And ';
     }
 
-    /**
-     * Iterate mutivalued variable and make html row
-     * @param int $data Variable to iterate
-     * @param String $seperator Seperator value
-     * @param String $elementKey Variable to fetch 
-     *
-     * @return String $rowHtml Row html
-     *
-     */
-    public function getMultiValues($data, $seperator, $elementKey = NULL) {
+    //Iterate variable and add seperator
+    foreach ($data as $key => $value) {
 
-        $sep = '';
-        $htmlDisplay = '';
+      $objValue = ($elementKey) ? $value->$elementKey : $value;
 
-        //If comma and 2 values then make seperator And
-        if (trim($seperator) == ',' && count($data) == 2) {
-            $seperator = ' and ';
-        }
-
-        //Iterate variable and add seperator
-        foreach ($data as $key => $value) {
-
-            $objValue = ($elementKey) ? $value->$elementKey : $value;
-         
-            if ($objValue != 'null') {
-                $htmlDisplay .= $sep . $objValue;
-                $sep = $seperator;
-            }
-        }
-
-        return $htmlDisplay;
+      $objValue = $this->getMultiReplacedValues($elementKey, $objValue);
+      if ($objValue != 'null') {
+        $htmlDisplay .= $sep . $objValue;
+        $sep = $seperator;
+      }
     }
+
+    return $htmlDisplay;
+  }
+
+  /**
+   * Iterate mutivalued variable and make html row
+   * @param int $data Variable to iterate
+   * @param String $seperator Seperator value
+   * @param String $elementKey Variable to fetch
+   *
+   * @return String $rowHtml Row html
+   *
+   */
+  public function createRowValue($valueArr, $separator) {
+
+    $html = '';
+    $sep = '';
+
+    foreach ($valueArr as $rowLabel=>$rowValue) {
+
+      if ($rowValue != 'null' && $rowValue) {
+        $rowValue = $this->getMultiReplacedValues($rowLabel,$rowValue);
+        $html.= $sep . $rowValue;
+        $sep = $separator;
+      }
+    }
+    return $html;
+  }
 
 }
 

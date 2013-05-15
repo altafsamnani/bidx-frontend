@@ -33,7 +33,7 @@ abstract class APIbridge {
     $sendDomain = 'bidx.net';
     $cookieArr = array();
     $groupDomain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'site1' : $this->getBidxSubdomain();
-   
+
     
     /*     * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
     $cookieInfo = $_COOKIE;

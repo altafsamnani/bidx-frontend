@@ -100,14 +100,14 @@ function bidx_login_session() {
   $body['domain'] = get_bidx_subdomain();
 
   $get_redirect = ($_GET['q']) ? $_GET['q'] : NULL;
-
+  
   /*   * ** Assumed if redirect in Get means session is already checked and is asking for uname/pass and then redirect ** */
-  if (!$get_redirect) {
+  if ($get_redirect == NULL) {
 
     $result = call_bidx_service('session', $body, $method = 'GET');
 
     $requestData = bidx_wordpress_post_action('sessionactive', $result, $body);
-
+  
     // If Bidx Session and Wp Session is there then redirect else clear the wp cache
     if ($requestData->redirect && is_user_logged_in()) {
       wp_redirect($requestData->redirect);
@@ -162,6 +162,11 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
     $headers['Content-Type'] = 'multipart/form-data';
   }
 
+  if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
+      $body['username'] = 'admin@bidnetwork.org';
+      $body['password'] = 'admin123';    
+
+  }
 
   // 2.2 Set the group domain header
   if (isset($body['domain'])) {
@@ -182,10 +187,7 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
 
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
-  if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
-      $body['username'] = 'admin@bidnetwork.org';
-      $body['password'] = 'admin123';
-  }
+  
   
   $request = new WP_Http;
   $result = $request->request($url, array('method' => $bidxMethod,
@@ -481,7 +483,7 @@ function bidx_wordpress_post_action($url, $result, $body) {
           strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
     if( !$is_ajax ) {
-      bidx_redirect_login($groupName);
+        ($url != 'sessionactive') ? bidx_redirect_login($groupName) : '';
 
     }
   } else {
@@ -504,8 +506,14 @@ function bidx_wordpress_post_action($url, $result, $body) {
         $process = TRUE;
         $displayData = $requestData->data;
         //check role and assign logged in wp username if present.
+        if ($url == 'session'&& DOMAIN_CURRENT_SITE == 'bidx.dev') {
+             $displayData->roles = array('SysAdmin');
+          }
+
         if (!empty($displayData->roles)) {
           $roleArray = $displayData->roles;
+
+
 
           if (in_array("SysAdmin", $roleArray)) {
             //$username = 'admin';

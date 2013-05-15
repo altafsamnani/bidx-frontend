@@ -16,17 +16,24 @@ $personalDetails = $this->data->bidxMemberProfile->personalDetails;
                       <div class="row-fluid">
                         <?php
                           //NO language variable
-                          $languageDetails = $this->getMultiValues($personalDetails->languageDetail, ', ', 'language') ;
-                          $address = $personalDetails->address[0]->street.' '.$personalDetails->address[0]->streetNumber;
-                          $address .= $personalDetails->address[0]->cityTown.'<br/>'.$personalDetails->address[0]->country.''.$personalDetails->address[0]->postalCode ;
+                          $languageData = $personalDetails->languageDetail;
+                          $languageDetails = $this->getMultiValues($languageData, ', ', 'language') ;
+                          $addressArr = array( $personalDetails->address[0]->street,
+                                               $personalDetails->address[0]->streetNumber,
+                                               $personalDetails->address[0]->cityTown,
+                                               'country'=>$personalDetails->address[0]->country,
+                                               $personalDetails->address[0]->postalCode );
+                          $address = $this->createRowValue($addressArr,' ');
+
+                         
 
                           $rowValues = array($personalDetails->professionalTitle,
-                                             $personalDetails->gender,
+                                             'gender' => $personalDetails->gender,
                                              $personalDetails->nationality,
                                              $personalDetails->dateOfBirth,
                                              $personalDetails->highestEducation,
                                              $personalDetails->nationality,
-                                            'I speak '.$languageDetails,
+                                             'language'=> $languageDetails,
                                             $address,
                                             'CV Name');
                           echo $this->addRows('12',$rowValues);
