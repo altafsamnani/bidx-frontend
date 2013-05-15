@@ -15,6 +15,7 @@ $( document ).ready( function()
     ,   groupDomain
     ,   bidx            = window.bidx
     ,   snippets        = {}
+
     ;
 
     var $mainStates     = $( ".mainState" )
@@ -658,6 +659,23 @@ $( document ).ready( function()
             languageDetail.push( data );
         } );
 
+        // This is a hack to handle the situation where we need to pad the languageDetail array to 'remove' items if we end up
+        // PUT'ing a shorter list than we got we need to pad it up to original length
+        //
+        // var currentLanguageDetail           = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.languageDetail", true )
+        // ,   originalLanguageDetailLength    = 0
+        // ;
+
+        // if ( currentLanguageDetail )
+        // {
+        //     originalLanguageDetailLength = currentLanguageDetail.length;
+        // }
+
+        // while ( languageDetail.length < originalLanguageDetailLength )
+        // {
+        //     languageDetail.push( {} );
+        // }
+
         bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.languageDetail", languageDetail );
     };
 
@@ -665,15 +683,11 @@ $( document ).ready( function()
     //
     var _init = function()
     {
-        memberId    = bidx.utils.getQueryParameter( "memberProfileId" ) || bidx.utils.getValue( bidxConfig, "context.membersId" ) || bidx.utils.getValue( bidxConfig, "context.memberId" );
-        groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain();
-
-        if ( !memberId )
-        {
-            _showError( "No member (profile) id found to be retrieved from API!" );
-            return;
-        }
-
+        // Reset any state
+        //
+        $controls.empty();
+        addedLanguages = [];
+        $languageList.empty();
 
         // Inject the save and button into the controls
         //
@@ -830,7 +844,6 @@ $( document ).ready( function()
                 }
             }
         );
-
     };
 
     // Private functions
@@ -860,27 +873,45 @@ $( document ).ready( function()
     var AppRouter = Backbone.Router.extend(
     {
         routes: {
-            'memberEdit(/:section)':        'edit'
+            'memberEdit/:id(/:section)':          'edit'
         ,   'cancel':                       'show'
         ,   '*path':                        'show'
         }
-    ,   edit:           function( section )
+    ,   edit:           function( id, section )
         {
-            bidx.utils.log( "MemberEdit::AppRouter::edit", section );
+            bidx.utils.log( "MemberEdit::AppRouter::edit", id, section );
 
-            if ( state === "edit" )
+            _showMainState( "memberEdit" );
+
+            groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain();
+
+            var newMemberId
+            ,   splatItems
+            ;
+
+            if ( !id.match( /^\d+$/ ) )
+            {
+                section = id;
+                id      = memberId;
+
+                this.navigate( "memberEdit/" + id + "/" + section );
+            }
+
+            if ( state === "edit" && id === memberId )
             {
                 return;
             }
 
+            memberId = id;
             state = "edit";
-
-            _showMainState( "memberEdit" );
 
             $element.show();
             _showView( "load" );
 
             _init();
+
+            // Update the navigational links
+            //
         }
     ,   show:           function( section )
         {
