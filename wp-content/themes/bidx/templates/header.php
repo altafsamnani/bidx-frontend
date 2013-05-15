@@ -1,7 +1,7 @@
 
 <header>
-	<div>
-		<!-- Main Nav to go here -->  
+	<div class="container">
+		<!-- Main Nav to go here -->
 		<div class="navbar">
 			<div class="navbar-inner-bidX">
 
@@ -27,7 +27,7 @@
 							<li class="hidden"><a href="#"><span class="sprite language en">English</span></a></li>
 							<li><a href="#"><span class="sprite language es">Spanish</span></a></li>
 						</ul>
-					</div>                  
+					</div>
 
 
 				</div>
@@ -36,7 +36,7 @@
 					if (has_nav_menu('primary_navigation')) :
 						wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav menu'));
 					endif;
-					?>        
+					?>
 
 				</nav>
 
