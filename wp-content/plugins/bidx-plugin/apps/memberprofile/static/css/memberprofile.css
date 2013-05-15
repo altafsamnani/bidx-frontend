@@ -1,50 +1,50 @@
-#memberEdit {
+#editMember {
     display:                none;
 }
 
-#memberEdit .view {
+#editMember .view {
     display:                none;
 }
 
-#memberEdit .viewLoad {
+#editMember .viewLoad {
     display:                block;
 }
 
-#memberEdit .memberEditControl {
+#editMember .editMemberControl {
     display:                none;
 }
 
-#memberEdit .profileImage {
+#editMember .profileImage {
     width:                  100%
 }
 
-#memberEdit .nav-memberEdit {
+#editMember .nav-editMember {
     top:                    200px;
 }
 
-#memberEdit input,
-#memberEdit select {
+#editMember input,
+#editMember select {
     width:                  100%;
 }
 
-#memberEdit label.radio input {
+#editMember label.radio input {
     width:                  auto;
 }
 
-#memberEdit form fieldset {
+#editMember form fieldset {
     position:               relative;
 }
 
-#memberEdit .languageList label,
-#memberEdit .languageList p {
+#editMember .languageList label,
+#editMember .languageList p {
     margin-top:             6px;
     margin-bottom:          0;
 }
 
-#memberEdit .languageList p {
+#editMember .languageList p {
     margin-left:            12px;
 }
 
-#memberEdit .languageList button {
+#editMember .languageList button {
     height:                 30px;
 }

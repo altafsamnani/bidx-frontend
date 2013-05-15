@@ -1,6 +1,6 @@
 $( document ).ready( function()
 {
-    var $element        = $( "#memberEdit" )
+    var $element        = $( "#editMember" )
     ,   $controls       = $( ".editControls" )
     ,   $views          = $element.find( ".view" )
     ,   $editForm       = $views.filter( ".viewEdit" ).find( "form" )
@@ -873,15 +873,15 @@ $( document ).ready( function()
     var AppRouter = Backbone.Router.extend(
     {
         routes: {
-            'memberEdit/:id(/:section)':          'edit'
+            'editMember/:id(/:section)':          'edit'
         ,   'cancel':                       'show'
         ,   '*path':                        'show'
         }
     ,   edit:           function( id, section )
         {
-            bidx.utils.log( "MemberEdit::AppRouter::edit", id, section );
+            bidx.utils.log( "EditMember::AppRouter::edit", id, section );
 
-            _showMainState( "memberEdit" );
+            _showMainState( "editMember" );
 
             groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain();
 
@@ -894,7 +894,7 @@ $( document ).ready( function()
                 section = id;
                 id      = memberId;
 
-                this.navigate( "memberEdit/" + id + "/" + section );
+                this.navigate( "editMember/" + id + "/" + section );
             }
 
             if ( state === "edit" && id === memberId )
@@ -915,7 +915,7 @@ $( document ).ready( function()
         }
     ,   show:           function( section )
         {
-            bidx.utils.log( "MemberEdit::AppRouter::show", section );
+            bidx.utils.log( "EditMember::AppRouter::show", section );
 
             if ( state === "show" )
             {
