@@ -1,0 +1,1 @@
+//update group overview elements by loading information from the service
