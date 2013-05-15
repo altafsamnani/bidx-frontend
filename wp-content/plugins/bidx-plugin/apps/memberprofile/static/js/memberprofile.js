@@ -4,13 +4,22 @@ $( document ).ready( function()
     ,   $controls       = $( ".editControls" )
     ,   $views          = $element.find( ".view" )
     ,   $editForm       = $views.filter( ".viewEdit" ).find( "form" )
+    ,   $snippets       = $element.find( ".snippets" )
+
+    ,   $languageList       = $editForm.find( ".languageList" )
+    ,   $btnAddLanguage     = $editForm.find( ".btnAddLanguage" )
+    ,   $inputAddLanguage   = $editForm.find( "input[name='addLanguage']" )
+
     ,   member
     ,   memberId
     ,   groupDomain
     ,   bidx            = window.bidx
+    ,   snippets        = {}
     ;
 
-    var $mainStates     = $( ".mainState" );
+    var $mainStates     = $( ".mainState" )
+
+    ;
 
     // Form fields
     //
@@ -71,6 +80,324 @@ $( document ).ready( function()
         ,   'fax'
         ]
     };
+
+
+    var languages = [
+        {
+        key: "sq",
+        value: "Albanian"
+        },
+        {
+        key: "ar",
+        value: "Arabic"
+        },
+        {
+        key: "be",
+        value: "Belarusian"
+        },
+        {
+        key: "bg",
+        value: "Bulgarian"
+        },
+        {
+        key: "ca",
+        value: "Catalan"
+        },
+        {
+        key: "zh",
+        value: "Chinese"
+        },
+        {
+        key: "hr",
+        value: "Croatian"
+        },
+        {
+        key: "cs",
+        value: "Czech"
+        },
+        {
+        key: "da",
+        value: "Danish"
+        },
+        {
+        key: "nl",
+        value: "Dutch"
+        },
+        {
+        key: "en",
+        value: "English"
+        },
+        {
+        key: "et",
+        value: "Estonian"
+        },
+        {
+        key: "fi",
+        value: "Finnish"
+        },
+        {
+        key: "fr",
+        value: "French"
+        },
+        {
+        key: "de",
+        value: "German"
+        },
+        {
+        key: "el",
+        value: "Greek"
+        },
+        {
+        key: "iw",
+        value: "Hebrew"
+        },
+        {
+        key: "hi",
+        value: "Hindi"
+        },
+        {
+        key: "hu",
+        value: "Hungarian"
+        },
+        {
+        key: "is",
+        value: "Icelandic"
+        },
+        {
+        key: "in",
+        value: "Indonesian"
+        },
+        {
+        key: "ga",
+        value: "Irish"
+        },
+        {
+        key: "it",
+        value: "Italian"
+        },
+        {
+        key: "ja",
+        value: "Japanese"
+        },
+        {
+        key: "ko",
+        value: "Korean"
+        },
+        {
+        key: "lv",
+        value: "Latvian"
+        },
+        {
+        key: "lt",
+        value: "Lithuanian"
+        },
+        {
+        key: "mk",
+        value: "Macedonian"
+        },
+        {
+        key: "ms",
+        value: "Malay"
+        },
+        {
+        key: "mt",
+        value: "Maltese"
+        },
+        {
+        key: "no",
+        value: "Norwegian"
+        },
+        {
+        key: "pl",
+        value: "Polish"
+        },
+        {
+        key: "pt",
+        value: "Portuguese"
+        },
+        {
+        key: "ro",
+        value: "Romanian"
+        },
+        {
+        key: "ru",
+        value: "Russian"
+        },
+        {
+        key: "sr",
+        value: "Serbian"
+        },
+        {
+        key: "sk",
+        value: "Slovak"
+        },
+        {
+        key: "sl",
+        value: "Slovenian"
+        },
+        {
+        key: "es",
+        value: "Spanish"
+        },
+        {
+        key: "sv",
+        value: "Swedish"
+        },
+        {
+        key: "th",
+        value: "Thai"
+        },
+        {
+        key: "tr",
+        value: "Turkish"
+        },
+        {
+        key: "uk",
+        value: "Ukrainian"
+        },
+        {
+        key: "vi",
+        value: "Vietnamese"
+        }
+    ];
+
+    // Grab the snippets from the DOM
+    //
+    snippets.$language = $snippets.children( ".languageItem" ).remove();
+
+    // Object for maintaining a list of currently selected languages, for optimizations only
+    //
+    var addedLanguages = {};
+
+    // Initialize the autocompletes
+    //
+    $inputAddLanguage.typeahead(
+        {
+            source:         function( query )
+            {
+                return _.map( languages, function( language ) { return language.value; } )
+            }
+        ,   matcher:        function( item )
+            {
+                if ( addedLanguages[ item ] )
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+    ).removeAttr( "disabled" );
+
+    // Figure out the key of the to be added language
+    //
+    $btnAddLanguage.click( function( e )
+    {
+        // Determine if the value is in the list of languages, and if, add it to the list of added languages
+        //
+        var language        = $inputAddLanguage.val()
+        ,   key
+        ;
+
+        key = _getLanguageKeyByValue( language );
+
+        if ( key )
+        {
+            $inputAddLanguage.val( "" );
+
+            addedLanguages[ language ] = true;
+
+            _addLanguageDetailToList( { language: key, motherLanguage: false } );
+        }
+
+    } ).removeAttr( "disabled" );
+
+    // Remove the language from the list
+    //
+    $languageList.delegate( ".btnRemoveLanguage", "click", function( e )
+    {
+        e.preventDefault();
+
+        var $languageItem   = $( this ).closest( ".languageItem" )
+        ,   languageDetail  = $languageItem.data( "languageDetail" )
+        ,   languageValue   = _getLanguageValueByKey( languageDetail.language )
+        ;
+
+        delete addedLanguages[ languageValue ];
+
+        $languageItem.remove();
+    } );
+
+    // Update the languages, and only set the clicked one to be the mother language
+    //
+    $languageList.delegate( ".btnSetMotherLanguage", "click", function( e )
+    {
+        e.preventDefault();
+
+        var $btn            = $( this )
+        ,   $languageItem   = $btn.closest( ".languageItem" )
+        ;
+
+        // Unset motherLanguage on all the languages first
+        //
+        $languageList.find( ".languageItem" ).each( function()
+        {
+            var $item           = $( this )
+            ,   languageDetail  = $item.data( "languageDetail" )
+            ;
+
+            languageDetail.motherLanguage = false;
+
+            $item.data( "languageDetail", languageDetail );
+
+            $item.find( ".btnSetMotherLanguage"     ).show();
+            $item.find( ".isCurrentMotherLanguage"  ).hide();
+        } );
+
+        // And set the motherLanguage on this item to true
+        //
+        var languageDetail = $languageItem.data( "languageDetail" );
+
+        languageDetail.motherLanguage = true;
+        $languageItem.data( "languageDetail", languageDetail );
+
+        $languageItem.find( ".isCurrentMotherLanguage"  ).show();
+        $languageItem.find( ".btnSetMotherLanguage"     ).hide();
+    } );
+
+    // Convenience function for translating a language key to it's description
+    //
+    var _getLanguageValueByKey = function( key )
+    {
+        var value;
+
+        $.each( languages, function( i, item )
+        {
+            if ( item.key === key )
+            {
+                value = item.value;
+            }
+        } );
+
+        return value;
+    };
+
+    // Convenience function for translating a language description to it's key
+    //
+    var _getLanguageKeyByValue = function( value )
+    {
+        var key;
+
+        $.each( languages, function( i, item )
+        {
+            if ( item.value === value )
+            {
+                key = item.key;
+            }
+        } );
+
+        return key;
+    }
 
     var _setElementValue = function( $el, value )
     {
@@ -155,7 +482,7 @@ $( document ).ready( function()
 
         // Now the nested objects
         //
-        $.each( [ "address", "languageDetail", "contactDetail" ], function()
+        $.each( [ "address", "contactDetail" ], function()
         {
             var nest    = this
             ,   items   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + nest, true )
@@ -179,6 +506,49 @@ $( document ).ready( function()
                 } );
             }
         } );
+
+        // Language is handled specially
+        //
+        var languageDetail       = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.languageDetail", true );
+
+        if ( languageDetail )
+        {
+            $.each( languageDetail, function( i, language )
+            {
+                _addLanguageDetailToList( language );
+            } );
+        }
+    };
+
+    // Add an item to the language list and render the HTML for it
+    //
+    var _addLanguageDetailToList = function( languageDetail )
+    {
+        var $language       = snippets.$language.clone()
+        ,   languageDescr   = ""
+        ;
+
+        languageDescr = _getLanguageValueByKey( languageDetail.language );
+
+        if ( languageDescr )
+        {
+            addedLanguages[ languageDescr ] = true;
+        }
+
+        $language.find( ".languageDescr" ).text( languageDescr );
+
+        if ( languageDetail.motherLanguage )
+        {
+            $language.find( ".btnSetMotherLanguage" ).hide();
+        }
+        else
+        {
+            $language.find( ".isCurrentMotherLanguage" ).hide();
+        }
+
+        $language.data( "languageDetail", languageDetail );
+
+        $languageList.append( $language );
     };
 
     // Convert the form values back into the member object
@@ -244,7 +614,7 @@ $( document ).ready( function()
 
         // Collect the nested objects
         //
-        $.each( [ "address", "languageDetail", "contactDetail" ], function()
+        $.each( [ "address", "contactDetail" ], function()
         {
             var nest    = this
             ,   i       = 0
@@ -274,6 +644,21 @@ $( document ).ready( function()
                 }
             } );
         } );
+
+        // Language Detail is handled specially
+        //
+        var languageDetail = [];
+
+        $languageList.find( ".languageItem" ).each( function()
+        {
+            var $languageItem   = $( this )
+            ,   data            = $languageItem.data( "languageDetail" )
+            ;
+
+            languageDetail.push( data );
+        } );
+
+        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.languageDetail", languageDetail );
     };
 
     // This is the startpoint
@@ -468,8 +853,6 @@ $( document ).ready( function()
 
     // ROUTER
     //
-
-
     var state;
 
     // Router for main state

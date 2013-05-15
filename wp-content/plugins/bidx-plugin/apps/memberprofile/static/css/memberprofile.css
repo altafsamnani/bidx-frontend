@@ -35,3 +35,16 @@
     position:               relative;
 }
 
+#memberEdit .languageList label,
+#memberEdit .languageList p {
+    margin-top:             6px;
+    margin-bottom:          0;
+}
+
+#memberEdit .languageList p {
+    margin-left:            12px;
+}
+
+#memberEdit .languageList button {
+    height:                 30px;
+}
