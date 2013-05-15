@@ -1,8 +1,5 @@
-<?php 
-
-$personalDetails = $this->data->bidxMemberProfile->personalDetails;
-
-?>
+<?php
+$personalDetails = $this->data->bidxMemberProfile->personalDetails; ?>
 
 
             <fieldset>
@@ -15,14 +12,17 @@ $personalDetails = $this->data->bidxMemberProfile->personalDetails;
                       <!-- Personal details 6/6 Start -->
                       <div class="row-fluid">
                         <?php
-                          //NO language variable
+                         
                           $languageData = $personalDetails->languageDetail;
                           $languageDetails = $this->getMultiValues($languageData, ', ', 'language') ;
+
+
                           $addressArr = array( $personalDetails->address[0]->street,
                                                $personalDetails->address[0]->streetNumber,
                                                $personalDetails->address[0]->cityTown,
                                                'country'=>$personalDetails->address[0]->country,
                                                $personalDetails->address[0]->postalCode );
+
                           $address = $this->createRowValue($addressArr,' ');
 
                          
@@ -71,8 +71,8 @@ $personalDetails = $this->data->bidxMemberProfile->personalDetails;
                   </div>
                 </div>
                 <div class="span2">
-                 <?php if ($this->data->bidxCanEdit) { ?>
-                   <a class="btn btn-primary" href="#edit">Edit</a>
+                 <?php if ($this->data->bidxMemberProfile->bidxCanEdit) { ?>
+                   <a class="btn btn-primary" href="#editMember">Edit</a>
                 <?php } ?>
                 </div>
               </div>

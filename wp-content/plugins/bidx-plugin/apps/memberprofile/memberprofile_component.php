@@ -40,7 +40,7 @@
 <div class="block-odd">
     <div class="pageHeader clearfix">
       <div class="container clearfix">
-        <h1 class="pull-left"><?php echo ($view->isMyProfile) ? 'My Profile' : ucwords($view->data->member->displayName); ?></h1>
+        <h1 class="pull-left"><?php echo ($view->data->isMyProfile) ? 'My Profile' : ucwords($view->data->member->displayName); ?></h1>
         <div class="editControls"></div>
       </div>
     </div>

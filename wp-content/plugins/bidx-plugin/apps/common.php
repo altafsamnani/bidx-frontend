@@ -24,12 +24,12 @@ class BidxCommon {
       $sessionObj = new SessionService();
       self::$staticSession = $sessionObj->isLoggedIn();
 
-      self::injectJsVariables(self::$staticSession);
+      return self::injectJsVariables(self::$staticSession);
       //Add JS Variables for Frontend
-      //add_action('wp_head', array(&$this, 'injectJsVariables'));
+      
     }
     //self::$staticSession = $this->sessionData;
-    return;
+    return ;
   }
 
   /**
@@ -40,7 +40,7 @@ class BidxCommon {
    * @return String Injects js variables
    */
   static public function injectJsVariables($jsSessionData) {
-
+    $jsSessionData = self::$staticSession;
     
     $jsSessionVars = (isset($jsSessionData->data)) ? json_encode($jsSessionData->data) : '{}';
 
@@ -50,7 +50,7 @@ class BidxCommon {
 
 
 
-    $scriptJs = " <head><script>
+    $scriptJs = "<script>
             var bidxConfig = bidxConfig || {};
 
             bidxConfig.context =  $jsApiVars ;
@@ -59,9 +59,9 @@ class BidxCommon {
             bidxConfig.session = $jsSessionVars ;
 
             bidxConfig.authenticated = {$jsSessionData->authenticated};
-</script></head>";
-    echo $scriptJs;
-    return;
+</script>";
+    //echo $scriptJs;
+    return $scriptJs;
     //eturn $scriptJs;
   }
 

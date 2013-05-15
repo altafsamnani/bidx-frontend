@@ -5,25 +5,26 @@ class memberprofile {
 
 	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
 
+  public $scriptInject ;
  	/**
 	 * Constructor
 	 */
   	function __construct() {
 
     //$bidCommonObj = new BidxCommon();
-    BidxCommon::checkSession();
+    $this->scriptInject = BidxCommon::checkSession();
     //$bidCommonObj->checkSession();
    
 		add_action( 'wp_enqueue_scripts', array( &$this, 'register_memberprofile_bidx_ui_libs' ) );
-
+    add_action('wp_head', array(&$this,'addJsVariables' ) );   
      
-     
-      //$resultDisplay = $this->injectJsVariables($sessionData, $data); //
+   }
 
+   
+   function addJsVariables() {
 
-
-
-        }
+     echo $this->scriptInject;
+   }
 	
 	/**
 	 * Register scripts and styles
