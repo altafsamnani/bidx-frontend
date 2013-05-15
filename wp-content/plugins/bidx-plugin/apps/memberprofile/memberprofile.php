@@ -11,8 +11,10 @@ class memberprofile {
 	 */
   	function __construct() {
 
-    //$bidCommonObj = new BidxCommon();
-    $this->scriptInject = BidxCommon::checkSession();
+    $bidCommonObj = new BidxCommon();
+    $this->scriptInject = $bidCommonObj->getScriptJs();
+  
+    //$this->scriptInject = BidxCommon::checkSession();
     //$bidCommonObj->checkSession();
    
 		add_action( 'wp_enqueue_scripts', array( &$this, 'register_memberprofile_bidx_ui_libs' ) );

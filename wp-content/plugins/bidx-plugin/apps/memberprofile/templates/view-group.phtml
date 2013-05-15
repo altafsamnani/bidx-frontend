@@ -1,7 +1,21 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
+$personalDetails = $this->data->bidxMemberProfile->personalDetails; ?>
+
+
+            <fieldset>
+              <legend>Member</legend>
+              <div class="row-fluid">
+                <div class="span4"><img src="http://placehold.it/30x45" class="img-rounded"></div>
+                <div class="span8">
+                  <div class="row-fluid">
+                  <?php
+                  $rowValues = array('GroupNameX','Tagline');
+                  echo $this->addRows('12',$rowValues); ?>
+                  </div>
+                </div>
+
+              </div>
+            </fieldset>
+
+

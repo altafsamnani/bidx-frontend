@@ -73,7 +73,7 @@ class TemplateLibrary {
     $className = ($className) ? " class = '" . $className . "' " : '';
 
     foreach ($rowValues as $label => $values) {
-      $values = $this->addExtraLabelsToRows($label, $values);
+      $values = $this->addExtraValuesToRows($label, $values);
       if ($values && $values != 'null') {
         $rowHtml .= "<div " . $className . " > " . $values . " </div>";
       }
@@ -84,7 +84,7 @@ class TemplateLibrary {
     return $rowHtml;
   }
 
-  public function addExtraLabelsToRows($label, $values) {
+  public function addExtraValuesToRows($label, $values) {
 
     switch ($label) {
 
@@ -97,9 +97,18 @@ class TemplateLibrary {
         }
         break;
 
+       case 'motherlanguage':
+         $values = ($values) ? 'My mother language is  '. $values:'';
+         break;
        case 'language':
          $values = ($values) ? 'I Speak '. $values:'';
          break;
+       
+        case 'nationality':
+        $values = $this->getNationalityValue($values);
+
+        break;
+
 
     }
 
@@ -120,7 +129,7 @@ class TemplateLibrary {
 
         break;
 
-      case 'language' :
+      case 'language' :    
         $values = $this->getLanguagesValue($values);
 
         break;
@@ -129,15 +138,24 @@ class TemplateLibrary {
         $values = $this->getCountryValue($values);
 
         break;
+     
       default:
     }
     return $values;
   }
 
+  public function getNationalityValue($value) {
+
+    $languageArr = array('en' => 'English', 'es' => 'Spanish', 'fr' => ' French', 'nl' => 'Dutch');
+    $languageKey = strtolower($value);
+    $returnLanguage = (isset($languageArr[$languageKey]) ? $languageArr[$languageKey] : $value);
+
+    return $returnLanguage;
+  }
+
   public function getLanguagesValue($value) {
 
-    $languageArr = array('en' => 'English',
-      'nl' => 'Dutch');
+    $languageArr = array('en' => 'English', 'es' => 'Spanish', 'fr' => ' French', 'nl' => 'Dutch');
     $languageKey = strtolower($value);
     $returnLanguage = (isset($languageArr[$languageKey]) ? $languageArr[$languageKey] : $value);
 
@@ -147,7 +165,8 @@ class TemplateLibrary {
   public function getCountryValue($value) {
 
     $countryArr = array('en' => 'United Kingdom',
-                         'nl' => 'The Netherlands');
+                         'nl' => 'The Netherlands',
+                          'fr' => 'France');
     $countryKey = strtolower($value);
     $returnCountry = (isset($countryArr[$countryKey]) ? $countryArr[$countryKey] : $value);
 
@@ -195,7 +214,7 @@ class TemplateLibrary {
    * @return String $rowHtml Row html
    *
    */
-  public function getMultiValues($data, $seperator, $elementKey = NULL) {
+  public function getMultiValues($data, $seperator, $elementKey = NULL, $condition = NULL) {
 
     $sep = '';
     $htmlDisplay = '';
@@ -205,13 +224,32 @@ class TemplateLibrary {
       $seperator = ' And ';
     }
 
+   // exit;
     //Iterate variable and add seperator
-    foreach ($data as $key => $value) {
+    foreach ($data as $key => $dataValue) {
 
-      $objValue = ($elementKey) ? $value->$elementKey : $value;
+   
+      if( $elementKey ) {
+        if( $condition ) {
+          foreach( $condition as $keyCondition=>$valueCondition) {
+            if( $dataValue->$keyCondition == $valueCondition) {
+               $writeValue = true;
+            } else {
+              $writeValue = false;
+            }
+          }
+     
+          $objValue = ($writeValue) ? $dataValue->$elementKey:'';
+        } else {
+          $objValue = $dataValue->$elementKey;
+        }
 
+      } else {
+        $objValue = $dataValue;
+      }
+ 
       $objValue = $this->getMultiReplacedValues($elementKey, $objValue);
-      if ($objValue != 'null') {
+      if ($objValue != 'null' && $objValue) {
         $htmlDisplay .= $sep . $objValue;
         $sep = $seperator;
       }

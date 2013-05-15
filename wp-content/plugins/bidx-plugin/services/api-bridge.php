@@ -106,7 +106,7 @@ abstract class APIbridge {
     $requestData = json_decode($result['body']);
     $httpCode = $result['response']['code'];
     $redirectUrl = NULL;
-    
+
     /** Add Domain **/
     $requestData->bidxGroupDomain = $groupDomain;
    
@@ -124,6 +124,8 @@ abstract class APIbridge {
     else if ($httpCode == 401) {
       $requestData->status = 'ERROR';
       $requestData->authenticated = 'false';
+      //$this->bidxRedirectLogin($groupDomain);
+   
       ($urlService != 'session') ? $this->bidxRedirectLogin($groupDomain) : '';
     }
 
@@ -180,9 +182,7 @@ function bidxRedirectLogin ($groupDomain) {
   $current_url = 'http://'  . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
   $redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode($current_url);
-  $redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login';
-
-
+  
   header("Location: ".$redirect_url);
   exit;
 }

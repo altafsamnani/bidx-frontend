@@ -9,27 +9,36 @@ require_once( BIDX_PLUGIN_DIR . '/../services/session-service.php' );
 
 class BidxCommon {
 
-  static public $staticSession;
+  public static $staticSession;
+  public static $scriptJs;
 
   public function __construct() {
-    
+
+    if ($this::$scriptJs == null) {
+    $this->checkSession();
+    $this::$scriptJs = $this->injectJsVariables();
+     }
   }
 
-  static public function checkSession() {
+  private function checkSession() {
     $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
     if (!$is_ajax) {
-
-      $sessionObj = new SessionService();
-      self::$staticSession = $sessionObj->isLoggedIn();
-
-      return self::injectJsVariables(self::$staticSession);
-      //Add JS Variables for Frontend
-      
+      // To check whther its login page or q= redirect already checked session.
+      $checkSession = $this->getLoginParams();
+      //Check session if its not redirect (is not having q= param)
+      if ($checkSession) {
+        $sessionObj = new SessionService();
+        $this::$staticSession = $sessionObj->isLoggedIn();
+      }
     }
     //self::$staticSession = $this->sessionData;
-    return ;
+    return;
+  }
+
+  public function getScriptJs() {
+    return $this::$scriptJs;
   }
 
   /**
@@ -39,13 +48,13 @@ class BidxCommon {
    *
    * @return String Injects js variables
    */
-  static public function injectJsVariables($jsSessionData) {
-    $jsSessionData = self::$staticSession;
-    
+  public function injectJsVariables() {
+
+    $jsSessionData = $this::$staticSession;
     $jsSessionVars = (isset($jsSessionData->data)) ? json_encode($jsSessionData->data) : '{}';
 
     //Api Resposne data
-    $data = self::getURIParams($jsSessionData);
+    $data = $this->getURIParams($jsSessionData);
     $jsApiVars = (isset($data)) ? json_encode($data) : '{}';
 
 
@@ -65,44 +74,102 @@ class BidxCommon {
     //eturn $scriptJs;
   }
 
-   /**
- * @author Altaf Samnani
- * @version 1.0
- *
- * Grab the subdomain portion of the URL. If there is no sub-domain, the root
- * domain is passed back. By default, this function *returns* the value as a
- * string. Calling the function with echo = true prints the response directly to
- * the screen.
- *
- * @param bool $echo
- */
-static public function getURIParams($jsSessionData) {
-  
- 
-  $hostAddress = explode('/', $_SERVER ["REQUEST_URI"]);
-
-  /**Host Address
-   * Param0 /member , /group, /profile
-   * Param1 2 from /member/2 , 3 from /group/3
+  /**
+   * @author Altaf Samnani
+   * @version 1.0
    *
+   * Grab the subdomain portion of the URL. If there is no sub-domain, the root
+   * domain is passed back. By default, this function *returns* the value as a
+   * string. Calling the function with echo = true prints the response directly to
+   * the screen.
+   *
+   * @param bool $echo
    */
-  if (is_array($hostAddress)) {
+  public function getURIParams($jsSessionData = NULL) {
 
-    switch ($hostAddress[1]) {
 
-    case 'member':
-       $memberId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->id;
-       $data->memberId = $memberId;
-       $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
-       self::$staticSession->memberId = $memberId;
-       break;
-    }
+    $hostAddress = explode('/', $_SERVER ["REQUEST_URI"]);
+
+    /*     * Host Address
+     * Param0 /member , /group, /profile
+     * Param1 2 from /member/2 , 3 from /group/3
+     *
+     */
+
+    if (is_array($hostAddress)) {
+
+      //Redirect URL Logic
+      $this->redirectUrls($hostAddress[1], $jsSessionData->authenticated);
+
+      switch ($hostAddress[1]) {
+
+        case 'member':
+          $memberId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->id;
+          $data->memberId = $memberId;
+          $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
+          $this::$staticSession->memberId = $memberId;
+
+          break;
+
+        
+      }
+
+      //Redirect Logic
+
+
+
       return $data;
+    }
+
+    return;
   }
-  else {
-    return ;
+
+  /*
+   * @author Altaf Samnani
+   * @version 1.0
+   *
+   * Bidx Logn redirect for Not Logged in users
+   *
+   * @param String $username
+   * @param String $password
+   *
+   * @return Loggedin User
+   */
+
+  function redirectUrls($uriString, $authenticated) {
+    $redirect_url = NULL;
+    $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+   
+    //Other than login page and no user authenticated redirect him Moved to api service 
+    if ($uriString != 'login' && $authenticated == 'false') {
+
+      //$redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/login/?q=' . base64_encode($current_url);
+    }
+    if ($uriString == 'login' && $authenticated == 'true') {
+
+      $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/member';
+    }
+
+    if ($redirect_url) {
+      header("Location: " . $redirect_url);
+      exit;
+    }
+
+    return;
   }
-}
+
+  static public function getLoginParams() {
+    $checkLoginSession = true;
+    $hostAddress = explode('/', $_SERVER ["REQUEST_URI"]);
+
+    //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
+    if (( $hostAddress[1] == 'login' && preg_match("/^[?]q=/i", $hostAddress[2]) ) ||
+        strstr($hostAddress[1], 'wp-login.php')) {
+      $checkLoginSession = false;
+    }
+
+    return $checkLoginSession;
+  }
 
 }
 

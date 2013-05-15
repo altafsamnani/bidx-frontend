@@ -1,4 +1,5 @@
 <?php
+
 $personalDetails = $this->data->bidxMemberProfile->personalDetails; ?>
 
 
@@ -15,24 +16,23 @@ $personalDetails = $this->data->bidxMemberProfile->personalDetails; ?>
                          
                           $languageData = $personalDetails->languageDetail;
                           $languageDetails = $this->getMultiValues($languageData, ', ', 'language') ;
+                          $motherLanguageDetails = $this->getMultiValues($languageData, ', ', 'language', array('motherLanguage' => '1')) ;
 
-
-                          $addressArr = array( $personalDetails->address[0]->street,
-                                               $personalDetails->address[0]->streetNumber,
+                          $addressArr = array( $personalDetails->address[0]->street.$personalDetails->address[0]->streetNumber,
                                                $personalDetails->address[0]->cityTown,
                                                'country'=>$personalDetails->address[0]->country,
                                                $personalDetails->address[0]->postalCode );
 
-                          $address = $this->createRowValue($addressArr,' ');
+                          $address = $this->createRowValue($addressArr,', ');
 
                          
 
                           $rowValues = array($personalDetails->professionalTitle,
                                              'gender' => $personalDetails->gender,
-                                             $personalDetails->nationality,
+                                             'nationality' => $personalDetails->nationality,
                                              $personalDetails->dateOfBirth,
                                              $personalDetails->highestEducation,
-                                             $personalDetails->nationality,
+                                             'motherlanguage'=> $motherLanguageDetails,
                                              'language'=> $languageDetails,
                                             $address,
                                             'CV Name');
@@ -72,7 +72,7 @@ $personalDetails = $this->data->bidxMemberProfile->personalDetails; ?>
                 </div>
                 <div class="span2">
                  <?php if ($this->data->bidxMemberProfile->bidxCanEdit) { ?>
-                   <a class="btn btn-primary" href="#editMember">Edit</a>
+                   <a class="btn btn-primary" href="#editMember/<?php echo $this->data->member->memberId;?>">Edit</a>
                 <?php } ?>
                 </div>
               </div>

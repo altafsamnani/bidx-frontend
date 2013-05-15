@@ -3,7 +3,7 @@
 		<div class="block-login">
 			<?php while (have_posts()) : the_post(); ?>
 			  <?php
-        bidx_login_session();
+        //bidx_login_session();
         the_content();
 
         ?>

@@ -30,11 +30,11 @@ class MemberService  extends APIbridge{
     //$sessionData = $this->isLoggedIn();
    $sessionData = BidxCommon::$staticSession;
    $memberId    = $sessionData->memberId;
-   
+
     //Call member profile
     $result = $this->callBidxAPI($this->memberUrl . '/' . $memberId, array(), 'GET'); //.$memberId 4
     //If edit rights inject js and render edit button
- 
+  
     if ($result->data->bidxMemberProfile->bidxCanEdit) {
       $result->data->isMyProfile  = ($memberId == $sessionData->data->id) ? true : false;
     }
