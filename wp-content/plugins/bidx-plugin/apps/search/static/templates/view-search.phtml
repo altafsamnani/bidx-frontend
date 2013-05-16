@@ -1,0 +1,250 @@
+<!-- 
+	Search startpage.
+	Single page application that is setup
+ -->
+<div>
+	<div class="row-fluid">
+		<div class="span12"><h2>Search results ({$data.numFound})</h2></div>
+	</div>
+	<div class="row-fluid">
+		<div class="alert">
+			 <button type="button" class="close" data-dismiss="alert">&times;</button>
+			 <strong>Warning!</strong> {$data.errorMessage}
+		</div>
+		<div class="alert alert-error">
+			 <button type="button" class="close" data-dismiss="alert">&times;</button>
+			 <strong>Warning!</strong> {$data.errorMessage}
+		</div>
+		
+	</div>
+	<div class="row-fluid">
+		<div class="search-result-container span8">
+		    <!--  investor entity -->
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Investor</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+			
+			<!--  -->
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img src="http://placehold.it/75x75" class="img-rounded">
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em>Title of item</em>
+						</div>
+						<div>Subtitle 1</div>
+						<div>Subtitle 2</div>
+						<div>
+							<span class="label">Entity</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="#">view</a>
+					</div>
+				</div>
+			</div>									
+						
+		</div>
+
+		<div class="sidebar span4">
+				
+			<div class="facetnavigation row-fluid">
+				<div>
+					Search in:
+					<div class="btn-group" data-toggle="buttons-radio">
+					  <button class="btn" name="selection" value="1">This Group</button>
+					  <button class="btn" name="selection" value="2">All My Groups</button>
+					  <button class="btn" name="selection" value="3">All Groups</button>
+					</div>
+				</div>
+				<div>
+					Filter results on:
+				</div>
+				<div class="accordion" id="accordion2">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse"
+								data-parent="#accordion2" href="#collapseOne"> People </a>
+						</div>
+						<div id="collapseOne" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<h4>Filter on role</h4>
+								<label class="checkbox"> 
+									<input type="checkbox" value="Member-only" /> Member only
+								</label> 
+								<label class="checkbox"> 
+									<input type="checkbox" value="Entrepreneur" /> Entrepreneur
+								</label> 
+								<label class="checkbox"> 
+									<input type="checkbox" value="Investor" /> Investor
+								</label> 
+								<h4>Filter on text</h4>
+								<input type="text" placeholder="Location" class="form-search" /> 
+								<input type="text" placeholder="Language" class="form-search" /> 
+								<input type="text" placeholder="Industry" class="form-search" /> 
+								<input type="text" placeholder="Theme" class="form-search" />
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse"
+								data-parent="#accordion2" href="#collapseTwo"> Business </a>
+						</div>
+						<div id="collapseTwo" class="accordion-body collapse">
+							<div class="accordion-inner">Anim pariatur cliche...</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse"
+								data-parent="#accordion3" href="#collapseThree"> Group </a>
+						</div>
+						<div id="collapseThree" class="accordion-body collapse">
+							<div class="accordion-inner">Anim pariatur cliche...</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
