@@ -873,7 +873,7 @@ $( document ).ready( function()
     var AppRouter = Backbone.Router.extend(
     {
         routes: {
-            'editMember/:id(/:section)':          'edit'
+            'editMember(/:id)(/:section)':    'edit'
         ,   'cancel':                       'show'
         ,   '*path':                        'show'
         }
@@ -887,14 +887,37 @@ $( document ).ready( function()
 
             var newMemberId
             ,   splatItems
+            ,   updateHash      = false
+            ,   isId            = ( id && id.match( /^\d+$/ ) )
             ;
 
-            if ( !id.match( /^\d+$/ ) )
+            if ( id && !isId )
             {
                 section = id;
                 id      = memberId;
 
-                this.navigate( "editMember/" + id + "/" + section );
+                updateHash = true;
+            }
+
+            // No memberId set yet and not one explicitly provided? Use the one from the session
+            //
+            if ( !memberId && !isId )
+            {
+                id = bidx.utils.getValue( bidxConfig, "session.id" );
+
+                updateHash = true;
+            }
+
+            if ( updateHash )
+            {
+                var hash = "editMember/" + id;
+
+                if ( section )
+                {
+                     hash += "/" + section;
+                }
+
+                this.navigate( hash );
             }
 
             if ( state === "edit" && id === memberId )

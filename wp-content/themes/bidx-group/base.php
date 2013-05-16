@@ -6,7 +6,7 @@
 
 <?php
   	$authenticated=false;
-    if ($_COOKIE['bidx-auth-test']) {
+    if (is_user_logged_in()) {
    	  $authenticated=true;
     }
 

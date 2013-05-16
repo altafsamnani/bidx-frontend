@@ -7,36 +7,6 @@
             }
     };
 </script>
-
-<style>
-  .pageHeader {
-    position:           fixed;
-    top:                120px;
-    padding-top:        10px;
-    height:             60px;
-    background-color:   #fff;
-    z-index:            1010;
-  }
-
-  .pageHeader .editControls {
-    position:           absolute;
-    bottom:             10px;
-    right:              0px;
-  }
-
-  .pageHeader .editControls a {
-    margin-left:        4px;
-  }
-
-  body {
-    padding-top:        190px;
-  }
-
-  span.scrollPositionMarker {
-    top:                -190px;
-  }
-</style>
-
 <div class="block-odd">
     <div class="pageHeader clearfix">
       <div class="container clearfix">
