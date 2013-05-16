@@ -20,8 +20,9 @@ class group {
 	 * Registers the search specific javascript and css files
 	 */
 	public function register_search_bidx_ui_libs() {
-		wp_register_script( 'search', plugins_url( 'static/js/group.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
-		wp_register_style( 'search', plugins_url( 'static/css/group.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+		wp_register_script( 'group', plugins_url( 'static/js/group.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
+		wp_register_style( 'group', plugins_url( 'static/css/group.css', __FILE__ ), array(), '20130501', 'all' );
+		wp_enqueue_style( 'group' );
 	}
 
 	/**
@@ -35,8 +36,10 @@ class group {
 	    /* 1 Template Rendering */
 	     require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
 	     $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/group/static/templates/');
-
-		return $view->render('groupList.phtml'); 
+	    
+	    return $view->render('lastMembers.phtml');
+	     
+		//return $view->render('groupList.phtml'); 
 	}
 }
 ?>

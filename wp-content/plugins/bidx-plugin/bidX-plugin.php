@@ -25,7 +25,8 @@ $ruleitems = array(
 					'member' => 'memberprofile',
 					'businessplan',
 					'mydashboard' => 'dashboard',
-					'search' 
+					'search',
+					'group'		 
 				  );
 
 $rewrite = new BidxRewrite();

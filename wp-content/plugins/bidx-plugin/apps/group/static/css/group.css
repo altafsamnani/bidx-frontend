@@ -1,0 +1,11 @@
+.member-thumb {
+	background: white;
+	margin-bottom:10px;
+	border: medium;
+	vertical-align: middle;
+	height:100px;
+}
+
+.media-body {
+	vertical-align: middle;
+}
