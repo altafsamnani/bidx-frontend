@@ -60,25 +60,51 @@ class TemplateLibrary {
 
   /**
    * Add bootstrap rows through views
-   * @param int $gridColumnVal length of spangrid
+   * @param int $gridColumnVal length of grid
    * @param String $rowValues Row values to be displayed
    * @param String $className Row class name
+   * @structure data1
+   *            data2
+   *            data3
    *
    * @return String $rowHtml Row html
    *
    */
-  public function addRows($gridColumnVal, $rowValues, $className = "") {
+  public function addMultipleRows($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div') {
 
-    $rowHtml = "<div class='span" . $gridColumnVal . "'>";
+    $rowHtml = "<div class='row-fluid'>";
+    $rowHtml .= "<div class='" . $gridColumnVal . "'>";
     $className = ($className) ? " class = '" . $className . "' " : '';
 
     foreach ($rowValues as $label => $values) {
       $values = $this->addExtraValuesToRows($label, $values);
+
       if ($values && $values != 'null') {
-        $rowHtml .= "<div " . $className . " > " . $values . " </div>";
+
+        //Class Name
+        if (is_array($className) && isset($className[$label])) {
+          $classRow = 'class ="' . $className[$label] . '"';
+        }
+        else {
+          $classRow = ( $className ) ? 'class ="' . $className . '"' : '';
+        }
+
+        //Tag Name
+        if (is_array($tagName) && isset($tagName[$label])) {
+          $tagRow = $tagName[$label];
+          $test = 'if';
+        }
+        else {
+          $tagRow = $tagName;
+          $test = 'else';
+        }
+
+
+        $rowHtml .= "<$tagRow " . $classRow . " > " . $values . " </$tagRow>";
       }
     }
 
+    $rowHtml .= "</div>";
     $rowHtml .= "</div>";
 
     return $rowHtml;
@@ -97,19 +123,17 @@ class TemplateLibrary {
         }
         break;
 
-       case 'motherlanguage':
-         $values = ($values) ? 'My mother language is  '. $values:'';
-         break;
-       case 'language':
-         $values = ($values) ? 'I Speak '. $values:'';
-         break;
-       
-        case 'nationality':
+      case 'motherlanguage':
+        $values = ($values) ? 'My mother language is  ' . $values : '';
+        break;
+      case 'language':
+        $values = ($values) ? 'I Speak ' . $values : '';
+        break;
+
+      case 'nationality':
         $values = $this->getNationalityValue($values);
 
         break;
-
-
     }
 
     return $values;
@@ -129,7 +153,7 @@ class TemplateLibrary {
 
         break;
 
-      case 'language' :    
+      case 'language' :
         $values = $this->getLanguagesValue($values);
 
         break;
@@ -138,7 +162,7 @@ class TemplateLibrary {
         $values = $this->getCountryValue($values);
 
         break;
-     
+
       default:
     }
     return $values;
@@ -165,8 +189,8 @@ class TemplateLibrary {
   public function getCountryValue($value) {
 
     $countryArr = array('en' => 'United Kingdom',
-                         'nl' => 'The Netherlands',
-                          'fr' => 'France');
+      'nl' => 'The Netherlands',
+      'fr' => 'France');
     $countryKey = strtolower($value);
     $returnCountry = (isset($countryArr[$countryKey]) ? $countryArr[$countryKey] : $value);
 
@@ -180,25 +204,88 @@ class TemplateLibrary {
    * @param String $classLabel Row class label value
    * @param String $className Row class name
    *
+   * @example Email altaf@gmail.com Phone 34343
+   *          addRowsWithLabelAdjacent(2,2,array('email'=>'altaf@gmail.com','Phone'=>'3434'))
    * @return String $rowHtml Row html
    *
    */
-  public function addRowsWithLabel($gridLabel, $gridValue, $rowValues, $classLabel = "", $classValue = "") {
+  public function addRowsWithLabelAdjacent($gridLabel, $gridValue, $rowValues, $properties = array()) {
 
-    $rowHtml = "";
-    $classLabel = ($classLabel) ? " class = '" . $classLabel . "' " : '';
-    $classValue = ($classValue) ? " class = '" . $classValue . "' " : '';
-
+    /** Class **/
+    $classLabel = ($properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+    $classValue = ($properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+    
+    /** Tag **/
+    $tagLabel = ($properties['tag_label']) ? $properties['tag_label']: 'div';
+    $tagValue = ($properties['tag_value']) ? $properties['tag_value']: 'div';
+    
+    $rowHtml = "<div class='row-fluid'>";
     foreach ($rowValues as $label => $value) {
       if ($value && $value != 'null') {
         //Display Label
-        $rowHtml .= "<div class='span" . $gridLabel . "'>";
-        $rowHtml .= "<div " . $classLabel . " > " . $label . " </div>";
+        $rowHtml .= "<div class='" . $gridLabel . "'>";
+        $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
         $rowHtml .= "</div>";
         //Display Value
-        $rowHtml .= "<div class='span" . $gridValue . "'>";
-        $rowHtml .= "<div " . $classValue . " > " . $value . " </div>";
+        $rowHtml .= "<div class='" . $gridValue . "'>";
+        $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
         $rowHtml .= "</div>";
+      }
+    }
+    $rowHtml .="</div>";
+    return $rowHtml;
+  }
+
+  /**
+   * Add bootstrap rows values/labels through views
+   * @param int $gridColumnVal length of spangrid
+   * @param String $rowValues Row values to be displayed
+   * @param String $classLabel Row class label value
+   * @param String $className Row class name
+   *
+   * @example Summary
+   *          This is business summary
+   *          addRowsWithLabelBelow(2,2,array('Summary'=>'This is business summary'))
+   * @return String $rowHtml Row html
+   *
+   */
+  public function addRowsWithLabelBelow($gridLabel, $gridValue, $rowValues, $properties = array()) {
+
+    /** Class **/
+    $classLabel = ($properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+    $classValue = ($properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+
+    /** Tag **/
+    $tagLabel = ($properties['tag_label']) ? $properties['tag_label']: 'div';
+    $tagValue = ($properties['tag_value']) ? $properties['tag_value']: 'div';
+
+
+    $rowHtml = "";
+    foreach ($rowValues as $label => $rowValue) {
+      if ($rowValue && $rowValue != 'null') {
+        //Display Label
+        $rowHtml .= "<div class='row-fluid'>";
+        $rowHtml .= "<div class='" . $gridLabel . "'>";
+        $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
+        $rowHtml .= "</div>";
+        $rowHtml .= "</div>";
+        //Display Value
+        if (is_array($rowValue)) {
+          foreach ($rowValue as $value) {
+            $rowHtml .= "<div class='row-fluid'>";
+            $rowHtml .= "<div class='" . $gridValue . "'>";
+            $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
+            $rowHtml .= "</div>";
+            $rowHtml .= "</div>";
+          }
+        }
+        else {
+          $rowHtml .= "<div class='row-fluid'>";
+          $rowHtml .= "<div class='" . $gridValue . "'>";
+          $rowHtml .= "<$tagValue " . $classValue . " > " . $rowValue . " </$tagValue>";
+          $rowHtml .= "</div>";
+          $rowHtml .= "</div>";
+        }
       }
     }
 
@@ -224,30 +311,32 @@ class TemplateLibrary {
       $seperator = ' And ';
     }
 
-   // exit;
+    // exit;
     //Iterate variable and add seperator
     foreach ($data as $key => $dataValue) {
 
-   
-      if( $elementKey ) {
-        if( $condition ) {
-          foreach( $condition as $keyCondition=>$valueCondition) {
-            if( $dataValue->$keyCondition == $valueCondition) {
-               $writeValue = true;
-            } else {
+
+      if ($elementKey) {
+        if ($condition) {
+          foreach ($condition as $keyCondition => $valueCondition) {
+            if ($dataValue->$keyCondition == $valueCondition) {
+              $writeValue = true;
+            }
+            else {
               $writeValue = false;
             }
           }
-     
-          $objValue = ($writeValue) ? $dataValue->$elementKey:'';
-        } else {
+
+          $objValue = ($writeValue) ? $dataValue->$elementKey : '';
+        }
+        else {
           $objValue = $dataValue->$elementKey;
         }
-
-      } else {
+      }
+      else {
         $objValue = $dataValue;
       }
- 
+
       $objValue = $this->getMultiReplacedValues($elementKey, $objValue);
       if ($objValue != 'null' && $objValue) {
         $htmlDisplay .= $sep . $objValue;
@@ -272,10 +361,10 @@ class TemplateLibrary {
     $html = '';
     $sep = '';
 
-    foreach ($valueArr as $rowLabel=>$rowValue) {
+    foreach ($valueArr as $rowLabel => $rowValue) {
 
       if ($rowValue != 'null' && $rowValue) {
-        $rowValue = $this->getMultiReplacedValues($rowLabel,$rowValue);
+        $rowValue = $this->getMultiReplacedValues($rowLabel, $rowValue);
         $html.= $sep . $rowValue;
         $sep = $separator;
       }

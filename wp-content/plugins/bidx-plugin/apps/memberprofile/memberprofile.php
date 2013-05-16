@@ -74,8 +74,10 @@ echo "<script>
     
     /* 3. Render Member Profile Services for Initial View Display */
     $memberData = $memberObj->getMemberDetails(  );
+   
     $view->data = $memberData->data;
-
+    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
+    $view->sessionData = BidxCommon::$staticSession;
     /* 4. Call the Display Component */
     add_action( 'wp_footer', array( &$this ,'bidx_memberprofile_add_to_footer' ) );
 		require_once ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );

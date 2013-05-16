@@ -18,8 +18,10 @@
     <div class="row-fluid mainState mainStateShow">
       <div class="span8">
         <?php $view->render('view-member.phtml'); ?>
+        <?php $view->render('view-entrepreneur.phtml'); ?>
       </div>
       <div class="span4">
+        
         <?php $view->render('view-group.phtml'); ?>
       </div>
     </div>

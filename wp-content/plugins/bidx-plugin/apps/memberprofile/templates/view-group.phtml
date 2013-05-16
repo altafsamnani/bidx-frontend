@@ -1,21 +1,62 @@
 <?php
 
-$personalDetails = $this->data->bidxMemberProfile->personalDetails; ?>
-
-
-            <fieldset>
-              <legend>Member</legend>
+$groupDetails = $this->data->groups; ?>
+<div class = "span2 affix">
+              <!-- Group Info --><br/>
+        <?php foreach ($groupDetails as $groupValue) {
+            echo strtolower(str_replace(" ","",$groupValue->name));
+                 if (strtolower(str_replace(" ","",$groupValue->name)) == strtolower(str_replace(" ","",$this->bidxGroupDomain))) {?>
               <div class="row-fluid">
-                <div class="span4"><img src="http://placehold.it/30x45" class="img-rounded"></div>
+                <div class="span4"><img src="http://placehold.it/90x60" class="img-rounded"></div>
                 <div class="span8">
                   <div class="row-fluid">
-                  <?php
-                  $rowValues = array('GroupNameX','Tagline');
-                  echo $this->addRows('12',$rowValues); ?>
+                    <?php
+
+                      
+                        $rowValues = array('groupname' => $this->bidxGroupDomain, $groupValue->slogan);
+                        echo $this->addMultipleRows('span12', $rowValues, '', array('groupname' => 'h4'));
+
+
+                    ?>
                   </div>
                 </div>
-
+              </div><br/>
+              <!-- Description -->
+              <div class="row-fluid">
+                <div class="span12"><?php echo $groupValue->description;?></div>
+              </div><br/>
+              <!-- Company name , URL -->
+              <div class="row-fluid">
+                        <?php
+                        $rowValues = array('Company name' => 'www.companyurl.com' );
+                        echo $this->addRowsWithLabelAdjacent('span6','span6',$rowValues); ?>
+               </div>
+              <? } } ?>
+              <!-- Joined Group -->
+            <div class="row-fluid">
+              <div class="span12">
+                <h4>Joined groups</h4>
               </div>
-            </fieldset>
+            </div>
+
+            
+              <? foreach( $groupDetails as $groupValue) { ?>
+                <div class="row-fluid">
+                <div class="span4"><img src="http://placehold.it/90x60" class="img-rounded"></div>
+                <div class="span8">
+                 
+                   <?php
+                    $joinLink = "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>";
+                   
+                    ?>
+                   <div class="span12"><?php echo $groupValue->name?></div>
+                   <div class="span12"><?php echo $groupValue->slogan?></div>
+                  <div class="span12 offset11"><a href='#joinGroup/<?php echo $groupValue->bidxGroupId?>'>Join</a></div>
+                </div>
+                </div>
+                <? } ?>
+              <br/>
+
+</div>
 
 

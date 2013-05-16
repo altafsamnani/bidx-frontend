@@ -1,81 +1,85 @@
 <?php
 
-$personalDetails = $this->data->bidxMemberProfile->personalDetails; ?>
+$personalDetails = $this->data->bidxMemberProfile->personalDetails;
+$picSrc = $personalDetails->profilePicture->document;
+?>
+
+<div class="row-fluid">
+  <div class="span3">
+    <h4>Member</h4>
+    <img height='175px'  width = '150px' src="http://placehold.it/150x175" class="img-rounded">
+
+  </div>
+  <div class="span7"><br/>
+    <div class="row-fluid">
+      <div class="span12"><h4><?php echo ucwords($personalDetails->firstName . ' ' . $personalDetails->lastName); ?></h4></div>
+      <!-- Personal details 6/6 Start -->
+
+<?php
+$languageData = $personalDetails->languageDetail;
+$languageDetails = $this->getMultiValues($languageData, ', ', 'language');
+$motherLanguageDetails = $this->getMultiValues($languageData, ', ', 'language', array('motherLanguage' => '1'));
+
+$addressArr = array($personalDetails->address[0]->street . $personalDetails->address[0]->streetNumber,
+  $personalDetails->address[0]->cityTown,
+  'country' => $personalDetails->address[0]->country,
+  $personalDetails->address[0]->postalCode);
+
+$address = $this->createRowValue($addressArr, ', ');
 
 
-            <fieldset>
-              <legend>Member</legend>
-              <div class="row-fluid">
-                <div class="span3"><img src="http://placehold.it/150x175" class="img-rounded"></div>
-                <div class="span7">
-                  <div class="row-fluid">
-                    <div class="span12"><h4><?php echo ucwords($personalDetails->firstName.' '.$personalDetails->lastName); ?></h4></div>
-                      <!-- Personal details 6/6 Start -->
-                      <div class="row-fluid">
-                        <?php
-                         
-                          $languageData = $personalDetails->languageDetail;
-                          $languageDetails = $this->getMultiValues($languageData, ', ', 'language') ;
-                          $motherLanguageDetails = $this->getMultiValues($languageData, ', ', 'language', array('motherLanguage' => '1')) ;
 
-                          $addressArr = array( $personalDetails->address[0]->street.$personalDetails->address[0]->streetNumber,
-                                               $personalDetails->address[0]->cityTown,
-                                               'country'=>$personalDetails->address[0]->country,
-                                               $personalDetails->address[0]->postalCode );
+$rowValues = array($personalDetails->professionalTitle,
+  'gender' => $personalDetails->gender,
+  'nationality' => $personalDetails->nationality,
+  $personalDetails->dateOfBirth,
+  $personalDetails->highestEducation,
+  'motherlanguage' => $motherLanguageDetails,
+  'language' => $languageDetails,
+  $address,
+  'CV Name');
+echo $this->addMultipleRows('span12', $rowValues);
+?>
 
-                          $address = $this->createRowValue($addressArr,', ');
+      <br/>
 
-                         
+<?php
+$rowValues = array('E-mail' => $personalDetails->emailAddress,
+  'Skype' => $personalDetails->skype
+);
+echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+?>
 
-                          $rowValues = array($personalDetails->professionalTitle,
-                                             'gender' => $personalDetails->gender,
-                                             'nationality' => $personalDetails->nationality,
-                                             $personalDetails->dateOfBirth,
-                                             $personalDetails->highestEducation,
-                                             'motherlanguage'=> $motherLanguageDetails,
-                                             'language'=> $languageDetails,
-                                            $address,
-                                            'CV Name');
-                          echo $this->addRows('12',$rowValues);
-                        ?>
-                                      
-                      </div>
-                  
-                      <div class="row-fluid">
-                        <?php 
-                        $rowValues = array('E-mail'=>$personalDetails->emailAddress,
-                                           'Skype'=>$personalDetails->skype
-                                           );
-                        echo $this->addRowsWithLabel('3','3',$rowValues,'label label-info'); ?>                       
-                      </div>
-                      <div class="row-fluid">
-                        <?php 
-                        $rowValues = array('Mobile'=> $this->getMultiValues($personalDetails->contactDetail, ', ', 'mobile'),
-                                           'Facebook'=>$personalDetails->facebook);
-                        echo $this->addRowsWithLabel('3','3',$rowValues,'label label-info'); ?>                       
-                      </div>
-                      <div class="row-fluid">
-                           <?php 
-                        $rowValues = array('Landline'=>$this->getMultiValues($personalDetails->contactDetail, ', ', 'landLine'),
-                                           'Twitter'=>$personalDetails->twitter);
-                        echo $this->addRowsWithLabel('3','3',$rowValues,'label label-info'); ?>                       
-                       </div>
-                      <div class="row-fluid">
-                        <?php 
-                        $rowValues = array('Fax'=>$this->data->contactDetail->fax,
-                                           'Linkedin'=>$personalDetails->linkedIn);
-                        echo $this->addRowsWithLabel('3','3',$rowValues,'label label-info'); ?>                       
-                       
-                      </div>
-                    
-                  </div>
-                </div>
-                <div class="span2">
-                 <?php if ($this->data->bidxMemberProfile->bidxCanEdit) { ?>
-                   <a class="btn btn-primary" href="#editMember/<?php echo $this->data->member->memberId;?>">Edit</a>
-                <?php } ?>
-                </div>
-              </div>
-            </fieldset>
-          
+
+<?php
+$rowValues = array('Mobile' => $this->getMultiValues($personalDetails->contactDetail, ', ', 'mobile'),
+  'Facebook' => $personalDetails->facebook);
+echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+?>
+
+
+      <?php
+      $rowValues = array('Landline' => $this->getMultiValues($personalDetails->contactDetail, ', ', 'landLine'),
+        'Twitter' => $personalDetails->twitter);
+      echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+      ?>
+
+
+      <?php
+      $rowValues = array('Fax' => $this->data->contactDetail->fax,
+        'Linkedin' => $personalDetails->linkedIn);
+      echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+      ?>
+
+
+    </div>
+  </div>
+  <div class="span2">
+    <?php if ($personalDetails->bidxCanEdit) { ?>
+      <a class="btn btn-primary" href="#editMember/<?php echo $personalDetails->ownerId; ?>">Edit</a>
+<?php } ?>
+  </div>
+</div>
+
+
 
