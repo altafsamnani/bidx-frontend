@@ -14,11 +14,6 @@ class SessionService extends APIBridge {
 
   private $data;
 
-  public function __construct(){
-    parent::__construct();
-    // Do stuff specific for Bar
-  }
-
 
 	/**
 	 * Checks if the user is logged in on the API

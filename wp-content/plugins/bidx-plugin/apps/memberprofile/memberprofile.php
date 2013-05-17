@@ -69,8 +69,6 @@ echo "<script>
     /* 2. Service MemberProfile*/
     require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
     $memberObj = new MemberService( );
-
-  
     
     /* 3. Render Member Profile Services for Initial View Display */
     $memberData = $memberObj->getMemberDetails(  );

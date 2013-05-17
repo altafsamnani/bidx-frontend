@@ -8,14 +8,14 @@
 class group {
 
 	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
-	
+
 	/**
 	 * Constructor
-	 */
+	*/
 	function __construct() {
-		add_action( 'wp_enqueue_scripts', array( &$this, 'register_search_bidx_ui_libs' ) ) ;	
+		add_action( 'wp_enqueue_scripts', array( &$this, 'register_search_bidx_ui_libs' ) ) ;
 	}
-	
+
 	/**
 	 * Registers the search specific javascript and css files
 	 */
@@ -27,19 +27,40 @@ class group {
 
 	/**
 	 * Load the content.
-	 * The search is a static page where the content is loaded dynamically from the UI.
-	 * Dynamic action needs to be added here
-	 * @param $atts 
+	 * @todo separate actions into private methods 
+	 * @param $atts attributes from the shorttag 
 	 */
 	function load($atts) {
 
-	    /* 1 Template Rendering */
-	     require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
-	     $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/group/static/templates/');
-	    
-	    return $view->render('lastMembers.phtml');
-	     
-		//return $view->render('groupList.phtml'); 
+		// 1. Template Rendering
+		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/static/templates/' );
+	  
+		//2. Service Group
+		require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
+		$groupSvc = new GroupService( );
+		
+		// 3. Determine the view needed 
+		$command = $atts['view'];
+		
+		switch ( $command ) {
+			case "lastMembers" :
+				$view->members = $groupSvc->getLatestMembers(  );
+				$view->sessionData = BidxCommon::$staticSession;				
+				return $view->render( 'lastMembers.phtml' );
+			case "listGroups" :
+				$view->members = $groupSvc->getGroupList(  );
+				$view->sessionData = BidxCommon::$staticSession;
+				return $view->render( 'groupList.phtml' );
+			case "getGroupDetails" :
+				$view->members = $groupSvc->getGroupDetails(  );
+				$view->sessionData = BidxCommon::$staticSession;
+				return $view->render( 'groupDetails.phtml' );
+			default :	
+				$view->members = $groupSvc->getLatestMembers(  );
+				$view->sessionData = BidxCommon::$staticSession;
+				return $view->render( 'lastMembers.phtml' );
+		}
 	}
 }
 ?>

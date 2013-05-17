@@ -64,7 +64,7 @@ abstract class APIbridge {
 
 		// 4. WP Http Request
 		$url = API_URL . $urlService . '?csrf=false' . $bidx_get_params;
-
+error_log('URL : '.$url);
 		$request = new WP_Http;
 		$result = $request->request( $url, array('method' => $bidxMethod,
 				'body' => $body,
@@ -94,9 +94,12 @@ abstract class APIbridge {
 	 * @param array $requestData response from Bidx API
 	 * @return array $requestData response from Bidx API
 	 */
-	public function processResponse($urlService, $result,$groupDomain) {
+	public function processResponse($urlService, $result, $groupDomain ) {
 
+// 		var_dump( $result );
+		
 		$requestData = json_decode( $result['body'] );
+		
 		$httpCode = $result['response']['code'];
 		$redirectUrl = NULL;
 
