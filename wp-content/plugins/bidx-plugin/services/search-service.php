@@ -9,6 +9,14 @@
 class SearchService extends APIbridge {
 
 	/**
+	 * Constructs the API bridge.
+	 * Needed for operational logging.
+	 */
+	public function __construct() {
+		parent :: __construct();
+	}	
+	
+	/**
 	 * Performs a search action 
 	 * @param string $query
 	 * @param string $filter optional value --> not implemented yet

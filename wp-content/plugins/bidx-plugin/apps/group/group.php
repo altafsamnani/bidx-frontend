@@ -49,11 +49,11 @@ class group {
 				$view->sessionData = BidxCommon::$staticSession;				
 				return $view->render( 'lastMembers.phtml' );
 			case "listGroups" :
-				$view->members = $groupSvc->getGroupList(  );
+				$view->groups = $groupSvc->getGroupList(  );
 				$view->sessionData = BidxCommon::$staticSession;
 				return $view->render( 'groupList.phtml' );
 			case "getGroupDetails" :
-				$view->members = $groupSvc->getGroupDetails(  );
+				$view->group = $groupSvc->getGroupDetails(  );
 				$view->sessionData = BidxCommon::$staticSession;
 				return $view->render( 'groupDetails.phtml' );
 			default :	

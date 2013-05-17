@@ -11,6 +11,14 @@
  */
 class GroupService extends APIbridge {
 
+	/**
+	 * Constructs the API bridge.
+	 * Needed for operational logging.
+	 */
+	public function __construct() {
+		parent :: __construct();
+	}
+	
   /**
    * Retrieves the latest members from a group
    * @param string $group_id optional a group id otherwise the current
@@ -20,7 +28,6 @@ class GroupService extends APIbridge {
   public function getLatestMembers( $group_id = null ) {
 
   	$result = $this -> getGroupDetails( $group_id );
-  	var_dump($result);
   	return $result->data->latestMembers;
   }
   
@@ -34,8 +41,12 @@ class GroupService extends APIbridge {
   	
   	if ($group_id == null) {
   		$session = BidxCommon :: $staticSession;
+  		$group_id = $session -> data -> currentGroup;
+  		if ($group_id == null) {
+  			$group_id = $this->getGroupId( $session -> getBidxGroupDomain );
+  		}
   	}
-  	return $this->callBidxAPI('group/' . $group_id, array(), 'GET');
+  	return $this->callBidxAPI('groups/' . $group_id, array(), 'GET');
 	
   }
 
@@ -47,7 +58,7 @@ class GroupService extends APIbridge {
    */
   public function getGroupList( $group_type = 'Open' ) {
   	 
-  	return $this->callBidxAPI('group/?groupType=' . $group_type, array(), 'GET');
+  	return $this->callBidxAPI('groups/?groupType=' . $group_type, array(), 'GET');
   
   }  
   
@@ -60,7 +71,7 @@ class GroupService extends APIbridge {
   public function getGroupId( $group_name ) {
   	
   	$group_id = 0;
-  	$result = $this->callBidxAPI('group/', array(), 'GET');
+  	$result = $this->callBidxAPI('groups/', array(), 'GET');
 	$data = $result -> data;
   	foreach( $data as $group ) {
   		if ( $group -> domain === $group_name ) {

@@ -10,8 +10,14 @@
  */
 class MemberService extends APIbridge {
 
-	public $memberUrl = '';
-
+	/**
+	 * Constructs the API bridge.
+	 * Needed for operational logging.
+	 */
+	public function __construct() {
+		parent :: __construct();
+	}
+	
 	/**
 	 * Checks if the user is logged in on the API
 	 * 

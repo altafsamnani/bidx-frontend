@@ -13,6 +13,16 @@ abstract class APIbridge {
 	// Bidx Auth password
 	private $authPassword = 'gobidx'; 
 
+	private $logger;
+	
+	/** 
+	 * Logger is instantiated in the constructor. 
+	 */
+	public function __construct()
+	{
+		$this->logger = Logger::getLogger(__CLASS__);
+	}	
+	
 	/**
 	 * Calls the bidx service and get the response
 	 * 
@@ -64,7 +74,9 @@ abstract class APIbridge {
 
 		// 4. WP Http Request
 		$url = API_URL . $urlService . '?csrf=false' . $bidx_get_params;
-error_log('URL : '.$url);
+
+		$this -> logger -> trace("Calling url : " . $url);
+		
 		$request = new WP_Http;
 		$result = $request->request( $url, array('method' => $bidxMethod,
 				'body' => $body,
@@ -96,7 +108,7 @@ error_log('URL : '.$url);
 	 */
 	public function processResponse($urlService, $result, $groupDomain ) {
 
-// 		var_dump( $result );
+		$this->logger->debug($result);
 		
 		$requestData = json_decode( $result['body'] );
 		
@@ -174,6 +186,13 @@ error_log('URL : '.$url);
 		exit;
 	}
 
+	/**
+	 * Access to logger
+	 */
+	public function getLogger() {
+		return $this -> logger;
+	}
+	
 }
 
 ?>
