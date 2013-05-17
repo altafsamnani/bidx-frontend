@@ -132,7 +132,7 @@ abstract class APIbridge {
 			$requestData->status = 'ERROR';
 			$requestData->authenticated = 'false';
 			//$this->bidxRedirectLogin($groupDomain);
-			 
+			  do_action('clear_auth_cookie');
 			($urlService != 'session') ? $this->bidxRedirectLogin($groupDomain) : '';
 		}
 
