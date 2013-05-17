@@ -35,7 +35,8 @@ class group {
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/static/templates/' );
-	  
+		$view->sessionData = BidxCommon::$staticSession;
+		
 		//2. Service Group
 		require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
 		$groupSvc = new GroupService( );
@@ -46,21 +47,18 @@ class group {
 		switch ( $command ) {
 			case "lastMembers" :
 				$view->members = $groupSvc->getLatestMembers(  );
-				$view->sessionData = BidxCommon::$staticSession;				
 				return $view->render( 'lastMembers.phtml' );
 			case "listGroups" :
-				$view->groups = $groupSvc->getGroupList(  );
-				$view->sessionData = BidxCommon::$staticSession;
-				return $view->render( 'groupList.phtml' );
+				$view->groups = $groupSvc->getGroupDetails(  );
+				return $view->render( 'groupList.phtml' );	
 			case "getGroupDetails" :
 				$view->group = $groupSvc->getGroupDetails(  );
-				$view->sessionData = BidxCommon::$staticSession;
 				return $view->render( 'groupDetails.phtml' );
 			default :	
-				$view->members = $groupSvc->getLatestMembers(  );
-				$view->sessionData = BidxCommon::$staticSession;
-				return $view->render( 'lastMembers.phtml' );
+				$view->groups = $groupSvc->getGroupDetails(  );
+				return $view->render( 'groupList.phtml' );
 		}
 	}
+	
 }
 ?>

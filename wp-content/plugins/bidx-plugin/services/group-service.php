@@ -8,6 +8,10 @@
  * 
  * @author Jaap Gorjup
  * @version 1.0
+ * 
+ * @todo store the group related data centrally so the data is called only once
+ * @todo see if the listMembers is not already in the session which optimizes one call
+ * @todo Overview of all groups should be cached for public usage for performance reasons or future optimization of group service
  */
 class GroupService extends APIbridge {
 
@@ -66,7 +70,6 @@ class GroupService extends APIbridge {
    * Use an API service to match the group name to the group id needed for service calls
    * @param string $group_name name of the group determined by domain
    * @return long respresentation id of the group
-   * @todo should be cached for public usage for performance reasons
    */
   public function getGroupId( $group_name ) {
   	
