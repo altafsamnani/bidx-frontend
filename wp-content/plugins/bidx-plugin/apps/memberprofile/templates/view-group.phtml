@@ -4,7 +4,7 @@ $groupDetails = $this->data->groups; ?>
 <div class = "span2 affix">
               <!-- Group Info --><br/>
         <?php foreach ($groupDetails as $groupValue) {
-            echo strtolower(str_replace(" ","",$groupValue->name));
+        
                  if (strtolower(str_replace(" ","",$groupValue->name)) == strtolower(str_replace(" ","",$this->bidxGroupDomain))) {?>
               <div class="row-fluid">
                 <div class="span4"><img src="http://placehold.it/90x60" class="img-rounded"></div>

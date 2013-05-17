@@ -1,13 +1,13 @@
 <?php
 
 $personalDetails = $this->data->bidxMemberProfile->personalDetails;
-$picSrc = $personalDetails->profilePicture->document;
+$picSrc = ($personalDetails->profilePicture->document) ? $personalDetails->profilePicture->document : 'http://placehold.it/150x175';
 ?>
 
 <div class="row-fluid">
   <div class="span3">
     <h4>Member</h4>
-    <img height='175px'  width = '150px' src="http://placehold.it/150x175" class="img-rounded">
+    <?php echo ($picSrc) ? "<img height='175px'  width = '150px' src='$picSrc' class='img-rounded'>" : '';?>
 
   </div>
   <div class="span7"><br/>

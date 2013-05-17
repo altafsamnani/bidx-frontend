@@ -179,7 +179,7 @@ class TemplateLibrary {
 
   public function getLanguagesValue($value) {
 
-    $languageArr = array('en' => 'English', 'es' => 'Spanish', 'fr' => ' French', 'nl' => 'Dutch');
+    $languageArr = array('en' => 'English', 'es' => 'Spanish', 'fr' => ' French', 'nl' => 'Dutch', 'uk' => 'English(UK)');
     $languageKey = strtolower($value);
     $returnLanguage = (isset($languageArr[$languageKey]) ? $languageArr[$languageKey] : $value);
 
@@ -211,14 +211,14 @@ class TemplateLibrary {
    */
   public function addRowsWithLabelAdjacent($gridLabel, $gridValue, $rowValues, $properties = array()) {
 
-    /** Class **/
+    /** Class * */
     $classLabel = ($properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
     $classValue = ($properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
-    
-    /** Tag **/
-    $tagLabel = ($properties['tag_label']) ? $properties['tag_label']: 'div';
-    $tagValue = ($properties['tag_value']) ? $properties['tag_value']: 'div';
-    
+
+    /** Tag * */
+    $tagLabel = ($properties['tag_label']) ? $properties['tag_label'] : 'div';
+    $tagValue = ($properties['tag_value']) ? $properties['tag_value'] : 'div';
+
     $rowHtml = "<div class='row-fluid'>";
     foreach ($rowValues as $label => $value) {
       if ($value && $value != 'null') {
@@ -251,13 +251,13 @@ class TemplateLibrary {
    */
   public function addRowsWithLabelBelow($gridLabel, $gridValue, $rowValues, $properties = array()) {
 
-    /** Class **/
+    /** Class * */
     $classLabel = ($properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
     $classValue = ($properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
 
-    /** Tag **/
-    $tagLabel = ($properties['tag_label']) ? $properties['tag_label']: 'div';
-    $tagValue = ($properties['tag_value']) ? $properties['tag_value']: 'div';
+    /** Tag * */
+    $tagLabel = ($properties['tag_label']) ? $properties['tag_label'] : 'div';
+    $tagValue = ($properties['tag_value']) ? $properties['tag_value'] : 'div';
 
 
     $rowHtml = "";
@@ -290,6 +290,45 @@ class TemplateLibrary {
     }
 
     return $rowHtml;
+  }
+
+  /**
+   * Add bootstrap rows values/labels through views
+   * @param int $gridColumnVal length of spangrid
+   * @param String $rowValues Row values to be displayed
+   * @param String $classLabel Row class label value
+   * @param String $className Row class name
+   *
+   * @example Summary
+   *          This is business summary
+   *          addRowsWithLabelBelow(2,2,array('Summary'=>'This is business summary'))
+   * @return String $rowHtml Row html
+   *
+   */
+  public function addTableRows($header, $rowsArr, $class) {
+
+
+    if (isset($rowsArr)) {
+
+      $html = "<table class = '$class' > ";
+      //Build Header
+      $html.= "<tr>";
+      foreach ($header as $headerKey => $headerValue) {
+        $html.= "<th>" . $headerKey . "</th>";
+      }
+      $html.= "</tr>";
+      foreach ($rowsArr as $rowValue) {
+        $html.= "<tr>";
+        foreach ($header as $headerKey => $headerValue) {
+          $html.= "<td>" . $rowValue->$headerValue . "</td>";
+        }
+        $html.= "</tr>";
+      }
+
+      $html.="</table>";
+
+      return $html;
+    }
   }
 
   /**

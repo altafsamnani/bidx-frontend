@@ -15,9 +15,9 @@ class BidxCommon {
   public function __construct() {
 
     if ($this::$scriptJs == null) {
-    $this->checkSession();
-    $this::$scriptJs = $this->injectJsVariables();
-     }
+      $this->checkSession();
+      $this::$scriptJs = $this->injectJsVariables();
+    }
   }
 
   private function checkSession() {
@@ -110,8 +110,6 @@ class BidxCommon {
           $this::$staticSession->memberId = $memberId;
 
           break;
-
-        
       }
 
       //Redirect Logic
@@ -139,16 +137,21 @@ class BidxCommon {
   function redirectUrls($uriString, $authenticated) {
     $redirect_url = NULL;
     $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-   
-    //Other than login page and no user authenticated redirect him Moved to api service 
+
+    //Other than login page and no user authenticated redirect him Moved to api service
     if ($uriString != 'login' && $authenticated == 'false') {
 
       //$redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/login/?q=' . base64_encode($current_url);
     }
-    if ($uriString == 'login' && $authenticated == 'true') {
-
-      $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/member';
+    if ($uriString == 'login') {
+      if ($authenticated == 'true') {
+        $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/member';
+      }
+      else {
+        do_action('clear_auth_cookie');
+      }
     }
+
 
     if ($redirect_url) {
       header("Location: " . $redirect_url);
