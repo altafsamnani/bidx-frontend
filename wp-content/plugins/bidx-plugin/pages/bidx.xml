@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
+
+	<posttype>bidx</posttype>
+	<description>List of page resources that are hidden for the enduser to manage</description>
+	<version>1.0</version>
+	
+	<posts>
+	  	<post>
+			<post_id>1</post_id>
+			<name>memberlist</name>
+			<title>Memberprofile List</title>
+			<mapping>^member/?</mapping>
+			<content>[bidx app="memberprofile" view="list"]</content>
+		</post> 
+		<post>
+			<post_id>2</post_id>
+			<name>member</name>
+			<title>Memberprofile</title>
+			<mapping>^member/([^/]*)/?</mapping>
+			<content>[bidx app="memberprofile"]</content>
+		</post>	
+		<post>
+			<post_id>3</post_id>
+			<name>search</name>
+			<title>Search</title>
+			<mapping>^search/?</mapping>
+			<content>[bidx app="search"]</content>
+		</post>
+		<post>
+			<post_id>4</post_id>
+			<name>businesslist</name>
+			<title>Business List</title>
+			<mapping>^business/?</mapping>
+			<content>[bidx app="business" view="list"]</content>
+		</post>	
+		<post>
+			<post_id>5</post_id>
+			<name>business</name>
+			<title>Business</title>
+			<mapping>^business/([^/]*)/?</mapping>
+			<content>[bidx app="business"]</content>
+		</post>	
+		<post>
+			<post_id>6</post_id>
+			<name>group</name>
+			<title>Last Members</title>
+			<mapping>^group/lastmembers?</mapping>
+			<content>[bidx app="group" view="lastMembers"]</content>
+		</post>	
+		<post>
+			<post_id>6</post_id>
+			<name>groupinfo</name>
+			<title>Group Information</title>
+			<mapping>^group/groupinfo?</mapping>
+			<content>[bidx app="group" view="getGroupDetails"]</content>
+		</post>											
+	</posts>
+	
+	<widgets>
+		<widget>
+			<widget_id>last_members_of_group</widget_id>
+			<widget_type>static</widget_type>
+			<name>Latest Members Of Group</name>
+			<content></content>
+		</widget>
+		<widget>
+			<widget_id>group_info</widget_id>
+			<widget_type>static</widget_type>
+			<name>Group Information</name>
+			<content></content>
+		</widget>
+		<widget>
+			<widget_id>last_business_of_group</widget_id>
+			<widget_type>static</widget_type>
+			<name>Latest Businesses</name>
+			<content></content>
+		</widget>				
+	</widgets>
+	
+</data>

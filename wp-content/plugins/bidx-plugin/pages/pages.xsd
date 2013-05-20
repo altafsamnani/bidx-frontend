@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+	<xs:element name="data" type="datatype" />
+
+	<xs:complexType name="datatype">
+		<xs:sequence>
+			<xs:element ref="posttype"/>
+			<xs:element ref="description"/>
+			<xs:element ref="version"/>
+			<xs:element name="posts" type="posts"/>
+			<xs:element name="widgets" type="widgets" minOccurs="0"/>
+			<xs:element name="menuitems" type="menuitems" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>		
+
+	<xs:element name="posttype" type="xs:string" />
+	<xs:element name="description" type="xs:string" />
+	<xs:element name="version" type="xs:string" />
+	
+	<xs:element name="content">
+		<xs:annotation>
+			<xs:documentation>Content to be filled. Language can be set explicitly although xml:lang could be used?</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+		  <xs:simpleContent>
+		    <xs:extension base="xs:string">
+		      <xs:attribute name="language" type="xs:string" use="optional" />
+		    </xs:extension>
+		  </xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	
+		
+	<xs:complexType name="posts">
+		<xs:sequence>
+			<xs:element name="post" type="post" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>		
+	</xs:complexType>
+
+	<xs:complexType name="post">
+		<xs:sequence>
+			<xs:element name="post_id" type="xs:string"></xs:element>
+			<xs:element name="name" type="xs:string"></xs:element>
+			<xs:element name="title" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional a title can be set else post name is used</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+			<xs:element name="post_date" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional a date can be set else load date is added</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mapping" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A regex with mapping for the url pattern</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="template" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional name of the template in a Theme</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+			<xs:element name="update" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If the post already exists should it be updated</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+			<xs:element ref="content" maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="widgets">
+		<xs:sequence>
+			<xs:element name="widget" type="widget" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="widget">
+		<xs:sequence>
+			<xs:element name="widget_id" type="xs:string"></xs:element>
+			<xs:element name="widget_type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					    <xs:enumeration value='static' />
+					    <xs:enumeration value='dynamic' />
+				    </xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="name" type="xs:string"></xs:element>
+			<xs:element ref="content" maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="menuitems">
+		<xs:sequence>
+			<xs:element name="menuitem" type="menuitem" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="menuitem">
+		<xs:annotation>
+			<xs:documentation>Menu items to add</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="menuitem_id" type="xs:string"></xs:element>
+			<xs:element name="name" type="xs:string"></xs:element>
+			<xs:element name="menuitem_parent" type="xs:string" minOccurs="0"></xs:element>
+			<xs:element name="reference" type="xs:string" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

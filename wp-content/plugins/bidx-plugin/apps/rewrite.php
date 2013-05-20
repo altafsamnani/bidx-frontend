@@ -8,6 +8,8 @@
 class BidxRewrite
 {
 	static $bidx_posttype = "bidx";
+	
+	/** TODO can be generated from pages **/
 	static $ruleitems = array();
 	
 	/**
@@ -17,6 +19,7 @@ class BidxRewrite
 	public function __construct()
 	{
 		Logger :: getLogger('rewrite') -> trace( 'Constructing BidxRewrite' );
+		//TODO : checkout if this is only called for registration of plugin instead every time
 		add_action( 'init', array( $this, 'codex_custom_init' ) );	
 	}
 	
@@ -80,6 +83,10 @@ class BidxRewrite
 	 * @param string $name can be an index number on an array, in that case bidxaction will be used
 	 * @param string $bidxaction name of the action internally called (optionally)
 	 * @param string $target target where the rewrite rule must be (top|bottom)
+	 * 
+	 * @todo handle the input pages here, instead of generating them
+	 * 
+	 * 
 	 */
 	public static function add_bidx_rewrite_rule($name, $bidxaction = null, $target = 'top')
 	{
@@ -90,8 +97,7 @@ class BidxRewrite
 		if (is_numeric($name)) {
 			$name = $bidxaction;
 		}
-		//3rd level optionals? check how the rest of the variables are added
-		//	add_rewrite_rule('^' . $name . '/([^/]*)/[^]?','index.php?page_id=ID&post_type=' . $bidx_posttype . '&bidxaction='. $bidxaction. '&bidx_param1=$matches[1]&bidx_param2=$matches[2]', $target );
+
 		add_rewrite_rule('^' . $name . '/([^/]*)/?','index.php?bidx=' . $bidxaction . '&post_type=' . $bidx_posttype . '&bidxaction=' . $bidxaction . '&bidxparam1=$matches[1]', $target );
 		add_rewrite_rule('^' . $name . '/?','index.php?bidxaction=' . $bidxaction . '&bidx=' . $bidxaction . '&post_type=' . $bidx_posttype, $target );
 		
