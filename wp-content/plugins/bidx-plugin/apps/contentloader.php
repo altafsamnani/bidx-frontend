@@ -85,8 +85,8 @@ class ContentLoader {
 			//if manual writeout is needed
 			//$this -> add_rewrite_rules();
 			
-			$widgets = $document -> xpath('widgets');
-			$this -> logger -> trace( 'Adding the widgets : ' . sizeof( $widgets ) . 'found');
+			$widgets = $document -> xpath('//widget');
+			$this -> logger -> trace( 'Adding the widgets : ' . sizeof( $widgets ) . ' found');
 			foreach ($widgets as $widget) {
 				
 				$this -> logger -> trace( 'Adding the widget named : ' . $widget -> name );
@@ -154,14 +154,14 @@ class ContentLoader {
 			$args = array(
 					'public' => true,
 					'exclude_from_search' => true,
-					'show_ui' => false, 
-					'show_in_menu' => false, 
+					'show_ui' => true, 
+					'show_in_menu' => true, 
 					'query_var' => true,
-					'rewrite' => false, 
+					'rewrite' => true, 
 					'capability_type' => 'page',
 					'_builtin' => false,
 					'has_archive' => false,
-					'hierarchical' => true,
+					'hierarchical' => false,
 					'menu_position' => null,
 					'supports' => array( 'title' )
 			);

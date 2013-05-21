@@ -43,7 +43,7 @@
 		</post>	
 		<post>
 			<post_id>6</post_id>
-			<name>group</name>
+			<name>lastmembers</name>
 			<title>Last Members</title>
 			<mapping>^group/lastmembers?</mapping>
 			<content>[bidx app="group" view="lastMembers"]</content>

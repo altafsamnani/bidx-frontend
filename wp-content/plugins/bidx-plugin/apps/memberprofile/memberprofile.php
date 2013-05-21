@@ -1,11 +1,17 @@
 <?php
 require_once(BIDX_PLUGIN_DIR .'/../apps/common.php' );
 
+/**
+ * 
+ * @author Altaf Samnani
+ * @version 1.0
+ */
 class memberprofile {
 
-	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
-
-  public $scriptInject ;
+	static $deps = array( 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core' );
+	
+ 	public $scriptInject ;
+ 	
  	/**
 	 * Constructor
 	 */

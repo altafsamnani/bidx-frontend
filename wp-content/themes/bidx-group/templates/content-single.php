@@ -8,6 +8,7 @@
        -->
     </header>
     <div class="entry-content">
+    	<p>plok</p>
       <?php the_content(); ?>
     </div>
     <footer>
