@@ -24,6 +24,7 @@ class ContentLoader {
 		
 		$this -> location = $location;
 		$this -> logger = Logger::getLogger( "contentloader" );
+		add_action( 'init', array( $this, 'codex_custom_init' ) );
 	}
 
 	/**
@@ -44,7 +45,6 @@ class ContentLoader {
 			$document = simplexml_load_file ( $filename );
 			
 			$this -> logger -> trace( 'Start processing file : ' . $filename );
-			$this -> codex_custom_init( $document -> posttype );
 			
 			$posts = $document -> xpath('//post');
 			$this -> logger -> trace( 'Found posts : ' . sizeof( $posts ) );
@@ -145,10 +145,12 @@ class ContentLoader {
 	 * Initialize post type
 	 * @param $post_type type that needs to created custom
 	 */
-	private function codex_custom_init( $post_type ) {
+	public function codex_custom_init() {
 		
-		$this -> logger -> trace( 'Initializing custom Post handler for : ' . $post_type );
-	
+		$post_type = 'bidx';
+		
+		$this -> logger -> trace( 'Initializing custom Post handler for : ' . $post_type );	
+		
 		if ( $post_type != 'post' && $post_type != 'page')
 		{
 			$args = array(
@@ -165,10 +167,13 @@ class ContentLoader {
 					'menu_position' => null,
 					'supports' => array( 'title' )
 			);
+			$this -> logger -> trace( 'Register action started for ' . $post_type );
 			register_post_type( $post_type, $args );
 		}
 		
 		$this -> logger -> trace( 'Custom Post handler ready' );
+		$this -> logger -> trace( get_post_types() );
+		
 		
 	}
 	
