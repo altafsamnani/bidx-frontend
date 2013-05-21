@@ -146,11 +146,11 @@ class ContentLoader {
 	 * @param $post_type type that needs to created custom
 	 */
 	public function codex_custom_init() {
-		
+
+		//hardcoded for now
 		$post_type = 'bidx';
 		
 		$this -> logger -> trace( 'Initializing custom Post handler for : ' . $post_type );	
-		
 		if ( $post_type != 'post' && $post_type != 'page')
 		{
 			$args = array(

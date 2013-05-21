@@ -92,7 +92,8 @@ Logger::getLogger ( 'util' ) -> trace("Defined BIDX_PLUGIN_URL : ". BIDX_PLUGIN_
 Logger::getLogger ( 'util' ) -> trace("Defined BIDX_version : ". BIDX_VERSION_NUM);
 
 // Do not show the default WordPress admin bar on top of the page after you have logged as admin
-//
-add_filter( 'show_admin_bar', '__return_false' );
+if (WP_DEVELOPMENT != true) {
+	add_filter( 'show_admin_bar', '__return_false' );
+}
 
 ?>
