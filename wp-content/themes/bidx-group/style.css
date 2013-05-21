@@ -709,6 +709,14 @@ footer .sub-footer {
 	.hero .signup {
 		width: 100%;
 	}
+
+	body {
+		padding-top: 0;
+	}
+
+	.pageHeader {
+		position:	static;
+	}
 }
 
 /*
