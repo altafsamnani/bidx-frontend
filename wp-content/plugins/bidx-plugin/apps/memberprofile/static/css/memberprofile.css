@@ -19,7 +19,9 @@
 }
 
 #editMember .nav-editMember {
-    top:                    220px;
+    top:                    240px;
+    position:               fixed;
+    width:                  14%;
 }
 
 #editMember input,
@@ -31,8 +33,19 @@
     width:                  auto;
 }
 
+#editMember form {
+    margin:                 0;
+}
+
 #editMember form fieldset {
     position:               relative;
+    padding-top:            50px;
+}
+
+#editMember form legend {
+    position:               absolute;
+    top:                    8px;
+    border-bottom:          0;
 }
 
 #editMember .languageList label,
