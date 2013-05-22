@@ -6,6 +6,7 @@
  */
 
 require_once( BIDX_PLUGIN_DIR . '/../services/session-service.php' );
+require_once( ABSPATH . WPINC . '/pluggable.php' );
 
 class BidxCommon {
 
@@ -89,7 +90,7 @@ class BidxCommon {
 
 
     $hostAddress = explode('/', $_SERVER ["REQUEST_URI"]);
-
+    $redirect = NULL;
     /*     * Host Address
      * Param0 /member , /group, /profile
      * Param1 2 from /member/2 , 3 from /group/3
@@ -97,29 +98,35 @@ class BidxCommon {
      */
 
     if (is_array($hostAddress)) {
-
-      //Redirect URL Logic
-      $this->redirectUrls($hostAddress[1], $jsSessionData->authenticated);
+       //Redirect URL Logic
+      
 
       switch ($hostAddress[1]) {
 
         case 'member':
           $memberId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->id;
+          if($memberId) {
           $data->memberId = $memberId;
           $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
           $this::$staticSession->memberId = $memberId;
+          } else {
+            $redirect = 'login';//To redirect /member and not loggedin page to /login
+          }
 
           break;
-      }
+      }   
 
-      //Redirect Logic
-
-
-
+      $this->redirectUrls($hostAddress[1], $jsSessionData->authenticated, $redirect);
       return $data;
     }
 
     return;
+  }
+
+  function redirectToLogin() {
+    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/login';
+    header("Location: " . $redirect_url);
+    exit;
   }
 
   /*
@@ -134,24 +141,36 @@ class BidxCommon {
    * @return Loggedin User
    */
 
-  function redirectUrls($uriString, $authenticated) {
+  function redirectUrls($uriString, $authenticated, $redirect=NULL) {
     $redirect_url = NULL;
     $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
     //Other than login page and no user authenticated redirect him Moved to api service
-    if ($uriString != 'login' && $authenticated == 'false') {
 
-      //$redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/login/?q=' . base64_encode($current_url);
-    }
-    if ($uriString == 'login') {
-      if ($authenticated == 'true') {
-        $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/member';
-      }
-      else {
-        do_action('clear_auth_cookie');
-      }
-    }
+    switch ($uriString) {
+      case 'login' :
+        if ($authenticated == 'true') {
+          $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/member';
+        }
+        else {
+          wp_clear_auth_cookie();
+        }
+        break;
 
+      case 'member' :
+        if ($authenticated == 'false' && $redirect) {
+          $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/'.$redirect;
+          wp_clear_auth_cookie();
+        }
+
+        break;
+
+      default:
+        if ($uriString != 'login' && $authenticated == 'false') {
+
+          //$redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/login/?q=' . base64_encode($current_url);
+        }
+    }
 
     if ($redirect_url) {
       header("Location: " . $redirect_url);

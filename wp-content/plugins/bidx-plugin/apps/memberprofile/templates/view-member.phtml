@@ -45,22 +45,29 @@ echo $this->addMultipleRows('span12', $rowValues);
 
 <?php
 $rowValues = array('E-mail' => $personalDetails->emailAddress,
-  'Skype' => $personalDetails->skype
+  'Mobile' => $this->getMultiValues($personalDetails->contactDetail, ', ', 'mobile'),
+  
 );
 echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
 ?>
-
+<?php
+      $rowValues = array('Fax' => $this->data->contactDetail->fax,
+        'Landline' => $this->getMultiValues($personalDetails->contactDetail, ', ', 'landLine'),
+        );
+      echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+      ?>
 
 <?php
-$rowValues = array('Mobile' => $this->getMultiValues($personalDetails->contactDetail, ', ', 'mobile'),
-  'Facebook' => $personalDetails->facebook);
+$rowValues = array('Facebook' => $this->addSocialPluginScript('facebook', $personalDetails->facebook),
+                   'Twitter' => $this->addSocialPluginScript('twitter', $personalDetails->twitter)
+                  );
 echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
 ?>
 
 
       <?php
-      $rowValues = array('Landline' => $this->getMultiValues($personalDetails->contactDetail, ', ', 'landLine'),
-        'Twitter' => $personalDetails->twitter);
+      $rowValues = array('Linkedin' => $this->addSocialPluginScript('linkedin',$personalDetails->linkedIn),
+        'Skype' => $this->addSocialPluginScript('skype',$personalDetails->skype) );
       echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
       ?>
 

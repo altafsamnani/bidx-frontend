@@ -41,6 +41,7 @@ class memberprofile {
 	  wp_register_script( 'memberprofile', plugins_url( 'static/js/memberprofile.js', __FILE__ ), self :: $deps, '20130501', TRUE );
 	  wp_register_style( 'memberprofile', plugins_url( 'static/css/memberprofile.css', __FILE__ ), array(), '20130501', 'all' );
 	  wp_enqueue_style( 'memberprofile' );
+
 	}
 
 

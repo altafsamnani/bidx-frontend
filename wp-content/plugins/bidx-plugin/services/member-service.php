@@ -10,35 +10,69 @@
  */
 class MemberService extends APIbridge {
 
-	/**
-	 * Constructs the API bridge.
-	 * Needed for operational logging.
-	 */
-	public function __construct() {
-		parent :: __construct();
-	}
-	
-	/**
-	 * Checks if the user is logged in on the API
-	 * 
-	 * @param boolean $serviceCheck define if a service check is needed or a simple check on the API cookie is sufficient.
-	 * In case of no API service check, the data in the Session profile will be very limited.
-	 * @return boolean if user is logged in
-	 */
-	function getMemberDetails( ) {
+  /**
+   * Constructs the API bridge.
+   * Needed for operational logging.
+   */
+  public function __construct() {
+    parent :: __construct();
+  }
 
-		$sessionData = BidxCommon::$staticSession;
-		$memberId    = $sessionData->memberId;
+  /**
+   * Checks if the user is logged in on the API
+   *
+   * @param boolean $serviceCheck define if a service check is needed or a simple check on the API cookie is sufficient.
+   * In case of no API service check, the data in the Session profile will be very limited.
+   * @return boolean if user is logged in
+   */
+  function getMemberDetails() {
 
-		//Call member profile
-		$result = $this->callBidxAPI('members/' . $memberId, array(), 'GET'); 
-		//If edit rights inject js and render edit button
-		if ($result->data->bidxMemberProfile->bidxCanEdit) {
-			$result->data->isMyProfile  = ($memberId == $sessionData->data->id) ? true : false;
-		}
+    $sessionData = BidxCommon::$staticSession;
+    $memberId = $sessionData->memberId;
 
-		return $result;
-	}
+    //Call member profile
+    $result = $this->callBidxAPI('members/' . $memberId, array(), 'GET');
+    //If edit rights inject js and render edit button
+    if ($result->data->bidxMemberProfile->bidxCanEdit) {
+      $result->data->isMyProfile = ($memberId == $sessionData->data->id) ? true : false;
+    }
+    
+    $return = $this->processMemberDetails($result, $sessionData);
+    
+    return $return;
+  }
+
+  function processMemberDetails ( $result, $sessionData ) {
+
+    $groupDetails = $result->data->groups;
+    $bidXGroupDomain = $result->bidxGroupDomain;
+    $loggedInGroups = (array)$sessionData->data->groups;
+
+    foreach ($groupDetails as $groupKey => $groupValue) {
+      //Group Info
+      if (strtolower(str_replace(" ", "", $groupValue->name)) == strtolower(str_replace(" ", "", $bidXGroupDomain))) {
+         $groupInfo = array('groupname' => $bidXGroupDomain, $groupValue->slogan);
+      }
+
+      //Join Link
+      if(!$result->data->isMyProfile) {
+//        $objKey = (object) $groupKey;
+//        $objVal = (object) $groupValue;
+//        echo "<pre>";
+//        print_r($);
+//        echo "</pre>";
+//        exit;
+        //$groupDetails->$objKey->$objVal->join  = true;
+        //$test = !isset($loggedInGroups[$groupKey]) ? true : false;
+      }
+
+    }
+
+    $result->groupInfo = $groupInfo;
+
+    return $result;
+
+  }
 
 }
 

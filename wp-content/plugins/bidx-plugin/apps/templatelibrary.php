@@ -307,27 +307,35 @@ class TemplateLibrary {
    */
   public function addTableRows($header, $rowsArr, $class) {
 
-
+    $html = NULL;
     if (isset($rowsArr)) {
 
-      $html = "<table class = '$class' > ";
+      $htmlHeader.= "<table class = '$class' > ";
       //Build Header
-      $html.= "<tr>";
+      $htmlHeader.= "<tr>";
       foreach ($header as $headerKey => $headerValue) {
-        $html.= "<th>" . $headerKey . "</th>";
+        $htmlHeader.= "<th>" . $headerKey . "</th>";
       }
-      $html.= "</tr>";
+      $htmlHeader.= "</tr>";
       foreach ($rowsArr as $rowValue) {
         $html.= "<tr>";
         foreach ($header as $headerKey => $headerValue) {
-          $html.= "<td>" . $rowValue->$headerValue . "</td>";
+          if ($rowValue->$headerValue) {
+            $html.= "<td>" . $rowValue->$headerValue . "</td>";
+            $display = true;
+          }
         }
         $html.= "</tr>";
       }
 
-      $html.="</table>";
+      $htmlFooter.="</table>";
 
-      return $html;
+      if ($display) {
+
+        $returnHtml = $htmlHeader . $html . $htmlFooter;
+      }
+
+      return $returnHtml;
     }
   }
 
@@ -409,6 +417,42 @@ class TemplateLibrary {
       }
     }
     return $html;
+  }
+
+  /**
+   * Add Social Plugin script
+   *
+   * @param String $type Social Plugin Type
+   * @param String $username Userid of social site
+   *
+   * @return String $icon script Row html
+   *
+   */
+  public function addSocialPluginScript($type, $username) {
+
+    $scriptContent = NULL;
+
+    if($username) {
+      switch ($type) {
+
+        case 'facebook' :
+          $scriptContent = '<iframe src="//www.facebook.com/plugins/follow.php?href=https%3A%2F%2Fwww.facebook.com%2F' . $username . '&amp;layout=button_count&amp;show_faces=true&amp;colorscheme=light&amp;font=verdana&amp;width=450&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>';
+          break;
+        case 'twitter' :
+
+          break;
+
+        case 'linkedin':
+
+          break;
+
+        case 'skype' :
+
+          break;
+      }
+      
+    }
+    return $scriptContent;
   }
 
 }
