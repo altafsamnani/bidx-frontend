@@ -488,40 +488,7 @@
                     <div class="row-fluid">
                         <div class="span6">
 
-                            <div class="control-group formfield">
-                                <label class="control-label">ETR</label>
-                                <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].eTR" placeholder="Please type your ETR" />
-                                </div>
-                            </div>
-
-                            <div class="control-group formfield">
-                                <label class="control-label">Street</label>
-                                <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].street" placeholder="Please type your street" />
-                                </div>
-                            </div>
-
-                            <div class="control-group formfield">
-                                <label class="control-label">Street number</label>
-                                <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].streetNumber" placeholder="Please type your street number" />
-                                </div>
-                            </div>
-
-                            <div class="control-group formfield">
-                                <label class="control-label">Neighborhood</label>
-                                <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].neighborhood" placeholder="Please type your neighborhood" />
-                                </div>
-                            </div>
-
-                            <div class="control-group formfield">
-                                <label class="control-label">City</label>
-                                <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].cityTown" placeholder="Please type your city" />
-                                </div>
-                            </div>
+                            <input type="hidden" name="personalDetails.address[0].coordinates"    />
 
                             <div class="control-group formfield">
                                 <label class="control-label">Country</label>
@@ -782,6 +749,27 @@
                             </div>
 
                             <div class="control-group formfield">
+                                <label class="control-label">City</label>
+                                <div class="controls">
+                                    <input type="text" name="personalDetails.address[0].cityTown" placeholder="Please type your city" />
+                                </div>
+                            </div>
+
+                            <div class="control-group formfield">
+                                <label class="control-label">Street</label>
+                                <div class="controls">
+                                    <input type="text" name="personalDetails.address[0].street" placeholder="Please type your street" />
+                                </div>
+                            </div>
+
+                            <div class="control-group formfield">
+                                <label class="control-label">Street number</label>
+                                <div class="controls">
+                                    <input type="text" name="personalDetails.address[0].streetNumber" placeholder="Please type your street number" />
+                                </div>
+                            </div>
+
+                            <div class="control-group formfield">
                                 <label class="control-label">Postal code</label>
                                 <div class="controls">
                                     <input type="text" name="personalDetails.address[0].postalCode" placeholder="Please type your postcode" />
@@ -789,23 +777,17 @@
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Postbox</label>
+                                <label class="control-label">Neighborhood</label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].postBox" placeholder="Please type your postbox" />
+                                    <input type="text" name="personalDetails.address[0].neighborhood" placeholder="Please type your neighborhood" />
                                 </div>
                             </div>
 
-                            <div class="control-group formfield">
-                                <label class="control-label">Coordinates</label>
-                                <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].coordinates" placeholder="Please type your coordinates" />
-                                </div>
-                            </div>
 
                         </div>
 
                         <div class="span6">
-                            <p>google maps</p>
+                            <div class="currentAddressMap"></div>
                         </div>
                     </div>
                 </fieldset>

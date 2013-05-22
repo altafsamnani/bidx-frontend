@@ -48,3 +48,8 @@
 #editMember .languageList button {
     height:                 30px;
 }
+
+#editMember .currentAddressMap {
+    height:                 400px;
+    margin-top:             20px;
+}

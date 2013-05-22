@@ -12,6 +12,14 @@ $( document ).ready( function()
 
     ,   $profilePictureImage    = $editForm.find( "img.profileImage" ).hide()
 
+    ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
+    ,   $currentAddressCountry      = $editForm.find( "[name='personalDetails.address[0].country']"         )
+    ,   $currentAddressCityTown     = $editForm.find( "[name='personalDetails.address[0].cityTown']"        )
+    ,   $currentAddressPostalCode   = $editForm.find( "[name='personalDetails.address[0].postalCode']"      )
+    ,   $currentAddressStreet       = $editForm.find( "[name='personalDetails.address[0].street']"          )
+    ,   $currentAddressStreetNumber = $editForm.find( "[name='personalDetails.address[0].streetNumber']"    )
+    ,   $currentAddressCoordinates  = $editForm.find( "[name='personalDetails.address[0].coordinates']"     )
+
     ,   member
     ,   memberId
     ,   groupDomain
@@ -290,7 +298,7 @@ $( document ).ready( function()
                 return true;
             }
         }
-    ).removeAttr( "disabled" );
+    ).removeClass( "disabled" );
 
     // Figure out the key of the to be added language
     //
@@ -313,7 +321,7 @@ $( document ).ready( function()
             _addLanguageDetailToList( { language: key, motherLanguage: false } );
         }
 
-    } ).removeAttr( "disabled" );
+    } ).removeClass( "disabled" );
 
     // Remove the language from the list
     //
@@ -368,6 +376,159 @@ $( document ).ready( function()
         $languageItem.find( ".btnSetMotherLanguage"     ).hide();
     } );
 
+    // Disable disabled links
+    //
+    $element.delegate( "a.disabled", "click", function( e )
+    {
+        e.preventDefault();
+    } );
+
+    // Build up the gmaps for the current address
+    //
+    var currentAddressMapOptions =
+        {
+            center:             new google.maps.LatLng( 0, 0 )
+        ,   zoom:               1
+        ,   panControl:         false
+        ,   scrollwheel:        false
+        ,   zoomControl:        true
+        ,   streetViewControl:  false
+        ,   rotateControl:      false
+        ,   overviewMapControl: false
+        ,   mapTypeControl:     false
+        ,   draggable:          false
+        ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
+        }
+    ,   currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions )
+    ;
+
+    var geocoder        = new google.maps.Geocoder()
+    ,   geocodeTimer    = null
+    ;
+
+    $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
+    $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
+    $currentAddressStreet.change(       function() { _updateCurrentAddressMap();    } );
+    $currentAddressStreetNumber.change( function() { _updateCurrentAddressMap();    } );
+    $currentAddressPostalCode.change(   function() { _updateCurrentAddressMap();    } );
+
+    // Try to gecode the address (array)
+    // On failure, pop one item from the address array and retry untill there is no
+    // address left or we found a location
+    //
+    var _geocode = function( region, address, cb )
+    {
+        geocoder.geocode(
+            {
+                "address":      address.join( ", " )
+            ,   "region":       region
+            }
+        ,   function( results, status )
+            {
+                bidx.utils.log( "geocode", region, address, status, results );
+
+                if ( status === google.maps.GeocoderStatus.OK )
+                {
+                    cb( null, { results: results[ 0 ], address: address } );
+                }
+                else if ( address.length > 1 )
+                {
+                    address.splice( -1, 1 );
+                    _geocode( region, address, cb );
+                }
+                else
+                {
+                    cb( new Error( "Unable to geocode " + status ));
+                }
+            }
+        );
+    };
+
+    // Update the address onto the map via geocodeing
+    //
+    var _updateCurrentAddressMap = function()
+    {
+        var address         = []
+        ,   country         = $currentAddressCountry.val()
+        ,   countryDescr    = $currentAddressCountry.find( "option:selected" ).text()
+        ,   cityTown        = $currentAddressCityTown.val()
+        ,   postalCode      = $currentAddressPostalCode.val()
+        ,   street          = $currentAddressStreet.val()
+        ,   streetNumber    = $currentAddressStreetNumber.val()
+        ,   region          = ""
+        ;
+
+        // Do not bother too lookup when no country is selected
+        //
+        if ( !country )
+        {
+            $currentAddressCoordinates.val( "" );
+            $currentAddressMap.hide();
+        }
+        else
+        {
+            address.push( countryDescr );
+            region  = country;
+
+            if ( cityTown )
+            {
+                address.push( cityTown );
+            }
+
+            if ( postalCode )
+            {
+                address.push( postalCode );
+            }
+
+            if ( street )
+            {
+                if ( streetNumber )
+                {
+                    address.push( street + " " + streetNumber );
+                }
+                else
+                {
+                    address.push( street );
+                }
+            }
+
+            // Try to geocode it with the provided address
+            //
+            _geocode( region, address , function( err, response )
+            {
+                var location        = bidx.utils.getValue( response, "results.geometry.location" )
+                ,   addressItems    = response.address.length
+                ,   zoom
+                ,   coordinates
+                ;
+
+                if ( err || !location )
+                {
+                    $currentAddressCoordinates.val( "" );
+                    $currentAddressMap.hide();
+                }
+                else
+                {
+                    coordinates = location.lat() + ", " + location.lng();
+
+                    $currentAddressCoordinates.val( coordinates );
+
+                    // Zoom in according to the amount of address elements used
+                    //
+                    zoom = 3 + addressItems * 3;
+
+                    currentAddressMap.setZoom( zoom );
+                    currentAddressMap.setCenter( response.results.geometry.location );
+
+                    $currentAddressMap.fadeIn( function()
+                    {
+                        google.maps.event.trigger( currentAddressMap, "resize" );
+                    });
+                }
+            } );
+        }
+    };
+
     // Convenience function for translating a language key to it's description
     //
     var _getLanguageValueByKey = function( key )
@@ -400,7 +561,7 @@ $( document ).ready( function()
         } );
 
         return key;
-    }
+    };
 
     var _setElementValue = function( $el, value )
     {
@@ -538,6 +699,8 @@ $( document ).ready( function()
                 _addLanguageDetailToList( language );
             } );
         }
+
+        _updateCurrentAddressMap();
     };
 
     // Add an item to the language list and render the HTML for it
@@ -712,8 +875,8 @@ $( document ).ready( function()
 
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { class: "btn btn-primary", href: "#save",   disabled: "true" } )
-        ,   $btnCancel  = $( "<a />", { class: "btn btn-primary", href: "#cancel", disabled: "true" } )
+        var $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    })
+        ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
         ;
 
         $btnSave.text( "Save profile" );
@@ -743,13 +906,13 @@ $( document ).ready( function()
         {
             e.preventDefault();
 
-            if ( $btnSave.prop( "disabled" ))
+            if ( $btnSave.hasClass( "disabled" ))
             {
                 return;
             }
 
-            $btnSave.prop( "disabled", true );
-            $btnCancel.prop( "disabled", true );
+            $btnSave.addClass( "disabled" );
+            $btnCancel.addClass( "disabled" );
 
             _save(
             {
@@ -757,8 +920,8 @@ $( document ).ready( function()
                 {
                     alert( "Something went wrong during save" );
 
-                    $btnSave.removeAttr( "disabled" );
-                    $btnCancel.removeAttr( "disabled" );
+                    $btnSave.removeClass( "disabled" );
+                    $btnCancel.removeClass( "disabled" );
                 }
             } );
         } );
@@ -798,10 +961,19 @@ $( document ).ready( function()
 
                     _populateForm();
 
-                    $btnSave.removeAttr( "disabled" );
-                    $btnCancel.removeAttr( "disabled" );
+                    $btnSave.removeClass( "disabled" );
+                    $btnCancel.removeClass( "disabled" );
 
                     _showView( "edit" );
+
+                    // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
+                    // center correctly. Probably because of some reflow / layout issue.
+                    // TODO: proper fix
+                    //
+                    setTimeout( function()
+                    {
+                        _updateCurrentAddressMap();
+                    }, 500 );
                 }
             ,   error:          function( jqXhr, textStatus )
                 {
@@ -985,7 +1157,8 @@ $( document ).ready( function()
     {
         // START DEV API
         //
-
+        _updateCurrentAddressMap:   _updateCurrentAddressMap
+    ,   currentAddressMap:          currentAddressMap
         // END DEV API
     };
 
