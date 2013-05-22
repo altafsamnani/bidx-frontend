@@ -6,7 +6,7 @@
 {
     var bidx    = window.bidx
     ,   api     = bidx.api
-    ,   session = {}
+    ,   search  = {}
     ,   baseUrl = "/api/v1/search"
     ,   params  = []
     ;
@@ -36,5 +36,5 @@
         } );
     };
 
-    api.session = session;
+    api.search = search;
 } )( jQuery );
