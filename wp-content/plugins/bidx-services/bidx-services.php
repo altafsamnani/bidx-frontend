@@ -44,7 +44,7 @@ if (!function_exists('htmlspecialchars_decode')) {
 
 function bidx_process_mail() {
 
- 
+
   //$is_session = bidx_check_session();
  // if($is_session) {
  //   echo 'session milaaa';exit;
@@ -100,14 +100,14 @@ function bidx_login_session() {
   $body['domain'] = get_bidx_subdomain();
 
   $get_redirect = ($_GET['q']) ? $_GET['q'] : NULL;
-  
+
   /*   * ** Assumed if redirect in Get means session is already checked and is asking for uname/pass and then redirect ** */
   if ($get_redirect == NULL) {
 
     $result = call_bidx_service('session', $body, $method = 'GET');
 
     $requestData = bidx_wordpress_post_action('sessionactive', $result, $body);
-  
+
     // If Bidx Session and Wp Session is there then redirect else clear the wp cache
     if ($requestData->redirect && is_user_logged_in()) {
       wp_redirect($requestData->redirect);
@@ -144,6 +144,8 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
   $cookieArr = array();
 
 
+error_log( sprintf( "urlservice: %s, body: %s", $urlservice, var_export( $body, true ) ));
+
 
   /*   * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
   $cookieInfo = $_COOKIE;
@@ -164,7 +166,7 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
 
   if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
       $body['username'] = 'admin@bidnetwork.org';
-      $body['password'] = 'admin123';    
+      $body['password'] = 'admin123';
 
   }
 
@@ -187,8 +189,8 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
 
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
-  
-  
+
+
   $request = new WP_Http;
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
@@ -225,7 +227,7 @@ add_action('wp_ajax_nopriv_bidx_signin', 'ajax_submit_signin');
 
 function ajax_submit_signin() {
   //require_once('./wp-includes/registration.php');
- 
+
   global $error;
 
   //Get the group name from  Subdomain
@@ -427,7 +429,7 @@ function get_redirect($url, $requestData, $domain = NULL) {
       break;
 
     case 'groups':
- 
+
       $requestData->data->id = $requestData->data->group->id;
       $requestData->data->domain = $requestData->data->group->domain;
       $requestData->submit = 'http://' . $domain . '/registration/';
@@ -670,7 +672,7 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
         'domain' => $wp_site['domain']
       );
       $params['domain'] = $wp_site['subdomain'];
-  
+
       break;
 
     case 'mailer' :
@@ -697,6 +699,37 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
       $params['isMember'] = 'true';
       $params['bidxEntityId'] = $params['creatorProfileId'];
       break;
+
+    case 'memberprofilepicture':
+      $response['status'] = 'ok';
+      $id = $params['memberProfileId'];
+      $domain = $params['domain'];
+      unset( $params );
+
+      $params['path'] = '/personalDetails/profilePicture';
+      $params['purpose'] = 'profilePicture';
+
+      $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
+
+      $params['id'] = $id;
+      $params['domain'] = $domain;
+      break;
+
+    case 'memberprofileattachment':
+      $response['status'] = 'ok';
+      $id = $params['memberProfileId'];
+      $domain = $params['domain'];
+      unset( $params );
+
+      $params['path'] = '/personalDetails/attachment';
+      $params['purpose'] = 'attachment';
+
+      $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
+
+      $params['id'] = $id;
+      $params['domain'] = $domain;
+      break;
+
 
     case 'logo' :
       $response['status'] = 'ok';
@@ -801,6 +834,8 @@ function allowed_file_extension($type, $file_type) {
   $is_allowed = false;
   switch ($type) {
     case 'logo' :
+    case 'memberprofilepicture':
+    case 'memberprofileattachment':
       if (preg_match("/^image/i", $file_type)) {
         $is_allowed = true;
       }
@@ -818,10 +853,17 @@ function allowed_file_extension($type, $file_type) {
  * @param bool $echo
  */
 add_action('wp_ajax_nopriv_file_upload', 'bidx_upload_action');
+add_action('wp_ajax_file_upload', 'bidx_upload_action');
 
 function bidx_upload_action() {
 
   $type = 'logo';
+
+  if (isset( $_POST['uploadtype']))
+  {
+    $type = $_POST['uploadtype'];
+  }
+
   $is_ie_wrapper = (isset($_POST['jsonp'])) ? $_POST['jsonp'] : 0;
 
   foreach ($_FILES as $file_name => $file_values) {
