@@ -14,16 +14,18 @@ $entrepreneurDetails = $this->data->bidxEntrepreneurProfile[0];
 
 ?>
 
-<div class="row-fluid">
-  <div class="span3">
-    <h4>Member</h4>
-    <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+<div class="well">
 
-  </div>
-  <div class="span7"><br/>
-    <div class="row-fluid">
-      <div class="span12"><h4><?php echo ucwords($personalDetails->firstName . ' ' . $personalDetails->lastName); ?></h4></div>
-      <!-- Personal details 6/6 Start -->
+  <div class="row-fluid">
+    <div class="span3">
+      <h4>Member</h4>
+      <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+
+    </div>
+    <div class="span7"><br/>
+      <div class="row-fluid">
+        <div class="span12"><h4><?php echo ucwords($personalDetails->firstName . ' ' . $personalDetails->lastName); ?></h4></div>
+        <!-- Personal details 6/6 Start -->
 
 <?php
 //Language Details
@@ -53,7 +55,7 @@ $rowValues = array($personalDetails->professionalTitle,
 echo $this->addMultipleRows('span12', $rowValues);
 ?>
 
-      <br/>
+        <br/>
 
 <?php
 $rowValues = array('E-mail' => $personalDetails->emailAddress,
@@ -89,20 +91,12 @@ $rowValues = array('Facebook' => $this->addSocialPluginScript('facebookprofile',
 
 ?>
 
-
-     
-
-
-
-
+      </div>
+    </div>
+    <div class="span2">
+<?php if ($personalDetails->bidxCanEdit) { ?>
+        <a class="btn btn-primary" href="#editMember/<?php echo $personalDetails->ownerId; ?>">Edit</a>
+<?php } ?>
     </div>
   </div>
-  <div class="span2">
-    <?php if ($personalDetails->bidxCanEdit) { ?>
-      <a class="btn btn-primary" href="#editMember/<?php echo $personalDetails->ownerId; ?>">Edit</a>
-<?php } ?>
-  </div>
 </div>
-
-
-
