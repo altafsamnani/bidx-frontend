@@ -75,7 +75,25 @@
 			<title>Group Information</title>
 			<mapping>^group/groupinfo?</mapping>
 			<content>[bidx app="group" view="getGroupDetails"]</content>
-		</post>											
+		</post>
+		<post>
+			<post_id>10</post_id>
+			<name>homepage</name>
+			<title>Home</title>
+			<mapping>^home?</mapping>
+			<content>
+			Test1234
+			&lt;div class="row-fluid"&gt;
+				&lt;div class="span8"&gt;
+					[bidx app="group" view="listGroups"]
+					[bidx app="group" view="lastMembers"]
+				&lt;/div&gt;
+				&lt;div class="span4"&gt;
+					[bidx app="group" view="getGroupDetails"]
+				&lt;/div&gt;
+			&lt;/div&gt;
+			</content>
+		</post>														
 	</posts>
 	
 	<widgets>

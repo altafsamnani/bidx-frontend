@@ -334,6 +334,7 @@ li {
 *
 ********************************************************************************************/
 
+
 footer .sub-footer {
 		background-color: #000;
 		height:30px;
@@ -360,6 +361,16 @@ footer .sub-footer {
 			color: #999;
 		}
 
+footer .social-footer {
+	background-color: #777;
+	height: 40px;
+	margin-bottom: 10px;
+}
+	.social-footer ul li {
+		color: #fff;
+		font-size: 16px;
+		line-height:40px;
+	}
 
 
 /* end footer styles */
