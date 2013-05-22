@@ -39,9 +39,9 @@ function bidx_filter($content) {
   $content = str_replace('</form>', $hiddenElement.'</form>', $content);
 
   // Debug the Get/Post params
-  if (WP_DEVELOPMENT == true) {
+  if (DOMAIN_CURRENT_SITE == 'bidx.dev') {
 
-    new dBug($_REQUEST);
+   // new dBug($_REQUEST);
   }
 
   return $content;
