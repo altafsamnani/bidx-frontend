@@ -1,6 +1,6 @@
 <?php
 /**
- * Search class loader.
+ * Group class loader.
  * Name lowercased for automatic loading.
  * @author Jaap Gorjup
  * @version 1.0
@@ -27,7 +27,6 @@ class group {
 
 	/**
 	 * Load the content.
-	 * @todo separate actions into private methods 
 	 * @param $atts attributes from the shorttag 
 	 */
 	function load($atts) {
