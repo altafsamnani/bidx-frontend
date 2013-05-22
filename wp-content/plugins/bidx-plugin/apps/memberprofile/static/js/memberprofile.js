@@ -10,7 +10,7 @@ $( document ).ready( function()
     ,   $btnAddLanguage         = $editForm.find( ".btnAddLanguage" )
     ,   $inputAddLanguage       = $editForm.find( "input[name='addLanguage']" )
 
-    ,   $profilePictureImage    = $editForm.find( "img.profileImage" ).hide()
+    ,   $profilePictureContainer    = $editForm.find( ".profilePictureContainer" )
 
     ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
     ,   $currentAddressCountry      = $editForm.find( "[name='personalDetails.address[0].country']"         )
@@ -651,15 +651,14 @@ $( document ).ready( function()
 
         if ( profilePictureUrl )
         {
-            $profilePictureImage.attr( "src", profilePictureUrl );
-            $profilePictureImage.show();
+            $profilePictureContainer.append( $( "<img />", { "src": profilePictureUrl } ));
         }
 
         // Setup the hidden fields used in the file upload
         //
-        $editForm.find( "[name='domain']"   ).val( groupDomain );
-        $editForm.find( "[name='id']"       ).val( bidx.utils.getValue( member, "bidxMemberProfile.bidxEntityId" ) );
-        $editForm.find( "[name='path']"     ).val( "/personalDetails/profilePicture" );
+        $editForm.find( "[name='domain']"           ).val( groupDomain );
+        $editForm.find( "[name='memberProfileId']"  ).val( bidx.utils.getValue( member, "bidxMemberProfile.bidxEntityId" ) );
+//        $editForm.find( "[name='path']"     ).val( "/personalDetails/profilePicture" );
 
         // Now the nested objects
         //
@@ -871,7 +870,7 @@ $( document ).ready( function()
         addedLanguages = [];
         $languageList.empty();
 
-        $profilePictureImage.hide();
+        $profilePictureContainer.empty();
 
         // Inject the save and button into the controls
         //

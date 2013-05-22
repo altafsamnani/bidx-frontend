@@ -34,9 +34,9 @@
             <div class="span9">
 
                 <!-- "id" is actually the memberProfileId, but to not have to rewrite the file upload let's do it like this -->
-                <input type="hidden" name="id"      />
-                <input type="hidden" name="domain"  />
-                <input type="hidden" name="path"    />
+                <input type="hidden" name="memberProfileId"     />
+                <input type="hidden" name="domain"              />
+                <input type="hidden" name="uploadtype"  value="memberprofilepicture" />
 
                 <fieldset>
                     <span class="scrollPositionMarker" id="editMember/personalDetail"></span>
@@ -71,8 +71,8 @@
                             <div class="control-group formfield">
                                 <label class="control-label">Profile image</label>
                                 <div class="controls">
-                                    <img src="http://placehold.it/350x150&text=Profile%20image" alt="Profile image" class="profileImage"/>
-                                    <input type="file" name="fileContent" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["id","domain","path"]}'/>
+                                    <div class="profilePictureContainer" id="editMemberProfilePicture"></div>
+                                    <input type="file" name="fileContent" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["memberProfileId","domain","uploadtype"], "imageContainer": "#editMemberProfilePicture"}'/>
                                 </div>
                             </div>
 
