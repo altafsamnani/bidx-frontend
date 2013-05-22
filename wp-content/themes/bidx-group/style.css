@@ -165,6 +165,23 @@ li {
 	display:none;
 }
 
+.sidebar-block-title {
+	margin-top:					0;
+}
+
+.sidebar-block-intro {
+	padding-left:				6px;
+}
+
+.sidebar-block-heading {
+    margin-bottom:				12px;
+}
+
+.sidebar-block-content {
+	padding-bottom:				12px;
+}
+
+
 /* End Global styles */
 
 /*******************************************************************************************

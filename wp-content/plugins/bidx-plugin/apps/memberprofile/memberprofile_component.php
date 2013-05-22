@@ -20,8 +20,7 @@
         <?php $view->render('view-member.phtml'); ?>
         <?php $view->render('view-entrepreneur.phtml'); ?>
       </div>
-      <div class="span4">
-
+      <div class="span4 sidebar">
         <?php $view->render('view-group.phtml'); ?>
       </div>
     </div>

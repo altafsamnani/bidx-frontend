@@ -111,6 +111,8 @@ class BidxShortcode {
 		wp_register_script( 'backbone', BIDX_PLUGIN_URI . '/../static/vendor/backbone/backbone-1.0.0.js', array('underscore'), '20130501', TRUE );
 		wp_register_script( 'json2', BIDX_PLUGIN_URI . '/../static/vendor/json2/json2.js', array('jquery'), '20130501', TRUE );
 		wp_register_script( 'gmaps-places', '//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places', array(), '20130501', TRUE);
+		wp_deregister_script( 'holder' );
+		wp_register_script( 'holder', BIDX_PLUGIN_URI . '/../static/vendor/holder/holder-1.9.js', array(), '20130501', TRUE );
 
 		//bidX scripts
 		wp_register_script( 'bidx-api-core', BIDX_PLUGIN_URI . '/../static/js/bidxAPI/api-core.js', array('jquery'), '20130501', TRUE );

@@ -1,7 +1,15 @@
 <?php
 
 $personalDetails = $this->data->bidxMemberProfile->personalDetails;
-$picSrc = ($personalDetails->profilePicture->document) ? $personalDetails->profilePicture->document : 'http://placehold.it/150x175';
+
+$useDataSrc = false;
+$picSrc     = $personalDetails->profilePicture->document;
+
+if (!$personalDetails->profilePicture->document) {
+  $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
+  $useDataSrc = true;
+}
+
 $entrepreneurDetails = $this->data->bidxEntrepreneurProfile[0];
 
 ?>
@@ -9,7 +17,7 @@ $entrepreneurDetails = $this->data->bidxEntrepreneurProfile[0];
 <div class="row-fluid">
   <div class="span3">
     <h4>Member</h4>
-    <?php echo ($picSrc) ? "<img height='175px'  width = '150px' src='$picSrc' class='img-rounded'>" : '';?>
+    <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
 
   </div>
   <div class="span7"><br/>
@@ -50,7 +58,7 @@ echo $this->addMultipleRows('span12', $rowValues);
 <?php
 $rowValues = array('E-mail' => $personalDetails->emailAddress,
   'Mobile' => $this->getMultiValues($personalDetails->contactDetail, ', ', 'mobile'),
-  
+
 );
 echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
 ?>

@@ -46,6 +46,10 @@ wp_enqueue_script('jquery');
 wp_enqueue_script('jqueryui');
 wp_enqueue_script('bootstrap');
 wp_enqueue_script('json2');
+
+wp_register_script( 'holder', get_template_directory_uri() . '/assets/js/vendor/holder-1.9.js', array(), '20130501', TRUE );
+wp_enqueue_script('holder');
+
   //wp_enqueue_script('modernizr');
 //  wp_enqueue_script('roots_plugins');
   //wp_enqueue_script('roots_main');

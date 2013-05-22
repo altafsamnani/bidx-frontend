@@ -4,69 +4,55 @@ $groupDetails = $this->data->groups;
 $showGroup = (count( (array)$groupDetails)) ? true : false;
 
 ?>
-<div class = "span2 affix">
-              <!-- Group Info --><br/>
-        <?php
-        if($showGroup) {
+<!-- Group Info -->
+<?php
+    if($showGroup) {
         foreach ($groupDetails as $groupValue) {
+            if (strtolower(str_replace(" ","",$groupValue->name)) == strtolower(str_replace(" ","",$this->bidxGroupDomain))) {
+?>
+<div class="well sidebar-block">
+    <div class="row-fluid sidebar-block-heading">
+        <div class="span4"><img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded"></div>
+        <div class="span8 sidebar-block-intro">
+            <h3 class="sidebar-block-title"><?php echo $this->bidxGroupDomain ?></h3>
+            <p><?php echo $groupValue->slogan ?></p>
+        </div>
+    </div>
 
-                 if (strtolower(str_replace(" ","",$groupValue->name)) == strtolower(str_replace(" ","",$this->bidxGroupDomain))) {?>
-              <div class="row-fluid">
-                <div class="span4"><img src="http://placehold.it/90x60" class="img-rounded"></div>
-                <div class="span8">
-                  <div class="row-fluid">
-                    <?php
+    <!-- Description -->
+    <p class="sidebar-block-content"><?php echo $groupValue->description;?></p>
 
-
-                        $rowValues = array('groupname' => $this->bidxGroupDomain, $groupValue->slogan);
-                        echo $this->addMultipleRows('span12', $rowValues, '', array('groupname' => 'h4'));
-
-
-                    ?>
-                  </div>
-                </div>
-              </div><br/>
-              <!-- Description -->
-              <div class="row-fluid">
-                <div class="span12"><?php echo $groupValue->description;?></div>
-              </div><br/>
-              <!-- Company name , URL -->
-              <div class="row-fluid">
-                        <?php
-                        $rowValues = array('Company name' => 'www.companyurl.com' );
-                        echo $this->addRowsWithLabelAdjacent('span6','span6',$rowValues); ?>
-               </div>
-
-              <?php } } ?>
-
-              <!-- Joined Group -->
-            <div class="row-fluid">
-              <div class="span12">
-                <h4>Joined groups</h4>
-              </div>
-            </div>
-
-
-              <?php foreach( $groupDetails as $groupValue) { ?>
-                <div class="row-fluid">
-                <div class="span4"><img src="http://placehold.it/90x60" class="img-rounded"></div>
-                <div class="span8">
-
-                   <?php
-
-                    $joinLink = ($groupValue->join) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>":'';
-
-                    ?>
-
-                   <div class="span12"><?php echo $groupValue->name?></div>
-                   <div class="span12"><?php echo $groupValue->slogan?></div>
-                   <div class="span12 offset11"><?php echo $joinLink;?></div>
-                </div>
-                </div>
-                <?php } ?>
-
-              <br/>
-
+    <!-- Company name , URL -->
+    <div class="row-fluid">
+<?php
+        $rowValues = array('Company name' => 'www.companyurl.com' );
+        echo $this->addRowsWithLabelAdjacent('span6','span6',$rowValues);
+?>
+    </div>
 </div>
+<?php
+            }
+        }
+    }
+?>
 
+<div class="well sidebar-block">
+    <!-- Joined Group -->
+    <h3>Joined groups</h3>
 
+<?php
+    foreach( $groupDetails as $groupValue) {
+        $joinLink = "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>";
+?>
+    <div class="clearfix">
+        <div class="row-fluid sidebar-block-heading">
+            <div class="span4"><img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded"></div>
+            <div class="span8 sidebar-block-intro">
+                <h4 class="sidebar-block-title"><?php echo $groupValue->name?></h4>
+                <p><?php echo $groupValue->slogan?></p>
+            </div>
+        </div>
+        <div class="pull-right"><a href='#joinGroup/<?php echo $groupValue->bidxGroupId?>'>Join</a></div>
+    </div>
+<?php } ?>
+</div>

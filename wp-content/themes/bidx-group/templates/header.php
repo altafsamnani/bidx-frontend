@@ -4,7 +4,7 @@
 
 			<div class="clearfix">
 				<div class="brand">
-					<a href="<?php echo home_url(); ?>/"><img src="http://placehold.it/200x100" class="logo img-rounded"></a>
+					<a href="<?php echo home_url(); ?>/"><img data-src="holder.js/100x100/industrial/auto/text:No Image" class="logo img-rounded"></a>
 
 					<h1>GroupNameX</h1>
 				</div>

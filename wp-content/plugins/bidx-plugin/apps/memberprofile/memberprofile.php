@@ -8,7 +8,7 @@ require_once(BIDX_PLUGIN_DIR .'/../apps/common.php' );
  */
 class memberprofile {
 
-	static $deps = array( 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core' );
+	static $deps = array( 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'holder', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core' );
 
  	public $scriptInject ;
 
