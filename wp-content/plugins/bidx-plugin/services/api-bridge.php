@@ -8,6 +8,8 @@
  */
 abstract class APIbridge {
 	
+	static $data_re_use = array();
+	
 	// Bidx Auth login
 	private $authUsername = 'bidx'; 
 	// Bidx Auth password
@@ -32,8 +34,15 @@ abstract class APIbridge {
 	 * @param boolean $isFormUpload  is it form upload
 	 * @return array $requestData response from Bidx API
 	 */
-	public function callBidxAPI( $urlService, $body, $method = 'POST', $isFormUpload = false ) {
+	public function callBidxAPI( $urlService, $body, $method = 'POST', $isFormUpload = false, $do_not_reuse = false ) {
 
+		//reuse of service data for reading in the same page ensures no duplicate calls
+		$this -> logger -> trace( 'Validating for : ' . $urlService );
+		if ( !$do_not_reuse && $method == 'GET' && in_array ( $urlService, APIbridge :: $data_re_use ) ) {
+			$this -> logger -> trace( 'Found cached instance for : ' . $urlService );
+			return $APIbridge :: $data_re_use [$urlService];
+		}
+		
 		$bidxMethod = strtoupper( $method );
 		$bidx_get_params = "";
 		$cookie_string = "";
@@ -95,6 +104,12 @@ abstract class APIbridge {
 
 		$requestData = $this->processResponse($urlService, $result,$groupDomain);
 
+		//if for reuse, store it 
+		if (!$do_not_reuse && $method == 'GET') {
+			$this -> logger -> trace( 'Storing response in ' . $urlService );
+			APIbridge :: $data_re_use  [$urlService] = $requestData;
+		}
+		
 		return $requestData;
 	}
 

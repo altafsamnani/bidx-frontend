@@ -1,6 +1,3 @@
-<?php
-	//$members = $this -> members;
-?>
 <div class="well">
 <div class="row-fluid">
 	<h3>New members in this group</h3>
@@ -8,24 +5,24 @@
 <div class="row-fluid">
 <?php
 if (is_array($this -> members)) {
+	$i = 0;
 	foreach ($this -> members as $member) {
 ?>
 	<div class="span4">
-		<div class="media member-thumb">
+		<div class="media member-thumb img-rounded">
 		  <a class="pull-left" href="/member/<?php echo $member -> bidxMemberId; ?>">
-		  	<img class="media-object" data-src="holder.js/100x100" src="<?php 
+		  	<?php 
 			  	if ( empty( $member -> profilePicture ) ) {
-					echo 'http://placehold.it/100x100&text=No+Image';
+					echo '<img data-src="holder.js/50x50/industrial/auto/text:None" class="media-object img-rounded" />';
 				}
 				else {
-			  		$image = $member -> profilePicture;
+					echo '<img class="media-object img-rounded" src="' . $member -> profilePicture . '" />';
 			  	}
-		  	?>">
+		  	?>
 		  </a>
 		  <div class="media-body centering">
 		    <h5 class="media-heading"><?php echo $member -> firstName . ' ' . $member -> lastName; ?></h5>
 			<div><?php echo $member -> professionalTitle; ?></div>
-			<div><?php echo $member -> industry; ?></div>
 			<div><?php echo $member -> country; ?></div>
 		  </div>
 		</div>
@@ -43,9 +40,13 @@ if (is_array($this -> members)) {
 }
 ?>	
 	<div class="span4 ">
-		<div class="media member-thumb centering">
-		   	<a href="/search" class="btn">Search new members</a>
-			<a href="/member" class="btn">View all</a>
+		<div class="media member-thumb img-rounded">
+			<div class="centering">
+			   	<a href="/search" class="btn">Search new members</a>
+			</div>
+			<div class="centering">   	
+				<a href="/member" class="btn">View all</a>
+			</div>
 		</div>	
 	</div>					
 </div>

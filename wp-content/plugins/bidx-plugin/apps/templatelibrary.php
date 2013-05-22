@@ -226,6 +226,7 @@ class TemplateLibrary {
 
     return $returnLanguage;
   }
+  
 
   public function getLanguagesValue($value) {
 
