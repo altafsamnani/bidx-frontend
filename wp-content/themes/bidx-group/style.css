@@ -454,6 +454,28 @@ footer .social-footer {
 
 }
 
+.bid-social.twitter {
+    background: url("assets/img/social-media-icons.png") no-repeat scroll 0 -5024px transparent;
+    margin-right: 0;
+}
+
+.bid-social.facebook {
+    background: url("assets/img/social-media-icons.png") no-repeat scroll 0 -1536px transparent;
+}
+
+.bid-social {
+    display: block;
+    float: left;
+    height: 16px;
+    margin-right: 8px;
+    text-indent: -3333px;
+    width: 16px;
+}
+
+.skypeclass p {
+    margin:-15px;
+}
+
 /* end intro styles */
 
 

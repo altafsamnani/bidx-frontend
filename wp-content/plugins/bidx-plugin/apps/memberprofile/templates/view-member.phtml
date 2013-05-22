@@ -72,13 +72,12 @@ echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_
       ?>
 <?php
 $rowValues = array('Facebook' => $this->addSocialPluginScript('facebookprofile', $personalDetails->facebook),
-                   'Twitter' => $this->addSocialPluginScript('twitterprofile', $personalDetails->twitter));
-?>
-<?php
-      $rowValues = array('Linkedin' => $this->addSocialPluginScript('linkedin',$personalDetails->linkedIn),
-        'Skype' => $this->addSocialPluginScript('skype',$personalDetails->skype) );
+                   'Twitter' => $this->addSocialPluginScript('twitterprofile', $personalDetails->twitter),
+                   'Linkedin' => $this->addSocialPluginScript('linkedin',$personalDetails->linkedIn) ,
+                   'Skype' => $this->addSocialPluginScript('skype',$personalDetails->skype)
+         );
 
-      echo $this->addAdjacentRows('span6', $rowValues);
+      echo $this->addAdjacentRows('span1', $rowValues, array('Skype' => 'skypeclass'));
      // echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
  ?>
 

@@ -71,23 +71,23 @@ class TemplateLibrary {
    *
    */
   public function addAdjacentRows($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div') {
-
+ 
     $rowHtml = "<div class='row-fluid'>";
 
-    $className = ($className) ? " class = '" . $className . "' " : '';
 
     foreach ($rowValues as $label => $values) {
 
       $values = $this->addExtraValuesToRows($label, $values);
-
+      $classRow = NULL;
       if ($values && $values != 'null') {
         $rowHtml .= "<div class='" . $gridColumnVal . "'>";
         //Class Name
         if (is_array($className) && isset($className[$label])) {
+          
           $classRow = 'class ="' . $className[$label] . '"';
         }
         else {
-          $classRow = ( $className ) ? 'class ="' . $className . '"' : '';
+          $classRow = ( !is_array($className) && $className ) ? 'class ="' . $className . '"' : '';
         }
 
         //Tag Name
@@ -545,21 +545,24 @@ class TemplateLibrary {
           break;
 
         case 'skype' :
-          $scriptContent = '<script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>
-<div id="SkypeButton_Dropdown_bid_christophe.perrin_1">
+          $scriptContent = '<script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
+<div id="SkypeButton_Chat_bid_altaf.samnani_1">
   <script type="text/javascript">
     Skype.ui({
-      "name": "dropdown",
-      "element": "SkypeButton_Dropdown_bid_christophe.perrin_1",
-      "participants": ["bid_christophe.perrin"]
+      "name": "chat",
+      "element": "SkypeButton_Chat_bid_altaf.samnani_1",
+      "participants": ["bid_altaf.samnani"]
     });
   </script>
 </div>';
           break;
 
         case 'facebookprofile' :
-
+          $scriptContent = '<a title="View my Facebook Profile" class="bid-social facebook" href="https://www.facebook.com/bidnetwork">Facebook</a>' ;
+          break;
         case 'twitterprofile' :
+          $scriptContent = '<a title="View my Twitter Profile" class="bid-social twitter" href="http://twitter.com/bidnet">Twitter</a>' ;
+          break;
       }
     }
     return $scriptContent;
