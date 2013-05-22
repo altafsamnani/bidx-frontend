@@ -17,6 +17,8 @@
 ===============================================================================================*/
 (function($){
 
+	var opts;
+
 	var methods = {
 
 		init : function (options){
@@ -26,8 +28,7 @@
 				var $this = $(this);
 				var that = this; //lock reference to input
 				this.options = {};//local collection of plugin options
-				$.extend(this.options, options);
-
+				opts = $.extend(this.options, options);
 				$this.bind("change", methods.uploadFile);
 				//any arguments for this plugin should be placed in this attribute
 				if($this.data("type-arguments")) {
@@ -126,9 +127,16 @@
 		done : function(result) {
 
 			if(result.status === "OK") {
-				switch(result.data.contentType.split("/")[0]) {
+				switch(result.data.mimeType.split("/")[0]) {
 					case "image":
-						result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
+						if ( opts.imageContainer ) {
+							methods.toggleAjaxLoader(result.el);
+							$( opts.imageContainer ).html( "<img src=\"" + result.data.document +  "\" >" );
+						}
+						else {
+							result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
+						}
+
 						break;
 					default :
 						alert("no content type returned from server");
