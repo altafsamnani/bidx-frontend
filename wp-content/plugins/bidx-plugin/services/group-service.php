@@ -32,7 +32,7 @@ class GroupService extends APIbridge {
   public function getLatestMembers( $group_id = null ) {
 
   	$result = $this -> getGroupDetails( $group_id );
-  	return $result->data->latestMembers;
+  	return $result -> data -> latestMembers;
   }
   
   /**
@@ -45,9 +45,17 @@ class GroupService extends APIbridge {
   	
   	if ($group_id == null) {
   		$session = BidxCommon :: $staticSession;
-  		$group_id = $session -> data -> currentGroup;
+  		$group_id = null; //hackhack checkcheck
+  		$this -> getLogger() -> trace($session);
+  		if (property_exists($session, 'data'))
+  		{
+  			$group_id =  $session -> data -> currentGroup;
+  		}
   		if ($group_id == null) {
-  			$group_id = $this->getGroupId( $session -> getBidxGroupDomain );
+  			
+  			$this -> getLogger() -> trace('finding out id of ' . $session -> bidxGroupDomain);
+  			
+  			$group_id = $this->getGroupId( $session -> bidxGroupDomain );
   		}
   	}
   	return $this->callBidxAPI('groups/' . $group_id, array(), 'GET');

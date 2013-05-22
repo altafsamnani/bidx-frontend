@@ -9,3 +9,8 @@
 .media-body {
 	vertical-align: middle;
 }
+
+.centering{
+float:none;
+margin:0 auto
+}
