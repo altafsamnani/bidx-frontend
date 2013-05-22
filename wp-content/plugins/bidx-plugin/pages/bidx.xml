@@ -7,11 +7,18 @@
 	
 	<posts>
 	  	<post>
+			<post_id>0</post_id>
+			<name>memberlist</name>
+			<title>Memberprofile List</title>
+			<mapping>^memberlist/?</mapping>
+			<content>[bidx app="memberprofile" view="list"]</content>
+		</post> 
+	  	<post>
 			<post_id>1</post_id>
 			<name>memberlist</name>
 			<title>Memberprofile List</title>
 			<mapping>^member/?</mapping>
-			<content>[bidx app="memberprofile" view="list"]</content>
+			<content>[bidx app="memberprofile"]</content>
 		</post> 
 		<post>
 			<post_id>2</post_id>

@@ -1,78 +1,46 @@
 <?php
-	$members = $this -> members;
+	//$members = $this -> members;
 ?>
 <div class="well">
 <div class="row-fluid">
 	<h3>New members in this group</h3>
 </div>
 <div class="row-fluid">
+<?php
+if (is_array($this -> members)) {
+	foreach ($this -> members as $member) {
+?>
 	<div class="span4">
 		<div class="media member-thumb">
-		  <a class="pull-left" href="#">
-		    <img class="media-object" data-src="holder.js/64x64" src="http://placehold.it/100x100">
+		  <a class="pull-left" href="/member/<?php echo $member -> id; ?>">
+		  	<?php 
+		  	$image = 'http://placehold.it/100x100';
+		  	if ($member -> image) {
+		  		$image = $member -> image;
+		  	}
+		  	?>
+		    <img class="media-object" data-src="holder.js/64x64" src="<?php $image ?>">
 		  </a>
 		  <div class="media-body">
-		    <h5 class="media-heading">firstName lastName</h5>
-			<div>professionalTitle</div>
-			<div>industry</div>
-			<div>location</div>
+		    <h5 class="media-heading"><?php echo $member -> firstName; echo $member -> lastName; ?></h5>
+			<div><?php echo $member -> professionalTitle; ?></div>
+			<div><?php echo $member -> industry; ?></div>
+			<div><?php echo $member -> location; ?></div>
 		  </div>
 		</div>
 	</div>
-	<div class="span4">
-		<div class="media member-thumb">
-		  <a class="pull-left" href="#">
-		    <img class="media-object" data-src="holder.js/64x64" src="http://placehold.it/100x100">
-		  </a>
-		  <div class="media-body">
-		    <h5 class="media-heading">firstName lastName</h5>
-			<div>professionalTitle</div>
-			<div>industry</div>
-			<div>location</div>
-		  </div>
-		</div>
-	</div>
-	<div class="span4">
-		<div class="media member-thumb">
-		  <a class="pull-left" href="#">
-		    <img class="media-object" data-src="holder.js/64x64" src="http://placehold.it/100x100">
-		  </a>
-		  <div class="media-body">
-		    <h5 class="media-heading">firstName lastName</h5>
-			<div>professionalTitle</div>
-			<div>industry</div>
-			<div>location</div>
-		  </div>
-		</div>
-	</div>
+	<?php
+		$i++ ;
+		if ( $i == 3 ) {
+	?>
 </div>
-<div class="row-fluid">	
-	<div class="span4">
-		<div class="media member-thumb">
-		  <a class="pull-left" href="#">
-		    <img class="media-object" data-src="holder.js/64x64" src="http://placehold.it/100x100">
-		  </a>
-		  <div class="media-body">
-		    <h5 class="media-heading">firstName lastName</h5>
-			<div>professionalTitle</div>
-			<div>industry</div>
-			<div>location</div>
-		  </div>
-		</div>
-	</div>
-	<div class="span4">
-		<div class="media member-thumb">
-		  <a class="pull-left" href="#">
-		    <img class="media-object" data-src="holder.js/64x64" src="http://placehold.it/100x100">
-		  </a>
-		  <div class="media-body">
-		    <h5 class="media-heading">firstName lastName</h5>
-			<div>professionalTitle</div>
-			<div>industry</div>
-			<div>location</div>
-		  </div>
-		</div>
-	</div>
+<div class="row-fluid">		
+	<?php
+		}
+		else if ( $i == 5 ) { break; }
+	}
+}
+?>	
 	<div class="span4 ">
 		<div class="media member-thumb">
 		  <a class="pull-left" href="#">
