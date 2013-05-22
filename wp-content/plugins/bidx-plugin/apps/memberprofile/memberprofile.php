@@ -83,6 +83,10 @@ echo "<script>
     $view->data = $memberData->data;
     $view->bidxGroupDomain = $memberData->bidxGroupDomain;
     $view->sessionData = BidxCommon::$staticSession;
+//    echo "<pre>";
+//    print_r($view->data);
+//    echo "</pre>";
+//    exit;
     /* 4. Call the Display Component */
     add_action( 'wp_footer', array( &$this ,'bidx_memberprofile_add_to_footer' ) );
 		require_once ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );

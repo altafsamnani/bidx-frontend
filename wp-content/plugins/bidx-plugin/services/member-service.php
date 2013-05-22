@@ -46,7 +46,7 @@ class MemberService extends APIbridge {
 
     $groupDetails = $result->data->groups;
     $bidXGroupDomain = $result->bidxGroupDomain;
-    $loggedInGroups = (array)$sessionData->data->groups;
+    $loggedInGroups = (array) $sessionData->data->groups;
 
     foreach ($groupDetails as $groupKey => $groupValue) {
       //Group Info
@@ -56,20 +56,15 @@ class MemberService extends APIbridge {
 
       //Join Link
       if(!$result->data->isMyProfile) {
-//        $objKey = (object) $groupKey;
-//        $objVal = (object) $groupValue;
-//        echo "<pre>";
-//        print_r($);
-//        echo "</pre>";
-//        exit;
-        //$groupDetails->$objKey->$objVal->join  = true;
-        //$test = !isset($loggedInGroups[$groupKey]) ? true : false;
+    
+        $groupDetails->{$groupKey}->join  = (isset($loggedInGroups[$groupKey])) ? false : true;
       }
 
     }
 
     $result->groupInfo = $groupInfo;
-
+    $result->data->groups = $groupDetails;
+ 
     return $result;
 
   }

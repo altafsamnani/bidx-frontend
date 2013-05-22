@@ -1,9 +1,14 @@
 <?php
 
-$groupDetails = $this->data->groups; ?>
+$groupDetails = $this->data->groups;
+$showGroup = (count( (array)$groupDetails)) ? true : false;
+
+?>
 <div class = "span2 affix">
               <!-- Group Info --><br/>
-        <?php foreach ($groupDetails as $groupValue) {
+        <?php
+        if($showGroup) {
+        foreach ($groupDetails as $groupValue) {
 
                  if (strtolower(str_replace(" ","",$groupValue->name)) == strtolower(str_replace(" ","",$this->bidxGroupDomain))) {?>
               <div class="row-fluid">
@@ -31,7 +36,9 @@ $groupDetails = $this->data->groups; ?>
                         $rowValues = array('Company name' => 'www.companyurl.com' );
                         echo $this->addRowsWithLabelAdjacent('span6','span6',$rowValues); ?>
                </div>
+
               <?php } } ?>
+
               <!-- Joined Group -->
             <div class="row-fluid">
               <div class="span12">
@@ -46,15 +53,18 @@ $groupDetails = $this->data->groups; ?>
                 <div class="span8">
 
                    <?php
-                    $joinLink = "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>";
+
+                    $joinLink = ($groupValue->join) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>":'';
 
                     ?>
+
                    <div class="span12"><?php echo $groupValue->name?></div>
                    <div class="span12"><?php echo $groupValue->slogan?></div>
-                  <div class="span12 offset11"><a href='#joinGroup/<?php echo $groupValue->bidxGroupId?>'>Join</a></div>
+                   <div class="span12 offset11"><?php echo $joinLink;?></div>
                 </div>
                 </div>
                 <?php } ?>
+
               <br/>
 
 </div>

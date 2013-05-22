@@ -1,5 +1,5 @@
 <?php $entrepreneurDetails = $this->data->bidxEntrepreneurProfile[0];
-
+$entrepreneurDetails1 = $this->data->bidxEntrepreneurProfile[1];
 if($entrepreneurDetails) {
 ?>
 
@@ -29,8 +29,9 @@ if($entrepreneurDetails) {
   ?>
   <br/>
   <?php
-  $rowValues = array('Documents' => array('Document1', 'Document2'));
-  echo $this->addRowsWithLabelBelow('span12', 'span12', $rowValues, array('tag_label' => 'h5'));
+
+  echo $this->getAttachmentsDisplay('12', '12', array('Documents' => $entrepreneurDetails1->attachment));
+ 
   ?>
 </div>
 <br/>

@@ -70,6 +70,58 @@ class TemplateLibrary {
    * @return String $rowHtml Row html
    *
    */
+  public function addAdjacentRows($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div') {
+
+    $rowHtml = "<div class='row-fluid'>";
+
+    $className = ($className) ? " class = '" . $className . "' " : '';
+
+    foreach ($rowValues as $label => $values) {
+
+      $values = $this->addExtraValuesToRows($label, $values);
+
+      if ($values && $values != 'null') {
+        $rowHtml .= "<div class='" . $gridColumnVal . "'>";
+        //Class Name
+        if (is_array($className) && isset($className[$label])) {
+          $classRow = 'class ="' . $className[$label] . '"';
+        }
+        else {
+          $classRow = ( $className ) ? 'class ="' . $className . '"' : '';
+        }
+
+        //Tag Name
+        if (is_array($tagName) && isset($tagName[$label])) {
+          $tagRow = $tagName[$label];
+        }
+        else {
+          $tagRow = $tagName;
+        }
+
+
+        $rowHtml .= "<$tagRow " . $classRow . " > " . $values . " </$tagRow>";
+        $rowHtml .= "</div>";
+      }
+    }
+
+
+    $rowHtml .= "</div>";
+
+    return $rowHtml;
+  }
+
+  /**
+   * Add bootstrap rows through views
+   * @param int $gridColumnVal length of grid
+   * @param String $rowValues Row values to be displayed
+   * @param String $className Row class name
+   * @structure data1
+   *            data2
+   *            data3
+   *
+   * @return String $rowHtml Row html
+   *
+   */
   public function addMultipleRows($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div') {
 
     $rowHtml = "<div class='row-fluid'>";
@@ -92,11 +144,9 @@ class TemplateLibrary {
         //Tag Name
         if (is_array($tagName) && isset($tagName[$label])) {
           $tagRow = $tagName[$label];
-          $test = 'if';
         }
         else {
           $tagRow = $tagName;
-          $test = 'else';
         }
 
 
@@ -339,6 +389,50 @@ class TemplateLibrary {
     }
   }
 
+   /**
+   * Get attachment to display
+   * @param int $gridColumnVal length of spangrid
+   * @param String $rowValues Row values to be displayed
+   * @param String $classLabel Row class label value
+   * @param String $className Row class name
+   *
+   * 
+   * @return String $rowHtml Row html
+   *
+   */
+  public function getAttachmentsDisplay($gridLabel, $gridValue, $rowValues, $properties = array()) {
+    $rowHtml = "";
+
+    if ($rowValues) {
+      /** Class * */
+      $classLabel = ($properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+      $classValue = ($properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+
+
+      foreach ($rowValues as $label => $rowValue) {
+        if ($rowValue && $rowValue != 'null') {
+          //Display Label
+          $rowHtml .= "<div class='row-fluid'>";
+          $rowHtml .= "<div class='" . $gridLabel . "'>";
+          $rowHtml .= "<h5 " . $classLabel . " > " . $label . " </h5>";
+          $rowHtml .= "</div>";
+          $rowHtml .= "</div>";
+          //Display Value
+          if (is_array($rowValue)) {
+            foreach ($rowValue as $value) {
+              $rowHtml .= "<div class='row-fluid'>";
+              $rowHtml .= "<div class='" . $gridValue . "'>";
+              $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $value->documentName . " </a>";
+              $rowHtml .= "</div>";
+              $rowHtml .= "</div>";
+            }
+          }
+        }
+      }
+    }
+    return $rowHtml;
+  }
+
   /**
    * Iterate mutivalued variable and make html row
    * @param int $data Variable to iterate
@@ -431,26 +525,42 @@ class TemplateLibrary {
   public function addSocialPluginScript($type, $username) {
 
     $scriptContent = NULL;
-
-    if($username) {
+    $username = 'altaf.samnani';
+    if ($username) {
       switch ($type) {
 
         case 'facebook' :
           $scriptContent = '<iframe src="//www.facebook.com/plugins/follow.php?href=https%3A%2F%2Fwww.facebook.com%2F' . $username . '&amp;layout=button_count&amp;show_faces=true&amp;colorscheme=light&amp;font=verdana&amp;width=450&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>';
           break;
         case 'twitter' :
+          $scriptContent = '<iframe allowtransparency="true" frameborder="0" scrolling="no"
 
+      src="//platform.twitter.com/widgets/follow_button.html?screen_name=twitterapi"
+
+      style="width:300px; height:20px;"></iframe>';
           break;
-
         case 'linkedin':
-
+          $scriptContent = '<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+<script type="IN/MemberProfile" data-id="/in/altafsamnani" data-format="hover"></script>';
           break;
 
         case 'skype' :
-
+          $scriptContent = '<script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>
+<div id="SkypeButton_Dropdown_bid_christophe.perrin_1">
+  <script type="text/javascript">
+    Skype.ui({
+      "name": "dropdown",
+      "element": "SkypeButton_Dropdown_bid_christophe.perrin_1",
+      "participants": ["bid_christophe.perrin"]
+    });
+  </script>
+</div>';
           break;
+
+        case 'facebookprofile' :
+
+        case 'twitterprofile' :
       }
-      
     }
     return $scriptContent;
   }

@@ -2,6 +2,8 @@
 
 $personalDetails = $this->data->bidxMemberProfile->personalDetails;
 $picSrc = ($personalDetails->profilePicture->document) ? $personalDetails->profilePicture->document : 'http://placehold.it/150x175';
+$entrepreneurDetails = $this->data->bidxEntrepreneurProfile[0];
+
 ?>
 
 <div class="row-fluid">
@@ -16,10 +18,11 @@ $picSrc = ($personalDetails->profilePicture->document) ? $personalDetails->profi
       <!-- Personal details 6/6 Start -->
 
 <?php
+//Language Details
 $languageData = $personalDetails->languageDetail;
 $languageDetails = $this->getMultiValues($languageData, ', ', 'language');
 $motherLanguageDetails = $this->getMultiValues($languageData, ', ', 'language', array('motherLanguage' => '1'));
-
+//Address Details
 $addressArr = array($personalDetails->address[0]->street . $personalDetails->address[0]->streetNumber,
   $personalDetails->address[0]->cityTown,
   'country' => $personalDetails->address[0]->country,
@@ -27,7 +30,8 @@ $addressArr = array($personalDetails->address[0]->street . $personalDetails->add
 
 $address = $this->createRowValue($addressArr, ', ');
 
-
+//CV
+$cvDetails = ($entrepreneurDetails->cv) ? '<a href="'.$entrepreneurDetails->cv->document.'" target="_blank" > '.$entrepreneurDetails->cv->documentName.'</a>':'';
 
 $rowValues = array($personalDetails->professionalTitle,
   'gender' => $personalDetails->gender,
@@ -37,7 +41,7 @@ $rowValues = array($personalDetails->professionalTitle,
   'motherlanguage' => $motherLanguageDetails,
   'language' => $languageDetails,
   $address,
-  'CV Name');
+  $cvDetails);
 echo $this->addMultipleRows('span12', $rowValues);
 ?>
 
@@ -56,27 +60,31 @@ echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_
         );
       echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
       ?>
+<?php
+$rowValues = array('Facebook' => $this->addSocialPluginScript('facebookprofile', $personalDetails->facebook),
+                   'Twitter' => $this->addSocialPluginScript('twitterprofile', $personalDetails->twitter));
+?>
+<?php
+      $rowValues = array('Linkedin' => $this->addSocialPluginScript('linkedin',$personalDetails->linkedIn),
+        'Skype' => $this->addSocialPluginScript('skype',$personalDetails->skype) );
+
+      echo $this->addAdjacentRows('span6', $rowValues);
+     // echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+ ?>
 
 <?php
-$rowValues = array('Facebook' => $this->addSocialPluginScript('facebook', $personalDetails->facebook),
-                   'Twitter' => $this->addSocialPluginScript('twitter', $personalDetails->twitter)
-                  );
-echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+//$rowValues = array('Facebook' => $this->addSocialPluginScript('facebook', $personalDetails->facebook),
+//                   'Twitter' => $this->addSocialPluginScript('twitter', $personalDetails->twitter));
+
+//echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+//echo $this->addAdjacentRows('span6', $rowValues);
+
 ?>
 
 
-      <?php
-      $rowValues = array('Linkedin' => $this->addSocialPluginScript('linkedin',$personalDetails->linkedIn),
-        'Skype' => $this->addSocialPluginScript('skype',$personalDetails->skype) );
-      echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
-      ?>
+     
 
 
-      <?php
-      $rowValues = array('Fax' => $this->data->contactDetail->fax,
-        'Linkedin' => $personalDetails->linkedIn);
-      echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
-      ?>
 
 
     </div>
