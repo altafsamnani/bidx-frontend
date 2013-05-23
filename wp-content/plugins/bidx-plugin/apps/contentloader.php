@@ -156,10 +156,10 @@ class ContentLoader {
 			$args = array(
 					'public' => true,
 					'exclude_from_search' => true,
-					'show_ui' => true, 
-					'show_in_menu' => true, 
+					'show_ui' => false, 
+					'show_in_menu' => false, 
 					'query_var' => true,
-					'rewrite' => true, 
+					'rewrite' => false, 
 					'capability_type' => 'page',
 					'_builtin' => false,
 					'has_archive' => false,

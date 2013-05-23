@@ -37,7 +37,7 @@ abstract class APIbridge {
 	public function callBidxAPI( $urlService, $body, $method = 'POST', $isFormUpload = false, $do_not_reuse = false ) {
 
 		//reuse of service data for reading in the same page ensures no duplicate calls
-		$this -> logger -> trace( 'Validating for : ' . $urlService );
+		$this -> logger -> trace( 'Validating for : ' . $urlService . ' on ');
 		if ( !$do_not_reuse && $method == 'GET' && in_array ( $urlService, APIbridge :: $data_re_use ) ) {
 			$this -> logger -> trace( 'Found cached instance for : ' . $urlService );
 			return $APIbridge :: $data_re_use [$urlService];

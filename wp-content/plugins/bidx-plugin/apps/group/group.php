@@ -53,6 +53,9 @@ class group {
 			case "getGroupDetails" :
 				$view->group = $groupSvc->getGroupDetails(  );
 				return $view->render( 'groupDetails.phtml' );
+				case "getGroupIntro" :
+					$view->group = $groupSvc->getGroupDetails(  );
+					return $view->render( 'groupIntro.phtml' );				
 			default :	
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'groupList.phtml' );

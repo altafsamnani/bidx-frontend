@@ -3,12 +3,35 @@
  -->
 <div class="well">
 	<div><h5>Title</h5></div>
-	<div class="map"></div>
+	<div class="map" id="map-canvas"></div>
 </div>
 <!--  needs to be externalized -->
 <script>
 //show map
 var $query = $this -> query;
+
 //call search api
+
 //parse result into map
+var result = '';
+
+//determine middle point
+var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+var mapOptions = {
+	zoom: 4, //can this be autozoomed depending on the markers
+    center: myLatlng, //use what location
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+}
+var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+$('location', result).
+
+  //iterate over calls
+  var latlng = new google.maps.LatLng($lat,$long);
+  var name = '';
+  var marker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      title:name
+  });
 </script>
