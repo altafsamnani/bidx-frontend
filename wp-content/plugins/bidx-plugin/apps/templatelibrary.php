@@ -82,7 +82,7 @@ class TemplateLibrary {
    *
    */
   public function addAdjacentRows($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div') {
- 
+
     $rowHtml = "<div class='row-fluid'>";
 
 
@@ -94,11 +94,11 @@ class TemplateLibrary {
         $rowHtml .= "<div class='" . $gridColumnVal . "'>";
         //Class Name
         if (is_array($className) && isset($className[$label])) {
-          
+
           $classRow = 'class ="' . $className[$label] . '"';
         }
         else {
-          $classRow = ( !is_array($className) && $className ) ? 'class ="' . $className . '"' : '';
+          $classRow = (!is_array($className) && $className ) ? 'class ="' . $className . '"' : '';
         }
 
         //Tag Name
@@ -401,7 +401,7 @@ class TemplateLibrary {
     }
   }
 
-   /**
+  /**
    * Get attachment to display
    * @param int $gridColumnVal length of spangrid
    * @param String $rowValues Row values to be displayed
@@ -537,7 +537,6 @@ class TemplateLibrary {
   public function addSocialPluginScript($type, $username) {
 
     $scriptContent = NULL;
-    $username = 'altaf.samnani';
     if ($username) {
       switch ($type) {
 
@@ -546,34 +545,32 @@ class TemplateLibrary {
           break;
         case 'twitter' :
           $scriptContent = '<iframe allowtransparency="true" frameborder="0" scrolling="no"
-
-      src="//platform.twitter.com/widgets/follow_button.html?screen_name=twitterapi"
-
-      style="width:300px; height:20px;"></iframe>';
+                            src="//platform.twitter.com/widgets/follow_button.html?screen_name=twitterapi"
+                            style="width:300px; height:20px;"></iframe>';
           break;
         case 'linkedin':
           $scriptContent = '<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-<script type="IN/MemberProfile" data-id="/in/altafsamnani" data-format="hover"></script>';
+<script type="IN/MemberProfile" data-id="' . $username . '" data-format="hover"></script>';
           break;
 
         case 'skype' :
           $scriptContent = '<script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
-<div id="SkypeButton_Chat_bid_altaf.samnani_1">
-  <script type="text/javascript">
-    Skype.ui({
-      "name": "chat",
-      "element": "SkypeButton_Chat_bid_altaf.samnani_1",
-      "participants": ["bid_altaf.samnani"]
-    });
-  </script>
-</div>';
+                              <div id="SkypeButton_Chat_' . $username . '_1">
+                                <script type="text/javascript">
+                                  Skype.ui({
+                                    "name": "chat",
+                                    "element": "SkypeButton_Chat_' . $username . '_1",
+                                    "participants": ["' . $username . '"]
+                                  });
+                                </script>
+                              </div>';
           break;
 
         case 'facebookprofile' :
-          $scriptContent = '<a title="View my Facebook Profile" class="bid-social facebook" href="https://www.facebook.com/bidnetwork">Facebook</a>' ;
+          $scriptContent = '<a title="View my Facebook Profile" class="bid-social facebook" href="' . $username . '">Facebook</a>';
           break;
         case 'twitterprofile' :
-          $scriptContent = '<a title="View my Twitter Profile" class="bid-social twitter" href="http://twitter.com/bidnet">Twitter</a>' ;
+          $scriptContent = '<a title="View my Twitter Profile" class="bid-social twitter" href="' . $username . '">Twitter</a>';
           break;
       }
     }
