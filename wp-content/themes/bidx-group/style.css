@@ -476,6 +476,10 @@ footer .social-footer {
     margin:-15px;
 }
 
+span.IN-widget [id*="easyXDM"]:first-child {
+    position: fixed !important;
+}
+
 /* end intro styles */
 
 
