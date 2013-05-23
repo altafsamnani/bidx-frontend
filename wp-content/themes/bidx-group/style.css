@@ -17,9 +17,8 @@ html, body {
 
 /** Padding is as high as the navbar + pageheader **/
 body {
-	padding-top: 				210px;
+	padding-top: 				140px;
 }
-
 
 ::-webkit-input-placeholder {
    color: #333333;
