@@ -24,6 +24,17 @@ class TemplateLibrary {
       $this->template_dir = $template_dir;
     }
   }
+  
+  /**
+   * Show the property when available
+   * @param array structure $object
+   * @param string $property name of the property
+   */
+  public function showProperty($object, $property) {
+  	if ( property_exists($object, $property ) ) { 
+  		echo $object -> $property; 
+  	}
+  }
 
   /**
    * Renders the file to display content

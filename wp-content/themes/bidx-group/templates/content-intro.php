@@ -28,9 +28,30 @@
 	    <div class="entry-content">
 			<div class="well">
 				<h4>News and Events</h4>
-				
-				<!-- Two posts here -->
-				
+				<div class="row-fluid">
+					<div class="span6 ">
+						<div class="media member-thumb img-rounded">
+		  					<a class="pull-left" href="/#postlink ?>">
+								<img data-src="holder.js/50x50/social/auto/text:News" class="media-object img-rounded" />
+							</a>
+							<div class="media-body centering">
+   								<h4>Post title</h4>
+								<p>Short description text</p>
+							</div>
+						</div>
+					</div>
+					<div class="span6 ">
+						<div class="media member-thumb img-rounded">
+		  					<a class="pull-left" href="/#postlink ?>">
+								<img data-src="holder.js/50x50/social/auto/text:News" class="media-object img-rounded" />
+							</a>
+							<div class="media-body centering">
+   								<h4>Post title</h4>
+								<p>Short description text</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	    <div class="entry-content">

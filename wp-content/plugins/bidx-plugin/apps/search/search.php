@@ -2,11 +2,24 @@
 /**
  * Search class loader.
  * Name lowercased for automatic loading.
+ * 
+ * The data is retrieved client side, so this app just returned preconfigured search views.
+ * 
+ * Setting the query (attribute query=):
+ * The query, part of the GET request on the url can be added here.
+ * This should contain everything on the querystring including q= / fq= etc.
+ * 
+ * Supported views (attribute view=):
+ * - default : show the big full screen search
+ * - listView : list overview vertical
+ * - cardView : list of cards, 3 per row horizontal
+ * - mapView  : plot the result in a Google Maps view
+ * 
  * @author Jaap Gorjup
  * @version 1.0
  */
 class search {
-
+	// dependencies : should be centralized!
 	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
 	
 	/**
@@ -31,7 +44,27 @@ class search {
 	 * @param $atts 
 	 */
 	function load($atts) {
-		return file_get_contents ( BIDX_PLUGIN_DIR . '/search/static/templates/default.html' );
+	
+		// 1. Template Rendering
+		//require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/static/templates/' );
+		//$view->sessionData = BidxCommon::$staticSession;
+		
+		//2. Copy data
+		$view -> query = $atts['query'];
+		
+		// 3. Determine the view needed
+		$command = $atts['view'];
+		switch ( $command ) {
+			case "cardView" :
+				return $view->render( 'cardView.phtml' );
+			case "listView" :
+				return $view->render( 'listView.phtml' );
+			case "mapView" :
+				return $view->render( 'mapView.phtml' );
+			default :
+				return $view->render( 'default.phtml' );
+		}		
 	}
 }
 ?>

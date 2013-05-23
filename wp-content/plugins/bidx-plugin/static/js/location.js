@@ -1,12 +1,12 @@
 
 /*==============================================================================================
-										LOCATION EXTENTSION PLUGIN
-							creates autocomplete using googlemaps api
-							Author: mattijs spierings
-							date: 24/4/2013
+	LOCATION EXTENSION PLUGIN
+	creates autocomplete using googlemaps api
+	Author: mattijs spierings
+	date: 24/4/2013
 
-							WORK IN PROGRESS.
-							End Requirements of plugin have not been set
+	WORK IN PROGRESS.
+	End Requirements of plugin have not been set
 ===============================================================================================*/
 (function($){
 	var elements = {};
