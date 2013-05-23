@@ -550,7 +550,7 @@ class TemplateLibrary {
           break;
         case 'linkedin':
           $scriptContent = '<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-<script type="IN/MemberProfile" data-id="' . $username . '" data-format="hover"></script>';
+<script type="IN/MemberProfile" data-id="' . $username . '" data-format="click" data-related="true"></script>';
           break;
 
         case 'skype' :
@@ -567,10 +567,10 @@ class TemplateLibrary {
           break;
 
         case 'facebookprofile' :
-          $scriptContent = '<a title="View my Facebook Profile" class="bid-social facebook" href="' . $username . '">Facebook</a>';
+          $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $username . '">Facebook</a>';
           break;
         case 'twitterprofile' :
-          $scriptContent = '<a title="View my Twitter Profile" class="bid-social twitter" href="' . $username . '">Twitter</a>';
+          $scriptContent = '<a title="View my Twitter Profile" target="_blank" class="bid-social twitter" href="' . $username . '">Twitter</a>';
           break;
       }
     }

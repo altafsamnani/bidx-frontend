@@ -42,7 +42,7 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
 
 <?php
     foreach( $groupDetails as $groupValue) {
-        $joinLink = "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>";
+        $joinLink = ($groupValue->join) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>":'';
 ?>
     <div class="clearfix">
         <div class="row-fluid sidebar-block-heading">
@@ -53,7 +53,7 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
             </div>
 
         </div>
-        <div class="pull-right"><a href='#joinGroup/<?php echo $groupValue->bidxGroupId?>'>Join</a></div>
+        <div class="pull-right"><?php echo $joinLink ?></div>
     </div>
 <?php } ?>
 </div>
