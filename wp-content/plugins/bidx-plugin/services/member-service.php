@@ -56,7 +56,6 @@ class MemberService extends APIbridge {
 
       //Join Link
        if(!$result->data->isMyProfile) {
-
         $groupDetails->{$groupKey}->join  = (in_array($groupKey,$loggedInGroupKeys)) ? false : true;
        }
 

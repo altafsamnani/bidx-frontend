@@ -20,6 +20,7 @@
 					    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">My profile</a>
 					    		<ul class="dropdown-menu">
 									<li><a href="/member">Profile</a></li>
+                  <li><a href="/wp-admin">Dashboard</a></li>
 									<li><a href="<?php echo wp_logout_url('/'); ?>">Logout</a></li>
 					    		</ul>
 					    	</li>

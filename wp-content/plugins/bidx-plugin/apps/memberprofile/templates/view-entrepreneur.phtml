@@ -1,70 +1,72 @@
-<?php $entrepreneurDetails = $this->data->bidxEntrepreneurProfile[0];
+<?php
+$entrepreneurDetails = $this->data->bidxEntrepreneurProfile[0];
 $entrepreneurDetails1 = $this->data->bidxEntrepreneurProfile[1];
-if($entrepreneurDetails) {
-?>
-
-<div class="row-fluid">
-  <div class="span12">
-    <h4>Entrepreneur profile</h4>
-  </div>
-</div>
-<div class="row-fluid">
-  <?php
-  $rowValues = array('Summary' => $entrepreneurDetails->entrepreneurProfileSummary);
-  echo $this->addRowsWithLabelBelow('span12', 'span12', $rowValues, array('tag_label' => 'h5'));
+if ($entrepreneurDetails) {
   ?>
-  <br/>
-  <?php
-  $focusIndustry = $this->getMultiValues($entrepreneurDetails->focusIndustry, ', ');
-  $rowValues = array('Focus Industry' => $focusIndustry);
-  echo $this->addRowsWithLabelAdjacent('span6', 'span6', $rowValues, array('tag_label' => 'h5'));
-  ?>
-  <br/>
-  <?php
-  $header = array('Name of Company' => 'company' ,'Outcome of business' => 'businessOutcome','Url of company website' => 'webSite');
-  $previousBusinessHtml = $this->addTableRows( $header, $entrepreneurDetails->previousBusiness, 'table table-bordered' );
 
-  $rowValues = array('Previous Business(es)' => $previousBusinessHtml);
-  echo $this->addRowsWithLabelBelow('span12', 'span12', $rowValues, array('tag_label' => 'h5'));
-  ?>
-  <br/>
-  <?php
-
-  echo $this->getAttachmentsDisplay('12', '12', array('Documents' => $entrepreneurDetails1->attachment));
- 
-  ?>
-</div>
-<br/>
-<!-- Company Profile -->
-<div class="row-fluid">
-  <div class="span12">
-    <h4>This person has a business</h4>
-  </div>
-</div>
-
-<div class="row-fluid">
-  <div class="span3">
-    <h4>Member</h4>
-    <img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded"></div>
-  <div class="span7"><br/>
-    <div class="row-fluid">
-      <div class="span12"><h4>Name Business</h4></div>
-      <!-- Personal details 6/6 Start -->
-
-      <?php
-      $rowValues = array('Tagline',
-        'Summary',
-        'Industry',
-        'Location');
-      echo $this->addMultipleRows('span12', $rowValues);
-      echo $this->addMultipleRows('span12 offset10', array('view more'));
-      ?>
-
-
-
+  <div class="row-fluid">
+    <div class="span12">
+      <h4>Entrepreneur profile</h4>
     </div>
   </div>
-</div>
+  <div class="row-fluid">
+    <?php
+    $rowValues = array('Summary' => $entrepreneurDetails->entrepreneurProfileSummary);
+    echo $this->addRowsWithLabelBelow('span12', 'span12', $rowValues, array('tag_label' => 'h5'));
+    ?>
+    <br/>
+    <?php
+    $focusIndustry = $this->getMultiValues($entrepreneurDetails->focusIndustry, ', ');
+    $rowValues = array('Focus Industry' => $focusIndustry);
+    echo $this->addRowsWithLabelAdjacent('span6', 'span6', $rowValues, array('tag_label' => 'h5'));
+    ?>
+    <br/>
+    <?php
+    $header = array('Name of Company' => 'company', 'Outcome of business' => 'businessOutcome', 'Url of company website' => 'webSite');
+    $previousBusinessHtml = $this->addTableRows($header, $entrepreneurDetails->previousBusiness, 'table table-bordered');
+
+    $rowValues = array('Previous Business(es)' => $previousBusinessHtml);
+    echo $this->addRowsWithLabelBelow('span12', 'span12', $rowValues, array('tag_label' => 'h5'));
+    ?>
+    <br/>
+    <?php
+    echo $this->getAttachmentsDisplay('12', '12', array('Documents' => $entrepreneurDetails1->attachment));
+    ?>
+  </div>
+  <br/>
+  <!-- Company Profile -->
+  <div class="row-fluid">
+    <div class="span12">
+      <h4>This person has a business</h4>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span3">
+      <h4>Member</h4>
+      <img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded">
+    </div>
+    <div class="span7"><br/>
+      <div class="row-fluid">
+        <div class="span12">
+          <h4>Name Business</h4>
+        </div>
+        <!-- Personal details 6/6 Start -->
+
+        <?php
+        $rowValues = array('Tagline',
+          'Summary',
+          'Industry',
+          'Location');
+        echo $this->addMultipleRows('span12', $rowValues);
+        echo $this->addMultipleRows('span12 offset10', array('view more'));
+        ?>
+
+
+
+      </div>
+    </div>
+  </div>
 <?php } ?>
 
 

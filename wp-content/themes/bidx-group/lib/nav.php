@@ -96,3 +96,4 @@ function roots_nav_menu_args($args = '') {
   return array_merge($args, $roots_nav_menu_args);
 }
 add_filter('wp_nav_menu_args', 'roots_nav_menu_args');
+show_admin_bar( false );
