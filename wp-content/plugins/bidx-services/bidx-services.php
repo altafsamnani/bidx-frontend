@@ -835,10 +835,12 @@ function allowed_file_extension($type, $file_type) {
   switch ($type) {
     case 'logo' :
     case 'memberprofilepicture':
-    case 'memberprofileattachment':
       if (preg_match("/^image/i", $file_type)) {
         $is_allowed = true;
       }
+      break;
+    case 'memberprofileattachment':
+      $is_allowed = true;
       break;
   }
   return $is_allowed;
@@ -871,26 +873,12 @@ function bidx_upload_action() {
     $file_extension = allowed_file_extension($type, $file_values['type']);
 
     if ($file_extension) {
-      switch ($file_values['type']) {
-        /* For Image Upload */
-        case (preg_match("/^image/i", $file_values['type']) ? true : false ) :
+      $body = bidx_wordpress_pre_action($type, $file_values);
 
-          $body = bidx_wordpress_pre_action($type, $file_values);
+      $params = $body['params'];
+      $result = call_bidx_service('entity/' . $params['id'] . '/document', $params, 'POST', true);
 
-
-          $params = $body['params'];
-
-          $result = call_bidx_service('entity/' . $params['id'] . '/document', $params, 'POST', true);
-
-          $request = bidx_wordpress_post_action($type, $result, $body);
-
-          break;
-
-        /* For Document Upload */
-        case (preg_match("/^text/i", $file_values['type']) ? true : false ) :
-
-          break;
-      }
+      $request = bidx_wordpress_post_action($type, $result, $body);
     }
     else {
       $request->status = 'ERROR';
