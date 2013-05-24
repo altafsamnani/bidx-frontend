@@ -20,9 +20,8 @@
 	<div class="sub-footer">
 		<ul>
 			<li>@ 2013. bidX.net. All rights reserved</li>
-			<li><a href="#">Terms of Service</a></li>
-			<li><a href="#">Privacy</a></li>
-			
+			<li><a href="/termsofservice/">Terms of Service</a></li>
+			<li><a href="/privacy/">Privacy</a></li>			
 		</ul>
 	</div>
 </footer>

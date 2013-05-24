@@ -4,9 +4,10 @@
 
 			<div class="clearfix">
 				<div class="brand">
-					<a href="<?php echo home_url(); ?>/"><img data-src="holder.js/210x113/industrial/text:No Image" class="logo img-rounded"></a>
-
-					<h1>GroupNameX</h1>
+					<a href="<?php echo home_url(); ?>/">
+						<img data-src="holder.js/210x113/social/text:No Image" class="logo img-rounded grouplogo">
+					</a>
+					<h1 class="groupname">GroupNameX</h1>
 				</div>
 
 				<div class="pull-right">

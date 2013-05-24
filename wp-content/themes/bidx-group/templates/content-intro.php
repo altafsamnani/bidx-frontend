@@ -31,19 +31,27 @@
                     </div>
 			    </div>
 			  </div>
-			  <!-- Carousel nav -->
-			  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-			  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 			</div>	    
 	    </header>
-	    
+  <?php if ( ! is_user_logged_in() ) { ?>
 	    <div class="entry-content">
 	    	<?php echo do_shortcode( '[bidx app="group" view="getGroupIntro"]' ); ?>
     	</div>
+    	<div class="entry-content">
+    		<div class="row-fluid after-well" >
+	    		<div class="span12 text-center">
+	    			<a class="btn" href="/join">Join our group</a> Already have an account? Just <a href="/login">login</a>
+	    		</div>
+    		</div>
+    	</div>	
+  <?php } ?>
+  
+  
 	    <div class="entry-content">	
-			<div class="well">
-				<h4>News and Events</h4>
-				<div class="row-fluid">
+	    	<div class="row-fluid">
+				<div class="well">
+					<h4>News and Events</h4>
+					<div class="row-fluid">
 <?php 				
  $args=array(
       'post_type' => 'post',
@@ -78,9 +86,12 @@
     }
 wp_reset_query();
 ?>								
+					</div>
 				</div>
 			</div>
 		</div>
+
+		
 		
 	    <div class="entry-content">
 		<?php echo do_shortcode( '[bidx app="group" view="lastMembers"]' ); ?>

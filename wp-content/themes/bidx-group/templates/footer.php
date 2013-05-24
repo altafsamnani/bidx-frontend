@@ -1,21 +1,26 @@
 <footer>
-	<div class="container">
-		<nav>
- <ul class="nav">
-    <li class="active">
-    <a href="#">Home</a>
-    </li>
-    <li><a href="#">Link</a></li>
-    <li><a href="#">Link</a></li>
-    </ul>
-</nav>
+
+	<div class="sub-footer social-footer">
+		<ul>
+			<li>
+				Have a question?
+			</li>
+			<li>
+				Facebook
+			</li>
+			<li>
+				LinkedIn
+			</li>
+			<li>
+				Twitter
+			</li>
+		</ul>
 	</div>
 	<div class="sub-footer">
 			<ul>
 				<li>@ 2013. bidX.net. All rights reserved</li>
-				<li><a href="#">Terms of Service</a></li>
-				<li><a href="#">Privacy</a></li>
-				
+				<li><a href="/termsofservice/">Terms of Service</a></li>
+				<li><a href="/privacy/">Privacy</a></li>	
 			</ul>
 		</div>
 </footer>
