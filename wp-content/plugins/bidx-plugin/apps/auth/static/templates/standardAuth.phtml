@@ -1,0 +1,37 @@
+<?php
+
+
+?>
+
+<form action="/wp-login.php" method="post">
+	<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
+		<label>Email address</label>
+		<input type="text" name="log" placeholder="Type your email address" />
+	</div>
+	<div class="formfield" data-validation='{"required":{"text":"A password is mandatory"}}'>
+		<label>Password</label>
+		<input type="password" name="pwd" placeholder="Type your password" />
+	</div>
+	<div class="buttonwrapper">
+		<a href="#" class="button primary jsLogin">Login</a>
+              
+	</div>
+	<p>
+		Forgot your password. Click <a href="/forgot-password">here</a> to recover.<br/>
+		Not a member? Click <a href="/forgot-password">here</a> to register.
+
+	</p>
+	
+		<!-- <input type="button" name="wp-submit"  value="Log In" /> -->
+		<input type="hidden" name="redirect_to" value="[!Q!]" />
+		<input type="hidden" name="testcookie" value="1" />
+</form>
+<script type="text/javascript">
+	$(function(){
+		$("form").form({
+			callToAction : '.jsLogin',
+			errorClass : 'error',
+			url : '/wp-admin/admin-ajax.php?action=bidx_signin'
+		});
+	});
+</script>
