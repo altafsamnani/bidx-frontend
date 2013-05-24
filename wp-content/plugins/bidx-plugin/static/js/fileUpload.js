@@ -17,7 +17,29 @@
 ===============================================================================================*/
 (function($){
 
-	var opts;
+	var _parseCallbackFn = function( str, context ) {
+		if ( !context )
+		{
+			context = window;
+		}
+
+		var aPath = str.split( "." );
+        var value = context;
+        var key   = aPath.shift();
+
+        while( key )
+        {
+            if ( !value[ key ] )
+            {
+                value[ key ] = {};
+            }
+            value = value[ key ];
+
+            key = aPath.shift();
+        }
+
+        return value;
+	};
 
 	var methods = {
 
@@ -28,7 +50,7 @@
 				var $this = $(this);
 				var that = this; //lock reference to input
 				this.options = {};//local collection of plugin options
-				opts = $.extend(this.options, options);
+				$.extend(this.options, options);
 				$this.bind("change", methods.uploadFile);
 				//any arguments for this plugin should be placed in this attribute
 				if($this.data("type-arguments")) {
@@ -37,20 +59,37 @@
 			});
 		},
 		uploadFile : function(){
-			var $this=$(this);
+			var $this=$(this),
+				i,
+				it,
+				temp;
+
 			//set spinner
 			methods.toggleAjaxLoader($this);
 
 			//check if XHR FormData is supported
 			if(window.FormData !== undefined) {
 				var formData = new FormData();
+
 				formData.append($this.attr("name"),this.files[0]);
 				if(this.options.addFields) {
-					var i=0,it=null;
+					i=0;
+					it=null;
+
 					while(it=this.options.addFields[i++]) {
 						formData.append(it,$("[name=" + it + "]").val());
 					}
 				}
+
+				if(this.options.extraValues) {
+					i=0;
+					it=null;
+
+					while(it=this.options.extraValues[i++]) {
+						formData.append(it["name"],it["value"]);
+					}
+				}
+
 				//formData.append("data",)
 				$.ajax(this.options.url, {
 						type:"post",
@@ -97,7 +136,10 @@
 				$form.append($this.detach());
 				//create hiddenfields for all fields that are to be posted
 				if(this.options.addFields) {
-					var i=0,it=null, temp=null;
+					i=0;
+					it=null;
+					temp=null;
+
 					while(it=this.options.addFields[i++]) {
 						temp = document.createElement("input");
 						temp.name = it;
@@ -105,13 +147,29 @@
 						temp.value = $("[name=" + it + "]").val();
 						$form.append(temp);
 					}
-					//add hidenfield so that application layer add padding to json result
-					temp = document.createElement("input");
-					temp.name = "jsonp";
-					temp.type="hidden";
-					temp.value = 1;
-					$form.append(temp);
 				}
+
+				//create hiddenfields for all fields that are to be posted
+				if(this.options.extraValues) {
+					i=0;
+					it=null;
+					temp=null;
+
+					while(it=this.options.extraValues[i++]) {
+						temp = document.createElement("input");
+						temp.name = it["name"];
+						temp.type="hidden";
+						temp.value = it["value"];
+						$form.append(temp);
+					}
+				}
+
+				//add hidenfield so that application layer add padding to json result
+				temp = document.createElement("input");
+				temp.name = "jsonp";
+				temp.type="hidden";
+				temp.value = 1;
+				$form.append(temp);
 
 				$form.attr("method","post");
 				$form.attr("target","uploadHandler");
@@ -125,27 +183,47 @@
 		},
 		//define done handler
 		done : function(result) {
+			methods.toggleAjaxLoader(result.el);
+
+			var options		= result.el[0].options
+			,	callback
+			;
+
+			if ( options.callback ){
+				callback = _parseCallbackFn( options.callback );
+			}
 
 			if(result.status === "OK") {
-				switch(result.data.mimeType.split("/")[0]) {
-					case "image":
-						if ( opts.imageContainer ) {
-							methods.toggleAjaxLoader(result.el);
-							$( opts.imageContainer ).html( "<img src=\"" + result.data.document +  "\" >" );
-						}
-						else {
-							result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
-						}
 
-						break;
-					default :
-						alert("no content type returned from server");
-						break;
+				if ( callback ) {
+					callback( null, result );
+				}
+				else {
+					switch(result.data.mimeType.split("/")[0]) {
+						case "image":
+							if ( options.imageContainer ) {
+								$( options.imageContainer ).html( "<img src=\"" + result.data.document +  "\" >" );
+							}
+							else {
+								result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
+							}
+
+							break;
+						default :
+							alert("no content type returned from server");
+							break;
+					}
 				}
 			}
 			else if(result.status === "ERROR" || result.status === "success") { //status succes is triggered when handler has not been called correctly
-				methods.toggleAjaxLoader(result.el);
-				alert("Image upload failed");
+
+
+				if ( callback ) {
+					callback( new Error( "Image upload failed" ) );
+				}
+				else {
+					alert("Image upload failed");
+				}
 			}
 
 		},

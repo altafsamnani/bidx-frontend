@@ -12,6 +12,8 @@ $( document ).ready( function()
 
     ,   $profilePictureContainer    = $editForm.find( ".profilePictureContainer" )
 
+    ,   $attachments                = $editForm.find( ".attachments" )
+
     ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
     ,   $currentAddressCountry      = $editForm.find( "[name='personalDetails.address[0].country']"         )
     ,   $currentAddressCityTown     = $editForm.find( "[name='personalDetails.address[0].cityTown']"        )
@@ -22,14 +24,13 @@ $( document ).ready( function()
 
     ,   member
     ,   memberId
+    ,   memberProfileId
     ,   groupDomain
     ,   bidx            = window.bidx
     ,   snippets        = {}
-
     ;
 
     var $mainStates     = $( ".mainState" )
-
     ;
 
     // Form fields
@@ -274,7 +275,8 @@ $( document ).ready( function()
 
     // Grab the snippets from the DOM
     //
-    snippets.$language = $snippets.children( ".languageItem" ).remove();
+    snippets.$language      = $snippets.children( ".languageItem"   ).remove();
+    snippets.$attachment    = $snippets.children( ".attachmentItem" ).remove();
 
     // Object for maintaining a list of currently selected languages, for optimizations only
     //
@@ -286,7 +288,7 @@ $( document ).ready( function()
         {
             source:         function( query )
             {
-                return _.map( languages, function( language ) { return language.value; } )
+                return _.map( languages, function( language ) { return language.value; } );
             }
         ,   matcher:        function( item )
             {
@@ -657,8 +659,7 @@ $( document ).ready( function()
         // Setup the hidden fields used in the file upload
         //
         $editForm.find( "[name='domain']"           ).val( groupDomain );
-        $editForm.find( "[name='memberProfileId']"  ).val( bidx.utils.getValue( member, "bidxMemberProfile.bidxEntityId" ) );
-//        $editForm.find( "[name='path']"     ).val( "/personalDetails/profilePicture" );
+        $editForm.find( "[name='memberProfileId']"  ).val( memberProfileId );
 
         // Now the nested objects
         //
@@ -927,23 +928,27 @@ $( document ).ready( function()
 
         // Attachments
         //
-        var tplAttachment = $element.find( "#template_attachment" ).html().replace( /(<!--)|(-->)/ig, "" )
-        ,   $attachments  = $element.find( "fieldset[name=attachments] > .group" )
-        ;
-
-        $attachments.append( tplAttachment );
-        $attachments.find( ".add" ).on( "click", addSet );
-
-        function addSet( e )
+        $attachments.delegate( "a[href$=#deleteAttachment]", "click", function( e )
         {
-            e.preventDefault();
+            var documentId;
 
-            var $btnAdd = $( this );
-            $btnAdd.after( tplAttachment );
-            $btnAdd.remove();
-
-            $attachments.find( ".add" ).on( "click", addSet );
-        }
+            bidx.api.call(
+                "entityDocument.destroy"
+            ,   {
+                    entityId:           memberProfileId
+                ,   documentId:         documentId
+                ,   groupDomain:        groupDomain
+                ,   success:            function( response )
+                    {
+                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
+                    }
+                ,   error:            function( jqXhr, textStatus )
+                    {
+                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
+                    }
+                }
+            );
+        } );
 
         // Fetch the member
         //
@@ -955,6 +960,10 @@ $( document ).ready( function()
             ,   success:        function( response )
                 {
                     member = response;
+
+                    // Set the global memberProfileId for convenience reasons
+                    //
+                    memberProfileId = bidx.utils.getValue( member, "bidxMemberProfile.bidxEntityId" );
 
                     bidx.utils.log( "bidx::member", member );
 
@@ -1117,8 +1126,9 @@ $( document ).ready( function()
                 return;
             }
 
-            memberId = id;
-            state = "edit";
+            memberId        = id;
+            memberProfileId = null;
+            state           = "edit";
 
             $element.show();
             _showView( "load" );
@@ -1150,13 +1160,21 @@ $( document ).ready( function()
     var router = new AppRouter();
     Backbone.history.start();
 
+
+    var attachmentUploadDone = function( err, result )
+    {
+        bidx.utils.log( "attachmentUploadDone", err, result );
+    };
+
     // Expose
     //
     var memberprofile =
     {
+        attachmentUploadDone:       attachmentUploadDone
+
         // START DEV API
         //
-        _updateCurrentAddressMap:   _updateCurrentAddressMap
+    ,    _updateCurrentAddressMap:   _updateCurrentAddressMap
     ,   currentAddressMap:          currentAddressMap
         // END DEV API
     };

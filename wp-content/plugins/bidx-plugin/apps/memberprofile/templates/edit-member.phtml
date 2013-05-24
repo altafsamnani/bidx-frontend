@@ -36,7 +36,6 @@
                 <!-- "id" is actually the memberProfileId, but to not have to rewrite the file upload let's do it like this -->
                 <input type="hidden" name="memberProfileId"     />
                 <input type="hidden" name="domain"              />
-                <input type="hidden" name="uploadtype"  value="memberprofilepicture" />
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editMember/personalDetail"></span>
@@ -72,7 +71,7 @@
                                 <label class="control-label">Profile image</label>
                                 <div class="controls">
                                     <div class="profilePictureContainer" id="editMemberProfilePicture"></div>
-                                    <input type="file" name="fileContent" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["memberProfileId","domain","uploadtype"], "imageContainer": "#editMemberProfilePicture"}'/>
+                                    <input type="file" name="fileContent" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"memberprofilepicture"}], "addFields":["memberProfileId","domain"], "imageContainer": "#editMemberProfilePicture"}'/>
                                 </div>
                             </div>
 
@@ -831,31 +830,25 @@
                     <span class="scrollPositionMarker" id="editMember/documents"></span>
                     <legend>Documents</legend>
 
-                    <div class="row-fluid">
-                        <div class="span6 group">
+                    <div class="row-fluid attachments">
+                        <div class="span6 attachmentList">
                         </div>
 
-                        <div class="span6">
+                        <div class="span6 addAttachment">
+                            <div class="fow-fluid">
+                                <div class="span4">
+                                    <img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded">
+                                </div>
+                                <div class="span8 formfield">
+                                    <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"memberprofileattachment"}], "addFields":["memberProfileId","domain"], "callback": "bidx.memberprofile.attachmentUploadDone"}'/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
             </div>
 
         </form>
-
-        <script type="text/html" id="template_attachment">
-            <!--
-            <div class="group">
-                <div class="control-group formfield">
-                    <label class="control-label">Attachement</label>
-                    <div class="controls">
-                        <input type="file" name="document" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["memberProfileId","domain"]}'/>
-                    </div>
-                </div>
-            </div>
-            <a href="#" class="add">Add another attachment</a>
-            -->
-        </script>
     </div>
 
     <div class="snippets hide">
@@ -867,6 +860,17 @@
             <div class="span4">
                 <button class="btn btnSetMotherLanguage">This is your mother tongue</button>
                 <p class="isCurrentMotherLanguage">My mother tongue</p>
+            </div>
+        </div>
+
+        <div class="fow-fluid attachmentItem">
+            <div class="span4">
+                <img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded">
+            </div>
+            <div class="span8">
+                <h3 class="filename"></h3>
+                <p class="purpose"></p>
+                <a href="#deleteAttachment" class="btn">Delete</a>
             </div>
         </div>
     </div>
