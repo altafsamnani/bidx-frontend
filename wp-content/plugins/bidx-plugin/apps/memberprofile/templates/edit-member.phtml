@@ -837,7 +837,7 @@
                         <div class="span6 addAttachment">
                             <div class="fow-fluid">
                                 <div class="span4">
-                                    <img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded">
+                                    <img src="/wp-content/plugins/bidx-plugin/static/img/iconAddDocument.png">
                                 </div>
                                 <div class="span8 formfield">
                                     <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"memberprofileattachment"}], "addFields":["memberProfileId","domain"], "callback": "bidx.memberprofile.attachmentUploadDone"}'/>
@@ -863,13 +863,13 @@
             </div>
         </div>
 
-        <div class="fow-fluid attachmentItem">
+        <div class="fow-fluid clearfix attachmentItem">
             <div class="span4">
-                <img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded">
+                <a href="#" target="_blank" class="documentLink"><img class="img-rounded documentImage"></a>
             </div>
             <div class="span8">
-                <h3 class="filename"></h3>
-                <p class="purpose"></p>
+                <h3 class="documentName"></h3>
+                <p class="uploadedDateTime"></p>
                 <a href="#deleteAttachment" class="btn">Delete</a>
             </div>
         </div>

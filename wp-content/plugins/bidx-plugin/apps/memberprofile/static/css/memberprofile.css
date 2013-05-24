@@ -67,6 +67,16 @@
     margin-top:             20px;
 }
 
+#editMember .attachmentItem {
+    padding-bottom:          20px;
+}
+
+#editMember .attachmentItem .documentName {
+    margin:                 0 0 4px;
+    font-size:              14px;
+    line-height:            18px;
+}
+
 .profile-block {
     position:               relative;
 }

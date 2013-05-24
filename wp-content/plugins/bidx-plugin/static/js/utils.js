@@ -1,5 +1,8 @@
-(function()
+(function( $ )
 {
+    var months = [ "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+
     function getQueryParameter( key )
     {
         var baseURL = decodeURI( document.location.href.replace( /\+/g, "%20" ) ).split( "#" )[ 0 ]
@@ -133,6 +136,20 @@
         return obj;
     }
 
+    function parseTimestampToDateStr( ts )
+    {
+        if ( !ts )
+        {
+            return "";
+        }
+
+        var d       = new Date( parseInt( ts + "000", 10 ) )
+        ,   result  = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear()
+        ;
+
+        return result;
+    }
+
     // Logger functions
     //
     function log()
@@ -169,15 +186,16 @@
 
     window.bidx.utils =
     {
-        getQueryParameter:      getQueryParameter
-    ,   getValue:               getValue
-    ,   setValue:               setValue
-    ,   getGroupDomain:         getGroupDomain
-    ,   getISODate:             getISODate
-    ,   parseISODate:           parseISODate
+        getQueryParameter:          getQueryParameter
+    ,   getValue:                   getValue
+    ,   setValue:                   setValue
+    ,   getGroupDomain:             getGroupDomain
+    ,   getISODate:                 getISODate
+    ,   parseISODate:               parseISODate
+    ,   parseTimestampToDateStr:    parseTimestampToDateStr
 
-    ,   log:                    log
-    ,   warn:                   warn
-    ,   error:                  error
+    ,   log:                        log
+    ,   warn:                       warn
+    ,   error:                      error
     };
-} ());
+} ( jQuery ));

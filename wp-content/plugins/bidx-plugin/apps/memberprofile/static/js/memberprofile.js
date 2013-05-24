@@ -630,9 +630,9 @@ $( document ).ready( function()
         }
     };
 
-    // Use the retrieved member object to populate the form elements
+    // Use the retrieved member object to populate the form and other screen elements
     //
-    var _populateForm = function()
+    var _populateScreen = function()
     {
         $.each( fields.personalDetails, function( i, f )
         {
@@ -690,7 +690,7 @@ $( document ).ready( function()
 
         // Language is handled specially
         //
-        var languageDetail       = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.languageDetail", true );
+        var languageDetail      = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.languageDetail", true );
 
         if ( languageDetail )
         {
@@ -700,7 +700,46 @@ $( document ).ready( function()
             } );
         }
 
+        // Attachments
+        //
+        var attachments         = bidx.utils.getValue( member, "bidxMemberProfile.attachment", true );
+
+        if ( attachments)
+        {
+            $.each( attachments, function( idx, attachment )
+            {
+                _addAttachmentToScreen( attachment );
+            } );
+        }
+
         _updateCurrentAddressMap();
+    };
+
+    // Add the attachment to the screen, by cloning the snippet and populating it
+    //
+    var _addAttachmentToScreen = function( attachment )
+    {
+        var $attachmentList     = $attachments.find( ".attachmentList" )
+        ,   $attachment         = snippets.$attachment.clone()
+
+        ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
+        ,   imageSrc
+        ;
+
+        $attachment.data( "attachment", attachment );
+
+        $attachment.find( ".documentName"       ).text( attachment.documentName );
+        $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
+
+        imageSrc =  attachment.mimeType.match( /^image/ )
+            ? attachment.document
+            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
+
+        $attachment.find( ".documentImage" ).attr( "src", imageSrc );
+
+        $attachment.find( ".documentLink" ).attr( "href", attachment.document );
+
+        $attachmentList.append( $attachment );
     };
 
     // Add an item to the language list and render the HTML for it
@@ -930,7 +969,20 @@ $( document ).ready( function()
         //
         $attachments.delegate( "a[href$=#deleteAttachment]", "click", function( e )
         {
-            var documentId;
+            e.preventDefault();
+
+            var $btn            = $( this )
+            ,   $attachment     = $btn.closest( ".attachmentItem" )
+            ,   attachment      = $attachment.data( "attachment" )
+            ,   documentId      = attachment.bidxEntityId
+            ;
+
+            if ( $btn.hasClass( "disabled" ))
+            {
+                return;
+            }
+
+            $btn.addClass( ".disabled" );
 
             bidx.api.call(
                 "entityDocument.destroy"
@@ -941,10 +993,16 @@ $( document ).ready( function()
                 ,   success:            function( response )
                     {
                         bidx.utils.log( "bidx::entityDocument::destroy::success", response );
+
+                        $attachment.remove();
                     }
                 ,   error:            function( jqXhr, textStatus )
                     {
                         bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
+
+                        alert( "Problems deleting attachment" );
+
+                        $btn.removeClass( ".disabled" );
                     }
                 }
             );
@@ -967,7 +1025,7 @@ $( document ).ready( function()
 
                     bidx.utils.log( "bidx::member", member );
 
-                    _populateForm();
+                    _populateScreen();
 
                     $btnSave.removeClass( "disabled" );
                     $btnCancel.removeClass( "disabled" );
@@ -1164,6 +1222,21 @@ $( document ).ready( function()
     var attachmentUploadDone = function( err, result )
     {
         bidx.utils.log( "attachmentUploadDone", err, result );
+
+        if ( err )
+        {
+            alert( "Problem uploading attachment" );
+        }
+        else
+        {
+            _addAttachmentToScreen( result.data );
+
+            // Clear the input by cloneing it
+            //
+            var $input = result.el;
+
+            $input.replaceWith( $input.clone( true ) );
+        }
     };
 
     // Expose
