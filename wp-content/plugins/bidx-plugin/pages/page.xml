@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
+
+	<posttype>page</posttype>
+	<description>List of public editable page resources for the enduser to manage</description>
+	<version>1.0</version>
+	
+	<posts>
+		<post>
+			<post_id>1</post_id>
+			<name>TermsofService</name>
+			<title>Terms of Service</title>
+			<mapping>^termsofservice/?</mapping>
+			<update>false</update>
+			<content>
+				&lt;h2&gt;Terms of service&lt;/h2&gt;
+			</content>
+		</post>
+		<post>
+			<post_id>2</post_id>
+			<name>Privacy</name>
+			<title>Privacy</title>
+			<mapping>^privacy/?</mapping>
+			<update>false</update>
+			<content>
+				&lt;h2&gt;Terms of service&lt;/h2&gt;
+			</content>
+		</post>		
+	</posts>
+	
+</data>

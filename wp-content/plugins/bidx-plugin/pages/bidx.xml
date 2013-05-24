@@ -15,8 +15,8 @@
 		</post> 
 	  	<post>
 			<post_id>1</post_id>
-			<name>memberlist</name>
-			<title>Memberprofile List</title>
+			<name>memberprofile</name>
+			<title>Your Profile</title>
 			<mapping>^member/?</mapping>
 			<content>[bidx app="memberprofile"]</content>
 		</post> 
@@ -82,7 +82,6 @@
 			<title>Home</title>
 			<mapping>^home?</mapping>
 			<content>
-			Test1234
 			&lt;div class="row-fluid"&gt;
 				&lt;div class="span8"&gt;
 					[bidx app="group" view="listGroups"]

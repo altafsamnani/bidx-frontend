@@ -30,7 +30,32 @@
 		  </xs:simpleContent>
 		</xs:complexType>
 	</xs:element>
-	
+
+	<xs:element name="title">
+		<xs:annotation>
+			<xs:documentation>Title. Language can be set explicitly although xml:lang could be used?</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+		  <xs:simpleContent>
+		    <xs:extension base="xs:string">
+		      <xs:attribute name="language" type="xs:string" use="optional" />
+		    </xs:extension>
+		  </xs:simpleContent>
+		</xs:complexType>
+	</xs:element>	
+
+	<xs:element name="mapping">
+		<xs:annotation>
+			<xs:documentation>URL mapping per Language. This is an optional field.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+		  <xs:simpleContent>
+		    <xs:extension base="xs:string">
+		      <xs:attribute name="language" type="xs:string" use="optional" />
+		    </xs:extension>
+		  </xs:simpleContent>
+		</xs:complexType>
+	</xs:element>	
 		
 	<xs:complexType name="posts">
 		<xs:sequence>
@@ -42,21 +67,13 @@
 		<xs:sequence>
 			<xs:element name="post_id" type="xs:string"></xs:element>
 			<xs:element name="name" type="xs:string"></xs:element>
-			<xs:element name="title" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Optional a title can be set else post name is used</xs:documentation>
-				</xs:annotation>			
-			</xs:element>
+			<xs:element ref="title" maxOccurs="unbounded"></xs:element>
 			<xs:element name="post_date" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Optional a date can be set else load date is added</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="mapping" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>A regex with mapping for the url pattern</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element ref="mapping" maxOccurs="unbounded"></xs:element>
 			<xs:element name="template" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Optional name of the template in a Theme</xs:documentation>
