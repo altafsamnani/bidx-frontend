@@ -43,23 +43,30 @@ class GroupService extends APIbridge {
    */
   public function getGroupDetails( $group_id = null ) {
   	
-  	if ($group_id == null) {
-  		$session = BidxCommon :: $staticSession;
-  		$group_id = null; //hackhack checkcheck
-  		$this -> getLogger() -> trace($session);
-  		if (property_exists($session, 'data'))
-  		{
-  			$group_id =  $session -> data -> currentGroup;
-  		}
-  		if ($group_id == null) {
-  			
-  			$this -> getLogger() -> trace('finding out id of ' . $session -> bidxGroupDomain);
-  			
-  			$group_id = $this->getGroupId( $session -> bidxGroupDomain );
-  		}
-  	}
-  	return $this->callBidxAPI('groups/' . $group_id, array(), 'GET');
+	if ($group_id == null) {
+		
+		if ( false === ( $result = get_transient( 'localgroup' ) ) ) {
+			// It wasn't there, so regenerate the data and save the transient
+			$session = BidxCommon :: $staticSession;
+			$this -> getLogger() -> trace($session);
+			if (property_exists($session, 'data')) {
+				$group_id =  $session -> data -> currentGroup;
+			}
+			if ($group_id == null) {
+				$this -> getLogger() -> trace('finding out id of ' . $session -> bidxGroupDomain);
+				$group_id = $this->getGroupId( $session -> bidxGroupDomain );
+			}
+			
+			$result = $this->callBidxAPI('groups/' . $group_id, array(), 'GET');
+			set_transient( 'localgroup', $result, 300 );
+		}
+			
+	} else {
+		
+		$result = $this->callBidxAPI('groups/' . $group_id, array(), 'GET');
+	}
 	
+	return $result;
   }
 
   /**
@@ -79,10 +86,16 @@ class GroupService extends APIbridge {
    * @param string $group_name name of the group determined by domain
    * @return long respresentation id of the group
    */
-  public function getGroupId( $group_name ) {
+public function getGroupId( $group_name ) {
   	
   	$group_id = 0;
-  	$result = $this->callBidxAPI('groups/', array(), 'GET');
+  	
+  	if ( false === ( $result = get_transient( 'groupoverview' ) ) ) {
+  		// It wasn't there, so regenerate the data and save the transient
+  		$result = $this->callBidxAPI('groups/', array(), 'GET');
+  		set_transient( 'groupoverview', $result, 300 );
+  	}
+  	
 	$data = $result -> data;
   	foreach( $data as $group ) {
   		if ( $group -> domain === $group_name ) {

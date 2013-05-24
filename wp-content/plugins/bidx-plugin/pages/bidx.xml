@@ -2,20 +2,20 @@
 <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
 
 	<posttype>bidx</posttype>
-	<description>List of page resources that are hidden for the enduser to manage</description>
+	<description>List of page resources that are hidden for the end-	user to manage</description>
 	<version>1.0</version>
 	
 	<posts>
 	  	<post>
 			<post_id>0</post_id>
-			<name>memberlist</name>
+			<name>member_list</name>
 			<title>Memberprofile List</title>
 			<mapping>^memberlist/?</mapping>
 			<content>[bidx app="memberprofile" view="list"]</content>
 		</post> 
 	  	<post>
 			<post_id>1</post_id>
-			<name>memberprofile</name>
+			<name>member_profile</name>
 			<title>Your Profile</title>
 			<mapping>^member/?</mapping>
 			<content>[bidx app="memberprofile"]</content>
@@ -36,21 +36,21 @@
 		</post>
 		<post>
 			<post_id>4</post_id>
-			<name>search</name>
-			<title>Search</title>
+			<name>search_business</name>
+			<title>Search Business</title>
 			<mapping>^search/business?</mapping>
 			<content>[bidx app="search" view="cardview" query=""]</content>
 		</post>
 		<post>
 			<post_id>5</post_id>
-			<name>search</name>
-			<title>Search</title>
+			<name>search_map</name>
+			<title>Search Map</title>
 			<mapping>^search/near?</mapping>
 			<content>[bidx app="search" view="mapview" query=""]</content>
 		</post>		
 		<post>
 			<post_id>6</post_id>
-			<name>businesslist</name>
+			<name>business_list</name>
 			<title>Business List</title>
 			<mapping>^business/?</mapping>
 			<content>[bidx app="business" view="list"]</content>
@@ -64,17 +64,17 @@
 		</post>	
 		<post>
 			<post_id>8</post_id>
-			<name>lastmembers</name>
+			<name>last_members</name>
 			<title>Last Members</title>
 			<mapping>^group/lastmembers?</mapping>
 			<content>[bidx app="group" view="lastMembers"]</content>
 		</post>	
 		<post>
 			<post_id>9</post_id>
-			<name>groupinfo</name>
+			<name>group_info</name>
 			<title>Group Information</title>
 			<mapping>^group/groupinfo?</mapping>
-			<content>[bidx app="group" view="getGroupDetails"]</content>
+			<content>[bidx app="group" view="getGroupIntro"]</content>
 		</post>
 		<post>
 			<post_id>10</post_id>

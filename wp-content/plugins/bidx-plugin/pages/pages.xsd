@@ -127,5 +127,37 @@
 			<xs:element name="reference" type="xs:string" minOccurs="0"></xs:element>
 		</xs:sequence>
 	</xs:complexType>
+
+	
+	<xs:complexType name="images">
+		<xs:sequence>
+			<xs:element name="image" type="image" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="image">
+		<xs:annotation>
+			<xs:documentation>Image items to add</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="image_id" type="xs:string"></xs:element>
+			<xs:element name="image_reference" type="xs:string"></xs:element>
+			<xs:element ref="title" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Title to display</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="content" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description text to add</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+			<xs:element name="category" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Useful for placing the images in collections</xs:documentation>
+				</xs:annotation>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	
 </xs:schema>
