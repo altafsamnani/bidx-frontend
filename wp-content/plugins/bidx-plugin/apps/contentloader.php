@@ -52,8 +52,26 @@ class ContentLoader {
 			foreach ($posts as $post) {
 				
 				$this -> logger -> trace( 'Adding the post named : ' . $post -> name );
+				
+				if ( $post -> update == 'false' ) {
+					
+					$this -> logger -> trace( 'May not update the post : ' . $post -> name );
+					
+					$posts_array = get_posts( array(
+							 'post_name'        => (string)$post -> name
+							,'post_status'      => 'publish'
+							,'post_type'        => $document -> posttype
+							,'nopaging'		    => true,
+							 'suppress_filters' => true )
+					);
+					if ( sizeof( $posts_array ) > 0 ) {
+						break;
+						$this -> logger -> trace( 'Post exist, skipping : ' . $post -> name );
+					}
+				}
+				
 				$post_id = wp_insert_post( array(
-						 'post_content'   => $post -> content
+						 'post_content_filtered'   => $post -> content
 						,'post_name'      => $post -> name
 						,'post_status'    => 'publish'
 						,'post_title'     => $post -> title
@@ -71,9 +89,8 @@ class ContentLoader {
 				}
 				
 				if ( isset( $post -> mapping ) && $post -> mapping != '' ) {
-					//$target = 'index.php?bidxaction=' . $post -> name . '&bidx=' . $post -> name . '&post_type=' . $document -> posttype;
-					$target = 'index.php?bidx=' . $post -> name;
-						
+					$target = 'index.php?' . $document -> posttype . '=' . $post -> name;
+											
 					$this -> logger -> trace( 'Adding the rewrite rule : ' . $post -> mapping . ' to ' . $target );
 					//check here that all values from SimpleXML are explicitly casted to string
 					add_rewrite_rule( (string)$post -> 	mapping, $target, 'top' );
