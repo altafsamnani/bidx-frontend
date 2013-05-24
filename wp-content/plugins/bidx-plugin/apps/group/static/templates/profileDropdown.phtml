@@ -5,10 +5,11 @@
    		<ul class="dropdown-menu">
 			<li><a href="/member">Profile</a></li>
 <?php
-if ( in_array( $this -> sessionData, 'GroupAdmin') && 
-	 in_array( $this -> sessionData, 'GroupOwner') ) {
+$roles = $this -> sessionData -> data -> roles;
+if ( in_array( 'GroupAdmin', $roles ) || 
+	 in_array( 'GroupOwner', $roles ) ) {
 ?>		
-            <li><a href="/wp-admin">Dashboard</a></li>
+            <li><a href="/wp-admin">Content</a></li>
 <?php
 }
 ?>
