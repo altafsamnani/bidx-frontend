@@ -300,7 +300,7 @@ $( document ).ready( function()
                 return true;
             }
         }
-    ).removeClass( "disabled" );
+    ).removeClass( "disabled" ).removeAttr( "disabled" );
 
     // Figure out the key of the to be added language
     //
@@ -323,7 +323,9 @@ $( document ).ready( function()
             _addLanguageDetailToList( { language: key, motherLanguage: false } );
         }
 
-    } ).removeClass( "disabled" );
+    } );
+
+    $btnAddLanguage.removeClass( "disabled" ).removeAttr( "disabled" );
 
     // Remove the language from the list
     //
@@ -1060,20 +1062,38 @@ $( document ).ready( function()
             return;
         }
 
+        // Remove all attachments / binary entities
+
         // Remove profile picture
         //
-        if ( bidx.utils.getValue( member, "member.bidxMemberProfile.personalDetails.profilePicture" ) )
+        if ( bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture" ) )
         {
             delete member.bidxMemberProfile.personalDetails.profilePicture;
         }
 
+        // Remove attachment
+        //
+        if ( bidx.utils.getValue( member, "bidxMemberProfile.attachment" ) )
+        {
+            delete member.bidxMemberProfile.attachment;
+        }
+
+        // Remove attachment
+        //
+        if ( bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.attachment" ) )
+        {
+            delete member.bidxMemberProfile.personalDetails.attachment;
+        }
+
+
+
         // Force current (0) set to be the current one
         //
-        var contactDetail = bidx.utils.getValue( member, "member.bidxMemberProfile.personalDetails.contactDetail", true );
+        var contactDetail = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.contactDetail", true );
 
         if ( contactDetail && contactDetail.length )
         {
-            member.personalDetails.contactDetail = [
+            member.bidxMemberProfile.personalDetails.contactDetail = [
             {
                 "currentContactDetails": true
             }];
