@@ -3,12 +3,7 @@
 		<div class="container">
 
 			<div class="clearfix">
-				<div class="brand">
-					<a href="<?php echo home_url(); ?>/">
-						<img data-src="holder.js/210x113/social/text:No Image" class="logo img-rounded grouplogo">
-					</a>
-					<h1 class="groupname">GroupNameX</h1>
-				</div>
+				<?php echo do_shortcode( '[bidx app="group" view="groupHeader"]' );?>
 
 				<div class="pull-right">
 					<div class="topNav clearfix">

@@ -9,19 +9,10 @@
 				<div class="pull-right">
 					<div class="topNav clearfix">
 						<form class="navbar-search" method="post" action="/search">
-				    		<input type="text" class="search-query" placeholder="Search">
+				    		<input type="text" name="q" class="search-query" placeholder="Search">
 				    		<button type="submit" class="btn"><i class="icon-search"></i></button>
 				    	</form>
-				    	<ul class="memberInfo pull-right nav nav-pills">
-							<li class="dropdown dropdown-hover">
-					    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">My profile</a>
-					    		<ul class="dropdown-menu">
-									<li><a href="/member">Profile</a></li>
-                  <li><a href="/wp-admin">Dashboard</a></li>
-									<li><a href="<?php echo wp_logout_url('/'); ?>">Logout</a></li>
-					    		</ul>
-					    	</li>
-				    	</ul>
+				    	<?php echo do_shortcode( '[bidx app="group" view="profileDropDown"]' );?>
 					</div>
 				</div>
 			</div>

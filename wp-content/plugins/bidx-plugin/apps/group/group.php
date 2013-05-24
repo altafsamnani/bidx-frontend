@@ -55,7 +55,9 @@ class group {
 				return $view->render( 'groupIntro.phtml' );	
 			case "groupHeader" :
 				$view->group = $groupSvc->getGroupDetails(  );
-				return $view->render( 'groupHeader.phtml' );							
+				return $view->render( 'groupHeader.phtml' );
+			case "profileDropDown" :
+				return $view->render( 'profileDropdown.phtml' );
 			default :	
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'groupList.phtml' );
