@@ -15,13 +15,9 @@ html, body {
 	font-family:'weblysleek_ui_normalregular',sans-serif,Arial;
 }
 
-/** Padding is as high as the navbar + pageheader. Please be aware that this is purposely set to 210! **/
+/** Padding is as high as the navbar + pageheader **/
 body {
 	padding-top: 				140px;
-}
-
-body.fixed-header {
-	padding-top:				210px;
 }
 
 ::-webkit-input-placeholder {
@@ -184,6 +180,9 @@ li {
 	padding-bottom:				12px;
 }
 
+.after-well {
+	margin-bottom: 				20px;
+}
 
 /* End Global styles */
 
