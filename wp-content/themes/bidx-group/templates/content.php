@@ -1,3 +1,4 @@
+<div class="container">
 <?php if (!have_posts()) : ?>
   <div class="alert">
     <?php _e('Sorry, no results were found.', 'roots'); ?>
@@ -9,7 +10,7 @@
   <article <?php post_class(); ?>>
     <header>
       <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-      <?php get_template_part('templates/entry-meta'); ?>
+     <?php get_template_part('templates/entry-meta'); ?>
     </header>
     <div class="entry-summary">
       <?php the_excerpt(); ?>
@@ -32,3 +33,4 @@
     </ul>
   </nav>
 <?php endif; ?>
+</div>
