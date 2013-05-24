@@ -31,6 +31,8 @@ class ContentLoader {
 	 * Load the data into Wordpress.
 	 * Ensure that defined custom post types are created
 	 * @param string $post_type optional loading for only one post_type
+	 * 
+	 * @todo language selector based on the language preference (how multiple languages are supported)
 	 */
 	public function load($post_type = null) {
 
@@ -102,6 +104,7 @@ class ContentLoader {
 			//if manual writeout is needed
 			//$this -> add_rewrite_rules();
 			
+			//Widgets to be added
 			$widgets = $document -> xpath('//widget');
 			$this -> logger -> trace( 'Adding the widgets : ' . sizeof( $widgets ) . ' found');
 			foreach ($widgets as $widget) {
@@ -110,11 +113,35 @@ class ContentLoader {
 				
 			}
 			
+			//Navigation blocks to be added 
+			$navigations = $document -> xpath('//navigation');
+			$this -> logger -> trace( 'Adding the Navigation : ' . sizeof( $navigations ) . ' found');
+			foreach ($navigations as $navigation) {
+			
+				$this -> logger -> trace( 'Adding the navigation named : ' . $navigation -> name );
+			
+			}
+			
+			//Image resource blocks to be added
+		//Navigation blocks to be added 
+			$images = $document -> xpath('//images');
+			$this -> logger -> trace( 'Adding the Image : ' . sizeof( $images )  . ' found');
+			foreach ($images as $image) {
+					
+				$this -> logger -> trace( 'Adding the navigation named : ' . $image -> name );
+					
+			}
+			
 		}	
 		
 	}
 	
-	function add_rewrite_rules($ep_mask=EP_NONE) {
+	/**
+	 * Internal help function for faster debugging of rewrite rule errors.
+	 * Not for production usage
+	 * @param string $ep_mask use the default value
+	 */
+	private function add_rewrite_rules( $ep_mask=EP_NONE ) {
 		global $wp_rewrite;
 		$wp_rewrite -> matches = 'matches'; // this is necessary to write the rules properly
 		$new_rules = $wp_rewrite -> generate_rewrite_rules(false, $ep_mask);

@@ -34,7 +34,7 @@ class group {
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/static/templates/' );
-		$view->sessionData = BidxCommon::$staticSession;
+		$view -> sessionData = BidxCommon::$staticSession;
 		
 		//2. Service Group
 		require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
@@ -50,12 +50,12 @@ class group {
 			case "listGroups" :
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'groupList.phtml' );	
-			case "getGroupDetails" :
+			case "getGroupIntro" :
 				$view->group = $groupSvc->getGroupDetails(  );
-				return $view->render( 'groupDetails.phtml' );
-				case "getGroupIntro" :
-					$view->group = $groupSvc->getGroupDetails(  );
-					return $view->render( 'groupIntro.phtml' );				
+				return $view->render( 'groupIntro.phtml' );	
+			case "groupHeader" :
+				$view->group = $groupSvc->getGroupDetails(  );
+				return $view->render( 'groupHeader.phtml' );							
 			default :	
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'groupList.phtml' );
