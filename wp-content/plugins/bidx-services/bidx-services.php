@@ -721,7 +721,7 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
       $domain = $params['domain'];
       unset( $params );
 
-      $params['path'] = '/personalDetails/attachment';
+      $params['path'] = '/attachment';
       $params['purpose'] = 'attachment';
 
       $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
