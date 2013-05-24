@@ -91,6 +91,7 @@ class BidxCommon {
 
     $hostAddress = explode('/', $_SERVER ["REQUEST_URI"]);
     $redirect = NULL;
+    $data = new STDClass();
     /*     * Host Address
      * Param0 /member , /group, /profile
      * Param1 2 from /member/2 , 3 from /group/3

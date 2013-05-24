@@ -46,15 +46,20 @@ class search {
 	function load($atts) {
 	
 		// 1. Template Rendering
-		//require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/static/templates/' );
-		//$view->sessionData = BidxCommon::$staticSession;
+		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/static/templates/' );
 		
 		//2. Copy data
-		$view -> query = $atts['query'];
+		if (in_array('q', $atts)) {
+			$view -> query = $atts['q'];
+		}
 		
 		// 3. Determine the view needed
-		$command = $atts['view'];
+		if (in_array('q', $atts)) {
+			$command = $atts['view'];
+		} else {
+			$command = '';
+		}
 		switch ( $command ) {
 			case "cardView" :
 				return $view->render( 'cardView.phtml' );

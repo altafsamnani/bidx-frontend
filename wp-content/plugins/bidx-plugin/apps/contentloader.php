@@ -73,7 +73,7 @@ class ContentLoader {
 				}
 				
 				$post_id = wp_insert_post( array(
-						 'post_content_filtered'   => $post -> content
+						 'post_content'   => $post -> content
 						,'post_name'      => $post -> name
 						,'post_status'    => 'publish'
 						,'post_title'     => $post -> title
