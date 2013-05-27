@@ -704,7 +704,7 @@ $( document ).ready( function()
 
         // Attachments
         //
-        var attachments         = bidx.utils.getValue( member, "bidxMemberProfile.attachment", true );
+        var attachments         = bidx.utils.getValue( member, "bidxMemberProfile.personalDetail.attachment", true );
 
         if ( attachments)
         {
