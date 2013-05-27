@@ -722,6 +722,13 @@ $( document ).ready( function()
     //
     var _addAttachmentToScreen = function( attachment )
     {
+        if ( attachment === null )
+        {
+            bidx.util.warn( "memberprofile::_addAttachmentToScreen: attachment is null!" );
+            return;
+        }
+
+
         var $attachmentList     = $attachments.find( ".attachmentList" )
         ,   $attachment         = snippets.$attachment.clone()
 
