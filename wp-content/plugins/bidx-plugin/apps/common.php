@@ -54,7 +54,7 @@ class BidxCommon {
     $jsSessionData = $this::$staticSession;
     $jsSessionVars = (isset($jsSessionData->data)) ? json_encode($jsSessionData->data) : '{}';
 
-    //Api Resposne data
+    //Api Response data
     $data = $this->getURIParams($jsSessionData);
     $jsApiVars = (isset($data)) ? json_encode($data) : '{}';
 
@@ -72,7 +72,6 @@ class BidxCommon {
 </script>";
     //echo $scriptJs;
     return $scriptJs;
-    //eturn $scriptJs;
   }
 
   /**
