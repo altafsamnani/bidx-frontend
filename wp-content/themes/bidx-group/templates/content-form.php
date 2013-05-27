@@ -1,16 +1,16 @@
 <div class="block-odd">
-	<div class="container">
-		
+	<div class="container outer-content-container">
+
 		<?php get_template_part('templates/page', 'header'); ?>
-		
+
 		<?php while (have_posts()) : the_post(); ?>
 		  <?php
        the_content();
-       
+
     //  $bidxUname = urldecode($wp_query->query_vars['buname']);
    //   $bidxGid   = urldecode($wp_query->query_vars['bgid']);
      // $bidxGroupName   = urldecode($wp_query->query_vars['bname']);
-      
+
 //      $content = get_the_content( );
 //      $content = apply_filters('the_content', $content);
 //      $content = str_replace(']]>', ']]&gt;', $content);
