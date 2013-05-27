@@ -15,13 +15,13 @@
 		init : function (options){
 
  			return this.each(function(){
- 				
+
  				var $this = $(this);
  				elements[$this.attr("name")] = $this;
  				var that = this; //lock reference to input
  				this.options = {};//local collection of plugin options
  				var markersArray = []; //local collection of overlay (markers, circles etc)
-				var geocoder = new google.maps.Geocoder();       
+				var geocoder = new google.maps.Geocoder();
 
  				//any arguments for this plugin should be placed in this attribute
  				if($this.data("type-arguments")) {
@@ -40,8 +40,8 @@
 					mapDimensions=this.options["mapDimensions"];
 				}
 				$this.after("<div id=\"" + mapId + "\" class=\"map jqHidden\" style=\"" + mapDimensions + "\"></div>");
-				
-				
+
+
 				if(this.options["showMap"]) {
 					//set handler to show map on focus
 					$this.focus(function(){
@@ -58,7 +58,7 @@
 					zoom: 13,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				};
-				
+
 				//create google map
 				var map = new google.maps.Map(document.getElementById(mapId),
 					mapOptions);
@@ -125,7 +125,7 @@
 						//add circle around marker
 						if(that.options["drawCircle"]) {
 
-							
+
 
 							// Add circle overlay and bind to marker
 							var circle = new google.maps.Circle({
@@ -152,9 +152,9 @@
 								var latlng = new google.maps.LatLng(pos.lat(), pos.lng());
 								geocoder.geocode({
 									latLng:  latlng
-								}, 
+								},
 								function(responses) {
-									
+
 									if (responses && responses.length > 0) {
 										$this.val(responses[0].formatted_address);
 										//update locationdata
@@ -163,7 +163,7 @@
 								});
 								//add radius value to location data
 								methods.createHiddenField($this, "focusReach", (circle.radius)/1000);
-								
+
 							});
 
 						}
@@ -186,30 +186,30 @@
 							return true;
 							//THIS NEEDS TO BE REPLACE BY SELECTING THE FIRST SUGGESTION FROM AUTCOMPLETE (example: http://jsfiddle.net/Ut2U4/1/  OR use autocompleteprediction service https://developers.google.com/maps/documentation/javascript/reference#AutocompleteService)
 						}
-						
+
 						if(that.options["listId"]) {
 
 							$list=$("#" + that.options["listId"]);
-							
-												
+
+
 							if($list.find("." + that.options.emptyClass)) {
 								$list.find("." + that.options.emptyClass).hide();
 							}
-							
+
 							var $li=$("<li><div class=\"label\">" + place.formatted_address + "<span class=\"control icon-remove icon-white\"></div></li>");
-							
+
 							$li.find(".control.icon-remove").click(function(){
 								$li.fadeOut('fast', function(){
 									methods.removeLocationData($this, $li.index(), $list.find("li > div:not(." + that.options.emptyClass + ")").length);
 									$li.remove();
-									
+
 									if($list.find("li > div:not(." + that.options.emptyClass + ")").length === 0) {
 										$list.find("." + that.options.emptyClass).fadeIn('fast');
 									}
 								});
 
 
-								
+
 							});
 							//add item to list
 							$list.append($li);
@@ -244,7 +244,6 @@
 		/*this function is specifically for bidx Address. Always needs to be converted to format defined below*/
 		setLocationData : function(input,location, index)	 {
 
-
 			var addressMappings=[
 				{bidx:"street",google:"route"},
 				{bidx:"streetNumber",google:"street_number"},
@@ -261,13 +260,13 @@
 				location.address_components.forEach(function(address,x,obj) {
 					if(methods.hasValue(mapping.google, address.types)) {
 						found=true;
-						addressValue=address.long_name;
+						addressValue = mapping.google === "country" ? address.short_name : address.long_name;
 						return true;
 					}
 				});
 				var fieldname=(index!="undefined" ? "["+index+"].":"") + mapping.bidx;
 				found ? methods.createHiddenField(input, fieldname, addressValue) : methods.createHiddenField(input, fieldname, "");
-				
+
 			});
 			//now add location (latlong)
 			if(location.geometry) {
@@ -285,14 +284,14 @@
 					$("[name^='" + (input.attr("name") + "[" + (i-1) + "]") + "']").each(function(index,it){
 						var $it=$(it);
 						$it.attr("name", $it.attr("name").replace(input.attr("name") + "[" + (i-1) + "]",input.attr("name") + "[" + (i-2) + "]"));
-						
+
 					});
 
 
-					
+
 				}
 			}
-			
+
 		},
 
 		//check for key in array
@@ -311,9 +310,9 @@
 			else {
 				input.nextAll("[name='" + fieldname + "']").val(val);
 			}
-			
+
 		}
-		
+
 	}
 
 	$.fn.location = function(method) {
