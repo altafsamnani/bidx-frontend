@@ -19,7 +19,14 @@
 
         $btn.addClass( "disabled" );
 
-        _joinGroup( function( err )
+        var groupId = $btn.data( "groupid" );
+
+        if ( !groupId )
+        {
+            groupId = bidx.utils.getValue( bidxConfig, "session.currentGroup" );
+        }
+
+        _joinGroup( groupId, groupDomain, function( err )
         {
             $btn.removeClass( "disabled" );
 
@@ -29,6 +36,8 @@
             }
             else
             {
+                // TODO: redirect to group dashboard in case the join was for a different group than the one currently looking at
+                //
                 document.location.reload();
             }
         });
@@ -36,15 +45,13 @@
 
     // Perform an API call to join the group
     //
-    var _joinGroup = function( cb )
+    var _joinGroup = function( groupId, cb )
     {
         if ( !bidx.utils.getValue( bidxConfig, "authenticated" ))
         {
             alert( "It is only possible to join a group when you are logged in" );
             return;
         }
-
-        var groupId = bidx.utils.getValue( bidxConfig, "session.currentGroup" );
 
         if ( !groupId )
         {
