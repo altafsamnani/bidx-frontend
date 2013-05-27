@@ -81,7 +81,6 @@
 				data.elements[el.name]=el;
 			});
 
-
 			//set callToAction button
 			if(options.callToAction) {
 
@@ -113,7 +112,7 @@
 					switch(plugin) {
 						case "date" :
 							//activate all datepickers in this plugin
-							this.find("[data-type=date]").datepicker({});
+							$form.find("[data-type=date]").datepicker({});
 							break;
 						case "slider" :
 
@@ -127,7 +126,7 @@
 								dataType: 'script'
 							});
 							//get all location elements and activate plugin
-							this.find("[data-type=location]").location({});
+							$form.find("[data-type=location]").location({});
 							break;
 						case "countryAutocomplete" :
 							$.ajax({
@@ -138,7 +137,7 @@
 								dataType: 'script'
 							});
 							//get all location elements and activate plugin
-							this.find("[data-type=countryAutocomplete]").countryAutocomplete({});
+							$form.find("[data-type=countryAutocomplete]").countryAutocomplete({});
 							break;
 						case "fileUpload" :
 							$.ajax({
@@ -149,7 +148,7 @@
 								dataType: 'script'
 							});
 							//get all fileuploads in this form and activate plugin
-							this.find("[data-type=fileUpload]").fileUpload({"parentForm":this});
+							$form.find("[data-type=fileUpload]").fileUpload({"parentForm":this});
 							break;
 						default:
 							break;
@@ -160,13 +159,25 @@
 			$form.data( "form", data );
 		},
 		formValidated : function () {
-			return this.data.valid;
+			var $form	= $( this )
+			,	data	= $form.data( "form" )
+			;
+
+			return data.valid;
 		},
 		getElements : function() {
-			return this.data.elements;
+			var $form	= $( this )
+			,	data	= $form.data( "form" )
+			;
+
+			return data.elements;
 		},
 		getElement : function(el) {
-			return this.data.elements[el];
+			var $form	= $( this )
+			,	data	= $form.data( "form" )
+			;
+
+			return data.elements[el];
 		},
 		getForm : function(){
 			return this;
@@ -262,9 +273,12 @@
 			//now check if there are errors per field
 			var field=null, result = true;
 			for(field in data.elements) {
+
 				if(!data.elements[field].validated) {
 					//if(this.formfield.data("validation")) {
 					//if value is NULL field has not been validated yet
+
+
 					if(data.elements[field].validated === null) {
 						data.elements[field].validate({data:data.elements[field]});
 						result = result && data.elements[field].validated;
