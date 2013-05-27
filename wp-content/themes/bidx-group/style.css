@@ -17,7 +17,11 @@ html, body {
 
 /** Padding is as high as the navbar + pageheader **/
 body {
-	padding-top: 				140px;
+	padding-top: 				160px;
+}
+
+body.bidx-edit {
+	padding-top:				230px;
 }
 
 ::-webkit-input-placeholder {
@@ -237,7 +241,11 @@ li {
 
 	span.scrollPositionMarker {
 		position: 					absolute;
-		top: 						-150px;
+		top: 						-60px;
+	}
+
+	body.bidx-edit span.scrollPositionMarker {
+		top: 						-240px;
 	}
 
 	header.banner .brand a {
@@ -320,14 +328,17 @@ li {
 	}
 
   .pageHeader {
-    position:           fixed;
-    top:                160px;
     padding-top:        10px;
     padding-bottom:		10px;
     height:             70px;
     background-color:   #fff;
     z-index:            1010;
     box-sizing: 		border-box;
+  }
+
+  .bidx-edit .pageHeader {
+  	position:           fixed;
+    top:                160px;
   }
 
   .pageHeader .editControls {

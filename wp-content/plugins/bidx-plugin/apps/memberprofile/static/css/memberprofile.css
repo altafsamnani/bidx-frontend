@@ -21,7 +21,7 @@
 #editMember .nav-editMember {
     top:                    240px;
     position:               fixed;
-    width:                  14%;
+    width:                  10%;
 }
 
 #editMember input,
@@ -85,4 +85,8 @@
     position:               absolute;
     right:                  20px;
     top:                    20px;
+}
+
+.attachment {
+    padding-bottom:          8px;
 }

@@ -114,7 +114,7 @@ if ( $personalDetails->attachment && is_array( $personalDetails->attachment )) {
       ? $attachment->document
       : '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
 
-    echo '<div class="row-fluid"><div class="span3">';
+    echo '<div class="row-fluid attachment"><div class="span3">';
     printf( '<a href="%s" class="documentLink"><img class="img-rounded documentImage" src="%s"></a>', $attachment->document, $documentImage );
     echo '</div>';
 

@@ -704,12 +704,13 @@ $( document ).ready( function()
 
         // Attachments
         //
-        var attachments         = bidx.utils.getValue( member, "bidxMemberProfile.personalDetail.attachment", true );
+        var attachments         = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.attachment", true );
 
         if ( attachments)
         {
             $.each( attachments, function( idx, attachment )
             {
+                bidx.utils.log( "attachment", attachment );
                 _addAttachmentToScreen( attachment );
             } );
         }
@@ -1140,6 +1141,15 @@ $( document ).ready( function()
 
     function _showMainState( s )
     {
+        if ( s === "editMember" )
+        {
+            $( "body" ).addClass( "bidx-edit" );
+        }
+        else
+        {
+            $( "body" ).removeClass( "bidx-edit" );
+        }
+
         $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
     }
 
@@ -1212,9 +1222,6 @@ $( document ).ready( function()
             _showView( "load" );
 
             _init();
-
-            // Update the navigational links
-            //
         }
     ,   show:           function( section )
         {
