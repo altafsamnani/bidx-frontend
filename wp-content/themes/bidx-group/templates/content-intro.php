@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container outer-content-container">
 	<article class="bidx type-bidx status-publish hentry">
 	    <header>
 			<div id="myCarousel" class="carousel slide">
@@ -31,7 +31,7 @@
                     </div>
 			    </div>
 			  </div>
-			</div>	    
+			</div>
 	    </header>
   <?php if ( ! is_user_logged_in() ) { ?>
 	    <div class="entry-content">
@@ -43,16 +43,16 @@
 	    			<a class="btn" href="/join">Join our group</a> Already have an account? Just <a href="/login">login</a>
 	    		</div>
     		</div>
-    	</div>	
+    	</div>
   <?php } ?>
-  
-  
-	    <div class="entry-content">	
+
+
+	    <div class="entry-content">
 	    	<div class="row-fluid">
 				<div class="well">
 					<h4>News and Events</h4>
 					<div class="row-fluid">
-<?php 				
+<?php
  $args=array(
       'post_type' => 'post',
       'post_status' => 'publish',
@@ -61,16 +61,16 @@
     $my_query = null;
     $my_query = new WP_Query($args);
     if( $my_query->have_posts() ) {
-      while ($my_query->have_posts()) : $my_query->the_post(); ?>		
+      while ($my_query->have_posts()) : $my_query->the_post(); ?>
 					<div class="span6 ">
 						<div class="media member-thumb img-rounded">
 		  					<a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
-		  					<?php 
+		  					<?php
 		  						if ( has_post_thumbnail() ) {
 			  						$size = array(100,100);
 			  						$atts = array('data-src' => 'holder.js/50x50/social/auto/text:News',
 			  									  'class' => 'media-object img-rounded');
-			  						the_post_thumbnail($size, $atts); 
+			  						the_post_thumbnail($size, $atts);
 			  					}
 			  					else {	?>
 								<img data-src="holder.js/50x50/social/auto/text:None" class="media-object img-rounded" />
@@ -85,14 +85,14 @@
        endwhile;
     }
 wp_reset_query();
-?>								
+?>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		
-		
+
+
 	    <div class="entry-content">
 		<?php echo do_shortcode( '[bidx app="group" view="lastMembers"]' ); ?>
 		</div>
