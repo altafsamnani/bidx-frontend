@@ -1,6 +1,6 @@
 ( function( $ )
 {
-    var bidx            = window.bidx
+    var bidx            = window.bidx || {}
     ,   groupDomain     = bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain()
     ;
 
@@ -71,6 +71,16 @@
                 }
             }
         );
+    };
+
+    if ( !window.bidx )
+    {
+        window.bidx = bidx;
+    }
+
+    bidx.common =
+    {
+        groupDomain:                groupDomain
     };
 
 } ( jQuery ));
