@@ -79,7 +79,7 @@ echo "<script>
 
     /* 3. Render Member Profile Services for Initial View Display */
     $memberData = $memberObj->getMemberDetails(  );
-
+ 
     $view->data = $memberData->data;
     $view->bidxGroupDomain = $memberData->bidxGroupDomain;
     $view->sessionData = BidxCommon::$staticSession;

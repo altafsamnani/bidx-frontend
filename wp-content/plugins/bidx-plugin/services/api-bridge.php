@@ -79,8 +79,8 @@ abstract class APIbridge {
 
 		$this -> logger -> trace( sprintf( 'Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $method, $body, var_export( $headers, true ), var_export( $cookieArr, true )));
 
-		$request = new WP_Http;
-		$result = $request->request( $url, array('method' => $bidxMethod,
+		//$request = new WP_Http;
+		$result = wp_remote_request( $url, array('method' => $bidxMethod,
 				'body' => $body,
 				'headers' => $headers,
 				'cookies' => $cookieArr
@@ -96,7 +96,7 @@ abstract class APIbridge {
 				setcookie( $bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly );
 			}
 		}
-
+   
 		$requestData = $this->processResponse($urlService, $result,$groupDomain);
 
 		return $requestData;
@@ -127,22 +127,37 @@ abstract class APIbridge {
 			//Keep the real status
 			//$requestData->status = 'OK';
 			$requestData->authenticated = 'true';
+      $this->checkWordpressLogin( $groupDomain );
+
 		}
 		else if ($httpCode >= 300 && $httpCode < 400) {
 			$requestData->status = 'ERROR';
 			$requestData->authenticated = 'true';
 		}
 		else if ($httpCode == 401) {
-			$requestData->status = 'ERROR';
-			$requestData->authenticated = 'false';
-			//$this->bidxRedirectLogin($groupDomain);
-			  do_action('clear_auth_cookie');
-			($urlService != 'session') ? $this->bidxRedirectLogin($groupDomain) : '';
-		}
+      $requestData->status = 'ERROR';
+      $requestData->authenticated = 'false';
+      //$this->bidxRedirectLogin($groupDomain);
+      do_action('clear_auth_cookie');
+
+      $this->logger->trace(sprintf('Authentication Failed for URL: %s ', $urlService));
+
+      ($urlService != 'session') ? $this->bidxRedirectLogin($groupDomain) : '';
+    }
 
 		return $requestData;
 	}
 
+  function checkWordpressLogin ( $groupDomain , $result ) {
+
+    $user = wp_get_current_user();
+
+    if($user && isset($user->user_login) && 'username_to_check' == $user->user_login)
+    {
+        // do stuff
+    }
+
+  }
 
 	/**
 	 * Grab the subdomain portion of the URL. If there is no sub-domain, the root

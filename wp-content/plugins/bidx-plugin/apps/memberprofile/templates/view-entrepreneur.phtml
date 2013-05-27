@@ -1,6 +1,6 @@
 <?php
 $entrepreneurDetails = $this->data->bidxEntrepreneurProfile[0];
-$entrepreneurDetails1 = $this->data->bidxEntrepreneurProfile[1];
+$entityDetails = $this->data->entities;
 if ($entrepreneurDetails) {
   ?>
 
@@ -34,32 +34,37 @@ if ($entrepreneurDetails) {
     ?>
   </div>
   <br/>
+  <? }
+  if($entityDetails) {
+  ?>
   <!-- Company Profile -->
   <div class="row-fluid">
     <div class="span12">
-      <h4>This person has a business</h4>
+      <h4><?php echo ($this->data->isMyProfile) ? 'My business' : 'This person has a business'; ?></h4>
     </div>
   </div>
 
   <div class="row-fluid">
     <div class="span3">
-      <h4>Member</h4>
       <img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded">
     </div>
-    <div class="span7"><br/>
+    <div class="span7">
       <div class="row-fluid">
         <div class="span12">
-          <h4>Name Business</h4>
+          <h5><?php echo $entityDetails->name;?></h5>
         </div>
         <!-- Personal details 6/6 Start -->
 
         <?php
-        $rowValues = array('Tagline',
-          'Summary',
-          'Industry',
-          'Location');
+        $industryVal = $this->getMultiValues($entityDetails->industry, ', ');
+        $countryVal  = $this->getMultiValues($entityDetails->countryOperation, ', ','country');
+        $joinLink = ($entityDetails->bidxEntityId) ? "<a href='#view more/".$entityDetails->bidxEntityId."'>view more</a>":'';
+        $rowValues = array( $entityDetails->slogan,
+          $entityDetails->summary,
+          $industryVal,
+          $countryVal);
         echo $this->addMultipleRows('span12', $rowValues);
-        echo $this->addMultipleRows('span12 offset10', array('view more'));
+        echo $this->addMultipleRows('span12 offset10', array($joinLink));
         ?>
 
 

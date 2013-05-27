@@ -164,12 +164,12 @@ error_log( sprintf( "urlservice: %s, body: %s", $urlservice, var_export( $body, 
     $headers['Content-Type'] = 'multipart/form-data';
   }
 
-  if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
+  /*if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
       $body['username'] = 'admin@bidnetwork.org';
       $body['password'] = 'admin123';
 
   }
-
+*/
   // 2.2 Set the group domain header
   if (isset($body['domain'])) {
     //Talk with arjan for domain on first page registration it will be blank when it goes live
@@ -432,7 +432,8 @@ function get_redirect($url, $requestData, $domain = NULL) {
 
       $requestData->data->id = $requestData->data->group->id;
       $requestData->data->domain = $requestData->data->group->domain;
-      $requestData->submit = 'http://' . $domain . '/registration/';
+      $http = (is_ssl()) ? 'https://' : 'http://';
+      $requestData->submit = $http . $domain . '/registration/';
       break;
   }
   return $requestData;
@@ -446,13 +447,13 @@ function get_redirect($url, $requestData, $domain = NULL) {
  *
  * @param bool $echo
  */
-function bidx_request_timeout_time($time) {
-  $time = 50; //new number of seconds
 
-  return $time;
+function bidx_request_timeout_time($r) {
+  $r['timeout'] = 15; # new timeout
+  return $r;
 }
 
-add_filter('http_request_timeout', 'bidx_request_timeout_time');
+add_filter('http_request_args', 'bidx_request_timeout_time', 100, 1);
 
 /**
  * @author Altaf Samnani
@@ -606,7 +607,7 @@ function create_bidx_wp_site($groupName, $email) {
 
   $password = 'N/A';
   //$user_id = email_exists($email);
-  $userName = $groupName . 'groupadmin';
+  $userName = $groupName.'groupadmin' ;
   $user_id = wpmu_create_user($userName, $password, $email);
   if (false == $user_id) {
     //wp_die(__('There was an error creating the user.'));
@@ -990,7 +991,7 @@ function assign_bidxgroup_theme_page($blog_id) {
   switch_to_blog($blog_id);
   // Action 1 Switch theme to assign
   switch_theme('bidx-group');
-
+  
   //Action 2 Default Enable WP Scrapper Plugin
   $wpws_values = array('sc_posts' => 1, 'sc_widgets' => 1, 'on_error' => 'error_hide');
 
@@ -1014,11 +1015,76 @@ function assign_bidxgroup_theme_page($blog_id) {
     unset($page->ID);
     unset($page->guid);
     /* Reference http://codex.wordpress.org/Function_Reference/wp_insert_post */
+    
     $post_id = wp_insert_post($page);
     update_post_meta($post_id, '_wp_page_template', $page->template_value);
   }
 
+  create_custom_role_capabilities($blog_id);
+
   restore_current_blog();
+}
+
+/* Add Custom Role capabilities
+ * @author Altaf Samnani
+ * @version 1.0
+ * @description  Assign Roles Capabilities
+ *
+ *
+ * @param bool $return
+ */
+
+function create_custom_role_capabilities($blog_id) {
+
+  /*********** Add Bidx Group Owner Group Admin Roles ****************/
+  $new_user_caps = array('read' => true,
+                         'edit_theme_options' => true,
+                         'publish_pages' => true,
+                         'publish_posts' => true,
+                         'edit_pages' => true,
+                         'edit_posts' => true,
+                         'edit_other_posts' => false,
+                         'edit_other_pages' => false,
+                         'upload_files' => true);
+  $new_role_added = add_role('groupadmin', 'Group Admin', $new_user_caps);
+
+  /*$new_role_added = add_role('groupowner', 'Group Owner', $new_user_caps);
+
+
+   /********* Add Bidx Group Owner Group Admin Roles *****************/
+  $users_query = new WP_User_Query(array('role' => 'administrator','orderby' => 'display_name' ));
+  $results = $users_query->get_results();
+
+  foreach ($results as $user) {
+
+    $user_id = $user->ID;
+    
+    //When creating directly from wordpress handle that case too
+    $is_frm_bidx = (preg_match("/^groupadmin/i", $user->user_login)) ? true : false  ;
+
+    $group_admin_login = $user->user_login . 'groupadmin';
+    $group_admin_email = $group_admin_login.'info@bidx.net';
+    //$group_admin_password = $user->user_login.'groupadmin';
+    $group_admin_password = wp_generate_password(12, false);
+    
+  }
+
+  if ($is_frm_bidx) {
+    $user = new WP_User($user_id);
+    $user->remove_role('administrator');
+    $user->add_role('groupadmin');
+  }
+  else {
+    /* For Adding users to existing blog */
+    $user_id = wpmu_create_user($group_admin_login, $group_admin_password, $group_admin_email);
+    add_user_to_blog($blog_id, $user_id, 'groupadmin');
+  }
+
+
+  //wpmu_signup_user( $new_user_login, 'test@aa.com', array( 'add_to_blog' => $blog_id, 'new_role' => 'groupadmin' ) );
+  //wp_insert_user( $user );
+  
+  return;
 }
 
 /* Start Add Custom Page attribute whether you want to add page in Group site creation
@@ -1062,35 +1128,66 @@ function page_group_save($post_id) {
     update_post_meta($post_id, 'page_group', $_POST['page_group']);
 }
 
-/* End Add Page attribute whether you want to add page in Group site creation */
 
 
-/* Login Start */
+/* Remove unwanted Admin menus to get Bidx branding
+ * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ *
+ * @param bool $echo
+ */
 
-//add_filter('login_errors', 'bidx_errors');
-/* Login End */
+function remove_menus() {
+  global $menu;
 
-//add_action('lost_password', 'disable_function');
-//add_action('user_register', 'disable_function');
-//add_action('register_form', 'disable_function_register');
-//add_action('retrieve_password', 'disable_function');
-//add_action('password_reset', 'disable_function');
-//add_action('profile_personal_options','bidx_warning');
+  if ((current_user_can('install_themes'))) {
+    $restricted = array();
+  } // check if admin and hide nothing
+  else { // for all other users
+    if ($current_user->user_level < 10) {
+      remove_menu_page('profile.php');
+      remove_menu_page('tools.php');
+      remove_menu_page('edit-comments.php');
+      remove_submenu_page( 'index.php', 'my-sites.php' );
 
-//add_filter('show_password_fields','bidx_show_password_fields');
-//add_filter('login_message','bidx_auth_warning');
+      //apply_filters( 'show_admin_bar', false );
+      add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+      add_action('admin_head', 'wpc_remove_admin_elements');
+    }
+  }
+  add_filter( 'admin_footer_text', 'remove_footer_admin' );
+}
 
-//register_activation_hook( __FILE__, 'bidx_auth_activate' );
+add_action('admin_menu', 'remove_menus');
+
+function wpc_remove_admin_elements() {
+    echo '<style type="text/css">
+           .versions #wp-version-message {display:none !important;}
+    </style>';
+}
+
+function remove_footer_admin () {
+echo '<span id="footer-thankyou">' . __( 'Thank you for creating with <a href="http://wordpress.org/">Bidx</a>.' ) . '</span>';
+}
+
+function annointed_admin_bar_remove() {
+        global $wp_admin_bar;
+
+        /* Remove their stuff */
+        $wp_admin_bar->remove_menu('wp-logo');
+        $wp_admin_bar->remove_menu('comments');
+        $wp_admin_bar->remove_menu('my-sites');
+        $wp_admin_bar->remove_menu('my-account');
+
+        $current_user = wp_get_current_user();
+        $user_login = str_replace('groupadmin','',$current_user->user_login);
+        $custom_menu = array('id' => 'bidx-name','title'  => $user_login,'parent' => 'top-secondary','href'   => '/member'	);
+        $wp_admin_bar->add_menu($custom_menu);
+        $custom_menu_logout = array('id' => 'bidx-logout','title'  => 'Logout','parent' => 'bidx-name','href'   => wp_logout_url('/')	);
+        $wp_admin_bar->add_menu($custom_menu_logout);
+        
 
 
-
-//function add_query_vars($aVars) {
-//$aVars[] = "bname"; // represents the name of the product category as shown in the URL
-//$aVars[] = "bgid";
-//$aVars[] = "buname";
-//return $aVars;
-//}
-//
-//// hook add_query_vars function into query_vars
-//add_filter('query_vars', 'add_query_vars');
-
+}

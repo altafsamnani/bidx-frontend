@@ -64,6 +64,19 @@ class MemberService extends APIbridge {
     $result->groupInfo = $groupInfo;
     $result->data->groups = $groupDetails;
 
+    $entityDetails = $result->data->entities;
+    foreach ( $entityDetails as $entityKey => $entityValue) {
+      if($entityValue -> bidxEntityType == 'bidxBusinessSummary') {
+        $resultEntity = $this->callBidxAPI('entity/' . $entityValue->bidxEntityId, array(), 'GET');
+        $rowValues = array('Tagline',
+          'Summary',
+          'Industry',
+          'Location');
+        $result->data->entities = $resultEntity->data;
+      }
+
+    }
+
     return $result;
 
   }
