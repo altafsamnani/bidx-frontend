@@ -1,33 +1,206 @@
+<!-- LOGIN -->
+<div class="mainState mainStateLogin">
+	<form id="frmLogin" action="/wp-login.php" method="post">
+		<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
+			<label>Email address</label>
+			<input type="text" name="log" placeholder="Type your email address" />
+		</div>
+		<div class="formfield" data-validation='{"required":{"text":"A password is mandatory"}}'>
+			<label>Password</label>
+			<input type="password" name="pwd" placeholder="Type your password" />
+		</div>
+		<div class="buttonwrapper">
+			<a href="#" class="button primary jsLogin">Login</a>
+		</div>
 
-<form action="/wp-login.php" method="post">
-	<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
-		<label>Email address</label>
-		<input type="text" name="log" placeholder="Type your email address" />
-	</div>
-	<div class="formfield" data-validation='{"required":{"text":"A password is mandatory"}}'>
-		<label>Password</label>
-		<input type="password" name="pwd" placeholder="Type your password" />
-	</div>
-	<div class="buttonwrapper">
-		<a href="#" class="button primary jsLogin">Login</a>
-              
-	</div>
-	<p>
-		Forgot your password. Click <a href="/forgot-password">here</a> to recover.<br/>
-		Not a member? Click <a href="/forgot-password">here</a> to register.
+		<p>
+			Forgot your password. Click <a href="/forgot-password">here</a> to recover.<br/>
+			Not a member? Click <a href="#register">here</a> to register.
+		</p>
 
-	</p>
-	
-		<!-- <input type="button" name="wp-submit"  value="Log In" /> -->
-		<input type="hidden" name="redirect_to" value="[!Q!]" />
-		<input type="hidden" name="testcookie" value="1" />
-</form>
-<script type="text/javascript">
-	$(function(){
-		$("form").form({
-			callToAction : '.jsLogin',
-			errorClass : 'error',
-			url : '/wp-admin/admin-ajax.php?action=bidx_signin'
+			<!-- <input type="button" name="wp-submit"  value="Log In" /> -->
+			<input type="hidden" name="redirect_to" value="[!Q!]" />
+			<input type="hidden" name="testcookie" value="1" />
+	</form>
+	<script>
+		$(function(){
+			$( "#frmLogin" ).form({
+				callToAction : '.jsLogin',
+				errorClass : 'error',
+				url : '/wp-admin/admin-ajax.php?action=bidx_signin'
+			});
 		});
-	});
+	</script>
+</div>
+
+<!-- REGISTER -->
+<div class="mainState mainStateRegister" style="display:none">
+	<form id="frmRegister" action="/">
+		<div class="formfield" data-validation='{"required":{"text":"A first name is mandatory"}}'>
+			<label>First name</label>
+			<input type="text" name="personalDetails.firstName" placeholder="Type your first name" />
+		</div>
+
+		<div class="formfield" data-validation='{"required":{"text":"A last name is mandatory"}}'>
+			<label>Last name</label>
+			<input type="text" name="personalDetails.lastName" placeholder="Type your last name" />
+		</div>
+
+		<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
+			<label>Email address</label>
+			<input type="text" name="personalDetails.emailAddress" placeholder="Type your email address" />
+		</div>
+
+		<div class="formfield">
+			<label>What is your location?</label>
+			<input type="text" name="personalDetails.address[0]." placeholder="Please type your location" data-type="location" data-type-arguments=''/>
+		</div>
+
+		<div class="buttonwrapper">
+			<a href="#" class="button primary jsRegister">Register</a>
+		</div>
+
+		<p>
+			Forgot your password. Click <a href="/forgot-password">here</a> to recover.<br/>
+			Login? Click <a href="#login">here</a> to go to login.
+		</p>
+	</form>
+
+	<script>
+		window.bidx = window.bidx || {};
+		window.bidx.api = {
+			settings: {
+				servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
+			}
+		};
+
+		$(function(){
+			var $frmRegister 	= $( "#frmRegister" )
+			,	$btnRegister	= $frmRegister.find( ".jsRegister" )
+			;
+
+			$frmRegister.form({
+				errorClass : 'error',
+				enablePlugins: ['location','countryAutocomplete']
+			});
+
+			$btnRegister.click( function( e )
+			{
+				e.preventDefault();
+
+				$frmRegister.submit();
+			} );
+
+			$frmRegister.submit( function( e )
+			{
+				e.preventDefault();
+
+				var valid = $frmRegister.form( "validateForm" );
+
+				if ( !valid || $btnRegister.hasClass( "disabled" ) )
+				{
+					return;
+				}
+
+				$btnRegister.addClass( "disabled" );
+
+				var member =
+				{
+					bidxMemberProfile:
+					{
+						personalDetails:
+						{
+							firstName: 				$frmRegister.find( "[name='personalDetails.firstName']" ).val()
+						,	lastName: 				$frmRegister.find( "[name='personalDetails.lastName']" ).val()
+						,	emailAddress: 			$frmRegister.find( "[name='personalDetails.emailAddress']" ).val()
+						}
+					}
+				};
+
+				if ( $frmRegister.find( "[name='personalDetails.address[0].']" ).val() )
+				{
+					// Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
+					// Just to not have to change the location.js plugin
+					//
+					member.bidxMemberProfile.address =
+					[
+						{
+							coordinates: 			$frmRegister.find( "[name$=location]" ).val()
+						,	postalCode: 			$frmRegister.find( "[name$=postalCode]" ).val()
+						,	country: 				$frmRegister.find( "[name$=country]" ).val()
+						,	cityTown: 				$frmRegister.find( "[name$=cityTown]" ).val()
+						,	neighborhood: 			$frmRegister.find( "[name$=neighborhood]" ).val()
+						,	streetNumber: 			$frmRegister.find( "[name$=streetNumber]" ).val()
+						,	street: 				$frmRegister.find( "[name$=street]" ).val()
+						}
+					];
+				}
+
+		        bidx.api.call(
+		            "member.save"
+		        ,   {
+		            	groupDomain:    bidx.common.groupDomain
+		            ,   data:           member
+		            ,   success:        function( response )
+		                {
+		                    bidx.utils.log( "member.save::success::response", response );
+
+		                    // Go to group dashboard
+		                    //
+		                    var url = window.location.protocol + "//" + window.location.host;
+
+		                    window.location.href = url;
+		                }
+		            ,   error:          function( jqXhr )
+		                {
+		                    $btnRegister.removeClass( "disabled" );
+
+		                    alert( "Problem while registering" );
+		                }
+		            }
+		        );
+
+			} );
+		});
+	</script>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"></script>
+
+<script>
+	$( function( )
+	{
+	    // ROUTER
+	    //
+	    var $mainStates = $( ".mainState" );
+
+	    // Router for main state
+	    //
+	    var AppRouter = Backbone.Router.extend(
+	    {
+	        routes: {
+	            'login':    'login'
+	        ,   'register': 'register'
+	        ,   '*path':    'login'
+	        }
+	    ,   login:           function()
+	        {
+	            _showMainState( "login" );
+	        }
+	    ,   register:           function()
+	        {
+	        	_showMainState( "register" );
+	        }
+	    } );
+
+	    var router = new AppRouter();
+	    Backbone.history.start();
+
+    	function _showMainState( s )
+	    {
+	        $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
+	    }
+
+
+	} );
 </script>
