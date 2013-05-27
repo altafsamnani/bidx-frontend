@@ -7,27 +7,27 @@
  * @version 1.0
  */
 abstract class APIbridge {
-	
+
 	static $data_re_use = array();
-	
+
 	// Bidx Auth login
-	private $authUsername = 'bidx'; 
+	private $authUsername = 'bidx';
 	// Bidx Auth password
-	private $authPassword = 'gobidx'; 
+	private $authPassword = 'gobidx';
 
 	private $logger;
-	
-	/** 
-	 * Logger is instantiated in the constructor. 
+
+	/**
+	 * Logger is instantiated in the constructor.
 	 */
 	public function __construct()
 	{
 		$this->logger = Logger::getLogger(__CLASS__);
-	}	
-	
+	}
+
 	/**
 	 * Calls the bidx service and get the response
-	 * 
+	 *
 	 * @param string $urlService Name of service
 	 * @param array $body Parameters to be sended
 	 * @param string $method Type of Method [GET|POST|PUT|DELETE]
@@ -35,7 +35,7 @@ abstract class APIbridge {
 	 * @return array $requestData response from Bidx API
 	 */
 	public function callBidxAPI( $urlService, $body, $method = 'POST', $isFormUpload = false, $do_not_reuse = false ) {
-		
+
 		$bidxMethod = strtoupper( $method );
 		$bidx_get_params = "";
 		$cookie_string = "";
@@ -43,7 +43,7 @@ abstract class APIbridge {
 		$cookieArr = array();
 		$groupDomain = ( DOMAIN_CURRENT_SITE == 'bidx.dev' ) ? 'site1' : $this->getBidxSubdomain();
 
-		// 1. Retrieve Bidx Cookies and send back to api to check 
+		// 1. Retrieve Bidx Cookies and send back to api to check
 		$cookieInfo = $_COOKIE;
 		foreach ( $_COOKIE as $cookieKey => $cookieValue ) {
 			if ( preg_match( "/^bidx/i", $cookieKey )) {
@@ -51,8 +51,8 @@ abstract class APIbridge {
 			}
 		}
 
-		// 2. Set Headers 
-		
+		// 2. Set Headers
+
 		// 2.1 For Authentication
 		$headers['Authorization'] = 'Basic ' . base64_encode( "$this->authUsername:$this->authPassword" );
 
@@ -77,8 +77,8 @@ abstract class APIbridge {
 		// 4. WP Http Request
 		$url = API_URL . $urlService . '?csrf=false' . $bidx_get_params;
 
-		$this -> logger -> trace("Calling url : " . $url);
-		
+		$this -> logger -> trace( sprintf( 'Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $method, $body, var_export( $headers, true ), var_export( $cookieArr, true )));
+
 		$request = new WP_Http;
 		$result = $request->request( $url, array('method' => $bidxMethod,
 				'body' => $body,
@@ -86,7 +86,9 @@ abstract class APIbridge {
 				'cookies' => $cookieArr
 		));
 
-		// 5. Set Cookies if Exist 
+		$this -> logger -> trace( sprintf( 'Response for API URL: %s Response: %s', $url, var_export( $result, true )));
+
+		// 5. Set Cookies if Exist
 		$cookies = $result[ 'cookies' ];
 		if ( count( $cookies )) {
 			foreach ( $cookies as $bidxAuthCookie ) {
@@ -96,14 +98,14 @@ abstract class APIbridge {
 		}
 
 		$requestData = $this->processResponse($urlService, $result,$groupDomain);
-		
+
 		return $requestData;
 	}
 
 
 	/**
 	 * Process Bidx Api Response
-	 * 
+	 *
 	 * @param string $urlService  Name of service
 	 * @param array $requestData response from Bidx API
 	 * @return array $requestData response from Bidx API
@@ -111,15 +113,15 @@ abstract class APIbridge {
 	public function processResponse($urlService, $result, $groupDomain ) {
 
 		$this->logger->debug($result);
-		
+
 		$requestData = json_decode( $result['body'] );
-		
+
 		$httpCode = $result['response']['code'];
 		$redirectUrl = NULL;
 
 		// Add Domain
 		$requestData->bidxGroupDomain = $groupDomain;
-		 
+
 		// Check the Http response and decide the status of request whether its error or ok
 		if ( $httpCode >= 200 && $httpCode < 300 ) {
 			//Keep the real status
@@ -145,7 +147,7 @@ abstract class APIbridge {
 	/**
 	 * Grab the subdomain portion of the URL. If there is no sub-domain, the root
 	 * domain is passed back. By default, this function *returns* the value as a
-	 * string.  
+	 * string.
 	 *
 	 * @param bool $echo optional parameter prints the response directly to
 	 * the screen.
@@ -194,7 +196,7 @@ abstract class APIbridge {
 	public function getLogger() {
 		return $this -> logger;
 	}
-	
+
 }
 
 ?>
