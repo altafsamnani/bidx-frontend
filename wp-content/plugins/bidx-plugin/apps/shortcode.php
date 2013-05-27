@@ -124,6 +124,9 @@ class BidxShortcode {
  		wp_register_script( 'bidx-country-autocomplete', BIDX_PLUGIN_URI . '/../static/js/country-autocomplete.js', array('jquery'), '20130501', TRUE );
  		wp_register_script( 'bidx-common', BIDX_PLUGIN_URI . '/../static/js/common.js', array( 'bidx-utils', 'bidx-api-core' ), '20130501', TRUE );
 
+ 		// We need to be more specific when to load what, but for now this is ok'ish
+ 		//
+ 		wp_enqueue_script( 'backbone' );
  		wp_enqueue_script( 'bidx-common' );
 
 	 }
