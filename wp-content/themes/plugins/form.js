@@ -34,23 +34,36 @@
 		path: "/wp-content/themes/plugins/",
 		apimethod : "post"
 	};
-	var form = null;
+//	var form = null;
 	var methods = {
 		/*
 			Init method
 		*/
 		init : function(options) {
+
+			if ( this.length === 0 ) {
+				alert( "Root element of form not found. Was a correct selector being provided? It doesn't match any elements..." );
+				return false;
+			}
+
 			if(this.prop("tagName").toLowerCase() !== "form") {
 				alert("Please use this form plugin on a form tag only");
 				return false;
 			}
 
-			form = this;
-			form.data.elements = {};//collection of form elements
-			form.data.valid=false;
+			var $form	= this
+			,	data	= {}
+			;
+
+			//collection of form elements
+			//
+			data.elements	= {};
+			data.valid		= false;
+
 			//extend options
+			//
 			if(options) {
-				$.extend(globalOptions, options);
+				data.options = $.extend(globalOptions, options);
 			}
 			//load form element extention
 			$.ajax({
@@ -61,25 +74,34 @@
 				dataType: 'script'
 			});
 			//create form element objects of each formfield element in the object
-			this.find(".formfield").each(function(){
+			$form.find(".formfield").each(function(){
 				var el = new Element($(this)).init();
 				//register form element
 				el.errorClass= options.errorClass;
-				form.data.elements[el.name]=el;
+				data.elements[el.name]=el;
 			});
-
 
 
 			//set callToAction button
 			if(options.callToAction) {
 
-			  	//bind call to action button to click
-				$(options.callToAction).click(function(e){
-					e.preventDefault();
-					form.data.valid=methods.validateForm();
+				var $callToAction = $( options.callToAction );
+				$callToAction.data( "form", $form );
 
-					if(form.data.valid) {
-						methods.submitForm();
+				//bind call to action button to click
+				$callToAction.click(function(e){
+
+					var $form	= $( this ).data( "form" )
+					,	data	= $form.data( "form" )
+					;
+
+					e.preventDefault();
+					data.valid = methods.validateForm.apply( $form );
+
+					$form.data( "form", data );
+
+					if( data.valid ) {
+						methods.submitForm.apply( $form );
 					}
 				});
 			}
@@ -134,32 +156,39 @@
 					}
 				}
 			}
+
+			$form.data( "form", data );
 		},
 		formValidated : function () {
-			return form.data.valid;
+			return this.data.valid;
 		},
 		getElements : function() {
-			return form.data.elements;
+			return this.data.elements;
 		},
 		getElement : function(el) {
-			return form.data.elements[el];
+			return this.data.elements[el];
 		},
 		getForm : function(){
-			return form;
+			return this;
 		},
 		submitForm : function() {
 
-			if(globalOptions.url) {
-				if(globalOptions.beforeSubmit) {
-					globalOptions.beforeSubmit();
+			var $form	= this
+			,	data	= $form.data( "form" )
+			,	options = data.options
+			;
+
+			if(options.url) {
+				if(options.beforeSubmit) {
+					options.beforeSubmit();
 				}
 				//xhr post
 
 				$.ajax({
 					type:'post',
-					url: globalOptions.url,
+					url: options.url,
 					dataType:'json',
-					data: $(form).find(":input:not(.ignore)").serialize() + "&apiurl=" + globalOptions.apiurl +  "&apimethod=" + globalOptions.apimethod,
+					data: $form.find(":input:not(.ignore)").serialize() + "&apiurl=" + options.apiurl +  "&apimethod=" + options.apimethod,
 					async: true})
 					.always(function(data){
 						if(data) {
@@ -172,12 +201,12 @@
 											/* it doesnt pass name variable so rename it to gname and proceed */
 											apikey = (apikey==='name') ? 'dynname': apikey;
 											dyninput = '<input type="hidden" name="'+apikey+'" id="'+apikey+'" value="'+val+'" />';
-											$(form).append(dyninput);
+											$form.append(dyninput);
 										});
 									}
-									$(form).attr('action', data.submit);
-									$(form).attr('method', 'POST');
-									$(form).submit();
+									$form.attr('action', data.submit);
+									$form.attr('method', 'POST');
+									$form.submit();
 								}
 								else if (data.redirect) {
 									document.location=data.redirect;
@@ -185,8 +214,8 @@
 							}
 							else {
 								//if error handler is defined, use this one
-								if(globalOptions.error) {
-									globalOptions.error(data);
+								if(options.error) {
+									options.error(data);
 								}
 								//otherwise show general error message in form
 								else {
@@ -217,26 +246,31 @@
 
 					});
 			}
-			else if(form.attr("action")){
-				form.submit();
+			else if( $form.attr("action")){
+				$form.submit();
 			}
 			else {
 				alert("no url or form action defined");
 			}
 		},
 		validateForm : function(){
+
+			var $form	= this
+			,	data	= $form.data( "form" )
+			;
+
 			//now check if there are errors per field
 			var field=null, result = true;
-			for(field in form.data.elements) {
-				if(!form.data.elements[field].validated) {
+			for(field in data.elements) {
+				if(!data.elements[field].validated) {
 					//if(this.formfield.data("validation")) {
 					//if value is NULL field has not been validated yet
-					if(form.data.elements[field].validated === null) {
-						form.data.elements[field].validate({data:form.data.elements[field]});
-						result = result && form.data.elements[field].validated;
+					if(data.elements[field].validated === null) {
+						data.elements[field].validate({data:data.elements[field]});
+						result = result && data.elements[field].validated;
 					}
 					else {
-						result = result && form.data.elements[field].validated;
+						result = result && data.elements[field].validated;
 					}
 				}
 			}
