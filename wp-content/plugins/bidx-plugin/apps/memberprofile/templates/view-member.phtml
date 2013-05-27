@@ -100,4 +100,32 @@ $rowValues = array('Facebook' => $this->addSocialPluginScript('facebookprofile',
       </div>
     </div>
   </div>
+
+<?php
+  // Attachments
+  //
+if ( $personalDetails->attachment && is_array( $personalDetails->attachment )) {
+
+  echo '<h4>Documents</h4>';
+
+  foreach ( $personalDetails->attachment as $attachment ) {
+
+    $documentImage = preg_match( "/^image/i", $attachment->mimeType )
+      ? $attachment->document
+      : '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
+
+    echo '<div class="row-fluid"><div class="span3">';
+    printf( '<a href="%s" class="documentLink"><img class="img-rounded documentImage" src="%s"></a>', $attachment->document, $documentImage );
+    echo '</div>';
+
+    echo '<div class="span9">';
+    printf( '<h5 class="documentName">%s</h5>', htmlspecialchars( $attachment->documentName ));
+    printf( '<p>%s</p>', htmlspecialchars( $attachment->uploadedDateTime ));
+    echo '</div>';
+
+    echo '</div>';
+  }
+}
+?>
+
 </div>
