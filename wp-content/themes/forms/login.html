@@ -46,14 +46,14 @@
 			<input type="text" name="personalDetails.lastName" placeholder="Type your last name" />
 		</div>
 
-		<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
+		<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
 			<label>Email address</label>
-			<input type="text" name="personalDetails.emailAddress" placeholder="Type your email address" />
+			<input type="text" name="username" placeholder="Type your email address" />
 		</div>
 
-		<div class="formfield">
+		<div class="formfield" data-validation='{"required":{"text":"A location is mandatory"}}'>
 			<label>What is your location?</label>
-			<input type="text" name="personalDetails.address[0]." placeholder="Please type your location" data-type="location" data-type-arguments=''/>
+			<input type="text" name="address" placeholder="Please type your location" data-type="location" data-type-arguments=''/>
 		</div>
 
 		<div class="buttonwrapper">
@@ -66,6 +66,11 @@
 		</p>
 	</form>
 
+	<div class="registerSuccess hide">
+		<h3>Registration complete</h3>
+		<p>The registration is complete. An e-mail has been dispatched with followup instructions.</p>
+	</div>
+
 	<script>
 		window.bidx = window.bidx || {};
 		window.bidx.api = {
@@ -75,8 +80,10 @@
 		};
 
 		$(function(){
-			var $frmRegister 	= $( "#frmRegister" )
+			var $stateRegister	= $( ".mainStateRegister" )
+			,	$frmRegister 	= $( "#frmRegister" )
 			,	$btnRegister	= $frmRegister.find( ".jsRegister" )
+
 			;
 
 			$frmRegister.form({
@@ -104,25 +111,27 @@
 
 				$btnRegister.addClass( "disabled" );
 
+				// Build up the data for the member request
+				//
 				var member =
 				{
-					bidxMemberProfile:
+					emailAddress: 			$frmRegister.find( "[name='username']" ).val()
+				,	personalDetails:
 					{
-						personalDetails:
-						{
-							firstName: 				$frmRegister.find( "[name='personalDetails.firstName']" ).val()
-						,	lastName: 				$frmRegister.find( "[name='personalDetails.lastName']" ).val()
-						,	emailAddress: 			$frmRegister.find( "[name='personalDetails.emailAddress']" ).val()
-						}
+						firstName: 				$frmRegister.find( "[name='personalDetails.firstName']" ).val()
+					,	lastName: 				$frmRegister.find( "[name='personalDetails.lastName']" ).val()
 					}
 				};
 
-				if ( $frmRegister.find( "[name='personalDetails.address[0].']" ).val() )
+				// Currently, address is required, so this is a bit of an unlogical test. Wouldn't be surprised it will
+				// be gone
+				//
+				if ( $frmRegister.find( "[name='address']" ).val() )
 				{
 					// Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
 					// Just to not have to change the location.js plugin
 					//
-					member.bidxMemberProfile.address =
+					member.personalDetails.address =
 					[
 						{
 							coordinates: 			$frmRegister.find( "[name$=location]" ).val()
@@ -149,7 +158,10 @@
 		                    //
 		                    var url = window.location.protocol + "//" + window.location.host;
 
-		                    window.location.href = url;
+		                    $frmRegister.hide();
+		                    $stateRegister.find( ".registerSuccess" ).removeClass( "hide" );
+
+//		                    window.location.href = url;
 		                }
 		            ,   error:          function( jqXhr )
 		                {
@@ -200,7 +212,6 @@
 	    {
 	        $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
 	    }
-
 
 	} );
 </script>
