@@ -2,6 +2,13 @@
 /**
  * Group class loader.
  * Name lowercased for automatic loading.
+ * Supported views:
+ * - lastMembers : show a widget with the last members in the group
+ * - listGroups : show a list of groups
+ * - getGroupIntro : show the general group introduction data
+ * - getGroupHeader : show the header data for a group containing image and name
+ * - profileDropDown : show the dropdown with personal functions if a user is known in a group
+ * 
  * @author Jaap Gorjup
  * @version 1.0
  */

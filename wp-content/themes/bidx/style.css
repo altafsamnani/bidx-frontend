@@ -744,6 +744,140 @@ header .logo {
     .lt-ie8 .span8 {
         width:55%;
     }
+    
+/**
+ * Social
+ */    	
+.sociallinks a {
+  margin: 0;
+  padding: 0 10px;
+  background: transparent url('assets/css/spritedsociallinks/icons.png') no-repeat;
+  font-size: 11px; /* greater than 11px needs playing with padding */
+}
+
+/* padding-top hack for fully-visible icons */
+.sociallinks a.blinklist {
+  background-position: 0 0;
+  padding-top: 4px;
+}
+.sociallinks a.brightkite {
+  background-position: 0 -66px;
+  padding-top: 4px;
+}
+.sociallinks a.delicious {
+  background-position: 0 -132px;
+  padding-top: 4px;
+}
+.sociallinks a.design_float {
+  background-position: 0 -198px;
+  padding-top: 4px;
+}
+.sociallinks a.digg {
+  background-position: 0 -264px;
+  padding-top: 4px;
+}
+.sociallinks a.dopplr {
+  background-position: 0 -330px;
+  padding-top: 4px;
+}
+.sociallinks a.email {
+  background-position: 0 -396px;
+  padding-top: 4px;
+}
+.sociallinks a.facebook {
+  background-position: 0 -462px;
+  padding-top: 4px;
+}
+.sociallinks a.feed {
+  background-position: 0 -528px;
+  padding-top: 4px;
+}
+.sociallinks a.flickr {
+  background-position: 0 -594px;
+  padding-top: 4px;
+}
+.sociallinks a.friendfeed {
+  background-position: 0 -660px;
+  padding-top: 4px;
+}
+.sociallinks a.furl {
+  background-position: 0 -726px;
+  padding-top: 4px;
+}
+.sociallinks a.gamespot {
+  background-position: 0 -792px;
+  padding-top: 4px;
+}
+.sociallinks a.lastfm {
+  background-position: 0 -858px;
+  padding-top: 4px;
+}
+.sociallinks a.linkedin {
+  background-position: 0 -924px;
+  padding-top: 4px;
+}
+.sociallinks a.magnolia {
+  background-position: 0 -990px;
+  padding-top: 4px;
+}
+.sociallinks a.mixx {
+  background-position: 0 -1056px;
+  padding-top: 4px;
+}
+.sociallinks a.myspace {
+  background-position: 0 -1122px;
+  padding-top: 4px;
+}
+.sociallinks a.newsvine {
+  background-position: 0 -1188px;
+  padding-top: 4px;
+}
+.sociallinks a.posterous {
+  background-position: 0 -1254px;
+  padding-top: 4px;
+}
+.sociallinks a.reddit {
+  background-position: 0 -1320px;
+  padding-top: 4px;
+}
+.sociallinks a.sphere {
+  background-position: 0 -1386px;
+  padding-top: 4px;
+}
+.sociallinks a.sphinn {
+  background-position: 0 -1452px;
+  padding-top: 4px;
+}
+.sociallinks a.stumble {
+  background-position: 0 -1518px;
+  padding-top: 4px;
+}
+.sociallinks a.technorati {
+  background-position: 0 -1584px;
+  padding-top: 4px;
+}
+.sociallinks a.tripadvisor {
+  background-position: 0 -1650px;
+  padding-top: 4px;
+}
+.sociallinks a.tumblr {
+  background-position: 0 -1716px;
+  padding-top: 4px;
+}
+.sociallinks a.twitter {
+  background-position: 0 -1782px;
+  padding-top: 4px;
+}
+.sociallinks a.vimeo {
+  background-position: 0 -1848px;
+  padding-top: 4px;
+}
+.sociallinks a.youtube {
+  background-position: 0 -1914px;
+  padding-top: 4px;
+}
+
+    
 /*
     fonts
 */

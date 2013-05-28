@@ -41,7 +41,7 @@ define('DB_COLLATE', '');
  * You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.
  *
  * @since 2.6.0
- */
+ *
 define('AUTH_KEY',         'put your unique phrase here');
 define('SECURE_AUTH_KEY',  'put your unique phrase here');
 define('LOGGED_IN_KEY',    'put your unique phrase here');
@@ -50,6 +50,24 @@ define('AUTH_SALT',        'put your unique phrase here');
 define('SECURE_AUTH_SALT', 'put your unique phrase here');
 define('LOGGED_IN_SALT',   'put your unique phrase here');
 define('NONCE_SALT',       'put your unique phrase here');
+*/
+define('AUTH_KEY',         '%(h1mMtZ~t>7pC};H/,>J|[O|/I^Q TflEIa+%PUj|B~M6H8%&c+T.}F(|XI_hGb');
+define('SECURE_AUTH_KEY',  '$]z{Vq[z,$T3GT0S&dP5&niTC)6r=W ^HG s2!rWJ-(5(NqCk]F8?bOb#+{vnnch');
+define('LOGGED_IN_KEY',    'nd)1MJy|?]:c6j:UP9h4.M7Rz>OE),9Wkv1mc?I_B+Qf-{Hw.0{R6vt+!w^c<ap@');
+define('NONCE_KEY',        '!nFN.~#A-o;Y_ePP$N.>;-_(|Jc<<Z=19@o,ci{%m+fqR|w45Z449y^l_5.Nt+1p');
+define('AUTH_SALT',        '?.5|_2);@?mEt((B4I,<MG6#xa2Q-|I9#W53y3n*,nJ({BjR*>B`j-GKBf)]O{JA');
+define('SECURE_AUTH_SALT', '}{krku(L8-#]TB/3IEc%X=x?y@OeBt?O1z$)k`qD~yd.&fD/8%l{1kk|?&7y9N2+');
+define('LOGGED_IN_SALT',   '76B.h(:0)|RxpqUc}X?iDl|8p;Q|Wf6H_-tVei7e>gz&&;V,|?^8v|y_{`#^6wz-');
+define('NONCE_SALT',       '-hDJc^&:M&c=/@)6.;rw1T%dFT;HnWO9h+u*6mY0xspAX6L6KcMP<~|f8B%A0-7w');
+
+/**
+ * Ensuring cookies are shared
+ */
+define('ADMIN_COOKIE_PATH', '/');
+define('COOKIE_DOMAIN', '');
+define('COOKIEPATH', '');
+define('SITECOOKIEPATH', '');
+
 
 /**#@-*/
 
@@ -88,8 +106,10 @@ define('SAVEQUERIES', true);
 
 define('FS_METHOD','direct');
 
+/**
+ * Internal settings for the API 
+ **/
 define('API_URL','http://test.bidx.net/api/v1/');
-
 define('IMG_URL','https://test.bidx.net/dl/document/');
 
 /* Multisite */
@@ -100,7 +120,6 @@ define('DOMAIN_CURRENT_SITE', 'bidx.net');
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
-define('FS_METHOD','direct');
 //define('DOMAIN_CURRENT_SITE','beta.bidx.net');
 
 define('WP_DEVELOPMENT', true);

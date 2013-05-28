@@ -1,4 +1,9 @@
 		<footer>
+			<div class="well">
+				PartnerImages
+			
+			</div>
+			
 		<div class="block-even">
 			<div class="container">
 				<!-- <div class="shade-top"></div> -->

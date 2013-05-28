@@ -292,7 +292,7 @@ function bidx_signout() {
   clear_bidx_cookies();
   $params['domain'] = get_bidx_subdomain();
   call_bidx_service('session', $params, 'DELETE');
-  //wp_clear_auth_cookie();
+  wp_clear_auth_cookie();
 }
 
 function clear_bidx_cookies() {
