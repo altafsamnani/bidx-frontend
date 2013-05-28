@@ -14,7 +14,7 @@
  */
 class group {
 
-	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
+	static $deps = array('jquery', 'bootstrap',  'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
 
 	/**
 	 * Constructor

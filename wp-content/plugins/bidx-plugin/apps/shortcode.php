@@ -99,36 +99,35 @@ class BidxShortcode {
 	 * 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete'
 	 */
 	 function register_script() {
-
-	 	//vendor scripts
-	 	wp_deregister_script( 'jquery' );
-		wp_register_script( 'jquery', BIDX_PLUGIN_URI . '/../static/vendor/jquery/jquery-1.9.1.js', array(), '20130501', TRUE );
-		wp_register_script( 'jqueryui', BIDX_PLUGIN_URI . '/../static/vendor/jqueryUI/jqueryUI-1.10.2.js', array(), '20130501', TRUE );
-		wp_register_script( 'bootstrap', BIDX_PLUGIN_URI . '/../static/vendor/bootstrap/js/bootstrap.min.js', array('jquery'), '20130501', TRUE );
-		wp_deregister_script( 'underscore' );
-		wp_register_script( 'underscore', BIDX_PLUGIN_URI . '/../static/vendor/underscore/underscore-1.4.4.js', array('jquery'), '20130501', TRUE );
-		wp_deregister_script( 'backbone' );
-		wp_register_script( 'backbone', BIDX_PLUGIN_URI . '/../static/vendor/backbone/backbone-1.0.0.js', array('underscore'), '20130501', TRUE );
-		wp_register_script( 'json2', BIDX_PLUGIN_URI . '/../static/vendor/json2/json2.js', array('jquery'), '20130501', TRUE );
-		wp_register_script( 'gmaps-places', '//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places', array(), '20130501', TRUE);
-		wp_deregister_script( 'holder' );
-		wp_register_script( 'holder', BIDX_PLUGIN_URI . '/../static/vendor/holder/holder-1.9.js', array(), '20130501', TRUE );
-
-		//bidX scripts
-		wp_register_script( 'bidx-api-core', BIDX_PLUGIN_URI . '/../static/js/bidxAPI/api-core.js', array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-fileupload', BIDX_PLUGIN_URI . '/../static/js/fileUpload.js', array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-form', BIDX_PLUGIN_URI . '/../static/js/form.js', array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-form-element', BIDX_PLUGIN_URI . '/../static/js/form-element.js', array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-location', BIDX_PLUGIN_URI . '/../static/js/location.js', array('jquery'), '20130501', TRUE );
-		wp_register_script( 'bidx-utils', BIDX_PLUGIN_URI . '/../static/js/utils.js', array('jquery'), '20130501', TRUE );
- 		wp_register_script( 'bidx-country-autocomplete', BIDX_PLUGIN_URI . '/../static/js/country-autocomplete.js', array('jquery'), '20130501', TRUE );
- 		wp_register_script( 'bidx-common', BIDX_PLUGIN_URI . '/../static/js/common.js', array( 'bidx-utils', 'bidx-api-core' ), '20130501', TRUE );
-
- 		// We need to be more specific when to load what, but for now this is ok'ish
- 		//
- 		wp_enqueue_script( 'backbone' );
- 		wp_enqueue_script( 'bidx-common' );
-
+	 	
+	 	if ( BidxCommon :: isWPInternalFunction() ) {
+	 		Logger :: getLogger( 'shortcode' ) -> trace('Skipping enqueueing because of admin.');
+	 	} else {
+	 		
+		 	//vendor scripts
+		 	wp_deregister_script( 'jquery' );
+			wp_register_script( 'jquery', BIDX_PLUGIN_URI . '/../static/vendor/jquery/jquery-1.9.1.js', array(), '20130501', TRUE );
+			wp_register_script( 'jqueryui', BIDX_PLUGIN_URI . '/../static/vendor/jqueryUI/jqueryUI-1.10.2.js', array(), '20130501', TRUE );
+			wp_register_script( 'bootstrap', BIDX_PLUGIN_URI . '/../static/vendor/bootstrap/js/bootstrap.min.js', array('jquery'), '20130501', TRUE );
+			wp_deregister_script( 'underscore' );
+			wp_register_script( 'underscore', BIDX_PLUGIN_URI . '/../static/vendor/underscore/underscore-1.4.4.js', array('jquery'), '20130501', TRUE );
+			wp_deregister_script( 'backbone' );
+			wp_register_script( 'backbone', BIDX_PLUGIN_URI . '/../static/vendor/backbone/backbone-1.0.0.js', array('underscore'), '20130501', TRUE );
+			wp_register_script( 'json2', BIDX_PLUGIN_URI . '/../static/vendor/json2/json2.js', array('jquery'), '20130501', TRUE );
+			wp_register_script( 'gmaps-places', '//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places', array(), '20130501', TRUE);
+			wp_deregister_script( 'holder' );
+			wp_register_script( 'holder', BIDX_PLUGIN_URI . '/../static/vendor/holder/holder-1.9.js', array(), '20130501', TRUE );
+	
+			//bidX scripts
+			wp_register_script( 'bidx-api-core', BIDX_PLUGIN_URI . '/../static/js/bidxAPI/api-core.js', array('jquery'), '20130501', TRUE );
+			wp_register_script( 'bidx-fileupload', BIDX_PLUGIN_URI . '/../static/js/fileUpload.js', array('jquery'), '20130501', TRUE );
+			wp_register_script( 'bidx-form', BIDX_PLUGIN_URI . '/../static/js/form.js', array('jquery'), '20130501', TRUE );
+			wp_register_script( 'bidx-form-element', BIDX_PLUGIN_URI . '/../static/js/form-element.js', array('jquery'), '20130501', TRUE );
+			wp_register_script( 'bidx-location', BIDX_PLUGIN_URI . '/../static/js/location.js', array('jquery'), '20130501', TRUE );
+			wp_register_script( 'bidx-utils', BIDX_PLUGIN_URI . '/../static/js/utils.js', array('jquery'), '20130501', TRUE );
+	 		wp_register_script( 'bidx-country-autocomplete', BIDX_PLUGIN_URI . '/../static/js/country-autocomplete.js', array('jquery'), '20130501', TRUE );
+	 		wp_register_script( 'bidx-common', BIDX_PLUGIN_URI . '/../static/js/common.js', array( 'bidx-utils', 'bidx-api-core' ), '20130501', TRUE );
+	 	}
 	 }
 
 	/**

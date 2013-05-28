@@ -7,6 +7,11 @@
  */
 class businessplan {
 
+	
+	static $deps = array( 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2',
+			'gmaps-places', 'holder', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location',
+			'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core', 'backbone', 'bidx-common' );
+	
 	/**
 	 * Constructor
 	 */

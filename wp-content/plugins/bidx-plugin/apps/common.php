@@ -193,6 +193,14 @@ class BidxCommon {
     return $checkLoginSession;
   }
 
+  /**
+   * Check if URI pattern is of wordpress internal function.
+   * @todo check of assets and scripts and maybe other functions can be added
+   */
+  static public function isWPInternalFunction( ) {
+  	return preg_match( '/wp-admin/i', $_SERVER["REQUEST_URI"] );
+  }
+  
 }
 
 ?>

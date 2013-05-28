@@ -21,19 +21,22 @@ include ('apps/util.php' );
 require ( BIDX_PLUGIN_DIR . '/contentloader.php' );
 require ( BIDX_PLUGIN_DIR . '/shortcode.php' );
 require ( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
+require_once ( BIDX_PLUGIN_DIR . '/common.php' );
 
 $loader = new ContentLoader( 'pages' );
 register_activation_hook( __FILE__, array( $loader, 'load' ) );
 register_deactivation_hook( __FILE__, array( $loader, 'unload' ) );	
 
-$ruleitems = array(
-		'member' => 'memberprofile',
-		'businessplan',
-		'mydashboard' => 'dashboard',
-		'search',
-		'group'
-);
-$shortcode = new BidxShortCode();
-$shortcode -> addMappingArray($ruleitems);
-
+if (!BidxCommon :: isWPInternalFunction()) {
+	$ruleitems = array(
+			'member' => 'memberprofile',
+			'businessplan',
+			'mydashboard' => 'dashboard',
+			'search',
+			'group',
+			'auth'
+	);
+	$shortcode = new BidxShortCode();
+	$shortcode -> addMappingArray($ruleitems);
+}
 ?>
