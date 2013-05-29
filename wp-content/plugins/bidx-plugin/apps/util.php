@@ -99,10 +99,10 @@ if (WP_DEVELOPMENT != true) {
 /**
  * Add timeout for Bidx Services
  */
-function bidx_request_timeout_time($r) {
-  $r['timeout'] = 15; # new timeout
-  return $r;
-}
-add_filter('http_request_args', 'bidx_request_timeout_time', 100, 1);
+// function bidx_request_timeout_time($r) {
+//   $r['timeout'] = 15; # new timeout
+//   return $r;
+// }
+// add_filter('http_request_args', 'bidx_request_timeout_time', 100, 1);
 
 ?>

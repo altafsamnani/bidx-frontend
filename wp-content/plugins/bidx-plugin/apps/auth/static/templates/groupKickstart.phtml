@@ -11,13 +11,13 @@ if ( is_user_logged_in() ) {
 <div class="signup span4 well">
 
 	<form class="fieldset">
-		<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}]}'>
+		<div class="formfield huge" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}]}'>
 			<input type="text" name="groupName" placeholder="Your group name" class="highlight" value="">
 		</div>
-		<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
+		<div class="formfield huge" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
 			<input type="email" name="username" placeholder="Your email address">
 		</div>
-		<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"}}'>
+		<div class="formfield huge" data-validation='{"required":{"text":"This fields is mandatory"}}'>
 			<input type="password" name="password" placeholder="Your password">
 		</div>
 		<a href="#" class="btn btn-success jsCreateGroup">Create your group</a>
