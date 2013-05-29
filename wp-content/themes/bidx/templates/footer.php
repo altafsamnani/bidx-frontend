@@ -1,9 +1,19 @@
-		<footer>
-			<div class="well">
-				PartnerImages
+	<footer>
 			
+		<div class="block-even">
+			<div class="container row-fluid">
+				<div class="span2 offset1">
+					<img 
+				</div>
+				<div class="span2"></div>
+				<div class="span2"></div>
+				<div class="span2"></div>
+				<div class="span2"></div>
 			</div>
-			
+		</div>	
+
+		<div class="block-odd"><br /></div>		
+		
 		<div class="block-even">
 			<div class="container">
 				<!-- <div class="shade-top"></div> -->
@@ -18,7 +28,8 @@
 					</div><!--/span-->	
 				</div>
 			</div>
-		</div>	
+		</div>
+		
 		<div class="sub-footer">
 			<ul>
 				<li>@ 2013. bidX.net. All rights reserved</li>

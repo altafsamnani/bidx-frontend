@@ -1,3 +1,9 @@
+<div class="container">
+	<div class="row-fluid">
+		<h1>Bidx blog</h1>
+	</div>
+	<div class="row-fluid">
+		<div class="span8">
 <?php if (!have_posts()) : ?>
   <div class="alert">
     <?php _e('Sorry, no results were found.', 'roots'); ?>
@@ -12,7 +18,7 @@
       <?php get_template_part('templates/entry-meta'); ?>
     </header>
     <div class="entry-summary">
-      <?php the_excerpt(); ?>
+    	<?php the_excerpt(); ?>
     </div>
     <footer>
       <?php the_tags('<ul class="entry-tags"><li>','</li><li>','</li></ul>'); ?>
@@ -32,3 +38,9 @@
     </ul>
   </nav>
 <?php endif; ?>
+		</div>
+		<div class="span4">
+			<?php get_template_part('templates/blog-sidebar'); ?>
+		</div>
+	</div>
+</div>

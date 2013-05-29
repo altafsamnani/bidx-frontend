@@ -64,9 +64,9 @@ define('NONCE_SALT',       '-hDJc^&:M&c=/@)6.;rw1T%dFT;HnWO9h+u*6mY0xspAX6L6KcMP
  * Ensuring cookies are shared
  */
 define('ADMIN_COOKIE_PATH', '/');
-define('COOKIE_DOMAIN', '');
-define('COOKIEPATH', '');
-define('SITECOOKIEPATH', '');
+define('COOKIE_DOMAIN', '.bidx.net');
+define('COOKIEPATH', '/');
+define('SITECOOKIEPATH', '/');
 
 
 /**#@-*/
