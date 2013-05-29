@@ -53,8 +53,10 @@ class BidxCommon {
 
     $jsSessionData = $this::$staticSession;
     $jsSessionVars = (isset($jsSessionData->data)) ? json_encode($jsSessionData->data) : '{}';
+    $jsAuthenticated = (isset($jsSessionData->authenticated)) ? $jsSessionData->authenticated : '{}';
+   
+    //Api Resposne data
 
-    //Api Response data
     $data = $this->getURIParams($jsSessionData);
     $jsApiVars = (isset($data)) ? json_encode($data) : '{}';
 
@@ -68,11 +70,31 @@ class BidxCommon {
             /* Dump response of the session-api */
             bidxConfig.session = $jsSessionVars ;
 
-            bidxConfig.authenticated = {$jsSessionData->authenticated};
+            bidxConfig.authenticated = {$jsAuthenticated};
 </script>";
     //echo $scriptJs;
     return $scriptJs;
   }
+
+//  public function getWordpressLogin($jsSessionData) {
+//
+//    $currentGroupId = $jsSessionData->data->currentGroup;
+//    $sessionUrl = $jsSessionData->data->groups->{$currentGroupId}->bidxGroupUrl;
+//    $http = 'http://';
+//    if (isset($_SERVER['HTTPS']) && $_SERVER["HTTPS"] == "on") {
+//        $http = 'https://';
+//    }
+//    $browserUrl = $http.$_SERVER['HTTP_HOST'];
+//    $browserUrl = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? str_replace('bidx.dev','beta.bidx.net',$browserUrl) : $browserUrl;
+//
+//    //if($jsSessionData->authenticated && ) {
+//    //
+//    //}
+//
+//
+//    echo $sessionUrl;
+//    exit;
+//  }
 
   /**
    * @author Altaf Samnani
@@ -97,9 +119,11 @@ class BidxCommon {
      *
      */
 
+    //$this->getWordpressLogin($jsSessionData);
+
     if (is_array($hostAddress)) {
        //Redirect URL Logic
-      
+     
 
       switch ($hostAddress[1]) {
 
@@ -124,7 +148,8 @@ class BidxCommon {
   }
 
   function redirectToLogin() {
-    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/login';
+    $http = (is_ssl()) ? 'https://' : 'http://';
+    $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/login';
     header("Location: " . $redirect_url);
     exit;
   }
@@ -143,14 +168,15 @@ class BidxCommon {
 
   function redirectUrls($uriString, $authenticated, $redirect=NULL) {
     $redirect_url = NULL;
-    $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $http = (is_ssl()) ? 'https://' : 'http://';
+    $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
     //Other than login page and no user authenticated redirect him Moved to api service
 
     switch ($uriString) {
       case 'login' :
         if ($authenticated == 'true') {
-          $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/member';
+          $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/member';
         }
         else {
           wp_clear_auth_cookie();
@@ -159,7 +185,7 @@ class BidxCommon {
 
       case 'member' :
         if ($authenticated == 'false' && $redirect) {
-          $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/'.$redirect;
+          $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/'.$redirect;
           wp_clear_auth_cookie();
         }
 
@@ -183,12 +209,16 @@ class BidxCommon {
   static public function getLoginParams() {
     $checkLoginSession = true;
     $hostAddress = explode('/', $_SERVER ["REQUEST_URI"]);
+    $params = $_GET;
 
     //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
-    if (( $hostAddress[1] == 'login' && preg_match("/^[?]q=/i", $hostAddress[2]) ) ||
+    if (( $hostAddress[1] == 'login' && isset($params['q']) ) ||
         strstr($hostAddress[1], 'wp-login.php')) {
       $checkLoginSession = false;
     }
+
+    //Login to Wordpress if already session exists
+
 
     return $checkLoginSession;
   }

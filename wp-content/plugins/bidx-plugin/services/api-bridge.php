@@ -41,6 +41,7 @@ abstract class APIbridge {
 		$cookie_string = "";
 		$sendDomain = 'bidx.net';
 		$cookieArr = array();
+    $bidxWPerror = NULL;
 		$groupDomain = ( DOMAIN_CURRENT_SITE == 'bidx.dev' ) ? 'site1' : $this->getBidxSubdomain();
 
 		// 1. Retrieve Bidx Cookies and send back to api to check
@@ -89,16 +90,21 @@ abstract class APIbridge {
 		$this -> logger -> trace( sprintf( 'Response for API URL: %s Response: %s', $url, var_export( $result, true )));
 
 		// 5. Set Cookies if Exist
+    if(is_array($result)) {
 		$cookies = $result[ 'cookies' ];
 		if ( count( $cookies )) {
 			foreach ( $cookies as $bidxAuthCookie ) {
 				$cookieDomain = ( DOMAIN_CURRENT_SITE == 'bidx.dev' ) ? 'bidx.dev' : $bidxAuthCookie->domain;
 				setcookie( $bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly );
 			}
-		}
-   
-		$requestData = $this->processResponse($urlService, $result,$groupDomain);
+		}  
+		} else { // Wp Request timeout
+      $bidxWPerror = $result;
+      $result = array( );
+      $result['response']['code'] = 408;
 
+    }
+    $requestData = $this->processResponse($urlService, $result,$groupDomain,$bidxWPerror);
 		return $requestData;
 	}
 
@@ -110,7 +116,7 @@ abstract class APIbridge {
 	 * @param array $requestData response from Bidx API
 	 * @return array $requestData response from Bidx API
 	 */
-	public function processResponse($urlService, $result, $groupDomain ) {
+	public function processResponse($urlService, $result, $groupDomain, $bidxWPerror = NULL ) {
 
 		$this->logger->debug($result);
 
@@ -127,7 +133,7 @@ abstract class APIbridge {
 			//Keep the real status
 			//$requestData->status = 'OK';
 			$requestData->authenticated = 'true';
-      $this->checkWordpressLogin( $groupDomain );
+    
 
 		}
 		else if ($httpCode >= 300 && $httpCode < 400) {
@@ -143,21 +149,18 @@ abstract class APIbridge {
       $this->logger->trace(sprintf('Authentication Failed for URL: %s ', $urlService));
 
       ($urlService != 'session') ? $this->bidxRedirectLogin($groupDomain) : '';
+    } else if ($httpCode >= 402 ) {
+      $requestData->status = 'ERROR';
+      $errors = $bidxWPerror->get_error_messages();
+      foreach ($errors as $error) {
+        echo $error; //this is just an example and generally not a good idea, you should implement means of processing the errors further down the track and using WP's error/message hooks to display them
+      }
+      $requestData->text .= $error;
     }
 
 		return $requestData;
 	}
 
-  function checkWordpressLogin ( $groupDomain , $result ) {
-
-    $user = wp_get_current_user();
-
-    if($user && isset($user->user_login) && 'username_to_check' == $user->user_login)
-    {
-        // do stuff
-    }
-
-  }
 
 	/**
 	 * Grab the subdomain portion of the URL. If there is no sub-domain, the root
@@ -197,9 +200,10 @@ abstract class APIbridge {
 	 */
 	function bidxRedirectLogin ($groupDomain) {
 		//wp_clear_auth_cookie();
-		$current_url = 'http://'  . $_SERVER['HTTP_HOST'] . $_SERVER[ 'REQUEST_URI' ];
+    $http = (is_ssl()) ? 'https://' : 'http://';
+		$current_url = $http  . $_SERVER['HTTP_HOST'] . $_SERVER[ 'REQUEST_URI' ];
 
-		$redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode( $current_url );
+		$redirect_url =  $http  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode( $current_url );
 
 		header( "Location: ".$redirect_url );
 		exit;

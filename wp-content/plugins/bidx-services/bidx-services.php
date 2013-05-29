@@ -75,8 +75,9 @@ function bidx_process_mail() {
  */
 function bidx_redirect_login ($groupDomain) {
   wp_clear_auth_cookie();
-  $current_url = 'http://'  . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-  $redirect_url =  'http://'  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode($current_url);
+  $http = (is_ssl()) ? 'https://' : 'http://';
+  $current_url = $http  . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+  $redirect_url =  $http  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode($current_url);
 
   header("Location: $redirect_url");
 }
@@ -486,7 +487,7 @@ function bidx_wordpress_post_action($url, $result, $body) {
           strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
     if( !$is_ajax ) {
-        ($url != 'sessionactive') ? bidx_redirect_login($groupName) : '';
+        ($url != 'session' || $url != 'sessionactive') ? bidx_redirect_login($groupName) : '';
 
     }
   } else {
@@ -574,7 +575,7 @@ function bidx_wordpress_post_action($url, $result, $body) {
           wpmu_delete_user($user_id);
         }
       }
-      else {
+      else {        
         $requestData = get_redirect($url, $requestData, $body['response']['domain']);
       }
       break;
@@ -605,9 +606,10 @@ function create_bidx_wp_site($groupName, $email) {
   $newdomain = $groupName . '.' . preg_replace('|^www\.|', '', $current_site->domain);
   $path = $current_site->path;
 
-  $password = 'N/A';
+  $password = 'bidxGeeks9';
   //$user_id = email_exists($email);
   $userName = $groupName.'groupadmin' ;
+
   $user_id = wpmu_create_user($userName, $password, $email);
   if (false == $user_id) {
     //wp_die(__('There was an error creating the user.'));
@@ -785,7 +787,7 @@ function ajax_submit_action() {
 
   $url = (isset($_POST['apiurl'])) ? $_POST['apiurl'] : NULL;
   $method = (isset($_POST['apimethod'])) ? $_POST['apimethod'] : NULL;
-
+ 
   //1 Do wordpress stuff and get the params
   $body = bidx_wordpress_pre_action($url);
 
@@ -823,6 +825,9 @@ function bidx_register_response($requestEntityMember, $requestEntityGroup, $requ
     $requestData = $requestGroupData;
   }
   else {
+  
+    $username_wp = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'site1groupadmin' : $_POST['businessGroupName'].'groupadmin';
+    force_wordpress_login($username_wp);
     $requestData->status = 'OK';
     $requestData->submit = '/member';
     //Logs the user in and show the group dashboard
@@ -1190,4 +1195,30 @@ function annointed_admin_bar_remove() {
         
 
 
+}
+
+/* Force Wordpress Login
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ *
+ * @param String $$username
+ */
+
+function force_wordpress_login($username) {
+
+  if ($user_id = username_exists($username)) {   //just do an update
+ 
+    // userdata will contain all information about the user
+    $userdata = get_userdata($user_id);
+    $user = wp_set_current_user($user_id, $username);
+    // this will actually make the user authenticated as soon as the cookie is in the browser
+    wp_set_auth_cookie($user_id);
+
+    // the wp_login action is used by a lot of plugins, just decide if you need it
+    do_action('wp_login', $userdata->ID);
+    // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
+
+  } 
+  return;
 }
