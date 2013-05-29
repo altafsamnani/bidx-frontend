@@ -1,17 +1,34 @@
 	<footer>
-			
-		<div class="block-even">
-			<div class="container row-fluid">
-				<div class="span2 offset1">
-					<img 
-				</div>
-				<div class="span2"></div>
-				<div class="span2"></div>
-				<div class="span2"></div>
-				<div class="span2"></div>
-			</div>
-		</div>	
 
+		<div class="container row-fluid">
+			<div class="span3" style="height: 100px">
+			    <a href="http://www.bidnetwork.org">
+			      <img style="height: 100%" src="/wp-content/themes/bidx/assets/img/partners/bidnetwork_logo.png" alt="Bidnetwork">
+			    </a>
+			 </div>
+			 <div class="span2" style="height: 100px">
+			    <a href="http://www.sampoerna.com">
+			      <img style="height: 100%" src="/wp-content/themes/bidx/assets/img/partners/Sampoerna/logo_Sampoerna.png" alt="Sampoerna">
+			    </a>
+			 </div>
+			 <div class="span2" style="height: 100px">
+			    <a href="http://www.postcodeloterij.nl">
+			      <img style="height: 100%" src="/wp-content/themes/bidx/assets/img/partners/NPL/NPL_LR.jpg" alt="Stichting Postcodeloterij">
+			    </a>
+			 </div>
+			 <div class="span2" style="height: 100px">	
+			 	<a href="http://www.dfid.com">
+			      <img style="height: 100%" src="/wp-content/themes/bidx/assets/img/partners/DFID/DFID_lowres_nobackground.png" alt="DFID">
+			    </a>
+			 </div>
+			 <div class="span2" style="height: 100px">
+			    <a href="http://www.usaid.com">
+			      <img style="height: 95px" src="/wp-content/themes/bidx/assets/img/partners/USAID/Horizontal_RGB_600.png" alt="USAID">
+			    </a>
+			</div>
+		</div>
+
+			
 		<div class="block-odd"><br /></div>		
 		
 		<div class="block-even">
