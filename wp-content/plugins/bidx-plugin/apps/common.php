@@ -26,12 +26,7 @@ class BidxCommon {
       if(!is_user_logged_in()) {
       
         $this->forceWordpressLogin( $subDomain  );
-      } else {
-        $user_id = username_exists($subDomain.'groupadmin');  //just do an update
-        // userdata will contain all information about the user
-        $userdata = get_userdata($user_id);
-      
-      }
+      } 
     }
 
     $this->setStaticSession( $subDomain );
