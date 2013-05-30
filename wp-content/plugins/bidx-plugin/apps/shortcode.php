@@ -127,6 +127,10 @@ class BidxShortcode {
 			wp_register_script( 'bidx-utils', BIDX_PLUGIN_URI . '/../static/js/utils.js', array('jquery'), '20130501', TRUE );
 	 		wp_register_script( 'bidx-country-autocomplete', BIDX_PLUGIN_URI . '/../static/js/country-autocomplete.js', array('jquery'), '20130501', TRUE );
 	 		wp_register_script( 'bidx-common', BIDX_PLUGIN_URI . '/../static/js/common.js', array( 'bidx-utils', 'bidx-api-core' ), '20130501', TRUE );
+
+	 		//enable backbone for now
+	 		//@todo: remove this as soon as all functions are moved to shortcodes
+	 		wp_enqueue_script('backbone');
 	 	}
 	 }
 
