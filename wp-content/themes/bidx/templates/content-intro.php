@@ -29,7 +29,7 @@
 				<div class="span4">
 					<div class="signup well">
 						<!-- ##### Widget Signup Start ######-->
-						<form class="fieldset">
+						<form class="fieldset" method="post" action="/register">
 							<div><!-- this div is necessary for container overflow issue IE7 -->
 								<h3>Welcome offer! Contact us to create a Group for free.</h3>
 
@@ -73,7 +73,7 @@
 					    		$(".fieldset").form({
 					    			callToAction : '.jsCreateGroup', // the selector for submit button
 					    			errorClass : 'error', //the css class used as error message
-					    			url : '/wp-admin/admin-ajax.php?action=bidx_request',
+//					    			url : '/wp-admin/admin-ajax.php?action=bidx_request',
 					    			apiurl : 'groups',
 					    			apimethod : 'post',
 					    			beforeSubmit : function(){
@@ -81,6 +81,8 @@
 							    		$this.fadeOut("fast", function(){
 							    			$(".group-creation-progress").fadeIn('fast');
 							    		});
+
+							    		alert(1);
 					    			},
 					    			//custom error message for frontend registration in case group creation fails
 					    			error: function(data){
