@@ -568,12 +568,15 @@ class TemplateLibrary {
 
         case 'facebookprofile' :
 
-          $fbUrl = (preg_match("/facebook/i", $username)) ? $username : 'https://www.facebook.com/' . $username;
+          //$fbUrl = (preg_match("/facebook/i", $username)) ? $username : 'https://www.facebook.com/' . $username;
 
-          $fbUrl = (preg_match("/http/i", $fbUrl)) ? $fbUrl : 'https://' . $fbUrl;
+         // $fbUrl = (preg_match("/http/i", $fbUrl)) ? $fbUrl : 'https://' . $fbUrl;
+          $fbUrl = 'https://' . $username;
+
 
           $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $fbUrl . '">Facebook</a>';
           break;
+        
         case 'twitterprofile' :
           $twitterUserName = str_replace("#", "", $username);
           $twitterUrl = 'https://twitter.com/' . $twitterUserName;
