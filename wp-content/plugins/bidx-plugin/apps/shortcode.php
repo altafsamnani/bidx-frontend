@@ -131,6 +131,7 @@ class BidxShortcode {
 	 		//enable backbone for now
 	 		//@todo: remove this as soon as all functions are moved to shortcodes
 	 		wp_enqueue_script('backbone');
+	 		wp_enqueue_script('bidx-common');
 	 	}
 	 }
 
