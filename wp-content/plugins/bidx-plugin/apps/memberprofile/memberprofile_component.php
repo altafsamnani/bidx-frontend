@@ -1,12 +1,3 @@
-<!-- bidxAPI config wasn't loaded anymore properly, added it here to be at least before the js include of it but it should be fixed properly... -->
-<script>
-  window.bidx = window.bidx || {};
-  window.bidx.api = {
-    settings: {
-              servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
-            }
-    };
-</script>
 <div class="block-odd">
     <div class="pageHeader clearfix">
       <div class="container clearfix">

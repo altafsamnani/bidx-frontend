@@ -8,8 +8,8 @@ require_once(BIDX_PLUGIN_DIR .'/../apps/common.php' );
  */
 class memberprofile {
 
-	static $deps = array( 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 
-			'gmaps-places', 'holder', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 
+	static $deps = array( 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2',
+			'gmaps-places', 'holder', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location',
 			'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core', 'backbone', 'bidx-common' );
 
  	public $scriptInject ;
@@ -28,6 +28,14 @@ class memberprofile {
   }
 
    function addJsVariables() {
+	echo "<script>
+	      window.bidx = window.bidx || {};
+	      window.bidx.api = {
+	        settings: {
+	                  servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
+	                }
+	        };
+	    </script>";
 
      echo $this->scriptInject;
    }
@@ -75,18 +83,8 @@ class memberprofile {
 	 * Add script block to footer
 	 */
 	static public function bidx_memberprofile_add_to_footer() {
-	
-	echo "<script>
-	      window.bidx = bidx || {};
-	      window.bidx.api = {
-	        settings: {
-	                  servicesPath:   '../../static/js/bidxAPI/services/'
-	                }
-	        };
-	    </script>";
-	
 	}
-	
+
 	/**
 	 * Load the content.
 	 * Dynamic action needs to be added here
@@ -97,22 +95,22 @@ class memberprofile {
 	    /* 1 Template Rendering */
 	     require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
 	     $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/memberprofile/templates/');
-	
+
 	    /* 2. Service MemberProfile*/
 	    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
 	    $memberObj = new MemberService( );
-	
+
 	    /* 3. Render Member Profile Services for Initial View Display */
 	    $memberData = $memberObj->getMemberDetails(  );
-	 
+
 	    $view->data = $memberData->data;
 	    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
 	    $view->sessionData = BidxCommon::$staticSession;
-   
+
 	    /* 4. Call the Display Component */
 	    add_action( 'wp_footer', array( memberprofile ,'bidx_memberprofile_add_to_footer' ) );
 		  require_once ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );
-		
+
 	}
 
 }
