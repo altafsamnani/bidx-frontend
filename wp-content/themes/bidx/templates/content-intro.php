@@ -81,8 +81,6 @@
 							    		$this.fadeOut("fast", function(){
 							    			$(".group-creation-progress").fadeIn('fast');
 							    		});
-
-							    		alert(1);
 					    			},
 					    			//custom error message for frontend registration in case group creation fails
 					    			error: function(data){
