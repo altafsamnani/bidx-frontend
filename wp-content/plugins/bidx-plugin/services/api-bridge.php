@@ -103,8 +103,7 @@ abstract class APIbridge {
 
       $bidxWPerror = $result;
       $result = array( );
-      $result['response']['code'] = 'timeout';
-      echo 'else';exit;
+      $result['response']['code'] = 'timeout';    
     }
     $requestData = $this->processResponse($urlService, $result,$groupDomain,$bidxWPerror);
 		return $requestData;

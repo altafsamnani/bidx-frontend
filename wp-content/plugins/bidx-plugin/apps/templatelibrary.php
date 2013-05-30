@@ -567,10 +567,17 @@ class TemplateLibrary {
           break;
 
         case 'facebookprofile' :
-          $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $username . '">Facebook</a>';
+
+          $fbUrl = (preg_match("/facebook/i", $username)) ? $username : 'https://www.facebook.com/' . $username;
+
+          $fbUrl = (preg_match("/http/i", $fbUrl)) ? $fbUrl : 'https://' . $fbUrl;
+
+          $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $fbUrl . '">Facebook</a>';
           break;
         case 'twitterprofile' :
-          $scriptContent = '<a title="View my Twitter Profile" target="_blank" class="bid-social twitter" href="' . $username . '">Twitter</a>';
+          $twitterUserName = str_replace("#", "", $username);
+          $twitterUrl = 'https://twitter.com/' . $twitterUserName;
+          $scriptContent = '<a title="View my Twitter Profile" target="_blank" class="bid-social twitter" href="' . $twitterUrl . '">Twitter</a>';
           break;
       }
     }
