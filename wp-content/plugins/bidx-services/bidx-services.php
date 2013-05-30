@@ -191,7 +191,7 @@ error_log( sprintf( "urlservice: %s, body: %s", $urlservice, var_export( $body, 
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
 
-
+  
   $request = new WP_Http;
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
@@ -290,10 +290,14 @@ function ajax_submit_signin() {
 add_action('wp_logout', 'bidx_signout');
 
 function bidx_signout() {
+  //Logout Bidx Session too
   clear_bidx_cookies();
   $params['domain'] = get_bidx_subdomain();
   call_bidx_service('session', $params, 'DELETE');
   wp_clear_auth_cookie();
+
+  
+  BidxCommon::$staticSession[$params['domain']] = NULL;
 }
 
 function clear_bidx_cookies() {
@@ -510,25 +514,25 @@ function bidx_wordpress_post_action($url, $result, $body) {
         $process = TRUE;
         $displayData = $requestData->data;
         //check role and assign logged in wp username if present.
-        if ($url == 'session'&& DOMAIN_CURRENT_SITE == 'bidx.dev') {
-             $displayData->roles = array('SysAdmin');
-          }
+     
 
         if (!empty($displayData->roles)) {
           $roleArray = $displayData->roles;
-
-
 
           if (in_array("SysAdmin", $roleArray)) {
             //$username = 'admin';
             $username = 'admin';
           }
-          else if (in_array("GroupAdmin", $roleArray) || in_array("GroupOwner", $roleArray)) {
+          else if (in_array("GroupAdmin", $roleArray)) {
 
             $username = $groupName . 'groupadmin';
           }
+          else if (in_array("GroupOwner", $roleArray)) {
+
+            $username = $groupName . 'groupowner';
+          }
           else if (in_array("Member", $roleArray)) {
-            $username = $groupName . 'subscriber';
+            $username = $groupName . 'groupmember';
           }
         }
         else {
@@ -608,7 +612,7 @@ function create_bidx_wp_site($groupName, $email) {
 
   $password = 'bidxGeeks9';
   //$user_id = email_exists($email);
-  $userName = $groupName.'groupadmin' ;
+  $userName = $groupName ;
 
   $user_id = wpmu_create_user($userName, $password, $email);
   if (false == $user_id) {
@@ -1042,7 +1046,7 @@ function assign_bidxgroup_theme_page($blog_id) {
 function create_custom_role_capabilities($blog_id) {
 
   /*********** Add Bidx Group Owner Group Admin Roles ****************/
-  $new_user_caps = array('read' => true,
+  $new_user_caps_admin = array('read' => true,
                          'edit_theme_options' => true,
                          'publish_pages' => true,
                          'publish_posts' => true,
@@ -1051,7 +1055,25 @@ function create_custom_role_capabilities($blog_id) {
                          'edit_other_posts' => false,
                          'edit_other_pages' => false,
                          'upload_files' => true);
-  $new_role_added = add_role('groupadmin', 'Group Admin', $new_user_caps);
+  $new_role_added = add_role('groupadmin', 'Group Admin', $new_user_caps_admin);
+
+  $new_user_caps_owner = array('read' => true,
+                         'edit_theme_options' => true,
+                         'publish_pages' => true,
+                         'publish_posts' => true,
+                         'edit_pages' => true,
+                         'edit_posts' => true,
+                         'edit_other_posts' => false,
+                         'edit_other_pages' => false,
+                         'upload_files' => true);
+  $new_role_added = add_role('groupowner', 'Group Owner', $new_user_caps_owner);
+
+  $new_user_caps_member = array('read' => true);
+  $new_role_added = add_role('groupmember', 'Group Member', $new_user_caps_member);
+
+
+
+
 
   /*$new_role_added = add_role('groupowner', 'Group Owner', $new_user_caps);
 
@@ -1065,25 +1087,47 @@ function create_custom_role_capabilities($blog_id) {
     $user_id = $user->ID;
     
     //When creating directly from wordpress handle that case too
-    $is_frm_bidx = (preg_match("/^groupadmin/i", $user->user_login)) ? true : false  ;
-
-    $group_admin_login = $user->user_login . 'groupadmin';
-    $group_admin_email = $group_admin_login.'info@bidx.net';
+    $is_frm_bidx = (preg_match("/groupadmin\z/i", $user->user_login)) ? true : false  ;
+    $group_password = $user->user_login.'bidxGeeks9';
     //$group_admin_password = $user->user_login.'groupadmin';
-    $group_admin_password = wp_generate_password(12, false);
-    
+
+    //Group Admin
+    $group_admin_login = $user->user_login . 'groupadmin';
+    $group_admin_email = $group_admin_login.'_admin@bidx.net';
+
+    //Group Owner
+    $group_owner_login = $user->user_login . 'groupowner';
+    $group_owner_email = $group_admin_login.'_owner@bidx.net';
+
+    //Group Member
+    $group_member_login = $user->user_login . 'groupmember';
+    $group_member_email = $group_admin_login.'_member@bidx.net';    
+        
   }
 
+
+  //Add Group Owner Role
   if ($is_frm_bidx) {
     $user = new WP_User($user_id);
     $user->remove_role('administrator');
-    $user->add_role('groupadmin');
+    $user->add_role('groupowner');
   }
   else {
     /* For Adding users to existing blog */
-    $user_id = wpmu_create_user($group_admin_login, $group_admin_password, $group_admin_email);
-    add_user_to_blog($blog_id, $user_id, 'groupadmin');
+    $user_id_owner = wpmu_create_user($group_owner_login, $group_password, $group_owner_email);
+    add_user_to_blog($blog_id, $user_id_owner, 'groupowner');
   }
+
+  //Add Group Admin Role
+  $user_id_admin = wpmu_create_user($group_admin_login, $group_password, $group_admin_email);
+  add_user_to_blog($blog_id, $user_id_admin, 'groupadmin');
+
+  //Add Group Member Role
+  $user_id_member = wpmu_create_user($group_member_login, $group_admin_password, $group_member_email);
+  add_user_to_blog($blog_id, $user_id_member, 'groupmember');
+
+
+
 
 
   //wpmu_signup_user( $new_user_login, 'test@aa.com', array( 'add_to_blog' => $blog_id, 'new_role' => 'groupadmin' ) );

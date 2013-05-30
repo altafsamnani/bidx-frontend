@@ -42,7 +42,7 @@ abstract class APIbridge {
 		$sendDomain = 'bidx.net';
 		$cookieArr = array();
     $bidxWPerror = NULL;
-		$groupDomain = ( DOMAIN_CURRENT_SITE == 'bidx.dev' ) ? 'site1' : $this->getBidxSubdomain();
+		$groupDomain = $this->getBidxSubdomain();
 
 		// 1. Retrieve Bidx Cookies and send back to api to check
 		$cookieInfo = $_COOKIE;
@@ -65,7 +65,8 @@ abstract class APIbridge {
 		// 2.2 Set the group domain header
 		if ( $groupDomain ) {
 			//Talk with arjan for domain on first page registration it will be blank when it goes live
-			$headers['X-Bidx-Group-Domain'] = ( $urlService == 'groups' && $bidxMethod == 'POST' ) ? 'beta' : $groupDomain;
+      $noDomain = ( DOMAIN_CURRENT_SITE == 'bidx.net' ) ? 'www' : 'beta';
+			$headers['X-Bidx-Group-Domain'] = ( $urlService == 'groups' && $bidxMethod == 'POST' ) ? $noDomain : $groupDomain;
 			//$bidx_get_params.= '&bidxGroupDomain=' . $body['domain'];
 		}
 
@@ -97,12 +98,13 @@ abstract class APIbridge {
 				$cookieDomain = ( DOMAIN_CURRENT_SITE == 'bidx.dev' ) ? 'bidx.dev' : $bidxAuthCookie->domain;
 				setcookie( $bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly );
 			}
-		}  
+		} 
 		} else { // Wp Request timeout
+
       $bidxWPerror = $result;
       $result = array( );
-      $result['response']['code'] = 408;
-
+      $result['response']['code'] = 'timeout';
+      echo 'else';exit;
     }
     $requestData = $this->processResponse($urlService, $result,$groupDomain,$bidxWPerror);
 		return $requestData;
@@ -132,25 +134,24 @@ abstract class APIbridge {
 		if ( $httpCode >= 200 && $httpCode < 300 ) {
 			//Keep the real status
 			//$requestData->status = 'OK';
-			$requestData->authenticated = 'true';
-    
+			$requestData->authenticated = 'true';   
 
 		}
 		else if ($httpCode >= 300 && $httpCode < 400) {
 			$requestData->status = 'ERROR';
 			$requestData->authenticated = 'true';
+
 		}
 		else if ($httpCode == 401) {
       $requestData->status = 'ERROR';
       $requestData->authenticated = 'false';
       //$this->bidxRedirectLogin($groupDomain);
       do_action('clear_auth_cookie');
-
       $this->logger->trace(sprintf('Authentication Failed for URL: %s ', $urlService));
-
       ($urlService != 'session') ? $this->bidxRedirectLogin($groupDomain) : '';
-    } else if ($httpCode >= 402 ) {
-      $requestData->status = 'ERROR';
+
+    } else if ($httpCode == 'timeout' ) {
+      $requestData->status = 'ERROR';  
       $errors = $bidxWPerror->get_error_messages();
       foreach ($errors as $error) {
         echo $error; //this is just an example and generally not a good idea, you should implement means of processing the errors further down the track and using WP's error/message hooks to display them

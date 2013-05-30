@@ -15,17 +15,17 @@ class memberprofile {
  	public $scriptInject ;
 
  	/**
-	 * Constructor
-	 */
-  	function __construct() {
+   * Constructor
+   */
+  function __construct() {
+    $subDomain = $this->getBidxSubdomain();
 
-	    $bidCommonObj = new BidxCommon();
-	    $this->scriptInject = $bidCommonObj->getScriptJs();
+    $bidCommonObj = new BidxCommon($subDomain);
+    $this->scriptInject = $bidCommonObj->getScriptJs($subDomain);
 
-		add_action( 'wp_enqueue_scripts', array( &$this, 'register_memberprofile_bidx_ui_libs' ) );
-    	add_action('wp_head', array(&$this,'addJsVariables' ) );
-
-   }
+    add_action('wp_enqueue_scripts', array(&$this, 'register_memberprofile_bidx_ui_libs'));
+    add_action('wp_head', array(&$this, 'addJsVariables'));
+  }
 
    function addJsVariables() {
 
@@ -40,6 +40,35 @@ class memberprofile {
 	  wp_register_style( 'memberprofile', plugins_url( 'static/css/memberprofile.css', __FILE__ ), array(), '20130501', 'all' );
 	  wp_enqueue_style( 'memberprofile' );
 
+	}
+
+   /**
+	 * Grab the subdomain portion of the URL. If there is no sub-domain, the root
+	 * domain is passed back. By default, this function *returns* the value as a
+	 * string.
+	 *
+	 * @param bool $echo optional parameter prints the response directly to
+	 * the screen.
+	 */
+	function getBidxSubdomain($echo = false) {
+		$hostAddress = explode( '.', $_SERVER ["HTTP_HOST"] );
+		if ( is_array($hostAddress) ) {
+			if ( eregi( "^www$", $hostAddress [0] ) ) {
+				$passBack = 1;
+			}
+			else {
+				$passBack = 0;
+			}
+			if ( $echo == false ) {
+				return ( $hostAddress [$passBack] );
+			}
+			else {
+				echo ( $hostAddress [$passBack] );
+			}
+		}
+		else {
+			return ( false );
+		}
 	}
 
 	/**
@@ -79,10 +108,10 @@ class memberprofile {
 	    $view->data = $memberData->data;
 	    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
 	    $view->sessionData = BidxCommon::$staticSession;
-	
+   
 	    /* 4. Call the Display Component */
 	    add_action( 'wp_footer', array( memberprofile ,'bidx_memberprofile_add_to_footer' ) );
-		require_once ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );
+		  require_once ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );
 		
 	}
 

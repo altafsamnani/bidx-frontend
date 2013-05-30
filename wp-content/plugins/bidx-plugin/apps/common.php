@@ -10,36 +10,68 @@ require_once( ABSPATH . WPINC . '/pluggable.php' );
 
 class BidxCommon {
 
-  public static $staticSession;
+  public static $bidxSession;
   public static $scriptJs;
+  public static $staticSession;
 
-  public function __construct() {
 
-    if ($this::$scriptJs == null) {
-      $this->checkSession();
-      $this::$scriptJs = $this->injectJsVariables();
+  public function __construct($subDomain) {
+   
+    if ( $subDomain ) {
+
+    if ( !isset ( $this::$scriptJs [ $subDomain ] ) ) {
+     
+      $this->getSessionAndScript( $subDomain );
+           
+      if(!is_user_logged_in()) {
+      
+        $this->forceWordpressLogin( $subDomain  );
+      } else {
+        $user_id = username_exists($subDomain.'groupadmin');  //just do an update
+        // userdata will contain all information about the user
+        $userdata = get_userdata($user_id);
+      
+      }
+    }
+
+    $this->setStaticSession( $subDomain );
     }
   }
 
-  private function checkSession() {
+ 
+  private function getSessionAndScript( $subDomain ) {
     $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
     if (!$is_ajax) {
       // To check whther its login page or q= redirect already checked session.
-      $checkSession = $this->getLoginParams();
+      $isWordpress = $this->isWordpressPage();
       //Check session if its not redirect (is not having q= param)
-      if ($checkSession) {
+      if (!$isWordpress) {
         $sessionObj = new SessionService();
-        $this::$staticSession = $sessionObj->isLoggedIn();
+        $this::$bidxSession[$subDomain] = $sessionObj->isLoggedIn();
+
+        $scriptValue = $this->injectJsVariables( $subDomain );
+        $this->setScriptJs( $subDomain, $scriptValue );
       }
     }
-    //self::$staticSession = $this->sessionData;
+ 
     return;
   }
 
-  public function getScriptJs() {
-    return $this::$scriptJs;
+  public function setStaticSession( $subDomain ) {
+    $this::$staticSession = $this::$bidxSession[$subDomain];
+
+  }
+  public function setScriptJs( $subDomain, $scriptValue ) {
+
+    $this::$scriptJs[$subDomain] = $scriptValue;
+    
+  }
+
+  public function getScriptJs( $subDomain ) {
+  
+    return $this::$scriptJs[$subDomain];
   }
 
   /**
@@ -49,15 +81,15 @@ class BidxCommon {
    *
    * @return String Injects js variables
    */
-  public function injectJsVariables() {
+  public function injectJsVariables( $subDomain ) {
 
-    $jsSessionData = $this::$staticSession;
+    $jsSessionData = $this::$bidxSession[$subDomain];
     $jsSessionVars = (isset($jsSessionData->data)) ? json_encode($jsSessionData->data) : '{}';
     $jsAuthenticated = (isset($jsSessionData->authenticated)) ? $jsSessionData->authenticated : '{}';
    
     //Api Resposne data
 
-    $data = $this->getURIParams($jsSessionData);
+    $data = $this->getURIParams($subDomain, $jsSessionData);
     $jsApiVars = (isset($data)) ? json_encode($data) : '{}';
 
 
@@ -76,25 +108,6 @@ class BidxCommon {
     return $scriptJs;
   }
 
-//  public function getWordpressLogin($jsSessionData) {
-//
-//    $currentGroupId = $jsSessionData->data->currentGroup;
-//    $sessionUrl = $jsSessionData->data->groups->{$currentGroupId}->bidxGroupUrl;
-//    $http = 'http://';
-//    if (isset($_SERVER['HTTPS']) && $_SERVER["HTTPS"] == "on") {
-//        $http = 'https://';
-//    }
-//    $browserUrl = $http.$_SERVER['HTTP_HOST'];
-//    $browserUrl = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? str_replace('bidx.dev','beta.bidx.net',$browserUrl) : $browserUrl;
-//
-//    //if($jsSessionData->authenticated && ) {
-//    //
-//    //}
-//
-//
-//    echo $sessionUrl;
-//    exit;
-//  }
 
   /**
    * @author Altaf Samnani
@@ -107,7 +120,7 @@ class BidxCommon {
    *
    * @param bool $echo
    */
-  public function getURIParams($jsSessionData = NULL) {
+  public function getURIParams($subDomain, $jsSessionData = NULL) {
 
 
     $hostAddress = explode('/', $_SERVER ["REQUEST_URI"]);
@@ -132,7 +145,7 @@ class BidxCommon {
           if($memberId) {
           $data->memberId = $memberId;
           $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
-          $this::$staticSession->memberId = $memberId;
+          $this::$bidxSession[$subDomain]->memberId = $memberId;
           } else {
             $redirect = 'login';//To redirect /member and not loggedin page to /login
           }
@@ -202,25 +215,27 @@ class BidxCommon {
     return;
   }
 
+
   /**
    * 
    * @return boolean 
    */
-  static public function getLoginParams() {
-    $checkLoginSession = true;
+  public function isWordpressPage() {
+
+    $isWordpress = false;
     $hostAddress = explode('/', $_SERVER ["REQUEST_URI"]);
     $params = $_GET;
 
     //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
-    if (( $hostAddress[1] == 'login' && isset($params['q']) ) ||
+    if (( $hostAddress[1] == 'login' && isset($params['q']) ) || $this->isWPInternalFunction() ||
         strstr($hostAddress[1], 'wp-login.php')) {
-      $checkLoginSession = false;
+      $isWordpress = true;
     }
 
     //Login to Wordpress if already session exists
 
 
-    return $checkLoginSession;
+    return $isWordpress;
   }
 
   /**
@@ -230,7 +245,48 @@ class BidxCommon {
   static public function isWPInternalFunction( ) {
   	return preg_match( '/wp-admin/i', $_SERVER["REQUEST_URI"] );
   }
+
+  /* Force Wordpress Login
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ *
+ * @param String $$username
+ */
+
+function forceWordpressLogin($subDomain) {
+
+  $sessionData = $this::$bidxSession[$subDomain]; 
+
+ if ($sessionData->authenticated == 'true') {
+   $groupName = $subDomain;
+   $roles = $sessionData->data->roles;
+
+      if (in_array('GroupAdmin', $roles)) {
+        $userName = $groupName . 'groupadmin';
+      }
+      else if (in_array('GroupOwner', $roles)) {
+        $userName = $groupName . 'groupowner';
+      }
+      else {
+        $userName = $groupName . 'groupmember';
+      }
   
+      if ($user_id = username_exists($userName)) {   //just do an update
+        // userdata will contain all information about the user
+        $userdata = get_userdata($user_id);
+        $user = wp_set_current_user($user_id, $userName);
+        // this will actually make the user authenticated as soon as the cookie is in the browser
+        wp_set_auth_cookie($user_id);
+
+        // the wp_login action is used by a lot of plugins, just decide if you need it
+        do_action('wp_login', $userdata->ID);
+        // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
+      }
+    }
+  return;
+}
+
  /** 
   * Authenticate the user using the username and password with Bidx Data.
   *
@@ -346,7 +402,8 @@ class BidxCommon {
   	}
   	
   }
-  
+
+
   
 }
 
