@@ -20,7 +20,7 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
     print_r($args->theme_location);
     echo "</pre>";exit;*/
 
-    
+
     if($args->theme_location == "primary_navigation")
       $output .= "\n<ul class=\"dropdown-menu\">\n";
     elseif ($args->theme_location == "footer_navigation")
@@ -28,9 +28,10 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
   }
 
   function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
- 
+
     $item_html = '';
     parent::start_el($item_html, $item, $depth, $args);
+
 
     //top navigation receives styling with dropdown menu's
     if($args->theme_location == "primary_navigation") {
@@ -43,6 +44,11 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
       }
       elseif (stristr($item_html, 'li class="nav-header')) {
         $item_html = preg_replace('/<a[^>]*>(.*)<\/a>/iU', '$1', $item_html);
+      }
+      else {
+        // START BIDX, add btn btn-primary to all anchors
+        $item_html = str_replace('<a', '<a class="btn"', $item_html );
+        // END BIDX
       }
     }
     //footer receives different styling of menu's
@@ -66,8 +72,8 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
   }
 
   function display_element($element, &$children_elements, $max_depth, $depth = 0, $args, &$output) {
-    
- 
+
+
     $element->is_dropdown =  ((!empty($children_elements[$element->ID]) && (($depth + 1) < $max_depth)));
 
     if ($element->is_dropdown) {
