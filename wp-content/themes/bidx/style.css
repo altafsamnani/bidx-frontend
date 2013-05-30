@@ -141,9 +141,27 @@ header .navbar .menu-main a {
     text-transform:             uppercase;
 }
 
-header .navbar .menu-main a:hover,
-header .navbar .menu-main li.active a:hover {
+header .navbar .menu-main > ul > li > a:hover,
+header .navbar .menu-main > ul > li.active > a:hover {
     background-color:           #ebedef;
+}
+
+.navbar .nav li.dropdown-hover:hover .dropdown-menu{
+    display:                    block;
+    visibility:                 visible;
+    top:                        100%;
+    z-index:                    1000;
+    opacity:                    1;
+    margin-top:                 6px;
+    -webkit-transform:          none;
+}
+
+.navbar .nav li .dropdown-menu {
+    width:                      200px;
+}
+
+.navbar .nav li.open .dropdown-menu {
+    margin-top:                 6px;
 }
 
 header .navbar .menu-main li.active a {

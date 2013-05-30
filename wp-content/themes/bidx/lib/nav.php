@@ -36,7 +36,7 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
     //top navigation receives styling with dropdown menu's
     if($args->theme_location == "primary_navigation") {
       if ($item->is_dropdown && ($depth === 0)) {
-        $item_html = str_replace('<a', '<a class="dropdown-toggle" data-toggle="dropdown" data-target="#"', $item_html);
+        $item_html = str_replace('<a', '<a class="dropdown-toggle btn" data-toggle="dropdown" data-target="#"', $item_html);
         $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
       }
       elseif (stristr($item_html, 'li class="divider')) {
@@ -79,6 +79,7 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
     if ($element->is_dropdown) {
       if ($depth === 0) {
         $element->classes[] = 'dropdown';
+        $element->classes[] = 'dropdown-hover';
       } elseif ($depth === 1) {
         $element->classes[] = 'dropdown-submenu';
       }
