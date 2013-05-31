@@ -14,7 +14,7 @@
 		</div>
 
 		<p>
-			Forgot your password. Click <a href="/forgot-password">here</a> to recover.<br/>
+			Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
 			Not a member? Click <a href="#register">here</a> to register.
 		</p>
 
@@ -69,114 +69,209 @@
 	<div class="registerSuccess hide">
 		<h3>Registration complete</h3>
 		<p>The registration is complete. An e-mail has been dispatched with followup instructions.</p>
-	</div>
-
-	<script>
-		window.bidx = window.bidx || {};
-		window.bidx.api = {
-			settings: {
-				servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
-			}
-		};
-
-		$(function(){
-			var $stateRegister	= $( ".mainStateRegister" )
-			,	$frmRegister 	= $( "#frmRegister" )
-			,	$btnRegister	= $frmRegister.find( ".jsRegister" )
-
-			;
-
-			$frmRegister.form({
-				errorClass : 'error',
-				enablePlugins: ['location','countryAutocomplete']
-			});
-
-			$btnRegister.click( function( e )
-			{
-				e.preventDefault();
-
-				$frmRegister.submit();
-			} );
-
-			$frmRegister.submit( function( e )
-			{
-				e.preventDefault();
-
-				var valid = $frmRegister.form( "validateForm" );
-
-				if ( !valid || $btnRegister.hasClass( "disabled" ) )
-				{
-					return;
-				}
-
-				$btnRegister.addClass( "disabled" );
-
-				// Build up the data for the member request
-				//
-				var member =
-				{
-					emailAddress: 			$frmRegister.find( "[name='username']" ).val()
-				,	personalDetails:
-					{
-						firstName: 				$frmRegister.find( "[name='personalDetails.firstName']" ).val()
-					,	lastName: 				$frmRegister.find( "[name='personalDetails.lastName']" ).val()
-					}
-				};
-
-				// Currently, address is required, so this is a bit of an unlogical test. Wouldn't be surprised it will
-				// be gone
-				//
-				if ( $frmRegister.find( "[name='address']" ).val() )
-				{
-					// Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
-					// Just to not have to change the location.js plugin
-					//
-					member.personalDetails.address =
-					[
-						{
-							coordinates: 			$frmRegister.find( "[name$=location]" ).val()
-						,	postalCode: 			$frmRegister.find( "[name$=postalCode]" ).val()
-						,	country: 				$frmRegister.find( "[name$=country]" ).val()
-						,	cityTown: 				$frmRegister.find( "[name$=cityTown]" ).val()
-						,	neighborhood: 			$frmRegister.find( "[name$=neighborhood]" ).val()
-						,	streetNumber: 			$frmRegister.find( "[name$=streetNumber]" ).val()
-						,	street: 				$frmRegister.find( "[name$=street]" ).val()
-						}
-					];
-				}
-
-		        bidx.api.call(
-		            "member.save"
-		        ,   {
-		            	groupDomain:    bidx.common.groupDomain
-		            ,   data:           member
-		            ,   success:        function( response )
-		                {
-		                    bidx.utils.log( "member.save::success::response", response );
-
-		                    // Go to group dashboard
-		                    //
-		                    var url = window.location.protocol + "//" + window.location.host;
-
-		                    $frmRegister.hide();
-		                    $stateRegister.find( ".registerSuccess" ).removeClass( "hide" );
-
-//		                    window.location.href = url;
-		                }
-		            ,   error:          function( jqXhr )
-		                {
-		                    $btnRegister.removeClass( "disabled" );
-
-		                    alert( "Problem while registering" );
-		                }
-		            }
-		        );
-
-			} );
-		});
-	</script>
+        </div>
 </div>
 
+<!-- FORGOT PASSWORD -->
+<div class="mainState mainStateResetpassword" style="display:none">
+  <form id="frmResetpassword" action="/">
+		<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
+			<label>Email address</label>
+			<input type="text" name="username" placeholder="Type your email address" />
+		</div>
+
+		<div class="buttonwrapper">
+			<a href="#" class="button primary jsResetpassword">Send me a new password</a>
+		</div>
+
+		<p>
+			Did you remember your password again?.<br/>
+			Click <a href="#login">here</a> to go to login.
+		</p>
+</form>
+
+	<div class="resetpasswordSuccess hide">
+		<h3>E-mail has been send</h3>
+		<p>Password reset e-mail has been send <br>
+                   A password reset link has been send to you. Please check your inbox and click on the link within the e-mail to reset your password.
+                <br/>
+                Click <a href="/">here</a> to go to homepage.
+                </p>
+       </div>
+        
+</div>
+
+<script>
+        window.bidx = window.bidx || {};
+        window.bidx.api = {
+                settings: {
+                        servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
+                }
+        };
+
+        $(function(){
+                var $stateRegister	= $( ".mainStateRegister" )
+                ,	$frmRegister 	= $( "#frmRegister" )
+                ,	$btnRegister	= $frmRegister.find( ".jsRegister" )
+
+                ;
+
+                $frmRegister.form({
+                        errorClass : 'error',
+                        enablePlugins: ['location','countryAutocomplete']
+                });
+
+                $btnRegister.click( function( e )
+                {
+                        e.preventDefault();
+
+                        $frmRegister.submit();
+                } );
+
+                $frmRegister.submit( function( e )
+                {
+                        e.preventDefault();
+
+                        var valid = $frmRegister.form( "validateForm" );
+
+                        if ( !valid || $btnRegister.hasClass( "disabled" ) )
+                        {
+                                return;
+                        }
+
+                        $btnRegister.addClass( "disabled" );
+
+                        // Build up the data for the member request
+                        //
+                        var member =
+                        {
+                                emailAddress: 			$frmRegister.find( "[name='username']" ).val()
+                        ,	personalDetails:
+                                {
+                                        firstName: 				$frmRegister.find( "[name='personalDetails.firstName']" ).val()
+                                ,	lastName: 				$frmRegister.find( "[name='personalDetails.lastName']" ).val()
+                                }
+                        };
+
+                        // Currently, address is required, so this is a bit of an unlogical test. Wouldn't be surprised it will
+                        // be gone
+                        //
+                        if ( $frmRegister.find( "[name='address']" ).val() )
+                        {
+                                // Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
+                                // Just to not have to change the location.js plugin
+                                //
+                                member.personalDetails.address =
+                                [
+                                        {
+                                                coordinates: 			$frmRegister.find( "[name$=location]" ).val()
+                                        ,	postalCode: 			$frmRegister.find( "[name$=postalCode]" ).val()
+                                        ,	country: 				$frmRegister.find( "[name$=country]" ).val()
+                                        ,	cityTown: 				$frmRegister.find( "[name$=cityTown]" ).val()
+                                        ,	neighborhood: 			$frmRegister.find( "[name$=neighborhood]" ).val()
+                                        ,	streetNumber: 			$frmRegister.find( "[name$=streetNumber]" ).val()
+                                        ,	street: 				$frmRegister.find( "[name$=street]" ).val()
+                                        }
+                                ];
+                        }
+
+                bidx.api.call(
+                    "member.save"
+                ,   {
+                        groupDomain:    bidx.common.groupDomain
+                    ,   data:           member
+                    ,   success:        function( response )
+                        {
+                            bidx.utils.log( "member.save::success::response", response );
+
+                            // Go to group dashboard
+                            //
+                            var url = window.location.protocol + "//" + window.location.host;
+
+                            $frmRegister.hide();
+                            $stateRegister.find( ".registerSuccess" ).removeClass( "hide" );
+
+//		                    window.location.href = url;
+                        }
+                    ,   error:          function( jqXhr )
+                        {
+                            $btnRegister.removeClass( "disabled" );
+
+                            alert( "Problem while registering" );
+                        }
+                    }
+                );
+
+                } );
+
+
+              /* Forgot Password */
+                        var $stateResetpassword	= $( ".mainStateResetpassword" )
+                ,	$frmResetpassword 	= $( "#frmResetpassword" )
+                ,	$btnResetpassword	= $frmResetpassword.find( ".jsResetpassword" )
+
+                ;
+
+                $btnResetpassword.click( function( e )
+                {      
+                        e.preventDefault();
+
+                        $frmResetpassword.submit();
+                } );
+
+                $frmResetpassword.submit( function( e )
+                {
+                        e.preventDefault();
+
+
+                        if ( $btnResetpassword.hasClass( "disabled" ) )
+                        {
+                                return;
+                        }
+
+                        $btnResetpassword.addClass( "disabled" );
+
+                        // Build up the data for the member request
+                        //
+                        var resetpass =
+                        {
+                                username: 	$frmResetpassword.find( "[name='username']" ).val()
+                       
+                        };
+
+
+                bidx.api.call(
+                    "resetpassword.save"
+                ,   {
+                        groupDomain:    bidx.common.groupDomain
+                    ,   data:           resetpass
+                    ,   success:        function( response )
+                        {
+                            bidx.utils.log( "resetpassword.save::success::response", response );
+
+                            // Go to group dashboard
+                            //
+                   
+                            $frmResetpassword.hide();
+                            $stateResetpassword.find( ".resetpasswordSuccess" ).removeClass( "hide" );
+
+//		                    window.location.href = url;
+                        }
+                    ,   error:          function( jqXhr )
+                        {
+                            alert(JSON.stringify(jqXhr));
+                            $btnResetpassword.removeClass( "disabled" );
+
+                            alert( "Problem while reseting the password" );
+                        }
+                    }
+                );
+
+                } );
+
+
+        });
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"></script>
 
 <script>
@@ -193,6 +288,7 @@
 	        routes: {
 	            'login':    'login'
 	        ,   'register': 'register'
+                ,   'resetpassword' : 'resetpassword'
 	        ,   '*path':    'login'
 	        }
 	    ,   login:           function()
@@ -202,6 +298,10 @@
 	    ,   register:           function()
 	        {
 	        	_showMainState( "register" );
+	        }
+            ,   resetpassword:      function()
+	        {
+	        	_showMainState( "resetpassword" );
 	        }
 	    } );
 

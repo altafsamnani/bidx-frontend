@@ -189,8 +189,6 @@ error_log( sprintf( "	: %s, body: %s", $urlservice, var_export( $body, true ) ))
 
 
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
-
-
   
   $request = new WP_Http;
   $result = $request->request($url, array('method' => $bidxMethod,

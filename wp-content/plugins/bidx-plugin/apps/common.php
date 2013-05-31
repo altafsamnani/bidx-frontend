@@ -21,12 +21,8 @@ class BidxCommon {
 
     if ( !isset ( $this::$scriptJs [ $subDomain ] ) ) {
      
-      $this->getSessionAndScript( $subDomain );
-           
-      if(!is_user_logged_in()) {
-      
-        $this->forceWordpressLogin( $subDomain  );
-      } 
+      $this->getSessionAndScript( $subDomain );           
+       
     }
 
     $this->setStaticSession( $subDomain );
@@ -34,7 +30,7 @@ class BidxCommon {
   }
 
  
-  private function getSessionAndScript( $subDomain ) {
+  private function getSessionAndScript($subDomain) {
     $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
@@ -46,11 +42,17 @@ class BidxCommon {
         $sessionObj = new SessionService();
         $this::$bidxSession[$subDomain] = $sessionObj->isLoggedIn();
 
-        $scriptValue = $this->injectJsVariables( $subDomain );
-        $this->setScriptJs( $subDomain, $scriptValue );
+        $scriptValue = $this->injectJsVariables($subDomain);
+        $this->setScriptJs($subDomain, $scriptValue);
+
+        //If not Logged in forcefully login to WP
+        if (!is_user_logged_in()) {
+
+          $this->forceWordpressLogin($subDomain);
+        }
       }
     }
- 
+
     return;
   }
 
@@ -222,14 +224,14 @@ class BidxCommon {
     $params = $_GET;
 
     //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
-    if (( $hostAddress[1] == 'login' && isset($params['q']) ) || $this->isWPInternalFunction() ||
+    if (( $hostAddress[1]== 'login'  && isset($params['q']) ) || $this->isWPInternalFunction() || $hostAddress[1]== 'registration' ||
         strstr($hostAddress[1], 'wp-login.php')) {
       $isWordpress = true;
     }
 
     //Login to Wordpress if already session exists
 
-
+  
     return $isWordpress;
   }
 
