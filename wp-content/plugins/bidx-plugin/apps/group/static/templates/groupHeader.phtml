@@ -1,6 +1,20 @@
+<?php 
+
+// validation because the fields may not be there
+if ( $this -> recursive_isset ( $this -> group, array( 'data','bidxGroupProfile','name' ) ) ) {
+	$name =  $this -> group -> data -> bidxGroupProfile -> name;
+} else {
+	$name = '';
+}
+if ( $this -> recursive_isset ( $this -> group, array( 'data','bidxGroupProfile','logo','document' ) ) ) {
+	$logo =  $this -> group -> data -> bidxGroupProfile -> logo -> document;
+} else {
+	$logo = '';
+} 	
+?>
 <div class="brand span5	">
 	<a href="<?php echo home_url(); ?>/">
-		<img data-src="holder.js/210x113/social/text:Logo" class="logo img-rounded">
+		<img data-src="holder.js/210x113/social/text:Logo" class="logo img-rounded" src="<?php echo $logo ?>">
 	</a>
-	<h1><?php echo $this -> group -> data -> bidxGroupProfile -> name ?></h1>
+	<h1><?php echo $name ?></h1>
 </div>

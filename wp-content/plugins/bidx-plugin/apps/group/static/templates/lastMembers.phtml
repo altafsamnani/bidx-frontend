@@ -21,7 +21,7 @@ if (is_array($this -> members)) {
 		  	?>
 		  </a>
 		  <div class="media-body centering">
-		    <h5 class="media-heading"><?php echo $member -> firstName . ' ' . $member -> lastName; ?></h5>
+		    <h5 class="media-heading"><?php $this -> showProperty($member, 'firstName') . ' ' . $this -> showProperty($member, 'lastName'); ?></h5>
 			<div><?php $this -> showProperty($member, 'professionalTitle') ?></div>
 			<div><?php $this -> showProperty($member, 'country') ?></div>
 		  </div>

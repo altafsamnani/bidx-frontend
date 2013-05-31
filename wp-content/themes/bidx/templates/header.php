@@ -12,7 +12,7 @@
 
 			<nav class="menu-top">
 				<ul class="unstyled inline nav">
-					<li><a href="/blog">Blog</a></li>
+					<li><a href="/category/blog">Blog</a></li>
 					<li><a href="/about">About bidX</a></li>
 					<li><a href="/contact">Contact</a></li>
 				</ul>

@@ -64,7 +64,7 @@ define('NONCE_SALT',       '-hDJc^&:M&c=/@)6.;rw1T%dFT;HnWO9h+u*6mY0xspAX6L6KcMP
  * Ensuring cookies are shared
  */
 define('ADMIN_COOKIE_PATH', '/');
-define('COOKIE_DOMAIN', '');
+define('COOKIE_DOMAIN', 'bidx.net');
 define('COOKIEPATH', '/');
 define('SITECOOKIEPATH', '/');
 
@@ -120,9 +120,10 @@ define('DOMAIN_CURRENT_SITE', 'bidx.net');
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
-//define('DOMAIN_CURRENT_SITE','beta.bidx.net');
 
-define('WP_DEVELOPMENT', true);
+define('WP_DEVELOPMENT', false);
+define('NOBLOGREDIRECT', 'http://' . DOMAIN_CURRENT_SITE);
+
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */

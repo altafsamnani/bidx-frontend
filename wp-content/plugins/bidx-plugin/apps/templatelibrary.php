@@ -586,6 +586,34 @@ class TemplateLibrary {
     }
     return $scriptContent;
   }
+  
+  /**
+   * Validation function for nested objects
+   * @param unknown $variable the object
+   * @param unknown $checkArray array of nested fields
+   * @param number $i do not use, for recursive use
+   * @return boolean true if is set
+   */
+  function recursive_isset($variable, $checkArray, $i=0) {
+  	
+  	$new_var = null;
+  	if(is_array($variable) && array_key_exists($checkArray[$i], $variable)) {
+  		$new_var = $variable[$checkArray[$i]];
+  	}
+  	else if(is_object($variable) && array_key_exists($checkArray[$i], $variable)) {
+  		$new_var = $variable->$checkArray[$i];
+  	}
+  	if(!isset($new_var)) {
+  		return false;
+  	}
+  	else if(count($checkArray) > $i + 1) {
+  		return $this -> recursive_isset($new_var, $checkArray, $i+1);
+  	}
+  	else {
+  		return $new_var;
+  	}
+  	
+  }
 
 }
 

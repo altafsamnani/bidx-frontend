@@ -101,7 +101,7 @@
 
 	<div class="container content-block">
 		<div class="row-fluid text-center">
-			<h2>Why Bidx?</h2>
+			<h2>Why bidX?</h2>
 			<p>If you help businesses in emerging markets to start, grow or find finance, then you need bidX.<br />
 			We work for incubators, business schools, chambers of commerce, governments, banks, investment funds, accountants...</p>
 		</div>
@@ -156,7 +156,7 @@ The Group is an online space aggregating tools to support, virtually, all your s
 				<div class="text-center">
 					<span class="howitworks-generaterevenues"></span>
 				</div>
-				<h3 class="title">3. Generate revenuesl</h3>
+				<h3 class="title">3. Generate revenues</h3>
 				<ul class="unstyled bidx-bullet-list">
 					<li><span class="fui-check"></span> Our solutions are not only innovative but also profitable. We offer a fair and transparent revenue sharing package</li>
 					<li><span class="fui-check"></span> We are actively looking out for functional and content partners to provide our clients with the best options</li>
