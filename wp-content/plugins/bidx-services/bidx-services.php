@@ -145,7 +145,7 @@ function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload
   $cookieArr = array();
 
 
-error_log( sprintf( "urlservice: %s, body: %s", $urlservice, var_export( $body, true ) ));
+error_log( sprintf( "	: %s, body: %s", $urlservice, var_export( $body, true ) ));
 
 
   /*   * *********1. Retrieve Bidx Cookies and send back to api to check ******* */

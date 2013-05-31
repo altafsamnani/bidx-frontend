@@ -251,9 +251,10 @@ class BidxCommon {
 
 function forceWordpressLogin($subDomain) {
 
-  $sessionData = $this::$bidxSession[$subDomain]; 
+ $sessionData = $this::$bidxSession[$subDomain]; 
 
- if ($sessionData->authenticated == 'true') {
+ if ($sessionData != null && property_exists($sessionData, 'authenticated') && 
+ 		$sessionData -> authenticated == 'true') {
    $groupName = $subDomain;
    $roles = $sessionData->data->roles;
 
