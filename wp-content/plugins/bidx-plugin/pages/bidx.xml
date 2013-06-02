@@ -2,7 +2,7 @@
 <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
 
 	<posttype>bidx</posttype>
-	<description>List of page resources that are hidden for the end-	user to manage</description>
+	<description>List of page resources that are hidden for the end-user to manage</description>
 	<version>1.0</version>
 	
 	<posts>
@@ -67,14 +67,14 @@
 			<name>last_members</name>
 			<title>Last Members</title>
 			<mapping>^group/lastmembers?</mapping>
-			<content>[bidx app="group" view="lastMembers"]</content>
+			<content>[bidx app="group" view="last-members"]</content>
 		</post>	
 		<post>
 			<post_id>9</post_id>
 			<name>group_info</name>
 			<title>Group Information</title>
 			<mapping>^group/groupinfo?</mapping>
-			<content>[bidx app="group" view="getGroupIntro"]</content>
+			<content>[bidx app="group" view="group-intro"]</content>
 		</post>
 		<post>
 			<post_id>10</post_id>
@@ -84,11 +84,11 @@
 			<content>
 			&lt;div class="row-fluid"&gt;
 				&lt;div class="span8"&gt;
-					[bidx app="group" view="listGroups"]
-					[bidx app="group" view="lastMembers"]
+					[bidx app="group" view="list-groups"]
+					[bidx app="group" view="last-members"]
 				&lt;/div&gt;
 				&lt;div class="span4"&gt;
-					[bidx app="group" view="getGroupDetails"]
+					[bidx app="group" view="group-details"]
 				&lt;/div&gt;
 			&lt;/div&gt;
 			</content>

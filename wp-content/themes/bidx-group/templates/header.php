@@ -7,7 +7,7 @@
 		<div class="container">
 
 			<div class="clearfix">
-				<?php echo do_shortcode( '[bidx app="group" view="groupHeader"]' );?>
+				<?php echo do_shortcode( '[bidx app="group" view="group-header"]' );?>
 
 <?php if ( !$registration ): ?>
 				<div class="pull-right">

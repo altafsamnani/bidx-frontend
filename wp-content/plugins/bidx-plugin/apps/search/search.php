@@ -34,7 +34,8 @@ class search {
 	 */
 	public function register_search_bidx_ui_libs() {
 		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
-//		wp_register_style( 'search', plugins_url( 'static/css/search.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+		wp_register_style( 'search', plugins_url( 'static/css/search.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+		wp_enqueue_style( 'search' );
 	}
 
 	/**
@@ -49,17 +50,52 @@ class search {
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/static/templates/' );
 		
-		//2. Copy data
-		if (in_array('q', $atts)) {
-			$view -> query = $atts['q'];
+		//2. Cook query based on q or else from url
+		
+		require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
+		$service = new SearchService( );
+		
+		if ( key_exists( 'q', $atts ) ) {
+			$view -> query = $service -> cookQuery( $atts );	
+		} else if ( $_REQUEST['q'] != null ) {
+			$view -> query = $service -> cookQuery( );	
+		}
+		$view -> results = $service -> getSearchResults( $view -> query );
+		
+		//messages:
+		//nothing found -> alertMessage
+		//error -> errorMessage
+		$rows = 10;
+		if ( key_exists( 'rows', $view -> query ) ) {
+			$rows = $view -> rows;
+		}
+		
+		if ( key_exists( 'start', $view -> query ) ) {
+			if ( $view -> query['start'] > 0 ) {
+				$backParam = $view -> query;
+				$newIndex = $view -> query['start'] - $rows;
+				if ($newIndex >= 0) {
+					$backParam['start'] = $newIndex;
+				}
+				$view -> previousLink = BidxCommon:: buildHTTPQuery($backParam);
+			}
+		}
+
+		$numFound = $view -> results -> data -> numFound;
+		$start = $view -> results -> data -> start;
+		if ($numFound - ( $start + $rows ) > 1) {
+			$nextParam = $view -> query;
+			$nextParam['start'] = $start + $rows;
+			$view -> nextLink = BidxCommon:: buildHTTPQuery($nextParam);	
 		}
 		
 		// 3. Determine the view needed
-		if (in_array('q', $atts)) {
+		if ( key_exists( 'view', $atts ) ) {
 			$command = $atts['view'];
 		} else {
 			$command = '';
 		}
+		
 		switch ( $command ) {
 			case "cardView" :
 				return $view->render( 'cardView.phtml' );
@@ -71,5 +107,6 @@ class search {
 				return $view->render( 'default.phtml' );
 		}		
 	}
+
 }
 ?>

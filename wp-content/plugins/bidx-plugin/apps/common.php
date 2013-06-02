@@ -401,6 +401,20 @@ function forceWordpressLogin($subDomain) {
   	
   }
 
+  /**
+   * Builds an http query string.
+   * @param array $query  // of key value pairs to be used in the query
+   * @return string       // http query string.
+   **/
+  static function buildHTTPQuery( $query ){
+  
+  	$query_array = array();
+  	foreach( $query as $key => $key_value ) {
+  		$query_array[] = $key . '=' . urlencode( $key_value );
+  	}
+  	return implode( '&', $query_array );
+  
+  }
 
   
 }

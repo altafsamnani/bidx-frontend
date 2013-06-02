@@ -51,23 +51,23 @@ class group {
 		$command = $atts['view'];
 		
 		switch ( $command ) {
-			case "lastMembers" :
+			case "last-members" :
 				$view->members = $groupSvc->getLatestMembers(  );
-				return $view->render( 'lastMembers.phtml' );
-			case "listGroups" :
+				return $view->render( 'last-members.phtml' );
+			case "list-groups" :
 				$view->groups = $groupSvc->getGroupDetails(  );
-				return $view->render( 'groupList.phtml' );	
-			case "getGroupIntro" :
+				return $view->render( 'group-list.phtml' );	
+			case "group-intro" :
 				$view->group = $groupSvc->getGroupDetails(  );
-				return $view->render( 'groupIntro.phtml' );	
-			case "groupHeader" :
+				return $view->render( 'group-intro.phtml' );	
+			case "group-header" :
 				$view->group = $groupSvc->getGroupDetails(  );
-				return $view->render( 'groupHeader.phtml' );
-			case "profileDropDown" :
-				return $view->render( 'profileDropdown.phtml' );
+				return $view->render( 'group-header.phtml' );
+			case "profile-dropDown" :
+				return $view->render( 'profile-dropdown.phtml' );
 			default :	
 				$view->groups = $groupSvc->getGroupDetails(  );
-				return $view->render( 'groupList.phtml' );
+				return $view->render( 'group-list.phtml' );
 		}
 	}
 	

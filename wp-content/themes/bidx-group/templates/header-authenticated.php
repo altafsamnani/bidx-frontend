@@ -4,7 +4,7 @@
 
 			<div class="clearfix">
 
-			<?php echo do_shortcode( '[bidx app="group" view="groupHeader"]' );?>		
+			<?php echo do_shortcode( '[bidx app="group" view="group-header"]' );?>		
 
 				<div class="pull-right">
 					<div class="topNav clearfix">
@@ -12,7 +12,7 @@
 				    		<input type="text" name="q" class="search-query" placeholder="Search">
 				    		<button type="submit" class="btn"><i class="icon-search"></i></button>
 				    	</form>
-				    	<?php echo do_shortcode( '[bidx app="group" view="profileDropDown"]' );?>
+				    	<?php echo do_shortcode( '[bidx app="group" view="profile-dropDown"]' );?>
 					</div>
 				</div>
 			</div>

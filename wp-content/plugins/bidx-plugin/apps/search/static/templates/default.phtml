@@ -1,64 +1,88 @@
 <!-- 
 	Search startpage.
 	Single page application that is setup
-	
-	TODO: Setup as template phtml page
- -->
+ -->	
+ <?php 
+ $docs = $this -> results -> data -> docs
+ ?>
 <div>
 	<div class="row-fluid">
-		<div class="span12"><h2>Search results ({$data.numFound})</h2></div>
+		<div class="span12"><h2>Search results (<?php echo $this -> results -> data -> numFound ?>)</h2></div>
 	</div>
+
+	<!-- Hidden 
 	<div class="row-fluid">
-		<div class="alert">
+		<div class="search alert">
 			 <button type="button" class="close" data-dismiss="alert">&times;</button>
 			 <strong>Warning!</strong> {$data.errorMessage}
 		</div>
-		<div class="alert alert-error">
+		<div class="search alert alert-error">
 			 <button type="button" class="close" data-dismiss="alert">&times;</button>
 			 <strong>Warning!</strong> {$data.errorMessage}
 		</div>
 		
 	</div>
+	-->
+	
 	<div class="row-fluid">
 		<div class="search-result-container span8">
-			<div class="search-result-item well">
-				<div class="row-fluid">
-					<div class="span2">
-						<div>
-							<img src="http://placehold.it/75x75" class="img-rounded">
-						</div>
-					</div>
-					<div class="span8">
-						<div>
-							<em>Title of item</em>
-						</div>
-						<div>Subtitle 1</div>
-						<div>Subtitle 2</div>
-						<div>
-							<span class="label">Entity</span>
-						</div>
-					</div>
-					<div class="span2">
-						<a href="#">view</a>
-					</div>
-				</div>
-			</div>
+		
+	<?php foreach ( $docs as $doc )  { 
+		
+		switch ($doc -> type) {
 
+			case 'bidxMemberProfile':
+				$fullname = $doc -> firstname_s . ' ' . $doc -> lastname_s;
+		?>
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
 						<div>
-							<img src="http://placehold.it/75x75" class="img-rounded">
+							<a href="/member/<?php echo $doc -> userId ?>">
+						<?php if (property_exists( $doc , 'profilePicturedoc_url' ) ) {
+								$items = explode( '/', $doc -> profilePicturedoc_url );
+								$imageUrl = 'https://test.bidx.net/dl/document/' . $items[2] . '/' . $items[3] ;
+							?>
+								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+						<?php  } else { ?>
+								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+						<?php  }?>
+							</a>
 						</div>
 					</div>
 					<div class="span8">
 						<div>
-							<em>Title of item</em>
+							<em><?php echo $fullname ?></em>
+							<p><?php echo $doc -> professionaltitle_t ?></p>
+							<p><?php echo $doc -> countrylabel_s ?></p>
 						</div>
-						<div>Subtitle 1</div>
-						<div>Subtitle 2</div>
 						<div>
-							<span class="label">Entity</span>
+							<span class="label">Member</span>
+						</div>
+					</div>
+					<div class="span2">
+						<a href="/member/<?php echo $doc -> userId ?>">view</a>
+					</div>
+				</div>
+			</div>								
+<?php	
+			break;
+			
+			case 'bidxCompanyProfile':
+?>
+			<div class="search-result-item well">
+				<div class="row-fluid">
+					<div class="span2">
+						<div>
+							<img data-src="holder.js/75x75/social/text:company" class="logo img-rounded" alt=""/>							
+						</div>
+					</div>
+					<div class="span8">
+						<div>
+							<em><?php echo $doc -> id ?></em>
+						</div>
+						<div>
+							<span class="label">Company</span>
 						</div>
 					</div>
 					<div class="span2">
@@ -66,22 +90,25 @@
 					</div>
 				</div>
 			</div>
+<?php 				
+			break;
 
+			case 'bidxInvestorProfile':
+				$fullname = $doc -> firstname_s . ' ' . $doc -> lastname_s;
+?>
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
 						<div>
-							<img src="http://placehold.it/75x75" class="img-rounded">
+							<img data-src="holder.js/75x75/social/text:investor" class="logo img-rounded" alt=""/>							
 						</div>
 					</div>
 					<div class="span8">
 						<div>
-							<em>Title of item</em>
+							<em><?php echo $doc -> id ?></em>
 						</div>
-						<div>Subtitle 1</div>
-						<div>Subtitle 2</div>
 						<div>
-							<span class="label">Entity</span>
+							<span class="label">Investor</span>
 						</div>
 					</div>
 					<div class="span2">
@@ -89,103 +116,98 @@
 					</div>
 				</div>
 			</div>
+<?php 				
+			break;			
 
+			case 'bidxEntrepreneurProfile':
+				$fullname = $doc -> firstname_s . ' ' . $doc -> lastname_s;
+?>
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
 						<div>
-							<img src="http://placehold.it/75x75" class="img-rounded">
+ 							<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">
+						<?php if (property_exists( $doc , 'profilePicturedoc_url' ) ) {
+								$items = explode( '/', $doc -> profilePicturedoc_url );
+								$imageUrl = 'https://test.bidx.net/dl/document/' . $items[2] . '/' . $items[3] ;
+							?>
+								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+						<?php  } else { ?>
+								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+						<?php  }?>
+							</a>
 						</div>
 					</div>
 					<div class="span8">
 						<div>
-							<em>Title of item</em>
+							<em><?php echo $fullname ?></em>
+							<p><?php echo $doc -> professionaltitle_t ?></p>
+							<p><?php echo $doc -> countrylabel_s ?></p>							
 						</div>
-						<div>Subtitle 1</div>
-						<div>Subtitle 2</div>
 						<div>
-							<span class="label">Entity</span>
+							<span class="label">Entrepreneur</span>
 						</div>
 					</div>
 					<div class="span2">
-						<a href="#">view</a>
+						<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">view</a>
 					</div>
 				</div>
 			</div>
+<?php 				
+			break;
 			
+			case 'bidxBusinessSummary':
+?>
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
 						<div>
-							<img src="http://placehold.it/75x75" class="img-rounded">
-						</div>
+							<a href="/business/<?php echo $doc -> userId ?>">
+						<?php if (property_exists( $doc , 'picturedoc_url' ) ) {
+								$items = explode( '/', $doc -> 	picturedoc_url );
+								$imageUrl = 'https://test.bidx.net/dl/document/' . $items[2] . '/' . $items[3] ;
+							?>
+								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+						<?php  } else { ?>
+								<img data-src="holder.js/75x75/social/text:business" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+						<?php  }?>
+							</a>						</div>
 					</div>
 					<div class="span8">
 						<div>
-							<em>Title of item</em>
-						</div>
-						<div>Subtitle 1</div>
-						<div>Subtitle 2</div>
-						<div>
-							<span class="label">Entity</span>
+							<em><?php echo $doc -> name_s ?></em><br />
+							<?php echo $doc -> slogan_s ?><br/>
+							<?php echo $doc -> reasonforsubmissionlabel_ss ?>, <?php echo $doc -> industrylabel_ss ?><br />
+							<span class="label">Business</span>
 						</div>
 					</div>
 					<div class="span2">
-						<a href="#">view</a>
+						<a href="/business/<?php echo $doc -> userId ?>">view</a>
 					</div>
 				</div>
 			</div>
-			
-			<div class="search-result-item well">
-				<div class="row-fluid">
-					<div class="span2">
-						<div>
-							<img src="http://placehold.it/75x75" class="img-rounded">
-						</div>
-					</div>
-					<div class="span8">
-						<div>
-							<em>Title of item</em>
-						</div>
-						<div>Subtitle 1</div>
-						<div>Subtitle 2</div>
-						<div>
-							<span class="label">Entity</span>
-						</div>
-					</div>
-					<div class="span2">
-						<a href="#">view</a>
-					</div>
-				</div>
-			</div>
-			
-			<div class="search-result-item well">
-				<div class="row-fluid">
-					<div class="span2">
-						<div>
-							<img src="http://placehold.it/75x75" class="img-rounded">
-						</div>
-					</div>
-					<div class="span8">
-						<div>
-							<em>Title of item</em>
-						</div>
-						<div>Subtitle 1</div>
-						<div>Subtitle 2</div>
-						<div>
-							<span class="label">Entity</span>
-						</div>
-					</div>
-					<div class="span2">
-						<a href="#">view</a>
-					</div>
-				</div>
-			</div>									
-						
+<?php 				
+			break;			
+		} 
+	} ?>
+			<div>					
+<?php 	
+	if ( $this->previousLink != null ) {
+	?>
+	<a href="?<?php echo $this -> previousLink ?>" class="btn">Previous</a>
+	<?php
+	}
+	if ( $this->nextLink != null ) {
+	?>
+	<a href="?<?php echo $this -> nextLink ?>" class="btn">Next</a>
+	<?php	
+	}	
+?>	
+			</div>					
 		</div>
 
 		<div class="sidebar span4">
-				
+			<!--
 			<div class="facetnavigation row-fluid">
 				<div>
 					Search in:
@@ -244,7 +266,7 @@
 					</div>
 				</div>
 			</div>
-
+ 			 -->	
 		</div>
 	</div>
 </div>
