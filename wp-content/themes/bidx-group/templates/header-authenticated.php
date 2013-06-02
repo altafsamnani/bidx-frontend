@@ -8,10 +8,7 @@
 
 				<div class="pull-right">
 					<div class="topNav clearfix">
-						<form class="navbar-search" method="post" action="/search">
-				    		<input type="text" name="q" class="search-query" placeholder="Search">
-				    		<button type="submit" class="btn"><i class="icon-search"></i></button>
-				    	</form>
+						<?php get_template_part('templates/searchform'); ?>
 				    	<?php echo do_shortcode( '[bidx app="group" view="profile-dropDown"]' );?>
 					</div>
 				</div>

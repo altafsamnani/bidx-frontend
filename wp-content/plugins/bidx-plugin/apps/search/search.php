@@ -50,7 +50,7 @@ class search {
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/static/templates/' );
 		
-		//2. Cook query based on q or else from url
+		// 2. Cook query based on q or else from url
 		
 		require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
 		$service = new SearchService( );
@@ -62,14 +62,22 @@ class search {
 		}
 		$view -> results = $service -> getSearchResults( $view -> query );
 		
-		//messages:
-		//nothing found -> alertMessage
-		//error -> errorMessage
+		
+		// 3. Parse data for preparsing for presentaions
+
+		//a. nothing found -> alertMessage
+		// $view -> alertMessage = '';
+		
+		
+		//b. error -> errorMessage
+		// $view -> errorMessage = '';
+		
 		$rows = 10;
 		if ( key_exists( 'rows', $view -> query ) ) {
 			$rows = $view -> rows;
 		}
 		
+		//c. navigation previous
 		if ( key_exists( 'start', $view -> query ) ) {
 			if ( $view -> query['start'] > 0 ) {
 				$backParam = $view -> query;
@@ -80,7 +88,7 @@ class search {
 				$view -> previousLink = BidxCommon:: buildHTTPQuery($backParam);
 			}
 		}
-
+		//d. navigation next
 		$numFound = $view -> results -> data -> numFound;
 		$start = $view -> results -> data -> start;
 		if ($numFound - ( $start + $rows ) > 1) {
@@ -89,7 +97,7 @@ class search {
 			$view -> nextLink = BidxCommon:: buildHTTPQuery($nextParam);	
 		}
 		
-		// 3. Determine the view needed
+		// 4. Determine the view needed
 		if ( key_exists( 'view', $atts ) ) {
 			$command = $atts['view'];
 		} else {

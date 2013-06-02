@@ -11,12 +11,7 @@
 
 <?php if ( !$registration ): ?>
 				<div class="pull-right">
-					<div class="topNav clearfix">
-						<form class="navbar-search" method="post" action="/search">
-				    		<input type="text" class="search-query" placeholder="Search">
-				    		<button type="submit" class="btn"><i class="icon-search"></i></button>
-				    	</form>
-					</div>
+				<?php get_template_part('templates/searchform'); ?>
 				</div>
 <?php endif; ?>
 			</div>

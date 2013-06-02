@@ -1,5 +1,6 @@
-<form role="search" method="get" id="searchform" class="form-search" action="<?php echo home_url('/'); ?>">
-  <label class="hide" for="s"><?php _e('Search for:', 'roots'); ?></label>
-  <input type="text" value="<?php if (is_search()) { echo get_search_query(); } ?>" name="s" id="s" class="search-query" placeholder="<?php _e('Search', 'roots'); ?> <?php bloginfo('name'); ?>">
-  <input type="submit" id="searchsubmit" value="<?php _e('Search', 'roots'); ?>" class="btn">
-</form>
+	<div class="topNav clearfix">
+		<form class="navbar-search" method="get" action="/search">
+    		<input type="text" name="q" class="search-query" placeholder="Search" value="<?php echo $_REQUEST['q'] ?>">
+    		<button type="submit" class="btn"><i class="icon-search"></i></button>
+    	</form>
+	</div>
