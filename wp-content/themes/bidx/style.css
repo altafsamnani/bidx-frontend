@@ -230,61 +230,61 @@ header .navbar .btn-navbar {
     width:                  220px;
     height:                 90px;
     margin-top:             80px;
-    margin-right:           59px;
-}
-
-.partner:last-child {
-    margin-right:           0;
 }
 
 .partner-bid {
   background-position:      0 0;
 
   width:                    200px;
+  margin-right:             59px;
 }
 
-.partner-bid:hover {
-  background-position:      0 -90px;
-}
+  .partner-bid:hover {
+    background-position:      0 -90px;
+  }
 
 .partner-sampoerna {
   background-position:      -220px 0;
 
   width:                    180px;
+  margin-right:             59px;
 }
 
-.partner-sampoerna:hover {
-  background-position:      -220px -90px;
-}
+  .partner-sampoerna:hover {
+    background-position:      -220px -90px;
+  }
 
 .partner-postcodeloterij {
   background-position:      -440px 0;
 
   width:                    100px;
+  margin-right:             59px;
 }
 
-.partner-postcodeloterij:hover {
-  background-position:      -440px -90px;
-}
+  .partner-postcodeloterij:hover {
+    background-position:      -440px -90px;
+  }
 
 .partner-did {
   background-position:      -660px 0;
   width:                    100px;
+  margin-right:             59px;
 }
 
-.partner-did:hover {
-  background-position:      -660px -90px;
-}
+  .partner-did:hover {
+    background-position:      -660px -90px;
+  }
 
 .partner-usaid {
   background-position:      -880px 0;
 
   width:                    145px;
+  margin-right:             0;
 }
 
-.partner-usaid:hover {
-  background-position:      -880px -90px;
-}
+  .partner-usaid:hover {
+    background-position:      -880px -90px;
+  }
 
 
 
