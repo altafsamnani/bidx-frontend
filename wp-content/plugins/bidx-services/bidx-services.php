@@ -189,7 +189,9 @@ error_log( sprintf( "	: %s, body: %s", $urlservice, var_export( $body, true ) ))
 
 
   $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
-  
+
+error_log( "URL: ". $url );
+
   $request = new WP_Http;
   $result = $request->request($url, array('method' => $bidxMethod,
     'body' => $body,
@@ -294,7 +296,7 @@ function bidx_signout() {
   call_bidx_service('session', $params, 'DELETE');
   wp_clear_auth_cookie();
 
-  
+
   BidxCommon::$staticSession[$params['domain']] = NULL;
 }
 
@@ -512,7 +514,7 @@ function bidx_wordpress_post_action($url, $result, $body) {
         $process = TRUE;
         $displayData = $requestData->data;
         //check role and assign logged in wp username if present.
-     
+
 
         if (!empty($displayData->roles)) {
           $roleArray = $displayData->roles;
@@ -579,7 +581,7 @@ function bidx_wordpress_post_action($url, $result, $body) {
           wpmu_delete_user($user_id);
         }
       }
-      else {        
+      else {
         $requestData = get_redirect($url, $requestData, $body['response']['domain']);
       }
       break;
@@ -597,7 +599,7 @@ function bidx_wordpress_post_action($url, $result, $body) {
  * @version 1.0
  *
  * Create Wordpress Site for Bidx Group
- * 
+ *
  * @param bool $echo
  */
 function create_bidx_wp_site($groupName, $email) {
@@ -661,7 +663,7 @@ Name: %3$s'), $userName, get_site_url($id), stripslashes($groupName));
  * Create Wordpress Site for Bidx Group
  * [id] => 1    [domain] => bidx.dev    [path] => /    [blog_id] => 1    [cookie_domain] => bidx.dev    [site_name] => Bidx Sites
  * http://bidx.net/wp-admin/admin-ajax.php?action=bidx_create&domain=hello&code=slowHorse01
- * 
+ *
  * @param bool $echo
  */
 //
@@ -822,6 +824,21 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
       $params['domain'] = $domain;
       break;
 
+    case 'companylogo':
+      $response['status'] = 'ok';
+      $id = $params['companyId'];
+      $domain = $params['domain'];
+      unset( $params );
+
+      $params['path'] = '/logo';
+      $params['purpose'] = 'Logo';
+
+      $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
+
+      $params['id'] = $id;
+      $params['domain'] = $domain;
+      break;
+
 
     case 'logo' :
       $response['status'] = 'ok';
@@ -876,7 +893,7 @@ function ajax_submit_action() {
 
   $url = (isset($_POST['apiurl'])) ? $_POST['apiurl'] : NULL;
   $method = (isset($_POST['apimethod'])) ? $_POST['apimethod'] : NULL;
- 
+
   //1 Do wordpress stuff and get the params
   $body = bidx_wordpress_pre_action($url);
 
@@ -914,7 +931,7 @@ function bidx_register_response($requestEntityMember, $requestEntityGroup, $requ
     $requestData = $requestGroupData;
   }
   else {
-  
+
     $username_wp = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'site1groupadmin' : $_POST['businessGroupName'].'groupadmin';
     force_wordpress_login($username_wp);
     $requestData->status = 'OK';
@@ -930,6 +947,7 @@ function allowed_file_extension($type, $file_type) {
   switch ($type) {
     case 'logo' :
     case 'memberprofilepicture':
+    case 'companylogo':
       if (preg_match("/^image/i", $file_type)) {
         $is_allowed = true;
       }
@@ -1085,7 +1103,7 @@ function assign_bidxgroup_theme_page($blog_id) {
   switch_to_blog($blog_id);
   // Action 1 Switch theme to assign
   switch_theme('bidx-group');
-  
+
   //Action 2 Default Enable WP Scrapper Plugin
   $wpws_values = array('sc_posts' => 1, 'sc_widgets' => 1, 'on_error' => 'error_hide');
 
@@ -1109,7 +1127,7 @@ function assign_bidxgroup_theme_page($blog_id) {
     unset($page->ID);
     unset($page->guid);
     /* Reference http://codex.wordpress.org/Function_Reference/wp_insert_post */
-    
+
     $post_id = wp_insert_post($page);
     update_post_meta($post_id, '_wp_page_template', $page->template_value);
   }
@@ -1170,7 +1188,7 @@ function create_custom_role_capabilities($blog_id) {
   foreach ($results as $user) {
 
     $user_id = $user->ID;
-    
+
     //When creating directly from wordpress handle that case too
     $is_frm_bidx = (preg_match("/groupadmin\z/i", $user->user_login)) ? true : false  ;
     $group_password = $user->user_login.'bidxGeeks9';
@@ -1186,8 +1204,8 @@ function create_custom_role_capabilities($blog_id) {
 
     //Group Member
     $group_member_login = $user->user_login . 'groupmember';
-    $group_member_email = $group_admin_login.'_member@bidx.net';    
-        
+    $group_member_email = $group_admin_login.'_member@bidx.net';
+
   }
 
 
@@ -1217,7 +1235,7 @@ function create_custom_role_capabilities($blog_id) {
 
   //wpmu_signup_user( $new_user_login, 'test@aa.com', array( 'add_to_blog' => $blog_id, 'new_role' => 'groupadmin' ) );
   //wp_insert_user( $user );
-  
+
   return;
 }
 
@@ -1321,7 +1339,7 @@ function annointed_admin_bar_remove() {
         $wp_admin_bar->add_menu($custom_menu);
         $custom_menu_logout = array('id' => 'bidx-logout','title'  => 'Logout','parent' => 'bidx-name','href'   => wp_logout_url('/')	);
         $wp_admin_bar->add_menu($custom_menu_logout);
-        
+
 
 
 }
@@ -1337,7 +1355,7 @@ function annointed_admin_bar_remove() {
 function force_wordpress_login($username) {
 
   if ($user_id = username_exists($username)) {   //just do an update
- 
+
     // userdata will contain all information about the user
     $userdata = get_userdata($user_id);
     $user = wp_set_current_user($user_id, $username);
@@ -1348,6 +1366,6 @@ function force_wordpress_login($username) {
     do_action('wp_login', $userdata->ID);
     // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
 
-  } 
+  }
   return;
 }

@@ -1,0 +1,60 @@
+#editCompany {
+    display:                none;
+}
+
+#editCompany .view {
+    display:                none;
+}
+
+#editCompany .viewLoad {
+    display:                block;
+}
+
+#editCompany .logoImage {
+    max-width:              100%
+}
+
+#editCompany .nav-editCompany {
+    top:                    240px;
+    position:               fixed;
+    width:                  10%;
+}
+
+#editCompany input,
+#editCompany select {
+    width:                  100%;
+}
+
+#editCompany label.radio input {
+    width:                  auto;
+}
+
+#editCompany form {
+    margin:                 0;
+}
+
+#editCompany form fieldset {
+    position:               relative;
+    padding-top:            50px;
+}
+
+#editCompany form legend {
+    position:               absolute;
+    top:                    8px;
+    border-bottom:          0;
+}
+
+#editCompany .currentAddressMap {
+    height:                 400px;
+    margin-top:             20px;
+}
+
+.profile-block {
+    position:               relative;
+}
+
+.profile-block .controls {
+    position:               absolute;
+    right:                  20px;
+    top:                    20px;
+}
