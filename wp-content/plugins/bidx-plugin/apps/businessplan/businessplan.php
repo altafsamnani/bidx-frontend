@@ -7,11 +7,11 @@
  */
 class businessplan {
 
-	
+
 	static $deps = array( 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2',
 			'gmaps-places', 'holder', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location',
 			'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core', 'backbone', 'bidx-common' );
-	
+
 	/**
 	 * Constructor
 	 */
@@ -26,14 +26,14 @@ class businessplan {
 		wp_register_script( 'businessplan', plugins_url( 'static/js/businessplan.js', __FILE__ ), array('bootstrap'), '20130501', TRUE );
 		wp_register_style( 'businessplan', plugins_url( 'static/css/businessplan.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
 	}
-	
+
 	/**
 	 * Load the content.
 	 * Dynamic action needs to be added here
 	 * @param $atts
 	 */
 	function load($atts) {
-		return file_get_contents ( BIDX_PLUGIN_DIR . '/search/static/templates/default.html' );
+		return file_get_contents ( BIDX_PLUGIN_DIR . '/businessplan/static/templates/default.html' );
 	}
 }
 
