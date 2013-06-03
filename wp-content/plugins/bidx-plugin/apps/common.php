@@ -16,20 +16,20 @@ class BidxCommon {
 
 
   public function __construct($subDomain) {
-   
+
     if ( $subDomain ) {
 
     if ( !isset ( $this::$scriptJs [ $subDomain ] ) ) {
-     
-      $this->getSessionAndScript( $subDomain );           
-       
+
+      $this->getSessionAndScript( $subDomain );
+
     }
 
     $this->setStaticSession( $subDomain );
     }
   }
 
- 
+
   private function getSessionAndScript($subDomain) {
     $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
@@ -63,11 +63,11 @@ class BidxCommon {
   public function setScriptJs( $subDomain, $scriptValue ) {
 
     $this::$scriptJs[$subDomain] = $scriptValue;
-    
+
   }
 
   public function getScriptJs( $subDomain ) {
-  
+
     return $this::$scriptJs[$subDomain];
   }
 
@@ -83,7 +83,7 @@ class BidxCommon {
     $jsSessionData = $this::$bidxSession[$subDomain];
     $jsSessionVars = (isset($jsSessionData->data)) ? json_encode($jsSessionData->data) : '{}';
     $jsAuthenticated = (isset($jsSessionData->authenticated)) ? $jsSessionData->authenticated : '{}';
-   
+
     //Api Resposne data
 
     $data = $this->getURIParams($subDomain, $jsSessionData);
@@ -133,7 +133,7 @@ class BidxCommon {
 
     if (is_array($hostAddress)) {
        //Redirect URL Logic
-     
+
 
       switch ($hostAddress[1]) {
 
@@ -148,7 +148,23 @@ class BidxCommon {
           }
 
           break;
-      }   
+
+        case 'company':
+          $companyId = null;
+          if ( isset( $hostAddress[2] ) ) {
+            $companyId = $hostAddress[2];
+          }
+          if($companyId) {
+            $data->companyId = $companyId;
+            $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
+            $this::$bidxSession[$subDomain]->companyId = $companyId;
+          } else {
+            $redirect = null;
+          }
+
+          break;
+
+      }
 
       $this->redirectUrls($hostAddress[1], $jsSessionData->authenticated, $redirect);
       return $data;
@@ -214,8 +230,8 @@ class BidxCommon {
 
 
   /**
-   * 
-   * @return boolean 
+   *
+   * @return boolean
    */
   public function isWordpressPage() {
 
@@ -231,7 +247,7 @@ class BidxCommon {
 
     //Login to Wordpress if already session exists
 
-  
+
     return $isWordpress;
   }
 
@@ -253,9 +269,9 @@ class BidxCommon {
 
 function forceWordpressLogin($subDomain) {
 
- $sessionData = $this::$bidxSession[$subDomain]; 
+ $sessionData = $this::$bidxSession[$subDomain];
 
- if ($sessionData != null && property_exists($sessionData, 'authenticated') && 
+ if ($sessionData != null && property_exists($sessionData, 'authenticated') &&
  		$sessionData -> authenticated == 'true') {
    $groupName = $subDomain;
    $roles = $sessionData->data->roles;
@@ -269,7 +285,7 @@ function forceWordpressLogin($subDomain) {
       else {
         $userName = $groupName . 'groupmember';
       }
-  
+
       if ($user_id = username_exists($userName)) {   //just do an update
         // userdata will contain all information about the user
         $userdata = get_userdata($user_id);
@@ -285,7 +301,7 @@ function forceWordpressLogin($subDomain) {
   return;
 }
 
- /** 
+ /**
   * Authenticate the user using the username and password with Bidx Data.
   *
   * @param String $username
@@ -293,7 +309,7 @@ function forceWordpressLogin($subDomain) {
   * @return Loggedin User
   */
   function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload = false) {
-  
+
   	$authUsername = 'bidx'; // Bidx Auth login
   	$authPassword = 'gobidx'; // Bidx Auth password
   	$bidxMethod = strtoupper($method);
@@ -301,7 +317,7 @@ function forceWordpressLogin($subDomain) {
   	$cookie_string = "";
   	$sendDomain = 'bidx.net';
   	$cookieArr = array();
-  
+
   	/*   * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
   	$cookieInfo = $_COOKIE;
   	foreach ($_COOKIE as $cookieKey => $cookieValue) {
@@ -309,44 +325,44 @@ function forceWordpressLogin($subDomain) {
   			$cookieArr[] = new WP_Http_Cookie(array('name' => $cookieKey, 'value' => urlencode($cookieValue), 'domain' => $sendDomain));
   		}
   	}
-  
+
   	/*   * *********2. Set Headers ******************************** */
   	//For Authentication
   	$headers['Authorization'] = 'Basic ' . base64_encode("$authUsername:$authPassword");
-  
+
   	// 2.1 Is Form Upload
   	if ($is_form_upload) {
   		$headers['Content-Type'] = 'multipart/form-data';
   	}
-  
+
   	// 2.2 Set the group domain header
   	if (isset($body['domain'])) {
   		//Talk with arjan for domain on first page registration it will be blank when it goes live
   		$headers['X-Bidx-Group-Domain'] = ($urlservice == 'groups' && $bidxMethod == 'POST') ? 'beta' : $body['domain'];
   		//$bidx_get_params.= '&groupDomain=' . $body['domain'];
   	}
-  
+
   	/*   * ********* 3. Decide method to use************** */
   	if ($bidxMethod == 'GET') {
   		$bidx_get_params = ($body) ? '&' . http_build_query($body) : '';
   		$body = NULL;
   	}
-  
-  
+
+
   	/*   * *********** 4. WP Http Request ******************************* */
-  
-  
+
+
   	$url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
-  
-  
-  
+
+
+
   	$request = new WP_Http;
   	$result = $request->request($url, array('method' => $bidxMethod,
   			'body' => $body,
   			'headers' => $headers,
   			'cookies' => $cookieArr
   	));
-  
+
   	/*   * *********** 5. Set Cookies if Exist ************************* */
   	$cookies = $result['cookies'];
   	if (count($cookies)) {
@@ -355,12 +371,12 @@ function forceWordpressLogin($subDomain) {
   			setcookie($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
   		}
   	}
- 
+
   	return $result;
   }
-  
+
   static function clear_bidx_cookies() {
-  
+
   	/*   * *********Retrieve Bidx Cookies and send back to api to check ******* */
   	$cookieInfo = $_COOKIE;
   	foreach ($_COOKIE as $cookieKey => $cookieValue) {
@@ -379,7 +395,7 @@ function forceWordpressLogin($subDomain) {
    * @param bool $echo
    */
   static function get_bidx_subdomain( $echo = false ) {
-  	
+
   	$hostAddress = explode( '.', $_SERVER ["HTTP_HOST"] );
   	if ( is_array( $hostAddress ) ) {
   		if ( eregi( "^www$", $hostAddress [0] ) ) {
@@ -398,7 +414,7 @@ function forceWordpressLogin($subDomain) {
   	else {
   		return ( false );
   	}
-  	
+
   }
 
   /**
@@ -407,16 +423,16 @@ function forceWordpressLogin($subDomain) {
    * @return string       // http query string.
    **/
   static function buildHTTPQuery( $query ){
-  
+
   	$query_array = array();
   	foreach( $query as $key => $key_value ) {
   		$query_array[] = $key . '=' . urlencode( $key_value );
   	}
   	return implode( '&', $query_array );
-  
+
   }
 
-  
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: bidx-plugin 
+Plugin Name: bidx-plugin
 Plugin URI: http://bidx.net/plugin/bidx-plugin
 Description: Wordpress plugin for adding bidX functionality to a website.
 Version: 0.1.2
@@ -25,12 +25,13 @@ require_once ( BIDX_PLUGIN_DIR . '/common.php' );
 
 $loader = new ContentLoader( 'pages' );
 register_activation_hook( __FILE__, array( $loader, 'load' ) );
-register_deactivation_hook( __FILE__, array( $loader, 'unload' ) );	
+register_deactivation_hook( __FILE__, array( $loader, 'unload' ) );
 
 if (!BidxCommon :: isWPInternalFunction()) {
 	$ruleitems = array(
 			'member' => 'memberprofile',
 			'businessplan',
+			'company',
 			'mydashboard' => 'dashboard',
 			'search',
 			'group',

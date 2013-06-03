@@ -4,7 +4,7 @@
 	<posttype>bidx</posttype>
 	<description>List of page resources that are hidden for the end-user to manage</description>
 	<version>1.0</version>
-	
+
 	<posts>
 	  	<post>
 			<post_id>0</post_id>
@@ -12,21 +12,21 @@
 			<title>Memberprofile List</title>
 			<mapping>^memberlist/?</mapping>
 			<content>[bidx app="memberprofile" view="list"]</content>
-		</post> 
+		</post>
 	  	<post>
 			<post_id>1</post_id>
 			<name>member_profile</name>
 			<title>Your Profile</title>
 			<mapping>^member/?</mapping>
 			<content>[bidx app="memberprofile"]</content>
-		</post> 
+		</post>
 		<post>
 			<post_id>2</post_id>
 			<name>member</name>
 			<title>Memberprofile</title>
 			<mapping>^member/([^/]*)/?</mapping>
 			<content>[bidx app="memberprofile"]</content>
-		</post>	
+		</post>
 		<post>
 			<post_id>3</post_id>
 			<name>search</name>
@@ -47,28 +47,28 @@
 			<title>Search Map</title>
 			<mapping>^search/near?</mapping>
 			<content>[bidx app="search" view="mapview" query=""]</content>
-		</post>		
+		</post>
 		<post>
 			<post_id>6</post_id>
 			<name>business_list</name>
 			<title>Business List</title>
 			<mapping>^business/?</mapping>
-			<content>[bidx app="business" view="list"]</content>
-		</post>	
+			<content>[bidx app="businessplan" view="list"]</content>
+		</post>
 		<post>
 			<post_id>7</post_id>
 			<name>business</name>
 			<title>Business</title>
 			<mapping>^business/([^/]*)/?</mapping>
-			<content>[bidx app="business"]</content>
-		</post>	
+			<content>[bidx app="businessplan"]</content>
+		</post>
 		<post>
 			<post_id>8</post_id>
 			<name>last_members</name>
 			<title>Last Members</title>
 			<mapping>^group/lastmembers?</mapping>
 			<content>[bidx app="group" view="last-members"]</content>
-		</post>	
+		</post>
 		<post>
 			<post_id>9</post_id>
 			<name>group_info</name>
@@ -92,9 +92,16 @@
 				&lt;/div&gt;
 			&lt;/div&gt;
 			</content>
-		</post>														
+		</post>
+		<post>
+			<post_id>11</post_id>
+			<name>company</name>
+			<title>Company Information</title>
+			<mapping>^company/([^/]*)/?</mapping>
+			<content>[bidx app="company"]</content>
+		</post>
 	</posts>
-	
+
 	<widgets>
 		<widget>
 			<widget_id>last_members_of_group</widget_id>
@@ -113,7 +120,7 @@
 			<widget_type>static</widget_type>
 			<name>Latest Businesses</name>
 			<content></content>
-		</widget>				
+		</widget>
 	</widgets>
-	
+
 </data>
