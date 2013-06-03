@@ -1,18 +1,18 @@
 <div class="block-odd">
     <div class="pageHeader clearfix">
       <div class="container clearfix">
-        <h1 class="pull-left"><?php echo ucwords($view->company->name); ?></h1>
+        <h1 class="pull-left"><?php echo ucwords( $this->company->name); ?></h1>
         <div class="editControls btn-group"></div>
       </div>
     </div>
 
     <div class="row-fluid mainState mainStateShow">
       <div class="span8">
-        <?php $view->render('view-company.phtml'); ?>
+        <?php $this->render('view-company.phtml'); ?>
       </div>
       <div class="span4 sidebar">
       </div>
     </div>
 
-    <?php $view->render('edit-company.phtml'); ?>
+    <?php $this->render('edit-company.phtml'); ?>
 </div>
