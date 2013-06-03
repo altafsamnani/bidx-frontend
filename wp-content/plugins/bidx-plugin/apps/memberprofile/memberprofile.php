@@ -104,6 +104,7 @@ class memberprofile {
 	    $memberData = $memberObj->getMemberDetails(  );
 
 	    $view->data = $memberData->data;
+  
 	    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
 	    $view->sessionData = BidxCommon::$staticSession;
 

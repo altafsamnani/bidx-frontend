@@ -1,6 +1,7 @@
 <?php 
 
 $groupDetails = $this->data->groups;
+
 $showGroup = (count( (array)$groupDetails)) ? true : false;
 
 ?>
@@ -9,10 +10,18 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
     if($showGroup) {
         foreach ($groupDetails as $groupValue) {
             if (strtolower(str_replace(" ","",$groupValue->name)) == strtolower(str_replace(" ","",$this->bidxGroupDomain))) {
+              $groupDataSrc = false;
+              $picSrc     = $groupValue->logo;
+
+              if (!$groupValue->logo) {
+                $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
+                $groupDataSrc = true;
+              }
+
 ?>
 <div class="well sidebar-block">
     <div class="row-fluid sidebar-block-heading">
-        <div class="span4"><img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded"></div>
+        <div class="span4"><img width="100" height="100" <?php $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded"></div>
         <div class="span8 sidebar-block-intro">
             <h3 class="sidebar-block-title"><?php echo $this->bidxGroupDomain ?></h3>
             <p><?php echo $groupValue->slogan ?></p>
@@ -25,7 +34,7 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
     <!-- Company name , URL -->
     <div class="row-fluid">
 <?php
-        $rowValues = array('Company name' => 'www.companyurl.com' );
+        $rowValues = array('Company name' => $groupValue->bidxGroupUrl );
         echo $this->addRowsWithLabelAdjacent('span6','span6',$rowValues);
 ?>
     </div>
@@ -43,10 +52,17 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
 <?php
     foreach( $groupDetails as $groupValue) {
         $joinLink = ($groupValue->join) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>":'';
+        $groupDataSrc = false;
+              $picSrc     = $groupValue->logo;
+
+              if (!$groupValue->logo) {
+                $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
+                $groupDataSrc = true;
+              }
 ?>
     <div class="clearfix">
         <div class="row-fluid sidebar-block-heading">
-            <div class="span4"><img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded"></div>
+            <div class="span4"><img width="100" height="100" <?php $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded"></div>
             <div class="span8 sidebar-block-intro">
                 <h4 class="sidebar-block-title"><?php echo $groupValue->name?></h4>
                 <p><?php echo $groupValue->slogan?></p>
