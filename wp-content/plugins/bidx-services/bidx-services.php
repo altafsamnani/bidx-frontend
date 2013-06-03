@@ -595,11 +595,12 @@ function bidx_wordpress_post_action($url, $result, $body) {
  * @version 1.0
  *
  * Create Wordpress Site for Bidx Group
- *
+ * 
  * @param bool $echo
  */
 function create_bidx_wp_site($groupName, $email) {
   global $wpdb, $current_site;
+
   $status = 'ok';
   $groupName = str_replace(" ","",strtolower($groupName));
   //if (preg_match('|^([a-zA-Z0-9-])+$|', $groupName))
@@ -649,6 +650,79 @@ Name: %3$s'), $userName, get_site_url($id), stripslashes($groupName));
     'domain' => $newdomain,
     'subdomain' => $groupName);
   return $siteCreation;
+}
+
+//[id] => 1    [domain] => bidx.dev    [path] => /    [blog_id] => 1    [cookie_domain] => bidx.dev    [site_name] => Bidx Sites
+
+add_action('wp_ajax_bidx_create', 'create_wp_site_from_bidx');
+add_action('wp_ajax_nopriv_bidx_create', 'create_wp_site_from_bidx'); // ajax for logged in users
+function create_wp_site_from_bidx( $groupName, $email ) {
+  global $wpdb;
+
+  $status    = 'ok';
+  $groupName = $_GET['domain'];
+  $email     = $groupName.'@bidx.net';
+  $getCode   = $_GET['code'];
+  $id        = '';
+  $domain = $_SERVER['HTTP_HOST'];
+
+  $code = 'slowHorse01';
+
+  if($code == $getCode && $groupName) {
+  $groupName = str_replace(" ","",strtolower($groupName));
+  //if (preg_match('|^([a-zA-Z0-9-])+$|', $groupName))
+   // $groupName = str_replace(" ","",strtolower($groupName));
+  $domain = $_SERVER['HTTP_HOST'];
+  $newdomain = $groupName . '.' . preg_replace('|^www\.|', '', $domain);
+
+
+  $password = 'bidxGeeks9';
+  //$user_id = email_exists($email);
+  $userName = $groupName ;
+
+  $user_id = wpmu_create_user($userName, $password, $email);
+  if (false == $user_id) {
+    //wp_die(__('There was an error creating the user.'));
+    $status = 'error';
+    $text = 'here was an error creating the user.';
+  }
+  else {
+    $wpdb->hide_errors();
+
+    $id = wpmu_create_blog($newdomain, '/', $groupName, $user_id, array('public' => 1), '1');
+    $wpdb->show_errors();
+    if (!is_wp_error($id)) {
+      if (!get_user_option('primary_blog', $user_id)) {
+        update_user_option($user_id, 'primary_blog', $id, true);
+      }
+      $content_mail = sprintf(__('New site created by %1$s
+
+Address: %2$s
+Name: %3$s'), $userName, get_site_url($id), stripslashes($groupName));
+      //wp_mail(get_site_option('admin_email'), sprintf(__('[%s] New Site Created'), $current_site->site_name), $content_mail, 'From: "Site Admin" <' . get_site_option('admin_email') . '>');
+      wp_mail('altaf.samnani@bidnetwork.org', sprintf(__('[%s] New Site Created from Backend'), 'Bidx Sites'), $content_mail, 'From: "Site Admin" <' . get_site_option('admin_email') . '>');
+
+      $text = 'New website created';
+    }
+    else {
+      //wp_die($id->get_error_message());
+      $status = 'error';
+      $text = $id->get_error_message();
+    }
+  }
+  } else {
+     $status = 'error';
+     $text   = 'Trying to fool me, He He :D.';
+  }
+
+  $siteCreation = array('status' => $status,
+    'text' => $text,
+    'site_id' => $id,
+    'user_id' => $user_id,
+    'domain' => $newdomain,
+    'subdomain' => $groupName);
+  echo json_encode($siteCreation);
+  exit;
 }
 
 /**
