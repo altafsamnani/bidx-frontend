@@ -14,9 +14,9 @@
     		<span>Follow us</span>
 
     		<ul class="unstyled inline">
-				<li><a href="#"><span class="fui-twitter"></span></a></li>
-				<li><a href="#"><span class="fui-facebook"></span></a></li>
-				<li><a href="#"><span class="fui-linkedin"></span></a></li>
+				<li><a href="https://twitter.com/bid_x"><span class="fui-twitter"></span></a></li>
+				<li><a href="https://www.facebook.com"><span class="fui-facebook"></span></a></li>
+				<li><a href="http://www.linkedin.com/company/bidx"><span class="fui-linkedin"></span></a></li>
     		</ul>
     	</div>
 

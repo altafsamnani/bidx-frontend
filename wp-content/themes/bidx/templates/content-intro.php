@@ -6,22 +6,40 @@
 
 				<div class="span8">
 					<div id="introCarousel" class="carousel slide">
+						<?php 
+						$images = get_children(
+									array(
+									'post_parent' => $post->ID,
+									'post_status' => 'inherit',
+									'post_type' => 'attachment',
+									'post_mime_type' => 'image',
+									'order' => 'ASC',
+									'orderby' => 'menu_order' )
+									);
+						?>
 						<ol class="carousel-indicators">
-							<li data-target="#introCarousel" data-slide-to="0" class="active"></li>
-							<li data-target="#introCarousel" data-slide-to="1"></li>
-							<li data-target="#introCarousel" data-slide-to="2"></li>
+						<?php 
+							$count = 0;
+							foreach ( $images as $id => $image ) { ?>	
+							<li data-target="#introCarousel" data-slide-to="<?php echo $count ?>"
+							<?php if ($count == 0) { ?> class="active" <?php } $count++; ?>></li>
+						<?php } ?>	
 						</ol>
 						<!-- Carousel items -->
 						<div class="carousel-inner">
-							<div class="active item">
-								<img class="img-rounded" src="/wp-content/themes/bidx-group/assets/img/sample/you_should_be_here.jpg" />
+						<?php 
+							$count = 0;
+							foreach ( $images as $id => $image ) { 
+								$img = wp_get_attachment_image_src( $image->ID, 400 );
+						?>
+							<div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
+								<img class="img-rounded" src="<?php echo $img[0] ?>" />
+							    <div class="carousel-caption img-rounded">
+			                      <h4><?php echo $image -> post_title ?></h4>
+			                      <p><?php echo $image -> post_content ?></p>
+			                    </div>
 							</div>
-							<div class="item">
-								<img class="img-rounded" src="/wp-content/themes/bidx-group/assets/img/sample/birds_eye_la_defense.jpg" />
-							</div>
-							<div class="item">
-								<img class="img-rounded" src="/wp-content/themes/bidx-group/assets/img/sample/alien_entrepreneurs.jpg" />
-							</div>
+						<?php } ?>
 						</div>
 					</div>
 				</div>

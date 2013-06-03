@@ -2,8 +2,7 @@
 	<div class="container">
 		<div class="block-login">
 			<?php while (have_posts()) : the_post(); ?>
-			  <?php the_content(); ?>
-			  
+			  <?php the_content(); ?>	  
 			<?php endwhile; ?>
 		</div>
 	</div>
@@ -19,7 +18,6 @@
 		});
 	});
 </script>
-
 
 <?php add_action('wp_footer', 'addToFooter',200);
 
