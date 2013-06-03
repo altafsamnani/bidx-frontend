@@ -533,11 +533,11 @@ function bidx_wordpress_post_action($url, $result, $body) {
             $username = $groupName . 'groupmember';
           }
         }
-        else {
-          $requestData->status = 'ERROR';
-          $requestData->text = 'You do not have permissions to log in.';
-          $process = FALSE;
-        }
+//        else {
+//          $requestData->status = 'ERROR';
+//          $requestData->text = 'You do not have permissions to log in.';
+//          $process = FALSE;
+//        }
 
         //only continue, if login/pw is valid AND, if used, proper role perms
         if ($process) {
@@ -554,9 +554,11 @@ function bidx_wordpress_post_action($url, $result, $body) {
             do_action('wp_login', $userdata->ID);
             // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
 
-            $requestData = get_redirect($url, $requestData);
+           // $requestData = get_redirect($url, $requestData);
           }
         }
+
+        $requestData = get_redirect($url, $requestData);
       }
 
       break;
