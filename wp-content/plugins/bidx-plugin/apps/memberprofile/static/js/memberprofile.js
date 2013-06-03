@@ -1107,6 +1107,10 @@ $( document ).ready( function()
             }];
         }
 
+        // Inform the API we are updating the member profile
+        //
+        member.bidxEntityType = "bidxMemberProfile";
+
         // Update the member object
         //
         _getFormValues();
