@@ -40,7 +40,7 @@ $languageData = $personalDetails->languageDetail;
 $languageDetails = $this->getMultiValues($languageData, ', ', 'language');
 $motherLanguageDetails = $this->getMultiValues($languageData, ', ', 'language', array('motherLanguage' => '1'));
 //Address Details
-$addressArr = array($personalDetails->address[0]->street . $personalDetails->address[0]->streetNumber,
+$addressArr = array($personalDetails->address[0]->street . ' '.$personalDetails->address[0]->streetNumber,
   $personalDetails->address[0]->cityTown,
   'country' => $personalDetails->address[0]->country,
   $personalDetails->address[0]->postalCode);
@@ -53,7 +53,7 @@ $cvDetails = ($entrepreneurDetails->cv) ? '<a href="'.$entrepreneurDetails->cv->
 $rowValues = array($personalDetails->professionalTitle,
   'gender' => $personalDetails->gender,
   'nationality' => $personalDetails->nationality,
-  $personalDetails->dateOfBirth,
+  date("d-m-Y", strtotime($personalDetails->dateOfBirth)),
   $personalDetails->highestEducation,
   'motherlanguage' => $motherLanguageDetails,
   'language' => $languageDetails,

@@ -188,7 +188,7 @@ class TemplateLibrary {
         $values = ($values) ? 'My mother language is  ' . $values : '';
         break;
       case 'language':
-        $values = ($values) ? 'I Speak ' . $values : '';
+        $values = ($values) ? 'I speak ' . $values : '';
         break;
 
       case 'nationality':
