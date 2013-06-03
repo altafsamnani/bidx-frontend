@@ -3,13 +3,22 @@
 	Single page application that is setup
  -->	
  <?php 
- $docs = $this -> results -> data -> docs
+ $docs = $this -> results -> data -> docs;
+ $numFound = $this -> results -> data -> numFound;
  ?>
 <div>
+	<?php if ($numFound > 0 ) { ?>
 	<div class="row-fluid">
 		<div class="span12"><h2>Search results (<?php echo $this -> results -> data -> numFound ?>)</h2></div>
 	</div>
-
+	<?php } else { ?>
+	<div class="row-fluid">
+		<div class="search alert">
+			 <button type="button" class="close" data-dismiss="alert">&times;</button>
+			 <strong>No results</strong> Your query did not have any results.
+		</div>
+	</div>	
+	<?php } ?>
 	<!-- Hidden 
 	<div class="row-fluid">
 		<div class="search alert">
@@ -41,7 +50,7 @@
 							<a href="/member/<?php echo $doc -> userId ?>">
 						<?php if (property_exists( $doc , 'profilePicturedoc_url' ) ) {
 								$items = explode( '/', $doc -> profilePicturedoc_url );
-								$imageUrl = 'https://test.bidx.net/dl/document/' . $items[2] . '/' . $items[3] ;
+								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
 							?>
 								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
 						<?php  } else { ?>
@@ -104,12 +113,10 @@
 						</div>
 					</div>
 					<div class="span8">
-						<div>
-							<em><?php echo $doc -> id ?></em>
-						</div>
-						<div>
-							<span class="label">Investor</span>
-						</div>
+						<em><?php echo $fullname ?></em><br />
+						<?php echo $doc -> summary_t ?><br />
+						<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />
+						<span class="label">Investor</span>
 					</div>
 					<div class="span2">
 						<a href="#">view</a>
@@ -129,7 +136,7 @@
  							<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">
 						<?php if (property_exists( $doc , 'profilePicturedoc_url' ) ) {
 								$items = explode( '/', $doc -> profilePicturedoc_url );
-								$imageUrl = 'https://test.bidx.net/dl/document/' . $items[2] . '/' . $items[3] ;
+								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
 							?>
 								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
 						<?php  } else { ?>
@@ -140,11 +147,9 @@
 					</div>
 					<div class="span8">
 						<div>
-							<em><?php echo $fullname ?></em>
-							<p><?php echo $doc -> professionaltitle_t ?></p>
-							<p><?php echo $doc -> countrylabel_s ?></p>							
-						</div>
-						<div>
+							<em><?php echo $fullname ?></em><br />
+							<?php echo $doc -> professionaltitle_t ?><br />
+							<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />							
 							<span class="label">Entrepreneur</span>
 						</div>
 					</div>
@@ -165,19 +170,20 @@
 							<a href="/business/<?php echo $doc -> userId ?>">
 						<?php if (property_exists( $doc , 'picturedoc_url' ) ) {
 								$items = explode( '/', $doc -> 	picturedoc_url );
-								$imageUrl = 'https://test.bidx.net/dl/document/' . $items[2] . '/' . $items[3] ;
+								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
 							?>
 								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
 						<?php  } else { ?>
 								<img data-src="holder.js/75x75/social/text:business" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
 						<?php  }?>
-							</a>						</div>
+							</a>						
+						</div>
 					</div>
 					<div class="span8">
 						<div>
 							<em><?php echo $doc -> name_s ?></em><br />
 							<?php echo $doc -> slogan_s ?><br/>
-							<?php echo $doc -> reasonforsubmissionlabel_ss ?>, <?php echo $doc -> industrylabel_ss ?><br />
+							<?php echo $doc -> industrylabel_ss ?>, <?php echo $doc -> countrylabel_s ?><br />
 							<span class="label">Business</span>
 						</div>
 					</div>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Gather search results for a standard full text query.
+ * Gather staticdata
  * 
  * @author Jaap Gorjup
  * @version 1.0
@@ -19,15 +19,15 @@ class StaticDataService extends APIbridge {
 	/**
 	 * Performs a search action 
 	 * @param string $query
-	 * @param string $filter optional value --> not implemented yet
 	 * @return response of the search service
-	 * @link http://bidx.net/api/v1/search
-	 * @todo implement the query cooking here for the facets
+	 * @link http://bidx.net/api/v1/staticdata
+	 * @todo implement the transient storage here
+	 * @todo implement with $query=null
 	 */
-	public function getSearchResults( $query, $filter = null ) {
+	public function getStaticData( $query ) {
 		
-		return $this->callBidxAPI('staticdata/?q=' . $query, array(), 'GET');
-		
+		 $data = $this->callBidxAPI('staticdata', $query, 'GET');
+		 return $data;
 	}	
 
 }
