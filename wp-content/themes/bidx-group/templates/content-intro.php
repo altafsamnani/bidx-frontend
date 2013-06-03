@@ -35,7 +35,7 @@
 	    </header>
   <?php if ( ! is_user_logged_in() ) { ?>
 	    <div class="entry-content">
-	    	<?php echo do_shortcode( '[bidx app="group" view="getGroupIntro"]' ); ?>
+	    	<?php echo do_shortcode( '[bidx app="group" view="group-intro"]' ); ?>
     	</div>
     	<div class="entry-content">
     		<div class="row-fluid after-well" >
@@ -84,17 +84,15 @@
 					</div><?php
        endwhile;
     }
-wp_reset_query();
+	wp_reset_query();
 ?>
 					</div>
 				</div>
 			</div>
 		</div>
 
-
-
 	    <div class="entry-content">
-		<?php echo do_shortcode( '[bidx app="group" view="lastMembers"]' ); ?>
+		<?php echo do_shortcode( '[bidx app="group" view="last-members"]' ); ?>
 		</div>
 
 	</article>
