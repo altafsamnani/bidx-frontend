@@ -216,6 +216,77 @@ header .navbar .btn-navbar {
 *
 ********************************************************************************************/
 
+.partners {
+  background:               #f4f4f4;
+  min-height:               250px;
+}
+
+.partner {
+    white-space:            nowrap;
+    text-indent:            -9999px;
+    display:                inline-block;
+    background-image:       url(assets/img/partners_sprite.png);
+    background-repeat:      no-repeat;
+    width:                  220px;
+    height:                 90px;
+    margin-top:             80px;
+    margin-right:           59px;
+}
+
+.partner:last-child {
+    margin-right:           0;
+}
+
+.partner-bid {
+  background-position:      0 0;
+
+  width:                    200px;
+}
+
+.partner-bid:hover {
+  background-position:      0 -90px;
+}
+
+.partner-sampoerna {
+  background-position:      -220px 0;
+
+  width:                    180px;
+}
+
+.partner-sampoerna:hover {
+  background-position:      -220px -90px;
+}
+
+.partner-postcodeloterij {
+  background-position:      -440px 0;
+
+  width:                    100px;
+}
+
+.partner-postcodeloterij:hover {
+  background-position:      -440px -90px;
+}
+
+.partner-did {
+  background-position:      -660px 0;
+  width:                    100px;
+}
+
+.partner-did:hover {
+  background-position:      -660px -90px;
+}
+
+.partner-usaid {
+  background-position:      -880px 0;
+
+  width:                    145px;
+}
+
+.partner-usaid:hover {
+  background-position:      -880px -90px;
+}
+
+
 
 footer.page-footer {
     background-color:               #34495e;
@@ -424,6 +495,8 @@ body.home .hero-block {
         font-weight: normal;
         font-size: 12px;
     }
+
+
 
 /* end intro styles */
 

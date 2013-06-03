@@ -1,19 +1,11 @@
-<div class="container row-fluid">
-	<div class="span2">
-	    <a href="http://www.bidnetwork.org"></a>
-	</div>
-	<div class="span2">
-	    <a href="http://www.sampoerna.com"></a>
-	</div>
-	<div class="span2">
-	    <a href="http://www.postcodeloterij.nl"></a>
-	</div>
-	<div class="span2">
-	 	<a href="http://www.dfid.com"></a>
-	</div>
-	<div class="span2">
-	    <a href="http://www.usaid.com"></a>
-	</div>
+<div class="partners">
+    <div class="container">
+        <a href="http://www.bidnetwork.org" class="partner partner-bid">BiD Network</a>
+        <a href="http://www.puterasampoerna.com/" class="partner partner-sampoerna">Putera Sampoerna</a>
+        <a href="http://www.postcodeloterij.nl" class="partner partner-postcodeloterij">Nationale Postcode Loterij</a>
+        <a href="https://www.gov.uk/government/organisations/department-for-international-development" class="partner partner-did">Department for International Development</a>
+        <a href="https://www.usaid.gov" class="partner partner-usaid">USAID</a>
+    </div>
 </div>
 
 <footer class="page-footer">
