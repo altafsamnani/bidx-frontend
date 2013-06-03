@@ -109,7 +109,9 @@ class memberprofile {
 
 	    /* 4. Call the Display Component */
 	    add_action( 'wp_footer', array( memberprofile ,'bidx_memberprofile_add_to_footer' ) );
-		  require_once ( BIDX_PLUGIN_DIR . '/memberprofile/memberprofile_component.php' );
+
+      $view->render('member.phtml');
+		 
 
 	}
 
