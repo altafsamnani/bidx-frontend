@@ -17,7 +17,9 @@ abstract class APIbridge {
 
 	private $logger;
 
-	/**
+  public $isRedirectCheck = true;
+
+  /**
 	 * Logger is instantiated in the constructor.
 	 */
 	public function __construct()
@@ -147,8 +149,10 @@ abstract class APIbridge {
       //$this->bidxRedirectLogin($groupDomain);
       do_action('clear_auth_cookie');
       $this->logger->trace(sprintf('Authentication Failed for URL: %s ', $urlService));
-      ($urlService != 'session') ? $this->bidxRedirectLogin($groupDomain) : '';
-
+      
+      if($urlService != 'session' && $this->isRedirectCheck) {   
+        $this->bidxRedirectLogin($groupDomain) ;
+      }
     } else if ($httpCode == 'timeout' ) {
       $requestData->status = 'ERROR';  
       $errors = $bidxWPerror->get_error_messages();

@@ -652,7 +652,17 @@ Name: %3$s'), $userName, get_site_url($id), stripslashes($groupName));
   return $siteCreation;
 }
 
-//[id] => 1    [domain] => bidx.dev    [path] => /    [blog_id] => 1    [cookie_domain] => bidx.dev    [site_name] => Bidx Sites
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Create Wordpress Site for Bidx Group
+ * [id] => 1    [domain] => bidx.dev    [path] => /    [blog_id] => 1    [cookie_domain] => bidx.dev    [site_name] => Bidx Sites
+ * http://bidx.net/wp-admin/admin-ajax.php?action=bidx_create&domain=hello&code=slowHorse01
+ * 
+ * @param bool $echo
+ */
+//
 
 add_action('wp_ajax_bidx_create', 'create_wp_site_from_bidx');
 add_action('wp_ajax_nopriv_bidx_create', 'create_wp_site_from_bidx'); // ajax for logged in users
@@ -672,7 +682,7 @@ function create_wp_site_from_bidx( $groupName, $email ) {
   $groupName = str_replace(" ","",strtolower($groupName));
   //if (preg_match('|^([a-zA-Z0-9-])+$|', $groupName))
    // $groupName = str_replace(" ","",strtolower($groupName));
-  $domain = $_SERVER['HTTP_HOST'];
+
   $newdomain = $groupName . '.' . preg_replace('|^www\.|', '', $domain);
 
 
