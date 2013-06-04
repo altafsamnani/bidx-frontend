@@ -458,10 +458,13 @@ class TemplateLibrary {
 
     $sep = '';
     $htmlDisplay = '';
-
+    $countData = count($data);
+    $count = 1;
+    echo 'altaf'.$countData;
+    $seperatorAnd = $seperator;
     //If comma and 2 values then make seperator And
-    if (trim($seperator) == ',' && count($data) == 2) {
-      $seperator = ' And ';
+    if (trim($seperator) == ',') {
+      $seperatorAnd = ' and ';
     }
 
     // exit;
@@ -493,7 +496,9 @@ class TemplateLibrary {
       $objValue = $this->getMultiReplacedValues($elementKey, $objValue);
       if ($objValue != 'null' && $objValue) {
         $htmlDisplay .= $sep . $objValue;
-        $sep = $seperator;
+        $count++;
+        
+        $sep = ($count == $countData) ? $seperatorAnd : $seperator;
       }
     }
 
