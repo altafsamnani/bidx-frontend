@@ -48,11 +48,9 @@
 					<div class="span2">
 						<div>
 							<a href="/member/<?php echo $doc -> userId ?>">
-						<?php if (property_exists( $doc , 'profilePicturedoc_url' ) ) {
-								$items = explode( '/', $doc -> profilePicturedoc_url );
-								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
+						<?php if (property_exists( $doc , 'profilepicturedoc_url' ) ) {
 							?>
-								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+								<img src="<?php echo $doc -> profilepicturedoc_url ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
 						<?php  } else { ?>
 								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
 						<?php  }?>
