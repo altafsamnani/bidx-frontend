@@ -460,7 +460,7 @@ class TemplateLibrary {
     $htmlDisplay = '';
     $countData = count($data);
     $count = 1;
-    echo 'altaf'.$countData;
+  
     $seperatorAnd = $seperator;
     //If comma and 2 values then make seperator And
     if (trim($seperator) == ',') {
