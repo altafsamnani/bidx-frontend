@@ -726,6 +726,21 @@ body.home .hero-block {
     fonts
 */
 
+/**
+ * Image styles
+ */
+.alignright {
+	float: right;
+}
+
+/**
+ * Widget styles
+ */
+.horizontal-1 {
+    list-style: none;
+    text-align: center;
+    padding-bottom: 30px;
+}
 
 /*******************************************************************************************
 *

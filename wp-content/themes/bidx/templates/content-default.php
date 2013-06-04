@@ -56,18 +56,18 @@ $blocks = explode('<hr />', $content)
 			$array = array_values($blocks);
 			foreach ( $blocks as $block ) {?>
 		<div class="row-fluid">
-			<div class="span8">
-				<p><?php echo $block ?></p>
-			</div>
+			<?php echo $block ?>
 		</div>
 		<hr>
 	 <?php } ?>
 	</div>
 	<footer>
-		<!-- widget ruimte -->
-		
-		
-		
+		<!-- widget space -->
+		<div class="container">
+			<div class="row-fluid">
+				<?php get_template_part('horizontal','1'); ?>
+			</div>
+		</div>
 	</footer>
 	
 </article>

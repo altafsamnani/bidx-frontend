@@ -16,3 +16,20 @@ require_once locate_template('/lib/widgets.php');         // Sidebars and widget
 require_once locate_template('/lib/scripts.php');         // Scripts and stylesheets
 require_once locate_template('/lib/custom.php');          // Custom functions
 //require_once locate_template('../functions/form.php'); //custom form json to html converter
+
+/**
+ * Widget creation
+ */
+add_action( 'after_setup_theme', 'child_theme_setup' );
+
+if ( !function_exists( 'child_theme_setup' ) ):
+function child_theme_setup() {
+
+	register_sidebar( array(
+	'name' => __( 'Horizontal Widget Content Template', 'bidx' ),
+	'id' => 'horizontal-1',
+	'description' => __( 'An optional horizontal widget below the content', 'bidx' ),
+	) );
+
+}
+endif;
