@@ -107,6 +107,10 @@ define('SAVEQUERIES', true);
 
 define('FS_METHOD','direct');
 
+define('API_AUTH_UNAME','bidx');
+
+define('API_AUTH_PASS','gobidx');
+
 /**
  * Internal settings for the API 
  **/

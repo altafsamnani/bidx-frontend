@@ -136,8 +136,8 @@ function bidx_login_session() {
 
 function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload = false) {
 
-  $authUsername = 'bidx'; // Bidx Auth login
-  $authPassword = 'gobidx'; // Bidx Auth password
+  $authUsername = ( API_AUTH_UNAME ) ? API_AUTH_UNAME : 'bidx'; // Bidx Auth login
+  $authPassword = ( API_AUTH_PASS ) ? API_AUTH_PASS : 'gobidx'; // Bidx Auth password
   $bidxMethod = strtoupper($method);
   $bidx_get_params = "";
   $cookie_string = "";
