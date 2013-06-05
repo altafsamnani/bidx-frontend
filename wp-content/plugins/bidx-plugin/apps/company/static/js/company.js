@@ -545,6 +545,11 @@ $( document ).ready( function()
                 {
                     company = response;
 
+                    // Set the global memberProfileId for convenience reasons
+                    //
+                    companyProfileId = bidx.utils.getValue( company, "bidxEntityId" );
+
+
                     bidx.utils.log( "bidx::company", company );
 
                     _populateScreen();
