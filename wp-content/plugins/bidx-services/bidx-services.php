@@ -826,7 +826,7 @@ function bidx_wordpress_pre_action($url = 'default', $file_values = NULL) {
 
     case 'companylogo':
       $response['status'] = 'ok';
-      $id = $params['companyId'];
+      $id = $params['companyProfileId'];
       $domain = $params['domain'];
       unset( $params );
 

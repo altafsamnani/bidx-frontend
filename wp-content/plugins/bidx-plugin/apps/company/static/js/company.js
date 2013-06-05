@@ -6,6 +6,10 @@ $( document ).ready( function()
     ,   $editForm       = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets       = $element.find( ".snippets" )
 
+    ,   $toggles                    = $element.find( ".toggle" ).hide()
+    ,   $toggleRegistered           = $element.find( "[name='registered']"      )
+    ,   $toggleHaveEmployees        = $element.find( "[name='haveEmployees']"   )
+
     ,   $logoContainer              = $editForm.find( ".logoContainer" )
 
     ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
@@ -20,6 +24,7 @@ $( document ).ready( function()
         //
     ,   company
     ,   companyId
+    ,   companyProfileId
     ,   groupDomain
     ,   bidx            = window.bidx
     ,   snippets        = {}
@@ -71,6 +76,26 @@ $( document ).ready( function()
     {
         e.preventDefault();
     } );
+
+
+    $toggleRegistered.change( function()
+    {
+        var value   = $toggleRegistered.val()
+        ,   fn      = value === "true" ? "show" : "hide"
+        ;
+
+        $toggles.filter( ".toggleRegistered" )[ fn ]();
+    } );
+
+    $toggleHaveEmployees.change( function()
+    {
+        var value   = $toggleHaveEmployees.val()
+        ,   fn      = value === "true" ? "show" : "hide"
+        ;
+
+        $toggles.filter( ".toggleHaveEmployees" )[ fn ]();
+    } );
+
 
     // Build up the gmaps for the current address
     //
@@ -287,6 +312,12 @@ $( document ).ready( function()
     //
     var _populateScreen = function()
     {
+        // Start by setting the toggles false, will switch to true if needed
+        //
+        $toggleRegistered.val( "false" );
+        $toggleHaveEmployees.val( "false" );
+
+
         $.each( fields._root, function( i, f )
         {
             var $input  = $editForm.find( "[name='" + f + "']" )
@@ -310,8 +341,8 @@ $( document ).ready( function()
 
         // Setup the hidden fields used in the file upload
         //
-        $editForm.find( "[name='domain']"       ).val( groupDomain );
-        $editForm.find( "[name='companyId']"    ).val( companyId );
+        $editForm.find( "[name='domain']"           ).val( groupDomain );
+        $editForm.find( "[name='companyProfileId']" ).val( companyProfileId );
 
         // Now the nested objects
         //

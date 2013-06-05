@@ -3,6 +3,8 @@
   <div class="btn-group controls">
   <?php if ($this->company->bidxCanEdit) { ?>
     <a class="btn btn-primary" href="#editCompany/<?php echo $this->company->ownerId; ?>">Edit</a>
+  <?php } else { ?>
+    <strong>Not allowed to edit</strong>
   <?php } ?>
   </div>
 </div>
