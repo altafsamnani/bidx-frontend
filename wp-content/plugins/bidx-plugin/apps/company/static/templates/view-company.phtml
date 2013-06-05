@@ -38,10 +38,43 @@ if (!$picSrc) {
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
             array( 'Legal form of business' => htmlspecialchars( $this->company->legalFormBusiness )), $options );
 
-        $statutoryAddress = '';
+        $statutoryAddress = $this->company->statutoryAddress;
+
+        $arStatutoryAddress = array();
+
+        if ( $statutoryAddress->street )
+        {
+            $arStatutoryAddress[] = $statutoryAddress->street;
+        }
+
+        if ( $statutoryAddress->streetNumber )
+        {
+            $arStatutoryAddress[] = $statutoryAddress->streetNumber;
+        }
+
+        if ( $statutoryAddress->postalCode )
+        {
+            $arStatutoryAddress[] = $statutoryAddress->postalCode;
+        }
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Statutory address' => htmlspecialchars( $statutoryAddress )), $options );
+            array( 'Statutory address' => htmlspecialchars( implode( ' ', $arStatutoryAddress ))), $options );
+
+        $arStatutoryCityCountry = array();
+
+        if ( $statutoryAddress->cityTown )
+        {
+            $arStatutoryCityCountry[] = $statutoryAddress->cityTown;
+        }
+
+        if ( $statutoryAddress->country )
+        {
+            $arStatutoryCityCountry[] = $statutoryAddress->country;
+        }
+
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Statutory city, country' => htmlspecialchars( implode( ' ', $arStatutoryCityCountry ))), $options );
+
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
             array( 'Fiscal number' => htmlspecialchars( $this->company->fiscalNumber )), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',

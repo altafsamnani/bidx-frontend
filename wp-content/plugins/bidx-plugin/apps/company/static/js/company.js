@@ -467,31 +467,25 @@ $( document ).ready( function()
         $.each( [ "statutoryAddress" ], function()
         {
             var nest    = this
-            ,   i       = 0
+            ,   item    = bidx.utils.getValue( company, nest )
             ;
+
+            if ( !item )
+            {
+                item = {};
+                bidx.utils.setValue( company, nest, item );
+            }
 
             // TODO: make i itterate
 
             $.each( fields[ nest ], function( j, f )
             {
-                var path    = nest + "[" + i + "]." + f
+                var path    = nest + "." + f
                 ,   $input  = $editForm.find( "[name='" + path + "']" )
                 ,   value   = $input.is( ":visible" ) ? _getElementValue( $input ) : ""
                 ;
 
-                var item = bidx.utils.getValue( company, nest, true );
-
-                // When undefined, leave it untouched for now...
-                //
-                if ( item )
-                {
-                    if ( !item[ i ] )
-                    {
-                        item[ i ] = {};
-                    }
-
-                    bidx.utils.setValue( item[ i ], f, value );
-                }
+                bidx.utils.setValue( item, f, value );
             } );
         } );
     };
