@@ -12,7 +12,7 @@ $blocks = explode('<hr />', $content)
 ?>
 <article <?php post_class(); ?>>
 	<header>
-		<div style="background-color: #0093cb">
+		<div class="headerbanner">
 			<div class="container">
 			<!-- Check if subpages available -->
 			<?php 
@@ -47,6 +47,7 @@ $blocks = explode('<hr />', $content)
 			</div>
 			<!-- arrowdown in middle -->
 		</div>
+		<div class="postheader"><span class="fui-triangle-down"></span></div>
 	</header>
 	<div class="container">
 		<br />

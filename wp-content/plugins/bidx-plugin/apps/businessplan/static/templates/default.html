@@ -1,40 +1,101 @@
-<h1>Businessplan</h1>
+<div class="container">
+	<!-- Infoheader -->
+	<div class="row-fluid" style="background-color: white; z-index: 101">
+		<div class="span6 text-left">Where am I? <a href="#">Activities</a> &gt; Create your business</div>
+		<div class="span6 text-right">
+			<button class="btn btn-primary">Save</button><button class="btn">Cancel</button><button class="btn">Delete</button>
+		</div>
+		<div class="span4 text-left">
+			<h5>Create Your Business</h5>Business Summary
+		</div>
+		<div class="span8">			
+			<ul class="nav nav-tabs">
+			  <li class="active"><a href="#summary" data-toggle="tab">Business Summary</a></li>
+			  <li><a href="#financial" data-toggle="tab">Financial Details</a></li>
+			  <li><a href="#company" data-toggle="tab">Company Details</a></li>
+			  <li><a href="#documents" data-toggle="tab">Documents</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="tab-content">
+		<div class="tab-pane active" id="summary">
+			<!--  Business Summary -->
+			<div class="row-fluid">
+				<div class="span4">
+					<div data-spy="affix" data-offset-top="200">
+						<ul class="nav nav-list affix">
+						  <li><a href="#start"><i class="icon-chevron-right"></i> Business summary</a></li>
+				          <li><a href="#about-business"><i class="icon-chevron-right"></i> About your business</a></li>
+				          <li><a href="#about-you"><i class="icon-chevron-right"></i> About you as Entrepreneur</a></li>
+				          <li><a href="#about-team"><i class="icon-chevron-right"></i> About your supporting team</a></li>
+				        </ul>					
+					</div>
+				</div>
+				<div class="span8">
+					<p>Introduction texts here</p>
+					<div class="well" id="start">
+						<h5>Business Summary</h5>
+						
+						<label>Describe your business name in 5 words</label>
+						<input type="text" name="name_description" placeholder="Description"/>
+					
+						<label>Describe your business in 15 words <small>optional</small></label>
+						<textarea cols="20" rows="3" name="business_description" placeholder="Description"></textarea>
+						
+						<label>Industry</label>
+						<input type="text" class="large" name="industry" placeholder="Industry"/>
+					
+						<label>Country of business</label>
+						<input type="text" class="large" name="country" placeholder="Country"/>
+					</div>
+					
+					<div class="well" id="about-business">
+						<h5>Tell us more about your business</h5>
+					
+						<label>Provide a summary of your business in 150 words</label>
+						<textarea cols="60" rows="6	" name="business_summary_description" placeholder="Description"></textarea>
 
-<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget tristique dui. 
-Curabitur feugiat bibendum ipsum vitae porta. Fusce tempus turpis a eros elementum at dignissim libero vulputate. 
-Sed tempus vulputate lorem, sed rutrum orci varius in. Suspendisse gravida pharetra libero, non egestas risus blandit eget. 
-Ut sed iaculis sem. Fusce blandit condimentum malesuada.</p>
+						<label>Percentage you currently retain <small>optional</small></label>
+						<input type="text" class="small" name="current_percentage" placeholder="100"/>
+					
+						<label>Finance needed</label>
+						<input type="text" name="finance_needed" placeholder="Amount"/>
+											
+						<label>Why do you need financing? Describe in maximum 30 words<small>optional</small></label>
+						<textarea cols="60" rows="3" name="finance_needed_reason" placeholder="Description"></textarea>
+					
+						<!-- Media blocks should come here : Should be designed ! -->
+					</div>
+					
+					<div class="well" id="about-you">
+						<h5>Tell us more about you as entrepreneur</h5>
+						
+					</div>
 
-<p>Phasellus id tortor et leo pellentesque gravida. Praesent in felis eget risus bibendum vehicula nec non tellus. 
-Vivamus sem justo, aliquam at mattis sed, varius vitae turpis. Integer id auctor felis. 
-Mauris tincidunt eros dui, aliquam congue erat. Proin viverra arcu sed tortor egestas vitae lobortis nunc ultrices. 
-Proin aliquam tellus eget urna mollis bibendum. Nunc dapibus nisi quis neque porttitor id tincidunt velit pharetra. 
-Duis eu blandit felis.</p>
+					<div class="well" id="about-team">
+						<h5>Tell us more about the people supporting your business</h5>
+					
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="financial">
+	  
+		</div>
+		<div class="tab-pane" id="company">
 
-<p>Curabitur sodales vestibulum magna, a varius nisl auctor vitae. Nunc rutrum arcu et augue sagittis ac pulvinar neque vulputate. 
-Sed nulla ante, luctus sed commodo vel, scelerisque in magna. Pellentesque sodales, augue sit amet tempus auctor, 
-lorem nisi interdum metus, quis viverra lacus libero nec nulla. Morbi interdum urna eu leo tincidunt vehicula. 
-Aliquam erat volutpat. Nulla auctor est ut nibh vehicula sed iaculis nunc ultricies. 
-In vehicula velit at lacus imperdiet mattis. Nam posuere eros at lacus fringilla eu lacinia arcu imperdiet. 
-Duis tempus nibh eget nibh dapibus sed ultricies elit pulvinar. In placerat pharetra nisl. 
-Sed elit tortor, dapibus a feugiat vehicula, pellentesque ut massa. 
-Maecenas vulputate magna dictum tellus luctus eu tincidunt neque faucibus. 
-Maecenas porta, elit at eleifend blandit, lorem augue mattis elit, in viverra mi lectus vitae justo. 
-Quisque pulvinar augue quis purus malesuada at volutpat est dapibus.</p>
+		</div>
+		<div class="tab-pane" id="documents">
 
-<p>Integer libero dolor, ullamcorper in varius nec, condimentum vitae dui. Integer ullamcorper laoreet metus, 
-aliquet iaculis nisi imperdiet vel. Sed varius felis in massa sollicitudin pulvinar. Donec nec urna pulvinar lectus 
-porttitor pharetra. Praesent velit est, commodo non ultricies ac, rhoncus non ante. Quisque sed odio leo. 
-Cras non nulla sed enim blandit condimentum. Morbi in sem felis, non pretium mi. 
-Aliquam viverra vulputate mi a mollis. Aenean viverra venenatis porttitor. 
-Ut laoreet sapien non purus dictum at malesuada augue volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, 
-nascetur ridiculus mus. Integer ultricies ipsum eget libero adipiscing dignissim. Morbi arcu elit, lobortis sed convallis sed, 
-auctor non nibh.</p>
+		</div>
+	</div>
 
-<p>Etiam vel diam mauris. Sed vestibulum bibendum purus, vel commodo massa pulvinar quis. Nam eleifend odio vel ante malesuada 
-auctor. Sed eleifend auctor semper. Morbi sed ultricies nisl. Praesent hendrerit, metus vitae ultricies porta, urna mauris 
-ultricies enim, in vulputate ante elit eget elit. Suspendisse at lacus dapibus enim euismod rutrum. 
-Aliquam lacinia felis quis elit iaculis fringilla. Nulla facilisi. Suspendisse potenti. 
-Cras arcu neque, elementum at feugiat nec, aliquet vel nunc. Nulla vel rhoncus quam. Maecenas molestie, eros ac rutrum 
-dignissim, mi libero vestibulum turpis, in molestie nisi lorem bibendum arcu. 
-Nullam et est ac nulla placerat cursus non ut neque.</p>
+</div>
+
+<script>
+  $(function () {
+    $('#myTab a:last').tab('show');
+  })
+</script>

@@ -2,6 +2,43 @@
 	<article class="bidx type-bidx status-publish hentry">
 	    <header>
 			<div id="myCarousel" class="carousel slide">
+			<?php 
+						$images = get_children(
+									array(
+									'post_parent' => $post->ID,
+									'post_status' => 'inherit',
+									'post_type' => 'attachment',
+									'post_mime_type' => 'image',
+									'order' => 'ASC',
+									'orderby' => 'menu_order' )
+									);
+						if ( count( $images ) > 0 ) {
+						?>
+						<ol class="carousel-indicators">
+						<?php 
+							$count = 0;
+							foreach ( $images as $id => $image ) { ?>	
+							<li data-target="#introCarousel" data-slide-to="<?php echo $count ?>"
+							<?php if ($count == 0) { ?> class="active" <?php } $count++; ?>></li>
+						<?php } ?>	
+						</ol>
+						<!-- Carousel items -->
+						<div class="carousel-inner">
+						<?php 
+							$count = 0;
+							foreach ( $images as $id => $image ) { 
+								$img = wp_get_attachment_image_src( $image->ID, 400 );
+						?>
+							<div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
+								<img class="img-rounded" src="<?php echo $img[0] ?>" />
+							    <div class="carousel-caption img-rounded">
+			                      <h4><?php echo $image -> post_title ?></h4>
+			                      <p><?php echo $image -> post_content ?></p>
+			                    </div>
+							</div>
+						<?php } 
+						} else {
+						?>	
 			  <ol class="carousel-indicators">
 			    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 			    <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -31,6 +68,7 @@
                     </div>
 			    </div>
 			  </div>
+	   <?php  } ?>
 			</div>
 	    </header>
   <?php if ( ! is_user_logged_in() ) { ?>

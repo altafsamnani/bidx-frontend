@@ -48,6 +48,7 @@
 			<mapping>^search/near?</mapping>
 			<content>[bidx app="search" view="mapview" query=""]</content>
 		</post>
+<!--	
 		<post>
 			<post_id>6</post_id>
 			<name>business_list</name>
@@ -62,6 +63,7 @@
 			<mapping>^business/([^/]*)/?</mapping>
 			<content>[bidx app="businessplan"]</content>
 		</post>
+  -->			
 		<post>
 			<post_id>8</post_id>
 			<name>last_members</name>
