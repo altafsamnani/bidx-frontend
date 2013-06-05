@@ -642,6 +642,10 @@ $( document ).ready( function()
             ,   value   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + f )
             ;
 
+            // HTML Unescape the values
+            //
+            value = $( "<div />" ).html( value ).text();
+
             $input.each( function()
             {
                 _setElementValue( $( this ), value );
@@ -680,6 +684,10 @@ $( document ).ready( function()
                         var $input  = $editForm.find( "[name='personalDetails." + nest + "[" + i + "]." + f + "']" )
                         ,   value   = bidx.utils.getValue( item, f )
                         ;
+
+                        // HTML Unescape the values
+                        //
+                        value = $( "<div />" ).html( value ).text();
 
                         $input.each( function()
                         {

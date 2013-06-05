@@ -326,6 +326,10 @@ $( document ).ready( function()
             ,   value   = bidx.utils.getValue( company, f )
             ;
 
+            // HTML Unescape the values
+            //
+            value = $( "<div />" ).html( value ).text();
+
             $input.each( function()
             {
                 _setElementValue( $( this ), value );
@@ -366,6 +370,10 @@ $( document ).ready( function()
                     {
                         value = ( value + "" ).toUpperCase();
                     }
+
+                    // HTML Unescape the values
+                    //
+                    value = $( "<div />" ).html( value ).text();
 
                     $input.each( function()
                     {

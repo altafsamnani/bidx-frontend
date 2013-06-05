@@ -118,8 +118,8 @@ if ( $personalDetails->attachment && is_array( $personalDetails->attachment )) {
     echo '</div>';
 
     echo '<div class="span9">';
-    printf( '<h5 class="documentName">%s</h5>', htmlspecialchars( $attachment->documentName ));
-    printf( '<p>%s</p>', htmlspecialchars( $attachment->uploadedDateTime ));
+    printf( '<h5 class="documentName">%s</h5>', $attachment->documentName );
+    printf( '<p>%s</p>', $attachment->uploadedDateTime );
     echo '</div>';
 
     echo '</div>';
