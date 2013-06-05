@@ -80,7 +80,7 @@ $( document ).ready( function()
 
     $toggleRegistered.change( function()
     {
-        var value   = $toggleRegistered.val()
+        var value   = $toggleRegistered.filter( ":checked" ).val()
         ,   fn      = value === "true" ? "show" : "hide"
         ;
 
@@ -89,7 +89,7 @@ $( document ).ready( function()
 
     $toggleHaveEmployees.change( function()
     {
-        var value   = $toggleHaveEmployees.val()
+        var value   = $toggleHaveEmployees.filter( ":checked" ).val()
         ,   fn      = value === "true" ? "show" : "hide"
         ;
 
@@ -314,9 +314,11 @@ $( document ).ready( function()
     {
         // Start by setting the toggles false, will switch to true if needed
         //
-        $toggleRegistered.val( "false" );
-        $toggleHaveEmployees.val( "false" );
+        $toggleRegistered.prop( "checked", false );
+        $toggleRegistered.filter( "[value='false']" ).prop( "checked", true );
 
+        $toggleHaveEmployees.prop( "checked", false );
+        $toggleHaveEmployees.filter( "[value='false']" ).prop( "checked", true );
 
         $.each( fields._root, function( i, f )
         {
@@ -344,34 +346,58 @@ $( document ).ready( function()
         $editForm.find( "[name='domain']"           ).val( groupDomain );
         $editForm.find( "[name='companyProfileId']" ).val( companyProfileId );
 
-        // Now the nested objects
+        // Now the nested objects, NOT ARRAY's
         //
         $.each( [ "statutoryAddress" ], function()
         {
             var nest    = this
-            ,   items   = bidx.utils.getValue( company, nest, true )
+            ,   item    = bidx.utils.getValue( company, nest )
             ;
 
-            if ( items )
+            if ( item )
             {
-                $.each( items, function( i, item )
+                $.each( fields[ nest ], function( j, f )
                 {
-                    $.each( fields[ nest ], function( j, f )
-                    {
-                        var $input  = $editForm.find( "[name='personalDetails." + nest + "[" + i + "]." + f + "']" )
-                        ,   value   = bidx.utils.getValue( item, f )
-                        ;
+                    var $input  = $editForm.find( "[name='" + nest + "." + f + "']" )
+                    ,   value   = bidx.utils.getValue( item, f )
+                    ;
 
-                        $input.each( function()
-                        {
-                            _setElementValue( $( this ), value  );
-                        } );
+                    if ( f === "country" && value )
+                    {
+                        value = ( value + "" ).toUpperCase();
+                    }
+
+                    $input.each( function()
+                    {
+                        _setElementValue( $( this ), value  );
                     } );
                 } );
             }
         } );
 
         _updateCurrentAddressMap();
+
+        // For "Have Employees?" there is no explicit property, so set the UI control conditional on having employees
+        //
+        var haveEmployees = false;
+        $.each( [ "numPermMaleEmpl", "numPermFemaleEmpl", "numTempMaleEmpl", "numTempFemaleEmpl" ], function( idx, field )
+        {
+            if ( bidx.utils.getValue( company, field ) )
+            {
+                haveEmployees = true;
+            }
+        } );
+
+        if ( haveEmployees )
+        {
+            $toggleHaveEmployees.prop( "checked", false );
+            $toggleHaveEmployees.filter( "[value='true']" ).prop( "checked", true );
+        }
+
+        // Fire of the toggle controls so the UI get's updated to it's current values
+        //
+        $toggleRegistered.trigger( "change" );
+        $toggleHaveEmployees.trigger( "change" );
     };
 
 
@@ -430,7 +456,7 @@ $( document ).ready( function()
         $.each( fields._root, function( i, f )
         {
             var $input  = $editForm.find( "[name='" + f + "']" )
-            ,   value   = _getElementValue( $input )
+            ,   value   = $input.is( ":visible" ) ? _getElementValue( $input ) : ""
             ;
 
             bidx.utils.setValue( company, f, value );
@@ -450,7 +476,7 @@ $( document ).ready( function()
             {
                 var path    = nest + "[" + i + "]." + f
                 ,   $input  = $editForm.find( "[name='" + path + "']" )
-                ,   value   = _getElementValue( $input )
+                ,   value   = $input.is( ":visible" ) ? _getElementValue( $input ) : ""
                 ;
 
                 var item = bidx.utils.getValue( company, nest, true );
@@ -513,7 +539,9 @@ $( document ).ready( function()
         {
             e.preventDefault();
 
-            if ( $btnSave.hasClass( "disabled" ))
+            var valid = $editForm.form( "validateForm" );
+
+            if ( !valid || $btnSave.hasClass( "disabled" ) )
             {
                 return;
             }
