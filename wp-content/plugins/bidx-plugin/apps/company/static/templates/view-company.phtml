@@ -19,6 +19,9 @@ if (!$picSrc) {
 
     <h4>Company details</h4>
 
+    <div class="row-fluid">
+        <div class="span8">
+
 <?php
     $options = array( 'class_label' => 'bidx-label' );
 
@@ -56,4 +59,10 @@ if (!$picSrc) {
             array( 'Number of temporary male employees' => htmlspecialchars( $this->company->numTempMaleEmpl )), $options );
     }
 ?>
+        </div>
+
+        <div class="span4">
+            <img <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+        </div>
+    </div><!-- row -->
 </div><!-- well -->
