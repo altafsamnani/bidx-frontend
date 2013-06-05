@@ -1,10 +1,59 @@
+<?php
+
+$useDataSrc = false;
+$picSrc     = $this->company->logo->document;
+
+if (!$picSrc) {
+    $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
+    $useDataSrc = true;
+}
+
+?>
 <div class="well profile-block">
 
-  <div class="btn-group controls">
-  <?php if ($this->company->bidxCanEdit) { ?>
-    <a class="btn btn-primary" href="#editCompany/<?php echo $this->company->ownerId; ?>">Edit</a>
-  <?php } else { ?>
-    <strong>Not allowed to edit</strong>
-  <?php } ?>
-  </div>
-</div>
+    <div class="btn-group controls">
+    <?php if ($this->company->bidxCanEdit) { ?>
+        <a class="btn btn-primary" href="#editCompany/<?php echo $this->company->ownerId; ?>">Edit</a>
+    <?php } ?>
+    </div>
+
+    <h4>Company details</h4>
+
+<?php
+    $options = array( 'class_label' => 'bidx-label' );
+
+    echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+        array( 'Company name' => htmlspecialchars( $this->company->name )), $options );
+
+    echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+        array( 'Company website' => htmlspecialchars( $this->company->website )), $options );
+
+    if ( $this->company->registered ) {
+
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Date of registration' =>   date("d-m-Y", strtotime( $this->company->dateCompanyEstab ))), $options );
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Legal form of business' => htmlspecialchars( $this->company->legalFormBusiness )), $options );
+
+        $statutoryAddress = '';
+
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Statutory address' => htmlspecialchars( $statutoryAddress )), $options );
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Fiscal number' => htmlspecialchars( $this->company->fiscalNumber )), $options );
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Company registration number' => htmlspecialchars( $this->company->registrationNumber )), $options );
+    }
+
+    if ( $this->company->numPermFemaleEmpl || $this->company->numPermMaleEmpl || $this->company->numTempFemaleEmpl || $this->company->numTempMaleEmpl ) {
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Number of permanent female employees' => htmlspecialchars( $this->company->numPermFemaleEmpl )), $options );
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Number of permanent male employees' => htmlspecialchars( $this->company->numPermMaleEmpl )), $options );
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Number of temporary female employees' => htmlspecialchars( $this->company->numTempFemaleEmpl )), $options );
+        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
+            array( 'Number of temporary male employees' => htmlspecialchars( $this->company->numTempMaleEmpl )), $options );
+    }
+?>
+</div><!-- well -->
