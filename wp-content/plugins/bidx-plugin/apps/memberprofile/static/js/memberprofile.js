@@ -954,7 +954,9 @@ $( document ).ready( function()
         {
             e.preventDefault();
 
-            if ( $btnSave.hasClass( "disabled" ))
+            var valid = $editForm.form( "validateForm" );
+
+            if ( !valid || $btnSave.hasClass( "disabled" ) )
             {
                 return;
             }
