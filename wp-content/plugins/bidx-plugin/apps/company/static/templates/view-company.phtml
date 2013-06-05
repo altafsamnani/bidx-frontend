@@ -76,7 +76,7 @@ if (!$picSrc) {
             array( 'Statutory city, country' => implode( ' ', $arStatutoryCityCountry )), $options );
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Fiscal number' => $this->company->fiscalNumber )), $options );
+            array( 'Fiscal number' => $this->company->fiscalNumber ), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
             array( 'Company registration number' => $this->company->registrationNumber ), $options );
     }

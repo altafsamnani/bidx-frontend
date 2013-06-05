@@ -196,6 +196,44 @@ li {
     font-weight:                bold;
 }
 
+.accordion-heading {
+    background-color:           #f5f5f5;
+}
+
+.accordion-toggle {
+    position:                   relative;
+}
+
+.accordion-toggle .controls {
+    font-size:                  28px;
+    position:                   absolute;
+    right:                      20px;
+    top:                        18px;
+}
+
+.bidx-collapse {
+    display:                    inline-block;
+}
+
+.bidx-expand {
+    display:                    none;
+}
+
+.collapsed .bidx-expand {
+    display:                    inline-block;
+}
+
+.collapsed .bidx-collapse {
+    display:                    none;
+}
+
+.accordion-inner .controls {
+    position:                   absolute;
+    right:                      20px;
+    bottom:                     10px;
+}
+
+
 /* End Global styles */
 
 /*******************************************************************************************
