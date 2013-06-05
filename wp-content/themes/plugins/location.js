@@ -264,13 +264,14 @@
 						return true;
 					}
 				});
-				var fieldname=(index!="undefined" ? "["+index+"].":"") + mapping.bidx;
+
+				var fieldname=( typeof index !== "undefined" ? "["+index+"].":"") + mapping.bidx;
 				found ? methods.createHiddenField(input, fieldname, addressValue) : methods.createHiddenField(input, fieldname, "");
 
 			});
 			//now add location (latlong)
 			if(location.geometry) {
-				methods.createHiddenField(input, (index != "undefined" ? "["+index+"].":"") + "location", location.geometry.location.toUrlValue());
+				methods.createHiddenField(input, ( typeof index !== "undefined" ? "["+index+"].":"") + "location", location.geometry.location.toUrlValue());
 			}
 
 		},
