@@ -151,17 +151,16 @@ class BidxCommon {
 
         case 'company':
           $companyId = null;
-          if ( isset( $hostAddress[2] ) ) {
+          if ( isset( $hostAddress[2] ) && $hostAddress[ 2 ] != '#create' ) {
             $companyId = $hostAddress[2];
           }
+
+          $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
+
           if($companyId) {
             $data->companyId = $companyId;
-            $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
             $this::$bidxSession[$subDomain]->companyId = $companyId;
-          } else {
-            $redirect = null;
           }
-
           break;
 
       }

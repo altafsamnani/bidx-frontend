@@ -112,7 +112,9 @@ class company {
                 // TODO: Chris will lookup what API to use for listing the companies of a member
                 return $view->render( 'company-list.phtml' );
             default :
-                $view->company = $companySvc->getCompanyDetails( $companyId );
+                if ( $companyId ) {
+                  $view->company = $companySvc->getCompanyDetails( $companyId );
+                }
                 return $view->render( 'company.phtml' );
         }
     }
