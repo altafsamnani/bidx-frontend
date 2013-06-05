@@ -1,6 +1,7 @@
 ( function( $ )
 {
     var bidx            = window.bidx || {}
+    ,   bidxConfig      = window.bidxConfig || {}
     ,   groupDomain     = bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain()
     ;
 
