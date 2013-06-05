@@ -10,7 +10,8 @@ $( document ).ready( function()
     ,   $toggleRegistered           = $element.find( "[name='registered']"      )
     ,   $toggleHaveEmployees        = $element.find( "[name='haveEmployees']"   )
 
-    ,   $logoContainer              = $editForm.find( ".logoContainer" )
+    ,   $logoControl                = $editForm.find( ".logo-control" )
+    ,   $logoContainer              = $logoControl.find( ".logoContainer" )
 
     ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
     ,   $currentAddressCountry      = $editForm.find( "[name='statutoryAddress.country']"         )
@@ -25,7 +26,6 @@ $( document ).ready( function()
     ,   company
     ,   companyId
     ,   companyProfileId
-    ,   groupDomain
     ,   bidx            = window.bidx
     ,   snippets        = {}
     ;
@@ -347,7 +347,7 @@ $( document ).ready( function()
 
         // Setup the hidden fields used in the file upload
         //
-        $editForm.find( "[name='domain']"           ).val( groupDomain );
+        $editForm.find( "[name='domain']"           ).val( bidx.common.groupDomain );
         $editForm.find( "[name='companyProfileId']" ).val( companyProfileId );
 
         // Now the nested objects, NOT ARRAY's
@@ -514,11 +514,20 @@ $( document ).ready( function()
         ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
         ;
 
-        $btnSave.text( "Save company" );
+        $btnSave.text( state === "create" ? "Add company" : "Save company" );
         $btnCancel.text( "Cancel" );
 
         $controls.append( $btnSave );
-        $controls.append( $btnCancel );
+
+        if ( state === "edit" )
+        {
+            $controls.append( $btnCancel );
+            $logoControl.show();
+        }
+        else
+        {
+            $logoControl.hide();
+        }
 
         // Wire the submit button which can be anywhere in the DOM
         //
@@ -564,48 +573,62 @@ $( document ).ready( function()
         } );
 
 
-        // Fetch the company
-        //
-        bidx.api.call(
-            "company.fetch"
-        ,   {
-                companyId:      companyId
-            ,   groupDomain:    groupDomain
-            ,   success:        function( response )
-                {
-                    company = response;
-
-                    // Set the global memberProfileId for convenience reasons
-                    //
-                    companyProfileId = bidx.utils.getValue( company, "bidxEntityId" );
-
-
-                    bidx.utils.log( "bidx::company", company );
-
-                    _populateScreen();
-
-                    $btnSave.removeClass( "disabled" );
-                    $btnCancel.removeClass( "disabled" );
-
-                    _showView( "edit" );
-
-                    // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
-                    // center correctly. Probably because of some reflow / layout issue.
-                    // TODO: proper fix
-                    //
-                    setTimeout( function()
+        if ( state === "edit" )
+        {
+            // Fetch the company
+            //
+            bidx.api.call(
+                "company.fetch"
+            ,   {
+                    companyId:      companyId
+                ,   groupDomain:    bidx.common.groupDomain
+                ,   success:        function( response )
                     {
-                        _updateCurrentAddressMap();
-                    }, 500 );
-                }
-            ,   error:          function( jqXhr, textStatus )
-                {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+                        company = response;
 
-                    _showError( "Something went wrong while retrieving the company: " + status );
+                        // Set the global memberProfileId for convenience reasons
+                        //
+                        companyProfileId = bidx.utils.getValue( company, "bidxEntityId" );
+
+
+                        bidx.utils.log( "bidx::company", company );
+
+                        _populateScreen();
+
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+
+                        _showView( "edit" );
+
+                        // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
+                        // center correctly. Probably because of some reflow / layout issue.
+                        // TODO: proper fix
+                        //
+                        setTimeout( function()
+                        {
+                            _updateCurrentAddressMap();
+                        }, 500 );
+                    }
+                ,   error:          function( jqXhr, textStatus )
+                    {
+                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                        _showError( "Something went wrong while retrieving the company: " + status );
+                    }
                 }
-            }
-        );
+            );
+        }
+        else
+        {
+            company = {};
+
+            _populateScreen();
+
+            $btnSave.removeClass( "disabled" );
+            $btnCancel.removeClass( "disabled" );
+
+            _showView( "edit" );
+        }
     };
 
     // Try to save the company to the API
@@ -627,13 +650,18 @@ $( document ).ready( function()
 
         var requestParams =
         {
-            groupDomain:    groupDomain
+            groupDomain:    bidx.common.groupDomain
         ,   data:           company
         ,   success:        function( response )
             {
                 bidx.utils.log( "company.save::success::response", response );
 
-                var url = document.location.href.split( "#" ).shift();
+                if ( state === "create" )
+                {
+                    companyId = bidx.utils.getValue( response, "data.ownerId" );
+                }
+
+                var url = "/company/" + companyId;
 
                 document.location.href = url;
             }
@@ -692,6 +720,7 @@ $( document ).ready( function()
         routes: {
             'editCompany(/:id)(/:section)':    'edit'
         ,   'cancel':                       'show'
+        ,   'create':                       'create'
         ,   '*path':                        'show'
         }
     ,   edit:           function( id, section )
@@ -699,8 +728,6 @@ $( document ).ready( function()
             bidx.utils.log( "EditCompany::AppRouter::edit", id, section );
 
             _showMainState( "editCompany" );
-
-            groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain();
 
             var newCompanyId
             ,   splatItems
@@ -739,6 +766,18 @@ $( document ).ready( function()
             $element.show();
             _showView( "load" );
 
+            _init();
+        }
+    ,   create:         function()
+        {
+            bidx.utils.log( "EditCompany::AppRouter::create" );
+
+            _showMainState( "editCompany" );
+
+            companyId   = null;
+            state       = "create";
+
+            $element.show();
             _init();
         }
     ,   show:           function( section )

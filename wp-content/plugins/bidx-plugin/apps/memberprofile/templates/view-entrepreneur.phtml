@@ -84,7 +84,7 @@ if ( $companies ) {
 ?>
 <div class="accordion" id="companies">
 <?php
-  foreach ( $companies as $company ) {
+  foreach ( $companies as $index => $company ) {
 
     $collapseId = sprintf( 'companyAccordion-%s', $company->bidxEntityId );
 
@@ -106,7 +106,7 @@ if ( $companies ) {
         </div>
       </a>
     </div><!-- accordion-heading -->
-    <div id="<?php echo $collapseId ?>" class="accordion-body collapse in">
+    <div id="<?php echo $collapseId ?>" class="accordion-body collapse <?php echo ( $index == 0 ) ? 'in' : ''; ?>">
       <div class="accordion-inner">
         <div class="row-fluid">
           <div class="span4">
@@ -177,7 +177,15 @@ if ( $companies ) {
 </div><!-- accordion #companies -->
 <?php
 }
+
+if ( $this->data->isMyProfile ) {
 ?>
+
+<div class="pull-right">
+  <a href="/company/#create" class="btn btn-primary">Add a company</a>
+</div>
+
+<?php } ?>
 
 
 
