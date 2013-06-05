@@ -845,35 +845,34 @@ $( document ).ready( function()
         } );
 
         // Collect the nested objects
+        // !! only written to handle nested objects that are arrays !!
         //
         $.each( [ "address", "contactDetail" ], function()
         {
-            var nest    = this
-            ,   i       = 0
+            var nest        = this
+            ,   i           = 0
+            ,   memberPath  = "bidxMemberProfile.personalDetails." + nest
+            ,   item        = bidx.utils.getValue( member, memberPath, true )
             ;
+
+            // Property not existing? Add it as an empty array holding an empty object
+            //
+            if ( !item )
+            {
+                item = [ {} ];
+                bidx.utils.setValue( member, memberPath, item );
+            }
 
             // TODO: make i itterate
 
             $.each( fields[ nest ], function( j, f )
             {
-                var path    = "personalDetails." + nest + "[" + i + "]." + f
-                ,   $input  = $editForm.find( "[name='" + path + "']" )
-                ,   value   = _getElementValue( $input )
+                var inputPath   = "personalDetails." + nest + "[" + i + "]." + f
+                ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
+                ,   value       = _getElementValue( $input )
                 ;
 
-                var item = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + nest, true );
-
-                // When undefined, leave it untouched for now...
-                //
-                if ( item )
-                {
-                    if ( !item[ i ] )
-                    {
-                        item[ i ] = {};
-                    }
-
-                    bidx.utils.setValue( item[ i ], f, value );
-                }
+                bidx.utils.setValue( item[ i ], f, value );
             } );
         } );
 
