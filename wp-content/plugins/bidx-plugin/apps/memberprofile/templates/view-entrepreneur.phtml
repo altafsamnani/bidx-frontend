@@ -20,7 +20,7 @@ if ($entrepreneurDetails) {
     <?php
     $focusIndustry = $this->getMultiValues($entrepreneurDetails->focusIndustry, ', ');
     $rowValues = array('Focus Industry' => $focusIndustry);
-    echo $this->addRowsWithLabelAdjacent('span6', 'span6', $rowValues, array('tag_label' => 'h5'));
+    echo $this->addRowsWithLabelAdjacent('span6', 'span6', $rowValues, array('tag_label' => 'h5', 'class_value' => 'adjacentval' ));
     ?>
     <br/>
     <?php
@@ -63,8 +63,8 @@ if($entityDetails) {
 
         <?php
         $industryVal = $this->getMultiValues($entityDetails->industry, ', ');
-        $countryVal  = $this->getMultiValues($entityDetails->countryOperation, ', ','country');
-        $joinLink = ($entityDetails->bidxEntityId) ? "<a href='#view more/".$entityDetails->bidxEntityId."'>view more</a>":'';
+        $countryVal  = $this->getMultiValues($entityDetails->countryOperation, ', ','country','country');
+        $joinLink = ($entityDetails->bidxEntityId) ? "<a href='/businessplan/".$entityDetails->bidxEntityId."'>view more</a>":'';
         $rowValues = array( $entityDetails->slogan,
           $entityDetails->summary,
           $industryVal,

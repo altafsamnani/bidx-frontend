@@ -1,1 +1,17 @@
-@CHARSET "UTF-8";
+
+
+.top-padding75,#sectionContent{
+    padding-top:75px;
+}
+
+
+.navli a {
+    width:150px;
+}
+.bpsummary{
+    z-index:1030;
+    background:#FFF;
+}
+
+
+

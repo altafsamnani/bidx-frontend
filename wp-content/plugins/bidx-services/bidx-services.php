@@ -453,12 +453,12 @@ function get_redirect($url, $requestData, $domain = NULL) {
  * @param bool $echo
  */
 
-function bidx_request_timeout_time($r) {
-  $r['timeout'] = 15; # new timeout
-  return $r;
+function bidx_request_timeout_time($time) {
+  $time = 25; # new timeout
+  return $time;
 }
 
-add_filter('http_request_args', 'bidx_request_timeout_time', 100, 1);
+add_filter('http_request_timeout', 'bidx_request_timeout_time');
 
 /**
  * @author Altaf Samnani

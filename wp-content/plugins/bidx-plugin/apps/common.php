@@ -14,21 +14,15 @@ class BidxCommon {
   public static $scriptJs;
   public static $staticSession;
 
-
   public function __construct($subDomain) {
 
-    if ( $subDomain ) {
+    if ($subDomain) {
 
-    if ( !isset ( $this::$scriptJs [ $subDomain ] ) ) {
+      $this->getSessionAndScript($subDomain);
 
-      $this->getSessionAndScript( $subDomain );
-
-    }
-
-    $this->setStaticSession( $subDomain );
+      $this->setStaticSession($subDomain);
     }
   }
-
 
   private function getSessionAndScript($subDomain) {
     $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
@@ -39,8 +33,14 @@ class BidxCommon {
       $isWordpress = $this->isWordpressPage();
       //Check session if its not redirect (is not having q= param)
       if (!$isWordpress) {
-        $sessionObj = new SessionService();
-        $this::$bidxSession[$subDomain] = $sessionObj->isLoggedIn();
+
+        //if (!isset($this::$scriptJs [$subDomain])) { // If Session set dont do anything
+          $sessionObj = new SessionService();
+          $this::$bidxSession[$subDomain] = $sessionObj->isLoggedIn();
+
+          //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
+          $this->processEntities( $subDomain );
+       // }
 
         $scriptValue = $this->injectJsVariables($subDomain);
         $this->setScriptJs($subDomain, $scriptValue);
@@ -56,17 +56,36 @@ class BidxCommon {
     return;
   }
 
-  public function setStaticSession( $subDomain ) {
-    $this::$staticSession = $this::$bidxSession[$subDomain];
+   /**
+   *Process Entities and store it in session variable
+   * @Author Altaf Samnani
+   * @param Array $entities bidx response as array
+   *
+   * @return String Injects js variables
+   */
+  public function processEntities( $subDomain ) {
 
+    $entities = $this::$bidxSession[$subDomain]->data->entities;
+    
+    foreach( $entities as $key => $value ) {
+      $bidxEntityType = $value->bidxEntityType;
+      $bidxEntityValue = $value->bidxEntityId;
+      $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
+    }
+ 
+    return;   
   }
-  public function setScriptJs( $subDomain, $scriptValue ) {
+
+  public function setStaticSession($subDomain) {
+    $this::$staticSession = $this::$bidxSession[$subDomain];
+  }
+
+  public function setScriptJs($subDomain, $scriptValue) {
 
     $this::$scriptJs[$subDomain] = $scriptValue;
-
   }
 
-  public function getScriptJs( $subDomain ) {
+  public function getScriptJs($subDomain) {
 
     return $this::$scriptJs[$subDomain];
   }
@@ -78,7 +97,7 @@ class BidxCommon {
    *
    * @return String Injects js variables
    */
-  public function injectJsVariables( $subDomain ) {
+  public function injectJsVariables($subDomain) {
 
     $jsSessionData = $this::$bidxSession[$subDomain];
     $jsSessionVars = (isset($jsSessionData->data)) ? json_encode($jsSessionData->data) : '{}';
@@ -104,7 +123,6 @@ class BidxCommon {
     //echo $scriptJs;
     return $scriptJs;
   }
-
 
   /**
    * @author Altaf Samnani
@@ -132,37 +150,48 @@ class BidxCommon {
     //$this->getWordpressLogin($jsSessionData);
 
     if (is_array($hostAddress)) {
-       //Redirect URL Logic
+      //Redirect URL Logic
 
 
       switch ($hostAddress[1]) {
 
         case 'member':
           $memberId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->id;
-          if($memberId) {
-          $data->memberId = $memberId;
-          $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
-          $this::$bidxSession[$subDomain]->memberId = $memberId;
-          } else {
-            $redirect = 'login';//To redirect /member and not loggedin page to /login
+          if ($memberId) {
+            $data->memberId = $memberId;
+            $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
+            $this::$bidxSession[$subDomain]->memberId = $memberId;
+          }
+          else {
+            $redirect = 'login'; //To redirect /member and not loggedin page to /login
           }
 
           break;
 
         case 'company':
           $companyId = null;
-          if ( isset( $hostAddress[2] ) && $hostAddress[ 2 ] != '#create' ) {
+          if (isset($hostAddress[2]) && $hostAddress[2] != '#create') {
             $companyId = $hostAddress[2];
           }
 
           $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
 
-          if($companyId) {
+          if ($companyId) {
             $data->companyId = $companyId;
             $this::$bidxSession[$subDomain]->companyId = $companyId;
           }
           break;
 
+        case 'businessplan':
+          $bpSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
+          if ($bpSummaryId) {
+            $data->bidxBusinessSummary = $bpSummaryId;
+            $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
+            $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
+          }
+          
+
+          break;
       }
 
       $this->redirectUrls($hostAddress[1], $jsSessionData->authenticated, $redirect);
@@ -186,8 +215,7 @@ class BidxCommon {
    * @param String $password
    * @return Loggedin User
    */
-
-  function redirectUrls($uriString, $authenticated, $redirect=NULL) {
+  function redirectUrls($uriString, $authenticated, $redirect = NULL) {
     $redirect_url = NULL;
     $http = (is_ssl()) ? 'https://' : 'http://';
     $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -206,7 +234,7 @@ class BidxCommon {
 
       case 'member' :
         if ($authenticated == 'false' && $redirect) {
-          $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/'.$redirect;
+          $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/' . $redirect;
           wp_clear_auth_cookie();
         }
 
@@ -227,7 +255,6 @@ class BidxCommon {
     return;
   }
 
-
   /**
    *
    * @return boolean
@@ -239,7 +266,7 @@ class BidxCommon {
     $params = $_GET;
 
     //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
-    if (( $hostAddress[1]== 'login'  && isset($params['q']) ) || $this->isWPInternalFunction() || $hostAddress[1]== 'registration' ||
+    if (( $hostAddress[1] == 'login' && isset($params['q']) ) || $this->isWPInternalFunction() || $hostAddress[1] == 'registration' ||
         strstr($hostAddress[1], 'wp-login.php')) {
       $isWordpress = true;
     }
@@ -254,26 +281,26 @@ class BidxCommon {
    * Check if URI pattern is of wordpress internal function.
    * @todo check of assets and scripts and maybe other functions can be added
    */
-  static public function isWPInternalFunction( ) {
-  	return preg_match( '/wp-admin/i', $_SERVER["REQUEST_URI"] );
+  static public function isWPInternalFunction() {
+    return preg_match('/wp-admin/i', $_SERVER["REQUEST_URI"]);
   }
 
   /* Force Wordpress Login
- * @author Altaf Samnani
- * @version 1.0
- *
- *
- * @param String $$username
- */
+   * @author Altaf Samnani
+   * @version 1.0
+   *
+   *
+   * @param String $$username
+   */
 
-function forceWordpressLogin($subDomain) {
+  function forceWordpressLogin($subDomain) {
 
- $sessionData = $this::$bidxSession[$subDomain];
+    $sessionData = $this::$bidxSession[$subDomain];
 
- if ($sessionData != null && property_exists($sessionData, 'authenticated') &&
- 		$sessionData -> authenticated == 'true') {
-   $groupName = $subDomain;
-   $roles = $sessionData->data->roles;
+    if ($sessionData != null && property_exists($sessionData, 'authenticated') &&
+        $sessionData->authenticated == 'true') {
+      $groupName = $subDomain;
+      $roles = $sessionData->data->roles;
 
       if (in_array('GroupAdmin', $roles)) {
         $userName = $groupName . 'groupadmin';
@@ -297,92 +324,92 @@ function forceWordpressLogin($subDomain) {
         // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
       }
     }
-  return;
-}
+    return;
+  }
 
- /**
-  * Authenticate the user using the username and password with Bidx Data.
-  *
-  * @param String $username
-  * @param String $password
-  * @return Loggedin User
-  */
+  /**
+   * Authenticate the user using the username and password with Bidx Data.
+   *
+   * @param String $username
+   * @param String $password
+   * @return Loggedin User
+   */
   function call_bidx_service($urlservice, $body, $method = 'POST', $is_form_upload = false) {
 
-  	$authUsername = 'bidx'; // Bidx Auth login
-  	$authPassword = 'gobidx'; // Bidx Auth password
-  	$bidxMethod = strtoupper($method);
-  	$bidx_get_params = "";
-  	$cookie_string = "";
-  	$sendDomain = 'bidx.net';
-  	$cookieArr = array();
+    $authUsername = 'bidx'; // Bidx Auth login
+    $authPassword = 'gobidx'; // Bidx Auth password
+    $bidxMethod = strtoupper($method);
+    $bidx_get_params = "";
+    $cookie_string = "";
+    $sendDomain = 'bidx.net';
+    $cookieArr = array();
 
-  	/*   * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
-  	$cookieInfo = $_COOKIE;
-  	foreach ($_COOKIE as $cookieKey => $cookieValue) {
-  		if (preg_match("/^bidx/i", $cookieKey)) {
-  			$cookieArr[] = new WP_Http_Cookie(array('name' => $cookieKey, 'value' => urlencode($cookieValue), 'domain' => $sendDomain));
-  		}
-  	}
+    /*     * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
+    $cookieInfo = $_COOKIE;
+    foreach ($_COOKIE as $cookieKey => $cookieValue) {
+      if (preg_match("/^bidx/i", $cookieKey)) {
+        $cookieArr[] = new WP_Http_Cookie(array('name' => $cookieKey, 'value' => urlencode($cookieValue), 'domain' => $sendDomain));
+      }
+    }
 
-  	/*   * *********2. Set Headers ******************************** */
-  	//For Authentication
-  	$headers['Authorization'] = 'Basic ' . base64_encode("$authUsername:$authPassword");
+    /*     * *********2. Set Headers ******************************** */
+    //For Authentication
+    $headers['Authorization'] = 'Basic ' . base64_encode("$authUsername:$authPassword");
 
-  	// 2.1 Is Form Upload
-  	if ($is_form_upload) {
-  		$headers['Content-Type'] = 'multipart/form-data';
-  	}
+    // 2.1 Is Form Upload
+    if ($is_form_upload) {
+      $headers['Content-Type'] = 'multipart/form-data';
+    }
 
-  	// 2.2 Set the group domain header
-  	if (isset($body['domain'])) {
-  		//Talk with arjan for domain on first page registration it will be blank when it goes live
-  		$headers['X-Bidx-Group-Domain'] = ($urlservice == 'groups' && $bidxMethod == 'POST') ? 'beta' : $body['domain'];
-  		//$bidx_get_params.= '&groupDomain=' . $body['domain'];
-  	}
+    // 2.2 Set the group domain header
+    if (isset($body['domain'])) {
+      //Talk with arjan for domain on first page registration it will be blank when it goes live
+      $headers['X-Bidx-Group-Domain'] = ($urlservice == 'groups' && $bidxMethod == 'POST') ? 'beta' : $body['domain'];
+      //$bidx_get_params.= '&groupDomain=' . $body['domain'];
+    }
 
-  	/*   * ********* 3. Decide method to use************** */
-  	if ($bidxMethod == 'GET') {
-  		$bidx_get_params = ($body) ? '&' . http_build_query($body) : '';
-  		$body = NULL;
-  	}
-
-
-  	/*   * *********** 4. WP Http Request ******************************* */
+    /*     * ********* 3. Decide method to use************** */
+    if ($bidxMethod == 'GET') {
+      $bidx_get_params = ($body) ? '&' . http_build_query($body) : '';
+      $body = NULL;
+    }
 
 
-  	$url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
+    /*     * *********** 4. WP Http Request ******************************* */
+
+
+    $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
 
 
-  	$request = new WP_Http;
-  	$result = $request->request($url, array('method' => $bidxMethod,
-  			'body' => $body,
-  			'headers' => $headers,
-  			'cookies' => $cookieArr
-  	));
+    $request = new WP_Http;
+    $result = $request->request($url, array('method' => $bidxMethod,
+      'body' => $body,
+      'headers' => $headers,
+      'cookies' => $cookieArr
+        ));
 
-  	/*   * *********** 5. Set Cookies if Exist ************************* */
-  	$cookies = $result['cookies'];
-  	if (count($cookies)) {
-  		foreach ($cookies as $bidxAuthCookie) {
-  			$cookieDomain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'bidx.dev' : $bidxAuthCookie->domain;
-  			setcookie($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
-  		}
-  	}
+    /*     * *********** 5. Set Cookies if Exist ************************* */
+    $cookies = $result['cookies'];
+    if (count($cookies)) {
+      foreach ($cookies as $bidxAuthCookie) {
+        $cookieDomain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'bidx.dev' : $bidxAuthCookie->domain;
+        setcookie($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
+      }
+    }
 
-  	return $result;
+    return $result;
   }
 
   static function clear_bidx_cookies() {
 
-  	/*   * *********Retrieve Bidx Cookies and send back to api to check ******* */
-  	$cookieInfo = $_COOKIE;
-  	foreach ($_COOKIE as $cookieKey => $cookieValue) {
-  		if (preg_match("/^bidx/i", $cookieKey)) {
-  			setcookie($cookieKey, ' ', time() - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-  		}
-  	}
+    /*     * *********Retrieve Bidx Cookies and send back to api to check ******* */
+    $cookieInfo = $_COOKIE;
+    foreach ($_COOKIE as $cookieKey => $cookieValue) {
+      if (preg_match("/^bidx/i", $cookieKey)) {
+        setcookie($cookieKey, ' ', time() - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+      }
+    }
   }
 
   /**
@@ -393,44 +420,41 @@ function forceWordpressLogin($subDomain) {
    *
    * @param bool $echo
    */
-  static function get_bidx_subdomain( $echo = false ) {
+  static function get_bidx_subdomain($echo = false) {
 
-  	$hostAddress = explode( '.', $_SERVER ["HTTP_HOST"] );
-  	if ( is_array( $hostAddress ) ) {
-  		if ( eregi( "^www$", $hostAddress [0] ) ) {
-  			$passBack = 1;
-  		}
-  		else {
-  			$passBack = 0;
-  		}
-  		if ($echo == false) {
-  			return ( $hostAddress [$passBack] );
-  		}
-  		else {
-  			echo ( $hostAddress [$passBack] );
-  		}
-  	}
-  	else {
-  		return ( false );
-  	}
-
+    $hostAddress = explode('.', $_SERVER ["HTTP_HOST"]);
+    if (is_array($hostAddress)) {
+      if (eregi("^www$", $hostAddress [0])) {
+        $passBack = 1;
+      }
+      else {
+        $passBack = 0;
+      }
+      if ($echo == false) {
+        return ( $hostAddress [$passBack] );
+      }
+      else {
+        echo ( $hostAddress [$passBack] );
+      }
+    }
+    else {
+      return ( false );
+    }
   }
 
   /**
    * Builds an http query string.
    * @param array $query  // of key value pairs to be used in the query
    * @return string       // http query string.
-   **/
-  static function buildHTTPQuery( $query ){
+   * */
+  static function buildHTTPQuery($query) {
 
-  	$query_array = array();
-  	foreach( $query as $key => $key_value ) {
-  		$query_array[] = $key . '=' . urlencode( $key_value );
-  	}
-  	return implode( '&', $query_array );
-
+    $query_array = array();
+    foreach ($query as $key => $key_value) {
+      $query_array[] = $key . '=' . urlencode($key_value);
+    }
+    return implode('&', $query_array);
   }
-
 
 }
 

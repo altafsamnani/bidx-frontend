@@ -1,0 +1,68 @@
+<?php
+
+$progress = trim($this->data->rating->Completeness).'%';
+
+?>
+
+<div class="block-odd top-margin">
+
+  <div class="row affix bpsummary">
+    <div class="span12">
+      <div class="span3">
+        <h3> Business X</h3>
+        <h4> Business summary </h4>
+      </div>
+      <div class="span5">
+        <div class="progress progress-striped">
+          <div style="width:<?php echo $progress ?>" class="bar summarybar">Business completion <?php echo $progress ?></div>
+        </div>
+      </div>
+      <div class=" span3">
+        <a class="btn btn-primary" href="#editSummary/">Edit</a>
+        <a class="btn btn-primary" href="#publishSummary/">Publish</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row-fluid top-padding75">
+    <div class=" tabbable"> <!-- Only required for left/right tabs -->
+      <div class ="span8 offset4">
+        <ul class="nav nav-tabs affix">
+          <li class="active">
+            <a href="#tab1" data-toggle="tab">Business summary</a>
+          </li>
+          <li>
+            <a href="#tab2" data-toggle="tab">Financial details</a>
+          </li>
+          <li>
+            <a href="#tab3" data-toggle="tab">Company details</a>
+          </li>
+          <li>
+            <a href="#tab4" data-toggle="tab">Documents</a>
+          </li>
+        </ul>
+      </div>
+      <div class ="span12">
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab1">
+            <? $this -> render ( 'business-summary.phtml' ); ?>
+          </div>
+          <div class="tab-pane" id="tab2">
+            <? $this -> render ( 'financial-details.phtml' ); ?>
+          </div>
+          <div class="tab-pane" id="tab3">
+            <? $this -> render ( 'company-details.phtml' ); ?>
+          </div>
+          <div class="tab-pane" id="tab4">
+            <? $this -> render ( 'documents.phtml' ); ?>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
