@@ -2,33 +2,33 @@
 /**
  * Search class loader.
  * Name lowercased for automatic loading.
- * 
+ *
  * The data is retrieved client side, so this app just returned preconfigured search views.
- * 
+ *
  * Setting the query (attribute query=):
  * The query, part of the GET request on the url can be added here.
  * This should contain everything on the querystring including q= / fq= etc.
- * 
+ *
  * Supported views (attribute view=):
  * - default : show the big full screen search
  * - listView : list overview vertical
  * - cardView : list of cards, 3 per row horizontal
  * - mapView  : plot the result in a Google Maps view
- * 
+ *
  * @author Jaap Gorjup
  * @version 1.0
  */
 class search {
 	// dependencies : should be centralized!
-	static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
-	
+	static $deps = array('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-form', 'bidx-utils', 'bidx-api-core');
+
 	/**
 	 * Constructor
 	 */
 	function __construct() {
-		add_action( 'wp_enqueue_scripts', array( &$this, 'register_search_bidx_ui_libs' ) ) ;	
+		add_action( 'wp_enqueue_scripts', array( &$this, 'register_search_bidx_ui_libs' ) ) ;
 	}
-	
+
 	/**
 	 * Registers the search specific javascript and css files
 	 */
@@ -42,41 +42,41 @@ class search {
 	 * Load the content.
 	 * The search is a static page where the content is loaded dynamically from the UI.
 	 * Dynamic action needs to be added here
-	 * @param $atts 
+	 * @param $atts
 	 */
 	function load($atts) {
-	
+
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/static/templates/' );
-		
+
 		// 2. Cook query based on q or else from url
-		
+
 		require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
 		$service = new SearchService( );
-		
+
 		if ( key_exists( 'q', $atts ) ) {
-			$view -> query = $service -> cookQuery( $atts );	
+			$view -> query = $service -> cookQuery( $atts );
 		} else if ( $_REQUEST['q'] != null ) {
-			$view -> query = $service -> cookQuery( );	
+			$view -> query = $service -> cookQuery( );
 		}
 		$view -> results = $service -> getSearchResults( $view -> query );
-		
-		
+
+
 		// 3. Parse data for preparsing for presentaions
 
 		//a. nothing found -> alertMessage
 		// $view -> alertMessage = '';
-		
-		
+
+
 		//b. error -> errorMessage
 		// $view -> errorMessage = '';
-		
+
 		$rows = 10;
 		if ( key_exists( 'rows', $view -> query ) ) {
 			$rows = $view -> rows;
 		}
-		
+
 		//c. navigation previous
 		if ( key_exists( 'start', $view -> query ) ) {
 			if ( $view -> query['start'] > 0 ) {
@@ -94,16 +94,16 @@ class search {
 		if ($numFound - ( $start + $rows ) > 1) {
 			$nextParam = $view -> query;
 			$nextParam['start'] = $start + $rows;
-			$view -> nextLink = BidxCommon:: buildHTTPQuery($nextParam);	
+			$view -> nextLink = BidxCommon:: buildHTTPQuery($nextParam);
 		}
-		
+
 		// 4. Determine the view needed
 		if ( key_exists( 'view', $atts ) ) {
 			$command = $atts['view'];
 		} else {
 			$command = '';
 		}
-		
+
 		switch ( $command ) {
 			case "cardView" :
 				return $view->render( 'cardView.phtml' );
@@ -113,7 +113,7 @@ class search {
 				return $view->render( 'mapView.phtml' );
 			default :
 				return $view->render( 'default.phtml' );
-		}		
+		}
 	}
 
 }

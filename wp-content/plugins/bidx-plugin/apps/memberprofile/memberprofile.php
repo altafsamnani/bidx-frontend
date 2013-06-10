@@ -8,9 +8,8 @@ require_once(BIDX_PLUGIN_DIR .'/../apps/common.php' );
  */
 class memberprofile {
 
-	static $deps = array( 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2',
-			'gmaps-places', 'holder', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location',
-			'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core', 'backbone', 'bidx-common' );
+	static $deps = array( 'jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2',
+			'gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common' );
 
  	public $scriptInject ;
 
@@ -84,12 +83,6 @@ class memberprofile {
 	}
 
 	/**
-	 * Add script block to footer
-	 */
-	static public function bidx_memberprofile_add_to_footer() {
-	}
-
-	/**
 	 * Load the content.
 	 * Dynamic action needs to be added here
 	 * @param $atts
@@ -112,12 +105,6 @@ class memberprofile {
 	    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
 	    $view->sessionData = BidxCommon::$staticSession;
 
-	    /* 4. Call the Display Component */
-	    add_action( 'wp_footer', array( &$this, 'bidx_memberprofile_add_to_footer' ) );
-
-      $view->render('member.phtml');
-
-
+      	$view->render('member.phtml');
 	}
-
 }

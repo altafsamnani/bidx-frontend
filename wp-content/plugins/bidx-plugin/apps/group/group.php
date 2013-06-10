@@ -8,13 +8,13 @@
  * - getGroupIntro : show the general group introduction data
  * - getGroupHeader : show the header data for a group containing image and name
  * - profileDropDown : show the dropdown with personal functions if a user is known in a group
- * 
+ *
  * @author Jaap Gorjup
  * @version 1.0
  */
 class group {
 
-	static $deps = array('jquery', 'bootstrap',  'bidx-location', 'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core');
+	static $deps = array('jquery', 'bootstrap',  'bidx-location', 'bidx-utils', 'bidx-form', 'bidx-api-core');
 
 	/**
 	 * Constructor
@@ -34,7 +34,7 @@ class group {
 
 	/**
 	 * Load the content.
-	 * @param $atts attributes from the shorttag 
+	 * @param $atts attributes from the shorttag
 	 */
 	function load($atts) {
 
@@ -42,35 +42,35 @@ class group {
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/static/templates/' );
 		$view -> sessionData = BidxCommon::$staticSession;
-		
+
 		//2. Service Group
 		require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
 		$groupSvc = new GroupService( );
-		
-		// 3. Determine the view needed 
+
+		// 3. Determine the view needed
 		$command = $atts['view'];
-		
+
 		switch ( $command ) {
 			case "last-members" :
 				$view->members = $groupSvc->getLatestMembers(  );
 				return $view->render( 'last-members.phtml' );
 			case "list-groups" :
 				$view->groups = $groupSvc->getGroupDetails(  );
-				return $view->render( 'group-list.phtml' );	
+				return $view->render( 'group-list.phtml' );
 			case "group-intro" :
 				$view->group = $groupSvc->getGroupDetails(  );
-				return $view->render( 'group-intro.phtml' );	
+				return $view->render( 'group-intro.phtml' );
 			case "group-header" :
         $groupSvc->isRedirectCheck = false;
 				$view->group = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-header.phtml' );
 			case "profile-dropDown" :
 				return $view->render( 'profile-dropdown.phtml' );
-			default :	
+			default :
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-list.phtml' );
 		}
 	}
-	
+
 }
 ?>
