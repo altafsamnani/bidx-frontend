@@ -76,9 +76,9 @@
         e.preventDefault();
     } );
 
-    $toggleRegistered.change( function()
+    $toggleRegistered.change( function( e )
     {
-        var value   = $toggleRegistered.filter( ":checked" ).val()
+        var value   = $toggleRegistered.filter( "[checked]" ).val()
         ,   fn      = value === "true" ? "show" : "hide"
         ;
 
@@ -87,7 +87,7 @@
 
     $toggleHaveEmployees.change( function()
     {
-        var value   = $toggleHaveEmployees.filter( ":checked" ).val()
+        var value   = $toggleHaveEmployees.filter( "[checked]" ).val()
         ,   fn      = value === "true" ? "show" : "hide"
         ;
 
@@ -248,10 +248,7 @@
     {
         // Start by setting the toggles false, will switch to true if needed
         //
-        $toggleRegistered.prop( "checked", false );
         $toggleRegistered.filter( "[value='false']" ).prop( "checked", true );
-
-        $toggleHaveEmployees.prop( "checked", false );
         $toggleHaveEmployees.filter( "[value='false']" ).prop( "checked", true );
 
         $.each( fields._root, function( i, f )
@@ -332,7 +329,6 @@
 
         if ( haveEmployees )
         {
-            $toggleHaveEmployees.prop( "checked", false );
             $toggleHaveEmployees.filter( "[value='true']" ).prop( "checked", true );
         }
 
@@ -340,6 +336,16 @@
         //
         $toggleRegistered.trigger( "change" );
         $toggleHaveEmployees.trigger( "change" );
+
+        if ( $.isFunction( $toggleRegistered.radio ))
+        {
+            $toggleRegistered.filter( ":checked" ).radio( "setState" );
+        }
+
+        if ( $.isFunction( $toggleHaveEmployees.radio ) )
+        {
+            $toggleHaveEmployees.filter( ":checked" ).radio( "setState" );
+        }
     };
 
 

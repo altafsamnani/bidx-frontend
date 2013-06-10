@@ -34,13 +34,11 @@
             switch( elType )
             {
                 case 'radio':
-                    // bewustte type-coercing for now
-                    //
                     if ( $el.val() === value )
                     {
                         $el.prop( 'checked', true );
                     }
-                    else
+                    else if ( typeof value !== "undefined" && value !== "" )
                     {
                         $el.prop( 'checked', false );
                     }

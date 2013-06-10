@@ -260,7 +260,7 @@
 
     $togglePrevRunBusiness.change( function()
     {
-        var value   = $togglePrevRunBusiness.filter( ":checked" ).val()
+        var value   = $togglePrevRunBusiness.filter( "[checked]" ).val()
         ,   fn      = value === "true" ? "show" : "hide"
         ;
 
