@@ -1,7 +1,7 @@
 <div class="block-odd">
     <div class="pageHeader clearfix">
       <div class="container clearfix">
-        <h1 class="pull-left"><?php echo ($view->data->isMyProfile) ? 'My Profile' : ucwords($this->data->member->displayName); ?></h1>
+        <h1 class="pull-left"><?php echo ($this->data->isMyProfile) ? 'My Profile' : ucwords($this->data->member->displayName); ?></h1>
         <div class="editControls btn-group"></div>
       </div>
     </div>
@@ -17,4 +17,5 @@
     </div>
 
     <?php $this->render('edit-member.phtml'); ?>
+    <?php $this->render('edit-entrepreneur.phtml'); ?>
 </div>

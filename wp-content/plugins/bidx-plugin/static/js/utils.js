@@ -2,8 +2,121 @@
 {
     var months = [ "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
+    var setElementValue = function( $el, value )
+    {
+        var elType      = $el.attr( 'type' )
+        ,   dataType    = $el.attr( 'data-type' )
+        ,   dateObj
+        ;
 
-    function getQueryParameter( key )
+        if ( value === true )
+        {
+            value = "true";
+        }
+        else if ( value === false )
+        {
+            value = "false";
+        }
+
+        if ( dataType === "date" )
+        {
+            if ( value )
+            {
+                dateObj = parseISODate( value );
+
+                value = dateObj.m + "/" + dateObj.d + "/" + dateObj.y;
+                $el.val( value );
+            }
+
+        }
+        if ( elType )
+        {
+            switch( elType )
+            {
+                case 'radio':
+                    // bewustte type-coercing for now
+                    //
+                    if ( $el.val() === value )
+                    {
+                        $el.prop( 'checked', true );
+                    }
+                    else
+                    {
+                        $el.prop( 'checked', false );
+                    }
+                break;
+
+                case 'checkbox':
+                    $el.prop( 'checked', !!value );
+                break;
+
+                case 'file':
+                break;
+
+                default:
+                    $el.val( value || ( value === 0 ? "0" : "" ) );
+            }
+        }
+        else if ( $el.is( 'input' ) || $el.is( 'select' ) || $el.is( 'textarea' ) )
+        {
+            $el.val( value || ( value === 0 ? '0' : '' ) );
+        }
+        else
+        {
+            $el.text( value || ( value === 0 ? '0' : '' ) );
+        }
+    };
+
+    var getElementValue = function( $input )
+    {
+        var value
+        ,   date
+        ;
+
+        switch ( $input.attr( 'data-type' ) )
+        {
+            // We need to get to ISO8601 => yyyy-mm-dd
+            //
+            case 'date':
+                date    = $input.datepicker( "getDate" );
+
+                if ( date )
+                {
+                    value   = getISODate( date );
+                }
+            break;
+
+            default:
+                switch ( $input.attr( "type" ) )
+                {
+                    case "radio":
+                        value = $input.filter( ":checked" ).val();
+                    break;
+
+                    case "checkbox":
+                        value = $input.is( ":checked" ) ? $input.val() : null;
+                    break;
+
+                    default:
+                        value = $input.val();
+                }
+        }
+
+
+        if ( value === "true" )
+        {
+            value = true;
+        }
+        else if ( value === "false" )
+        {
+            value = false;
+        }
+
+        return value;
+    };
+
+
+    var getQueryParameter = function( key )
     {
         var baseURL = decodeURI( document.location.href.replace( /\+/g, "%20" ) ).split( "#" )[ 0 ]
         ,   parts   = baseURL.split( "?" )
@@ -27,9 +140,9 @@
         }
 
         return result;
-    }
+    };
 
-    function getValue( obj, path, forceArray )
+    var getValue = function( obj, path, forceArray )
     {
         if ( typeof path === "undefined" )
         {
@@ -54,12 +167,12 @@
         }
 
         return value;
-    }
+    };
 
     /**
      * Safely set a JSON value on a certain path, regardless if that path exists or not
      */
-    function setValue( obj, path, value )
+    var setValue = function( obj, path, value )
     {
         var aPath   = path.split( "." )
         ,   key     = aPath.shift()
@@ -83,14 +196,14 @@
         }
 
         obj[ prevKey ] = value;
-    }
+    };
 
-    function getGroupDomain()
+    var getGroupDomain = function()
     {
         return document.location.hostname.split( "." ).shift();
-    }
+    };
 
-    function getISODate( obj )
+    var getISODate = function( obj )
     {
         var result = "";
 
@@ -117,9 +230,9 @@
         result += y + "-" + m + "-" + d;
 
         return result;
-    }
+    };
 
-    function parseISODate( str )
+    var parseISODate = function( str )
     {
         if ( !str )
         {
@@ -134,9 +247,9 @@
         };
 
         return obj;
-    }
+    };
 
-    function parseTimestampToDateStr( ts )
+    var parseTimestampToDateStr = function( ts )
     {
         if ( !ts )
         {
@@ -148,33 +261,33 @@
         ;
 
         return result;
-    }
+    };
 
     // Logger functions
     //
-    function log()
+    var log = function()
     {
         if ( window[ "console" ] && console[ "log" ] && typeof console.log === "function" )
         {
             console.log.apply( console, arguments );
         }
-    }
+    };
 
-    function warn()
+    var warn = function()
     {
         if ( window[ "console" ] && console[ "warn" ] &&  typeof console.warn === "function" )
         {
             console.warn.apply( console, arguments );
         }
-    }
+    };
 
-    function error()
+    var error = function()
     {
         if ( window[ "console" ] && console[ "error" ] && typeof console.error === "function" )
         {
             console.error.apply( console, arguments );
         }
-    }
+    };
 
 
     // Exports
@@ -193,6 +306,8 @@
     ,   getISODate:                 getISODate
     ,   parseISODate:               parseISODate
     ,   parseTimestampToDateStr:    parseTimestampToDateStr
+    ,   setElementValue:            setElementValue
+    ,   getElementValue:            getElementValue
 
     ,   log:                        log
     ,   warn:                       warn

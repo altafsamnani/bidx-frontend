@@ -44,10 +44,14 @@ class memberprofile {
 	 * Register scripts and styles
 	 */
 	function register_memberprofile_bidx_ui_libs() {
-	  wp_register_script( 'memberprofile', plugins_url( 'static/js/memberprofile.js', __FILE__ ), self :: $deps, '20130501', TRUE );
-	  wp_register_style( 'memberprofile', plugins_url( 'static/css/memberprofile.css', __FILE__ ), array(), '20130501', 'all' );
-	  wp_enqueue_style( 'memberprofile' );
 
+		wp_register_script( 'entrepreneurprofile', plugins_url( 'static/js/entrepreneurprofile.js', __FILE__ ), array(), '20130501', TRUE );
+
+		$deps = array_merge( self :: $deps, array( 'entrepreneurprofile' ) );
+
+	  	wp_register_script( 'memberprofile', plugins_url( 'static/js/memberprofile.js', __FILE__ ), $deps, '20130501', TRUE );
+	  	wp_register_style( 'memberprofile', plugins_url( 'static/css/memberprofile.css', __FILE__ ), array(), '20130501', 'all' );
+	  	wp_enqueue_style( 'memberprofile' );
 	}
 
    /**
@@ -104,15 +108,15 @@ class memberprofile {
 	    $memberData = $memberObj->getMemberDetails(  );
 
 	    $view->data = $memberData->data;
-  
+
 	    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
 	    $view->sessionData = BidxCommon::$staticSession;
 
 	    /* 4. Call the Display Component */
-	    add_action( 'wp_footer', array( memberprofile ,'bidx_memberprofile_add_to_footer' ) );
+	    add_action( 'wp_footer', array( &$this, 'bidx_memberprofile_add_to_footer' ) );
 
       $view->render('member.phtml');
-		 
+
 
 	}
 

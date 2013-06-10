@@ -30,14 +30,19 @@
     var AppRouter = Backbone.Router.extend(
     {
         routes: {
-            'editMember(/:id)(/:section)':      'editMember'
-        ,   'editCompany(/:id)(/:section)':     'editCompany'
-        ,   'createCompany':                    'createCompany'
-        ,   'login':                            'login'
-        ,   'register':                         'register'
-        ,   'resetpassword':                    'resetpassword'
-        ,   'cancel':                           'show'
-        ,   '*path':                            'show'
+            'editMember(/:id)(/:section)':          'editMember'
+
+        ,   'editEntrepreneur(/:id)(/:section)':    'editEntrepreneur'
+
+        ,   'editCompany(/:id)(/:section)':         'editCompany'
+        ,   'createCompany':                        'createCompany'
+
+        ,   'login':                                'login'
+        ,   'register':                             'register'
+        ,   'resetpassword':                        'resetpassword'
+
+        ,   'cancel':                               'show'
+        ,   '*path':                                'show'
         }
     ,   editMember:             function( id, section )
         {
@@ -58,19 +63,40 @@
                 this.navigate( newHash );
             }
         }
+
+    ,   editEntrepreneur:             function( id, section )
+        {
+            bidx.utils.log( "AppRouter::editEntrepreneur", id, section );
+
+            $controls.empty();
+
+            state       = "editEntrepreneur";
+            app         = bidx.entrepreneurprofile;
+            $element    = bidx.entrepreneurprofile.$element;
+
+            var newHash = bidx.entrepreneurprofile.navigate( "edit", section, id );
+
+            _showMainState( state );
+
+            if ( newHash )
+            {
+                this.navigate( newHash );
+            }
+        }
+
     ,   editCompany:             function( id, section )
         {
             bidx.utils.log( "AppRouter::editCompany", id, section );
 
             $controls.empty();
-            state   = "editCompany";
-            app     = bidx.company;
+
+            state       = "editCompany";
+            app         = bidx.company;
+            $element    = bidx.company.$element;
 
             var newHash = bidx.company.navigate( "edit", section, id );
 
             _showMainState( state );
-
-            $element = bidx.company.$element;
 
             if ( newHash )
             {
@@ -82,14 +108,14 @@
             bidx.utils.log( "AppRouter::createCompany" );
 
             $controls.empty();
-            state   = "editCompany";
-            app     = bidx.company;
+
+            state       = "editCompany";
+            app         = bidx.company;
+            $element    = bidx.company.$element;
 
             var newHash = bidx.company.navigate( "create" );
 
             _showMainState( state );
-
-            $element = bidx.company.$element;
 
             if ( newHash )
             {
@@ -108,13 +134,14 @@
                 app.reset();
             }
 
-            state   = "show";
-            app     = null;
-
             if ( $element )
             {
                 $element.hide();
             }
+
+            state       = "show";
+            app         = null;
+            $element    = null;
 
             _showMainState( state );
         }

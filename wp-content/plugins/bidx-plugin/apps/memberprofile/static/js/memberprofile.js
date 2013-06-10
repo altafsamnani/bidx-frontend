@@ -562,71 +562,6 @@
         return key;
     };
 
-    var _setElementValue = function( $el, value )
-    {
-        var elType      = $el.attr( 'type' )
-        ,   dataType    = $el.attr( 'data-type' )
-        ,   dateObj
-        ;
-
-        if ( value === true )
-        {
-            value = "true";
-        }
-        else if ( value === false )
-        {
-            value = "false";
-        }
-
-        if ( dataType === "date" )
-        {
-            if ( value )
-            {
-                dateObj = bidx.utils.parseISODate( value );
-
-                value = dateObj.m + "/" + dateObj.d + "/" + dateObj.y;
-                $el.val( value );
-            }
-
-        }
-        if ( elType )
-        {
-            switch( elType )
-            {
-                case 'radio':
-                    // bewustte type-coercing for now
-                    //
-                    if ( $el.val() === value )
-                    {
-                        $el.prop( 'checked', true );
-                    }
-                    else
-                    {
-                        $el.prop( 'checked', false );
-                    }
-                break;
-
-                case 'checkbox':
-                    $el.prop( 'checked', !!value );
-                break;
-
-                case 'file':
-                break;
-
-                default:
-                    $el.val( value || ( value === 0 ? "0" : "" ) );
-            }
-        }
-        else if ( $el.is( 'input' ) || $el.is( 'select' ) || $el.is( 'textarea' ) )
-        {
-            $el.val( value || ( value === 0 ? '0' : '' ) );
-        }
-        else
-        {
-            $el.text( value || ( value === 0 ? '0' : '' ) );
-        }
-    };
-
     // Use the retrieved member object to populate the form and other screen elements
     //
     var _populateScreen = function()
@@ -643,7 +578,7 @@
 
             $input.each( function()
             {
-                _setElementValue( $( this ), value );
+                bidx.utils.setElementValue( $( this ), value );
             } );
         } );
 
@@ -686,7 +621,7 @@
 
                         $input.each( function()
                         {
-                            _setElementValue( $( this ), value  );
+                            bidx.utils.setElementValue( $( this ), value  );
                         } );
                     } );
                 } );
@@ -790,58 +725,10 @@
     //
     var _getFormValues = function()
     {
-        var _getElementValue = function( $input )
-        {
-            var value
-            ,   date
-            ;
-
-            switch ( $input.attr( 'data-type' ) )
-            {
-                // We need to get to ISO8601 => yyyy-mm-dd
-                //
-                case 'date':
-                    date    = $input.datepicker( "getDate" );
-
-                    if ( date )
-                    {
-                        value   = bidx.utils.getISODate( date );
-                    }
-                break;
-
-                default:
-                    switch ( $input.attr( "type" ) )
-                    {
-                        case "radio":
-                            value = $input.filter( ":checked" ).val();
-                        break;
-
-                        case "checkbox":
-                            value = $input.is( ":checked" ) ? $input.val() : null;
-                        break;
-
-                        default:
-                            value = $input.val();
-                    }
-            }
-
-
-            if ( value === "true" )
-            {
-                value = true;
-            }
-            else if ( value === "false" )
-            {
-                value = false;
-            }
-
-            return value;
-        };
-
         $.each( fields.personalDetails, function( i, f )
         {
             var $input  = $editForm.find( "[name='personalDetails." + f + "']" )
-            ,   value   = _getElementValue( $input )
+            ,   value   = bidx.utils.getElementValue( $input )
             ;
 
             bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + f, value );
@@ -872,7 +759,7 @@
             {
                 var inputPath   = "personalDetails." + nest + "[" + i + "]." + f
                 ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
-                ,   value       = _getElementValue( $input )
+                ,   value       = bidx.utils.getElementValue( $input )
                 ;
 
                 bidx.utils.setValue( item[ i ], f, value );
