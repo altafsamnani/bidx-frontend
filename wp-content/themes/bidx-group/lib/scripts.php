@@ -1,98 +1,99 @@
 <?php
 /**
- * Enqueue scripts and stylesheets
- *
- * Enqueue stylesheets in the following order:
- * 1. /theme/assets/css/bootstrap.css
- * 2. /theme/assets/css/bootstrap-responsive.css
- * 3. /theme/assets/css/app.css
- * 4. /child-theme/style.css (if a child theme is activated)
- *
- * Enqueue scripts in the following order:
- * 1. jquery-1.9.1.min.js via Google CDN
- * 2. /theme/assets/js/vendor/modernizr-2.6.2.min.js
- * 3. /theme/assets/js/plugins.js (in footer)
- * 4. /theme/assets/js/main.js    (in footer)
- */
+* Enqueue scripts and stylesheets
+*/
 function roots_scripts() {
-  wp_enqueue_style('roots_bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.css', false, null);
-  wp_enqueue_style('roots_bootstrap_responsive', get_template_directory_uri() . '/assets/css/bootstrap-responsive.css', array('roots_bootstrap'), null);
+    wp_enqueue_style('roots_bootstrap',             get_template_directory_uri() . '/assets/css/bootstrap.css', false, null);
+    wp_enqueue_style('roots_bootstrap_responsive',  get_template_directory_uri() . '/assets/css/bootstrap-responsive.css', array('roots_bootstrap'), null);
+    wp_enqueue_style('flatui',                      get_template_directory_uri() . '/assets/FlatUI/css/flat-ui.css', false, null);
+    wp_enqueue_style('main-style',                  get_template_directory_uri() . '/style.css', false, null);
 
-  wp_enqueue_style('flatui', get_template_directory_uri() . '/assets/FlatUI/css/flat-ui.css', false, null);
-  wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css', false, null);
+    if (is_single() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 
+    // Do not load the internal jQuery, we do not want it to run in noConflict and we need 1.8.3 because of flatui plugins that have problems with 1.9+
+    //
+    wp_deregister_script( 'jquery' );
+    wp_register_script( 'jquery',                   get_template_directory_uri() . '/assets/js/vendor/jquery-1.8.3.min.js',             false,                  '1.8.3',            true );
 
-wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/assets/css/jqueryUI/ui-darkness/jquery-ui-1.10.2.custom.min.css', false, null);
+    // Load the jquery-ui that comes with FlatUI, just to make sure
+    //
+    wp_deregister_script( 'jquery-ui' );
+    wp_register_script( 'jquery-ui',                get_template_directory_uri() . '/assets/FlatUI/js/jquery-ui-1.10.3.custom.min.js',  array( 'jquery' ),      '1.10.3-20130610',  true );
 
+    // Upgrade underscore
+    //
+    wp_deregister_script( 'underscore' );
+    wp_register_script( 'underscore',               get_template_directory_uri() . '/assets/js/vendor/underscore.js',                   false,                  '1.4.4',  true );
 
-  // Load style.css from child theme
-  /*if (is_child_theme()) {
-    wp_enqueue_style('roots_child', get_stylesheet_uri(), false, null);
-  }*/
+    // Upgrade backbone
+    //
+    wp_deregister_script( 'backbone' );
+    wp_register_script( 'backbone',                 get_template_directory_uri() . '/assets/js/vendor/backbone.js',                     array( 'underscore' ),  '1.0.0',  true );
 
-  // jQuery is loaded using the same method from HTML5 Boilerplate:
-  // Grab Google CDN's latest jQuery with a protocol relative URL; fallback to local if offline
-  // It's kept in the header instead of footer to avoid conflicts with plugins.
-  /*if (!is_admin() && current_theme_supports('jquery-cdn')) {
-   *wp_deregister_script('jquery');
-    wp_register_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js', false, null, false);
-    add_filter('script_loader_src', 'roots_jquery_local_fallback', 10, 2);
-  }*/
+    wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/js/vendor/bootstrap.min.js',                array( 'jquery' ),      '2.3.2',            true );
 
-  if (is_single() && comments_open() && get_option('thread_comments')) {
-    wp_enqueue_script('comment-reply');
-  }
+    wp_register_script( 'jquery-ui-touchpunch',     get_template_directory_uri() . '/assets/js/vendor/jquery.ui.touch-punch.js',        array( 'jquery-ui' ),   '0.2.2',            true );
+    wp_register_script( 'bootstrap-select',         get_template_directory_uri() . '/assets/js/vendor/bootstrap-select.js',             array( 'bootstrap' ),   '20130610',         true );
+    wp_register_script( 'bootstrap-switch',         get_template_directory_uri() . '/assets/js/vendor/bootstrap-switch.js',             array( 'bootstrap' ),   '1.3',              true );
+    wp_register_script( 'flatui-checkbox',          get_template_directory_uri() . '/assets/FlatUI/js/flatui-checkbox.js',              array( 'jquery' ),      '0.0.2',            true );
+    wp_register_script( 'flatui-radio',             get_template_directory_uri() . '/assets/FlatUI/js/flatui-radio.js',                 array( 'jquery' ),      '0.0.2',            true );
+    wp_register_script( 'jquery-tagsinput',         get_template_directory_uri() . '/assets/js/vendor/jquery.tagsinput.js',             array( 'jquery' ),      '1.3.3',            true );
+    wp_register_script( 'jquery-placeholder',       get_template_directory_uri() . '/assets/js/vendor/jquery.placeholder.js',           array( 'jquery' ),      '2.0.7',            true );
+    wp_register_script( 'jquery-stacktable',        get_template_directory_uri() . '/assets/js/vendor/jquery.stacktable.js',            array( 'jquery' ),      '20130610',         true );
 
-  //wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr-2.6.2.min.js', false, null, false);
-//  wp_register_script('roots_plugins', get_template_directory_uri() . '/assets/js/plugins.js', false, null, true);
-  //wp_register_script('roots_main', get_template_directory_uri() . '/assets/js/main.js', false, null, true);
-wp_enqueue_script('jquery');
-wp_enqueue_script('jqueryui');
-wp_enqueue_script('bootstrap');
-wp_enqueue_script('json2');
+    wp_register_script( 'holder',                   get_template_directory_uri() . '/assets/js/vendor/holder-1.9.js',                   false,                  '1.9',              true );
 
-// FlatUI
-//
-wp_register_script( 'flatui-checkbox',  get_template_directory_uri() . '/assets/FlatUI/js/flatui-checkbox.js',  array(), '20130501', TRUE );
-wp_register_script( 'flatui-radio',     get_template_directory_uri() . '/assets/FlatUI/js/flatui-radio.js',     array(), '20130501', TRUE );
-wp_enqueue_script( 'flatui-checkbox' );
-wp_enqueue_script( 'flatui-radio' );
+    // Enqueue the scripts
+    //
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'jquery-ui' );
 
-wp_register_script( 'holder', get_template_directory_uri() . '/assets/js/vendor/holder-1.9.js', array(), '20130501', TRUE );
-wp_enqueue_script('holder');
+    wp_enqueue_script( 'bootstrap' );
+    wp_enqueue_script( 'bootstrap-select' );
+    wp_enqueue_script( 'bootstrap-switch' );
 
-  //wp_enqueue_script('modernizr');
-//  wp_enqueue_script('roots_plugins');
-  //wp_enqueue_script('roots_main');
+    wp_enqueue_script( 'flatui-checkbox' );
+    wp_enqueue_script( 'flatui-radio' );
+
+    wp_enqueue_script( 'jquery-tagsinput' );
+    wp_enqueue_script( 'jquery-placeholder' );
+    wp_enqueue_script( 'jquery-stacktable' );
+
+    wp_enqueue_script( 'json2' );
+
+    wp_enqueue_script( 'holder' );
 }
 add_action('wp_enqueue_scripts', 'roots_scripts', 100);
 
-
-
 // http://wordpress.stackexchange.com/a/12450
 function roots_jquery_local_fallback($src, $handle) {
-  static $add_jquery_fallback = false;
+    static $add_jquery_fallback = false;
 
-  if ($add_jquery_fallback) {
-    echo '<script>window.jQuery || document.write(\'<script src="' . get_template_directory_uri() . '/assets/js/vendor/jquery-1.9.1.min.js"><\/script>\')</script>' . "\n";
-    $add_jquery_fallback = false;
-  }
+    if ($add_jquery_fallback) {
+        echo '<script>window.jQuery || document.write(\'<script src="' . get_template_directory_uri() . '/assets/js/vendor/jquery-1.9.1.min.js"><\/script>\')</script>' . "\n";
+        $add_jquery_fallback = false;
+    }
 
-  if ($handle === 'jquery') {
-    $add_jquery_fallback = true;
-  }
+    if ($handle === 'jquery') {
+        $add_jquery_fallback = true;
+    }
 
-  return $src;
+    return $src;
 }
 
-function roots_google_analytics() { ?>
-<script>
-  var _gaq=[['_setAccount','<?php echo GOOGLE_ANALYTICS_ID; ?>'],['_trackPageview']];
-  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
-<?php }
+function roots_google_analytics() {
+?>
+    <script>
+        var _gaq=[['_setAccount','<?php echo GOOGLE_ANALYTICS_ID; ?>'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+<?php
+}
+
 if (GOOGLE_ANALYTICS_ID) {
-  add_action('wp_footer', 'roots_google_analytics', 20);
+    add_action('wp_footer', 'roots_google_analytics', 20);
 }
