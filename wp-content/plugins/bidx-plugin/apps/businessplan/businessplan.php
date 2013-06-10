@@ -8,9 +8,9 @@
  */
 class businessplan {
 
-  static $deps = array('jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone', 'json2',
-    'gmaps-places', 'holder', 'bidx-fileupload', 'bidx-form', 'bidx-form-element', 'bidx-location',
-    'bidx-utils', 'bidx-country-autocomplete', 'bidx-api-core', 'backbone', 'bidx-common');
+  static $deps = array('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2',
+    'gmaps-places', 'holder', 'bidx-form',
+    'bidx-utils', 'bidx-api-core', 'bidx-common');
 
   /**
    * Constructor
@@ -51,10 +51,6 @@ class businessplan {
 
 
     $view->data = $summaryData->data;
-
-   
-    /* 4. Call the Display Component */
-    add_action('wp_footer', array(memberprofile, 'bidx_memberprofile_add_to_footer'));
 
 
     $view->render('summary.phtml');
