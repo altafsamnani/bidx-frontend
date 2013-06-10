@@ -17,7 +17,11 @@
 function roots_scripts() {
   wp_enqueue_style('roots_bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.css', false, null);
   wp_enqueue_style('roots_bootstrap_responsive', get_template_directory_uri() . '/assets/css/bootstrap-responsive.css', array('roots_bootstrap'), null);
+
+  wp_enqueue_style('flatui', get_template_directory_uri() . '/assets/FlatUI/css/flat-ui.css', false, null);
   wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css', false, null);
+
+
 wp_enqueue_style('jquery-ui', get_template_directory_uri() . '/assets/css/jqueryUI/ui-darkness/jquery-ui-1.10.2.custom.min.css', false, null);
 
 
@@ -46,6 +50,13 @@ wp_enqueue_script('jquery');
 wp_enqueue_script('jqueryui');
 wp_enqueue_script('bootstrap');
 wp_enqueue_script('json2');
+
+// FlatUI
+//
+wp_register_script( 'flatui-checkbox',  get_template_directory_uri() . '/assets/FlatUI/js/flatui-checkbox.js',  array(), '20130501', TRUE );
+wp_register_script( 'flatui-radio',     get_template_directory_uri() . '/assets/FlatUI/js/flatui-radio.js',     array(), '20130501', TRUE );
+wp_enqueue_script( 'flatui-checkbox' );
+wp_enqueue_script( 'flatui-radio' );
 
 wp_register_script( 'holder', get_template_directory_uri() . '/assets/js/vendor/holder-1.9.js', array(), '20130501', TRUE );
 wp_enqueue_script('holder');
