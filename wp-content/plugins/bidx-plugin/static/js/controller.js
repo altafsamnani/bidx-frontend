@@ -13,7 +13,7 @@
 
     function _showMainState( s )
     {
-        if ( s.match( /^edit/ ))
+        if ( s.match( /^(edit|create)/ ))
         {
             $( "body" ).addClass( "bidx-edit" );
         }
@@ -32,6 +32,7 @@
         routes: {
             'editMember(/:id)(/:section)':      'editMember'
         ,   'editCompany(/:id)(/:section)':     'editCompany'
+        ,   'createCompany':                    'createCompany'
         ,   'login':                            'login'
         ,   'register':                         'register'
         ,   'resetpassword':                    'resetpassword'
@@ -66,6 +67,25 @@
             app     = bidx.company;
 
             var newHash = bidx.company.navigate( "edit", section, id );
+
+            _showMainState( state );
+
+            $element = bidx.company.$element;
+
+            if ( newHash )
+            {
+                this.navigate( newHash );
+            }
+        }
+    ,   createCompany:          function()
+        {
+            bidx.utils.log( "AppRouter::createCompany" );
+
+            $controls.empty();
+            state   = "editCompany";
+            app     = bidx.company;
+
+            var newHash = bidx.company.navigate( "create" );
 
             _showMainState( state );
 

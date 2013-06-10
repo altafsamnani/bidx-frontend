@@ -6,11 +6,15 @@ $companies = $this->data->companies;
 if ($entrepreneurDetails) {
   ?>
 
-  <div class="row-fluid">
-    <div class="span12">
-      <h4>Entrepreneur profile</h4>
-    </div>
+<div class="well profile-block">
+
+  <div class="btn-group controls">
+  <?php if ($entrepreneurDetails->bidxCanEdit) { ?>
+    <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $entrepreneurDetails->ownerId; ?>">Edit</a>
+  <?php } ?>
   </div>
+
+  <h4>Entrepreneur profile</h4>
   <div class="row-fluid">
     <?php
     $rowValues = array('Summary' => $entrepreneurDetails->entrepreneurProfileSummary);
@@ -35,13 +39,15 @@ if ($entrepreneurDetails) {
     echo $this->getAttachmentsDisplay('12', '12', array('Documents' => $entrepreneurDetails1->attachment));
     ?>
   </div>
-  <br/>
+</div>
 <? }
 
 // Business Summary
 //
 if($entityDetails) {
 ?>
+<div class="well profile-block">
+
   <!-- Business Summaries Profile -->
   <div class="row-fluid">
     <div class="span12">
@@ -75,6 +81,7 @@ if($entityDetails) {
         ?>
     </div>
   </div>
+</div>
 <?php
 }
 
@@ -98,7 +105,7 @@ if ( $companies ) {
 ?>
   <div class="accordion-group">
     <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#companies" href="#<?php echo $collapseId ?>">
+      <a class="accordion-toggle <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#companies" href="#<?php echo $collapseId ?>">
         <h4><?php echo $company->name ?></h4>
         <div class="controls">
           <span class="bidx-expand">+</span>
@@ -182,7 +189,7 @@ if ( $this->data->isMyProfile ) {
 ?>
 
 <div class="pull-right">
-  <a href="/company/#create" class="btn btn-primary">Add a company</a>
+  <a href="/company/#createCompany" class="btn btn-primary">Add a company</a>
 </div>
 
 <?php } ?>
