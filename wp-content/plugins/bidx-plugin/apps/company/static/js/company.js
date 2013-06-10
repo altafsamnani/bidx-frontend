@@ -1,4 +1,4 @@
-$( document ).ready( function()
+( function( $ )
 {
     var $element        = $( "#editCompany" )
     ,   $controls       = $( ".editControls" )
@@ -695,120 +695,81 @@ $( document ).ready( function()
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
     }
 
-    function _showMainState( s )
-    {
-        if ( s === "editCompany" )
-        {
-            $( "body" ).addClass( "bidx-edit" );
-        }
-        else
-        {
-            $( "body" ).removeClass( "bidx-edit" );
-        }
-
-        $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
-    }
-
     // ROUTER
     //
     var state;
 
-    // Router for main state
-    //
-    var AppRouter = Backbone.Router.extend(
+    var navigate = function( requestedState, section, id, cb )
     {
-        routes: {
-            'editCompany(/:id)(/:section)':    'edit'
-        ,   'cancel':                       'show'
-        ,   'create':                       'create'
-        ,   '*path':                        'show'
-        }
-    ,   edit:           function( id, section )
+        switch( requestedState )
         {
-            bidx.utils.log( "EditCompany::AppRouter::edit", id, section );
+            case "edit":
+                bidx.utils.log( "EditCompany::AppRouter::edit", id, section );
 
-            _showMainState( "editCompany" );
+                var updateHash      = false
+                ,   isId            = ( id && id.match( /^\d+$/ ) )
+                ;
 
-            var newCompanyId
-            ,   splatItems
-            ,   updateHash      = false
-            ,   isId            = ( id && id.match( /^\d+$/ ) )
-            ;
-
-            if ( id && !isId )
-            {
-                section = id;
-                id      = companyId;
-
-                updateHash = true;
-            }
-
-            if ( updateHash )
-            {
-                var hash = "editCompany/" + id;
-
-                if ( section )
+                if ( id && !isId )
                 {
-                     hash += "/" + section;
+                    section = id;
+                    id      = companyId;
+
+                    updateHash = true;
                 }
 
-                this.navigate( hash );
-            }
+                if ( !( state === "edit" && id === companyId ))
+                {
+                    companyId        = id;
+                    state           = "edit";
 
-            if ( state === "edit" && id === companyId )
-            {
-                return;
-            }
+                    $element.show();
+                    _showView( "load" );
 
-            companyId        = id;
-            state           = "edit";
+                    _init();
+                }
 
-            $element.show();
-            _showView( "load" );
+                if ( updateHash )
+                {
+                    var hash = "editCompany/" + id;
 
-            _init();
+                    if ( section )
+                    {
+                         hash += "/" + section;
+                    }
+
+                    return hash;
+                }
+            break;
+
+            case "create":
+                bidx.utils.log( "EditCompany::AppRouter::create" );
+
+                companyId   = null;
+                state       = "create";
+
+                $element.show();
+                _init();
+            break;
         }
-    ,   create:         function()
-        {
-            bidx.utils.log( "EditCompany::AppRouter::create" );
+    };
 
-            _showMainState( "editCompany" );
-
-            companyId   = null;
-            state       = "create";
-
-            $element.show();
-            _init();
-        }
-    ,   show:           function( section )
-        {
-            bidx.utils.log( "EditCompany::AppRouter::show", section );
-
-            if ( state === "show" )
-            {
-                return;
-            }
-
-            state = "show";
-
-            $element.hide();
-
-            _showMainState( "show" );
-
-            $controls.empty();
-        }
-    } );
-
-    var router = new AppRouter();
-    Backbone.history.start();
+    var reset = function()
+    {
+        state = null;
+    };
 
     // Expose
     //
     var exports =
     {
+        navigate:                   navigate
+    ,   $element:                   $element
+    ,   reset:                      reset
+
         // START DEV API
         //
-         _updateCurrentAddressMap:   _updateCurrentAddressMap
+    ,   _updateCurrentAddressMap:   _updateCurrentAddressMap
     ,   currentAddressMap:          currentAddressMap
         // END DEV API
     };
@@ -819,4 +780,4 @@ $( document ).ready( function()
     }
 
     window.bidx.company = exports;
-} );
+} ( jQuery ));

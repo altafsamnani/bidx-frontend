@@ -1,5 +1,5 @@
 <!-- LOGIN -->
-<div class="mainState mainStateLogin">
+<div class="mainState mainStateLogin mainStateShow">
 	<form id="frmLogin" action="/wp-login.php" method="post">
 		<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
 			<label>Email address</label>
@@ -61,7 +61,7 @@
 		</div>
 
 		<p>
-			Forgot your password. Click <a href="/forgot-password">here</a> to recover.<br/>
+			Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
 			Login? Click <a href="#login">here</a> to go to login.
 		</p>
 	</form>
@@ -98,7 +98,7 @@
                 Click <a href="/">here</a> to go to homepage.
                 </p>
        </div>
-        
+
 </div>
 
 <script>
@@ -213,7 +213,7 @@
                 ;
 
                 $btnResetpassword.click( function( e )
-                {      
+                {
                         e.preventDefault();
 
                         $frmResetpassword.submit();
@@ -236,7 +236,7 @@
                         var resetpass =
                         {
                                 username: 	$frmResetpassword.find( "[name='username']" ).val()
-                       
+
                         };
 
 
@@ -251,7 +251,7 @@
 
                             // Go to group dashboard
                             //
-                   
+
                             $frmResetpassword.hide();
                             $stateResetpassword.find( ".resetpasswordSuccess" ).removeClass( "hide" );
 
@@ -273,45 +273,3 @@
         });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"></script>
-
-<script>
-	$( function( )
-	{
-	    // ROUTER
-	    //
-	    var $mainStates = $( ".mainState" );
-
-	    // Router for main state
-	    //
-	    var AppRouter = Backbone.Router.extend(
-	    {
-	        routes: {
-	            'login':    'login'
-	        ,   'register': 'register'
-                ,   'resetpassword' : 'resetpassword'
-	        ,   '*path':    'login'
-	        }
-	    ,   login:           function()
-	        {
-	            _showMainState( "login" );
-	        }
-	    ,   register:           function()
-	        {
-	        	_showMainState( "register" );
-	        }
-            ,   resetpassword:      function()
-	        {
-	        	_showMainState( "resetpassword" );
-	        }
-	    } );
-
-	    var router = new AppRouter();
-	    Backbone.history.start();
-
-    	function _showMainState( s )
-	    {
-	        $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
-	    }
-
-	} );
-</script>

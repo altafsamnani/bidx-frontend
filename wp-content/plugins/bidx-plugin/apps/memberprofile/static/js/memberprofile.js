@@ -1,14 +1,13 @@
-$( document ).ready( function()
+( function( $ )
 {
-    var $element        = $( "#editMember" )
-    ,   $controls       = $( ".editControls" )
-    ,   $views          = $element.find( ".view" )
-    ,   $editForm       = $views.filter( ".viewEdit" ).find( "form" )
-    ,   $snippets       = $element.find( ".snippets" )
+    var $element                    = $( "#editMember" )
+    ,   $views                      = $element.find( ".view" )
+    ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
+    ,   $snippets                   = $element.find( ".snippets" )
 
-    ,   $languageList           = $editForm.find( ".languageList" )
-    ,   $btnAddLanguage         = $editForm.find( ".btnAddLanguage" )
-    ,   $inputAddLanguage       = $editForm.find( "input[name='addLanguage']" )
+    ,   $languageList               = $editForm.find( ".languageList" )
+    ,   $btnAddLanguage             = $editForm.find( ".btnAddLanguage" )
+    ,   $inputAddLanguage           = $editForm.find( "input[name='addLanguage']" )
 
     ,   $profilePictureContainer    = $editForm.find( ".profilePictureContainer" )
 
@@ -25,12 +24,8 @@ $( document ).ready( function()
     ,   member
     ,   memberId
     ,   memberProfileId
-    ,   groupDomain
     ,   bidx            = window.bidx
     ,   snippets        = {}
-    ;
-
-    var $mainStates     = $( ".mainState" )
     ;
 
     // Form fields
@@ -664,7 +659,7 @@ $( document ).ready( function()
 
         // Setup the hidden fields used in the file upload
         //
-        $editForm.find( "[name='domain']"           ).val( groupDomain );
+        $editForm.find( "[name='domain']"           ).val( bidx.common.groupDomain );
         $editForm.find( "[name='memberProfileId']"  ).val( memberProfileId );
 
         // Now the nested objects
@@ -897,23 +892,6 @@ $( document ).ready( function()
             languageDetail.push( data );
         } );
 
-        // This is a hack to handle the situation where we need to pad the languageDetail array to 'remove' items if we end up
-        // PUT'ing a shorter list than we got we need to pad it up to original length
-        //
-        // var currentLanguageDetail           = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.languageDetail", true )
-        // ,   originalLanguageDetailLength    = 0
-        // ;
-
-        // if ( currentLanguageDetail )
-        // {
-        //     originalLanguageDetailLength = currentLanguageDetail.length;
-        // }
-
-        // while ( languageDetail.length < originalLanguageDetailLength )
-        // {
-        //     languageDetail.push( {} );
-        // }
-
         bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.languageDetail", languageDetail );
     };
 
@@ -923,7 +901,6 @@ $( document ).ready( function()
     {
         // Reset any state
         //
-        $controls.empty();
         addedLanguages = [];
         $languageList.empty();
 
@@ -938,8 +915,7 @@ $( document ).ready( function()
         $btnSave.text( "Save profile" );
         $btnCancel.text( "Cancel" );
 
-        $controls.append( $btnSave );
-        $controls.append( $btnCancel );
+        bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 
         // Wire the submit button which can be anywhere in the DOM
         //
@@ -1008,7 +984,7 @@ $( document ).ready( function()
             ,   {
                     entityId:           memberProfileId
                 ,   documentId:         documentId
-                ,   groupDomain:        groupDomain
+                ,   groupDomain:        bidx.common.groupDomain
                 ,   success:            function( response )
                     {
                         bidx.utils.log( "bidx::entityDocument::destroy::success", response );
@@ -1033,7 +1009,7 @@ $( document ).ready( function()
             "member.fetch"
         ,   {
                 memberId:       memberId
-            ,   groupDomain:    groupDomain
+            ,   groupDomain:    bidx.common.groupDomain
             ,   success:        function( response )
                 {
                     member = response;
@@ -1128,7 +1104,7 @@ $( document ).ready( function()
             "member.save"
         ,   {
                 memberId:       memberId
-            ,   groupDomain:    groupDomain
+            ,   groupDomain:    bidx.common.groupDomain
             ,   data:           member
             ,   success:        function( response )
                 {
@@ -1148,122 +1124,78 @@ $( document ).ready( function()
 
     // Private functions
     //
-    function _showError( msg )
+    var _showError = function( msg )
     {
         $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
         _showView( "error" );
-    }
+    };
 
-    function _showView( v )
+    var _showView = function( v )
     {
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
-    }
-
-    function _showMainState( s )
-    {
-        if ( s === "editMember" )
-        {
-            $( "body" ).addClass( "bidx-edit" );
-        }
-        else
-        {
-            $( "body" ).removeClass( "bidx-edit" );
-        }
-
-        $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
-    }
+    };
 
     // ROUTER
     //
     var state;
 
-    // Router for main state
-    //
-    var AppRouter = Backbone.Router.extend(
+
+    var navigate = function( requestedState, section, id, cb )
     {
-        routes: {
-            'editMember(/:id)(/:section)':    'edit'
-        ,   'cancel':                       'show'
-        ,   '*path':                        'show'
-        }
-    ,   edit:           function( id, section )
+        switch ( requestedState )
         {
-            bidx.utils.log( "EditMember::AppRouter::edit", id, section );
+            case "edit":
+                bidx.utils.log( "EditMember::AppRouter::edit", id, section );
 
-            _showMainState( "editMember" );
+                var newMemberId
+                ,   splatItems
+                ,   updateHash      = false
+                ,   isId            = ( id && id.match( /^\d+$/ ) )
+                ;
 
-            groupDomain = bidx.utils.getQueryParameter( "bidxGroupDomain" ) || bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain();
-
-            var newMemberId
-            ,   splatItems
-            ,   updateHash      = false
-            ,   isId            = ( id && id.match( /^\d+$/ ) )
-            ;
-
-            if ( id && !isId )
-            {
-                section = id;
-                id      = memberId;
-
-                updateHash = true;
-            }
-
-            // No memberId set yet and not one explicitly provided? Use the one from the session
-            //
-            if ( !memberId && !isId )
-            {
-                id = bidx.utils.getValue( bidxConfig, "session.id" );
-
-                updateHash = true;
-            }
-
-            if ( updateHash )
-            {
-                var hash = "editMember/" + id;
-
-                if ( section )
+                if ( id && !isId )
                 {
-                     hash += "/" + section;
+                    section = id;
+                    id      = memberId;
+
+                    updateHash = true;
                 }
 
-                this.navigate( hash );
-            }
+                // No memberId set yet and not one explicitly provided? Use the one from the session
+                //
+                if ( !memberId && !isId )
+                {
+                    id = bidx.utils.getValue( bidxConfig, "session.id" );
 
-            if ( state === "edit" && id === memberId )
-            {
-                return;
-            }
+                    updateHash = true;
+                }
 
-            memberId        = id;
-            memberProfileId = null;
-            state           = "edit";
+                if ( !( state === "edit" && id === memberId ) )
+                {
+                    memberId        = id;
+                    memberProfileId = null;
+                    state           = "edit";
 
-            $element.show();
-            _showView( "load" );
+                    $element.show();
+                    _showView( "load" );
 
-            _init();
+                    _init();
+                }
+
+                if ( updateHash )
+                {
+                    var hash = "editMember/" + id;
+
+                    if ( section )
+                    {
+                         hash += "/" + section;
+                    }
+
+                    return hash;
+                }
+            break;
         }
-    ,   show:           function( section )
-        {
-            bidx.utils.log( "EditMember::AppRouter::show", section );
-
-            if ( state === "show" )
-            {
-                return;
-            }
-
-            state = "show";
-
-            $element.hide();
-
-            _showMainState( "show" );
-
-            $controls.empty();
-        }
-    } );
-
-    var router = new AppRouter();
-    Backbone.history.start();
+    };
 
 
     var attachmentUploadDone = function( err, result )
@@ -1286,11 +1218,20 @@ $( document ).ready( function()
         }
     };
 
+    var reset = function()
+    {
+        state = null;
+    };
+
     // Expose
     //
     var memberprofile =
     {
         attachmentUploadDone:       attachmentUploadDone
+    ,   navigate:                   navigate
+    ,   reset:                      reset
+
+    ,   $element:                   $element
 
         // START DEV API
         //
@@ -1305,4 +1246,4 @@ $( document ).ready( function()
     }
 
     window.bidx.memberprofile = memberprofile;
-} );
+} ( jQuery ));
