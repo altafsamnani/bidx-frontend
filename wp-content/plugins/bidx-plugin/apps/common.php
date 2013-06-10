@@ -317,7 +317,7 @@ class BidxCommon {
         $userdata = get_userdata($user_id);
         $user = wp_set_current_user($user_id, $userName);
         // this will actually make the user authenticated as soon as the cookie is in the browser
-        wp_set_auth_cookie($user_id,false,false);
+        wp_set_auth_cookie($user_id,false,NULL);
 
         // the wp_login action is used by a lot of plugins, just decide if you need it
         do_action('wp_login', $userdata->ID);
