@@ -1,3 +1,7 @@
+<?php
+	wp_enqueue_script( 'bidx-form' );
+?>
+
 	<!-- content starting here -->
 	<div class="hero-block">
 
@@ -6,7 +10,7 @@
 
 				<div class="span8">
 					<div id="introCarousel" class="carousel slide">
-						<?php 
+						<?php
 						$images = get_children(
 									array(
 									'post_parent' => $post->ID,
@@ -18,18 +22,18 @@
 									);
 						?>
 						<ol class="carousel-indicators">
-						<?php 
+						<?php
 							$count = 0;
-							foreach ( $images as $id => $image ) { ?>	
+							foreach ( $images as $id => $image ) { ?>
 							<li data-target="#introCarousel" data-slide-to="<?php echo $count ?>"
 							<?php if ($count == 0) { ?> class="active" <?php } $count++; ?>></li>
-						<?php } ?>	
+						<?php } ?>
 						</ol>
 						<!-- Carousel items -->
 						<div class="carousel-inner">
-						<?php 
+						<?php
 							$count = 0;
-							foreach ( $images as $id => $image ) { 
+							foreach ( $images as $id => $image ) {
 								$img = wp_get_attachment_image_src( $image->ID, 400 );
 						?>
 							<div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
@@ -233,12 +237,3 @@ The Group is an online space aggregating tools to support, virtually, all your s
 			</div>
 		</div>
 	</div>
-
-<?php
-	add_action('wp_footer', 'addToFooter',200);
-
-	function addToFooter() {
-		$content = '<script type="text/javascript" src="/wp-content/themes/plugins/form.js"></script>';
-		echo $content;
-	}
-?>

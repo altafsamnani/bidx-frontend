@@ -1,3 +1,6 @@
+<?php
+	wp_enqueue_script( 'bidx-form' );
+?>
 	<!-- content starting here -->
 	<div class="hero-block">
 		<div class="top-border"></div>
@@ -135,13 +138,3 @@
 		<br/>
 		<br/>
 	</div>
-
-	<?php add_action('wp_footer', 'addToFooter',200);
-
-		function addToFooter() {
-			$content = '<script type="text/javascript" src="/wp-content/themes/plugins/form.js"></script>';
-			echo $content;
-		}
-	 ?>
-
-
