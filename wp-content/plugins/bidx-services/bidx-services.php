@@ -549,8 +549,9 @@ function bidx_wordpress_post_action($url, $result, $body) {
             // userdata will contain all information about the user
             $userdata = get_userdata($user_id);
             $user = wp_set_current_user($user_id, $username);
+
             // this will actually make the user authenticated as soon as the cookie is in the browser
-            wp_set_auth_cookie($user_id);
+            wp_set_auth_cookie($user_id,false,false);
 
             // the wp_login action is used by a lot of plugins, just decide if you need it
             do_action('wp_login', $userdata->ID);

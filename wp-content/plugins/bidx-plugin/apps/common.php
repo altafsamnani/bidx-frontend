@@ -161,8 +161,7 @@ class BidxCommon {
             $data->memberId = $memberId;
             $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
             $this::$bidxSession[$subDomain]->memberId = $memberId;
-          }
-          else {
+          } else {
             $redirect = 'login'; //To redirect /member and not loggedin page to /login
           }
 
@@ -184,12 +183,14 @@ class BidxCommon {
 
         case 'businessplan':
           $bpSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
+          
           if ($bpSummaryId) {
             $data->bidxBusinessSummary = $bpSummaryId;
             $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
             $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
-          }
-          
+          } else {
+            $redirect = 'login'; //To redirect /member and not loggedin page to /login
+          }        
 
           break;
       }
@@ -237,7 +238,6 @@ class BidxCommon {
           $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/' . $redirect;
           wp_clear_auth_cookie();
         }
-
         break;
 
       default:
@@ -317,7 +317,7 @@ class BidxCommon {
         $userdata = get_userdata($user_id);
         $user = wp_set_current_user($user_id, $userName);
         // this will actually make the user authenticated as soon as the cookie is in the browser
-        wp_set_auth_cookie($user_id);
+        wp_set_auth_cookie($user_id,false,false);
 
         // the wp_login action is used by a lot of plugins, just decide if you need it
         do_action('wp_login', $userdata->ID);
