@@ -64,20 +64,17 @@ class search {
 
 
 		// 3. Parse data for preparsing for presentaions
-
-		//a. nothing found -> alertMessage
-		// $view -> alertMessage = '';
-
-
-		//b. error -> errorMessage
-		// $view -> errorMessage = '';
+		if ( !property_exists( $view -> results, 'data') ) {
+			$data = array('numFound' => 0, 'error' => 'Communication failure' );
+			$view -> results -> data = $data;
+		}
 
 		$rows = 10;
 		if ( key_exists( 'rows', $view -> query ) ) {
 			$rows = $view -> rows;
 		}
 
-		//c. navigation previous
+		// navigation previous
 		if ( key_exists( 'start', $view -> query ) ) {
 			if ( $view -> query['start'] > 0 ) {
 				$backParam = $view -> query;
@@ -88,7 +85,7 @@ class search {
 				$view -> previousLink = BidxCommon:: buildHTTPQuery($backParam);
 			}
 		}
-		//d. navigation next
+		//  navigation next
 		$numFound = $view -> results -> data -> numFound;
 		$start = $view -> results -> data -> start;
 		if ($numFound - ( $start + $rows ) > 1) {
