@@ -1,3 +1,6 @@
+/**
+ *  Main controller for the bidX front-end
+ */
 ( function( $ )
 {
     var bidx = window.bidx = ( window.bidx || {} )
@@ -10,7 +13,8 @@
     ,   $controls       = $( ".editControls" )
     ;
 
-
+    // Mainstate switcher. Expects html containers to exist with both the class mainState and mainState{{s}}, where s is the parameter being put into this function
+    //
     function _showMainState( s )
     {
         if ( s.match( /^(edit|create)/ ))
@@ -48,7 +52,6 @@
         {
             bidx.utils.log( "AppRouter::editMember", id, section );
 
-            $controls.empty();
             state   = "editMember";
             app     = bidx.memberprofile;
 
@@ -68,8 +71,6 @@
         {
             bidx.utils.log( "AppRouter::editEntrepreneur", id, section );
 
-            $controls.empty();
-
             state       = "editEntrepreneur";
             app         = bidx.entrepreneurprofile;
             $element    = bidx.entrepreneurprofile.$element;
@@ -88,8 +89,6 @@
         {
             bidx.utils.log( "AppRouter::editCompany", id, section );
 
-            $controls.empty();
-
             state       = "editCompany";
             app         = bidx.company;
             $element    = bidx.company.$element;
@@ -106,8 +105,6 @@
     ,   createCompany:          function()
         {
             bidx.utils.log( "AppRouter::createCompany" );
-
-            $controls.empty();
 
             state       = "editCompany";
             app         = bidx.company;
