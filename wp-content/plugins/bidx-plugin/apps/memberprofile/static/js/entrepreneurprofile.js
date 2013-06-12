@@ -7,6 +7,9 @@
 
     ,   $attachments                = $editForm.find( ".attachments" )
 
+    ,   $btnAddPreviousBusiness     = $editForm.find( "[href$='#addPreviousBusiness']" )
+    ,   $previousBusinessContainer  = $editForm.find( ".previousBusinessContainer" )
+
     ,   $toggles                    = $element.find( ".toggle" ).hide()
     ,   $togglePrevRunBusiness      = $element.find( "[name='prevRunBusiness']"      )
 
@@ -217,7 +220,6 @@
     snippets.$previousBusiness  = $snippets.children( ".previousBusiness"   ).remove();
 
 
-
     // Populate the dropdowns with the values, TODO: fetch the options from the server
     //
     var $focusIndustry = $editForm.find( "[name='focusIndustry']" );
@@ -258,6 +260,8 @@
         e.preventDefault();
     } );
 
+    // Update the UI to show the input / previous run business'
+    //
     $togglePrevRunBusiness.change( function()
     {
         var value   = $togglePrevRunBusiness.filter( "[checked]" ).val()
@@ -265,6 +269,24 @@
         ;
 
         $toggles.filter( ".togglePrevRunBusiness" )[ fn ]();
+    } );
+
+    // Add the snippet for another run business
+    //
+    var _addPreviousBusiness = function( data )
+    {
+        var $previousBusiness = snippets.$previousBusiness.clone();
+
+        $previousBusinessContainer.append( $previousBusiness );
+    };
+
+    // Add an empty previous business block
+    //
+    $btnAddPreviousBusiness.click( function( e )
+    {
+        e.preventDefault();
+
+        _addPreviousBusiness();
     } );
 
 
@@ -443,6 +465,7 @@
     {
         // Reset any state
         //
+        $previousBusinessContainer.empty();
 
         // Inject the save and button into the controls
         //

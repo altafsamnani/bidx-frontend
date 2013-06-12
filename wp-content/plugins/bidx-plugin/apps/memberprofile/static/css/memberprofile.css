@@ -24,15 +24,6 @@
     width:                  10%;
 }
 
-#editMember input,
-#editMember select {
-    width:                  100%;
-}
-
-#editMember label.radio input {
-    width:                  auto;
-}
-
 #editMember form {
     margin:                 0;
 }
@@ -56,10 +47,6 @@
 
 #editMember .languageList p {
     margin-left:            12px;
-}
-
-#editMember .languageList button {
-    height:                 30px;
 }
 
 #editMember .currentAddressMap {
