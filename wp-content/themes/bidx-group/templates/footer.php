@@ -1,33 +1,31 @@
 <footer>
+	<div class="bottom-menu bottom-menu-inverse">
+		<div class="container">
+			<div class="row">
+				<div class="span2">(c) 2013. bidX.net</div>
 
-	<div class="sub-footer social-footer">
-		<ul>
-			<li>
-				Have a question?
-			</li>
-			<li>
-				Facebook
-			</li>
-			<li>
-				LinkedIn
-			</li>
-			<li>
-				Twitter
-			</li>
-		</ul>
-	</div>
-	<div class="sub-footer">
-			<ul>
-				<li>@ 2013. bidX.net. All rights reserved</li>
-				<li><a href="/termsofservice/">Terms of Service</a></li>
-				<li><a href="/privacy/">Privacy</a></li>	
-			</ul>
+				<div class="span6">
+					<ul class="bottom-links">
+						<li><a href="#fakelink">Privacy</a></li>
+						<li><a href="#fakelink">Terms</a></li>
+					</ul>
+				</div>
+
+				<div class="span2">
+					<ul class="bottom-icons">
+						<li><a href="#fakelink" class="fui-pinterest"></a>
+						</li>
+						<li><a href="#fakelink" class="fui-facebook"></a>
+						</li>
+						<li><a href="#fakelink" class="fui-twitter"></a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
+	</div>
 </footer>
-<?php wp_footer(); ?><!-- this includes the script libraries defined in the lib/script file -->
-
+<?php wp_footer(); ?>
 <script type="text/javascript">
-	//load all functions from queue
-	
 	$.each(q, function(index,f){$(f);});
 </script>

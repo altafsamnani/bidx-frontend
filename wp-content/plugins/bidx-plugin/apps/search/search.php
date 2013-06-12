@@ -109,7 +109,7 @@ class search {
 			case "mapView" :
 				return $view->render( 'mapView.phtml' );
 			default :
-				return $view->render( 'default.phtml' );
+				return $view->render( 'listView.phtml' );
 		}
 	}
 

@@ -1,7 +1,6 @@
-/*@import url("assets/css/FlatUI/css/flat-ui.css");*/
 /*
 Theme Name: bidX Group Theme
-Author: Mattijs Spierings
+Author: Mattijs Spierings/Arne de Bree/Altaf Samnani/Jaap Gorjup
 Company: bidX;
 */
 
@@ -373,6 +372,10 @@ li {
 		background-position: 		0px 0px;
 		background-repeat: 			no-repeat;
 	}
+
+  .mainNav {
+  		margin-top:					-12px;
+  }
 
   .pageHeader {
     padding-top:        10px;

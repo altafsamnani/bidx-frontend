@@ -1,0 +1,35 @@
+<div class="iconbar iconbar-horizontal iconbar-info">
+	<ul>
+        <li><a href="/member" class="fui-user" alt="Profile"></a></li>
+		<li data-toggle="collapse" data-target="#nav-collapse-01">
+	    	<button type="button" class="btn btn-navbar" 
+					data-toggle="collapse" data-target="#nav-collapse-01"></button>
+        </li>        
+        <li>
+        	<a href="/inbox" class="fui-mail" alt="Inbox">
+            	<!-- If messages are available -->
+              	<span class="iconbar-unread">1</span>
+            </a>
+		</li>
+<?php
+if (property_exists($this -> sessionData, 'data') && 
+	false != ($roles = $this -> sessionData -> data -> roles)) {
+	if ( in_array( 'GroupAdmin', $roles ) || 
+		 in_array( 'GroupOwner', $roles ) ) {
+?>		
+ 	<li><a href="/admin" class="fui-cmd" alt="Admin"></a></li>
+<?php
+	}
+}
+?>
+    	<li>
+    		<a href="#" class="dropdown-toggle" data-toggle="dropdown" alt="Personal">
+    			<i class="fui-gear"></i>
+    		</a>
+    		<ul class="dropdown-menu">
+				<li><a href="#leaveGroup">Leave this group</a></li>
+				<li><a href="#messageOwner">Message to Group owner</a></li>
+    		</ul>
+    	</li>
+	</ul>
+</div>

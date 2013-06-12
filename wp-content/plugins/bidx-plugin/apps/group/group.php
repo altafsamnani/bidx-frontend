@@ -61,11 +61,13 @@ class group {
 				$view->group = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-intro.phtml' );
 			case "group-header" :
-        $groupSvc->isRedirectCheck = false;
+        		$groupSvc->isRedirectCheck = false;
 				$view->group = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-header.phtml' );
 			case "profile-dropDown" :
 				return $view->render( 'profile-dropdown.phtml' );
+			case "navbar" :
+				return $view->render( 'navbar.phtml' );
 			default :
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-list.phtml' );
