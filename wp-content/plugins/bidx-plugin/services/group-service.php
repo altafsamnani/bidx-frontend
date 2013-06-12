@@ -49,11 +49,11 @@ class GroupService extends APIbridge {
 			// It wasn't there, so regenerate the data and save the transient
 			$session = BidxCommon :: $staticSession;
 			$this -> getLogger() -> trace($session);
-			if (property_exists($session, 'data')) {
+			if ( property_exists( $session, 'data' ) ) {
 				$group_id =  $session -> data -> currentGroup;
 			}
-			if ($group_id == null) {
-				$this -> getLogger() -> trace('finding out id of ' . $session -> bidxGroupDomain);
+			if ( $group_id == null ) {
+				$this -> getLogger() -> trace( 'finding out id of ' . $session -> bidxGroupDomain );
 				$group_id = $this->getGroupId( $session -> bidxGroupDomain );
 			}
 			
@@ -63,7 +63,7 @@ class GroupService extends APIbridge {
 			
 	} else {
 		
-		$result = $this->callBidxAPI('groups/' . $group_id, array(), 'GET');
+		$result = $this->callBidxAPI( 'groups/' . $group_id, array(), 'GET' );
 	}
 	
 	return $result;
