@@ -93,6 +93,9 @@
 					$form.data( "form", data );
 
 					if( data.valid ) {
+
+						$callToAction.addClass( "disabled" );
+
 						methods.submitForm.apply( $form );
 					}
 				});
@@ -174,6 +177,12 @@
 					data: $form.find(":input:not(.ignore)").serialize() + "&apiurl=" + options.apiurl +  "&apimethod=" + options.apimethod,
 					async: true})
 					.always(function(data){
+
+						if ( options.callToAction )
+						{
+							$( options.callToAction ).removeClass( "disabled" );
+						}
+
 						if(data) {
 							if(data.status === 'OK') {
 								if(data.submit) {
