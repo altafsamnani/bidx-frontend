@@ -518,10 +518,11 @@ body.home .hero-block {
 *
 ********************************************************************************************/
 
-.row-fluid .control-group input {
-    height:         auto;
-    box-sizing:    border-box;
+.row-fluid textarea, .row-fluid input[type="text"], .row-fluid input[type="password"], .row-fluid input[type="datetime"], .row-fluid input[type="datetime-local"], .row-fluid input[type="date"], .row-fluid input[type="month"], .row-fluid input[type="time"], .row-fluid input[type="week"], .row-fluid input[type="number"], .row-fluid input[type="email"], .row-fluid input[type="url"], .row-fluid input[type="search"], .row-fluid input[type="tel"], .row-fluid input[type="color"], .row-fluid .uneditable-input {
+    height:             21px;  /* let's just use the same height as a regular row */
 }
+
+
 
     .highlight {
         box-shadow: 0 0 0 3px #DFDFDF inset !important;

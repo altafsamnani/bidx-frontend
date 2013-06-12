@@ -1,6 +1,6 @@
-	<div class=" clearfix input-prepend">
-		<form class="navbar-search" method="get" action="/search">
-    		<input type="text" name="q" class="search-query" placeholder="Search" value="<?php echo isset( $_REQUEST[ 'q' ] ) ? $_REQUEST['q'] : ''; ?>">
-    		<button type="submit" class="btn"><i class="icon-search"></i></button>
-    	</form>
-	</div>
+<form class="form-search">
+    <div class="input-append">
+        <input type="text" class="search-query search-query-rounded" name="q" placeholder="Search" value="<?php echo isset( $_REQUEST[ 'q' ] ) ? $_REQUEST['q'] : ''; ?>">
+        <button type="submit" class="btn"><span class="fui-search"></span></button>
+    </div>
+</form>

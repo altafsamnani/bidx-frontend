@@ -9,22 +9,22 @@
 					<a href="/login" class="btn btn-primary btn-block">Login</a>
 				</div>
 				<div class="pull-right span2">
-					<a href="/register" class="btn btn-primary btn-block">Register</a>	
+					<a href="/register" class="btn btn-primary btn-block">Register</a>
 				</div>
 			</div>
-			<div class="row-fluid">
-				<nav class="nav-main mainNav span8" role="navigation">
+			<div>
+				<nav class="nav-main mainNav" role="navigation">
 					<?php
 						if (has_nav_menu('group_dashboard_navigation')) :
 							wp_nav_menu(array('theme_location' => 'group_dashboard_navigation', 'menu_class' => 'nav'));
 						endif;
 					?>
 				</nav>
-				<div class="pull-right span4 mainNav">
-			     	<?php get_template_part('templates/searchform'); ?> 
+				<div class="pull-right">
+			     	<?php get_template_part('templates/searchform'); ?>
 		        </div>
 			</div>
 		</div>
 	</div>
-</header>				
+</header>
 
