@@ -216,8 +216,8 @@
 
     // Grab the snippets from the DOM
     //
-    snippets.$attachment        = $snippets.children( ".attachmentItem"     ).remove();
-    snippets.$previousBusiness  = $snippets.children( ".previousBusiness"   ).remove();
+    snippets.$attachment        = $snippets.children( ".attachmentItem"         ).remove();
+    snippets.$previousBusiness  = $snippets.children( ".previousBusinessItem"   ).remove();
 
 
     // Populate the dropdowns with the values, TODO: fetch the options from the server
@@ -271,13 +271,79 @@
         $toggles.filter( ".togglePrevRunBusiness" )[ fn ]();
     } );
 
+    // Wire up the delete button for the previous busienss. Since this is a dynamic built up list we are delegating it
+    //
+    $previousBusinessContainer.delegate( "[href$=#removePreviousBusiness]", "click", function( e )
+    {
+        e.preventDefault();
+
+        var $btn                    = $( this )
+        ,   $previousBusinessItem   = $btn.closest( ".previousBusinessItem" )
+        ;
+
+        $previousBusinessItem.remove();
+    } );
+
     // Add the snippet for another run business
     //
-    var _addPreviousBusiness = function( data )
+    var _addPreviousBusiness = function( index, previousBusiness )
     {
-        var $previousBusiness = snippets.$previousBusiness.clone();
+        if ( !index )
+        {
+            index = $previousBusinessContainer.find( ".previousBusinessItem" ).length;
+        }
 
-        $previousBusinessContainer.append( $previousBusiness );
+        var $previousBusiness = snippets.$previousBusiness.clone()
+        ,   inputNamePrefix = "previousBusiness[" + index + "]"
+        ;
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $previousBusiness.find( "input, select, textarea" ).each( function( )
+        {
+            var $input = $( this );
+
+            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
+        } );
+
+        if ( previousBusiness )
+        {
+            $.each( fields.previousBusiness, function( j, f )
+            {
+                var $input  = $previousBusiness.find( "[name='" + inputNamePrefix + "." + f + "']" )
+                ,   value   = bidx.utils.getValue( previousBusiness, f )
+                ;
+
+                $input.each( function()
+                {
+                    bidx.utils.setElementValue( $( this ), value  );
+                } );
+            } );
+        }
+
+        // Find a row that has room or add a new row
+        //
+        var $rowWithRoom;
+        $previousBusinessContainer.children( ".row-fluid" ).each( function( )
+        {
+            var $row = $( this );
+
+            if ( $row.children().length < 3 )
+            {
+                $rowWithRoom = $row;
+                return false;
+            }
+        } );
+
+        if ( !$rowWithRoom )
+        {
+            $rowWithRoom = $( "<div />", { "class": "row-fluid" } );
+
+            $previousBusinessContainer.append( $rowWithRoom );
+        }
+
+        $rowWithRoom.append( $previousBusiness );
     };
 
     // Add an empty previous business block
@@ -294,15 +360,15 @@
     //
     var _populateScreen = function()
     {
+        // Start by setting the toggles false, will switch to true if needed
+        //
+        $togglePrevRunBusiness.filter( "[value='false']" ).prop( "checked", true );
+
         $.each( fields._root, function( i, f )
         {
             var $input  = $editForm.find( "[name='" + f + "']" )
             ,   value   = bidx.utils.getValue( member, "bidxEntrepreneurProfile." + f )
             ;
-
-            // HTML Unescape the values
-            //
-            value = $( "<div />" ).html( value ).text();
 
             $input.each( function()
             {
@@ -317,50 +383,15 @@
 
         // Now the nested objects
         //
-        $.each( [ "previousBusiness" ], function()
+        var previousBusiness = bidx.utils.getValue( member, "bidxEntrepreneurProfile.previousBusiness", true );
+
+        if ( previousBusiness )
         {
-            var nest    = this
-            ,   items   = bidx.utils.getValue( member, "bidxEntrepreneurProfile." + nest, true )
-            ;
-
-            if ( items )
+            $.each( previousBusiness, function( i, item )
             {
-                $.each( items, function( i, item )
-                {
-                    // Clone the snippet
-                    //
-                    var $item           = snippets[ "$" + nest ].clone()
-                    ,   inputNamePrefix = nest + "[" + i + "]"
-                    ;
-
-                    // Update all the input elements and prefix the names with the right index
-                    // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
-                    //
-                    $item.find( "input, select, textarea" ).each( function( )
-                    {
-                        var $input = $( this );
-
-                        $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
-                    } );
-
-                    $.each( fields[ nest ], function( j, f )
-                    {
-                        var $input  = $editForm.find( "[name='" + inputNamePrefix + "." + f + "']" )
-                        ,   value   = bidx.utils.getValue( item, f )
-                        ;
-
-                        // HTML Unescape the values
-                        //
-                        value = $( "<div />" ).html( value ).text();
-
-                        $input.each( function()
-                        {
-                            bidx.utils.setElementValue( $( this ), value  );
-                        } );
-                    } );
-                } );
-            }
-        } );
+                _addPreviousBusiness( i, item );
+            } );
+        }
 
 // TODO: CV
 
@@ -375,6 +406,15 @@
                 bidx.utils.log( "attachment", attachment );
                 _addAttachmentToScreen( attachment );
             } );
+        }
+
+        // Fire of the toggle controls so the UI get's updated to it's current values
+        //
+        $togglePrevRunBusiness.trigger( "change" );
+
+        if ( $.isFunction( $togglePrevRunBusiness.radio ))
+        {
+            $togglePrevRunBusiness.filter( ":checked" ).radio( "setState" );
         }
     };
 
@@ -429,34 +469,38 @@
         // Collect the nested objects
         // !! only written to handle nested objects that are arrays !!
         //
-        $.each( [ "previousBusiness" ], function()
+        var nest        = "previousBusiness"
+        ,   i           = 0
+        ,   count       = $editForm.find( ".previousBusinessItem" ).length
+        ,   memberPath  = "bidxEntrepreneurProfile." + nest
+        ,   item        = bidx.utils.getValue( member, memberPath, true )
+        ;
+
+        // Property not existing? Add it as an empty array holding an empty object
+        //
+        if ( !item )
         {
-            var nest        = this
-            ,   i           = 0
-            ,   memberPath  = "bidxEntrepreneurProfile." + nest
-            ,   item        = bidx.utils.getValue( member, memberPath, true )
-            ;
+            item = [ {} ];
+            bidx.utils.setValue( member, memberPath, item );
+        }
 
-            // Property not existing? Add it as an empty array holding an empty object
-            //
-            if ( !item )
+        for ( i = 0; i < count; i++ )
+        {
+            if ( !item[ i ] )
             {
-                item = [ {} ];
-                bidx.utils.setValue( member, memberPath, item );
+                item[ i ] = {};
             }
-
-            // TODO: make i itterate
 
             $.each( fields[ nest ], function( j, f )
             {
-                var inputPath   = "personalDetails." + nest + "[" + i + "]." + f
+                var inputPath   = nest + "[" + i + "]." + f
                 ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
                 ,   value       = bidx.utils.getElementValue( $input )
                 ;
 
                 bidx.utils.setValue( item[ i ], f, value );
             } );
-        } );
+        }
     };
 
     // This is the startpoint
@@ -608,13 +652,6 @@
             return;
         }
 
-        // Remove attachment
-        //
-        if ( bidx.utils.getValue( member, "bidxEntrepreneurProfile.attachment" ) )
-        {
-            delete member.bidxEntrepreneurProfile.attachment;
-        }
-
         // Inform the API we are updating the member profile
         //
         member.bidxEntityType = "bidxEntrepreneurProfile";
@@ -628,7 +665,7 @@
         ,   {
                 memberId:       memberId
             ,   groupDomain:    bidx.common.groupDomain
-            ,   data:           member
+            ,   data:           member.bidxEntrepreneurProfile
             ,   success:        function( response )
                 {
                     bidx.utils.log( "member.save::success::response", response );

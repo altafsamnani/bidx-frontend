@@ -192,16 +192,16 @@ body.bidx-edit span.scrollPositionMarker {
 *
 ********************************************************************************************/
 
-	header {
-		background-color: #FFF;
+header {
+	background-color: #FFF;
 
-		height:auto;
-		z-index:200;
-	}
+	height:auto;
+	z-index:200;
+}
 
-	.dropdown-hover:hover > ul.dropdown-menu{
-	    display: 					block;
-	}
+.dropdown-hover:hover > ul.dropdown-menu{
+    display: 					block;
+}
 
 
 	header.banner .navbar-inner {
@@ -241,6 +241,10 @@ body.bidx-edit span.scrollPositionMarker {
 	header.banner .nav {
 		margin-right: 				0;
 	}
+
+    header.banner .form-search {
+        margin:                     0;
+    }
 
 	header.banner .nav-pills > li > a {
 		color: 						#555;
@@ -482,17 +486,19 @@ footer .social-footer {
           box-sizing: border-box;
 }
 
-	input[type="file"] {
-		height: auto;
-	}
+input[type="file"] {
+	height: auto;
+}
 
-	textarea {
-		min-height: 100px;
-	}
+textarea {
+	min-height: 100px;
+}
 
-	select {
-		padding: 8px 20px;
-	}
+select {
+	width:                  100%;
+    height:                 41px;
+    margin-bottom:          0;
+}
 
 	form label {
 		font-weight: 700;

@@ -61,8 +61,11 @@
                         </div>
                     </div>
 
-                    <div class="row-fluid toggle togglePrevRunBusiness">
-                        <div class="previousBusinessContainer"></div>
+                    <div class="toggle togglePrevRunBusiness previousBusinessContainer">
+                        <div class="row-fluid"></div>
+                    </div>
+
+                    <div class="toggle togglePrevRunBusiness">
                         <a href="#addPreviousBusiness" class="btn btn-large btn-block btn-primary">Add another previous business</a>
                     </div>
                 </fieldset>
@@ -110,11 +113,11 @@
     </div>
 
     <div class="snippets hide">
-        <div class="previousBusinessItem">
+        <div class="previousBusinessItem span4">
             <div class="control-group formfield">
                 <label class="control-label">Name of company</label>
                 <div class="controls">
-                    <input type="text" name="company" placeholder="Please type the name of your previous company">
+                    <input type="text" name="company" placeholder="Please type the name of the company">
                 </div>
             </div>
 
@@ -122,16 +125,17 @@
                 <label class="control-label">What happened?</label>
                 <div class="controls">
                     <select name="businessOutcome"></select>
-
                 </div>
             </div>
 
             <div class="control-group formfield">
                 <label class="control-label">Url of company website?</label>
                 <div class="controls">
-                    <input type="text" name="webSite" placeholder="Please type the name of your previous company">
+                    <input type="text" name="webSite" placeholder="Please type the URL of the company">
                 </div>
             </div>
+
+            <a href="#removePreviousBusiness" class="btn btn-danger btn-mini btn-block">Remove this business</a>
         </div>
 
         <div class="fow-fluid clearfix attachmentItem">

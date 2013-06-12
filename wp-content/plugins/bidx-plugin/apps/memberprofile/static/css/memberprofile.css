@@ -64,6 +64,13 @@
     line-height:            18px;
 }
 
+.previousBusinessItem {
+    margin-bottom:          20px;
+}
+
+.previousBusinessContainer {
+    margin-bottom:          10px;
+}
 
 .profile-block {
     position:               relative;
