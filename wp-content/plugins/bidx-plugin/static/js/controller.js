@@ -29,11 +29,37 @@
         $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
     }
 
+    // Navigate to a certain app (and state within the app)
+    //
+    var _navigateToApp = function( toApp, toState, section, id )
+    {
+        app     = bidx[ toApp ];
+
+        if ( !app )
+        {
+            bidx.utils.error( "bidx::controller trying to loading ", toApp, " but that app is not loaded!" );
+            router.navigate( "" );
+            return;
+        }
+
+        var newHash = app.navigate( toState, section, id );
+
+        _showMainState( state );
+
+        $element = app.$element;
+
+        if ( newHash )
+        {
+            this.navigate( newHash );
+        }
+    };
+
     // Router for main state
     //
     var AppRouter = Backbone.Router.extend(
     {
-        routes: {
+        routes:
+        {
             'editMember(/:id)(/:section)':          'editMember'
 
         ,   'editEntrepreneur(/:id)(/:section)':    'editEntrepreneur'
@@ -53,18 +79,8 @@
             bidx.utils.log( "AppRouter::editMember", id, section );
 
             state   = "editMember";
-            app     = bidx.memberprofile;
 
-            var newHash = bidx.memberprofile.navigate( "edit", section, id );
-
-            _showMainState( state );
-
-            $element = bidx.memberprofile.$element;
-
-            if ( newHash )
-            {
-                this.navigate( newHash );
-            }
+            _navigateToApp( "memberprofile", "edit", section, id );
         }
 
     ,   editEntrepreneur:             function( id, section )
@@ -72,17 +88,8 @@
             bidx.utils.log( "AppRouter::editEntrepreneur", id, section );
 
             state       = "editEntrepreneur";
-            app         = bidx.entrepreneurprofile;
-            $element    = bidx.entrepreneurprofile.$element;
 
-            var newHash = bidx.entrepreneurprofile.navigate( "edit", section, id );
-
-            _showMainState( state );
-
-            if ( newHash )
-            {
-                this.navigate( newHash );
-            }
+            _navigateToApp( "entrepreneurprofile", "edit", section, id );
         }
 
     ,   editCompany:             function( id, section )
@@ -90,34 +97,16 @@
             bidx.utils.log( "AppRouter::editCompany", id, section );
 
             state       = "editCompany";
-            app         = bidx.company;
-            $element    = bidx.company.$element;
 
-            var newHash = bidx.company.navigate( "edit", section, id );
-
-            _showMainState( state );
-
-            if ( newHash )
-            {
-                this.navigate( newHash );
-            }
+            _navigateToApp( "company", "edit", section, id );
         }
     ,   createCompany:          function()
         {
             bidx.utils.log( "AppRouter::createCompany" );
 
             state       = "editCompany";
-            app         = bidx.company;
-            $element    = bidx.company.$element;
 
-            var newHash = bidx.company.navigate( "create" );
-
-            _showMainState( state );
-
-            if ( newHash )
-            {
-                this.navigate( newHash );
-            }
+            _navigateToApp( "company", "create" );
         }
     ,   show:                   function()
         {
