@@ -220,6 +220,7 @@
                 {
                     url:            url
                 ,   method:         options.method
+                ,   type:           options.method
                 ,   dataType:       "json"
                 ,   success:        options.success
                 ,   error:          options.error
