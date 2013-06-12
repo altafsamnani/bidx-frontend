@@ -283,6 +283,11 @@ body.bidx-edit span.scrollPositionMarker {
 		display: 					inline;
 	}
 
+    header.banner .mainNav .nav > li > a {
+        padding-top:                14px;
+        padding-bottom:             14px;
+    }
+
 	header.banner .topNav {
 		margin-top: 				20px;
 	}
@@ -294,6 +299,8 @@ body.bidx-edit span.scrollPositionMarker {
 
 	header.banner .navbar-search {
 		margin-right: 				0;
+        padding-top:                0;
+        padding-bottom:             0;
 	}
 
 	header.banner .nav {
@@ -339,9 +346,8 @@ body.bidx-edit span.scrollPositionMarker {
 		background-repeat: 			no-repeat;
 	}
 
-  .mainNav {
-  		margin-top:					-12px;
-  }
+
+
 
   .pageHeader {
     padding-top:        10px;
