@@ -761,6 +761,11 @@
         }
     };
 
+    var reset = function()
+    {
+        state = null;
+    };
+
     // Expose
     //
     var entrepreneurprofile =
@@ -768,6 +773,7 @@
         attachmentUploadDone:       attachmentUploadDone
     ,   cvUploadDone:               cvUploadDone
     ,   navigate:                   navigate
+    ,   reset:                      reset
 
     ,   $element:                   $element
 
