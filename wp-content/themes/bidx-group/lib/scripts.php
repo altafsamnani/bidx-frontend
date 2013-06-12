@@ -43,6 +43,8 @@ function roots_scripts() {
     wp_register_script( 'jquery-placeholder',       get_template_directory_uri() . '/assets/js/vendor/jquery.placeholder.js',           array( 'jquery' ),      '2.0.7',            true );
     wp_register_script( 'jquery-stacktable',        get_template_directory_uri() . '/assets/js/vendor/jquery.stacktable.js',            array( 'jquery' ),      '20130610',         true );
 
+    wp_register_script( 'bidx-flatui',              get_template_directory_uri() . '/assets/js/bidx-flatui.js',                         array( 'jquery' ),      '20130610',         true );
+
     wp_register_script( 'holder',                   get_template_directory_uri() . '/assets/js/vendor/holder-1.9.js',                   false,                  '1.9',              true );
 
     // Enqueue the scripts
@@ -56,6 +58,8 @@ function roots_scripts() {
 
     wp_enqueue_script( 'flatui-checkbox' );
     wp_enqueue_script( 'flatui-radio' );
+
+    wp_enqueue_script( 'bidx-flatui' );
 
     wp_enqueue_script( 'jquery-tagsinput' );
     wp_enqueue_script( 'jquery-placeholder' );
