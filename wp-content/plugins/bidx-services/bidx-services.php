@@ -825,6 +825,36 @@ function bidx_wordpress_pre_action ($url = 'default', $file_values = NULL)
             $params['domain'] = $domain;
             break;
 
+        case 'entrepreneurprofilecv':
+            $response['status'] = 'ok';
+            $id = $params['entrepreneurProfileId'];
+            $domain = $params['domain'];
+            unset ($params);
+
+            $params['path'] = '/cv';
+            $params['purpose'] = 'CV';
+
+            $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
+
+            $params['id'] = $id;
+            $params['domain'] = $domain;
+            break;
+
+        case 'entrepreneurprofileattachment':
+            $response['status'] = 'ok';
+            $id = $params['entrepreneurProfileId'];
+            $domain = $params['domain'];
+            unset ($params);
+
+            $params['path'] = '/attachment';
+            $params['purpose'] = 'attachment';
+
+            $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
+
+            $params['id'] = $id;
+            $params['domain'] = $domain;
+            break;
+
         case 'companylogo':
             $response['status'] = 'ok';
             $id = $params['companyProfileId'];
@@ -953,6 +983,8 @@ function allowed_file_extension ($type, $file_type)
             }
             break;
         case 'memberprofileattachment':
+        case 'entrepreneurprofilecv':
+        case 'entrepreneurprofileattachment':
             $is_allowed = true;
             break;
     }
