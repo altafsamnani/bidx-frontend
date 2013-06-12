@@ -84,66 +84,6 @@ li {
 	list-style-type: none;
 }
 
-
-.button {
- 	font-size:1.1em;
-    font-weight: bold;
-    text-shadow:0 -1px 0 #1d701d;
-
-	display: -moz-inline-block;
-    display:inline-block;
-    zoom: 1;
-	*display: inline;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-}
-
-.primary {
-	background-color: #339933;
-	padding:10px 20px;
-	color: #FFF;
-	text-align: center;
-}
-
-.primary:hover{
-    background-color: #339933;
-    color: white;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #339933), color-stop(0.3, #3ebd3e),color-stop(0.7, #3ebd3e),color-stop(0.95, #339933));
-    background:-moz-linear-gradient(top, #339933 5%, #3ebd3e 30%, #3ebd3e 70%, #339933 95%);
-    background:-webkit-linear-gradient(top, #339933 5%, #3ebd3e 30%, #3ebd3e 70%, #339933 95%);
-    background:-o-linear-gradient(top, #339933 5%, #3ebd3e 30%, #3ebd3e 70%, #339933 95%);
-    background:-ms-linear-gradient(top, #339933 5%, #3ebd3e 30%, #3ebd3e 70%, #339933 95%);
-    background:linear-gradient(to bottom, #339933 5%, #3ebd3e 30%, #3ebd3e 70%, #339933 95%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#339933', endColorstr='#3ebd3e',GradientType=0);
-}
-
-.secondary {
-	background-color: #666666;
-	padding:10px 20px;
-	color: #FFF;
-}
-
-.secondary:hover{
-    background-color: #666666;
-    color: white;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #666666), color-stop(0.3, #767676),color-stop(0.7, #767676),color-stop(0.95, #666666));
-    background:-moz-linear-gradient(top, #666666 5%, #767676 30%, #767676 70%, #666666 95%);
-    background:-webkit-linear-gradient(top, #666666 5%, #767676 30%, #767676 70%, #666666 95%);
-    background:-o-linear-gradient(top, #666666 5%, #767676 30%, #767676 70%, #666666 95%);
-    background:-ms-linear-gradient(top, #666666 5%, #767676 30%, #767676 70%, #666666 95%);
-    background:linear-gradient(to bottom, #666666 5%, #767676 30%, #767676 70%, #666666 95%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#767676',GradientType=0);
-}
-.primary:active, .secondary:active  {
-	position: relative;
-	top:1px;
- }
-.primary:focus, .secondary:focus {
-	color: #FFF;
-}
-
 .sprite{
     background:url(assets/img/sprite.png) no-repeat;
 }
