@@ -28,17 +28,6 @@
     margin:                 0;
 }
 
-#editMember form fieldset {
-    position:               relative;
-    padding-top:            50px;
-}
-
-#editMember form legend {
-    position:               absolute;
-    top:                    8px;
-    border-bottom:          0;
-}
-
 #editMember .languageList label,
 #editMember .languageList p {
     margin-top:             6px;

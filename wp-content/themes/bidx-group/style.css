@@ -500,6 +500,9 @@ select {
     margin-bottom:          0;
 }
 
+form {
+}
+
 	form label {
 		font-weight: 700;
 		color: #9DA09C;
@@ -509,6 +512,16 @@ select {
 		font-weight: normal;
 	}
 
+    form fieldset {
+        position:               relative;
+        padding-top:            50px;
+    }
+
+    form legend {
+        position:               absolute;
+        top:                    8px;
+        border-bottom:          0;
+    }
 	.highlight {
 		box-shadow: 0 0 0 3px #DFDFDF inset !important;
 	}
