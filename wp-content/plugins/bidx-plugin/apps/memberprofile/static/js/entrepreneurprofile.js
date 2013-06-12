@@ -10,6 +10,8 @@
     ,   $btnAddPreviousBusiness     = $editForm.find( "[href$='#addPreviousBusiness']" )
     ,   $previousBusinessContainer  = $editForm.find( ".previousBusinessContainer" )
 
+    ,   $cvContainer                = $editForm.find( ".cvContainer" )
+
     ,   $toggles                    = $element.find( ".toggle" ).hide()
     ,   $togglePrevRunBusiness      = $element.find( "[name='prevRunBusiness']"      )
 
@@ -356,6 +358,36 @@
     } );
 
 
+    // Add the CV to the screen (or show the 'there is no cv')
+    //
+    var _addCVToScreen = function( attachment )
+    {
+        var $hasCV              = $cvContainer.find( ".hasCV" )
+        ,   $noCV               = $cvContainer.find( ".noCV" )
+        ,   uploadedDateTime
+        ,   imageSrc
+        ;
+
+        if ( !attachment )
+        {
+            $hasCV.hide();
+            $noCV.show();
+        }
+        else
+        {
+            uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime );
+
+            $hasCV.find( ".documentName"       ).text( attachment.documentName );
+            $hasCV.find( ".uploadedDateTime"   ).text( uploadedDateTime );
+
+            $hasCV.find( ".documentLink" ).attr( "href", attachment.document );
+
+            $hasCV.show();
+            $noCV.hide();
+        }
+    };
+
+
     // Use the retrieved member object to populate the form and other screen elements
     //
     var _populateScreen = function()
@@ -393,11 +425,11 @@
             } );
         }
 
-// TODO: CV
+        _addCVToScreen( bidx.utils.getValue( member, "bidxEntrepreneurProfile.cv" ) );
 
         // Attachments
         //
-        var attachments         = bidx.utils.getValue( member, "bidxEntrepeneurProfile.attachment", true );
+        var attachments         = bidx.utils.getValue( member, "bidxEntrepreneurProfile.attachment", true );
 
         if ( attachments)
         {
@@ -510,6 +542,10 @@
         // Reset any state
         //
         $previousBusinessContainer.empty();
+        $cvContainer.find( ".noCV"  ).hide();
+        $cvContainer.find( ".hasCV" ).hide();
+
+
 
         // Inject the save and button into the controls
         //
@@ -787,8 +823,7 @@
         }
         else
         {
-// TODO implement proper handling of this
-            alert( "cv upload done.." );
+            _addCVToScreen( result.data );
 
             // Clear the input by cloneing it
             //

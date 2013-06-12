@@ -73,20 +73,26 @@
                 <fieldset class="well">
                     <legend>CV</legend>
 
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <div class="fow-fluid">
-                                <div class="span4">
-                                    <img src="/wp-content/plugins/bidx-plugin/static/img/iconAddDocument.png">
-                                </div>
-                                <div class="span8 formfield">
-                                    <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofilecv"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.cvUploadDone"}'/>
-                                </div>
+                    <div class="fow-fluid">
+                        <div class="span4 cvContainer">
+
+                            <div class="hasCV">
+                                <h3 class="documentName"></h3>
+                                <p class="uploadedDateTime"></p>
+
+                                <a href="#" class="documentLink">Download CV</a>
                             </div>
+
+                            <div class="noCV">
+                                <i>No CV uploaded yet</i>
+                            </div>
+
+                        </div>
+                        <div class="span8 formfield">
+                            <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofilecv"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.cvUploadDone"}'/>
                         </div>
                     </div>
                 </fieldset>
-
 
                 <fieldset class="well">
                     <legend>Other documents</legend>

@@ -512,7 +512,8 @@ form {
 		font-weight: normal;
 	}
 
-    form fieldset {
+    form fieldset,
+    form fieldset.well {
         position:               relative;
         padding-top:            50px;
     }
@@ -522,6 +523,7 @@ form {
         top:                    8px;
         border-bottom:          0;
     }
+
 	.highlight {
 		box-shadow: 0 0 0 3px #DFDFDF inset !important;
 	}
