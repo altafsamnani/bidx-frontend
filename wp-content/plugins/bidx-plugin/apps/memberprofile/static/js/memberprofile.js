@@ -864,7 +864,7 @@
                 return;
             }
 
-            $btn.addClass( ".disabled" );
+            $btn.addClass( "disabled" );
 
             bidx.api.call(
                 "entityDocument.destroy"
@@ -1101,7 +1101,9 @@
             //
             var $input = result.el;
 
-            $input.replaceWith( $input.clone( true ) );
+            $input.replaceWith( $input.clone() );
+
+            $input.fileUpload( { "parentForm": $input.prop( "form" ) });
         }
     };
 

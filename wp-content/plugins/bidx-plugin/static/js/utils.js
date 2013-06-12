@@ -2,6 +2,21 @@
 {
     var months = [ "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
+    var populateDropdown = function( $el, values )
+    {
+        $.each( values, function( i, option )
+        {
+            var $option = $(
+                "<option />"
+            ,   {
+                    value:      option.value
+                }
+            ).text( option.label );
+
+            $el.append( $option );
+        } );
+    };
+
     var setElementValue = function( $el, value )
     {
         var elType      = $el.attr( 'type' )
@@ -306,6 +321,7 @@
     ,   parseTimestampToDateStr:    parseTimestampToDateStr
     ,   setElementValue:            setElementValue
     ,   getElementValue:            getElementValue
+    ,   populateDropdown:           populateDropdown
 
     ,   log:                        log
     ,   warn:                       warn

@@ -487,17 +487,17 @@ footer .social-footer {
 }
 
 input[type="file"] {
-	height: auto;
+	line-height:               18px;
 }
 
 textarea {
-	min-height: 100px;
+	min-height:                100px;
 }
 
 select {
-	width:                  100%;
-    height:                 41px;
-    margin-bottom:          0;
+	width:                     100%;
+    height:                     41px;
+    margin-bottom:              0;
 }
 
 form {

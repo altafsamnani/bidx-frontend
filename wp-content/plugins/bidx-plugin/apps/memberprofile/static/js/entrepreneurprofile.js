@@ -5,7 +5,7 @@
     ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                   = $element.find( ".snippets" )
 
-    ,   $attachments                = $editForm.find( ".attachments" )
+    ,   $attachmentsContainer       = $editForm.find( ".attachmentsContainer" )
 
     ,   $btnAddPreviousBusiness     = $editForm.find( "[href$='#addPreviousBusiness']" )
     ,   $previousBusinessContainer  = $editForm.find( ".previousBusinessContainer" )
@@ -41,6 +41,12 @@
             "company"
         ,   "businessOutcome"
         ,   "webSite"
+        ]
+
+    ,   attachment:
+        [
+            "purpose"
+        ,   "documentType"
         ]
     };
 
@@ -216,6 +222,42 @@
           }
     ];
 
+    var documentTypeOptions =
+    [
+        {
+        value: "agreement",
+        label: "Agreement"
+        },
+        {
+        value: "businessplan",
+        label: "Business plan"
+        },
+        {
+        value: "certificate",
+        label: "Certificate"
+        },
+        {
+        value: "contract",
+        label: "Contract"
+        },
+        {
+        value: "cv",
+        label: "CV"
+        },
+        {
+        value: "financialplan",
+        label: "Financial plan"
+        },
+        {
+        value: "letterintent",
+        label: "Letter of intent"
+        },
+        {
+        value: "other",
+        label: "Other"
+        }
+    ];
+
     // Grab the snippets from the DOM
     //
     snippets.$attachment        = $snippets.children( ".attachmentItem"         ).remove();
@@ -227,32 +269,18 @@
     var $focusIndustry = $editForm.find( "[name='focusIndustry']" );
     $focusIndustry.append( $( "<option value='' />" ).text( "Select your focus industry" ));
 
-    $.each( focusIndustryOptions, function( i, option )
-    {
-        var $option = $(
-            "<option />"
-        ,   {
-                value:      option.value
-            }
-        ).text( option.label );
-
-        $focusIndustry.append( $option );
-    } );
+    bidx.utils.populateDropdown( $focusIndustry, focusIndustryOptions );
 
     var $businessOutcome = snippets.$previousBusiness.find( "[name='businessOutcome']" );
     $businessOutcome.append( $( "<option value='' />" ).text( "Select the outcome of this business" ));
 
-    $.each( businessOutcomeOptions, function( i, option )
-    {
-        var $option = $(
-            "<option />"
-        ,   {
-                value:      option.value
-            }
-        ).text( option.label );
+    bidx.utils.populateDropdown( $businessOutcome, businessOutcomeOptions );
 
-        $businessOutcome.append( $option );
-    } );
+    var $documentType = snippets.$attachment.find( "[name='documentType']" );
+    $documentType.append( $( "<option value='' />" ).text( "Select the type" ));
+
+    bidx.utils.populateDropdown( $documentType, documentTypeOptions );
+
 
 
     // Disable disabled links
@@ -387,6 +415,81 @@
         }
     };
 
+    // Add the attachment to the screen, by cloning the snippet and populating it
+    //
+    var _addAttachmentToScreen = function( index, attachment )
+    {
+        if ( !attachment )
+        {
+            bidx.util.warn( "entrepreneurprofile::_addAttachmentToScreen: attachment is null!" );
+            return;
+        }
+
+        if ( !index )
+        {
+            index = $attachmentsContainer.find( ".attachmentItem" ).length;
+        }
+
+        var $attachment         = snippets.$attachment.clone()
+        ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
+        ,   inputNamePrefix     = "previousBusiness[" + index + "]"
+        ,   imageSrc
+        ;
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $attachment.find( "input, select, textarea" ).each( function( )
+        {
+            var $input = $( this );
+
+            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
+        } );
+
+        $attachment.data( "attachment", attachment );
+
+        $attachment.find( ".documentName"       ).text( attachment.documentName );
+        $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
+
+        var $purpose       = $attachment.find( "[name='purpose']" )
+        ,   $documentType  = $attachment.find( "[name='documentType']" )
+        ;
+
+        bidx.utils.setElementValue( $purpose,       attachment.purpose );
+        bidx.utils.setElementValue( $documentType,  attachment.documentType );
+
+        imageSrc =  attachment.mimeType.match( /^image/ )
+            ? attachment.document
+            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
+
+        $attachment.find( ".documentImage" ).attr( "src", imageSrc );
+
+        $attachment.find( ".documentLink" ).attr( "href", attachment.document );
+
+        // Find a row that has room or add a new row
+        //
+        var $rowWithRoom;
+        $attachmentsContainer.children( ".row-fluid" ).each( function( )
+        {
+            var $row = $( this );
+
+            if ( $row.children().length < 3 )
+            {
+                $rowWithRoom = $row;
+                return false;
+            }
+        } );
+
+        if ( !$rowWithRoom )
+        {
+            $rowWithRoom = $( "<div />", { "class": "row-fluid" } );
+
+            $attachmentsContainer.append( $rowWithRoom );
+        }
+
+        $rowWithRoom.append( $attachment );
+    };
+
 
     // Use the retrieved member object to populate the form and other screen elements
     //
@@ -436,7 +539,7 @@
             $.each( attachments, function( idx, attachment )
             {
                 bidx.utils.log( "attachment", attachment );
-                _addAttachmentToScreen( attachment );
+                _addAttachmentToScreen( idx, attachment );
             } );
         }
 
@@ -448,40 +551,6 @@
         {
             $togglePrevRunBusiness.filter( ":checked" ).radio( "setState" );
         }
-    };
-
-    // Add the attachment to the screen, by cloning the snippet and populating it
-    //
-    var _addAttachmentToScreen = function( attachment )
-    {
-        if ( attachment === null )
-        {
-            bidx.util.warn( "entrepreneurprofile::_addAttachmentToScreen: attachment is null!" );
-            return;
-        }
-
-
-        var $attachmentList     = $attachments.find( ".attachmentList" )
-        ,   $attachment         = snippets.$attachment.clone()
-
-        ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   imageSrc
-        ;
-
-        $attachment.data( "attachment", attachment );
-
-        $attachment.find( ".documentName"       ).text( attachment.documentName );
-        $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
-
-        imageSrc =  attachment.mimeType.match( /^image/ )
-            ? attachment.document
-            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
-
-        $attachment.find( ".documentImage" ).attr( "src", imageSrc );
-
-        $attachment.find( ".documentLink" ).attr( "href", attachment.document );
-
-        $attachmentList.append( $attachment );
     };
 
 
@@ -501,38 +570,41 @@
         // Collect the nested objects
         // !! only written to handle nested objects that are arrays !!
         //
-        var nest        = "previousBusiness"
-        ,   i           = 0
-        ,   count       = $editForm.find( ".previousBusinessItem" ).length
-        ,   memberPath  = "bidxEntrepreneurProfile." + nest
-        ,   item        = bidx.utils.getValue( member, memberPath, true )
-        ;
-
-        // Property not existing? Add it as an empty array holding an empty object
-        //
-        if ( !item )
+        $.each( [ "previousBusiness", "attachment" ], function()
         {
-            item = [ {} ];
-            bidx.utils.setValue( member, memberPath, item );
-        }
+            var nest        = this
+            ,   i           = 0
+            ,   count       = $editForm.find( "." + nest + "Item" ).length
+            ,   memberPath  = "bidxEntrepreneurProfile." + nest
+            ,   item        = bidx.utils.getValue( member, memberPath, true )
+            ;
 
-        for ( i = 0; i < count; i++ )
-        {
-            if ( !item[ i ] )
+            // Property not existing? Add it as an empty array holding an empty object
+            //
+            if ( !item )
             {
-                item[ i ] = {};
+                item = [ {} ];
+                bidx.utils.setValue( member, memberPath, item );
             }
 
-            $.each( fields[ nest ], function( j, f )
+            for ( i = 0; i < count; i++ )
             {
-                var inputPath   = nest + "[" + i + "]." + f
-                ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
-                ,   value       = bidx.utils.getElementValue( $input )
-                ;
+                if ( !item[ i ] )
+                {
+                    item[ i ] = {};
+                }
 
-                bidx.utils.setValue( item[ i ], f, value );
-            } );
-        }
+                $.each( fields[ nest ], function( j, f )
+                {
+                    var inputPath   = nest + "[" + i + "]." + f
+                    ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
+                    ,   value       = bidx.utils.getElementValue( $input )
+                    ;
+
+                    bidx.utils.setValue( item[ i ], f, value );
+                } );
+            }
+        } );
     };
 
     // This is the startpoint
@@ -603,7 +675,7 @@
 
         // Attachments
         //
-        $attachments.delegate( "a[href$=#deleteAttachment]", "click", function( e )
+        $attachmentsContainer.delegate( "a[href$=#deleteAttachment]", "click", function( e )
         {
             e.preventDefault();
 
@@ -618,7 +690,7 @@
                 return;
             }
 
-            $btn.addClass( ".disabled" );
+            $btn.addClass( "disabled" );
 
             bidx.api.call(
                 "entityDocument.destroy"
@@ -793,6 +865,8 @@
     };
 
 
+    // function called by file upload plugin when attachment upload is done
+    //
     var attachmentUploadDone = function( err, result )
     {
         bidx.utils.log( "attachmentUploadDone", err, result );
@@ -803,16 +877,19 @@
         }
         else
         {
-            _addAttachmentToScreen( result.data );
+            _addAttachmentToScreen( null, result.data );
 
             // Clear the input by cloneing it
             //
             var $input = result.el;
 
-            $input.replaceWith( $input.clone( true ) );
+            $input.replaceWith( $input.clone() );
+            $input.fileUpload( { "parentForm": $input.prop( "form" ) });
         }
     };
 
+    // function called by file upload plugin when cv upload is done
+    //
     var cvUploadDone = function( err, result )
     {
         bidx.utils.log( "cvUploadDone", err, result );
@@ -829,7 +906,8 @@
             //
             var $input = result.el;
 
-            $input.replaceWith( $input.clone( true ) );
+            $input.replaceWith( $input.clone() );
+            $input.fileUpload( { "parentForm": $input.prop( "form" ) });
         }
     };
 
