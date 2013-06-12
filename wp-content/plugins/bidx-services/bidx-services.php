@@ -1172,7 +1172,7 @@ function create_custom_role_capabilities ($blog_id)
     $new_role_added = add_role ('groupmember', 'Group Member', $new_user_caps_member);
 
     $new_user_caps_anonymous = array ('read' => true);
-    //$new_role_added = add_role ('groupanonymous', 'Group Anonymous', $new_user_caps_anonymous);
+    $new_role_added = add_role ('groupanonymous', 'Group Anonymous', $new_user_caps_anonymous);
 
 
 
@@ -1230,7 +1230,7 @@ function create_custom_role_capabilities ($blog_id)
 
     //Add Group Member Role
     $user_id_anonymous = wpmu_create_user ($group_anonymous_login, $group_password, $group_anonymous_email);
-    //add_user_to_blog ($blog_id, $user_id_anonymous, 'groupanonymous');
+    add_user_to_blog ($blog_id, $user_id_anonymous, 'groupanonymous');
 
 
 
