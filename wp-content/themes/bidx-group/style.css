@@ -276,6 +276,7 @@ body.bidx-edit span.scrollPositionMarker {
 
 	header.banner .brand img {
 		max-height: 				100px;
+        min-height:                 100px;
 	}
 
 	header.banner .brand h1 {
