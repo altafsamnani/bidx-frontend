@@ -207,7 +207,7 @@ abstract class APIbridge {
     $http = (is_ssl()) ? 'https://' : 'http://';
 		$current_url = $http  . $_SERVER['HTTP_HOST'] . $_SERVER[ 'REQUEST_URI' ];
 
-		$redirect_url =  $http  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode( $current_url );
+		$redirect_url =  $http  .$groupDomain.'.'.DOMAIN_CURRENT_SITE.'/login?q='.base64_encode( $current_url ).'&emsg='.base64_encode('Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.');
 
 		header( "Location: ".$redirect_url );
 		exit;

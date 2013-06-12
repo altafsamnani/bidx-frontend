@@ -1,16 +1,17 @@
 
 
-.top-padding75,#sectionContent{
+.top-padding75{
     padding-top:75px;
 }
-
+#sectionContent{
+    padding-top:30px;
+}
 
 .navli a {
     width:150px;
 }
-.bpsummary{
-    z-index:1030;
-    background:#FFF;
+.scrollcontent{
+    z-index: -1;
 }
 
 
