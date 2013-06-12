@@ -547,24 +547,16 @@ footer .social-footer {
 
 
 	input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="number"], select , textarea {
-	    color: #333333;
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		-ms-box-sizing: border-box;
 		box-sizing: border-box;
-
-	    font-size: 16px;
-	    height: 40px;
-	    line-height: 40px;
-	    padding: 0px 20px; /*override bootstrap padding */
-
 	}
 	input[type="file"] {
 		height: auto;
 	}
+
 	textarea {
-		padding-right: 0;
-		/*height:auto;*/
 		min-height: 100px;
 	}
 
