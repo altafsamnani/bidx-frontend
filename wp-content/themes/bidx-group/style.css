@@ -234,6 +234,16 @@ li {
 }
 
 
+span.scrollPositionMarker {
+    position:                   absolute;
+    top:                        -60px;
+}
+
+body.bidx-edit span.scrollPositionMarker {
+    top:                        -240px;
+}
+
+
 /* End Global styles */
 
 /*******************************************************************************************
@@ -248,32 +258,6 @@ li {
 		height:auto;
 		z-index:200;
 	}
-		header .subheader {
-			margin :20px 0;
-		}
-		header .subheader .branding {
-/*			width:70%;*/
-			float: left;
-
-
-		}
-		header .subheader .account-access {
-			width:30%;
-			text-align: right;
-			float:right;
-
-		}
-
-		header .nav-wrapper {
-			background-color: #323232;
-			min-height: 30px;
-			margin-bottom:20px;
-		}
-
-		header .nav-wrapper nav ul {
-			margin-bottom: 0;
-		}
-
 
 	.dropdown-hover:hover > ul.dropdown-menu{
 	    display: 					block;
@@ -285,14 +269,6 @@ li {
 		height: 					160px;
 	}
 
-	span.scrollPositionMarker {
-		position: 					absolute;
-		top: 						-60px;
-	}
-
-	body.bidx-edit span.scrollPositionMarker {
-		top: 						-240px;
-	}
 
 	header.banner .brand a {
 		margin-right: 				10px;
@@ -321,12 +297,7 @@ li {
 	}
 
 	header.banner .nav {
-		margin-right: 				0px;
-	}
-
-	header.banner .navbar-search input {
-		height: 					34px;
-	    line-height: 				34px;
+		margin-right: 				0;
 	}
 
 	header.banner .navbar-search select {
@@ -335,11 +306,6 @@ li {
 		line-height: 				34px;
 		font-size: 					13px;
 		margin-bottom: 				0;
-	}
-
-	header.banner .navbar-search button {
-		height: 					34px;
-		margin-top: 				0;
 	}
 
 	header.banner .nav-pills > li > a {
@@ -369,7 +335,7 @@ li {
 		line-height: 				32px;
 		vertical-align: 			text-top;
 		background-image: 			url("/wp-content/themes/bidx-group/assets/img/cog.png");
-		background-position: 		0px 0px;
+		background-position: 		0 0;
 		background-repeat: 			no-repeat;
 	}
 
@@ -395,16 +361,12 @@ li {
 
   .pageHeader .editControls {
     position:           absolute;
-    bottom:             0px;
-    right:              0px;
+    bottom:             0;
+    right:              0;
   }
 
   .pageHeader .editControls a {
     margin-left:        4px;
-  }
-
-  span.scrollPositionMarker {
-    top:                -240px;
   }
 
 	/************** GROUP DASHBARD *************************/
