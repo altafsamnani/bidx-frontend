@@ -62,13 +62,15 @@ class BidxCommon
      */
     public function processEntities ($subDomain)
     {
-
-        $entities = $this::$bidxSession[$subDomain]->data->entities;
-        foreach ($entities as $key => $value) {
-            $bidxEntityType = $value->bidxEntityType;
-            $bidxEntityValue = $value->bidxEntityId;
-            $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
-        }
+		if ( property_exists( $this::$bidxSession[$subDomain], 'data' ) )
+		{
+	        $entities = $this::$bidxSession[$subDomain]->data->entities;
+	        foreach ($entities as $key => $value) {
+	            $bidxEntityType = $value->bidxEntityType;
+	            $bidxEntityValue = $value->bidxEntityId;
+	            $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
+	        }
+		}
         return;
     }
 
