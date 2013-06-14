@@ -51,7 +51,6 @@ class search {
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/static/templates/' );
 
 		// 2. Cook query based on q or else from url
-
 		require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
 		$service = new SearchService( );
 
@@ -64,8 +63,8 @@ class search {
 
 
 		// 3. Parse data for preparsing for presentaions
-		if ( !property_exists( $view -> results, 'data') ) {
-			$data = array('numFound' => 0, 'error' => 'Communication failure' );
+		if ( !property_exists( $view -> results, 'data' ) ) {
+			$data = array( 'numFound' => 0, 'error' => 'Communication failure' );
 			$view -> results -> data = $data;
 		}
 
@@ -83,15 +82,17 @@ class search {
 					$backParam['start'] = $newIndex;
 				}
 				$view -> previousLink = BidxCommon:: buildHTTPQuery($backParam);
+				Logger :: getLogger('search') -> trace( 'previousLink : ' . $view -> previousLink );
 			}
 		}
 		//  navigation next
 		$numFound = $view -> results -> data -> numFound;
 		$start = $view -> results -> data -> start;
-		if ($numFound - ( $start + $rows ) > 1) {
+		if ($numFound - ( $start + $rows ) > 1 ) {
 			$nextParam = $view -> query;
 			$nextParam['start'] = $start + $rows;
-			$view -> nextLink = BidxCommon:: buildHTTPQuery($nextParam);
+			$view -> nextLink = BidxCommon:: buildHTTPQuery( $nextParam );
+			Logger :: getLogger( 'search' ) -> trace( 'nextLink : ' . $view -> nextLink );
 		}
 
 		// 4. Determine the view needed

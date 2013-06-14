@@ -9,7 +9,7 @@
 					<a href="/login" class="btn btn-primary btn-block">Login</a>
 				</div>
 				<div class="pull-right span2">
-					<a href="/register" class="btn btn-primary btn-block">Register</a>
+					<a href="/login/#register" class="btn btn-primary btn-block">Register</a>
 				</div>
 			</div>
 			<div>

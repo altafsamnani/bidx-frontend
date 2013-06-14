@@ -4,7 +4,7 @@
  -->	
  <?php 
  $numFound = 0;
- if ( property_exists($this -> results, 'data') ) {
+ if ( property_exists( $this -> results, 'data' ) ) {
 	 $docs = $this -> results -> data -> docs;
 	 $numFound = $this -> results -> data -> numFound;
  }
@@ -56,10 +56,9 @@
 					</a>
 				</td>
 				<td>
-					<em><?php echo $fullname ?></em>
-					<p><?php echo $doc -> professionaltitle_t ?></p>
-					<p><?php echo $doc -> countrylabel_s ?></p>
-					
+					<p><?php echo $fullname ?></p>
+					<?php echo $doc -> professionaltitle_t ?><br />
+					<?php echo $doc -> countrylabel_s ?>
 				</td>
 				<td>
 					<a class="fui-arrow-right" href="/member/<?php echo $doc -> userId ?>">view</a>
@@ -150,7 +149,7 @@
 				</td>
 				<td>
 					<a href="/business/<?php echo $doc -> userId ?>">
-						<?php if (property_exists( $doc , 'picturedoc_url' ) ) {
+						<?php if ( property_exists( $doc , 'picturedoc_url' ) ) {
 								$items = explode( '/', $doc -> 	picturedoc_url );
 								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
 							?>
@@ -174,20 +173,33 @@
 		} 
 	} ?>
 		</tbody>
-	</table>					
-<?php 	
-	if ( property_exists( $this, 'previousLink' ) ) {
+	</table>
+	<div class="row-fluid">
+		<div class="span6">					
+<?php 
+	if ( isset( $this -> previousLink ) ) { 
 	?>
-	<a href="?<?php echo $this -> previousLink ?>" class="btn">Previous</a>
+		<a href="?<?php echo $this -> previousLink ?>" class="btn btn-block btn-primary fui-arrow-left">Previous
+			<i class="fui-arrow-left pull-left"></i>
+		</a>
 	<?php
-	}
-	if ( property_exists( $this, 'nextLink' ) ) {
+	} ?>
+		</div>
+		<div class="span6">	
+<?php if ( isset( $this -> nextLink ) ) { 
 	?>
-	<a href="?<?php echo $this -> nextLink ?>" class="btn">Next</a>
+		<a href="?<?php echo $this -> nextLink ?>" class="btn btn-block btn-primary">Next
+			<i class="fui-arrow-right pull-right"></i>
+		</a>
 	<?php	
 	}	
-?>						
+?>	
 		</div>
+	</div>	
+	<div class="row-fluid">
+		&nbsp;
+	</div>				
+</div>
 <?php } ?>
 	
 		<div class="sidebar span4">
@@ -196,47 +208,78 @@
 			</div>
 			<div>
 			<ul class="nav nav-list">
-	            <li class="nav-header">Filters</li>
+	            <li class="nav-header">Find By Type</li>
 	            <li>
 	              <a href="#fakelink">
-	                UX Design
+	                Members Only
 	                <span class="nav-counter">19</span>
 	              </a>
 	            </li>
 	            <li class="active">
 	              <a href="#fakelink">
-	                Photography
+	                Entrepreneurs
 	                <span class="nav-counter">130</span>
 	              </a>
 	            </li>
 	            <li>
 	              <a href="#fakelink">
-	                Art
+	                Investors
 	                <span class="nav-counter">9</span>
 	              </a>
 	            </li>
+	            <li>
+	              <a href="#fakelink">
+	                Businesses
+	                <span class="nav-counter">9</span>
+	              </a>
+	            </li>	            
 	            <li class="divider"></li>
-	            <li class="nav-header">Condition</li>
+	            <li class="nav-header">Filters</li>
 	            <li>
-	              <a href="#fakelink">
-	                Brand new
-	                <span class="nav-counter">69</span>
-	              </a>
+	            	<label>Language</label>
+          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_language" style="display: none;">
+          			<div id="tags_language_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
+          				<div class="tagsinput-add-container" id="tags_language_addTag">
+          					<div class="tagsinput-add"></div>
+          					<input id="tags_language_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
+          				</div>
+          			</div>
 	            </li>
 	            <li>
-	              <a href="#fakelink">
-	                Read-used
-	                <span class="nav-counter">21</span>
-	              </a>
+	            	<label>Location</label>
+          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_location" style="display: none;">
+          			<div id="tags_location_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
+          				<div class="tagsinput-add-container" id="tags_location_addTag">
+          					<div class="tagsinput-add"></div>
+          					<input id="tags_location_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
+          				</div>
+          			</div>
 	            </li>
 	            <li>
-	              <a href="#fakelink">
-	                Work-used
-	                <span class="nav-counter">40</span>
-	              </a>
+	                <label>Industry</label>
+          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_industry" style="display: none;">
+          			<div id="tags_industry_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
+          				<div class="tagsinput-add-container" id="tags_industry_addTag">
+          					<div class="tagsinput-add"></div>
+          					<input id="tags_industry_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
+          				</div>
+          			</div>	                
 	            </li>
+	            <li>
+	                <label>Theme</label>
+          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_theme" style="display: none;">
+          			<div id="tags_theme_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
+          				<div class="tagsinput-add-container" id="tags_theme_addTag">
+          					<div class="tagsinput-add"></div>
+          					<input id="tags_theme_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
+          				</div>
+          			</div>	                
+	            </li>	            
 	          </ul>
 			</div>
 		</div>
+	</div>
+</div>
+		
 
 	

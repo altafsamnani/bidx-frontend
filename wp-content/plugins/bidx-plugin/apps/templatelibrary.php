@@ -70,6 +70,13 @@ class TemplateLibrary {
   }
 
   /**
+   * PHP Magic method for checking if isset
+   */
+  public function __isset( $key ) {
+	return key_exists( $key, $this -> vars );
+  }
+  
+  /**
    * Add bootstrap rows through views
    * @param int $gridColumnVal length of grid
    * @param String $rowValues Row values to be displayed

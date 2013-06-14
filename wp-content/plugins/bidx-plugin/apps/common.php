@@ -143,7 +143,7 @@ class BidxCommon
          */
         //$this->getWordpressLogin($jsSessionData);
 
-
+		$msg = array();
 
         if (is_array ($hostAddress)) {
 
