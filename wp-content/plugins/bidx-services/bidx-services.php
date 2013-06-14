@@ -701,7 +701,7 @@ function create_wp_site_from_bidx ($groupName, $email)
         if (false == $user_id) {
             //wp_die(__('There was an error creating the user.'));
             $status = 'error';
-            $text = 'here was an error creating the user.';
+            $text = 'here was an error creating the user or user already exists.';
         } else {
             $wpdb->hide_errors ();
 
@@ -1221,7 +1221,7 @@ function create_custom_role_capabilities ($blog_id)
 
         //When creating directly from wordpress handle that case too
         $is_frm_bidx = (preg_match ("/groupadmin\z/i", $user->user_login)) ? true : false;
-        $group_password = $user->user_login . 'bidxGeeks9';
+        $group_password = 'bidxGeeks9';
         //$group_admin_password = $user->user_login.'groupadmin';
         //Group Admin
         $group_admin_login = $user->user_login . 'groupadmin';

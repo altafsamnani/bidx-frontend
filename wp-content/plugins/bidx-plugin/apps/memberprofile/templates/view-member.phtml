@@ -1,15 +1,16 @@
 <?php
-$personalDetails = $this -> data -> bidxMemberProfile -> personalDetails;
+$personalDetails = $this->exst ($this->data->bidxMemberProfile->personalDetails);
+
 
 $useDataSrc = false;
-$picSrc = $personalDetails -> profilePicture -> document;
+$picSrc = $this->exst ($personalDetails->profilePicture->document);
 
-if ( !$personalDetails -> profilePicture -> document ) {
-  $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
-  $useDataSrc = true;
+if (!$personalDetails->profilePicture->document) {
+    $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
+    $useDataSrc = true;
 }
 
-$entrepreneurDetails = $this -> data -> bidxEntrepreneurProfile;
+$entrepreneurDetails = $this->data->bidxEntrepreneurProfile;
 
 //Get the browser Language
 //$broswerLang = getenv("HTTP_ACCEPT_LANGUAGE");
@@ -19,93 +20,93 @@ $entrepreneurDetails = $this -> data -> bidxEntrepreneurProfile;
 
 <div class="well profile-block">
 
-  <div class="btn-group controls">
-<?php if ( $personalDetails -> bidxCanEdit ) { ?>
-      <a class="btn btn-primary" href="#editMember/<?php echo $personalDetails -> ownerId; ?>">Edit</a>
-    <?php } ?>
-  </div>
-
-
-  <div class="row-fluid">
-    <div class="span3">
-      <h4>Member</h4>
-      <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
-
+    <div class="btn-group controls">
+        <?php if ($personalDetails->bidxCanEdit) { ?>
+            <a class="btn btn-primary" href="#editMember/<?php echo $personalDetails->ownerId; ?>">Edit</a>
+        <?php } ?>
     </div>
-    <div class="span9"><br/>
-      <div class="row-fluid">
-        <div class="span12"><h4><?php echo ucwords ( $personalDetails -> firstName . ' ' . $personalDetails -> lastName ); ?></h4></div>
-        <!-- Personal details 6/6 Start -->
 
-<?php
+
+    <div class="row-fluid">
+        <div class="span3">
+            <h4>Member</h4>
+            <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+
+        </div>
+        <div class="span9"><br/>
+            <div class="row-fluid">
+                <div class="span12"><h4><?php echo ucwords ($personalDetails->firstName . ' ' . $personalDetails->lastName); ?></h4></div>
+                <!-- Personal details 6/6 Start -->
+
+                <?php
 //Language Details
 
-$languageData = $personalDetails -> languageDetail;
-$languageDetails = $this -> getMultiValues ( $languageData, ', ', 'language', 'language' );
-$motherLanguageDetails = $this -> getMultiValues ( $languageData, ', ', 'language', 'language', array ( 'motherLanguage' => '1' ) );
+                $languageData = $this->exst ($personalDetails->languageDetail);
+                $languageDetails = $this->getMultiValues ($languageData, ', ', 'language', 'language');
+                $motherLanguageDetails = $this->getMultiValues ($languageData, ', ', 'language', 'language', array ('motherLanguage' => '1'));
 //Address Details
-$addressArr = array ( $personalDetails -> address[ 0 ] -> street . ' ' . $personalDetails -> address[ 0 ] -> streetNumber,
-  $personalDetails -> address[ 0 ] -> cityTown,
-  'country' => $personalDetails -> address[ 0 ] -> country,
-  $personalDetails -> address[ 0 ] -> postalCode );
+                $addressArr = array ($personalDetails->address[0]->street . ' ' . $personalDetails->address[0]->streetNumber,
+                  $personalDetails->address[0]->cityTown,
+                  'country' => $personalDetails->address[0]->country,
+                  $personalDetails->address[0]->postalCode);
 
-$address = $this -> createRowValue ( $addressArr, ', ' );
+                $address = $this->createRowValue ($addressArr, ', ');
 
 //CV
-$cvDetails = ($entrepreneurDetails -> cv) ? '<a href="' . $entrepreneurDetails -> cv -> document . '" target="_blank" > ' . $entrepreneurDetails -> cv -> documentName . '</a>' : '';
+                $cvDetails = ($entrepreneurDetails->cv) ? '<a href="' . $entrepreneurDetails->cv->document . '" target="_blank" > ' . $entrepreneurDetails->cv->documentName . '</a>' : '';
 
-$rowValues = array ( $personalDetails -> professionalTitle,
-  'gender' => $personalDetails -> gender,
-  'nationality' => $personalDetails -> nationality,
-  date ( "d-m-Y", strtotime ( $personalDetails -> dateOfBirth ) ),
-  $personalDetails -> highestEducation,
-  'motherlanguage' => $motherLanguageDetails,
-  'language' => $languageDetails,
-  $address,
-  $cvDetails );
-echo $this -> addMultipleRows ( 'span12', $rowValues );
-?>
+                $rowValues = array ($this->exst($personalDetails->professionalTitle),
+                'gender' => $this->exst($personalDetails->gender),
+                'nationality' => $this->exst($personalDetails->nationality),
+                date ("d-m-Y", strtotime ($this->exst($personalDetails->dateOfBirth))),
+                $this->exst($personalDetails->highestEducation),
+                'motherlanguage' => $motherLanguageDetails,
+                'language' => $languageDetails,
+                $address,
+                $cvDetails);
+                echo $this->addMultipleRows ('span12', $rowValues);
+                ?>
 
-        <br/>
+                <br/>
 
-<?php
-$rowValues = array ( 'E-mail' => $personalDetails -> emailAddress );
-echo $this -> addRowsWithLabelAdjacent ( 'span3', 'span9', $rowValues, array ( 'class_label' => 'label label-info' ) );
-$rowValues = array ( 'Mobile' => $this -> getMultiValues ( $personalDetails -> contactDetail, ', ', NULL, 'mobile' ) );
-echo $this -> addRowsWithLabelAdjacent ( 'span3', 'span9', $rowValues, array ( 'class_label' => 'label label-info' ) );
+                <?php
+                $rowValues = array ('E-mail' => $this->exst($personalDetails->emailAddress));
+                echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('class_label' => 'label label-info'));
+                $rowValues = array ('Mobile' => $this->getMultiValues ($this->exst($personalDetails->contactDetail), ', ', NULL, 'mobile'));
+                echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('class_label' => 'label label-info'));
 
-$rowValues = array ( 'Fax' => $this -> data -> contactDetail -> fax );
-echo $this -> addRowsWithLabelAdjacent ( 'span3', 'span9', $rowValues, array ( 'class_label' => 'label label-info' ) );
-$rowValues = array ( 'Landline' => $this -> getMultiValues ( $personalDetails -> contactDetail, ', ', NULL, 'landLine' ) );
-echo $this -> addRowsWithLabelAdjacent ( 'span3', 'span9', $rowValues, array ( 'class_label' => 'label label-info' ) );
-?>
-        <br/>
-        <?php
-        $rowValues = array ( 'Facebook' => $this -> addSocialPluginScript ( 'facebookprofile', $personalDetails -> facebook ),
-          'Twitter' => $this -> addSocialPluginScript ( 'twitterprofile', $personalDetails -> twitter ),
-          'Linkedin' => $this -> addSocialPluginScript ( 'linkedin', $personalDetails -> linkedIn ),
-          'Skype' => $this -> addSocialPluginScript ( 'skype', $personalDetails -> skype )
-        );
+                $rowValues = array ('Fax' => $this->exst($this->data->contactDetail->fax));
+                echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('class_label' => 'label label-info'));
+                $rowValues = array ('Landline' => $this->getMultiValues ($this->exst($personalDetails->contactDetail), ', ', NULL, 'landLine'));
+                echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('class_label' => 'label label-info'));
+                ?>
+                <br/>
+                <?php
+                $rowValues = array ('Facebook' => $this->addSocialPluginScript ('facebookprofile', $this->exst($personalDetails->facebook)),
+                  'Twitter' => $this->addSocialPluginScript ('twitterprofile', $this->exst($personalDetails->twitter)),
+                  'Linkedin' => $this->addSocialPluginScript ('linkedin', $this->exst($personalDetails->linkedIn)),
+                  'Skype' => $this->addSocialPluginScript ('skype', $this->exst($personalDetails->skype))
+                );
 
-        echo $this -> addAdjacentRows ( 'span1', $rowValues, array ( 'Skype' => 'skypeclass' ) );
-        // echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
-        ?>
+                echo $this->addAdjacentRows ('span1', $rowValues, array ('Skype' => 'skypeclass'));
+                // echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+                ?>
 
-        <?php
+                <?php
 //$rowValues = array('Facebook' => $this->addSocialPluginScript('facebook', $personalDetails->facebook),
 //                   'Twitter' => $this->addSocialPluginScript('twitter', $personalDetails->twitter));
 //echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
 //echo $this->addAdjacentRows('span6', $rowValues);
-        ?>
+                ?>
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-<?php
+    <?php
 // Attachments
 //
-   echo $this -> displayAttachments ( $header = '<h4>Documents<h4>', $personalDetails -> attachment );
-?>
+    echo $this->displayAttachments ($header = '<h4>Documents<h4>', $this->exst($personalDetails->attachment));
+    ?>
 
 </div>

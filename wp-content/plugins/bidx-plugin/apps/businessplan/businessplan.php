@@ -36,8 +36,6 @@ class businessplan {
    */
   function load($atts) {
 
-
-
     /* 1 Template Rendering */
     require_once(BIDX_PLUGIN_DIR . '/templatelibrary.php');
     $view = new TemplateLibrary(BIDX_PLUGIN_DIR . '/businessplan/templates/');
@@ -49,9 +47,7 @@ class businessplan {
     /* 3. Render Member Profile Services for Initial View Display */
     $summaryData = $bpSummaryObj->getSummaryDetails( );
 
-
     $view->data = $summaryData->data;
-
 
     $view->render('summary.phtml');
   }

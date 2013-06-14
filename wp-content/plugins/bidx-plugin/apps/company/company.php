@@ -106,7 +106,7 @@ class company {
         if ( isset( $sessionData->companyId )) {
             $companyId = $sessionData->companyId;
         }
-
+        $companyId = 507;
         switch ( $command ) {
             case 'list-companies' :
                 // TODO: Chris will lookup what API to use for listing the companies of a member

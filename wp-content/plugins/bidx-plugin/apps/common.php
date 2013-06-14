@@ -35,13 +35,13 @@ class BidxCommon
             $isWordpress = $this->isWordpressPage ();
             //Check session if its not redirect (is not having q= param)
             if (!$isWordpress) {
-                //if (!isset($this::$scriptJs [$subDomain])) { // If Session set dont do anything
+                if (!isset($this::$scriptJs [$subDomain])) { // If Session set dont do anything
                 $sessionObj = new SessionService();
                 $this::$bidxSession[$subDomain] = $sessionObj->isLoggedIn ();
                 //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
                 $this->processEntities ($subDomain);
-                // }
-
+                }
+               
                 $scriptValue = $this->injectJsVariables ($subDomain);
                 $this->setScriptJs ($subDomain, $scriptValue);
 
@@ -69,8 +69,8 @@ class BidxCommon
 	            $bidxEntityType = $value->bidxEntityType;
 	            $bidxEntityValue = $value->bidxEntityId;
 	            $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
-	        }
-		}
+  	        }
+              }
         return;
     }
 
@@ -132,10 +132,11 @@ class BidxCommon
      */
     public function getURIParams ($subDomain, $jsSessionData = NULL)
     {
+        
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $redirect = NULL;
         $data = new STDClass();
-
+        $msg = NULL;
         /**
          * Host Address
          * Param0 /member , /group, /profile
@@ -151,7 +152,9 @@ class BidxCommon
             switch ($hostAddress[1]) {
 
                 case 'member':
-                    $memberId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->id;
+       
+                    $memberId = ( isset($hostAddress[2]) &&  $hostAddress[2]) ? $hostAddress[2] : $jsSessionData->data->id;
+                   
                     if ($memberId) {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
@@ -177,7 +180,8 @@ class BidxCommon
                     }
                     break;
 
-                case 'businessplan':
+                case 'business':
+               
                     $bpSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
 
                     if ($bpSummaryId) {
@@ -220,7 +224,7 @@ class BidxCommon
         $urlSep = '?';
         $http = (is_ssl ()) ? 'https://' : 'http://';
         $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
+        $param = '';
         //Status Messages
         if (isset ($statusMsg['error'])) {
             $param.= '?emsg=' . base64_encode ($statusMsg ['error']);

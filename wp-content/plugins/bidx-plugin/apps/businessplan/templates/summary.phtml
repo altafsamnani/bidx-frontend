@@ -49,7 +49,7 @@ $progress = trim($this->data->rating->Completeness).'%';
             <? $this -> render ( 'business-summary.phtml' ); ?>
           </div>
           <div class="tab-pane" id="tab2">
-            <? $this -> render ( 'financial-details.phtml' ); ?>
+            <? echo do_shortcode('[bidx app="company"]'); ?>
           </div>
           <div class="tab-pane" id="tab3">
             <? $this -> render ( 'company-details.phtml' ); ?>

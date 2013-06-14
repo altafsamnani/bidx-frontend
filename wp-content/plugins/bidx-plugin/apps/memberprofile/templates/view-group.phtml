@@ -1,6 +1,6 @@
 <?php 
 
-$groupDetails = $this->data->groups;
+$groupDetails = $this->exst ($this->data->groups);
 
 $showGroup = (count( (array)$groupDetails)) ? true : false;
 
@@ -43,19 +43,20 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
             }
         }
     }
-?>
 
+
+if( $groupDetails ) { ?>
 <div class="well sidebar-block">
     <!-- Joined Group -->
     <h3>Joined groups</h3>
 
 <?php
     foreach( $groupDetails as $groupValue) {
-        $joinLink = ($groupValue->join) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>":'';
+        $joinLink = ($this->exst($groupValue->join)) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>":'';
         $groupDataSrc = false;
-              $picSrc     = $groupValue->logo;
+              $picSrc     = $this->exst($groupValue->logo);
 
-              if (!$groupValue->logo) {
+              if (!$picSrc) {
                 $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
                 $groupDataSrc = true;
               }
@@ -73,3 +74,4 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
     </div>
 <?php } ?>
 </div>
+<? } ?>

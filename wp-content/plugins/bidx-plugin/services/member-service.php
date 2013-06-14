@@ -48,6 +48,7 @@ class MemberService extends APIbridge {
     $bidXGroupDomain = $result->bidxGroupDomain;
     $loggedInGroups = (array) $sessionData->data->groups;
     $loggedInGroupKeys = array_keys($loggedInGroups);
+    $groupInfo = NULL;
     foreach ($groupDetails as $groupKey => $groupValue) {
       //Group Info
       if (strtolower(str_replace(" ", "", $groupValue->name)) == strtolower(str_replace(" ", "", $bidXGroupDomain))) {
@@ -65,6 +66,7 @@ class MemberService extends APIbridge {
     $result->data->groups = $groupDetails;
 
     $entityDetails = $result->data->entities;
+
     foreach ( $entityDetails as $entityKey => $entityValue) {
       if($entityValue -> bidxEntityType == 'bidxBusinessSummary') {
         $resultEntity = $this->callBidxAPI('entity/' . $entityValue->bidxEntityId, array(), 'GET');
@@ -72,7 +74,7 @@ class MemberService extends APIbridge {
           'Summary',
           'Industry',
           'Location');
-        $result->data->entities = $resultEntity->data;
+        $result->data->wp->entities->bidxBusinessSummary = $resultEntity->data;
       }
 
     }
