@@ -32,7 +32,13 @@ class GroupService extends APIbridge {
   public function getLatestMembers( $group_id = null ) {
 
   	$result = $this -> getGroupDetails( $group_id );
-  	return $result -> data -> latestMembers;
+  	if ( property_exists( $result, 'data' ) ) {
+  		return $result -> data -> latestMembers;
+  	}
+  	else {
+  		return;
+  	}
+  	
   }
   
   /**
@@ -44,25 +50,21 @@ class GroupService extends APIbridge {
   public function getGroupDetails( $group_id = null ) {
   	
 	if ($group_id == null) {
-		
 		if ( false === ( $result = get_transient( 'localgroup' ) ) ) {
 			// It wasn't there, so regenerate the data and save the transient
-			$session = BidxCommon :: $staticSession;
-			$this -> getLogger() -> trace($session);
-			if ( property_exists( $session, 'data' ) ) {
-				$group_id =  $session -> data -> currentGroup;
-			}
-			if ( $group_id == null ) {
-				$this -> getLogger() -> trace( 'finding out id of ' . $session -> bidxGroupDomain );
-				$group_id = $this->getGroupId( $session -> bidxGroupDomain );
-			}
-			
-			$result = $this->callBidxAPI('groups/' . $group_id, array(), 'GET');
-			set_transient( 'localgroup', $result, 300 );
-		}
-			
+// Outcommented in order to move to getting the group/[name] implementation
+// 			$session = BidxCommon :: $staticSession;
+// 			if ( property_exists( $session, 'data' ) ) {
+// 				$group_id =  $session -> data -> currentGroup;
+// 			}
+// 			if ( $group_id == null ) {
+// 				$this -> getLogger() -> trace( 'finding out id of ' . $session -> bidxGroupDomain );
+// 				$group_id = $this->getGroupId( $session -> bidxGroupDomain );
+// 			}
+			$result = $this->callBidxAPI( 'groups/' . BidxCommon::get_bidx_subdomain(), array(), 'GET' );
+			set_transient( 'localgroup', $result, 600 ); //10 minutes
+		}	
 	} else {
-		
 		$result = $this->callBidxAPI( 'groups/' . $group_id, array(), 'GET' );
 	}
 	

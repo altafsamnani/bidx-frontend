@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>bidX Map Navigator</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+	<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/css/bootstrap.css">
+	<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/css/bootstrap-responsive.css">
+	<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/FlatUI/css/flat-ui.css">
+	<link rel="stylesheet" href="/wp-content/themes/bidx-group/style.css">
+    
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <script>
+var map;
+function initialize() {
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: new google.maps.LatLng(52.377823, 4.905385),
+    zoom: 15
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+    <style>
+    html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map-canvas, #map_canvas {
+  height: 100%;
+}
+
+@media print {
+  html, body {
+    height: auto;
+  }
+
+  #map-canvas, #map_canvas {
+    height: 650px;
+  }
+}
+
+#panel {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  margin-left: -180px;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+}   
+    </style>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+	<div class="row-fluid text-center" style="margin-top: -60px">
+		<form class="form-search" method="GET">
+		    <div class="input-append">
+		        <input type="text" class="search-query search-query-rounded" name="q" placeholder="Search">
+		        <button type="submit" class="btn"><span class="fui-search"></span></button>
+		    </div>
+		</form>
+	</div>
+	<div class="header-overlay" style="display: block; position: fixed; z-index: 100; top: 10px; left: 50%; margin-left: -50px">
+		<div class="well" style="width: 100px"><h1>bidX</h1>worldnavigator</div>
+	</div>
+	
+	<script type="text/javascript" src="/wp-content/themes/bidx-group/assets/js/vendor/jquery-1.8.3.min.js?ver=1.8.3"></script>
+	<script type="text/javascript" src="/wp-content/themes/bidx-group/assets/js/vendor/bootstrap.min.js?ver=2.3.2"></script>
+	<script type="text/javascript" src="/wp-content/themes/bidx-group/assets/js/vendor/bootstrap.min.js?ver=2.3.2"></script>
+	<script type="text/javascript" src="/wp-content/themes/bidx-group/assets/js/vendor/bootstrap-switch.js?ver=1.3"></script>
+	<script type="text/javascript" src="/wp-content/themes/bidx-group/assets/js/bidx-flatui.js?ver=20130610"></script>
+	<script>
+	$(".form-search").submit(function(event) {
+		//block search object
+		//reset map
+		var q = $("input:first").val();
+		//search near location ordered in distance
+		$.get('/api/v1/search/?q='+q, function(response) {
+		//     response.data.numFound;
+			var bounds = new google.maps.LatLngBounds();
+			for (var doc_id in response.data.docs) {
+				
+			  var doc = response.data.docs[doc_id];
+			  
+			  switch (doc.type) {
+				  case 'bidxMemberProfile': 
+					  var location = doc.focuslocation_p;
+					  var title = doc.name_s;
+					  var icon = 'member_icon.png';
+					  var content = doc.slogan_t;
+					  break;
+				  case 'bidxEntrepreneurProfile':
+					  var location = doc.focuslocation_p;
+					  var title = doc.name_s;
+					  var icon = 'entrepreneur_icon.png';
+					  var content = doc.slogan_t;
+					  break;
+				  case 'bidxInvestorProfile':
+					  var location = doc.focuslocation_p;
+					  var title = doc.name_s;
+					  var icon = 'investor_icon.png';
+					  var content = doc.slogan_t;
+					  break;
+				  case 'bidxCompany':
+					  var location = doc.focuslocation_p;
+					  var title = doc.name_s;
+					  var icon = 'company_icon.png';
+					  var content = doc.slogan_t;
+					  break;					  
+				  case 'bidxBusinessSummary':
+					  var location = doc.focuslocation_p;
+					  var title = doc.name_s;
+					  var icon = 'business_icon.png';
+					  var content = doc.slogan_t;
+					  break;					  					  					  
+				  case 'bidxBusinessGroup':
+					  var location = doc.focuslocation_p;
+					  var title = doc.name_s;
+					  var icon = 'business_group_icon.png';
+					  var content = doc.slogan_t;
+					  break;
+			  }
+			  //add data to map
+			  var loc = location.split(',');
+			  var myLatlng = new google.maps.LatLng(loc[0], loc[1]);
+
+			  var infowindow = new google.maps.InfoWindow({
+				      content: content
+			   }); 
+			
+			  var marker = new google.maps.Marker({
+			      position: myLatlng,
+			      map: map,
+			      animation: google.maps.Animation.DROP,
+			      flat: true,
+			 //	  icon: icon ,     
+			      title: title,
+			      infoWindowIndex : doc_id	
+			  });
+
+			  bounds.extend(myLatlng);
+			  
+			  google.maps.event.addListener(marker, 'click', function() {
+				  infowindow.open(map, this);
+			  });
+
+			  map.fitBounds(bounds);
+			}
+  		}, "json");
+  		
+		return false;
+	});
+			
+	</script>
+  </body>
+</html>

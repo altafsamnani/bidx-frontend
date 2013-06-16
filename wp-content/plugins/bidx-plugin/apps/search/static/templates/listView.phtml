@@ -169,7 +169,35 @@
 				</td>
 			</tr>
 <?php 				
-			break;			
+			break;	
+
+			case 'bidxBusinessGroup':
+				?>
+						<tr>
+							<td>
+								<span class="label">Group</span>
+							</td>
+							<td>
+								<a href="http://<?php $doc -> domain_s ?>.local.bidx.net">
+									<?php if ( property_exists( $doc , 'logodoc_url' ) ) {
+										?>
+											<img src="<?php echo $doc -> logodoc_url ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+									<?php  } else { ?>
+											<img data-src="holder.js/75x75/social/text:business" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+									<?php  }?>
+										</a>						
+							</td>
+							<td>
+								<em><?php echo $doc -> name_s ?></em><br />
+								<?php echo $doc -> slogan_t ?><br/>
+								<?php echo $doc -> focusindustrylabel_ss ?>, <?php echo $doc -> countrylabel_s ?><br />
+							</td>
+							<td>
+								<a href="http://<?php $doc -> domain_s ?>.local.bidx.net">view</a>
+							</td>
+						</tr>
+			<?php 				
+						break;			
 		} 
 	} ?>
 		</tbody>
@@ -200,7 +228,7 @@
 		&nbsp;
 	</div>				
 </div>
-<?php } ?>
+
 	
 		<div class="sidebar span4">
 			<div>
@@ -209,13 +237,19 @@
 			<div>
 			<ul class="nav nav-list">
 	            <li class="nav-header">Find By Type</li>
+	            <li class="active">
+	              <a href="#fakelink">
+	                All
+	                <span class="nav-counter"><?php echo $this -> results -> data -> numFound ?></span>
+	              </a>
+	            </li>
 	            <li>
 	              <a href="#fakelink">
 	                Members Only
 	                <span class="nav-counter">19</span>
 	              </a>
 	            </li>
-	            <li class="active">
+	            <li>
 	              <a href="#fakelink">
 	                Entrepreneurs
 	                <span class="nav-counter">130</span>
@@ -224,7 +258,7 @@
 	            <li>
 	              <a href="#fakelink">
 	                Investors
-	                <span class="nav-counter">9</span>
+	                <span class="nav-counter">49</span>
 	              </a>
 	            </li>
 	            <li>
@@ -232,7 +266,13 @@
 	                Businesses
 	                <span class="nav-counter">9</span>
 	              </a>
-	            </li>	            
+	            </li>
+	            <li>
+	              <a href="#fakelink">
+	                Groups
+	                <span class="nav-counter">11</span>
+	              </a>
+	            </li>	            	            
 	            <li class="divider"></li>
 	            <li class="nav-header">Filters</li>
 	            <li>
@@ -261,7 +301,7 @@
           			<div id="tags_industry_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
           				<div class="tagsinput-add-container" id="tags_industry_addTag">
           					<div class="tagsinput-add"></div>
-          					<input id="tags_industry_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
+          					<input id="tags_industry_tag small" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
           				</div>
           			</div>	                
 	            </li>
@@ -279,6 +319,7 @@
 			</div>
 		</div>
 	</div>
+<?php } ?>	
 </div>
 		
 
