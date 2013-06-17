@@ -723,89 +723,22 @@ form {
 *	Responsive breakpoints
 *
 ********************************************************************************************/
-/* defautlt */
-.container,
-.navbar-static-top .container,
-.navbar-fixed-top .container,
-.navbar-fixed-bottom .container {
-		position: relative;
-}
-/*
-@media (min-width: 1200px) {
-	.container,
-	.navbar-static-top .container,
-	.navbar-fixed-top .container,
-	.navbar-fixed-bottom .container {
-		width: 975px;
-	}
-}*/
 
-/* large display*/
-@media (min-width: 980px) {
-/*@media (min-width: 61.25em) {*/
-
-	.container,
-	.navbar-static-top .container,
-	.navbar-fixed-top .container,
-	.navbar-fixed-bottom .container {
-		width: 975px;
-		/*width: 60.9375em;*/
-		/*width:60.938em;*/
-
-	}
-}
 /* all other devices*/
 @media (max-width: 979px) {
-/*@media (max-width: 61.188em) {	*/
-	.container,
-	.navbar-static-top .container,
-	.navbar-fixed-top .container,
-	.navbar-fixed-bottom .container {
-		width: 100%;
-	}
-
-	.hero .pay-off {
-		width: 100%;
-	}
-	.hero .signup {
-		width: 100%;
-	}
-
-	body {
+	body,
+    body.bidx-edit {
 		padding-top: 0;
 	}
 
-	.pageHeader {
-		position:	static;
+	body.bidx-edit .pageHeader {
+		position: relative;
+        top: 0;
 	}
-}
 
-/*
-
-@media (min-width: 768px) and (max-width: 979px) {
-	.container,
-	.navbar-static-top .container,
-	.navbar-fixed-top .container,
-	.navbar-fixed-bottom .container {
-		width: 742px;
-
-	}
-}
-
-@media (max-width: 767px) {
-	.container,
-	.navbar-static-top .container,
-	.navbar-fixed-top .container,
-	.navbar-fixed-bottom .container {
-		width: auto;
-
-	}
-}
-
-@media (max-width: 480px) {
-	.container,
-	.navbar-static-top .container,
-	.navbar-fixed-top .container,
-	.navbar-fixed-bottom .container {
-	}
+    #editMember .nav-editMember {
+        position: relative;
+        top: 0;
+        width: auto;
+    }
 }
