@@ -663,6 +663,130 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
  *
  * Create Wordpress Site for Bidx Group
  * [id] => 1    [domain] => bidx.dev    [path] => /    [blog_id] => 1    [cookie_domain] => bidx.dev    [site_name] => Bidx Sites
+ * http://local.bidx.net/wp-admin/admin-ajax.php?action=local_create&print=true
+ *
+ * @param bool $echo
+ */
+//
+
+add_action ('wp_ajax_local_create', 'create_wp_site_from_local');
+add_action ('wp_ajax_nopriv_local_create', 'create_wp_site_from_local'); // ajax for logged in users
+
+function create_wp_site_from_local ($groupName, $email)
+{
+    if ((DOMAIN_CURRENT_SITE == 'local.bidx.net')) {
+        global $wpdb;
+
+        $status = 'ok';   
+        $id = '';
+        $print = $_GET['print'];
+        $domain = $_SERVER['HTTP_HOST'];
+        $groupDomainArr = array ('cambridge-angels', 'sampoerna', 'shell', 'burundi-fruits');
+     
+        $roleArr = array ('','groupadmin', 'groupowner', 'groupmember', 'groupanonymous');
+       
+
+        $blog_title = strtolower (get_bloginfo ());
+        //Delete the Sites and users if exist
+        foreach ($groupDomainArr as $groupName) {
+            $site_id = $body['response']['site_id'];
+            $user_id = $body['response']['user_id'];
+            //Delete Wordpress Site
+            $blogUrl = $groupName. '.' . $domain;   
+            $site_id = get_blog_id_from_url ($blogUrl);
+         
+            if ($site_id) {
+                wpmu_delete_blog ($site_id, true);
+                $siteDelete[$groupName]['site_id'] = $site_id;
+            }
+            //Delete Users if exist
+            foreach ($roleArr as $roleVal) {
+                $userName = $groupName . $roleVal;
+                $user = get_userdatabylogin ($userName);
+                $user_id = $user->ID; // prints the id of the user
+                //Delete Wordpress User
+                if ($user_id) {
+                    wpmu_delete_user ($user_id);
+                    $siteDelete[$groupName][$userName] = $user_id;
+                }
+            }
+        }
+
+        //Insert site and users
+        foreach ($groupDomainArr as $groupName) {
+            if ($groupName) {
+                $groupName = str_replace (" ", "", strtolower ($groupName));
+                $email = $groupName . '@bidx.net';
+                //if (preg_match('|^([a-zA-Z0-9-])+$|', $groupName))
+                // $groupName = str_replace(" ","",strtolower($groupName));
+
+                $newdomain = $groupName . '.' . preg_replace ('|^www\.|', '', $domain);
+                $password = 'bidxGeeks9';
+                $userName = $groupName;
+
+                $user_id = wpmu_create_user ($userName, $password, $email);
+                if (false == $user_id) {
+                    //wp_die(__('There was an error creating the user.'));
+                    $status = 'error';
+                    $text = 'here was an error creating the user or user already exists.';
+                } else {
+                    $wpdb->hide_errors ();
+
+                    $id = wpmu_create_blog ($newdomain, '/', $groupName, $user_id, array ('public' => 1), '1');
+                    $wpdb->show_errors ();
+                    if (!is_wp_error ($id)) {
+                        if (!get_user_option ('primary_blog', $user_id)) {
+                            update_user_option ($user_id, 'primary_blog', $id, true);
+                        }
+                        $content_mail = sprintf (__ ('New site created by %1$s
+
+Address: %2$s
+Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
+                        //wp_mail(get_site_option('admin_email'), sprintf(__('[%s] New Site Created'), $current_site->site_name), $content_mail, 'From: "Site Admin" <' . get_site_option('admin_email') . '>');
+                        wp_mail ('altaf.samnani@bidnetwork.org', sprintf (__ ('[%s] New Site Created from Backend'), 'Bidx Sites'), $content_mail, 'From: "Site Admin" <' . get_site_option ('admin_email') . '>');
+
+                        $text = 'New website created';
+                    } else {
+                        //wp_die($id->get_error_message());
+                        $status = 'error';
+                        $text = $id->get_error_message ();
+                    }
+                }
+            } else {
+                $status = 'error';
+                $text = 'Trying to fool me, He He :D.';
+            }
+
+            $siteCreation[$groupName] = array ('status' => $status,
+              'text' => $text,
+              'site_id' => $id,
+              'user_id' => $user_id,
+              'domain' => $newdomain,
+              'subdomain' => $groupName);
+        }
+        if($print) {
+          echo '<pre>Site Deleted<br>';
+          print_r($siteDelete);
+          echo '<br>Site Created<br>';
+          print_r($siteCreation);
+          echo '</pre>';
+
+        } else {
+             $site['delete'] = $siteDelete;
+             $site['create'] = $siteCreation;
+             echo json_encode($site);
+        }
+         exit; 
+        
+    }
+}
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Create Wordpress Site for Bidx Group
+ * [id] => 1    [domain] => bidx.dev    [path] => /    [blog_id] => 1    [cookie_domain] => bidx.dev    [site_name] => Bidx Sites
  * http://bidx.net/wp-admin/admin-ajax.php?action=bidx_create&domain=hello&code=slowHorse01
  *
  * @param bool $echo
