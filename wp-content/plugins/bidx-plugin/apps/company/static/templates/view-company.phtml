@@ -42,18 +42,15 @@ if (!$picSrc) {
 
         $arStatutoryAddress = array();
 
-        if ( $statutoryAddress->street )
-        {
+        if ( $statutoryAddress->street ) {
             $arStatutoryAddress[] = $statutoryAddress->street;
         }
 
-        if ( $statutoryAddress->streetNumber )
-        {
+        if ( $statutoryAddress->streetNumber ) {
             $arStatutoryAddress[] = $statutoryAddress->streetNumber;
         }
 
-        if ( $statutoryAddress->postalCode )
-        {
+        if ( $statutoryAddress->postalCode ) {
             $arStatutoryAddress[] = $statutoryAddress->postalCode;
         }
 
@@ -62,13 +59,11 @@ if (!$picSrc) {
 
         $arStatutoryCityCountry = array();
 
-        if ( $statutoryAddress->cityTown )
-        {
+        if ( $statutoryAddress->cityTown ) {
             $arStatutoryCityCountry[] = $statutoryAddress->cityTown;
         }
 
-        if ( $statutoryAddress->country )
-        {
+        if ( $statutoryAddress->country ) {
             $arStatutoryCityCountry[] = $statutoryAddress->country;
         }
 
