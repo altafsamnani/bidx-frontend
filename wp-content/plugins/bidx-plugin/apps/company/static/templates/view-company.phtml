@@ -36,21 +36,21 @@ if (!$picSrc) {
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
             array( 'Date of registration' =>   date("d-m-Y", strtotime( $this->company->dateCompanyEstab ))), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Legal form of business' => $this->company->legalFormBusiness ), $options );
+            array( 'Legal form of business' => $this->exst($this->company->legalFormBusiness)), $options );
 
-        $statutoryAddress = $this->company->statutoryAddress;
+        $statutoryAddress = $this->exst($this->company->statutoryAddress);
 
         $arStatutoryAddress = array();
 
-        if ( $statutoryAddress->street ) {
+        if ($this->exst($statutoryAddress->street)) {
             $arStatutoryAddress[] = $statutoryAddress->street;
         }
 
-        if ( $statutoryAddress->streetNumber ) {
+        if ($this->exst($statutoryAddress->streetNumber)) {
             $arStatutoryAddress[] = $statutoryAddress->streetNumber;
         }
 
-        if ( $statutoryAddress->postalCode ) {
+        if ($this->exst($statutoryAddress->postalCode)) {
             $arStatutoryAddress[] = $statutoryAddress->postalCode;
         }
 
@@ -59,11 +59,11 @@ if (!$picSrc) {
 
         $arStatutoryCityCountry = array();
 
-        if ( $statutoryAddress->cityTown ) {
+        if ($this->exst($statutoryAddress->cityTown)) {
             $arStatutoryCityCountry[] = $statutoryAddress->cityTown;
         }
 
-        if ( $statutoryAddress->country ) {
+        if ($this->exst($statutoryAddress->country)) {
             $arStatutoryCityCountry[] = $statutoryAddress->country;
         }
 
@@ -71,9 +71,9 @@ if (!$picSrc) {
             array( 'Statutory city, country' => implode( ' ', $arStatutoryCityCountry )), $options );
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Fiscal number' => $this->company->fiscalNumber ), $options );
+            array( 'Fiscal number' => $this->exst($this->company->fiscalNumber)), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Company registration number' => $this->company->registrationNumber ), $options );
+            array( 'Company registration number' => $this->exst($this->company->registrationNumber)), $options );
     }
 
     if ($this->exst($this->company->numPermFemaleEmpl) || $this->exst($this->company->numPermMaleEmpl) || $this->exst($this->company->numTempFemaleEmpl) || $this->exst($this->company->numTempMaleEmpl)) {
@@ -90,7 +90,7 @@ if (!$picSrc) {
         </div>
 
         <div class="span4">
-            <img <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+            <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
         </div>
     </div><!-- row -->
 </div><!-- well -->
