@@ -190,7 +190,7 @@ if ($companies) {
         <?php
     }
 
-    if ($this->data->isMyProfile) {
+    if ( $this->exst($this->data->isMyProfile)) {
         ?>
 
     <div class="pull-right">
