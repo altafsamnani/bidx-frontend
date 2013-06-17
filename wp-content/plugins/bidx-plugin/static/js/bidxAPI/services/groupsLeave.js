@@ -6,12 +6,12 @@
 {
     var bidx        = window.bidx
     ,   api         = bidx.api
-    ,   groupsJoin  = {}
-    ,   baseUrl     = "/api/v1/groups/join"
+    ,   service     = {}
+    ,   baseUrl     = "/api/v1/groups/leave"
     ,   params      = []
     ;
 
-    groupsJoin.save = function( params )
+    service.save = function( params )
     {
         var method  = "POST"
         ,   url     = baseUrl
@@ -34,5 +34,5 @@
         } );
     };
 
-    api.groupsJoin = groupsJoin;
+    api.groupsLeave = service;
 } )( jQuery );

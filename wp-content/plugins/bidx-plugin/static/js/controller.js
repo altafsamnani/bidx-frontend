@@ -7,6 +7,7 @@
     ,   state
     ,   $element
     ,   app
+    ,   router
     ;
 
     var $mainStates     = $( ".mainState" )
@@ -50,7 +51,7 @@
 
         if ( newHash )
         {
-            this.navigate( newHash );
+            router.navigate( newHash );
         }
     };
 
@@ -151,7 +152,7 @@
         }
     } );
 
-    var router = new AppRouter();
+    router = new AppRouter();
 
     // Expose
     //
