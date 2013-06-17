@@ -232,6 +232,17 @@ header .navbar .btn-navbar {
   min-height:               250px;
 }
 
+  .partnerlist {
+    text-align:               justify;
+    font-size:                0.1px; /*hide whitespace between elements*/
+  }
+
+  .partnerlist:after {
+    content:                  '';
+    display:                  inline-block;
+    width:                    100%;
+  }
+
 .partner {
     white-space:            nowrap;
     text-indent:            -9999px;
@@ -241,13 +252,17 @@ header .navbar .btn-navbar {
     width:                  220px;
     height:                 90px;
     margin-top:             80px;
+
+  -webkit-transition:       background-position 0.25s;
+     -moz-transition:       background-position 0.25s;
+       -o-transition:       background-position 0.25s;
+          transition:       background-position 0.25s;
 }
 
 .partner-bid {
   background-position:      0 0;
 
   width:                    200px;
-  margin-right:             59px;
 }
 
   .partner-bid:hover {
@@ -258,7 +273,6 @@ header .navbar .btn-navbar {
   background-position:      -220px 0;
 
   width:                    180px;
-  margin-right:             59px;
 }
 
   .partner-sampoerna:hover {
@@ -269,7 +283,6 @@ header .navbar .btn-navbar {
   background-position:      -440px 0;
 
   width:                    100px;
-  margin-right:             59px;
 }
 
   .partner-postcodeloterij:hover {
@@ -279,7 +292,6 @@ header .navbar .btn-navbar {
 .partner-did {
   background-position:      -660px 0;
   width:                    100px;
-  margin-right:             59px;
 }
 
   .partner-did:hover {
@@ -290,7 +302,6 @@ header .navbar .btn-navbar {
   background-position:      -880px 0;
 
   width:                    145px;
-  margin-right:             0;
 }
 
   .partner-usaid:hover {
@@ -759,55 +770,3 @@ body.home .hero-block {
 *   Responsive breakpoints
 *
 ********************************************************************************************/
-/* defautlt */
-.container,
-.navbar-static-top .container,
-.navbar-fixed-top .container,
-.navbar-fixed-bottom .container {
-        position: relative;
-}
-
-/* large display*/
-@media (min-width: 980px) {
-/*@media (min-width: 61.25em) {*/
-
-    .container,
-    .navbar-static-top .container,
-    .navbar-fixed-top .container,
-    .navbar-fixed-bottom .container {
-        width: 975px;
-
-    }
-}
-/* all other devices*/
-@media (max-width: 979px) {
-/*@media (max-width: 61.188em) {    */
-    .container,
-    .navbar-static-top .container,
-    .navbar-fixed-top .container,
-    .navbar-fixed-bottom .container {
-        width: 100%;
-    }
-
-    .hero .signup {
-        width: 100%;
-    }
-
-    footer .footer-links .footer_nav  {
-        width:100%;
-        float:none;
-    }
-    footer .footer-links .footer_socialmedia {
-        width:100%;
-        float:none;
-        margin-top:20px;
-    }
-}
-
-@media (max-width: 600px) {
-    footer .footer-links .footer_nav > li  {
-        width:100%;
-        float:none;
-
-    }
-}
