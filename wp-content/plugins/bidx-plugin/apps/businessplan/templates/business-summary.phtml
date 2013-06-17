@@ -1,7 +1,5 @@
 <?php
 $businessSummary = $this->data;
-
-
 ?>
 <div class="span3" id="scrollSummary">
     <ul class="nav nav-list" >
@@ -11,8 +9,8 @@ $businessSummary = $this->data;
     </ul>
 </div>
 
-<div class="span9 scrollcontent"  data-target="#scrollSummary" data-spy="scroll" data-offset-top="10px">
-    <div id="sectionContent">
+<div class="span9 scrollcontent">
+  
         <span id="businessSummary" class="scrollPositionMarker"></span>
         <h3>Business summary</h3>
         <div class="row-fluid">
@@ -45,8 +43,8 @@ $businessSummary = $this->data;
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
         </div>
-    </div>
-    <div id="sectionContent">
+ 
+
         <span id="aboutBusiness" class="scrollPositionMarker"></span>
 
         <h3> About the business </h3>
@@ -112,8 +110,8 @@ $businessSummary = $this->data;
             //echo $this->displayAttachments ($header = '<h6>Media<h6>', $businessSummary->attachment);
             ?>
         </div>
-    </div>
-    <div id="sectionContent">
+ 
+
         <span id="aboutSupporting" class="scrollPositionMarker"></span>
         <h3>About the supporting team</h3>
         <div class="row-fluid">
@@ -144,10 +142,7 @@ $businessSummary = $this->data;
             ?>
         </div>
         <div class = "nextPageBtn">
-            <a class="btn btn-large btn-primary btn-embossed mlm" href="#tab2" data-toggle="tab">
-                View financial details
-                <i class="fui-arrow-right pull-right"></i>
-            </a>
-        </div>
+            <a class="btn btn-large btn-primary btn-embossed mlm" href="#tab2" data-toggle="tab">View financial details<i class="fui-arrow-right pull-right"></i></a>
+       
     </div>
 </div>
