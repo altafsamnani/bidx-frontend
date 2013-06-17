@@ -18,7 +18,7 @@ if ($entrepreneurDetails) {
         <h4>Entrepreneur profile</h4>
         <div class="row-fluid">
             <?php
-            $rowValues = array ('Summary' => $this->exst ($entrepreneurDetails->entrepreneurProfileSummary));
+            $rowValues = array ('Summary' => $this->exst ($entrepreneurDetails->summary));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
             ?>
             <br/>
