@@ -17,7 +17,7 @@ html, body {
 
 /** Padding is as high as the navbar + pageheader **/
 body {
-	padding-top: 				160px;
+	padding-top: 				150px;
     padding-bottom:             100px;
 }
 
@@ -196,10 +196,14 @@ body.bidx-edit span.scrollPositionMarker {
 ********************************************************************************************/
 
 header.navbar {
-	background-color: #FFF;
+	background-color:      #FFF;
 
-	height:auto;
-	z-index:200;
+	height:                auto;
+	z-index:               200;
+}
+
+header.navbar .navbar-inner {
+    min-height:             150px;
 }
 
 header.navbar .navbar-inner > .container {
@@ -253,12 +257,12 @@ header.navbar .nav > li > ul {
     padding-top:            10px;
     padding-bottom:		    10px;
     background-color:       #fff;
-    z-index:                1010;
+    z-index:                190;
 }
 
 .bidx-edit .pageHeader {
     position:               fixed;
-    top:                    160px;
+    top:                    150px;
 }
 
     .pageHeader > .container {
