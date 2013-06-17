@@ -46,16 +46,17 @@ $progress = trim($this->data->rating->Completeness).'%';
       <div class ="span12">
         <div class="tab-content">
           <div class="tab-pane active" id="tab1">
-            <? $this -> render ( 'business-summary.phtml' ); ?>
+            <?php $this -> render ( 'business-summary.phtml' ); ?>
           </div>
           <div class="tab-pane" id="tab2">
-            <? echo do_shortcode('[bidx app="company"]'); ?>
+            <?php $this -> render ( 'financial-details.phtml' ); ?>
           </div>
           <div class="tab-pane" id="tab3">
-            <? $this -> render ( 'company-details.phtml' ); ?>
+            <?php //$this -> render ( 'company-details.phtml' );
+                  echo do_shortcode('[bidx app="company"]'); ?>
           </div>
           <div class="tab-pane" id="tab4">
-            <? $this -> render ( 'documents.phtml' ); ?>
+            <?php $this -> render ( 'documents.phtml' ); ?>
           </div>
         </div>
 
