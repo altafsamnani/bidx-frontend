@@ -170,8 +170,15 @@ li {
 .accordion-inner .controls {
     position:                   absolute;
     right:                      20px;
+    top:                        10px;
+}
+
+.accordion-inner .bottom-controls {
+    position:                   absolute;
+    right:                      20px;
     bottom:                     10px;
 }
+
 
 
 span.scrollPositionMarker {

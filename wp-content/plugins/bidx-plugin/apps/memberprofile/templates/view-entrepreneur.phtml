@@ -119,6 +119,12 @@ if ($companies) {
                 </div><!-- accordion-heading -->
                 <div id="<?php echo $collapseId ?>" class="accordion-body collapse <?php echo ( $index == 0 ) ? 'in' : ''; ?>">
                     <div class="accordion-inner">
+                        <div class="btn-group controls">
+                        <?php if ($company->bidxCanEdit) { ?>
+                            <a class="btn btn-primary" href="/company/<?php echo $company->ownerId; ?>/#editCompany/<?php echo $company->ownerId; ?>">Edit</a>
+                        <?php } ?>
+                        </div>
+
                         <div class="row-fluid">
                             <div class="span4">
                                 <img <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
@@ -168,7 +174,7 @@ if ($companies) {
                             </div>
                         </div>
 
-                        <div class="controls">
+                        <div class="bottom-controls">
         <?php
         $viewMoreLink = "<a href='/company/" . $company->ownerId . "'>view more</a>";
         echo $viewMoreLink;
