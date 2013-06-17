@@ -30,8 +30,6 @@ class CompanyService extends APIbridge {
     //Call company API
     $result = $this->callBidxAPI('company/' . $companyId, array(), 'GET');
 
-    error_log( var_export( $result , true ));
-
     return $result->data;
   }
 }
