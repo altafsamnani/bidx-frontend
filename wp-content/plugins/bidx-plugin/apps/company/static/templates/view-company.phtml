@@ -1,7 +1,7 @@
 <?php
 
 $useDataSrc = false;
-$picSrc     = $this->company->logo->document;
+$picSrc     = $this->exst($this->company->logo->document);
 
 if (!$picSrc) {
     $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
@@ -31,7 +31,7 @@ if (!$picSrc) {
     echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
         array( 'Company website' => $this->company->website ), $options );
 
-    if ( $this->company->registered ) {
+    if ($this->exst($this->company->registered)) {
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
             array( 'Date of registration' =>   date("d-m-Y", strtotime( $this->company->dateCompanyEstab ))), $options );
@@ -81,15 +81,15 @@ if (!$picSrc) {
             array( 'Company registration number' => $this->company->registrationNumber ), $options );
     }
 
-    if ( $this->company->numPermFemaleEmpl || $this->company->numPermMaleEmpl || $this->company->numTempFemaleEmpl || $this->company->numTempMaleEmpl ) {
+    if ($this->exst($this->company->numPermFemaleEmpl) || $this->exst($this->company->numPermMaleEmpl) || $this->exst($this->company->numTempFemaleEmpl) || $this->exst($this->company->numTempMaleEmpl)) {
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Number of permanent female employees' => $this->company->numPermFemaleEmpl ), $options );
+            array( 'Number of permanent female employees' => $this->exst($this->company->numPermFemaleEmpl)), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Number of permanent male employees' => $this->company->numPermMaleEmpl ), $options );
+            array( 'Number of permanent male employees' => $this->exst($this->company->numPermMaleEmpl)), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Number of temporary female employees' => $this->company->numTempFemaleEmpl ), $options );
+            array( 'Number of temporary female employees' => $this->exst($this->company->numTempFemaleEmpl)), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Number of temporary male employees' => $this->company->numTempMaleEmpl ), $options );
+            array( 'Number of temporary male employees' => $this->exst($this->company->numTempMaleEmpl)), $options );
     }
 ?>
         </div>
