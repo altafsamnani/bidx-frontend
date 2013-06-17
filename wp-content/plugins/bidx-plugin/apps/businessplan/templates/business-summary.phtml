@@ -1,6 +1,7 @@
 <?php
 $businessSummary = $this->data;
 
+
 ?>
 <div class="span3" id="scrollSummary">
     <ul class="nav nav-list affix" >
@@ -89,8 +90,26 @@ $businessSummary = $this->data;
 
             <?php
             // Media/Attachments
+            $rowVideoValues = NULL;
+            if ($businessSummary->videoPitch->document) {
+                //$rowVideoValues[] = $this->embedAudioVideo ($businessSummary->videoPitch->document);
+                $rowVideoValues[] = "<a href= '" . $businessSummary->videoPitch->document . "' " . $classValue . " target='_blank' > " . $businessSummary->videoPitch->documentName . " </a>";
 
-            echo $this->displayAttachments ($header = '<h6>Media<h6>', $businessSummary->attachment);
+            }
+
+            if ($businessSummary->audioPitch->document) {
+                //$rowVideoValues[] = $this->embedAudioVideo ($businessSummary->audioPitch->document);
+                $rowVideoValues[] = "<a href= '" . $businessSummary->audioPitch->document . "' " . $classValue . " target='_blank' > " . $businessSummary->audioPitch->documentName . " </a>";
+            }
+
+            if ($rowVideoValues) {
+                $rowVideoAudioHtml = $this->displayAudioVideo ('span6', 'span6', $rowVideoValues, array ());
+
+
+                $rowValues = array ('Media' => $rowVideoAudioHtml);
+                echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
+            }
+            //echo $this->displayAttachments ($header = '<h6>Media<h6>', $businessSummary->attachment);
             ?>
         </div>
     </div>

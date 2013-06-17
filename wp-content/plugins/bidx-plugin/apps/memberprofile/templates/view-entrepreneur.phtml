@@ -20,7 +20,7 @@ if ($entrepreneurDetails) {
             <?php
             $rowValues = array ('Summary' => $this->exst ($entrepreneurDetails->summary));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
-            ?>
+            ?>bom
             <br/>
             <?php
             $focusIndustry = $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ');

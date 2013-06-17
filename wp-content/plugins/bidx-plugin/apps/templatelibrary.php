@@ -654,9 +654,72 @@ class TemplateLibrary
     }
 
     /**
+     * Validation function for nested objects
+     * @param String $fileName File Name
+     * @return String $audioVideoHtml Embed Video Html
+     */
+    function embedAudioVideo ($fileName,$width='120',$height='90')
+    {
+       $audioVideoHtml = "<object classid='clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95' width='$width' height='$height' codebase='http://www.microsoft.com/Windows/MediaPlayer/'>
+                        <param name='Filename' value='$fileName'>
+                        <param name='AutoStart' value='true'>
+                        <param name='ShowControls' value='true'>
+                        <param name='BufferingTime' value='2'>
+                        <param name='ShowStatusBar' value='true'>
+                        <param name='AutoSize' value='true'>
+                        <param name='InvokeURLs' value='false'>
+                        <embed src=''$fileName' type='application/x-mplayer2' autostart='1' enabled='1' showstatusbar='1' showdisplay='1' showcontrols='1' pluginspage='http://www.microsoft.com/Windows/MediaPlayer/' CODEBASE='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,0,0,0' width='480' height='360'></embed>
+                        </object>";
+       
+        return $audioVideoHtml;
+    }
+
+    /**
+     * Validation function for nested objects
+     * @param String $fileName File Name
+     * @return String $audioVideoHtml Embed Video Html
+     */
+    function displayAudioVideo ($gridLabel, $gridValue, $rowValues, $properties = array ())
+    {
+        /** Class * */
+        $classLabel = (isset($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+        $classValue = (isset($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+
+        /** Tag * */
+        $tagLabel = (isset($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
+        $tagValue = (isset($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
+
+        $rowHtml = "<div class='row-fluid'>";
+        $displayFlag = true;
+        foreach ($rowValues as $value) {
+
+            if ($displayFlag) {
+                //Display Label
+                $rowHtml .= "<div class='" . $gridLabel . "'>";
+                $rowHtml .= "<$tagLabel " . $classLabel . " > " . $value . " </$tagLabel>";
+                $rowHtml .= "</div>";
+                $displayFlag = false;
+
+            } else {
+                //Display Value
+                $rowHtml .= "<div class='" . $gridValue . "'>";
+                $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
+                $rowHtml .= "</div>";
+                $displayFlag = true;
+            }
+
+
+        }
+        $rowHtml .="</div>";
+        return $rowHtml;
+    }
+
+
+
+    /**
      * Display Attachments.
      *
-     *
+     
      * @author Altaf S
      *
      * @param string $header Html Header
