@@ -1,10 +1,7 @@
 <div class="iconbar iconbar-horizontal iconbar-info">
 	<ul>
         <li><a href="/member" class="fui-user" alt="Profile"></a></li>
-		<li data-toggle="collapse" data-target="#nav-collapse-01">
-	    	<button type="button" class="btn btn-navbar" 
-					data-toggle="collapse" data-target="#nav-collapse-01"></button>
-        </li>        
+		<li><button class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-main"></button></li>
         <li>
         	<a href="/inbox" class="fui-mail" alt="Inbox">
             	<!-- If messages are available -->
@@ -12,11 +9,11 @@
             </a>
 		</li>
 <?php
-if (property_exists($this -> sessionData, 'data') && 
+if (property_exists($this -> sessionData, 'data') &&
 	false != ($roles = $this -> sessionData -> data -> roles)) {
-	if ( in_array( 'GroupAdmin', $roles ) || 
+	if ( in_array( 'GroupAdmin', $roles ) ||
 		 in_array( 'GroupOwner', $roles ) ) {
-?>		
+?>
  	<li><a href="/admin" class="fui-cmd" alt="Admin"></a></li>
 <?php
 	}

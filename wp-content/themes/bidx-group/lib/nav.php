@@ -16,17 +16,18 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
   }
 
   function start_lvl(&$output, $depth = 0, $args = array()) {
-    $output .= "\n<ul class=\"dropdown-menu\">\n";
+      $output .= "\n<ul class=\"\">\n";
+//    $output .= "\n<ul class=\"dropdown-menu\">\n";
   }
 
   function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
-//    new dBug($item); 
- 
+//    new dBug($item);
+
     $item_html = '';
     parent::start_el($item_html, $item, $depth, $args);
 
     if ($item->is_dropdown && ($depth === 0)) {
-      $item_html = str_replace('<a', '<a class="dropdown-toggle" data-toggle="dropdown" data-target="#"', $item_html);
+      $item_html = str_replace('<a', '<a class=""', $item_html ); //dropdown-toggle" data-toggle="dropdown" data-target="#"', $item_html);
       $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
     }
     elseif (stristr($item_html, 'li class="divider')) {
@@ -42,13 +43,13 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
   function display_element($element, &$children_elements, $max_depth, $depth = 0, $args, &$output) {
     $element->is_dropdown =  ((!empty($children_elements[$element->ID]) && (($depth + 1) < $max_depth)));
 
-    if ($element->is_dropdown) {
-      if ($depth === 0) {
-        $element->classes[] = 'dropdown';
-      } elseif ($depth === 1) {
-        $element->classes[] = 'dropdown-submenu';
-      }
-    }
+    // if ($element->is_dropdown) {
+    //   if ($depth === 0) {
+    //     $element->classes[] = 'dropdown';
+    //   } elseif ($depth === 1) {
+    //     $element->classes[] = 'dropdown-submenu';
+    //   }
+    // }
 
     parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
   }
