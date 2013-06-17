@@ -303,6 +303,62 @@
 
     // Wire up the delete button for the previous busienss. Since this is a dynamic built up list we are delegating it
     //
+    var _removeItemFromReflowRow = function( $item )
+    {
+        var reflowRowClass          = "reflow-row"
+        ,   $row                    = $item.closest( "." + reflowRowClass )
+        ,   $prevRow
+        ;
+
+        $item.remove();
+
+        // 'reflow' the previous business items. Move the first child (previousBusinessItem) of each next row, up one row. If the last row is empty, delete it.
+        //
+        $prevRow = $row;
+        $row.nextAll( "." + reflowRowClass ).each( function()
+        {
+            $row = $( this );
+
+            var $item = $row.find( "." + reflowRowClass + "-item:eq(0)" );
+            $prevRow.append( $item );
+
+            $prevRow = $row;
+        } );
+
+        if ( $row.children().length === 0 )
+        {
+            $row.remove();
+        }
+    };
+
+    var _appendItemToReflowRow = function( $container, $item )
+    {
+        // Find a row that has room or add a new row
+        //
+        var $rowWithRoom;
+        $container.children( ".reflow-row" ).each( function( )
+        {
+            var $row = $( this );
+
+            if ( $row.children().length < 3 )
+            {
+                $rowWithRoom = $row;
+                return false;
+            }
+        } );
+
+        if ( !$rowWithRoom )
+        {
+            $rowWithRoom = $( "<div />", { "class": "row-fluid reflow-row" } );
+
+            $previousBusinessContainer.append( $rowWithRoom );
+        }
+
+        $rowWithRoom.append( $item );
+    };
+
+    // Click handler for removing an item
+    //
     $previousBusinessContainer.delegate( "[href$=#removePreviousBusiness]", "click", function( e )
     {
         e.preventDefault();
@@ -311,7 +367,7 @@
         ,   $previousBusinessItem   = $btn.closest( ".previousBusinessItem" )
         ;
 
-        $previousBusinessItem.remove();
+        _removeItemFromReflowRow( $previousBusinessItem );
     } );
 
     // Add the snippet for another run business
@@ -352,28 +408,7 @@
             } );
         }
 
-        // Find a row that has room or add a new row
-        //
-        var $rowWithRoom;
-        $previousBusinessContainer.children( ".row-fluid" ).each( function( )
-        {
-            var $row = $( this );
-
-            if ( $row.children().length < 3 )
-            {
-                $rowWithRoom = $row;
-                return false;
-            }
-        } );
-
-        if ( !$rowWithRoom )
-        {
-            $rowWithRoom = $( "<div />", { "class": "row-fluid" } );
-
-            $previousBusinessContainer.append( $rowWithRoom );
-        }
-
-        $rowWithRoom.append( $previousBusiness );
+        _appendItemToReflowRow( $previousBusinessContainer, $previousBusiness );
     };
 
     // Add an empty previous business block
@@ -614,6 +649,7 @@
         // Reset any state
         //
         $previousBusinessContainer.empty();
+        $attachmentsContainer.empty();
         $cvContainer.find( ".noCV"  ).hide();
         $cvContainer.find( ".hasCV" ).hide();
 
