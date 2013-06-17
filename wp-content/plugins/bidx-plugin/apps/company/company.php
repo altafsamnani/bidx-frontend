@@ -25,21 +25,7 @@ class company {
         $this->scriptInject = $bidCommonObj->getScriptJs($subDomain);
 
         add_action( 'wp_enqueue_scripts', array( &$this, 'register_company_bidx_ui_libs' ) ) ;
-        add_action('wp_head', array(&$this, 'addJsVariables'));
     }
-
-   function addJsVariables() {
-    echo "<script>
-          window.bidx = window.bidx || {};
-          window.bidx.api = {
-            settings: {
-                      servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
-                    }
-            };
-        </script>";
-
-     echo $this->scriptInject;
-   }
 
     /**
      * Registers the search specific javascript and css files
