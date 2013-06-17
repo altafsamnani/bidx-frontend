@@ -183,6 +183,9 @@ body.bidx-edit span.scrollPositionMarker {
     top:                        -240px;
 }
 
+.well-white {
+    background-color:           #fff;
+}
 
 /* End Global styles */
 
