@@ -5,7 +5,7 @@ require_once( ABSPATH . WPINC . '/pluggable.php' );
 
 /**
  * Common functions for all the services
- * 
+ *
  * @author Altaf Samnani
  * @author Jaap Gorjup
  * @version 1.0
@@ -41,7 +41,7 @@ class BidxCommon
                 //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
                 $this->processEntities ($subDomain);
                 }
-               
+
                 $scriptValue = $this->injectJsVariables ($subDomain);
                 $this->setScriptJs ($subDomain, $scriptValue);
 
@@ -132,7 +132,7 @@ class BidxCommon
      */
     public function getURIParams ($subDomain, $jsSessionData = NULL)
     {
-        
+
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $redirect = NULL;
         $data = new STDClass();
@@ -152,9 +152,9 @@ class BidxCommon
             switch ($hostAddress[1]) {
 
                 case 'member':
-       
+
                     $memberId = ( isset($hostAddress[2]) &&  $hostAddress[2]) ? $hostAddress[2] : $jsSessionData->data->id;
-                   
+
                     if ($memberId) {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
@@ -168,7 +168,7 @@ class BidxCommon
 
                 case 'company':
                     $companyId = null;
-                    if (isset ($hostAddress[2]) && $hostAddress[2] != '#create') {
+                    if (!empty($hostAddress[2])) {
                         $companyId = $hostAddress[2];
                     }
 
@@ -181,7 +181,7 @@ class BidxCommon
                     break;
 
                 case 'business':
-               
+
                     $bpSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
 
                     if ($bpSummaryId) {
