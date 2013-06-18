@@ -96,7 +96,7 @@ abstract class APIbridge
             if (isset($result['cookies']) && count ($result['cookies'])) {
                 $cookies = $result['cookies'];
                 foreach ($cookies as $bidxAuthCookie) {
-                    if(isset($bidxAuthCookie->name)) {
+                    if(!empty($bidxAuthCookie->name) && $bidxAuthCookie->name) {
                     $cookieDomain = $bidxAuthCookie->domain;
                     setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
                     }

@@ -118,11 +118,11 @@
     ,   geocodeTimer    = null
     ;
 
-    $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
-    $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
-    $currentAddressStreet.change(       function() { _updateCurrentAddressMap();    } );
-    $currentAddressStreetNumber.change( function() { _updateCurrentAddressMap();    } );
-    $currentAddressPostalCode.change(   function() { _updateCurrentAddressMap();    } );
+    $currentAddressCountry.change(      function() {_updateCurrentAddressMap();} );
+    $currentAddressCityTown.change(     function() {_updateCurrentAddressMap();} );
+    $currentAddressStreet.change(       function() {_updateCurrentAddressMap();} );
+    $currentAddressStreetNumber.change( function() {_updateCurrentAddressMap();} );
+    $currentAddressPostalCode.change(   function() {_updateCurrentAddressMap();} );
 
     // Try to gecode the address (array)
     // On failure, pop one item from the address array and retry untill there is no
@@ -141,7 +141,7 @@
 
                 if ( status === google.maps.GeocoderStatus.OK )
                 {
-                    cb( null, { results: results[ 0 ], address: address } );
+                    cb( null, {results: results[ 0 ], address: address} );
                 }
                 else if ( address.length > 1 )
                 {
@@ -273,7 +273,7 @@
 
         if ( logo && logo.length && logo[ 0 ].document )
         {
-            $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document  } ));
+            $logoContainer.append( $( "<img />", {"src": logo[ 0 ].document} ));
         }
 
         // Setup the hidden fields used in the file upload
@@ -402,8 +402,8 @@
 
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
+        var $btnSave    = $( "<a />", {class: "btn btn-primary disabled", href: "#save"})
+        ,   $btnCancel  = $( "<a />", {class: "btn btn-primary disabled", href: "#cancel"})
         ;
 
         $btnSave.text( state === "create" ? "Add company" : "Save company" );
@@ -672,4 +672,12 @@
     }
 
     window.bidx.company = exports;
+    /* Menu code for Bp summary Tab Menu */
+    $('.nextPageBtn a').click(function(e) {
+            $('.nav-tabs li').removeClass('active');
+            var nextbtnhref = $(this).attr('href');
+            $('ul.nav > li > a[href="' + nextbtnhref + '"]').parent().addClass('active');
+            e.preventDefault();
+        });
+
 } ( jQuery ));
