@@ -21,24 +21,24 @@ $businessSummary = $this->data;
             ?>
 
             <?php
-            $rowValues = array ('Business name' => $businessSummary->name);
+            $rowValues = array ('Business name' => $this->exst ($businessSummary->name));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $rowValues = array ('Describe your business in 15 words' => $businessSummary->summary);
+            $rowValues = array ('Describe your business in 15 words' => $this->exst ($businessSummary->summary));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
 
             <?php
-            $industry = $this->getMultiValues ($businessSummary->industry, ', ');
+            $industry = $this->getMultiValues ($this->exst ($businessSummary->industry), ', ');
             $rowValues = array ('Industry' => $industry);
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $country = $this->getMultiValues ($businessSummary->countryOperation, ', ', 'country');
+            $country = $this->getMultiValues ($this->exst ($businessSummary->countryOperation), ', ', 'country');
             $rowValues = array ('Country of business ' => $country);
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
@@ -55,49 +55,53 @@ $businessSummary = $this->data;
             ?>
 
             <?php
-            $rowValues = array ('Summary of this business' => $businessSummary->summary);
+            $rowValues = array ('Summary of this business' => $this->exst ($businessSummary->summary));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $reasonSubmission = $this->getMultiValues ($businessSummary->reasonForSubmission, ', ');
+            $reasonSubmission = $this->getMultiValues ($this->exst ($businessSummary->reasonForSubmission), ', ');
             $rowValues = array ('Reason for submission of business summary' => $reasonSubmission);
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $socialImpact = $this->getMultiValues ($businessSummary->socialImpact, ', ');
+            $socialImpact = $this->getMultiValues ($this->exst ($businessSummary->socialImpact), ', ');
             $rowValues = array ('Social Impact' => $socialImpact);
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $rowValues = array ('Percentage equity you currently retain ( optional )' => $businessSummary->equityRetained);
+            $rowValues = array ('Percentage equity you currently retain ( optional )' => $this->exst ($businessSummary->equityRetained));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $rowValues = array ('Finance needed' => $businessSummary->financingNeeded);
+            $rowValues = array ('Finance needed' => $this->exst ($businessSummary->financingNeeded));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $rowValues = array ('Why do you need financing? Describe in maximum 30 words ( optional )' => $businessSummary->summaryFinancingNeeded);
+            $rowValues = array ('Why do you need financing? Describe in maximum 30 words ( optional )' => $this->exst ($businessSummary->summaryFinancingNeeded));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
             // Media/Attachments
             $rowVideoValues = NULL;
-            if ($businessSummary->videoPitch->document) {
+            $videoPitch = $this->exst ($businessSummary->videoPitch->document);
+            $audioPitch = $this->exst ($businessSummary->audioPitch->document);
+            if ( $videoPitch ) {
+                $videoPitchDocName = $this->exst ($businessSummary->videoPitch->documentName);
                 //$rowVideoValues[] = $this->embedAudioVideo ($businessSummary->videoPitch->document);
-                $rowVideoValues[] = "<a href= '" . $businessSummary->videoPitch->document . "' " . $classValue . " target='_blank' > " . $businessSummary->videoPitch->documentName . " </a>";
+                $rowVideoValues[] = "<a href= '" . $videoPitch . "' target='_blank' > " . $videoPitchDocName . " </a>";
 
             }
 
-            if ($businessSummary->audioPitch->document) {
+            if ($audioPitch) {
+                $audioPitchDocName = $this->exst ($businessSummary->audioPitch->documentName);
                 //$rowVideoValues[] = $this->embedAudioVideo ($businessSummary->audioPitch->document);
-                $rowVideoValues[] = "<a href= '" . $businessSummary->audioPitch->document . "' " . $classValue . " target='_blank' > " . $businessSummary->audioPitch->documentName . " </a>";
+                $rowVideoValues[] = "<a href= '" . $audioPitch . "' target='_blank' > " . $audioPitchDocName . " </a>";
             }
 
             if ($rowVideoValues) {
@@ -110,10 +114,15 @@ $businessSummary = $this->data;
             //echo $this->displayAttachments ($header = '<h6>Media<h6>', $businessSummary->attachment);
             ?>
         </div>
- 
+       <?php
+        $personalRole = $this->exst ($businessSummary->personalRole);
+        $personalExpertise = $this->exst ($businessSummary->personalExpertise);
+        $supportingData = $this->exst ($businessSummary->personalDetails);
+        if($personalRole ||  $personalExpertise || $supportingData ) {
+       ?>
 
         <span id="aboutSupporting" class="scrollPositionMarker"></span>
-        <h3>About the supporting team</h3>
+        <h3>About the supporting team </h3>
         <div class="row-fluid">
 
             <?php
@@ -122,17 +131,17 @@ $businessSummary = $this->data;
             ?>
 
             <?php
-            $rowValues = array ('Role of entrepreneur in this business' => $businessSummary->personalRole);
+            $rowValues = array ('Role of entrepreneur in this business' => $personalRole);
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $rowValues = array ('Please provide details of your expertise applicable to this business' => $businessSummary->personalExpertise);
+            $rowValues = array ('Please provide details of your expertise applicable to this business' => $personalExpertise);
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h6', 'class_value' => 'adjacentval'));
             ?>
 
             <?php
-            $supportingData = $businessSummary->personalDetails;
+            
             $header = array ('Name' => 'name', 'Role of partner in this business' => 'role', 'Expertise of partner applicable' => 'expertise');
             $merge['name'] = array ('firstName', 'lastName');
             $supportingMembersHtml = $this->addTableRows ($header, $supportingData, 'table table-bordered', $merge);
@@ -141,6 +150,7 @@ $businessSummary = $this->data;
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
             ?>
         </div>
+        <?php } ?>
         <div class = "nextPageBtn">
             <a class="btn btn-large btn-primary btn-embossed mlm" href="#tab2" data-toggle="tab">View financial details<i class="fui-arrow-right pull-right"></i></a>
        

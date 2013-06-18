@@ -520,7 +520,7 @@ class TemplateLibrary
 
                     $objValue = ($writeValue) ? $dataValue->$subVal : '';
                 } else {
-                    $objValue = $dataValue->$subVal;
+                    $objValue = (!empty($dataValue->$subVal)) ? $dataValue->$subVal:'';
                 }
 
                 $elementKey = ($elementKey) ? $elementKey : $subVal;

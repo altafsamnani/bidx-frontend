@@ -35,11 +35,11 @@ class BidxCommon
             $isWordpress = $this->isWordpressPage ();
             //Check session if its not redirect (is not having q= param)
             if (!$isWordpress) {
-                if (!isset($this::$scriptJs [$subDomain])) { // If Session set dont do anything
-                $sessionObj = new SessionService();
-                $this::$bidxSession[$subDomain] = $sessionObj->isLoggedIn ();
-                //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
-                $this->processEntities ($subDomain);
+                if (!isset ($this::$scriptJs [$subDomain])) { // If Session set dont do anything
+                    $sessionObj = new SessionService();
+                    $this::$bidxSession[$subDomain] = $sessionObj->isLoggedIn ();
+                    //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
+                    $this->processEntities ($subDomain);
                 }
 
                 $scriptValue = $this->injectJsVariables ($subDomain);
@@ -62,15 +62,14 @@ class BidxCommon
      */
     public function processEntities ($subDomain)
     {
-		if ( property_exists( $this::$bidxSession[$subDomain], 'data' ) )
-		{
-	        $entities = $this::$bidxSession[$subDomain]->data->entities;
-	        foreach ($entities as $key => $value) {
-	            $bidxEntityType = $value->bidxEntityType;
-	            $bidxEntityValue = $value->bidxEntityId;
-	            $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
-  	        }
-              }
+        if (!empty ($this::$bidxSession[$subDomain]->data)) {
+            $entities = $this::$bidxSession[$subDomain]->data->entities;
+            foreach ($entities as $key => $value) {
+                $bidxEntityType = $value->bidxEntityType;
+                $bidxEntityValue = $value->bidxEntityId;
+                $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
+            }
+        }
         return;
     }
 
@@ -144,7 +143,7 @@ class BidxCommon
          */
         //$this->getWordpressLogin($jsSessionData);
 
-		$msg = array();
+        $msg = array ();
 
         if (is_array ($hostAddress)) {
 
@@ -152,8 +151,8 @@ class BidxCommon
             switch ($hostAddress[1]) {
 
                 case 'member':
-
-                    $memberId = ( isset($hostAddress[2]) &&  $hostAddress[2]) ? $hostAddress[2] : $jsSessionData->data->id;
+                    $sessioMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
+                    $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessioMemberId;
 
                     if ($memberId) {
                         $data->memberId = $memberId;
@@ -168,7 +167,7 @@ class BidxCommon
 
                 case 'company':
                     $companyId = null;
-                    if (!empty($hostAddress[2])) {
+                    if (!empty ($hostAddress[2])) {
                         $companyId = $hostAddress[2];
                     }
 
@@ -186,7 +185,7 @@ class BidxCommon
 
                     if ($bpSummaryId) {
                         $data->bidxBusinessSummary = $bpSummaryId;
-                        $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
+                        $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
                         $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
                     } else {
                         $redirect = 'login'; //To redirect /member and not loggedin page to /login
