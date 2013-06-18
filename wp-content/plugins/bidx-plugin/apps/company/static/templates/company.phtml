@@ -1,16 +1,21 @@
 <div class="block-odd">
+    <?php if(empty($this->bpSummary)) { ?>
     <div class="pageHeader clearfix">
       <div class="container clearfix">
         <h1><?php echo ucwords( $this->company->name); ?></h1>
         <div class="editControls btn-group"></div>
       </div>
     </div>
-
+    <?php } ?>
     <div class="row-fluid mainState mainStateShow">
       <div class="span12">
         <?php $this->render('view-company.phtml'); ?>
       </div>
     </div>
 
-    <?php $this->render('edit-company.phtml'); ?>
+    <?php
+    if(empty($this->bpSummary)) {
+    $this->render('edit-company.phtml');
+    }
+    ?>
 </div>

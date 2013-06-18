@@ -739,7 +739,7 @@ class TemplateLibrary
             $html .= $header;
 
             foreach ($attachmentArr as $attachment) {
-
+                $date = date('d F, Y',$attachment->uploadedDateTime);
                 $documentImage = preg_match ("/^image/i", $attachment->mimeType) ? $attachment->document : '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
 
                 $html .= '<div class="row-fluid attachment"><div class="span3">';
@@ -748,7 +748,8 @@ class TemplateLibrary
 
                 $html .= '<div class="span9">';
                 $html .= "<h5 class='documentName'>{$attachment->documentName}</h5>";
-                $html .= "<p>{$attachment->uploadedDateTime} </p>";
+                $html .= "<p>{$date} </p>";
+                $html .= "<p>{$attachment->purpose} </p>";
                 $html .= '</div>';
 
                 $html .= '</div>';

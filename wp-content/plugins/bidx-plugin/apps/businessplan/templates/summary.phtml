@@ -1,10 +1,9 @@
 <?php
-
-$progress = trim($this->data->rating->Completeness).'%';
-
+$progress = trim ($this->data->rating->Completeness) . '%';
+$companyId = $this->exst ($this->data->company);
 ?>
 
-<div class="block-odd top-margin">
+<div class="block-odd bp-summary">
 
   <div class="row affix">
     <div class="span12">
@@ -28,16 +27,18 @@ $progress = trim($this->data->rating->Completeness).'%';
   <div class="row-fluid top-padding75">
     <div class=" tabbable"> <!-- Only required for left/right tabs -->
       <div class ="span8 offset4">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs affix">
           <li class="active">
             <a href="#tab1" data-toggle="tab">Business summary</a>
           </li>
           <li>
             <a href="#tab2" data-toggle="tab">Financial details</a>
           </li>
+          <?php if($companyId) { ?>
           <li>
             <a href="#tab3" data-toggle="tab">Company details</a>
           </li>
+          <?php } ?>
           <li>
             <a href="#tab4" data-toggle="tab">Documents</a>
           </li>
@@ -50,11 +51,25 @@ $progress = trim($this->data->rating->Completeness).'%';
           </div>
           <div class="tab-pane" id="tab2">
             <?php $this -> render ( 'financial-details.phtml' ); ?>
+            <div class = "prevPageBtn">
+                <a class="btn btn-large btn-primary btn-embossed mlm" href="#tab1" data-toggle="tab">View business details<i class="fui-arrow-left pull-left"></i></a>
+               </div>
+               <div class = "nextPageBtn">
+                <a class="btn btn-large btn-primary btn-embossed mlm" href="#tab3" data-toggle="tab">View company details<i class="fui-arrow-right pull-right"></i></a>
+               </div>
           </div>
+          <?php if($companyId) {  ?>
           <div class="tab-pane" id="tab3">
-            <?php //$this -> render ( 'company-details.phtml' );
-                  echo do_shortcode('[bidx app="company" id='.$this->data->company.'] '); ?>
+            <?php 
+               echo do_shortcode('[bidx app="company" id='.$this->data->company.'] '); ?>
+               <div class = "prevPageBtn">
+                <a class="btn btn-large btn-primary btn-embossed mlm" href="#tab2" data-toggle="tab">View financial details<i class="fui-arrow-left pull-left"></i></a>
+               </div>
+               <div class = "nextPageBtn">
+                <a class="btn btn-large btn-primary btn-embossed mlm" href="#tab4" data-toggle="tab">View documents<i class="fui-arrow-right pull-right"></i></a>
+               </div>
           </div>
+            <?php } ?>
           <div class="tab-pane" id="tab4">
             <?php $this -> render ( 'documents.phtml' ); ?>
           </div>

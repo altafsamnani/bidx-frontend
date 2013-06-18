@@ -13,6 +13,16 @@
 .scrollcontent{
     z-index: -1;
 }
+.bp-summary .tab-content {
+    border:0px;
+}
+
+.bp-summary .attachment {
+    width:60%;
+    background:#FFFFFF;
+    margin-bottom:2%;
+
+}
 
 
 

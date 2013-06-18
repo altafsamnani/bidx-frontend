@@ -427,10 +427,17 @@ footer .social-footer {
 .scrollcontent {
     z-index:-100;
 }
+.prevPageBtn{
+    margin-top:40px;
+    margin-bottom:10px;
+    float:left;
+    width:auto;
+}
 .nextPageBtn{
     margin-top:40px;
     margin-bottom:10px;
     float:right;
+    width:auto;
 }
 .top-margin {
     margin-top:47px;

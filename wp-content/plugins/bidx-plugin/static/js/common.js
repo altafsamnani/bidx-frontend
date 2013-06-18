@@ -166,5 +166,13 @@
     {
         groupDomain:                groupDomain
     };
+    
+    /* Menu code for Bp summary Tab Menu */
+    $('.nextPageBtn a , .prevPageBtn a').click(function(e) {
+            $('.nav-tabs li').removeClass('active');
+            var btnhref = $(this).attr('href');
+            $('ul.nav > li > a[href="' + btnhref + '"]').parent().addClass('active');
+            e.preventDefault();
+    });
 
 } ( jQuery ));

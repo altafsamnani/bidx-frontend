@@ -94,6 +94,7 @@ class company
         if (isset ($atts) && isset ($atts['id'])) {
             $companyId = $atts['id'];
             $bpSummary = true;
+            $view->bpSummary = true;
         } else if (isset ($sessionData->companyId)) {
             $companyId = $sessionData->companyId;
         }

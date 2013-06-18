@@ -26,12 +26,12 @@ if (!$picSrc) {
     $options = array( 'class_label' => 'bidx-label' );
 
     echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-        array( 'Company name' => $this->company->name ), $options );
+        array( 'Company name' => $this->exst($this->company->name )), $options );
 
     echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-        array( 'Company website' => $this->company->website ), $options );
+        array( 'Company website' => $this->exst($this->company->website )), $options );
 
-    if ($this->exst($this->company->registered)) {
+    if (!empty($this->company->registered)) {
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
             array( 'Date of registration' =>   date("d-m-Y", strtotime( $this->company->dateCompanyEstab ))), $options );

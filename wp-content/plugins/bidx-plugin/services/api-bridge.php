@@ -98,6 +98,7 @@ abstract class APIbridge
                 foreach ($cookies as $bidxAuthCookie) {
                     if(!empty($bidxAuthCookie->name) && $bidxAuthCookie->name) {
                     $cookieDomain = $bidxAuthCookie->domain;
+                    ob_start();
                     setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
                     }
                 }
