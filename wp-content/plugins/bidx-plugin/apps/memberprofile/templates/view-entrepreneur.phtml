@@ -100,7 +100,7 @@ if ($companies) {
             $collapseId = sprintf ('companyAccordion-%s', $company->bidxEntityId);
 
             $useDataSrc = false;
-            $picSrc = $company->logo->document;
+            $picSrc = $this->exst ($company->logo->document);
 
             if (!$picSrc) {
                 $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
@@ -132,37 +132,40 @@ if ($companies) {
                             <div class="span8">
                                 <ul class="unstyled">
                                     <?php
+                                    $companyWebsite = $this->exst ( $company->website );
+                                    $companyRegistered = $this->exst ( $company->registered );
                                     printf ('<li>%s</li>', $company->name);
 
-                                    if ($company->website) {
-                                        printf ('<li>%s</li>', $company->website);
+                                    if ($companyWebsite) {
+                                        printf ('<li>%s</li>', $companyWebsite);
                                     }
 
-                                    if ($company->registered) {
-                                        printf ('<li>%s</li>', date ('d-m-Y', strtotime ($company->dateCompanyEstab)));
+
+                                    if ($companyRegistered) {
+                                        printf ('<li>%s</li>', date ('d-m-Y', strtotime ($this->exst ($company->dateCompanyEstab))));
 
                                         $arStatutoryAddress = array ();
 
-                                        if ($company->statutoryAddress->street) {
+                                        if (!empty($company->statutoryAddress->street)) {
                                             $arStatutoryAddress[] = $company->statutoryAddress->street;
                                         }
 
-                                        if ($company->statutoryAddress->streetNumber) {
+                                        if (!empty($company->statutoryAddress->streetNumber)) {
                                             $arStatutoryAddress[] = $company->statutoryAddress->streetNumber;
                                         }
 
-                                        if ($company->statutoryAddress->postalCode) {
+                                        if (!empty($company->statutoryAddress->postalCode)) {
                                             $arStatutoryAddress[] = $company->statutoryAddress->postalCode;
                                         }
 
 
                                         $arStatutoryCityCountry = array ();
 
-                                        if ($company->statutoryAddress->cityTown) {
+                                        if (!empty($company->statutoryAddress->cityTown)) {
                                             $arStatutoryCityCountry[] = $company->statutoryAddress->cityTown;
                                         }
 
-                                        if ($company->statutoryAddress->country) {
+                                        if (!empty($company->statutoryAddress->country)) {
                                             $arStatutoryCityCountry[] = $company->statutoryAddress->country;
                                         }
 

@@ -97,7 +97,7 @@ abstract class APIbridge
                 $cookies = $result['cookies'];
                 foreach ($cookies as $bidxAuthCookie) {
                     if(isset($bidxAuthCookie->name)) {
-                    $cookieDomain = ( DOMAIN_CURRENT_SITE == 'bidx.dev' ) ? 'bidx.dev' : $bidxAuthCookie->domain;
+                    $cookieDomain = $bidxAuthCookie->domain;
                     setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
                     }
                 }

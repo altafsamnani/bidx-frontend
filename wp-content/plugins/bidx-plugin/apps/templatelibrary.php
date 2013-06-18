@@ -389,7 +389,7 @@ class TemplateLibrary
     {
 
         $returnHtml = NULL;
-
+        $display =  false;
         if (isset ($rowsArr)) {
             $html = NULL;
             $htmlHeader = "<table class = '$class' > ";
