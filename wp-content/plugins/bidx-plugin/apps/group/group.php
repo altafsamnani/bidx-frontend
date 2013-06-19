@@ -60,6 +60,8 @@ class group {
 			case "group-intro" :
 				$view->group = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-intro.phtml' );
+			case "join-group":
+				return $view->render( 'group-join.phtml' );
 			case "group-header" :
         		$groupSvc->isRedirectCheck = false;
 				$view->group = $groupSvc->getGroupDetails(  );
