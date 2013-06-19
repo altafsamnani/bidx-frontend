@@ -37,11 +37,7 @@
             }
             else
             {
-                var noty = noty(
-                {
-                    type:           "success"
-                ,   text:           "Welcome in the group! You will be redirected now..."
-                });
+                bidx.common.notifyRedirect();
 
                 var successMsg = window.btoa( "Welcome in the group!" );
 
@@ -126,11 +122,7 @@
             }
             else
             {
-                var noty = noty(
-                {
-                    type:           "success"
-                ,   text:           "Sad to see you leave. You will be redirected now..."
-                });
+                bidx.common.notifyRedirect();
 
                 var successMsg = window.btoa( "Successfully left the group!" );
 
