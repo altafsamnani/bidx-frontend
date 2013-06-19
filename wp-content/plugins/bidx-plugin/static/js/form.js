@@ -749,8 +749,7 @@ var Validator = function () {
 				var errorfield=$("<div class=\"" + this.errorClass + " " + (this.addedErrorClass ? this.addedErrorClass:"") +  "\" style=\"display: none;\">" + rule[key].text + "</div>");
 				this.formfield.append(errorfield);
 				//show error
-
-				this.formfield.switchClass("formfield","formfield-error", 'fast');
+				this.formfield.addClass("hasError");
 				errorfield.slideDown('fast');
 
 			}
@@ -779,7 +778,7 @@ var Validator = function () {
 			}
 			this.validated=true;//set formelement to validated
 			this.formfield.removeClass("hasError");
-			this.formfield.switchClass("formfield-error","formfield", 'fast');
+					
 			var el = this.formfield.find("." + this.errorClass);
 			el.slideUp('fast',function(){
 				el.remove();

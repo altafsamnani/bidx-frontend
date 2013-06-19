@@ -18,21 +18,23 @@ Company: bidX;
 html, body {
     margin:                 0;
     padding:                0;
-/*    font-family:            'Lucida Sans', Verdana, sans-serif; */
-
-    color:                  #526476;
+    font-family:            'Lucida Sans', Verdana, sans-serif;
+    color:                  #526476; /*do we still need this?*/
 }
 
-h1 {
 
+h2,h3,h4 {
+  font-family: Helvetica,Arial,sans-serif;
 }
-
 h2 {
     font-size:              32px;
+    color:                  #333;
 }
+
 
 p {
     font-size:              14px;
+    color:                  #666;   
 }
 
 hr {
@@ -72,9 +74,6 @@ a, a:hover, a:visited, a:link  {
     margin-bottom:              60px;
 }
 
-.sprite{
-    background:url(assets/img/sprite.png) no-repeat;
-}
 
 .block-login {
     margin:50px auto;
@@ -90,24 +89,54 @@ a, a:hover, a:visited, a:link  {
 .jqHidden {
     display:none;
 }
-
 .bidx-well {
-    padding:                16px;
+    padding:                30px;
+}
+
+.bidx-well, .bidx-well.p {
+    padding:                30px;
     background-color:       #f2faf8;
+    color:                  #2c3e50;
+}
+
+.bidx-well .title {
+  color: #34495e;
 }
 
 .bidx-bullet-list li {
-    margin-left:            18px;
+    margin-left: 30px;
+    position: relative;
+    line-height: 22px;
 }
 
 .bidx-bullet-list .fui-check {
-    margin-left:            -18px;
     color:                  #2ecc71;
+    position:  absolute;
+    left: -30px;
+    top: 0;
     vertical-align:         bottom;
+    width:                  30px;
 }
 
 
+
 /* End Global styles */
+
+/* Sprites */
+.sprite{
+    background:url(assets/img/sprite.png) no-repeat;
+}
+
+.arrow-down {
+  background-position : 0 -100px;
+  width: 21px;
+  height: 13px;
+  margin: 0 auto;
+}
+
+/* End sprites*/
+
+
 
 /*******************************************************************************************
 *
@@ -394,7 +423,7 @@ body.home .hero-block {
 }
 
 .howitworks-block .title {
-    margin:                 30px 0 20px;
+    margin:                 50px 0 20px;
 }
 
 .howitworks-block-freefasteasysetup .title {
@@ -425,7 +454,10 @@ body.home .hero-block {
 .howitworks-generaterevenues {
     background-position:    -250px 0;
 }
-
+                                
+.home .notaserviceprovider {
+    margin-bottom:          50px;
+}
 .home .notaserviceprovider-block ul {
     min-height:             124px;
 }
@@ -447,8 +479,11 @@ body.home .hero-block {
 }
 
 .signup {
-    padding-top:            20px;
+    /*padding-top:            20px;*/
+    padding:                20px;
     background-color:       #0093cb;
+    border:                 0px;
+
 }
 
 .signup h3 {
@@ -518,6 +553,17 @@ body.home .hero-block {
         font-size: 12px;
     }
 
+.solutions-arrow {
+  margin: 35px auto;
+}
+
+.btn-bidx-blue {
+  background-color: #5dade2;
+}
+
+.btn-bidx-blue:hover, .btn-bidx-blue:focus  {
+  background-color: red;
+}
 
 
 /* end intro styles */
@@ -528,10 +574,10 @@ body.home .hero-block {
 *   Form styles
 *
 ********************************************************************************************/
-
+/*
 .row-fluid textarea, .row-fluid input[type="text"], .row-fluid input[type="password"], .row-fluid input[type="datetime"], .row-fluid input[type="datetime-local"], .row-fluid input[type="date"], .row-fluid input[type="month"], .row-fluid input[type="time"], .row-fluid input[type="week"], .row-fluid input[type="number"], .row-fluid input[type="email"], .row-fluid input[type="url"], .row-fluid input[type="search"], .row-fluid input[type="tel"], .row-fluid input[type="color"], .row-fluid .uneditable-input {
-    height:             21px;  /* let's just use the same height as a regular row */
-}
+    height:             21px;   let's just use the same height as a regular row 
+}*/
 
 
 
@@ -542,6 +588,15 @@ body.home .hero-block {
     .formfield  {
         position:relative;
         margin-bottom:10px;
+    }
+
+    .formfield input {
+      border:0px;
+
+      -moz-box-sizing: border-box; 
+      -webkit-box-sizing: border-box; 
+      box-sizing: border-box; 
+
     }
 
     .formfield .ajaxloader, .formfield-error .ajaxloader {
@@ -564,7 +619,7 @@ body.home .hero-block {
         margin:20px 0;
     }
 
-    .formfield-error {
+    .formfield.hasError {
         margin-bottom: 0px;
     }
 

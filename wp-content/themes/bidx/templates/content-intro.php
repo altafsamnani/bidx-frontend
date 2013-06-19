@@ -148,8 +148,8 @@
 	<div class="container content-block howitworks">
 		<div class="row-fluid text-center">
 			<h2>How It Works</h2>
-			<p>To grow your network of entrepreneurs, mentors and investors bidX invites you to create a Group.<br />
-The Group is an online space aggregating tools to support, virtually, all your services from business idea rating to successful matchmaking.</p>
+			<p>To grow your network of entrepreneurs, mentors and investors, bidX invites you to create a Group.<br />
+			The Group is an online space aggregating tools to support, virtually, all your services from business idea rating to successful matchmaking.</p>
 		</div>
 		<div class="row-fluid">
 			<div class="span4 howitworks-block howitworks-block-freefasteasysetup">
@@ -189,20 +189,43 @@ The Group is an online space aggregating tools to support, virtually, all your s
 		<hr />
 	</div>
 
-	<div class="container content-block">
+	<div class="container content-block oursolutions">
 		<div class="row-fluid text-center">
 			<h2>Our Solutions</h2>
-			<p>Is your bank or investment fund receiving many business plans every day?
-			We recommend the bidX Rating module to screen and select finance ready plans according
-			to your criteria. Does your incubator need innovative tools to reach and engage
-			entrepreneurs?  Use the bidX Competition feature - allowing you to manage a business plan competition,
-			including mentoring, vetting and jury coordination - to find and accelerate the finance of promising businesses in your region.</p>
-			<p>All the community management tools you need are included; events, news, discussions, messaging.
-			Should your group want to engage investors, we will make sure your information is safe and secure.
-			The bidX Business Proposal is suggested to entrepreneurs that need to strengthen their idea into a strong proposal for finance.</p>
-			<a href="/features" class="btn btn-primary btn-large">Our Features<i class="fui-arrow-right pull-right"></i></a>
+			<p>Using technology for business growth</p>
 		</div>
-
+		<div class="row-fluid">
+			<div class="span4 usp-block bidx-well">
+				<div>
+					Is your investment fund receiving tons of business plans a day?
+				</div>
+				<div class="sprite arrow-down solutions-arrow"></div>
+				<div>
+					Filter & Screen finance ready plans with the <strong>Rating feature</strong>
+				</div>
+			</div>
+			<div class="span4 usp-block bidx-well">
+				<div>
+					Does your incubator need innovative tools to reach and engage entrepreneurs?
+				</div>
+				<div class="sprite arrow-down solutions-arrow"></div>
+				<div>
+					Find and accelerate promising businesses with the <strong>Group & Competition features</strong>
+				</div>
+			</div>
+			<div class="span4 usp-block bidx-well">
+				<div>
+					Do entrepreneurs in your network need tools to strengthen their idea?
+				</div>
+				<div class="sprite arrow-down solutions-arrow"></div>
+				<div>
+					Transform business ideas into ready-for-finance plans with the <strong>Business Proposal feature</strong>
+				</div>
+			</div>
+		</div>
+		<div class="text-center">
+			<a href="/features" class="btn btn-bidx-blue">View all features <i class="fui-arrow-right pull-right"></i></a>
+		</div>
 		<hr />
 	</div>
 
@@ -222,7 +245,7 @@ The Group is an online space aggregating tools to support, virtually, all your s
 					<li><span class="fui-check"></span> Join Groups to generate leads for your business, network with like-minded professionals and find the expertise to grow your business</li>
 					<li><span class="fui-check"></span> Find and connect with mentors &amp; investors</li>
 				</ul>
-				<a href="/entrepreneurs" class="btn btn-primary">Entrepreneurs <i class="fui-arrow-right pull-right"></i></a>
+				<a href="/entrepreneurs" class="btn btn-bidx-blue">Entrepreneurs <i class="fui-arrow-right pull-right"></i></a>
 			</div>
 			<div class="span6 bidx-well notaserviceprovider-block">
 				<h3 class="title">For Investors</h3>
@@ -233,7 +256,7 @@ The Group is an online space aggregating tools to support, virtually, all your s
 					<li><span class="fui-check"></span> Find and Connect with entrepreneurs in selected areas</li>
 					<li><span class="fui-check"></span> Join Groups of Business and Finance service providers to network and generate leads</li>
 				</ul>
-				<a href="/investors" class="btn btn-primary">Investors <i class="fui-arrow-right pull-right"></i></a>
+				<a href="/investors" class="btn btn-bidx-blue">Investors <i class="fui-arrow-right pull-right"></i></a>
 			</div>
 		</div>
 	</div>
