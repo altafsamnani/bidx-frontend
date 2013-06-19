@@ -37,6 +37,12 @@
             }
             else
             {
+                var noty = noty(
+                {
+                    type:           "success"
+                ,   text:           "Welcome in the group! You will be redirected now..."
+                });
+
                 var successMsg = window.btoa( "Welcome in the group!" );
 
                 var url = document.location.protocol
@@ -120,6 +126,12 @@
             }
             else
             {
+                var noty = noty(
+                {
+                    type:           "success"
+                ,   text:           "Sad to see you leave. You will be redirected now..."
+                });
+
                 var successMsg = window.btoa( "Successfully left the group!" );
 
                 var url = document.location.protocol

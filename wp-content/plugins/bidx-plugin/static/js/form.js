@@ -170,6 +170,13 @@
 				}
 				//xhr post
 
+				var $error = $form.find( ".error_separate" );
+
+				if ( $error.length )
+				{
+					$error.remove();
+				}
+
 				$.ajax({
 					type:'post',
 					url: options.url,
@@ -201,6 +208,16 @@
 									$form.submit();
 								}
 								else if (data.redirect) {
+
+									if ( window.noty )
+									{
+										noty(
+										{
+											type:           "success"
+										,   text:           "Wait to be redirected..."
+										});
+									}
+
 									document.location=data.redirect;
 								}
 							}
@@ -217,14 +234,14 @@
 									}
 									//add separate error message under button
 									var $button=$(globalOptions.callToAction);
-									if($(".error_separate").length === 0) {
-										var $error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
+									if ( $error.length === 0) {
+										$error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
 										$button.parent().after($error);
 										$error.fadeIn('fast');
 									}
 									else {
 										//error box already there, replace text
-										$(".error_separate").text(message);
+										$error.text(message);
 									}
 								}
 
