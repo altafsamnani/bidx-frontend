@@ -2,7 +2,7 @@
 	<article class="bidx type-bidx status-publish hentry">
 	    <header>
 			<div id="myCarousel" class="carousel slide">
-			<?php 
+			<?php
 						$images = get_children(
 									array(
 									'post_parent' => $post->ID,
@@ -15,18 +15,18 @@
 						if ( count( $images ) > 0 ) {
 						?>
 						<ol class="carousel-indicators">
-						<?php 
+						<?php
 							$count = 0;
-							foreach ( $images as $id => $image ) { ?>	
+							foreach ( $images as $id => $image ) { ?>
 							<li data-target="#introCarousel" data-slide-to="<?php echo $count ?>"
 							<?php if ($count == 0) { ?> class="active" <?php } $count++; ?>></li>
-						<?php } ?>	
+						<?php } ?>
 						</ol>
 						<!-- Carousel items -->
 						<div class="carousel-inner">
-						<?php 
+						<?php
 							$count = 0;
-							foreach ( $images as $id => $image ) { 
+							foreach ( $images as $id => $image ) {
 								$img = wp_get_attachment_image_src( $image->ID, 400 );
 						?>
 							<div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
@@ -36,9 +36,9 @@
 			                      <p><?php echo $image -> post_content ?></p>
 			                    </div>
 							</div>
-						<?php } 
+						<?php }
 						} else {
-						?>	
+						?>
 			  <ol class="carousel-indicators">
 			    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 			    <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -71,7 +71,9 @@
 	   <?php  } ?>
 			</div>
 	    </header>
-  <?php if ( ! is_user_logged_in() ) { ?>
+<?php
+    if ( ! is_user_logged_in() ) {
+?>
 	    <div class="entry-content">
 	    	<?php echo do_shortcode( '[bidx app="group" view="group-intro"]' ); ?>
     	</div>
@@ -82,7 +84,16 @@
 	    		</div>
     		</div>
     	</div>
-  <?php } ?>
+<?php } else {
+    // Logged in but not joined this group
+    //
+?>
+        <div class="entry-content">
+            <?php echo do_shortcode( '[bidx app="group" view="join-group"]' ); ?>
+        </div>
+<?php
+    }
+?>
 
 
 	    <div class="entry-content">

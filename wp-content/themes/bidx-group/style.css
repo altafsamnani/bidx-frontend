@@ -187,6 +187,10 @@ body.bidx-edit span.scrollPositionMarker {
     background-color:           #fff;
 }
 
+.content-row {
+    padding-bottom:             20px;
+}
+
 /* End Global styles */
 
 /*******************************************************************************************
