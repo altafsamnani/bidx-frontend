@@ -37,9 +37,16 @@
             }
             else
             {
-                // TODO: redirect to group dashboard in case the join was for a different group than the one currently looking at
-                //
-                document.location.reload();
+                var successMsg = window.btoa( "Welcome in the group!" );
+
+                var url = document.location.protocol
+                    + "//"
+                    + document.location.hostname
+                    + ( document.location.port ? ":" + document.location.port : "" )
+                    + "?smsg=" + successMsg
+                ;
+
+                document.location.href = url;
             }
         });
     } );
@@ -113,9 +120,16 @@
             }
             else
             {
-                // TODO: redirect to group dashboard in case the join was for a different group than the one currently looking at
-                //
-                document.location.reload();
+                var successMsg = window.btoa( "Successfully left the group!" );
+
+                var url = document.location.protocol
+                    + "//"
+                    + document.location.hostname
+                    + ( document.location.port ? ":" + document.location.port : "" )
+                    + "?smsg=" + successMsg
+                ;
+
+                document.location.href = url;
             }
         });
     } );
@@ -166,7 +180,7 @@
     {
         groupDomain:                groupDomain
     };
-    
+
     /* Menu code for Bp summary Tab Menu */
     $('.nextPageBtn a , .prevPageBtn a').click(function(e) {
             $('.nav-tabs li').removeClass('active');
