@@ -29,7 +29,7 @@ if (property_exists($this -> sessionData, 'data') ) {
 
     $currentGroup   = $this->exst( $this->sessionData->data->currentGroup );
     $groups         = $this->exst( $this->sessionData->data->groups );
-
+    $showLogout     = true;
     if ( !empty( $currentGroup ) && !empty( $groups ) && !isset( $groups->$currentGroup )) {
 ?>
                 <li><a href="#joinGroup">Join this group</a></li>
@@ -42,6 +42,9 @@ if (property_exists($this -> sessionData, 'data') ) {
 }
 ?>
 				<li><a href="#messageOwner">Message to Group owner</a></li>
+           <?php if( $showLogout ) { ?>
+                     <li> <a href="<?php echo wp_logout_url( home_url() ); ?>" title="Logout">Logout</a>
+           <?php } ?>
     		</ul>
     	</li>
 	</ul>
