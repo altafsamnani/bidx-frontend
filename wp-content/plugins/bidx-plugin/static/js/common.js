@@ -182,11 +182,17 @@
     };
 
     /* Menu code for Bp summary Tab Menu */
-    $('.nextPageBtn a , .prevPageBtn a').click(function(e) {
-            $('.nav-tabs li').removeClass('active');
-            var btnhref = $(this).attr('href');
-            $('ul.nav > li > a[href="' + btnhref + '"]').parent().addClass('active');
-            e.preventDefault();
+    $('.tabControl').click(function(e)
+    {
+        e.preventDefault();
+
+        var $btn    = $( this )
+        ,   btnhref = $btn.attr('href')
+        ,   tab     = $btn.data('tab')
+        ,   $tab    = $( tab )
+        ;
+
+        $tab.find( "[href$='" + btnhref + "']" ).tab( 'show' );
     });
 
 } ( jQuery ));

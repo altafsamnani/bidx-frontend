@@ -27,7 +27,7 @@ $companyId = $this->exst ($this->data->company);
   <div class="row-fluid top-padding75">
     <div class=" tabbable"> <!-- Only required for left/right tabs -->
       <div class ="span8 offset4">
-        <ul class="nav nav-tabs affix">
+        <ul class="nav nav-tabs affix businessSummaryTabs">
           <li class="active">
             <a href="#tab1" data-toggle="tab">Business summary</a>
           </li>
@@ -60,7 +60,7 @@ $companyId = $this->exst ($this->data->company);
           </div>
           <?php if($companyId) {  ?>
           <div class="tab-pane" id="tab3">
-            <?php 
+            <?php
                echo do_shortcode('[bidx app="company" id='.$this->data->company.'] '); ?>
                <div class = "prevPageBtn">
                 <a class="btn btn-large btn-primary btn-embossed mlm" href="#tab2" data-toggle="tab">View financial details<i class="fui-arrow-left pull-left"></i></a>
