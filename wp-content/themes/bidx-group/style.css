@@ -137,7 +137,7 @@ a, a:hover, a:visited, a:link  {
     position:                   relative;
 }
 
-.accordion-toggle .controls {
+.accordion-toggle .control-buttons {
     font-size:                  28px;
     position:                   absolute;
     right:                      20px;
@@ -160,7 +160,7 @@ a, a:hover, a:visited, a:link  {
     display:                    none;
 }
 
-.accordion-inner .controls {
+.accordion-inner .control-buttons {
     position:                   absolute;
     right:                      20px;
     top:                        10px;

@@ -9,7 +9,7 @@ if ($entrepreneurDetails) {
 
     <div class="well profile-block">
 
-        <div class="btn-group controls">
+        <div class="btn-group control-buttons">
             <?php if ($entrepreneurDetails->bidxCanEdit) { ?>
                 <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurDetails->ownerId); ?>">Edit</a>
             <?php } ?>
@@ -111,7 +111,7 @@ if ($companies) {
                 <div class="accordion-heading">
                     <a class="accordion-toggle <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#companies" href="#<?php echo $collapseId ?>">
                         <h4><?php echo $company->name ?></h4>
-                        <div class="controls">
+                        <div class="control-buttons">
                             <span class="bidx-expand">+</span>
                             <span class="bidx-collapse">-</span>
                         </div>
@@ -119,7 +119,7 @@ if ($companies) {
                 </div><!-- accordion-heading -->
                 <div id="<?php echo $collapseId ?>" class="accordion-body collapse <?php echo ( $index == 0 ) ? 'in' : ''; ?>">
                     <div class="accordion-inner">
-                        <div class="btn-group controls">
+                        <div class="btn-group control-buttons">
                         <?php if ($company->bidxCanEdit) { ?>
                             <a class="btn btn-primary" href="/company/<?php echo $company->ownerId; ?>/#editCompany/<?php echo $company->ownerId; ?>">Edit</a>
                         <?php } ?>
