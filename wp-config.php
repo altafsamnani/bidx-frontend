@@ -16,7 +16,7 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'bidx_Jun18');
+define('DB_NAME', 'bidx');
 
 /** MySQL database username */
 define('DB_USER', 'bidx');
@@ -70,6 +70,10 @@ define('COOKIEPATH', '/');
 define('SITECOOKIEPATH', '/');
 
 
+define('SCRIPT_DEBUG', false);
+define('CONCATENATE_SCRIPTS', true);
+define('COMPRESS_SCRIPTS', true);
+
 /**#@-*/
 
 /**
@@ -112,7 +116,7 @@ define('API_AUTH_UNAME','bidx');
 define('API_AUTH_PASS','gobidx');
 
 /**
- * Internal settings for the API 
+ * Internal settings for the API
  **/
 define('API_URL','http://test.bidx.net/api/v1/');
 define('IMG_URL','https://test.bidx.net/dl/document/');
