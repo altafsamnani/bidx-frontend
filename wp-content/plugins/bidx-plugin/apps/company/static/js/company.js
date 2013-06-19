@@ -6,20 +6,23 @@
     ,   $editForm       = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets       = $element.find( ".snippets" )
 
-    ,   $toggles                    = $element.find( ".toggle" ).hide()
-    ,   $toggleRegistered           = $element.find( "[name='registered']"      )
-    ,   $toggleHaveEmployees        = $element.find( "[name='haveEmployees']"   )
+    ,   $toggles                            = $element.find( ".toggle" ).hide()
+    ,   $toggleRegistered                   = $element.find( "[name='registered']"      )
+    ,   $toggleHaveEmployees                = $element.find( "[name='haveEmployees']"   )
 
-    ,   $logoControl                = $editForm.find( ".logo-control" )
-    ,   $logoContainer              = $logoControl.find( ".logoContainer" )
+    ,   $logoControl                        = $editForm.find( ".logo-control" )
+    ,   $logoContainer                      = $logoControl.find( ".logoContainer" )
 
-    ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
-    ,   $currentAddressCountry      = $editForm.find( "[name='statutoryAddress.country']"         )
-    ,   $currentAddressCityTown     = $editForm.find( "[name='statutoryAddress.cityTown']"        )
-    ,   $currentAddressPostalCode   = $editForm.find( "[name='statutoryAddress.postalCode']"      )
-    ,   $currentAddressStreet       = $editForm.find( "[name='statutoryAddress.street']"          )
-    ,   $currentAddressStreetNumber = $editForm.find( "[name='statutoryAddress.streetNumber']"    )
-    ,   $currentAddressCoordinates  = $editForm.find( "[name='statutoryAddress.coordinates']"     )
+    ,   $currentAddressMap                  = $editForm.find( ".currentAddressMap"                          )
+    ,   $currentAddressCountry              = $editForm.find( "[name='statutoryAddress.country']"           )
+    ,   $currentAddressCityTown             = $editForm.find( "[name='statutoryAddress.cityTown']"          )
+    ,   $currentAddressPostalCode           = $editForm.find( "[name='statutoryAddress.postalCode']"        )
+    ,   $currentAddressStreet               = $editForm.find( "[name='statutoryAddress.street']"            )
+    ,   $currentAddressStreetNumber         = $editForm.find( "[name='statutoryAddress.streetNumber']"      )
+    ,   $currentAddressCoordinates          = $editForm.find( "[name='statutoryAddress.coordinates']"       )
+
+    ,   $btnAddCountryOperationSpecifics    = $editForm.find( "[href$='#addCountryOperationSpecifics']"     )
+    ,   $countryOperationSpecificsAccordion = $editForm.find( ".countryOperationSpecifics > .accordion"    )
 
         // Main object for holding the company
         //
@@ -64,10 +67,1051 @@
         ,   'postBox'
         ,   'coordinates'
         ]
+
+    ,   countryOperationSpecifics:
+        [
+            'country'
+        ,   'permitsLicencesObtained'
+        ,   'companyTradeName'
+        ]   // TODO: companyAddress
     };
+
+    var countryOperationSpecificsCountryOptions =
+    [
+        {
+        value: "AF",
+        label: "Afghanistan"
+        },
+        {
+        value: "AX",
+        label: "Åland Islands"
+        },
+        {
+        value: "AL",
+        label: "Albania"
+        },
+        {
+        value: "DZ",
+        label: "Algeria"
+        },
+        {
+        value: "AS",
+        label: "American Samoa"
+        },
+        {
+        value: "AD",
+        label: "Andorra"
+        },
+        {
+        value: "AO",
+        label: "Angola"
+        },
+        {
+        value: "AI",
+        label: "Anguilla"
+        },
+        {
+        value: "AQ",
+        label: "Antarctica"
+        },
+        {
+        value: "AG",
+        label: "Antigua and Barbuda"
+        },
+        {
+        value: "AR",
+        label: "Argentina"
+        },
+        {
+        value: "AM",
+        label: "Armenia"
+        },
+        {
+        value: "AW",
+        label: "Aruba"
+        },
+        {
+        value: "AU",
+        label: "Australia"
+        },
+        {
+        value: "AT",
+        label: "Austria"
+        },
+        {
+        value: "AZ",
+        label: "Azerbaijan"
+        },
+        {
+        value: "BS",
+        label: "Bahamas"
+        },
+        {
+        value: "BH",
+        label: "Bahrain"
+        },
+        {
+        value: "BD",
+        label: "Bangladesh"
+        },
+        {
+        value: "BB",
+        label: "Barbados"
+        },
+        {
+        value: "BY",
+        label: "Belarus"
+        },
+        {
+        value: "BE",
+        label: "Belgium"
+        },
+        {
+        value: "BZ",
+        label: "Belize"
+        },
+        {
+        value: "BJ",
+        label: "Benin"
+        },
+        {
+        value: "BM",
+        label: "Bermuda"
+        },
+        {
+        value: "BT",
+        label: "Bhutan"
+        },
+        {
+        value: "BO",
+        label: "Bolivia"
+        },
+        {
+        value: "BQ",
+        label: "Bonaire"
+        },
+        {
+        value: "BA",
+        label: "Bosnia and Herzegovina"
+        },
+        {
+        value: "BW",
+        label: "Botswana"
+        },
+        {
+        value: "BV",
+        label: "Bouvet Island"
+        },
+        {
+        value: "BR",
+        label: "Brazil"
+        },
+        {
+        value: "IO",
+        label: "British Indian Ocean Territory"
+        },
+        {
+        value: "VG",
+        label: "British Virgin Islands"
+        },
+        {
+        value: "BN",
+        label: "Brunei"
+        },
+        {
+        value: "BG",
+        label: "Bulgaria"
+        },
+        {
+        value: "BF",
+        label: "Burkina Faso"
+        },
+        {
+        value: "BI",
+        label: "Burundi"
+        },
+        {
+        value: "KH",
+        label: "Cambodia"
+        },
+        {
+        value: "CM",
+        label: "Cameroon"
+        },
+        {
+        value: "CA",
+        label: "Canada"
+        },
+        {
+        value: "CV",
+        label: "Cape Verde"
+        },
+        {
+        value: "KY",
+        label: "Cayman Islands"
+        },
+        {
+        value: "CF",
+        label: "Central African Republic"
+        },
+        {
+        value: "TD",
+        label: "Chad"
+        },
+        {
+        value: "CL",
+        label: "Chile"
+        },
+        {
+        value: "CN",
+        label: "China"
+        },
+        {
+        value: "CX",
+        label: "Christmas Island"
+        },
+        {
+        value: "CC",
+        label: "Cocos Islands"
+        },
+        {
+        value: "CO",
+        label: "Colombia"
+        },
+        {
+        value: "KM",
+        label: "Comoros"
+        },
+        {
+        value: "CG",
+        label: "Congo"
+        },
+        {
+        value: "CK",
+        label: "Cook Islands"
+        },
+        {
+        value: "CR",
+        label: "Costa Rica"
+        },
+        {
+        value: "CI",
+        label: "Côte d'Ivoire"
+        },
+        {
+        value: "HR",
+        label: "Croatia"
+        },
+        {
+        value: "CU",
+        label: "Cuba"
+        },
+        {
+        value: "CW",
+        label: "Curaçao"
+        },
+        {
+        value: "CY",
+        label: "Cyprus"
+        },
+        {
+        value: "CZ",
+        label: "Czech Republic"
+        },
+        {
+        value: "DK",
+        label: "Denmark"
+        },
+        {
+        value: "DJ",
+        label: "Djibouti"
+        },
+        {
+        value: "DM",
+        label: "Dominica"
+        },
+        {
+        value: "DO",
+        label: "Dominican Republic"
+        },
+        {
+        value: "EC",
+        label: "Ecuador"
+        },
+        {
+        value: "EG",
+        label: "Egypt"
+        },
+        {
+        value: "SV",
+        label: "El Salvador"
+        },
+        {
+        value: "GQ",
+        label: "Equatorial Guinea"
+        },
+        {
+        value: "ER",
+        label: "Eritrea"
+        },
+        {
+        value: "EE",
+        label: "Estonia"
+        },
+        {
+        value: "ET",
+        label: "Ethiopia"
+        },
+        {
+        value: "FK",
+        label: "Falkland Islands"
+        },
+        {
+        value: "FO",
+        label: "Faroe Islands"
+        },
+        {
+        value: "FJ",
+        label: "Fiji"
+        },
+        {
+        value: "FI",
+        label: "Finland"
+        },
+        {
+        value: "FR",
+        label: "France"
+        },
+        {
+        value: "GF",
+        label: "French Guiana"
+        },
+        {
+        value: "PF",
+        label: "French Polynesia"
+        },
+        {
+        value: "TF",
+        label: "French Southern Territories"
+        },
+        {
+        value: "GA",
+        label: "Gabon"
+        },
+        {
+        value: "GM",
+        label: "Gambia"
+        },
+        {
+        value: "GE",
+        label: "Georgia"
+        },
+        {
+        value: "DE",
+        label: "Germany"
+        },
+        {
+        value: "GH",
+        label: "Ghana"
+        },
+        {
+        value: "GI",
+        label: "Gibraltar"
+        },
+        {
+        value: "GR",
+        label: "Greece"
+        },
+        {
+        value: "GL",
+        label: "Greenland"
+        },
+        {
+        value: "GD",
+        label: "Grenada"
+        },
+        {
+        value: "GP",
+        label: "Guadeloupe"
+        },
+        {
+        value: "GU",
+        label: "Guam"
+        },
+        {
+        value: "GT",
+        label: "Guatemala"
+        },
+        {
+        value: "GG",
+        label: "Guernsey"
+        },
+        {
+        value: "GN",
+        label: "Guinea"
+        },
+        {
+        value: "GW",
+        label: "Guinea-Bissau"
+        },
+        {
+        value: "GY",
+        label: "Guyana"
+        },
+        {
+        value: "HT",
+        label: "Haiti"
+        },
+        {
+        value: "HM",
+        label: "Heard Island And McDonald Islands"
+        },
+        {
+        value: "HN",
+        label: "Honduras"
+        },
+        {
+        value: "HK",
+        label: "Hong Kong"
+        },
+        {
+        value: "HU",
+        label: "Hungary"
+        },
+        {
+        value: "IS",
+        label: "Iceland"
+        },
+        {
+        value: "IN",
+        label: "India"
+        },
+        {
+        value: "ID",
+        label: "Indonesia"
+        },
+        {
+        value: "IR",
+        label: "Iran"
+        },
+        {
+        value: "IQ",
+        label: "Iraq"
+        },
+        {
+        value: "IE",
+        label: "Ireland"
+        },
+        {
+        value: "IM",
+        label: "Isle Of Man"
+        },
+        {
+        value: "IL",
+        label: "Israel"
+        },
+        {
+        value: "IT",
+        label: "Italy"
+        },
+        {
+        value: "JM",
+        label: "Jamaica"
+        },
+        {
+        value: "JP",
+        label: "Japan"
+        },
+        {
+        value: "JE",
+        label: "Jersey"
+        },
+        {
+        value: "JO",
+        label: "Jordan"
+        },
+        {
+        value: "KZ",
+        label: "Kazakhstan"
+        },
+        {
+        value: "KE",
+        label: "Kenya"
+        },
+        {
+        value: "KI",
+        label: "Kiribati"
+        },
+        {
+        value: "KW",
+        label: "Kuwait"
+        },
+        {
+        value: "KG",
+        label: "Kyrgyzstan"
+        },
+        {
+        value: "LA",
+        label: "Laos"
+        },
+        {
+        value: "LV",
+        label: "Latvia"
+        },
+        {
+        value: "LB",
+        label: "Lebanon"
+        },
+        {
+        value: "LS",
+        label: "Lesotho"
+        },
+        {
+        value: "LR",
+        label: "Liberia"
+        },
+        {
+        value: "LY",
+        label: "Libya"
+        },
+        {
+        value: "LI",
+        label: "Liechtenstein"
+        },
+        {
+        value: "LT",
+        label: "Lithuania"
+        },
+        {
+        value: "LU",
+        label: "Luxembourg"
+        },
+        {
+        value: "MO",
+        label: "Macao"
+        },
+        {
+        value: "MK",
+        label: "Macedonia"
+        },
+        {
+        value: "MG",
+        label: "Madagascar"
+        },
+        {
+        value: "MW",
+        label: "Malawi"
+        },
+        {
+        value: "MY",
+        label: "Malaysia"
+        },
+        {
+        value: "MV",
+        label: "Maldives"
+        },
+        {
+        value: "ML",
+        label: "Mali"
+        },
+        {
+        value: "MT",
+        label: "Malta"
+        },
+        {
+        value: "MH",
+        label: "Marshall Islands"
+        },
+        {
+        value: "MQ",
+        label: "Martinique"
+        },
+        {
+        value: "MR",
+        label: "Mauritania"
+        },
+        {
+        value: "MU",
+        label: "Mauritius"
+        },
+        {
+        value: "YT",
+        label: "Mayotte"
+        },
+        {
+        value: "MX",
+        label: "Mexico"
+        },
+        {
+        value: "FM",
+        label: "Micronesia"
+        },
+        {
+        value: "MD",
+        label: "Moldova"
+        },
+        {
+        value: "MC",
+        label: "Monaco"
+        },
+        {
+        value: "MN",
+        label: "Mongolia"
+        },
+        {
+        value: "ME",
+        label: "Montenegro"
+        },
+        {
+        value: "MS",
+        label: "Montserrat"
+        },
+        {
+        value: "MA",
+        label: "Morocco"
+        },
+        {
+        value: "MZ",
+        label: "Mozambique"
+        },
+        {
+        value: "MM",
+        label: "Myanmar"
+        },
+        {
+        value: "NA",
+        label: "Namibia"
+        },
+        {
+        value: "NR",
+        label: "Nauru"
+        },
+        {
+        value: "NP",
+        label: "Nepal"
+        },
+        {
+        value: "NL",
+        label: "Netherlands"
+        },
+        {
+        value: "AN",
+        label: "Netherlands Antilles"
+        },
+        {
+        value: "NC",
+        label: "New Caledonia"
+        },
+        {
+        value: "NZ",
+        label: "New Zealand"
+        },
+        {
+        value: "NI",
+        label: "Nicaragua"
+        },
+        {
+        value: "NE",
+        label: "Niger"
+        },
+        {
+        value: "NG",
+        label: "Nigeria"
+        },
+        {
+        value: "NU",
+        label: "Niue"
+        },
+        {
+        value: "NF",
+        label: "Norfolk Island"
+        },
+        {
+        value: "KP",
+        label: "North Korea"
+        },
+        {
+        value: "MP",
+        label: "Northern Mariana Islands"
+        },
+        {
+        value: "NO",
+        label: "Norway"
+        },
+        {
+        value: "OM",
+        label: "Oman"
+        },
+        {
+        value: "PK",
+        label: "Pakistan"
+        },
+        {
+        value: "PW",
+        label: "Palau"
+        },
+        {
+        value: "PS",
+        label: "Palestine"
+        },
+        {
+        value: "PA",
+        label: "Panama"
+        },
+        {
+        value: "PG",
+        label: "Papua New Guinea"
+        },
+        {
+        value: "PY",
+        label: "Paraguay"
+        },
+        {
+        value: "PE",
+        label: "Peru"
+        },
+        {
+        value: "PH",
+        label: "Philippines"
+        },
+        {
+        value: "PN",
+        label: "Pitcairn"
+        },
+        {
+        value: "PL",
+        label: "Poland"
+        },
+        {
+        value: "PT",
+        label: "Portugal"
+        },
+        {
+        value: "PR",
+        label: "Puerto Rico"
+        },
+        {
+        value: "QA",
+        label: "Qatar"
+        },
+        {
+        value: "RE",
+        label: "Reunion"
+        },
+        {
+        value: "RO",
+        label: "Romania"
+        },
+        {
+        value: "RU",
+        label: "Russia"
+        },
+        {
+        value: "RW",
+        label: "Rwanda"
+        },
+        {
+        value: "BL",
+        label: "Saint Barthélemy"
+        },
+        {
+        value: "SH",
+        label: "Saint Helena"
+        },
+        {
+        value: "KN",
+        label: "Saint Kitts And Nevis"
+        },
+        {
+        value: "LC",
+        label: "Saint Lucia"
+        },
+        {
+        value: "MF",
+        label: "Saint Martin"
+        },
+        {
+        value: "PM",
+        label: "Saint Pierre And Miquelon"
+        },
+        {
+        value: "VC",
+        label: "Saint Vincent And The Grenadines"
+        },
+        {
+        value: "WS",
+        label: "Samoa"
+        },
+        {
+        value: "SM",
+        label: "San Marino"
+        },
+        {
+        value: "ST",
+        label: "Sao Tome And Principe"
+        },
+        {
+        value: "SA",
+        label: "Saudi Arabia"
+        },
+        {
+        value: "SN",
+        label: "Senegal"
+        },
+        {
+        value: "RS",
+        label: "Serbia"
+        },
+        {
+        value: "SC",
+        label: "Seychelles"
+        },
+        {
+        value: "SL",
+        label: "Sierra Leone"
+        },
+        {
+        value: "SG",
+        label: "Singapore"
+        },
+        {
+        value: "SX",
+        label: "Sint Maarten (Dutch part)"
+        },
+        {
+        value: "SK",
+        label: "Slovakia"
+        },
+        {
+        value: "SI",
+        label: "Slovenia"
+        },
+        {
+        value: "SB",
+        label: "Solomon Islands"
+        },
+        {
+        value: "SO",
+        label: "Somalia"
+        },
+        {
+        value: "ZA",
+        label: "South Africa"
+        },
+        {
+        value: "GS",
+        label: "South Georgia And The South Sandwich Islands"
+        },
+        {
+        value: "KR",
+        label: "South Korea"
+        },
+        {
+        value: "ES",
+        label: "Spain"
+        },
+        {
+        value: "LK",
+        label: "Sri Lanka"
+        },
+        {
+        value: "SD",
+        label: "Sudan"
+        },
+        {
+        value: "SR",
+        label: "Suriname"
+        },
+        {
+        value: "SJ",
+        label: "Svalbard And Jan Mayen"
+        },
+        {
+        value: "SZ",
+        label: "Swaziland"
+        },
+        {
+        value: "SE",
+        label: "Sweden"
+        },
+        {
+        value: "CH",
+        label: "Switzerland"
+        },
+        {
+        value: "SY",
+        label: "Syria"
+        },
+        {
+        value: "TW",
+        label: "Taiwan"
+        },
+        {
+        value: "TJ",
+        label: "Tajikistan"
+        },
+        {
+        value: "TZ",
+        label: "Tanzania"
+        },
+        {
+        value: "TH",
+        label: "Thailand"
+        },
+        {
+        value: "CD",
+        label: "The Democratic Republic Of Congo"
+        },
+        {
+        value: "TL",
+        label: "Timor-Leste"
+        },
+        {
+        value: "TG",
+        label: "Togo"
+        },
+        {
+        value: "TK",
+        label: "Tokelau"
+        },
+        {
+        value: "TO",
+        label: "Tonga"
+        },
+        {
+        value: "TT",
+        label: "Trinidad and Tobago"
+        },
+        {
+        value: "TN",
+        label: "Tunisia"
+        },
+        {
+        value: "TR",
+        label: "Turkey"
+        },
+        {
+        value: "TM",
+        label: "Turkmenistan"
+        },
+        {
+        value: "TC",
+        label: "Turks And Caicos Islands"
+        },
+        {
+        value: "TV",
+        label: "Tuvalu"
+        },
+        {
+        value: "VI",
+        label: "U.S. Virgin Islands"
+        },
+        {
+        value: "UG",
+        label: "Uganda"
+        },
+        {
+        value: "UA",
+        label: "Ukraine"
+        },
+        {
+        value: "AE",
+        label: "United Arab Emirates"
+        },
+        {
+        value: "GB",
+        label: "United Kingdom"
+        },
+        {
+        value: "US",
+        label: "United States"
+        },
+        {
+        value: "UM",
+        label: "United States Minor Outlying Islands"
+        },
+        {
+        value: "UY",
+        label: "Uruguay"
+        },
+        {
+        value: "UZ",
+        label: "Uzbekistan"
+        },
+        {
+        value: "VU",
+        label: "Vanuatu"
+        },
+        {
+        value: "VA",
+        label: "Vatican"
+        },
+        {
+        value: "VE",
+        label: "Venezuela"
+        },
+        {
+        value: "VN",
+        label: "Vietnam"
+        },
+        {
+        value: "WF",
+        label: "Wallis And Futuna"
+        },
+        {
+        value: "EH",
+        label: "Western Sahara"
+        },
+        {
+        value: "YE",
+        label: "Yemen"
+        },
+        {
+        value: "ZM",
+        label: "Zambia"
+        },
+        {
+        value: "ZW",
+        label: "Zimbabwe"
+        }
+    ];
+
+    var permitsLicencesObtainedOptions =
+    [
+        {
+        value: "applicationNeeded",
+        label: "Application needed"
+        },
+        {
+        value: "permitnotrequired",
+        label: "Permit not required"
+        },
+        {
+        value: "permitobtained",
+        label: "Permit obtained"
+        },
+        {
+        value: "permitrequested",
+        label: "Permit requested"
+        }
+    ];
 
     // Grab the snippets from the DOM
     //
+    snippets.$countryOperationSpecifics  = $snippets.children( ".countryOperationSpecificsItem"   ).remove();
+
+    // Populate the dropdowns with the values
+    //
+    var $countryOperationSpecificsCountry = snippets.$countryOperationSpecifics.find( "[name='country']" );
+    $countryOperationSpecificsCountry.append( $( "<option value='' />" ).text( "Select the country" ));
+
+    bidx.utils.populateDropdown( $countryOperationSpecificsCountry, countryOperationSpecificsCountryOptions );
+
+    var $countryOperationSpecificsPermitsLicencesObtained = snippets.$countryOperationSpecifics.find( "[name='permitsLicencesObtained']" );
+    $countryOperationSpecificsPermitsLicencesObtained.append( $( "<option value='' />" ).text( "Select the obtained licenses" ));
+
+    bidx.utils.populateDropdown( $countryOperationSpecificsPermitsLicencesObtained, permitsLicencesObtainedOptions );
+
 
     // Disable disabled links
     //
@@ -76,22 +1120,75 @@
         e.preventDefault();
     } );
 
+    var _handleToggleChange = function( show, group )
+    {
+        var fn = show ? "fadeIn" : "hide";
+
+        $toggles.filter( ".toggle-" + group )[ fn ]();
+    };
+
     $toggleRegistered.change( function( e )
     {
-        var value   = $toggleRegistered.filter( "[checked]" ).val()
-        ,   fn      = value === "true" ? "show" : "hide"
-        ;
+        var value   = $toggleRegistered.filter( "[checked]" ).val();
 
-        $toggles.filter( ".toggleRegistered" )[ fn ]();
+        _handleToggleChange( value === "true", "registered" );
     } );
 
     $toggleHaveEmployees.change( function()
     {
-        var value   = $toggleHaveEmployees.filter( "[checked]" ).val()
-        ,   fn      = value === "true" ? "show" : "hide"
+        var value   = $toggleHaveEmployees.filter( "[checked]" ).val();
+
+        _handleToggleChange( value === "true", "haveEmployees" );
+    } );
+
+    // Add the snippet for another run business
+    //
+    var _addCountryOperationSpecifics = function( index, countryOperationSpecifics )
+    {
+        if ( !index )
+        {
+            index = $countryOperationSpecificsAccordion.find( ".countryOperationSpecificsItem" ).length;
+        }
+
+        var $countryOperationSpecifics = snippets.$countryOperationSpecifics.clone()
+        ,   inputNamePrefix = "countryOperationSpecifics[" + index + "]"
         ;
 
-        $toggles.filter( ".toggleHaveEmployees" )[ fn ]();
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $countryOperationSpecifics.find( "input, select, textarea" ).each( function( )
+        {
+            var $input = $( this );
+
+            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
+        } );
+
+        if ( countryOperationSpecifics )
+        {
+            $.each( fields.countryOperationSpecifics, function( j, f )
+            {
+                var $input  = $countryOperationSpecifics.find( "[name='" + inputNamePrefix + "." + f + "']" )
+                ,   value   = bidx.utils.getValue( countryOperationSpecifics, f )
+                ;
+
+                $input.each( function()
+                {
+                    bidx.utils.setElementValue( $( this ), value  );
+                } );
+            } );
+        }
+
+        $countryOperationSpecificsAccordion.append( $countryOperationSpecifics );
+    };
+
+    // Add an empty previous business block
+    //
+    $btnAddCountryOperationSpecifics.click( function( e )
+    {
+        e.preventDefault();
+
+        _addCountryOperationSpecifics();
     } );
 
 
@@ -240,6 +1337,10 @@
             } );
         }
     };
+
+
+
+
 
 
     // Use the retrieved company object to populate the form and other screen elements
