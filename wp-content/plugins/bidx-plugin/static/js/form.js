@@ -215,6 +215,7 @@
 										{
 											type:           "success"
 										,   text:           "Wait to be redirected..."
+										,	modal:			true
 										});
 									}
 
