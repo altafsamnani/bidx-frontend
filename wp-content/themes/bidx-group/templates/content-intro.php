@@ -1,5 +1,6 @@
 <div class="container outer-content-container">
 	<article class="bidx type-bidx status-publish hentry">
+        <?php echo bidx_get_status_msgs(); ?>
 	    <header>
 			<div id="myCarousel" class="carousel slide">
 			<?php

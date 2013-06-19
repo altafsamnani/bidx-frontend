@@ -74,14 +74,13 @@ class TemplateLibrary
         return $this->vars[$name];
     }
 
-   /**
-   * PHP Magic method for checking if isset
-   */
-
-  public function __isset( $key ) {
-	return key_exists( $key, $this -> vars );
-  }
-
+    /**
+     * PHP Magic method for checking if isset
+     */
+    public function __isset ($key)
+    {
+        return key_exists ($key, $this->vars);
+    }
 
     /**
      * Add bootstrap rows through views
@@ -290,12 +289,12 @@ class TemplateLibrary
     {
 
         /** Class * */
-        $classLabel = (isset($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
-        $classValue = (isset($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+        $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+        $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
 
         /** Tag * */
-        $tagLabel = (isset($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
-        $tagValue = (isset($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
+        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
+        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
 
         $rowHtml = "<div class='row-fluid'>";
         foreach ($rowValues as $label => $value) {
@@ -331,15 +330,15 @@ class TemplateLibrary
     {
 
         /** Class * */
-        $classLabel = (isset($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
-        $classValue = (isset($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+        $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+        $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
 
         /** ID * */
-        $idLabel = (isset($properties['id_label']) && $properties['id_label']) ? " class = '" . $properties['id_label'] . "' " : '';
-        $idValue = (isset($properties['id_value']) && $properties['id_value']) ? " class = '" . $properties['id_value'] . "' " : '';
+        $idLabel = (isset ($properties['id_label']) && $properties['id_label']) ? " class = '" . $properties['id_label'] . "' " : '';
+        $idValue = (isset ($properties['id_value']) && $properties['id_value']) ? " class = '" . $properties['id_value'] . "' " : '';
         /** Tag * */
-        $tagLabel = (isset($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
-        $tagValue = (isset($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
+        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
+        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
 
 
         $rowHtml = "";
@@ -389,7 +388,7 @@ class TemplateLibrary
     {
 
         $returnHtml = NULL;
-        $display =  false;
+        $display = false;
         if (isset ($rowsArr)) {
             $html = NULL;
             $htmlHeader = "<table class = '$class' > ";
@@ -409,10 +408,10 @@ class TemplateLibrary
                             $html.= $sepMerge . $rowValue->$mergeVal;
                             $sepMerge = " ";
                         }
-                        
+
                         $display = true;
-                    } else if (isset($rowValue->$headerValue)) {
-                        $html.= $rowValue->$headerValue ;
+                    } else if (isset ($rowValue->$headerValue)) {
+                        $html.= $rowValue->$headerValue;
                         $display = true;
                     }
                     $html.= "</td>";
@@ -420,7 +419,7 @@ class TemplateLibrary
                 $html.= "</tr>";
             }
 
-            $htmlFooter ="</table>";
+            $htmlFooter = "</table>";
 
             if ($display) {
 
@@ -448,8 +447,8 @@ class TemplateLibrary
 
         if ($rowValues) {
             /** Class * */
-            $classLabel = (isset($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
-            $classValue = (isset($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+            $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+            $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
 
 
             foreach ($rowValues as $label => $rowValue) {
@@ -520,7 +519,7 @@ class TemplateLibrary
 
                     $objValue = ($writeValue) ? $dataValue->$subVal : '';
                 } else {
-                    $objValue = (!empty($dataValue->$subVal)) ? $dataValue->$subVal:'';
+                    $objValue = (!empty ($dataValue->$subVal)) ? $dataValue->$subVal : '';
                 }
 
                 $elementKey = ($elementKey) ? $elementKey : $subVal;
@@ -658,9 +657,9 @@ class TemplateLibrary
      * @param String $fileName File Name
      * @return String $audioVideoHtml Embed Video Html
      */
-    function embedAudioVideo ($fileName,$width='120',$height='90')
+    function embedAudioVideo ($fileName, $width = '120', $height = '90')
     {
-       $audioVideoHtml = "<object classid='clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95' width='$width' height='$height' codebase='http://www.microsoft.com/Windows/MediaPlayer/'>
+        $audioVideoHtml = "<object classid='clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95' width='$width' height='$height' codebase='http://www.microsoft.com/Windows/MediaPlayer/'>
                         <param name='Filename' value='$fileName'>
                         <param name='AutoStart' value='true'>
                         <param name='ShowControls' value='true'>
@@ -670,7 +669,7 @@ class TemplateLibrary
                         <param name='InvokeURLs' value='false'>
                         <embed src=''$fileName' type='application/x-mplayer2' autostart='1' enabled='1' showstatusbar='1' showdisplay='1' showcontrols='1' pluginspage='http://www.microsoft.com/Windows/MediaPlayer/' CODEBASE='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,0,0,0' width='480' height='360'></embed>
                         </object>";
-       
+
         return $audioVideoHtml;
     }
 
@@ -682,12 +681,12 @@ class TemplateLibrary
     function displayAudioVideo ($gridLabel, $gridValue, $rowValues, $properties = array ())
     {
         /** Class * */
-        $classLabel = (isset($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
-        $classValue = (isset($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
+        $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
+        $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
 
         /** Tag * */
-        $tagLabel = (isset($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
-        $tagValue = (isset($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
+        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
+        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
 
         $rowHtml = "<div class='row-fluid'>";
         $displayFlag = true;
@@ -699,7 +698,6 @@ class TemplateLibrary
                 $rowHtml .= "<$tagLabel " . $classLabel . " > " . $value . " </$tagLabel>";
                 $rowHtml .= "</div>";
                 $displayFlag = false;
-
             } else {
                 //Display Value
                 $rowHtml .= "<div class='" . $gridValue . "'>";
@@ -707,55 +705,57 @@ class TemplateLibrary
                 $rowHtml .= "</div>";
                 $displayFlag = true;
             }
-
-
         }
         $rowHtml .="</div>";
         return $rowHtml;
     }
 
-
-
     /**
      * Display Attachments.
      *
-     
+
      * @author Altaf S
      *
      * @param string $header Html Header
      * @param array $attachment Array of attachment values
      *
      * @return string $html html display for attachments
-     * 
+     *
      * @access public
      */
-    function displayAttachments ($header = '<h4>Media<h4>', $attachmentArr)
+    function displayAttachments ($header, $attachmentArr)
     {
 
-        $html = '';
-
-        if ($attachmentArr && is_array ($attachmentArr)) {
-
-            $html .= $header;
+        $html = NULL;
+        $displayHeader = NULL;
+        if (!empty ($attachmentArr) && is_array ($attachmentArr)) {
 
             foreach ($attachmentArr as $attachment) {
-                $date = date('d F, Y',$attachment->uploadedDateTime);
-                $documentImage = preg_match ("/^image/i", $attachment->mimeType) ? $attachment->document : '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
+                if (!empty ($attachment->document)) {
+                    $date = date ('d F, Y', $attachment->uploadedDateTime);
+                    $documentImage = preg_match ("/^image/i", $attachment->mimeType) ? $attachment->document : '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
 
-                $html .= '<div class="row-fluid attachment"><div class="span3">';
-                $html .= "<a href='{$attachment->document}' class='documentLink'><img class='img-rounded documentImage' src='{$documentImage}'></a>";
-                $html .= '</div>';
+                    $html .= '<div class="row-fluid attachment"><div class="span3">';
+                    $html .= "<a href='{$attachment->document}' class='documentLink'><img class='img-rounded documentImage' src='{$documentImage}'></a>";
+                    $html .= '</div>';
 
-                $html .= '<div class="span9">';
-                $html .= "<h5 class='documentName'>{$attachment->documentName}</h5>";
-                $html .= "<p>{$date} </p>";
-                $html .= "<p>{$attachment->purpose} </p>";
-                $html .= '</div>';
+                    $html .= '<div class="span9">';
+                    $html .= "<h5 class='documentName'>{$attachment->documentName}</h5>";
+                    $html .= "<p>{$date} </p>";
+                    $html .= "<p>{$attachment->purpose} </p>";
+                    $html .= '</div>';
 
-                $html .= '</div>';
+                    $html .= '</div>';
+
+                    $displayHeader = $header;
+                }
             }
+
+
+
+            $returnHtml = $displayHeader . $html;
         }
-        return $html;
+        return $returnHtml;
     }
 
     /**
@@ -771,7 +771,7 @@ class TemplateLibrary
      */
     function exst (& $var, $default = null)
     {
-        return empty($var) ? $var = $default : $var;
+        return empty ($var) ? $var = $default : $var;
     }
 
 }

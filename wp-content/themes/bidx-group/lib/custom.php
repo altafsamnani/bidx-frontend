@@ -41,25 +41,8 @@ function bidx_filter ($content)
         $content = str_replace ('[!Q!]', $redirect, $content);
     }
 
-    //Add Error Status Msg
-    if (isset ($_GET['emsg'])) {
-        $statusMsg = base64_decode ($_GET['emsg']);
-        $statusMsgDiv = "<div class='alert alert-error'>
-                      <button data-dismiss='alert' class='close fui-cross' type='button'></button>
-                      {$statusMsg}
-                    </div>";
-        $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
-    }
-
-    //Add Success Status Msg
-    if (isset ($_GET['smsg'])) {
-        $statusMsg = base64_decode ($_GET['smsg']);
-        $statusMsgDiv = "<div class='alert alert-success'>
-                      <button data-dismiss='alert' class='close fui-cross' type='button'></button> 
-                      {$statusMsg}
-                    </div>";
-        $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
-    }
+    //Add Status Messages if any
+    $content = bidx_get_status_msgs() . $content;
 
     // Add variables as hidden that cant be replaced from Post Variables to keep the previous state
     $content = str_replace ('</form>', $hiddenElement . '</form>', $content);
@@ -71,4 +54,32 @@ function bidx_filter ($content)
     }
 
     return $content;
+}
+
+function bidx_get_status_msgs( ) {
+
+    $statusMessages = '';
+    //Add Error Status Msg
+    if (isset ($_GET['emsg'])) {
+        $decodedStatusMsg = base64_decode ($_GET['emsg']);
+        $statusMessages = "<div class='alert alert-error'>
+                      <button data-dismiss='alert' class='close fui-cross' type='button'></button>
+                      {$decodedStatusMsg}
+                    </div>";
+       // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
+    }
+    
+    //Add Success Status Msg
+
+    if (isset ($_GET['smsg'])) {
+        $decodedStatusMsg = base64_decode ($_GET['smsg']);
+        $statusMessages = "<div class='alert alert-success'>
+                      <button data-dismiss='alert' class='close fui-cross' type='button'></button>
+                      {$decodedStatusMsg}
+                    </div>";
+        // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
+    }
+
+
+    return $statusMessages;
 }
