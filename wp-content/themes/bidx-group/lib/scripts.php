@@ -47,6 +47,8 @@ function roots_scripts() {
 
     wp_register_script( 'holder',                   get_template_directory_uri() . '/assets/js/vendor/holder-1.9.js',                   false,                  '1.9',              true );
 
+    wp_register_script( 'base64',                   get_template_directory_uri() . '/assets/js/vendor/base64.js',                       false,                  '20130619',         true );
+
     // Enqueue the scripts
     //
     wp_enqueue_script( 'jquery' );
@@ -68,6 +70,7 @@ function roots_scripts() {
     wp_enqueue_script( 'json2' );
 
     wp_enqueue_script( 'holder' );
+    wp_enqueue_script( 'base64' );
 }
 add_action('wp_enqueue_scripts', 'roots_scripts', 100);
 
