@@ -24,7 +24,23 @@ if (property_exists($this -> sessionData, 'data') &&
     			<i class="fui-gear"></i>
     		</a>
     		<ul class="dropdown-menu">
+<?php
+if (property_exists($this -> sessionData, 'data') ) {
+
+    $currentGroup   = $this->exst( $this->sessionData->data->currentGroup );
+    $groups         = $this->exst( $this->sessionData->data->groups );
+
+    if ( !empty( $currentGroup ) && !empty( $groups ) && !isset( $groups->$currentGroup )) {
+?>
+                <li><a href="#joinGroup">Join this group</a></li>
+<?php
+    } else {
+?>
 				<li><a href="#leaveGroup">Leave this group</a></li>
+<?php
+    }
+}
+?>
 				<li><a href="#messageOwner">Message to Group owner</a></li>
     		</ul>
     	</li>
