@@ -762,6 +762,8 @@
                 {
                     bidx.utils.log( "member.save::success::response", response );
 
+                    bidx.common.notifyRedirect();
+
                     var url = document.location.href.split( "#" ).shift();
 
                     document.location.href = url;

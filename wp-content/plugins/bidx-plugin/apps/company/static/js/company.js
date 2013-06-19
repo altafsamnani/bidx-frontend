@@ -553,6 +553,8 @@
                     companyId = bidx.utils.getValue( response, "data.ownerId" );
                 }
 
+                bidx.common.notifyRedirect();
+
                 var url = "/company/" + companyId;
 
                 document.location.href = url;

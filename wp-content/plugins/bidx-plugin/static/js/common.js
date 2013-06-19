@@ -183,6 +183,24 @@
         );
     };
 
+    // Notify the user, for now it's just a wrapper over noty... but if we replace this
+    //
+    var _notify = function( params )
+    {
+        noty( params );
+    };
+
+    // Notify the user that he is going to be redirected
+    var notifyRedirect = function()
+    {
+        _notify(
+        {
+            text:           "Wait for the redirect..."
+        ,   type:           "success"
+        ,   modal:          true
+        } );
+    };
+
     if ( !window.bidx )
     {
         window.bidx = bidx;
@@ -191,20 +209,25 @@
     bidx.common =
     {
         groupDomain:                groupDomain
+    ,   notifyRedirect:             notifyRedirect
+
+        // DEV API - do not use these in code!
+    ,   _notify:                    _notify
     };
 
-    /* Menu code for Bp summary Tab Menu */
-    $('.tabControl').click(function(e)
+    // Control Bootstraps' tab control from outside of the tab header
+    //
+    $( ".tabControl" ).click(function(e)
     {
         e.preventDefault();
 
         var $btn    = $( this )
-        ,   btnhref = $btn.attr('href')
-        ,   tab     = $btn.data('tab')
+        ,   btnhref = $btn.attr( "href" )
+        ,   tab     = $btn.data( "tab" )
         ,   $tab    = $( tab )
         ;
 
-        $tab.find( "[href$='" + btnhref + "']" ).tab( 'show' );
+        $tab.find( "[href$='" + btnhref + "']" ).tab( "show" );
     });
 
 } ( jQuery ));
