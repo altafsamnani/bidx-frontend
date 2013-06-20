@@ -36,8 +36,8 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
     //top navigation receives styling with dropdown menu's
     if($args->theme_location == "primary_navigation") {
       if ($item->is_dropdown && ($depth === 0)) {
-        $item_html = str_replace('<a', '<a class="dropdown-toggle btn" data-toggle="dropdown" data-target="#"', $item_html);
-        $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
+        $item_html = str_replace('<a', '<div class="container"><a class="dropdown-toggle btn" data-toggle="dropdown" data-target="#"', $item_html);
+        $item_html = str_replace('</a>', ' <b class="caret"></b></a></div>', $item_html);
       }
       elseif (stristr($item_html, 'li class="divider')) {
         $item_html = preg_replace('/<a[^>]*>.*?<\/a>/iU', '', $item_html);
@@ -47,7 +47,7 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
       }
       else {
         // START BIDX, add btn btn-primary to all anchors
-        $item_html = str_replace('<a', '<a class="btn"', $item_html );
+        $item_html = str_replace('<a', '<div class="container"><a class="btn"', $item_html ) . "</div>"; 
         // END BIDX
       }
     }

@@ -158,9 +158,6 @@ header .logo {
     display:                    inline-block;
 }
 
-header .navbar .menu-main li {
-    margin-left:                4px;
-}
 
 header .navbar .menu-main a {
     padding:                    6px 40px;
@@ -169,7 +166,7 @@ header .navbar .menu-main a {
 }
 
 header .navbar .menu-main > ul > li > a:hover,
-header .navbar .menu-main > ul > li.active > a:hover {
+header .navbar .menu-main > ul > li.active >  a:hover {
     background-color:           #ebedef;
 }
 
@@ -179,7 +176,7 @@ header .headerbanner {
 
 header .postheader .headerarrow {
     display:                inline-block;
-	background: url('assets/img/banner-arrow-blue.png' no-repeat);
+	background:             url('assets/img/banner-arrow-blue.png' no-repeat);
 	border:                 0;
     height:                 20px;
     margin-top:            -10px;
@@ -237,9 +234,20 @@ header .navbar {
     position:                   relative;
 }
 
-header .navbar .btn-navbar {
-    margin:                     56px 4px 0 0;
+header .navbar .btn-navbar, header .navbar .btn-navbar.collapsed:hover, header .navbar .btn-navbar.collapsed:focus {
+    margin:                     3px 4px 0 0;
+    background-color:           #3498db;
+    border-radius:              0;
+    color:                      white;
 }
+header .navbar .collapsed, header .navbar .btn-navbar:hover {
+    margin:                     3px 4px 0 0;
+    border-radius:              0;
+    color:                      black;
+    background-color:           transparent;
+}
+
+
 
 @media (max-width: 979px) {
     header .menu-main {
@@ -825,3 +833,123 @@ body.home .hero-block {
 *   Responsive breakpoints
 *
 ********************************************************************************************/
+    /* Large desktop */
+    @media (min-width: 1200px) {
+        /*fix main menu display because of the added container wrapper whch breaks the BS amd FlatUI css path */
+        header .navbar .nav > li a {
+            color: #526476;
+            font-size: 14.994px;
+            font-weight: 700;
+            
+            text-shadow: none;
+            transition: background-color 0.25s ease 0s, color 0.25s ease 0s, border-bottom-color 0.25s ease 0s;
+        }
+
+        header .navbar .menu-main > ul > li  a:hover,
+        header .navbar .menu-main > ul > li.active  a:hover {
+            background-color:           #ebedef;
+        }
+
+        header .navbar .menu-main li {
+            margin-left:                4px;
+        }
+
+    }
+
+
+     
+    /* Portrait tablet to landscape and desktop */
+    @media (min-width: 768px) and (max-width: 979px) { 
+
+        /*fix main menu display because of the added container wrapper whch breaks the BS amd FlatUI css path */
+        header .navbar .nav > li a {
+            color: #526476;
+            font-size: 14.994px;
+            font-weight: 700;
+            
+            text-shadow: none;
+            transition: background-color 0.25s ease 0s, color 0.25s ease 0s, border-bottom-color 0.25s ease 0s;
+        }
+
+        header .navbar .menu-main > ul > li  a:hover,
+        header .navbar .menu-main > ul > li.active  a:hover {
+            background-color:           #ebedef;
+        }
+        header .navbar .menu-main li {
+            margin-left:                4px;
+        }
+
+
+    }
+     
+    /* Landscape phone to portrait tablet */
+    @media (max-width: 767px) { ... }
+     
+    /* Landscape phones and down */
+    @media (max-width: 480px) {
+
+
+        /* navigation related style */
+        
+        /* the navigation menu needs to exceed the responsive container */
+        header .container {
+            width:          auto;
+        }
+        .container, .navbar .container {
+            width:          320px;
+        }
+        
+        header .navbar {
+            margin-bottom: 0;
+        }
+        header .navbar .btn {
+            margin-top: 0px;
+        }
+            .navbar .nav-collapse .nav > li > a {
+                margin-bottom: 1px;
+            }
+
+                .nav.menu {
+                    margin-bottom: 0;            
+
+                }
+
+                .nav.menu li {
+                    background-color: #3498db;
+                    color: white;
+                    margin-bottom: 1px;
+                    margin-left: 0;   
+                    text-align: center;
+                }
+                .nav.menu li:last-child {
+                    margin-bottom: 0;
+                }
+                .nav.menu li .container, .nav.menu .dropdown a {
+                    text-align: left;
+                }
+                
+                .nav.menu li a{
+                    padding-left: 0;
+                }
+                .dropdown-menu {
+                    margin-left: 0;
+                }
+                .nav.menu .dropdown-menu li {
+                    border-bottom: 1px solid white;
+                    
+                }
+                .nav.menu .dropdown-menu .container a{
+                    padding-left: 15px;
+                }
+
+                .nav.menu li a .caret {
+                    display: none;
+                }
+
+                
+
+
+        /* end styling of navigation*/
+        
+
+    }
