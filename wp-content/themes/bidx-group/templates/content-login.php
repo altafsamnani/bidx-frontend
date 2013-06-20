@@ -23,9 +23,10 @@ if (!username_exists ($group_anonymous_login)) {
 
         <?php while (have_posts ()) : the_post (); ?>
             <?php
+            echo bidx_get_status_msgs();
             the_content ();
             ?>
-<?php endwhile; ?>
+        <?php endwhile; ?>
 
     </div>
 </div>

@@ -2,7 +2,9 @@
 <div class="container">
 	<article <?php post_class(); ?>>
     <div class="entry-content">
-      <?php the_content(); ?>
+      <?php
+      echo bidx_get_status_msgs();
+      the_content(); ?>
     </div>
   </article>
  </div> 

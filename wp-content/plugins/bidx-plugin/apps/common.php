@@ -135,7 +135,7 @@ class BidxCommon
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $redirect = NULL;
         $data = new STDClass();
-        $msg = NULL;
+        $statusMsgId = NULL;
         /**
          * Host Address
          * Param0 /member , /group, /profile
@@ -143,7 +143,7 @@ class BidxCommon
          */
         //$this->getWordpressLogin($jsSessionData);
 
-        $msg = array ();
+ 
 
         if (is_array ($hostAddress)) {
 
@@ -160,7 +160,7 @@ class BidxCommon
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
                     } else {
                         $redirect = 'login'; //To redirect /member and not loggedin page to /login
-                        $msg['error'] = 'Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.';
+                        $statusMsgId = 1;
                     }
 
                     break;
@@ -189,13 +189,13 @@ class BidxCommon
                         $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
                     } else {
                         $redirect = 'login'; //To redirect /member and not loggedin page to /login
-                        $msg['error'] = 'Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.';
+                        $statusMsgId = 1;
                     }
 
                     break;
             }
 
-            $this->redirectUrls ($hostAddress[1], $jsSessionData->authenticated, $redirect, $msg);
+            $this->redirectUrls ($hostAddress[1], $jsSessionData->authenticated, $redirect, $statusMsgId);
             return $data;
         }
 
@@ -217,7 +217,7 @@ class BidxCommon
      * @param String $password
      * @return Loggedin User
      */
-    function redirectUrls ($uriString, $authenticated, $redirect = NULL, $statusMsg = NULL)
+    function redirectUrls ($uriString, $authenticated, $redirect = NULL, $statusMsgId = NULL)
     {
         $redirect_url = NULL;
         $urlSep = '?';
@@ -225,14 +225,11 @@ class BidxCommon
         $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $param = '';
         //Status Messages
-        if (isset ($statusMsg['error'])) {
-            $param.= '?emsg=' . base64_encode ($statusMsg ['error']);
+        if ($statusMsgId) {
+            $param.= '?smsg=' . $statusMsgId;
             $urlSep = '&';
         }
 
-        if (isset ($statusMsg['success'])) {
-            $param.= $urlSep . 'smsg=' . base64_encode ($statusMsg ['success']);
-        }
 
         //Other than login page and no user authenticated redirect him Moved to api service
 

@@ -728,6 +728,7 @@ class TemplateLibrary
 
         $html = NULL;
         $displayHeader = NULL;
+        $returnHtml = '';
         if (!empty ($attachmentArr) && is_array ($attachmentArr)) {
 
             foreach ($attachmentArr as $attachment) {

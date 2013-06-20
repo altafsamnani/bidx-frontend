@@ -38,14 +38,13 @@
             else
             {
                 bidx.common.notifyRedirect();
-
-                var successMsg = window.btoa( "Welcome in the group!" );
+                
 
                 var url = document.location.protocol
                     + "//"
                     + document.location.hostname
                     + ( document.location.port ? ":" + document.location.port : "" )
-                    + "?smsg=" + successMsg
+                    + "?smsg=2"
                 ;
 
                 document.location.href = url;
@@ -124,13 +123,13 @@
             {
                 bidx.common.notifyRedirect();
 
-                var successMsg = window.btoa( "Successfully left the group!" );
+                
 
                 var url = document.location.protocol
                     + "//"
                     + document.location.hostname
                     + ( document.location.port ? ":" + document.location.port : "" )
-                    + "?smsg=" + successMsg
+                    + "?smsg=3"
                 ;
 
                 document.location.href = url;
