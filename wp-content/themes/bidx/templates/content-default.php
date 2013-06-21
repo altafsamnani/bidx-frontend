@@ -47,7 +47,7 @@ $blocks = explode('<hr />', $content)
 			</div>
 			<!-- arrowdown in middle -->
 		</div>
-		<div class="postheader"><span class="fui-triangle-down"></span></div>
+		<div class="postheader"><span class="sprite headerarrow"></span></div>
 	</header>
 	<div class="container">
 		<br />
