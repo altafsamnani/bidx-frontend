@@ -1172,6 +1172,13 @@
                 ,   value   = bidx.utils.getValue( countryOperationSpecifics, f )
                 ;
 
+                // Sometimes the data coming back from the API is in lowercase, and since it's a lookup concept we need to have it uppercase
+                //
+                if ( value && f === "country" )
+                {
+                    value = value.toUpperCase();
+                }
+
                 $input.each( function()
                 {
                     bidx.utils.setElementValue( $( this ), value  );

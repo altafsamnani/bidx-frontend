@@ -572,9 +572,12 @@
             ,   value   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + f )
             ;
 
-            // HTML Unescape the values
+            // Sometimes the data coming back from the API is in lowercase, and since it's a lookup concept we need to have it uppercase
             //
-            value = $( "<div />" ).html( value ).text();
+            if ( value && f === "nationality" )
+            {
+                value = value.toUpperCase();
+            }
 
             $input.each( function()
             {
@@ -615,9 +618,12 @@
                         ,   value   = bidx.utils.getValue( item, f )
                         ;
 
-                        // HTML Unescape the values
+                        // Sometimes the data coming back from the API is in lowercase, and since it's a lookup concept we need to have it uppercase
                         //
-                        value = $( "<div />" ).html( value ).text();
+                        if ( value && f === "country" )
+                        {
+                            value = value.toUpperCase();
+                        }
 
                         $input.each( function()
                         {
@@ -698,7 +704,13 @@
         ,   languageDescr   = ""
         ;
 
-        languageDescr = _getLanguageValueByKey( languageDetail.language );
+        if ( languageDetail.language )
+        {
+            // Make sure the language key is *always* in lowercase
+            //
+            languageDetail.language = languageDetail.language.toLowerCase();
+            languageDescr = _getLanguageValueByKey( languageDetail.language );
+        }
 
         if ( languageDescr )
         {
