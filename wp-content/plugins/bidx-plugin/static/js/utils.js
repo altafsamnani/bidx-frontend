@@ -51,11 +51,11 @@
                 case 'radio':
                     if ( $el.val() === value )
                     {
-                        $el.prop( 'checked', true );
+                        $el.click();
                     }
                     else if ( typeof value !== "undefined" && value !== "" )
                     {
-                        $el.prop( 'checked', false );
+                        // noop
                     }
                 break;
 
