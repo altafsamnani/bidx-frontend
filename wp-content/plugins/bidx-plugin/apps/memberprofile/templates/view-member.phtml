@@ -58,7 +58,7 @@ $entrepreneurDetails = $this->data->bidxEntrepreneurProfile;
                 $rowValues = array ($this->exst($personalDetails->professionalTitle),
                 'gender' => $this->exst($personalDetails->gender),
                 'nationality' => $this->exst($personalDetails->nationality),
-                date ("d-m-Y", strtotime ($this->exst($personalDetails->dateOfBirth))),
+                date('j F Y', strtotime ($this->exst($personalDetails->dateOfBirth))),
                 $this->exst($personalDetails->highestEducation),
                 'motherlanguage' => $motherLanguageDetails,
                 'language' => $languageDetails,

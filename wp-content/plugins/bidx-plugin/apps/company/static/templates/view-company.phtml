@@ -34,7 +34,7 @@ if (!$picSrc) {
     if (!empty($this->company->registered)) {
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Date of registration' =>   date("d-m-Y", strtotime( $this->company->dateCompanyEstab ))), $options );
+            array( 'Date of registration' =>   date( 'j F Y', strtotime( $this->company->dateCompanyEstab ))), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
             array( 'Legal form of business' => $this->exst($this->company->legalFormBusiness)), $options );
 
