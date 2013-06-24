@@ -9,7 +9,7 @@
             </a>
 		</li>
 <?php
-if (property_exists($this -> sessionData, 'data') &&
+if ( property_exists( $this, 'sessionData' ) && property_exists($this -> sessionData, 'data') &&
 	false != ($roles = $this -> sessionData -> data -> roles)) {
 	if ( in_array( 'GroupAdmin', $roles ) ||
 		 in_array( 'GroupOwner', $roles ) ) {
