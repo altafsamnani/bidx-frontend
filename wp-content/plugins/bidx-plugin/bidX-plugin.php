@@ -29,7 +29,7 @@ $loader = new ContentLoader( 'pages' );
 register_activation_hook( __FILE__, array( $loader, 'load' ) );
 register_deactivation_hook( __FILE__, array( $loader, 'unload' ) );
 
-if (!BidxCommon :: isWPInternalFunction()) {
+if ( !BidxCommon :: isWPInternalFunction() ) {
 	$ruleitems = array(
 			'member' => 'memberprofile',
 			'businessplan',
@@ -40,6 +40,16 @@ if (!BidxCommon :: isWPInternalFunction()) {
 			'auth'
 	);
 	$shortcode = new BidxShortCode();
-	$shortcode -> addMappingArray($ruleitems);
+	$shortcode -> addMappingArray( $ruleitems );
+	//cleanup body tag
+	
+}
+
+add_filter( 'body_class','my_class_names', 100000 );
+
+function my_class_names($classes) {
+	
+	return preg_replace( "/^\?bidx=/", 'bidx-',  $classes );
+	
 }
 ?>
