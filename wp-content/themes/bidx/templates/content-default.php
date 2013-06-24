@@ -14,54 +14,62 @@ $blocks = explode('<hr />', $content)
 	<header>
 		<div class="headerbanner">
 			<div class="container">
-			<!-- Check if subpages available -->
-			<?php 
+				<!-- Check if subpages available -->
+				<?php 
 				$children = get_pages('child_of=' . $post->ID . '&parent=' . $post->ID);
 				if( count( $children ) > 0 ) {
-			?>
+				?>
 				<div class="span9">
 					<div class="navbar navbar-inverse">
-		            	<div class="navbar-inner">
-		                	<div class="nav-collapse collapse">
-		                  	<ul class="nav">
-						<?php foreach ($children as $child ) { ?>		                  	
-		                    	<li>
-			                      <a href="<?php echo $child -> guid; ?>"><?php echo $child -> post_name; ?></a>
-			                    </li>
-			            <?php } ?>
-			                  </ul>
-		                	</div>
-		            	</div>
-		          	</div>
-		       <?php 
-		       	}
-		       ?>   	
-		          	
-				</div>
-				<div class="row-fluid text-center headerblock blue">
-					<h2 style="color: white"><?php the_title(); ?></h2>
-					<div class="span8 offset2" style="padding-bottom: 10px;">
-						<p style="color: white"><?php echo $blocks[0] ?></p>
+						<div class="navbar-inner">
+							<div class="nav-collapse collapse">
+						  		<ul class="nav">
+								<?php foreach ($children as $child ) { ?>		                  	
+							    	<li>
+							          <a href="<?php echo $child -> guid; ?>"><?php echo $child -> post_name; ?></a>
+							        </li>
+								<?php } ?>
+						    	</ul>
+							</div>
+						</div>
+					
 					</div>
 				</div>
+	       		<?php 
+	       		}
+	       		?>   	
+		        
+				<div class="row-fluid text-center headerblock blue">
+					<div class="span12">
+						<h1><?php the_title(); ?></h1>
+						<?php echo $blocks[0] ?>
+					</div>
+				</div>
+
 			</div>
-			<!-- arrowdown in middle -->
+			<!-- end of container -->
 		</div>
+		<!-- end headerbanner -->
 		<div class="postheader"><span class="sprite headerarrow"></span></div>
 	</header>
 	<div class="container">
 		<br />
+
 		<?php 
 			unset($blocks[0]);
 
 			$array = array_values($blocks);
-			foreach ( $blocks as $block ) {?>
-		<div class="row-fluid">
-			<?php echo $block ?>
-		</div>
-		<hr>
-	 <?php } ?>
+			foreach ( $blocks as $block ) {
+		?>
+				<div class="row-fluid">
+					<?php echo $block ?>
+				</div>
+				<hr>
+ 		<?php 
+ 			} 
+ 		?>
 	</div>
+	
 	<footer>
 		<!-- widget space -->
 		<div class="container">

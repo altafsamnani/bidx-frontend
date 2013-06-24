@@ -101,3 +101,28 @@ function roots_google_analytics() {
 if (GOOGLE_ANALYTICS_ID) {
     add_action('wp_footer', 'roots_google_analytics', 20);
 }
+
+
+/*
+//use following script to add Custom Style selectbox to TinyMCE
+
+add_filter('mce_buttons_2', 'mce_buttons_2');
+function mce_buttons_2($buttons)
+{
+    array_unshift($buttons, 'styleselect');
+    return $buttons;
+}
+
+function my_mce_before_init($init_array) {
+    // Now we add classes with title and separate them with;
+    $init_array['theme_advanced_blockformats'] = "p,pre,h1,h2,h3,h4,h5,h6";
+        $style_formats = array(
+            array( 'title' => 'Subtitle',          'inline'   => 'span', 'classes' => 'subtitle' )
+    );
+    $init_array['style_formats'] = json_encode( $style_formats );
+
+    return $init_array;
+}
+
+add_filter('tiny_mce_before_init', 'my_mce_before_init');
+*/

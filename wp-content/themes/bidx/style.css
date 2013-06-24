@@ -31,6 +31,10 @@ h2 {
     color:                  #333;
 }
 
+h5 {
+    font-size:              18px;
+}
+
 
 p {
     font-size:              14px;
@@ -118,6 +122,16 @@ a, a:hover, a:visited, a:link  {
     width:                  30px;
 }
 
+.btn-bidx-blue {
+  background-color: #5dade2;
+}
+
+.btn-bidx-blue:hover, .btn-bidx-blue:focus  {
+  background-color: #34495e;
+}
+.btn .fui-arrow-right {
+    line-height: 18px;
+}
 
 
 /* End Global styles */
@@ -174,6 +188,31 @@ header {
     	background-color: #3498db;
 
     }
+        header .headerbanner h1 {
+            color: white;
+        }
+        .headerbanner .headerblock  {
+            color: white;
+        }
+            .headerblock > div {
+                margin: 53px 0 60px 0;
+            }
+            .headerblock > div h1 {
+                margin: 0px;
+                font-size:  30px;
+            }
+
+            .headerblock > div h3 {
+                margin:15px 0;
+                font-size: 20px;
+                
+            }
+            .headerblock > div h5 {
+                font-size: 20px;
+            }
+
+
+
     header .postheader {
         text-align:           center;
     }
@@ -254,9 +293,7 @@ header .navbar .collapsed, header .navbar .btn-navbar:hover {
 
 
 @media (max-width: 979px) {
-    header .menu-main {
-        position:                   static;
-    }
+    
 }
 
 
@@ -569,16 +606,34 @@ body.home .hero-block {
   margin: 35px auto;
 }
 
-.btn-bidx-blue {
-  background-color: #5dade2;
-}
 
-.btn-bidx-blue:hover, .btn-bidx-blue:focus  {
-  background-color: red;
-}
 
 
 /* end intro styles */
+
+
+
+/*******************************************************************************************
+*
+*   Inner page styles
+*
+********************************************************************************************/
+
+
+    article.page img.alignleft {
+        margin-right:40px;
+    }
+
+    article.page img.alignright {
+        margin-left:40px;
+    }
+
+    article.page .btn-bidx-blue {
+        margin: 20px 0 0 0;
+    }
+    article.page ul {
+        margin: 15px 0;
+    }
 
 
 /*******************************************************************************************
@@ -822,6 +877,9 @@ body.home .hero-block {
 .alignright {
 	float: right;
 }
+.alignleft {
+    float: left;
+}
 
 /**
  * Widget styles
@@ -865,6 +923,9 @@ body.home .hero-block {
     /* Portrait tablet to landscape and desktop */
     @media (min-width: 768px) and (max-width: 979px) { 
 
+        header .menu-main {
+                position:                   static;
+            }
         /*fix main menu display because of the added container wrapper whch breaks the BS amd FlatUI css path */
         header .navbar .nav > li a {
             color: #526476;
@@ -911,11 +972,8 @@ body.home .hero-block {
             
 
 
- /*           .navbar .menu-main > ul > li > a:hover,
-            .navbar .menu-main > ul > li.active >  a:hover {
-                background-color:           #34495e;
-            }
-*/              .menu-main .nav.menu {
+
+              .menu-main .nav.menu {
                     margin-bottom: 0;
                 }
                 .menu-main .nav.menu li {
@@ -942,7 +1000,7 @@ body.home .hero-block {
                 .navbar .nav > li.dropdown:hover .dropdown-menu li:hover a {
                     background-color: #34495e;
                     border-radius: 0;
-                    /*margin-bottom: 0;*/
+                    
                 
                
                 }
@@ -984,33 +1042,6 @@ body.home .hero-block {
             display: none;
         }
 
-/*
-
-                .nav.menu li:last-child {
-                    margin-bottom: 0;
-                }
-                .nav.menu li .container, .nav.menu .dropdown a {
-                    text-align: left;
-                }
-                
-                .nav.menu li a{
-                    padding-left: 0;
-                }
-                .dropdown-menu {
-                    margin-left: 0;
-                }
-                .nav.menu .dropdown-menu li {
-                    border-bottom: 1px solid white;
-                    
-                }
-                .nav.menu .dropdown-menu .container a{
-                    padding-left: 15px;
-                }
-
-                
-
-                
-*/
 
         /* end styling of navigation*/
         
