@@ -112,7 +112,13 @@
     ,   show:                   function()
         {
             bidx.utils.log( "AppRouter::show" );
-            $controls.empty();
+
+            // Bidx-business is handled differently
+            //
+            if ( !$( "body" ).hasClass( "bidx-business" ))
+            {
+                $controls.empty();
+            }
 
             // Did we have an app loaded? Unload it!
             //
