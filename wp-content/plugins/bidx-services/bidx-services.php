@@ -300,7 +300,7 @@ function bidx_signout ()
     wp_clear_auth_cookie ();
 
 
-    BidxCommon::$staticSession[$params['domain']] = NULL;
+    $_SESSION[$params['domain']] = NULL;
 }
 
 function clear_bidx_cookies ()
@@ -458,13 +458,12 @@ function get_redirect ($url, $requestData, $domain = NULL)
  *
  * @param bool $echo
  */
-function bidx_request_timeout_time ($time)
-{
-    $time = 25; # new timeout
-    return $time;
-}
-
 add_filter ('http_request_timeout', 'bidx_request_timeout_time');
+function bidx_request_timeout_time ($val)
+{
+
+    return 15;
+}
 
 /**
  * @author Altaf Samnani

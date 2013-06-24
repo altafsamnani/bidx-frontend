@@ -15,7 +15,8 @@ class ContentLoader {
 	private $location;
 	// logger instance
 	private $logger;
-	
+    //Session Js Script Inject
+ 	public $scriptInject ;
 	/**
 	 * Construct the loader for a directory location
 	 * @param unknown $location full path to a directory containing xml files
@@ -25,6 +26,55 @@ class ContentLoader {
 		$this -> location = $location;
 		$this -> logger = Logger::getLogger( "contentloader" );
 		add_action( 'init', array( $this, 'codex_custom_init' ) );
+
+        $subDomain = $this->getBidxSubdomain();
+        $bidCommonObj = new BidxCommon($subDomain);
+        $this->scriptInject = $bidCommonObj->getScriptJs($subDomain);
+        add_action('wp_head', array(&$this, 'addJsVariables'));
+   }
+
+
+
+   function addJsVariables() {
+	echo "<script>
+	      window.bidx = window.bidx || {};
+	      window.bidx.api = {
+	        settings: {
+	                  servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
+	                }
+	        };
+	    </script>";
+
+     echo $this->scriptInject;
+   }
+
+   /**
+	 * Grab the subdomain portion of the URL. If there is no sub-domain, the root
+	 * domain is passed back. By default, this function *returns* the value as a
+	 * string.
+	 *
+	 * @param bool $echo optional parameter prints the response directly to
+	 * the screen.
+	 */
+	function getBidxSubdomain($echo = false) {
+		$hostAddress = explode( '.', $_SERVER ["HTTP_HOST"] );
+		if ( is_array($hostAddress) ) {
+			if ( eregi( "^www$", $hostAddress [0] ) ) {
+				$passBack = 1;
+			}
+			else {
+				$passBack = 0;
+			}
+			if ( $echo == false ) {
+				return ( $hostAddress [$passBack] );
+			}
+			else {
+				echo ( $hostAddress [$passBack] );
+			}
+		}
+		else {
+			return ( false );
+		}
 	}
 
 	/**

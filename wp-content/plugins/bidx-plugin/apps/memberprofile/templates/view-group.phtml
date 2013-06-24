@@ -23,7 +23,7 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
     <div class="row-fluid sidebar-block-heading">
         <div class="span4"><img width="100" height="100" <?php $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded"></div>
         <div class="span8 sidebar-block-intro">
-            <h3 class="sidebar-block-title"><?php echo $this->bidxGroupDomain ?></h3>
+            <h4 class="sidebar-block-title"><?php echo ucwords($this->bidxGroupDomain) ?></h4>
             <p><?php echo $groupValue->slogan ?></p>
         </div>
     </div>
@@ -45,7 +45,7 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
     }
 
 
-if( $groupDetails ) { ?>
+if( $showGroup ) { ?>
 <div class="well sidebar-block">
     <!-- Joined Group -->
     <h3>Joined groups</h3>

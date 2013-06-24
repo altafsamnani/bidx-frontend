@@ -13,19 +13,31 @@ require_once( ABSPATH . WPINC . '/pluggable.php' );
 class BidxCommon
 {
 
-    public static $bidxSession;
-    public static $scriptJs;
-    public static $staticSession;
+    public static $bidxSession = array ();
+    public static $scriptJs = array ();
+    public static $staticSession = array ();
 
     public function __construct ($subDomain)
     {
         if ($subDomain) {
             $this->getSessionAndScript ($subDomain);
-            $this->setStaticSession ($subDomain);
         }
     }
 
-    private function getSessionAndScript ($subDomain)
+    public function isSetBidxAuthCookie ()
+    {
+        $bidxAuthCookie = false;
+        foreach ($_COOKIE as $cookieKey => $cookieValue) {
+            if (preg_match ("/^bidx-auth/i", $cookieKey)) {
+                $bidxAuthCookie = true;
+            }
+        }
+
+        return $bidxAuthCookie;
+    }
+
+    //http://www.phpro.org/tutorials/Introduction-To-PHP-Sessions.html
+    public function getSessionAndScript ($subDomain)
     {
         $is_ajax = isset ($_SERVER['HTTP_X_REQUESTED_WITH']) AND
             strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
@@ -33,14 +45,28 @@ class BidxCommon
         if (!$is_ajax) {
             // To check whther its login page or q= redirect already checked session.
             $isWordpress = $this->isWordpressPage ();
+
             //Check session if its not redirect (is not having q= param)
+            //Start the session to store Bidx Session
+            session_start ();
+         
             if (!$isWordpress) {
-                if (!isset ($this::$scriptJs [$subDomain])) { // If Session set dont do anything
+                //Check Session Variables
+                $sessionVars = $this->getSessionVariables ($subDomain);
+  
+                if ($this->isSetBidxAuthCookie () && !$sessionVars) { // If Session set dont do anything
                     $sessionObj = new SessionService();
-                    $this::$bidxSession[$subDomain] = $sessionObj->isLoggedIn ();
+                    $bidxSessionVars = $sessionObj->isLoggedIn ();
+
                     //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
                     $this->processEntities ($subDomain);
+                    //Set firsttime/new session variables
+                    $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);
                 }
+     
+                //Set static variables to access through pages
+                $this->setStaticVariables ($subDomain, $sessionVars);
+
 
                 $scriptValue = $this->injectJsVariables ($subDomain);
                 $this->setScriptJs ($subDomain, $scriptValue);
@@ -52,6 +78,46 @@ class BidxCommon
             }
         }
         return;
+    }
+
+    public function getSessionVariables ($subDomain)
+    {
+        $sessionVars = false;
+        if (!empty ($_SESSION[$subDomain])) {
+            $sessionVars = $_SESSION[$subDomain];
+        }
+        return $sessionVars;
+    }
+
+    /**
+     * Process Entities and store it in session variable
+     *
+     * @param Array $entities bidx response as array
+     * @return String Injects js variables
+     */
+    public function setSessionVariables ($subDomain, $bidxSessionVars)
+    {
+        if (!empty ($bidxSessionVars)) {
+            $_SESSION[$subDomain] = $bidxSessionVars;
+            return $bidxSessionVars;
+        }
+    }
+
+    /**
+     * Process Entities and store it in session variable
+     *
+     * @param Array $entities bidx response as array
+     * @return String Injects js variables
+     */
+    public function setStaticVariables ($subDomain, $sessionVars)
+    {
+        if (empty ($sessionVars)) {
+            $sessionVars->data = NULL;
+            $sessionVars->authenticated = 'false';
+        }
+
+        $this::$bidxSession[$subDomain] = $sessionVars;
+        $this::$staticSession = $sessionVars;
     }
 
     /**
@@ -88,7 +154,7 @@ class BidxCommon
     public function getScriptJs ($subDomain)
     {
 
-        return $this::$scriptJs[$subDomain];
+        return (!empty ($this::$scriptJs)) ? $this::$scriptJs[$subDomain] : '';
     }
 
     /**
@@ -99,7 +165,6 @@ class BidxCommon
      */
     public function injectJsVariables ($subDomain)
     {
-
         $jsSessionData = $this::$bidxSession[$subDomain];
         $jsSessionVars = (isset ($jsSessionData->data)) ? json_encode ($jsSessionData->data) : '{}';
         $jsAuthenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : '{}';
@@ -143,7 +208,7 @@ class BidxCommon
          */
         //$this->getWordpressLogin($jsSessionData);
 
- 
+
 
         if (is_array ($hostAddress)) {
 
@@ -153,12 +218,13 @@ class BidxCommon
                 case 'member':
                     $sessioMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessioMemberId;
-
+               
                     if ($memberId) {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
                     } else {
+
                         $redirect = 'login'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
@@ -195,7 +261,9 @@ class BidxCommon
                     break;
             }
 
-            $this->redirectUrls ($hostAddress[1], $jsSessionData->authenticated, $redirect, $statusMsgId);
+            if ($jsSessionData) {
+                $this->redirectUrls ($hostAddress[1], $jsSessionData->authenticated, $redirect, $statusMsgId);
+            }
             return $data;
         }
 

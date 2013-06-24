@@ -55,7 +55,7 @@ abstract class APIbridge
 
         // 2. Set Headers
         // 2.1 For Authentication
-        $headers['Authorization'] = 'Basic ' . base64_encode ("$this->authUsername:$this->authPassword");
+        //$headers['Authorization'] = 'Basic ' . base64_encode ("$this->authUsername:$this->authPassword");
 
         // 2.1 Is Form Upload
         if ($isFormUpload) {
@@ -72,12 +72,12 @@ abstract class APIbridge
 
         // 3. Decide method to use
         if ($bidxMethod == 'GET') {
-            $bidx_get_params = ($body) ? '&' . http_build_query ($body) : '';
+            $bidx_get_params = ($body) ? '?' . http_build_query ($body) : '';
             $body = NULL;
         }
 
         // 4. WP Http Request
-        $url = API_URL . $urlService . '?csrf=false' . $bidx_get_params;
+        $url = API_URL . $urlService . $bidx_get_params;
 
         $this->logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $method, $body, var_export ($headers, true), var_export ($cookieArr, true)));
 
@@ -85,7 +85,8 @@ abstract class APIbridge
         $result = wp_remote_request ($url, array ('method' => $bidxMethod,
           'body' => $body,
           'headers' => $headers,
-          'cookies' => $cookieArr
+          'cookies' => $cookieArr,
+          'timeout' => apply_filters( 'http_request_timeout', 15)
             ));
 
         $this->logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
@@ -98,7 +99,6 @@ abstract class APIbridge
                 foreach ($cookies as $bidxAuthCookie) {
                     if(!empty($bidxAuthCookie->name) && $bidxAuthCookie->name) {
                     $cookieDomain = $bidxAuthCookie->domain;
-                    ob_start();
                     setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
                     }
                 }

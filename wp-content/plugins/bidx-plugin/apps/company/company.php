@@ -20,10 +20,10 @@ class company
      */
     function __construct ()
     {
-        $subDomain = $this->getBidxSubdomain ();
+        //$subDomain = $this->getBidxSubdomain ();
 
-        $bidCommonObj = new BidxCommon ($subDomain);
-        $this->scriptInject = $bidCommonObj->getScriptJs ($subDomain);
+       // $bidCommonObj = new BidxCommon ($subDomain);
+        //$this->scriptInject = $bidCommonObj->getScriptJs ($subDomain);
 
         add_action ('wp_enqueue_scripts', array (&$this, 'register_company_bidx_ui_libs'));
     }

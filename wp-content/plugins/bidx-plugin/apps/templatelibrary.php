@@ -504,13 +504,14 @@ class TemplateLibrary
 
         // exit;
         //Iterate variable and add seperator
+        if($data) {
         foreach ($data as $key => $dataValue) {
 
 
             if ($subVal) {
                 if ($condition) {
                     foreach ($condition as $keyCondition => $valueCondition) {
-                        if ($dataValue->$keyCondition == $valueCondition) {
+                        if ((!empty($dataValue->$keyCondition)) && $dataValue->$keyCondition == $valueCondition) {
                             $writeValue = true;
                         } else {
                             $writeValue = false;
@@ -535,7 +536,7 @@ class TemplateLibrary
                 $sep = ($count == $countData) ? $seperatorAnd : $seperator;
             }
         }
-
+    }
         return $htmlDisplay;
     }
 
@@ -553,15 +554,18 @@ class TemplateLibrary
 
         $html = '';
         $sep = '';
-
+        
         foreach ($valueArr as $rowLabel => $rowValue) {
 
-            if ($rowValue != 'null' && $rowValue) {
+            if ($rowValue != 'null' && trim($rowValue) != '' && $rowValue) {
+          
                 $rowValue = $this->getMultiReplacedValues ($rowLabel, $rowValue);
                 $html.= $sep . $rowValue;
                 $sep = $separator;
             }
         }
+
+        
         return $html;
     }
 
