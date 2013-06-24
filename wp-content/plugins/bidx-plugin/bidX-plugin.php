@@ -23,6 +23,8 @@ require ( BIDX_PLUGIN_DIR . '/shortcode.php' );
 require ( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 require_once ( BIDX_PLUGIN_DIR . '/common.php' );
 
+
+//do not do this when site is bidx.net
 $loader = new ContentLoader( 'pages' );
 register_activation_hook( __FILE__, array( $loader, 'load' ) );
 register_deactivation_hook( __FILE__, array( $loader, 'unload' ) );

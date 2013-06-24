@@ -8,7 +8,7 @@
      ====================================================================== -->
 <project name="BidX Plugin for Wordpress" default="default">
     <description>
-            
+    	Builds the plugin as a zip file        
     </description>
 
     <!-- ================================= 
@@ -17,7 +17,7 @@
     <target name="default" depends="depends" description="" >
   		
     	
-        <zip destfile="bidx-plugin.zip" update="false" basedir=".." excludes="**/build/**, *.zip, .*/**">
+        <zip destfile="bidx-plugin.zip" update="false" basedir=".." excludes="**/build/**, *.zip, .*/**, debug.log">
         </zip>
     </target>
 

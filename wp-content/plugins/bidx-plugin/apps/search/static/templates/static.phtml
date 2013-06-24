@@ -2,16 +2,9 @@
 	Search startpage.
 	Single page application that is setup
  -->	
- <?php 
- $numFound = 0;
- if ( property_exists($this -> results, 'data') ) {
-	 $docs = $this -> results -> data -> docs;
-	 $numFound = $this -> results -> data -> numFound;
- }
- ?>
  <br /><br />
 <div>
-	<?php if ($numFound < 1 ) { ?>
+
 	<div class="row-fluid">
 		<div class="search alert">
 			 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -19,7 +12,7 @@
 			 <p>Your query did not have any results. Please retry with a more specific search term</p>
 		</div>
 	</div>	
-	<?php } else { ?>
+	
 	<div class="row-fluid">
 		<div class="span12"><h4>Search results (<?php echo $this -> results -> data -> numFound ?>)</h4></div>
 	</div>
