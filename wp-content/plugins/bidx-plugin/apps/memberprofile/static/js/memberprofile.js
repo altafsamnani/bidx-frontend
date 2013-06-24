@@ -12,6 +12,7 @@
     ,   $profilePictureContainer    = $editForm.find( ".profilePictureContainer" )
 
     ,   $attachments                = $editForm.find( ".attachments" )
+    ,   $attachmentList             = $attachments.find( ".attachmentList" )
 
     ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
     ,   $currentAddressCountry      = $editForm.find( "[name='personalDetails.address[0].country']"         )
@@ -672,9 +673,7 @@
             return;
         }
 
-
-        var $attachmentList     = $attachments.find( ".attachmentList" )
-        ,   $attachment         = snippets.$attachment.clone()
+        var $attachment         = snippets.$attachment.clone()
 
         ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
         ,   imageSrc
@@ -804,6 +803,8 @@
         $languageList.empty();
 
         $profilePictureContainer.empty();
+
+        $attachmentList.empty();
 
         // Inject the save and button into the controls
         //
