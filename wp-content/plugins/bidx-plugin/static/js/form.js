@@ -108,7 +108,10 @@
 					switch(plugin) {
 						case "date" :
 							//activate all datepickers in this plugin
-							$form.find("[data-type=date]").datepicker({});
+							$form.find("[data-type=date]").datepicker(
+							{
+								"dateFormat":                     "d MM yy"
+							});
 							break;
 						case "slider" :
 
@@ -778,7 +781,7 @@ var Validator = function () {
 			}
 			this.validated=true;//set formelement to validated
 			this.formfield.removeClass("hasError");
-					
+
 			var el = this.formfield.find("." + this.errorClass);
 			el.slideUp('fast',function(){
 				el.remove();

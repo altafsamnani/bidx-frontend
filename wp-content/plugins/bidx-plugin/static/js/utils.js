@@ -39,7 +39,7 @@
             {
                 dateObj = parseISODate( value );
 
-                value = dateObj.m + "/" + dateObj.d + "/" + dateObj.y;
+                value = dateObj.d + " " + months[ dateObj.m - 1 ] + " " + dateObj.y;
                 $el.val( value );
             }
 
@@ -254,9 +254,9 @@
 
         var obj =
         {
-            y:      str.substr( 0, 4 )
-        ,   m:      str.substr( 5, 2 )
-        ,   d:      str.substr( 8, 2 )
+            y:      parseInt( str.substr( 0, 4 ), 10 )
+        ,   m:      parseInt( str.substr( 5, 2 ), 10 )
+        ,   d:      parseInt( str.substr( 8, 2 ), 10 )
         };
 
         return obj;
