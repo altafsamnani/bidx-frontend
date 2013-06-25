@@ -1,15 +1,16 @@
-<div class="partners">
-    <div class="container partnerlist">
-        <a href="http://www.bidnetwork.org" class="partner partner-bid">BiD Network</a>
-        <a href="http://www.puterasampoerna.com/" class="partner partner-sampoerna">Putera Sampoerna</a>
-        <a href="http://www.postcodeloterij.nl" class="partner partner-postcodeloterij">Nationale Postcode Loterij</a>
-        <a href="https://www.gov.uk/government/organisations/department-for-international-development" class="partner partner-did">Department for International Development</a>
-        <a href="https://www.usaid.gov" class="partner partner-usaid">USAID</a>
+<footer>
+<!--     <div class="partners">
+        <div class="container partnerlist">
+            <a href="http://www.bidnetwork.org" class="partner partner-bid">BiD Network</a>
+            <a href="http://www.puterasampoerna.com/" class="partner partner-sampoerna">Putera Sampoerna</a>
+            <a href="http://www.postcodeloterij.nl" class="partner partner-postcodeloterij">Nationale Postcode Loterij</a>
+            <a href="https://www.gov.uk/government/organisations/department-for-international-development" class="partner partner-did">Department for International Development</a>
+            <a href="https://www.usaid.gov" class="partner partner-usaid">USAID</a>
+        </div>
     </div>
-</div>
+ -->
 
-<footer class="page-footer">
-    <div class="container">
+    <div class="page-footer">
     	<div class="pull-left social-links">
     		<span>Follow us</span>
 

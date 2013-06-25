@@ -16,8 +16,7 @@ Company: bidX;
 *
 ********************************************************************************************/
 html, body {
-    margin:                 0;
-    padding:                0;
+    
     font-family:            'Lucida Sans', Verdana, sans-serif;
     color:                  #526476; /*do we still need this?*/
 }
@@ -70,12 +69,12 @@ a, a:hover, a:visited, a:link  {
     text-decoration: none;
 }
 
-.hero-block > .container {
-    padding-top:                 40px;
-}
+
 
 .hero-block {
     margin-bottom:              60px;
+    margin-left: -20px;
+    margin-right: -20px;
 }
 
 
@@ -163,13 +162,15 @@ header {
     background-color:           #FFF;
     height:                     auto;
     z-index:                    200;
+
 }
 
     header .logo {
-        margin-top:                 13px;
-        width:                      134px;
-        height:                     82px;
-        display:                    inline-block;
+        margin:                 13px 0;
+/*        width:                      134px;
+        height:                     82px;*/
+        display:                    block;
+
     }
 
 
@@ -184,48 +185,7 @@ header {
         background-color:           #ebedef;
     }
 
-    header .headerbanner {
-    	background-color: #3498db;
-
-    }
-        header .headerbanner h1 {
-            color: white;
-        }
-        .headerbanner .headerblock  {
-            color: white;
-        }
-            .headerblock > div {
-                margin: 53px 0 60px 0;
-            }
-            .headerblock > div h1 {
-                margin: 0px;
-                font-size:  30px;
-            }
-
-            .headerblock > div h3 {
-                margin:15px 0;
-                font-size: 20px;
-                
-            }
-            .headerblock > div h5 {
-                font-size: 20px;
-            }
-
-
-
-    header .postheader {
-        text-align:           center;
-    }
-        header .postheader .headerarrow {
-            display:                inline-block;
-            background-position:    0 -125px;
-            border:                 0;
-            height:                 19px;
-            width:                  41px;
-
-        }
-
-
+    
 .navbar .nav li.dropdown-hover:hover .dropdown-menu{
     display:                    block;
     visibility:                 visible;
@@ -290,14 +250,53 @@ header .navbar .collapsed, header .navbar .btn-navbar:hover {
     background-color:           transparent;
 }
 
+/* inner page header */
 
+.page-intro .hero {
+        background-color: #3498db;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
 
-@media (max-width: 979px) {
-    
 }
+    .hero h1 {
+        color: white;
+    }
+    .hero .heroblock  {
+        color: white;
+    }
+        .heroblock > div {
+            margin: 53px 0 60px 0;
 
+        }
+        .heroblock > div h1 {
+            margin: 0px;
+            font-size:  30px;
+        }
 
-/* end header styles */
+        .heroblock > div h3 {
+            margin:15px 0;
+            font-size: 20px;
+            
+        }
+        .heroblock > div h5 {
+            font-size: 20px;
+        }
+
+.page-intro .posthero {
+    text-align:           center;
+}
+    .posthero .hero-arrow {
+        display:                inline-block;
+        background-position:    0 -125px;
+        border:                 0;
+        height:                 19px;
+        width:                  41px;
+
+    }
+
+/* end inner page header */
 
 /*******************************************************************************************
 *
@@ -388,35 +387,39 @@ header .navbar .collapsed, header .navbar .btn-navbar:hover {
 
 
 
-footer.page-footer {
+footer .page-footer {
     background-color:               #34495e;
     line-height:                    48px;
     color:                          #fff;
     font-size:                      13px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-footer.page-footer a {
+footer .page-footer a {
     text-decoration:                underline;
     color:                          #fff;
 }
 
-footer.page-footer .copyright {
+footer .page-footer .copyright {
     display:                        inline-block;
     margin-right:                   20px;
 }
 
-footer.page-footer .social-links ul,
-footer.page-footer .footer-menu {
+footer .page-footer .social-links ul,
+footer .page-footer .footer-menu {
     display:                        inline-block;
     margin:                         0;
 }
 
-footer.page-footer .social-links > span {
+footer .page-footer .social-links > span {
     display:                        inline-block;
     margin-right:                   20px;
 }
 
-footer.page-footer .social-links a {
+footer .page-footer .social-links a {
     font-size:                      22px;
 
 }
@@ -895,6 +898,7 @@ body.home .hero-block {
 *   Responsive breakpoints
 *
 ********************************************************************************************/
+  
     /* Large desktop */
     @media (min-width: 1200px) {
         /*fix main menu display because of the added container wrapper whch breaks the BS amd FlatUI css path */
@@ -918,62 +922,50 @@ body.home .hero-block {
 
     }
 
-
-     
-    /* Portrait tablet to landscape and desktop */
-    @media (min-width: 768px) and (max-width: 979px) { 
-
-        header .menu-main {
-                position:                   static;
-            }
-        /*fix main menu display because of the added container wrapper whch breaks the BS amd FlatUI css path */
-        header .navbar .nav > li a {
-            color: #526476;
-            font-size: 14.994px;
-            font-weight: 700;
-            
-            text-shadow: none;
-            transition: background-color 0.25s ease 0s, color 0.25s ease 0s, border-bottom-color 0.25s ease 0s;
+    /* styles shared by portrait tablet and above */
+    @media (min-width: 768px ) {
+        
+        .navbar .btn-navbar {
+            display: none;
+          }
+           
+        .nav-bidx-collapse.collapse {
+          height: auto;
+          overflow: visible;
+        }
+        .hero-block > .container {
+            padding-top: 40px;
         }
 
-        header .navbar .menu-main > ul > li  a:hover,
-        header .navbar .menu-main > ul > li.active  a:hover {
-            background-color:           #ebedef;
+        .navbar .nav li.dropdown .dropdown-menu {
+            background-color: #34495E;
         }
-        header .navbar .menu-main li {
-            margin-left:                4px;
-        }
-
 
     }
      
-    /* Landscape phone to portrait tablet */
-    @media (max-width: 767px) { ... }
-     
+
     /* Landscape phones and down */
-    @media (max-width: 480px) {
+    @media (min-width: 320px) and (max-width: 768px) { 
 
 
         /* navigation related style */
         .container {
             width: auto;
         }
-/*        .nav.menu {
-            margin-bottom: 0;            
-
-        }*/
+        header .menu-main {
+            position: static;
+            margin-left: -20px;
+            margin-right: -20px;                
+        }
         header .navbar {
             margin-bottom: 0;
-        }
+        }   
             .navbar .btn {
                 margin-top: 0px; 
                 text-align: left;
             }
             
-
-
-
-              .menu-main .nav.menu {
+                .menu-main .nav.menu {
                     margin-bottom: 0;
                 }
                 .menu-main .nav.menu li {
@@ -1044,7 +1036,136 @@ body.home .hero-block {
 
 
         /* end styling of navigation*/
-        
+
+        /* bidx-collapse*/
+        .navbar .container {
+            width: auto;
+            padding: 0;
+        }
+        .nav-bidx-collapse {
+            -webkit-transform: translate3d(0, 0, 0);
+        }
+
+        .nav-bidx-collapse {
+            clear: both;
+          }
+          .nav-bidx-collapse .nav {
+            float: none;
+            margin: 0 0 10px;
+          }
+          .nav-bidx-collapse .nav > li {
+            float: none;
+          }
+          .nav-bidx-collapse .nav > li > a {
+            margin-bottom: 2px;
+          }
+          .nav-bidx-collapse .nav > .divider-vertical {
+            display: none;
+          }
+          .nav-bidx-collapse .nav .nav-header {
+            color: #777777;
+            text-shadow: none;
+          }
+          .nav-bidx-collapse .nav > li > a,
+          .nav-bidx-collapse .dropdown-menu a {
+            padding: 9px 15px;
+            font-weight: bold;
+            color: #777777;
+            -webkit-border-radius: 3px;
+               -moz-border-radius: 3px;
+                    border-radius: 3px;
+          }
+          .nav-bidx-collapse .btn {
+            padding: 4px 10px 4px;
+            font-weight: normal;
+            -webkit-border-radius: 4px;
+               -moz-border-radius: 4px;
+                    border-radius: 4px;
+          }
+          .nav-bidx-collapse .dropdown-menu li + li a {
+            margin-bottom: 2px;
+          }
+          .nav-bidx-collapse .nav > li > a:hover,
+          .nav-bidx-collapse .nav > li > a:focus,
+          .nav-bidx-collapse .dropdown-menu a:hover,
+          .nav-bidx-collapse .dropdown-menu a:focus {
+            background-color: #f2f2f2;
+          }
+          .navbar-inverse .nav-bidx-collapse .nav > li > a,
+          .navbar-inverse .nav-bidx-collapse .dropdown-menu a {
+            color: #999999;
+          }
+          .navbar-inverse .nav-bidx-collapse .nav > li > a:hover,
+          .navbar-inverse .nav-bidx-collapse .nav > li > a:focus,
+          .navbar-inverse .nav-bidx-collapse .dropdown-menu a:hover,
+          .navbar-inverse .nav-bidx-collapse .dropdown-menu a:focus {
+            background-color: #111111;
+          }
+          .nav-bidx-collapse.in .btn-group {
+            padding: 0;
+            margin-top: 5px;
+          }
+          .nav-bidx-collapse .dropdown-menu {
+            position: static;
+            top: auto;
+            left: auto;
+            display: none;
+            float: none;
+            max-width: none;
+            padding: 0;
+            margin: 0 15px;
+            background-color: transparent;
+            border: none;
+            -webkit-border-radius: 0;
+               -moz-border-radius: 0;
+                    border-radius: 0;
+            -webkit-box-shadow: none;
+               -moz-box-shadow: none;
+                    box-shadow: none;
+          }
+          .nav-bidx-collapse .open > .dropdown-menu {
+            display: block;
+          }
+          .nav-bidx-collapse .dropdown-menu:before,
+          .nav-bidx-collapse .dropdown-menu:after {
+            display: none;
+          }
+          .nav-bidx-collapse .dropdown-menu .divider {
+            display: none;
+          }
+          .nav-bidx-collapse .nav > li > .dropdown-menu:before,
+          .nav-bidx-collapse .nav > li > .dropdown-menu:after {
+            display: none;
+          }
+          .nav-bidx-collapse .navbar-form,
+          .nav-bidx-collapse .navbar-search {
+            float: none;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-top: 1px solid #f2f2f2;
+            border-bottom: 1px solid #f2f2f2;
+            -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
+               -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
+                    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
+          }
+          .navbar-inverse .nav-bidx-collapse .navbar-form,
+          .navbar-inverse .nav-bidx-collapse .navbar-search {
+            border-top-color: #111111;
+            border-bottom-color: #111111;
+          }
+          .navbar .nav-bidx-collapse .nav.pull-right {
+            float: none;
+            margin-left: 0;
+          }
+          .nav-bidx-collapse,
+          .nav-bidx-collapse.collapse {
+            height: 0;
+            overflow: hidden;
+          }
+        .navbar .btn-navbar {
+            display: block;
+          }
+                
 
     }
 
