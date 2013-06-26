@@ -202,6 +202,10 @@ body.bidx-business span.scrollPositionMarker {
 
 
 /* bidX tagsinput, uses bootstrap-tagmanager */
+input[type='text'].bidx-tagsinput {
+    width:                          50%;
+}
+
 .bidx-tag {
     background-color:               #1abc9c;
     color:                          #ffffff;
@@ -211,7 +215,7 @@ body.bidx-business span.scrollPositionMarker {
     margin-bottom:                  3px;
     overflow:                       hidden;
     line-height:                    22px;
-    padding:                        6px 13px 8px 19px;
+    padding:                        7px 17px 8px 17px;
     position:                       relative;
     display:                        inline-block;
     zoom:                           1;
@@ -226,7 +230,7 @@ body.bidx-business span.scrollPositionMarker {
     .bidx-tag:hover {
         background-color:               #16a085;
         color:                          #ffffff;
-        padding-left:                   12px;
+        padding-left:                   10px;
         padding-right:                  24px;
     }
 
