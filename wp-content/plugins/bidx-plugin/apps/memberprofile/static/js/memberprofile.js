@@ -9,6 +9,9 @@
     ,   $btnAddLanguage             = $editForm.find( ".btnAddLanguage" )
     ,   $inputAddLanguage           = $editForm.find( "input[name='addLanguage']" )
 
+    ,   $personalDetailsNationality         = $editForm.find( "[name='personalDetails.nationality']" )
+    ,   $personalDetailsHighestEducation    = $editForm.find( "[name='personalDetails.highestEducation']" )
+
     ,   $profilePictureContainer    = $editForm.find( ".profilePictureContainer" )
 
     ,   $attachments                = $editForm.find( ".attachments" )
@@ -27,6 +30,8 @@
     ,   memberProfileId
     ,   bidx            = window.bidx
     ,   snippets        = {}
+
+    ,   languages
     ;
 
     // Form fields
@@ -89,214 +94,73 @@
         ]
     };
 
-
-    var languages = [
-        {
-        key: "sq",
-        value: "Albanian"
-        },
-        {
-        key: "ar",
-        value: "Arabic"
-        },
-        {
-        key: "be",
-        value: "Belarusian"
-        },
-        {
-        key: "bg",
-        value: "Bulgarian"
-        },
-        {
-        key: "ca",
-        value: "Catalan"
-        },
-        {
-        key: "zh",
-        value: "Chinese"
-        },
-        {
-        key: "hr",
-        value: "Croatian"
-        },
-        {
-        key: "cs",
-        value: "Czech"
-        },
-        {
-        key: "da",
-        value: "Danish"
-        },
-        {
-        key: "nl",
-        value: "Dutch"
-        },
-        {
-        key: "en",
-        value: "English"
-        },
-        {
-        key: "et",
-        value: "Estonian"
-        },
-        {
-        key: "fi",
-        value: "Finnish"
-        },
-        {
-        key: "fr",
-        value: "French"
-        },
-        {
-        key: "de",
-        value: "German"
-        },
-        {
-        key: "el",
-        value: "Greek"
-        },
-        {
-        key: "iw",
-        value: "Hebrew"
-        },
-        {
-        key: "hi",
-        value: "Hindi"
-        },
-        {
-        key: "hu",
-        value: "Hungarian"
-        },
-        {
-        key: "is",
-        value: "Icelandic"
-        },
-        {
-        key: "in",
-        value: "Indonesian"
-        },
-        {
-        key: "ga",
-        value: "Irish"
-        },
-        {
-        key: "it",
-        value: "Italian"
-        },
-        {
-        key: "ja",
-        value: "Japanese"
-        },
-        {
-        key: "ko",
-        value: "Korean"
-        },
-        {
-        key: "lv",
-        value: "Latvian"
-        },
-        {
-        key: "lt",
-        value: "Lithuanian"
-        },
-        {
-        key: "mk",
-        value: "Macedonian"
-        },
-        {
-        key: "ms",
-        value: "Malay"
-        },
-        {
-        key: "mt",
-        value: "Maltese"
-        },
-        {
-        key: "no",
-        value: "Norwegian"
-        },
-        {
-        key: "pl",
-        value: "Polish"
-        },
-        {
-        key: "pt",
-        value: "Portuguese"
-        },
-        {
-        key: "ro",
-        value: "Romanian"
-        },
-        {
-        key: "ru",
-        value: "Russian"
-        },
-        {
-        key: "sr",
-        value: "Serbian"
-        },
-        {
-        key: "sk",
-        value: "Slovak"
-        },
-        {
-        key: "sl",
-        value: "Slovenian"
-        },
-        {
-        key: "es",
-        value: "Spanish"
-        },
-        {
-        key: "sv",
-        value: "Swedish"
-        },
-        {
-        key: "th",
-        value: "Thai"
-        },
-        {
-        key: "tr",
-        value: "Turkish"
-        },
-        {
-        key: "uk",
-        value: "Ukrainian"
-        },
-        {
-        key: "vi",
-        value: "Vietnamese"
-        }
-    ];
-
     // Grab the snippets from the DOM
     //
     snippets.$language      = $snippets.children( ".languageItem"   ).remove();
     snippets.$attachment    = $snippets.children( ".attachmentItem" ).remove();
 
+
+    // Populate the peronsalDetails.nationality select box using the data items
+    //
+    bidx.data.getItem( "country", function( err, countries )
+    {
+        $personalDetailsNationality.empty();
+        $personalDetailsNationality.append( $( "<option value='' />" ).text( "Select your nationality" ));
+
+        bidx.utils.populateDropdown( $personalDetailsNationality, countries );
+    } );
+
+
+    // Populate the personalDetails.address[0].country select box using the data items
+    //
+    bidx.data.getItem( "country", function( err, countries )
+    {
+        $currentAddressCountry.empty();
+        $currentAddressCountry.append( $( "<option value='' />" ).text( "Select your country" ));
+
+        bidx.utils.populateDropdown( $currentAddressCountry, countries );
+    } );
+
+    // Populate the personalDetails.address[0].country select box using the data items
+    //
+    bidx.data.getItem( "education", function( err, educations )
+    {
+        $personalDetailsHighestEducation.empty();
+        $personalDetailsHighestEducation.append( $( "<option value='' />" ).text( "Select your highest education" ));
+
+        bidx.utils.populateDropdown( $personalDetailsHighestEducation, educations );
+    } );
+
     // Object for maintaining a list of currently selected languages, for optimizations only
     //
     var addedLanguages = {};
 
-    // Initialize the autocompletes
+    // Retrieve the list of languages from the data api
     //
-    $inputAddLanguage.typeahead(
-        {
-            source:         function( query )
-            {
-                return _.map( languages, function( language ) { return language.value; } );
-            }
-        ,   matcher:        function( item )
-            {
-                if ( addedLanguages[ item ] )
-                {
-                    return false;
-                }
+    bidx.data.getItem( "language", function( err, data )
+    {
+        languages = data;
 
-                return true;
+        // Initialize the autocompletes
+        //
+        $inputAddLanguage.typeahead(
+            {
+                source:         function( query )
+                {
+                    return _.map( languages, function( language ) { return language.value; } );
+                }
+            ,   matcher:        function( item )
+                {
+                    if ( addedLanguages[ item ] )
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
             }
-        }
-    ).removeClass( "disabled" ).removeAttr( "disabled" );
+        ).removeClass( "disabled" ).removeAttr( "disabled" );
+    } );
 
     // Figure out the key of the to be added language
     //

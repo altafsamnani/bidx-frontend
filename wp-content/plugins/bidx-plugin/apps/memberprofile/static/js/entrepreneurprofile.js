@@ -50,213 +50,6 @@
         ]
     };
 
-    var focusIndustryOptions =
-    [
-        {
-        "value" : "agriFood",
-        "label" : "Agriculture and food"
-      }, {
-        "value" : "utilities.biogas",
-        "label" : "Biogas"
-      }, {
-        "value" : "manufacturing.chemical",
-        "label" : "Chemical"
-      }, {
-        "value" : "services.cultureMedia",
-        "label" : "Culture media"
-      }, {
-        "value" : "agriFood.distribution",
-        "label" : "Distribution"
-      }, {
-        "value" : "services.education",
-        "label" : "Education"
-      }, {
-        "value" : "manufacturing.electronics",
-        "label" : "Electronics"
-      }, {
-        "value" : "utilities.energyDistribution",
-        "label" : "Energy distribution"
-      }, {
-        "value" : "utilities.energyStorage",
-        "label" : "Energy storage"
-      }, {
-        "value" : "manufacturing.equipement",
-        "label" : "Equipement"
-      }, {
-        "value" : "services.finance",
-        "label" : "Finance"
-      }, {
-        "value" : "agriFood.fishery",
-        "label" : "Fishery"
-      }, {
-        "value" : "agriFood.foodProcessing",
-        "label" : "Food processing"
-      }, {
-        "value" : "agriFood.forestry",
-        "label" : "Forestry"
-      }, {
-        "value" : "manufacturing.furniture",
-        "label" : "Furniture"
-      }, {
-        "value" : "ict.hardware",
-        "label" : "Hardware"
-      }, {
-        "value" : "services.healthCare",
-        "label" : "Health care"
-      }, {
-        "value" : "services.housing",
-        "label" : "Housing"
-      }, {
-        "value" : "utilities.hydroEnergy",
-        "label" : "Hydro energy"
-      }, {
-        "value" : "ict",
-        "label" : "ICT"
-      }, {
-        "value" : "services.insurance",
-        "label" : "Insurance"
-      }, {
-        "value" : "utilities.irrigation",
-        "label" : "Irrigation"
-      }, {
-        "value" : "services.legal",
-        "label" : "Legal"
-      }, {
-        "value" : "manufacturing.machinery",
-        "label" : "Machinery"
-      }, {
-        "value" : "manufacturing",
-        "label" : "Manufacturing"
-      }, {
-        "value" : "manufacturing.metal",
-        "label" : "Metal"
-      }, {
-        "value" : "ict.mobile",
-        "label" : "Mobile"
-      }, {
-        "value" : "agriFood.primaryAgriculture",
-        "label" : "Primary agriculture"
-      }, {
-        "value" : "agriFood.dairy",
-        "label" : "Primary agriculture"
-      }, {
-        "value" : "utilities.recycling",
-        "label" : "Recycling"
-      }, {
-        "value" : "services.recycling",
-        "label" : "Recycling"
-      }, {
-        "value" : "manufacturing.recycling",
-        "label" : "Recycling"
-      }, {
-        "value" : "utilities.renewableEnergy",
-        "label" : "Renewable energy"
-      }, {
-        "value" : "services.research",
-        "label" : "Research"
-      }, {
-        "value" : "services.retail",
-        "label" : "Retail"
-      }, {
-        "value" : "utilities.sanitation",
-        "label" : "Sanitation"
-      }, {
-        "value" : "services",
-        "label" : "Services"
-      }, {
-        "value" : "ict.services",
-        "label" : "Services"
-      }, {
-        "value" : "ict.software",
-        "label" : "Software"
-      }, {
-        "value" : "utilities.solarEnergy",
-        "label" : "Solar energy"
-      }, {
-        "value" : "agriFood.storage",
-        "label" : "Storage"
-      }, {
-        "value" : "manufacturing.textiles",
-        "label" : "Textiles"
-      }, {
-        "value" : "services.tourism",
-        "label" : "Tourism"
-      }, {
-        "value" : "services.transport",
-        "label" : "Transport"
-      }, {
-        "value" : "utilities",
-        "label" : "Utilities"
-      }, {
-        "value" : "utilities.waste",
-        "label" : "Waste"
-      }, {
-        "value" : "utilities.water",
-        "label" : "Water"
-      }, {
-        "value" : "services.wholesale",
-        "label" : "Wholesale"
-      }, {
-        "value" : "utilities.windEnergy",
-        "label" : "Wind energy"
-      }
-    ];
-
-    var businessOutcomeOptions =
-    [
-        {
-            "value" : "stillInvolved",
-            "label" : "I am still involved with the company"
-          }, {
-            "value" : "leftCompany",
-            "label" : "I left the company"
-          }, {
-            "value" : "soldCompany",
-            "label" : "I sold the company"
-          }, {
-            "value" : "dissolvedCompany",
-            "label" : "The company was dissolved"
-          }, {
-            "value" : "companyBankrupt",
-            "label" : "The company went bankrupt"
-          }
-    ];
-
-    var documentTypeOptions =
-    [
-        {
-        value: "agreement",
-        label: "Agreement"
-        },
-        {
-        value: "businessplan",
-        label: "Business plan"
-        },
-        {
-        value: "certificate",
-        label: "Certificate"
-        },
-        {
-        value: "contract",
-        label: "Contract"
-        },
-        {
-        value: "cv",
-        label: "CV"
-        },
-        {
-        value: "financialplan",
-        label: "Financial plan"
-        },
-        {
-        value: "letterintent",
-        label: "Letter of intent"
-        },
-        {
-        value: "other",
-        label: "Other"
-        }
-    ];
 
     // Grab the snippets from the DOM
     //
@@ -264,24 +57,31 @@
     snippets.$previousBusiness  = $snippets.children( ".previousBusinessItem"   ).remove();
 
 
-    // Populate the dropdowns with the values, TODO: fetch the options from the server
+    // Populate the dropdowns with the values
     //
-    var $focusIndustry = $editForm.find( "[name='focusIndustry']" );
-    $focusIndustry.append( $( "<option value='' />" ).text( "Select your focus industry" ));
+    bidx.data.getItem( "industry", function( err, industries )
+    {
+        var $focusIndustry = $editForm.find( "[name='focusIndustry']" );
+        $focusIndustry.append( $( "<option value='' />" ).text( "Select your focus industry" ));
 
-    bidx.utils.populateDropdown( $focusIndustry, focusIndustryOptions );
+        bidx.utils.populateDropdown( $focusIndustry, industries );
+    } );
 
-    var $businessOutcome = snippets.$previousBusiness.find( "[name='businessOutcome']" );
-    $businessOutcome.append( $( "<option value='' />" ).text( "Select the outcome of this business" ));
+    bidx.data.getItem( "businessOutcome", function( err, businessOutcomes )
+    {
+        var $businessOutcome = snippets.$previousBusiness.find( "[name='businessOutcome']" );
+        $businessOutcome.append( $( "<option value='' />" ).text( "Select the outcome of this business" ));
 
-    bidx.utils.populateDropdown( $businessOutcome, businessOutcomeOptions );
+        bidx.utils.populateDropdown( $businessOutcome, businessOutcomes );
+    } );
 
-    var $documentType = snippets.$attachment.find( "[name='documentType']" );
-    $documentType.append( $( "<option value='' />" ).text( "Select the type" ));
+    bidx.data.getItem( "documentType", function( err, documentTypes )
+    {
+        var $documentType = snippets.$attachment.find( "[name='documentType']" );
+        $documentType.append( $( "<option value='' />" ).text( "Select the type" ));
 
-    bidx.utils.populateDropdown( $documentType, documentTypeOptions );
-
-
+        bidx.utils.populateDropdown( $documentType, documentTypes );
+    } );
 
     // Disable disabled links
     //
