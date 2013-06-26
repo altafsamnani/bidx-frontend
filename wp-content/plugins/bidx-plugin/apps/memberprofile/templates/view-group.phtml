@@ -4,16 +4,18 @@ $groupDetails = $this->exst ($this->data->groups);
 
 $showGroup = (count( (array)$groupDetails)) ? true : false;
 
+$groupInfo = $this->exst ($this->data->groupInfo);
+
+
 ?>
 <!-- Group Info -->
 <?php
-    if($showGroup) {
-        foreach ($groupDetails as $groupValue) {
-            if (strtolower(str_replace(" ","",$groupValue->name)) == strtolower(str_replace(" ","",$this->bidxGroupDomain))) {
-              $groupDataSrc = false;
-              $picSrc     = $groupValue->logo;
+    if($groupInfo) {
 
-              if (!$groupValue->logo) {
+              $groupDataSrc = false;
+              $picSrc     = $groupInfo->logo;
+
+              if (!$groupInfo->logo) {
                 $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
                 $groupDataSrc = true;
               }
@@ -23,13 +25,13 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
     <div class="row-fluid sidebar-block-heading">
         <div class="span4"><img width="100" height="100" <?php $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded"></div>
         <div class="span8 sidebar-block-intro">
-            <h4 class="sidebar-block-title"><?php echo ucwords($this->bidxGroupDomain) ?></h4>
-            <p><?php echo $groupValue->slogan ?></p>
+            <h4 class="sidebar-block-title"><?php echo $groupInfo->groupName ?></h4>
+            <p><?php echo $groupInfo->slogan ?></p>
         </div>
     </div>
 
     <!-- Description -->
-    <p class="sidebar-block-content"><?php echo $groupValue->description;?></p>
+    <p class="sidebar-block-content"><?php echo $groupInfo->description;?></p>
 
     <!-- Company name , URL -->
     <div class="row-fluid">
@@ -39,11 +41,7 @@ $showGroup = (count( (array)$groupDetails)) ? true : false;
 ?>
     </div>
 </div>
-<?php
-            }
-        }
-    }
-
+<?php }
 
 if( $showGroup ) { ?>
 <div class="well sidebar-block">

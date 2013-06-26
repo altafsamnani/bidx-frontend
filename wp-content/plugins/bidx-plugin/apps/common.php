@@ -60,6 +60,7 @@ class BidxCommon
                 if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
                     $sessionVars = $this->getSessionVariables ($subDomain);
+         
                     if (!$sessionVars) { // If Session set dont do anything
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
@@ -69,11 +70,11 @@ class BidxCommon
                         //Set firsttime/new session variables
                         $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);
                     }
-
+              
                     //If not Logged in forcefully login to WP
                     $this->forceWordpressLogin ($subDomain, $sessionVars);
                 }
-
+                
                 //Set static variables to access through pages
                 $this->setStaticVariables ($subDomain, $sessionVars);
 
@@ -87,7 +88,8 @@ class BidxCommon
     public function getSessionVariables ($subDomain)
     {
         $sessionVars = false;
-        if (!empty ($_SESSION[$subDomain])) {
+        //Get Previous Session Variables if Set and Not Failed Login
+        if (!empty ($_SESSION[$subDomain]) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') {
             $sessionVars = $_SESSION[$subDomain];
         }
         return $sessionVars;
@@ -222,7 +224,7 @@ class BidxCommon
                 case 'member':
                     $sessioMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessioMemberId;
-
+               
                     if ($memberId) {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
@@ -315,10 +317,13 @@ class BidxCommon
                 break;
 
             case 'member' :
+         
                 if ($authenticated == 'false' && $redirect) {
                     $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/' . $redirect . $param;
                     wp_clear_auth_cookie ();
+                  
                 }
+          
                 break;
 
             default:
@@ -374,7 +379,6 @@ class BidxCommon
      */
     function forceWordpressLogin ($subDomain, $sessionData)
     {
-
         if ($sessionData != null && !empty ($sessionData->authenticated) && $sessionData->authenticated == 'true') {
 
             $groupName = $subDomain;
@@ -391,7 +395,7 @@ class BidxCommon
 
             //If currently Logged in dont do anything
             if ($currentUser && isset ($currentUser->user_login) && $userName == $currentUser->user_login) {
-                return;
+      
             } else if ($user_id = username_exists ($userName)) {   //just do an update
                 // userdata will contain all information about the user
                 $userdata = get_userdata ($user_id);

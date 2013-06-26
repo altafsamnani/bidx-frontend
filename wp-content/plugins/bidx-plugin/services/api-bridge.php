@@ -172,9 +172,16 @@ abstract class APIbridge
      * @param bool $echo optional parameter prints the response directly to
      * the screen.
      */
-    function getBidxSubdomain ($echo = false)
+    function getBidxSubdomain ($echo = false,$url = false)
     {
-        $hostAddress = explode ('.', $_SERVER ["HTTP_HOST"]);
+   
+        $bidxUrl = $_SERVER ["HTTP_HOST"];
+        
+        if($url) {
+            $bidxUrl = str_replace(array('http://','https://'),'',$url);
+        }
+
+        $hostAddress = explode ('.', $bidxUrl);
         if (is_array ($hostAddress)) {
             if (eregi ("^www$", $hostAddress [0])) {
                 $passBack = 1;

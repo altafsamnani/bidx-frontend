@@ -58,23 +58,27 @@ $entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
                       $cityTown,
                       'country' => $personalDetails->address[0]->country,
                       $personalDetails->address[0]->postalCode);
-
+                 
                     $address = $this->createRowValue ($addressArr, ', ');
                 }
 //CV
                 $cvDetails = ($this->exst($entrepreneurDetails->cv)) ? '<a href="' . $entrepreneurDetails->cv->document . '" target="_blank" > ' . $entrepreneurDetails->cv->documentName . '</a>' : 
+                $professionalTitle = $this->exst($personalDetails->professionalTitle);
+                $gender = $this->exst($personalDetails->gender);
+                $nationality = $this->exst($personalDetails->nationality);
+                $dateofBirth = $this->exst($personalDetails->dateOfBirth);
+                $highestEducation = $this->exst($personalDetails->highestEducation);
 
-
-                $rowValues = array ($this->exst($personalDetails->professionalTitle),
-                'gender' => $this->exst($personalDetails->gender),
-                'nationality' => $this->exst($personalDetails->nationality),
-                date('j F Y', strtotime ($this->exst($personalDetails->dateOfBirth))),
-                $this->exst($personalDetails->highestEducation),
+                $rowValues = array ($professionalTitle,
+                'gender' => $gender,
+                'nationality' => $nationality,
+                date('j F Y', strtotime ($dateofBirth)),
+                $highestEducation,
                 'motherlanguage' => $motherLanguageDetails,
                 'language' => $languageDetails,
                 $address,
                 $cvDetails);
-
+  
                 echo $this->addMultipleRows ('span12', $rowValues);
                 ?>
 

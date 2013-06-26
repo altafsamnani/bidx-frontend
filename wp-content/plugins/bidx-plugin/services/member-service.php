@@ -53,8 +53,15 @@ class MemberService extends APIbridge {
     $groupInfo = NULL;
     foreach ($groupDetails as $groupKey => $groupValue) {
       //Group Info
-      if (strtolower(str_replace(" ", "", $groupValue->name)) == strtolower(str_replace(" ", "", $bidXGroupDomain))) {
-         $groupInfo = array('groupname' => $bidXGroupDomain, $groupValue->slogan);
+      $bidxGroupUrlVal = $this->getBidxSubdomain(false, $groupValue->bidxGroupUrl);
+
+      if ($bidxGroupUrlVal == $bidXGroupDomain) {
+         $groupInfo->groupName = $groupValue->name;
+         $groupInfo->slogan    = $groupValue->slogan;
+         $groupInfo->description = $groupValue->description;
+         $groupInfo->logo = $groupValue->logo;
+         
+         $result->data->groupInfo = $groupInfo;
       }
 
       //Join Link
@@ -64,7 +71,7 @@ class MemberService extends APIbridge {
 
     }
 
-    $result->groupInfo = $groupInfo;
+    
     $result->data->groups = $groupDetails;
 
     $entityDetails = (!empty($result->data->entities)) ? $result->data->entities : array();
