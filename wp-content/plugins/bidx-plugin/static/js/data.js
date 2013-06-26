@@ -110,7 +110,7 @@
 
 // TEMPORARY CACHE LOADING UNTILL THERE IS AN API FOR THIS
 //
-// Please add this in alphabetical order
+// Please add this in alphabetical order so it's easier to find ...
 //
 ( function()
 {
@@ -1527,6 +1527,22 @@
         {
         key: "vi",
         value: "Vietnamese"
+        }
+    ] );
+
+    window.bidx.data._setItem( "legalForm",
+    [
+        {
+        value: "company",
+        label: "Company"
+        },
+        {
+        value: "partnership",
+        label: "Partnership"
+        },
+        {
+        value: "soletrader",
+        label: "Sole trader"
         }
     ] );
 

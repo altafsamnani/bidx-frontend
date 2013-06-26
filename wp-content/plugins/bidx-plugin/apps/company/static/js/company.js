@@ -103,6 +103,15 @@
         bidx.utils.populateDropdown( $countryOperationSpecificsPermitsLicencesObtained, permitsOptained );
     } );
 
+    bidx.data.getItem( "legalForm", function( err, legalForms )
+    {
+        var $legalFormBusiness = $editForm.find( "[name='legalFormBusiness']" );
+        $legalFormBusiness.append( $( "<option value='' />" ).text( "Select the legal form of your company" ));
+
+        bidx.utils.populateDropdown( $legalFormBusiness, legalForms );
+    } );
+
+
     // Disable disabled links
     //
     $element.delegate( "a.disabled", "click", function( e )
