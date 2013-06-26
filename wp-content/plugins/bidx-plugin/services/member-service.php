@@ -33,8 +33,9 @@ class MemberService extends APIbridge {
     //Call member profile
     $result = $this->callBidxAPI('members/' . $memberId, array(), 'GET');
     //If edit rights inject js and render edit button
-    if ($result->data->bidxMemberProfile->bidxCanEdit) {
-      $result->data->isMyProfile = ($memberId == $sessionData->data->id) ? true : false;
+    $result->data->isMyProfile = false;
+    if (!empty($result->data->bidxMemberProfile->bidxCanEdit) && !empty($result->data) && ($memberId == $sessionData->data->id) ) {
+      $result->data->isMyProfile = true;
     }
     
     $return = $this->processMemberDetails($result, $sessionData);
@@ -44,9 +45,10 @@ class MemberService extends APIbridge {
 
   function processMemberDetails ( $result, $sessionData ) {
 
-    $groupDetails = $result->data->groups;
+    $groupDetails = (!empty($result->data->groups)) ? $result->data->groups : array();
     $bidXGroupDomain = $result->bidxGroupDomain;
-    $loggedInGroups = (array) $sessionData->data->groups;
+    $sessionGroups = (!empty($sessionData->data->groups)) ? $sessionData->data->groups : NULL;
+    $loggedInGroups = (array) $sessionGroups;
     $loggedInGroupKeys = array_keys($loggedInGroups);
     $groupInfo = NULL;
     foreach ($groupDetails as $groupKey => $groupValue) {
@@ -65,7 +67,7 @@ class MemberService extends APIbridge {
     $result->groupInfo = $groupInfo;
     $result->data->groups = $groupDetails;
 
-    $entityDetails = $result->data->entities;
+    $entityDetails = (!empty($result->data->entities)) ? $result->data->entities : array();
 
     foreach ( $entityDetails as $entityKey => $entityValue) {
       if($entityValue -> bidxEntityType == 'bidxBusinessSummary') {

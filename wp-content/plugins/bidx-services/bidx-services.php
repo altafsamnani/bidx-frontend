@@ -299,7 +299,7 @@ function bidx_signout ()
     call_bidx_service ('session', $params, 'DELETE');
     wp_clear_auth_cookie ();
 
-
+    
     $_SESSION[$params['domain']] = NULL;
 }
 

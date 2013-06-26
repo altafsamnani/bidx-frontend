@@ -30,7 +30,7 @@ if ($entrepreneurDetails) {
             <br/>
             <?php
             $previousBusiness = $this->exst ($entrepreneurDetails->previousBusiness);
-            $header = array ('Name of Company' => 'company', 'Outcome of business' => 'businessOutcome', 'Url of company website' => 'webSite');
+            $header = array ('Name of Company' => 'company', 'Outcome of business' => 'businessOutcome', 'Company web-site' => 'webSite');
             $previousBusinessHtml = $this->addTableRows ($header, $previousBusiness, 'table table-bordered');
 
             $rowValues = array ('Previous Business(es)' => $previousBusinessHtml);

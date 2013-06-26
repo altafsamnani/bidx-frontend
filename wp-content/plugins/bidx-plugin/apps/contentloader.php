@@ -26,7 +26,7 @@ class ContentLoader {
 		$this -> location = $location;
 		$this -> logger = Logger::getLogger( "contentloader" );
 		add_action( 'init', array( $this, 'codex_custom_init' ) );
-
+        
         $subDomain = $this->getBidxSubdomain();
         $bidCommonObj = new BidxCommon($subDomain);
         $this->scriptInject = $bidCommonObj->getScriptJs($subDomain);
@@ -267,10 +267,10 @@ class ContentLoader {
 		
 		$this -> logger -> trace( 'Custom Post handler ready' );
 		$this -> logger -> trace( get_post_types() );
-		
-		
+
+
 	}
-	
+ 
 }
 
 ?>

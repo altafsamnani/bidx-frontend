@@ -565,7 +565,6 @@ class TemplateLibrary
             }
         }
 
-        
         return $html;
     }
 

@@ -33,6 +33,10 @@ class BidxCommon
             }
         }
 
+        if (!$bidxAuthCookie && is_user_logged_in ()) {
+            wp_logout ();
+        }
+
         return $bidxAuthCookie;
     }
 
@@ -49,32 +53,32 @@ class BidxCommon
             //Check session if its not redirect (is not having q= param)
             //Start the session to store Bidx Session
             session_start ();
-         
-            if (!$isWordpress) {
-                //Check Session Variables
-                $sessionVars = $this->getSessionVariables ($subDomain);
-  
-                if ($this->isSetBidxAuthCookie () && !$sessionVars) { // If Session set dont do anything
-                    $sessionObj = new SessionService();
-                    $bidxSessionVars = $sessionObj->isLoggedIn ();
 
-                    //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
-                    $this->processEntities ($subDomain);
-                    //Set firsttime/new session variables
-                    $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);
+            if (!$isWordpress) {
+
+                //If Bidx Cookie set do the following
+                if ($this->isSetBidxAuthCookie ()) {
+                    //Check Session Variables from Second call, dont need to make session call from second request
+                    $sessionVars = $this->getSessionVariables ($subDomain);
+                    if (!$sessionVars) { // If Session set dont do anything
+                        $sessionObj = new SessionService();
+                        $bidxSessionVars = $sessionObj->isLoggedIn ();
+
+                        //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
+                        $this->processEntities ($subDomain);
+                        //Set firsttime/new session variables
+                        $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);
+                    }
+
+                    //If not Logged in forcefully login to WP
+                    $this->forceWordpressLogin ($subDomain, $sessionVars);
                 }
-     
+
                 //Set static variables to access through pages
                 $this->setStaticVariables ($subDomain, $sessionVars);
 
-
                 $scriptValue = $this->injectJsVariables ($subDomain);
                 $this->setScriptJs ($subDomain, $scriptValue);
-
-                //If not Logged in forcefully login to WP
-                if (!is_user_logged_in ()) {
-                    $this->forceWordpressLogin ($subDomain);
-                }
             }
         }
         return;
@@ -218,7 +222,7 @@ class BidxCommon
                 case 'member':
                     $sessioMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessioMemberId;
-               
+
                     if ($memberId) {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
@@ -368,15 +372,14 @@ class BidxCommon
      * Force Wordpress Login for single sign on
      * @param string $subdomain
      */
-    function forceWordpressLogin ($subDomain)
+    function forceWordpressLogin ($subDomain, $sessionData)
     {
 
-        $sessionData = $this::$bidxSession[$subDomain];
+        if ($sessionData != null && !empty ($sessionData->authenticated) && $sessionData->authenticated == 'true') {
 
-        if ($sessionData != null && property_exists ($sessionData, 'authenticated') &&
-            $sessionData->authenticated == 'true') {
             $groupName = $subDomain;
             $roles = $sessionData->data->roles;
+            $currentUser = wp_get_current_user ();
 
             if (in_array ('GroupAdmin', $roles)) {
                 $userName = $groupName . 'groupadmin';
@@ -386,7 +389,10 @@ class BidxCommon
                 $userName = $groupName . 'groupmember';
             }
 
-            if ($user_id = username_exists ($userName)) {   //just do an update
+            //If currently Logged in dont do anything
+            if ($currentUser && isset ($currentUser->user_login) && $userName == $currentUser->user_login) {
+                return;
+            } else if ($user_id = username_exists ($userName)) {   //just do an update
                 // userdata will contain all information about the user
                 $userdata = get_userdata ($user_id);
                 $user = wp_set_current_user ($user_id, $userName);
@@ -396,9 +402,10 @@ class BidxCommon
                 // the wp_login action is used by a lot of plugins, just decide if you need it
                 do_action ('wp_login', $userdata->ID);
                 // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
+                return;
             }
         }
-        return;
+        
     }
 
     /**
