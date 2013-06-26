@@ -112,7 +112,7 @@ class BidxShortcode {
 			wp_register_script( 'bidx-form', 					BIDX_PLUGIN_URI . '/../static/js/form.js', 					array( 'jquery' ), '20130501', TRUE );
 			wp_register_script( 'bidx-utils', 					BIDX_PLUGIN_URI . '/../static/js/utils.js', 				array( 'jquery' ), '20130501', TRUE );
 
-	 		wp_register_script( 'bidx-common', 					BIDX_PLUGIN_URI . '/../static/js/common.js', 				array( 'bidx-utils', 'bidx-api-core' ), '20130501', TRUE );
+	 		wp_register_script( 'bidx-common', 					BIDX_PLUGIN_URI . '/../static/js/common.js', 				array( 'bidx-utils', 'bidx-api-core', 'bidx-data', 'bootstrap-tagmanager' ), '20130501', TRUE );
 	 		wp_register_script( 'bidx-controller', 				BIDX_PLUGIN_URI . '/../static/js/controller.js', 			array( 'bidx-utils', 'bidx-api-core', 'bidx-data', 'backbone' ), '20130501', TRUE );
 
 	 		wp_register_script( 'bidx-reflowrower', 			BIDX_PLUGIN_URI . '/../static/js/reflowrower.js',			array( 'jquery' ), '20130501', TRUE );
