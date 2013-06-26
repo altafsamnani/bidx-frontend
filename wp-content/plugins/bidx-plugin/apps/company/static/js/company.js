@@ -33,9 +33,6 @@
     ,   snippets        = {}
     ;
 
-    var $mainStates     = $( ".mainState" )
-    ;
-
     // Form fields
     //
     var fields =
