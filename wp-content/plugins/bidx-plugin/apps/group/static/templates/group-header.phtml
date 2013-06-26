@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // validation because the fields may not be there
 if ( $this -> recursive_isset ( $this -> group, array( 'data','bidxGroupProfile','name' ) ) ) {
@@ -10,11 +10,11 @@ if ( $this -> recursive_isset ( $this -> group, array( 'data','bidxGroupProfile'
 	$logo =  $this -> group -> data -> bidxGroupProfile -> logo -> document;
 } else {
 	$logo = '';
-} 	
+}
 ?>
 <div class="header-logo">
 	<a href="<?php echo home_url(); ?>/">
-		<img data-src="holder.js/210x113/social/text:Logo" class="logo img-rounded" src="<?php echo $logo ?>">
+		<img data-src="holder.js/210x100/social/text:Logo" class="logo img-rounded" src="<?php echo $logo ?>">
 	</a>
 	<span class="sitetext"><?php echo $name ?></span>
 </div>

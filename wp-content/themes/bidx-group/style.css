@@ -264,6 +264,12 @@ header.navbar .nav > li > ul {
     margin-top:             -18px;
 }
 
+header.navbar .header-logo {
+    min-height:             100px;
+    height:                 100px;
+    overflow:               hidden;
+}
+
 
 
 .pageHeader {
