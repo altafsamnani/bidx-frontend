@@ -218,8 +218,57 @@
         $tab.find( "[href$='" + btnhref + "']" ).tab( "show" );
     });
 
-    // Instantiate bidx tagsinputs
+    // Instantiate bidx tagsinputs, should be in a plugin eventually
     //
-//    $( "input.bidx-tagsinput" ).bidxTagsInput();
+    $( "input.bidx-tagsinput" ).each( function()
+    {
+        var $input      = $( this )
+        ,   dataKey     = $input.data( "bidxdatakey" )
+        ,   dataValues
+        ;
+
+        var _setup = function()
+        {
+            var params =
+            {
+                typeahead:          true
+            ,   tagClass:           "bidx-tag"
+            ,   tagCloseIcon:       ""
+            };
+
+            if ( dataKey && dataValues )
+            {
+                params.typeahead        = true;
+                params.onlyTagList      = true;
+                params.typeaheadSource  = $.map( dataValues, function( data ) { return data.label; } );
+            }
+
+            $input
+                .tagsManager( params )
+                .removeClass( "disabled" )
+                .prop( "disabled", false )
+            ;
+        };
+
+        // Does it have data key set?
+        //
+        if ( dataKey )
+        {
+            bidx.data.getItem( dataKey, function( err, result )
+            {
+                if ( err )
+                {
+                    bidx.utils.error( "Problem getting bidx.data for key", dataKey, "populate a tagsinput control" );
+                }
+
+                dataValues = result;
+                _setup();
+            } );
+        }
+        else
+        {
+            _setup();
+        }
+    } );
 
 } ( jQuery ));
