@@ -77,7 +77,16 @@
             ,   groupDomain:        bidx.common.groupDomain
             ,   success:            function( response )
                 {
+                    businessSummary = response;
 
+                    bidx.utils.log( "bidx::businessSummary", businessSummary );
+
+                    _populateScreen();
+
+                    $btnSave.removeClass( "disabled" );
+                    $btnCancel.removeClass( "disabled" );
+
+                    _showView( "edit" );
                 }
             ,   error:              function( jqXhr, textStatus )
                 {
