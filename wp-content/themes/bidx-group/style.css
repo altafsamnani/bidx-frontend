@@ -200,6 +200,74 @@ body.bidx-business span.scrollPositionMarker {
     padding-bottom:             20px;
 }
 
+
+/* bidX tagsinput, uses bootstrap-tagmanager */
+.bidx-tag {
+    background-color:               #1abc9c;
+    color:                          #ffffff;
+
+    border-radius:                  4px;
+    margin-right:                   5px;
+    margin-bottom:                  3px;
+    overflow:                       hidden;
+    line-height:                    22px;
+    padding:                        6px 13px 8px 19px;
+    position:                       relative;
+    display:                        inline-block;
+    zoom:                           1;
+    *display:                       inline;
+    -webkit-transition:             0.14s linear;
+       -moz-transition:             0.14s linear;
+         -o-transition:             0.14s linear;
+            transition:             0.14s linear;
+    -webkit-backface-visibility:    hidden;
+}
+
+    .bidx-tag:hover {
+        background-color:               #16a085;
+        color:                          #ffffff;
+        padding-left:                   12px;
+        padding-right:                  24px;
+    }
+
+    .bidx-tag .tm-tag-remove {
+        bottom:                         0;
+        color:                          #ffffff;
+        cursor:                         pointer;
+        font-size:                      12px;
+        opacity:                        0;
+        padding:                        7px 7px 5px 0;
+        position:                       absolute;
+        right:                          0;
+        text-align:                     right;
+        text-decoration:                none;
+        top:                            0;
+        width:                          100%;
+        z-index:                        2;
+        display:                        none\9;
+    }
+
+    .bidx-tag .tm-tag-remove:before {
+        color:                          #ffffff;
+        content:                        "\e00b";
+        font-family:                    "Flat-UI-Icons";
+        cursor:                         pointer;
+    }
+
+    .cross:before {
+        color:                          #000;
+        content:                        "\e00b";
+        font-family:                    "Flat-UI-Icons";
+        cursor:                         pointer;
+    }
+
+    .bidx-tag:hover .tm-tag-remove {
+        color:                          #ffffff;
+        opacity:                        1;
+        display:                        block\9;
+    }
+
+
 /* End Global styles */
 
 /*******************************************************************************************
@@ -282,7 +350,7 @@ header.navbar .header-logo {
 .bidx-edit .pageHeader,
 .bp-summary .pageHeader {
     position:               fixed;
-    top:                    150px;
+    top:                    160px;
 }
 
     .pageHeader > .container {
