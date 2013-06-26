@@ -33,6 +33,12 @@
     ,   snippets        = {}
     ;
 
+    if ( !$element.length )
+    {
+        bidx.utils.warn( "edit company was loaded, but the HTML wasn't in the DOM.. why did you do this?" );
+        return;
+    }
+
     // Form fields
     //
     var fields =

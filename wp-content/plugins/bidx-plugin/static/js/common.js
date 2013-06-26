@@ -38,7 +38,6 @@
             else
             {
                 bidx.common.notifyRedirect();
-                
 
                 var url = document.location.protocol
                     + "//"
@@ -122,8 +121,6 @@
             else
             {
                 bidx.common.notifyRedirect();
-
-                
 
                 var url = document.location.protocol
                     + "//"
@@ -220,5 +217,9 @@
 
         $tab.find( "[href$='" + btnhref + "']" ).tab( "show" );
     });
+
+    // Instantiate bidx tagsinputs
+    //
+//    $( "input.bidx-tagsinput" ).bidxTagsInput();
 
 } ( jQuery ));

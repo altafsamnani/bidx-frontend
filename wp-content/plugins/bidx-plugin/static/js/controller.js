@@ -32,18 +32,18 @@
 
     // Navigate to a certain app (and state within the app)
     //
-    var _navigateToApp = function( toApp, toState, section, id )
+    var _navigateToApp = function( toApp, toState, section, id, part )
     {
         app     = bidx[ toApp ];
 
         if ( !app )
         {
-            bidx.utils.error( "bidx::controller trying to loading ", toApp, " but that app is not loaded!" );
+            bidx.utils.error( "bidx::controller trying to navigate ", toApp, " but that app is not loaded!" );
             router.navigate( "" );
             return;
         }
 
-        var newHash = app.navigate( toState, section, id );
+        var newHash = app.navigate( toState, section, id, part );
 
         _showMainState( state );
 
@@ -61,19 +61,21 @@
     {
         routes:
         {
-            'editMember(/:id)(/:section)':          'editMember'
+            'editMember(/:id)(/:section)':                      'editMember'
 
-        ,   'editEntrepreneur(/:id)(/:section)':    'editEntrepreneur'
+        ,   'editEntrepreneur(/:id)(/:section)':                'editEntrepreneur'
 
-        ,   'editCompany(/:id)(/:section)':         'editCompany'
-        ,   'createCompany':                        'createCompany'
+        ,   'editCompany(/:id)(/:section)':                     'editCompany'
+        ,   'createCompany':                                    'createCompany'
 
-        ,   'login':                                'login'
-        ,   'register':                             'register'
-        ,   'resetpassword':                        'resetpassword'
+        ,   'editBusinessSummary(/:id)(/:part)(/:section)':     'editBusinessSummary'
 
-        ,   'cancel':                               'show'
-        ,   '*path':                                'show'
+        ,   'login':                                            'login'
+        ,   'register':                                         'register'
+        ,   'resetpassword':                                    'resetpassword'
+
+        ,   'cancel':                                           'show'
+        ,   '*path':                                            'show'
         }
     ,   editMember:             function( id, section )
         {
@@ -109,6 +111,16 @@
 
             _navigateToApp( "company", "create" );
         }
+
+    ,   editBusinessSummary:    function( id, part, section )
+        {
+            bidx.utils.log( "AppRouter::editBusinessSummary", id, part, section );
+
+            state   = "editBusinessSummary";
+
+            _navigateToApp( "businessSummary", "edit", section, id, part );
+        }
+
     ,   show:                   function()
         {
             bidx.utils.log( "AppRouter::show" );
