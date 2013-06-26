@@ -11,8 +11,7 @@ class company
 {
 
     static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2',
-      'gmaps-places', 'holder', 'bidx-form',
-      'bidx-utils', 'bidx-api-core', 'bidx-common');
+      'gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data' );
     public $scriptInject;
 
     /**

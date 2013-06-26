@@ -8,14 +8,14 @@
 class memberprofile {
 
 	static $deps = array( 'jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2',
-			'gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower' );
+			'gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data' );
 
 
  	/**
    * Constructor
    */
   function __construct() {
-    
+
 
     add_action('wp_enqueue_scripts', array(&$this, 'register_memberprofile_bidx_ui_libs'));
   }
@@ -32,7 +32,7 @@ class memberprofile {
 	  	wp_register_script( 'memberprofile', plugins_url( 'static/js/memberprofile.js', __FILE__ ), $deps, '20130501', TRUE );
 	  	wp_register_style( 'memberprofile', plugins_url( 'static/css/memberprofile.css', __FILE__ ), array(), '20130501', 'all' );
 	  	wp_enqueue_style( 'memberprofile' );
-	}   
+	}
 
 	/**
 	 * Load the content.
@@ -51,7 +51,7 @@ class memberprofile {
 
 	    /* 3. Render Member Profile Services for Initial View Display */
 	    $memberData = $memberObj->getMemberDetails(  );
-       
+
 	    $view->data = $memberData->data;
 
 	    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
