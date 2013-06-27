@@ -29,7 +29,23 @@ class dashboard {
 	 * @param $atts
 	 */
 	function load($atts) {
-		return file_get_contents ( BIDX_PLUGIN_DIR . '/dashboard/static/templates/default.html' );
+		//return file_get_contents ( BIDX_PLUGIN_DIR . '/dashboard/static/templates/default.html' );
+
+	    /* 1 Template Rendering */
+	    require_once(BIDX_PLUGIN_DIR . '/templatelibrary.php');
+	    $view = new TemplateLibrary(BIDX_PLUGIN_DIR . '/dashboard/templates/');
+
+	    /* 2. Service MemberProfile */
+	    //require_once( BIDX_PLUGIN_DIR . '/../services/business-plan-service.php' );
+	    //$bpSummaryObj = new BusinessPlanService( );
+
+	    /* 3. Render Member Profile Services for Initial View Display */
+	    //$summaryData = $bpSummaryObj->getSummaryDetails( );
+
+	    //$view->data = $summaryData->data;
+
+	    $view->render('dashboard.phtml');
+
 	}
 }
 

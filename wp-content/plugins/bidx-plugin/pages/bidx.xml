@@ -102,6 +102,13 @@
 			<mapping>^company/([^/]*)/?</mapping>
 			<content>[bidx app="company"]</content>
 		</post>
+		<post>
+			<post_id>12</post_id>
+			<name>My dashboard</name>
+			<title>My dashboard</title>
+			<mapping>^my-dashboard</mapping>
+			<content>[bidx app="dashboard" view="dashboard"]</content>
+		</post>
 	</posts>
 
 	<widgets>

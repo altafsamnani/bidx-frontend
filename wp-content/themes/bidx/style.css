@@ -936,10 +936,20 @@ body.home .hero-block {
         .hero-block > .container {
             padding-top: 40px;
         }
-
-        .navbar .nav li.dropdown .dropdown-menu {
+        /*
+        .navbar .btn, .navbar .btn-group {
+            margin-top: 0px;
+        }
+        .navbar .nav > li ul li, .navbar .nav > li.dropdown ul li {
             background-color: #34495E;
         }
+
+
+        .navbar .nav > li:hover > ul, .navbar .nav > li.dropdown:hover > ul, .navbar .nav > li:hover .dropdown-menu, .navbar .nav > li.dropdown:hover .dropdown-menu {
+            height: 0px;
+            margin-left: 0px;
+
+        }*/
 
     }
      
