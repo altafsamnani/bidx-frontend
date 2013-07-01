@@ -134,6 +134,26 @@
           }
     ] );
 
+    window.bidx.data._setItem( "consumerType",
+    [
+        {
+        value: "exportHardCurrency",
+        label: "The business exports (in hard currency i.e. USD"
+        },
+        {
+        value: "exportLocalCurrency",
+        label: "The business exports (in local currencies)"
+        },
+        {
+        value: "B2B",
+        label: "The business sells mainly to other businesses (B2B)"
+        },
+        {
+        value: "B2C",
+        label: "The business sells mainly to people/ customers (B2C)"
+        }
+    ] );
+
     window.bidx.data._setItem( "country",
     [
         {
