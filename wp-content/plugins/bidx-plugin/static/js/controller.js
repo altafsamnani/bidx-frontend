@@ -65,6 +65,8 @@
 
         ,   'editEntrepreneur(/:id)(/:section)':                'editEntrepreneur'
 
+        ,   'editInvestor(/:id)(/:section)':                    'editInvestor'
+
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
 
@@ -93,6 +95,15 @@
             state       = "editEntrepreneur";
 
             _navigateToApp( "entrepreneurprofile", "edit", section, id );
+        }
+
+    ,   editInvestor:             function( id, section )
+        {
+            bidx.utils.log( "AppRouter::editInvestor", id, section );
+
+            state       = "editInvestor";
+
+            _navigateToApp( "investorprofile", "edit", section, id );
         }
 
     ,   editCompany:             function( id, section )

@@ -184,7 +184,7 @@ span.scrollPositionMarker {
 }
 
 body.bidx-edit span.scrollPositionMarker {
-    top:                        -240px;
+    top:                        -250px;
 }
 
 body.bidx-business span.scrollPositionMarker {
@@ -202,6 +202,12 @@ body.bidx-business span.scrollPositionMarker {
 
 .details-block label {
     font-weight:                bold;
+}
+
+.nav-edit {
+    top:                    250px;
+    position:               fixed;
+    width:                  14s%;
 }
 
 /* bidX tagsinput, uses bootstrap-tagmanager */
@@ -875,8 +881,11 @@ form {
     header.navbar .nav > li > ul {
         margin-top:                 0;
     }
+}
 
-    #editMember .nav-editMember {
+@media (max-width: 767px) {
+
+    .nav-edit {
         position:                   relative;
         top:                        0;
         width:                      auto;

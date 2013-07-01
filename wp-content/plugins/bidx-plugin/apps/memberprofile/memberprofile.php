@@ -25,9 +25,11 @@ class memberprofile {
 	 */
 	function register_memberprofile_bidx_ui_libs() {
 
-		wp_register_script( 'entrepreneurprofile', plugins_url( 'static/js/entrepreneurprofile.js', __FILE__ ), array(), '20130501', TRUE );
+		wp_register_script( 'entrepreneurprofile', 	plugins_url( 'static/js/entrepreneurprofile.js', 	__FILE__ ), array(), '20130501', TRUE );
+		wp_register_script( 'investorprofile', 		plugins_url( 'static/js/investorprofile.js', 		__FILE__ ), array(), '20130701', TRUE );
 
-		$deps = array_merge( self :: $deps, array( 'entrepreneurprofile' ) );
+
+		$deps = array_merge( self :: $deps, array( 'entrepreneurprofile', 'investorprofile' ) );
 
 	  	wp_register_script( 'memberprofile', plugins_url( 'static/js/memberprofile.js', __FILE__ ), $deps, '20130501', TRUE );
 	  	wp_register_style( 'memberprofile', plugins_url( 'static/css/memberprofile.css', __FILE__ ), array(), '20130501', 'all' );
