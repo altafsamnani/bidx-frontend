@@ -1402,6 +1402,58 @@
         }
     ] );
 
+    window.bidx.data._setItem( "investorType",
+    [
+        {
+        value: "AngelInvPrivIndiv",
+        label: "Angel Investor or Private Individual"
+        },
+        {
+        value: "assetMgmtCorp",
+        label: "Asset Management Corporation"
+        },
+        {
+        value: "bank",
+        label: "Bank"
+        },
+        {
+        value: "busAngelGroup",
+        label: "Business Angel Group"
+        },
+        {
+        value: "develBank",
+        label: "Development Bank"
+        },
+        {
+        value: "develOrkNGO",
+        label: "Development Organisation / NGO"
+        },
+        {
+        value: "familyOffice",
+        label: "Family Office"
+        },
+        {
+        value: "govtFacility",
+        label: "Government Facility"
+        },
+        {
+        value: "invFund",
+        label: "Investment Fund"
+        },
+        {
+        value: "microFinance",
+        label: "Micro Finance Institution"
+        },
+        {
+        value: "pensionFund",
+        label: "Pension Fund"
+        },
+        {
+        value: "privateFoundation",
+        label: "Private Foundation"
+        }
+    ] );
+
     window.bidx.data._setItem( "language",
     [
         {
