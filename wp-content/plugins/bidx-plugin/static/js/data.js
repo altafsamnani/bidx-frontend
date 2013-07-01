@@ -1382,6 +1382,26 @@
       }
     ] );
 
+    window.bidx.data._setItem( "investmentType",
+    [
+        {
+        value: "equity",
+        label: "Equity"
+        },
+        {
+        value: "loan",
+        label: "Loan"
+        },
+        {
+        value: "mezzFinancing",
+        label: "Mezzanine Financing"
+        },
+        {
+        value: "other",
+        label: "Other"
+        }
+    ] );
+
     window.bidx.data._setItem( "language",
     [
         {
