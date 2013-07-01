@@ -200,6 +200,9 @@ body.bidx-business span.scrollPositionMarker {
     padding-bottom:             20px;
 }
 
+.details-block label {
+    font-weight:                bold;
+}
 
 /* bidX tagsinput, uses bootstrap-tagmanager */
 input[type='text'].bidx-tagsinput {
@@ -838,7 +841,7 @@ form {
                 font-weight: 700;
             }
 
-            
+
 
 
 
