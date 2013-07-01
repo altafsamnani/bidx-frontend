@@ -299,7 +299,7 @@ function bidx_signout ()
     call_bidx_service ('session', $params, 'DELETE');
     wp_clear_auth_cookie ();
 
-    
+
     $_SESSION[$params['domain']] = NULL;
 }
 
@@ -435,7 +435,7 @@ function get_redirect ($url, $requestData, $domain = NULL)
     switch ($url) {
         case 'sessionactive':
         case 'session':
-            $redirect = ($redirect) ? $redirect : '/member';
+            $redirect = ($redirect) ? $redirect : '/';
             $requestData->redirect = $redirect;
             break;
 
@@ -676,14 +676,14 @@ function create_wp_site_from_local ($groupName, $email)
     if ((DOMAIN_CURRENT_SITE == 'local.bidx.net')) {
         global $wpdb;
 
-        $status = 'ok';   
+        $status = 'ok';
         $id = '';
         $print = $_GET['print'];
         $domain = $_SERVER['HTTP_HOST'];
         $groupDomainArr = array ('cambridge-angels', 'sampoerna', 'shell', 'burundi-fruits');
-     
+
         $roleArr = array ('','groupadmin', 'groupowner', 'groupmember', 'groupanonymous');
-       
+
 
         $blog_title = strtolower (get_bloginfo ());
         //Delete the Sites and users if exist
@@ -691,9 +691,9 @@ function create_wp_site_from_local ($groupName, $email)
             $site_id = $body['response']['site_id'];
             $user_id = $body['response']['user_id'];
             //Delete Wordpress Site
-            $blogUrl = $groupName. '.' . $domain;   
+            $blogUrl = $groupName. '.' . $domain;
             $site_id = get_blog_id_from_url ($blogUrl);
-         
+
             if ($site_id) {
                 wpmu_delete_blog ($site_id, true);
                 $siteDelete[$groupName]['site_id'] = $site_id;
@@ -775,8 +775,8 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
              $site['create'] = $siteCreation;
              echo json_encode($site);
         }
-         exit; 
-        
+         exit;
+
     }
 }
 
