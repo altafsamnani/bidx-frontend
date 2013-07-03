@@ -158,12 +158,7 @@ a, a:hover, a:visited, a:link  {
 ********************************************************************************************/
 
 
-header {
-    background-color:           #FFF;
-    height:                     auto;
-    z-index:                    200;
 
-}
 
     header .logo {
         margin:                 10px 0;
@@ -174,68 +169,7 @@ header {
     }
 
 
-    header .navbar .menu-main a {
-        padding:                    6px 40px;
-        background:                 none;
-        text-transform:             uppercase;
-    }
 
-    header .navbar .menu-main > ul > li > a:hover,
-    header .navbar .menu-main > ul > li.active >  a:hover {
-        background-color:           #ebedef;
-    }
-
-    
-.navbar .nav li.dropdown-hover:hover .dropdown-menu{
-    display:                    block;
-    visibility:                 visible;
-    top:                        100%;
-    z-index:                    1000;
-    opacity:                    1;
-    margin-top:                 6px;
-    -webkit-transform:          none;
-}
-
-.navbar .nav li .dropdown-menu {
-    width:                      200px;
-}
-
-.navbar .nav li.open .dropdown-menu {
-    margin-top:                 6px;
-}
-
-header .navbar .menu-main li.active a {
-    background:                 #34495e;
-    color:                      #fff;
-}
-
-header .menu-top {
-    position:                   absolute;
-    right:                      20px;
-    top:                        10px;
-
-    font-size:                  15px;
-}
-
-header .menu-top li {
-    margin-left:                20px;
-}
-
-
-header .navbar .menu-top li a,
-header .navbar .menu-top li a:hover {
-    padding:                    0;
-}
-
-header .menu-main {
-    position:                   absolute;
-    right:                      0;
-    bottom:                     0;
-}
-
-header .navbar {
-    position:                   relative;
-}
 
 header .navbar .btn-navbar, header .navbar .btn-navbar.collapsed:hover, header .navbar .btn-navbar.collapsed:focus {
     margin:                     3px 4px 0 0;
@@ -902,7 +836,7 @@ body.home .hero-block {
     /* Large desktop */
     @media (min-width: 1200px) {
         /*fix main menu display because of the added container wrapper whch breaks the BS amd FlatUI css path */
-        header .navbar .nav > li a {
+/*        header .navbar .nav > li a {
             color: #526476;
             font-size: 14.994px;
             font-weight: 700;
@@ -918,13 +852,67 @@ body.home .hero-block {
 
         header .navbar .menu-main li {
             margin-left:                4px;
-        }
+        }*/
+
+
+      
 
     }
 
     /* styles shared by portrait tablet and above */
     @media (min-width: 980px ) {
         
+        /* navigation styles*/
+
+        header .navbar {
+            position:                   relative;
+        }
+
+        header .navbar .menu-top {
+            position:                   absolute;
+            right:                      20px;
+            top:                        10px;
+
+            font-size:                  15px;
+        }
+
+        header .navbar .menu-top li {
+            margin-left:                20px;
+        }
+        header .navbar .menu-top li a,
+        header .navbar .menu-top li a:hover {
+            padding:                    0;
+        }
+
+        header .menu-main {
+            position:                   absolute;
+            right:                      0;
+            bottom:                     0;
+        }
+
+        header .navbar .menu-main a {
+            padding:                    6px 40px;
+            background:                 none;
+            text-transform:             uppercase;
+        }
+
+
+
+
+        header .navbar .menu-main > ul > li > a:hover,
+        header .navbar .menu-main > ul > li.active >  a:hover {
+            background-color:           #ebedef;
+        }
+            .navbar .nav li.open .dropdown-menu {
+                margin-top:                 6px;
+            }
+
+            .navbar .nav li .dropdown-menu {
+                width:                      200px;
+            }
+
+
+        /* end navigation styles*/
 
         .hero-block > .container {
             padding-top: 40px;
@@ -935,7 +923,10 @@ body.home .hero-block {
 
     /* Landscape phones and down */
     @media  (max-width: 979px) { 
-
+        body {
+            padding-left: 20px;
+            padding-right :20px;
+        }
 
         /* navigation related style */
         .container {
@@ -946,9 +937,14 @@ body.home .hero-block {
             margin-left: -20px;
             margin-right: -20px;                
         }
+        .navbar .nav li.dropdown.open>.dropdown-toggle, .navbar .nav li.dropdown.active>.dropdown-toggle, .navbar .nav li.dropdown.open.active>.dropdown-toggle {
+            background:                 #34495e;
+            color:                      #fff;
+        }
         header .navbar {
             margin-bottom: 0;
         }   
+
             .navbar .btn {
                 margin-top: 0px; 
                 text-align: left;
@@ -1005,7 +1001,7 @@ body.home .hero-block {
                     }
                     .navbar .nav li.dropdown .dropdown-menu li a { 
                         color: white;
-                        margin-left: 30px;
+                        padding-left: 30px;
                         border-radius: 0;
                         margin-bottom: 0;
                         margin-top: 0;
