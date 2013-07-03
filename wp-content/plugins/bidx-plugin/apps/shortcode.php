@@ -100,6 +100,8 @@ class BidxShortcode {
 	 */
 	 function register_script() {
 
+	 	$bidxJsDir = sprintf( '%s/../static/js', BIDX_PLUGIN_URI );
+
 	 	if ( BidxCommon :: isWPInternalFunction() ) {
 	 		Logger :: getLogger( 'shortcode' ) -> trace('Skipping enqueueing because of admin.');
 	 	} else {
@@ -108,16 +110,17 @@ class BidxShortcode {
 			wp_register_script( 'gmaps-places', '//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places', array(), '20130501', TRUE);
 
 			//bidX scripts
-			wp_register_script( 'bidx-api-core', 				BIDX_PLUGIN_URI . '/../static/js/bidxAPI/api-core.js', 		array( 'jquery' ), '20130501', TRUE );
-			wp_register_script( 'bidx-form', 					BIDX_PLUGIN_URI . '/../static/js/form.js', 					array( 'jquery' ), '20130501', TRUE );
-			wp_register_script( 'bidx-utils', 					BIDX_PLUGIN_URI . '/../static/js/utils.js', 				array( 'jquery' ), '20130501', TRUE );
+			wp_register_script( 'bidx-api-core', 				$bidxJsDir . '/bidxAPI/api-core.js', 			array( 'jquery' ), '20130501', TRUE );
+			wp_register_script( 'bidx-form', 					$bidxJsDir . '/form.js', 						array( 'jquery' ), '20130501', TRUE );
+			wp_register_script( 'bidx-utils', 					$bidxJsDir . '/utils.js', 						array( 'jquery' ), '20130501', TRUE );
 
-	 		wp_register_script( 'bidx-common', 					BIDX_PLUGIN_URI . '/../static/js/common.js', 				array( 'bidx-utils', 'bidx-api-core', 'bidx-data', 'bootstrap-tagmanager' ), '20130501', TRUE );
-	 		wp_register_script( 'bidx-controller', 				BIDX_PLUGIN_URI . '/../static/js/controller.js', 			array( 'bidx-utils', 'bidx-api-core', 'bidx-data', 'backbone' ), '20130501', TRUE );
+			wp_register_script( 'bidx-bootstrap-tagmanager',	$bidxJsDir . '/bidx-bootstrap-tagmanager.js',	array( 'bootstrap'), '20130703', TRUE );
+	 		wp_register_script( 'bidx-common', 					$bidxJsDir . '/common.js', 						array( 'bidx-utils', 'bidx-api-core', 'bidx-data', 'bidx-tagsinput' ), '20130501', TRUE );
+	 		wp_register_script( 'bidx-controller', 				$bidxJsDir . '/controller.js', 					array( 'bidx-utils', 'bidx-api-core', 'bidx-data', 'backbone' ), '20130501', TRUE );
 
-	 		wp_register_script( 'bidx-reflowrower', 			BIDX_PLUGIN_URI . '/../static/js/reflowrower.js',			array( 'jquery' ), '20130501', TRUE );
-
-	 		wp_register_script( 'bidx-data',					BIDX_PLUGIN_URI . '/../static/js/data.js',					array( 'jquery' ), '20130626', TRUE );
+	 		wp_register_script( 'bidx-reflowrower', 			$bidxJsDir . '/bidx-reflowrower.js',			array( 'jquery' ), '20130501', TRUE );
+	 		wp_register_script( 'bidx-data',					$bidxJsDir . '/data.js',						array( 'jquery' ), '20130626', TRUE );
+	 		wp_register_script( 'bidx-tagsinput',				$bidxJsDir . '/bidx-tagsinput.js',				array( 'bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data' ), '20130703', TRUE );
 
 	 		wp_enqueue_script( 'bidx-common' );
 	 		wp_enqueue_script( 'bidx-controller' );
