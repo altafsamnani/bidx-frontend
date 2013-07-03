@@ -175,7 +175,7 @@ class auth {
 		// 2. Determine the view needed 
 		$command = $atts['view'];
         $type    = $atts['type'];
-        echo $type;
+        $render = 'standard-auth';
         switch($type) {
             case "login" :
                 $view->type = "login";
