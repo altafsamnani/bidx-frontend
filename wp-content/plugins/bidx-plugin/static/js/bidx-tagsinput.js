@@ -135,7 +135,7 @@
 
             // Get all the tags, using the DOM for now.. might be better to have the values on this widget
             //
-            $el.siblings( "." + options.tagsClass ).each( function()
+            $el.siblings( "." + options.tagClass ).each( function()
             {
                 var $tag    = $( this )
                 ,   value   = $tag.data( "value" )
@@ -143,8 +143,6 @@
 
                 if ( value )
                 {
-                    value = JSON.parse( value );
-
                     values.push( value );
                 }
             } );
