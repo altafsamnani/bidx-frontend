@@ -17,6 +17,8 @@
         } );
     };
 
+    // Set the value of an form element
+    //
     var setElementValue = function( $el, value )
     {
         var elType      = $el.attr( 'type' )
@@ -42,41 +44,47 @@
                 value = dateObj.d + " " + months[ dateObj.m - 1 ] + " " + dateObj.y;
                 $el.val( value );
             }
-
         }
-        if ( elType )
+        else if ( dataType === "tagsinput" )
         {
-            switch( elType )
-            {
-                case 'radio':
-                    if ( $el.val() === value )
-                    {
-                        $el.click();
-                    }
-                    else if ( typeof value !== "undefined" && value !== "" )
-                    {
-                        // noop
-                    }
-                break;
-
-                case 'checkbox':
-                    $el.prop( 'checked', !!value );
-                break;
-
-                case 'file':
-                break;
-
-                default:
-                    $el.val( value || ( value === 0 ? "0" : "" ) );
-            }
-        }
-        else if ( $el.is( 'input' ) || $el.is( 'select' ) || $el.is( 'textarea' ) )
-        {
-            $el.val( value || ( value === 0 ? '0' : '' ) );
+            $el.tagsinput( "setValues", value );
         }
         else
         {
-            $el.text( value || ( value === 0 ? '0' : '' ) );
+            if ( elType )
+            {
+                switch( elType )
+                {
+                    case 'radio':
+                        if ( $el.val() === value )
+                        {
+                            $el.click();
+                        }
+                        else if ( typeof value !== "undefined" && value !== "" )
+                        {
+                            // noop
+                        }
+                    break;
+
+                    case 'checkbox':
+                        $el.prop( 'checked', !!value );
+                    break;
+
+                    case 'file':
+                    break;
+
+                    default:
+                        $el.val( value || ( value === 0 ? "0" : "" ) );
+                }
+            }
+            else if ( $el.is( 'input' ) || $el.is( 'select' ) || $el.is( 'textarea' ) )
+            {
+                $el.val( value || ( value === 0 ? '0' : '' ) );
+            }
+            else
+            {
+                $el.text( value || ( value === 0 ? '0' : '' ) );
+            }
         }
     };
 
