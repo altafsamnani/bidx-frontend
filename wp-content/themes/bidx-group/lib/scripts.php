@@ -37,7 +37,6 @@ function roots_scripts() {
     wp_register_script( 'jquery-ui-touchpunch',     get_template_directory_uri() . '/assets/js/vendor/jquery.ui.touch-punch.js',        array( 'jquery-ui' ),   '0.2.2',            true );
     wp_register_script( 'bootstrap-select',         get_template_directory_uri() . '/assets/js/vendor/bootstrap-select.js',             array( 'bootstrap' ),   '20130610',         true );
     wp_register_script( 'bootstrap-switch',         get_template_directory_uri() . '/assets/js/vendor/bootstrap-switch.js',             array( 'bootstrap' ),   '1.3',              true );
-    wp_register_script( 'bootstrap-tagmanager',     get_template_directory_uri() . '/assets/js/vendor/bootstrap-tagmanager.js',         array( 'bootstrap' ),   '2.4.1',            true );
 
     wp_register_script( 'flatui-checkbox',          get_template_directory_uri() . '/assets/FlatUI/js/flatui-checkbox.js',              array( 'jquery' ),      '0.0.2',            true );
     wp_register_script( 'flatui-radio',             get_template_directory_uri() . '/assets/FlatUI/js/flatui-radio.js',                 array( 'jquery' ),      '0.0.2',            true );
@@ -64,7 +63,6 @@ function roots_scripts() {
     wp_enqueue_script( 'bootstrap' );
     wp_enqueue_script( 'bootstrap-select' );
     wp_enqueue_script( 'bootstrap-switch' );
-    wp_enqueue_script( 'bootstrap-tagmanager' );
 
     wp_enqueue_script( 'flatui-checkbox' );
     wp_enqueue_script( 'flatui-radio' );
