@@ -1,3 +1,5 @@
+
+
 <div  <?php echo ($this->type!='register') ? 'class="mainState mainStateRegister" style="display:none"':'';?>>
 	<form id="frmRegister" action="/">
 		<div class="formfield" data-validation='{"required":{"text":"A first name is mandatory"}}'>
@@ -140,69 +142,7 @@
                 } );
 
 
-              /* Forgot Password */
-                        var $stateResetpassword	= $( ".mainStateResetpassword" )
-                ,	$frmResetpassword 	= $( "#frmResetpassword" )
-                ,	$btnResetpassword	= $frmResetpassword.find( ".jsResetpassword" )
 
-                ;
-
-                $btnResetpassword.click( function( e )
-                {
-                        e.preventDefault();
-
-                        $frmResetpassword.submit();
-                } );
-
-                $frmResetpassword.submit( function( e )
-                {
-                        e.preventDefault();
-
-
-                        if ( $btnResetpassword.hasClass( "disabled" ) )
-                        {
-                                return;
-                        }
-
-                        $btnResetpassword.addClass( "disabled" );
-
-                        // Build up the data for the member request
-                        //
-                        var resetpass =
-                        {
-                                username: 	$frmResetpassword.find( "[name='username']" ).val()
-
-                        };
-
-
-                bidx.api.call(
-                    "resetpassword.save"
-                ,   {
-                        groupDomain:    bidx.common.groupDomain
-                    ,   data:           resetpass
-                    ,   success:        function( response )
-                        {
-                            bidx.utils.log( "resetpassword.save::success::response", response );
-
-                            // Go to group dashboard
-                            //
-
-                            $frmResetpassword.hide();
-                            $stateResetpassword.find( ".resetpasswordSuccess" ).removeClass( "hide" );
-
-//		                    window.location.href = url;
-                        }
-                    ,   error:          function( jqXhr )
-                        {
-                            alert(JSON.stringify(jqXhr));
-                            $btnResetpassword.removeClass( "disabled" );
-
-                            alert( "Problem while reseting the password" );
-                        }
-                    }
-                );
-
-                } );
 
 
         });
