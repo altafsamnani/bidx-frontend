@@ -166,10 +166,10 @@ header {
 }
 
     header .logo {
-        margin:                 13px 0;
-/*        width:                      134px;
-        height:                     82px;*/
-        display:                    block;
+        margin:                 10px 0;
+        width:                      134px;
+        height:                     82px;
+        display:                    inline-block;
 
     }
 
@@ -923,39 +923,18 @@ body.home .hero-block {
     }
 
     /* styles shared by portrait tablet and above */
-    @media (min-width: 768px ) {
+    @media (min-width: 980px ) {
         
-        .navbar .btn-navbar {
-            display: none;
-          }
-           
-        .nav-bidx-collapse.collapse {
-          height: auto;
-          overflow: visible;
-        }
+
         .hero-block > .container {
             padding-top: 40px;
         }
-        /*
-        .navbar .btn, .navbar .btn-group {
-            margin-top: 0px;
-        }
-        .navbar .nav > li ul li, .navbar .nav > li.dropdown ul li {
-            background-color: #34495E;
-        }
-
-
-        .navbar .nav > li:hover > ul, .navbar .nav > li.dropdown:hover > ul, .navbar .nav > li:hover .dropdown-menu, .navbar .nav > li.dropdown:hover .dropdown-menu {
-            height: 0px;
-            margin-left: 0px;
-
-        }*/
 
     }
      
 
     /* Landscape phones and down */
-    @media (min-width: 320px) and (max-width: 768px) { 
+    @media  (max-width: 979px) { 
 
 
         /* navigation related style */
@@ -1047,135 +1026,6 @@ body.home .hero-block {
 
         /* end styling of navigation*/
 
-        /* bidx-collapse*/
-        .navbar .container {
-            width: auto;
-            padding: 0;
-        }
-        .nav-bidx-collapse {
-            -webkit-transform: translate3d(0, 0, 0);
-        }
-
-        .nav-bidx-collapse {
-            clear: both;
-          }
-          .nav-bidx-collapse .nav {
-            float: none;
-            margin: 0 0 10px;
-          }
-          .nav-bidx-collapse .nav > li {
-            float: none;
-          }
-          .nav-bidx-collapse .nav > li > a {
-            margin-bottom: 2px;
-          }
-          .nav-bidx-collapse .nav > .divider-vertical {
-            display: none;
-          }
-          .nav-bidx-collapse .nav .nav-header {
-            color: #777777;
-            text-shadow: none;
-          }
-          .nav-bidx-collapse .nav > li > a,
-          .nav-bidx-collapse .dropdown-menu a {
-            padding: 9px 15px;
-            font-weight: bold;
-            color: #777777;
-            -webkit-border-radius: 3px;
-               -moz-border-radius: 3px;
-                    border-radius: 3px;
-          }
-          .nav-bidx-collapse .btn {
-            padding: 4px 10px 4px;
-            font-weight: normal;
-            -webkit-border-radius: 4px;
-               -moz-border-radius: 4px;
-                    border-radius: 4px;
-          }
-          .nav-bidx-collapse .dropdown-menu li + li a {
-            margin-bottom: 2px;
-          }
-          .nav-bidx-collapse .nav > li > a:hover,
-          .nav-bidx-collapse .nav > li > a:focus,
-          .nav-bidx-collapse .dropdown-menu a:hover,
-          .nav-bidx-collapse .dropdown-menu a:focus {
-            background-color: #f2f2f2;
-          }
-          .navbar-inverse .nav-bidx-collapse .nav > li > a,
-          .navbar-inverse .nav-bidx-collapse .dropdown-menu a {
-            color: #999999;
-          }
-          .navbar-inverse .nav-bidx-collapse .nav > li > a:hover,
-          .navbar-inverse .nav-bidx-collapse .nav > li > a:focus,
-          .navbar-inverse .nav-bidx-collapse .dropdown-menu a:hover,
-          .navbar-inverse .nav-bidx-collapse .dropdown-menu a:focus {
-            background-color: #111111;
-          }
-          .nav-bidx-collapse.in .btn-group {
-            padding: 0;
-            margin-top: 5px;
-          }
-          .nav-bidx-collapse .dropdown-menu {
-            position: static;
-            top: auto;
-            left: auto;
-            display: none;
-            float: none;
-            max-width: none;
-            padding: 0;
-            margin: 0 15px;
-            background-color: transparent;
-            border: none;
-            -webkit-border-radius: 0;
-               -moz-border-radius: 0;
-                    border-radius: 0;
-            -webkit-box-shadow: none;
-               -moz-box-shadow: none;
-                    box-shadow: none;
-          }
-          .nav-bidx-collapse .open > .dropdown-menu {
-            display: block;
-          }
-          .nav-bidx-collapse .dropdown-menu:before,
-          .nav-bidx-collapse .dropdown-menu:after {
-            display: none;
-          }
-          .nav-bidx-collapse .dropdown-menu .divider {
-            display: none;
-          }
-          .nav-bidx-collapse .nav > li > .dropdown-menu:before,
-          .nav-bidx-collapse .nav > li > .dropdown-menu:after {
-            display: none;
-          }
-          .nav-bidx-collapse .navbar-form,
-          .nav-bidx-collapse .navbar-search {
-            float: none;
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-top: 1px solid #f2f2f2;
-            border-bottom: 1px solid #f2f2f2;
-            -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
-               -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
-                    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
-          }
-          .navbar-inverse .nav-bidx-collapse .navbar-form,
-          .navbar-inverse .nav-bidx-collapse .navbar-search {
-            border-top-color: #111111;
-            border-bottom-color: #111111;
-          }
-          .navbar .nav-bidx-collapse .nav.pull-right {
-            float: none;
-            margin-left: 0;
-          }
-          .nav-bidx-collapse,
-          .nav-bidx-collapse.collapse {
-            height: 0;
-            overflow: hidden;
-          }
-        .navbar .btn-navbar {
-            display: block;
-          }
-                
 
     }
 
