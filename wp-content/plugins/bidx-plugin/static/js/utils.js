@@ -2,6 +2,8 @@
 {
     var months = [ "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
+    // Convenience function for populating a <select />
+    //
     var populateDropdown = function( $el, values )
     {
         $.each( values, function( i, option )
@@ -88,9 +90,12 @@
         }
     };
 
+    // Get the values back from the input element
+    //
     var getElementValue = function( $input )
     {
-        var value
+        var values
+        ,   value
         ,   date
         ;
 
@@ -105,6 +110,12 @@
                 {
                     value   = getISODate( date );
                 }
+            break;
+
+            case 'tagsinput':
+                values = $input.tagsinput( "getValues" );
+
+                value = $.map( values, function( v ) { return v.value; });
             break;
 
             default:
