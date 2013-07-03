@@ -11,7 +11,7 @@
     /*
         Function: bidx.reflowrower
 
-        Used to create a wizard.
+        Used to create a reflow row where items can be added and removed from
         Returns:
             None
     */
