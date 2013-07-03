@@ -1,4 +1,12 @@
-/* ===================================================
+/*
+ * bidx extended version to work with JSON strings as tags
+ * !! all changes only excpect the typeaheadSource to be a value, not a function
+ *
+ * All changes are marked between // BIDX and // end BIDX
+ *
+ * Author: Arne de Bree
+ *
+ * ===================================================
  * bootstrap-tagmanager.js v2.4.1
  * http://welldonethings.com/tags/manager
  * ===================================================
@@ -169,6 +177,15 @@
       obj.data('active', true);
       obj.data('typeahead').source = source;
       tagManagerOptions.typeaheadSource = source;
+
+      // BIDX
+      var items;
+
+      if ( tagManagerOptions.useJSONValues && $.isArray( source )) {
+        tagManagerOptions.typeaheadSourceValues = $.map( source, function( item ) { return JSON.parse( item ).value; } );
+      }
+      // end BIDX
+
       obj.data('active', false);
     };
 
@@ -290,13 +307,37 @@
     };
 
     var pushTag = function (tag) {
-      tag = trimTag(tag);
 
-      if (!tag || tag.length <= 0) return;
+      // BIDX
+      //
+      var tagData
+      ,   orgTag    = tag
+      ;
 
-      if(tagManagerOptions.onlyTagList &&
-        tagManagerOptions.typeaheadSource != null &&
-        $.inArray(tag, tagManagerOptions.typeaheadSource) == -1) return;
+      if ( tagManagerOptions.useJSONValues ) {
+        try {
+          tagData = JSON.parse( tag );
+        } catch( e ) {
+          return;
+        }
+
+        tag = tagData.label;
+
+        if(tagManagerOptions.onlyTagList &&
+          tagManagerOptions.typeaheadSource != null &&
+          $.inArray(tagData.value, tagManagerOptions.typeaheadSourceValues) == -1) return;
+
+      } else {
+
+        tag = trimTag(tag);
+
+        if (!tag || tag.length <= 0) return;
+
+        if(tagManagerOptions.onlyTagList &&
+          tagManagerOptions.typeaheadSource != null &&
+          $.inArray(tag, tagManagerOptions.typeaheadSource) == -1) return;
+      }
+      // end BIDX
 
       if (tagManagerOptions.CapitalizeFirstLetter && tag.length > 1) {
         tag = tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
@@ -350,6 +391,13 @@
         html += '<a href="#" class="tm-tag-remove" id="' + newTagRemoveId + '" TagIdToRemove="' + tagId + '">';
         html += tagManagerOptions.tagCloseIcon + '</a></span> ';
         var $el = $(html);
+
+        // BIDX
+        //
+        if ( tagData ) {
+          $el.attr( "data-value", orgTag );
+        }
+        // end BIDX
 
         if (tagManagerOptions.tagsContainer != null) {
           $(tagManagerOptions.tagsContainer).append($el);
