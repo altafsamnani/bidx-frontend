@@ -214,6 +214,12 @@
     };
 
     var tagClasses = function () {
+
+      // BIDX
+      //
+      var tagManagerOptions = obj.data( "tagManager" );
+      // end BIDX
+
       // 1) default class (tm-tag)
       var cl = tagBaseClass;
       // 2) interpolate from input class: tm-input-xxx --> tm-tag-xxx
@@ -310,6 +316,8 @@
 
       // BIDX
       //
+      var tagManagerOptions = obj.data( "tagManager" );
+
       var tagData
       ,   orgTag    = tag
       ;
@@ -465,7 +473,13 @@
 
       // prevent double-initialization of TagManager
       if ($(this).data('tagManager')){ return false; }
-      $(this).data('tagManager', true);
+
+      // BIDX
+      //
+//      $(this).data('tagManager', true);
+
+      obj.data('tagManager', tagManagerOptions);
+      // end BIDX
 
       // store instance-specific data in the DOM object
       var tlis = new Array();
