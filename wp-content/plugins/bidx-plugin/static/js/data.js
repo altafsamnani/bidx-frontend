@@ -1477,180 +1477,180 @@
     window.bidx.data._setItem( "language",
     [
         {
-        key: "sq",
-        value: "Albanian"
+        value: "sq",
+        label: "Albanian"
         },
         {
-        key: "ar",
-        value: "Arabic"
+        value: "ar",
+        label: "Arabic"
         },
         {
-        key: "be",
-        value: "Belarusian"
+        value: "be",
+        label: "Belarusian"
         },
         {
-        key: "bg",
-        value: "Bulgarian"
+        value: "bg",
+        label: "Bulgarian"
         },
         {
-        key: "ca",
-        value: "Catalan"
+        value: "ca",
+        label: "Catalan"
         },
         {
-        key: "zh",
-        value: "Chinese"
+        value: "zh",
+        label: "Chinese"
         },
         {
-        key: "hr",
-        value: "Croatian"
+        value: "hr",
+        label: "Croatian"
         },
         {
-        key: "cs",
-        value: "Czech"
+        value: "cs",
+        label: "Czech"
         },
         {
-        key: "da",
-        value: "Danish"
+        value: "da",
+        label: "Danish"
         },
         {
-        key: "nl",
-        value: "Dutch"
+        value: "nl",
+        label: "Dutch"
         },
         {
-        key: "en",
-        value: "English"
+        value: "en",
+        label: "English"
         },
         {
-        key: "et",
-        value: "Estonian"
+        value: "et",
+        label: "Estonian"
         },
         {
-        key: "fi",
-        value: "Finnish"
+        value: "fi",
+        label: "Finnish"
         },
         {
-        key: "fr",
-        value: "French"
+        value: "fr",
+        label: "French"
         },
         {
-        key: "de",
-        value: "German"
+        value: "de",
+        label: "German"
         },
         {
-        key: "el",
-        value: "Greek"
+        value: "el",
+        label: "Greek"
         },
         {
-        key: "iw",
-        value: "Hebrew"
+        value: "iw",
+        label: "Hebrew"
         },
         {
-        key: "hi",
-        value: "Hindi"
+        value: "hi",
+        label: "Hindi"
         },
         {
-        key: "hu",
-        value: "Hungarian"
+        value: "hu",
+        label: "Hungarian"
         },
         {
-        key: "is",
-        value: "Icelandic"
+        value: "is",
+        label: "Icelandic"
         },
         {
-        key: "in",
-        value: "Indonesian"
+        value: "in",
+        label: "Indonesian"
         },
         {
-        key: "ga",
-        value: "Irish"
+        value: "ga",
+        label: "Irish"
         },
         {
-        key: "it",
-        value: "Italian"
+        value: "it",
+        label: "Italian"
         },
         {
-        key: "ja",
-        value: "Japanese"
+        value: "ja",
+        label: "Japanese"
         },
         {
-        key: "ko",
-        value: "Korean"
+        value: "ko",
+        label: "Korean"
         },
         {
-        key: "lv",
-        value: "Latvian"
+        value: "lv",
+        label: "Latvian"
         },
         {
-        key: "lt",
-        value: "Lithuanian"
+        value: "lt",
+        label: "Lithuanian"
         },
         {
-        key: "mk",
-        value: "Macedonian"
+        value: "mk",
+        label: "Macedonian"
         },
         {
-        key: "ms",
-        value: "Malay"
+        value: "ms",
+        label: "Malay"
         },
         {
-        key: "mt",
-        value: "Maltese"
+        value: "mt",
+        label: "Maltese"
         },
         {
-        key: "no",
-        value: "Norwegian"
+        value: "no",
+        label: "Norwegian"
         },
         {
-        key: "pl",
-        value: "Polish"
+        value: "pl",
+        label: "Polish"
         },
         {
-        key: "pt",
-        value: "Portuguese"
+        value: "pt",
+        label: "Portuguese"
         },
         {
-        key: "ro",
-        value: "Romanian"
+        value: "ro",
+        label: "Romanian"
         },
         {
-        key: "ru",
-        value: "Russian"
+        value: "ru",
+        label: "Russian"
         },
         {
-        key: "sr",
-        value: "Serbian"
+        value: "sr",
+        label: "Serbian"
         },
         {
-        key: "sk",
-        value: "Slovak"
+        value: "sk",
+        label: "Slovak"
         },
         {
-        key: "sl",
-        value: "Slovenian"
+        value: "sl",
+        label: "Slovenian"
         },
         {
-        key: "es",
-        value: "Spanish"
+        value: "es",
+        label: "Spanish"
         },
         {
-        key: "sv",
-        value: "Swedish"
+        value: "sv",
+        label: "Swedish"
         },
         {
-        key: "th",
-        value: "Thai"
+        value: "th",
+        label: "Thai"
         },
         {
-        key: "tr",
-        value: "Turkish"
+        value: "tr",
+        label: "Turkish"
         },
         {
-        key: "uk",
-        value: "Ukrainian"
+        value: "uk",
+        label: "Ukrainian"
         },
         {
-        key: "vi",
-        value: "Vietnamese"
+        value: "vi",
+        label: "Vietnamese"
         }
     ] );
 
