@@ -4,7 +4,7 @@
  * @namespace
  * @name bidx.tagsinput
  * @version 1.0
- * @depends window.bidx.data, window.bidx.utils
+ * @depends window.bidx.data, window.bidx.utils, bidx-tagsmanager
  * @author
 */
 ;(function( $ )
@@ -12,7 +12,7 @@
     /*
         Function: bidx.tagsinput
 
-        Used to create a wizard.
+        Used to create a tagsinput control with API to get and set tags/values.
         Returns:
             None
     */
@@ -28,6 +28,7 @@
         ,   state:
             {
                 dataValues:             null
+            ,   dataValuesByValue:      null
             }
         }
 
@@ -49,6 +50,10 @@
 
             $item.addClass( options.widgetClass );
 
+            $item.attr( "data-type", "tagsinput" );
+
+            // Setup the tagsManager and build typeahead
+            //
             var _setup = function()
             {
                 var params =
@@ -57,6 +62,8 @@
                 ,   tagCloseIcon:       ""
                 };
 
+                // If there was a fixed list of data
+                //
                 if ( dataKey && options.state.dataValues )
                 {
                     params.typeahead            = true;
@@ -115,7 +122,18 @@
                         window.bidx.utils.error( "Problem getting bidx.data for key", dataKey, "populate a tagsinput control" );
                     }
 
-                    options.state.dataValues = result;
+                    options.state.dataValues            = result;
+                    options.state.dataValuesByValue     = {};
+
+                    // Pre-parse the dataValues into an object structure with
+                    //
+                    $.each( result, function( idx, item )
+                    {
+                        // Lowercase the keys so looking up can be done using a lowercase as well. Have had some inconsistencies
+                        //
+                        options.state.dataValuesByValue[ item.value.toLowerCase() ] = item;
+                    } );
+
                     _setup();
                 } );
             }
@@ -125,6 +143,8 @@
             }
         }
 
+        // Retrieve the values of the tags
+        //
     ,   getValues: function()
         {
             var widget      = this
@@ -150,14 +170,42 @@
             return values;
         }
 
+        // Set the tags using an array values
+        //
     ,   setValues: function( values )
         {
             var widget      = this
             ,   $el         = widget.element
             ,   options     = widget.options
+            ,   type        = $.type( values )
             ;
 
+            // Normalize into an array
+            //
+            if ( type === "string" )
+            {
+                values  = [ values ];
+                type    = "array";
+            }
 
+            if ( type !== "array" )
+            {
+                window.bidx.utils.error( "bidx-tagsinput.setValues called with something that's not an array", values );
+                return;
+            }
+
+            $.each( values, function( idx, value )
+            {
+                var item = options.state.dataValuesByValue[ value.toLowerCase() ];
+
+                if ( !item )
+                {
+                    window.bidx.utils.error( "bidx-tagsinput:data item not found for ", value, $el[0] );
+                    return;
+                }
+
+                $el.tagsManager( "pushTag", JSON.stringify( item ) );
+            } );
         }
     } );
 } )( jQuery );
