@@ -175,17 +175,24 @@ class auth {
 		// 2. Determine the view needed 
 		$command = $atts['view'];
         $type    = $atts['type'];
-        $render = 'standard-auth';
+        
         switch($type) {
             case "login" :
                 $view->type = "login";
                 $render = 'standard-auth';
+                $view->showRegisterLink = false;
+                $view->showLoginLink = true;
                 break;
             case "register" :
                 $view->type = "register";
                 $render = 'registration';
+                $view->showLoginLink = false;
                 break;
             default :
+                $view->type = "login";
+                $render = 'standard-auth';
+                $view->showRegisterLink = true;
+                $view->showLoginLink = true;
         }
 
 		return $view -> render( $render . '.phtml' );

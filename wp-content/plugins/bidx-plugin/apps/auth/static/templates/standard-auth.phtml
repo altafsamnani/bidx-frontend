@@ -38,7 +38,7 @@ if (!username_exists ($group_anonymous_login)) {
 			<a href="#" class="btn btn-primary jsLogin">Login</a>
 		</div>
 
-        <?php if ($this->type!="login") {	?>
+        <?php if ($this->showRegisterLink) {	?>
 		<p>
 			Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
 		    Not a member? Click <a href="#register">here</a> to register.
