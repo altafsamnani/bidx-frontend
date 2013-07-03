@@ -44,18 +44,18 @@
         ,   'institutionWebsite'
         ,   'minInvestment'
         ,   'maxInvestment'
-        ,   'focusIndustry'             // array
-        ,   'focusSocialImpact'         // array
-        ,   'focusEnvImpact'            // array
-        ,   'focusConsumerType'         // array
-        ,   'focusCity'                 // array
-        ,   'focusCountry'              // array
-        ,   'focusStageBusiness'        // array
-        ,   'focusGender'               // array
+        ,   'focusIndustry'
+        ,   'focusSocialImpact'
+        ,   'focusEnvImpact'
+        ,   'focusConsumerType'
+        ,   'focusCity'
+        ,   'focusCountry'
+        ,   'focusStageBusiness'
+        ,   'focusGender'
         ,   'additionalPreferences'
         ,   'numberInvestments'
         ,   'totalInvestment'
-        ,   'typicalInvolvement'        // array
+        ,   'typicalInvolvement'
         ]
 
     ,   institutionAddress:
@@ -84,7 +84,7 @@
 
     // Grab the snippets from the DOM
     //
-    //snippets.$language      = $snippets.children( ".languageItem"   ).remove();
+    //snippets...      = $snippets.children( "....Item"   ).remove();
 
 
     // Disable disabled links
@@ -392,6 +392,42 @@
     //
     var _getFormValues = function()
     {
+        $.each( fields._root, function( i, f )
+        {
+            var $input  = $editForm.find( "[name='" + f + "']" )
+            ,   value   = bidx.utils.getElementValue( $input )
+            ;
+
+            bidx.utils.setValue( member, "bidxInvestorProfile." + f, value );
+        } );
+
+        // Collect the nested objects that are not arrays
+        //
+        $.each( [ "institutionAddress" ], function()
+        {
+            var nest        = this
+            ,   memberPath  = "bidxInvestorProfile." + nest
+            ,   item        = bidx.utils.getValue( member, memberPath, true )
+            ;
+
+            // Property not existing? Add it as an empty array holding an empty object
+            //
+            if ( !item )
+            {
+                item = [ {} ];
+                bidx.utils.setValue( member, memberPath, item );
+            }
+
+            $.each( fields[ nest ], function( j, f )
+            {
+                var inputPath   = nest + "." + f
+                ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
+                ,   value       = bidx.utils.getElementValue( $input )
+                ;
+
+                bidx.utils.setValue( item, f, value );
+            } );
+        } );
     };
 
     // This is the startpoint
@@ -559,6 +595,10 @@
         // Update the member object
         //
         _getFormValues();
+
+        bidx.utils.log( "about to save member", member );
+
+        return;
 
         bidx.api.call(
             "member.save"
