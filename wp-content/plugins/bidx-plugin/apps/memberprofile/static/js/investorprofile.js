@@ -126,8 +126,17 @@
         bidx.utils.populateDropdown( $investorType, investorTypes );
     } );
 
+    // Populate the dropdowns with the values
+    //
+    bidx.data.getItem( "country", function( err, countries )
+    {
+        $institutionAddressCountry.append( $( "<option value='' />" ).text( "Select the country" ));
 
-// Build up the gmaps for the current address
+        bidx.utils.populateDropdown( $institutionAddressCountry, countries );
+    } );
+
+
+    // Build up the gmaps for the current address
     //
     var institutionAddressMapOptions =
         {
