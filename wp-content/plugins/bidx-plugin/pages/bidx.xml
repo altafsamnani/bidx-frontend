@@ -121,7 +121,7 @@
                         <name>login</name>
                         <title>Login</title>
                         <mapping>^login?</mapping>
-                        <content>[bidx app="auth" view="standard-auth"]</conten$
+                        <content>[bidx app="auth" view="standard-auth"]</content>
                 </post>
 	</posts>
 
