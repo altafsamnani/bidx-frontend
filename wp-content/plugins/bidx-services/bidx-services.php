@@ -662,6 +662,47 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
  *
  * Create Wordpress Site for Bidx Group
  * [id] => 1    [domain] => bidx.dev    [path] => /    [blog_id] => 1    [cookie_domain] => bidx.dev    [site_name] => Bidx Sites
+ * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_delete
+ *
+ * @param bool $echo
+ */
+add_action ('wp_ajax_nopriv_bidx_delete', 'bidx_delete_wp_pages'); // ajax for logged in users
+add_action ('wp_ajax_bidx_delete', 'bidx_delete_wp_pages');
+function bidx_delete_wp_pages ()
+{
+    global $wpdb;
+    set_time_limit (120);
+    $pageTitle = array ('Login');
+
+    $blogs = $wpdb->get_col ("SELECT blog_id FROM {$wpdb->blogs} WHERE site_id = {$wpdb->siteid} AND spam = 0");
+    if ($blogs) {
+        foreach ($blogs as $blog_id) {
+            switch_to_blog ($blog_id);
+            delete_bidx_plugin ($pageTitle); //silently deactivate the plugin
+            restore_current_blog ();
+        }
+        ?><div id="message" class="updated fade"><p><span style="color:#FF3300;"><?php echo implode(', ',$pageTitle); ?></span><?php echo ' has been MASS Deleted.'; ?></p></div><?php
+    } else {
+        ?><div class="error"><p><?php echo 'Failed to mass deactivate: error selecting blogs'; ?></p></div><?php
+    }
+}
+
+function delete_bidx_plugin ($pageTitle)
+{
+    foreach ($pageTitle as $pageValue) {
+        $page = get_page_by_title ($pageValue);
+        wp_delete_post ($page->ID, true);
+    }
+
+    return;
+}
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Create Wordpress Site for Bidx Group
+ * [id] => 1    [domain] => bidx.dev    [path] => /    [blog_id] => 1    [cookie_domain] => bidx.dev    [site_name] => Bidx Sites
  * http://local.bidx.net/wp-admin/admin-ajax.php?action=local_create&print=true
  *
  * @param bool $echo
@@ -771,12 +812,11 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
           echo '</pre>';
 
         } else {
-             $site['delete'] = $siteDelete;
-             $site['create'] = $siteCreation;
-             echo json_encode($site);
+            $site['delete'] = $siteDelete;
+            $site['create'] = $siteCreation;
+            echo json_encode($site);
         }
-         exit;
-
+        exit;
     }
 }
 

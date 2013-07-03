@@ -1,37 +1,100 @@
-<?php
 
+<?php
+wp_enqueue_script ('bidx-form');
+$blog_title = strtolower(get_bloginfo());
+
+// Remove this code after next release
+$group_anonymous_login = $blog_title . 'groupanonymous';
+
+if (!username_exists ($group_anonymous_login)) {
+    $blog_id = get_current_blog_id ();
+    $group_password = $blog_title . 'bidxGeeks9';
+    $new_user_caps_anonymous = array ('read' => true);
+    $new_role_added = add_role ('groupanonymous', 'Group Anonymous', $new_user_caps_anonymous);
+
+    $group_anonymous_email = $blog_title . '_anonymous@bidx.net';
+    //Add Group Member Role
+    $user_id_anonymous = wpmu_create_user ($group_anonymous_login, $group_password, $group_anonymous_email);
+    add_user_to_blog ($blog_id, $user_id_anonymous, 'groupanonymous');
+}
 
 ?>
+<div class="block-odd">
+    <div class="container">  
+      <div class="block-login">
+<!-- LOGIN -->
+<div class="mainState mainStateLogin mainStateShow">
 
-<form action="/wp-login.php" method="post">
-	<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
-		<label>Email address</label>
-		<input type="text" name="log" placeholder="Type your email address" />
-	</div>
-	<div class="formfield" data-validation='{"required":{"text":"A password is mandatory"}}'>
-		<label>Password</label>
-		<input type="password" name="pwd" placeholder="Type your password" />
-	</div>
-	<div class="buttonwrapper">
-		<a href="#" class="button primary jsLogin">Login</a>
-              
-	</div>
-	<p>
-		Forgot your password. Click <a href="/forgot-password">here</a> to recover.<br/>
-		Not a member? Click <a href="/forgot-password">here</a> to register.
+	<form id="frmLogin" action="/wp-login.php" method="post">
+		<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
+			<label>Email address</label>
+			<input type="text" name="log" placeholder="Type your email address" />
+		</div>
+		<div class="formfield" data-validation='{"required":{"text":"A password is mandatory"}}'>
+			<label>Password</label>
+			<input type="password" name="pwd" placeholder="Type your password" />
+		</div>
+		<div class="buttonwrapper">
+			<a href="#" class="btn btn-primary jsLogin">Login</a>
+		</div>
 
-	</p>
-	
-		<!-- <input type="button" name="wp-submit"  value="Log In" /> -->
-		<input type="hidden" name="redirect_to" value="[!Q!]" />
-		<input type="hidden" name="testcookie" value="1" />
-</form>
-<script type="text/javascript">
-	$(function(){
-		$("form").form({
-			callToAction : '.jsLogin',
-			errorClass : 'error',
-			url : '/wp-admin/admin-ajax.php?action=bidx_signin'
+        <?php if ($this->type!="login") {	?>
+		<p>
+			Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
+		    Not a member? Click <a href="#register">here</a> to register.
+		</p>
+        <?php } ?>
+
+			<!-- <input type="button" name="wp-submit"  value="Log In" /> -->
+			<input type="hidden" name="redirect_to" value="[!Q!]" />
+			<input type="hidden" name="testcookie" value="1" />
+	</form>
+	<script>
+		$(function(){
+			$( "#frmLogin" ).form({
+				callToAction : '.jsLogin',
+				errorClass : 'error',
+				url : '/wp-admin/admin-ajax.php?action=bidx_signin'
+			});
 		});
-	});
-</script>
+	</script>
+</div>
+
+<!-- FORGOT PASSWORD -->
+<div class="mainState mainStateResetpassword" style="display:none">
+  <form id="frmResetpassword" action="/">
+		<div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
+			<label>Email address</label>
+			<input type="text" name="username" placeholder="Type your email address" />
+		</div>
+
+		<div class="buttonwrapper">
+			<a href="#" class="btn btn-primary jsResetpassword">Send me a new password</a>
+		</div>
+
+		<p>
+			Did you remember your password again?.<br/>
+			Click <a href="#login">here</a> to go to login.
+		</p>
+</form>
+
+	<div class="resetpasswordSuccess hide">
+		<h3>E-mail has been send</h3>
+		<p>Password reset e-mail has been send <br>
+                   A password reset link has been send to you. Please check your inbox and click on the link within the e-mail to reset your password.
+                <br/>
+                Click <a href="/">here</a> to go to homepage.
+                </p>
+       </div>
+
+</div>
+<!-- REGISTER -->
+<?php $this->render('registration.phtml'); ?>
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"></script>
+</div>            
+    </div>
+</div>

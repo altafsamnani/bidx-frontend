@@ -1,8 +1,5 @@
 <?php
-//echo "<pre>";
-//print_r($this->data);
-//echo "</pre>";
-//exit;
+
 $member = $this->exst($this->data->member->displayName);
 ?>
 <div class="block-odd">
@@ -22,6 +19,15 @@ $member = $this->exst($this->data->member->displayName);
       <div class="span4 sidebar">
         <?php $this->render('view-group.phtml'); ?>
       </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6">
+           <?php echo do_shortcode( '[bidx app="auth" view="standard-auth" type="login"]' ); ?>
+        </div>
+        <div class="span8">
+            <?php echo do_shortcode( '[bidx app="auth" view="standard-auth" type="register"]' ); ?>
+        </div>
+
     </div>
 
     <?php $this->render('edit-member.phtml'); ?>

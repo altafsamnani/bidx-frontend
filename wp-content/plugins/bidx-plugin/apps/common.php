@@ -52,10 +52,10 @@ class BidxCommon
 
             //Check session if its not redirect (is not having q= param)
             //Start the session to store Bidx Session
-            session_start ();
+            
 
             if (!$isWordpress) {
-
+                session_start ();
                 //If Bidx Cookie set do the following
                 if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
@@ -89,7 +89,7 @@ class BidxCommon
     {
         $sessionVars = false;
         //Get Previous Session Variables if Set and Not Failed Login
-        if (!empty ($_SESSION[$subDomain]) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') {
+        if (!empty ($_SESSION[$subDomain]) && !empty($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') {
             $sessionVars = $_SESSION[$subDomain];
         }
         return $sessionVars;

@@ -174,7 +174,21 @@ class auth {
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/static/templates/' );
 		// 2. Determine the view needed 
 		$command = $atts['view'];
-		return $view -> render( $command . '.phtml' );
+        $type    = $atts['type'];
+        echo $type;
+        switch($type) {
+            case "login" :
+                $view->type = "login";
+                $render = 'standard-auth';
+                break;
+            case "register" :
+                $view->type = "register";
+                $render = 'registration';
+                break;
+            default :
+        }
+
+		return $view -> render( $render . '.phtml' );
 
 	}
 }

@@ -116,6 +116,13 @@
 			<mapping>^investor-dashboard</mapping>
 			<content>[bidx app="dashboard" view="investor-dashboard"]</content>
 		</post>
+		 <post>
+                        <post_id>14</post_id>
+                        <name>login</name>
+                        <title>Login</title>
+                        <mapping>^login?</mapping>
+                        <content>[bidx app="auth" view="standard-auth"]</conten$
+                </post>
 	</posts>
 
 	<widgets>
