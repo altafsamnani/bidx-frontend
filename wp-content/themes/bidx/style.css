@@ -159,7 +159,6 @@ a, a:hover, a:visited, a:link  {
 
 
 
-
     header .logo {
         margin:                 10px 0;
         width:                      134px;
@@ -167,70 +166,54 @@ a, a:hover, a:visited, a:link  {
         display:                    inline-block;
 
     }
+    /* ! most header styles are located in media query section at the bottom of this document */
 
+    /* inner page header */
 
-
-
-header .navbar .btn-navbar, header .navbar .btn-navbar.collapsed:hover, header .navbar .btn-navbar.collapsed:focus {
-    margin:                     3px 4px 0 0;
-    background-color:           #3498db;
-    border-radius:              0;
-    color:                      white;
-}
-header .navbar .collapsed, header .navbar .btn-navbar:hover {
-    margin:                     3px 4px 0 0;
-    border-radius:              0;
-    color:                      black;
-    background-color:           transparent;
-}
-
-/* inner page header */
-
-.page-intro .hero {
+    .page-intro .hero {
         background-color: #3498db;
-        margin-left: -20px;
-        margin-right: -20px;
+/*        margin-left: -20px;
+        margin-right: -20px;*/
         padding-left: 20px;
         padding-right: 20px;
 
-}
-    .hero h1 {
-        color: white;
     }
-    .hero .heroblock  {
-        color: white;
+        .hero h1 {
+            color: white;
+        }
+        .hero .heroblock  {
+            color: white;
+        }
+            .heroblock > div {
+                margin: 53px 0 60px 0;
+
+            }
+            .heroblock > div h1 {
+                margin: 0px;
+                font-size:  30px;
+            }
+
+            .heroblock > div h3 {
+                margin:15px 0;
+                font-size: 20px;
+            }
+            .heroblock > div h5 {
+                font-size: 20px;
+            }
+
+    .page-intro .posthero {
+        text-align:           center;
     }
-        .heroblock > div {
-            margin: 53px 0 60px 0;
+        .posthero .hero-arrow {
+            display:                inline-block;
+            background-position:    0 -125px;
+            border:                 0;
+            height:                 19px;
+            width:                  41px;
 
         }
-        .heroblock > div h1 {
-            margin: 0px;
-            font-size:  30px;
-        }
 
-        .heroblock > div h3 {
-            margin:15px 0;
-            font-size: 20px;
-            
-        }
-        .heroblock > div h5 {
-            font-size: 20px;
-        }
-
-.page-intro .posthero {
-    text-align:           center;
-}
-    .posthero .hero-arrow {
-        display:                inline-block;
-        background-position:    0 -125px;
-        border:                 0;
-        height:                 19px;
-        width:                  41px;
-
-    }
-
-/* end inner page header */
+    /* end inner page header */
 
 /*******************************************************************************************
 *
@@ -241,6 +224,7 @@ header .navbar .collapsed, header .navbar .btn-navbar:hover {
 .partners {
   background:               #f4f4f4;
   min-height:               250px;
+
 }
 
   .partnerlist {
@@ -323,25 +307,62 @@ header .navbar .collapsed, header .navbar .btn-navbar:hover {
 
 footer .page-footer {
     background-color:               #34495e;
-    line-height:                    48px;
+    /*line-height:                    48px;*/
     color:                          #fff;
     font-size:                      13px;
-    margin-left: -20px;
-    margin-right: -20px;
+
     padding-left: 20px;
     padding-right: 20px;
+    border-top: 1px solid #aeb6bf;
+    border-bottom: 1px solid #aeb6bf;
 }
+
+footer .page-footer .footer-bar {
+    height: 48px;
+
+}
+
+    footer .page-footer .footer-bar > div {
+        line-height: 48px;
+        height: 48px;
+    }
+
+        footer .page-footer .footer-bar > div > span {
+            margin-right:20px;
+        }
+
 
 footer .page-footer a {
     text-decoration:                underline;
     color:                          #fff;
 }
 
+
 footer .page-footer .copyright {
     display:                        inline-block;
     margin-right:                   20px;
 }
 
+footer .page-footer .inline-list {
+    display:inline-block;
+}
+  
+
+    footer .page-footer .inline-list > div {
+        display: inline;
+        position: relative;
+        top: 3px;
+        margin-right: 10px;
+    }
+    footer .page-footer .inline-list.footer-menu > div {
+        top:0;
+    }
+footer .page-footer .social-links a {
+    font-size:                      22px;
+
+}
+
+/*
 footer .page-footer .social-links ul,
 footer .page-footer .footer-menu {
     display:                        inline-block;
@@ -353,11 +374,7 @@ footer .page-footer .social-links > span {
     margin-right:                   20px;
 }
 
-footer .page-footer .social-links a {
-    font-size:                      22px;
-
-}
-
+*/
 /* end footer styles */
 
 
@@ -683,7 +700,7 @@ body.home .hero-block {
 }
 
 /* padding-top hack for fully-visible icons */
-.sociallinks a.blinklist {
+/*.sociallinks a.blinklist {
   background-position: 0 0;
   padding-top: 4px;
 }
@@ -802,7 +819,7 @@ body.home .hero-block {
 .sociallinks a.youtube {
   background-position: 0 -1914px;
   padding-top: 4px;
-}
+}*/
 
 /*
     fonts
@@ -835,24 +852,6 @@ body.home .hero-block {
   
     /* Large desktop */
     @media (min-width: 1200px) {
-        /*fix main menu display because of the added container wrapper whch breaks the BS amd FlatUI css path */
-/*        header .navbar .nav > li a {
-            color: #526476;
-            font-size: 14.994px;
-            font-weight: 700;
-            
-            text-shadow: none;
-            transition: background-color 0.25s ease 0s, color 0.25s ease 0s, border-bottom-color 0.25s ease 0s;
-        }
-
-        header .navbar .menu-main > ul > li  a:hover,
-        header .navbar .menu-main > ul > li.active  a:hover {
-            background-color:           #ebedef;
-        }
-
-        header .navbar .menu-main li {
-            margin-left:                4px;
-        }*/
 
 
       
@@ -928,6 +927,17 @@ body.home .hero-block {
             padding-right :20px;
         }
 
+        .page-intro .hero, footer {
+        
+            margin-left: -20px;
+           margin-right: -20px;
+        }
+
+        footer > div {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
         /* navigation related style */
         .container {
             width: auto;
@@ -944,8 +954,32 @@ body.home .hero-block {
         header .navbar {
             margin-bottom: 0;
         }   
+            .navbar .nav ul {
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+            }
+            .navbar .nav ul li:last-child ,  .navbar .nav ul li:first-child, .navbar .nav ul li {
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                margin: 0px;
+                padding: 0px;
+            }
+            .navbar .btn-navbar, .navbar .btn-navbar.collapsed:hover, .navbar .btn-navbar.collapsed:focus {
+                margin:                     3px 4px 0 0;
+                background-color:           #3498db;
+                border-radius:              0;
+                color:                      white;
+            }
+            .navbar .collapsed, .navbar .btn-navbar:hover {
+                margin:                     3px 4px 0 0;
+                border-radius:              0;
+                color:                      black;
+                background-color:           transparent;
+            }
 
-            .navbar .btn {
+            .navbar .menu-main .btn {
                 margin-top: 0px; 
                 text-align: left;
             }
@@ -969,7 +1003,7 @@ body.home .hero-block {
                 }
                 .menu-main .nav.menu .dropdown-menu li {
                     margin-bottom: 0px;
-                    border-bottom: 1px solid white;
+                    /*border-bottom: 1px solid white;*/
                 }
 
                 .menu-main .nav.menu li > a:hover,
@@ -993,8 +1027,9 @@ body.home .hero-block {
                     .navbar .nav > li.dropdown:hover .dropdown-menu {
                         margin: 0;
                         border-radius: 0;
+                        height: auto;
                     }
-                    .navbar .nav > li.dropdown:hover .dropdown-menu li {
+                    .navbar .nav > li.dropdown:hover .dropdown-menu li, .navbar .nav > li.dropdown.open .dropdown-menu li {
                         padding: 0;
                         margin-bottom: 0;
                         border-bottom: 1px solid white;
@@ -1011,6 +1046,12 @@ body.home .hero-block {
                         color: white;
                         margin-bottom: 0;
                     }
+
+                    .navbar .dropdown-hover.open ul {
+                        height: auto!important;
+                        margin-right: 0px;
+                    }
+                   
 
 
    
