@@ -36,10 +36,10 @@ if (!username_exists ($group_anonymous_login)) {
                     <div class="buttonwrapper">
                         <a href="#" class="btn btn-primary jsLogin">Login</a>
                     </div>
-
-                    <?php if ($this->showRegisterLink) { ?>
+                 
                         <p>
                             Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
+                     <?php if ($this->showRegisterLink) { ?>
                             Not a member? Click <a href="#register">here</a> to register.
                         </p>
                     <?php } ?>
@@ -88,7 +88,11 @@ if (!username_exists ($group_anonymous_login)) {
 
             </div>
             <!-- REGISTER -->
-            <?php $this->render ('registration.phtml'); ?>
+             <?php
+            if($this->type == 'standard-auth') {
+            $this->render ('registration.phtml');
+            }
+            ?>
 
             <script>
                 window.bidx = window.bidx || {};

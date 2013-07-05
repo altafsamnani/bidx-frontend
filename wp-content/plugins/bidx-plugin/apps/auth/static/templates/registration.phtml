@@ -1,6 +1,6 @@
 
 
-<div  <?php echo ($this->type!='register') ? 'class="mainState mainStateRegister" style="display:none"':'';?>>
+<div  class="mainState mainStateRegister <?php echo ($this->type=='register') ? 'mainStateShow':'';?>">
 	<form id="frmRegister" action="/">
 		<div class="formfield" data-validation='{"required":{"text":"A first name is mandatory"}}'>
 			<label>First name</label>
@@ -25,11 +25,12 @@
 		<div class="buttonwrapper">
 			<a href="#" class="btn btn-primary jsRegister">Register</a>
 		</div>
-
+        <?php if($this->showLoginLink) { ?>
 		<p>
 			Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
 			Login? Click <a href="#login">here</a> to go to login.
 		</p>
+        <?php } ?>
 	</form>
 
 	<div class="registerSuccess hide">
@@ -62,7 +63,7 @@
                 {
                         e.preventDefault();
 
-                        $frmRegister.submit();
+                       $frmRegister.submit();
                 } );
 
                 $frmRegister.submit( function( e )
@@ -101,7 +102,7 @@
                                 member.personalDetails.address =
                                 [
                                         {
-                                                coordinates: 			$frmRegister.find( "[name$=location]" ).val()
+                                            coordinates: 			$frmRegister.find( "[name$=location]" ).val()
                                         ,	postalCode: 			$frmRegister.find( "[name$=postalCode]" ).val()
                                         ,	country: 				$frmRegister.find( "[name$=country]" ).val()
                                         ,	cityTown: 				$frmRegister.find( "[name$=cityTown]" ).val()
@@ -123,12 +124,13 @@
 
                             // Go to group dashboard
                             //
-                            var url = window.location.protocol + "//" + window.location.host;
+                            
 
                             $frmRegister.hide();
                             $stateRegister.find( ".registerSuccess" ).removeClass( "hide" );
-
-//		                    window.location.href = url;
+                            var urlparam = '<?php  echo base64_encode('groupname='.$this->groupNotification);?>';
+                            var url = window.location.protocol + "//" + window.location.host + "?smsg=4&sparam=" + urlparam;
+		                    window.location.href = url;
                         }
                     ,   error:          function( jqXhr )
                         {

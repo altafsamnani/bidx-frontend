@@ -189,11 +189,13 @@ class auth {
                 $view->showLoginLink = false;
                 break;
             default :
-                $view->type = "login";
+                $view->type = "default";
                 $render = 'standard-auth';
                 $view->showRegisterLink = true;
                 $view->showLoginLink = true;
         }
+
+        $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
 
 		return $view -> render( $render . '.phtml' );
 

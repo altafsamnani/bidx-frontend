@@ -68,14 +68,17 @@ function bidx_filter ($content)
  *
  * @return string $statusMessages notification html
  * @access public
+ * @example ?smsg = 4 &sparam=base64_enocde('key1=val1|key2=val2|key3=val3)
    */
 function bidx_get_status_msgs( ) {
   
     $statusMessages = '';
+    $replaceString = NULL;
     //Add Error Status Msg
     if (isset ($_GET['emsg'])) {
         $textId = $_GET['emsg'];
-        $statusMsg = bidx_status_text ( $textId );
+        (!empty($_GET['eparam'])) ? $replaceString = base64_decode($_GET['eparam']) :'';
+        $statusMsg = bidx_status_text ( $textId, $replaceString );
         $statusMessages = "<div class='alert alert-error'>
                       <button data-dismiss='alert' class='close fui-cross' type='button'></button>
                       {$statusMsg}
@@ -87,7 +90,8 @@ function bidx_get_status_msgs( ) {
 
     if (isset ($_GET['smsg'])) {
         $textId = $_GET['smsg'];
-        $statusMsg = bidx_status_text ( $textId );
+        (!empty($_GET['sparam'])) ? $replaceString = base64_decode($_GET['sparam']) :'';
+        $statusMsg = bidx_status_text ( $textId, $replaceString );
         $statusMessages = "<div class='alert alert-success'>
                       <button data-dismiss='alert' class='close fui-cross' type='button'></button>
                       {$statusMsg}
@@ -109,7 +113,7 @@ function bidx_get_status_msgs( ) {
  * @return string $statusMessages notification html
  * @access public
    */
-function bidx_status_text ( $textId ) {
+function bidx_status_text ( $textId, $replaceString ) {
 
     switch($textId) {
         
@@ -125,10 +129,26 @@ function bidx_status_text ( $textId ) {
         $text = "Successfully left the group!";
         break;
 
+    case '4' :
+        $text = "Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.";
+        break;
+
     default :
         $text = 'Add your notification message to custom.php with id ';
     
      }
+
+     if( $replaceString ) {
+         $keyValues = explode('|',$replaceString);
+         foreach( $keyValues as $repValue) {
+             $dispNote = explode("=", $repValue);
+             $dispKey = '<!--'.$dispNote[0].'-->';
+             $dispVal = $dispNote[1];
+             $text = str_replace($dispKey,$dispVal,$text);
+         }
+
+     }
+
     return $text;
 
 }
