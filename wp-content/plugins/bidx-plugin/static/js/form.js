@@ -224,8 +224,12 @@
 
 									document.location=data.redirect;
 								}
+                                                                if(options.success) {
+                                                                    options.success(data);
+                                                                }
 							}
 							else {
+                                                              
 								//if error handler is defined, use this one
 								if(options.error) {
 									options.error(data);

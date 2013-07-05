@@ -531,7 +531,7 @@ body.home .hero-block {
 
 }
 
-.group-creation-progress {
+.group-creation-progress,.group-creation-success {
     text-align: center;
     width: 100%;
     display: none;
@@ -542,7 +542,7 @@ body.home .hero-block {
         height:100px;
         margin: 0px auto;
     }
-    .group-creation-progress div.text{
+    .group-creation-progress div.text, .group-creation-success div.text{
         margin-top:100px;
         color: white;
         font-size:16px;
@@ -550,7 +550,7 @@ body.home .hero-block {
         line-height: 40px;
         font-weight: bold
     }
-    .group-creation-progress div.text.sub {
+    .group-creation-progress div.text.sub, .group-creation-success div.text.sub {
         margin-top:0px;
         font-weight: normal;
         font-size: 12px;

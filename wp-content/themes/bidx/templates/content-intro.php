@@ -72,8 +72,13 @@
 						</form>
 
 						<div class="group-creation-progress">
+							<div class="text">Your request is being processed.</div>
+					
+							<div class="text sub">We appreciate your patience.</div>
+						</div>
+                        <div class="group-creation-success">
 							<div class="text">Your request is sent.</div>
-							<div class="loader"></div>
+
 							<div class="text sub">Our service desk will contact you soon.</div>
 						</div>
 
@@ -95,21 +100,24 @@
 					    		$(".fieldset").form({
 					    			callToAction : '.jsCreateGroup', // the selector for submit button
 					    			errorClass : 'error', //the css class used as error message
-//					    			url : '/wp-admin/admin-ajax.php?action=bidx_request',
-					    			apiurl : 'groups',
-					    			apimethod : 'post',
+					    			url : '/wp-admin/admin-ajax.php?action=bidx_staffmail',
 					    			beforeSubmit : function(){
 										var $this=$(".fieldset");
 							    		$this.fadeOut("fast", function(){
 							    			$(".group-creation-progress").fadeIn('fast');
 							    		});
 					    			},
+                                    success : function(data){
+                 
+                                        var $success=$(".group-creation-progress");
+                                        $success.hide();
+							    			$(".group-creation-success").fadeIn('fast');
+							 
+					    			},
 					    			//custom error message for frontend registration in case group creation fails
 					    			error: function(data){
 					    				$(".group-creation-progress").html("<div class=\"text sub\">Group creation failed. Please reload the page and try again.<br/> If the problem persists, please contact us.");
-					    				if(data.text) {
-					    					$(".group-creation-progress").append(data.text);
-					    				}
+
 					    			}
 					    		});
 							});

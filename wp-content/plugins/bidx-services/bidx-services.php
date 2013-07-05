@@ -637,7 +637,7 @@ function create_bidx_wp_site ($groupName, $email)
 Address: %2$s
 Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
             //wp_mail(get_site_option('admin_email'), sprintf(__('[%s] New Site Created'), $current_site->site_name), $content_mail, 'From: "Site Admin" <' . get_site_option('admin_email') . '>');
-            wp_mail ('altaf.samnani@bidnetwork.org', sprintf (__ ('[%s] New Site Created'), $current_site->site_name), $content_mail, 'From: "Site Admin" <' . get_site_option ('admin_email') . '>');
+            wp_mail ('info@bidnetwork.org', sprintf (__ ('[%s] New Site Created'), $current_site->site_name), $content_mail, 'From: "Site Admin" <' . get_site_option ('admin_email') . '>');
 
             $text = 'New website created';
         } else {
@@ -1052,7 +1052,16 @@ function bidx_wordpress_pre_action ($url = 'default', $file_values = NULL)
             $params['domain'] = $domain;
             break;
 
+        case 'staff_email':
+            $params['subject'] = 'New group '.$params['groupName'].' has been created';
 
+            $body = 'Dear Staff, <br> New group <strong>'.$params['groupName']. '</strong> has been created by <strong>'.$params['username']. '</strong> from country <strong>'.$params['country'].'</strong><br>' ;
+            $body.= 'Email     -'.$params['username'].'<br/>';
+            $body.= 'GroupName -'.$params['groupName'].'<br/>';
+            $body.= 'Country   -'.$params['country'].'<br/>';
+            $body.= 'Regards<br>Bidx Dev Team';
+            $params['body'] = $body;
+            
         default:
             $response['status'] = 'ok';
             break;
@@ -1565,4 +1574,33 @@ function force_wordpress_login ($username)
         // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
     }
     return;
+}
+
+/* Send frontpage Group createion request Staff Email
+ * @author Altaf Samnani
+ * @version 1.0
+ * *
+ *
+ */
+
+add_action ('wp_ajax_bidx_staffmail', 'bidx_staffmail');
+add_action ('wp_ajax_nopriv_bidx_staffmail', 'bidx_staffmail'); // ajax for logged in users
+
+function bidx_staffmail ()
+{
+
+    $data = bidx_wordpress_pre_action ('staff_email');
+    $params = $data['params'];
+    $fromName = "From: '" . $params['groupName'] . "' <" . $params['username'] . '>';
+    $mailSent = wp_mail ('info@bidnetwork.org', $params['subject'], $data['body'], $fromName);
+    if ($mailSent) {
+        $requestData->status = 'OK';
+        $requestData->text = 'Our Staff will contact you shortly, thank you. We appreciate your patience.';
+    } else {
+        $requestData->status = 'ERROR';
+    }
+
+    $jsonData = json_encode ($requestData);
+    echo $jsonData;
+    die ();
 }
