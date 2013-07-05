@@ -297,7 +297,7 @@ header.navbar {
 }
 
 header.navbar .navbar-inner {
-    min-height:             150px;
+    min-height:             100px;
 }
 
 header.navbar .navbar-inner > .container {
@@ -390,51 +390,84 @@ header.navbar .header-logo {
 
 
 /* end header styles */
-
 /*******************************************************************************************
 *
-*	Footer styles
+*   Footer styles
 *
 ********************************************************************************************/
 
 
-footer .sub-footer {
-		background-color: #000;
-		height:30px;
+footer .page-footer {
+    background-color:               #34495e;
+    /*line-height:                    48px;*/
+    color:                          #fff;
+    font-size:                      13px;
 
-	}
-
-		 .sub-footer ul {
-			margin: 0;
-			padding: 0;
-			text-align: center;
-
-		}
-
-		.sub-footer ul li {
-			list-style-type: none;
-			font-size: 12px;
-			line-height:30px;
-			color: #666;
-			display:inline;
-			margin: 0 5px;
-		}
-
-		.sub-footer ul li a, .sub-footer ul li a:hover, ul li a:focus {
-			color: #999;
-		}
-
-footer .social-footer {
-	background-color: #777;
-	height: 40px;
-	margin-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top: 1px solid #aeb6bf;
+    border-bottom: 1px solid #aeb6bf;
 }
-	.social-footer ul li {
-		color: #fff;
-		font-size: 16px;
-		line-height:40px;
-	}
 
+footer .page-footer .footer-bar {
+    height: 48px;
+
+}
+    footer .page-footer .left-block {
+        margin-top: 5px;
+    }
+    footer .page-footer .right-block {
+        margin-top: 15px;
+    }
+
+
+        footer .page-footer .footer-bar > div > div,
+        footer .page-footer .inline-list,
+        footer .page-footer .copyright {
+            display: inline-block;
+        }
+
+
+        footer .page-footer a {
+            text-decoration:                underline;
+            color:                          #fff;
+        }
+
+        footer .page-footer .follow-us,
+        footer .page-footer .copyright  {
+           margin-right:                   20px; 
+        }
+          
+
+            footer .page-footer .inline-list > div {
+                display: inline;
+                margin-right: 10px;
+            }
+
+    footer .page-footer .social-links {
+        position: relative;
+        top: 7px;
+    }
+        footer .page-footer .social-links a {
+           display: inline-block;
+           height:25px;
+           width: 25px;
+            margin-right: 5px;
+        }
+    
+
+.twitter {
+    background-position: 0 -150px;
+}
+
+
+.facebook {
+    background-position: -38px -150px;
+}
+
+.linkedin {
+    background-position: -75px -150px;
+}
 
 /* end footer styles */
 
@@ -693,7 +726,7 @@ form {
 
 
 	/*IE hacks*/
-	.lt-ie8 .formfield {
+/*	.lt-ie8 .formfield {
 		padding-right:42px;
 	}
 	 .lt-ie8 textarea {
@@ -710,7 +743,7 @@ form {
 	.lt-ie8 .span8 {
 		width:55%;
 	}
-
+*/
 	/* LOCATION PLUGIN*/
 	.location-map .explanation, .location-list .explanation {
 		margin:10px 0;
@@ -890,4 +923,54 @@ form {
         top:                        0;
         width:                      auto;
     }
+}
+@media only screen and (max-width: 800px) {
+/* Experimental code*/
+
+    /* Force table to not be like tables anymore */
+    #no-more-tables table,
+    #no-more-tables thead,
+    #no-more-tables tbody,
+    #no-more-tables th,
+    #no-more-tables td,
+    #no-more-tables tr {
+        display: block;
+    }
+     
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #no-more-tables thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+     
+    #no-more-tables tr { border: 1px solid #ccc; }
+     
+    #no-more-tables td {
+        /* Behave like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        text-align:left;
+    }
+     
+    #no-more-tables td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+     
+    /*
+    Label the data
+    */
+    #no-more-tables td:before { content: attr(data-title); }
 }

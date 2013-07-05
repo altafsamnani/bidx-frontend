@@ -13,22 +13,17 @@
     <div class="page-footer">
         <div class="container">
             <div class="footer-bar">
-            	<div class="pull-left ">
-            		<span>Follow us</span>
-
+            	<div class="pull-left left-block">
+            		<div class="follow-us">Follow us</div>
             	 	<div class="inline-list social-links">
-                        <div><a href="https://twitter.com/bid_x"><span class="fui-twitter"></span></a></div>
-                        <div><a href="https://www.facebook.com"><span class="fui-facebook"></span></a></div>
-                        <div><a href="http://www.linkedin.com/company/bidx"><span class="fui-linkedin"></span></a></div>
+                        <a href="https://twitter.com/bid_x" class="sprite twitter"></a>
+                        <a href="https://www.facebook.com" class="sprite facebook"></a>
+                        <a href="http://www.linkedin.com/company/bidx" class="sprite linkedin"></a>
                     </div>
-        				<!-- <li><a href="https://twitter.com/bid_x"><span class="fui-twitter"></span></a></li>
-        				<li><a href="https://www.facebook.com"><span class="fui-facebook"></span></a></li>
-        				<li><a href="http://www.linkedin.com/company/bidx"><span class="fui-linkedin"></span></a></li> -->
-            		<!-- </ul> -->
             	</div>
 
-            	<div class="pull-right">
-            		<span class="copyright">&copy; 2013. bidX.net. All rights reserved</span>
+            	<div class="pull-right right-block">
+            		<div class="copyright">&copy; 2013. bidX.net. All rights reserved</div>
                     <div class="inline-list footer-menu">
             			<div><a href="/sitemap">Sitemap</a></div>
             			<div><a href="/termsandconditions">Terms and conditions</a></div>
