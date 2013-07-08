@@ -232,7 +232,7 @@
 			</div>
 		</div>
 		<div class="text-center">
-			<a href="/features" class="btn btn-bidx-blue">View all features <i class="fui-arrow-right pull-right"></i></a>
+			<a href="/features" class="btn btn-bidx-blue">View all features<i class="fui-arrow-right pull-right"></i></a>
 		</div>
 		<hr />
 	</div>

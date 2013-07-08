@@ -117,12 +117,19 @@
 			<content>[bidx app="dashboard" view="investor-dashboard"]</content>
 		</post>
 		 <post>
-                        <post_id>14</post_id>
-                        <name>login</name>
-                        <title>Login</title>
-                        <mapping>^login?</mapping>
-                        <content>[bidx app="auth" view="standard-auth"]</content>
-                </post>
+	     	<post_id>14</post_id>
+            <name>login</name>
+            <title>Login</title>
+            <mapping>^login?</mapping>
+            <content>[bidx app="auth" view="standard-auth"]</content>
+	    </post>
+		<post>
+			<post_id>15</post_id>
+			<name>My inbox</name>
+			<title>My inbox</title>
+			<mapping>^my-inbox</mapping>
+			<content>[bidx app="inbox" view="overview"]</content>
+		</post>	    
 	</posts>
 
 	<widgets>

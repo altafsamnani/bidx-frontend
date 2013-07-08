@@ -67,6 +67,7 @@ hr {
 
 a, a:hover, a:visited, a:link  {
     text-decoration: none;
+    color: #08c;
 }
 
 
@@ -121,10 +122,12 @@ a, a:hover, a:visited, a:link  {
 
 .btn-bidx-blue {
   background-color: #5dade2;
+  color: #fff !important;
 }
 
 .btn-bidx-blue:hover, .btn-bidx-blue:focus  {
   background-color: #34495e;
+  color: #fff;
 }
 .btn .fui-arrow-right {
     line-height: 18px;
@@ -201,6 +204,7 @@ a, a:hover, a:visited, a:link  {
 
     .page-intro .posthero {
         text-align:           center;
+        margin-bottom: 50px;
     }
         .posthero .hero-arrow {
             display:                inline-block;
