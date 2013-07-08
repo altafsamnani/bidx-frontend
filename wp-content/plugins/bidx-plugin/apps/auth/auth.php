@@ -18,14 +18,6 @@ class auth extends Generic{
 	function __construct() {
 
 		add_action( 'wp_enqueue_scripts', array( &$this, 'register_auth_bidx_ui_libs' ) );
-		// ajax for logged in users
-		//add_action( 'wp_ajax_nopriv_bidx_request', array( &$this, 'ajax_submit_action' ) ); 
-		// wordpress login override
-		//add_action( 'wp_authenticate', array( &$this, 'ajax_submit_signin' ) );
-		// ajax login override
-		//add_action( 'wp_ajax_nopriv_bidx_signin', array( &$this, 'ajax_submit_signin' ) );
-		// logout override
-		//add_action( 'wp_logout', array( &$this, 'bidx_signout' ) );
 	}
 
 	/**
