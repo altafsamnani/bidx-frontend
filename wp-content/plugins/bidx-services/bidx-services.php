@@ -1600,6 +1600,8 @@ function bidx_staffmail ()
         $requestData->status = 'ERROR';
     }
 
+    //Test
+
     $jsonData = json_encode ($requestData);
     echo $jsonData;
     die ();
