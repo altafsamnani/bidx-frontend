@@ -1,12 +1,40 @@
 <?php
 	
 /**
- * Load the central wp-load file to start the page loading from theme
+ * Bidx Wordpress Generic Functions
+ *
+ * @author Altaf Samnani
+ * 
+ * @version 1.0
  */
-//$absolute_path = __FILE__;
-//$path_to_file = explode( 'wp-content', $absolute_path );
-//$path_to_wp = $path_to_file[0];
-//require_once( $path_to_wp.'/wp-load.php' );
+class Generic
+{
+
+
+    public function getWidgetJsDependency ( $widgetType )
+    {
+       $uri =  $_SERVER['REQUEST_URI'];
+       $dep = array();
+       switch ($widgetType) {
+           case 'auth' :
+               $dep[] = 'bootstrap';
+              // Logger :: getLogger('rewrite') -> trace( 'Constructing Bidxdepinside'.$uri );
+             //   Logger :: getLogger('rewrite') -> trace( 'Constructing Bidxdeptrue'.strpos($uri, 'member') );
+               if(strpos($uri, 'member')) {
+
+                   $dep[] = 'memberprofile';
+                   Logger :: getLogger('rewrite') -> trace( 'Constructing inside Bidxdep'.implode(',',$dep) );
+               }
+               break;
+           default:
+               break;
+               
+       }
+       Logger :: getLogger('rewrite') -> trace( 'Constructing '.$widgetType.' Dependent Js'. implode(',',$dep) );
+       return $dep;
+
+    }
+}
 
 
 ?>
