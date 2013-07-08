@@ -12,14 +12,11 @@ Company: bidX;
 html, body {
 	margin: 0;
 	padding: 0;
+    height: 100%;
 	font-family:'weblysleek_ui_normalregular',sans-serif,Arial;
 }
 
-/** Padding is as high as the navbar + pageheader **/
-body {
-	padding-top: 				150px;
-    padding-bottom:             100px;
-}
+
 
 body.bidx-edit {
 	padding-top:				250px;
@@ -27,6 +24,20 @@ body.bidx-edit {
 
 body.bidx-business {
     padding-top:                300px;
+}
+
+/* sticky footer part  */
+#wrap {
+    height: auto !important;
+    margin: 0 auto -50px;
+    min-height: 100%;
+}
+
+#wrap > .container {
+    padding-top: 161px;
+}
+#push, footer {
+    height: 50px;
 }
 
 ::-webkit-input-placeholder {
