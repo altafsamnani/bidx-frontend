@@ -34,7 +34,7 @@ body.bidx-business {
 }
 
 #wrap > .container {
-    padding-top: 161px;
+    padding-top: 190px;
 }
 #push, footer {
     height: 50px;
@@ -487,11 +487,7 @@ footer .page-footer .footer-bar {
 *	Intro styles
 *
 ********************************************************************************************/
-.hero-block {
-	background: url(assets/img/hero_bg.jpg) repeat-x top left;
 
-	position: relative;
-}
 /*
 .hero-block .shade-top {
 	background: url(../img/hero-block-shade-top.png) no-repeat center top !important;
@@ -501,7 +497,8 @@ footer .page-footer .footer-bar {
 }
 */
 
-
+/*Mattijs: Is this still used? */
+/*
 .top-border, .bottom-border {
 	border-top: 1px solid #CCCCCC;
 	height: 1px;
@@ -540,7 +537,7 @@ footer .page-footer .footer-bar {
 	padding:25px;
 
 
-}
+}*/
 
 .bid-social.twitter {
     background: url("assets/img/social-media-icons.png") no-repeat scroll 0 -5024px transparent;

@@ -13,7 +13,8 @@
             $children = get_pages('child_of=' . $post->ID . '&parent=' . $post->ID);
             if( count( $children ) > 0 ) {
             ?>
-            <div class="span9">
+            <div class="row-fluid">
+            <div class="span12 text-center">
                 <div class="navbar navbar-inverse">
                     <div class="navbar-inner">
                         <div class="nav-collapse collapse">
@@ -28,6 +29,7 @@
                     </div>
                 
                 </div>
+            </div>
             </div>
             <?php 
             }
