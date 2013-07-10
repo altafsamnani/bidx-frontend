@@ -11,15 +11,18 @@
 					<img src="/wp-content/themes/bidx/assets/img/logo-desktop.png" class="hidden-phone">
 					<img src="/wp-content/themes/bidx/assets/img/logo-mobile.png" class="visible-phone">
 				</a>
-				
+				<div class="bidlangswitcher"> <?php do_action('icl_language_selector');?></div>
 				<nav class="menu-top visible-desktop">
 					<ul class="unstyled inline nav">
 						<li><a href="/category/blog">Blog</a></li>
 						<li><a href="/about">About bidX</a></li>
 						<li><a href="/contact">Contact</a></li>
+                        <li>
 					</ul>
 				</nav>
+                   
 			</div>
+         
 			<nav class="nav-collapse collapse menu-main">
 				<?php
 				if (has_nav_menu('primary_navigation')) :

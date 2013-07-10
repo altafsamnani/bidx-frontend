@@ -570,7 +570,10 @@ body.home .hero-block {
 }
 
 
-
+.bidlangswitcher {
+    float:right;
+    margin-top:41px;
+}
 
 /* end intro styles */
 
