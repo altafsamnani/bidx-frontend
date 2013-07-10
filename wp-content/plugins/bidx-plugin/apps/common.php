@@ -55,12 +55,15 @@ class BidxCommon
             
 
             if (!$isWordpress) {
+                 
                 session_start ();
+            
                 //If Bidx Cookie set do the following
                 if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
+                  
                     $sessionVars = $this->getSessionVariables ($subDomain);
-         
+                 
                     if (!$sessionVars) { // If Session set dont do anything
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
@@ -70,7 +73,7 @@ class BidxCommon
                         //Set firsttime/new session variables
                         $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);
                     }
-              
+                 
                     //If not Logged in forcefully login to WP
                     $this->forceWordpressLogin ($subDomain, $sessionVars);
                 }
@@ -89,7 +92,8 @@ class BidxCommon
     {
         $sessionVars = false;
         //Get Previous Session Variables if Set and Not Failed Login
-        if (!empty ($_SESSION[$subDomain]) && !empty($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') {
+        if (!empty ($_SESSION[$subDomain]) && 
+             ((!empty($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $_SESSION[$subDomain]->authenticated))  {
             $sessionVars = $_SESSION[$subDomain];
         }
         return $sessionVars;
