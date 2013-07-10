@@ -592,6 +592,15 @@ body.home .hero-block {
     article.page ul {
         margin: 15px 0;
     }
+    
+    .testp:after {
+
+        content: .testp > img.attr(title);
+    }
+
+    .img-circle:after {
+        border: 1px solid black;
+    }
 
 
 /*******************************************************************************************

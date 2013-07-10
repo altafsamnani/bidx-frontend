@@ -18,6 +18,14 @@ require_once locate_template('/lib/scripts.php');         // Scripts and stylesh
 require_once locate_template('/lib/custom.php');          // Custom functions
 //require_once locate_template('../functions/form.php'); //custom form json to html converter
 
+/* add dividerbutton to editor */
+function enable_more_buttons($buttons) {
+  $buttons[] = 'hr';
+   return $buttons;
+}
+add_filter("mce_buttons", "enable_more_buttons");
+
+
 /**
  * Widget creation
  */

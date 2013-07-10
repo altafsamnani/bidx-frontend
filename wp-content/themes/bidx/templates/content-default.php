@@ -7,9 +7,12 @@
 </div>	  	
 <?php endif; ?>
 <?php while (have_posts()) : the_post(); 
-$content = get_the_content();
-$blocks = explode('<hr />', $content)
+	//$content = get_the_content();
+	$content = get_the_content_feed(); //Mattijs 10/7/2013: get_the_content doesnot apply shortcode filtering
+	$blocks = explode('<hr />', $content)
 ?>
+
+
 <article <?php post_class(); ?>>
 	
 	<?php 
@@ -18,7 +21,7 @@ $blocks = explode('<hr />', $content)
 	?>
 	<div class="container">
 		<br />
-
+	
 		<?php 
 			unset($blocks[0]);
 
