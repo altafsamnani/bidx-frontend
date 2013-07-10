@@ -136,6 +136,7 @@ a, a:hover, a:visited, a:link  {
 .thumbnail {
     border: 0px;
     box-shadow: none;
+    height: 250px;
 }
 
 /* End Global styles */
@@ -186,7 +187,7 @@ a, a:hover, a:visited, a:link  {
         .hero h1 {
             color: white;
         }
-        .hero .heroblock  {
+        .hero .heroblock, .hero .heroblock p  {
             color: white;
         }
             .heroblock > div {
