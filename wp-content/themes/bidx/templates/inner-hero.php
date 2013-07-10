@@ -21,7 +21,7 @@
                             <ul class="nav">
                             <?php foreach ($children as $child ) { ?>                           
                                 <li>
-                                  <a href="<?php echo $child -> guid; ?>"><?php echo $child -> post_name; ?></a>
+                                  <a href="<?php echo $child -> post_name; ?>"><?php echo $child -> post_title; ?></a>
                                 </li>
                             <?php } ?>
                             </ul>
