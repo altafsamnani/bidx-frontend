@@ -44,7 +44,7 @@ hr {
     background:             url(assets/img/hr.png) no-repeat;
     border:                 0;
     height:                 36px;
-
+    clear:                  both;
     margin:                 60px;
 }
 
@@ -133,6 +133,10 @@ a, a:hover, a:visited, a:link  {
     line-height: 18px;
 }
 
+.thumbnail {
+    border: 0px;
+    box-shadow: none;
+}
 
 /* End Global styles */
 
