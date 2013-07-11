@@ -120,6 +120,28 @@ a, a:hover, a:visited, a:link  {
     width:                  30px;
 }
 
+.bidx-list-checks {
+    margin: 0;
+}
+    .bidx-list-checks li {
+        list-style-type: none;
+        margin-left: 30px;
+        line-height: 22px;
+    }
+    .bidx-list-checks li:before {
+        content:"\e00a";
+        display: inline-block;
+        font-family: 'Flat-UI-Icons';
+        font-style: normal;
+        font-variant: normal;
+        font-weight: normal;
+        text-transform: none;
+        color: #2ECC71;
+        margin-left:-30px;
+        vertical-align: bottom;
+        width: 30px;
+    }
+
 .btn-bidx-blue {
   background-color: #5dade2;
   color: #fff !important;

@@ -41,7 +41,7 @@
                     <?php echo $blocks[0] ?>
                 </div>
             </div>
-
+            
         </div>
         <!-- end of container -->
     </div>

@@ -163,10 +163,10 @@
 					<span class="howitworks-freefasteasysetup"></span>
 				</div>
 				<h3 class="title"><?php _e('1. Free, fast and easy set-up','bidxfrontpage');?></h3>
-				<ul class="unstyled bidx-bullet-list">
-					<li><span class="fui-check"></span> <?php _e('Submit a request to create a Group at bidX.net','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('Customize and brand your Group page','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('Invite members, social media followers and contacts to join your Group','bidxfrontpage');?></li>
+				<ul class="bidx-list-checks">
+					<li><?php _e('Submit a request to create a Group at bidX.net','bidxfrontpage');?></li>
+					<li><?php _e('Customize and brand your Group page','bidxfrontpage');?></li>
+					<li><?php _e('Invite members, social media followers and contacts to join your Group','bidxfrontpage');?></li>
 				</ul>
 			</div>
 			<div class="span4 howitworks-block howitworks-block-sourceconnectfinance">
@@ -174,10 +174,10 @@
 					<span class="howitworks-sourceconnectfinance"></span>
 				</div>
 				<h3 class="title"><?php _e('2. Source, Connect, Finance','bidxfrontpage');?></h3>
-				<ul class="unstyled bidx-bullet-list">
-					<li><span class="fui-check"></span> <?php _e('Competition feature: Engage promising businesses and accelerate their growth','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('Mentoring feature: Unleash the potential of entrepreneurs, connecting them with the highest rated mentors','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('Matchmaking feature: Match the best businesses with committed investors','bidxfrontpage');?></li>
+				<ul class="bidx-list-checks">
+					<li><?php _e('Competition feature: Engage promising businesses and accelerate their growth','bidxfrontpage');?></li>
+					<li><?php _e('Mentoring feature: Unleash the potential of entrepreneurs, connecting them with the highest rated mentors','bidxfrontpage');?></li>
+					<li><?php _e('Matchmaking feature: Match the best businesses with committed investors','bidxfrontpage');?></li>
 				</ul>
 			</div>
 			<div class="span4 howitworks-block howitworks-block-generaterevenues">
@@ -185,9 +185,9 @@
 					<span class="howitworks-generaterevenues"></span>
 				</div>
 				<h3 class="title"><?php _e('3. Generate revenues','bidxfrontpage');?></h3>
-				<ul class="unstyled bidx-bullet-list">
-					<li><span class="fui-check"></span> <?php _e('Our solutions are not only innovative but also profitable. We offer a fair and transparent revenue sharing package','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('We are actively looking out for functional and content partners to provide our clients with the best options','bidxfrontpage');?></li>
+				<ul class="bidx-list-checks">
+					<li><?php _e('Our solutions are not only innovative but also profitable. We offer a fair and transparent revenue sharing package','bidxfrontpage');?></li>
+					<li><?php _e('We are actively looking out for functional and content partners to provide our clients with the best options','bidxfrontpage');?></li>
 				</ul>
 			</div>
 		</div>
@@ -245,10 +245,10 @@
 				<h3 class="title"><?php _e('For Entrepreneurs');?></h3>
 				<p><?php _e('If you are an entrepreneur and need to expose your business to investors you are in the right place.','bidxfrontpage');?></p>
 				<h5 class="subtitle"><?php _e("What's in it for me?",'bidxfrontpage');?></h5>
-				<ul class="unstyled bidx-bullet-list">
-					<li><span class="fui-check"></span> <?php _e('Use templates &amp; services to create finance ready Business Proposals','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('Join Groups to generate leads for your business, network with like-minded professionals and find the expertise to grow your business','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('Find and connect with mentors &amp; investors','bidxfrontpage');?></li>
+				<ul class="bidx-list-checks">
+					<li><?php _e('Use templates &amp; services to create finance ready Business Proposals','bidxfrontpage');?></li>
+					<li><?php _e('Join Groups to generate leads for your business, network with like-minded professionals and find the expertise to grow your business','bidxfrontpage');?></li>
+					<li><?php _e('Find and connect with mentors &amp; investors','bidxfrontpage');?></li>
 				</ul>
 				<a href="/entrepreneurs" class="btn btn-bidx-blue"><?php _e('Entrepreneurs');?> <i class="fui-arrow-right pull-right"></i></a>
 			</div>
@@ -256,10 +256,10 @@
 				<h3 class="title"><?php _e('For Investors');?></h3>
 				<p><?php _e('As an investor you will have access to the best Business Proposals matching your preferences.','bidxfrontpage');?></p>
 				<h5 class="subtitle"><?php _e("What's in it for me?",'bidxfrontpage');?></h5>
-				<ul class="unstyled bidx-bullet-list">
-					<li><span class="fui-check"></span> <?php _e('Get alerts of the latest relevant businesses based on your interests','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('Find and Connect with entrepreneurs in selected areas','bidxfrontpage');?></li>
-					<li><span class="fui-check"></span> <?php _e('Join Groups of Business and Finance service providers to network and generate leads','bidxfrontpage');?></li>
+				<ul class="bidx-list-checks">
+					<li><?php _e('Get alerts of the latest relevant businesses based on your interests','bidxfrontpage');?></li>
+					<li><?php _e('Find and Connect with entrepreneurs in selected areas','bidxfrontpage');?></li>
+					<li><?php _e('Join Groups of Business and Finance service providers to network and generate leads','bidxfrontpage');?></li>
 				</ul>
 				<a href="/investors" class="btn btn-bidx-blue"><?php _e('Investors','bidxfrontpage');?> <i class="fui-arrow-right pull-right"></i></a>
 			</div>
