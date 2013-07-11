@@ -509,7 +509,8 @@ body.home .hero-block {
 }
 
 .signup .btn.btn-primary {
-    background-color:           #f49e34
+    background-color:           #f49e34;
+    color: #fff;
 }
 
 
@@ -682,6 +683,7 @@ body.home .hero-block {
         padding:4px;
         display: none;
         text-align: left;
+        text-shadow: 0 0 7px white;
     }
 
     .error_separate {
@@ -733,12 +735,12 @@ body.home .hero-block {
 /**
  * Image styles
  */
-/*.alignright {
+.alignright {
 	float: right;
 }
 .alignleft {
     float: left;
-}*/
+}
 
 
 
