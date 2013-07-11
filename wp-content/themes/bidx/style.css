@@ -250,87 +250,87 @@ a, a:hover, a:visited, a:link  {
 *
 ********************************************************************************************/
 
-.partners {
+footer .partners {
   background:               #f4f4f4;
   min-height:               250px;
 
 }
 
-  .partnerlist {
+  .partners .partnerlist {
     text-align:               justify;
     font-size:                0.1px; /*hide whitespace between elements*/
   }
 
-  .partnerlist:after {
+  .partners .partnerlist:after {
     content:                  '';
     display:                  inline-block;
     width:                    100%;
   }
 
-.partner {
-    white-space:            nowrap;
-    text-indent:            -9999px;
-    display:                inline-block;
-    background-image:       url(assets/img/partners_sprite.png);
-    background-repeat:      no-repeat;
-    width:                  220px;
-    height:                 90px;
-    margin-top:             80px;
+    .partnerList .partner {
+        white-space:            nowrap;
+        text-indent:            -9999px;
+        display:                inline-block;
+        background-image:       url(assets/img/partners_sprite.png);
+        background-repeat:      no-repeat;
+        width:                  220px;
+        height:                 90px;
+        margin-top:             80px;
 
-  -webkit-transition:       background-position 0.25s;
-     -moz-transition:       background-position 0.25s;
-       -o-transition:       background-position 0.25s;
-          transition:       background-position 0.25s;
-}
+      -webkit-transition:       background-position 0.25s;
+         -moz-transition:       background-position 0.25s;
+           -o-transition:       background-position 0.25s;
+              transition:       background-position 0.25s;
+    }
 
-.partner-bid {
-  background-position:      0 0;
+    .partnerList .partner-bid {
+      background-position:      0 0;
 
-  width:                    200px;
-}
+      width:                    200px;
+    }
 
-  .partner-bid:hover {
-    background-position:      0 -90px;
-  }
+    .partnerList .partner-bid:hover {
+        background-position:      0 -90px;
+      }
 
-.partner-sampoerna {
-  background-position:      -220px 0;
+    .partnerList .partner-sampoerna {
+      background-position:      -220px 0;
 
-  width:                    180px;
-}
+      width:                    180px;
+    }
 
-  .partner-sampoerna:hover {
-    background-position:      -220px -90px;
-  }
+    .partnerList .partner-sampoerna:hover {
+        background-position:      -220px -90px;
+      }
 
-.partner-postcodeloterij {
-  background-position:      -440px 0;
+    .partnerList .partner-postcodeloterij {
+      background-position:      -440px 0;
 
-  width:                    100px;
-}
+      width:                    100px;
+    }
 
-  .partner-postcodeloterij:hover {
-    background-position:      -440px -90px;
-  }
+    .partnerList .partner-postcodeloterij:hover {
+        background-position:      -440px -90px;
+      }
 
-.partner-did {
-  background-position:      -660px 0;
-  width:                    100px;
-}
+    .partnerList .partner-did {
+      background-position:      -660px 0;
+      width:                    100px;
+    }
 
-  .partner-did:hover {
-    background-position:      -660px -90px;
-  }
+    .partnerList .partner-did:hover {
+        background-position:      -660px -90px;
+      }
 
-.partner-usaid {
-  background-position:      -880px 0;
+    .partnerList .partner-usaid {
+      background-position:      -880px 0;
 
-  width:                    145px;
-}
+      width:                    145px;
+    }
 
-  .partner-usaid:hover {
-    background-position:      -880px -90px;
-  }
+    .partnerList .partner-usaid:hover {
+        background-position:      -880px -90px;
+      }
 
 
 
