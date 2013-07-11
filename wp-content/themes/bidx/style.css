@@ -610,6 +610,17 @@ body.home .hero-block {
         border: 1px solid black;
     }
 
+    /* specific alginment for team page (centering thumbails */
+    .our-team article > .container > .row-fluid {
+        text-align: center;
+    }
+    .our-team article > .container > .row-fluid .alignleft {
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+    }
+
+
 
 /*******************************************************************************************
 *
@@ -722,12 +733,14 @@ body.home .hero-block {
 /**
  * Image styles
  */
-.alignright {
+/*.alignright {
 	float: right;
 }
 .alignleft {
     float: left;
-}
+}*/
+
+
 
 /**
  * Widget styles
