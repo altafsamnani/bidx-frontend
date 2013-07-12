@@ -407,6 +407,10 @@ header.navbar .header-logo {
 *
 ********************************************************************************************/
 
+/** flatui override, since design seems to be aiming at a 50px footer but seems not te be in place yet completely but is now overlapping **/
+footer .bottom-menu {
+    padding: 10px 0;
+}
 
 footer .page-footer {
     background-color:               #34495e;
