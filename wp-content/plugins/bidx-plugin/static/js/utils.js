@@ -144,7 +144,13 @@
 
                 if ( $input.hasClass( "btn-group" ) )
                 {
+                    value = [];
+                    $input.find( ".active" ).each( function()
+                    {
+                        var $btn = $( this );
 
+                        value.push( $btn.attr( "value" ) );
+                    } );
                 }
                 else
                 {

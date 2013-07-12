@@ -54,10 +54,10 @@
         ,   'focusSocialImpact'
         ,   'focusEnvImpact'
         ,   'focusConsumerType'
-        ,   'focusCity'
-        ,   'focusCountry'
+//        ,   'focusCity'
         ,   'focusStageBusiness'
         ,   'focusGender'
+        ,   'focusLanguage'
         ,   'investmentType'
         ,   'additionalPreferences'
         ,   'numberInvestments'
@@ -108,8 +108,8 @@
 
     // Grab the snippets from the DOM
     //
-    snippets.$previousInvestment    = $snippets.children( ".previousInvestmentItem" ).remove();
-    snippets.$reference             = $snippets.children( ".referenceItem"          ).remove();
+    snippets.$previousInvestment    = $snippets.children( ".previousInvestmentsItem" ).remove();
+    snippets.$reference             = $snippets.children( ".referencesItem"          ).remove();
     snippets.$attachment            = $snippets.children( ".attachmentItem"          ).remove();
 
     // Populate the dropdowns with the values
@@ -140,11 +140,11 @@
     {
         if ( !index )
         {
-            index = $previousInvestmentContainer.find( ".previousInvestmentItem" ).length;
+            index = $previousInvestmentContainer.find( ".previousInvestmentsItem" ).length;
         }
 
         var $previousInvestment = snippets.$previousInvestment.clone()
-        ,   inputNamePrefix = "previousInvestment[" + index + "]"
+        ,   inputNamePrefix = "previousInvestments[" + index + "]"
         ;
 
         // Update all the input elements and prefix the names with the right index
@@ -190,11 +190,11 @@
     {
         if ( !index )
         {
-            index = $referencesContainer.find( ".referenceItem" ).length;
+            index = $referencesContainer.find( ".referencesItem" ).length;
         }
 
         var $reference      = snippets.$reference.clone()
-        ,   inputNamePrefix = "reference[" + index + "]"
+        ,   inputNamePrefix = "references[" + index + "]"
         ;
 
         // Update all the input elements and prefix the names with the right index
@@ -469,9 +469,29 @@
 
         // Now the nested objects
         //
+        var previousInvestments = bidx.utils.getValue( member, "bidxInvestorProfile.previousInvestments", true );
+
+        if ( previousInvestments )
+        {
+            $.each( previousInvestments, function( i, item )
+            {
+                _addPreviousInvestment( i, item );
+            } );
+        }
+
+        var references = bidx.utils.getValue( member, "bidxInvestorProfile.references", true );
+
+        if ( references )
+        {
+            $.each( references, function( i, item )
+            {
+                _addReference( i, item );
+            } );
+        }
+
         $.each( [ "institutionAddress" ], function()
         {
-            var nest    = this
+            var nest    = "" + this // unboxing
             ,   items   = bidx.utils.getValue( member, "bidxInvestorProfile." + nest, true )
             ;
 
@@ -591,7 +611,7 @@
 
         // Collect the nested objects || Arrays
         //
-        $.each( [ "references" ], function()
+        $.each( [ "references", "previousInvestments" ], function()
         {
             var nest        = this
             ,   i           = 0
