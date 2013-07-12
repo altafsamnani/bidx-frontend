@@ -1,19 +1,25 @@
 ( function( $ )
 {
-    var $element                    = $( "#editInvestor" )
-    ,   $views                      = $element.find( ".view" )
-    ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
-    ,   $snippets                   = $element.find( ".snippets" )
+    var $element                        = $( "#editInvestor" )
+    ,   $views                          = $element.find( ".view" )
+    ,   $editForm                       = $views.filter( ".viewEdit" ).find( "form" )
+    ,   $snippets                       = $element.find( ".snippets" )
 
-    ,   $investorType               = $editForm.find( "[name='investorType']" )
+    ,   $investorType                   = $editForm.find( "[name='investorType']" )
 
-    ,   $attachments                = $editForm.find( ".attachments" )
-    ,   $attachmentList             = $attachments.find( ".attachmentList" )
+    ,   $btnAddPreviousInvestment       = $editForm.find( "[href$='#addPreviousInvestment']" )
+    ,   $previousInvestmentContainer    = $editForm.find( ".previousInvestmentContainer" )
 
-    ,   $toggles                    = $element.find( ".toggle" ).hide()
-    ,   $toggleInvestsForInst       = $element.find( "[name='investsForInst']"      )
+    ,   $btnAddReference                = $editForm.find( "[href$='#addReference']" )
+    ,   $referencesContainer            = $editForm.find( ".referencesContainer" )
 
-    ,   $institutionAddressMap          = $editForm.find( ".currentAddressMap" )
+    ,   $attachments                    = $editForm.find( ".attachments" )
+    ,   $attachmentList                 = $attachments.find( ".attachmentList" )
+
+    ,   $toggles                        = $element.find( ".toggle" ).hide()
+    ,   $toggleInvestsForInst           = $element.find( "[name='investsForInst']"      )
+
+    ,   $institutionAddressMap          = $editForm.find( ".institutionAddressMap" )
     ,   $institutionAddressCountry      = $editForm.find( "[name='institutionAddress.country']"         )
     ,   $institutionAddressCityTown     = $editForm.find( "[name='institutionAddress.cityTown']"        )
     ,   $institutionAddressPostalCode   = $editForm.find( "[name='institutionAddress.postalCode']"      )
@@ -52,6 +58,7 @@
         ,   'focusCountry'
         ,   'focusStageBusiness'
         ,   'focusGender'
+        ,   'investmentType'
         ,   'additionalPreferences'
         ,   'numberInvestments'
         ,   'totalInvestment'
@@ -68,14 +75,31 @@
         ,   'streetNumber'
         ]
 
-    ,   previousInvestments:            // array
+    ,   previousInvestments:
         [
             'companyName'
         ,   'companyWebsite'
+        ,   'investment'
         ,   'investmentType'
         ]
 
-    ,   attachment:                     // array
+    ,   references:
+        [
+            'firstName'
+        ,   'lastName'
+        ,   'professionalTitle'
+        ,   'linkedIn'
+        ,   'emailAddress'
+        ,   {
+                'contactDetail[0]':         // yes.. bad! but only one for now, just getting it to work
+                [
+                    'landLine'
+                ,   'mobile'
+                ]
+            }
+        ]
+
+    ,   attachment:
         [
             "purpose"
         ,   "documentType"
@@ -84,14 +108,150 @@
 
     // Grab the snippets from the DOM
     //
-    //snippets...      = $snippets.children( "....Item"   ).remove();
+    snippets.$previousInvestment    = $snippets.children( ".previousInvestmentItem" ).remove();
+    snippets.$reference             = $snippets.children( ".referenceItem"          ).remove();
+    snippets.$attachment            = $snippets.children( ".attachmentItem"          ).remove();
 
+    // Populate the dropdowns with the values
+    //
+    bidx.data.getItem( "investmentType", function( err, investmentTypes )
+    {
+        var $investmentType = snippets.$previousInvestment.find( "[name='investmentType']" );
+        $investmentType.append( $( "<option value='' />" ).text( "Select investment type" ));
+
+        bidx.utils.populateDropdown( $investmentType, investmentTypes );
+    } );
 
     // Disable disabled links
     //
     $element.delegate( "a.disabled", "click", function( e )
     {
         e.preventDefault();
+    } );
+
+    // Instantiate reflowrower on the previousInvestment container
+    //
+    $previousInvestmentContainer.reflowrower( { itemsPerRow: 2 } );
+    $referencesContainer.reflowrower( { itemsPerRow: 2 } );
+
+    // Add the snippet for a previous investment
+    //
+    var _addPreviousInvestment = function( index, previousInvestment )
+    {
+        if ( !index )
+        {
+            index = $previousInvestmentContainer.find( ".previousInvestmentItem" ).length;
+        }
+
+        var $previousInvestment = snippets.$previousInvestment.clone()
+        ,   inputNamePrefix = "previousInvestment[" + index + "]"
+        ;
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $previousInvestment.find( "input, select, textarea" ).each( function( )
+        {
+            var $input = $( this );
+
+            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
+        } );
+
+        if ( previousInvestment )
+        {
+            $.each( fields.previousInvestments, function( j, f )
+            {
+                var $input  = $previousInvestment.find( "[name='" + inputNamePrefix + "." + f + "']" )
+                ,   value   = bidx.utils.getValue( previousInvestment, f )
+                ;
+
+                $input.each( function()
+                {
+                    bidx.utils.setElementValue( $( this ), value  );
+                } );
+            } );
+        }
+
+        $previousInvestmentContainer.reflowrower( "addItem", $previousInvestment );
+    };
+
+    // Add an empty previous business block
+    //
+    $btnAddPreviousInvestment.click( function( e )
+    {
+        e.preventDefault();
+
+        _addPreviousInvestment();
+    } );
+
+    // Add the snippet for a reference (and fill it with data)
+    //
+    var _addReference = function( index, reference )
+    {
+        if ( !index )
+        {
+            index = $referencesContainer.find( ".referenceItem" ).length;
+        }
+
+        var $reference      = snippets.$reference.clone()
+        ,   inputNamePrefix = "reference[" + index + "]"
+        ;
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $reference.find( "input, select, textarea" ).each( function( )
+        {
+            var $input = $( this );
+
+            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
+        } );
+
+        if ( reference )
+        {
+            $.each( fields.references, function( j, f )
+            {
+                _setElementValue( f );
+            } );
+        }
+
+        $referencesContainer.reflowrower( "addItem", $reference );
+
+        function _setElementValue( field, prefix )
+        {
+            if ( $.type( field ) === "object" )
+            {
+                $.each( field, function( prop, fields )
+                {
+                    var newPrefix = ( prefix ? "." : "" ) + prop;
+
+                    $.each( fields, function( idx, f )
+                    {
+                        _setElementValue( f, newPrefix );
+                    } );
+                } );
+            }
+            else
+            {
+                var $input  = $reference.find( "[name='" + inputNamePrefix + "." + field + "']" )
+                ,   value   = bidx.utils.getValue( reference, field )
+                ;
+
+                $input.each( function()
+                {
+                    bidx.utils.setElementValue( $( this ), value  );
+                } );
+            }
+        }
+    };
+
+    // Add an empty previous business block
+    //
+    $btnAddReference.click( function( e )
+    {
+        e.preventDefault();
+
+        _addReference();
     } );
 
 
@@ -437,6 +597,8 @@
         // Reset any state
         //
         $attachmentList.empty();
+        $referencesContainer.empty();
+        $previousInvestmentContainer.empty();
 
         // Inject the save and button into the controls
         //
@@ -711,14 +873,6 @@
         else
         {
             _addAttachmentToScreen( result.data );
-
-            // Clear the input by cloneing it
-            //
-            var $input = result.el;
-
-            $input.replaceWith( $input.clone() );
-
-            $input.fileUpload( { "parentForm": $input.prop( "form" ) });
         }
     };
 
