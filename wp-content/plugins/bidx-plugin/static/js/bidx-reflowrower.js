@@ -21,6 +21,7 @@
             widgetClass:        "reflowrower"
         ,   rowClass:           "reflow-row"
         ,   itemClass:          "reflow-row-item"
+        ,   itemsPerRow:        3
 
         ,   extraRowClasses:    "row-fluid"
         }
@@ -51,7 +52,7 @@
             {
                 var $row = $( this );
 
-                if ( $row.children().length < 3 )
+                if ( $row.children().length < options.itemsPerRow )
                 {
                     $rowWithRoom = $row;
                     return false;
