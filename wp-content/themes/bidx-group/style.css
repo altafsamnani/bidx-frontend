@@ -19,11 +19,11 @@ html, body {
 
 
 body.bidx-edit {
-	padding-top:				250px;
+	padding-top:				60px;
 }
 
 body.bidx-business {
-    padding-top:                300px;
+    padding-top:                110px;
 }
 
 /* sticky footer part  */
@@ -446,9 +446,9 @@ footer .page-footer .footer-bar {
 
         footer .page-footer .follow-us,
         footer .page-footer .copyright  {
-           margin-right:                   20px; 
+           margin-right:                   20px;
         }
-          
+
 
             footer .page-footer .inline-list > div {
                 display: inline;
@@ -465,7 +465,7 @@ footer .page-footer .footer-bar {
            width: 25px;
             margin-right: 5px;
         }
-    
+
 
 .twitter {
     background-position: 0 -150px;
@@ -944,16 +944,16 @@ form {
     #no-more-tables tr {
         display: block;
     }
-     
+
     /* Hide table headers (but not display: none;, for accessibility) */
     #no-more-tables thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
-     
+
     #no-more-tables tr { border: 1px solid #ccc; }
-     
+
     #no-more-tables td {
         /* Behave like a "row" */
         border: none;
@@ -963,7 +963,7 @@ form {
         white-space: normal;
         text-align:left;
     }
-     
+
     #no-more-tables td:before {
         /* Now like a table header */
         position: absolute;
@@ -976,7 +976,7 @@ form {
         text-align:left;
         font-weight: bold;
     }
-     
+
     /*
     Label the data
     */
