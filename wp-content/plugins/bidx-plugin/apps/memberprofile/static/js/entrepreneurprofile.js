@@ -105,19 +105,6 @@
         $toggles.filter( ".togglePrevRunBusiness" )[ fn ]();
     } );
 
-    // Click handler for removing an item
-    //
-    $previousBusinessContainer.delegate( "[href$=#removePreviousBusiness]", "click", function( e )
-    {
-        e.preventDefault();
-
-        var $btn                    = $( this )
-        ,   $previousBusinessItem   = $btn.closest( ".previousBusinessItem" )
-        ;
-
-        $previousBusinessContainer.reflowrower( "removeItem", $previousBusinessItem );
-    } );
-
     // Add the snippet for another run business
     //
     var _addPreviousBusiness = function( index, previousBusiness )
@@ -687,13 +674,6 @@
         else
         {
             _addCVToScreen( result.data );
-
-            // Clear the input by cloneing it
-            //
-            var $input = result.el;
-
-            $input.replaceWith( $input.clone() );
-            $input.fileUpload( { "parentForm": $input.prop( "form" ) });
         }
     };
 
