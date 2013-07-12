@@ -567,14 +567,14 @@
         {
             var nest        = this
             ,   memberPath  = "bidxInvestorProfile." + nest
-            ,   item        = bidx.utils.getValue( member, memberPath, true )
+            ,   item        = bidx.utils.getValue( member, memberPath )
             ;
 
             // Property not existing? Add it as an empty array holding an empty object
             //
             if ( !item )
             {
-                item = [ {} ];
+                item = {};
                 bidx.utils.setValue( member, memberPath, item );
             }
 
@@ -587,6 +587,44 @@
 
                 bidx.utils.setValue( item, f, value );
             } );
+        } );
+
+        // Collect the nested objects || Arrays
+        //
+        $.each( [ "references" ], function()
+        {
+            var nest        = this
+            ,   i           = 0
+            ,   count       = $editForm.find( "." + nest + "Item" ).length
+            ,   memberPath  = "bidxInvestorProfile." + nest
+            ,   item        = bidx.utils.getValue( member, memberPath, true )
+            ;
+
+            // Property not existing? Add it as an empty array holding an empty object
+            //
+            if ( !item )
+            {
+                item = [ {} ];
+                bidx.utils.setValue( member, memberPath, item );
+            }
+
+            for ( i = 0; i < count; i++ )
+            {
+                if ( !item[ i ] )
+                {
+                    item[ i ] = {};
+                }
+
+                $.each( fields[ nest ], function( j, f )
+                {
+                    var inputPath   = nest + "[" + i + "]." + f
+                    ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
+                    ,   value       = bidx.utils.getElementValue( $input )
+                    ;
+
+                    bidx.utils.setValue( item[ i ], f, value );
+                } );
+            }
         } );
     };
 
@@ -759,8 +797,6 @@
         _getFormValues();
 
         bidx.utils.log( "about to save member", member );
-
-        return;
 
         bidx.api.call(
             "member.save"
