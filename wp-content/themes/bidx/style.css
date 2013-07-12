@@ -192,7 +192,7 @@ a, a:hover, a:visited, a:link  {
         width:                      134px;
         height:                     82px;
         display:                    inline-block;
-
+        float: left;
     }
     /* ! most header styles are located in media query section at the bottom of this document */
 

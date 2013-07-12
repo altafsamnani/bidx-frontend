@@ -14,9 +14,9 @@
 				<div class="bidlangswitcher"> <?php do_action('icl_language_selector');?></div>
 				<nav class="menu-top visible-desktop">
 					<ul class="unstyled inline nav">
-						<li><a href="/category/blog">Blog</a></li>
-						<li><a href="/about">About bidX</a></li>
-						<li><a href="/contact">Contact</a></li>
+						<li><a href="/category/blog"><?php _e('Blog','bidx');?></a></li>
+						<li><a href="/about"><?php _e('About bidX','bidx');?></a></li>
+						<li><a href="/contact"><?php _e('Contact','bidx');?></a></li>
                         <li>
 					</ul>
 				</nav>
