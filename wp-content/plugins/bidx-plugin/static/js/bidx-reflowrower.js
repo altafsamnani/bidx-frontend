@@ -29,13 +29,24 @@
     ,   _create: function( params )
         {
             var widget  = this
-            ,   $item   = widget.element
+            ,   $el     = widget.element
             ;
 
             widget.options = $.extend( widget.options, params );
             var options    = widget.options;
 
-            $item.addClass( options.widgetClass );
+            $el.addClass( options.widgetClass );
+
+            $el.delegate( "[href$=#removeItem]", "click", function( e )
+            {
+                e.preventDefault();
+
+                var $btn    = $( this )
+                ,   $item   = $btn.closest( ".reflow-row-item" )
+                ;
+
+                widget.removeItem( $item );
+            } );
         }
 
     ,   addItem: function( $item )
@@ -65,6 +76,8 @@
 
                 $el.append( $rowWithRoom );
             }
+
+            $item.addClass( options.itemClass );
 
             $rowWithRoom.append( $item );
         }
