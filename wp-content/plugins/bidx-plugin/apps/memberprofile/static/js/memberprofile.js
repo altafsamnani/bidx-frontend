@@ -975,14 +975,6 @@
         else
         {
             _addAttachmentToScreen( result.data );
-
-            // Clear the input by cloneing it
-            //
-            var $input = result.el;
-
-            $input.replaceWith( $input.clone() );
-
-            $input.fileUpload( { "parentForm": $input.prop( "form" ) });
         }
     };
 
