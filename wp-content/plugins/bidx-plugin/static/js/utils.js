@@ -19,7 +19,7 @@
         } );
     };
 
-    // Set the value of an form element
+    // Set the value of an form element. All the funky / special component handling is done here.
     //
     var setElementValue = function( $el, value )
     {
@@ -28,6 +28,8 @@
         ,   dateObj
         ;
 
+        // Convert booleans to their string versions
+        //
         if ( value === true )
         {
             value = "true";
@@ -37,6 +39,8 @@
             value = "false";
         }
 
+        // When an data-type is defined on the HTML that has presendence over the handling of regular form inputs
+        //
         if ( dataType === "date" )
         {
             if ( value )
@@ -51,8 +55,26 @@
         {
             $el.tagsinput( "setValues", value );
         }
+        else if ( $el.hasClass( "btn-group" ))
+        {
+            // Value should be an array
+            //
+            if ( !$.isArray( value ) && typeof value !== "undefined" )
+            {
+                value = [ value ];
+            }
+
+            $.each( value, function( idx, v )
+            {
+                var $button = $el.find( "[value='" + v + "']" );
+
+                $button.addClass( "active" );
+            } );
+        }
         else
         {
+            // Regular form inputs
+            //
             if ( elType )
             {
                 switch( elType )
@@ -119,18 +141,26 @@
             break;
 
             default:
-                switch ( $input.attr( "type" ) )
+
+                if ( $input.hasClass( "btn-group" ) )
                 {
-                    case "radio":
-                        value = $input.filter( ":checked" ).val();
-                    break;
 
-                    case "checkbox":
-                        value = $input.is( ":checked" ) ? $input.val() : null;
-                    break;
+                }
+                else
+                {
+                    switch ( $input.attr( "type" ) )
+                    {
+                        case "radio":
+                            value = $input.filter( ":checked" ).val();
+                        break;
 
-                    default:
-                        value = $input.val();
+                        case "checkbox":
+                            value = $input.is( ":checked" ) ? $input.val() : null;
+                        break;
+
+                        default:
+                            value = $input.val();
+                    }
                 }
         }
 
