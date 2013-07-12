@@ -1018,6 +1018,21 @@ function bidx_wordpress_pre_action ($url = 'default', $file_values = NULL)
             $params['domain'] = $domain;
             break;
 
+        case 'investorprofileattachment':
+            $response['status'] = 'ok';
+            $id = $params['investorProfileId'];
+            $domain = $params['domain'];
+            unset ($params);
+
+            $params['path'] = '/attachment';
+            $params['purpose'] = 'attachment';
+
+            $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
+
+            $params['id'] = $id;
+            $params['domain'] = $domain;
+            break;
+
         case 'companylogo':
             $response['status'] = 'ok';
             $id = $params['companyProfileId'];
@@ -1061,7 +1076,7 @@ function bidx_wordpress_pre_action ($url = 'default', $file_values = NULL)
             $body.= 'Country   -'.$params['country'].'<br/>';
             $body.= 'Regards<br>Bidx Dev Team';
             $params['body'] = $body;
-            
+
         default:
             $response['status'] = 'ok';
             break;
@@ -1155,6 +1170,7 @@ function allowed_file_extension ($type, $file_type)
             }
             break;
         case 'memberprofileattachment':
+        case 'investorprofileattachment':
         case 'entrepreneurprofilecv':
         case 'entrepreneurprofileattachment':
             $is_allowed = true;
