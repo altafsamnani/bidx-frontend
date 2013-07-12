@@ -145,7 +145,7 @@
                         </div>
 
                         <div class="span6">
-                            <div class="currentAddressMap"></div>
+                            <div class="institutionAddressMap"></div>
                         </div>
                     </div>
 
@@ -205,16 +205,61 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label">Consumer type</label>
+                                <div class="controls">
+                                    <input type="text" name="focusConsumerType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="consumerType" placeholder="Consumer type">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <p>Investment size</p>
+                    <div class="flow-ruid">
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label">Stage of business</label>
+                                <div class="btn-group" data-toggle="buttons-checkbox" name="focusStageBusiness">
+                                  <button type="button" class="btn btn-primary" value="startUp">Start up</button>
+                                  <button type="button" class="btn btn-primary" value="established">Established</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label">Gender</label>
+                                <div class="btn-group" data-toggle="buttons-checkbox" name="focusGender">
+                                  <button type="button" class="btn btn-primary" value="m">Male</button>
+                                  <button type="button" class="btn btn-primary" value="f">Female</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label">Investment type</label>
+                                <div class="controls">
+                                    <input type="text" name="investmentType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="investmentType" placeholder="Investment type">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Investment size</h4>
 
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
                                 <label class="control-label">Minimal investment</label>
                                 <div class="controls">
-                                    <input type="text" name="minInvestment" placeholder="Minimal investment">
+                                    <div class="input-prepend">
+                                        <span class="add-on">$</span>
+                                        <input type="number" name="minInvestment" placeholder="Minimal investment" min="0">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -223,11 +268,25 @@
                             <div class="control-group formfield">
                                 <label class="control-label">Maximum investment</label>
                                 <div class="controls">
-                                    <input type="text" name="maxInvestment" placeholder="Maximal investment">
+                                    <div class="input-prepend">
+                                        <span class="add-on">$</span>
+                                        <input type="number" name="maxInvestment" placeholder="Maximal investment" min="0">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="row-fluid">
+                        <div class="span12">
+
+                            <div class="control-group formfield">
+                                <label class="control-label">Other preferences (max. 60 words)</label>
+                                <div class="controls">
+                                    <textarea name="additionalPreferences" placeholder="Please type any additional preferences"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </fieldset>
@@ -238,17 +297,60 @@
 
                     <div class="row-fluid">
                         <div class="span6">
-
-                        </div>
-                        <div class="span6">
-
+                            <div class="control-group formfield">
+                                <label class="control-label">Number of investments in the last 12 months</label>
+                                <div class="controls">
+                                    <input type="number" name="numberInvestments" placeholder="Number of investments">
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label">Amount invested in the last 12 months</label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <span class="add-on">$</span>
+                                        <input type="number" name="numberInvestments" placeholder="Number of investments">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label">Typical involvement</label>
+                                <div class="btn-group" data-toggle="buttons-checkbox" name="typicalInvolvement">
+                                  <button type="button" class="btn btn-primary" value="advisory">Advisory</button>
+                                  <button type="button" class="btn btn-primary" value="handsOn">Hands-On</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Previous investments</h4>
+
+                    <div class="previousInvestmentContainer"></div>
+
+                    <div>
+                        <a href="#addPreviousInvestment" class="btn btn-large btn-block btn-primary">Add another previous investment</a>
+                    </div>
+
                 </fieldset>
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editInvestor/references"></span>
                     <legend>References</legend>
+
+                    <div class="referencesContainer"></div>
+
+                    <div>
+                        <a href="#addReference" class="btn btn-large btn-block btn-primary">Add another reference</a>
+                    </div>
                 </fieldset>
 
                 <fieldset class="well">
@@ -277,10 +379,98 @@
     </div>
 
     <div class="snippets hide">
-        <div class="previousInvestmentItem">
-            Previousinvestment item.
+
+        <!-- Previous Investment -->
+        <div class="previousInvestmentItem span6 well well-white">
+            <div class="control-group formfield">
+                <label class="control-label">Company name</label>
+                <div class="controls">
+                    <input type="text" name="companyName" placeholder="Please type the name">
+                </div>
+            </div>
+
+            <div class="control-group formfield">
+                <label class="control-label">Company web-site?</label>
+                <div class="controls">
+                    <input type="text" name="companyWebsite" placeholder="Please type the URL">
+                </div>
+            </div>
+
+            <div class="control-group formfield">
+                <label class="control-label">Amount invested</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">$</span>
+                        <input type="number" name="investment" placeholder="Amount invested">
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group formfield">
+                <label class="control-label">Investment type</label>
+                <div class="controls">
+                    <select name="investmentType"></select>
+                </div>
+            </div>
+
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block">Remove this investment</a>
         </div>
 
+        <!-- Reference -->
+        <div class="referenceItem span6 well well-white">
+            <div class="control-group formfield">
+                <label class="control-label">First name</label>
+                <div class="controls">
+                    <input type="text" name="firstName" placeholder="Please type the first name">
+                </div>
+            </div>
+
+            <div class="control-group formfield">
+                <label class="control-label">Last name</label>
+                <div class="controls">
+                    <input type="text" name="lastName" placeholder="Please type the last name">
+                </div>
+            </div>
+
+            <div class="control-group formfield">
+                <label class="control-label">Professional title</label>
+                <div class="controls">
+                    <input type="text" name="professionalTitle" placeholder="Please type the professional title">
+                </div>
+            </div>
+
+            <div class="control-group formfield" >
+                <label class="control-label">LinkedIn profile</label>
+                <div class="controls">
+                    <input type="text" name="linkedIn" placeholder="Please type your LinkedIn profile url" />
+                </div>
+            </div>
+
+            <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"Please fill in a valid email address"}}]}'>
+                <label class="control-label">Email address</label>
+                <div class="controls">
+                    <input type="email" name="emailAddress" placeholder="Please type your email address" />
+                </div>
+            </div>
+
+            <div class="control-group formfield">
+                <label class="control-label">Landline</label>
+                <div class="controls">
+                    <input type="text" name="contactDetail[0].landLine" placeholder="Please type your landline number" />
+                </div>
+            </div>
+
+            <div class="control-group formfield">
+                <label class="control-label">Mobile</label>
+                <div class="controls">
+                    <input type="text" name="contactDetail[0].mobile" placeholder="Please type your mobile number" />
+                </div>
+            </div>
+
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block">Remove this reference</a>
+        </div>
+
+        <!-- Attachment -->
         <div class="fow-fluid clearfix attachmentItem">
             <div class="span4">
                 <a href="#" class="documentLink"><img class="img-rounded documentImage"></a>
