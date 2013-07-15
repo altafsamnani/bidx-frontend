@@ -135,7 +135,7 @@ if ($investorDetails) {
 
             // Typical involvement
             //
-            $typicalInvolvement = $this->getMultiValues( $this->exst ($investorDetails->typicalInvolvement), ', ');
+            $typicalInvolvement = $this->exst ($investorDetails->typicalInvolvement);
             $rowValues = array ('Typical involvement' => $typicalInvolvement);
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>

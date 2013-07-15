@@ -151,13 +151,22 @@
 
                 if ( $input.hasClass( "btn-group" ) )
                 {
-                    value = [];
-                    $input.find( ".active" ).each( function()
-                    {
-                        var $btn = $( this );
+                    var toggleType = $input.data( "toggle" );
 
-                        value.push( $btn.attr( "value" ) );
-                    } );
+                    if ( toggleType === "buttons-checkbox" )
+                    {
+                        value = [];
+                        $input.find( ".active" ).each( function()
+                        {
+                            var $btn = $( this );
+
+                            value.push( $btn.attr( "value" ) );
+                        } );
+                    }
+                    else if ( toggleType === "buttons-radio" )
+                    {
+                        value = $input.find( ".active" ).attr( "value" );
+                    }
                 }
                 else
                 {
