@@ -67,9 +67,7 @@ class BidxCommon
                     if (!$sessionVars) { // If Session set dont do anything
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
-
-                        //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
-                        $this->processEntities ($subDomain);
+                        
                         //Set firsttime/new session variables
                         $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);
                     }
@@ -80,6 +78,9 @@ class BidxCommon
                 
                 //Set static variables to access through pages
                 $this->setStaticVariables ($subDomain, $sessionVars);
+
+                //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
+                $this->processEntities ($subDomain);
 
                 $scriptValue = $this->injectJsVariables ($subDomain);
                 $this->setScriptJs ($subDomain, $scriptValue);
@@ -138,7 +139,7 @@ class BidxCommon
      */
     public function processEntities ($subDomain)
     {
-        if (!empty ($this::$bidxSession[$subDomain]->data)) {
+       if (!empty ($this::$bidxSession[$subDomain]->data)) {
             $entities = $this::$bidxSession[$subDomain]->data->entities;
             foreach ($entities as $key => $value) {
                 $bidxEntityType = $value->bidxEntityType;
