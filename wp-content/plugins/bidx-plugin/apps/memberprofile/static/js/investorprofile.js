@@ -54,15 +54,20 @@
         ,   'focusSocialImpact'
         ,   'focusEnvImpact'
         ,   'focusConsumerType'
-//        ,   'focusCity'
         ,   'focusStageBusiness'
         ,   'focusGender'
+        ,   'focusCountry'
         ,   'focusLanguage'
         ,   'investmentType'
         ,   'additionalPreferences'
         ,   'numberInvestments'
         ,   'totalInvestment'
         ,   'typicalInvolvement'
+        ]
+
+    ,   focusCity:
+        [
+            'cityTown'
         ]
 
     ,   institutionAddress:
@@ -211,30 +216,48 @@
         {
             $.each( fields.references, function( j, f )
             {
-                _setElementValue( f );
+                _setElementValue( reference, f, inputNamePrefix );
             } );
         }
 
         $referencesContainer.reflowrower( "addItem", $reference );
 
-        function _setElementValue( field, prefix )
+        function _setElementValue( data, field, prefix )
         {
             if ( $.type( field ) === "object" )
             {
                 $.each( field, function( prop, fields )
                 {
-                    var newPrefix = ( prefix ? "." : "" ) + prop;
+                    var newPrefix       = ( prefix ? prefix + "." : "" ) + prop
+                    ,   fieldPathParts  = prop.match( /([.\w]+)\[(\d+)\]/ )
+                    ,   isArray         = false
+                    ;
+
+                    if ( fieldPathParts )
+                    {
+                        isArray = true;
+                    }
 
                     $.each( fields, function( idx, f )
                     {
-                        _setElementValue( f, newPrefix );
+                        if ( isArray )
+                        {
+                            // TODO: itterate...
+                            //
+                            _setElementValue( data[ fieldPathParts[1] ][0], f, newPrefix );
+                        }
+                        else
+                        {
+                            _setElementValue( data[ prop ], f, newPrefix );
+                        }
+
                     } );
                 } );
             }
             else
             {
-                var $input  = $reference.find( "[name='" + inputNamePrefix + "." + field + "']" )
-                ,   value   = bidx.utils.getValue( reference, field )
+                var $input  = $reference.find( "[name='" + prefix + "." + field + "']" )
+                ,   value   = bidx.utils.getValue( data, field )
                 ;
 
                 $input.each( function()
@@ -489,33 +512,54 @@
             } );
         }
 
+        // Focuscity, special field because it's a single UI control but a complex structure in the API
+        //
+        var $focusCity  = $editForm.find( "[name='focusCity']" )
+        ,   focusCity   = bidx.utils.getValue( member, "bidxInvestorProfile.focusCity", true )
+        ,   focusCities = []
+        ;
+
+        if ( focusCity )
+        {
+            $.each( focusCity, function( idx, fc )
+            {
+                var cityTown = fc.cityTown;
+
+                if ( cityTown )
+                {
+                    focusCities.push( cityTown );
+                }
+            } );
+        }
+
+        bidx.utils.setElementValue( $focusCity, focusCities );
+
+        // Non-array nested structures
+        //
         $.each( [ "institutionAddress" ], function()
         {
             var nest    = "" + this // unboxing
-            ,   items   = bidx.utils.getValue( member, "bidxInvestorProfile." + nest, true )
+            ,   item    = bidx.utils.getValue( member, "bidxInvestorProfile." + nest )
             ;
 
-            if ( items )
+            if ( item )
             {
-                $.each( items, function( i, item )
+                $.each( fields[ nest ], function( j, f )
                 {
-                    $.each( fields[ nest ], function( j, f )
+                    var $input  = $editForm.find( "[name='" + nest + "." + f + "']" )
+                    ,   value   = bidx.utils.getValue( item, f )
+                    ;
+
+                    // Sometimes the data coming back from the API is in lowercase, and since it's a lookup concept we need to have it uppercase
+                    //
+                    if ( value && f === "country" )
                     {
-                        var $input  = $editForm.find( "[name='" + nest + "[" + i + "]." + f + "']" )
-                        ,   value   = bidx.utils.getValue( item, f )
-                        ;
+                        value = value.toUpperCase();
+                    }
 
-                        // Sometimes the data coming back from the API is in lowercase, and since it's a lookup concept we need to have it uppercase
-                        //
-                        if ( value && f === "country" )
-                        {
-                            value = value.toUpperCase();
-                        }
-
-                        $input.each( function()
-                        {
-                            bidx.utils.setElementValue( $( this ), value  );
-                        } );
+                    $input.each( function()
+                    {
+                        bidx.utils.setElementValue( $( this ), value  );
                     } );
                 } );
             }
@@ -609,15 +653,35 @@
             } );
         } );
 
+        // Focus City is a pretty special field. Its a tagsinput in the UI but a array of objects
+        // in the API
+        //
+        var $focusCity  = $editForm.find( "[name='focusCity']" )
+        ,   focusCities = bidx.utils.getElementValue( $focusCity )
+        ,   focusCity   = []
+        ;
+
+        if ( focusCities )
+        {
+            focusCity = $.map( focusCities, function( cityTown )
+            {
+                return { cityTown: cityTown };
+            } );
+        }
+
+        bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", focusCity );
+
+
         // Collect the nested objects || Arrays
         //
         $.each( [ "references", "previousInvestments" ], function()
         {
-            var nest        = this
-            ,   i           = 0
-            ,   count       = $editForm.find( "." + nest + "Item" ).length
-            ,   memberPath  = "bidxInvestorProfile." + nest
-            ,   item        = bidx.utils.getValue( member, memberPath, true )
+            var nest                = this
+            ,   i                   = 0
+            ,   count               = $editForm.find( "." + nest + "Item" ).length
+            ,   memberPath          = "bidxInvestorProfile." + nest
+            ,   item                = bidx.utils.getValue( member, memberPath, true )
+            ,   inputPathPrefix
             ;
 
             // Property not existing? Add it as an empty array holding an empty object
@@ -630,6 +694,8 @@
 
             for ( i = 0; i < count; i++ )
             {
+                inputPathPrefix = nest + "[" + i + "]";
+
                 if ( !item[ i ] )
                 {
                     item[ i ] = {};
@@ -637,12 +703,61 @@
 
                 $.each( fields[ nest ], function( j, f )
                 {
-                    var inputPath   = nest + "[" + i + "]." + f
-                    ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
-                    ,   value       = bidx.utils.getElementValue( $input )
-                    ;
+                    // TODO: make properly recursive, only one layer of nested-nested objects now
+                    //
+                    if ( $.type( f ) === "object" )
+                    {
+                        $.each( f, function( k, v )
+                        {
+                            var inputPath   = inputPathPrefix + "." + k
+                            ,   isArray     = false
+                            ,   myItem      = item[ i ]
+                            ;
 
-                    bidx.utils.setValue( item[ i ], f, value );
+                            // Is it an array?
+                            //
+                            var fieldPathParts = k.match( /([.\w]+)\[(\d+)\]/ );
+
+                            if ( fieldPathParts )
+                            {
+                                isArray     = true;
+                                myItem      = bidx.utils.getValue( item[ i ], fieldPathParts[ 1 ], true );
+
+                                if ( !myItem )
+                                {
+                                    myItem = [ {} ];
+                                    bidx.utils.setValue( item[ i ], fieldPathParts[ 1 ], myItem );
+                                }
+                            }
+
+                            $.each( v, function( j, f )
+                            {
+                                var $input      = $editForm.find( "[name='" + inputPath + "." + f + "']" )
+                                ,   value       = bidx.utils.getElementValue( $input )
+                                ;
+
+                                if ( isArray )
+                                {
+                                    // TODO: itterate, but index 0 is ok'ish for now
+                                    //
+                                    bidx.utils.setValue( myItem[ 0 ], f, value );
+                                }
+                                else
+                                {
+                                    bidx.utils.setValue( myItem, k + "." + f, value );
+                                }
+                            } );
+                        } );
+                    }
+                    else
+                    {
+                        var inputPath   = inputPathPrefix + "." + f
+                        ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
+                        ,   value       = bidx.utils.getElementValue( $input )
+                        ;
+
+                        bidx.utils.setValue( item[ i ], f, value );
+                    }
                 } );
             }
         } );
@@ -817,6 +932,7 @@
         _getFormValues();
 
         bidx.utils.log( "about to save member", member );
+
 
         bidx.api.call(
             "member.save"

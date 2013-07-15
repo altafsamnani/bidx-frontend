@@ -92,7 +92,6 @@ if ($investorDetails) {
                 'Enviromental impact'   =>  $this->exst ($investorDetails->focusEnvImpact),
                 'Consumer type'         =>  $this->exst ($investorDetails->focusConsumerType),
                 'Languages'             =>  $this->exst ($investorDetails->focusLanguage),
-                'Cities'                =>  $this->exst ($investorDetails->focusCity),
                 'Countries'             =>  $this->exst ($investorDetails->focusCountry),
                 'Stage of business'     =>  $this->exst ($investorDetails->focusStageBusiness),
                 'Gender'                =>  $this->exst ($investorDetails->focusGender),
@@ -101,6 +100,26 @@ if ($investorDetails) {
             foreach ( $multiValueProperties as $k => $v ) {
                 $values = $this->getMultiValues($v, ', ');
                 $rowValues = array ( $k => $values);
+                echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            }
+
+            // The focusCity property exists of an array of objects having the following properties:
+            // - cityTown
+            // - country (optional)
+            //
+            // Convert the array of objects into a single array and make a row out of it
+            //
+            $focusCities = array();
+            if ($this->exst ($investorDetails->focusCity)) {
+
+                foreach ($investorDetails->focusCity as $focusCity ) {
+                    if ($this->exst ($focusCity->cityTown)) {
+                        $focusCities[] = $focusCity->cityTown;
+                    }
+                }
+
+                $rowValues = array( 'City' => $this->getMultiValues( $focusCities, ', ' ) );
+
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
 
