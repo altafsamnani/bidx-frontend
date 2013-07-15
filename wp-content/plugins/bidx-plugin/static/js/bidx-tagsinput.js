@@ -27,7 +27,8 @@
 
         ,   state:
             {
-                dataValues:             null
+                dataKey:                null
+            ,   dataValues:             null
             ,   dataValuesByValue:      null
             }
         }
@@ -36,17 +37,19 @@
         {
             var widget      = this
             ,   $item       = widget.element
-            ,   dataKey     = $item.data( "bidxdatakey" )
             ;
 
-            if ( !window.bidx.data )
+            widget.options = $.extend( widget.options, params );
+            var options    = widget.options;
+
+            options.state.dataKey     = $item.data( "bidxdatakey" );
+
+            if ( options.state.dataKey && !window.bidx.data )
             {
                 alert( "bidx::tagsinput => No bidx.data available. Fatal!" );
                 return;
             }
 
-            widget.options = $.extend( widget.options, params );
-            var options    = widget.options;
 
             $item.addClass( options.widgetClass );
 
@@ -64,7 +67,7 @@
 
                 // If there was a fixed list of data
                 //
-                if ( dataKey && options.state.dataValues )
+                if ( options.state.dataKey && options.state.dataValues )
                 {
                     params.typeahead            = true;
                     params.onlyTagList          = true;
@@ -113,13 +116,13 @@
 
             // Does it have data key set?
             //
-            if ( dataKey )
+            if ( options.state.dataKey )
             {
-                window.bidx.data.getItem( dataKey, function( err, result )
+                window.bidx.data.getItem( options.state.dataKey, function( err, result )
                 {
                     if ( err )
                     {
-                        window.bidx.utils.error( "Problem getting bidx.data for key", dataKey, "populate a tagsinput control" );
+                        window.bidx.utils.error( "Problem getting bidx.data for key", options.state.dataKey, "populate a tagsinput control" );
                     }
 
                     options.state.dataValues            = result;
@@ -161,6 +164,15 @@
                 ,   value   = $tag.data( "value" )
                 ;
 
+                // If no data value is set, use the text value of the tag itself
+                // Most likely scenario this happens is when the tagsinput is used without a datasource
+                // And the user input is actually the real value
+                //
+                if ( !value )
+                {
+                    value = $tag.text();
+                }
+
                 if ( value )
                 {
                     values.push( value );
@@ -196,15 +208,22 @@
 
             $.each( values, function( idx, value )
             {
-                var item = options.state.dataValuesByValue[ value.toLowerCase() ];
+                var tagValue = value;
 
-                if ( !item )
+                if ( options.state.dataKey )
                 {
-                    window.bidx.utils.error( "bidx-tagsinput:data item not found for ", value, $el[0] );
-                    return;
+                    var item = options.state.dataValuesByValue[ value.toLowerCase() ];
+
+                    if ( !item )
+                    {
+                        window.bidx.utils.error( "bidx-tagsinput:data item not found for ", value, $el[0] );
+                        return;
+                    }
+
+                    tagValue = JSON.stringify( item );
                 }
 
-                $el.tagsManager( "pushTag", JSON.stringify( item ) );
+                $el.tagsManager( "pushTag", tagValue );
             } );
         }
     } );
