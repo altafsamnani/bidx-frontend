@@ -640,9 +640,18 @@ select {
     margin-bottom:              0;
 }
 
-.row-fluid .input-prepend input {
-    width:                      95%;
+/* 'fix' for having the input prepends take up the whole width */
+.row-fluid .input-prepend {
+    display:                    block;
 }
+    .row-fluid .input-prepend span {
+        box-sizing:                 border-box;
+        width:                      10%;
+        height:                     41px;
+    }
+    .row-fluid .input-prepend input {
+        width:                      90%;
+    }
 
 form {
 }
