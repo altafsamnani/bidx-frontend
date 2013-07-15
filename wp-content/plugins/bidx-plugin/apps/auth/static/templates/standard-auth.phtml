@@ -19,7 +19,7 @@ if (!username_exists ($group_anonymous_login)) {
 }
 ?>
 <div class="block-odd">
-    <div class="container">  
+    <div class="container">
         <div class="block-login">
             <!-- LOGIN -->
             <div class="mainState mainStateLogin mainStateShow">
@@ -36,7 +36,7 @@ if (!username_exists ($group_anonymous_login)) {
                     <div class="buttonwrapper">
                         <a href="#" class="btn btn-primary jsLogin">Login</a>
                     </div>
-                 
+
                         <p>
                             Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
                      <?php if ($this->showRegisterLink) { ?>
@@ -89,8 +89,8 @@ if (!username_exists ($group_anonymous_login)) {
             </div>
             <!-- REGISTER -->
              <?php
-            if($this->type == 'standard-auth') {
-            $this->render ('registration.phtml');
+            if($this->type == 'default') {
+                $this->render ('registration.phtml');
             }
             ?>
 
