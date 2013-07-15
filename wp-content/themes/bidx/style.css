@@ -16,7 +16,9 @@ Company: bidX;
 *
 ********************************************************************************************/
 html, body {
-    
+    margin: 0;
+    padding: 0;
+    height: 100%;
     font-family:            'Lucida Sans', Verdana, sans-serif;
     color:                  #526476; /*do we still need this?*/
 }
@@ -47,6 +49,18 @@ hr {
     clear:                  both;
     margin:                 60px;
 }
+
+/* sticky footer part  */
+#wrap {
+    height: auto !important;
+    margin: 0 auto -300px;
+    min-height: 100%;
+}
+
+#push, body > footer {
+    height: 300px;
+}
+/* end sticky footer */
 
 ::-webkit-input-placeholder {
    color: #333333;
@@ -256,12 +270,12 @@ footer .partners {
 
 }
 
-  .partners .partnerlist {
+  .partners .partnerList {
     text-align:               justify;
     font-size:                0.1px; /*hide whitespace between elements*/
   }
 
-  .partners .partnerlist:after {
+  .partners .partnerList:after {
     content:                  '';
     display:                  inline-block;
     width:                    100%;
@@ -645,6 +659,41 @@ body.home .hero-block {
 
 
 
+    .bidx-map {
+        background: url(assets/img/contact-map.png) no-repeat top center transparent;
+        height: 505px;
+
+    }
+        .bidx-map .bidx-map-dialog {
+            background-color: #3598DB;
+            color: #fff;
+            padding:30px;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+
+            position: relative;
+            top: 50px;
+            left: 50px;
+            display:inline-block;
+            zoom:1;
+            *display: inline;
+        }
+            .bidx-map-dialog > div {
+                text-align: left;
+            }
+            .bidx-map-dialog a, .bidx-map-dialog p {
+                color: #fff;
+            }
+            .bidx-map-dialog p {
+                 text-align: left;
+                 margin-top:10px;
+                 line-height: 18px;
+            }
+
+
+
 /*******************************************************************************************
 *
 *   Form styles
@@ -1006,9 +1055,6 @@ body.home .hero-block {
                     border-bottom: 1px solid white;
                      color: #1abc9c;                  
                 }
-                  {
-
-                 }
 
                 /*.navbar .nav > li.dropdown:hover {
                     margin-bottom: 0px;
@@ -1055,8 +1101,40 @@ body.home .hero-block {
         }
 
 
+
+
         /* end styling of navigation*/
 
+        /* contact page */
 
+        .bidx-map {
+
+            background-position: -585px 0;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+        .bidx-map .bidx-map-dialog {
+            left: 0;
+            top: 0;
+            display: block;
+            margin: 0px;
+            -webkit-border-radius: 5px 5px 0 0;
+            -moz-border-radius: 5px 5px 0 0;
+            border-radius: 5px 5px 0 0;
+
+            
+        }
+            
+
+
+        /* end contact page */
+
+
+    }
+    @media  (max-width: 800px) {
+       .bidx-map {
+            background-position: -885px 0;
+        }
     }
 

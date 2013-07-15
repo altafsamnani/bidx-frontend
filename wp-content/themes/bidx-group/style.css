@@ -39,6 +39,7 @@ body.bidx-business {
 #push, footer {
     height: 50px;
 }
+/* end sticky footer */
 
 ::-webkit-input-placeholder {
    color: #333333;

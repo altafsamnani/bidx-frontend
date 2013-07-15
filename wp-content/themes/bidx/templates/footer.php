@@ -1,6 +1,6 @@
 <footer>
      <div class="partners">
-        <div class="container partnerlist">
+        <div class="container partnerList">
             <a href="http://www.bidnetwork.org" class="partner partner-bid">BiD Network</a>
             <a href="http://www.puterasampoerna.com/" class="partner partner-sampoerna">Putera Sampoerna</a>
             <a href="http://www.postcodeloterij.nl" class="partner partner-postcodeloterij">Nationale Postcode Loterij</a>
