@@ -137,7 +137,14 @@
             case 'tagsinput':
                 values = $input.tagsinput( "getValues" );
 
-                value = $.map( values, function( v ) { return v.value; });
+                value = $.map(
+                    values
+                ,   function( v )
+                    {
+                        return $.type( v ) === "object" ? v.value : v;
+                    }
+                );
+
             break;
 
             default:
