@@ -940,6 +940,25 @@ body.home .hero-block {
             padding-top: 40px;
         }
 
+
+        .navbar-inverse .navbar-inner {
+            background-color: #2577ad;
+        }
+            .navbar-inverse .navbar-inner li:hover a {
+                background-color: #1c5982;
+                color: white;
+            }
+            .navbar-inverse .navbar-inner li:first-child:hover a {
+                -webkit-border-radius: 6px 0 0 6px;
+                -moz-border-radius: 6px 0 0 6px;
+                border-radius: 6px 0 0 6px;
+            }
+            .navbar-inverse .navbar-inner li:last-child:hover a {
+                -webkit-border-radius: 0 6px 6px 0;
+                -moz-border-radius: 0 6px 6px 0;
+                border-radius: 0 6px 6px 0;
+            }
+
     }
      
 
@@ -1134,7 +1153,7 @@ body.home .hero-block {
     }
     @media  (max-width: 800px) {
        .bidx-map {
-            background-position: -885px 0;
+            background-position: -857px 0;
         }
     }
 
