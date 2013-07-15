@@ -823,7 +823,7 @@
         ,   {
                 memberId:       memberId
             ,   groupDomain:    bidx.common.groupDomain
-            ,   data:           member
+            ,   data:           member.bidxInvestorProfile
             ,   success:        function( response )
                 {
                     bidx.utils.log( "member.save::success::response", response );
