@@ -10,7 +10,7 @@
         <div class="container">
             <!-- Check if subpages available -->
             <?php 
-            $children = get_pages('child_of=' . $post->ID . '&parent=' . $post->ID);
+            $children = get_pages(array('child_of' => $post->ID,'sort_column' => 'menu_order', 'sort_order' => 'asc'));
             if( count( $children ) > 0 ) {
             ?>
             <div class="row-fluid">
