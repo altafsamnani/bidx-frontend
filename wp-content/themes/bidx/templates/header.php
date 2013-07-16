@@ -10,17 +10,16 @@
 				<a class="logo" href="<?php echo home_url(); ?>/">
 					<img src="/wp-content/themes/bidx/assets/img/logo-desktop.png" class="hidden-phone">
 					<img src="/wp-content/themes/bidx/assets/img/logo-mobile.png" class="visible-phone">
-				</a>
-				<div class="bidlangswitcher"> <?php do_action('icl_language_selector');?></div>
+				</a>				
 				<nav class="menu-top visible-desktop">
 					<ul class="unstyled inline nav">
 						<li><a href="/category/blog"><?php _e('Blog','bidx');?></a></li>
 						<li><a href="/about"><?php _e('About bidX','bidx');?></a></li>
-						<li><a href="/contact"><?php _e('Contact','bidx');?></a></li>
-                        <li>
+						<li><a href="/contact"><?php _e('Contact','bidx');?></a></li>                       
 					</ul>
+                    <div class="bidlangswitcher"> <?php do_action('icl_language_selector');?></div>
 				</nav>
-                   
+                 
 			</div>
          
 			<nav class="nav-collapse collapse menu-main">
