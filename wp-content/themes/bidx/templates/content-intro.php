@@ -56,15 +56,15 @@
 								<h3><?php _e('Welcome offer! Contact us to create a Group for free.','bidx');?></h3>
 
 								<div class="formfield control-group" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
-									<input type="email" name="username" placeholder=<?php _e("Your email address",'bidx');?>>
+									<input type="email" name="username" placeholder="<?php _e('Your email address','bidx');?>">
 								</div>
 
 								<div class="formfield control-group" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}]}'>
-									<input type="text" name="groupName" placeholder=<?php _e("Your group name",'bidx');?>>
+									<input type="text" name="groupName" placeholder="<?php _e('Your group name','bidx');?>">
 								</div>
 
 								<div class="formfield control-group" data-validation='{"required":{"text":"This fields is mandatory"}}'>
-									<input type="text" name="country" placeholder=<?php _e("Country",'bidx');?>>
+									<input type="text" name="country" placeholder="<?php _e('Country','bidx');?>">
 								</div>
 
 								<a href="#" class="btn btn-block btn-primary jsCreateGroup"><?php _e("Submit your request",'bidx');?></a>
