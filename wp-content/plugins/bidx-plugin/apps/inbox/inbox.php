@@ -20,7 +20,8 @@ class inbox {
     function register_inbox_bidx_ui_libs()
     {
         wp_register_script( 'inbox', plugins_url( 'static/js/inbox.js', __FILE__ ), array('bootstrap'), '20130501', TRUE ); 
-        wp_register_style( 'inbox', plugins_url( 'static/css/inbox.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+        wp_register_style( 'inbox', plugins_url( 'static/css/inbox.css', __FILE__ ), array('businessplan'), '20130501', 'all' );/*should load inbox css, not all other css files from other apps*/
+        wp_enqueue_style('inbox');
     }
 
     /**
