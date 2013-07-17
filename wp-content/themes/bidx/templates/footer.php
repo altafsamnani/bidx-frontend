@@ -39,5 +39,7 @@
 
 <script type="text/javascript">
 	//load all functions from queue
-	$.each(q, function(index,f){$(f);});
+    ( function( $ ) {
+	   $.each(q, function(index,f){$(f);});
+    } ( jQuery ));
 </script>
