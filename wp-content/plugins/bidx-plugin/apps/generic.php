@@ -4,7 +4,7 @@
  * Bidx Wordpress Generic Functions
  *
  * @author Altaf Samnani
- * 
+ *
  * @version 1.0
  */
 class Generic
@@ -16,16 +16,16 @@ class Generic
         $dep = array ();
         switch ($widgetType) {
             case 'auth' :
-                $dep[] = 'bootstrap';
+                $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data');
                 if (strpos ($uri, 'member')) {
-                    $dep[] = 'memberprofile';                    
+                    $dep[] = 'memberprofile';
                 }
                 break;
 
             case 'company' :
                 $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data' ,'businessplan');
                 if (strpos ($uri, 'business')) {
-                    $dep[] = 'businessplan';                    
+                    $dep[] = 'businessplan';
                 }
 
                 break;
