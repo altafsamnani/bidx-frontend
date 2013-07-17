@@ -111,7 +111,7 @@ class BidxShortcode {
 
 			//bidX scripts
 			wp_register_script( 'bidx-api-core', 				$bidxJsDir . '/bidxAPI/api-core.js', 			array( 'jquery' ), '20130501', TRUE );
-			wp_register_script( 'bidx-form', 					$bidxJsDir . '/form.js', 						array( 'jquery' ), '20130501', TRUE );
+			wp_register_script( 'bidx-form', 					$bidxJsDir . '/form.js', 						array( 'jquery', 'jquery-ui' ), '20130501', TRUE );
 			wp_register_script( 'bidx-utils', 					$bidxJsDir . '/utils.js', 						array( 'jquery' ), '20130501', TRUE );
 
 			wp_register_script( 'bidx-bootstrap-tagmanager',	$bidxJsDir . '/bidx-bootstrap-tagmanager.js',	array( 'bootstrap', 'jquery-ui' ), '20130703', TRUE );
