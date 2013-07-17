@@ -53,7 +53,10 @@
         }
         else if ( dataType === "tagsinput" )
         {
-            $el.tagsinput( "setValues", value );
+            if ( value )
+            {
+                $el.tagsinput( "setValues", value );
+            }
         }
         else if ( $el.hasClass( "btn-group" ))
         {
@@ -64,12 +67,15 @@
                 value = [ value ];
             }
 
-            $.each( value, function( idx, v )
+            if ( value )
             {
-                var $button = $el.find( "[value='" + v + "']" );
+                $.each( value, function( idx, v )
+                {
+                    var $button = $el.find( "[value='" + v + "']" );
 
-                $button.addClass( "active" );
-            } );
+                    $button.addClass( "active" );
+                } );
+            }
         }
         else
         {
