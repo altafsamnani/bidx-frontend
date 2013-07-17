@@ -1,6 +1,6 @@
 
 
-<div  class="mainState mainStateRegister <?php echo ($this->type=='register') ? 'mainStateShow':'';?>">
+<div  class="mainState mainStateRegister <?php echo ($this->type=='register') ? 'mainStateShow':'';?>" style="display:none">
 	<form id="frmRegister" action="/">
 		<div class="formfield" data-validation='{"required":{"text":"A first name is mandatory"}}'>
 			<label>First name</label>
@@ -124,7 +124,7 @@
 
                             // Go to group dashboard
                             //
-                            
+
 
                             $frmRegister.hide();
                             $stateRegister.find( ".registerSuccess" ).removeClass( "hide" );
