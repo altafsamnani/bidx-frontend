@@ -52,32 +52,32 @@ class BidxCommon
 
             //Check session if its not redirect (is not having q= param)
             //Start the session to store Bidx Session
-            
+
 
             if (!$isWordpress) {
-                 
+
                 session_start ();
-         
+
                 //If Bidx Cookie set do the following
                 if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
-                  
+
                     $sessionVars = $this->getSessionVariables ($subDomain);
-                    
+
                     if (!$sessionVars) { // If Session set dont do anything
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
-                        
+
                         //Set firsttime/new session variables
                         $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);
                     }
-                 
+
                     //If not Logged in forcefully login to WP
                     $this->forceWordpressLogin ($subDomain, $sessionVars);
                 }
-                
+
                 //Set static variables to access through pages
-                $this->setStaticVariables ($subDomain, $sessionVars);
+                $this->setStaticVariables ($subDomain, isset($sessionVars)?$sessionVars:null );
 
                 //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
                 $this->processEntities ($subDomain);
@@ -93,7 +93,7 @@ class BidxCommon
     {
         $sessionVars = false;
         //Get Previous Session Variables if Set and Not Failed Login
-        if (!empty ($_SESSION[$subDomain]) && 
+        if (!empty ($_SESSION[$subDomain]) &&
              ((!empty($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $_SESSION[$subDomain]->authenticated))  {
             $sessionVars = $_SESSION[$subDomain];
         }
@@ -229,13 +229,13 @@ class BidxCommon
                 case 'member':
                     $sessioMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessioMemberId;
-               
+
                     if ($memberId) {
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
                     } else {
-                       
+
                         $redirect = 'login'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
@@ -264,7 +264,7 @@ class BidxCommon
                         $data->bidxBusinessSummary = $bpSummaryId;
                         $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
                         $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
-                    } else {                       
+                    } else {
                         $redirect = 'login'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
@@ -322,19 +322,19 @@ class BidxCommon
                 break;
 
             case 'member' :
-         
+
                 if ($authenticated == 'false' && $redirect) {
                     $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/' . $redirect . $param;
                     wp_clear_auth_cookie ();
-               
+
                     //Clear Session and Static variables
                     session_destroy();
-             
+
                     $this::$staticSession = NULL;
                     unset($this::$bidxSession[$subDomain]);
-                  
+
                 }
-          
+
                 break;
 
             default:
@@ -406,7 +406,7 @@ class BidxCommon
 
             //If currently Logged in dont do anything
             if ($currentUser && isset ($currentUser->user_login) && $userName == $currentUser->user_login) {
-      
+
             } else if ($user_id = username_exists ($userName)) {   //just do an update
                 // userdata will contain all information about the user
                 $userdata = get_userdata ($user_id);
@@ -420,7 +420,7 @@ class BidxCommon
                 return;
             }
         }
-        
+
     }
 
     /**
