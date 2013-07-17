@@ -93,12 +93,16 @@
         ,   'login':                                            'login'
         ,   'register':                                         'register'
         ,   'resetpassword':                                    'resetpassword'
+        
+        ,   'mail(/:section)':                                  'mailInbox'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
+        
         }
     ,   editMember:             function( id, section )
         {
+
             bidx.utils.log( "AppRouter::editMember", id, section );
 
             state   = "editMember";
@@ -212,6 +216,14 @@
             state = "resetpassword";
 
             _showMainState( state );
+        }
+     ,   mailInbox:             function( section )
+        {
+            bidx.utils.log( "AppRouter::mailInbox", section );
+
+            state   = "inbox";
+
+            _navigateToApp( "mail", "inbox", section );
         }
     } );
 

@@ -2,6 +2,7 @@
   	<div class="navbar-inner">
 		<div class="container">
 			<div>
+				
 				<?php echo do_shortcode( '[bidx app="group" view="group-header"]' );?>
 			</div>
 			<div class="menu-top">

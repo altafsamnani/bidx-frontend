@@ -125,10 +125,10 @@
 	    </post>
 		<post>
 			<post_id>15</post_id>
-			<name>My inbox</name>
-			<title>My inbox</title>
-			<mapping>^my-inbox</mapping>
-			<content>[bidx app="inbox" view="overview"]</content>
+			<name>My messages</name>
+			<title>My messages</title>
+			<mapping>^mail</mapping>
+			<content>[bidx app="mail" view="view"]</content>
 		</post>
 		<post>
 			<post_id>16</post_id>
