@@ -20,7 +20,7 @@ function roots_scripts() {
     // Load the jquery-ui that comes with FlatUI, just to make sure
     //
     wp_deregister_script( 'jquery-ui' );
-    wp_register_script( 'jquery-ui',                get_template_directory_uri() . '/assets/FlatUI/js/jquery-ui-1.10.3.custom.min.js',  array( 'jquery' ),      '1.10.3-20130610',  true );
+    wp_register_script( 'jquery-ui',                get_template_directory_uri() . '/assets/js/vendor/jquery-ui-1.10.3.custom.js',  array( 'jquery' ),      '1.10.3-20130610',  true );
 
     // Upgrade underscore
     //
