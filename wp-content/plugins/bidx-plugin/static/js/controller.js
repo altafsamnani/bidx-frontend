@@ -34,6 +34,8 @@
     //
     var _navigateToApp = function( toApp, toState, section, id, part )
     {
+        var differentApp = app !== bidx[ toApp ];
+
         app     = bidx[ toApp ];
 
         if ( !app )
@@ -43,10 +45,24 @@
             return;
         }
 
+        // When switching to the app, start by scrolling to the top of the page
+        //
+        if ( differentApp )
+        {
+            $( "html, body" ).animate( {scrollTop: 0}, 500 );
+        }
+
+        // Perform a navigate request to the app, might come back with the
+        // request for us to update the hash
+        //
         var newHash = app.navigate( toState, section, id, part );
 
+        // Switch the UI to the app
+        //
         _showMainState( state );
 
+        // Save a reference to the container element of the app
+        //
         $element = app.$element;
 
         if ( newHash )
