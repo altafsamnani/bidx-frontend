@@ -24,7 +24,7 @@ class auth extends Generic{
 	 * Load the scripts and css belonging to this function
 	 */
 	function register_auth_bidx_ui_libs() {
-  
+
         //$deps = array( 'bootstrap','memberprofile') ;
         $deps = $this->getWidgetJsDependency('auth');
         //$deps = array('bootstrap');
@@ -41,27 +41,35 @@ class auth extends Generic{
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/static/templates/' );
-		// 2. Determine the view needed 
+		// 2. Determine the view needed
 		$command = $atts['view'];
         $type    = $atts['type'];
-        
-        switch($type) {
-            case "login" :
-                $view->type = "login";
-                $render = 'standard-auth';
-                $view->showRegisterLink = false;
-                $view->showLoginLink = true;
+
+        switch ($command) {
+            case "group-kickstart":
+                $render = $command;
                 break;
-            case "register" :
-                $view->type = "register";
-                $render = 'registration';
-                $view->showLoginLink = false;
+
+            case "standard-auth":
+                switch($type) {
+                    case "login" :
+                        $view->type = "login";
+                        $render = 'standard-auth';
+                        $view->showRegisterLink = false;
+                        $view->showLoginLink = true;
+                        break;
+                    case "register" :
+                        $view->type = "register";
+                        $render = 'registration';
+                        $view->showLoginLink = false;
+                        break;
+                    default :
+                        $view->type = "default";
+                        $render = 'standard-auth';
+                        $view->showRegisterLink = true;
+                        $view->showLoginLink = true;
+                }
                 break;
-            default :
-                $view->type = "default";
-                $render = 'standard-auth';
-                $view->showRegisterLink = true;
-                $view->showLoginLink = true;
         }
 
         $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
