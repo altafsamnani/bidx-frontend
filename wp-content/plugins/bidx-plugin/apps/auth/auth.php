@@ -43,7 +43,7 @@ class auth extends Generic{
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/static/templates/' );
 		// 2. Determine the view needed
 		$command = $atts['view'];
-        $type    = $atts['type'];
+        $type    = array_key_exists( 'type', $atts ) ? $atts['type'] : null;
 
         switch ($command) {
             case "standard-auth":
