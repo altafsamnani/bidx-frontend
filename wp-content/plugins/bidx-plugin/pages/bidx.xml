@@ -129,7 +129,14 @@
 			<title>My inbox</title>
 			<mapping>^my-inbox</mapping>
 			<content>[bidx app="inbox" view="overview"]</content>
-		</post>	    
+		</post>
+		<post>
+			<post_id>16</post_id>
+			<name>Group Registration</name>
+			<title>Group Registration</title>
+			<mapping>^registration</mapping>
+			<content>[bidx app="auth" view="group-registration"]</content>
+		</post>
 	</posts>
 
 	<widgets>

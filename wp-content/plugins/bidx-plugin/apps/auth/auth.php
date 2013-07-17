@@ -45,11 +45,9 @@ class auth extends Generic{
 		$command = $atts['view'];
         $type    = $atts['type'];
 
-        switch ($command) {
-            case "group-kickstart":
-                $render = $command;
-                break;
+        xdebug_break();
 
+        switch ($command) {
             case "standard-auth":
                 switch($type) {
                     case "login" :
@@ -70,6 +68,9 @@ class auth extends Generic{
                         $view->showLoginLink = true;
                 }
                 break;
+
+            default:
+                $render = $command;
         }
 
         $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
