@@ -147,6 +147,7 @@ abstract class APIbridge
                 $requestData->authenticated = 'false';
                 //$this->bidxRedirectLogin($groupDomain);
                 do_action ('clear_auth_cookie');
+                session_destroy();
                 $this->logger->trace (sprintf ('Authentication Failed for URL: %s ', $urlService));
 
                 if ($urlService != 'session' && $this->isRedirectCheck) {
@@ -159,6 +160,7 @@ abstract class APIbridge
                     echo $error; //this is just an example and generally not a good idea, you should implement means of processing the errors further down the track and using WP's error/message hooks to display them
                 }
                 $requestData->text .= $error;
+                session_destroy();
             }
             return $requestData;
         }

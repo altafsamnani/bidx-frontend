@@ -298,9 +298,7 @@ function bidx_signout ()
     $params['domain'] = get_bidx_subdomain ();
     call_bidx_service ('session', $params, 'DELETE');
     wp_clear_auth_cookie ();
-
-
-    $_SESSION[$params['domain']] = NULL;
+    session_destroy();
 }
 
 function clear_bidx_cookies ()

@@ -57,13 +57,13 @@ class BidxCommon
             if (!$isWordpress) {
                  
                 session_start ();
-            
+         
                 //If Bidx Cookie set do the following
                 if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
                   
                     $sessionVars = $this->getSessionVariables ($subDomain);
-                 
+                    
                     if (!$sessionVars) { // If Session set dont do anything
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
@@ -235,7 +235,7 @@ class BidxCommon
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
                     } else {
-
+                       
                         $redirect = 'login'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
@@ -264,7 +264,7 @@ class BidxCommon
                         $data->bidxBusinessSummary = $bpSummaryId;
                         $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
                         $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
-                    } else {
+                    } else {                       
                         $redirect = 'login'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
@@ -273,7 +273,7 @@ class BidxCommon
             }
 
             if ($jsSessionData) {
-                $this->redirectUrls ($hostAddress[1], $jsSessionData->authenticated, $redirect, $statusMsgId);
+                $this->redirectUrls ($hostAddress[1], $jsSessionData->authenticated, $redirect, $statusMsgId, $subDomain);
             }
             return $data;
         }
@@ -296,7 +296,7 @@ class BidxCommon
      * @param String $password
      * @return Loggedin User
      */
-    function redirectUrls ($uriString, $authenticated, $redirect = NULL, $statusMsgId = NULL)
+    function redirectUrls ($uriString, $authenticated, $redirect = NULL, $statusMsgId = NULL, $subDomain)
     {
         $redirect_url = NULL;
         $urlSep = '?';
@@ -326,6 +326,12 @@ class BidxCommon
                 if ($authenticated == 'false' && $redirect) {
                     $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/' . $redirect . $param;
                     wp_clear_auth_cookie ();
+               
+                    //Clear Session and Static variables
+                    session_destroy();
+             
+                    $this::$staticSession = NULL;
+                    unset($this::$bidxSession[$subDomain]);
                   
                 }
           
