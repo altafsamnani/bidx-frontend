@@ -62,12 +62,22 @@
     {
         var method = params.memberId ? "PUT" : "POST";
 
+        var url = baseUrl;
+
+        // Creation must be done via the Entity API..
+        //
+        if ( method === "POST" )
+        {
+            url = "/api/v1/entity";
+        }
+
+
         api._call(
         {
             method:         method
         ,   id:             params.memberId
         ,   groupDomain:    params.groupDomain
-        ,   baseUrl:        baseUrl
+        ,   baseUrl:        url
         ,   data:           params.data
         ,   success:        function( data, textStatus, jqXhr )
             {
