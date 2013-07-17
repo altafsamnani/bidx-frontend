@@ -2,75 +2,93 @@
 	<article class="bidx type-bidx status-publish hentry">
         <?php echo bidx_get_status_msgs(); ?>
 	    <header>
-			<div id="myCarousel" class="carousel slide">
-			<?php
-						$images = get_children(
-									array(
-									'post_parent' => $post->ID,
-									'post_status' => 'inherit',
-									'post_type' => 'attachment',
-									'post_mime_type' => 'image',
-									'order' => 'ASC',
-									'orderby' => 'menu_order' )
-									);
-						if ( count( $images ) > 0 ) {
-						?>
-						<ol class="carousel-indicators">
-						<?php
-							$count = 0;
-							foreach ( $images as $id => $image ) { ?>
-							<li data-target="#introCarousel" data-slide-to="<?php echo $count ?>"
-							<?php if ($count == 0) { ?> class="active" <?php } $count++; ?>></li>
-						<?php } ?>
-						</ol>
-						<!-- Carousel items -->
-						<div class="carousel-inner">
-						<?php
-							$count = 0;
-							foreach ( $images as $id => $image ) {
-								$img = wp_get_attachment_image_src( $image->ID, 400 );
-						?>
-							<div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
-								<img class="img-rounded" src="<?php echo $img[0] ?>" />
-							    <div class="carousel-caption img-rounded">
-			                      <h4><?php echo $image -> post_title ?></h4>
-			                      <p><?php echo $image -> post_content ?></p>
-			                    </div>
-							</div>
-						<?php }
-						} else {
-						?>
-			  <ol class="carousel-indicators">
-			    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			    <li data-target="#myCarousel" data-slide-to="1"></li>
-			    <li data-target="#myCarousel" data-slide-to="2"></li>
-			  </ol>
-			  <!-- Carousel items -->
-			  <div class="carousel-inner">
-			    <div class="active item">
-			    	<img src="/wp-content/themes/bidx-group/assets/img/sample/you_should_be_here.jpg" />
-			    	<div class="carousel-caption">
-                      <h4>First Thumbnail label</h4>
-                      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
-			    </div>
-			    <div class="item">
-			    	<img src="/wp-content/themes/bidx-group/assets/img/sample/birds_eye_la_defense.jpg" />
-			    	<div class="carousel-caption">
-                      <h4>Second Thumbnail label</h4>
-                      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
-			    </div>
-			    <div class="item">
-			    	<img src="/wp-content/themes/bidx-group/assets/img/sample/alien_entrepreneurs.jpg" />
-			    	<div class="carousel-caption">
-                      <h4>Third Thumbnail label</h4>
-                      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
-			    </div>
-			  </div>
-	   <?php  } ?>
-			</div>
+            <div class="row-fluid">
+                <div class="span<?php echo is_user_logged_in() ? '9' : '12'; ?>">
+        			<div id="myCarousel" class="carousel slide">
+        			<?php
+        						$images = get_children(
+        									array(
+        									'post_parent' => $post->ID,
+        									'post_status' => 'inherit',
+        									'post_type' => 'attachment',
+        									'post_mime_type' => 'image',
+        									'order' => 'ASC',
+        									'orderby' => 'menu_order' )
+        									);
+        						if ( count( $images ) > 0 ) {
+        						?>
+        						<ol class="carousel-indicators">
+        						<?php
+        							$count = 0;
+        							foreach ( $images as $id => $image ) { ?>
+        							<li data-target="#introCarousel" data-slide-to="<?php echo $count ?>"
+        							<?php if ($count == 0) { ?> class="active" <?php } $count++; ?>></li>
+        						<?php } ?>
+        						</ol>
+        						<!-- Carousel items -->
+        						<div class="carousel-inner">
+        						<?php
+        							$count = 0;
+        							foreach ( $images as $id => $image ) {
+        								$img = wp_get_attachment_image_src( $image->ID, 400 );
+        						?>
+        							<div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
+        								<img class="img-rounded" src="<?php echo $img[0] ?>" />
+        							    <div class="carousel-caption img-rounded">
+        			                      <h4><?php echo $image -> post_title ?></h4>
+        			                      <p><?php echo $image -> post_content ?></p>
+        			                    </div>
+        							</div>
+        						<?php }
+        						} else {
+        						?>
+        			  <ol class="carousel-indicators">
+        			    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        			    <li data-target="#myCarousel" data-slide-to="1"></li>
+        			    <li data-target="#myCarousel" data-slide-to="2"></li>
+        			  </ol>
+        			  <!-- Carousel items -->
+        			  <div class="carousel-inner">
+        			    <div class="active item">
+        			    	<img src="/wp-content/themes/bidx-group/assets/img/sample/you_should_be_here.jpg" />
+        			    	<div class="carousel-caption">
+                              <h4>First Thumbnail label</h4>
+                              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                            </div>
+        			    </div>
+        			    <div class="item">
+        			    	<img src="/wp-content/themes/bidx-group/assets/img/sample/birds_eye_la_defense.jpg" />
+        			    	<div class="carousel-caption">
+                              <h4>Second Thumbnail label</h4>
+                              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                            </div>
+        			    </div>
+        			    <div class="item">
+        			    	<img src="/wp-content/themes/bidx-group/assets/img/sample/alien_entrepreneurs.jpg" />
+        			    	<div class="carousel-caption">
+                              <h4>Third Thumbnail label</h4>
+                              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                            </div>
+        			    </div>
+        			  </div>
+        	           <?php  } // $images > 0 ?>
+        			</div><!-- // carousel -->
+                </div><!-- span -->
+<?php
+    if ( is_user_logged_in() ) {
+?>
+                <div class="span3">
+<?php
+$sessionData = BidxCommon::$staticSession;
+$entities = $sessionData->data->wp->entities;
+
+?>
+                </div>
+<?php
+    }
+?>
+
+            </div><!-- row -->
 	    </header>
 <?php
     if ( ! is_user_logged_in() ) {

@@ -544,6 +544,10 @@ footer .page-footer .footer-bar {
 
 }*/
 
+body.home .carousel-inner img {
+    width:              100%;
+}
+
 .bid-social.twitter {
     background: url("assets/img/social-media-icons.png") no-repeat scroll 0 -5024px transparent;
     margin-right: 0;
