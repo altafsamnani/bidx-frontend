@@ -79,8 +79,45 @@
 ?>
                 <div class="span3">
 <?php
-$sessionData = BidxCommon::$staticSession;
-$entities = $sessionData->data->wp->entities;
+    $sessionData = BidxCommon::$staticSession;
+    $entities = $sessionData->data->wp->entities;
+
+    // Create investor
+    //
+    if ( !isset( $entities->bidxInvestorProfile )) {
+?>
+        <div class="well">
+            <h3>Become an investor</h3>
+            <div class="row-fluid">
+                <div class="span8">
+                    <p>Create your business</p>
+                </div>
+                <div class="span4">
+                    <a class="btn btn-primary" href="/member/#createInvestor">Create</a>
+                </div>
+            </div>
+        </div>
+<?php
+    }
+
+    // Create entrepreneur
+    //
+    if ( !isset( $entities->bidxEntrepreneurProfile )) {
+?>
+        <div class="well">
+            <h3>Become an entrepreneur</h3>
+            <div class="row-fluid">
+                <div class="span8">
+                    <p>Create your business</p>
+                </div>
+                <div class="span4">
+                    <a class="btn btn-primary" href="/member/#createEntrepreneur">Create</a>
+                </div>
+            </div>
+        </div>
+<?php
+
+    }
 
 ?>
                 </div>
