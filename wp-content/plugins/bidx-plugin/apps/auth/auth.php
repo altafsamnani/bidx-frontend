@@ -45,8 +45,6 @@ class auth extends Generic{
 		$command = $atts['view'];
         $type    = $atts['type'];
 
-        xdebug_break();
-
         switch ($command) {
             case "standard-auth":
                 switch($type) {
