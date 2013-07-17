@@ -80,8 +80,10 @@
             'editMember(/:id)(/:section)':                      'editMember'
 
         ,   'editEntrepreneur(/:id)(/:section)':                'editEntrepreneur'
+        ,   'createEntrepreneur':                               'createEntrepreneur'
 
         ,   'editInvestor(/:id)(/:section)':                    'editInvestor'
+        ,   'createInvestor':                                   'createInvestor'
 
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
@@ -112,6 +114,14 @@
 
             _navigateToApp( "entrepreneurprofile", "edit", section, id );
         }
+    ,   createEntrepreneur:          function()
+        {
+            bidx.utils.log( "AppRouter::createEntrepreneur" );
+
+            state       = "editEntrepreneur";
+
+            _navigateToApp( "entrepreneurprofile", "create" );
+        }
 
     ,   editInvestor:             function( id, section )
         {
@@ -120,6 +130,14 @@
             state       = "editInvestor";
 
             _navigateToApp( "investorprofile", "edit", section, id );
+        }
+    ,   createInvestor:          function()
+        {
+            bidx.utils.log( "AppRouter::createInvestor" );
+
+            state       = "editInvestor";
+
+            _navigateToApp( "investorprofile", "create" );
         }
 
     ,   editCompany:             function( id, section )
