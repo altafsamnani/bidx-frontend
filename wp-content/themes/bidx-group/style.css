@@ -650,7 +650,9 @@ select {
     display:                    block;
 }
     .row-fluid .input-prepend span {
-        box-sizing:                 border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
         width:                      10%;
         height:                     41px;
     }
@@ -910,10 +912,6 @@ form {
                 width: 200px;
                 font-weight: 700;
             }
-
-
-
-
 
 
 

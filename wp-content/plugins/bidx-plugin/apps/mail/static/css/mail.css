@@ -2,7 +2,7 @@
     display: none;
 }
 
-.mail {
+.viewList {
     background-color: #E0E0E0;
     padding :10px;
     -webkit-border-radius: 5px;
@@ -10,14 +10,14 @@
     border-radius: 5px;
 }
 
-    .mail-search .input-append {
+    .viewList .mail-search .input-append {
         margin: 0px;
     }
-    .mail .checkbox, .mail .radio {
+    .viewList .checkbox, .mail .radio {
         margin: 0px;
     }
 
-    .mail .check {
+    .viewList .check {
         width: 20px;
         padding: 5px;
         float: left;
@@ -25,10 +25,13 @@
     }
     .mail .mail-toolbar {
         background-color: #34495E;
-        -webkit-border-radius: 6px;
-        -moz-border-radius: 6px;
-        border-radius: 6px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+
+        padding: 0 3px;
         margin-bottom:10px;
+
         
     }
 
@@ -36,9 +39,7 @@
         padding: 2px 13px;
         margin: 3px 0;
     }
-    .mail .mail-toolbar .search {
-        margin: 0px 5px 0 0;
-    }
+ 
         .mail .mail-toolbar .search input {
             padding: 2px;
             height:24px;
@@ -47,7 +48,7 @@
             width: 200px;   
         }
  
-    .mail .list {
+     .list {
         background-color: #E0E0E0;
     }
     .mail .list > li {
@@ -74,4 +75,29 @@
         .mail .pagination a, .mail .pagination li.previous a, .mail .pagination li.next a {
             background-color: #BDC3C7;
             padding: 6px 17px;
+
         }
+
+    .mail .viewRead .mail-message {
+        border: 2px solid #BDC3C7;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+        background-color: #fff;
+    }
+
+    .row-fluid .input-prepend {
+        display: inline-block;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .row-fluid .input-prepend span {
+        width:                      auto !important;
+        height:                     19px !important;
+        -webkit-box-sizing: content-box !important;
+        -moz-box-sizing: content-box !important;
+        box-sizing: content-box !important;
+        
+    }
+

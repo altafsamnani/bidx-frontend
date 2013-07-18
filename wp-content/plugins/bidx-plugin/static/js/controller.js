@@ -94,7 +94,7 @@
         ,   'register':                                         'register'
         ,   'resetpassword':                                    'resetpassword'
         
-        ,   'mail(/:section)':                                  'mailInbox'
+        ,   'mail(/:section)(/:id)':                            'mail'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
@@ -217,13 +217,23 @@
 
             _showMainState( state );
         }
-     ,   mailInbox:             function( section )
+     ,   mail:         function( section, id )
         {
             bidx.utils.log( "AppRouter::mailInbox", section );
 
-            state   = "inbox";
+            //default state is a list view of emails whereas the section defines the source
+            state   = "list";
 
-            _navigateToApp( "mail", "inbox", section );
+            // if there is an id, switch state to viewing of email
+            if( id && id.match( /^\d+$/ ) ) 
+            {
+                state = "read";
+            }
+            
+            
+
+            _navigateToApp( "mail", state, section, id);
+            //_navigateToApp( "mail",  section );
         }
     } );
 

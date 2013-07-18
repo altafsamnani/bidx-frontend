@@ -19,12 +19,13 @@
 
     var _showView = function( v )
     {
+
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
     };
 
     
     /* load items into list*/
-    var _populateList = function ( state, list ) 
+    var _populateList = function ( type, list ) 
     {
 
         var $listItem               = $($("#listMessage").html().replace(/(<!--)*(-->)*/g, ""))
@@ -37,14 +38,14 @@
         bidx.api.call(
             "mail.fetch"
         ,   {
-                data:   
+                data:
                 {
                     offset:               0
                 ,   limit:                10
                 ,   sort:                 "sentDate"
                 ,   order:                "desc"
                 ,   showRemovedEmails:    true
-                ,   inboxType:            "RECEIVED_EMAILS"
+                ,   inboxType:            type
                 }     
             ,   groupDomain:              bidx.common.groupDomain
             ,   success:                  function( response )
@@ -57,7 +58,7 @@
                         ,   textValue
                         ;
                         
-
+                        $list.empty();
                         //loop through response
                         for( index in response.data) 
                         {
@@ -68,21 +69,22 @@
                             element.find(".placeholder").each(function( i, el )
                             {
                                 //!! TEMP add sendername to item because it is not coming from API
-                                item.sendername = "SEND UNKNOWN IN API!!!!";
+                                item.sendername = "SENDER UNKNOWN IN API!!!!";
+
                                 //isolate placeholder key
                                 cls = $(el).attr("class").replace("placeholder ", "");
                                 
-                                //if key if available in 
+                                //if key if available in item response
                                 if( item[cls] ) 
                                 {
 
                                     textValue = item[cls];
-
+                                    //add hyperlink on sendername for now (to read email)
                                     if( cls === "sendername")
                                     {
                                         textValue = "<a href=\"" + document.location.hash +  "/" + item.id + "\">" + textValue + "</a>";
                                     }
-                                   element.find("span." + cls).replaceWith( textValue );
+                                    element.find("span." + cls).replaceWith( textValue );
 
                                 }
                             });
@@ -119,20 +121,37 @@
     var state;
 
 
-    var navigate = function( requestedState, section, cb )
+    var navigate = function( requestedState,section, id)
     {
+        console.log("Section=" + section);
+        console.log("id=" + id);
+        console.log("requestedState=" + requestedState);
+        
+
 
         switch ( requestedState )
         {
             case "load" : 
                 _showView( "load" );
             break;
-            case "sent":;
-            case "inbox":
-                bidx.utils.log( "mailInbox::AppRouter::mail", section );
 
-                _populateList( requestedState, "list");
+            case "read":
+                console.log("view EMAIL");
+                _showView( "read" );
+            break;
+
+            case "list":
+                var type = "RECEIVED_EMAILS";
+
+                if( section === "sent") {
+                    type = "SENT_EMAILS";                    
+                }
+
+                _populateList( type, "list");
                 _showView( "list" );
+                //bidx.utils.log( "mailInbox::AppRouter::mail", section );
+
+                
             break;
         }
     };    
@@ -155,3 +174,5 @@
 
     window.bidx.mail = mail;
 } ( jQuery ));
+
+
