@@ -97,25 +97,12 @@
                 <fieldset class="well">
                     <legend>Other documents</legend>
 
-                    <div class="attachmentsContainer">
-                        <div class="row-fluid"></div>
+                    <div class="formfield">
+                        <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofileattachment"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.attachmentUploadDone"}'/>
                     </div>
 
-                    <div class="row-fluid">
+                    <div class="attachmentsContainer"></div>
 
-                        <div class="span4 addAttachment well well-white">
-                            <div class="fow-fluid">
-                                <div class="span4">
-                                    <img src="/wp-content/plugins/bidx-plugin/static/img/iconAddDocument.png">
-                                </div>
-                                <div class="span8 formfield">
-                                    <p>Upload a new document:</p>
-
-                                    <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofileattachment"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.attachmentUploadDone"}'/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </fieldset>
             </div>
 
@@ -169,10 +156,9 @@
                             <select name="documentType"></select>
                         </div>
                     </div>
-
-                    <a href="#deleteAttachment" class="btn btn-danger btn-mini pull-right">Delete</a>
                 </div>
             </div>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block">Delete</a>
         </div>
     </div>
 

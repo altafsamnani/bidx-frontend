@@ -239,7 +239,7 @@
         $languageItem.find( ".btnSetMotherLanguage"     ).hide();
     } );
 
-    // Instantiate reflowrower on the previousInvestment container
+    // Instantiate reflowrower on the attachments container
     //
     $attachmentsContainer.reflowrower(
     {

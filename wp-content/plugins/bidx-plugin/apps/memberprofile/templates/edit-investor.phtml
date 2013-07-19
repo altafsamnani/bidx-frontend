@@ -375,21 +375,12 @@
                     <span class="scrollPositionMarker" id="editInvestor/documents"></span>
                     <legend>Documents</legend>
 
-                    <div class="row-fluid attachments">
-                        <div class="span6 attachmentList">
-                        </div>
-
-                        <div class="span6 addAttachment">
-                            <div class="fow-fluid">
-                                <div class="span4">
-                                    <img src="/wp-content/plugins/bidx-plugin/static/img/iconAddDocument.png">
-                                </div>
-                                <div class="span8 formfield">
-                                    <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"investorprofileattachment"}], "addFields":["investorProfileId","domain"], "callback": "bidx.investorprofile.attachmentUploadDone"}'/>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="formfield">
+                        <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"investorprofileattachment"}], "addFields":["investorProfileId","domain"], "callback": "bidx.investorprofile.attachmentUploadDone"}'/>
                     </div>
+
+                    <div class="attachmentsContainer"></div>
+
                 </fieldset>
             </div>
 
@@ -489,15 +480,17 @@
         </div>
 
         <!-- Attachment -->
-        <div class="fow-fluid clearfix attachmentItem">
-            <div class="span4">
-                <a href="#" class="documentLink"><img class="img-rounded documentImage"></a>
+        <div class="attachmentItem span4 well well-white">
+            <div class="row-fluid">
+                <div class="span4">
+                    <a href="#" class="documentLink"><img class="img-rounded documentImage"></a>
+                </div>
+                <div class="span8">
+                    <h3 class="documentName"></h3>
+                    <p class="uploadedDateTime"></p>
+                </div>
             </div>
-            <div class="span8">
-                <h3 class="documentName"></h3>
-                <p class="uploadedDateTime"></p>
-                <a href="#deleteAttachment" class="btn">Delete</a>
-            </div>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block">Delete</a>
         </div>
     </div>
 

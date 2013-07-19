@@ -141,7 +141,7 @@
             //
             if ( !$firstRow.length )
             {
-                addRow();
+                $firstRow = addRow();
             }
 
             // We want to find the item later, put the item class on it
@@ -270,8 +270,10 @@
                 return;
             }
 
-
-            $item.remove();
+            $item.fadeOut( 600, function()
+            {
+                $item.remove();
+            } );
 
             // 'reflow' the previous business items. Move the first child (previousBusinessItem) of each next row, up one row. If the last row is empty, delete it.
             //

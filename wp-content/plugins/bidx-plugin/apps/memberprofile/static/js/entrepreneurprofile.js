@@ -155,6 +155,45 @@
         _addPreviousBusiness();
     } );
 
+    // Instantiate reflowrower on the attachments container
+    //
+    $attachmentsContainer.reflowrower(
+    {
+        itemsPerRow:        3
+    ,   removeItemOverride: function( $item, cb )
+        {
+            var attachment      = $item.data( "attachment" )
+            ,   documentId      = attachment.bidxEntityId
+            ;
+
+            bidx.api.call(
+                "entityDocument.destroy"
+            ,   {
+                    entityId:           entrepreneurProfileId
+                ,   documentId:         documentId
+                ,   groupDomain:        bidx.common.groupDomain
+                ,   success:            function( response )
+                    {
+                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
+                        bidx.common.notifySuccess( "Attachment deleted" );
+
+                        cb();
+
+                        $attachmentsContainer.reflowrower( "removeItem", $item, true );
+                    }
+                ,   error:            function( jqXhr, textStatus )
+                    {
+                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
+
+                        alert( "Problems deleting attachment" );
+
+                        cb();
+                    }
+                }
+            );
+        }
+    } );
+
 
     // Add the CV to the screen (or show the 'there is no cv')
     //
@@ -233,31 +272,9 @@
             : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
 
         $attachment.find( ".documentImage" ).attr( "src", imageSrc );
+        $attachment.find( ".documentLink"  ).attr( "href", attachment.document );
 
-        $attachment.find( ".documentLink" ).attr( "href", attachment.document );
-
-        // Find a row that has room or add a new row
-        //
-        var $rowWithRoom;
-        $attachmentsContainer.children( ".row-fluid" ).each( function( )
-        {
-            var $row = $( this );
-
-            if ( $row.children().length < 3 )
-            {
-                $rowWithRoom = $row;
-                return false;
-            }
-        } );
-
-        if ( !$rowWithRoom )
-        {
-            $rowWithRoom = $( "<div />", { "class": "row-fluid" } );
-
-            $attachmentsContainer.append( $rowWithRoom );
-        }
-
-        $rowWithRoom.append( $attachment );
+        $attachmentsContainer.reflowrower( "addItem", $attachment );
     };
 
 
@@ -384,7 +401,7 @@
         // Reset any state
         //
         $previousBusinessContainer.reflowrower( "empty" );
-        $attachmentsContainer.empty();
+        $attachmentsContainer.reflowrower( "empty" );
         $cvContainer.find( ".noCV"  ).hide();
         $cvContainer.find( ".hasCV" ).hide();
 
@@ -442,49 +459,6 @@
                     $btnCancel.removeClass( "disabled" );
                 }
             } );
-        } );
-
-        // Attachments
-        //
-        $attachmentsContainer.delegate( "a[href$=#deleteAttachment]", "click", function( e )
-        {
-            e.preventDefault();
-
-            var $btn            = $( this )
-            ,   $attachment     = $btn.closest( ".attachmentItem" )
-            ,   attachment      = $attachment.data( "attachment" )
-            ,   documentId      = attachment.bidxEntityId
-            ;
-
-            if ( $btn.hasClass( "disabled" ))
-            {
-                return;
-            }
-
-            $btn.addClass( "disabled" );
-
-            bidx.api.call(
-                "entityDocument.destroy"
-            ,   {
-                    entityId:           entrepreneurProfileId
-                ,   documentId:         documentId
-                ,   groupDomain:        bidx.common.groupDomain
-                ,   success:            function( response )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
-
-                        $attachment.remove();
-                    }
-                ,   error:            function( jqXhr, textStatus )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
-
-                        alert( "Problems deleting attachment" );
-
-                        $btn.removeClass( ".disabled" );
-                    }
-                }
-            );
         } );
 
         // Fetch the member
@@ -650,14 +624,9 @@
         }
         else
         {
+            bidx.common.notifySuccess( "Attachment upload done" );
+
             _addAttachmentToScreen( null, result.data );
-
-            // Clear the input by cloneing it
-            //
-            var $input = result.el;
-
-            $input.replaceWith( $input.clone() );
-            $input.fileUpload( { "parentForm": $input.prop( "form" ) });
         }
     };
 

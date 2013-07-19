@@ -13,8 +13,7 @@
     ,   $btnAddReference                = $editForm.find( "[href$='#addReference']" )
     ,   $referencesContainer            = $editForm.find( ".referencesContainer" )
 
-    ,   $attachments                    = $editForm.find( ".attachments" )
-    ,   $attachmentList                 = $attachments.find( ".attachmentList" )
+    ,   $attachmentsContainer           = $editForm.find( ".attachmentsContainer" )
 
     ,   $toggles                        = $element.find( ".toggle" ).hide()
     ,   $toggleInvestsForInst           = $element.find( "[name='investsForInst']"      )
@@ -297,8 +296,42 @@
 
     // Instantiate reflowrower on the attachments container
     //
-    $attachmentList.reflowrower();
+    $attachmentsContainer.reflowrower(
+    {
+        itemsPerRow:        3
+    ,   removeItemOverride: function( $item, cb )
+        {
+            var attachment      = $item.data( "attachment" )
+            ,   documentId      = attachment.bidxEntityId
+            ;
 
+            bidx.api.call(
+                "entityDocument.destroy"
+            ,   {
+                    entityId:           investorProfileId
+                ,   documentId:         documentId
+                ,   groupDomain:        bidx.common.groupDomain
+                ,   success:            function( response )
+                    {
+                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
+                        bidx.common.notifySuccess( "Attachment deleted" );
+
+                        cb();
+
+                        $attachmentsContainer.reflowrower( "removeItem", $item, true );
+                    }
+                ,   error:            function( jqXhr, textStatus )
+                    {
+                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
+
+                        alert( "Problems deleting attachment" );
+
+                        cb();
+                    }
+                }
+            );
+        }
+    } );
 
     // Populate the dropdowns with the values
     //
@@ -609,7 +642,7 @@
         $attachment.find( ".documentImage" ).attr( "src", imageSrc );
         $attachment.find( ".documentLink" ).attr( "href", attachment.document );
 
-        $attachmentList.reflowrower( "addItem", $attachment );
+        $attachmentsContainer.reflowrower( "addItem", $attachment );
     };
 
     // Convert the form values back into the member object
@@ -769,9 +802,9 @@
     {
         // Reset any state
         //
-        $attachmentList.empty();
-        $referencesContainer.empty();
-        $previousInvestmentContainer.empty();
+        $attachmentsContainer.reflowrower( "empty" );
+        $referencesContainer.reflowrower( "empty" );
+        $previousInvestmentContainer.reflowrower( "empty" );
 
         // Inject the save and button into the controls
         //
@@ -825,49 +858,6 @@
                     $btnCancel.removeClass( "disabled" );
                 }
             } );
-        } );
-
-        // Attachments
-        //
-        $attachments.delegate( "a[href$=#deleteAttachment]", "click", function( e )
-        {
-            e.preventDefault();
-
-            var $btn            = $( this )
-            ,   $attachment     = $btn.closest( ".attachmentItem" )
-            ,   attachment      = $attachment.data( "attachment" )
-            ,   documentId      = attachment.bidxEntityId
-            ;
-
-            if ( $btn.hasClass( "disabled" ))
-            {
-                return;
-            }
-
-            $btn.addClass( "disabled" );
-
-            bidx.api.call(
-                "entityDocument.destroy"
-            ,   {
-                    entityId:           investorProfileId
-                ,   documentId:         documentId
-                ,   groupDomain:        bidx.common.groupDomain
-                ,   success:            function( response )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
-
-                        $attachmentList.reflowrower( "removeItem", $attachment );
-                    }
-                ,   error:            function( jqXhr, textStatus )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
-
-                        alert( "Problems deleting attachment" );
-
-                        $btn.removeClass( ".disabled" );
-                    }
-                }
-            );
         } );
 
         if ( state === "create" )
@@ -1115,6 +1105,8 @@
         }
         else
         {
+            bidx.common.notifySuccess( "Attachment upload done" );
+
             _addAttachmentToScreen( result.data );
         }
     };
