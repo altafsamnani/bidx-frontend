@@ -136,7 +136,7 @@
     	<div class="entry-content">
     		<div class="row-fluid after-well" >
 	    		<div class="span12 text-center">
-	    			<a class="btn" href="/login">Join our group</a> Already have an account? Just <a href="/login">login</a>
+	    			<a class="btn" href="/login?join=true">Join our group</a> Already have an account? Just <a href="/login">login</a>
 	    		</div>
     		</div>
     	</div>

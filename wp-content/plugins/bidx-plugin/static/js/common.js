@@ -27,7 +27,7 @@
             groupId = bidx.utils.getValue( bidxConfig, "session.currentGroup" );
         }
 
-        _joinGroup( groupId, groupDomain, function( err )
+        joinGroup( groupId, function( err )
         {
             $btn.removeClass( "disabled" );
 
@@ -53,7 +53,7 @@
 
     // Perform an API call to join the group
     //
-    var _joinGroup = function( groupId, groupDomain, cb )
+    var joinGroup = function( groupId, cb )
     {
         if ( !bidx.utils.getValue( bidxConfig, "authenticated" ))
         {
@@ -110,7 +110,7 @@
             groupId = bidx.utils.getValue( bidxConfig, "session.currentGroup" );
         }
 
-        _leaveGroup( groupId, groupDomain, function( err )
+        leaveGroup( groupId, function( err )
         {
             $btn.removeClass( "disabled" );
 
@@ -136,7 +136,7 @@
 
     // Perform an API call to join the group
     //
-    var _leaveGroup = function( groupId, groupDomain, cb )
+    var leaveGroup = function( groupId, cb )
     {
         if ( !bidx.utils.getValue( bidxConfig, "authenticated" ))
         {
@@ -179,11 +179,17 @@
     };
 
     // Notify the user that he is going to be redirected
+    //
     var notifyRedirect = function()
+    {
+        notifySuccess( "Wait for the redirect..." );
+    };
+
+    var notifySuccess = function( msg )
     {
         _notify(
         {
-            text:           "Wait for the redirect..."
+            text:           msg
         ,   type:           "success"
         ,   modal:          true
         } );
@@ -198,6 +204,9 @@
     {
         groupDomain:                groupDomain
     ,   notifyRedirect:             notifyRedirect
+    ,   notifySuccess:              notifySuccess
+    ,   joinGroup:                  joinGroup
+    ,   leaveGroup:                 leaveGroup
 
         // DEV API - do not use these in code!
     ,   _notify:                    _notify

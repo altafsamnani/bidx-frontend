@@ -50,11 +50,53 @@ if (!username_exists ($group_anonymous_login)) {
                 </form>
                 <script>
                     $(function() {
-                        $("#frmLogin").form({
+
+                        var formParams = {
                             callToAction: '.jsLogin',
                             errorClass: 'error',
                             url: '/wp-admin/admin-ajax.php?action=bidx_signin'
-                        });
+                        };
+
+                        if ( bidx.utils.getQueryParameter( "join" ) ) {
+                            formParams.deferRedirect = true;
+
+                            formParams.success = function( response ) {
+
+                                var groupId = bidx.utils.getValue( response, "data.currentGroup" );
+                                bidxConfig.authenticated = true;
+
+                                bidx.common.notifySuccess( "Succesfully logged in. About to join the group!" );
+
+                                bidx.utils.log( "succesfully logged in, continue'ing to join the group", groupId );
+
+                                bidx.common.joinGroup( groupId, function( err ) {
+                                    if ( err ) {
+                                        alert( err );
+                                        return;
+                                    }
+
+                                    response.redirect += "";
+
+                                    var sep = response.redirect.indexOf( "?" ) !== -1
+                                        ? "&"
+                                        : "?";
+
+                                    var url = document.location.protocol
+                                        + "//"
+                                        + document.location.hostname
+                                        + ( document.location.port ? ":" + document.location.port : "" )
+                                        + response.redirect
+                                        + sep + "smsg=2"
+                                    ;
+
+                                    bidx.common.notifyRedirect();
+                                    document.location.href = url;
+                                } )
+                            };
+                        }
+
+
+                        $("#frmLogin").form( formParams );
                     });
                 </script>
             </div>

@@ -210,7 +210,7 @@
 									$form.attr('method', 'POST');
 									$form.submit();
 								}
-								else if (data.redirect) {
+								else if (data.redirect && !options.deferRedirect) {
 
 									if ( window.noty )
 									{
@@ -224,12 +224,12 @@
 
 									document.location=data.redirect;
 								}
-                                                                if(options.success) {
-                                                                    options.success(data);
-                                                                }
+                                if(options.success) {
+                                    options.success(data);
+                                }
 							}
 							else {
-                                                              
+
 								//if error handler is defined, use this one
 								if(options.error) {
 									options.error(data);
