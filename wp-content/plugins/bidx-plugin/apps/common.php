@@ -50,13 +50,9 @@ class BidxCommon
             // To check whther its login page or q= redirect already checked session.
             $isWordpress = $this->isWordpressPage ();
 
-            //Check session if its not redirect (is not having q= param)
-            //Start the session to store Bidx Session
-
-
             if (!$isWordpress) {
-
-                session_start ();
+                //Start the session to store Bidx Session
+                $this->startSession ();
 
                 //If Bidx Cookie set do the following
                 if ($this->isSetBidxAuthCookie ()) {
@@ -77,7 +73,8 @@ class BidxCommon
                 }
 
                 //Set static variables to access through pages
-                $this->setStaticVariables ($subDomain, isset($sessionVars)?$sessionVars:null );
+                $sessionVars = isset ($sessionVars) ? $sessionVars : NULL;
+                $this->setStaticVariables ($subDomain, $sessionVars);
 
                 //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
                 $this->processEntities ($subDomain);
@@ -89,14 +86,34 @@ class BidxCommon
         return;
     }
 
+    /**
+     * Start PHP Session to avoid extra session calls
+     *
+     * @return Starts php session and execute the same session if session_id cookie exists
+     */
+    public function startSession ()
+    {
+
+        if (isset ($_COOKIE['session_id'])) {
+            session_id ($_COOKIE['session_id']);
+        }
+        session_start (); //or session_start();
+        if (!isset ($_COOKIE['session_id'])) {
+            setcookie ('session_id', session_id (), 0, '/', '.' . COOKIE_DOMAIN);
+        }
+    }
+
     public function getSessionVariables ($subDomain)
     {
-        $sessionVars = false;
         //Get Previous Session Variables if Set and Not Failed Login
         if (!empty ($_SESSION[$subDomain]) &&
-             ((!empty($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $_SESSION[$subDomain]->authenticated))  {
+            ((!empty ($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $_SESSION[$subDomain]->authenticated)) {
             $sessionVars = $_SESSION[$subDomain];
+        } else {
+            session_unset ();
+            $sessionVars = false;
         }
+
         return $sessionVars;
     }
 
@@ -139,7 +156,7 @@ class BidxCommon
      */
     public function processEntities ($subDomain)
     {
-       if (!empty ($this::$bidxSession[$subDomain]->data)) {
+        if (!empty ($this::$bidxSession[$subDomain]->data)) {
             $entities = $this::$bidxSession[$subDomain]->data->entities;
             foreach ($entities as $key => $value) {
                 $bidxEntityType = $value->bidxEntityType;
@@ -328,11 +345,10 @@ class BidxCommon
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables
-                    session_destroy();
+                    session_destroy ();
 
                     $this::$staticSession = NULL;
-                    unset($this::$bidxSession[$subDomain]);
-
+                    unset ($this::$bidxSession[$subDomain]);
                 }
 
                 break;
@@ -420,7 +436,6 @@ class BidxCommon
                 return;
             }
         }
-
     }
 
     /**
@@ -484,7 +499,7 @@ class BidxCommon
           'body' => $body,
           'headers' => $headers,
           'cookies' => $cookieArr
-            ));
+        ));
 
         /*         * *********** 5. Set Cookies if Exist ************************* */
         $cookies = $result['cookies'];

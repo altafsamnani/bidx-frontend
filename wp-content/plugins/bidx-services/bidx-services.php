@@ -294,11 +294,14 @@ add_action ('wp_logout', 'bidx_signout');
 function bidx_signout ()
 {
     //Logout Bidx Session too
+
     clear_bidx_cookies ();
+   
     $params['domain'] = get_bidx_subdomain ();
     call_bidx_service ('session', $params, 'DELETE');
     wp_clear_auth_cookie ();
-    session_destroy();
+    clear_wp_bidx_session();
+    
 }
 
 function clear_bidx_cookies ()
@@ -310,38 +313,32 @@ function clear_bidx_cookies ()
         if (preg_match ("/^bidx/i", $cookieKey)) {
             setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
         }
-    }
+    }    
 }
 
-/* add_filter('login_errors', 'bidx_errors');
-
-  function bidx_errors() {
-  global $error;
-  global $ext_error;
-  if ($ext_error == "notindb")
-  return "<strong>ERROR:</strong> Username not found.";
-  else if ($ext_error == "wrongrole")
-  return "<strong>ERROR:</strong> You don't have permissions to log in.";
-  else if ($ext_error == "wrongpw")
-  return "<strong>ERROR:</strong> Invalid password.";
-  else if ($ext_error == "wrongusr")
-  return "<strong>ERROR:</strong> User not found.";
-  else if ($ext_error == "nocurl")
-  return "<strong>ERROR:</strong> Bidx needs the CURL PHP extension. Contact your server adminsitrator!";
-  else if ($ext_error == "nohttps")
-  return "<strong>ERROR:</strong> Protocol https not supported or disabled in libcurl. Contact your server adminsitrator!";
-  else if ($ext_error == "nojson")
-  return "<strong>ERROR:</strong>Bidx needs the JSON PHP extension. Contact your server adminsitrator!";
-  else
-  return $error;
-  }
-
-  //gives warning for login - where to get "source" login
-  function bidx_auth_warning() {
-  echo "<p class=\"message\">" . get_option('bidx_error_msg') . "</p>";
-  }
+/*
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Flush the bidx Wordpress PHP Session Variables 
+ * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_clearwpsession
  *
  */
+add_action ('wp_ajax_nopriv_bidx_clearwpsession', 'clear_wp_bidx_session'); // ajax for logged in users
+add_action ('wp_ajax_bidx_clearwpsession', 'clear_wp_bidx_session');
+
+function clear_wp_bidx_session() {
+
+    /* Clear the Session */
+    session_id($_COOKIE['session_id']);
+    session_start ();
+    session_destroy();
+    setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+    $sessionMsg = array ('status' => 'success','text' => 'Session Flused.');
+    echo json_encode ($sessionMsg);
+    exit;
+
+}
 
 /**
  * @author Altaf Samnani
