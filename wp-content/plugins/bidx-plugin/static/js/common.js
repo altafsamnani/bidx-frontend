@@ -182,7 +182,17 @@
     //
     var notifyRedirect = function()
     {
-        notifySuccess( "Wait for the redirect..." );
+        notifySuccessModal( "Wait for the redirect..." );
+    };
+
+    var notifySuccessModal = function( msg )
+    {
+        _notify(
+        {
+            text:           msg
+        ,   type:           "success"
+        ,   modal:          true
+        } );
     };
 
     var notifySuccess = function( msg )
@@ -191,7 +201,7 @@
         {
             text:           msg
         ,   type:           "success"
-        ,   modal:          true
+        ,   timeout:        3000
         } );
     };
 
@@ -205,6 +215,7 @@
         groupDomain:                groupDomain
     ,   notifyRedirect:             notifyRedirect
     ,   notifySuccess:              notifySuccess
+    ,   notifySuccessModal:         notifySuccessModal
     ,   joinGroup:                  joinGroup
     ,   leaveGroup:                 leaveGroup
 

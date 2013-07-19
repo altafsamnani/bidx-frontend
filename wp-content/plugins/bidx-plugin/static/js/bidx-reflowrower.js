@@ -28,6 +28,8 @@
 
         ,   extraRowClasses:    "row-fluid"
 
+        ,   removeItemOverride: null
+
         ,   state:
             {
                 $control:           null
@@ -64,7 +66,7 @@
                 e.preventDefault();
 
                 var $btn            = $( this )
-                ,   $item           = $btn.closest( ".reflow-row-item" )
+                ,   $item           = $btn.closest( "." + options.itemClass )
                 ,   orgText
                 ,   confirmTimer
                 ;
@@ -85,7 +87,7 @@
                 if ( !options.confirmRemove || $btn.data( "confirm" ) )
                 {
                     clearTimeout( confirmTimer );
-                    widget.removeItem( $item );
+                    widget.removeItem( $item, $btn );
                 }
                 else
                 {
@@ -227,7 +229,7 @@
             }
         }
 
-    ,   removeItem:  function( $item )
+    ,   removeItem:  function( $item, $btn, force )
         {
             var widget              = this
             ,   $el                 = widget.element
@@ -236,6 +238,38 @@
             ,   $row                = $item.closest( "." + options.rowClass )
             ,   $prevRow
             ;
+
+
+            // Method overloading
+            //
+            if ( $.type( $btn ) === "boolean" )
+            {
+                force = $btn;
+                $btn = null;
+            }
+
+            if ( $btn && $btn.length )
+            {
+                if ( $btn.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                $btn.addClass( "disabled" );
+            }
+
+            if ( !force && options.removeItemOverride )
+            {
+                options.removeItemOverride( $item, function()
+                {
+                    if ( $btn && $btn.length )
+                    {
+                        $btn.removeClass( "disabled" );
+                    }
+                } );
+                return;
+            }
+
 
             $item.remove();
 

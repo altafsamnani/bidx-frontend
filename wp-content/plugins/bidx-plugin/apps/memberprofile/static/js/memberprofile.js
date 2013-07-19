@@ -14,8 +14,7 @@
 
     ,   $profilePictureContainer    = $editForm.find( ".profilePictureContainer" )
 
-    ,   $attachments                = $editForm.find( ".attachments" )
-    ,   $attachmentList             = $attachments.find( ".attachmentList" )
+    ,   $attachmentsContainer       = $editForm.find( ".attachmentsContainer" )
 
     ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
     ,   $currentAddressCountry      = $editForm.find( "[name='personalDetails.address[0].country']"         )
@@ -239,6 +238,46 @@
         $languageItem.find( ".isCurrentMotherLanguage"  ).show();
         $languageItem.find( ".btnSetMotherLanguage"     ).hide();
     } );
+
+    // Instantiate reflowrower on the previousInvestment container
+    //
+    $attachmentsContainer.reflowrower(
+    {
+        itemsPerRow:        3
+    ,   removeItemOverride: function( $item, cb )
+        {
+            var attachment      = $item.data( "attachment" )
+            ,   documentId      = attachment.bidxEntityId
+            ;
+
+            bidx.api.call(
+                "entityDocument.destroy"
+            ,   {
+                    entityId:           memberProfileId
+                ,   documentId:         documentId
+                ,   groupDomain:        bidx.common.groupDomain
+                ,   success:            function( response )
+                    {
+                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
+                        bidx.common.notifySuccess( "Attachment deleted" );
+
+                        cb();
+
+                        $attachmentsContainer.reflowrower( "removeItem", $item, true );
+                    }
+                ,   error:            function( jqXhr, textStatus )
+                    {
+                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
+
+                        alert( "Problems deleting attachment" );
+
+                        cb();
+                    }
+                }
+            );
+        }
+    } );
+
 
     // Disable disabled links
     //
@@ -552,11 +591,10 @@
             ? attachment.document
             : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
 
-        $attachment.find( ".documentImage" ).attr( "src", imageSrc );
+        $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
+        $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
 
-        $attachment.find( ".documentLink" ).attr( "href", attachment.document );
-
-        $attachmentList.append( $attachment );
+        $attachmentsContainer.reflowrower( "addItem", $attachment );
     };
 
     // Add an item to the language list and render the HTML for it
@@ -668,7 +706,7 @@
 
         $profilePictureContainer.empty();
 
-        $attachmentList.empty();
+        $attachmentsContainer.reflowrower( "empty" );
 
         // Inject the save and button into the controls
         //
@@ -726,7 +764,7 @@
 
         // Attachments
         //
-        $attachments.delegate( "a[href$=#deleteAttachment]", "click", function( e )
+        $attachmentsContainer.delegate( "a[href$=#deleteAttachment]", "click", function( e )
         {
             e.preventDefault();
 
@@ -753,7 +791,7 @@
                     {
                         bidx.utils.log( "bidx::entityDocument::destroy::success", response );
 
-                        $attachment.remove();
+                        $attachmentsContainer.reflowrower( "removeItem", $attachment );
                     }
                 ,   error:            function( jqXhr, textStatus )
                     {
@@ -974,6 +1012,8 @@
         }
         else
         {
+            bidx.common.notifySuccess( "Attachment upload done" );
+
             _addAttachmentToScreen( result.data );
         }
     };
