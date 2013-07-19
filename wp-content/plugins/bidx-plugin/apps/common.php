@@ -93,14 +93,34 @@ class BidxCommon
      */
     public function startSession ()
     {
+        $session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
+        $this->clearSessionFromParam ($session_id);
 
-        if (isset ($_COOKIE['session_id'])) {
-            session_id ($_COOKIE['session_id']);
+        if ($session_id) {
+            session_id ($session_id);
         }
         session_start (); //or session_start();
-        if (!isset ($_COOKIE['session_id'])) {
+        if (!$session_id) {
             setcookie ('session_id', session_id (), 0, '/', '.' . COOKIE_DOMAIN);
         }
+    }
+    /**
+     * Clear Session From GET param rs
+     * @param $session_id Wordpress php session id to be cleared
+     *
+     * @return Starts php session and execute the same session if session_id cookie exists
+     */
+    function clearSessionFromParam ($session_id)
+    {
+        if (isset ($_GET['rs']) && $_GET['rs']) {
+            /* Clear the Session */
+            session_id ($session_id);
+            session_start ();
+            session_destroy ();
+            setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+        }
+        
+        return;
     }
 
     public function getSessionVariables ($subDomain)
@@ -224,8 +244,8 @@ class BidxCommon
      */
     public function getURIParams ($subDomain, $jsSessionData = NULL)
     {
-
-        $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
+        $requestUri = explode('?', $_SERVER ["REQUEST_URI"]);
+        $hostAddress = explode ('/', $requestUri[0]);
         $redirect = NULL;
         $data = new STDClass();
         $statusMsgId = NULL;
@@ -236,14 +256,14 @@ class BidxCommon
          */
         //$this->getWordpressLogin($jsSessionData);
 
-
+    
 
         if (is_array ($hostAddress)) {
 
             //Redirect URL Logic
             switch ($hostAddress[1]) {
 
-                case 'member':
+                case 'member':           
                     $sessioMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
                     $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessioMemberId;
 

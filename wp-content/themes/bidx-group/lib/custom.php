@@ -69,6 +69,7 @@ function bidx_filter ($content)
  * @return string $statusMessages notification html
  * @access public
  * @example ?smsg = 4 &sparam=base64_enocde('key1=val1|key2=val2|key3=val3)
+ * @Why keeping seperate because its run time and session clear in common.php because it needs before session call
    */
 function bidx_get_status_msgs( ) {
   
