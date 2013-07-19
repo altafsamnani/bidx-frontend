@@ -147,7 +147,7 @@
             {
                 source:         function( query )
                 {
-                    return _.map( languages, function( language ) { return language.value; } );
+                    return _.map( languages, function( language ) { return language.label; } );
                 }
             ,   matcher:        function( item )
                 {
@@ -169,18 +169,18 @@
         // Determine if the value is in the list of languages, and if, add it to the list of added languages
         //
         var language        = $inputAddLanguage.val()
-        ,   key
+        ,   value
         ;
 
-        key = _getLanguageKeyByValue( language );
+        value = _getLanguageValueByLabel( language );
 
-        if ( key )
+        if ( value )
         {
             $inputAddLanguage.val( "" );
 
             addedLanguages[ language ] = true;
 
-            _addLanguageDetailToList( { language: key, motherLanguage: false } );
+            _addLanguageDetailToList( { language: value, motherLanguage: false } );
         }
 
     } );
@@ -195,10 +195,10 @@
 
         var $languageItem   = $( this ).closest( ".languageItem" )
         ,   languageDetail  = $languageItem.data( "languageDetail" )
-        ,   languageValue   = _getLanguageValueByKey( languageDetail.language )
+        ,   languageLabel   = _getLanguageLabelByValue( languageDetail.language )
         ;
 
-        delete addedLanguages[ languageValue ];
+        delete addedLanguages[ languageLabel ];
 
         $languageItem.remove();
     } );
@@ -395,32 +395,32 @@
 
     // Convenience function for translating a language key to it's description
     //
-    var _getLanguageValueByKey = function( key )
+    var _getLanguageLabelByValue = function( value )
     {
-        var value;
-
-        $.each( languages, function( i, item )
-        {
-            if ( item.key === key )
-            {
-                value = item.value;
-            }
-        } );
-
-        return value;
-    };
-
-    // Convenience function for translating a language description to it's key
-    //
-    var _getLanguageKeyByValue = function( value )
-    {
-        var key;
+        var label;
 
         $.each( languages, function( i, item )
         {
             if ( item.value === value )
             {
-                key = item.key;
+                label = item.label;
+            }
+        } );
+
+        return label;
+    };
+
+    // Convenience function for translating a language description to it's key
+    //
+    var _getLanguageValueByLabel = function( label )
+    {
+        var key;
+
+        $.each( languages, function( i, item )
+        {
+            if ( item.label === label )
+            {
+                key = item.value;
             }
         } );
 
@@ -572,7 +572,7 @@
             // Make sure the language key is *always* in lowercase
             //
             languageDetail.language = languageDetail.language.toLowerCase();
-            languageDescr = _getLanguageValueByKey( languageDetail.language );
+            languageDescr = _getLanguageLabelByValue( languageDetail.language );
         }
 
         if ( languageDescr )
