@@ -241,7 +241,7 @@
 
         var $attachment         = snippets.$attachment.clone()
         ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   inputNamePrefix     = "previousBusiness[" + index + "]"
+        ,   inputNamePrefix     = "attachment[" + index + "]"
         ,   imageSrc
         ;
 
@@ -260,8 +260,8 @@
         $attachment.find( ".documentName"       ).text( attachment.documentName );
         $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
 
-        var $purpose       = $attachment.find( "[name='purpose']" )
-        ,   $documentType  = $attachment.find( "[name='documentType']" )
+        var $purpose       = $attachment.find( "[name$='.purpose']" )
+        ,   $documentType  = $attachment.find( "[name$='.documentType']" )
         ;
 
         bidx.utils.setElementValue( $purpose,       attachment.purpose );

@@ -126,6 +126,15 @@
         bidx.utils.populateDropdown( $investmentType, investmentTypes );
     } );
 
+    bidx.data.getItem( "documentType", function( err, documentTypes )
+    {
+        var $documentType = snippets.$attachment.find( "[name='documentType']" );
+        $documentType.append( $( "<option value='' />" ).text( "Select the type" ));
+
+        bidx.utils.populateDropdown( $documentType, documentTypes );
+    } );
+
+
     // Disable disabled links
     //
     $element.delegate( "a.disabled", "click", function( e )
@@ -607,7 +616,7 @@
             $.each( attachments, function( idx, attachment )
             {
                 bidx.utils.log( "attachment", attachment );
-                _addAttachmentToScreen( attachment );
+                _addAttachmentToScreen( idx, attachment );
             } );
         }
 
@@ -616,7 +625,7 @@
 
     // Add the attachment to the screen, by cloning the snippet and populating it
     //
-    var _addAttachmentToScreen = function( attachment )
+    var _addAttachmentToScreen = function( index, attachment )
     {
         if ( attachment === null )
         {
@@ -624,23 +633,45 @@
             return;
         }
 
-        var $attachment         = snippets.$attachment.clone()
+        if ( !index )
+        {
+            index = $attachmentsContainer.find( ".attachmentItem" ).length;
+        }
 
+        var $attachment         = snippets.$attachment.clone()
         ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
+        ,   inputNamePrefix     = "attachment[" + index + "]"
         ,   imageSrc
         ;
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $attachment.find( "input, select, textarea" ).each( function( )
+        {
+            var $input = $( this );
+
+            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
+        } );
 
         $attachment.data( "attachment", attachment );
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
         $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
 
+        var $purpose       = $attachment.find( "[name$='.purpose']" )
+        ,   $documentType  = $attachment.find( "[name$='.documentType']" )
+        ;
+
+        bidx.utils.setElementValue( $purpose,       attachment.purpose );
+        bidx.utils.setElementValue( $documentType,  attachment.documentType );
+
         imageSrc =  attachment.mimeType.match( /^image/ )
             ? attachment.document
             : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
 
         $attachment.find( ".documentImage" ).attr( "src", imageSrc );
-        $attachment.find( ".documentLink" ).attr( "href", attachment.document );
+        $attachment.find( ".documentLink"  ).attr( "href", attachment.document );
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
     };
@@ -1107,7 +1138,7 @@
         {
             bidx.common.notifySuccess( "Attachment upload done" );
 
-            _addAttachmentToScreen( result.data );
+            _addAttachmentToScreen( null, result.data );
         }
     };
 
