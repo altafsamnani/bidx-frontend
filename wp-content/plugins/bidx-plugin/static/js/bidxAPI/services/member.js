@@ -64,14 +64,6 @@
 
         var url = baseUrl;
 
-        // Creation must be done via the Entity API..
-        //
-        if ( method === "POST" )
-        {
-            url = "/api/v1/entity";
-        }
-
-
         api._call(
         {
             method:         method
