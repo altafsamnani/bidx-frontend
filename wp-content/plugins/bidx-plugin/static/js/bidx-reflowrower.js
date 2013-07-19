@@ -22,6 +22,7 @@
         ,   rowClass:           "reflow-row"
         ,   itemClass:          "reflow-row-item"
         ,   itemsPerRow:        3
+        ,   confirmRemove:      true
 
         ,   extraRowClasses:    "row-fluid"
         }
@@ -41,11 +42,41 @@
             {
                 e.preventDefault();
 
-                var $btn    = $( this )
-                ,   $item   = $btn.closest( ".reflow-row-item" )
+                var $btn            = $( this )
+                ,   $item           = $btn.closest( ".reflow-row-item" )
+                ,   orgText
+                ,   confirmTimer
                 ;
 
-                widget.removeItem( $item );
+                function startConfirmTimer( $btn, orgText )
+                {
+                    confirmTimer = setTimeout( function( )
+                    {
+                        $btn.text( orgText );
+                        $btn.data( "confirm", false );
+
+                        $btn.removeClass( "btn-large" );
+                        $btn.addClass( "btn-mini" );
+
+                    }, 5000 );
+                }
+
+                if ( !options.confirmRemove || $btn.data( "confirm" ) )
+                {
+                    clearTimeout( confirmTimer );
+                    widget.removeItem( $item );
+                }
+                else
+                {
+                    orgText = $btn.text();
+                    $btn.text( "Are you sure? Click again..." );
+                    $btn.data( "confirm", true );
+
+                    $btn.removeClass( "btn-mini" );
+                    $btn.addClass( "btn-large" );
+
+                    startConfirmTimer( $btn, orgText );
+                }
             } );
         }
 
