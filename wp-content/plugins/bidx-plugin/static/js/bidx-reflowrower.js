@@ -21,10 +21,17 @@
             widgetClass:        "reflowrower"
         ,   rowClass:           "reflow-row"
         ,   itemClass:          "reflow-row-item"
+        ,   controlClass:       "reflow-control"
         ,   itemsPerRow:        3
         ,   confirmRemove:      true
+        ,   prependNewItems:    true
 
         ,   extraRowClasses:    "row-fluid"
+
+        ,   state:
+            {
+                $control:           null
+            }
         }
 
     ,   _create: function( params )
@@ -37,6 +44,20 @@
             var options    = widget.options;
 
             $el.addClass( options.widgetClass );
+
+
+            // If there is a control container added, wrap it in a row container
+            //
+            var $control    = $el.find( "." + options.controlClass )
+            ,   $row
+            ;
+
+            if ( $control.length )
+            {
+                $control.wrap( $( "<div />", { "class": options.rowClass + " " + options.extraRowClasses + " " + options.controlClass + "-row" } ));
+
+                options.state.$control = $control;
+            }
 
             $el.delegate( "[href$=#removeItem]", "click", function( e )
             {
@@ -80,37 +101,130 @@
             } );
         }
 
-    ,   addItem: function( $item )
+    ,   empty:  function()
         {
             var widget      = this
-            ,   $el         = widget.element
             ,   options     = widget.options
+            ,   $el         = widget.element
             ;
 
-            // Find a row that has room or add a new row
+            // Remove all rows, except the one containing the control container,
+            // remove all childs from the control container, except the control itself
             //
-            var $rowWithRoom;
-            $el.children( ".reflow-row" ).each( function( )
+            $el.children( ":not(." + options.controlClass + "-row)" ).remove();
+            $el.find( "." + options.controlClass + "-row" ).children( ":not(." + options.controlClass + ")" ).remove();
+        }
+
+    ,   addItem: function( $item )
+        {
+            var widget          = this
+            ,   $el             = widget.element
+            ,   options         = widget.options
+            ,   $firstRow       = $el.children( "." + options.rowClass + ":eq(0)" )
+            ,   $rowWithRoom
+            ;
+
+            // DRY function for adding rows to the container
+            //
+            function addRow()
             {
-                var $row = $( this );
+                var $row = $( "<div />", { "class": options.rowClass + " " + options.extraRowClasses } );
 
-                if ( $row.children().length < options.itemsPerRow )
-                {
-                    $rowWithRoom = $row;
-                    return false;
-                }
-            } );
+                $el.append( $row );
 
-            if ( !$rowWithRoom )
-            {
-                $rowWithRoom = $( "<div />", { "class": options.rowClass + " " + options.extraRowClasses } );
-
-                $el.append( $rowWithRoom );
+                return $row;
             }
 
+            // Make sure there is always at least one row
+            //
+            if ( !$firstRow.length )
+            {
+                addRow();
+            }
+
+            // We want to find the item later, put the item class on it
+            //
             $item.addClass( options.itemClass );
 
-            $rowWithRoom.append( $item );
+            // Add an item to the front of th eback of the list?
+            //
+            if ( options.prependNewItems )
+            {
+                if ( options.state.$control )
+                {
+                    options.state.$control.after( $item.fadeIn( 800 ) );
+                }
+                else
+                {
+                    $firstRow.prepend( $item.fadeIn( 800 ) );
+                }
+
+                // No need to go further if the first row is not full yet
+                //
+                if ( $firstRow.children().length <= options.itemsPerRow )
+                {
+                    return;
+                }
+
+                // Take the last of each row, and put it in the first of the next row
+                //
+                var $prevItem;
+                $el.children( "." + options.rowClass ).each( function( )
+                {
+                    var $row        = $( this )
+                    ,   childCount
+                    ;
+
+                    // Move the item from the previous row (if any) to the front of this row
+                    //
+                    if ( $prevItem && $prevItem.length )
+                    {
+                        $row.prepend( $prevItem );
+                        $prevItem = null;
+                    }
+
+                    childCount = $row.children().length;
+
+                    // Row full? remove last item and carry it to the following row
+                    //
+                    if ( childCount > options.itemsPerRow )
+                    {
+                        $prevItem = $row.children( ":eq(" + ( childCount - 1 ) + ")" ).remove();
+                    }
+                } );
+
+                // Here with an item left? New row needed!
+                //
+                if ( $prevItem && $prevItem.length )
+                {
+                    $rowWithRoom = addRow();
+                    $rowWithRoom.append( $prevItem );
+                }
+            }
+            else
+            {
+                // Find a row that has room or add a new row
+                //
+                $el.children( "." + options.rowClass ).each( function( )
+                {
+                    var $row = $( this );
+
+                    if ( $row.children().length < options.itemsPerRow )
+                    {
+                        $rowWithRoom = $row;
+                        return false;
+                    }
+                } );
+
+                // No room found in a row to put our item in? Add a new row
+                //
+                if ( !$rowWithRoom )
+                {
+                    $rowWithRoom = addRow();
+                }
+
+                $rowWithRoom.append( $item.fadeIn( 800 ) );
+            }
         }
 
     ,   removeItem:  function( $item )

@@ -137,6 +137,10 @@ a, a:hover, a:visited, a:link  {
 	margin-bottom: 				20px;
 }
 
+.intermediate-row {
+    margin-bottom:              10px;
+}
+
 .outer-content-container {
     padding-top:                20px;
 }

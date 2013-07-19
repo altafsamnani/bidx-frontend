@@ -383,7 +383,7 @@
     {
         // Reset any state
         //
-        $previousBusinessContainer.empty();
+        $previousBusinessContainer.reflowrower( "empty" );
         $attachmentsContainer.empty();
         $cvContainer.find( ".noCV"  ).hide();
         $cvContainer.find( ".hasCV" ).hide();
