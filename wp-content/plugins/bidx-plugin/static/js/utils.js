@@ -205,7 +205,8 @@
         return value;
     };
 
-
+    // Retrieve the value of a specific URL parameter
+    //
     var getQueryParameter = function( key )
     {
         var baseURL = decodeURI( document.location.href.replace( /\+/g, "%20" ) ).split( "#" )[ 0 ]
@@ -232,9 +233,12 @@
         return result;
     };
 
+    // Get safely a value from a JS object by specifying the property path as
+    // a string
+    //
     var getValue = function( obj, path, forceArray )
     {
-        if ( typeof path === "undefined" )
+        if ( typeof path === "undefined" || !obj )
         {
             return;
         }

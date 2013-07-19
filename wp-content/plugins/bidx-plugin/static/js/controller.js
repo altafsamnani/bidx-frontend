@@ -14,6 +14,37 @@
     ,   $controls       = $( ".editControls" )
     ;
 
+    // Convenience function for itterating over the list of entities of the session
+    // data and lookup the existance (and id) of a specific entity
+    //
+    function getEntityId( entityType )
+    {
+        var result      = null
+        ,   entities    = bidx.utils.getValue( bidxConfig, "session.entities" )
+        ;
+
+        if ( entities )
+        {
+            $.each( entities, function( idx, entity )
+            {
+                if ( entity.bidxEntityType === entityType )
+                {
+                    if ( !result )
+                    {
+                        result = entity.bidxEntityId;
+                    }
+                    else
+                    {
+                        result = [ result ];
+                        result.push( entity.bidxEntityId );
+                    }
+                }
+            } );
+        }
+
+        return result;
+    }
+
     // Mainstate switcher. Expects html containers to exist with both the class mainState and mainState{{s}}, where s is the parameter being put into this function
     //
     function _showMainState( s )
@@ -93,12 +124,12 @@
         ,   'login':                                            'login'
         ,   'register':                                         'register'
         ,   'resetpassword':                                    'resetpassword'
-        
+
         ,   'mail(/:section)(/:id)':                            'mail'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
-        
+
         }
     ,   editMember:             function( id, section )
         {
@@ -225,12 +256,12 @@
             state   = "list";
 
             // if there is an id, switch state to viewing of email
-            if( id && id.match( /^\d+$/ ) ) 
+            if( id && id.match( /^\d+$/ ) )
             {
                 state = "read";
             }
-            
-            
+
+
 
             _navigateToApp( "mail", state, section, id);
             //_navigateToApp( "mail",  section );
@@ -247,6 +278,16 @@
         {
             $controls.append( btns );
         }
+
+    ,   getInvestorProfileId:                         function()
+        {
+            return getEntityId( "bidxInvestorProfile" );
+        }
+    ,   getEntrepreneurProfileId:                     function()
+        {
+            return getEntityId( "bidxEntrepreneurProfile" );
+        }
+
     };
 
 

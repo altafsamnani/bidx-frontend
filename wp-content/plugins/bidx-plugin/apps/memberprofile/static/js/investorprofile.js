@@ -872,10 +872,10 @@
 
         if ( state === "create" )
         {
-            // Create the member
+            // Create the investorprofile, which needs to be done via the entity api directly
             //
             bidx.api.call(
-                "member.save"
+                "entity.save"
             ,   {
                     groupDomain:    bidx.common.groupDomain
                 ,   data:
@@ -1077,17 +1077,28 @@
             case "create":
                 bidx.utils.log( "EditMember::AppRouter::create" );
 
-                memberId    = null;
-                state       = "create";
-
-                $element.show();
-
-                // Create the investor profile by doing a POST
-                // We *need* this for the fileupload to work
+                // Protect against 'double creation' it is only allowed to have
+                // one investor profile
                 //
-                _showView( "load" );
+                if ( bidx.controller.getInvestorProfileId() )
+                {
+                    return navigate( "edit" );
+                }
+                else
+                {
+                    memberId    = null;
+                    state       = "create";
 
-                _init();
+                    $element.show();
+
+                    // Create the investor profile by doing a POST
+                    // We *need* this for the fileupload to work
+                    //
+                    _showView( "load" );
+
+                    _init();
+                }
+
             break;
 
         }
