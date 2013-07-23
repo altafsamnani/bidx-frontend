@@ -18,8 +18,10 @@ if (!username_exists ($group_anonymous_login)) {
 }
 
 ?>
-<div class="block-odd">
-    <div class="container">
+<div class="container">
+    <div class="block-odd">
+
+    
 
         <?php while (have_posts ()) : the_post (); ?>
             <?php
@@ -29,5 +31,5 @@ if (!username_exists ($group_anonymous_login)) {
         <?php endwhile; ?>
 
     </div>
+    
 </div>
-

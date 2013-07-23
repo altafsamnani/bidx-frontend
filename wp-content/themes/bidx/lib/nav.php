@@ -35,8 +35,12 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
 
     //top navigation receives styling with dropdown menu's
     if($args->theme_location == "primary_navigation") {
+/*      echo "<div style='position:absolute;left:0;top:0;'>";
+      new dBug($item);
+      echo "</div>";
+      exit();*/
       if ($item->is_dropdown && ($depth === 0)) {
-        $item_html = str_replace('<a', '<a class="dropdown-toggle" data-toggle="dropdown" data-target="#"', $item_html);
+        $item_html = str_replace('<a', '<a class="dropdown-toggle" href="'. $item->url .'"data-toggle="dropdown" data-target="#"', $item_html);
         $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
       }
       elseif (stristr($item_html, 'li class="divider')) {
