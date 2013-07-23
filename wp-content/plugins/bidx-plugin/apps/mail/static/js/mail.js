@@ -50,6 +50,7 @@
             ,   groupDomain:              bidx.common.groupDomain
             ,   success:                  function( response )
                 {
+                    console.log(response.data);
                     if( response.data ) 
                     {
                         var item
@@ -69,7 +70,10 @@
                             element.find(".placeholder").each(function( i, el )
                             {
                                 //!! TEMP add sendername to item because it is not coming from API
-                                item.sendername = "SENDER UNKNOWN IN API!!!!";
+                                //item.sendername = "SENDER UNKNOWN IN API!!!!";
+                                if( item.recipients[0] && item.recipients[0].fullName ) {
+                                    item.sendername = item.recipients[0].fullName;
+                                }
 
                                 //isolate placeholder key
                                 cls = $(el).attr("class").replace("placeholder ", "");
