@@ -155,9 +155,9 @@
 
 			<div class="formfield">
 				<label>Is the location of your focus based on a:</label>
-				<label class="radio"><input type="radio" name="location-type" value="city" checked> city (or a number of cities)?</label>
-				<label class="radio"><input type="radio" name="location-type" value="country"> country (or a number of countries)?</label>
-				<label class="radio"><input type="radio" name="location-type" value="coord"> specific location (or a number of specific locations)?</label>
+				<label class="bidx-radio"><input type="radio" name="location-type" value="city" checked> city (or a number of cities)?</label>
+				<label class="bidx-radio"><input type="radio" name="location-type" value="country"> country (or a number of countries)?</label>
+				<label class="bidx-radio"><input type="radio" name="location-type" value="coord"> specific location (or a number of specific locations)?</label>
 
 				<div class="location-list cities">
 
@@ -166,7 +166,7 @@
 						<input type="text" name="focusCity" data-type="location" data-type-arguments='{"listResults":"true","listId":"locationList", "emptyClass":"empty","filter":"cities"}' placeholder="Please type your focus theme" />
 					</div>
 					<div class="list">
-						<ul id="locationList" class="clearfix">
+						<ul id="locationList" class="unstyled clearfix">
 							<li>
 								<div class="label empty">Add a location</div>
 							</li>
@@ -196,11 +196,13 @@
 					</div>
 				</div>				
 			</div>
-			
+			<div>
+				<p>
+				<a href="#" class="btn btn-primary jsSave">Save Profile</a>                       
+				</p>
+			</div>
 		</div>
-		<div class="save-block">
-			<a href="#" class="button primary jsSave">Save Profile</a>                       
-		</div>
+
 	</div>
 
 </form>
