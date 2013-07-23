@@ -11,7 +11,14 @@
 		padding-right:		10px;
 	}
 </style>
+
 <form id="registration"  name="registration">
+	<?php 
+		//generate hiddenfields. REMARK: we might not want to print all values here!!
+		foreach ( $_POST as $key => $value ) {
+			 echo  "<input type='hidden' name='" . $key . "' value='" . $value . "'>" ;
+		}
+	 ?>	
 
 	<div class="row-fluid">
 		<div class="span4 well">
@@ -28,7 +35,7 @@
 
 			<div class="formfield">
 				<label>E-mail</label>
-				<input type="email" readonly="readonly" name="email" value="[!USERNAME!]"/>
+				<input type="email" readonly="readonly" name="email" value="<?php echo $_POST["username"]; ?>"/>
 			</div>
 
 			<div class="formfield">
@@ -44,7 +51,7 @@
 			</div>			
 			<div class="formfield">
 				<label>Group Name</label>
-				<input type="text" name="businessGroupName" readonly="readonly" placeholder="Please type your group name" value="[!GROUPNAME!]"/>
+				<input type="text" name="businessGroupName" readonly="readonly" placeholder="Please type your group name" value="<?php echo $_POST["groupName"]; ?>"/>
 			</div>
 
 			<div class="formfield">
@@ -154,7 +161,7 @@
 
 				<div class="location-list cities">
 
-					<div class="explanation">EXPLANATION OF HOW TO THIS OPTION WORKS</div>
+					<div class="explanation">EXPLANATION OF HOW TO THIS OPTION WORKS1</div>
 					<div>
 						<input type="text" name="focusCity" data-type="location" data-type-arguments='{"listResults":"true","listId":"locationList", "emptyClass":"empty","filter":"cities"}' placeholder="Please type your focus theme" />
 					</div>
@@ -169,12 +176,12 @@
 				</div>
 
 				<div class="location-list countries jqHidden">
-					<div class="explanation">EXPLANATION OF HOW TO THIS OPTION WORKS</div>
+					<div class="explanation">EXPLANATION OF HOW TO THIS OPTION WORKS2</div>
 					<div>
 						<input type="text" name="focusCountry" data-type="countryAutocomplete" data-type-arguments='{"listId":"countryList","emptyClass":"empty"}' placeholder="Please type your focus theme" />
 					</div>
 					<div class="list">
-						<ul id="countryList" class="clearfix">
+						<ul id="nostyle countryList" class="clearfix">
 							<li>
 								<div class="label empty">Add a location</div>
 							</li>
@@ -195,8 +202,7 @@
 			<a href="#" class="button primary jsSave">Save Profile</a>                       
 		</div>
 	</div>
-	
-    <!--HIDDEN-->
+
 </form>
 <script type="text/javascript">
 	$(function(){
@@ -215,8 +221,9 @@
 
 		
 
-		$("[name=location-type]").click(function(e){
+		$("[name=location-type]").change(function(e){
 			var $this=$(this);
+			console.log("sdfdfs");
 			if ($this.val() == "city"){
 				$(".location-map, .location-list.countries").fadeOut('fast',function(){
 					

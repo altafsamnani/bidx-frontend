@@ -187,7 +187,6 @@
 					data: $form.find(":input:not(.ignore)").serialize() + "&apiurl=" + options.apiurl +  "&apimethod=" + options.apimethod,
 					async: true})
 					.always(function(data){
-
 						if ( options.callToAction )
 						{
 							$( options.callToAction ).removeClass( "disabled" );
@@ -422,6 +421,7 @@
 							el:$this,
 							status:status
 						};
+						console.log(data);
 						$.extend(ret,data);
 						methods.done(ret);
 					});
@@ -520,11 +520,16 @@
 				else {
 					switch(result.data.mimeType.split("/")[0]) {
 						case "image":
+
 							if ( options.imageContainer ) {
 								$( options.imageContainer ).html( "<img src=\"" + result.data.document +  "\" >" );
 							}
 							else {
-								result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
+								//remove if wrapper exists
+								result.el.parent().find(".grouplogo").remove();
+								//add image with wrapper
+								result.el.before("<div class=\"grouplogo\"><img src=\"" + result.data.document +  "\" ></div>");
+								//result.el.parent().html("<img src=\"" + result.data.document +  "\" >");
 							}
 
 							break;
