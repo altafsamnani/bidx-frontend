@@ -316,7 +316,6 @@
         {
             text:           msg
         ,   type:           "error"
-        ,   timeout:        8000
         } );
     };
 
