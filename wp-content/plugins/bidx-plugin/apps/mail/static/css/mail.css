@@ -79,11 +79,13 @@
         }
 
     .mail .viewRead .mail-message {
-        border: 2px solid #BDC3C7;
         -webkit-border-radius: 6px;
         -moz-border-radius: 6px;
         border-radius: 6px;
+        border: 2px solid #BDC3C7;
+
         background-color: #fff;
+        padding: 20px;
     }
 
     .row-fluid .input-prepend {

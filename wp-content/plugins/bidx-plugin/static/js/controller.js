@@ -230,7 +230,7 @@
 
             _showMainState( state );
         }
-    ,   login:           function()
+    ,   login:              function()
         {
             state = "login";
 
@@ -248,23 +248,33 @@
 
             _showMainState( state );
         }
-     ,   mail:         function( section, id )
+     ,   mail:              function( section, id )
         {
             bidx.utils.log( "AppRouter::mailInbox", section );
 
             //default state is a list view of emails whereas the section defines the source
             state   = "list";
 
-            // if there is an id, switch state to viewing of email
-            if( id && id.match( /^\d+$/ ) )
+
+            // if there is an id, switch state to viewing of email. Id could also be available under section
+            if( ( section && section.match( /^\d+$/ ) ) || ( id && id.match( /^\d+$/ ) ) )
             {
                 state = "read";
+                //if Id was provided on the position of section, copy it onto ID
+                if ( section && section.match( /^\d+$/ ) )
+                {
+                    id = section;
+                }
+                if( section && section === "deleteConfirm" )
+                {
+                    state = section;
+                }
             }
-
-
+            
+            
 
             _navigateToApp( "mail", state, section, id);
-            //_navigateToApp( "mail",  section );
+
         }
     } );
 

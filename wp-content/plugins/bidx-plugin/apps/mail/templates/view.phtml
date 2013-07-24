@@ -14,6 +14,10 @@
     <!-- mail stage: this is the ajax target -->
     <section class="span10 well mail">
         <article class="view viewLoad">Loading...</article>
+        <article class="view viewError">
+            <h1>Error</h1>
+            <span class="errorMsg"></span>
+        </article>
 
         <!-- mail listview like mail, sent, drafts, archived or trash -->
         <article class="view viewList">
@@ -93,21 +97,17 @@
               <!-- TOOLBAR -->
             <div class="mail-toolbar">
                 <div class="btn-group">
-                    <a class="btn btn-small btn-primary" href="#fakelink">Reply</a>
-                    <a class="btn btn-small btn-primary" href="#fakelink">Reply All</a>
-                    <a class="btn btn-small btn-primary" href="#fakelink">Forward</a>
-                    <a class="btn btn-small btn-primary" href="#fakelink">Archive</a>
-                    <a class="btn btn-small btn-primary" href="#fakelink">Delete</a>
-                    
-                    <a class="btn btn-small btn-primary" href="#fakelink">Report</a>
+                    <a class="btn btn-small btn-primary" href="#/mail/#mail/reply/">Reply</a>
+                    <!-- <a class="btn btn-small btn-primary" href="#fakelink">Reply All</a> -->
+                    <a class="btn btn-small btn-primary" href="/mail/#mail/forward/">Forward</a>
+                    <a class="btn btn-small btn-primary" href="/mail/#mail/deleteConfirm/">Delete</a>
+<!--                     <a class="btn btn-small btn-primary" href="#fakelink">Report</a> -->
                 </div>
-              
-
             </div>
 
                 <div class="row-fluid">
                     <div class="span12 mail-message">
-                      Dzie message!
+                        Loading...
                     </div>
                 </div>
             
@@ -154,6 +154,28 @@
                 </div>
             </div>
 
+        </article>
+
+
+
+        <!--  ************************** MODAL VIEWS ****************************************** -->
+        <article class="view viewDeleteConfirm">
+            <!-- Modal -->
+            <div class="modal hide fade bidx-modal-deleteEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Delete message</h3>
+                </div>
+                <div class="modal-body">
+                <p>
+                    You are about to remove this message. Are you sure?
+                </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn btn-primary" href="/mail/#mail/delete/">Delete message</button>
+                </div>
+            </div>
         </article>
 
     </section>

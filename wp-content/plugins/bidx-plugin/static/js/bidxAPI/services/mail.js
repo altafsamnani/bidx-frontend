@@ -12,6 +12,7 @@
     ,   params  = []
     ;
 
+
     mail.fetch = function( params )
     {
         var method = "GET";
@@ -19,7 +20,6 @@
         api._call(
         {
             method:         method
-        ,   id:             params.memberId
         ,   groupDomain:    params.groupDomain
         ,   baseUrl:        baseUrl
         ,   form:           true
@@ -40,6 +40,26 @@
         } );
     };
 
+    mail.read = function ( params ) 
+    {
+        var method = "GET";
+
+        api._call(
+        {
+            method:         method
+        ,   id:             params.mailId
+        ,   groupDomain:    params.groupDomain
+        ,   baseUrl:        baseUrl
+        ,   success:        function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    }
    
 
     api.mail = mail;
