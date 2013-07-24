@@ -3,11 +3,12 @@
     var bidx            = window.bidx || {}
     ,   bidxConfig      = window.bidxConfig || {}
     ,   groupDomain     = bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain()
+    ,   $body           = $( "body" )
     ;
 
     // Search for any join group button on the page, on click, perform an API call to join the group and reload the page on success
     //
-    $( "body" ).delegate( "a[href$=#joinGroup]", "click", function( e )
+    $body.delegate( "a[href$=#joinGroup]", "click", function( e )
     {
         e.preventDefault();
 
@@ -53,7 +54,7 @@
 
     // Perform an API call to join the group
     //
-    var joinGroup = function( groupId, cb )
+    function joinGroup( groupId, cb )
     {
         if ( !bidx.utils.getValue( bidxConfig, "authenticated" ))
         {
@@ -86,11 +87,11 @@
                 }
             }
         );
-    };
+    }
 
     // Search for any join group button on the page, on click, perform an API call to join the group and reload the page on success
     //
-    $( "body" ).delegate( "a[href$=#leaveGroup]", "click", function( e )
+    $body.delegate( "a[href$=#leaveGroup]", "click", function( e )
     {
         e.preventDefault();
 
@@ -136,7 +137,7 @@
 
     // Perform an API call to join the group
     //
-    var leaveGroup = function( groupId, cb )
+    function leaveGroup( groupId, cb )
     {
         if ( !bidx.utils.getValue( bidxConfig, "authenticated" ))
         {
@@ -169,7 +170,89 @@
                 }
             }
         );
-    };
+    }
+
+    // Search for any publish button on the page, on click, perform an API call to
+    // publish the entity reload the page on success
+    //
+    $body.delegate( "a[href*='#publish/']", "click", function( e )
+    {
+        e.preventDefault();
+
+        var $btn = $( this );
+
+        if ( $btn.hasClass( "disabled" ))
+        {
+            return;
+        }
+
+        $btn.addClass( "disabled" );
+
+        var hrefElements = $btn.attr( "href" ).split( "/" );
+
+        if ( hrefElements.length !== 2 )
+        {
+            bidx.utils.error( "publish href", hrefElements, $btn.attr( "href" ) );
+            alert( "Unexpected publish link!" );
+            return;
+        }
+
+        var entityId = hrefElements[ 1 ];
+
+        publish( entityId, function( err )
+        {
+            $btn.removeClass( "disabled" );
+
+            if ( err )
+            {
+                alert( err );
+            }
+            else
+            {
+                bidx.common.notifyRedirect();
+
+                var url = document.location.protocol
+                    + "//"
+                    + document.location.hostname
+                    + ( document.location.port ? ":" + document.location.port : "" )
+                    + "?smsg=3&rs=true"
+                ;
+
+                document.location.href = url;
+            }
+        });
+    } );
+
+    // Perform an API call to publish an entity
+    //
+    function publish( entityId, cb )
+    {
+        if ( !bidx.utils.getValue( bidxConfig, "authenticated" ))
+        {
+            alert( "It is only possible to publish something when you are logged in" );
+            return;
+        }
+
+        bidx.api.call(
+            "entityPublish.save"
+        ,   {
+                entityId:           entityId
+            ,   groupDomain:        groupDomain
+            ,   success:            function( response )
+                {
+                    bidx.utils.log( "bidx::entityPublish::save::success", response );
+
+                    cb();
+                }
+            ,   error:            function( jqXhr, textStatus )
+                {
+                    bidx.utils.log( "bidx::entityPublish::save::error", jqXhr, textStatus );
+
+                    cb( new Error( "Problem publishing entity" ) );
+                }
+            }
+        );
+    }
 
     // Notify the user, for now it's just a wrapper over noty... but if we replace this
     //
