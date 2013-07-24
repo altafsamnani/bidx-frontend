@@ -50,7 +50,7 @@
             ,   groupDomain:              bidx.common.groupDomain
             ,   success:                  function( response )
                 {
-                    console.log(response.data);
+
                     if( response.data ) 
                     {
                         var item
