@@ -286,6 +286,7 @@
     {
         addControlButtons:                  function( btns )
         {
+            $controls.empty();
             $controls.append( btns );
         }
 
