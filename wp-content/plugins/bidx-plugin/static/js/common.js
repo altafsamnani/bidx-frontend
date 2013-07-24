@@ -179,7 +179,16 @@
     {
         e.preventDefault();
 
-        var $btn = $( this );
+        var $btn            = $( this )
+        ,   missingFields   = $btn.data( "missingfields" )
+        ;
+
+        if ( missingFields && $.type( missingFields ) === "array" )
+        {
+            notifyError( "Not all the required information for publishing is provided. Please go to edit and fill in the missing data: " + missingFields.join( ", " ));
+
+            return;
+        }
 
         if ( $btn.hasClass( "disabled" ))
         {
@@ -284,7 +293,17 @@
         {
             text:           msg
         ,   type:           "success"
-        ,   timeout:        3000
+        ,   timeout:        4000
+        } );
+    };
+
+    var notifyError = function( msg )
+    {
+        _notify(
+        {
+            text:           msg
+        ,   type:           "error"
+        ,   timeout:        8000
         } );
     };
 

@@ -4,7 +4,8 @@ $entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
 $entityDetails = $this->exst ($this->data->wp->entities->bidxBusinessSummary);
 $companies = $this->exst ($this->data->companies);
 
-if ($entrepreneurDetails) {
+if ($entrepreneurDetails &&
+    ( $entrepreneurDetails->bidxEntityStatus == 'PUBLISHED' || $entrepreneurDetails->bidxCanEdit  ) ) {
     ?>
 
     <div class="well profile-block">
@@ -12,7 +13,34 @@ if ($entrepreneurDetails) {
         <div class="btn-group control-buttons">
             <?php if ($entrepreneurDetails->bidxCanEdit) { ?>
                 <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurDetails->ownerId); ?>">Edit</a>
-            <?php } ?>
+
+                    <?php
+                        if ($entrepreneurDetails->bidxEntityStatus == 'DRAFT') {
+
+                            // Encode the missing fields into an attribute so we can provide a nice
+                            // UI feedback in the implementation of the publish button
+                            //
+                            // TODO: this is of couse only for the fields we know are going to be
+                            // missed and fail. This is not helping for the actual publishing which
+                            // might pop up with all kinds of errors. That should be handled in the
+                            // front-end when actually doing the publishing
+                            //
+                            $missingFields = array();
+
+                            if ( !$this->exst( $entrepreneurDetails->cv )) {
+                                $missingFields[] = 'CV';
+                            }
+
+                            $missingFieldsAttribute = count($missingFields)
+                                ? sprintf( 'data-missingfields=\'%s\'', json_encode($missingFields) )
+                                : ''
+                            ;
+                    ?>
+                <a class="btn btn-primary" href="#publish/<?php echo $this->exst ($entrepreneurDetails->bidxEntityId); ?>" <?php echo $missingFieldsAttribute; ?>>Publish</a>
+                    <?php
+                        }
+                    }
+                    ?>
         </div>
 
         <h4>Entrepreneur profile</h4>

@@ -2,7 +2,10 @@
 
 $investorDetails = $this->exst ($this->data->bidxInvestorProfile);
 
-if ($investorDetails) {
+
+if ($investorDetails &&
+    ( $investorDetails->bidxEntityStatus == 'PUBLISHED' || $investorDetails->bidxCanEdit  ) ) {
+
     $investorType = $this->exst ($investorDetails->investorType);
 ?>
 
@@ -11,7 +14,30 @@ if ($investorDetails) {
         <div class="btn-group control-buttons">
             <?php if ($investorDetails->bidxCanEdit) { ?>
                 <a class="btn btn-primary" href="#editInvestor/<?php echo $this->exst ($investorDetails->ownerId); ?>">Edit</a>
-            <?php } ?>
+
+                    <?php
+                        if ($investorDetails->bidxEntityStatus == 'DRAFT') {
+
+                            // Encode the missing fields into an attribute so we can provide a nice
+                            // UI feedback in the implementation of the publish button
+                            //
+                            // TODO: this is of couse only for the fields we know are going to be
+                            // missed and fail. This is not helping for the actual publishing which
+                            // might pop up with all kinds of errors. That should be handled in the
+                            // front-end when actually doing the publishing
+                            //
+                            $missingFields = array();
+
+                            $missingFieldsAttribute = count($missingFields)
+                                ? sprintf( 'data-missingfields=\'%s\'', json_encode($missingFields) )
+                                : ''
+                            ;
+                    ?>
+                <a class="btn btn-primary" href="#publish/<?php echo $this->exst ($investorDetails->bidxEntityId); ?>" <?php echo $missingFieldsAttribute; ?>>Publish</a>
+                    <?php
+                        }
+                    }
+                    ?>
         </div>
 
         <h4>Investor profile</h4>
