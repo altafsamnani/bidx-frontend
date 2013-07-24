@@ -421,7 +421,6 @@
 							el:$this,
 							status:status
 						};
-						console.log(data);
 						$.extend(ret,data);
 						methods.done(ret);
 					});
