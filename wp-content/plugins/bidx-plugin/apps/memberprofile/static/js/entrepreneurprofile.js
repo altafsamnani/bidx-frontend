@@ -5,12 +5,13 @@
     ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                   = $element.find( ".snippets" )
 
+    ,   $hideOnCreate                   = $element.find( ".hideOnCreate" )
+
     ,   $attachmentsContainer       = $editForm.find( ".attachmentsContainer" )
+    ,   $cvContainer                = $editForm.find( ".cvContainer" )
 
     ,   $btnAddPreviousBusiness     = $editForm.find( "[href$='#addPreviousBusiness']" )
     ,   $previousBusinessContainer  = $editForm.find( ".previousBusinessContainer" )
-
-    ,   $cvContainer                = $editForm.find( ".cvContainer" )
 
     ,   $toggles                    = $element.find( ".toggle" ).hide()
     ,   $togglePrevRunBusiness      = $element.find( "[name='prevRunBusiness']"      )
@@ -461,39 +462,62 @@
             } );
         } );
 
-        // Fetch the member
-        //
-        bidx.api.call(
-            "member.fetch"
-        ,   {
-                memberId:       memberId
-            ,   groupDomain:    bidx.common.groupDomain
-            ,   success:        function( response )
-                {
-                    member = response;
+        if ( state === "create" )
+        {
+            member =
+            {
+                bidxEntrepreneurProfile: {}
+            };
 
-                    // Set the global (for this app) entrepeneurProfileId for convenience reasons
-                    //
-                    entrepreneurProfileId = bidx.utils.getValue( member, "bidxEntrepreneurProfile.bidxEntityId" );
+            $hideOnCreate.hide();
 
-                    bidx.utils.log( "bidx::member", member );
+            // Make sure all the components are brought to live
+            //
+            _populateScreen();
 
-                    _populateScreen();
+            $btnSave.removeClass( "disabled" );
+            $btnCancel.removeClass( "disabled" );
 
-                    $btnSave.removeClass( "disabled" );
-                    $btnCancel.removeClass( "disabled" );
+            _showView( "edit" );
+        }
+        else if ( state === "edit" )
+        {
+            $hideOnCreate.show();
 
-                    _showView( "edit" );
+            // Fetch the member
+            //
+            bidx.api.call(
+                "member.fetch"
+            ,   {
+                    memberId:       memberId
+                ,   groupDomain:    bidx.common.groupDomain
+                ,   success:        function( response )
+                    {
+                        member = response;
 
+                        // Set the global (for this app) entrepeneurProfileId for convenience reasons
+                        //
+                        entrepreneurProfileId = bidx.utils.getValue( member, "bidxEntrepreneurProfile.bidxEntityId" );
+
+                        bidx.utils.log( "bidx::member", member );
+
+                        _populateScreen();
+
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+
+                        _showView( "edit" );
+
+                    }
+                ,   error:          function( jqXhr, textStatus )
+                    {
+                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                        _showError( "Something went wrong while retrieving the member: " + status );
+                    }
                 }
-            ,   error:          function( jqXhr, textStatus )
-                {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
-
-                    _showError( "Something went wrong while retrieving the member: " + status );
-                }
-            }
-        );
+            );
+        }
     };
 
     // Try to save the member to the API
@@ -507,33 +531,61 @@
 
         // Inform the API we are updating the member profile
         //
-        member.bidxEntityType = "bidxEntrepreneurProfile";
+        member.bidxEntityType                           = "bidxEntrepreneurProfile";
+        member.bidxEntrepreneurProfile.bidxEntityType   = "bidxEntrepreneurProfile";
 
         // Update the member object
         //
         _getFormValues();
 
-        bidx.api.call(
-            "member.save"
-        ,   {
-                memberId:       memberId
+        bidx.utils.log( "about to save member", member );
+
+        var bidxAPIService
+        ,   bidxAPIParams   =
+            {
+                data:           member.bidxEntrepreneurProfile
             ,   groupDomain:    bidx.common.groupDomain
-            ,   data:           member.bidxEntrepreneurProfile
             ,   success:        function( response )
                 {
-                    bidx.utils.log( "member.save::success::response", response );
+                    bidx.utils.log( bidxAPIService + "::success::response", response );
 
                     bidx.common.notifyRedirect();
 
                     var url = document.location.href.split( "#" ).shift();
 
+                    // Maybe rs=true was already added, or not 'true' add it before reloading
+                    //
+                    var rs = bidx.utils.getQueryParameter( "rs", url );
+
+                    if ( !rs || rs !== "true" )
+                    {
+                        url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
+                        url += "rs=true";
+                    }
+
                     document.location.href = url;
                 }
-            ,   error:          function( jqXhr )
+            ,   error:          function( jqXhr, textStatus )
                 {
                     params.error( jqXhr );
                 }
-            }
+            };
+
+        if ( state === "create" )
+        {
+            bidxAPIService          = "entity.save";
+        }
+        else
+        {
+            bidxAPIService          = "member.save";
+            bidxAPIParams.memberId  = memberId;
+        }
+
+        // Call that service!
+        //
+        bidx.api.call(
+            bidxAPIService
+        ,   bidxAPIParams
         );
     };
 
@@ -608,6 +660,35 @@
                 }
 
             break;
+
+            case "create":
+                bidx.utils.log( "EditEntrepreneur::AppRouter::create" );
+
+                // Protect against 'double creation' it is only allowed to have
+                // one investor profile
+                //
+                if ( bidx.controller.getEntrepreneurProfileId() )
+                {
+                    return navigate( "edit" );
+                }
+                else
+                {
+                    memberId    = null;
+                    state       = "create";
+
+                    $element.show();
+
+                    // Create the investor profile by doing a POST
+                    // We *need* this for the fileupload to work
+                    //
+                    _showView( "load" );
+
+                    _init();
+                }
+
+            break;
+
+
         }
     };
 

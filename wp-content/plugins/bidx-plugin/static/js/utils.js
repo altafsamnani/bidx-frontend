@@ -207,9 +207,14 @@
 
     // Retrieve the value of a specific URL parameter
     //
-    var getQueryParameter = function( key )
+    var getQueryParameter = function( key, url )
     {
-        var baseURL = decodeURI( document.location.href.replace( /\+/g, "%20" ) ).split( "#" )[ 0 ]
+        if ( !url )
+        {
+            url = document.location.href;
+        }
+
+        var baseURL = decodeURI( url.replace( /\+/g, "%20" ) ).split( "#" )[ 0 ]
         ,   parts   = baseURL.split( "?" )
         ,   result
         ,   params

@@ -5,6 +5,8 @@
     ,   $editForm                       = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                       = $element.find( ".snippets" )
 
+    ,   $hideOnCreate                   = $element.find( ".hideOnCreate" )
+
     ,   $investorType                   = $editForm.find( "[name='investorType']" )
 
     ,   $btnAddPreviousInvestment       = $editForm.find( "[href$='#addPreviousInvestment']" )
@@ -507,8 +509,6 @@
         }
     };
 
-
-
     // Use the retrieved member object to populate the form and other screen elements
     //
     var _populateScreen = function()
@@ -825,6 +825,13 @@
                 } );
             }
         } );
+
+        // Attachments
+        //
+        if ( state === "edit" )
+        {
+            // TODO: retrieve attachment values
+        }
     };
 
     // This is the startpoint
@@ -893,44 +900,26 @@
 
         if ( state === "create" )
         {
-            // Create the investorprofile, which needs to be done via the entity api directly
+            member =
+            {
+                bidxInvestorProfile: {}
+            };
+
+            $hideOnCreate.hide();
+
+            // Make sure all the components are brought to live
             //
-            bidx.api.call(
-                "entity.save"
-            ,   {
-                    groupDomain:    bidx.common.groupDomain
-                ,   data:
-                    {
-                        bidxEntityType:             "bidxInvestorProfile"
-                    }
-                ,   success:        function( response )
-                    {
-                        member = response;
+            _populateScreen();
 
-                        // Set the global memberProfileId for convenience reasons
-                        //
-                        investorProfileId = bidx.utils.getValue( member, "bidxInvestorProfile.bidxEntityId" );
+            $btnSave.removeClass( "disabled" );
+            $btnCancel.removeClass( "disabled" );
 
-                        bidx.utils.log( "bidx::invvestor", member );
-
-                        _populateScreen();
-
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
-
-                        _showView( "edit" );
-                    }
-                ,   error:          function( jqXhr, textStatus )
-                    {
-                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
-
-                        _showError( "Something went wrong while creating the investor: " + status );
-                    }
-                }
-            );
+            _showView( "edit" );
         }
         else if ( state === "edit" )
         {
+            $hideOnCreate.show();
+
             // Fetch the member
             //
             bidx.api.call(
@@ -987,9 +976,8 @@
 
         // Inform the API we are updating the member profile
         //
-        member.bidxEntityType = "bidxInvestorProfile";
-
-        member.bidxInvestorProfile.bidxEntityType = "bidxInvestorProfile";
+        member.bidxEntityType                       = "bidxInvestorProfile";
+        member.bidxInvestorProfile.bidxEntityType   = "bidxInvestorProfile";
 
         // Update the member object
         //
@@ -997,28 +985,52 @@
 
         bidx.utils.log( "about to save member", member );
 
-
-        bidx.api.call(
-            "member.save"
-        ,   {
-                memberId:       memberId
+        var bidxAPIService
+        ,   bidxAPIParams   =
+            {
+                data:           member.bidxInvestorProfile
             ,   groupDomain:    bidx.common.groupDomain
-            ,   data:           member.bidxInvestorProfile
             ,   success:        function( response )
                 {
-                    bidx.utils.log( "member.save::success::response", response );
+                    bidx.utils.log( bidxAPIService + "::success::response", response );
 
                     bidx.common.notifyRedirect();
 
                     var url = document.location.href.split( "#" ).shift();
 
+                    // Maybe rs=true was already added, or not 'true' add it before reloading
+                    //
+                    var rs = bidx.utils.getQueryParameter( "rs", url );
+
+                    if ( !rs || rs !== "true" )
+                    {
+                        url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
+                        url += "rs=true";
+                    }
+
                     document.location.href = url;
                 }
-            ,   error:          function( jqXhr )
+            ,   error:          function( jqXhr, textStatus )
                 {
                     params.error( jqXhr );
                 }
-            }
+            };
+
+        if ( state === "create" )
+        {
+            bidxAPIService          = "entity.save";
+        }
+        else
+        {
+            bidxAPIService          = "member.save";
+            bidxAPIParams.memberId  = memberId;
+        }
+
+        // Call that service!
+        //
+        bidx.api.call(
+            bidxAPIService
+        ,   bidxAPIParams
         );
     };
 
@@ -1096,7 +1108,7 @@
             break;
 
             case "create":
-                bidx.utils.log( "EditMember::AppRouter::create" );
+                bidx.utils.log( "EditInvestor::AppRouter::create" );
 
                 // Protect against 'double creation' it is only allowed to have
                 // one investor profile
