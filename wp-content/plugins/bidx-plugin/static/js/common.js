@@ -43,7 +43,7 @@
                     + "//"
                     + document.location.hostname
                     + ( document.location.port ? ":" + document.location.port : "" )
-                    + "?smsg=2"
+                    + "?smsg=2&rs=true"
                 ;
 
                 document.location.href = url;
@@ -126,7 +126,7 @@
                     + "//"
                     + document.location.hostname
                     + ( document.location.port ? ":" + document.location.port : "" )
-                    + "?smsg=3"
+                    + "?smsg=3&rs=true"
                 ;
 
                 document.location.href = url;
