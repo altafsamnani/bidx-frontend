@@ -127,9 +127,9 @@
 
     var navigate = function( requestedState,section, id)
     {
-        console.log("Section=" + section);
-        console.log("id=" + id);
-        console.log("requestedState=" + requestedState);
+        bidx.utils.log("Section=" + section);
+        bidx.utils.log("id=" + id);
+        bidx.utils.log("requestedState=" + requestedState);
         
 
 
@@ -140,7 +140,7 @@
             break;
 
             case "read":
-                console.log("view EMAIL");
+                bidx.utils.log("view EMAIL");
                 _showView( "read" );
             break;
 
