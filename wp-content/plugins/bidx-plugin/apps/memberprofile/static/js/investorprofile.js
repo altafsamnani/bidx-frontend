@@ -929,30 +929,41 @@
                 ,   groupDomain:    bidx.common.groupDomain
                 ,   success:        function( response )
                     {
-                        member = response;
-
-                        // Set the global memberProfileId for convenience reasons
+                        // Do we have edit perms?
                         //
-                        investorProfileId = bidx.utils.getValue( member, "bidxInvestorProfile.bidxEntityId" );
+                        var canEdit = bidx.utils.getValue( response, "bidxInvestorProfile.bidxCanEdit" );
 
-                        bidx.utils.log( "bidx::invvestor", member );
-
-                        _populateScreen();
-
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
-
-                        _showView( "edit" );
-
-                        // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
-                        // center correctly. Probably because of some reflow / layout issue.
-                        // TODO: proper fix
-                        //
-                        setTimeout( function()
+                        if ( !canEdit )
                         {
-                            _updateInstitutionAddressMap();
-                        }, 500 );
+                            _showError( "You do not have the rights to edit this profile" );
+                            $btnCancel.removeClass( "disabled" );
+                        }
+                        else
+                        {
+                            member = response;
 
+                            // Set the global memberProfileId for convenience reasons
+                            //
+                            investorProfileId = bidx.utils.getValue( member, "bidxInvestorProfile.bidxEntityId" );
+
+                            bidx.utils.log( "bidx::invvestor", member );
+
+                            _populateScreen();
+
+                            $btnSave.removeClass( "disabled" );
+                            $btnCancel.removeClass( "disabled" );
+
+                            _showView( "edit" );
+
+                            // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
+                            // center correctly. Probably because of some reflow / layout issue.
+                            // TODO: proper fix
+                            //
+                            setTimeout( function()
+                            {
+                                _updateInstitutionAddressMap();
+                            }, 500 );
+                        }
                     }
                 ,   error:          function( jqXhr, textStatus )
                     {

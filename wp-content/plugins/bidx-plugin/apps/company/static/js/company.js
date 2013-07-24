@@ -589,30 +589,42 @@
                 ,   groupDomain:    bidx.common.groupDomain
                 ,   success:        function( response )
                     {
-                        company = response;
-
-                        // Set the global memberProfileId for convenience reasons
+                        // Do we have edit perms?
                         //
-                        companyProfileId = bidx.utils.getValue( company, "bidxEntityId" );
+                        var canEdit = bidx.utils.getValue( response, "bidxCanEdit" );
 
-
-                        bidx.utils.log( "bidx::company", company );
-
-                        _populateScreen();
-
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
-
-                        _showView( "edit" );
-
-                        // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
-                        // center correctly. Probably because of some reflow / layout issue.
-                        // TODO: proper fix
-                        //
-                        setTimeout( function()
+                        if ( !canEdit )
                         {
-                            _updateCurrentAddressMap();
-                        }, 500 );
+                            _showError( "You do not have the rights to edit this company" );
+                            $btnCancel.removeClass( "disabled" );
+                        }
+                        else
+                        {
+                            company = response;
+
+                            // Set the global memberProfileId for convenience reasons
+                            //
+                            companyProfileId = bidx.utils.getValue( company, "bidxEntityId" );
+
+
+                            bidx.utils.log( "bidx::company", company );
+
+                            _populateScreen();
+
+                            $btnSave.removeClass( "disabled" );
+                            $btnCancel.removeClass( "disabled" );
+
+                            _showView( "edit" );
+
+                            // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
+                            // center correctly. Probably because of some reflow / layout issue.
+                            // TODO: proper fix
+                            //
+                            setTimeout( function()
+                            {
+                                _updateCurrentAddressMap();
+                            }, 500 );
+                        }
                     }
                 ,   error:          function( jqXhr, textStatus )
                     {

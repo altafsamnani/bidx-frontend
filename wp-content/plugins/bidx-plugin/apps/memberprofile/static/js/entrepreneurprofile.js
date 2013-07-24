@@ -482,21 +482,32 @@
                 ,   groupDomain:    bidx.common.groupDomain
                 ,   success:        function( response )
                     {
-                        member = response;
-
-                        // Set the global (for this app) entrepeneurProfileId for convenience reasons
+                        // Do we have edit perms?
                         //
-                        entrepreneurProfileId = bidx.utils.getValue( member, "bidxEntrepreneurProfile.bidxEntityId" );
+                        var canEdit = bidx.utils.getValue( response, "bidxEntrepreneurProfile.bidxCanEdit" );
 
-                        bidx.utils.log( "bidx::member", member );
+                        if ( !canEdit )
+                        {
+                            _showError( "You do not have the rights to edit this profile" );
+                            $btnCancel.removeClass( "disabled" );
+                        }
+                        else
+                        {
+                            member = response;
 
-                        _populateScreen();
+                            // Set the global (for this app) entrepeneurProfileId for convenience reasons
+                            //
+                            entrepreneurProfileId = bidx.utils.getValue( member, "bidxEntrepreneurProfile.bidxEntityId" );
 
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
+                            bidx.utils.log( "bidx::member", member );
 
-                        _showView( "edit" );
+                            _populateScreen();
 
+                            $btnSave.removeClass( "disabled" );
+                            $btnCancel.removeClass( "disabled" );
+
+                            _showView( "edit" );
+                        }
                     }
                 ,   error:          function( jqXhr, textStatus )
                     {

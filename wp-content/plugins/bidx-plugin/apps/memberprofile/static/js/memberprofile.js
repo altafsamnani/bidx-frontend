@@ -851,29 +851,41 @@
             ,   groupDomain:    bidx.common.groupDomain
             ,   success:        function( response )
                 {
-                    member = response;
-
-                    // Set the global memberProfileId for convenience reasons
+                    // Do we have edit perms?
                     //
-                    memberProfileId = bidx.utils.getValue( member, "bidxMemberProfile.bidxEntityId" );
+                    var canEdit = bidx.utils.getValue( response, "bidxMemberProfile.bidxCanEdit" );
 
-                    bidx.utils.log( "bidx::member", member );
-
-                    _populateScreen();
-
-                    $btnSave.removeClass( "disabled" );
-                    $btnCancel.removeClass( "disabled" );
-
-                    _showView( "edit" );
-
-                    // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
-                    // center correctly. Probably because of some reflow / layout issue.
-                    // TODO: proper fix
-                    //
-                    setTimeout( function()
+                    if ( !canEdit )
                     {
-                        _updateCurrentAddressMap();
-                    }, 500 );
+                        _showError( "You do not have the rights to edit this profile" );
+                        $btnCancel.removeClass( "disabled" );
+                    }
+                    else
+                    {
+                        member = response;
+
+                        // Set the global memberProfileId for convenience reasons
+                        //
+                        memberProfileId = bidx.utils.getValue( member, "bidxMemberProfile.bidxEntityId" );
+
+                        bidx.utils.log( "bidx::member", member );
+
+                        _populateScreen();
+
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+
+                        _showView( "edit" );
+
+                        // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
+                        // center correctly. Probably because of some reflow / layout issue.
+                        // TODO: proper fix
+                        //
+                        setTimeout( function()
+                        {
+                            _updateCurrentAddressMap();
+                        }, 500 );
+                    }
                 }
             ,   error:          function( jqXhr, textStatus )
                 {
