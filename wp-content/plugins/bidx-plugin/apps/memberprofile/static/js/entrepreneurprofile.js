@@ -57,17 +57,6 @@
     snippets.$attachment        = $snippets.children( ".attachmentItem"         ).remove();
     snippets.$previousBusiness  = $snippets.children( ".previousBusinessItem"   ).remove();
 
-
-    // Populate the dropdowns with the values
-    //
-    bidx.data.getItem( "industry", function( err, industries )
-    {
-        var $focusIndustry = $editForm.find( "[name='focusIndustry']" );
-        $focusIndustry.append( $( "<option value='' />" ).text( "Select your focus industry" ));
-
-        bidx.utils.populateDropdown( $focusIndustry, industries );
-    } );
-
     bidx.data.getItem( "businessOutcome", function( err, businessOutcomes )
     {
         var $businessOutcome = snippets.$previousBusiness.find( "[name='businessOutcome']" );

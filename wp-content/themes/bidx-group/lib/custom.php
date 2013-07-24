@@ -72,7 +72,7 @@ function bidx_filter ($content)
  * @Why keeping seperate because its run time and session clear in common.php because it needs before session call
    */
 function bidx_get_status_msgs( ) {
-  
+
     $statusMessages = '';
     $replaceString = NULL;
     //Add Error Status Msg
@@ -86,7 +86,7 @@ function bidx_get_status_msgs( ) {
                     </div>";
        // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
     }
-    
+
     //Add Success Status Msg
 
     if (isset ($_GET['smsg'])) {
@@ -100,7 +100,7 @@ function bidx_get_status_msgs( ) {
         // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
     }
 
-  
+
     return $statusMessages;
 }
 
@@ -117,7 +117,7 @@ function bidx_get_status_msgs( ) {
 function bidx_status_text ( $textId, $replaceString ) {
 
     switch($textId) {
-        
+
     case '1' :
         $text = "Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.";
         break;
@@ -134,9 +134,13 @@ function bidx_status_text ( $textId, $replaceString ) {
         $text = "Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.";
         break;
 
+    case '5':
+        $text = 'Successfully published!';
+        break;
+
     default :
         $text = 'Add your notification message to custom.php with id ';
-    
+
      }
 
      if( $replaceString ) {

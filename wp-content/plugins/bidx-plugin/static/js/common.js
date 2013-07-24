@@ -214,7 +214,7 @@
 
             if ( err )
             {
-                alert( err );
+                bidx.common.notifyError( err.toString() );
             }
             else
             {
@@ -224,7 +224,7 @@
                     + "//"
                     + document.location.hostname
                     + ( document.location.port ? ":" + document.location.port : "" )
-                    + "?smsg=3&rs=true"
+                    + "?smsg=5&rs=true"
                 ;
 
                 document.location.href = url;
@@ -257,7 +257,20 @@
                 {
                     bidx.utils.log( "bidx::entityPublish::save::error", jqXhr, textStatus );
 
-                    cb( new Error( "Problem publishing entity" ) );
+                    var response;
+
+                    try
+                    {
+                        // Not really needed for now, but just have it on the screen, k thx bye
+                        //
+                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                    }
+                    catch ( e )
+                    {
+                        bidx.utils.error( "problem parsing error response from entityPublish" );
+                    }
+
+                    cb( new Error( "Problem publishing entity: " + response ) );
                 }
             }
         );
@@ -316,6 +329,7 @@
     {
         groupDomain:                groupDomain
     ,   notifyRedirect:             notifyRedirect
+    ,   notifyError:                notifyError
     ,   notifySuccess:              notifySuccess
     ,   notifySuccessModal:         notifySuccessModal
     ,   joinGroup:                  joinGroup
