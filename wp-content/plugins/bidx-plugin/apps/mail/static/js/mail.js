@@ -1,18 +1,18 @@
-( function ( $ ) 
-{   
+( function ( $ )
+{
     var $element                    = $( "#mail" ),
         $views                      = $element.find( ".view" ),
         toolbar                     = {},
         defaultView                 = "inbox";
-        
 
 
 
-    
+
+
 
      /*
             bind messageCheckAll to all chexkboxes in messages listing
-        */        
+        */
 
 
     //private functions
@@ -34,7 +34,7 @@
     {
         $views.filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) )
             .find( ".bidx-modal-deleteEmail" ).modal({});
-        
+
     }
 
     var _setToolbarTargetID = function ( id, v )
@@ -49,7 +49,7 @@
         });
     }
 
-    var _getEmail = function ( id, v ) 
+    var _getEmail = function ( id, v )
     {
         bidx.api.call(
              "mail.read"
@@ -81,16 +81,17 @@
             }
         );
     }
-    
+
     /* load items into list*/
-    var _populateList = function ( type, list ) 
+    var _populateList = function ( type, list, v )
     {
 
         var $listItem               = $($("#listMessage").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list                   = $("." + list)
+        ,   $view                   = $views.filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) )
         ,   messages
         ;
-        
+
         bidx.api.call(
             "mail.fetch"
         ,   {
@@ -102,49 +103,52 @@
                 ,   order:                "desc"
                 ,   showRemovedEmails:    true
                 ,   inboxType:            type
-                }     
+                }
             ,   groupDomain:              bidx.common.groupDomain
 
             ,   success: function( response )
                 {
 
-                    if( response.data ) 
+                    if( response.data )
                     {
                         var item
                         ,   element
                         ,   cls
                         ,   textValue
                         ;
-                        
+
                         //clear listing
                         $list.empty();
 
                         //loop through response
                         $.each( response.data, function( index, item )
                         {
+                            bidx.utils.log("ITEM", item);
                             element   = $listItem.clone();
 
                             //search for placeholders in snippit
                             element.find( ".placeholder" ).each( function( i, el )
                             {
-                                //!! TEMP add sendername to item because it is not coming from API
-                                //item.sendername = "SENDER UNKNOWN IN API!!!!";
+                                item.sendername = "Sender unspecified";
+                                item.read = false;
+                                //set sendername (this might change in the future, hence the current construction)
                                 if( item.recipients[0] && item.recipients[0].fullName ) {
                                     item.sendername = item.recipients[0].fullName;
+                                    item.new = item.recipients[0].new;
                                 }
 
                                 //isolate placeholder key
                                 cls = $(el).attr( "class" ).replace( "placeholder ", "" );
-                                
+
                                 //if key if available in item response
-                                if( item[cls] ) 
+                                if( item[cls] )
                                 {
 
                                     textValue = item[cls];
                                     //add hyperlink on sendername for now (to read email)
                                     if( cls === "sendername")
                                     {
-                                        textValue = "<a href=\"" + document.location.hash +  "/" + item.id + "\">" + textValue + "</a>";
+                                        textValue = "<a href=\"" + document.location.hash +  "/" + item.id + "\" class=\"" + (item.new ? "email-new" : "" ) + "\">" + textValue + "</a>";
                                     }
                                     if( cls === "sentDate" )
                                     {
@@ -154,24 +158,22 @@
 
                                 }
                             });
-                            
+
                             //add mail element to list
                             $list.append(element);
                         });
-                      
+
                         //load checkbox plugin on element
                         $list.find( '[data-toggle="checkbox"]' ).checkbox();
 
                         //bind event to change all checkboxes from toolbar checkbox
-                        $( ".messagesCheckall" ).change( function()
+                        $view.find( ".messagesCheckall" ).change( function()
                         {
+                            var masterCheck = $( this ).attr( "checked" );
                             $list.find( ":checkbox" ).each( function()
                             {
                                 var $this = $(this);
-
-                                $this.checkbox();
-                                $this.attr( "checked", !$this.attr( "checked" ) );
-                                $this.parent().toggleClass( "checked" );
+                                $this.checkbox( masterCheck ? 'check' : 'uncheck' );
                             });
                         });
                     }
@@ -186,11 +188,13 @@
             }
         );
 
-        
+
+
+
     }
 
     // ROUTER
-    
+
     var state;
 
 
@@ -199,12 +203,12 @@
         bidx.utils.log("Section=" + section);
         bidx.utils.log("id=" + id);
         bidx.utils.log("requestedState=" + requestedState);
-        
+
 
 
         switch ( requestedState )
         {
-            case "load" : 
+            case "load" :
                 _showView( "load" );
             break;
 
@@ -224,17 +228,17 @@
                 var type = "RECEIVED_EMAILS";
 
                 if( section === "sent") {
-                    type = "SENT_EMAILS";                    
+                    type = "SENT_EMAILS";
                 }
 
-                _populateList( type, "list");
+                _populateList( type, "list", "list" );
                 _showView( "list" );
                 //bidx.utils.log( "mailInbox::AppRouter::mail", section );
 
-                
+
             break;
         }
-    };    
+    };
 
     //expose
     var mail =

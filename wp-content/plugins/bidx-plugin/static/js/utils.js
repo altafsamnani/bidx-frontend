@@ -365,7 +365,7 @@
                 ,   s:      str.substr( 17,2 )
             }
         ,   d      = new Date( obj.y, obj.m, obj.d )
-        ,   result = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear() + " " + obj.h + ":" + obj.n + ":" + obj.s
+        ,   result = d.getDate() + " " + months[ d.getMonth()-1 ] + " " + d.getFullYear() + " " + obj.h + ":" + obj.n + ":" + obj.s
         ;
         return result;
     };
@@ -379,7 +379,7 @@
         }
 
         var d       = new Date( parseInt( ts + "000", 10 ) )
-        ,   result  = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear()
+        ,   result  = d.getDate() + " " + months[ d.getMonth()-1 ] + " " + d.getFullYear()
         ;
         return result;
     };

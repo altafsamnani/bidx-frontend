@@ -13,12 +13,12 @@
 </style>
 
 <form id="registration"  name="registration">
-	<?php 
+	<?php
 		//generate hiddenfields. REMARK: we might not want to print all values here!!
 		foreach ( $_POST as $key => $value ) {
 			 echo  "<input type='hidden' name='" . $key . "' value='" . $value . "'>" ;
 		}
-	 ?>	
+	 ?>
 
 	<div class="row-fluid">
 		<div class="span4 well">
@@ -48,7 +48,7 @@
 			<div class="formfield">
 				<label>Logo</label>
 				<input type="file" name="logo" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["groupProfileId","domain"]}' value=""/>
-			</div>			
+			</div>
 			<div class="formfield">
 				<label>Group Name</label>
 				<input type="text" name="businessGroupName" readonly="readonly" placeholder="Please type your group name" value="<?php echo $_POST["groupName"]; ?>"/>
@@ -67,8 +67,8 @@
 			<div class="formfield">
 				<label>Location</label>
 				<input type="text" name="companyLocation" placeholder="Please type your location" />
-			</div> 
-		
+			</div>
+
 			<div class="formfield">
 				<label>Company</label>
 				<input type="text" name="company" placeholder="Please type your company name" />
@@ -137,7 +137,7 @@
 					<option value="entrepeneurs">Entrepeneurs</option>
 				</select>
 			</div>
-			
+
 <!-- List must be loaded from static data service -->
 			<div class="formfield" >
 				<label>The social impact e.g. poverty reduction, job creation, religious tolerance, women, social inclusion, urban regeneration and None applicable.</label>
@@ -155,9 +155,9 @@
 
 			<div class="formfield">
 				<label>Is the location of your focus based on a:</label>
-				<label class="bidx-radio"><input type="radio" name="location-type" value="city" checked> city (or a number of cities)?</label>
-				<label class="bidx-radio"><input type="radio" name="location-type" value="country"> country (or a number of countries)?</label>
-				<label class="bidx-radio"><input type="radio" name="location-type" value="coord"> specific location (or a number of specific locations)?</label>
+				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="city" checked> city (or a number of cities)?</label>
+				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="country"> country (or a number of countries)?</label>
+				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="coord"> specific location (or a number of specific locations)?</label>
 
 				<div class="location-list cities">
 
@@ -181,7 +181,7 @@
 						<input type="text" name="focusCountry" data-type="countryAutocomplete" data-type-arguments='{"listId":"countryList","emptyClass":"empty"}' placeholder="Please type your focus theme" />
 					</div>
 					<div class="list">
-						<ul id="nostyle countryList" class="clearfix">
+						<ul id="countryList" class="unstyled clearfix">
 							<li>
 								<div class="label empty">Add a location</div>
 							</li>
@@ -194,11 +194,11 @@
 					<div>
 						<input type="text" name="focusLocation" data-type="location" data-type-arguments='{"showMap":"true","mapDimensions":"width:100%;height:400px;","setMarkers":"true", "drawCircle":"true"}' placeholder="Please type your focus theme" />
 					</div>
-				</div>				
+				</div>
 			</div>
 			<div>
-				<a href="#" class="btn btn-primary jsSave">Save Profile</a>                       
-				
+				<a href="#" class="btn btn-primary jsSave">Save Profile</a>
+
 			</div>
 		</div>
 
@@ -207,42 +207,50 @@
 </form>
 <script type="text/javascript">
 	$(function(){
-		
+
 		$("form").form({
 			callToAction : '.jsSave',
 			errorClass : 'error',
 			url : '/wp-admin/admin-ajax.php?action=bidx_register',
 			apiurl:'ajax_register_action',
-			apimethod:'post',			
+			apimethod:'post',
 			enablePlugins: ['date','location','fileUpload','countryAutocomplete'],
 			beforeSubmit : function () {
 				/*document.location = "/group-creation-success/" */
 			}
 		});
 
-		
 
-		$("[name=location-type]").change(function(e){
+
+		$('[data-toggle="radio"]').change(function(e){
+
 			var $this=$(this);
-			console.log("sdfdfs");
-			if ($this.val() == "city"){
-				$(".location-map, .location-list.countries").fadeOut('fast',function(){
-					
-					$(".location-list.cities").fadeIn('fast');	
-				});
-			}
-			else if ($this.val() == "country"){
 
-				$(".location-map, .location-list.cities").fadeOut('fast',function(){
-
-					
-					$(".location-list.countries").fadeIn('fast');	
-				});
+			//FlatUI triggers the onchange of all checkboxes, checked or not. We only want the checked on to fire the event
+			if( !$this.is(":checked") ) {
+				return false;
 			}
-			else if ($this.val() == "coord"){
-				$(".location-list").fadeOut('fast',function(){
-					$(".location-map").fadeIn('fast');	
-				});
+			switch($this.val())
+			{
+				case "city":
+					$( ".location-map, .location-list.countries" ).fadeOut( 'fast', function()
+					{
+
+						$( ".location-list.cities" ).fadeIn('fast');
+					});
+				break;
+				case "country":
+					$(" .location-map, .location-list.cities ").fadeOut( 'fast', function()
+					{
+						$( ".location-list.countries" ).fadeIn('fast');
+					});
+				break;
+				case "coord":
+					$( ".location-list" ).fadeOut( 'fast',function()
+					{
+						$( ".location-map" ).fadeIn( 'fast' );
+					});
+				break;
 			}
 		});
 

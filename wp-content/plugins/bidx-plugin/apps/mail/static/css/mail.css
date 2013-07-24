@@ -52,22 +52,30 @@
         background-color: #E0E0E0;
     }
     .mail .list > li {
-        padding: 5px 0;
+        padding: 5px 0 5px 3px;
         margin: 0px;
         background-color: #F5F5F5;
         border-bottom: 2px solid #E0E0E0;
         border-top: 2px solid #E0E0E0;
         
     }
-    .mail .media-list.messages > li:first-child {
+    .mail .media-list.list > li:first-child {
         border-top: 0px;
     }
-    .mail .media-list.messages > li:last-child {
+    .mail .media-list.list > li:last-child {
         border-bottom: 0px;
     }
-    .mail .media-list.messages > li:nth-child(2n+1)  {
+    .mail .media-list.list > li:nth-child(2n+1)  {
         
     }
+        .mail .media-list.list > li a {
+            color: #34495E;
+            font-size: 22px;
+        }
+        .mail .media-list.list > li .email-new {
+            font-weight: bold;
+            color: #1abc9c;
+        }
 
     .mail .pagination {
         margin: 0;
