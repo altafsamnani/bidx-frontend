@@ -1,3 +1,10 @@
+#mail .side-menu {
+
+}
+
+    #mail .side-menu a:first-child {
+        margin-bottom: 20px;
+    }
 .view {
     display: none;
 }
@@ -32,22 +39,22 @@
         padding: 0 3px;
         margin-bottom:10px;
 
-        
+
     }
 
     .mail .mail-toolbar .btn {
         padding: 2px 13px;
         margin: 3px 0;
     }
- 
+
         .mail .mail-toolbar .search input {
             padding: 2px;
             height:24px;
             min-height: 24px;
             margin-top:3px;
-            width: 200px;   
+            width: 200px;
         }
- 
+
      .list {
         background-color: #E0E0E0;
     }
@@ -57,7 +64,7 @@
         background-color: #F5F5F5;
         border-bottom: 2px solid #E0E0E0;
         border-top: 2px solid #E0E0E0;
-        
+
     }
     .mail .media-list.list > li:first-child {
         border-top: 0px;
@@ -66,7 +73,7 @@
         border-bottom: 0px;
     }
     .mail .media-list.list > li:nth-child(2n+1)  {
-        
+
     }
         .mail .media-list.list > li a {
             color: #34495E;
@@ -108,6 +115,6 @@
         -webkit-box-sizing: content-box !important;
         -moz-box-sizing: content-box !important;
         box-sizing: content-box !important;
-        
+
     }
 

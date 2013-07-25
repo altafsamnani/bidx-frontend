@@ -259,19 +259,35 @@
             // if there is an id, switch state to viewing of email. Id could also be available under section
             if( ( section && section.match( /^\d+$/ ) ) || ( id && id.match( /^\d+$/ ) ) )
             {
-                state = "read";
+                /*
+                    section:    inbox, sent --> state: list
+                                inbox, sent + /{ID} ---> state: read
+                                deleteConfirm, delete + /{ID} ---> state = section
+                                compose ---> state = section
+                */
+
                 //if Id was provided on the position of section, copy it onto ID
                 if ( section && section.match( /^\d+$/ ) )
                 {
                     id = section;
                 }
-                if( section && section === "deleteConfirm" )
+
+                if( section && (section === "deleteConfirm" || section === "delete") )
                 {
                     state = section;
                 }
+                //else if must be a read on a mailbox (inbox, send etc)
+                else
+                {
+                    state = "read";
+                }
             }
-            
-            
+            else
+            {
+                state = section;
+            }
+
+
 
             _navigateToApp( "mail", state, section, id);
 

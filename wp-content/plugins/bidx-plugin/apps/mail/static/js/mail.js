@@ -23,24 +23,63 @@
         _showView( "error" );
     };
 
+    var _getViewName = function ( v )
+    {
+        return ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 );
+    }
 
     var _showView = function( v )
     {
 
-        $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
+        $views.hide().filter( _getViewName( v ) ).show();
     };
 
-    var _showModal = function ( v )
+    var _updateMenu = function( )
     {
-        $views.filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) )
-            .find( ".bidx-modal-deleteEmail" ).modal({});
+        $( "#mail > .side-menu > a" ).each( function( index, item )
+        {
+            var $this = $( item );
+            if( $this.attr( "href" ) === window.location.hash )
+            {
+                $this.addClass( "btn-primary" );
+            }
+            else
+            {
+                $this.removeClass( "btn-primary" );
+            }
 
+
+        });
     }
 
+    //  show modal view with optionally and ID to be appended to the views buttons
+    var _showModal = function ( options )
+    {
+
+        if( options.id )
+        {
+            var id = options.id;
+        }
+        var $view =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" );
+        $view.find( ".btn[href]" ).each( function()
+        {
+            var $this=$(this);
+            $this.attr( "href", $this.attr("href") + id );
+        });
+        $view.modal({});
+    }
+
+    var _closeModal = function ( options )
+    {
+        var $view =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" )
+        $view.modal('hide');
+    };
+
+    //  sets any given toolbar and associate toolbar buttons with ID
     var _setToolbarTargetID = function ( id, v )
     {
         bidx.utils.log("TEST", arguments);
-        var $toolbar = $views.filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).find( ".mail-toolbar" )
+        var $toolbar = $views.filter( _getViewName( v ) ).find( ".mail-toolbar" )
         $toolbar.find(".btn").each( function()
         {
             var $this =  $ ( this );
@@ -51,6 +90,8 @@
 
     var _getEmail = function ( id, v )
     {
+
+
         bidx.api.call(
              "mail.read"
         ,   {
@@ -61,10 +102,13 @@
                 {
                     if( response.data && response.data[0] && response.data[0].content )
                     {
-                        bidx.utils.log("MAILREAD RESPONSE", response.data);
-                        $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) )
+                        var htmlParser = document.createElement("DIV");
+                        htmlParser.innerHTML = response.data[0].content;
+                        var mailBody = $(htmlParser).text().replace(/\n/g,"<br/>");
+
+                        $views.hide().filter( _getViewName( v ) )
                             .show().find( ".mail-message")
-                            .text( response.data[0].content );
+                            .html( mailBody );
 
                         //set target ID in toolbar buttons
                         _setToolbarTargetID( id, v );
@@ -88,7 +132,7 @@
 
         var $listItem               = $($("#listMessage").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list                   = $("." + list)
-        ,   $view                   = $views.filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) )
+        ,   $view                   = $views.filter( _getViewName( v ) )
         ,   messages
         ;
 
@@ -108,7 +152,6 @@
 
             ,   success: function( response )
                 {
-
                     if( response.data )
                     {
                         var item
@@ -123,7 +166,6 @@
                         //loop through response
                         $.each( response.data, function( index, item )
                         {
-                            bidx.utils.log("ITEM", item);
                             element   = $listItem.clone();
 
                             //search for placeholders in snippit
@@ -181,24 +223,58 @@
 
             ,   error: function( jqXhr, textStatus )
                 {
+
                     var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
                     _showError( "Something went wrong while retrieving the member: " + status );
                 }
             }
         );
-
-
-
-
     }
+
+    //  delete email
+    var _delete = function ( options )
+    {
+        bidx.api.call(
+             "mail.delete"
+        ,   {
+                mailId:                   options.id
+            ,   groupDomain:              bidx.common.groupDomain
+
+            ,   success: function( response )
+                {
+
+                    if ( response.data && response.data.succeeded )
+                    {
+                        _closeModal(
+                        {
+                            view: options.view
+                        } );
+                        //set window location to inbox
+                        window.location.hash = "#mail/inbox";
+                    }
+                    if ( response.data && response.data.failed )
+                    {
+
+                    }
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                    _showError( "Something went wrong while retrieving the member: " + status );
+                }
+            }
+        );
+    };
 
     // ROUTER
 
     var state;
 
 
-    var navigate = function( requestedState,section, id)
+    var navigate = function( requestedState, section, id)
     {
         bidx.utils.log("Section=" + section);
         bidx.utils.log("id=" + id);
@@ -221,21 +297,43 @@
 
             case "deleteConfirm":
                 _showView( "deleteConfirm" );
-                _showModal( "deleteConfirm" );
+                _showModal(
+                {
+                    view:   "deleteConfirm"
+                ,   id:     id
+                });
+            break;
+
+            case "delete":
+                _delete(
+                 {
+                    view:   "deleteConfirm"
+                ,   id:     id
+                });
+
             break;
 
             case "list":
                 var type = "RECEIVED_EMAILS";
 
-                if( section === "sent") {
+                if( section === "sent" ) {
                     type = "SENT_EMAILS";
+
                 }
+                _updateMenu();
 
                 _populateList( type, "list", "list" );
                 _showView( "list" );
                 //bidx.utils.log( "mailInbox::AppRouter::mail", section );
 
+            break;
 
+            case "compose":
+                _showView( "compose" );
+            break;
+
+            default:
+                _showView( "undefined" );
             break;
         }
     };
@@ -258,5 +356,3 @@
 
     window.bidx.mail = mail;
 } ( jQuery ));
-
-

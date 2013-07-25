@@ -1,27 +1,38 @@
 
 
+<h1>Your inbox</h1>
+
 <div id="mail" class="row-fluid">
 
     <!-- Left menu -->
-        <div class="span2 side-menu well">
-            <a class="btn btn-large btn-block btn-primary" href="#mail/inbox">Inbox</a>
-            <a class="btn btn-large btn-block" href="#mail/sent">Sent</a>
-    <!--         <a class="btn btn-large btn-block" href="#drafts">Drafts</a>
-            <a class="btn btn-large btn-block" href="#archived">Archived</a>
-            <a class="btn btn-large btn-block" href="#trash">Trash</a> -->
-        </div>
+    <div class="span2 side-menu well">
+        <a class="btn btn-large btn-block btn-info" href="#mail/compose">Compose</a>
+        <a class="btn btn-large btn-block" href="#mail/inbox">Inbox</a>
+        <a class="btn btn-large btn-block" href="#mail/sent">Sent</a>
+<!--         <a class="btn btn-large btn-block" href="#drafts">Drafts</a>
+        <a class="btn btn-large btn-block" href="#archived">Archived</a>
+        <a class="btn btn-large btn-block" href="#trash">Trash</a> -->
+    </div>
 
     <!-- mail stage: this is the ajax target -->
     <section class="span10 well mail">
+
+        <!-- ************************* utility views *********************************** -->
         <article class="view viewLoad">Loading...</article>
+
         <article class="view viewError">
             <h1>Error</h1>
             <span class="errorMsg"></span>
         </article>
 
+        <article class="view viewUndefined"><h1>No view defined for this state</h1></article>
+
+
+        <!-- ************************* application views *********************************** -->
+
         <!-- mail listview like mail, sent, drafts, archived or trash -->
         <article class="view viewList">
-            
+
             <!-- Email searchbox  CURRENTLY NO SEARCH SUPPORTED IN API-->
             <!-- <div class="mail-search text-right">
                 <div class="control-group small">
@@ -46,7 +57,7 @@
                         <a class="btn btn-small btn-primary" href="#fakelink">Mark read</a>
                         <a class="btn btn-small btn-primary" href="#fakelink">Mark unread</a>
                     </div>
-                  
+
 
                 </div>
 
@@ -97,27 +108,13 @@
                         Loading...
                     </div>
                 </div>
-            
+
 
         </article>
 
 
         <!-- Compose view -->
         <article class="view viewCompose">
-              <!-- TOOLBAR -->
-            <div class="mail-toolbar">
-                <div class="btn-group">
-                    <a class="btn btn-small btn-primary" href="#fakelink">Reply</a>
-                    <a class="btn btn-small btn-primary" href="#fakelink">Reply All</a>
-                    <a class="btn btn-small btn-primary" href="#fakelink">Forward</a>
-                    <a class="btn btn-small btn-primary" href="#fakelink">Archive</a>
-                    <a class="btn btn-small btn-primary" href="#fakelink">Delete</a>
-                    
-                    <a class="btn btn-small btn-primary" href="#fakelink">Report</a>
-                </div>
-              
-
-            </div>
 
             <div class="row-fluid">
                 <div class="control-group span12">
@@ -132,7 +129,7 @@
                     <div class="input-prepend ">
                         <span class="add-on">Subject</span>
                         <input id="prependedInput" type="text" placeholder="Add people you want to send a copy">
-                    </div>                    
+                    </div>
                 </div>
                 <div class="row-fluid">
                     <div class="span12">
@@ -140,6 +137,17 @@
                     </div>
                 </div>
             </div>
+                                <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label">Focus industry</label>
+                                <div class="controls">
+                                    <input type="text" name="focusIndustry" class="bidx-tagsinput"  data-bidxdatakey="industry" placeholder="Focus industry">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
 
         </article>
 
@@ -159,8 +167,8 @@
                 </p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    <button class="btn btn-primary" href="/mail/#mail/delete/">Delete message</button>
+                    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+                    <a class="btn btn-primary" href="/mail/#mail/delete/">Delete message</a>
                 </div>
             </div>
         </article>

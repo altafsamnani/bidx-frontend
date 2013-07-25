@@ -1,6 +1,6 @@
 /**
  * @version 1.0
- * @author adebree
+ * @initiator adebree
  * @author mattijs spierings
  */
 ;(function( $ )
@@ -40,7 +40,7 @@
         } );
     };
 
-    mail.read = function ( params ) 
+    mail.read = function ( params )
     {
         var method = "GET";
 
@@ -59,8 +59,29 @@
                 params.error( jqXhr, textStatus, errorThrown );
             }
         } );
-    }
-   
+    };
+
+    //Delete and Read could be combined in one call?? it has the same structure. Or maybe have 2 exposed functions using 1 local function?
+    mail.delete = function ( params )
+    {
+        var method = "DELETE";
+
+        api._call(
+        {
+            method:         method
+        ,   id:             params.mailId
+        ,   groupDomain:    params.groupDomain
+        ,   baseUrl:        baseUrl
+        ,   success:        function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
 
     api.mail = mail;
 } )( jQuery );
