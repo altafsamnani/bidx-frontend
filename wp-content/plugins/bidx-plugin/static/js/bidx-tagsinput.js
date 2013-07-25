@@ -21,9 +21,6 @@
         options: {
             widgetClass:        "bidx-tagsinput"
         ,   tagClass:           "bidx-tag"
-        ,   itemClass:          "reflow-row-item"
-
-        ,   extraRowClasses:    "row-fluid"
 
         ,   state:
             {
@@ -225,6 +222,18 @@
 
                 $el.tagsManager( "pushTag", tagValue );
             } );
+        }
+
+        // Remove all the set / provided tags and bring the tagsinput back to it's initial state
+        //
+    ,   reset: function()
+        {
+            var widget      = this
+            ,   $el         = widget.element
+            ,   options     = widget.options
+            ;
+
+            $el.siblings( "." + options.tagClass ).remove();
         }
     } );
 } )( jQuery );
