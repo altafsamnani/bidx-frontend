@@ -238,20 +238,32 @@
                         <div class="span6">
                             <div class="control-group formfield">
                                 <label class="control-label">Stage of business</label>
-                                <div class="btn-group" data-toggle="buttons-checkbox" name="focusStageBusiness">
-                                  <button type="button" class="btn btn-primary" value="startUp">Start up</button>
-                                  <button type="button" class="btn btn-primary" value="established">Established</button>
-                                </div>
+
+                                <label class="checkbox" for="cbFocusStageBusinessStartup">
+                                    <input type="checkbox" name="focusStageBusiness" value="startUp" id="cbFocusStageBusinessStartup" data-toggle="checkbox">
+                                    Startup
+                                </label>
+
+                                <label class="checkbox" for="cbFocusStageBusinessEstablished">
+                                    <input type="checkbox" name="focusStageBusiness" value="established" id="cbFocusStageBusinessEstablished" data-toggle="checkbox">
+                                    Established
+                                </label>
                             </div>
                         </div>
 
                         <div class="span6">
                             <div class="control-group formfield">
                                 <label class="control-label">Gender</label>
-                                <div class="btn-group" data-toggle="buttons-checkbox" name="focusGender">
-                                  <button type="button" class="btn btn-primary" value="m">Male</button>
-                                  <button type="button" class="btn btn-primary" value="f">Female</button>
-                                </div>
+
+                                <label class="checkbox" for="cbFocusGenderMale">
+                                    <input type="checkbox" name="focusGender" value="m" id="cbFocusGenderMale" data-toggle="checkbox">
+                                    Male
+                                </label>
+
+                                <label class="checkbox" for="cbFocusGenderFemale">
+                                    <input type="checkbox" name="focusGender" value="f" id="cbFocusGenderFemale" data-toggle="checkbox">
+                                    Female
+                                </label>
                             </div>
                         </div>
                     </div>

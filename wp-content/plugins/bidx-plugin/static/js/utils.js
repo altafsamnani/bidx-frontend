@@ -97,7 +97,18 @@
                     break;
 
                     case 'checkbox':
-                        $el.prop( 'checked', !!value );
+                        $el.each( function()
+                        {
+                            $( this ).checkbox( "uncheck" );
+                        } );
+
+                        if ( $.type( value ) === "array" )
+                        {
+                            $.each( value, function( idx, v )
+                            {
+                                $el.filter( "[value='" + v + "']" ).checkbox( "check" );
+                            } );
+                        }
                     break;
 
                     case 'file':
@@ -183,7 +194,24 @@
                         break;
 
                         case "checkbox":
-                            value = $input.is( ":checked" ) ? $input.val() : null;
+                            if ( $input.length > 1 )
+                            {
+                                value = [];
+
+                                $input.each( function()
+                                {
+                                    var $cb = $( this );
+
+                                    if ( $cb.is( ":checked" ) )
+                                    {
+                                        value.push( $cb.val() );
+                                    }
+                                } );
+                            }
+                            else
+                            {
+                                value = $input.is( ":checked" ) ? $input.val() : null;
+                            }
                         break;
 
                         default:
@@ -354,7 +382,7 @@
         {
             return;
         }
-        
+
         var obj =
             {
                     y:      parseInt( str.substr( 0, 4 ), 10 )
