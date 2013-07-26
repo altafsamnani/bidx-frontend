@@ -2,8 +2,8 @@
 if ( is_user_logged_in() ) {
 ?>
 <div class="signup span4 well">
-	<h3>Not available!</h3>
-	<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="Logout">Logout</a> to use
+	<h3><?php _e('Not available!','bidx-plugin');?></h3>
+	<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="Logout"><?php _e('Logout','bidx-plugin');?></a> <?php _e('to use','bidx-plugin');?>
 </div>
 <?php 
 } else {
@@ -11,22 +11,22 @@ if ( is_user_logged_in() ) {
 <div class="signup span4 well">
 
 	<form class="fieldset">
-		<div class="formfield huge" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}]}'>
-			<input type="text" name="groupName" placeholder="Your group name" class="highlight" value="">
+		<div class="formfield huge" data-validation='{"required":{"text":"<?php _e('This field is mandatory','bidx-plugin');?>"},"typecheck":[{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"groups/validateGroupName","apimethod":"get"}}]}'>
+			<input type="text" name="groupName" placeholder="<?php _e('Your group name','bidx-plugin');?>" class="highlight" value="">
 		</div>
-		<div class="formfield huge" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
-			<input type="email" name="username" placeholder="Your email address">
+		<div class="formfield huge" data-validation='{"required":{"text":"<?php _e('This fields is mandatory','bidx-plugin');?>"},"typecheck":[{"email":{"text":"<?php _e('This is not a valid e-mail address','bidx-plugin');?>"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
+			<input type="email" name="username" placeholder="<?php _e('Your email address','bidx-plugin');?>">
 		</div>
-		<div class="formfield huge" data-validation='{"required":{"text":"This fields is mandatory"}}'>
-			<input type="password" name="password" placeholder="Your password">
+		<div class="formfield huge" data-validation='{"required":{"text":"<?php _e('This fields is mandatory','bidx-plugin');?>"}}'>
+			<input type="password" name="password" placeholder="<?php _e('Your password','bidx-plugin');?>">
 		</div>
-		<a href="#" class="btn btn-success jsCreateGroup">Create your group</a>
+		<a href="#" class="btn btn-success jsCreateGroup"><?php _e('Create your group','bidx-plugin');?></a>
 	</form>
 	
 	<div class="group-creation-progress">
-		<p class="lead">Your group is being created</p>
+		<p class="lead"><?php _e('Your group is being created','bidx-plugin');?></p>
 		<div class="loader"></div>
-		<p>This might take a moment of your time</p>
+		<p><?php _e('This might take a moment of your time','bidx-plugin');?></p>
 	</div>
 
 	<!-- externalize this -->
@@ -58,7 +58,7 @@ if ( is_user_logged_in() ) {
 	    			},
 	    			//custom error message for frontend registration in case group creation fails
 	    			error: function(data){
-	    				$(".group-creation-progress").html("<div class=\"text sub\">Group creation failed. Please reload the page and try again.<br/> If the problem persists, please contact us.");
+	    				$(".group-creation-progress").html("<div class=\"text sub\"><?php _e('Group creation failed. Please reload the page and try again.<br/> If the problem persists, please contact us.','bidx-plugin');?>");
 	    				if(data.text) {
 	    					$(".group-creation-progress").append(data.text);
 	    				}

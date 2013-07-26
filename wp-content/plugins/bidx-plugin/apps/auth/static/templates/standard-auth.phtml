@@ -25,22 +25,22 @@ if (!username_exists ($group_anonymous_login)) {
             <div class="mainState mainStateLogin mainStateShow">
 
                 <form id="frmLogin" action="/wp-login.php" method="post">
-                    <div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
-                        <label>Email address</label>
-                        <input type="text" name="log" placeholder="Type your email address" />
+                    <div class="formfield" data-validation='{"required":{"text":"<?php _e('This fields is mandatory','bidx-plugin');?>"},"typecheck":[{"email":{"text":"<?php _e('This is not a valid e-mail address','bidx-plugin');?>"}}]}'>
+                        <label><?php _e('Email address','bidx-plugin');?></label>
+                        <input type="text" name="log" placeholder="<?php _e('Type your email address','bidx-plugin');?>" />
                     </div>
-                    <div class="formfield" data-validation='{"required":{"text":"A password is mandatory"}}'>
-                        <label>Password</label>
-                        <input type="password" name="pwd" placeholder="Type your password" />
+                    <div class="formfield" data-validation='{"required":{"text":"<?php _e('A password is mandatory','bidx-plugin');?>"}}'>
+                        <label><?php _e('Password','bidx-plugin');?></label>
+                        <input type="password" name="pwd" placeholder="<?php _e('Type your password','bidx-plugin');?>" />
                     </div>
                     <div class="buttonwrapper">
-                        <a href="#" class="btn btn-primary jsLogin">Login</a>
+                        <a href="#" class="btn btn-primary jsLogin"><?php _e('Login','bidx-plugin');?></a>
                     </div>
 
                         <p>
-                            Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
+                            <?php _e('Forgot your password. Click <a href="#resetpassword">here</a> to recover.','bidx-plugin');?><br/>
                      <?php if ($this->showRegisterLink) { ?>
-                            Not a member? Click <a href="#register">here</a> to register.
+                            <?php _e('Not a member? Click <a href="#register">here</a> to register.','bidx-plugin');?>
                         </p>
                     <?php } ?>
 
@@ -72,26 +72,26 @@ if (!username_exists ($group_anonymous_login)) {
             <div class="mainState mainStateResetpassword" style="display:none">
                 <form id="frmResetpassword" action="/">
                     <div class="formfield" data-validation='{"required":{"text":"This fields is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}}]}'>
-                        <label>Email address</label>
+                        <label><?php _e('Email address','bidx-plugin');?></label>
                         <input type="text" name="username" placeholder="Type your email address" />
                     </div>
 
                     <div class="buttonwrapper">
-                        <a href="#" class="btn btn-primary jsResetpassword">Send me a new password</a>
+                        <a href="#" class="btn btn-primary jsResetpassword"><?php _e('Send me a new password','bidx-plugin');?></a>
                     </div>
 
                     <p>
-                        Did you remember your password again?.<br/>
-                        Click <a href="#login">here</a> to go to login.
+                        <?php _e('Did you remember your password again?.','bidx-plugin');?><br/>
+                        <?php _e('Click <a href="#login">here</a> to go to login.','bidx-plugin');?>
                     </p>
                 </form>
 
                 <div class="resetpasswordSuccess hide">
-                    <h3>E-mail has been send</h3>
-                    <p>Password reset e-mail has been send <br>
-                        A password reset link has been send to you. Please check your inbox and click on the link within the e-mail to reset your password.
+                    <h3><?php _e('E-mail has been send','bidx-plugin');?></h3>
+                    <p><?php _e('Password reset e-mail has been send','bidx-plugin');?> <br>
+                        <?php _e('A password reset link has been send to you. Please check your inbox and click on the link within the e-mail to reset your password.','bidx-plugin');?>
                         <br/>
-                        Click <a href="/">here</a> to go to homepage.
+                        <?php _e('Click <a href="/">here</a> to go to homepage.','bidx-plugin');?>
                     </p>
                 </div>
 

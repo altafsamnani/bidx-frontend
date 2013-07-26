@@ -25,11 +25,10 @@ class ContentLoader {
 		
 		$this -> location = $location;
 		$this -> logger = Logger::getLogger( "contentloader" );
-		add_action( 'init', array( $this, 'codex_custom_init' ) );
-        
-        $subDomain = $this->getBidxSubdomain();
-        $bidCommonObj = new BidxCommon($subDomain);
-        $this->scriptInject = $bidCommonObj->getScriptJs($subDomain);
+		add_action( 'init', array( $this, 'codex_custom_init' ) );        
+       
+        $bidCommonObj = new BidxCommon();
+        $this->scriptInject = $bidCommonObj->getScriptJs();
         add_action('wp_head', array(&$this, 'addJsVariables'));
    }
 
@@ -48,34 +47,7 @@ class ContentLoader {
      echo $this->scriptInject;
    }
 
-   /**
-	 * Grab the subdomain portion of the URL. If there is no sub-domain, the root
-	 * domain is passed back. By default, this function *returns* the value as a
-	 * string.
-	 *
-	 * @param bool $echo optional parameter prints the response directly to
-	 * the screen.
-	 */
-	function getBidxSubdomain($echo = false) {
-		$hostAddress = explode( '.', $_SERVER ["HTTP_HOST"] );
-		if ( is_array($hostAddress) ) {
-			if ( eregi( "^www$", $hostAddress [0] ) ) {
-				$passBack = 1;
-			}
-			else {
-				$passBack = 0;
-			}
-			if ( $echo == false ) {
-				return ( $hostAddress [$passBack] );
-			}
-			else {
-				echo ( $hostAddress [$passBack] );
-			}
-		}
-		else {
-			return ( false );
-		}
-	}
+  
 
 	/**
 	 * Load the data into Wordpress.
@@ -114,23 +86,25 @@ class ContentLoader {
 							,'post_status'      => 'publish'
 							,'post_type'        => $document -> posttype
 							,'nopaging'		    => true,
-							 'suppress_filters' => true )
+							 'suppress_filters' => false )
 					);
 					if ( sizeof( $posts_array ) > 0 ) {
 						break;
 						$this -> logger -> trace( 'Post exist, skipping : ' . $post -> name );
 					}
 				}
-				
-				$post_id = wp_insert_post( array(
+				$insertPostArr =  array(
 						 'post_content'   => $post -> content
 						,'post_name'      => $post -> name
 						,'post_status'    => 'publish'
 						,'post_title'     => $post -> title
 						,'post_type'      => $document -> posttype
 						,'post_author'    => 1
-					)
-				);
+					);
+                //$enPostArr = $insertPostArr;
+                //$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
+                //$post_id = wp_insert_post($enPostArr);
+				$post_id = wp_insert_post($insertPostArr);
 				if ( !$post_id ) {
 					wp_die( 'Error creating page' );
 				} else {
@@ -138,14 +112,30 @@ class ContentLoader {
 						$this -> logger -> trace( 'Adding template on post ' . $post_id . ' named : ' . $post -> template );
 						update_post_meta( $post_id, '_wp_page_template', $post -> template );
 					}
+
+                  // $post_translated_id = $this->mwm_wpml_translate_post($post_id,$insertPostArr,'es' );
+
 				}
 				
 				if ( isset( $post -> mapping ) && $post -> mapping != '' ) {
 					$target = 'index.php?' . $document -> posttype . '=' . $post -> name;
-											
-					$this -> logger -> trace( 'Adding the rewrite rule : ' . $post -> mapping . ' to ' . $target );
+                    $mappingOrig = (string) $post->mapping;
+
+					$this -> logger -> trace( 'Adding the rewrite rule : ' . $mappingOrig . ' to ' . $target );
 					//check here that all values from SimpleXML are explicitly casted to string
-					add_rewrite_rule( (string)$post -> 	mapping, $target, 'top' );
+
+                    //$enMapping = str_replace('^','^/en/',$mappingOrig);
+                    //$enTarget = $target.'_en';
+					add_rewrite_rule( $mappingOrig, $target, 'top' );
+
+                    //$enMapping = str_replace('^','^/en/',$mappingOrig);
+                    //$enTarget = $target.'_en';
+					//add_rewrite_rule( $enMapping, $enTarget, 'top' );
+                    
+                    //$esMapping = str_replace('^','^/es/',$mappingOrig);
+                    //$esTarget = $target.'_es';
+                    //add_rewrite_rule( $esMapping, $esTarget, 'top' );
+                    //$this -> logger -> trace( 'Adding the rewrite rule ES: ' . $esMapping . ' to ' . $target );
 				}
 
 			}
@@ -185,6 +175,44 @@ class ContentLoader {
 		}	
 		
 	}
+    /**
+ * Creates a translation of a post (to be used with WPML)
+ *
+ * @param int $post_id The ID of the post to be translated.
+ * @param string $post_type The post type of the post to be transaled (ie. 'post', 'page', 'custom type', etc.).
+ * @param string $lang The language of the translated post (ie 'fr', 'de', etc.).
+ * @link http://wordpress.stackexchange.com/questions/20143/plugin-wpml-how-to-create-a-translation-of-a-post-using-the-wpml-api
+ * @return the translated post ID
+ *  */
+    function mwm_wpml_translate_post( $post_id, $insertPostArr, $lang ){
+    
+
+    // Include WPML API
+    include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+
+    // Define title of translated post
+   //$post_translated_title = get_post( $post_id )->post_title . ' (' . $lang . ')';
+    $insertPostArr['post_title'] = $insertPostArr['post_title'] . ' (' . $lang . ')';
+    $insertPostArr['post_name'] = $insertPostArr['post_name'] . '_' . $lang ;
+    $post_type = $insertPostArr['post_type'];
+    // Insert translated post
+
+    $post_translated_id = wp_insert_post( $insertPostArr );
+
+    // Get trid of original post
+    $trid = wpml_get_content_trid( 'post_' . $post_type, $post_id );
+
+    // Get default language
+    $default_lang = wpml_get_default_language();
+
+    // Associate original post and translated post
+    global $wpdb;
+    $wpdb->update( $wpdb->prefix.'icl_translations', array( 'trid' => $trid, 'language_code' => $lang, 'source_language_code' => $default_lang ), array( 'element_id' => $post_translated_id ) );
+
+    // Return translated post ID
+    return $post_translated_id;
+
+    }
 	
 	/**
 	 * Internal help function for faster debugging of rewrite rule errors.
@@ -244,13 +272,13 @@ class ContentLoader {
 		//hardcoded for now
 		$post_type = 'bidx';
 		
-		$this -> logger -> trace( 'Initializing custom Post handler for : ' . $post_type );	
+		$this -> logger -> trace( 'Initializing custom Post handler for contentloaderaltaf: ' . $post_type );
 		if ( $post_type != 'post' && $post_type != 'page')
 		{
 			$args = array(
 					'public' => true,
 					'exclude_from_search' => true,
-					'show_ui' => false, 
+					'show_ui' => true,
 					'show_in_menu' => false, 
 					'query_var' => true,
 					'rewrite' => false, 
@@ -259,7 +287,7 @@ class ContentLoader {
 					'has_archive' => false,
 					'hierarchical' => false,
 					'menu_position' => null,
-					'supports' => array( 'title' )
+					//'supports' => array( 'title' )
 			);
 			$this -> logger -> trace( 'Register action started for ' . $post_type );
 			register_post_type( $post_type, $args );
@@ -267,6 +295,7 @@ class ContentLoader {
 		
 		$this -> logger -> trace( 'Custom Post handler ready' );
 		$this -> logger -> trace( get_post_types() );
+        
 
 
 	}

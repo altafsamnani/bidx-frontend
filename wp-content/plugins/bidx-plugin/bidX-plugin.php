@@ -12,6 +12,8 @@ License: Commercial
 //
 //Generic config for paths
 //
+$plugin_dir = basename(dirname(__FILE__)).'/translation';
+load_plugin_textdomain( 'bidx-plugin', false, $plugin_dir );
 include ('apps/util.php' );
 
 //
@@ -43,8 +45,9 @@ if ( !BidxCommon :: isWPInternalFunction() ) {
 	);
 	$shortcode = new BidxShortCode();
 	$shortcode -> addMappingArray( $ruleitems );
+    
 	//cleanup body tag
-	
+
 }
 
 add_filter( 'body_class','my_class_names', 100000 );
@@ -54,4 +57,28 @@ function my_class_names($classes) {
 	return preg_replace( "/^\?bidx=/", 'bidx-',  $classes );
 	
 }
+
+//add_filter('init','bidx_plugin_init("tst")');
+//
+//
+//function bidx_plugin_init($test) {
+//
+//    $ruleitems = array(
+//			'member' => 'memberprofile',
+//			'businessplan',
+//			'company',
+//			'mydashboard' => 'dashboard',
+//			'search',
+//			'group',
+//			'auth',
+//			'inbox');
+//    foreach( $ruleitems as $key => $val ) {
+//
+//    $plugin_dir = basename(dirname(__FILE__)).'/apps/'.$val.'/languages';
+//
+//    load_plugin_textdomain( 'bidx-plugin', false, $plugin_dir );
+//    }
+//}
+
+
 ?>

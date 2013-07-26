@@ -17,12 +17,19 @@ class BidxCommon
     public static $scriptJs = array ();
     public static $staticSession = array ();
 
-    public function __construct ($subDomain)
+    public function __construct ()
     {
-        if ($subDomain) {
-            $this->getSessionAndScript ($subDomain);
-        }
+        $this->subDomain = self::get_bidx_subdomain();
     }
+
+    public function getBidxSessionAndScript ()
+    {
+         if ($this->subDomain) {
+            $this->processSessionAndScript ($this->subDomain);
+     }
+    }
+
+
 
     public function isSetBidxAuthCookie ()
     {
@@ -41,7 +48,7 @@ class BidxCommon
     }
 
     //http://www.phpro.org/tutorials/Introduction-To-PHP-Sessions.html
-    public function getSessionAndScript ($subDomain)
+    public function processSessionAndScript ($subDomain)
     {
         $is_ajax = isset ($_SERVER['HTTP_X_REQUESTED_WITH']) AND
             strtolower ($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
@@ -59,7 +66,6 @@ class BidxCommon
                     //Check Session Variables from Second call, dont need to make session call from second request
 
                     $sessionVars = $this->getSessionVariables ($subDomain);
-
                     if (!$sessionVars) { // If Session set dont do anything
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
@@ -93,16 +99,20 @@ class BidxCommon
      */
     public function startSession ()
     {
+        $time = 120;
+        
         $session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
         $this->clearSessionFromParam ($session_id);
 
+        //Set Cookie Timeout 
+        session_set_cookie_params($time);
         if ($session_id) {
             session_id ($session_id);
-        }
+        }     
         session_start (); //or session_start();
-        if (!$session_id) {
-            setcookie ('session_id', session_id (), 0, '/', '.' . COOKIE_DOMAIN);
-        }
+        //if (!$session_id) {
+        setcookie ('session_id', session_id (), time()+$time, '/', '.' . COOKIE_DOMAIN);
+        //}
     }
     /**
      * Clear Session From GET param rs
@@ -199,10 +209,9 @@ class BidxCommon
         $this::$scriptJs[$subDomain] = $scriptValue;
     }
 
-    public function getScriptJs ($subDomain)
+    public function getScriptJs ()
     {
-
-        return (!empty ($this::$scriptJs)) ? $this::$scriptJs[$subDomain] : '';
+        return (!empty ($this::$scriptJs)) ? $this::$scriptJs[$this->subDomain] : '';
     }
 
     /**
@@ -572,6 +581,8 @@ class BidxCommon
             return ( false );
         }
     }
+
+
 
     /**
      * Builds an http query string.

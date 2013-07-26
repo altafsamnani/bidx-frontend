@@ -2,40 +2,40 @@
 
 <div  class="mainState mainStateRegister <?php echo ($this->type=='register') ? 'mainStateShow':'';?>" style="display:none">
 	<form id="frmRegister" action="/">
-		<div class="formfield" data-validation='{"required":{"text":"A first name is mandatory"}}'>
-			<label>First name</label>
-			<input type="text" name="personalDetails.firstName" placeholder="Type your first name" />
+		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A first name is mandatory','bidx-plugin');?>"}}'>
+			<label><?php _e('First name','bidx-plugin');?></label>
+			<input type="text" name="personalDetails.firstName" placeholder="<?php _e('Type your first name','bidx-plugin');?>" />
 		</div>
 
-		<div class="formfield" data-validation='{"required":{"text":"A last name is mandatory"}}'>
-			<label>Last name</label>
-			<input type="text" name="personalDetails.lastName" placeholder="Type your last name" />
+		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A last name is mandatory','bidx-plugin');?>"}}'>
+			<label><?php _e('Last name','bidx-plugin');?></label>
+			<input type="text" name="personalDetails.lastName" placeholder="<?php _e('Type your last name','bidx-plugin');?>" />
 		</div>
 
-		<div class="formfield" data-validation='{"required":{"text":"This field is mandatory"},"typecheck":[{"email":{"text":"This is not a valid e-mail address"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
-			<label>Email address</label>
-			<input type="text" name="username" placeholder="Type your email address" />
+		<div class="formfield" data-validation='{"required":{"text":"<?php _e('This field is mandatory','bidx-plugin');?>"},"typecheck":[{"email":{"text":"<?php _e('This is not a valid e-mail address','bidx-plugin');?>"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
+			<label><?php _e('Email address','bix-plugin');?></label>
+			<input type="text" name="username" placeholder="<?php _e('Type your email address','bidx-plugin');?>" />
 		</div>
 
-		<div class="formfield" data-validation='{"required":{"text":"A location is mandatory"}}'>
-			<label>What is your location?</label>
-			<input type="text" name="address" placeholder="Please type your location" data-type="location" data-type-arguments=''/>
+		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A location is mandatory','bidx-plugin');?>"}}'>
+			<label><?php _e('What is your location?','bidx-plugin');?></label>
+			<input type="text" name="address" placeholder="<?php _e('Please type your location','bidx-plugin');?>" data-type="location" data-type-arguments=''/>
 		</div>
 
 		<div class="buttonwrapper">
-			<a href="#" class="btn btn-primary jsRegister">Register</a>
+			<a href="#" class="btn btn-primary jsRegister"><?php _e('Register','bidx-plugin');?></a>
 		</div>
         <?php if($this->showLoginLink) { ?>
 		<p>
-			Forgot your password. Click <a href="#resetpassword">here</a> to recover.<br/>
-			Login? Click <a href="#login">here</a> to go to login.
+			<?php _e('Forgot your password. Click <a href="#resetpassword">here</a> to recover.','bidx-plugin');?><br/>
+			<?php _e('Login? Click <a href="#login">here</a> to go to login.','bidx-plugin');?>
 		</p>
         <?php } ?>
 	</form>
 
 	<div class="registerSuccess hide">
-		<h3>Registration complete</h3>
-		<p>The registration is complete. An e-mail has been dispatched with followup instructions.</p>
+		<h3><?php _e('Registration complete','bidx-plugin');?></h3>
+		<p><?php _e('The registration is complete. An e-mail has been dispatched with followup instructions.','bidx-plugin');?></p>
         </div>
 </div>
 
@@ -136,7 +136,7 @@
                         {
                             $btnRegister.removeClass( "disabled" );
 
-                            alert( "Problem while registering" );
+                            alert( "<?php _e('Problem while registering"','bidx-plugin');?> );
                         }
                     }
                 );
