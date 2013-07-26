@@ -7,12 +7,52 @@
 
 
 
+    //public functions
+
+    var memberRelationships = function ()
+    {
+        bidx.api.call(
+            "memberRelationships.fetch"
+        ,   {
+                requesterId:              bidxConfig.session.id
+            ,   groupDomain:              bidx.common.groupDomain
+            ,   async:                     true
+
+            ,   success: function( response )
+                {
+                    var result = [];
+
+                    //now format it into array of objects with value and label
+
+                    if( response && response.contact.Active )
+                    {
+
+                        $.each( response.contact.Active, function ( idx, item)
+                        {
+                            result.push(
+                            {
+                                value:      item.requesteeId
+                            ,   label:      item.requesteeName
+                            });
+                        });
+
+                    }
+                    return result;
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                    _showError( "Something went wrong while retrieving contactlist of the member: " + status );
+                }
+            }
+        );
+    }
 
 
 
-     /*
-            bind messageCheckAll to all chexkboxes in messages listing
-        */
 
 
     //private functions
@@ -269,6 +309,38 @@
         );
     };
 
+    var _getContacts = function ( id )
+    {
+        bidx.api.call(
+            "memberRelationships.fetch"
+        ,   {
+                requesterId:              bidxConfig.session.id
+            ,   groupDomain:              bidx.common.groupDomain
+
+            ,   success: function( response )
+                {
+                    if( response && response.contact.active )
+                    {
+                        return response.contact.active;
+                    }
+                    else
+                    {
+                        return [];
+                    }
+
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                    _showError( "Something went wrong while retrieving contactlist of the member: " + status );
+                }
+            }
+        );
+    }
+
     // ROUTER
 
     var state;
@@ -313,7 +385,8 @@
 
             break;
 
-            case "list":
+            case "inbox":
+            case "sent":
                 var type = "RECEIVED_EMAILS";
 
                 if( section === "sent" ) {
@@ -329,7 +402,13 @@
             break;
 
             case "compose":
+                //_getContacts( id );
                 _showView( "compose" );
+
+            break;
+
+            case "test":
+                _getContacts( id );
             break;
 
             default:
@@ -343,6 +422,7 @@
     {
         navigate:               navigate
     ,   $element:               $element
+    ,   memberRelationships:    memberRelationships
     };
 
     if ( !window.bidx )

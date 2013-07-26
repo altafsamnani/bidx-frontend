@@ -40,6 +40,7 @@
             var options    = widget.options;
 
             options.state.dataKey     = $item.data( "bidxdatakey" );
+            options.state.dataService  = $item.data( "bidxdataservice" );
 
             if ( options.state.dataKey && !window.bidx.data )
             {
@@ -64,7 +65,7 @@
 
                 // If there was a fixed list of data
                 //
-                if ( options.state.dataKey && options.state.dataValues )
+                if ( ( options.state.dataKey || options.state.dataService ) && options.state.dataValues )
                 {
                     params.typeahead            = true;
                     params.onlyTagList          = true;
@@ -127,6 +128,7 @@
 
                     // Pre-parse the dataValues into an object structure with
                     //
+
                     $.each( result, function( idx, item )
                     {
                         // Lowercase the keys so looking up can be done using a lowercase as well. Have had some inconsistencies
@@ -136,6 +138,49 @@
 
                     _setup();
                 } );
+            }
+            // Does it have a datasource
+            else if ( options.state.dataService )
+            {
+                var serviceCall = options.state.dataService.split(".");
+
+                if (serviceCall.length !== 2)
+                {
+                    window.bidx.utils.error( "Problem getting bidx.data for key", options.state.dataSource, "populate a tagsinput control" );
+                }
+                else
+                {
+                    //load service
+                    var result = window.bidx[ serviceCall[0] ][ serviceCall[1] ]();
+
+                    //test data for now because load order is incorrect: service call not ready when this code is excuted
+                    result = [
+                    {
+                        value:  "1"
+                    ,   label:  "Arne de Bree Label"
+                    },
+                    {
+                        value:  "Mattijs Spierings"
+                    ,   label:  "Mattijs Spierings Label"
+                    } ];
+
+
+                    options.state.dataValues            = result;
+                    options.state.dataValuesByValue     = {};
+
+                    // Pre-parse the dataValues into an object structure with
+                    //
+                    $.each( result, function( idx, item )
+                    {
+                        // Lowercase the keys so looking up can be done using a lowercase as well. Have had some inconsistencies
+                        //
+                        options.state.dataValuesByValue[ item.value.toLowerCase() ] = item;
+                    } );
+
+                    _setup();
+                }
+
+
             }
             else
             {

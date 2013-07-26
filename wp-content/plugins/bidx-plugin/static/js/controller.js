@@ -252,10 +252,6 @@
         {
             bidx.utils.log( "AppRouter::mailInbox", section );
 
-            //default state is a list view of emails whereas the section defines the source
-            state   = "list";
-
-
             // if there is an id, switch state to viewing of email. Id could also be available under section
             if( ( section && section.match( /^\d+$/ ) ) || ( id && id.match( /^\d+$/ ) ) )
             {
@@ -285,9 +281,8 @@
             else
             {
                 state = section;
+
             }
-
-
 
             _navigateToApp( "mail", state, section, id);
 
