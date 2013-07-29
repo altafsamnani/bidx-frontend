@@ -810,6 +810,10 @@ form {
 			margin-top:10px;
 			border:1px solid #777;
 		}
+
+        /** fix for bootstrap messing up with the zoom controls in google maps **/
+        .map label { width: auto; display:inline; }
+        .map img { max-width: none; }
 	/* END LOCATION PLUGIN*/
 
 
