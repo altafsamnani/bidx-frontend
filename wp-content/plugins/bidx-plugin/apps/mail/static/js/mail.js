@@ -14,7 +14,7 @@
         bidx.api.call(
             "memberRelationships.fetch"
         ,   {
-                requesterId:              27 // bidxConfig.session.id
+                requesterId:              bidxConfig.session.id
             ,   groupDomain:              bidx.common.groupDomain
 
             ,   success: function( response )
