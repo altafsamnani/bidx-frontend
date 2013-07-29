@@ -103,18 +103,5 @@
         padding: 20px;
     }
 
-    .row-fluid .input-prepend {
-        display: inline-block;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-    .row-fluid .input-prepend span {
-        width:                      auto !important;
-        height:                     19px !important;
-        -webkit-box-sizing: content-box !important;
-        -moz-box-sizing: content-box !important;
-        box-sizing: content-box !important;
 
-    }
 

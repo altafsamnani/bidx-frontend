@@ -58,7 +58,7 @@ class memberprofile {
 
 	    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
 	    $view->sessionData = BidxCommon::$staticSession;
-     
+
       	$view->render('member.phtml');
 	}
 }

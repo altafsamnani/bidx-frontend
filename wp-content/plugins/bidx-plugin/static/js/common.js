@@ -4,6 +4,7 @@
     ,   bidxConfig      = window.bidxConfig || {}
     ,   groupDomain     = bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain()
     ,   $body           = $( "body" )
+    ,   notifier
     ;
 
     // Search for any join group button on the page, on click, perform an API call to join the group and reload the page on success
@@ -290,6 +291,40 @@
         notifySuccessModal( "Wait for the redirect..." );
     };
 
+    var notifyCustom = function( msg )
+    {
+        window.bidx.common.notifier = noty ({
+            text:           msg
+        ,   type:           "alert"
+        ,   modal:          true
+        } );
+    };
+
+    var notifyCustomSuccess = function (msg)
+    {
+        if( notifier )
+        {
+            notifier
+                .setText( msg )
+                .setType( "success" )
+                .setTimeout( 2000 )
+                ;
+
+        }
+        else
+        {
+            _notify(
+                {
+                    text:           msg
+                ,   type:           "success"
+                ,   modal:          true
+                ,   timeout:        2000
+                } );
+        }
+    };
+
+
+
     var notifySuccessModal = function( msg )
     {
         _notify(
@@ -310,6 +345,7 @@
         } );
     };
 
+
     var notifyError = function( msg )
     {
         _notify(
@@ -328,6 +364,8 @@
     {
         groupDomain:                groupDomain
     ,   notifyRedirect:             notifyRedirect
+    ,   notifyCustom:               notifyCustom
+    ,   notifyCustomSuccess:        notifyCustomSuccess
     ,   notifyError:                notifyError
     ,   notifySuccess:              notifySuccess
     ,   notifySuccessModal:         notifySuccessModal

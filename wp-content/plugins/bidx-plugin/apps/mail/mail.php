@@ -8,6 +8,13 @@
  */
 class mail {
 
+
+
+
+    static $deps = array( 'bidx-form', 'bidx-tagsinput', 'bidx-common' );
+
+
+
     /**
      * Constructor
      */
@@ -20,8 +27,8 @@ class mail {
      */
     function register_mail_bidx_ui_libs()
     {
-        wp_register_script( 'mail', plugins_url( 'static/js/mail.js', __FILE__ ), array('bootstrap'), '20130501', TRUE ); 
-        wp_register_style( 'mail', plugins_url( 'static/css/mail.css', __FILE__ ), array('businessplan'), '20130501', 'all' );/*should load mail css, not all other css files from other apps*/
+        wp_register_script( 'mail', plugins_url( 'static/js/mail.js', __FILE__ ), self::$deps, '20130715', TRUE );
+        wp_register_style( 'mail', plugins_url( 'static/css/mail.css', __FILE__ ),  array(), '20130715', TRUE );/*should load mail css, not all other css files from other apps*/
         wp_enqueue_style('mail');
     }
 
@@ -42,7 +49,7 @@ class mail {
         //2. Service Group
         //require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
         //$groupSvc = new GroupService( );
-        
+
         // 3. Determine the view needed
         $command = $atts['view'];
 
@@ -56,11 +63,11 @@ class mail {
         }
         $view->render($template);
 
-        
+
 
     }
 
-    
+
 }
 
 ?>

@@ -193,20 +193,29 @@
             }
         };
 
-        api.getUrl = function( baseUrl, id, groupDomain )
+        api.getUrl = function( baseUrl, id, groupDomain, extraUrlParameters )
         {
-            var result = baseUrl;
+            var result              = baseUrl;
+            var extraUrlParams      = "";
 
             if ( id )
             {
                 result += "/" + id;
             }
 
+            if ( extraUrlParameters )
+            {
+                $.each( extraUrlParameters, function( index, item )
+                {
+                    extraUrlParams += "&" + item.label + "=" + item.value;
+                } );
+            }
+
             // Override groupDomain from the URL
             //
             var forcedGroupDomain = bidx.utils.getQueryParameter( "__bidxGroupDomain" );
 
-            result += "?csrf=false&bidxGroupDomain=" + encodeURIComponent( forcedGroupDomain || groupDomain );
+            result += "?csrf=false&bidxGroupDomain=" + encodeURIComponent( forcedGroupDomain || groupDomain ) + extraUrlParams;
 
             return result;
         };
@@ -215,7 +224,7 @@
         //
         api._call = function( options )
         {
-            var url     = api.getUrl( options.baseUrl, options.id, options.groupDomain )
+            var url     = api.getUrl( options.baseUrl, options.id, options.groupDomain, options.extraUrlParameters )
             ,   params  =
                 {
                     url:            url

@@ -1,38 +1,48 @@
 ( function ( $ )
 {
-    var $element                    = $( "#mail" ),
-        $views                      = $element.find( ".view" ),
-        toolbar                     = {},
-        defaultView                 = "inbox";
+    var $element                    = $( "#mail" )
+    ,   $views                      = $element.find( ".view" )
+    ,   $currentView
+    ,   $composeForm                = $views.filter( ".viewCompose" ).find( "form" )
+    ,   $btnSubmit                = $composeForm.find(".compose-submit")
+    ,   $btnCancel                = $composeForm.find(".compose-cancel")
+    ,   toolbar                     = {}
+    ,   defaultView                 = "inbox"
+    ,   bidx                        = window.bidx
+    ,   message                     = {}
+    ;
+
+
+
 
 
 
     //public functions
 
-    var memberRelationships = function ( callback )
+    var getMembers = function ( callback )
     {
+        //TO BE REFACTORED WHEN API IS UPDATED
         bidx.api.call(
-            "memberRelationships.fetch"
+            "groupMembers.fetch"
         ,   {
-                requesterId:              bidxConfig.session.id
+                groupId:                  bidxConfig.session.currentGroup
             ,   groupDomain:              bidx.common.groupDomain
 
             ,   success: function( response )
                 {
                     var result          = []
-                    ,   activeContact   = bidx.utils.getValue( response, "contact.Active" )
                     ;
 
                     // now format it into array of objects with value and label
                     //
-                    if( activeContact )
+                    if( response )
                     {
-                        $.each( activeContact, function ( idx, item)
+                        $.each( response, function ( idx, item)
                         {
                             result.push(
                             {
-                                value:      item.requesteeId
-                            ,   label:      item.requesteeName
+                                value:      item.id
+                            ,   label:      item.name
                             });
                         });
                     }
@@ -56,6 +66,121 @@
 
     //private functions
 
+
+    var _init = function()
+    {
+        // Setup form
+        //
+        $composeForm.form(
+        {
+            errorClass:     'error'
+        } );
+
+        $composeForm.submit( function( e )
+        {
+            e.preventDefault();
+
+            var valid = $composeForm.form( "validateForm" );
+            bidx.utils.log("VALIDATED", valid );
+            if ( !valid || $btnSubmit.hasClass( "disabled" ) )
+            {
+                return;
+            }
+
+            $btnSubmit.addClass( "disabled" );
+            $btnCancel.addClass( "disabled" );
+
+            _send(
+            {
+                error: function()
+                {
+                    alert( "Something went wrong during submit" );
+
+                    $btnSubmit.removeClass( "disabled" );
+                    $btnCancel.removeClass( "disabled" );
+                }
+            } );
+        } );
+
+    };
+
+    var _send = function ( params )
+    {
+        if ( !message )
+        {
+            return;
+        }
+
+        _formatValues();
+
+        var extraUrlParameters =
+        [
+            {
+                label :     "mailType",
+                value :     "PLATFORM"
+            }
+        ];
+        bidx.common.notifyCustom("Sending message");
+
+        bidx.api.call(
+            "mail.send"
+        ,   {
+                groupDomain:              bidx.common.groupDomain
+            ,   extraUrlParameters:       extraUrlParameters
+            ,   data:                     message
+
+            ,   success: function( response )
+                {
+
+                    bidx.utils.log( "MAIL RESPONSE", response );
+                    document.location.href = document.location.href.split( "#" ).shift() + "#mail/inbox";
+
+                    bidx.common.notifyCustomSuccess("Message sent");
+/*                    bidx.utils.log( "member.save::success::response", response );
+
+                    bidx.common.notifyRedirect();
+
+                    var url = document.location.href.split( "#" ).shift();
+
+                    document.location.href = url;*/
+                }
+
+            ,   error:  function( jqXhr )
+                {
+                    params.error( jqXhr );
+                }
+            }
+        );
+
+    };
+
+    var _formatValues = function ()
+    {
+        /*
+            //  API expected format
+            {
+                "userIds": [],
+                "emails": [],
+                "subject": "subject of the email",
+                "content": "content of the email blablablabla"
+            }
+        */
+
+        $currentView = $views.filter( ".viewCompose" );
+
+        var to = [];
+        var recipients = $currentView.find("[name=contacts]").tagsinput('getValues');
+
+        $.each( recipients, function( index, item )
+        {
+            to.push( item.value );
+        } );
+
+        bidx.utils.setValue( message, "userIds", to );
+        bidx.utils.setValue( message, "subject", $currentView.find("[name=subject]").val() );
+        bidx.utils.setValue( message, "content", $currentView.find("[name=content]").val() );
+    };
+
     var _showError = function( msg )
     {
         $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
@@ -65,7 +190,7 @@
     var _getViewName = function ( v )
     {
         return ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 );
-    }
+    };
 
     var _showView = function( v )
     {
@@ -89,7 +214,7 @@
 
 
         });
-    }
+    };
 
     //  show modal view with optionally and ID to be appended to the views buttons
     var _showModal = function ( options )
@@ -106,11 +231,11 @@
             $this.attr( "href", $this.attr("href") + id );
         });
         $view.modal({});
-    }
+    };
 
     var _closeModal = function ( options )
     {
-        var $view =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" )
+        var $view =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" );
         $view.modal('hide');
     };
 
@@ -118,14 +243,14 @@
     var _setToolbarTargetID = function ( id, v )
     {
         bidx.utils.log("TEST", arguments);
-        var $toolbar = $views.filter( _getViewName( v ) ).find( ".mail-toolbar" )
+        var $toolbar = $views.filter( _getViewName( v ) ).find( ".mail-toolbar" );
         $toolbar.find(".btn").each( function()
         {
             var $this =  $ ( this );
             $this.attr( "href", $this.attr( "href" ) + id);
 
         });
-    }
+    };
 
     var _getEmail = function ( id, v )
     {
@@ -163,7 +288,7 @@
                 }
             }
         );
-    }
+    };
 
     /* load items into list*/
     var _populateList = function ( type, list, v )
@@ -269,7 +394,7 @@
                 }
             }
         );
-    }
+    };
 
     //  delete email
     var _delete = function ( options )
@@ -338,7 +463,7 @@
                 }
             }
         );
-    }
+    };
 
     // ROUTER
 
@@ -403,6 +528,7 @@
             case "compose":
                 //_getContacts( id );
                 _showView( "compose" );
+                _init();
 
             break;
 
@@ -421,7 +547,7 @@
     {
         navigate:               navigate
     ,   $element:               $element
-    ,   memberRelationships:    memberRelationships
+    ,   getMembers:             getMembers
     };
 
     if ( !window.bidx )
@@ -434,4 +560,9 @@
 
 
     window.bidx.mail = mail;
+
+    // Initialize the defered tagsinput
+    //
+    $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
+
 } ( jQuery ));
