@@ -19,17 +19,6 @@ $member = $this->exst($this->data->member->displayName);
         <?php $this->render('view-group.phtml'); ?>
       </div>
     </div>
-<?php if($this->sessionData->authenticated == 'false') { ?>
-    <div class="row-fluid memberLogin">
-        <div class="span6">
-           <?php echo do_shortcode( '[bidx app="auth" view="standard-auth" type="login"]' ); ?>
-        </div>
-        <div class="span6">
-           <?php echo do_shortcode( '[bidx app="auth" name="'.$this->data->groupInfo->groupName.'" view="standard-auth" type="register"]' ); ?>
-        </div>
-
-    </div>
-<?php } ?>
     <?php $this->render('edit-member.phtml'); ?>
     <?php $this->render('edit-entrepreneur.phtml'); ?>
     <?php $this->render('edit-investor.phtml'); ?>
