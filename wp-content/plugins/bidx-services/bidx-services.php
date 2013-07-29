@@ -296,12 +296,12 @@ function bidx_signout ()
     //Logout Bidx Session too
 
     clear_bidx_cookies ();
-   
+
     $params['domain'] = get_bidx_subdomain ();
     call_bidx_service ('session', $params, 'DELETE');
     wp_clear_auth_cookie ();
     clear_wp_bidx_session();
-    
+
 }
 
 function clear_bidx_cookies ()
@@ -313,14 +313,14 @@ function clear_bidx_cookies ()
         if (preg_match ("/^bidx/i", $cookieKey)) {
             setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
         }
-    }    
+    }
 }
 
 /*
  * @author Altaf Samnani
  * @version 1.0
  *
- * Flush the bidx Wordpress PHP Session Variables 
+ * Flush the bidx Wordpress PHP Session Variables
  * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_clearwpsession
  *
  */
@@ -975,7 +975,7 @@ function bidx_wordpress_pre_action ($url = 'default', $file_values = NULL)
             unset ($params);
 
             $params['path'] = '/personalDetails/attachment';
-            $params['purpose'] = 'attachment';
+            $params['purpose'] = '';
 
             $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
 
@@ -1005,7 +1005,7 @@ function bidx_wordpress_pre_action ($url = 'default', $file_values = NULL)
             unset ($params);
 
             $params['path'] = '/attachment';
-            $params['purpose'] = 'attachment';
+            $params['purpose'] = '';
 
             $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
 
@@ -1020,7 +1020,7 @@ function bidx_wordpress_pre_action ($url = 'default', $file_values = NULL)
             unset ($params);
 
             $params['path'] = '/attachment';
-            $params['purpose'] = 'attachment';
+            $params['purpose'] = '';
 
             $params['fileContent'] = "@" . $file_values["tmp_name"] . ';filename=' . $file_values["name"] . ';type=' . $file_values["type"];
 
