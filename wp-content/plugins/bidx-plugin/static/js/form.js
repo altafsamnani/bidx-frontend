@@ -1009,7 +1009,7 @@ Element.prototype = new Validator();
 							  	editable:true,
 							  	dragable:false,
 							  	radius_changed: function(){
-							  		methods.createHiddenField($this, "focusReach", (this.getRadius())/1000);
+							  		methods.createHiddenField($this, "reach", (this.getRadius())/1000);
 							  	}
 
 							});
@@ -1019,7 +1019,7 @@ Element.prototype = new Validator();
 							markersArray.push(circle);
 
 							//store radius of circle in hiddenfield
-							methods.createHiddenField($this, "focusReach", (circle.getRadius())/1000);
+							methods.createHiddenField($this, "reach", (circle.getRadius())/1000);
 
 							google.maps.event.addListener(marker, 'dragend', function() {
 								var pos =marker.position;
@@ -1036,7 +1036,7 @@ Element.prototype = new Validator();
 									}
 								});
 								//add radius value to location data
-								methods.createHiddenField($this, "focusReach", (circle.radius)/1000);
+								methods.createHiddenField($this, "reach", (circle.radius)/1000);
 
 							});
 
@@ -1145,7 +1145,7 @@ Element.prototype = new Validator();
 			});
 			//now add location (latlong)
 			if(location.geometry) {
-				methods.createHiddenField(input, ( typeof index !== "undefined" ? "["+index+"].":"") + "location", location.geometry.location.toUrlValue());
+				methods.createHiddenField(input, ( typeof index !== "undefined" ? "["+index+"].":"") + "coordinates", location.geometry.location.toUrlValue());
 			}
 
 		},
@@ -1176,10 +1176,10 @@ Element.prototype = new Validator();
 
 		//create hiddenfield for bidX address storage
 		createHiddenField : function(input, name, val) {
-			var fieldname = input.attr("name") + name;
+			var fieldname = input.attr("name") + "." + name;
 			//check if hiddenfield already exists
 			if(input.nextAll("[name='" + fieldname + "']").length === 0) {
-				input.after("<input type=\"hidden\" name=\"" + input.attr("name") + name + "\" value=\"" + val + "\">");
+				input.after("<input type=\"hidden\" name=\"" + fieldname + "\" value=\"" + val + "\">");
 			}
 			//if exists, update value
 			else {
