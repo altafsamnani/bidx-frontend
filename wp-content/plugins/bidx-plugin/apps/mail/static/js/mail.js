@@ -9,25 +9,25 @@
 
     //public functions
 
-    var memberRelationships = function ()
+    var memberRelationships = function ( callback )
     {
         bidx.api.call(
             "memberRelationships.fetch"
         ,   {
-                requesterId:              bidxConfig.session.id
+                requesterId:              27 // bidxConfig.session.id
             ,   groupDomain:              bidx.common.groupDomain
-            ,   async:                     true
 
             ,   success: function( response )
                 {
-                    var result = [];
+                    var result          = []
+                    ,   activeContact   = bidx.utils.getValue( response, "contact.Active" )
+                    ;
 
-                    //now format it into array of objects with value and label
-
-                    if( response && response.contact.Active )
+                    // now format it into array of objects with value and label
+                    //
+                    if( activeContact )
                     {
-
-                        $.each( response.contact.Active, function ( idx, item)
+                        $.each( activeContact, function ( idx, item)
                         {
                             result.push(
                             {
@@ -35,21 +35,20 @@
                             ,   label:      item.requesteeName
                             });
                         });
-
                     }
-                    return result;
+
+                    callback( result );
                 }
 
             ,   error: function( jqXhr, textStatus )
                 {
-
                     var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
                     _showError( "Something went wrong while retrieving contactlist of the member: " + status );
                 }
             }
         );
-    }
+    };
 
 
 
