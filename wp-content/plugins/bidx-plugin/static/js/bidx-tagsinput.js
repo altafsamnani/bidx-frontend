@@ -22,11 +22,20 @@
             widgetClass:        "bidx-tagsinput"
         ,   tagClass:           "bidx-tag"
 
+            // The properties of the dataset to use for the descriptive label'ing an the actual value
+            //
+        ,   labelProperty:      "label"
+        ,   valueProperty:      "value"
+
         ,   state:
             {
                 dataKey:                null
+            ,   dataService:            null
             ,   dataValues:             null
             ,   dataValuesByValue:      null
+            ,   dataRetrieved:          false
+
+            ,   valueQueue:             null
             }
         }
 
@@ -36,26 +45,71 @@
             ,   $item       = widget.element
             ;
 
-            widget.options = $.extend( widget.options, params );
-            var options    = widget.options;
+            widget.options  = $.extend( widget.options, params );
+            var options     = widget.options
+            ,   state       = options.state
+            ;
 
-            options.state.dataKey     = $item.data( "bidxdatakey" );
-            options.state.dataService  = $item.data( "bidxdataservice" );
+            state.dataKey       = $item.data( "bidxdatakey" );
+            state.dataService   = $item.data( "bidxdataservice" );
+            state.valueQueue    = [];
+            state.dataRetrieved = false;
 
-            if ( options.state.dataKey && !window.bidx.data )
+            if ( state.dataKey && state.dataServer )
+            {
+                bidx.utils.error( "bidx::tagsinput => it is not possible to specify both bidxdatakey and bidxdataservice on the same tagsinput!", $item );
+                return;
+            }
+
+            if ( state.dataKey && !window.bidx.data )
             {
                 alert( "bidx::tagsinput => No bidx.data available. Fatal!" );
                 return;
             }
 
+            if ( state.dataService && !window.bidx.api )
+            {
+                alert( "bidx::tagsinput => No bidx.api available. Fatal!" );
+                return;
+            }
 
             $item.addClass( options.widgetClass );
 
             $item.attr( "data-type", "tagsinput" );
 
+            // DRY function for processing async data result used for setting up the typeahead
+            // This can come either from the bidx.data internal api or from a bidx.api call
+            //
+            // !! REsult must be an array!
+            //
+            function _processDataResponse( result )
+            {
+                if ( !result || $.type( result ) !== "array" )
+                {
+                    bidx.utils.error( "Result used for setting up the typeahead in this bidx-tagsinput is not an array!", $item, result );
+                    return;
+                }
+
+                state.dataValues            = result;
+                state.dataValuesByValue     = {};
+
+                // Pre-parse the dataValues into an object structure with
+                //
+                $.each( result, function( idx, item )
+                {
+                    // Lowercase the keys so looking up can be done using a lowercase as well. Have had some inconsistencies
+                    //
+                    state.dataValuesByValue[ ( item[ options.valueProperty ] + "" ).toLowerCase() ] = item;
+                } );
+
+                state.dataRetrieved = true;
+
+                _setup();
+            }
+
             // Setup the tagsManager and build typeahead
             //
-            var _setup = function()
+            function _setup()
             {
                 var params =
                 {
@@ -83,11 +137,11 @@
 
                             item = JSON.parse( item );
 
-                            var value = item.value.toLowerCase()
+                            var label = item[ options.labelProperty ].toLowerCase()
                             ,   query = this.query.trim().toLowerCase()
                             ;
 
-                            if ( value.indexOf( query ) !== -1 )
+                            if ( label.indexOf( query ) !== -1 )
                             {
                                 return true;
                             }
@@ -98,19 +152,28 @@
                             item = JSON.parse( item );
 
                             var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
-                            return item.label.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+                            return item[ options.labelProperty ].replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
                                 return '<strong>' + match + '</strong>';
                             });
                         }
                     };
                 }
 
+                // Instantiate the tagsManager itself
+                //
+                $item.tagsManager( params );
+
+                // Flush the value queue (if any)
+                //
+                widget._processQueuedValues();
+
+                // Time to release the component for user interaction
+                //
                 $item
-                    .tagsManager( params )
                     .removeClass( "disabled" )
                     .prop( "disabled", false )
                 ;
-            };
+            }
 
             // Does it have data key set?
             //
@@ -122,65 +185,34 @@
                     {
                         window.bidx.utils.error( "Problem getting bidx.data for key", options.state.dataKey, "populate a tagsinput control" );
                     }
-
-                    options.state.dataValues            = result;
-                    options.state.dataValuesByValue     = {};
-
-                    // Pre-parse the dataValues into an object structure with
-                    //
-
-                    $.each( result, function( idx, item )
+                    else
                     {
-                        // Lowercase the keys so looking up can be done using a lowercase as well. Have had some inconsistencies
-                        //
-                        options.state.dataValuesByValue[ item.value.toLowerCase() ] = item;
-                    } );
-
-                    _setup();
+                        _processDataResponse( result );
+                    }
                 } );
             }
             // Does it have a datasource
             else if ( options.state.dataService )
             {
-                var serviceCall = options.state.dataService.split(".");
+                // Expecting the dataService to contain a string which points to a globally exposed function on the window.bidx namespace
+                //
+                var serviceCall = bidx.utils.getValue( window.bidx, state.dataService );
 
-                if (serviceCall.length !== 2)
+                if ( !serviceCall || $.type( serviceCall ) !== "function" )
                 {
-                    window.bidx.utils.error( "Problem getting bidx.data for key", options.state.dataSource, "populate a tagsinput control" );
+                    window.bidx.utils.error( "Problem getting / parsing the service call ", state.dataService, "populate a tagsinput control" );
                 }
                 else
                 {
-                    //load service
-                    var result = window.bidx[ serviceCall[0] ][ serviceCall[1] ]();
-
-                    //test data for now because load order is incorrect: service call not ready when this code is excuted
-                    result = [
-                    {
-                        value:  "1"
-                    ,   label:  "Arne de Bree Label"
-                    },
-                    {
-                        value:  "Mattijs Spierings"
-                    ,   label:  "Mattijs Spierings Label"
-                    } ];
-
-
-                    options.state.dataValues            = result;
-                    options.state.dataValuesByValue     = {};
-
-                    // Pre-parse the dataValues into an object structure with
+                    // Perform the service call to get the data
                     //
-                    $.each( result, function( idx, item )
+                    serviceCall( function( result )
                     {
-                        // Lowercase the keys so looking up can be done using a lowercase as well. Have had some inconsistencies
-                        //
-                        options.state.dataValuesByValue[ item.value.toLowerCase() ] = item;
+                        bidx.utils.log( "bidx-tagsinput, response from servicecall", result );
+
+                        _processDataResponse( result );
                     } );
-
-                    _setup();
                 }
-
-
             }
             else
             {
@@ -203,6 +235,9 @@
             $el.siblings( "." + options.tagClass ).each( function()
             {
                 var $tag    = $( this )
+
+                    // Value can be a JSON string, using the .data() API it will be parsed to an object
+                    //
                 ,   value   = $tag.data( "value" )
                 ;
 
@@ -231,6 +266,7 @@
             var widget      = this
             ,   $el         = widget.element
             ,   options     = widget.options
+            ,   state       = options.state
             ,   type        = $.type( values )
             ;
 
@@ -248,25 +284,52 @@
                 return;
             }
 
-            $.each( values, function( idx, value )
+            $.merge( state.valueQueue, values );
+
+            widget._processQueuedValues();
+        }
+
+    ,   _processQueuedValues: function()
+        {
+            var widget      = this
+            ,   $el         = widget.element
+            ,   options     = widget.options
+            ,   state       = options.state
+            ;
+
+            // Are there values queued we need to process?
+            // Only do this after the data is retrieved when we actually are waiting for data to be retrived
+            //
+            if ( state.valueQueue.length &&  ( !( state.dataKey || state.dataService ) || ( state.dataRetrieved )))
             {
-                var tagValue = value;
-
-                if ( options.state.dataKey )
+                $.each( state.valueQueue, function( idx, value )
                 {
-                    var item = options.state.dataValuesByValue[ value.toLowerCase() ];
+                    var tagValue = value;
 
-                    if ( !item )
+                    // If we retrieved the data using a webservice / bidx.data, use that data
+                    //
+                    if ( state.dataKey || state.dataService )
                     {
-                        window.bidx.utils.error( "bidx-tagsinput:data item not found for ", value, $el[0] );
-                        return;
+                        var item = options.state.dataValuesByValue[ value.toLowerCase() ];
+
+                        if ( !item )
+                        {
+                            window.bidx.utils.error( "bidx-tagsinput:data item not found for ", value, $el[0] );
+                            return;
+                        }
+
+                        tagValue = JSON.stringify( item );
                     }
 
-                    tagValue = JSON.stringify( item );
-                }
+                    bidx.utils.log( "pushTag", tagValue );
 
-                $el.tagsManager( "pushTag", tagValue );
-            } );
+                    $el.tagsManager( "pushTag", tagValue );
+                } );
+
+                // Reset the queue
+                //
+                state.valueQueue = [];
+            }
         }
 
         // Remove all the set / provided tags and bring the tagsinput back to it's initial state
