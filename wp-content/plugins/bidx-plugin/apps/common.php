@@ -100,7 +100,7 @@ class BidxCommon
      */
     public function startSession ()
     {
-        $time = 30; //Default Time for nonactivity and make a new session call again
+        $time = 60; //Default Time for nonactivity and make a new session call again
         
         $session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
         $this->clearSessionFromParam ($session_id);
@@ -275,8 +275,8 @@ class BidxCommon
             switch ($hostAddress[1]) {
 
                 case 'member':           
-                    $sessioMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
-                    $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessioMemberId;
+                    $sessionMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
+                    $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessionMemberId;
 
                     if ($memberId) {
                         $data->memberId = $memberId;

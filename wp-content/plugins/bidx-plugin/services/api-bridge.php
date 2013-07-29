@@ -90,7 +90,7 @@ abstract class APIbridge
             ));
 
         $this->logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
-
+        
         // 5. Set Cookies if Exist
         if (is_array ($result)) {
             
@@ -109,7 +109,7 @@ abstract class APIbridge
             $result['response']['code'] = 'timeout';
         }
         $requestData = $this->processResponse ($urlService, $result, $groupDomain, $bidxWPerror);
-
+     
         return $requestData;
     }
 
@@ -147,9 +147,9 @@ abstract class APIbridge
                 $requestData->authenticated = 'false';
                 //$this->bidxRedirectLogin($groupDomain);
                 do_action ('clear_auth_cookie');
-                session_destroy();
+                $this->clear_wp_bidx_session();
                 $this->logger->trace (sprintf ('Authentication Failed for URL: %s ', $urlService));
-
+            
                 if ($urlService != 'session' && $this->isRedirectCheck) {
                     $this->bidxRedirectLogin ($groupDomain);
                 }
@@ -160,11 +160,25 @@ abstract class APIbridge
                     echo $error; //this is just an example and generally not a good idea, you should implement means of processing the errors further down the track and using WP's error/message hooks to display them
                 }
                 $requestData->text .= $error;
-                session_destroy();
+                $this->clear_wp_bidx_session();
             }
             return $requestData;
         }
     }
+
+    function clear_wp_bidx_session() {
+
+    /* Clear the Session */
+    session_id($_COOKIE['session_id']);
+    session_start ();
+    session_destroy();
+    setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+    //setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+    //$sessionMsg = array ('status' => 'success','text' => 'Session Flused.');
+    //echo json_encode ($sessionMsg);
+    //exit;
+
+}
 
     /**
      * Grab the subdomain portion of the URL. If there is no sub-domain, the root
