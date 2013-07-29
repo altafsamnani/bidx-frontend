@@ -354,7 +354,9 @@
     });
 
     // Instantiate bidx tagsinputs
+    // The ones with a class 'defer' on them are left alone in case there is a dependency
+    // with the app that otherwise can't be fixed
     //
-    $( "input.bidx-tagsinput" ).tagsinput();
+    $( "input.bidx-tagsinput:not(.defer)" ).tagsinput();
 
 } ( jQuery ));
