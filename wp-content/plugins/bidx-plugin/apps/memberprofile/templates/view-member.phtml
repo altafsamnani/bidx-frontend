@@ -49,16 +49,16 @@ $entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
                     $streetNumber = $this->exst ($personalDetails->address[0]->streetNumber,'');
                     $cityTown = $this->exst ($personalDetails->address[0]->cityTown,'');
                     $postalCode = $this->exst ($personalDetails->address[0]->postalCode,'');
-                    
+
                     $addressArr = array ($street . ' ' . $streetNumber,
                       $cityTown,
                       'country' => $personalDetails->address[0]->country,
                       $personalDetails->address[0]->postalCode);
-                 
+
                     $address = $this->createRowValue ($addressArr, ', ');
                 }
 //CV
-                $cvDetails = ($this->exst($entrepreneurDetails->cv)) ? '<a href="' . $entrepreneurDetails->cv->document . '" target="_blank" > ' . $entrepreneurDetails->cv->documentName . '</a>' : 
+                $cvDetails = ($this->exst($entrepreneurDetails->cv)) ? '<a href="' . $entrepreneurDetails->cv->document . '" target="_blank" > ' . $entrepreneurDetails->cv->documentName . '</a>' :
                 $professionalTitle = $this->exst($personalDetails->professionalTitle);
                 $gender = $this->exst($personalDetails->gender);
                 $nationality = $this->exst($personalDetails->nationality);
@@ -74,7 +74,7 @@ $entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
                 'language' => $languageDetails,
                 $address,
                 $cvDetails);
-  
+
                 echo $this->addMultipleRows ('span12', $rowValues);
                 ?>
 
@@ -86,7 +86,7 @@ $entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
                 $rowValues = array ('Mobile' => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
                 echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('class_label' => 'label label-info'));
 
-                $rowValues = array ('Fax' => $this->exst ($this->data->contactDetail->fax));
+                $rowValues = array ('Fax' => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
                 echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('class_label' => 'label label-info'));
                 $rowValues = array ('Landline' => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
                 echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('class_label' => 'label label-info'));
