@@ -598,7 +598,7 @@
 
         var $attachment         = snippets.$attachment.clone()
         ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   inputNamePrefix     = "attachment[" + index + "]"
+        ,   inputNamePrefix     = "personalDetails.attachment[" + index + "]"
         ,   imageSrc
         ;
 
@@ -684,15 +684,15 @@
             bidx.utils.setValue( member, "bidxMemberProfile.personalDetails." + f, value );
         } );
 
-        // Collect the nested objects
-        // !! only written to handle nested objects that are arrays !!
+        // Collect the nested objects from inside personalDetails
         //
-        $.each( [ "address", "contactDetail" ], function()
+        $.each( [ "address", "contactDetail", "attachment" ], function()
         {
-            var nest        = this
-            ,   i           = 0
-            ,   memberPath  = "bidxMemberProfile.personalDetails." + nest
-            ,   item        = bidx.utils.getValue( member, memberPath, true )
+            var nest                = this
+            ,   i                   = 0
+            ,   count               = $editForm.find( "." + nest + "Item" ).length || 1 // when not found, default to 1
+            ,   memberPath          = "bidxMemberProfile.personalDetails." + nest
+            ,   item                = bidx.utils.getValue( member, memberPath, true )
             ;
 
             // Property not existing? Add it as an empty array holding an empty object
@@ -703,17 +703,7 @@
                 bidx.utils.setValue( member, memberPath, item );
             }
 
-            // TODO: make i itterate
-
-            $.each( fields[ nest ], function( j, f )
-            {
-                var inputPath   = "personalDetails." + nest + "[" + i + "]." + f
-                ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
-                ,   value       = bidx.utils.getElementValue( $input )
-                ;
-
-                bidx.utils.setValue( item[ i ], f, value );
-            } );
+            bidx.utils.setNestedStructure( item, count, "personalDetails." + nest, $editForm, fields[ nest ]  );
         } );
 
         // Language Detail is handled specially
@@ -789,9 +779,22 @@
 
             _save(
             {
-                error: function()
+                error: function( jqXhr )
                 {
-                    alert( "Something went wrong during save" );
+                    var response;
+
+                    try
+                    {
+                        // Not really needed for now, but just have it on the screen, k thx bye
+                        //
+                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                    }
+                    catch ( e )
+                    {
+                        bidx.utils.error( "problem parsing error response from memberProfile save" );
+                    }
+
+                    bidx.common.notifyError( "Something went wrong during save: " + response );
 
                     $btnSave.removeClass( "disabled" );
                     $btnCancel.removeClass( "disabled" );
@@ -906,41 +909,13 @@
             return;
         }
 
-        // Remove all attachments / binary entities
-
-        // Remove profile picture
-        //
-        if ( bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture" ) )
-        {
-            delete member.bidxMemberProfile.personalDetails.profilePicture;
-        }
-
-        // Remove attachment
-        //
-        if ( bidx.utils.getValue( member, "bidxMemberProfile.attachment" ) )
-        {
-            delete member.bidxMemberProfile.attachment;
-        }
-
-        // Remove attachment
-        //
-        if ( bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.attachment" ) )
-        {
-            delete member.bidxMemberProfile.personalDetails.attachment;
-        }
-
-
-
         // Force current (0) set to be the current one
         //
         var contactDetail = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.contactDetail", true );
 
         if ( contactDetail && contactDetail.length )
         {
-            member.bidxMemberProfile.personalDetails.contactDetail = [
-            {
-                "currentContactDetails": true
-            }];
+            member.bidxMemberProfile.personalDetails.contactDetail[0].currentContactDetails = true;
         }
 
         // Inform the API we are updating the member profile

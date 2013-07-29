@@ -345,15 +345,14 @@
         } );
 
         // Collect the nested objects
-        // !! only written to handle nested objects that are arrays !!
         //
         $.each( [ "previousBusiness", "attachment" ], function()
         {
-            var nest        = this
-            ,   i           = 0
-            ,   count       = $editForm.find( "." + nest + "Item" ).length
-            ,   memberPath  = "bidxEntrepreneurProfile." + nest
-            ,   item        = bidx.utils.getValue( member, memberPath, true )
+            var nest                = this
+            ,   i                   = 0
+            ,   count               = $editForm.find( "." + nest + "Item" ).length || 1 // when not found, default to 1
+            ,   memberPath          = "bidxEntrepreneurProfile." + nest
+            ,   item                = bidx.utils.getValue( member, memberPath, true )
             ;
 
             // Property not existing? Add it as an empty array holding an empty object
@@ -364,23 +363,7 @@
                 bidx.utils.setValue( member, memberPath, item );
             }
 
-            for ( i = 0; i < count; i++ )
-            {
-                if ( !item[ i ] )
-                {
-                    item[ i ] = {};
-                }
-
-                $.each( fields[ nest ], function( j, f )
-                {
-                    var inputPath   = nest + "[" + i + "]." + f
-                    ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
-                    ,   value       = bidx.utils.getElementValue( $input )
-                    ;
-
-                    bidx.utils.setValue( item[ i ], f, value );
-                } );
-            }
+            bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
         } );
     };
 
@@ -396,11 +379,10 @@
         $cvContainer.find( ".hasCV" ).hide();
 
 
-
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
+        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
+        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  })
         ;
 
         $btnSave.text( "Save profile" );

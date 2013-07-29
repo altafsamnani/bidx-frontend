@@ -689,32 +689,26 @@
             bidx.utils.setValue( member, "bidxInvestorProfile." + f, value );
         } );
 
-        // Collect the nested objects that are not arrays
+        // Collect the nested objects
         //
-        $.each( [ "institutionAddress" ], function()
+        $.each( [ "institutionAddress", "references", "previousInvestments", "attachment" ], function()
         {
-            var nest        = this
-            ,   memberPath  = "bidxInvestorProfile." + nest
-            ,   item        = bidx.utils.getValue( member, memberPath )
+            var nest                = this
+            ,   i                   = 0
+            ,   count               = $editForm.find( "." + nest + "Item" ).length || 1 // when not found, default to 1
+            ,   memberPath          = "bidxInvestorProfile." + nest
+            ,   item                = bidx.utils.getValue( member, memberPath, true )
             ;
 
             // Property not existing? Add it as an empty array holding an empty object
             //
             if ( !item )
             {
-                item = {};
+                item = [ {} ];
                 bidx.utils.setValue( member, memberPath, item );
             }
 
-            $.each( fields[ nest ], function( j, f )
-            {
-                var inputPath   = nest + "." + f
-                ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
-                ,   value       = bidx.utils.getElementValue( $input )
-                ;
-
-                bidx.utils.setValue( item, f, value );
-            } );
+            bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
         } );
 
         // Focus City is a pretty special field. Its a tagsinput in the UI but a array of objects
@@ -734,104 +728,6 @@
         }
 
         bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", focusCity );
-
-
-        // Collect the nested objects || Arrays
-        //
-        $.each( [ "references", "previousInvestments" ], function()
-        {
-            var nest                = this
-            ,   i                   = 0
-            ,   count               = $editForm.find( "." + nest + "Item" ).length
-            ,   memberPath          = "bidxInvestorProfile." + nest
-            ,   item                = bidx.utils.getValue( member, memberPath, true )
-            ,   inputPathPrefix
-            ;
-
-            // Property not existing? Add it as an empty array holding an empty object
-            //
-            if ( !item )
-            {
-                item = [ {} ];
-                bidx.utils.setValue( member, memberPath, item );
-            }
-
-            for ( i = 0; i < count; i++ )
-            {
-                inputPathPrefix = nest + "[" + i + "]";
-
-                if ( !item[ i ] )
-                {
-                    item[ i ] = {};
-                }
-
-                $.each( fields[ nest ], function( j, f )
-                {
-                    // TODO: make properly recursive, only one layer of nested-nested objects now
-                    //
-                    if ( $.type( f ) === "object" )
-                    {
-                        $.each( f, function( k, v )
-                        {
-                            var inputPath   = inputPathPrefix + "." + k
-                            ,   isArray     = false
-                            ,   myItem      = item[ i ]
-                            ;
-
-                            // Is it an array?
-                            //
-                            var fieldPathParts = k.match( /([.\w]+)\[(\d+)\]/ );
-
-                            if ( fieldPathParts )
-                            {
-                                isArray     = true;
-                                myItem      = bidx.utils.getValue( item[ i ], fieldPathParts[ 1 ], true );
-
-                                if ( !myItem )
-                                {
-                                    myItem = [ {} ];
-                                    bidx.utils.setValue( item[ i ], fieldPathParts[ 1 ], myItem );
-                                }
-                            }
-
-                            $.each( v, function( j, f )
-                            {
-                                var $input      = $editForm.find( "[name='" + inputPath + "." + f + "']" )
-                                ,   value       = bidx.utils.getElementValue( $input )
-                                ;
-
-                                if ( isArray )
-                                {
-                                    // TODO: itterate, but index 0 is ok'ish for now
-                                    //
-                                    bidx.utils.setValue( myItem[ 0 ], f, value );
-                                }
-                                else
-                                {
-                                    bidx.utils.setValue( myItem, k + "." + f, value );
-                                }
-                            } );
-                        } );
-                    }
-                    else
-                    {
-                        var inputPath   = inputPathPrefix + "." + f
-                        ,   $input      = $editForm.find( "[name='" + inputPath + "']" )
-                        ,   value       = bidx.utils.getElementValue( $input )
-                        ;
-
-                        bidx.utils.setValue( item[ i ], f, value );
-                    }
-                } );
-            }
-        } );
-
-        // Attachments
-        //
-        if ( state === "edit" )
-        {
-            // TODO: retrieve attachment values
-        }
     };
 
     // This is the startpoint
@@ -846,8 +742,8 @@
 
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
+        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
+        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  })
         ;
 
         $btnSave.text( "Save profile" );

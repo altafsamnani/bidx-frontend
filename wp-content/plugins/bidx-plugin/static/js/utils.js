@@ -19,6 +19,82 @@
         } );
     };
 
+    var setNestedStructure = function( item, count, nest, $container, fields  )
+    {
+        var i
+        ,   inputPathPrefix
+        ;
+
+        for ( i = 0; i < count; i++ )
+        {
+            inputPathPrefix = nest + "[" + i + "]";
+
+            if ( !item[ i ] )
+            {
+                item[ i ] = {};
+            }
+
+            $.each( fields, function( j, f )
+            {
+                // TODO: make properly recursive, only one layer of nested-nested objects now
+                //
+                if ( $.type( f ) === "object" )
+                {
+                    $.each( f, function( k, v )
+                    {
+                        var inputPath   = inputPathPrefix + "." + k
+                        ,   isArray     = false
+                        ,   myItem      = item[ i ]
+                        ;
+
+                        // Is it an array?
+                        //
+                        var fieldPathParts = k.match( /([.\w]+)\[(\d+)\]/ );
+
+                        if ( fieldPathParts )
+                        {
+                            isArray     = true;
+                            myItem      = bidx.utils.getValue( item[ i ], fieldPathParts[ 1 ], true );
+
+                            if ( !myItem )
+                            {
+                                myItem = [ {} ];
+                                bidx.utils.setValue( item[ i ], fieldPathParts[ 1 ], myItem );
+                            }
+                        }
+
+                        $.each( v, function( j, f )
+                        {
+                            var $input      = $container.find( "[name='" + inputPath + "." + f + "']" )
+                            ,   value       = bidx.utils.getElementValue( $input )
+                            ;
+
+                            if ( isArray )
+                            {
+                                // TODO: itterate, but index 0 is ok'ish for now
+                                //
+                                bidx.utils.setValue( myItem[ 0 ], f, value );
+                            }
+                            else
+                            {
+                                bidx.utils.setValue( myItem, k + "." + f, value );
+                            }
+                        } );
+                    } );
+                }
+                else
+                {
+                    var inputPath   = inputPathPrefix + "." + f
+                    ,   $input      = $container.find( "[name='" + inputPath + "']" )
+                    ,   value       = bidx.utils.getElementValue( $input )
+                    ;
+
+                    bidx.utils.setValue( item[ i ], f, value );
+                }
+            } );
+        }
+    };
+
     // Set the value of an form element. All the funky / special component handling is done here.
     //
     var setElementValue = function( $el, value )
@@ -459,6 +535,7 @@
     ,   setElementValue:            setElementValue
     ,   getElementValue:            getElementValue
     ,   populateDropdown:           populateDropdown
+    ,   setNestedStructure:         setNestedStructure
 
     ,   log:                        log
     ,   warn:                       warn
