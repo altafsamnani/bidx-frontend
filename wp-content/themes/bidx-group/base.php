@@ -7,10 +7,7 @@
 <?php
     $bidCommonObj = new BidxCommon();
     $bidCommonObj->getBidxSessionAndScript();
-    echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-exit;
+
   	$authenticated=false;
     if (is_user_logged_in()) {
    	  $authenticated=true;
