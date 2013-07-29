@@ -26,8 +26,9 @@ class ContentLoader {
 		$this -> location = $location;
 		$this -> logger = Logger::getLogger( "contentloader" );
 		add_action( 'init', array( $this, 'codex_custom_init' ) );        
-       
+
         $bidCommonObj = new BidxCommon();
+        $bidCommonObj->getBidxSessionAndScript();
         $this->scriptInject = $bidCommonObj->getScriptJs();
         add_action('wp_head', array(&$this, 'addJsVariables'));
    }

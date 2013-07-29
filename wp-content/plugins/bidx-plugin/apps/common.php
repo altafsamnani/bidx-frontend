@@ -16,6 +16,7 @@ class BidxCommon
     public static $bidxSession = array ();
     public static $scriptJs = array ();
     public static $staticSession = array ();
+    public static $count =0 ;
 
     public function __construct ()
     {
@@ -99,7 +100,7 @@ class BidxCommon
      */
     public function startSession ()
     {
-        $time = 120;
+        $time = 30; //Default Time for nonactivity and make a new session call again
         
         $session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
         $this->clearSessionFromParam ($session_id);
@@ -201,12 +202,13 @@ class BidxCommon
     {
 
         $this::$staticSession = $this::$bidxSession[$subDomain];
+
     }
 
-    public function setScriptJs ($subDomain, $scriptValue)
+    public  function setScriptJs ($subDomain, $scriptValue)
     {
-
-        $this::$scriptJs[$subDomain] = $scriptValue;
+        
+        return $this::$scriptJs[$subDomain] = $scriptValue;
     }
 
     public function getScriptJs ()
