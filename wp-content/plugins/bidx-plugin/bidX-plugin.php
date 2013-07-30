@@ -12,8 +12,7 @@ License: Commercial
 //
 //Generic config for paths
 //
-$plugin_dir = basename(dirname(__FILE__)).'/translation';
-load_plugin_textdomain( 'bidx-plugin', false, $plugin_dir );
+
 include ('apps/util.php' );
 
 //
@@ -58,10 +57,9 @@ function my_class_names($classes) {
 	
 }
 
-//add_filter('init','bidx_plugin_init("tst")');
-//
-//
-//function bidx_plugin_init($test) {
+add_filter('init','bidx_plugin_init');
+
+function bidx_plugin_init() {
 //
 //    $ruleitems = array(
 //			'member' => 'memberprofile',
@@ -78,7 +76,16 @@ function my_class_names($classes) {
 //
 //    load_plugin_textdomain( 'bidx-plugin', false, $plugin_dir );
 //    }
-//}
+    $domain = 'bidx';
+    $abs_rel_path = WP_CONTENT_DIR.'/languages';
+   // $path = ABSPATH . trim( $abs_rel_path, '/' );
+    $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+    $mofile = $abs_rel_path . '/'. $locale . '.mo';
+ 
+    load_textdomain( $domain, $mofile );
+   // load_plugin_textdomain( 'bidx-plugin', $plugin_dir );
+
+}
 
 
 ?>

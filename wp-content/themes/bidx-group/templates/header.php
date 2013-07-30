@@ -5,11 +5,14 @@
 				<div class="pull-left span6">
 					<?php echo do_shortcode( '[bidx app="group" view="group-header"]' );?>
 				</div>
-				<div class="pull-right span2">
-					<a href="/login" class="btn btn-primary btn-block">Login</a>
+                <div class="pull-left span2">
+					<?php //do_action('icl_language_selector'); ?>
 				</div>
 				<div class="pull-right span2">
-					<a href="/login/#register" class="btn btn-primary btn-block">Register</a>
+					<a href="/login" class="btn btn-primary btn-block"><?php _e('Login');?></a>
+				</div>
+				<div class="pull-right span2">
+					<a href="/login/#register" class="btn btn-primary btn-block"><?php _e('Register');?></a>
 				</div>
 			</div>
 			<div>
