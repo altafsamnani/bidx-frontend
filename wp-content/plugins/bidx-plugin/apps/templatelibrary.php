@@ -614,7 +614,7 @@ class TemplateLibrary
 
                     //$fbUrl = (preg_match("/facebook/i", $username)) ? $username : 'https://www.facebook.com/' . $username;
                     // $fbUrl = (preg_match("/http/i", $fbUrl)) ? $fbUrl : 'https://' . $fbUrl;
-                    $fbUrl = 'https://www.facebok.com/' . $username;
+                    $fbUrl = 'http://www.facebok.com/' . $username;
 
 
                     $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $fbUrl . '">Facebook</a>';
