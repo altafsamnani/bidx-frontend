@@ -125,8 +125,7 @@ abstract class APIbridge
 
         $this->logger->debug ($result);
 
-        if (isset ($result['body'])) {
-            $requestData = json_decode ($result['body']);
+            $requestData = (isset($result['body'])) ? json_decode ($result['body']) : new stdClass();
 
             $httpCode = $result['response']['code'];
             $redirectUrl = NULL;
@@ -156,14 +155,12 @@ abstract class APIbridge
             } else if ($httpCode == 'timeout') {
                 $requestData->status = 'ERROR';
                 $errors = $bidxWPerror->get_error_messages ();
-                foreach ($errors as $error) {
-                    echo $error; //this is just an example and generally not a good idea, you should implement means of processing the errors further down the track and using WP's error/message hooks to display them
-                }
+                $error = implode(', ',$errors);
                 $requestData->text .= $error;
                 $this->clear_wp_bidx_session();
             }
             return $requestData;
-        }
+        
     }
 
     function clear_wp_bidx_session() {
