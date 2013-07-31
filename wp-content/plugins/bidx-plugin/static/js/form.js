@@ -385,6 +385,8 @@
 			//set spinner
 			methods.toggleAjaxLoader($this);
 
+			$this.attr( "disabled", true );
+
 			//check if XHR FormData is supported
 			if(window.FormData !== undefined) {
 				var formData = new FormData();
@@ -502,6 +504,8 @@
 		//define done handler
 		done : function(result) {
 			methods.toggleAjaxLoader(result.el);
+
+			result.el.removeAttr( "disabled" );
 
 			var options		= result.el[0].options
 			,	callback
