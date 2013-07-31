@@ -169,73 +169,35 @@
                                     <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="industry" placeholder="Focus industry">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="span6">
-                            <div class="control-group formfield">
-                                <label class="control-label">Social impact</label>
-                                <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusSocialImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="socialImpact" placeholder="Social impact">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <div class="control-group formfield">
-                                <label class="control-label">Environmental impact</label>
-                                <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusEnvImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="envImpact" placeholder="Environmental impact">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="span6">
-                            <div class="control-group formfield">
-                                <label class="control-label">Consumer type</label>
-                                <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusConsumerType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="consumerType" placeholder="Consumer type">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row-fluid">
-                        <div class="span6">
                             <div class="control-group formfield">
                                 <label class="control-label">Languages</label>
                                 <div class="controls">
                                     <input type="text" autocomplete="off" name="focusLanguage" class="bidx-tagsinput disabled" disabled data-bidxdatakey="language" placeholder="Languages">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Country</label>
+                                <label class="control-label">Social impact</label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusCountry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="country" placeholder="Country">
+                                    <input type="text" autocomplete="off" name="focusSocialImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="socialImpact" placeholder="Social impact">
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
-
-                    <div class="row-fluid">
-                        <div class="span6 offset6">
                             <div class="control-group formfield">
-                                <label class="control-label">City</label>
+                                <label class="control-label">Environmental impact</label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput" placeholder="City">
+                                    <input type="text" autocomplete="off" name="focusEnvImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="envImpact" placeholder="Environmental impact">
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
+                            <div class="control-group formfield">
+                                <label class="control-label">Consumer type</label>
+                                <div class="controls">
+                                    <input type="text" autocomplete="off" name="focusConsumerType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="consumerType" placeholder="Consumer type">
+                                </div>
+                            </div>
 
-                    <div class="flow-ruid">
-                        <div class="span6">
                             <div class="control-group formfield">
                                 <label class="control-label">Stage of business</label>
 
@@ -249,9 +211,7 @@
                                     Established
                                 </label>
                             </div>
-                        </div>
 
-                        <div class="span6">
                             <div class="control-group formfield">
                                 <label class="control-label">Gender</label>
 
@@ -265,18 +225,48 @@
                                     Female
                                 </label>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="row-fluid">
-                        <div class="span6">
                             <div class="control-group formfield">
                                 <label class="control-label">Investment type</label>
                                 <div class="controls">
                                     <input type="text" autocomplete="off" name="investmentType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="investmentType" placeholder="Investment type">
                                 </div>
                             </div>
+
                         </div>
+
+                        <div class="span6">
+                            <h6>Location</h6>
+
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country">Country / Countries</label>
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="city">City / Cities</label>
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="reach">Region</label>
+
+                            <div class="control-group formfield toggle toggle-focusLocationType toggle-focusLocationType-country">
+                                <label class="control-label">Country</label>
+                                <div class="controls">
+                                    <input type="text" autocomplete="off" name="focusCountry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="country" placeholder="Country">
+                                </div>
+                            </div>
+
+                            <div class="control-group formfield toggle toggle-focusLocationType toggle-focusLocationType-city">
+                                <label class="control-label">City</label>
+                                <div class="controls">
+                                    <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput" placeholder="City">
+                                </div>
+                            </div>
+
+                            <div class="control-group formfield  toggle toggle-focusLocationType toggle-focusLocationType-reach">
+                            <label class="control-label">Region</label>
+                                <div class="controls">
+                                    <input type="text" name="focusReach" data-type="location" data-type-arguments='{"showMap":"true","mapDimensions":"width:100%;height:400px;","setMarkers":"true", "drawCircle":"true"}' />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
                     </div>
 
                     <h4>Investment size</h4>

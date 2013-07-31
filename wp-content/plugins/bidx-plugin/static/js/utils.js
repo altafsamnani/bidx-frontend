@@ -19,21 +19,37 @@
         } );
     };
 
-    var setNestedStructure = function( item, count, nest, $container, fields  )
+    // Convenience function for merging back in the values of a nested structure
+    // into an API retrieved object from a form
+    //
+    var setNestedStructure = function( obj, count, nest, $container, fields  )
     {
         var i
-        ,   inputPathPrefix
+        ,   inputPathPrefix = nest
         ;
 
-        for ( i = 0; i < count; i++ )
+        if ( $.isArray( obj ))
         {
-            inputPathPrefix = nest + "[" + i + "]";
-
-            if ( !item[ i ] )
+            for ( i = 0; i < count; i++ )
             {
-                item[ i ] = {};
-            }
+                inputPathPrefix += "[" + i + "]";
 
+                if ( !obj[ i ] )
+                {
+                    obj[ i ] = {};
+                }
+
+                _itterateFieldsForItem( obj[ i ] );
+            }
+        }
+        else
+        {
+            _itterateFieldsForItem( obj );
+        }
+
+
+        function _itterateFieldsForItem( item )
+        {
             $.each( fields, function( j, f )
             {
                 // TODO: make properly recursive, only one layer of nested-nested objects now
@@ -44,7 +60,7 @@
                     {
                         var inputPath   = inputPathPrefix + "." + k
                         ,   isArray     = false
-                        ,   myItem      = item[ i ]
+                        ,   myItem      = item
                         ;
 
                         // Is it an array?
@@ -54,12 +70,12 @@
                         if ( fieldPathParts )
                         {
                             isArray     = true;
-                            myItem      = bidx.utils.getValue( item[ i ], fieldPathParts[ 1 ], true );
+                            myItem      = bidx.utils.getValue( item, fieldPathParts[ 1 ], true );
 
                             if ( !myItem )
                             {
                                 myItem = [ {} ];
-                                bidx.utils.setValue( item[ i ], fieldPathParts[ 1 ], myItem );
+                                bidx.utils.setValue( item, fieldPathParts[ 1 ], myItem );
                             }
                         }
 
@@ -89,10 +105,11 @@
                     ,   value       = bidx.utils.getElementValue( $input )
                     ;
 
-                    bidx.utils.setValue( item[ i ], f, value );
+                    bidx.utils.setValue( item, f, value );
                 }
             } );
         }
+
     };
 
     // Set the value of an form element. All the funky / special component handling is done here.
@@ -164,7 +181,14 @@
                     case 'radio':
                         if ( $el.val() === value )
                         {
-                            $el.click();
+                            if ( $el.data( "radio" ) )
+                            {
+                                $el.filter( "[value='" + value + "']" ).radio( "check" );
+                            }
+                            else
+                            {
+                                $el.click();
+                            }
                         }
                         else if ( typeof value !== "undefined" && value !== "" )
                         {

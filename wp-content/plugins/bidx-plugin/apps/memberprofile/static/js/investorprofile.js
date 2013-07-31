@@ -19,6 +19,7 @@
 
     ,   $toggles                        = $element.find( ".toggle" ).hide()
     ,   $toggleInvestsForInst           = $element.find( "[name='investsForInst']"      )
+    ,   $toggleFocusLocationType        = $element.find( "[name='focusLocationType']"      )
 
     ,   $institutionAddressMap          = $editForm.find( ".institutionAddressMap" )
     ,   $institutionAddressCountry      = $editForm.find( "[name='institutionAddress.country']"         )
@@ -40,6 +41,8 @@
 
     // Form fields
     //
+    var arrayFields = [ "focusCity", "previousInvestments", "references", "attachment" ];
+
     var fields =
     {
         _root:
@@ -69,6 +72,12 @@
     ,   focusCity:
         [
             'cityTown'
+        ]
+
+    ,   focusReach:
+        [
+            'reach'
+        ,   'coordinates'
         ]
 
     ,   institutionAddress:
@@ -303,6 +312,36 @@
 
         _handleToggleChange( value === "true", "investsForInst" );
     } );
+
+    $toggleFocusLocationType.change( function()
+    {
+        var value       = $toggleFocusLocationType.filter( "[checked]" ).val()
+        ,   groupClass  = "toggle-focusLocationType"
+        ;
+
+        // FlatUI's radio plugin fires the change event for all radio's, but since
+        // we check on [checked] only the change event for the newly selected
+        // radio does have a value at this point. We could have written the code
+        // so it will use the event for all radio's, but that will break when we
+        // remove FlatUI
+        //
+        if ( value === undefined )
+        {
+            return;
+        }
+
+        $toggles.filter( "." + groupClass ).each( function()
+        {
+            var $block  = $( this )
+            ,   fn      = $block.hasClass( groupClass + "-" + value )
+                            ? "fadeIn"
+                            : "hide"
+            ;
+
+            $block[ fn ]();
+        } );
+    } );
+
 
 
     // Instantiate reflowrower on the attachments container
@@ -554,12 +593,14 @@
             } );
         }
 
+
         // Focuscity, special field because it's a single UI control but a complex structure in the API
         //
         var $focusCity  = $editForm.find( "[name='focusCity']" )
         ,   focusCity   = bidx.utils.getValue( member, "bidxInvestorProfile.focusCity", true )
         ,   focusCities = []
         ;
+
 
         if ( focusCity )
         {
@@ -621,6 +662,44 @@
         }
 
         _updateInstitutionAddressMap();
+
+        // Now that everything is processed, let's decide whicch of the focusLocation radio buttons must
+        // be selected
+        //
+        // Since there is no explicit 'focusLocation' property in the API we need to 'elect' the best option
+        // in the radio control to be selected based upon the data that *is* available.
+        // Values are booleans
+        //
+        var focusLocation =
+            {
+                country:        !!bidx.utils.getValue( member, "bidxInvestorProfile.focusCountry", true )
+            ,   city:           !!focusCity
+            ,   reach:          !!bidx.utils.getValue( member, "bidxInvestorProfile.focusReach.coordinates" )
+            }
+        ,   focusLocationValue
+        ;
+
+        // Country over city over reach, if in that order a value is found it is decided (front-end business logic!) that the first
+        // is the intended value
+        //
+        if ( focusLocation.country )
+        {
+            focusLocationValue = "country";
+        }
+        else if ( focusLocation.city )
+        {
+            focusLocationValue = "city";
+        }
+        else if ( focusLocation.reach )
+        {
+            focusLocationValue = "reach";
+        }
+
+        bidx.utils.log( "Showing focusLocation state", focusLocationValue );
+
+        bidx.utils.setElementValue( $toggleFocusLocationType, focusLocationValue );
+
+        bidx.utils.log( "$toggleFocusLocationType:checked", $toggleFocusLocationType.filter( ":checked" ), "value", $toggleFocusLocationType.val(), "all", $toggleFocusLocationType );
     };
 
     // Add the attachment to the screen, by cloning the snippet and populating it
@@ -691,20 +770,20 @@
 
         // Collect the nested objects
         //
-        $.each( [ "institutionAddress", "references", "previousInvestments", "attachment" ], function()
+        $.each( [ "institutionAddress", "references", "previousInvestments", "attachment", "focusReach" ], function()
         {
-            var nest                = this
+            var nest                = this + "" // unbox that value!
             ,   i                   = 0
             ,   count               = $editForm.find( "." + nest + "Item" ).length || 1 // when not found, default to 1
             ,   memberPath          = "bidxInvestorProfile." + nest
             ,   item                = bidx.utils.getValue( member, memberPath, true )
             ;
-
+if ( nest === "focusReach" ) debugger;
             // Property not existing? Add it as an empty array holding an empty object
             //
             if ( !item )
             {
-                item = [ {} ];
+                item = $.inArray( nest, arrayFields ) !== -1 ? [ {} ] : {};
                 bidx.utils.setValue( member, memberPath, item );
             }
 
@@ -765,7 +844,7 @@
         $editForm.form(
         {
             errorClass:     'error'
-        ,   enablePlugins:  [ 'date', 'fileUpload' ]
+        ,   enablePlugins:  [ 'date', 'fileUpload', 'location' ]
         } );
 
         $editForm.submit( function( e )
@@ -1031,9 +1110,6 @@
 
                     $element.show();
 
-                    // Create the investor profile by doing a POST
-                    // We *need* this for the fileupload to work
-                    //
                     _showView( "load" );
 
                     _init();
