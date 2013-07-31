@@ -86,7 +86,7 @@ abstract class APIbridge
           'body' => $body,
           'headers' => $headers,
           'cookies' => $cookieArr,
-          'timeout' => apply_filters( 'http_request_timeout', 15)
+          'timeout' => apply_filters( 'http_request_timeout', 60)
             ));
 
         $this->logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));

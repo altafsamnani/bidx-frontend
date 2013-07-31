@@ -199,7 +199,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $is_form_uploa
     $result = $request->request ($url, array ('method' => $bidxMethod,
       'body' => $body,
       'headers' => $headers,
-      'cookies' => $cookieArr
+      'cookies' => $cookieArr,
+      'timeout' => apply_filters( 'http_request_timeout', 60)
     ));
 
     /*     * *********** 5. Set Cookies if Exist ************************* */
@@ -464,7 +465,7 @@ add_filter ('http_request_timeout', 'bidx_request_timeout_time');
 function bidx_request_timeout_time ($val)
 {
 
-    return 15;
+    return 60;
 }
 
 /**
