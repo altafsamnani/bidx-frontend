@@ -171,6 +171,8 @@
         ,   inputNamePrefix = "previousInvestments[" + index + "]"
         ;
 
+        $previousInvestment.data( "bidxData", previousInvestment );
+
         // Update all the input elements and prefix the names with the right index
         // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
         //
@@ -220,6 +222,8 @@
         var $reference      = snippets.$reference.clone()
         ,   inputNamePrefix = "references[" + index + "]"
         ;
+
+        $reference.data( "bidxData", reference );
 
         // Update all the input elements and prefix the names with the right index
         // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
@@ -351,7 +355,7 @@
         itemsPerRow:        3
     ,   removeItemOverride: function( $item, cb )
         {
-            var attachment      = $item.data( "attachment" )
+            var attachment      = $item.data( "bidxData" )
             ,   documentId      = attachment.bidxEntityId
             ;
 
@@ -627,11 +631,24 @@
 
             if ( item )
             {
+                // Find the container for this item and store the data on it
+                //
+                var containerDataSet = false;
+
                 $.each( fields[ nest ], function( j, f )
                 {
                     var $input  = $editForm.find( "[name='" + nest + "." + f + "']" )
                     ,   value   = bidx.utils.getValue( item, f )
                     ;
+
+                    // Store the item on the warpper / item so we can later use this to
+                    // merge the data back
+                    //
+                    if ( !containerDataSet && $input.length )
+                    {
+                        $input.closest( "." + nest + "Item" ).data( "bidxData", item );
+                        containerDataSet = true;
+                    }
 
                     // Sometimes the data coming back from the API is in lowercase, and since it's a lookup concept we need to have it uppercase
                     //
@@ -697,9 +714,7 @@
 
         bidx.utils.log( "Showing focusLocation state", focusLocationValue );
 
-        bidx.utils.setElementValue( $toggleFocusLocationType, focusLocationValue );
-
-        bidx.utils.log( "$toggleFocusLocationType:checked", $toggleFocusLocationType.filter( ":checked" ), "value", $toggleFocusLocationType.val(), "all", $toggleFocusLocationType );
+        $toggleFocusLocationType.filter( "[value='" + focusLocationValue + "']" ).radio( "check" );
     };
 
     // Add the attachment to the screen, by cloning the snippet and populating it
@@ -723,6 +738,10 @@
         ,   imageSrc
         ;
 
+        // Store the data so we can later use it to merge the updated data in
+        //
+        $attachment.data( "bidxData", attachment );
+
         // Update all the input elements and prefix the names with the right index
         // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
         //
@@ -732,8 +751,6 @@
 
             $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
         } );
-
-        $attachment.data( "attachment", attachment );
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
         $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
@@ -774,18 +791,23 @@
         {
             var nest                = this + "" // unbox that value!
             ,   i                   = 0
-            ,   count               = $editForm.find( "." + nest + "Item" ).length || 1 // when not found, default to 1
+            ,   arrayField          = $.inArray( nest, arrayFields ) !== -1
             ,   memberPath          = "bidxInvestorProfile." + nest
-            ,   item                = bidx.utils.getValue( member, memberPath, true )
+            ,   item
+            ,   count
             ;
-if ( nest === "focusReach" ) debugger;
-            // Property not existing? Add it as an empty array holding an empty object
-            //
-            if ( !item )
+
+            if ( arrayField )
             {
-                item = $.inArray( nest, arrayFields ) !== -1 ? [ {} ] : {};
-                bidx.utils.setValue( member, memberPath, item );
+                count   = $editForm.find( "." + nest + "Item" ).length;
+                item    = [];
             }
+            else
+            {
+                item    = {};
+            }
+
+            bidx.utils.setValue( member, memberPath, item );
 
             bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
         } );

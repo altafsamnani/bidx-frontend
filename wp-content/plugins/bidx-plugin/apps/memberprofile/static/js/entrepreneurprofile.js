@@ -350,18 +350,12 @@
         {
             var nest                = this
             ,   i                   = 0
-            ,   count               = $editForm.find( "." + nest + "Item" ).length || 1 // when not found, default to 1
+            ,   count               = $editForm.find( "." + nest + "Item" ).length
             ,   memberPath          = "bidxEntrepreneurProfile." + nest
-            ,   item                = bidx.utils.getValue( member, memberPath, true )
+            ,   item                = []
             ;
 
-            // Property not existing? Add it as an empty array holding an empty object
-            //
-            if ( !item )
-            {
-                item = [ {} ];
-                bidx.utils.setValue( member, memberPath, item );
-            }
+            bidx.utils.setValue( member, memberPath, item );
 
             bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
         } );

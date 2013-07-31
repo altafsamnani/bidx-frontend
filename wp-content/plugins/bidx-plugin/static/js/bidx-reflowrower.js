@@ -191,7 +191,7 @@
                     //
                     if ( childCount > options.itemsPerRow )
                     {
-                        $prevItem = $row.children( ":eq(" + ( childCount - 1 ) + ")" ).remove();
+                        $prevItem = $row.children( ":eq(" + ( childCount - 1 ) + ")" ).detach();
                     }
                 } );
 

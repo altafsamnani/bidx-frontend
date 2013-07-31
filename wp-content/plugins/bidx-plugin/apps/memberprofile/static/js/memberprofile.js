@@ -35,6 +35,8 @@
 
     // Form fields
     //
+    var arrayFields = [ "address", "contactDetail", "attachment" ];
+
     var fields =
     {
         personalDetails:
@@ -261,7 +263,7 @@
         itemsPerRow:        3
     ,   removeItemOverride: function( $item, cb )
         {
-            var attachment      = $item.data( "attachment" )
+            var attachment      = $item.data( "bidxItem" )
             ,   documentId      = attachment.bidxEntityId
             ;
 
@@ -523,7 +525,7 @@
         //
         $.each( [ "address", "contactDetail" ], function()
         {
-            var nest    = this
+            var nest    = this + ""
             ,   items   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + nest, true )
             ;
 
@@ -531,11 +533,24 @@
             {
                 $.each( items, function( i, item )
                 {
+                    // Find the container for this item and store the data on it
+                    //
+                    var containerDataSet = false;
+
                     $.each( fields[ nest ], function( j, f )
                     {
                         var $input  = $editForm.find( "[name='personalDetails." + nest + "[" + i + "]." + f + "']" )
                         ,   value   = bidx.utils.getValue( item, f )
                         ;
+
+                        // Store the item on the warpper / item so we can later use this to
+                        // merge the data back
+                        //
+                        if ( !containerDataSet && $input.length )
+                        {
+                            $input.closest( "." + nest + "Item" ).data( "bidxData", item );
+                            containerDataSet = true;
+                        }
 
                         // Sometimes the data coming back from the API is in lowercase, and since it's a lookup concept we need to have it uppercase
                         //
@@ -573,7 +588,7 @@
         {
             $.each( attachments, function( idx, attachment )
             {
-                bidx.utils.log( "attachment", attachment );
+                bidx.utils.log( "attachment ", idx, attachment );
                 _addAttachmentToScreen( idx, attachment );
             } );
         }
@@ -602,6 +617,10 @@
         ,   imageSrc
         ;
 
+        // Store the data so we can later use it to merge the updated data in
+        //
+        $attachment.data( "bidxData", attachment );
+
         // Update all the input elements and prefix the names with the right index
         // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
         //
@@ -611,8 +630,6 @@
 
             $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
         } );
-
-        $attachment.data( "attachment", attachment );
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
         $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
@@ -688,20 +705,25 @@
         //
         $.each( [ "address", "contactDetail", "attachment" ], function()
         {
-            var nest                = this
+            var nest                = this + ""
             ,   i                   = 0
-            ,   count               = $editForm.find( "." + nest + "Item" ).length || 1 // when not found, default to 1
+            ,   arrayField          = $.inArray( nest, arrayFields ) !== -1
             ,   memberPath          = "bidxMemberProfile.personalDetails." + nest
             ,   item                = bidx.utils.getValue( member, memberPath, true )
+            ,   count
             ;
 
-            // Property not existing? Add it as an empty array holding an empty object
-            //
-            if ( !item )
+            if ( arrayField )
             {
-                item = [ {} ];
-                bidx.utils.setValue( member, memberPath, item );
+                count   = $editForm.find( "." + nest + "Item" ).length;
+                item    = [];
             }
+            else
+            {
+                item    = {};
+            }
+
+            bidx.utils.setValue( member, memberPath, item );
 
             bidx.utils.setNestedStructure( item, count, "personalDetails." + nest, $editForm, fields[ nest ]  );
         } );
@@ -810,7 +832,7 @@
 
             var $btn            = $( this )
             ,   $attachment     = $btn.closest( ".attachmentItem" )
-            ,   attachment      = $attachment.data( "attachment" )
+            ,   attachment      = $attachment.data( "bidxData" )
             ,   documentId      = attachment.bidxEntityId
             ;
 

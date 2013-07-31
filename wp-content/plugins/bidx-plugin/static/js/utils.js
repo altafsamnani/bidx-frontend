@@ -32,7 +32,7 @@
         {
             for ( i = 0; i < count; i++ )
             {
-                inputPathPrefix += "[" + i + "]";
+                inputPathPrefix = nest + "[" + i + "]";
 
                 if ( !obj[ i ] )
                 {
@@ -44,12 +44,18 @@
         }
         else
         {
+            inputPathPrefix = nest;
+
+            // Find the wrapper of this object
+            //
             _itterateFieldsForItem( obj );
         }
 
 
         function _itterateFieldsForItem( item )
         {
+            var containerDataRetrieved = false;
+
             $.each( fields, function( j, f )
             {
                 // TODO: make properly recursive, only one layer of nested-nested objects now
@@ -85,6 +91,12 @@
                             ,   value       = bidx.utils.getElementValue( $input )
                             ;
 
+                            if ( !containerDataRetrieved && $input.length )
+                            {
+                                $.extend( item, $input.closest( "." + ( nest.split( "." ).pop() ) + "Item" ).data( "bidxData" ) );
+                                containerDataRetrieved = true;
+                            }
+
                             if ( isArray )
                             {
                                 // TODO: itterate, but index 0 is ok'ish for now
@@ -104,6 +116,12 @@
                     ,   $input      = $container.find( "[name='" + inputPath + "']" )
                     ,   value       = bidx.utils.getElementValue( $input )
                     ;
+
+                    if ( !containerDataRetrieved && $input.length )
+                    {
+                        $.extend( item, $input.closest( "." + ( nest.split( "." ).pop() ) + "Item" ).data( "bidxData" ) );
+                        containerDataRetrieved = true;
+                    }
 
                     bidx.utils.setValue( item, f, value );
                 }
