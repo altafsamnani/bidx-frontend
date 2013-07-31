@@ -549,6 +549,17 @@
 				}
 			}
 
+			// Wipe the file input by cloning it (it's not possible to just set the .val() due to browser security constraints)
+			//
+			result.el.replaceWith(
+				result.el.clone().fileUpload(
+					{
+						"parentForm":		options.parentForm
+					}
+				)
+			);
+
+
 		},
 		toggleAjaxLoader : function (el) {
 			//add wrapper for positioning
