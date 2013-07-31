@@ -16,7 +16,7 @@ html, body {
 	font-family:'weblysleek_ui_normalregular',sans-serif,Arial;
 }
 
-
+2
 
 body.bidx-edit {
 	padding-top:				60px;
@@ -77,10 +77,13 @@ h2 {
 	font-size: 32px
 }
 
+
 h3 {
 	font-family: 'weblysleek_uisemibold',sans-serif,Arial;
 	font-size: 24px;
+
 }
+
 
 p {
 	font-family: 'weblysleek_ui_normalregular',sans-serif,Arial;
@@ -296,6 +299,26 @@ input[type='text'].bidx-tagsinput {
         display:                        block\9;
     }
 
+    .vertical-middle {
+        position: relative;
+        height: 100%;
+    }
+    .vertical-middle a {
+         left: 0;
+        margin-top: -10px;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+    }
+
+    .well .block-title {
+        font-family: 'weblysleek_uisemibold',sans-serif,Arial;
+        font-size: 20px;
+        display: inline-block;
+        zoom: 1;
+        *display: block;
+        margin-bottom: 20px;
+    }
 
 /* End Global styles */
 
@@ -773,7 +796,7 @@ form {
 		right:-30px;
 	}
 	.lt-ie8 .ie8-padding-correction {
-		padding-right:0px;
+		padding-right:0;
 	}
 
 	.lt-ie8 .span8 {
@@ -901,14 +924,14 @@ form {
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 40px;
-    border-top:0px;
-    border-bottom:0px;
+    border-top: 0;
+    border-bottom: 0;
 
 }
 
     .detailRow > div {
-        padding-top: 0px;
-        padding-bottom: 0px;
+        padding-top: 0;
+        padding-bottom: 0;
     }
         .detailRow > div > div {
             padding-top: 8px;
@@ -920,6 +943,95 @@ form {
                 width: 200px;
                 font-weight: 700;
             }
+
+/*******************************************************************************************
+*
+*   Group homepage styles
+*
+********************************************************************************************/
+.group-members .media {
+    position: relative;
+}
+.group-members .media .member-connect {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0 6px 4px 0;
+}
+
+
+/*******************************************************************************************
+*
+*   Financial details styles
+*
+********************************************************************************************/
+.financial-details {
+    width: 100%;
+    margin-bottom: 20px;
+}
+    .financial-details caption {
+        font-family: 'weblysleek_uisemibold',sans-serif,Arial;
+        font-size: 20px;
+        text-align: left;
+        padding: 0 0 15px 0;
+    }
+
+    .financial-details colgroup col.item-spacer {
+        width: 30px;
+    }
+
+    .financial-details colgroup col.item-label {
+        width: 30%;
+    }
+
+    .financial-details colgroup col.item-value {
+
+    }
+
+    .financial-details thead th {
+        background-color: #fff;
+        padding: 6px;
+    }
+
+    .financial-details thead .item-label,
+    .financial-details tbody .item-label,
+    .financial-details tfoot .item-label {
+        text-align: left;
+    }
+
+
+
+    .financial-details thead tr .item-spacer {
+        background-color: #fff;
+        vertical-align:
+    }
+        .financial-details thead tr .item-spacer .caret {
+        }
+
+    .financial-details tfoot td {
+        background-color: #E3E3E3;
+    }
+
+    .financial-details td {
+        padding: 4px;
+        background-color: #E3E3E3;
+        text-align: center;
+    }
+    .financial-details .subtotal td, .financial-details .total td {
+        background-color: #C8C8C8;
+        font-weight: bold;
+    }
+
+
+    .financial-details .spacer td {
+        height: 20px;
+        background-color: transparent;
+    }
+
+    .financial-details tr .item-spacer {
+        background-color:  transparent;
+    }
+
 
 
 

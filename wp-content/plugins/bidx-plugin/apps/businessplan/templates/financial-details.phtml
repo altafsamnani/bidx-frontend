@@ -1,1 +1,151 @@
-<h3>Financial Details</h3>
+<section class="well">
+    <article class="view viewNew">
+
+        <span class="block-title"><?php _e('Financiel details')?></span>
+
+        <form action="">
+            <div>
+                <label><?php _e('Number of years business has generated sales or incurred costs')?></label>
+                <input type="text" name="years" value="">
+            </div>
+            <div>
+                <label><?php _e('What is the start date of the financial period')?></label>
+                <input type="text" name="startdate" value="">
+            </div>
+            <div>
+                <p>
+                    <?php _e('After filling in this in a table will be generated')?>
+                </p>
+                <button type="submit" class="btn btn-primary"><?php _e('Generate table')?></button>
+            </div>
+        </form>
+
+    </article>
+
+    <article class="view viewShow" style="display:block;">
+
+
+
+        <table class="financial-details" border="1">
+            <colgroup>
+                <col class="item-spacer">
+                <col class="item-label">
+                <col class="item-value" span="5">
+            </colgroup>
+            <tbody>
+                <tr class="years">
+                    <th class="item-spacer"></th>
+                    <th class="item-label"></th>
+                    <th class="year">2012</th>
+                    <th class="year">2013</th>
+                    <th class="year">2014</th>
+                    <th class="year">2015</th>
+                    <th class="year">2016</th>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="financial-details" border="1">
+            <caption>Income Statement</caption>
+            <colgroup>
+                <col class="item-spacer">
+                <col class="item-label">
+                <col class="item-value" span="5">
+            </colgroup>
+            <thead>
+                <tr class="profit-before-tax" data-toggle="collapse" data-target="#profitbeforetax">
+                    <th class="item-spacer"><span class="fui-triangle-down"></span></th>
+                    <th class="item-label">Profit before tax</th>
+                    <th class="item-value 2012"> $ 00,00 </th>
+                    <th class="item-value 2013"> $ 00,00 </th>
+                    <th class="item-value 2014"> $ 00,00 </th>
+                    <th class="item-value 2015"> $ 00,00 </th>
+                    <th class="item-value ;2016"> $ 00,00 </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr class="profit-before-tax">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Tax</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value 2013"> $ 00,00 </td>
+                    <td class="item-value 2014"> $ 00,00 </td>
+                    <td class="item-value 2015"> $ 00,00 </td>
+                    <td class="item-value ;2016"> $ 00,00 </td>
+                </tr>
+            </tfoot>
+
+            <tbody id="profitbeforetax" class="profit-before-tax collapse">
+                <tr class="total-sales-reveneus">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Total sales reveneus</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="cost-of-goods-sold">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Cost of goods sold</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="gross-profit subtotal">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Gross Profit</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="spacer">
+                    <td colspan="7"></td>
+                </tr>
+
+
+
+                <tr class="salary">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Salary</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="depreciation">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Depreciation</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="other-operating-costs">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Other Operating Costs</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="operating-profit subtotal">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Operating profit</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="spacer">
+                    <td colspan="7"></td>
+                </tr>
+
+                <tr class="investing-cash-flow">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Investing cash flow</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="operating-profit subtotal">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Operating Profit</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="spacer">
+                    <td colspan="7"></td>
+                </tr>
+
+                <tr class="profit-before-tax total">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Total profit before tax</td>
+                    <td class="item-value 2012"> $ 00,00 </td>
+                </tr>
+                <tr class="spacer">
+                    <td colspan="7"></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </article>
+</section>

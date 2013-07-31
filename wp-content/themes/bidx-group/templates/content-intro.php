@@ -196,7 +196,7 @@
 			</div>
 		</div>
 
-	    <div class="entry-content">
+	    <div class="entry-content group-members">
 		<?php echo do_shortcode( '[bidx app="group" view="last-members"]' ); ?>
 		</div>
 
