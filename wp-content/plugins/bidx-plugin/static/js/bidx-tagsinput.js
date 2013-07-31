@@ -321,8 +321,6 @@
                         tagValue = JSON.stringify( item );
                     }
 
-                    bidx.utils.log( "pushTag", tagValue );
-
                     $el.tagsManager( "pushTag", tagValue );
                 } );
 
