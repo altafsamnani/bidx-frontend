@@ -437,7 +437,7 @@ class TemplateLibrary
      * @param String $classLabel Row class label value
      * @param String $className Row class name
      *
-     * 
+     *
      * @return String $rowHtml Row html
      *
      */
@@ -554,11 +554,11 @@ class TemplateLibrary
 
         $html = '';
         $sep = '';
-        
+
         foreach ($valueArr as $rowLabel => $rowValue) {
 
             if ($rowValue != 'null' && trim($rowValue) != '' && $rowValue) {
-          
+
                 $rowValue = $this->getMultiReplacedValues ($rowLabel, $rowValue);
                 $html.= $sep . $rowValue;
                 $sep = $separator;
@@ -614,7 +614,7 @@ class TemplateLibrary
 
                     //$fbUrl = (preg_match("/facebook/i", $username)) ? $username : 'https://www.facebook.com/' . $username;
                     // $fbUrl = (preg_match("/http/i", $fbUrl)) ? $fbUrl : 'https://' . $fbUrl;
-                    $fbUrl = 'http://www.facebok.com/' . $username;
+                    $fbUrl = 'http://www.facebook.com/' . $username;
 
 
                     $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $fbUrl . '">Facebook</a>';
@@ -764,7 +764,7 @@ class TemplateLibrary
 
     /**
      * Function exst() - Checks if the variable has been set
-     * 
+     *
      * If the variable is set and not empty returns the variable (no transformation)
      * If the variable is not set or empty, returns the $default value
      *
