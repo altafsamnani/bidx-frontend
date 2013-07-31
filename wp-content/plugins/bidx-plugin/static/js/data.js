@@ -100,6 +100,7 @@
     window.bidx.data =
     {
         getItem:                    getItem
+    ,   setItem:                    setItem
 
         // DEV API
         // !! do not use directly
