@@ -119,6 +119,7 @@
 
     var navigate = function( requestedState, section, id, part )
     {
+        bidx.utils.log("state", requestedState);
         switch ( requestedState )
         {
             case "edit":
@@ -175,6 +176,11 @@
 
                     return hash;
                 }
+            break;
+
+            case "financialDetails":
+            alert(123);
+                _showView( requestedState );
             break;
         }
     };

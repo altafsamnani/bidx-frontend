@@ -44,7 +44,7 @@ class businessplan {
     require_once( BIDX_PLUGIN_DIR . '/../services/business-plan-service.php' );
     $bpSummaryObj = new BusinessPlanService( );
 
-    /* 3. Render Member Profile Services for Initial View Display */
+    /* 3. Render Services for Initial View Display */
     $summaryData = $bpSummaryObj->getSummaryDetails( );
 
     $view->data = $summaryData->data;

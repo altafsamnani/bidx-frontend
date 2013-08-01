@@ -200,7 +200,6 @@
 
             _navigateToApp( "businessSummary", "edit", section, id, part );
         }
-
     ,   show:                   function()
         {
             bidx.utils.log( "AppRouter::show" );

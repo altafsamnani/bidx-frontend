@@ -1,3 +1,174 @@
+<script type="text/javascript">
+    //using temporary inline loading
+    $( function()
+    {
+
+
+
+        ( function( $ )
+        {
+            var $element                    = $( "#editBusinessSummary" )
+            ,   $views                      = $element.find( ".view" )
+            ,   $tables                     = $( ".financial-details" )
+            ,   bidx                        = window.bidx
+            ,   snippets                    = {}
+            ;
+
+
+            //public functions
+
+            //private functions
+            var _init = function ()
+            {
+                _generateTable();
+            };
+
+            var _generateTable = function ()
+            {
+                var  financialData           = _getData()
+                ,   $table
+                ,   $item
+                ,   $clone
+             //   ,   yearCount       = financialData.length
+                ,   dataGrid        = {}
+                ;
+
+
+                bidx.utils.log("FINANCIALDATA", financialData);
+
+                //loop though statements
+                $.each( financialData, function ( idx, statement )
+                {
+                    bidx.utils.log(idx);
+                    //get the correct table
+                    table = $tables.filter( "." + idx );
+
+                    //now loop throught items in the statement
+
+/*
+                    $( ".financial-details" ).each( function( idt, table )
+                    {
+                        $table = $ ( table );
+
+                        if( $table.hasClass( "header" ) )
+                        {
+
+                            bidx.utils.log($table.find( "tbody > tr.years" ));
+                        }
+
+                        //get items/rows for this table
+                        if( $table.hasClass( "income-statement" ) )
+                        {
+                            // retrieve tbody so we can map the item from markup into the dataGrid object
+                            $table.find( "tr" ).each( function( idi, row )
+                            {
+                                $row = $( row );
+                                //get first item value from this row
+                                $item = $( $row.find( ".item-value" )[0] );
+                                $clone = $item.clone();
+
+                                //check if item already exist in dataGrid (only true for the first year iteration)
+                                if( !dataGrid[ data.year ][ $row.attr( "class" ) ] )
+                                {
+                                    dataGrid[ data.year ][ $row.attr( "class" ) ] = {};
+                                }
+
+                                //create cell for this item / year
+                                $row.append( $clone );
+
+                            } );
+
+                        }
+                    } );
+*/
+
+
+                } );
+
+            }
+
+
+            //THIS FUNCTION CREATES MOCK DATA FOR THE FINANCIAL SUMMARY
+            var _getData = function ()
+            {
+                //use the table markup to get the report rows, this would normally come from the API
+                var mockStructure   = {}
+                ,   mockData        = {}
+                ,   statement
+                ,   years           = [ 2011, 2012, 2013, 2014, 2015, 2016 ]
+                ;
+
+                //  loop through each tabel that has the class financial-details
+                $( ".financial-details" ).each( function( idt, table )
+                {
+                    $table = $ ( table );
+
+                    //  get items/rows from this table
+
+                        //get statement label
+                        statement = $.trim( $table.attr( "class" ).replace( "financial-details", "" ) ) ;
+                        mockStructure[ statement ] = [];
+
+                        // retrieve tbody so we can map the item from markup into the dataGrid object
+                        $table.find( "tr:not(.ignore)" ).each( function( idi, row )
+                        {
+                            $row = $( row );
+                            //  get the
+                            mockStructure[ statement ].push( $row.attr( "class" ).split(" ").shift() );
+                        } );
+
+
+                } );
+
+
+
+                //now create a grid of the mockStructre and the years with mock values
+                $.each( mockStructure, function( idx, statement )
+                {
+
+                    mockData[ idx ] = {};
+                    $.each( statement, function( idz, item )
+                    {
+                        mockData[ idx ][ item ] = {};
+                        $.each( years, function ( idy, year)
+                        {
+                            mockData[ idx ][ item ][ year ] = {};
+                            if( idx !== "header")
+                            {
+                                mockData[ idx ][ item ][ year ][ "value" ] = Math.floor( 1000 * Math.random() );
+                            }
+                            else
+                            {
+                                mockData[ idx ][ item ][ year ][ "value" ] = year;
+                            }
+
+
+                        } );
+
+                    } );
+
+                } );
+
+
+                return mockData;
+
+            };
+
+
+
+            if ( !window.bidx )
+            {
+                window.bidx = {};
+            }
+
+            window.bidx.financialDetails = {};
+            _init();
+
+        } ( jQuery ));
+
+    } );
+</script>
+
 <section class="well">
     <article class="view viewNew">
 
@@ -26,7 +197,7 @@
 
 
 
-        <table class="financial-details" border="1">
+        <table class="financial-details header" border="1">
             <colgroup>
                 <col class="item-spacer">
                 <col class="item-label">
@@ -36,17 +207,12 @@
                 <tr class="years">
                     <th class="item-spacer"></th>
                     <th class="item-label"></th>
-                    <th class="year">2012</th>
-                    <th class="year">2013</th>
-                    <th class="year">2014</th>
-                    <th class="year">2015</th>
-                    <th class="year">2016</th>
-
+                    <th class="item-value"></th>
                 </tr>
             </tbody>
         </table>
 
-        <table class="financial-details" border="1">
+        <table class="financial-details income-statement" border="1">
             <caption>Income Statement</caption>
             <colgroup>
                 <col class="item-spacer">
@@ -57,42 +223,34 @@
                 <tr class="profit-before-tax" data-toggle="collapse" data-target="#profitbeforetax">
                     <th class="item-spacer"><span class="fui-triangle-down"></span></th>
                     <th class="item-label">Profit before tax</th>
-                    <th class="item-value 2012"> $ 00,00 </th>
-                    <th class="item-value 2013"> $ 00,00 </th>
-                    <th class="item-value 2014"> $ 00,00 </th>
-                    <th class="item-value 2015"> $ 00,00 </th>
-                    <th class="item-value ;2016"> $ 00,00 </th>
+                    <th class="item-value"> $ 00,00 </th>
                 </tr>
             </thead>
             <tfoot>
-                <tr class="profit-before-tax">
+                <tr class="tax">
                     <td class="item-spacer"></td>
                     <td class="item-label">Tax</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
-                    <td class="item-value 2013"> $ 00,00 </td>
-                    <td class="item-value 2014"> $ 00,00 </td>
-                    <td class="item-value 2015"> $ 00,00 </td>
-                    <td class="item-value ;2016"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
             </tfoot>
 
-            <tbody id="profitbeforetax" class="profit-before-tax collapse">
+            <tbody class="profit-before-tax">
                 <tr class="total-sales-reveneus">
                     <td class="item-spacer"></td>
                     <td class="item-label">Total sales reveneus</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
                 <tr class="cost-of-goods-sold">
                     <td class="item-spacer"></td>
                     <td class="item-label">Cost of goods sold</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
                 <tr class="gross-profit subtotal">
                     <td class="item-spacer"></td>
                     <td class="item-label">Gross Profit</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
-                <tr class="spacer">
+                <tr class="ignore spacer">
                     <td colspan="7"></td>
                 </tr>
 
@@ -101,51 +259,52 @@
                 <tr class="salary">
                     <td class="item-spacer"></td>
                     <td class="item-label">Salary</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
                 <tr class="depreciation">
                     <td class="item-spacer"></td>
                     <td class="item-label">Depreciation</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
                 <tr class="other-operating-costs">
                     <td class="item-spacer"></td>
                     <td class="item-label">Other Operating Costs</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
                 <tr class="operating-profit subtotal">
                     <td class="item-spacer"></td>
                     <td class="item-label">Operating profit</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
-                <tr class="spacer">
+                <tr class="ignore spacer">
                     <td colspan="7"></td>
                 </tr>
 
                 <tr class="investing-cash-flow">
                     <td class="item-spacer"></td>
                     <td class="item-label">Investing cash flow</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
                 <tr class="operating-profit subtotal">
                     <td class="item-spacer"></td>
                     <td class="item-label">Operating Profit</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
-                <tr class="spacer">
+                <tr class="ignore spacer">
                     <td colspan="7"></td>
                 </tr>
 
                 <tr class="profit-before-tax total">
                     <td class="item-spacer"></td>
                     <td class="item-label">Total profit before tax</td>
-                    <td class="item-value 2012"> $ 00,00 </td>
+                    <td class="item-value"> $ 00,00 </td>
                 </tr>
-                <tr class="spacer">
+                <tr class="ignore spacer">
                     <td colspan="7"></td>
                 </tr>
             </tbody>
 
         </table>
     </article>
+
 </section>
