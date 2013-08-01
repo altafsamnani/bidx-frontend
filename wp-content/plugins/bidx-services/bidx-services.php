@@ -328,6 +328,51 @@ function clear_bidx_cookies ()
  * @version 1.0
  *
  * Flush the bidx Wordpress PHP Session Variables
+ * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_createstaticpo
+ *
+ */
+
+add_action ('wp_ajax_bidx_createstaticpo', 'create_bidx_static_po');
+
+function create_bidx_static_po ()
+{
+    if (is_site_admin) {
+        //force some filters
+        $pre_data = bidx_wordpress_pre_action ('staticpo');
+        $params = $pre_data['params'];
+        $lang = $_GET['lang'];
+
+        $result = call_bidx_service ('staticdata', NULL, 'GET');
+
+        $requestData = bidx_wordpress_post_action ('staticpo', $result, $_GET);
+        $po = $requestData->po;
+
+        if($lang) {
+            $popot = 'po';
+            $poname = $lang.'_'.  strtoupper ($lang);
+        }else {
+            $popot = 'pot';
+            $poname = 'main';
+        }
+        
+
+        header ("Content-Type: application/force-download");
+        header ("Content-Type: application/octet-stream");
+        header ("Content-Type: application/download");
+        header ("Content-Disposition: attachment; filename=" . $poname . '.' . $popot . ";");
+        header ("Content-Length: " . strlen ($po));
+        echo $po;
+        exit (0);
+    } else {
+        die('Nice Try!');
+    }
+}
+
+/*
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Flush the bidx Wordpress PHP Session Variables
  * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_clearwpsession
  *
  */
@@ -599,7 +644,23 @@ function bidx_wordpress_post_action ($url, $result, $body)
             }
             break;
 
-        case 'logo':
+        case 'staticpo':
+            $displayData = $requestData->data;
+            $po = '';
+            $count = 1;
+
+            foreach ($displayData as $dataKey => $dataValue) {
+                $po .= '#' . $count.' '.$dataKey . PHP_EOL;
+                foreach ($dataValue as $msgId) {
+                    $msgStr = $body['lang'] ? $body['lang'].$msgId->value : '';
+                    $po .= 'msgctxt "' . str_replace ('"', '\"', $dataKey) . '"' . PHP_EOL;
+                    $po .= 'msgid "' . str_replace ('"', '\"', $msgId->value) . '"' . PHP_EOL;
+                    $po .= 'msgstr "' . str_replace ('"', '\"', $msgStr) . '"' . PHP_EOL;
+                    $po .= PHP_EOL;
+                }
+                $count++;
+            }
+            $requestData->po = $po;
 
             break;
         default :
@@ -1516,7 +1577,7 @@ function page_group_save ($post_id)
         update_post_meta ($post_id, 'page_group', $_POST['page_group']);
 }
 
-/* Remove unwanted Admin menus to get Bidx branding
+/* Alter Admin menus to get Bidx branding
  * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
  * @author Altaf Samnani
  * @version 1.0
@@ -1525,7 +1586,7 @@ function page_group_save ($post_id)
  * @param bool $echo
  */
 
-function remove_menus ()
+function alter_site_menu ()
 {
     global $menu;
 
@@ -1545,9 +1606,37 @@ function remove_menus ()
         }
     }
     add_filter ('admin_footer_text', 'remove_footer_admin');
+    
 }
+add_action ('admin_menu', 'alter_site_menu');
 
-add_action ('admin_menu', 'remove_menus');
+/* Alter Network Admin menus to get Bidx branding
+ * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ *
+ * @param bool $echo
+ */
+function alter_network_menu() {
+
+    add_submenu_page( 'settings.php', __('Static PO Generator'), __('Bidx'), 'manage_network_options', 'static-po', 'bidx_options' );
+
+}
+add_action ('network_admin_menu', 'alter_network_menu');
+
+
+function bidx_options() {
+    /* 1 Create Bidx Static PO */
+	if ( current_user_can( 'manage_options' ) )  {
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createstaticpo'>here</a> to create static PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createstaticpo&lang=fr'>here</a> to create static Demo Fr PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createstaticpo&lang=es'>here</a> to create static Demo ES PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createstaticpo&lang=ar'>here</a> to create static Demo Ar PO <br/>";
+    } else {
+		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+	}
+}
 
 function wpc_remove_admin_elements ()
 {

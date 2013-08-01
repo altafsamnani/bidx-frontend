@@ -20,15 +20,31 @@ class StaticDataService extends APIbridge {
 	 * Performs a search action 
 	 * @param string $query
 	 * @return response of the search service
-	 * @link http://bidx.net/api/v1/staticdata
-	 * @todo implement the transient storage here
-	 * @todo implement with $query=null
+	 * @link http://bidx.net/api/v1/staticdata	 *	
 	 */
-	public function getStaticData( $query ) {
+	public function getStaticData( $query = NULL ) {
 		
 		 $data = $this->callBidxAPI('staticdata', $query, 'GET');
 		 return $data;
 	}	
+    
+	/**
+	 * Performs a search action 
+	 * @param string $query
+	 * @return response of the search service
+	 * @link http://bidx.net/api/v1/staticdata	 *	
+	 */
+	public function getMultilingualStaticData( $staticDataObj ) {
+
+        foreach($staticDataObj as $staticDataKey => $staticDataValue ) {
+            $resultKey->value = $staticDataValue->key;
+            $resultKey->label = _x($staticDataValue->value, 'static', '');
+            $resultStaticData[$staticDataKey][] = $resultKey;
+        }
+        
+    }
+
+
 
 }
 

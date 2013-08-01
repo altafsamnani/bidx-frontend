@@ -10,9 +10,11 @@
 		</li>
 <?php
 $roles = (!empty($this -> sessionData -> data -> roles)) ? $this -> sessionData -> data -> roles:NULL;
+$currentGroupAdmin = false;
 if ( !empty($this->sessionData) && !empty($roles)) {
 	if ( in_array( 'GroupAdmin', $roles ) ||
 		 in_array( 'GroupOwner', $roles ) ) {
+        $currentGroupAdmin = true;
 ?>
  	<li><a href="/wp-admin" class="fui-cmd" alt="Admin"></a></li>
 <?php
@@ -34,15 +36,16 @@ if (!empty($this -> sessionData -> data)) {
 ?>
                 <li><a href="#joinGroup">Join this group</a></li>
 <?php
-    } else {
+    } else if(!$currentGroupAdmin) {
 ?>
 				<li><a href="#leaveGroup">Leave this group</a></li>
 <?php
     }
 }
+if(!$currentGroupAdmin) {
 ?>
 				<li><a href="#messageOwner">Message to Group owner</a></li>
-           <?php if( $showLogout ) { ?>
+<?php } if( $showLogout ) { ?>
                      <li> <a href="<?php echo wp_logout_url( home_url() ); ?>" title="Logout">Logout</a>
            <?php } ?>
     		</ul>
