@@ -101,7 +101,8 @@ class BidxShortcode {
 	 function register_script() {
 
 	 	$bidxJsDir = sprintf( '%s/../static/js', BIDX_PLUGIN_URI );
-
+        $staticData = json_encode( BidxCommon::$scriptStaticJs);
+     
 	 	if ( BidxCommon :: isWPInternalFunction() ) {
 	 		Logger :: getLogger( 'shortcode' ) -> trace('Skipping enqueueing because of admin.');
 	 	} else {
@@ -120,7 +121,10 @@ class BidxShortcode {
 
 	 		wp_register_script( 'bidx-reflowrower', 			$bidxJsDir . '/bidx-reflowrower.js',			array( 'jquery', 'jquery-ui' ), '20130501', TRUE );
 	 		wp_register_script( 'bidx-data',					$bidxJsDir . '/data.js',						array( 'jquery' ), '20130626', TRUE );
-	 		wp_register_script( 'bidx-tagsinput',				$bidxJsDir . '/bidx-tagsinput.js',				array( 'bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data' ), '20130703', TRUE );
+	 		
+            wp_localize_script( 'bidx-data', 'staticdata', $staticData ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+
+            wp_register_script( 'bidx-tagsinput',				$bidxJsDir . '/bidx-tagsinput.js',				array( 'bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data' ), '20130703', TRUE );
 
 	 		wp_enqueue_script( 'bidx-common' );
 	 		wp_enqueue_script( 'bidx-controller' );

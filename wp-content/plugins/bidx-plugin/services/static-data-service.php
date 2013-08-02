@@ -29,22 +29,26 @@ class StaticDataService extends APIbridge {
 	}	
     
 	/**
-	 * Performs a search action 
-	 * @param string $query
-	 * @return response of the search service
-	 * @link http://bidx.net/api/v1/staticdata	 *	
-	 */
-	public function getMultilingualStaticData( $staticDataObj ) {
+     * Performs a search action
+     * @param string $query
+     * @return response of the search service
+     * @link http://bidx.net/api/v1/staticdata	 *
+     */
+    public function getMultilingualStaticData ($staticDataObj)
+    {
 
-        foreach($staticDataObj as $staticDataKey => $staticDataValue ) {
-            $resultKey->value = $staticDataValue->key;
-            $resultKey->label = _x($staticDataValue->value, 'static', '');
-            $resultStaticData[$staticDataKey][] = $resultKey;
+        foreach ($staticDataObj as $staticObjKey => $staticObjValue) {
+            $count = 0;
+            foreach ($staticObjValue as $staticDataKey => $staticDataValue) {
+
+                $resultStaticData[$staticObjKey][$count]->value = $staticDataValue->key;
+                $resultStaticData[$staticObjKey][$count]->label = _x ($staticDataValue->value, $staticObjKey, 'static');
+                $count++;
+            }
         }
-        
+
+        return $resultStaticData;
     }
-
-
 
 }
 

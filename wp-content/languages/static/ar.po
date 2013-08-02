@@ -1,0 +1,2218 @@
+#1 renderType
+msgctxt "renderType"
+msgid "download"
+msgstr "ardownload"
+
+msgctxt "renderType"
+msgid "Image"
+msgstr "arImage"
+
+msgctxt "renderType"
+msgid "Video"
+msgstr "arVideo"
+
+#2 documentType
+msgctxt "documentType"
+msgid "Agreement"
+msgstr "arAgreement"
+
+msgctxt "documentType"
+msgid "Business plan"
+msgstr "arBusiness plan"
+
+msgctxt "documentType"
+msgid "Certificate"
+msgstr "arCertificate"
+
+msgctxt "documentType"
+msgid "Contract"
+msgstr "arContract"
+
+msgctxt "documentType"
+msgid "CV"
+msgstr "arCV"
+
+msgctxt "documentType"
+msgid "Financial plan"
+msgstr "arFinancial plan"
+
+msgctxt "documentType"
+msgid "Letter of intent"
+msgstr "arLetter of intent"
+
+msgctxt "documentType"
+msgid "Other"
+msgstr "arOther"
+
+#3 locale
+msgctxt "locale"
+msgid "Albanian"
+msgstr "arAlbanian"
+
+msgctxt "locale"
+msgid "Albanian (Albania)"
+msgstr "arAlbanian (Albania)"
+
+msgctxt "locale"
+msgid "Arabic"
+msgstr "arArabic"
+
+msgctxt "locale"
+msgid "Arabic (Algeria)"
+msgstr "arArabic (Algeria)"
+
+msgctxt "locale"
+msgid "Arabic (Bahrain)"
+msgstr "arArabic (Bahrain)"
+
+msgctxt "locale"
+msgid "Arabic (Egypt)"
+msgstr "arArabic (Egypt)"
+
+msgctxt "locale"
+msgid "Arabic (Iraq)"
+msgstr "arArabic (Iraq)"
+
+msgctxt "locale"
+msgid "Arabic (Jordan)"
+msgstr "arArabic (Jordan)"
+
+msgctxt "locale"
+msgid "Arabic (Kuwait)"
+msgstr "arArabic (Kuwait)"
+
+msgctxt "locale"
+msgid "Arabic (Lebanon)"
+msgstr "arArabic (Lebanon)"
+
+msgctxt "locale"
+msgid "Arabic (Libya)"
+msgstr "arArabic (Libya)"
+
+msgctxt "locale"
+msgid "Arabic (Morocco)"
+msgstr "arArabic (Morocco)"
+
+msgctxt "locale"
+msgid "Arabic (Oman)"
+msgstr "arArabic (Oman)"
+
+msgctxt "locale"
+msgid "Arabic (Qatar)"
+msgstr "arArabic (Qatar)"
+
+msgctxt "locale"
+msgid "Arabic (Saudi Arabia)"
+msgstr "arArabic (Saudi Arabia)"
+
+msgctxt "locale"
+msgid "Arabic (Sudan)"
+msgstr "arArabic (Sudan)"
+
+msgctxt "locale"
+msgid "Arabic (Syria)"
+msgstr "arArabic (Syria)"
+
+msgctxt "locale"
+msgid "Arabic (Tunisia)"
+msgstr "arArabic (Tunisia)"
+
+msgctxt "locale"
+msgid "Arabic (United Arab Emirates)"
+msgstr "arArabic (United Arab Emirates)"
+
+msgctxt "locale"
+msgid "Arabic (Yemen)"
+msgstr "arArabic (Yemen)"
+
+msgctxt "locale"
+msgid "Belarusian"
+msgstr "arBelarusian"
+
+msgctxt "locale"
+msgid "Belarusian (Belarus)"
+msgstr "arBelarusian (Belarus)"
+
+msgctxt "locale"
+msgid "Bulgarian"
+msgstr "arBulgarian"
+
+msgctxt "locale"
+msgid "Bulgarian (Bulgaria)"
+msgstr "arBulgarian (Bulgaria)"
+
+msgctxt "locale"
+msgid "Catalan"
+msgstr "arCatalan"
+
+msgctxt "locale"
+msgid "Catalan (Spain)"
+msgstr "arCatalan (Spain)"
+
+msgctxt "locale"
+msgid "Chinese"
+msgstr "arChinese"
+
+msgctxt "locale"
+msgid "Chinese (China)"
+msgstr "arChinese (China)"
+
+msgctxt "locale"
+msgid "Chinese (Hong Kong)"
+msgstr "arChinese (Hong Kong)"
+
+msgctxt "locale"
+msgid "Chinese (Singapore)"
+msgstr "arChinese (Singapore)"
+
+msgctxt "locale"
+msgid "Chinese (Taiwan)"
+msgstr "arChinese (Taiwan)"
+
+msgctxt "locale"
+msgid "Croatian"
+msgstr "arCroatian"
+
+msgctxt "locale"
+msgid "Croatian (Croatia)"
+msgstr "arCroatian (Croatia)"
+
+msgctxt "locale"
+msgid "Czech"
+msgstr "arCzech"
+
+msgctxt "locale"
+msgid "Czech (Czech Republic)"
+msgstr "arCzech (Czech Republic)"
+
+msgctxt "locale"
+msgid "Danish"
+msgstr "arDanish"
+
+msgctxt "locale"
+msgid "Danish (Denmark)"
+msgstr "arDanish (Denmark)"
+
+msgctxt "locale"
+msgid "Dutch"
+msgstr "arDutch"
+
+msgctxt "locale"
+msgid "Dutch (Belgium)"
+msgstr "arDutch (Belgium)"
+
+msgctxt "locale"
+msgid "Dutch (Netherlands)"
+msgstr "arDutch (Netherlands)"
+
+msgctxt "locale"
+msgid "English"
+msgstr "arEnglish"
+
+msgctxt "locale"
+msgid "English (Australia)"
+msgstr "arEnglish (Australia)"
+
+msgctxt "locale"
+msgid "English (Canada)"
+msgstr "arEnglish (Canada)"
+
+msgctxt "locale"
+msgid "English (India)"
+msgstr "arEnglish (India)"
+
+msgctxt "locale"
+msgid "English (Ireland)"
+msgstr "arEnglish (Ireland)"
+
+msgctxt "locale"
+msgid "English (Malta)"
+msgstr "arEnglish (Malta)"
+
+msgctxt "locale"
+msgid "English (New Zealand)"
+msgstr "arEnglish (New Zealand)"
+
+msgctxt "locale"
+msgid "English (Philippines)"
+msgstr "arEnglish (Philippines)"
+
+msgctxt "locale"
+msgid "English (Singapore)"
+msgstr "arEnglish (Singapore)"
+
+msgctxt "locale"
+msgid "English (South Africa)"
+msgstr "arEnglish (South Africa)"
+
+msgctxt "locale"
+msgid "English (United Kingdom)"
+msgstr "arEnglish (United Kingdom)"
+
+msgctxt "locale"
+msgid "English (United States)"
+msgstr "arEnglish (United States)"
+
+msgctxt "locale"
+msgid "Estonian"
+msgstr "arEstonian"
+
+msgctxt "locale"
+msgid "Estonian (Estonia)"
+msgstr "arEstonian (Estonia)"
+
+msgctxt "locale"
+msgid "Finnish"
+msgstr "arFinnish"
+
+msgctxt "locale"
+msgid "Finnish (Finland)"
+msgstr "arFinnish (Finland)"
+
+msgctxt "locale"
+msgid "French"
+msgstr "arFrench"
+
+msgctxt "locale"
+msgid "French (Belgium)"
+msgstr "arFrench (Belgium)"
+
+msgctxt "locale"
+msgid "French (Canada)"
+msgstr "arFrench (Canada)"
+
+msgctxt "locale"
+msgid "French (France)"
+msgstr "arFrench (France)"
+
+msgctxt "locale"
+msgid "French (Luxembourg)"
+msgstr "arFrench (Luxembourg)"
+
+msgctxt "locale"
+msgid "French (Switzerland)"
+msgstr "arFrench (Switzerland)"
+
+msgctxt "locale"
+msgid "German"
+msgstr "arGerman"
+
+msgctxt "locale"
+msgid "German (Austria)"
+msgstr "arGerman (Austria)"
+
+msgctxt "locale"
+msgid "German (Germany)"
+msgstr "arGerman (Germany)"
+
+msgctxt "locale"
+msgid "German (Luxembourg)"
+msgstr "arGerman (Luxembourg)"
+
+msgctxt "locale"
+msgid "German (Switzerland)"
+msgstr "arGerman (Switzerland)"
+
+msgctxt "locale"
+msgid "Greek"
+msgstr "arGreek"
+
+msgctxt "locale"
+msgid "Greek (Cyprus)"
+msgstr "arGreek (Cyprus)"
+
+msgctxt "locale"
+msgid "Greek (Greece)"
+msgstr "arGreek (Greece)"
+
+msgctxt "locale"
+msgid "Hebrew"
+msgstr "arHebrew"
+
+msgctxt "locale"
+msgid "Hebrew (Israel)"
+msgstr "arHebrew (Israel)"
+
+msgctxt "locale"
+msgid "Hindi (India)"
+msgstr "arHindi (India)"
+
+msgctxt "locale"
+msgid "Hungarian"
+msgstr "arHungarian"
+
+msgctxt "locale"
+msgid "Hungarian (Hungary)"
+msgstr "arHungarian (Hungary)"
+
+msgctxt "locale"
+msgid "Icelandic"
+msgstr "arIcelandic"
+
+msgctxt "locale"
+msgid "Icelandic (Iceland)"
+msgstr "arIcelandic (Iceland)"
+
+msgctxt "locale"
+msgid "Indonesian"
+msgstr "arIndonesian"
+
+msgctxt "locale"
+msgid "Indonesian (Indonesia)"
+msgstr "arIndonesian (Indonesia)"
+
+msgctxt "locale"
+msgid "Irish"
+msgstr "arIrish"
+
+msgctxt "locale"
+msgid "Irish (Ireland)"
+msgstr "arIrish (Ireland)"
+
+msgctxt "locale"
+msgid "Italian"
+msgstr "arItalian"
+
+msgctxt "locale"
+msgid "Italian (Italy)"
+msgstr "arItalian (Italy)"
+
+msgctxt "locale"
+msgid "Italian (Switzerland)"
+msgstr "arItalian (Switzerland)"
+
+msgctxt "locale"
+msgid "Japanese"
+msgstr "arJapanese"
+
+msgctxt "locale"
+msgid "Japanese (Japan"
+msgstr "arJapanese (Japan"
+
+msgctxt "locale"
+msgid "Korean"
+msgstr "arKorean"
+
+msgctxt "locale"
+msgid "Korean (South Korea)"
+msgstr "arKorean (South Korea)"
+
+msgctxt "locale"
+msgid "Latvian"
+msgstr "arLatvian"
+
+msgctxt "locale"
+msgid "Latvian (Latvia)"
+msgstr "arLatvian (Latvia)"
+
+msgctxt "locale"
+msgid "Lithuanian"
+msgstr "arLithuanian"
+
+msgctxt "locale"
+msgid "Lithuanian (Lithuania)"
+msgstr "arLithuanian (Lithuania)"
+
+msgctxt "locale"
+msgid "Macedonian"
+msgstr "arMacedonian"
+
+msgctxt "locale"
+msgid "Macedonian (Macedonia)"
+msgstr "arMacedonian (Macedonia)"
+
+msgctxt "locale"
+msgid "Malay"
+msgstr "arMalay"
+
+msgctxt "locale"
+msgid "Malay (Malaysia)"
+msgstr "arMalay (Malaysia)"
+
+msgctxt "locale"
+msgid "Maltese"
+msgstr "arMaltese"
+
+msgctxt "locale"
+msgid "Maltese (Malta)"
+msgstr "arMaltese (Malta)"
+
+msgctxt "locale"
+msgid "Norwegian"
+msgstr "arNorwegian"
+
+msgctxt "locale"
+msgid "Norwegian (Norway)"
+msgstr "arNorwegian (Norway)"
+
+msgctxt "locale"
+msgid "Polish"
+msgstr "arPolish"
+
+msgctxt "locale"
+msgid "Polish (Poland)"
+msgstr "arPolish (Poland)"
+
+msgctxt "locale"
+msgid "Portuguese"
+msgstr "arPortuguese"
+
+msgctxt "locale"
+msgid "Portuguese (Brazil)"
+msgstr "arPortuguese (Brazil)"
+
+msgctxt "locale"
+msgid "Portuguese (Portugal)"
+msgstr "arPortuguese (Portugal)"
+
+msgctxt "locale"
+msgid "Romanian"
+msgstr "arRomanian"
+
+msgctxt "locale"
+msgid "Romanian (Romania)"
+msgstr "arRomanian (Romania)"
+
+msgctxt "locale"
+msgid "Russian"
+msgstr "arRussian"
+
+msgctxt "locale"
+msgid "Russian (Russia)"
+msgstr "arRussian (Russia)"
+
+msgctxt "locale"
+msgid "Serbian"
+msgstr "arSerbian"
+
+msgctxt "locale"
+msgid "Serbian (Latin"
+msgstr "arSerbian (Latin"
+
+msgctxt "locale"
+msgid "Serbian (Latin"
+msgstr "arSerbian (Latin"
+
+msgctxt "locale"
+msgid "Serbian (Serbia and Montenegro)"
+msgstr "arSerbian (Serbia and Montenegro)"
+
+msgctxt "locale"
+msgid "Serbian (Serbia)"
+msgstr "arSerbian (Serbia)"
+
+msgctxt "locale"
+msgid "Slovak"
+msgstr "arSlovak"
+
+msgctxt "locale"
+msgid "Slovak (Slovakia)"
+msgstr "arSlovak (Slovakia)"
+
+msgctxt "locale"
+msgid "Slovenian"
+msgstr "arSlovenian"
+
+msgctxt "locale"
+msgid "Slovenian (Slovenia)"
+msgstr "arSlovenian (Slovenia)"
+
+msgctxt "locale"
+msgid "Spanish"
+msgstr "arSpanish"
+
+msgctxt "locale"
+msgid "Spanish (Argentina)"
+msgstr "arSpanish (Argentina)"
+
+msgctxt "locale"
+msgid "Spanish (Bolivia)"
+msgstr "arSpanish (Bolivia)"
+
+msgctxt "locale"
+msgid "Spanish (Chile)"
+msgstr "arSpanish (Chile)"
+
+msgctxt "locale"
+msgid "Spanish (Colombia)"
+msgstr "arSpanish (Colombia)"
+
+msgctxt "locale"
+msgid "Spanish (Costa Rica)"
+msgstr "arSpanish (Costa Rica)"
+
+msgctxt "locale"
+msgid "Spanish (Dominican Republic)"
+msgstr "arSpanish (Dominican Republic)"
+
+msgctxt "locale"
+msgid "Spanish (Ecuador)"
+msgstr "arSpanish (Ecuador)"
+
+msgctxt "locale"
+msgid "Spanish (El Salvador)"
+msgstr "arSpanish (El Salvador)"
+
+msgctxt "locale"
+msgid "Spanish (Guatemala)"
+msgstr "arSpanish (Guatemala)"
+
+msgctxt "locale"
+msgid "Spanish (Honduras)"
+msgstr "arSpanish (Honduras)"
+
+msgctxt "locale"
+msgid "Spanish (Mexico)"
+msgstr "arSpanish (Mexico)"
+
+msgctxt "locale"
+msgid "Spanish (Nicaragua)"
+msgstr "arSpanish (Nicaragua)"
+
+msgctxt "locale"
+msgid "Spanish (Panama)"
+msgstr "arSpanish (Panama)"
+
+msgctxt "locale"
+msgid "Spanish (Paraguay)"
+msgstr "arSpanish (Paraguay)"
+
+msgctxt "locale"
+msgid "Spanish (Peru)"
+msgstr "arSpanish (Peru)"
+
+msgctxt "locale"
+msgid "Spanish (Puerto Rico)"
+msgstr "arSpanish (Puerto Rico)"
+
+msgctxt "locale"
+msgid "Spanish (Spain)"
+msgstr "arSpanish (Spain)"
+
+msgctxt "locale"
+msgid "Spanish (United States)"
+msgstr "arSpanish (United States)"
+
+msgctxt "locale"
+msgid "Spanish (Uruguay)"
+msgstr "arSpanish (Uruguay)"
+
+msgctxt "locale"
+msgid "Spanish (Venezuela)"
+msgstr "arSpanish (Venezuela)"
+
+msgctxt "locale"
+msgid "Swedish"
+msgstr "arSwedish"
+
+msgctxt "locale"
+msgid "Swedish (Sweden)"
+msgstr "arSwedish (Sweden)"
+
+msgctxt "locale"
+msgid "Thai"
+msgstr "arThai"
+
+msgctxt "locale"
+msgid "Thai (Thailand)"
+msgstr "arThai (Thailand)"
+
+msgctxt "locale"
+msgid "Turkish"
+msgstr "arTurkish"
+
+msgctxt "locale"
+msgid "Turkish (Turkey)"
+msgstr "arTurkish (Turkey)"
+
+msgctxt "locale"
+msgid "Ukrainian"
+msgstr "arUkrainian"
+
+msgctxt "locale"
+msgid "Ukrainian (Ukraine)"
+msgstr "arUkrainian (Ukraine)"
+
+msgctxt "locale"
+msgid "Vietnamese"
+msgstr "arVietnamese"
+
+msgctxt "locale"
+msgid "Vietnamese (Vietnam)"
+msgstr "arVietnamese (Vietnam)"
+
+#4 exportImport
+msgctxt "exportImport"
+msgid "Exports"
+msgstr "arExports"
+
+msgctxt "exportImport"
+msgid "Exports & Import"
+msgstr "arExports & Import"
+
+msgctxt "exportImport"
+msgid "Imports"
+msgstr "arImports"
+
+msgctxt "exportImport"
+msgid "Not Applicable"
+msgstr "arNot Applicable"
+
+#5 permitsObtained
+msgctxt "permitsObtained"
+msgid "Application needed"
+msgstr "arApplication needed"
+
+msgctxt "permitsObtained"
+msgid "Permit not required"
+msgstr "arPermit not required"
+
+msgctxt "permitsObtained"
+msgid "Permit obtained"
+msgstr "arPermit obtained"
+
+msgctxt "permitsObtained"
+msgid "Permit requested"
+msgstr "arPermit requested"
+
+#6 stageBusiness
+msgctxt "stageBusiness"
+msgid "Established"
+msgstr "arEstablished"
+
+msgctxt "stageBusiness"
+msgid "Startup"
+msgstr "arStartup"
+
+#7 legalForm
+msgctxt "legalForm"
+msgid "Company"
+msgstr "arCompany"
+
+msgctxt "legalForm"
+msgid "Partnership"
+msgstr "arPartnership"
+
+msgctxt "legalForm"
+msgid "Sole trader"
+msgstr "arSole trader"
+
+#8 businessOutcome
+msgctxt "businessOutcome"
+msgid "I am still involved with the company"
+msgstr "arI am still involved with the company"
+
+msgctxt "businessOutcome"
+msgid "I left the company"
+msgstr "arI left the company"
+
+msgctxt "businessOutcome"
+msgid "I sold the company"
+msgstr "arI sold the company"
+
+msgctxt "businessOutcome"
+msgid "The company was dissolved"
+msgstr "arThe company was dissolved"
+
+msgctxt "businessOutcome"
+msgid "The company went bankrupt"
+msgstr "arThe company went bankrupt"
+
+#9 country
+msgctxt "country"
+msgid "Afghanistan"
+msgstr "arAfghanistan"
+
+msgctxt "country"
+msgid "Åland Islands"
+msgstr "arÅland Islands"
+
+msgctxt "country"
+msgid "Albania"
+msgstr "arAlbania"
+
+msgctxt "country"
+msgid "Algeria"
+msgstr "arAlgeria"
+
+msgctxt "country"
+msgid "American Samoa"
+msgstr "arAmerican Samoa"
+
+msgctxt "country"
+msgid "Andorra"
+msgstr "arAndorra"
+
+msgctxt "country"
+msgid "Angola"
+msgstr "arAngola"
+
+msgctxt "country"
+msgid "Anguilla"
+msgstr "arAnguilla"
+
+msgctxt "country"
+msgid "Antarctica"
+msgstr "arAntarctica"
+
+msgctxt "country"
+msgid "Antigua and Barbuda"
+msgstr "arAntigua and Barbuda"
+
+msgctxt "country"
+msgid "Argentina"
+msgstr "arArgentina"
+
+msgctxt "country"
+msgid "Armenia"
+msgstr "arArmenia"
+
+msgctxt "country"
+msgid "Aruba"
+msgstr "arAruba"
+
+msgctxt "country"
+msgid "Australia"
+msgstr "arAustralia"
+
+msgctxt "country"
+msgid "Austria"
+msgstr "arAustria"
+
+msgctxt "country"
+msgid "Azerbaijan"
+msgstr "arAzerbaijan"
+
+msgctxt "country"
+msgid "Bahamas"
+msgstr "arBahamas"
+
+msgctxt "country"
+msgid "Bahrain"
+msgstr "arBahrain"
+
+msgctxt "country"
+msgid "Bangladesh"
+msgstr "arBangladesh"
+
+msgctxt "country"
+msgid "Barbados"
+msgstr "arBarbados"
+
+msgctxt "country"
+msgid "Belarus"
+msgstr "arBelarus"
+
+msgctxt "country"
+msgid "Belgium"
+msgstr "arBelgium"
+
+msgctxt "country"
+msgid "Belize"
+msgstr "arBelize"
+
+msgctxt "country"
+msgid "Benin"
+msgstr "arBenin"
+
+msgctxt "country"
+msgid "Bermuda"
+msgstr "arBermuda"
+
+msgctxt "country"
+msgid "Bhutan"
+msgstr "arBhutan"
+
+msgctxt "country"
+msgid "Bolivia"
+msgstr "arBolivia"
+
+msgctxt "country"
+msgid "Bonaire"
+msgstr "arBonaire"
+
+msgctxt "country"
+msgid "Bosnia and Herzegovina"
+msgstr "arBosnia and Herzegovina"
+
+msgctxt "country"
+msgid "Botswana"
+msgstr "arBotswana"
+
+msgctxt "country"
+msgid "Bouvet Island"
+msgstr "arBouvet Island"
+
+msgctxt "country"
+msgid "Brazil"
+msgstr "arBrazil"
+
+msgctxt "country"
+msgid "British Indian Ocean Territory"
+msgstr "arBritish Indian Ocean Territory"
+
+msgctxt "country"
+msgid "British Virgin Islands"
+msgstr "arBritish Virgin Islands"
+
+msgctxt "country"
+msgid "Brunei"
+msgstr "arBrunei"
+
+msgctxt "country"
+msgid "Bulgaria"
+msgstr "arBulgaria"
+
+msgctxt "country"
+msgid "Burkina Faso"
+msgstr "arBurkina Faso"
+
+msgctxt "country"
+msgid "Burundi"
+msgstr "arBurundi"
+
+msgctxt "country"
+msgid "Cambodia"
+msgstr "arCambodia"
+
+msgctxt "country"
+msgid "Cameroon"
+msgstr "arCameroon"
+
+msgctxt "country"
+msgid "Canada"
+msgstr "arCanada"
+
+msgctxt "country"
+msgid "Cape Verde"
+msgstr "arCape Verde"
+
+msgctxt "country"
+msgid "Cayman Islands"
+msgstr "arCayman Islands"
+
+msgctxt "country"
+msgid "Central African Republic"
+msgstr "arCentral African Republic"
+
+msgctxt "country"
+msgid "Chad"
+msgstr "arChad"
+
+msgctxt "country"
+msgid "Chile"
+msgstr "arChile"
+
+msgctxt "country"
+msgid "China"
+msgstr "arChina"
+
+msgctxt "country"
+msgid "Christmas Island"
+msgstr "arChristmas Island"
+
+msgctxt "country"
+msgid "Cocos Islands"
+msgstr "arCocos Islands"
+
+msgctxt "country"
+msgid "Colombia"
+msgstr "arColombia"
+
+msgctxt "country"
+msgid "Comoros"
+msgstr "arComoros"
+
+msgctxt "country"
+msgid "Congo"
+msgstr "arCongo"
+
+msgctxt "country"
+msgid "Cook Islands"
+msgstr "arCook Islands"
+
+msgctxt "country"
+msgid "Costa Rica"
+msgstr "arCosta Rica"
+
+msgctxt "country"
+msgid "Côte d'Ivoire"
+msgstr "arCôte d'Ivoire"
+
+msgctxt "country"
+msgid "Croatia"
+msgstr "arCroatia"
+
+msgctxt "country"
+msgid "Cuba"
+msgstr "arCuba"
+
+msgctxt "country"
+msgid "Curaçao"
+msgstr "arCuraçao"
+
+msgctxt "country"
+msgid "Cyprus"
+msgstr "arCyprus"
+
+msgctxt "country"
+msgid "Czech Republic"
+msgstr "arCzech Republic"
+
+msgctxt "country"
+msgid "Denmark"
+msgstr "arDenmark"
+
+msgctxt "country"
+msgid "Djibouti"
+msgstr "arDjibouti"
+
+msgctxt "country"
+msgid "Dominica"
+msgstr "arDominica"
+
+msgctxt "country"
+msgid "Dominican Republic"
+msgstr "arDominican Republic"
+
+msgctxt "country"
+msgid "Ecuador"
+msgstr "arEcuador"
+
+msgctxt "country"
+msgid "Egypt"
+msgstr "arEgypt"
+
+msgctxt "country"
+msgid "El Salvador"
+msgstr "arEl Salvador"
+
+msgctxt "country"
+msgid "Equatorial Guinea"
+msgstr "arEquatorial Guinea"
+
+msgctxt "country"
+msgid "Eritrea"
+msgstr "arEritrea"
+
+msgctxt "country"
+msgid "Estonia"
+msgstr "arEstonia"
+
+msgctxt "country"
+msgid "Ethiopia"
+msgstr "arEthiopia"
+
+msgctxt "country"
+msgid "Falkland Islands"
+msgstr "arFalkland Islands"
+
+msgctxt "country"
+msgid "Faroe Islands"
+msgstr "arFaroe Islands"
+
+msgctxt "country"
+msgid "Fiji"
+msgstr "arFiji"
+
+msgctxt "country"
+msgid "Finland"
+msgstr "arFinland"
+
+msgctxt "country"
+msgid "France"
+msgstr "arFrance"
+
+msgctxt "country"
+msgid "French Guiana"
+msgstr "arFrench Guiana"
+
+msgctxt "country"
+msgid "French Polynesia"
+msgstr "arFrench Polynesia"
+
+msgctxt "country"
+msgid "French Southern Territories"
+msgstr "arFrench Southern Territories"
+
+msgctxt "country"
+msgid "Gabon"
+msgstr "arGabon"
+
+msgctxt "country"
+msgid "Gambia"
+msgstr "arGambia"
+
+msgctxt "country"
+msgid "Georgia"
+msgstr "arGeorgia"
+
+msgctxt "country"
+msgid "Germany"
+msgstr "arGermany"
+
+msgctxt "country"
+msgid "Ghana"
+msgstr "arGhana"
+
+msgctxt "country"
+msgid "Gibraltar"
+msgstr "arGibraltar"
+
+msgctxt "country"
+msgid "Greece"
+msgstr "arGreece"
+
+msgctxt "country"
+msgid "Greenland"
+msgstr "arGreenland"
+
+msgctxt "country"
+msgid "Grenada"
+msgstr "arGrenada"
+
+msgctxt "country"
+msgid "Guadeloupe"
+msgstr "arGuadeloupe"
+
+msgctxt "country"
+msgid "Guam"
+msgstr "arGuam"
+
+msgctxt "country"
+msgid "Guatemala"
+msgstr "arGuatemala"
+
+msgctxt "country"
+msgid "Guernsey"
+msgstr "arGuernsey"
+
+msgctxt "country"
+msgid "Guinea"
+msgstr "arGuinea"
+
+msgctxt "country"
+msgid "Guinea-Bissau"
+msgstr "arGuinea-Bissau"
+
+msgctxt "country"
+msgid "Guyana"
+msgstr "arGuyana"
+
+msgctxt "country"
+msgid "Haiti"
+msgstr "arHaiti"
+
+msgctxt "country"
+msgid "Heard Island And McDonald Islands"
+msgstr "arHeard Island And McDonald Islands"
+
+msgctxt "country"
+msgid "Honduras"
+msgstr "arHonduras"
+
+msgctxt "country"
+msgid "Hong Kong"
+msgstr "arHong Kong"
+
+msgctxt "country"
+msgid "Hungary"
+msgstr "arHungary"
+
+msgctxt "country"
+msgid "Iceland"
+msgstr "arIceland"
+
+msgctxt "country"
+msgid "India"
+msgstr "arIndia"
+
+msgctxt "country"
+msgid "Indonesia"
+msgstr "arIndonesia"
+
+msgctxt "country"
+msgid "Iran"
+msgstr "arIran"
+
+msgctxt "country"
+msgid "Iraq"
+msgstr "arIraq"
+
+msgctxt "country"
+msgid "Ireland"
+msgstr "arIreland"
+
+msgctxt "country"
+msgid "Isle Of Man"
+msgstr "arIsle Of Man"
+
+msgctxt "country"
+msgid "Israel"
+msgstr "arIsrael"
+
+msgctxt "country"
+msgid "Italy"
+msgstr "arItaly"
+
+msgctxt "country"
+msgid "Jamaica"
+msgstr "arJamaica"
+
+msgctxt "country"
+msgid "Japan"
+msgstr "arJapan"
+
+msgctxt "country"
+msgid "Jersey"
+msgstr "arJersey"
+
+msgctxt "country"
+msgid "Jordan"
+msgstr "arJordan"
+
+msgctxt "country"
+msgid "Kazakhstan"
+msgstr "arKazakhstan"
+
+msgctxt "country"
+msgid "Kenya"
+msgstr "arKenya"
+
+msgctxt "country"
+msgid "Kiribati"
+msgstr "arKiribati"
+
+msgctxt "country"
+msgid "Kuwait"
+msgstr "arKuwait"
+
+msgctxt "country"
+msgid "Kyrgyzstan"
+msgstr "arKyrgyzstan"
+
+msgctxt "country"
+msgid "Laos"
+msgstr "arLaos"
+
+msgctxt "country"
+msgid "Latvia"
+msgstr "arLatvia"
+
+msgctxt "country"
+msgid "Lebanon"
+msgstr "arLebanon"
+
+msgctxt "country"
+msgid "Lesotho"
+msgstr "arLesotho"
+
+msgctxt "country"
+msgid "Liberia"
+msgstr "arLiberia"
+
+msgctxt "country"
+msgid "Libya"
+msgstr "arLibya"
+
+msgctxt "country"
+msgid "Liechtenstein"
+msgstr "arLiechtenstein"
+
+msgctxt "country"
+msgid "Lithuania"
+msgstr "arLithuania"
+
+msgctxt "country"
+msgid "Luxembourg"
+msgstr "arLuxembourg"
+
+msgctxt "country"
+msgid "Macao"
+msgstr "arMacao"
+
+msgctxt "country"
+msgid "Macedonia"
+msgstr "arMacedonia"
+
+msgctxt "country"
+msgid "Madagascar"
+msgstr "arMadagascar"
+
+msgctxt "country"
+msgid "Malawi"
+msgstr "arMalawi"
+
+msgctxt "country"
+msgid "Malaysia"
+msgstr "arMalaysia"
+
+msgctxt "country"
+msgid "Maldives"
+msgstr "arMaldives"
+
+msgctxt "country"
+msgid "Mali"
+msgstr "arMali"
+
+msgctxt "country"
+msgid "Malta"
+msgstr "arMalta"
+
+msgctxt "country"
+msgid "Marshall Islands"
+msgstr "arMarshall Islands"
+
+msgctxt "country"
+msgid "Martinique"
+msgstr "arMartinique"
+
+msgctxt "country"
+msgid "Mauritania"
+msgstr "arMauritania"
+
+msgctxt "country"
+msgid "Mauritius"
+msgstr "arMauritius"
+
+msgctxt "country"
+msgid "Mayotte"
+msgstr "arMayotte"
+
+msgctxt "country"
+msgid "Mexico"
+msgstr "arMexico"
+
+msgctxt "country"
+msgid "Micronesia"
+msgstr "arMicronesia"
+
+msgctxt "country"
+msgid "Moldova"
+msgstr "arMoldova"
+
+msgctxt "country"
+msgid "Monaco"
+msgstr "arMonaco"
+
+msgctxt "country"
+msgid "Mongolia"
+msgstr "arMongolia"
+
+msgctxt "country"
+msgid "Montenegro"
+msgstr "arMontenegro"
+
+msgctxt "country"
+msgid "Montserrat"
+msgstr "arMontserrat"
+
+msgctxt "country"
+msgid "Morocco"
+msgstr "arMorocco"
+
+msgctxt "country"
+msgid "Mozambique"
+msgstr "arMozambique"
+
+msgctxt "country"
+msgid "Myanmar"
+msgstr "arMyanmar"
+
+msgctxt "country"
+msgid "Namibia"
+msgstr "arNamibia"
+
+msgctxt "country"
+msgid "Nauru"
+msgstr "arNauru"
+
+msgctxt "country"
+msgid "Nepal"
+msgstr "arNepal"
+
+msgctxt "country"
+msgid "Netherlands"
+msgstr "arNetherlands"
+
+msgctxt "country"
+msgid "Netherlands Antilles"
+msgstr "arNetherlands Antilles"
+
+msgctxt "country"
+msgid "New Caledonia"
+msgstr "arNew Caledonia"
+
+msgctxt "country"
+msgid "New Zealand"
+msgstr "arNew Zealand"
+
+msgctxt "country"
+msgid "Nicaragua"
+msgstr "arNicaragua"
+
+msgctxt "country"
+msgid "Niger"
+msgstr "arNiger"
+
+msgctxt "country"
+msgid "Nigeria"
+msgstr "arNigeria"
+
+msgctxt "country"
+msgid "Niue"
+msgstr "arNiue"
+
+msgctxt "country"
+msgid "Norfolk Island"
+msgstr "arNorfolk Island"
+
+msgctxt "country"
+msgid "North Korea"
+msgstr "arNorth Korea"
+
+msgctxt "country"
+msgid "Northern Mariana Islands"
+msgstr "arNorthern Mariana Islands"
+
+msgctxt "country"
+msgid "Norway"
+msgstr "arNorway"
+
+msgctxt "country"
+msgid "Oman"
+msgstr "arOman"
+
+msgctxt "country"
+msgid "Pakistan"
+msgstr "arPakistan"
+
+msgctxt "country"
+msgid "Palau"
+msgstr "arPalau"
+
+msgctxt "country"
+msgid "Palestine"
+msgstr "arPalestine"
+
+msgctxt "country"
+msgid "Panama"
+msgstr "arPanama"
+
+msgctxt "country"
+msgid "Papua New Guinea"
+msgstr "arPapua New Guinea"
+
+msgctxt "country"
+msgid "Paraguay"
+msgstr "arParaguay"
+
+msgctxt "country"
+msgid "Peru"
+msgstr "arPeru"
+
+msgctxt "country"
+msgid "Philippines"
+msgstr "arPhilippines"
+
+msgctxt "country"
+msgid "Pitcairn"
+msgstr "arPitcairn"
+
+msgctxt "country"
+msgid "Poland"
+msgstr "arPoland"
+
+msgctxt "country"
+msgid "Portugal"
+msgstr "arPortugal"
+
+msgctxt "country"
+msgid "Puerto Rico"
+msgstr "arPuerto Rico"
+
+msgctxt "country"
+msgid "Qatar"
+msgstr "arQatar"
+
+msgctxt "country"
+msgid "Reunion"
+msgstr "arReunion"
+
+msgctxt "country"
+msgid "Romania"
+msgstr "arRomania"
+
+msgctxt "country"
+msgid "Russia"
+msgstr "arRussia"
+
+msgctxt "country"
+msgid "Rwanda"
+msgstr "arRwanda"
+
+msgctxt "country"
+msgid "Saint Barthélemy"
+msgstr "arSaint Barthélemy"
+
+msgctxt "country"
+msgid "Saint Helena"
+msgstr "arSaint Helena"
+
+msgctxt "country"
+msgid "Saint Kitts And Nevis"
+msgstr "arSaint Kitts And Nevis"
+
+msgctxt "country"
+msgid "Saint Lucia"
+msgstr "arSaint Lucia"
+
+msgctxt "country"
+msgid "Saint Martin"
+msgstr "arSaint Martin"
+
+msgctxt "country"
+msgid "Saint Pierre And Miquelon"
+msgstr "arSaint Pierre And Miquelon"
+
+msgctxt "country"
+msgid "Saint Vincent And The Grenadines"
+msgstr "arSaint Vincent And The Grenadines"
+
+msgctxt "country"
+msgid "Samoa"
+msgstr "arSamoa"
+
+msgctxt "country"
+msgid "San Marino"
+msgstr "arSan Marino"
+
+msgctxt "country"
+msgid "Sao Tome And Principe"
+msgstr "arSao Tome And Principe"
+
+msgctxt "country"
+msgid "Saudi Arabia"
+msgstr "arSaudi Arabia"
+
+msgctxt "country"
+msgid "Senegal"
+msgstr "arSenegal"
+
+msgctxt "country"
+msgid "Serbia"
+msgstr "arSerbia"
+
+msgctxt "country"
+msgid "Seychelles"
+msgstr "arSeychelles"
+
+msgctxt "country"
+msgid "Sierra Leone"
+msgstr "arSierra Leone"
+
+msgctxt "country"
+msgid "Singapore"
+msgstr "arSingapore"
+
+msgctxt "country"
+msgid "Sint Maarten (Dutch part)"
+msgstr "arSint Maarten (Dutch part)"
+
+msgctxt "country"
+msgid "Slovakia"
+msgstr "arSlovakia"
+
+msgctxt "country"
+msgid "Slovenia"
+msgstr "arSlovenia"
+
+msgctxt "country"
+msgid "Solomon Islands"
+msgstr "arSolomon Islands"
+
+msgctxt "country"
+msgid "Somalia"
+msgstr "arSomalia"
+
+msgctxt "country"
+msgid "South Africa"
+msgstr "arSouth Africa"
+
+msgctxt "country"
+msgid "South Georgia And The South Sandwich Islands"
+msgstr "arSouth Georgia And The South Sandwich Islands"
+
+msgctxt "country"
+msgid "South Korea"
+msgstr "arSouth Korea"
+
+msgctxt "country"
+msgid "Spain"
+msgstr "arSpain"
+
+msgctxt "country"
+msgid "Sri Lanka"
+msgstr "arSri Lanka"
+
+msgctxt "country"
+msgid "Sudan"
+msgstr "arSudan"
+
+msgctxt "country"
+msgid "Suriname"
+msgstr "arSuriname"
+
+msgctxt "country"
+msgid "Svalbard And Jan Mayen"
+msgstr "arSvalbard And Jan Mayen"
+
+msgctxt "country"
+msgid "Swaziland"
+msgstr "arSwaziland"
+
+msgctxt "country"
+msgid "Sweden"
+msgstr "arSweden"
+
+msgctxt "country"
+msgid "Switzerland"
+msgstr "arSwitzerland"
+
+msgctxt "country"
+msgid "Syria"
+msgstr "arSyria"
+
+msgctxt "country"
+msgid "Taiwan"
+msgstr "arTaiwan"
+
+msgctxt "country"
+msgid "Tajikistan"
+msgstr "arTajikistan"
+
+msgctxt "country"
+msgid "Tanzania"
+msgstr "arTanzania"
+
+msgctxt "country"
+msgid "Thailand"
+msgstr "arThailand"
+
+msgctxt "country"
+msgid "The Democratic Republic Of Congo"
+msgstr "arThe Democratic Republic Of Congo"
+
+msgctxt "country"
+msgid "Timor-Leste"
+msgstr "arTimor-Leste"
+
+msgctxt "country"
+msgid "Togo"
+msgstr "arTogo"
+
+msgctxt "country"
+msgid "Tokelau"
+msgstr "arTokelau"
+
+msgctxt "country"
+msgid "Tonga"
+msgstr "arTonga"
+
+msgctxt "country"
+msgid "Trinidad and Tobago"
+msgstr "arTrinidad and Tobago"
+
+msgctxt "country"
+msgid "Tunisia"
+msgstr "arTunisia"
+
+msgctxt "country"
+msgid "Turkey"
+msgstr "arTurkey"
+
+msgctxt "country"
+msgid "Turkmenistan"
+msgstr "arTurkmenistan"
+
+msgctxt "country"
+msgid "Turks And Caicos Islands"
+msgstr "arTurks And Caicos Islands"
+
+msgctxt "country"
+msgid "Tuvalu"
+msgstr "arTuvalu"
+
+msgctxt "country"
+msgid "U.S. Virgin Islands"
+msgstr "arU.S. Virgin Islands"
+
+msgctxt "country"
+msgid "Uganda"
+msgstr "arUganda"
+
+msgctxt "country"
+msgid "Ukraine"
+msgstr "arUkraine"
+
+msgctxt "country"
+msgid "United Arab Emirates"
+msgstr "arUnited Arab Emirates"
+
+msgctxt "country"
+msgid "United Kingdom"
+msgstr "arUnited Kingdom"
+
+msgctxt "country"
+msgid "United States"
+msgstr "arUnited States"
+
+msgctxt "country"
+msgid "United States Minor Outlying Islands"
+msgstr "arUnited States Minor Outlying Islands"
+
+msgctxt "country"
+msgid "Uruguay"
+msgstr "arUruguay"
+
+msgctxt "country"
+msgid "Uzbekistan"
+msgstr "arUzbekistan"
+
+msgctxt "country"
+msgid "Vanuatu"
+msgstr "arVanuatu"
+
+msgctxt "country"
+msgid "Vatican"
+msgstr "arVatican"
+
+msgctxt "country"
+msgid "Venezuela"
+msgstr "arVenezuela"
+
+msgctxt "country"
+msgid "Vietnam"
+msgstr "arVietnam"
+
+msgctxt "country"
+msgid "Wallis And Futuna"
+msgstr "arWallis And Futuna"
+
+msgctxt "country"
+msgid "Western Sahara"
+msgstr "arWestern Sahara"
+
+msgctxt "country"
+msgid "Yemen"
+msgstr "arYemen"
+
+msgctxt "country"
+msgid "Zambia"
+msgstr "arZambia"
+
+msgctxt "country"
+msgid "Zimbabwe"
+msgstr "arZimbabwe"
+
+#10 focusRole
+msgctxt "focusRole"
+msgid "Entrepreneur"
+msgstr "arEntrepreneur"
+
+msgctxt "focusRole"
+msgid "Investor"
+msgstr "arInvestor"
+
+#11 socialImpact
+msgctxt "socialImpact"
+msgid "Child care"
+msgstr "arChild care"
+
+msgctxt "socialImpact"
+msgid "Drinking water"
+msgstr "arDrinking water"
+
+msgctxt "socialImpact"
+msgid "Education"
+msgstr "arEducation"
+
+msgctxt "socialImpact"
+msgid "Energy"
+msgstr "arEnergy"
+
+msgctxt "socialImpact"
+msgid "Health"
+msgstr "arHealth"
+
+msgctxt "socialImpact"
+msgid "Housing"
+msgstr "arHousing"
+
+msgctxt "socialImpact"
+msgid "Job creation"
+msgstr "arJob creation"
+
+msgctxt "socialImpact"
+msgid "maternalHealth"
+msgstr "armaternalHealth"
+
+msgctxt "socialImpact"
+msgid "Other social benefits"
+msgstr "arOther social benefits"
+
+msgctxt "socialImpact"
+msgid "Poverty reduction"
+msgstr "arPoverty reduction"
+
+msgctxt "socialImpact"
+msgid "Safety"
+msgstr "arSafety"
+
+msgctxt "socialImpact"
+msgid "Social inclusion"
+msgstr "arSocial inclusion"
+
+msgctxt "socialImpact"
+msgid "Urban regeneration"
+msgstr "arUrban regeneration"
+
+msgctxt "socialImpact"
+msgid "Women in business"
+msgstr "arWomen in business"
+
+#12 envImpact
+msgctxt "envImpact"
+msgid "Biodiversity"
+msgstr "arBiodiversity"
+
+msgctxt "envImpact"
+msgid "Carbon mitigation"
+msgstr "arCarbon mitigation"
+
+msgctxt "envImpact"
+msgid "Nature conservation"
+msgstr "arNature conservation"
+
+msgctxt "envImpact"
+msgid "Pollution reduction"
+msgstr "arPollution reduction"
+
+msgctxt "envImpact"
+msgid "Reforestation"
+msgstr "arReforestation"
+
+msgctxt "envImpact"
+msgid "Soil enrichment"
+msgstr "arSoil enrichment"
+
+msgctxt "envImpact"
+msgid "Water resources"
+msgstr "arWater resources"
+
+#13 prefNotMethod
+msgctxt "prefNotMethod"
+msgid "email and message"
+msgstr "aremail and message"
+
+msgctxt "prefNotMethod"
+msgid "telephone"
+msgstr "artelephone"
+
+#14 gender
+msgctxt "gender"
+msgid "Female"
+msgstr "arFemale"
+
+msgctxt "gender"
+msgid "Male"
+msgstr "arMale"
+
+#15 language
+msgctxt "language"
+msgid "Albanian"
+msgstr "arAlbanian"
+
+msgctxt "language"
+msgid "Arabic"
+msgstr "arArabic"
+
+msgctxt "language"
+msgid "Belarusian"
+msgstr "arBelarusian"
+
+msgctxt "language"
+msgid "Bulgarian"
+msgstr "arBulgarian"
+
+msgctxt "language"
+msgid "Catalan"
+msgstr "arCatalan"
+
+msgctxt "language"
+msgid "Chinese"
+msgstr "arChinese"
+
+msgctxt "language"
+msgid "Croatian"
+msgstr "arCroatian"
+
+msgctxt "language"
+msgid "Czech"
+msgstr "arCzech"
+
+msgctxt "language"
+msgid "Danish"
+msgstr "arDanish"
+
+msgctxt "language"
+msgid "Dutch"
+msgstr "arDutch"
+
+msgctxt "language"
+msgid "English"
+msgstr "arEnglish"
+
+msgctxt "language"
+msgid "Estonian"
+msgstr "arEstonian"
+
+msgctxt "language"
+msgid "Finnish"
+msgstr "arFinnish"
+
+msgctxt "language"
+msgid "French"
+msgstr "arFrench"
+
+msgctxt "language"
+msgid "German"
+msgstr "arGerman"
+
+msgctxt "language"
+msgid "Greek"
+msgstr "arGreek"
+
+msgctxt "language"
+msgid "Hebrew"
+msgstr "arHebrew"
+
+msgctxt "language"
+msgid "Hindi"
+msgstr "arHindi"
+
+msgctxt "language"
+msgid "Hungarian"
+msgstr "arHungarian"
+
+msgctxt "language"
+msgid "Icelandic"
+msgstr "arIcelandic"
+
+msgctxt "language"
+msgid "Indonesian"
+msgstr "arIndonesian"
+
+msgctxt "language"
+msgid "Irish"
+msgstr "arIrish"
+
+msgctxt "language"
+msgid "Italian"
+msgstr "arItalian"
+
+msgctxt "language"
+msgid "Japanese"
+msgstr "arJapanese"
+
+msgctxt "language"
+msgid "Korean"
+msgstr "arKorean"
+
+msgctxt "language"
+msgid "Latvian"
+msgstr "arLatvian"
+
+msgctxt "language"
+msgid "Lithuanian"
+msgstr "arLithuanian"
+
+msgctxt "language"
+msgid "Macedonian"
+msgstr "arMacedonian"
+
+msgctxt "language"
+msgid "Malay"
+msgstr "arMalay"
+
+msgctxt "language"
+msgid "Maltese"
+msgstr "arMaltese"
+
+msgctxt "language"
+msgid "Norwegian"
+msgstr "arNorwegian"
+
+msgctxt "language"
+msgid "Polish"
+msgstr "arPolish"
+
+msgctxt "language"
+msgid "Portuguese"
+msgstr "arPortuguese"
+
+msgctxt "language"
+msgid "Romanian"
+msgstr "arRomanian"
+
+msgctxt "language"
+msgid "Russian"
+msgstr "arRussian"
+
+msgctxt "language"
+msgid "Serbian"
+msgstr "arSerbian"
+
+msgctxt "language"
+msgid "Slovak"
+msgstr "arSlovak"
+
+msgctxt "language"
+msgid "Slovenian"
+msgstr "arSlovenian"
+
+msgctxt "language"
+msgid "Spanish"
+msgstr "arSpanish"
+
+msgctxt "language"
+msgid "Swedish"
+msgstr "arSwedish"
+
+msgctxt "language"
+msgid "Thai"
+msgstr "arThai"
+
+msgctxt "language"
+msgid "Turkish"
+msgstr "arTurkish"
+
+msgctxt "language"
+msgid "Ukrainian"
+msgstr "arUkrainian"
+
+msgctxt "language"
+msgid "Vietnamese"
+msgstr "arVietnamese"
+
+#16 languageRating
+msgctxt "languageRating"
+msgid "basic"
+msgstr "arbasic"
+
+msgctxt "languageRating"
+msgid "fluent"
+msgstr "arfluent"
+
+msgctxt "languageRating"
+msgid "good"
+msgstr "argood"
+
+#17 industry
+msgctxt "industry"
+msgid "Agriculture and food"
+msgstr "arAgriculture and food"
+
+msgctxt "industry"
+msgid "Biogas"
+msgstr "arBiogas"
+
+msgctxt "industry"
+msgid "Chemical"
+msgstr "arChemical"
+
+msgctxt "industry"
+msgid "Culture media"
+msgstr "arCulture media"
+
+msgctxt "industry"
+msgid "Distribution"
+msgstr "arDistribution"
+
+msgctxt "industry"
+msgid "Education"
+msgstr "arEducation"
+
+msgctxt "industry"
+msgid "Electronics"
+msgstr "arElectronics"
+
+msgctxt "industry"
+msgid "Energy distribution"
+msgstr "arEnergy distribution"
+
+msgctxt "industry"
+msgid "Energy storage"
+msgstr "arEnergy storage"
+
+msgctxt "industry"
+msgid "Equipement"
+msgstr "arEquipement"
+
+msgctxt "industry"
+msgid "Finance"
+msgstr "arFinance"
+
+msgctxt "industry"
+msgid "Fishery"
+msgstr "arFishery"
+
+msgctxt "industry"
+msgid "Food processing"
+msgstr "arFood processing"
+
+msgctxt "industry"
+msgid "Forestry"
+msgstr "arForestry"
+
+msgctxt "industry"
+msgid "Furniture"
+msgstr "arFurniture"
+
+msgctxt "industry"
+msgid "Hardware"
+msgstr "arHardware"
+
+msgctxt "industry"
+msgid "Health care"
+msgstr "arHealth care"
+
+msgctxt "industry"
+msgid "Housing"
+msgstr "arHousing"
+
+msgctxt "industry"
+msgid "Hydro energy"
+msgstr "arHydro energy"
+
+msgctxt "industry"
+msgid "ICT"
+msgstr "arICT"
+
+msgctxt "industry"
+msgid "Insurance"
+msgstr "arInsurance"
+
+msgctxt "industry"
+msgid "Irrigation"
+msgstr "arIrrigation"
+
+msgctxt "industry"
+msgid "Legal"
+msgstr "arLegal"
+
+msgctxt "industry"
+msgid "Machinery"
+msgstr "arMachinery"
+
+msgctxt "industry"
+msgid "Manufacturing"
+msgstr "arManufacturing"
+
+msgctxt "industry"
+msgid "Metal"
+msgstr "arMetal"
+
+msgctxt "industry"
+msgid "Mobile"
+msgstr "arMobile"
+
+msgctxt "industry"
+msgid "Primary agriculture"
+msgstr "arPrimary agriculture"
+
+msgctxt "industry"
+msgid "Primary agriculture"
+msgstr "arPrimary agriculture"
+
+msgctxt "industry"
+msgid "Recycling"
+msgstr "arRecycling"
+
+msgctxt "industry"
+msgid "Recycling"
+msgstr "arRecycling"
+
+msgctxt "industry"
+msgid "Recycling"
+msgstr "arRecycling"
+
+msgctxt "industry"
+msgid "Renewable energy"
+msgstr "arRenewable energy"
+
+msgctxt "industry"
+msgid "Research"
+msgstr "arResearch"
+
+msgctxt "industry"
+msgid "Retail"
+msgstr "arRetail"
+
+msgctxt "industry"
+msgid "Sanitation"
+msgstr "arSanitation"
+
+msgctxt "industry"
+msgid "Services"
+msgstr "arServices"
+
+msgctxt "industry"
+msgid "Services"
+msgstr "arServices"
+
+msgctxt "industry"
+msgid "Software"
+msgstr "arSoftware"
+
+msgctxt "industry"
+msgid "Solar energy"
+msgstr "arSolar energy"
+
+msgctxt "industry"
+msgid "Storage"
+msgstr "arStorage"
+
+msgctxt "industry"
+msgid "Textiles"
+msgstr "arTextiles"
+
+msgctxt "industry"
+msgid "Tourism"
+msgstr "arTourism"
+
+msgctxt "industry"
+msgid "Transport"
+msgstr "arTransport"
+
+msgctxt "industry"
+msgid "Utilities"
+msgstr "arUtilities"
+
+msgctxt "industry"
+msgid "Waste"
+msgstr "arWaste"
+
+msgctxt "industry"
+msgid "Water"
+msgstr "arWater"
+
+msgctxt "industry"
+msgid "Wholesale"
+msgstr "arWholesale"
+
+msgctxt "industry"
+msgid "Wind energy"
+msgstr "arWind energy"
+
+#18 fieldOfBusiness

@@ -1,6 +1,7 @@
 <?php
 
 require_once( BIDX_PLUGIN_DIR . '/../services/session-service.php' );
+require_once( BIDX_PLUGIN_DIR . '/../services/static-data-service.php' );
 require_once( ABSPATH . WPINC . '/pluggable.php' );
 
 /**
@@ -16,7 +17,8 @@ class BidxCommon
     public static $bidxSession = array ();
     public static $scriptJs = array ();
     public static $staticSession = array ();
-    public static $count =0 ;
+    public static $transientStaticData = array();
+    public static $scriptStaticJs;
 
     public function __construct ()
     {
@@ -25,12 +27,12 @@ class BidxCommon
 
     public function getBidxSessionAndScript ()
     {
-         if ($this->subDomain) {
+         if ($this->subDomain) {          
             $this->processSessionAndScript ($this->subDomain);
      }
     }
 
-
+    
 
     public function isSetBidxAuthCookie ()
     {
@@ -115,6 +117,7 @@ class BidxCommon
         setcookie ('session_id', session_id (), time()+$time, '/', '.' . COOKIE_DOMAIN);
         //}
     }
+
     /**
      * Clear Session From GET param rs
      * @param $session_id Wordpress php session id to be cleared
@@ -206,8 +209,7 @@ class BidxCommon
     }
 
     public  function setScriptJs ($subDomain, $scriptValue)
-    {
-        
+    {        
         return $this::$scriptJs[$subDomain] = $scriptValue;
     }
 
@@ -227,9 +229,15 @@ class BidxCommon
         $jsSessionData = $this::$bidxSession[$subDomain];
         $jsSessionVars = (isset ($jsSessionData->data)) ? json_encode ($jsSessionData->data) : '{}';
         $jsAuthenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : '{}';
+        $bidxJsDir = sprintf( '%s/../static/js', BIDX_PLUGIN_URI );
 
+        
+        $transientStaticData = $this->setLocaleTransient(); // To store static api values to site transient for Frontend
+        
         //API Response data
-        $data = $this->getURIParams ($subDomain, $jsSessionData);
+        $result = $this->getURIParams ($subDomain, $jsSessionData, $transientStaticData);        
+     
+        $data = $result['data'];
         $jsApiVars = (isset ($data)) ? json_encode ($data) : '{}';
 
         $scriptJs = "<script>
@@ -241,7 +249,13 @@ class BidxCommon
             bidxConfig.session = $jsSessionVars ;
 
             bidxConfig.authenticated = {$jsAuthenticated};
-</script>";
+                 </script>
+            ";
+
+        //Create Static Data Script and pass variables through local_script it in shortcode.php
+       $staticData = $result['staticdata']; 
+       $this::$scriptStaticJs = $staticData;      
+            
         return $scriptJs;
     }
 
@@ -253,7 +267,7 @@ class BidxCommon
      * @param string $subDomain
      * @param string $jsSessionData
      */
-    public function getURIParams ($subDomain, $jsSessionData = NULL)
+    public function getURIParams ($subDomain, $jsSessionData = NULL, $transientStaticData)
     {
         $requestUri = explode('?', $_SERVER ["REQUEST_URI"]);
         $hostAddress = explode ('/', $requestUri[0]);
@@ -318,12 +332,20 @@ class BidxCommon
                     }
 
                     break;
+
+
             }
+
+            $staticDataPageVars = $transientStaticData;  
 
             if ($jsSessionData) {
                 $this->redirectUrls ($hostAddress[1], $jsSessionData->authenticated, $redirect, $statusMsgId, $subDomain);
             }
-            return $data;
+
+            $return['data'] = $data;
+            $return['staticdata'] = $staticDataPageVars;
+
+            return $return;
         }
 
         return;
@@ -469,92 +491,8 @@ class BidxCommon
         }
     }
 
-    /**
-     * Authenticate the user using the username and password with Bidx Data.
-     *
-     * @param String $username
-     * @param String $password
-     * @return Loggedin User
-     */
-    function call_bidx_service ($urlservice, $body, $method = 'POST', $is_form_upload = false)
-    {
-
-        $authUsername = 'bidx'; // Bidx Auth login
-        $authPassword = 'gobidx'; // Bidx Auth password
-        $bidxMethod = strtoupper ($method);
-        $bidx_get_params = "";
-        $cookie_string = "";
-        $sendDomain = 'bidx.net';
-        $cookieArr = array ();
-
-        /*         * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
-        $cookieInfo = $_COOKIE;
-        foreach ($_COOKIE as $cookieKey => $cookieValue) {
-            if (preg_match ("/^bidx/i", $cookieKey)) {
-                $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
-            }
-        }
-
-        /*         * *********2. Set Headers ******************************** */
-        //For Authentication
-        $headers['Authorization'] = 'Basic ' . base64_encode ("$authUsername:$authPassword");
-
-        // 2.1 Is Form Upload
-        if ($is_form_upload) {
-            $headers['Content-Type'] = 'multipart/form-data';
-        }
-
-        // 2.2 Set the group domain header
-        if (isset ($body['domain'])) {
-            //Talk with arjan for domain on first page registration it will be blank when it goes live
-            $headers['X-Bidx-Group-Domain'] = ($urlservice == 'groups' && $bidxMethod == 'POST') ? 'beta' : $body['domain'];
-            //$bidx_get_params.= '&groupDomain=' . $body['domain'];
-        }
-
-        /*         * ********* 3. Decide method to use************** */
-        if ($bidxMethod == 'GET') {
-            $bidx_get_params = ($body) ? '&' . http_build_query ($body) : '';
-            $body = NULL;
-        }
-
-
-        /*         * *********** 4. WP Http Request ******************************* */
-
-
-        $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
-
-
-
-        $request = new WP_Http;
-        $result = $request->request ($url, array ('method' => $bidxMethod,
-          'body' => $body,
-          'headers' => $headers,
-          'cookies' => $cookieArr
-        ));
-
-        /*         * *********** 5. Set Cookies if Exist ************************* */
-        $cookies = $result['cookies'];
-        if (count ($cookies)) {
-            foreach ($cookies as $bidxAuthCookie) {
-                $cookieDomain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'bidx.dev' : $bidxAuthCookie->domain;
-                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
-            }
-        }
-
-        return $result;
-    }
-
-    static function clear_bidx_cookies ()
-    {
-
-        /*         * *********Retrieve Bidx Cookies and send back to api to check ******* */
-        $cookieInfo = $_COOKIE;
-        foreach ($_COOKIE as $cookieKey => $cookieValue) {
-            if (preg_match ("/^bidx/i", $cookieKey)) {
-                setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-            }
-        }
-    }
+    
+   
 
     /**
      * Grab the subdomain portion of the URL. If there is no sub-domain, the root
@@ -601,6 +539,31 @@ class BidxCommon
         return implode ('&', $query_array);
     }
 
+    /**
+     * Set Site Transient
+     * @param $session_id Wordpress php session id to be cleared
+     *
+     * @return Starts php session and execute the same session if session_id cookie exists
+     * @example http://matty.co.za/2012/01/wordpress-transients-api/ Use of Transient api
+     * @example http://wpengineer.com/2237/whats-the-difference-between-__-_e-_x-and-_ex/ Use of x
+     */
+    public function setLocaleTransient ()
+    {
+        $siteLocale = get_locale ();
+        $staticDataObj = new StaticDataService();
+        $transientKey = 'static'.$siteLocale; // Transient key for Static Data
+        $transientStaticData = get_transient ($transientKey);
+
+        /* If no value then set the site local transiet */
+        if ($transientStaticData === false) {
+            $resultStaticData = $staticDataObj->getStaticData(NULL);
+            $staticDataVars = $resultStaticData->data;
+            $transientStaticData = $staticDataObj->getMultilingualStaticData( $staticDataVars );
+		    set_transient( $transientKey, $transientStaticData, 60*5 ); //Second*Min*Hour            
+        }
+
+        return $transientStaticData;     
+    }
 }
 
 ?>

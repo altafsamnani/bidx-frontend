@@ -1,5 +1,6 @@
 // Wrapper around the static data API
 //
+
 ( function( $ )
 {
     var bidx                = window.bidx
@@ -52,7 +53,7 @@
         //
         // TODO: proper implementation, currently no API available... shouldn't end up here
         //
-        if ( first )
+       /* if ( first )
         {
             bidx.api.call(
                 "STATIC_DATA.TO_BE_DEFINED" // TODO: what API to call for this?
@@ -76,7 +77,7 @@
                     }
                 }
             );
-        }
+        } */
     };
 
     // Internal setter of cache items
@@ -115,7 +116,14 @@
 //
 ( function()
 {
-    window.bidx.data._setItem( "businessOutcome",
+       var staticVar = jQuery.parseJSON(staticdata);
+      
+       $.each( staticVar, function ( idx, item )
+       {
+             window.bidx.data.setItem( idx, item);
+
+       } );
+  /*   window.bidx.data._setItem( "businessOutcome",
     [
         {
             "value" : "stillInvolved",
@@ -3429,6 +3437,6 @@
         value: "womenBusiness",
         label: "Women in business"
         }
-    ] );
+    ] ); */
 } () );
 //
