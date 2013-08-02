@@ -293,7 +293,7 @@
 
     var notifyCustom = function( msg )
     {
-        window.bidx.common.notifier = noty ({
+        notifier = noty ({
             text:           msg
         ,   type:           "alert"
         ,   modal:          true

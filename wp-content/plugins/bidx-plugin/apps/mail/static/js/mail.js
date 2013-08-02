@@ -21,28 +21,47 @@
 
     var getMembers = function ( callback )
     {
-        //TO BE REFACTORED WHEN API IS UPDATED
+
+        var extraUrlParameters =
+        [
+            {
+                label :     "q",
+                value :     "user:*"
+            }
+        ,   {
+                label :     "fq",
+                value :     "type:bidxMemberProfile+AND+groupIds:21"
+            }
+        ,   {
+                label :     "rows",
+                value :     "1000"
+            }
+        ];
+
+
         bidx.api.call(
             "groupMembers.fetch"
         ,   {
                 groupId:                  bidxConfig.session.currentGroup
             ,   groupDomain:              bidx.common.groupDomain
+            ,   extraUrlParameters:       extraUrlParameters
 
             ,   success: function( response )
                 {
+
                     var result          = []
                     ;
 
                     // now format it into array of objects with value and label
                     //
-                    if( response )
+                    if( response && response.docs )
                     {
-                        $.each( response, function ( idx, item)
+                        $.each( response.docs, function ( idx, item)
                         {
                             result.push(
                             {
-                                value:      item.id
-                            ,   label:      item.name
+                                value:      item.userId
+                            ,   label:      item.user
                             });
                         });
                     }
@@ -67,7 +86,7 @@
     //private functions
 
 
-    var _init = function()
+    var _composeFormInit = function()
     {
         // Setup form
         //
@@ -433,37 +452,6 @@
         );
     };
 
-    var _getContacts = function ( id )
-    {
-        bidx.api.call(
-            "memberRelationships.fetch"
-        ,   {
-                requesterId:              bidxConfig.session.id
-            ,   groupDomain:              bidx.common.groupDomain
-
-            ,   success: function( response )
-                {
-                    if( response && response.contact.active )
-                    {
-                        return response.contact.active;
-                    }
-                    else
-                    {
-                        return [];
-                    }
-
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
-
-                    _showError( "Something went wrong while retrieving contactlist of the member: " + status );
-                }
-            }
-        );
-    };
 
     // ROUTER
 
@@ -526,9 +514,9 @@
             break;
 
             case "compose":
-                //_getContacts( id );
+
                 _showView( "compose" );
-                _init();
+                _composeFormInit();
 
             break;
 
@@ -549,6 +537,8 @@
     ,   $element:               $element
     ,   getMembers:             getMembers
     };
+
+
 
     if ( !window.bidx )
     {
