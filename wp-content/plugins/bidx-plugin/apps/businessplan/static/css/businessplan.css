@@ -13,6 +13,7 @@
 .bp-summary .tab-content {
     border:                     none;
     padding:                    0;
+    margin-top: 144px;
 }
 
 .bp-summary .attachment {

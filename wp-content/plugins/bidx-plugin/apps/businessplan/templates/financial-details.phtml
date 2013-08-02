@@ -23,67 +23,47 @@
                 _generateTable();
             };
 
+            //  function that generates the table based on the returned data from the API
             var _generateTable = function ()
             {
                 var  financialData           = _getData()
                 ,   $table
                 ,   $item
                 ,   $clone
-             //   ,   yearCount       = financialData.length
+                ,   $row
                 ,   dataGrid        = {}
                 ;
-
-
-                bidx.utils.log("FINANCIALDATA", financialData);
 
                 //loop though statements
                 $.each( financialData, function ( idx, statement )
                 {
                     bidx.utils.log(idx);
                     //get the correct table
-                    table = $tables.filter( "." + idx );
+                    $table = $tables.filter( "." + idx );
+                    bidx.utils.log("STATEMENT", statement);
 
                     //now loop throught items in the statement
-
-/*
-                    $( ".financial-details" ).each( function( idt, table )
+                    $.each( statement, function( key , item )
                     {
-                        $table = $ ( table );
+                        //  get the row
+                        $row = $table.find( "." + key );
+                        //  get the value item that will be cloned
+                        $item = $( $row.find( ".item-value" )[0] ).remove();
 
-                        if( $table.hasClass( "header" ) )
+                        //  loop through collection of item values and generate table cells
+                        $.each( item, function( idv, value )
                         {
-
-                            bidx.utils.log($table.find( "tbody > tr.years" ));
-                        }
-
-                        //get items/rows for this table
-                        if( $table.hasClass( "income-statement" ) )
-                        {
-                            // retrieve tbody so we can map the item from markup into the dataGrid object
-                            $table.find( "tr" ).each( function( idi, row )
-                            {
-                                $row = $( row );
-                                //get first item value from this row
-                                $item = $( $row.find( ".item-value" )[0] );
-                                $clone = $item.clone();
-
-                                //check if item already exist in dataGrid (only true for the first year iteration)
-                                if( !dataGrid[ data.year ][ $row.attr( "class" ) ] )
-                                {
-                                    dataGrid[ data.year ][ $row.attr( "class" ) ] = {};
-                                }
-
-                                //create cell for this item / year
-                                $row.append( $clone );
-
-                            } );
-
-                        }
+                            $clone = $item.clone();
+                            $clone.text( value.value );
+                            $clone.addClass( idv );
+                            $row.append( $clone );
+                        } );
+                        //  end item loop
                     } );
-*/
-
-
+                    //  end row loop
                 } );
+                //  end statement loop
+
 
             }
 
@@ -141,8 +121,6 @@
                             {
                                 mockData[ idx ][ item ][ year ][ "value" ] = year;
                             }
-
-
                         } );
 
                     } );
@@ -161,7 +139,7 @@
                 window.bidx = {};
             }
 
-            window.bidx.financialDetails = {};
+            //window.bidx.financialDetails = {};
             _init();
 
         } ( jQuery ));
@@ -197,7 +175,7 @@
 
 
 
-        <table class="financial-details header" border="1">
+        <table class="financial-details header" border="0">
             <colgroup>
                 <col class="item-spacer">
                 <col class="item-label">
@@ -212,7 +190,7 @@
             </tbody>
         </table>
 
-        <table class="financial-details income-statement" border="1">
+        <table class="financial-details income-statement" border="0">
             <caption>Income Statement</caption>
             <colgroup>
                 <col class="item-spacer">
@@ -220,7 +198,7 @@
                 <col class="item-value" span="5">
             </colgroup>
             <thead>
-                <tr class="profit-before-tax" data-toggle="collapse" data-target="#profitbeforetax">
+                <tr class="profit-before-tax">
                     <th class="item-spacer"><span class="fui-triangle-down"></span></th>
                     <th class="item-label">Profit before tax</th>
                     <th class="item-value"> $ 00,00 </th>
@@ -234,7 +212,7 @@
                 </tr>
             </tfoot>
 
-            <tbody class="profit-before-tax">
+            <tbody >
                 <tr class="total-sales-reveneus">
                     <td class="item-spacer"></td>
                     <td class="item-label">Total sales reveneus</td>
@@ -280,23 +258,127 @@
                     <td colspan="7"></td>
                 </tr>
 
+                <tr class="interest-payment">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Interest Payment</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+
+                <tr class="ignore spacer">
+                    <td colspan="7"></td>
+                </tr>
+
+                <tr class="total-profit-before-tax total">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Total profit before tax</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+                <tr class="ignore spacer">
+                    <td colspan="7"></td>
+                </tr>
+            </tbody>
+
+        </table>
+
+
+        <table class="financial-details cash-flow-statement" border="0">
+            <caption>Cash flow Statement</caption>
+            <colgroup>
+                <col class="item-spacer">
+                <col class="item-label">
+                <col class="item-value" span="5">
+            </colgroup>
+            <thead>
+                <tr class="change-in-cash">
+                    <th class="item-spacer"><span class="fui-triangle-down"></span></th>
+                    <th class="item-label">Profit before tax</th>
+                    <th class="item-value"> $ 00,00 </th>
+                </tr>
+            </thead>
+
+            <tbody >
                 <tr class="investing-cash-flow">
                     <td class="item-spacer"></td>
                     <td class="item-label">Investing cash flow</td>
                     <td class="item-value"> $ 00,00 </td>
                 </tr>
-                <tr class="operating-profit subtotal">
+                <tr class="financing-cash-flow">
                     <td class="item-spacer"></td>
-                    <td class="item-label">Operating Profit</td>
+                    <td class="item-label">Financing cash flow</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+                <tr class="total-change-in-cash total">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Total Change in cash</td>
                     <td class="item-value"> $ 00,00 </td>
                 </tr>
                 <tr class="ignore spacer">
                     <td colspan="7"></td>
                 </tr>
 
-                <tr class="profit-before-tax total">
+            </tbody>
+
+        </table>
+
+        <table class="financial-details balance-sheet-statement" border="0">
+            <caption>Balance Sheet Statement</caption>
+            <colgroup>
+                <col class="item-spacer">
+                <col class="item-label">
+                <col class="item-value" span="5">
+            </colgroup>
+            <thead>
+                <tr class="total-assets-header">
+                    <th class="item-spacer"><span class="fui-triangle-down"></span></th>
+                    <th class="item-label">Total Assets</th>
+                    <th class="item-value"> $ 00,00 </th>
+                </tr>
+            </thead>
+
+
+            <tbody >
+                <tr class="fixed-assets">
                     <td class="item-spacer"></td>
-                    <td class="item-label">Total profit before tax</td>
+                    <td class="item-label">Fixed Assets</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+                <tr class="total-fixed-assets subtotal">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Total Fixed Assets</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+
+                <tr class="ignore spacer">
+                    <td colspan="7"></td>
+                </tr>
+
+                <tr class="total-inventory">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Total inventory</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+                <tr class="net-receivables">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Net receivables</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+                <tr class="cash">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Cash</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+                <tr class="current-assets subtotal">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Current Assets</td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+                <tr class="ignore spacer">
+                    <td colspan="7"></td>
+                </tr>
+
+                <tr class="total-assets total">
+                    <td class="item-spacer"></td>
+                    <td class="item-label">Total Assets</td>
                     <td class="item-value"> $ 00,00 </td>
                 </tr>
                 <tr class="ignore spacer">
