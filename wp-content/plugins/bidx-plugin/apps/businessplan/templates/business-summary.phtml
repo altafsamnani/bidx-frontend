@@ -3,16 +3,16 @@
 <div class="row-fluid">
     <div class="span3">
         <ul class="nav nav-list affix" id="bpSummary-BusinessSummary-Nav">
-            <li><a href="#businessSummary">Business summary</a></li>
-            <li><a href="#aboutBusiness">About the business</a></li>
-            <li><a href="#aboutSupporting">About the supporting team</a></li>
+            <li><a href="#businessSummary"><?php _e('Business summary'); ?></a></li>
+            <li><a href="#aboutBusiness"><?php _e('About the business'); ?></a></li>
+            <li><a href="#aboutSupporting"><?php _e('About the supporting team'); ?></a></li>
         </ul>
     </div>
 
     <div class="span9">
         <div class ="well profile-block">
             <span id="businessSummary" class="scrollPositionMarker"></span>
-            <h4>Business summary</h4>
+            <h4><?php _e('Business summary'); ?></h4>
             <div class="row-fluid">
 
                 <?php
@@ -21,24 +21,24 @@
                 ?>
 
                 <?php
-                $rowValues = array ('Business name' => $this->exst ($businessSummary->name));
+                $rowValues = array (__('Business name') => $this->exst ($businessSummary->name));
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
                 <?php
-                $rowValues = array ('Describe your business in 15 words' => $this->exst ($businessSummary->summary));
+                $rowValues = array (__('Describe your business in 15 words') => $this->exst ($businessSummary->summary));
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
                 <?php
                 $industry = $this->getMultiValues ($this->exst ($businessSummary->industry), ', ');
-                $rowValues = array ('Industry' => $industry);
+                $rowValues = array (__('Industry') => $industry);
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
                 <?php
                 $country = $this->getMultiValues ($this->exst ($businessSummary->countryOperation), ', ', 'country');
-                $rowValues = array ('Country of business ' => $country);
+                $rowValues = array (__('Country of business') => $country);
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
             </div>
@@ -46,7 +46,7 @@
         <div class ="well profile-block">
             <span id="aboutBusiness" class="scrollPositionMarker"></span>
 
-            <h4> About the business </h4>
+            <h4><?php _e('About the business'); ?></h4>
             <div class="row-fluid">
                 <?php
     //$rowValues = array('About the business');
@@ -54,34 +54,34 @@
                 ?>
 
                 <?php
-                $rowValues = array ('Summary of this business' => $this->exst ($businessSummary->summary));
+                $rowValues = array (__('Summary of this business') => $this->exst ($businessSummary->summary));
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
                 <?php
                 $reasonSubmission = $this->getMultiValues ($this->exst ($businessSummary->reasonForSubmission), ', ');
-                $rowValues = array ('Reason for submission of business summary' => $reasonSubmission);
+                $rowValues = array (__('Reason for submission of business summary') => $reasonSubmission);
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
                 <?php
                 $socialImpact = $this->getMultiValues ($this->exst ($businessSummary->socialImpact), ', ');
-                $rowValues = array ('Social Impact' => $socialImpact);
+                $rowValues = array (__('Social Impact') => $socialImpact);
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
                 <?php
-                $rowValues = array ('Percentage equity you currently retain ( optional )' => $this->exst ($businessSummary->equityRetained));
+                $rowValues = array (__('Percentage equity you currently retain ( optional )') => $this->exst ($businessSummary->equityRetained));
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
                 <?php
-                $rowValues = array ('Finance needed' => $this->exst ($businessSummary->financingNeeded));
+                $rowValues = array (__('Finance needed') => $this->exst ($businessSummary->financingNeeded));
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
                 <?php
-                $rowValues = array ('Why do you need financing? Describe in maximum 30 words ( optional )' => $this->exst ($businessSummary->summaryFinancingNeeded));
+                $rowValues = array (__('Why do you need financing? Describe in maximum 30 words ( optional )') => $this->exst ($businessSummary->summaryFinancingNeeded));
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
@@ -121,7 +121,7 @@
             </div>
             <div class ="well profile-block">
                 <span id="aboutSupporting" class="scrollPositionMarker"></span>
-                <h4>About the supporting team </h4>
+                <h4><?php _e('About the supporting team'); ?></h4>
                 <div class="row-fluid">
 
                     <?php
@@ -130,21 +130,21 @@
                     ?>
 
                     <?php
-                    $rowValues = array ('Role of entrepreneur in this business' => $personalRole);
+                    $rowValues = array (__('Role of entrepreneur in this business') => $personalRole);
                     echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                     ?>
 
                     <?php
-                    $rowValues = array ('Please provide details of your expertise applicable to this business' => $personalExpertise);
+                    $rowValues = array (__('Please provide details of your expertise applicable to this business') => $personalExpertise);
                     echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                     ?>
 
                     <?php
-                    $header = array ('Name' => 'name', 'Role of partner in this business' => 'role', 'Expertise of partner applicable' => 'expertise');
+                    $header = array (__('Name') => 'name', __('Role of partner in this business') => 'role', __('Expertise of partner applicable') => 'expertise');
                     $merge['name'] = array ('firstName', 'lastName');
                     $supportingMembersHtml = $this->addTableRows ($header, $supportingData, 'table table-bordered', $merge);
 
-                    $rowValues = array ('Supporting members of management team' => $supportingMembersHtml);
+                    $rowValues = array (__('Supporting members of management team') => $supportingMembersHtml);
                     echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
                     ?>
                 </div>

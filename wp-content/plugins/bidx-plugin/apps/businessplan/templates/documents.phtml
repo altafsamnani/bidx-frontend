@@ -2,5 +2,5 @@
 $businessSummary = $this->data;
 ?>
 <div class ="well profile-block">
-<?php echo $this->displayAttachments ($header = '<h6>Documents</h6>', $businessSummary->attachment); ?>
+<?php echo $this->displayAttachments ($header = '<h6>' . __('Documents') . '</h6>', $businessSummary->attachment); ?>
 </div>

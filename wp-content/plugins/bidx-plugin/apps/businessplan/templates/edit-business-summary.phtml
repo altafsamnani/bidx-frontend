@@ -2,12 +2,12 @@
 
     <!-- LOAD -->
     <div class="view viewLoad span12">
-        <span>Retrieving business summary information...</span>
+        <span><?php _e('Retrieving business summary information...'); ?></span>
     </div>
 
     <!-- ERROR -->
     <div class="view viewError span12">
-        <h2>Error</h2>
+        <h2><?php _e('Error'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
@@ -18,27 +18,27 @@
 
             <div class="span3">
                 <ul class="nav nav-list affix" id="editBusinessSummary-BusinessSummary-Nav">
-                    <li><a href="#editBusinessSummary/BusinessSummary/businessSummary">Business summary</a>
-                    <li><a href="#editBusinessSummary/BusinessSummary/aboutYourBusiness">About your business</a>
-                    <li><a href="#editBusinessSummary/BusinessSummary/aboutYouAndSupportingTeam">About you and supporting team</a>
+                    <li><a href="#editBusinessSummary/BusinessSummary/businessSummary"><?php _e('Business summary'); ?></a>
+                    <li><a href="#editBusinessSummary/BusinessSummary/aboutYourBusiness"><?php _e('About your business'); ?></a>
+                    <li><a href="#editBusinessSummary/BusinessSummary/aboutYouAndSupportingTeam"><?php _e('About you and supporting team'); ?></a>
                 </ul>
             </div>
 
             <div class="span9">
 
-                <p>Lorem ipsum dolizzle sit amizzle, consectetuer adipiscing my shizz. Nullizzle sapien velizzle, fo volutpizzle, suscipizzle quis, the bizzle vizzle, fo shizzle. Pellentesque eget tortor. Sure eros. Shizznit izzle dolizzle dapibizzle turpis break it down shit. Maurizzle uhuh ... yih! nibh da bomb turpizzle. Things in tortizzle. Pellentesque check it out rhoncizzle nisi. In check it out habitasse daahng dawg dictumst. Pizzle dapibizzle. Curabitur tellus nizzle, pretizzle tellivizzle, mattizzle daahng dawg, phat ass, nunc. Da bomb suscipit. Integer sheezy velit izzle purizzle.</p>
+                <p>work in progress, this edit state is not finished yet</p>
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editBusinessSummary/BusinessSummary/businessSummary"></span>
-                    <legend>Business summary</legend>
+                    <legend><?php _e('Business summary'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Describe your business name in 5 words</label>
+                                <label class="control-label"><?php _e('Describe your business name in 5 words'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="name" placeholder="Business name">
+                                    <input type="text" name="name" placeholder="<?php _e('Business name'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -47,9 +47,9 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <div class="control-group formfield">
-                                <label class="control-label">Describe your business in 15 words ( optional )</label>
+                                <label class="control-label"><?php _e('Describe your business in 15 words ( optional )'); ?></label>
                                 <div class="controls">
-                                    <textarea type="text" name="slogan" placeholder="Please give a description of your business"></textarea>
+                                    <textarea type="text" name="slogan" placeholder="<?php _e('Please give a description of your business'); ?>"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -58,17 +58,17 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Industry</label>
+                                <label class="control-label"><?php _e('Industry'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="industry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="industry" placeholder="Tags">
+                                    <input type="text" autocomplete="off" name="industry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Industry'); ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Suggested industry</label>
+                                <label class="control-label"><?php _e('Suggested industry'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput" placeholder="Tags">
+                                    <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput" placeholder="<?php _e('Suggested industry'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -77,17 +77,16 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Country of business</label>
+                                <label class="control-label"><?php _e('Country of business'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="countryOperation" class="bidx-tagsinput disabled" disabled data-bidxdatakey="country" placeholder="Tags">
+                                    <input type="text" autocomplete="off" name="countryOperation" class="bidx-tagsinput disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country of business'); ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Stage of business</label>
+                                <label class="control-label"><?php _e('Stage of business'); ?></label>
                                 <div class="controls">
-                                    toggle button group thingy (2 options)
                                     <input type="checkbox" name="stageOfBusiness" />
                                 </div>
                             </div>
@@ -97,36 +96,17 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">productService</label>
+                                <label class="control-label"><?php _e('Products'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="productService" class="bidx-tagsinput disabled" disabled data-bidxdatakey="productService" placeholder="Tags">
+                                    <input type="text" autocomplete="off" name="productService" class="bidx-tagsinput disabled" disabled data-bidxdatakey="productService" placeholder="<?php _e('Products'); ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Suggested productService</label>
+                                <label class="control-label"><?php _e('Suggested product'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput" placeholder="Tags">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <div class="control-group formfield">
-                                <label class="control-label">socialImpact</label>
-                                <div class="controls">
-                                    <input type="text" autocomplete="off" name="socialImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="socialImpact" placeholder="Tags">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="span6">
-                            <div class="control-group formfield">
-                                <label class="control-label">envImpact</label>
-                                <div class="controls">
-                                    <input type="text" autocomplete="off" name="envImpact" class="bidx-tagsinput" placeholder="Tags">
+                                    <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput" placeholder="S<?php _e('Suggested products'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -135,18 +115,35 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Consumper type</label>
+                                <label class="control-label"><?php _e('Social impact'); ?></label>
                                 <div class="controls">
-                                    checkbox thingy, rendered from the list "consumerType"
+                                    <input type="text" autocomplete="off" name="socialImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="socialImpact" placeholder="<?php _e('Social impact'); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label"><?php _e('Environmental impact'); ?></label>
+                                <div class="controls">
+                                    <input type="text" autocomplete="off" name="envImpact" class="bidx-tagsinput" placeholder="<?php _e('Environmental impact'); ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label"><?php _e('Consumper type'); ?></label>
+                                <div class="controls">
                                     <input type="checkbox" name="consumerType" />
                                 </div>
                             </div>
                         </div>
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Investment type</label>
+                                <label class="control-label"><?php _e('Investment type'); ?></label>
                                 <div class="controls">
-                                    checkbox thingy, rendered from the list "investmentType"
                                     <input type="checkbox" name="investmentType" />
                                 </div>
                             </div>
@@ -157,14 +154,14 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editBusinessSummary/BusinessSummary/aboutYourBusiness"></span>
-                    <legend>Tell us more about your business</legend>
+                    <legend><?php _e('Tell us more about your business'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span12">
                             <div class="control-group formfield">
-                                <label class="control-label">Provide a summary of your business in maximum 150 words</label>
+                                <label class="control-label"><?php _e('Provide a summary of your business in maximum 150 words'); ?></label>
                                 <div class="controls">
-                                    <textarea name="summary" placeholder="Please give a summary of your business"></textarea>
+                                    <textarea name="summary" placeholder="<?php _e('Please give a summary of your business'); ?>"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -173,9 +170,8 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Reason for submission of business summary</label>
+                                <label class="control-label"><?php _e('Reason for submission of business summary'); ?></label>
                                 <div class="controls">
-                                    checkbox thingy / toggle button
                                     <input type="checkbox" name="reasonForSubmission" />
                                 </div>
                             </div>
@@ -185,9 +181,9 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Percentage equity your currently retain ( optional )</label>
+                                <label class="control-label"><?php _e('Percentage equity your currently retain ( optional )'); ?></label>
                                 <div class="controls">
-                                    <input type="number" name="equityRetained" placeholder="Please give the environmental impact">
+                                    <input type="number" name="equityRetained" placeholder="<?php _e('Percentage'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -196,9 +192,9 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Finance needed</label>
+                                <label class="control-label"><?php _e('Finance needed'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="financeNeeded" placeholder="Please give finance needed">
+                                    <input type="text" name="financeNeeded" placeholder="<?php _e('Please give finance needed'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -207,30 +203,30 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <div class="control-group formfield">
-                                <label class="control-label">Why do you need financing? Describe in maximum 30 words ( optional )</label>
+                                <label class="control-label"><?php _e('Why do you need financing? Describe in maximum 30 words ( optional )'); ?></label>
                                 <div class="controls">
-                                    <textarea name="summaryFinancingNeeded" placeholder="Please give the reason you need financing"></textarea>
+                                    <textarea name="summaryFinancingNeeded" placeholder="<?php _e('Please give the reason you need financing'); ?>"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <h3>Media</h3>
+                    <h3><?php _e('Media'); ?></h3>
 
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Add online video</label>
+                                <label class="control-label"><?php _e('Add online video'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="externalVideoPitch" placeholder="Please give online video">
+                                    <input type="text" name="externalVideoPitch" placeholder="<?php _e('Please give online video'); ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Add online audio</label>
+                                <label class="control-label"><?php _e('Add online audio'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="externalAudioPitch" placeholder="Please give online audio">
+                                    <input type="text" name="externalAudioPitch" placeholder="<?php _e('Please give online audio'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -239,14 +235,14 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editBusinessSummary/BusinessSummary/aboutYouAndSupportingTeam"></span>
-                    <legend>Tell us more about the people that are supporting you in this business</legend>
+                    <legend><?php _e('Tell us more about the people that are supporting you in this business'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Role of entrepreneur in this business (5 words)</label>
+                                <label class="control-label"><?php _e('Role of entrepreneur in this business (5 words)'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalRole" placeholder="Please give role of entrepreneur in this business">
+                                    <input type="text" name="personalRole" placeholder="<?php _e('Please give role of entrepreneur in this business'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -255,17 +251,17 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <div class="control-group formfield">
-                                <label class="control-label">Please provide details of your expertise applicable to this business (30 words)</label>
+                                <label class="control-label"><?php _e('Please provide details of your expertise applicable to this business (30 words)'); ?></label>
                                 <div class="controls">
-                                    <textarea name="personalExpertise" placeholder="Please give the "></textarea>
+                                    <textarea name="personalExpertise" placeholder="<?php _e('The details of your expertise for this business'); ?>"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <h4>Supporting members of management team</h4>
+                    <h4><?php _e('Supporting members of management team'); ?></h4>
                     <div class="row-fluid">
-                        reflowrower thingy with personaldetails
+                        ...
                     </div>
 
                 </fieldset>
