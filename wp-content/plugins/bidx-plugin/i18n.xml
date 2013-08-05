@@ -1,4 +1,18 @@
 <I18N>
+    <!-- Misc -->
+    <Item value="noProfileEditPermission">You do not have the rights to edit this profile</Item>
+
+    <!-- Attachment -->
+    <Item value="selectDocumentType">Select the type</Item>
+    <Item value="attachmentDeleted">Attachment deleted</Item>
+    <Item value="attachmentUploadDone">Attachment upload done</Item>
+    <Item value="errAttachmentDelete">Problems deleting attachment</Item>
+
+    <!-- Buttons -->
     <Item value="btnNext">Next</Item>
+    <Item value="btnCancel">Cancel</Item>
+    <Item value="btnSaveProfile">Save profile</Item>
+
+    <!-- Form validations -->
     <Item value="frmFieldRequired">This field is required</Item>
 </I18N>
