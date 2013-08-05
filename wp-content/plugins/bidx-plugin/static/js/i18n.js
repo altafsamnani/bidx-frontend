@@ -6,7 +6,6 @@
     var bidx                = window.bidx
     ;
 
-
         // Internal administration of cached items, let's keep it for now in an object, maybe later sync it to localstorage
         //
         // A cached item is identifed by it's key in the items object. This key is equal to the name of the list in the static data API
@@ -22,32 +21,26 @@
     ,   requestQueue        = {}
     ;
 
-    // Main function for access the data cache
-    //
-    var getItem = function( key, cb )
+    // Retr
+    function getContext( context, cb )
     {
-            // Untill we have defined what the caching rules are.. let's just disable it and cache forever
-            //
-        var oldestAllowedMTime  = 0
-        ,   first
-        ;
+        var first = false;
 
-        // Is the item in the cache and not 'too' old? return it
+        // Already loaded?
         //
-        if ( items[ key ] && items[ key ].mtime > oldestAllowedMTime )
+        if ( items[ context ] )
         {
-            cb( null, items[ key ].data );
+            cb( null, items[ context ].data );
             return;
         }
 
-
-        if ( !requestQueue[ key ] )
+        if ( !requestQueue[ context ] )
         {
-            requestQueue[ key ] = [];
+            requestQueue[ context ] = [];
             first = true;
         }
 
-        requestQueue[ key ].push( cb );
+        requestQueue[ context ].push( cb );
 
         // Retrieve data from API
         //
@@ -55,21 +48,22 @@
         //
         if ( first )
         {
+            bidx.utils.warn( "bidx.i18n not having", context, "loaded. Calling API to retrieve it" );
+
             bidx.api.call(
-                "STATIC_DATA.TO_BE_DEFINED" // TODO: what API to call for this?
+                "I18N.TO_BE_DEFINED" // TODO: what API to call for this?
             ,   {
-                    key:            key
-                ,   locale:         "en"    // TODO: determine locale in front-end or back-end?
+                    key:            context
                 ,   success:        function( data )
                     {
-                        setItem( key, data );
+                        setItem( context, data );
 
-                        $.each( requestQueue[ key ], function( idx, cb )
+                        $.each( requestQueue[ context ], function( idx, cb )
                         {
-                            cb( null, items[ key ].data );
+                            cb( null, items[ context ].data );
                         } );
 
-                        delete requestQueue[ key ];
+                        delete requestQueue[ context ];
                     }
                 ,   error:          function( data )
                     {
@@ -80,18 +74,82 @@
                 }
             );
         }
-    };
+    }
+
+    function getItem( key, context, cb )
+    {
+        var item, myItem;
+
+        // When getItem() was called for a global item the context might be the callback
+        // or there is no context and callback at all. Since context is fallbacked to
+        // __global, we only need to fix the remapping of the callback here
+        //
+        if ( $.isFunction( context ) )
+        {
+            cb      = context;
+            context = null;
+        }
+
+        // When no context specified, it is the global context which by convention we named __global
+        //
+        if ( !context )
+        {
+            context = "__global";
+        }
+
+        // Context not loaded? Retrieve it first, and then retry finding it
+        //
+        if ( !items[ context ] )
+        {
+            getContext( context, function( err, data )
+            {
+                if ( err )
+                {
+                    cb( err, key );
+                }
+                else
+                {
+                    getItem( key, context, cb );
+                }
+            } );
+        }
+        else
+        {
+            item = items[ context ] || {};
+
+            // Was asked for the whole context or a single key?
+            //
+            if ( !key )
+            {
+                cb( null, item.data );
+            }
+            else
+            {
+                myItem = item.byKey[ key ] || {};
+
+                cb( null, myItem.label || key );
+            }
+        }
+    }
 
     // Internal setter of cache items
     //
-    var setItem = function( key, data )
+    function setItem( context, data )
     {
-        items[ key ] =
+        var keys = {};
+
+        $.each( data, function( idx, item )
+        {
+            keys[ item.value ] = item;
+        });
+
+        items[ context ] =
         {
             mtime:              +( new Date() )
         ,   data:               data
+        ,   byKey:              keys
         };
-    };
+    }
 
     // Was data preloaded?
     //
@@ -112,10 +170,28 @@
         {
             $.each( preload, function ( idx, item )
             {
-                setItem( idx, item);
+                setItem( idx, item );
             } );
         }
     }
+
+    // jQuery extensions
+    //
+    $.fn.i18nText = function i18nText( key, context )
+    {
+        var $el = $( this );
+
+        getItem( key, context, function( err, label )
+        {
+            if ( err || !label )
+            {
+                label = key;
+                bidx.utils.error( "i18n::Problem translating", key, context );
+            }
+
+            $el.text( label );
+        } );
+    };
 
     // Exports
     //
@@ -128,5 +204,6 @@
     {
         getItem:                    getItem
     ,   setItem:                    setItem
+    ,   getContext:                 getContext
     };
 } ( jQuery ));
