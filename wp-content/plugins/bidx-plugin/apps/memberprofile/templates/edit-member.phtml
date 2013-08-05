@@ -2,12 +2,12 @@
 
     <!-- LOAD -->
     <div class="view viewLoad span12">
-        <span>Retrieving member information...</span>
+        <span><?php _e('Retrieving member information...'); ?></span>
     </div>
 
     <!-- ERROR -->
     <div class="view viewError span12">
-        <h2>Error</h2>
+        <h2><?php _e('Error'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
@@ -18,11 +18,11 @@
 
             <div class="span3">
                 <ul class="nav nav-list nav-editMember nav-edit hidden-phone">
-                    <li><a href="#editMember/personalDetail">Personal detail</a>
-                    <li><a href="#editMember/language">Language</a>
-                    <li><a href="#editMember/currentAddress">Current address</a>
-                    <li><a href="#editMember/contactDetails">Contact details</a>
-                    <li><a href="#editMember/documents">Documents</a>
+                    <li><a href="#editMember/personalDetail"><?php _e('Personal detail'); ?></a>
+                    <li><a href="#editMember/language"><?php _e('Language'); ?></a>
+                    <li><a href="#editMember/currentAddress"><?php _e('Current address'); ?></a>
+                    <li><a href="#editMember/contactDetails"><?php _e('Contact details'); ?></a>
+                    <li><a href="#editMember/documents"><?php _e('Documents'); ?></a>
                 </ul>
             </div>
 
@@ -34,36 +34,36 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editMember/personalDetail"></span>
-                    <legend>Personal detail</legend>
+                    <legend><?php _e('Personal detail'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">First name</label>
+                                <label class="control-label"><?php _e('First name'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.firstName" placeholder="Please type your first name">
+                                    <input type="text" name="personalDetails.firstName" placeholder="<?php _e('Please type your first name'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Last name</label>
+                                <label class="control-label"><?php _e('Last name'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.lastName" placeholder="Please type your last name">
+                                    <input type="text" name="personalDetails.lastName" placeholder="<?php _e('Please type your last name'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Professional title</label>
+                                <label class="control-label"><?php _e('Professional title'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.professionalTitle" placeholder="Please type your professional title">
+                                    <input type="text" name="personalDetails.professionalTitle" placeholder="<?php _e('Please type your professional title'); ?>">
                                 </div>
                             </div>
                         </div>
 
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Profile image</label>
+                                <label class="control-label"><?php _e('Profile image'); ?></label>
                                 <div class="controls">
                                     <div class="profilePictureContainer" id="editMemberProfilePicture"></div>
                                     <input type="file" name="fileContent" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"memberprofilepicture"}], "addFields":["memberProfileId","domain"], "imageContainer": "#editMemberProfilePicture"}'/>
@@ -77,10 +77,10 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Gender</label>
+                                <label class="control-label"><?php _e('Gender'); ?></label>
                                 <div class="controls">
-                                    <label class="radio inline"><input type="radio" value="m" name="personalDetails.gender" data-toggle="radio"/> Male</label>
-                                    <label class="radio inline"><input type="radio" value="f" name="personalDetails.gender" data-toggle="radio"/> Female</label>
+                                    <label class="radio inline"><input type="radio" value="m" name="personalDetails.gender" data-toggle="radio"/> <?php _e('Male'); ?></label>
+                                    <label class="radio inline"><input type="radio" value="f" name="personalDetails.gender" data-toggle="radio"/> <?php _e('Female'); ?></label>
                                 </div>
                             </div>
 
@@ -88,9 +88,9 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Date of birth</label>
+                                <label class="control-label"><?php _e('Date of birth'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.dateOfBirth" data-type="date" placeholder="Please type your date of birth">
+                                    <input type="text" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('Please type your date of birth'); ?>">
                                 </div>
                             </div>
 
@@ -101,7 +101,7 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Nationality</label>
+                                <label class="control-label"><?php _e('Nationality'); ?></label>
                                 <div class="controls">
                                     <select name="personalDetails.nationality" ></select>
                                 </div> <!-- // controls -->
@@ -111,7 +111,7 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Highest Education</label>
+                                <label class="control-label"><?php _e('Highest Education'); ?></label>
                                 <div class="controls">
                                     <select name="personalDetails.highestEducation"></select>
                                 </div>
@@ -123,10 +123,10 @@
                     <div class="row-fluid">
                         <div class="span6">
 
-                            <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"Please fill in a valid email address"}}]}'>
-                                <label class="control-label">Email address</label>
+                            <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"<?php _e('Please fill in a valid email address'); ?>"}}]}'>
+                                <label class="control-label"><?php _e('Email address'); ?></label>
                                 <div class="controls">
-                                    <input type="email" name="personalDetails.emailAddress" placeholder="Please type your email address" />
+                                    <input type="email" name="personalDetails.emailAddress" placeholder="<?php _e('Please type your email address'); ?>" />
                                 </div>
                             </div>
 
@@ -134,9 +134,9 @@
                         <div class="span6">
 
                             <div class="control-group formfield" >
-                                <label class="control-label">LinkedIn profile</label>
+                                <label class="control-label"><?php _e('LinkedIn profile'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.linkedIn" placeholder="Please type your LinkedIn profile url" />
+                                    <input type="text" name="personalDetails.linkedIn" placeholder="<?php _e('Please type your LinkedIn profile url'); ?>" />
                                 </div>
                             </div>
                         </div>
@@ -146,9 +146,9 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Skype</label>
+                                <label class="control-label"><?php _e('Skype'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.skype" placeholder="Please type your Skype identifier" />
+                                    <input type="text" name="personalDetails.skype" placeholder="<?php _e('Please type your Skype identifier'); ?>" />
                                 </div>
                             </div>
 
@@ -156,9 +156,9 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Facebook profile</label>
+                                <label class="control-label"><?php _e('Facebook profile'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.facebook" placeholder="Please type your Facebook profile url" />
+                                    <input type="text" name="personalDetails.facebook" placeholder="<?php _e('Please type your Facebook profile url'); ?>" />
                                 </div>
                             </div>
 
@@ -169,11 +169,11 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Twitter</label>
+                                <label class="control-label"><?php _e('Twitter'); ?></label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on">@</span>
-                                        <input type="text" name="personalDetails.twitter" placeholder="Please type your Twitter identifier" />
+                                        <input type="text" name="personalDetails.twitter" placeholder="<?php _e('Please type your Twitter identifier'); ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -187,19 +187,19 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editMember/language"></span>
-                    <legend>Language</legend>
+                    <legend><?php _e('Language'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield addLanguageGroup">
-                                <label class="control-label">Select the languages you speak:</label>
+                                <label class="control-label"><?php _e('Select the languages you speak:'); ?></label>
                                 <div class="controls">
                                     <div class="row-fluid">
                                         <div class="span8">
                                             <input type="text" name="addLanguage" autocomplete="off" disabled />
                                         </div>
                                         <div class="span4">
-                                            <button type="button" class="btn btnAddLanguage pull-right" disabled>Add to list</button>
+                                            <button type="button" class="btn btnAddLanguage pull-right" disabled><?php _e('Add to list'); ?></button>
                                         </div>
                                     </div>
                                 </div>
@@ -209,10 +209,10 @@
 
                     <div class="row-fluid">
                         <div class="span4">
-                            <strong>List of your languages</strong>
+                            <strong><?php _e('List of your languages'); ?></strong>
                         </div>
                         <div class="span4">
-                            <strong>Choose your mother tongue</strong>
+                            <strong><?php _e('Choose your mother tongue'); ?></strong>
                         </div>
                     </div>
 
@@ -221,7 +221,7 @@
 
                 <fieldset class="well addressItem">
                     <span class="scrollPositionMarker" id="editMember/currentAddress"></span>
-                    <legend>Your current address</legend>
+                    <legend><?php _e('Your current address'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
@@ -229,44 +229,44 @@
                             <input type="hidden" name="personalDetails.address[0].coordinates"    />
 
                             <div class="control-group formfield">
-                                <label class="control-label">Country</label>
+                                <label class="control-label"><?php _e('Country'); ?></label>
                                 <div class="controls">
                                     <select name="personalDetails.address[0].country" ></select>
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">City</label>
+                                <label class="control-label"><?php _e('City'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].cityTown" placeholder="Please type your city" />
+                                    <input type="text" name="personalDetails.address[0].cityTown" placeholder="<?php _e('Please type your city'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Street</label>
+                                <label class="control-label"><?php _e('Street'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].street" placeholder="Please type your street" />
+                                    <input type="text" name="personalDetails.address[0].street" placeholder="<?php _e('Please type your street'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Street number</label>
+                                <label class="control-label"><?php _e('Street number'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].streetNumber" placeholder="Please type your street number" />
+                                    <input type="text" name="personalDetails.address[0].streetNumber" placeholder="<?php _e('Please type your street number'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Postal code</label>
+                                <label class="control-label"><?php _e('Postal code'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].postalCode" placeholder="Please type your postcode" />
+                                    <input type="text" name="personalDetails.address[0].postalCode" placeholder="<?php _e('Please type your postcode'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Neighborhood</label>
+                                <label class="control-label"><?php _e('Neighborhood'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].neighborhood" placeholder="Please type your neighborhood" />
+                                    <input type="text" name="personalDetails.address[0].neighborhood" placeholder="<?php _e('Please type your neighborhood'); ?>" />
                                 </div>
                             </div>
 
@@ -281,29 +281,29 @@
 
                 <fieldset class="well contactDetailItem">
                     <span class="scrollPositionMarker" id="editMember/contactDetails"></span>
-                    <legend>Your contact details?</legend>
+                    <legend><?php _e('Your contact details?'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Landline</label>
+                                <label class="control-label"><?php _e('Landline'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.contactDetail[0].landLine" placeholder="Please type your landline number" />
+                                    <input type="text" name="personalDetails.contactDetail[0].landLine" placeholder="<?php _e('Please type your landline number'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Mobile</label>
+                                <label class="control-label"><?php _e('Mobile'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.contactDetail[0].mobile" placeholder="Please type your mobile number" />
+                                    <input type="text" name="personalDetails.contactDetail[0].mobile" placeholder="<?php _e('Please type your mobile number'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Fax</label>
+                                <label class="control-label"><?php _e('Fax'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.contactDetail[0].fax" placeholder="Please type your fax number" />
+                                    <input type="text" name="personalDetails.contactDetail[0].fax" placeholder="<?php _e('Please type your fax number'); ?>" />
                                 </div>
                             </div>
 
@@ -316,7 +316,7 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editMember/documents"></span>
-                    <legend>Documents</legend>
+                    <legend><?php _e('Documents'); ?></legend>
 
                     <div class="formfield">
                         <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"memberprofileattachment"}], "addFields":["memberProfileId","domain"], "callback": "bidx.memberprofile.attachmentUploadDone"}'/>
@@ -338,8 +338,8 @@
                 <button class="btn pull-right btnRemoveLanguage"><i class="icon-trash"></i></button>
             </div>
             <div class="span4">
-                <button class="btn btnSetMotherLanguage">This is your mother tongue</button>
-                <p class="isCurrentMotherLanguage">My mother tongue</p>
+                <button class="btn btnSetMotherLanguage"><?php _e('This is your mother tongue'); ?></button>
+                <p class="isCurrentMotherLanguage"><?php _e('My mother tongue'); ?></p>
             </div>
         </div>
 
@@ -360,14 +360,14 @@
                     </div>
 
                     <div class="control-group formfield">
-                        <label class="control-label">Document type</label>
+                        <label class="control-label"><?php _e('Document type'); ?></label>
                         <div class="controls">
                             <select name="documentType"></select>
                         </div>
                     </div>
                 </div>
             </div>
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block">Delete</a>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Delete'); ?></a>
         </div>
     </div>
 

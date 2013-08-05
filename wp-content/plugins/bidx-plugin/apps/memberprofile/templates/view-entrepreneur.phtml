@@ -12,7 +12,7 @@ if ($entrepreneurDetails &&
 
         <div class="btn-group control-buttons">
             <?php if ($entrepreneurDetails->bidxCanEdit) { ?>
-                <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurDetails->ownerId); ?>">Edit</a>
+                <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurDetails->ownerId); ?>"><?php _e('Edit'); ?></a>
 
                     <?php
                         if ($entrepreneurDetails->bidxEntityStatus == 'DRAFT') {
@@ -46,27 +46,27 @@ if ($entrepreneurDetails &&
         <h4>Entrepreneur profile</h4>
         <div class="row-fluid">
             <?php
-            $rowValues = array ('Summary' => $this->exst ($entrepreneurDetails->summary));
+            $rowValues = array ( __('Summary') => $this->exst ($entrepreneurDetails->summary));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
             ?>
             <br/>
             <?php
             $focusIndustry = $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ');
-            $rowValues = array ('Focus Industry' => $focusIndustry);
+            $rowValues = array ( __('Focus Industry') => $focusIndustry);
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'h5', 'class_value' => 'adjacentval'));
             ?>
             <br/>
             <?php
             $previousBusiness = $this->exst ($entrepreneurDetails->previousBusiness);
-            $header = array ('Name of Company' => 'company', 'Outcome of business' => 'businessOutcome', 'Company web-site' => 'webSite');
+            $header = array ( __('Name of Company') => 'company', __('Outcome of business') => 'businessOutcome', 'Company web-site' => 'webSite');
             $previousBusinessHtml = $this->addTableRows ($header, $previousBusiness, 'table table-bordered');
 
-            $rowValues = array ('Previous Business(es)' => $previousBusinessHtml);
+            $rowValues = array ( __('Previous Business(es)') => $previousBusinessHtml);
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
             ?>
             <br/>
             <?php
-            echo $this->getAttachmentsDisplay ('12', '12', array ('Documents' => $this->exst ($entrepreneurDetails->attachment)));
+            echo $this->getAttachmentsDisplay ('12', '12', array ( __('Documents') => $this->exst ($entrepreneurDetails->attachment)));
             ?>
         </div>
     </div>
@@ -83,7 +83,7 @@ if ($entityDetails) {
         <!-- Business Summaries Profile -->
         <div class="row-fluid">
             <div class="span12">
-                <h4><?php echo ($this->data->isMyProfile) ? 'My business' : 'This person has a business'; ?></h4>
+                <h4><?php echo ($this->data->isMyProfile) ? __('My business') : __('This person has a business'); ?></h4>
             </div>
         </div>
 
@@ -102,7 +102,7 @@ if ($entityDetails) {
                 <?php
                 $industryVal = $this->getMultiValues ($this->exst ($entityDetails->industry), ', ');
                 $countryVal = $this->getMultiValues ($this->exst ($entityDetails->countryOperation), ', ', 'country', 'country');
-                $joinLink = ((isset ($entityDetails->bidxEntityId)) && $entityDetails->bidxEntityId) ? "<a href='/business/" . $entityDetails->bidxEntityId . "'>view more</a>" : '';
+                $joinLink = ((isset ($entityDetails->bidxEntityId)) && $entityDetails->bidxEntityId) ? "<a href='/business/" . $entityDetails->bidxEntityId . "'>" . __('view more') ."</a>" : '';
                 $rowValues = array ($entityDetails->slogan,
                   $entityDetails->summary,
                   $industryVal,
@@ -207,7 +207,7 @@ if ($companies) {
 
                         <div class="bottom-controls">
         <?php
-        $viewMoreLink = "<a href='/company/" . $company->ownerId . "'>view more</a>";
+        $viewMoreLink = "<a href='/company/" . $company->ownerId . "'>". __('view more') ."</a>";
         echo $viewMoreLink;
         ?>
                         </div>
@@ -225,7 +225,7 @@ if ($companies) {
         ?>
 
     <div class="pull-right">
-        <a href="/company/#createCompany" class="btn btn-primary">Add a company</a>
+        <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company'); ?></a>
     </div>
 
 <?php } ?>

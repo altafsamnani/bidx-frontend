@@ -13,7 +13,7 @@ if ($investorDetails &&
 
         <div class="btn-group control-buttons">
             <?php if ($investorDetails->bidxCanEdit) { ?>
-                <a class="btn btn-primary" href="#editInvestor/<?php echo $this->exst ($investorDetails->ownerId); ?>">Edit</a>
+                <a class="btn btn-primary" href="#editInvestor/<?php echo $this->exst ($investorDetails->ownerId); ?>"><?php _e('Edit'); ?></a>
 
                     <?php
                         if ($investorDetails->bidxEntityStatus == 'DRAFT') {
@@ -45,7 +45,7 @@ if ($investorDetails &&
 
         // Summary
         //
-        $rowValues = array ('Investor profile summary' => $this->exst ($investorDetails->summary));
+        $rowValues = array (__('Investor profile summary') => $this->exst ($investorDetails->summary));
         echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'label'));
 
 ?>
@@ -55,13 +55,13 @@ if ($investorDetails &&
 
         // Investor type
         //
-        $rowValues = array ('Investor type' => $investorType );
+        $rowValues = array (__('Investor type') => $investorType );
         echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
         // Investment type
         //
         $values = $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', ');
-        $rowValues = array ( 'Investment types' => $values);
+        $rowValues = array ( __('Investment types') => $values);
         echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
@@ -78,12 +78,12 @@ if ($investorDetails &&
 
             // Institution name
             //
-            $rowValues = array ('Institution details' => $this->exst($investorDetails->institutionName));
+            $rowValues = array (__('Institution details') => $this->exst($investorDetails->institutionName));
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Institution website
             //
-            $rowValues = array ('Institution website' => $this->exst($investorDetails->institutionWebsite));
+            $rowValues = array (__('Institution website') => $this->exst($investorDetails->institutionWebsite));
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Institution address
@@ -100,12 +100,12 @@ if ($investorDetails &&
 
                 $addressArr = array ($street . ' ' . $streetNumber,
                   $cityTown,
-                  'country' => $institutionAddress->country,
+                  __('country') => $institutionAddress->country,
                   $institutionAddress->postalCode);
 
                 $address = $this->createRowValue ($addressArr, ', ');
 
-                $rowValues = array ('Address' => $address );
+                $rowValues = array (__('Address') => $address );
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
         }
@@ -113,14 +113,14 @@ if ($investorDetails &&
 
 <?php
             $multiValueProperties = array(
-                'Industry'              =>  $this->exst ($investorDetails->focusIndustry),
-                'Social impact'         =>  $this->exst ($investorDetails->focusSocialImpact),
-                'Enviromental impact'   =>  $this->exst ($investorDetails->focusEnvImpact),
-                'Consumer type'         =>  $this->exst ($investorDetails->focusConsumerType),
-                'Languages'             =>  $this->exst ($investorDetails->focusLanguage),
-                'Countries'             =>  $this->exst ($investorDetails->focusCountry),
-                'Stage of business'     =>  $this->exst ($investorDetails->focusStageBusiness),
-                'Gender'                =>  $this->exst ($investorDetails->focusGender),
+                __('Industry')              =>  $this->exst ($investorDetails->focusIndustry),
+                __('Social impact')         =>  $this->exst ($investorDetails->focusSocialImpact),
+                __('Enviromental impact')   =>  $this->exst ($investorDetails->focusEnvImpact),
+                __('Consumer type')         =>  $this->exst ($investorDetails->focusConsumerType),
+                __('Languages')             =>  $this->exst ($investorDetails->focusLanguage),
+                __('Countries')             =>  $this->exst ($investorDetails->focusCountry),
+                __('Stage of business')     =>  $this->exst ($investorDetails->focusStageBusiness),
+                __('Gender')                =>  $this->exst ($investorDetails->focusGender),
             );
 
             foreach ( $multiValueProperties as $k => $v ) {
@@ -144,7 +144,7 @@ if ($investorDetails &&
                     }
                 }
 
-                $rowValues = array( 'City' => $this->getMultiValues( $focusCities, ', ' ) );
+                $rowValues = array( __('City') => $this->getMultiValues( $focusCities, ', ' ) );
 
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
@@ -156,13 +156,13 @@ if ($investorDetails &&
                 $this->exst( $investorDetails->maxInvestment, '' )
             );
 
-            $rowValues = array ('Investment size' => implode( $investmentSize, ' - ' ) );
+            $rowValues = array (__('Investment size') => implode( $investmentSize, ' - ' ) );
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Typical involvement
             //
             $typicalInvolvement = $this->exst ($investorDetails->typicalInvolvement);
-            $rowValues = array ('Typical involvement' => $typicalInvolvement);
+            $rowValues = array (__('Typical involvement') => $typicalInvolvement);
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
@@ -173,7 +173,7 @@ if ($investorDetails &&
 <?php
             // Additional Preferences
             //
-            $rowValues = array ('Other preferences' => $this->exst ($investorDetails->additionalPreferences));
+            $rowValues = array (__('Other preferences') => $this->exst ($investorDetails->additionalPreferences));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'label'));
 
 ?>
@@ -184,12 +184,12 @@ if ($investorDetails &&
 
             // Number Investments
             //
-            $rowValues = array ('Number of investments in the last 12 months' => $this->exst( $investorDetails->numberInvestments ));
+            $rowValues = array (__('Number of investments in the last 12 months') => $this->exst( $investorDetails->numberInvestments ));
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Total Investments
             //
-            $rowValues = array ('Total investments made in the last 12 months' => $this->exst( $investorDetails->totalInvestment ));
+            $rowValues = array (__('Total investments made in the last 12 months') => $this->exst( $investorDetails->totalInvestment ));
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
@@ -198,13 +198,13 @@ if ($investorDetails &&
 <?php
             // Previous investments
             //
-            echo '<h5>Previous investments</h5>';
+            echo '<h5>' . __('Previous investments') . '</h5>';
 
             $header = array(
-                'Name of Company'           => 'companyName',
-                'Amount invested'           => 'investment',
-                'Investment type'           => 'investmentType',
-                'URL of Company website'    => 'companyWebsite'
+                __('Name of Company')           => 'companyName',
+                __('Amount invested')           => 'investment',
+                __('Investment type')           => 'investmentType',
+                __('URL of Company website')    => 'companyWebsite'
             );
 
             echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered' );

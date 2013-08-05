@@ -2,17 +2,17 @@
 
     <!-- LOAD -->
     <div class="view viewLoad span12">
-        <span>Retrieving investor information...</span>
+        <span><?php _e('Retrieving investor information...'); ?></span>
     </div>
 
     <!-- CREATE -->
     <div class="view viewCreate span12">
-        <span>Creating investor...</span>
+        <span><?php _e('Creating investor...'); ?></span>
     </div>
 
     <!-- ERROR -->
     <div class="view viewError span12">
-        <h2>Error</h2>
+        <h2><?php _e('Error'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
@@ -23,11 +23,11 @@
 
             <div class="span3">
                 <ul class="nav nav-list nav-edit nav-editInvestor hidden-phone">
-                    <li><a href="#editInvestor/generalInformation">General information</a>
-                    <li><a href="#editInvestor/investmentPreferences">Investment preferences</a>
-                    <li><a href="#editInvestor/investmentHistory">Investment history</a>
-                    <li><a href="#editInvestor/references">References</a>
-                    <li><a href="#editInvestor/documents">Documents</a>
+                    <li><a href="#editInvestor/generalInformation"><?php _e('General information'); ?></a>
+                    <li><a href="#editInvestor/investmentPreferences"><?php _e('Investment preferences'); ?></a>
+                    <li><a href="#editInvestor/investmentHistory"><?php _e('Investment history'); ?></a>
+                    <li><a href="#editInvestor/references"><?php _e('References'); ?></a>
+                    <li><a href="#editInvestor/documents"><?php _e('Documents'); ?></a>
                 </ul>
             </div>
 
@@ -39,15 +39,15 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editInvestor/generalInformation"></span>
-                    <legend>General information</legend>
+                    <legend><?php _e('General information'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span12">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Describe yourself as investor</label>
+                                <label class="control-label"><?php _e('Describe yourself as investor'); ?></label>
                                 <div class="controls">
-                                    <textarea name="summary" placeholder="Please type the summary of yourself as investor" ></textarea>
+                                    <textarea name="summary" placeholder="<?php _e('Please type the summary of yourself as investor'); ?>" ></textarea>
                                 </div>
                             </div>
                         </div>
@@ -57,10 +57,10 @@
 
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Do you invest on behalf of an institution?</label>
+                                <label class="control-label"><?php _e('Do you invest on behalf of an institution?'); ?></label>
                                 <div class="controls">
-                                    <label class="radio inline"><input type="radio" value="true"  name="investsForInst" data-toggle="radio"/> Yes</label>
-                                    <label class="radio inline"><input type="radio" value="false" name="investsForInst" data-toggle="radio"/> No</label>
+                                    <label class="radio inline"><input type="radio" value="true"  name="investsForInst" data-toggle="radio"/> <?php _e('Yes'); ?></label>
+                                    <label class="radio inline"><input type="radio" value="false" name="investsForInst" data-toggle="radio"/> <?php _e('No'); ?></label>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                     <div class="row-fluid toggle toggle-investsForInst">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Institution type</label>
+                                <label class="control-label"><?php _e('Institution type'); ?></label>
                                 <div class="controls">
                                     <select name="investorType"></select>
                                 </div>
@@ -80,9 +80,9 @@
                     <div class="row-fluid toggle toggle-investsForInst">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Institution name</label>
+                                <label class="control-label"><?php _e('Institution name'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="institutionName" placeholder="Please type the name of the institution">
+                                    <input type="text" name="institutionName" placeholder="<?php _e('Please type the name of the institution'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -91,9 +91,9 @@
                     <div class="row-fluid toggle toggle-investsForInst">
                         <div class="span6">
                             <div class="control-group formfield" data-validation='{"typecheck": [{"url":{"text":"Please fill in a valid URL"}}]}'>
-                                <label class="control-label">Institution website</label>
+                                <label class="control-label"><?php _e('Institution website'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="institutionWebsite" placeholder="Please type the website of the institution">
+                                    <input type="text" name="institutionWebsite" placeholder="<?php _e('Please type the website of the institution'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -105,48 +105,46 @@
                             <input type="hidden" name="institutionAddress.coordinates"    />
 
                             <div class="control-group formfield">
-                                <label class="control-label">Country</label>
+                                <label class="control-label"><?php _e('Country'); ?></label>
                                 <div class="controls">
                                     <select name="institutionAddress.country" ></select>
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">City</label>
+                                <label class="control-label"><?php _e('City'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="institutionAddress.cityTown" placeholder="Please type your city" />
+                                    <input type="text" name="institutionAddress.cityTown" placeholder="<?php _e('Please type your city'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Street</label>
+                                <label class="control-label"><?php _e('Street'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="institutionAddress.street" placeholder="Please type your street" />
+                                    <input type="text" name="institutionAddress.street" placeholder="<?php _e('Please type your street'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Street number</label>
+                                <label class="control-label"><?php _e('Street number'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="institutionAddress.streetNumber" placeholder="Please type your street number" />
+                                    <input type="text" name="institutionAddress.streetNumber" placeholder="<?php _e('Please type your street number'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Postal code</label>
+                                <label class="control-label"><?php _e('Postal code'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="institutionAddress.postalCode" placeholder="Please type your postcode" />
+                                    <input type="text" name="institutionAddress.postalCode" placeholder="<?php _e('Please type your postcode'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Neighborhood</label>
+                                <label class="control-label"><?php _e('Neighborhood'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="institutionAddress.neighborhood" placeholder="Please type your neighborhood" />
+                                    <input type="text" name="institutionAddress.neighborhood" placeholder="<?php _e('Please type your neighborhood'); ?>" />
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="span6">
@@ -159,56 +157,56 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editInvestor/investmentPreferences"></span>
-                    <legend>Investment preferences</legend>
+                    <legend><?php _e('Investment preferences'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Industry</label>
+                                <label class="control-label"><?php _e('Industry'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="industry" placeholder="Focus industry">
+                                    <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Focus industry'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Languages</label>
+                                <label class="control-label"><?php _e('Languages'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusLanguage" class="bidx-tagsinput disabled" disabled data-bidxdatakey="language" placeholder="Languages">
+                                    <input type="text" autocomplete="off" name="focusLanguage" class="bidx-tagsinput disabled" disabled data-bidxdatakey="language" placeholder="<?php _e('Languages'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Social impact</label>
+                                <label class="control-label"><?php _e('Social impact'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusSocialImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="socialImpact" placeholder="Social impact">
+                                    <input type="text" autocomplete="off" name="focusSocialImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="socialImpact" placeholder="<?php _e('Social impact'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Environmental impact</label>
+                                <label class="control-label"><?php _e('Environmental impact'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusEnvImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="envImpact" placeholder="Environmental impact">
+                                    <input type="text" autocomplete="off" name="focusEnvImpact" class="bidx-tagsinput disabled" disabled data-bidxdatakey="envImpact" placeholder="<?php _e('Environmental impact'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Consumer type</label>
+                                <label class="control-label"><?php _e('Consumer type'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusConsumerType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="consumerType" placeholder="Consumer type">
+                                    <input type="text" autocomplete="off" name="focusConsumerType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="consumerType" placeholder="<?php _e('Consumer type'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Stage of business</label>
+                                <label class="control-label"><?php _e('Stage of business'); ?></label>
 
                                 <label class="checkbox" for="cbFocusStageBusinessStartup">
                                     <input type="checkbox" name="focusStageBusiness" value="startUp" id="cbFocusStageBusinessStartup" data-toggle="checkbox">
-                                    Startup
+                                    <?php _e('Startup'); ?>
                                 </label>
 
                                 <label class="checkbox" for="cbFocusStageBusinessEstablished">
                                     <input type="checkbox" name="focusStageBusiness" value="established" id="cbFocusStageBusinessEstablished" data-toggle="checkbox">
-                                    Established
+                                    <?php _e('Established'); ?>
                                 </label>
                             </div>
 
@@ -217,47 +215,47 @@
 
                                 <label class="checkbox" for="cbFocusGenderMale">
                                     <input type="checkbox" name="focusGender" value="m" id="cbFocusGenderMale" data-toggle="checkbox">
-                                    Male
+                                    <?php _e('Male'); ?>
                                 </label>
 
                                 <label class="checkbox" for="cbFocusGenderFemale">
                                     <input type="checkbox" name="focusGender" value="f" id="cbFocusGenderFemale" data-toggle="checkbox">
-                                    Female
+                                    <?php _e('Female'); ?>
                                 </label>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label">Investment type</label>
+                                <label class="control-label"><?php _e('Investment type'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="investmentType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="investmentType" placeholder="Investment type">
+                                    <input type="text" autocomplete="off" name="investmentType" class="bidx-tagsinput disabled" disabled data-bidxdatakey="investmentType" placeholder="<?php _e('Investment type'); ?>">
                                 </div>
                             </div>
 
                         </div>
 
                         <div class="span6">
-                            <h6>Location</h6>
+                            <h6><?php _e('Location'); ?></h6>
 
-                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country">Country / Countries</label>
-                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="city">City / Cities</label>
-                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="reach">Region</label>
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country"><?php _e('Country / Countries'); ?></label>
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="city"><?php _e('City / Cities'); ?></label>
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="reach"><?php _e('Region'); ?></label>
 
                             <div class="control-group formfield toggle toggle-focusLocationType toggle-focusLocationType-country">
-                                <label class="control-label">Country</label>
+                                <label class="control-label"><?php _e('Country'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusCountry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="country" placeholder="Country">
+                                    <input type="text" autocomplete="off" name="focusCountry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield toggle toggle-focusLocationType toggle-focusLocationType-city">
-                                <label class="control-label">City</label>
+                                <label class="control-label"><?php _e('City'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput" placeholder="City">
+                                    <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput" placeholder="<?php _e('City'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield  toggle toggle-focusLocationType toggle-focusLocationType-reach">
-                            <label class="control-label">Region</label>
+                            <label class="control-label"><?php _e('Region'); ?></label>
                                 <div class="controls">
                                     <input type="text" name="focusReach" data-type="location" data-type-arguments='{"showMap":"true","mapDimensions":"width:100%;height:400px;","setMarkers":"true", "drawCircle":"true"}' />
                                 </div>
@@ -269,16 +267,16 @@
                     <div class="row-fluid">
                     </div>
 
-                    <h4>Investment size</h4>
+                    <h4><?php _e('Investment size'); ?></h4>
 
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Minimal investment</label>
+                                <label class="control-label"><?php _e('Minimal investment'); ?></label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on">$</span>
-                                        <input type="number" name="minInvestment" placeholder="Minimal investment" min="0">
+                                        <input type="number" name="minInvestment" placeholder="<?php _e('Minimal investment'); ?>" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -286,11 +284,11 @@
 
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Maximum investment</label>
+                                <label class="control-label"><?php _e('Maximum investment'); ?></label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on">$</span>
-                                        <input type="number" name="maxInvestment" placeholder="Maximal investment" min="0">
+                                        <input type="number" name="maxInvestment" placeholder="<?php _e('Maximum investment'); ?>" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -301,9 +299,9 @@
                         <div class="span12">
 
                             <div class="control-group formfield">
-                                <label class="control-label">Other preferences (max. 60 words)</label>
+                                <label class="control-label"><?php _e('Other preferences (max. 60 words)'); ?></label>
                                 <div class="controls">
-                                    <textarea name="additionalPreferences" placeholder="Please type any additional preferences"></textarea>
+                                    <textarea name="additionalPreferences" placeholder="<?php _e('Please type any additional preferences'); ?>"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -313,14 +311,14 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editInvestor/investmentHistory"></span>
-                    <legend>Investment history</legend>
+                    <legend><?php _e('Investment history'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Number of investments in the last 12 months</label>
+                                <label class="control-label"><?php _e('Number of investments in the last 12 months'); ?></label>
                                 <div class="controls">
-                                    <input type="number" name="numberInvestments" placeholder="Number of investments">
+                                    <input type="number" name="numberInvestments" placeholder="<?php _e('Number of investments'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -329,11 +327,11 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Amount invested in the last 12 months</label>
+                                <label class="control-label"><?php _e('Amount invested in the last 12 months'); ?></label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on">$</span>
-                                        <input type="number" name="numberInvestments" placeholder="Number of investments">
+                                        <input type="number" name="numberInvestments" placeholder="<?php _e('Number of investments'); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -343,18 +341,18 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label">Typical involvement</label>
+                                <label class="control-label"><?php _e('Typical involvement'); ?></label>
                                 <div class="btn-group" data-toggle="buttons-radio" name="typicalInvolvement">
-                                  <button type="button" class="btn btn-primary" value="advisory">Advisory</button>
-                                  <button type="button" class="btn btn-primary" value="handsOn">Hands-On</button>
+                                  <button type="button" class="btn btn-primary" value="advisory"><?php _e('Advisory'); ?></button>
+                                  <button type="button" class="btn btn-primary" value="handsOn"><?php _e('Hands-On'); ?></button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="intermediate-row">
-                        <h6>Previous investment</h6>
-                        <a href="#addPreviousInvestment" class="btn btn-primary"><span class="fui-plus"></span>Add</a>
+                        <h6><?php _e('Previous investment'); ?></h6>
+                        <a href="#addPreviousInvestment" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add'); ?></a>
                     </div>
 
                     <div class="previousInvestmentContainer"></div>
@@ -363,10 +361,10 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editInvestor/references"></span>
-                    <legend>References</legend>
+                    <legend><?php _e('References'); ?></legend>
 
                     <div class="intermediate-row">
-                        <a href="#addReference" class="btn btn-primary"><span class="fui-plus"></span>Add</a>
+                        <a href="#addReference" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add'); ?></a>
                     </div>
 
                     <div class="referencesContainer"></div>
@@ -375,7 +373,7 @@
 
                 <fieldset class="well hideOnCreate">
                     <span class="scrollPositionMarker" id="editInvestor/documents"></span>
-                    <legend>Documents</legend>
+                    <legend><?php _e('Documents'); ?></legend>
 
                     <div class="formfield">
                         <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"investorprofileattachment"}], "addFields":["investorProfileId","domain"], "callback": "bidx.investorprofile.attachmentUploadDone"}'/>
@@ -394,91 +392,91 @@
         <!-- Previous Investment -->
         <div class="previousInvestmentsItem span6 well well-white">
             <div class="control-group formfield">
-                <label class="control-label">Company name</label>
+                <label class="control-label"><?php _e('Company name'); ?></label>
                 <div class="controls">
-                    <input type="text" name="companyName" placeholder="Please type the name">
+                    <input type="text" name="companyName" placeholder="<?php _e('Please type the name'); ?>">
                 </div>
             </div>
 
             <div class="control-group formfield">
-                <label class="control-label">Company web-site?</label>
+                <label class="control-label"><?php _e('Company web-site?'); ?></label>
                 <div class="controls">
-                    <input type="text" name="companyWebsite" placeholder="Please type the URL">
+                    <input type="text" name="companyWebsite" placeholder="<?php _e('Please type the URL'); ?>">
                 </div>
             </div>
 
             <div class="control-group formfield">
-                <label class="control-label">Amount invested</label>
+                <label class="control-label"><?php _e('Amount invested'); ?></label>
                 <div class="controls">
                     <div class="input-prepend">
                         <span class="add-on">$</span>
-                        <input type="number" name="investment" placeholder="Amount invested">
+                        <input type="number" name="investment" placeholder="<?php _e('Amount invested'); ?>">
                     </div>
                 </div>
             </div>
 
             <div class="control-group formfield">
-                <label class="control-label">Investment type</label>
+                <label class="control-label"><?php _e('Investment type'); ?></label>
                 <div class="controls">
                     <select name="investmentType"></select>
                 </div>
             </div>
 
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block">Remove this investment</a>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this investment'); ?></a>
         </div>
 
         <!-- Reference -->
         <div class="referencesItem span6 well well-white">
             <div class="control-group formfield">
-                <label class="control-label">First name</label>
+                <label class="control-label"><?php _e('First name'); ?></label>
                 <div class="controls">
-                    <input type="text" name="firstName" placeholder="Please type the first name">
+                    <input type="text" name="firstName" placeholder="<?php _e('Please type the first name'); ?>">
                 </div>
             </div>
 
             <div class="control-group formfield">
-                <label class="control-label">Last name</label>
+                <label class="control-label"><?php _e('Last name'); ?></label>
                 <div class="controls">
-                    <input type="text" name="lastName" placeholder="Please type the last name">
+                    <input type="text" name="lastName" placeholder="<?php _e('Please type the last name'); ?>">
                 </div>
             </div>
 
             <div class="control-group formfield">
-                <label class="control-label">Professional title</label>
+                <label class="control-label"><?php _e('Professional title'); ?></label>
                 <div class="controls">
-                    <input type="text" name="professionalTitle" placeholder="Please type the professional title">
+                    <input type="text" name="professionalTitle" placeholder="<?php _e('Please type the professional title'); ?>">
                 </div>
             </div>
 
             <div class="control-group formfield" >
-                <label class="control-label">LinkedIn profile</label>
+                <label class="control-label"><?php _e('LinkedIn profile'); ?></label>
                 <div class="controls">
-                    <input type="text" name="linkedIn" placeholder="Please type your LinkedIn profile url" />
+                    <input type="text" name="linkedIn" placeholder="<?php _e('Please type your LinkedIn profile url'); ?>" />
                 </div>
             </div>
 
-            <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"Please fill in a valid email address"}}]}'>
-                <label class="control-label">Email address</label>
+            <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"<?php _e('Please fill in a valid email address'); ?>"}}]}'>
+                <label class="control-label"><?php _e('Email address'); ?></label>
                 <div class="controls">
-                    <input type="email" name="emailAddress" placeholder="Please type your email address" />
-                </div>
-            </div>
-
-            <div class="control-group formfield">
-                <label class="control-label">Landline</label>
-                <div class="controls">
-                    <input type="text" name="contactDetail[0].landLine" placeholder="Please type your landline number" />
+                    <input type="email" name="emailAddress" placeholder="<?php _e('Please type your email address'); ?>" />
                 </div>
             </div>
 
             <div class="control-group formfield">
-                <label class="control-label">Mobile</label>
+                <label class="control-label"><?php _e('Landline'); ?></label>
                 <div class="controls">
-                    <input type="text" name="contactDetail[0].mobile" placeholder="Please type your mobile number" />
+                    <input type="text" name="contactDetail[0].landLine" placeholder="<?php _e('Please type your landline number'); ?>" />
                 </div>
             </div>
 
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block">Remove this reference</a>
+            <div class="control-group formfield">
+                <label class="control-label"><?php _e('Mobile'); ?></label>
+                <div class="controls">
+                    <input type="text" name="contactDetail[0].mobile" placeholder="<?php _e('Please type your mobile number'); ?>" />
+                </div>
+            </div>
+
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this reference'); ?></a>
         </div>
 
         <!-- Attachment -->
@@ -493,12 +491,12 @@
 
                     <div class="control-group formfield">
                         <div class="controls">
-                            <input type="text" name="purpose" placeholder="Short description">
+                            <input type="text" name="purpose" placeholder="<?php _e('Short description'); ?>">
                         </div>
                     </div>
 
                     <div class="control-group formfield">
-                        <label class="control-label">Document type</label>
+                        <label class="control-label"><?php _e('Document type'); ?></label>
                         <div class="controls">
                             <select name="documentType"></select>
                         </div>
@@ -506,7 +504,7 @@
                 </div>
             </div>
 
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block">Delete</a>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Delete'); ?></a>
         </div>
     </div>
 

@@ -46,11 +46,11 @@ $groupInfo = $this->exst ($this->data->groupInfo);
 if( $showGroup ) { ?>
 <div class="well sidebar-block">
     <!-- Joined Group -->
-    <h3>Joined groups</h3>
+    <h3><?php _e('Joined groups'); ?></h3>
 
 <?php
     foreach( $groupDetails as $groupValue) {
-        $joinLink = ($this->exst($groupValue->join)) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>Join</a>":'';
+        $joinLink = ($this->exst($groupValue->join)) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>" . __('Join') . "</a>":'';
         $groupDataSrc = false;
               $picSrc     = $this->exst($groupValue->logo);
 
