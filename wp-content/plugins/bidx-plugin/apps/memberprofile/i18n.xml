@@ -1,4 +1,6 @@
 <I18N>
     <Item value="selectOutcomeBusiness">Select the outcome of this business</Item>
-    <Item value="noProfileEditPermission">You do not have the rights to edit this profile</Item>
+    <Item value="selectInvestmentType">Select the investment type</Item>
+    <Item value="selectInvestor">Select your investor</Item>
+    <Item value="selectCountry">Select the country</Item>
 </I18N>
