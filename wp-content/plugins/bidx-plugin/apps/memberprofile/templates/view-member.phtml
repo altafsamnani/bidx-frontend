@@ -65,7 +65,7 @@ $entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
                 $dateofBirth = $this->exst($personalDetails->dateOfBirth);
                 $highestEducation = $this->exst($personalDetails->highestEducation);
 
-                $rowValues = array ($professionalTitle,
+                $rowValues = array ( $this->exst($professionalTitle),
                 __('gender') => $gender,
                 __('nationality') => $nationality,
                 date('j F Y', strtotime ($dateofBirth)),
