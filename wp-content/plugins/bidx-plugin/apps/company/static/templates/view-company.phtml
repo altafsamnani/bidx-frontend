@@ -17,7 +17,7 @@ if (!$picSrc) {
     <?php } ?>
     </div>
 
-    <h4>Company details</h4>
+    <h4><?php _e('Company details'); ?></h4>
 
     <div class="row-fluid">
         <div class="span8">
@@ -26,17 +26,17 @@ if (!$picSrc) {
     $options = array( 'class_label' => 'bidx-label' );
 
     echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-        array( 'Company name' => $this->exst($this->company->name )), $options );
+        array( __('Company name') => $this->exst($this->company->name )), $options );
 
     echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-        array( 'Company website' => $this->exst($this->company->website )), $options );
+        array( __('Company website') => $this->exst($this->company->website )), $options );
 
     if (!empty($this->company->registered)) {
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Date of registration' =>   date( 'j F Y', strtotime( $this->company->dateCompanyEstab ))), $options );
+            array( __('Date of registration') =>   date( 'j F Y', strtotime( $this->company->dateCompanyEstab ))), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Legal form of business' => $this->exst($this->company->legalFormBusiness)), $options );
+            array( __('Legal form of business') => $this->exst($this->company->legalFormBusiness)), $options );
 
         $statutoryAddress = $this->exst($this->company->statutoryAddress);
 
@@ -55,7 +55,7 @@ if (!$picSrc) {
         }
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Statutory address' => implode( ' ', $arStatutoryAddress )), $options );
+            array( __('Statutory address') => implode( ' ', $arStatutoryAddress )), $options );
 
         $arStatutoryCityCountry = array();
 
@@ -68,23 +68,23 @@ if (!$picSrc) {
         }
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Statutory city, country' => implode( ' ', $arStatutoryCityCountry )), $options );
+            array( __('Statutory city, country') => implode( ' ', $arStatutoryCityCountry )), $options );
 
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Fiscal number' => $this->exst($this->company->fiscalNumber)), $options );
+            array( __('Fiscal number') => $this->exst($this->company->fiscalNumber)), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Company registration number' => $this->exst($this->company->registrationNumber)), $options );
+            array( __('Company registration number') => $this->exst($this->company->registrationNumber)), $options );
     }
 
     if ($this->exst($this->company->numPermFemaleEmpl) || $this->exst($this->company->numPermMaleEmpl) || $this->exst($this->company->numTempFemaleEmpl) || $this->exst($this->company->numTempMaleEmpl)) {
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Number of permanent female employees' => $this->exst($this->company->numPermFemaleEmpl)), $options );
+            array( __('Number of permanent female employees') => $this->exst($this->company->numPermFemaleEmpl)), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Number of permanent male employees' => $this->exst($this->company->numPermMaleEmpl)), $options );
+            array( __('Number of permanent male employees') => $this->exst($this->company->numPermMaleEmpl)), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Number of temporary female employees' => $this->exst($this->company->numTempFemaleEmpl)), $options );
+            array( __('Number of temporary female employees') => $this->exst($this->company->numTempFemaleEmpl)), $options );
         echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( 'Number of temporary male employees' => $this->exst($this->company->numTempMaleEmpl)), $options );
+            array( __('Number of temporary male employees') => $this->exst($this->company->numTempMaleEmpl)), $options );
     }
 ?>
         </div>
