@@ -95,7 +95,7 @@
 
     // Was data preloaded?
     //
-    if ( bidx.data.__preload )
+    if ( bidx.data && bidx.data.__preload )
     {
         var preload;
 
