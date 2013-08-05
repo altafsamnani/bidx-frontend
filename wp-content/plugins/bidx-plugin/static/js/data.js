@@ -6,6 +6,12 @@
     var bidx                = window.bidx
     ;
 
+    // TODO: remove this when staticdata is moved to window.bidx.data.__preload
+    //
+    if ( !bidx.data || !bidx.data.__preload )
+    {
+        bidx.data = { __preload: staticdata };
+    }
 
         // Internal administration of cached items, let's keep it for now in an object, maybe later sync it to localstorage
         //
