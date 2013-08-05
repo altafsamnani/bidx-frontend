@@ -16,14 +16,14 @@ class Generic
         $dep = array ();
         switch ($widgetType) {
             case 'auth' :
-                $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data');
+                $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n');
                 if (strpos ($uri, 'member')) {
                     $dep[] = 'memberprofile';
                 }
                 break;
 
             case 'company' :
-                $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data' ,'businessplan');
+                $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n', 'businessplan');
                 if (strpos ($uri, 'business')) {
                     $dep[] = 'businessplan';
                 }

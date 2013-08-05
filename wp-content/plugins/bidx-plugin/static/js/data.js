@@ -53,7 +53,7 @@
         //
         // TODO: proper implementation, currently no API available... shouldn't end up here
         //
-       /* if ( first )
+        if ( first )
         {
             bidx.api.call(
                 "STATIC_DATA.TO_BE_DEFINED" // TODO: what API to call for this?
@@ -74,10 +74,12 @@
                 ,   error:          function( data )
                     {
                         bidx.utils.error( "problem retrieving static data" );
+
+                        cb( new Error( "problem retrieving static data"     ));
                     }
                 }
             );
-        } */
+        }
     };
 
     // Internal setter of cache items
@@ -91,6 +93,30 @@
         };
     };
 
+    // Was data preloaded?
+    //
+    if ( bidx.data.__preload )
+    {
+        var preload;
+
+        try
+        {
+            preload = $.parseJSON( bidx.data.__preload );
+        }
+        catch ( e )
+        {
+            bidx.utils.error( "Problem parsing data preload data" );
+        }
+
+        if ( preload )
+        {
+            $.each( preload, function ( idx, item )
+            {
+                setItem( idx, item);
+            } );
+        }
+    }
+
     // Exports
     //
     if ( !window.bidx )
@@ -102,11 +128,6 @@
     {
         getItem:                    getItem
     ,   setItem:                    setItem
-
-        // DEV API
-        // !! do not use directly
-    ,   _setItem:                   setItem
-        // END DEV API
     };
 } ( jQuery ));
 
@@ -116,13 +137,6 @@
 //
 ( function()
 {
-       var staticVar = jQuery.parseJSON(staticdata);
-      
-       $.each( staticVar, function ( idx, item )
-       {
-             window.bidx.data.setItem( idx, item);
-
-       } );
   /*   window.bidx.data._setItem( "businessOutcome",
     [
         {
