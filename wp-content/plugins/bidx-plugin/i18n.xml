@@ -1,4 +1,4 @@
 <I18N>
-    <Item id="btnNext">Next</Item>
-    <Item id="frmFieldRequired">This field is required</Item>
+    <Item value="btnNext">Next</Item>
+    <Item value="frmFieldRequired">This field is required</Item>
 </I18N>

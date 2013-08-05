@@ -328,24 +328,44 @@ function clear_bidx_cookies ()
  * @version 1.0
  *
  * Flush the bidx Wordpress PHP Session Variables
- * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_createstaticpo
+ * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_createpo
  *
  */
 
-add_action ('wp_ajax_bidx_createstaticpo', 'create_bidx_static_po');
+add_action ('wp_ajax_bidx_createpo', 'create_bidx_po');
 
-function create_bidx_static_po ()
+function create_bidx_po ()
 {
-    if (is_site_admin) {
+    if (is_super_admin()) {
+        //$pre_data = bidx_wordpress_pre_action ('staticpo');
+       // $params = $pre_data['params'];
+        $lang = (isset($_GET['lang'])) ? $_GET['lang'] : NULL ;
         //force some filters
-        $pre_data = bidx_wordpress_pre_action ('staticpo');
-        $params = $pre_data['params'];
-        $lang = $_GET['lang'];
+        $type = (isset($_GET['type'])) ? $_GET['type'] : NULL ;
+        switch($type) {
 
-        $result = call_bidx_service ('staticdata', NULL, 'GET');
+            case 'static' :
+                $result = call_bidx_service ('staticdata', NULL, 'GET');
+                $requestData = bidx_wordpress_post_action ('staticpo', $result, $_GET);
+                $po = $requestData->po;
+                break;
+         
+            case 'module' :                
+                $pathName = $_GET['path'];
+                $fileName = $pathName . '/i18n.xml';
+         
+                $document = simplexml_load_file ($fileName);
+                $items = $document->xpath ('//Item');            
+                $po = other_wordpress_post_action('pocreate', $items , $_GET);
 
-        $requestData = bidx_wordpress_post_action ('staticpo', $result, $_GET);
-        $po = $requestData->po;
+
+        }
+        
+
+        
+
+        
+        
 
         if($lang) {
             $popot = 'po';
@@ -366,6 +386,40 @@ function create_bidx_static_po ()
     } else {
         die('Nice Try!');
     }
+}
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Check Bidx Service Response
+ *
+ * @param bool $echo
+ */
+function other_wordpress_post_action ($url, $result, $body)
+{
+    switch ($url) {
+        case 'pocreate' :
+            $count = 1;
+            $po = '';
+            foreach ($result as $xmlObj) {
+                $msgId = $xmlObj->__toString ();
+                $arr = $xmlObj->attributes ();
+                $msgcTxt = $arr['value'];
+                $msgStr = (isset($body['lang'])) ? $body['lang'] . $msgId : '';
+                $po .= '#'. $count.'. Context '.$msgcTxt.' TextDomain '.$body['app']. PHP_EOL;
+                $po .= '#  _e("'.$msgId.'", "'.$msgcTxt.'", "'.$body['app'].'");'. PHP_EOL;
+                $po .= 'msgctxt "' . str_replace ('"', '\"', $msgcTxt) . '"' . PHP_EOL;
+                $po .= 'msgid "' . str_replace ('"', '\"', $msgId) . '"' . PHP_EOL;
+                $po .= 'msgstr "' . str_replace ('"', '\"', $msgStr) . '"' . PHP_EOL;
+                $po .= PHP_EOL;
+               
+                $count++;
+            }
+            return $po;
+            break;
+    }
+    exit;
 }
 
 /*
@@ -1629,10 +1683,55 @@ add_action ('network_admin_menu', 'alter_network_menu');
 function bidx_options() {
     /* 1 Create Bidx Static PO */
 	if ( current_user_can( 'manage_options' ) )  {
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createstaticpo'>here</a> to create static PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createstaticpo&lang=fr'>here</a> to create static Demo Fr PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createstaticpo&lang=es'>here</a> to create static Demo ES PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createstaticpo&lang=ar'>here</a> to create static Demo Ar PO <br/>";
+
+        $pluginDir = WP_PLUGIN_DIR.'/bidx-plugin/apps';
+        /* 1. Bidx Static Pot Generator*/
+        echo "<b>Bidx Static Pot Generator</b><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static'>here</a> to create static PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=es'>here</a> to create static Demo ES PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=ar'>here</a> to create static Demo Ar PO <br/><br/>";
+
+        /* 2. Bidx Common Apps*/
+        echo "<b>Bidx Common Apps Pot Generator</b><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Common Apps PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Common Apps Demo Fr PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Common Apps Demo ES PO <br/><br/>";
+
+
+        /* 2. Bidx Module Apps*/
+         echo "<b>Bidx Apps Pot Generator</b><br/>";
+        
+     
+        $pluginDirIterator = new RecursiveDirectoryIterator($pluginDir, FilesystemIterator::SKIP_DOTS);
+        
+        
+        $it  = new RecursiveIteratorIterator($pluginDirIterator, RecursiveIteratorIterator::SELF_FIRST);
+     
+        // Maximum depth is 1 level deeper than the base folder
+        $it->setMaxDepth(0);
+
+        // Basic loop displaying different messages based on file or folder
+        $count = 1;
+        foreach ($it as $fileinfo) {
+            if ($fileinfo->isDir ()) {
+                $dirName = $fileinfo->getFilename ();
+                $dirPath = $fileinfo->getPathname ();
+                echo "<b>".$count.") ".$dirName."</b><br/>";
+                echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&path=".$dirPath."&app=".$dirName."'>here</a> to create ".$dirName." PO <br/>";
+                echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=".$dirPath."&app=".$dirName."'>here</a> to create ".$dirName." Demo Fr PO <br/>";
+                echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=".$dirPath."&app=".$dirName."'>here</a> to create ".$dirName." Demo ES PO <br/><br/>";
+                $count++;
+                
+            }
+        }
+
+
+        //echo "<b>Bidx Static Pot Generator</b>";
+        //echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=common'>here</a> to create Common Apps PO <br/>";
+
+
+
+
     } else {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
