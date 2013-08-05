@@ -2,13 +2,13 @@
 	<div class="bottom-menu bottom-menu-inverse navbar-fixed-bottom">
 		<div class="container">
 			<div class="row">
-				<div class="span2">@ 2013. bidX.net</div>
+				<div class="span2">@ <?php echo date("Y") ?>. bidX.net </div>
 
 				<div class="span6">
 					<ul class="bottom-links">
-						<li><a href="#fakelink">About Us</a></li>
-						<li><a href="#fakelink">Store</a></li>
-						<li><a href="#fakelink">Links</a></li>
+						<li><a href="#fakelink"><?php _e('About Us')?></a></li>
+						<li><a href="#fakelink"><?php _e('Store')?></a></li>
+						<li><a href="#fakelink"><?php _e('Links')?></a></li>
 					</ul>
 				</div>
 

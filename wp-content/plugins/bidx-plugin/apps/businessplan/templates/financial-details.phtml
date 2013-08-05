@@ -205,9 +205,9 @@
                 </tr>
             </thead>
             <tfoot>
-                <tr class="tax">
+                <tr class="net-profit">
                     <td class="item-spacer"></td>
-                    <td class="item-label"><?php _e('Tax'); ?></td>
+                    <td class="item-label"><?php _e('Net profit'); ?></td>
                     <td class="item-value"> $ 00,00 </td>
                 </tr>
             </tfoot>
@@ -264,18 +264,24 @@
                     <td class="item-value"> $ 00,00 </td>
                 </tr>
 
-                <tr class="ignore spacer">
+<!--                 <tr class="ignore spacer">
                     <td colspan="7"></td>
-                </tr>
+                </tr> -->
 
                 <tr class="total-profit-before-tax total">
                     <td class="item-spacer"></td>
                     <td class="item-label"><?php _e('Total profit before tax'); ?></td>
                     <td class="item-value"> $ 00,00 </td>
                 </tr>
-                <tr class="ignore spacer">
+                <tr class="tax">
+                    <td class="item-spacer"></td>
+                    <td class="item-label"><?php _e('Tax'); ?></td>
+                    <td class="item-value"> $ 00,00 </td>
+                </tr>
+                <!-- <tr class="ignore spacer">
                     <td colspan="7"></td>
                 </tr>
+                 -->
             </tbody>
 
         </table>

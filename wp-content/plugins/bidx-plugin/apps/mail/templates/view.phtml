@@ -6,9 +6,9 @@
 
     <!-- Left menu -->
     <div class="span2 side-menu well">
-        <a class="btn btn-large btn-block btn-info" href="#mail/compose">Compose</a>
-        <a class="btn btn-large btn-block" href="#mail/inbox">Inbox</a>
-        <a class="btn btn-large btn-block" href="#mail/sent">Sent</a>
+        <a class="btn btn-large btn-block btn-info" href="#mail/compose"><?php _e('Compose')?></a>
+        <a class="btn btn-large btn-block" href="#mail/inbox"><?php _e('Inbox')?></a>
+        <a class="btn btn-large btn-block" href="#mail/sent"><?php _e('Sent')?></a>
 <!--         <a class="btn btn-large btn-block" href="#drafts">Drafts</a>
         <a class="btn btn-large btn-block" href="#archived">Archived</a>
         <a class="btn btn-large btn-block" href="#trash">Trash</a> -->
@@ -18,14 +18,14 @@
     <section class="span10 well mail">
 
         <!-- ************************* utility views *********************************** -->
-        <article class="view viewLoad">Loading...</article>
+        <article class="view viewLoad"><?php _e('Loading...')?></article>
 
         <article class="view viewError">
-            <h1>Error</h1>
+            <h1><?php _e('Error')?></h1>
             <span class="errorMsg"></span>
         </article>
 
-        <article class="view viewUndefined"><h1>No view defined for this state</h1></article>
+        <article class="view viewUndefined"><h1><?php _e('No view defined for this state')?></h1></article>
 
 
         <!-- ************************* application views *********************************** -->
@@ -53,9 +53,9 @@
                         </label>
                     </div>
                     <div class="btn-group">.
-                        <a class="btn btn-small btn-primary" href="#fakelink">Delete</a>
-                        <a class="btn btn-small btn-primary" href="#fakelink">Mark read</a>
-                        <a class="btn btn-small btn-primary" href="#fakelink">Mark unread</a>
+                        <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Delete')?></a>
+                        <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Mark read')?></a>
+                        <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Mark unread')?></a>
                     </div>
 
 
@@ -66,7 +66,7 @@
                     <li class="media">
                         <div class="pull-left check"></div>
                         <div class="pull-left">
-                            Loading...
+                            <?php _e('Loading...')?>
                         </div>
                     </li>
 
@@ -95,17 +95,15 @@
               <!-- TOOLBAR -->
             <div class="mail-toolbar">
                 <div class="btn-group">
-                    <a class="btn btn-small btn-primary" href="#/mail/#mail/reply/">Reply</a>
-                    <!-- <a class="btn btn-small btn-primary" href="#fakelink">Reply All</a> -->
-                    <a class="btn btn-small btn-primary" href="/mail/#mail/forward/">Forward</a>
-                    <a class="btn btn-small btn-primary" href="/mail/#mail/deleteConfirm/">Delete</a>
-<!--                     <a class="btn btn-small btn-primary" href="#fakelink">Report</a> -->
+                    <a class="btn btn-small btn-primary" href="#/mail/#mail/reply/"><?php _e('Reply')?></a>
+                    <a class="btn btn-small btn-primary" href="/mail/#mail/forward/"><?php _e('Forward')?></a>
+                    <a class="btn btn-small btn-primary" href="/mail/#mail/deleteConfirm/"><?php _e('Delete')?></a>
                 </div>
             </div>
 
                 <div class="row-fluid">
                     <div class="span12 mail-message">
-                        Loading...
+                        <?php _e('Loading...')?>
                     </div>
                 </div>
 
@@ -119,7 +117,7 @@
             <form action="">
                 <div class="row-fluid">
                     <div class="controls">
-                        <input type="text" name="contacts" class="bidx-tagsinput defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="Recipient">
+                        <input type="text" name="contacts" class="bidx-tagsinput defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Recipient')?>">
 
 
                     </div>
@@ -128,20 +126,20 @@
                 <div class="row-fluid">
                     <div class="input-prepend">
                         <span class="add-on">Subject</span>
-                        <input id="prependedInput" type="text" name="subject" placeholder="Your subject goes here...">
+                        <input id="prependedInput" type="text" name="subject" placeholder="<?php _e('Your subject goes here...')?>">
                     </div>
                 </div>
                 <div class="row-fluid">
                     <div class="span12">
-                        <textarea name="content" placeholder="Please type your message here.."></textarea>
+                        <textarea name="content" placeholder="<?php _e('Please type your message here..')?>"></textarea>
                     </div>
                 </div>
                 <div class="pull-left">
-                    <button type="submit" class="btn btn-primary compose-submit">Send message</button>
+                    <button type="submit" class="btn btn-primary compose-submit"><?php _e('Send message')?></button>
 
                 </div>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-primary compose-cancel">Discard message --> ADD CONFIRM!!!</button>
+                    <button type="button" class="btn btn-primary compose-cancel"><?php _e('Discard message')?> --> ADD CONFIRM!!!</button>
                 </div>
 
             </form>
@@ -153,16 +151,16 @@
             <div class="modal hide fade bidx-modal-deleteEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel">Delete message</h3>
+                    <h3 id="myModalLabel"><?php _e('Delete message')?></h3>
                 </div>
                 <div class="modal-body">
                 <p>
-                    You are about to remove this message. Are you sure?
+                    <?php _e('You are about to remove this message. Are you sure?')?>
                 </p>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-                    <a class="btn btn-primary" href="/mail/#mail/delete/">Delete message</a>
+                    <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close')?></a>
+                    <a class="btn btn-primary" href="/mail/#mail/delete/"><?php _e('Delete message')?></a>
                 </div>
             </div>
         </article>
@@ -184,7 +182,7 @@
     </a>
     <div class="media-body">
         <div class="row-fluid">
-            <div class="span10"><h6 class="media-heading"><span class="placeholder sendername">SENDER UNKNOWN IN API</span></h6></div>
+            <div class="span10"><h6 class="media-heading"><span class="placeholder sendername"><?php _e('SENDER UNKNOWN IN API')?></span></h6></div>
             <div class="span2"><span class="placeholder sentDate"/></div>
         </div>
         <div class="subject">

@@ -39,7 +39,7 @@ h5 {
 
 p {
     font-size:              14px;
-    color:                  #666;   
+    color:                  #666;
 }
 
 hr {
@@ -386,9 +386,9 @@ footer .page-footer .footer-bar {
 
         footer .page-footer .follow-us,
         footer .page-footer .copyright  {
-           margin-right:                   20px; 
+           margin-right:                   20px;
         }
-          
+
 
             footer .page-footer .inline-list > div {
                 display: inline;
@@ -502,7 +502,7 @@ body.home .hero-block {
 .howitworks-generaterevenues {
     background-position:    -250px 0;
 }
-                                
+
 .home .notaserviceprovider {
     margin-bottom:          50px;
 }
@@ -636,7 +636,7 @@ body.home .hero-block {
     article.page ul {
         margin: 15px 0;
     }
-    
+
     .testp:after {
 
         content: .testp > img.attr(title);
@@ -700,7 +700,7 @@ body.home .hero-block {
 ********************************************************************************************/
 /*
 .row-fluid textarea, .row-fluid input[type="text"], .row-fluid input[type="password"], .row-fluid input[type="datetime"], .row-fluid input[type="datetime-local"], .row-fluid input[type="date"], .row-fluid input[type="month"], .row-fluid input[type="time"], .row-fluid input[type="week"], .row-fluid input[type="number"], .row-fluid input[type="email"], .row-fluid input[type="url"], .row-fluid input[type="search"], .row-fluid input[type="tel"], .row-fluid input[type="color"], .row-fluid .uneditable-input {
-    height:             21px;   let's just use the same height as a regular row 
+    height:             21px;   let's just use the same height as a regular row
 }*/
 
 
@@ -717,9 +717,9 @@ body.home .hero-block {
     .formfield input {
       border:0px;
 
-      -moz-box-sizing: border-box; 
-      -webkit-box-sizing: border-box; 
-      box-sizing: border-box; 
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
 
     }
 
@@ -828,18 +828,18 @@ body.home .hero-block {
 *   Responsive breakpoints
 *
 ********************************************************************************************/
-  
+
     /* Large desktop */
     @media (min-width: 1200px) {
 
 
-      
+
 
     }
 
     /* styles shared by portrait tablet and above */
     @media (min-width: 980px ) {
-        
+
         /* navigation styles*/
 
         header .navbar {
@@ -868,7 +868,7 @@ body.home .hero-block {
                 margin-right:5px;
             }
             header .navbar .nav > li  {
-                
+
                 margin-right:5px;
             }
             header .navbar .nav > li:last-child {
@@ -877,9 +877,9 @@ body.home .hero-block {
             header .navbar .nav > li.active > a, .navbar .nav > li.active > a:hover, .navbar .nav > li.active > a:focus{
                 background-color: #32495E;
                 color: #fff;
-                
+
             }
-            
+
             header.navbar .nav > li > a:hover,
             header .navbar .nav > li > a:focus,
             header .navbar .nav li.dropdown.open > .dropdown-toggle {
@@ -888,7 +888,7 @@ body.home .hero-block {
             }
 
             header .navbar .nav li.dropdown.open > .dropdown-toggle .caret,
-            header .navbar .nav li.dropdown > .dropdown-toggle:hover .caret, 
+            header .navbar .nav li.dropdown > .dropdown-toggle:hover .caret,
             header .navbar .nav li.dropdown > .dropdown-toggle:focus .caret
             {
                 border-bottom-color: #32495E !important;
@@ -959,21 +959,21 @@ body.home .hero-block {
             }
 
     }
-     
+
 
     /* Landscape phones and down */
-    @media  (max-width: 979px) { 
+    @media  (max-width: 979px) {
         body {
             padding-left: 20px;
             padding-right :20px;
         }
 
         .page-intro .hero, .hero-block, footer {
-        
+
             margin-left: -20px;
            margin-right: -20px;
         }
-         
+
 
         footer > div {
             padding-left: 20px;
@@ -988,12 +988,12 @@ body.home .hero-block {
         header .menu-main {
             position: static;
             margin-left: -20px;
-            margin-right: -20px;                
+            margin-right: -20px;
         }
 
         header .navbar {
             margin-bottom: 0;
-        }   
+        }
             .navbar .nav ul {
                 -webkit-border-radius: 0px;
                 -moz-border-radius: 0px;
@@ -1020,10 +1020,10 @@ body.home .hero-block {
             }
 
             .navbar .menu-main .btn {
-                margin-top: 0px; 
+                margin-top: 0px;
                 text-align: left;
             }
-            
+
                 /*.menu-main .nav.menu li.active {
                     color: red;
                 }*/
@@ -1034,7 +1034,7 @@ body.home .hero-block {
                     background-color: #3498db;
                     color: white;
                     margin-bottom: 0px;
-                    margin-left: 0;   
+                    margin-left: 0;
                     text-align: left;
                 }
 
@@ -1050,7 +1050,7 @@ body.home .hero-block {
                 }
                 .menu-main li {
                     border-bottom: 1px solid white;
-                }   
+                }
 
                 .menu-main .dropdown-menu li:last-child {
                     border-bottom: 0px;
@@ -1063,15 +1063,15 @@ body.home .hero-block {
                  .navbar .nav li.dropdown.open.active>.dropdown-toggle {
                     background-color: #34495e;
                     border-radius: 0;
-                    color: #1abc9c;                  
-                
-               
+                    color: #1abc9c;
+
+
                 }
 
                 /* Submenu styles: flat-ui overrule*/
                 .navbar .nav li.dropdown.open:hover > .dropdown-toggle {
                     border-bottom: 1px solid white;
-                     color: #1abc9c;                  
+                     color: #1abc9c;
                 }
 
                 /*.navbar .nav > li.dropdown:hover {
@@ -1080,7 +1080,7 @@ body.home .hero-block {
                 .navbar .nav > li.dropdown:hover > a {
                     border-radius: 0;
                     margin-bottom: 0px;
-                    
+
                 }*/
                    .navbar .nav > li.dropdown:hover .dropdown-menu {
                         margin: 0;
@@ -1090,9 +1090,9 @@ body.home .hero-block {
                     .navbar .nav > li.dropdown:hover .dropdown-menu li, .navbar .nav > li.dropdown.open .dropdown-menu li {
                         padding: 0;
                         margin-bottom: 0;
-                        
+
                     }
-                    .navbar .nav li.dropdown .dropdown-menu li a { 
+                    .navbar .nav li.dropdown .dropdown-menu li a {
                         color: white;
                         padding-left: 40px;
                         border-radius: 0;
@@ -1112,7 +1112,7 @@ body.home .hero-block {
                    */
 
 
-   
+
         /* general override to ditch caret from menu's*/
         li a .caret {
             display: none;
@@ -1141,9 +1141,9 @@ body.home .hero-block {
             -moz-border-radius: 5px 5px 0 0;
             border-radius: 5px 5px 0 0;
 
-            
+
         }
-            
+
 
 
         /* end contact page */
