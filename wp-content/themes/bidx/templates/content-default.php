@@ -1,12 +1,12 @@
 <?php if (!have_posts()) : ?>
 <div>
 	<div class="alert">
-    	<?php _e('Sorry, no results were found.', 'roots'); ?>
+    	<?php _e('Sorry, no results were found.'); ?>
   	</div>
   	<?php get_search_form(); ?>
-</div>	  	
+</div>
 <?php endif; ?>
-<?php while (have_posts()) : the_post(); 
+<?php while (have_posts()) : the_post();
 	//$content = get_the_content();
 	$content = get_the_content_feed(); //Mattijs 10/7/2013: get_the_content doesnot apply shortcode filtering
 	$blocks = explode('<hr />', $content)
@@ -14,15 +14,15 @@
 
 
 <article <?php post_class(); ?>>
-	
-	<?php 
+
+	<?php
 		//include hero banner (which requires the array $blocks)
 		require_once("inner-hero.php");
 	?>
 	<div class="container">
 		<br />
-	
-		<?php 
+
+		<?php
 			unset($blocks[0]);
 
 			$array = array_values($blocks);
@@ -32,11 +32,11 @@
 					<?php echo $block ?>
 				</div>
 				<hr>
- 		<?php 
- 			} 
+ 		<?php
+ 			}
  		?>
 	</div>
-	
+
 	<footer>
 		<!-- widget space -->
 		<div class="container">
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 	</footer>
-	
+
 </article>
 <?php endwhile; ?>
-    
+
