@@ -5,7 +5,7 @@
     ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                   = $element.find( ".snippets" )
 
-    ,   $hideOnCreate                   = $element.find( ".hideOnCreate" )
+    ,   $hideOnCreate               = $element.find( ".hideOnCreate" )
 
     ,   $attachmentsContainer       = $editForm.find( ".attachmentsContainer" )
     ,   $cvContainer                = $editForm.find( ".cvContainer" )
@@ -24,6 +24,8 @@
     ,   entrepreneurProfileId
     ,   bidx            = window.bidx
     ,   snippets        = {}
+
+    ,   appName         = "memberprofile"
     ;
 
     // Form fields
@@ -59,16 +61,26 @@
 
     bidx.data.getItem( "businessOutcome", function( err, businessOutcomes )
     {
-        var $businessOutcome = snippets.$previousBusiness.find( "[name='businessOutcome']" );
-        $businessOutcome.append( $( "<option value='' />" ).text( "Select the outcome of this business" ));
+        var $businessOutcome    = snippets.$previousBusiness.find( "[name='businessOutcome']" )
+        ,   $noValue            = $( "<option value='' />" )
+        ;
+
+        $noValue.i18nText( "selectOutcomeBusiness", appName );
+
+        $businessOutcome.append( $noValue );
 
         bidx.utils.populateDropdown( $businessOutcome, businessOutcomes );
     } );
 
     bidx.data.getItem( "documentType", function( err, documentTypes )
     {
-        var $documentType = snippets.$attachment.find( "[name='documentType']" );
-        $documentType.append( $( "<option value='' />" ).text( "Select the type" ));
+        var $documentType   = snippets.$attachment.find( "[name='documentType']" )
+        ,   $noValue        = $( "<option value='' />" )
+        ;
+
+        $noValue.i18nText( "selectDocumentType" );
+
+        $documentType.append( $noValue );
 
         bidx.utils.populateDropdown( $documentType, documentTypes );
     } );
@@ -165,7 +177,11 @@
                 ,   success:            function( response )
                     {
                         bidx.utils.log( "bidx::entityDocument::destroy::success", response );
-                        bidx.common.notifySuccess( "Attachment deleted" );
+
+                        bidx.i18n.getItem( "attachmentDeleted", function( err, label )
+                        {
+                            bidx.common.notifySuccess( label );
+                        });
 
                         cb();
 
@@ -175,7 +191,10 @@
                     {
                         bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
 
-                        alert( "Problems deleting attachment" );
+                        bidx.i18n.getItem( "errAttachmentDelete", function( err, label )
+                        {
+                            alert( label );
+                        } );
 
                         cb();
                     }
@@ -372,15 +391,14 @@
         $cvContainer.find( ".noCV"  ).hide();
         $cvContainer.find( ".hasCV" ).hide();
 
-
         // Inject the save and button into the controls
         //
         var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
         ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  })
         ;
 
-        $btnSave.text( "Save profile" );
-        $btnCancel.text( "Cancel" );
+        $btnSave.i18nText( "btnSaveProfile" );
+        $btnCancel.i18nText( "btnCancel" );
 
         bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 
@@ -464,7 +482,11 @@
 
                         if ( !canEdit )
                         {
-                            _showError( "You do not have the rights to edit this profile" );
+                            bidx.i18n.getItem( "noProfileEditPermission", function( err, label )
+                            {
+                                _showError( label );
+                            } );
+
                             $btnCancel.removeClass( "disabled" );
                         }
                         else
@@ -681,7 +703,10 @@
         }
         else
         {
-            bidx.common.notifySuccess( "Attachment upload done" );
+            bidx.i18n.getItem( "attachmentUploadDone", function( err, label )
+            {
+                bidx.common.notifySuccess( label );
+            } );
 
             _addAttachmentToScreen( null, result.data );
         }
@@ -699,6 +724,11 @@
         }
         else
         {
+            bidx.i18n.getItem( "attachmentUploadDone", function( err, label )
+            {
+                bidx.common.notifySuccess( label );
+            } );
+
             _addCVToScreen( result.data );
         }
     };
