@@ -61,6 +61,8 @@
         //
         if ( first )
         {
+            bidx.utils.warn( "bidx.data not having", key, "loaded. Calling API to retrieve it" );
+
             bidx.api.call(
                 "STATIC_DATA.TO_BE_DEFINED" // TODO: what API to call for this?
             ,   {
