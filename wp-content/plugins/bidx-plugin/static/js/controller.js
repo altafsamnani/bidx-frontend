@@ -45,6 +45,25 @@
         return result;
     }
 
+    // data and lookup the joined group id's
+    //
+    function getGroupIds()
+    {
+        var result      = []
+        ,   groups      = bidx.utils.getValue( bidxConfig, "session.groups" )
+        ;
+
+        if ( groups )
+        {
+            $.each( groups, function( idx, group )
+            {
+                result.push( group.bidxGroupId );
+            } );
+        }
+
+        return result;
+    }
+
     // Mainstate switcher. Expects html containers to exist with both the class mainState and mainState{{s}}, where s is the parameter being put into this function
     //
     function _showMainState( s )
@@ -307,6 +326,11 @@
     ,   getEntrepreneurProfileId:                     function()
         {
             return getEntityId( "bidxEntrepreneurProfile" );
+        }
+
+    ,   getGroupIds: function()
+        {
+            return getGroupIds();
         }
 
     };
