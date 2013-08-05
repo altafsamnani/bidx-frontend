@@ -179,7 +179,6 @@
             break;
 
             case "financialDetails":
-            alert(123);
                 _showView( requestedState );
             break;
         }
