@@ -40,7 +40,7 @@ class auth extends Generic{
 	function load($atts) {
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/static/templates/' );
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/templates/' );
 		// 2. Determine the view needed
 		$command = $atts['view'];
         $type    = array_key_exists( 'type', $atts ) ? $atts['type'] : null;

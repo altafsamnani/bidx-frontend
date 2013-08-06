@@ -48,7 +48,7 @@ class search {
 
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/static/templates/' );
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/templates/' );
 		$sessionData = BidxCommon::$staticSession;
 
 		if ( $sessionData -> authenticated === 'true' ) {

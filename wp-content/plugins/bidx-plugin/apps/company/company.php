@@ -72,7 +72,7 @@ class company extends Generic
 
         // 1. Template Rendering
         require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
-        $view = new TemplateLibrary (BIDX_PLUGIN_DIR . '/company/static/templates/');
+        $view = new TemplateLibrary (BIDX_PLUGIN_DIR . '/company/templates/');
         $view->sessionData = BidxCommon::$staticSession;
 
         //2. Service company

@@ -40,7 +40,7 @@ class group {
 
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/static/templates/' );
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/templates/' );
 		$view -> sessionData = BidxCommon::$staticSession;
 
 		//2. Service Group
