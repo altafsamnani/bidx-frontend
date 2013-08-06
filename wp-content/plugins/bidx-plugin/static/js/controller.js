@@ -157,7 +157,7 @@
 
             state   = "editMember";
 
-            _navigateToApp( "memberprofile", "edit", section, id );
+            _navigateToApp( "member", "edit", section, id );
         }
 
     ,   editEntrepreneur:             function( id, section )

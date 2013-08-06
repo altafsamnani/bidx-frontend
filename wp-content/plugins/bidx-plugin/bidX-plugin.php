@@ -45,7 +45,7 @@ register_deactivation_hook( __FILE__, array( $loader, 'unload' ) );
 if ( !BidxCommon :: isWPInternalFunction() ) {
 	//Mattijs 8/7/2013: would be nice if this array is populated from XML so you dont have to define your apps twice
 	$ruleitems = array(
-			'member' => 'memberprofile',
+			'member',
 			'businessplan',
 			'company',
 			'mydashboard' => 'dashboard',
@@ -56,7 +56,7 @@ if ( !BidxCommon :: isWPInternalFunction() ) {
 	);
 	$shortcode = new BidxShortCode();
 	$shortcode -> addMappingArray( $ruleitems );
-    
+
 	//cleanup body tag
 
 }
@@ -64,9 +64,9 @@ if ( !BidxCommon :: isWPInternalFunction() ) {
 add_filter( 'body_class','my_class_names', 100000 );
 
 function my_class_names($classes) {
-	
+
 	return preg_replace( "/^\?bidx=/", 'bidx-',  $classes );
-	
+
 }
 
 

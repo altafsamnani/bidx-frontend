@@ -9,23 +9,23 @@
 	  	<post>
 			<post_id>0</post_id>
 			<name>member_list</name>
-			<title>Memberprofile List</title>
+			<title>Member List</title>
 			<mapping>^memberlist/?</mapping>
-			<content>[bidx app="memberprofile" view="list"]</content>
+			<content>[bidx app="member" view="list"]</content>
 		</post>
 	  	<post>
 			<post_id>1</post_id>
 			<name>member_profile</name>
 			<title>Your Profile</title>
 			<mapping>^member/?</mapping>
-			<content>[bidx app="memberprofile"]</content>
+			<content>[bidx app="member"]</content>
 		</post>
 		<post>
 			<post_id>2</post_id>
 			<name>member</name>
 			<title>Memberprofile</title>
 			<mapping>^member/([^/]*)/?</mapping>
-			<content>[bidx app="memberprofile"]</content>
+			<content>[bidx app="member"]</content>
 		</post>
 		<post>
 			<post_id>3</post_id>

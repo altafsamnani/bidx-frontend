@@ -18,7 +18,7 @@ class Generic
             case 'auth' :
                 $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n');
                 if (strpos ($uri, 'member')) {
-                    $dep[] = 'memberprofile';
+                    $dep[] = 'member';
                 }
                 break;
 
