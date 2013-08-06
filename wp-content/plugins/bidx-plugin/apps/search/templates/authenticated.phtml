@@ -19,14 +19,7 @@
 	
 	<div class="row-fluid">
 		<div class="search-result-container span8">
-		
-	<?php foreach ( $docs as $doc )  { 
-		
-		switch ($doc -> type) {
 
-			case 'bidxMemberProfile':
-				$fullname = $doc -> firstname_s . ' ' . $doc -> lastname_s;
-		?>
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
@@ -56,11 +49,7 @@
 					</div>
 				</div>
 			</div>								
-<?php	
-			break;
-			
-			case 'bidxCompanyProfile':
-?>
+
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
@@ -81,12 +70,7 @@
 					</div>
 				</div>
 			</div>
-<?php 				
-			break;
 
-			case 'bidxInvestorProfile':
-				$fullname = $doc -> firstname_s . ' ' . $doc -> lastname_s;
-?>
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
@@ -105,12 +89,7 @@
 					</div>
 				</div>
 			</div>
-<?php 				
-			break;			
 
-			case 'bidxEntrepreneurProfile':
-				$fullname = $doc -> firstname_s . ' ' . $doc -> lastname_s;
-?>
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
@@ -140,11 +119,7 @@
 					</div>
 				</div>
 			</div>
-<?php 				
-			break;
-			
-			case 'bidxBusinessSummary':
-?>
+
 			<div class="search-result-item well">
 				<div class="row-fluid">
 					<div class="span2">
@@ -174,26 +149,16 @@
 					</div>
 				</div>
 			</div>
-<?php 				
-			break;			
-		} 
-	} ?>
+
 			<div>					
-<?php 	
-	if ( property_exists( $this, 'previousLink' ) ) {
-	?>
+
 	<a href="?<?php echo $this -> previousLink ?>" class="btn">Previous</a>
-	<?php
-	}
-	if ( property_exists( $this, 'nextLink' ) ) {
-	?>
+	
 	<a href="?<?php echo $this -> nextLink ?>" class="btn">Next</a>
-	<?php	
-	}	
-?>	
+	
 			</div>					
 		</div>
-<?php } ?>
+
 	
 		<div class="sidebar span4">
 			<div>
@@ -201,108 +166,66 @@
 			</div>
 			<div>
 			<ul class="nav nav-list">
-	            <li class="nav-header">Filters</li>
+	            <li class="nav-header">Find By Type</li>
+	            <li class="active">
+	              <a href="#fakelink">
+	                All
+	                <span class="nav-counter"><?php echo $this -> results -> data -> numFound ?></span>
+	              </a>
+	            </li>
 	            <li>
 	              <a href="#fakelink">
-	                UX Design
+	                Members Only
 	                <span class="nav-counter">19</span>
 	              </a>
 	            </li>
-	            <li class="active">
+	            <li>
 	              <a href="#fakelink">
-	                Photography
+	                Entrepreneurs
 	                <span class="nav-counter">130</span>
 	              </a>
 	            </li>
 	            <li>
 	              <a href="#fakelink">
-	                Art
+	                Investors
+	                <span class="nav-counter">49</span>
+	              </a>
+	            </li>
+	            <li>
+	              <a href="#fakelink">
+	                Businesses
 	                <span class="nav-counter">9</span>
 	              </a>
 	            </li>
+	            <li>
+	              <a href="#fakelink">
+	                Groups
+	                <span class="nav-counter">11</span>
+	              </a>
+	            </li>	            	            
 	            <li class="divider"></li>
-	            <li class="nav-header">Condition</li>
+	            <li class="nav-header">Filters</li>
 	            <li>
-	              <a href="#fakelink">
-	                Brand new
-	                <span class="nav-counter">69</span>
-	              </a>
+	                <label>Industry</label>
+          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_industry" style="display: none;">
+          			<div id="tags_industry_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
+          				<div class="tagsinput-add-container" id="tags_industry_addTag">
+          					<div class="tagsinput-add"></div>
+          					<input id="tags_industry_tag small" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
+          				</div>
+          			</div>	                
 	            </li>
 	            <li>
-	              <a href="#fakelink">
-	                Read-used
-	                <span class="nav-counter">21</span>
-	              </a>
-	            </li>
-	            <li>
-	              <a href="#fakelink">
-	                Work-used
-	                <span class="nav-counter">40</span>
-	              </a>
-	            </li>
-	          </ul>
-			</div>
-		
-			<!--
-			<div class="facetnavigation row-fluid">
-				<div>
-					Search in:
-					<div class="btn-group" data-toggle="buttons-radio">
-					  <button class="btn" name="selection" value="1">This Group</button>
-					  <button class="btn" name="selection" value="2">All My Groups</button>
-					  <button class="btn" name="selection" value="3">All Groups</button>
-					</div>
-				</div>
-				<div>
-					Filter results on:
-				</div>
-				<div class="accordion" id="accordion2">
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse"
-								data-parent="#accordion2" href="#collapseOne"> People </a>
-						</div>
-						<div id="collapseOne" class="accordion-body collapse">
-							<div class="accordion-inner">
-								<h4>Filter on role</h4>
-								<label class="checkbox"> 
-									<input type="checkbox" value="Member-only" /> Member only
-								</label> 
-								<label class="checkbox"> 
-									<input type="checkbox" value="Entrepreneur" /> Entrepreneur
-								</label> 
-								<label class="checkbox"> 
-									<input type="checkbox" value="Investor" /> Investor
-								</label> 
-								<h4>Filter on text</h4>
-								<input type="text" placeholder="Location" class="form-search" /> 
-								<input type="text" placeholder="Language" class="form-search" /> 
-								<input type="text" placeholder="Industry" class="form-search" /> 
-								<input type="text" placeholder="Theme" class="form-search" />
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse"
-								data-parent="#accordion2" href="#collapseTwo"> Business </a>
-						</div>
-						<div id="collapseTwo" class="accordion-body collapse">
-							<div class="accordion-inner">Anim pariatur cliche...</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse"
-								data-parent="#accordion3" href="#collapseThree"> Group </a>
-						</div>
-						<div id="collapseThree" class="accordion-body collapse">
-							<div class="accordion-inner">Anim pariatur cliche...</div>
-						</div>
-					</div>
-				</div>
-			</div>
- 			 -->	
+	                <label>Theme</label>
+          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_theme" style="display: none;">
+          			<div id="tags_theme_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
+          				<div class="tagsinput-add-container" id="tags_theme_addTag">
+          					<div class="tagsinput-add"></div>
+          					<input id="tags_theme_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
+          				</div>
+          			</div>	                
+	            </li>;
+	            
 		</div>
 	</div>
 </div>

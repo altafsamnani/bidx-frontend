@@ -30,7 +30,6 @@
 			<tbody>
 				<tr>
 					<th>Type</th>
-					<th>Image</th>
 					<th>Description</th>
 					<th></th>
 				</tr>
@@ -44,16 +43,6 @@
 			<tr>
 				<td>
 					<span class="label">Member</span>
-				</td>
-				<td>
-					<a href="/member/<?php echo $doc -> userId ?>">
-						<?php if (property_exists( $doc , 'profilepicturedoc_url' ) ) {
-							?>
-								<img src="<?php echo $doc -> profilepicturedoc_url ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
-						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
-						<?php  }?>
-					</a>
 				</td>
 				<td>
 					<p><?php echo $fullname ?></p>
@@ -74,9 +63,6 @@
 					<span class="label">Company</span>
 				</td>
 				<td>
-					<img data-src="holder.js/75x75/social/text:company" class="logo img-rounded" alt=""/>							
-				</td>
-				<td>
 					<em><?php echo $doc -> id ?></em>		
 				</td>
 				<td>
@@ -92,9 +78,6 @@
 			<tr>
 				<td>
 					<span class="label">Investor</span>
-				</td>
-				<td>
-					<img data-src="holder.js/75x75/social/text:investor" class="logo img-rounded" alt=""/>							
 				</td>
 				<td>
 					<em><?php echo $fullname ?></em><br />
@@ -117,18 +100,6 @@
 					<span class="label">Entrepreneur</span>
 				</td>
 				<td>
- 					<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">
-						<?php if (property_exists( $doc , 'profilePicturedoc_url' ) ) {
-								$items = explode( '/', $doc -> profilePicturedoc_url );
-								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
-							?>
-								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
-						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
-						<?php  }?>
-							</a>
-				</td>
-				<td>
 					<em><?php echo $fullname ?></em><br />
 					<?php echo $doc -> professionaltitle_t ?><br />
 					<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />							
@@ -146,18 +117,6 @@
 			<tr>
 				<td>
 					<span class="label">Business</span>
-				</td>
-				<td>
-					<a href="/business/<?php echo $doc -> userId ?>">
-						<?php if ( property_exists( $doc , 'picturedoc_url' ) ) {
-								$items = explode( '/', $doc -> 	picturedoc_url );
-								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
-							?>
-								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
-						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:business" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
-						<?php  }?>
-							</a>						
 				</td>
 				<td>
 					<em><?php echo $doc -> name_s ?></em><br />
@@ -178,22 +137,12 @@
 								<span class="label">Group</span>
 							</td>
 							<td>
-								<a href="http://<?php $doc -> domain_s ?>.local.bidx.net">
-									<?php if ( property_exists( $doc , 'logodoc_url' ) ) {
-										?>
-											<img src="<?php echo $doc -> logodoc_url ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
-									<?php  } else { ?>
-											<img data-src="holder.js/75x75/social/text:business" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
-									<?php  }?>
-										</a>						
-							</td>
-							<td>
 								<em><?php echo $doc -> name_s ?></em><br />
 								<?php echo $doc -> slogan_t ?><br/>
 								<?php echo $doc -> focusindustrylabel_ss ?>, <?php echo $doc -> countrylabel_s ?><br />
 							</td>
 							<td>
-								<a href="http://<?php $doc -> domain_s ?>.local.bidx.net">view</a>
+								<a href="http://<?php $doc -> domain_s ?>.bidx.net">view</a>
 							</td>
 						</tr>
 			<?php 				
@@ -236,65 +185,33 @@
 			</div>
 			<div>
 			<ul class="nav nav-list">
+	            <li class="nav-header">Advanced search features require login.</li>
+	            <li class="active">
+	            Registered users can view images and have much more advanced search features.
+	            </li>			
+				<li class="divider"></li>
 	            <li class="nav-header">Find By Type</li>
 	            <li class="active">
-	              <a href="#fakelink">
 	                All
 	                <span class="nav-counter"><?php echo $this -> results -> data -> numFound ?></span>
-	              </a>
+	            </li>
+	            <li	>
+	            	Members Only
 	            </li>
 	            <li>
-	              <a href="#fakelink">
-	                Members Only
-	                <span class="nav-counter">19</span>
-	              </a>
-	            </li>
-	            <li>
-	              <a href="#fakelink">
 	                Entrepreneurs
-	                <span class="nav-counter">130</span>
-	              </a>
 	            </li>
 	            <li>
-	              <a href="#fakelink">
 	                Investors
-	                <span class="nav-counter">49</span>
-	              </a>
 	            </li>
 	            <li>
-	              <a href="#fakelink">
 	                Businesses
-	                <span class="nav-counter">9</span>
-	              </a>
 	            </li>
 	            <li>
-	              <a href="#fakelink">
 	                Groups
-	                <span class="nav-counter">11</span>
-	              </a>
 	            </li>	            	            
 	            <li class="divider"></li>
 	            <li class="nav-header">Filters</li>
-	            <li>
-	            	<label>Language</label>
-          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_language" style="display: none;">
-          			<div id="tags_language_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
-          				<div class="tagsinput-add-container" id="tags_language_addTag">
-          					<div class="tagsinput-add"></div>
-          					<input id="tags_language_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
-          				</div>
-          			</div>
-	            </li>
-	            <li>
-	            	<label>Location</label>
-          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_location" style="display: none;">
-          			<div id="tags_location_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
-          				<div class="tagsinput-add-container" id="tags_location_addTag">
-          					<div class="tagsinput-add"></div>
-          					<input id="tags_location_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
-          				</div>
-          			</div>
-	            </li>
 	            <li>
 	                <label>Industry</label>
           			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_industry" style="display: none;">

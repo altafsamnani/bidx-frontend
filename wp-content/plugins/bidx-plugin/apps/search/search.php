@@ -9,11 +9,7 @@
  * The query, part of the GET request on the url can be added here.
  * This should contain everything on the querystring including q= / fq= etc.
  *
- * Supported views (attribute view=):
- * - default : show the big full screen search
- * - listView : list overview vertical
- * - cardView : list of cards, 3 per row horizontal
- * - mapView  : plot the result in a Google Maps view
+ * Supported views is for authenticated or not authenticated
  *
  * @author Jaap Gorjup
  * @version 1.0
@@ -52,13 +48,13 @@ class search {
 		$sessionData = BidxCommon::$staticSession;
 
 		if ( $sessionData -> authenticated === 'true' ) {
-			// client side rendering authenticated
+			// 2a. Client side rendering authenticated
 			var_dump($sessionData);
 			$view->sessionData = $sessionData;
 			return $view->render( 'authenticated.phtml' );
 		}
 		else {
-			// server side rendering anonymous
+			// 2b. Server side rendering anonymous
 			require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
 			$service = new SearchService( );
 			
@@ -109,17 +105,8 @@ class search {
 			} else {
 				$command = '';
 			}
-			
-			switch ( $command ) {
-				case "cardView" :
-					return $view->render( 'cardView.phtml' );
-				case "listView" :
-					return $view->render( 'listView.phtml' );
-				case "mapView" :
-					return $view->render( 'mapView.phtml' );
-				default :
-					return $view->render( 'listView.phtml' );
-			}		
+
+			return $view->render( 'listView.phtml' );	
 		}
 
 	}
