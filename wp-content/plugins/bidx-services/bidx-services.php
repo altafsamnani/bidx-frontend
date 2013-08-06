@@ -353,7 +353,7 @@ function create_bidx_po ()
             case 'module' :
                 $pathName = $_GET['path'];
                 $language = (isset($body['lang'])) ? $body['lang'] : 'Original';
-                $po .= '# Language '.$language;
+                $po = '# Language '.$language. PHP_EOL;;
      
                 $body = $_GET;
                 $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*/{i18n.xml}', GLOB_BRACE);
@@ -724,23 +724,32 @@ function bidx_wordpress_post_action ($url, $result, $body)
             $language = (isset($body['lang'])) ? $body['lang'] : 'Original';
             $po = '# Language '.$language. PHP_EOL;
             $count = 1;
+            $validate = array();
 
             foreach ($displayData as $dataKey => $dataValue) {
                 
                 $po .= PHP_EOL.'#' . $count.' '.$dataKey . PHP_EOL;
-                foreach ($dataValue as $msgId) {
+              
+                foreach ($dataValue as $dataId) {
 
-                    $msgId = str_replace ('"', '\"', $msgId->value);
+
+                    $msgId = str_replace ('"', '\"', $dataId->value);
                     $msgStr = (isset($body['lang'])) ? $body['lang'].$msgId : '';
-                    $msgCtxt = str_replace ('"', '\"', $dataKey);
+                    $msgCtxt = str_replace ('"', '\"', $dataId->key);
                     $po .= '#  _x("'.$msgId.'", "'.$msgCtxt.'", '.'"static");' . PHP_EOL;
-                    $po .= '# Context '.$dataKey.' Textdomain static' . PHP_EOL;
+                    $po .= '# Context '.$msgCtxt.' Textdomain static' . PHP_EOL;
 
-                    
+                    if(!isset($validate[$msgCtxt][$msgId])) {
                     $po .= 'msgctxt "' . $msgCtxt . '"' . PHP_EOL;
                     $po .= 'msgid "' . $msgId . '"' . PHP_EOL;
-                    $po .= 'msgstr "' . str_replace ('"', '\"', $msgStr) . '"' . PHP_EOL;
+                    $po .= 'msgstr "' . $msgStr . '"' . PHP_EOL;
                     $po .= PHP_EOL;
+                    $validate[$msgCtxt][$msgId] = $msgStr;
+                    } else {
+                        $po .= '# Already exists, doesnt need translation.' . PHP_EOL. PHP_EOL;
+                    }
+
+
                 }
                 $count++;
             }

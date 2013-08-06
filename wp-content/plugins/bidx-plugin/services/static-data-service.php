@@ -42,7 +42,7 @@ class StaticDataService extends APIbridge {
             foreach ($staticObjValue as $staticDataKey => $staticDataValue) {
 
                 $resultStaticData[$staticObjKey][$count]->value = $staticDataValue->key;
-                $resultStaticData[$staticObjKey][$count]->label = _x ($staticDataValue->value, $staticObjKey, 'static');
+                $resultStaticData[$staticObjKey][$count]->label = _x ($staticDataValue->value, $staticDataValue->key, 'static');
                 $count++;
             }
         }
