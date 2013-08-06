@@ -1071,7 +1071,7 @@
 
     // Expose
     //
-    var memberprofile =
+    var member =
     {
         attachmentUploadDone:       attachmentUploadDone
     ,   navigate:                   navigate
@@ -1091,5 +1091,5 @@
         window.bidx = {};
     }
 
-    window.bidx.member = memberprofile;
+    window.bidx.member = member;
 } ( jQuery ));
