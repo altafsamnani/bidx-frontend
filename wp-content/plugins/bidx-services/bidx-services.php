@@ -352,7 +352,9 @@ function create_bidx_po ()
 
             case 'module' :
                 $pathName = $_GET['path'];
-                $po = '';
+                $language = (isset($body['lang'])) ? $body['lang'] : 'Original';
+                $po .= '# Language '.$language;
+     
                 $body = $_GET;
                 $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*/{i18n.xml}', GLOB_BRACE);
                 $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}', GLOB_BRACE);
@@ -378,7 +380,7 @@ function create_bidx_po ()
             $poname = $lang . '_' . strtoupper ($lang);
         } else {
             $popot = 'pot';
-            $poname = 'main';
+            $poname = 'i18n';
         }
 
 
@@ -719,15 +721,24 @@ function bidx_wordpress_post_action ($url, $result, $body)
 
         case 'staticpo':
             $displayData = $requestData->data;
-            $po = '';
+            $language = (isset($body['lang'])) ? $body['lang'] : 'Original';
+            $po = '# Language '.$language. PHP_EOL;
             $count = 1;
 
             foreach ($displayData as $dataKey => $dataValue) {
-                $po .= '#' . $count.' '.$dataKey . PHP_EOL;
+                
+                $po .= PHP_EOL.'#' . $count.' '.$dataKey . PHP_EOL;
                 foreach ($dataValue as $msgId) {
-                    $msgStr = $body['lang'] ? $body['lang'].$msgId->value : '';
-                    $po .= 'msgctxt "' . str_replace ('"', '\"', $dataKey) . '"' . PHP_EOL;
-                    $po .= 'msgid "' . str_replace ('"', '\"', $msgId->value) . '"' . PHP_EOL;
+
+                    $msgId = str_replace ('"', '\"', $msgId->value);
+                    $msgStr = (isset($body['lang'])) ? $body['lang'].$msgId : '';
+                    $msgCtxt = str_replace ('"', '\"', $dataKey);
+                    $po .= '#  _x("'.$msgId.'", "'.$msgCtxt.'", '.'"static");' . PHP_EOL;
+                    $po .= '# Context '.$dataKey.' Textdomain static' . PHP_EOL;
+
+                    
+                    $po .= 'msgctxt "' . $msgCtxt . '"' . PHP_EOL;
+                    $po .= 'msgid "' . $msgId . '"' . PHP_EOL;
                     $po .= 'msgstr "' . str_replace ('"', '\"', $msgStr) . '"' . PHP_EOL;
                     $po .= PHP_EOL;
                 }
@@ -1705,16 +1716,17 @@ function bidx_options() {
 
         $pluginDir = WP_PLUGIN_DIR.'/bidx-plugin/apps';
         /* 1. Bidx Static Pot Generator*/
-        echo "<b>Bidx Static Pot Generator</b><br/>";
+        echo "<b>Bidx Static Api Pot Generator</b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static'>here</a> to create static PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=es'>here</a> to create static Demo ES PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=ar'>here</a> to create static Demo Ar PO <br/><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=es'>here</a> to create static Demo Es PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=fr'>here</a> to create static Demo Fr PO <br/><br/>";
 
         /* 2. Bidx Apps Pot Generator*/
-        echo "<b>Bidx Apps Pot Generator</b><br/>";
+        echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin)</b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Apps PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Apps Demo Fr PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Apps Demo ES PO <br/><br/>";
+        
 
     } else {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
