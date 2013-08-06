@@ -49,70 +49,80 @@ class search {
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/static/templates/' );
+		$sessionData = BidxCommon::$staticSession;
 
-		// 2. Cook query based on q or else from url
-		require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
-		$service = new SearchService( );
-
-		if ( key_exists( 'q', $atts ) ) {
-			$view -> query = $service -> cookQuery( $atts );
-		} else if ( $_REQUEST['q'] != null ) {
-			$view -> query = $service -> cookQuery( );
+		if ( $sessionData -> authenticated === 'true' ) {
+			// client side rendering authenticated
+			var_dump($sessionData);
+			$view->sessionData = $sessionData;
+			return $view->render( 'authenticated.phtml' );
 		}
-		$view -> results = $service -> getSearchResults( $view -> query );
-
-
-		// 3. Parse data for preparsing for presentaions
-		if ( !property_exists( $view -> results, 'data' ) ) {
-			$data = array( 'numFound' => 0, 'error' => 'Communication failure' );
-			$view -> results -> data = $data;
-		}
-
-		$rows = 10;
-		if ( key_exists( 'rows', $view -> query ) ) {
-			$rows = $view -> rows;
-		}
-
-		// navigation previous
-		if ( key_exists( 'start', $view -> query ) ) {
-			if ( $view -> query['start'] > 0 ) {
-				$backParam = $view -> query;
-				$newIndex = $view -> query['start'] - $rows;
-				if ($newIndex >= 0) {
-					$backParam['start'] = $newIndex;
-				}
-				$view -> previousLink = BidxCommon:: buildHTTPQuery($backParam);
-				Logger :: getLogger('search') -> trace( 'previousLink : ' . $view -> previousLink );
+		else {
+			// server side rendering anonymous
+			require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
+			$service = new SearchService( );
+			
+			if ( key_exists( 'q', $atts ) ) {
+				$view -> query = $service -> cookQuery( $atts );
+			} else if ( $_REQUEST['q'] != null ) {
+				$view -> query = $service -> cookQuery( );
 			}
-		}
-		//  navigation next
-		$numFound = $view -> results -> data -> numFound;
-		$start = $view -> results -> data -> start;
-		if ($numFound - ( $start + $rows ) > 1 ) {
-			$nextParam = $view -> query;
-			$nextParam['start'] = $start + $rows;
-			$view -> nextLink = BidxCommon:: buildHTTPQuery( $nextParam );
-			Logger :: getLogger( 'search' ) -> trace( 'nextLink : ' . $view -> nextLink );
+			$view -> results = $service -> getSearchResults( $view -> query );
+			
+			
+			// 3. Parse data for preparsing for presentations
+			if ( !property_exists( $view -> results, 'data' ) ) {
+				$data = array( 'numFound' => 0, 'error' => 'Communication failure' );
+				$view -> results -> data = $data;
+			}
+			
+			$rows = 10;
+			if ( key_exists( 'rows', $view -> query ) ) {
+				$rows = $view -> rows;
+			}
+			
+			// navigation previous
+			if ( key_exists( 'start', $view -> query ) ) {
+				if ( $view -> query['start'] > 0 ) {
+					$backParam = $view -> query;
+					$newIndex = $view -> query['start'] - $rows;
+					if ($newIndex >= 0) {
+						$backParam['start'] = $newIndex;
+					}
+					$view -> previousLink = BidxCommon:: buildHTTPQuery($backParam);
+					Logger :: getLogger('search') -> trace( 'previousLink : ' . $view -> previousLink );
+				}
+			}
+			//  navigation next
+			$numFound = $view -> results -> data -> numFound;
+			$start = $view -> results -> data -> start;
+			if ($numFound - ( $start + $rows ) > 1 ) {
+				$nextParam = $view -> query;
+				$nextParam['start'] = $start + $rows;
+				$view -> nextLink = BidxCommon:: buildHTTPQuery( $nextParam );
+				Logger :: getLogger( 'search' ) -> trace( 'nextLink : ' . $view -> nextLink );
+			}
+			
+			// 4. Determine the view needed
+			if ( key_exists( 'view', $atts ) ) {
+				$command = $atts['view'];
+			} else {
+				$command = '';
+			}
+			
+			switch ( $command ) {
+				case "cardView" :
+					return $view->render( 'cardView.phtml' );
+				case "listView" :
+					return $view->render( 'listView.phtml' );
+				case "mapView" :
+					return $view->render( 'mapView.phtml' );
+				default :
+					return $view->render( 'listView.phtml' );
+			}		
 		}
 
-		// 4. Determine the view needed
-		if ( key_exists( 'view', $atts ) ) {
-			$command = $atts['view'];
-		} else {
-			$command = '';
-		}
-
-		switch ( $command ) {
-			case "cardView" :
-				return $view->render( 'cardView.phtml' );
-			case "listView" :
-				return $view->render( 'listView.phtml' );
-			case "mapView" :
-				return $view->render( 'mapView.phtml' );
-			default :
-				return $view->render( 'listView.phtml' );
-		}
 	}
-
+	
 }
 ?>
