@@ -327,7 +327,49 @@ function clear_bidx_cookies ()
  * @author Altaf Samnani
  * @version 1.0
  *
- * Flush the bidx Wordpress PHP Session Variables
+ * Create the Po file from settings->Bidx
+ * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation
+ *
+ */
+
+add_action ('wp_ajax_bidx_translation', 'get_string_translation');
+///////////////Working 
+function get_string_translation ()
+{
+     if( $context == '__global') {
+         $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}';
+     } else {
+         if($context) {
+            $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/apps/*{'.$appName.'}/{i18n.xml}';
+         } else {
+             $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/apps/*{'.$appName.'}/{i18n.xml}';
+         }
+     }
+
+    $i18Path = ($context == '__global') ? WP_PLUGIN_DIR .'/bidx-plugin/{i18n.xml}' : WP_PLUGIN_DIR .'/bidx-plugin/apps/*/{i18n.xml}';
+    $i18AppsArr = glob ($i18Path, GLOB_BRACE);
+    $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
+
+                foreach ($fileArr as $fileName) {
+
+                    $body['is_app'] = (preg_match ("/apps/i", $fileName)) ? true : false;
+
+                    $dirArr = (preg_match ("/apps\/(.*)\/i18n.xml/i", $fileName, $matches));
+                    $body['app'] = (isset ($matches[1])) ? $matches[1] : NULL;
+
+                    $document = simplexml_load_file ($fileName);
+                    $items = $document->xpath ('//Item');
+
+                    $po .= other_wordpress_post_action ('pocreate', $items, $body);
+                }
+
+} 
+
+/*
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Create the Po file from settings->Bidx
  * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_createpo
  *
  */

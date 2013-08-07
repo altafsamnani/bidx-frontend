@@ -14,19 +14,7 @@ License: Commercial
 //
 
 include ('apps/util.php' );
-$domain = 'bidx-plugin';
-      $abs_rel_path = WP_CONTENT_DIR.'/languages';
-      $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
-    /* 1. Load Textdoamin for plugin values */
-    //$mofile = $abs_rel_path . '/'. $locale . '.mo';
-    //load_textdomain( $domain, $mofile );
-    //load_plugin_textdomain( 'bidx-plugin', $plugin_dir );
-
-    /* 2. Load Textdomain for Bidx Static APIs */
-     $moStaticfile = $abs_rel_path . '/static/'. $locale . '.mo';
-    //echo $moStaticfile;exit;
-     load_textdomain( 'bidx-plugin', $moStaticfile );
 //
 // Activation of frontend apps
 //

@@ -32,7 +32,7 @@ class ContentLoader
         add_action ('init', array ($this, 'codex_custom_init'));
 
         //Load Multilingual text domain for static data
-        $this->locale_staticdata_init ();
+        $this->localeTextdomainInit ();
 
         $bidCommonObj = new BidxCommon();
         $bidCommonObj->getBidxSessionAndScript ();
@@ -299,23 +299,24 @@ class ContentLoader
     /**
      * Initialize Static Multilingual text domain data load
      * @param $post_type type that needs to created custom
+     * @example http://geertdedeckere.be/article/loading-wordpress-language-files-the-right-way
      */
-    function locale_staticdata_init ()
+    function localeTextdomainInit ()
     {
 
-        $domain = 'static';
-        $abs_rel_path = WP_CONTENT_DIR . '/languages';
+        /* 1. Load Textdomain for Bidx Static APIs */
+        $domain = 'static'; //we use _e('String','static') see staticdataservice.php
+        $languagePath = WP_CONTENT_DIR . '/languages';
         $locale = apply_filters ('plugin_locale', get_locale (), $domain);
-
-        /* 1. Load Textdoamin for plugin values */
-        //$mofile = $abs_rel_path . '/'. $locale . '.mo';
-        //load_textdomain( $domain, $mofile );
-        //load_plugin_textdomain( 'bidx-plugin', $plugin_dir );
-
-        /* 2. Load Textdomain for Bidx Static APIs */
-        $moStaticfile = $abs_rel_path . '/static/' . $locale . '.mo';
-        //echo $moStaticfile;exit;
+        $moStaticfile = $languagePath . '/static/' . $locale . '.mo';
         load_textdomain ($domain, $moStaticfile);
+        
+        /* 2. Load Textdomain for Bidx Wp I18n */
+        $domain = 'i18n'; // we use _e('String','i18n')
+        $locale = apply_filters ('plugin_locale', get_locale (), $domain);
+        $moi18nfile = $languagePath . '/i18n/' . $locale . '.mo';
+        load_textdomain ($domain, $moi18nfile);
+
     }
 
 }
