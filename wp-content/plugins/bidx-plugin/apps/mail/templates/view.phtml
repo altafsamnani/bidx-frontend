@@ -54,13 +54,13 @@
                     </div>
                     <div class="btn-group">.
                         <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Delete')?></a>
-                        <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Mark read')?></a>
+                        <a class="btn btn-small btn-primary" href="/mail/#mail/mark-read/"><?php _e('Mark read')?></a>
                         <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Mark unread')?></a>
                     </div>
 
 
                 </div>
-
+                <form action="">
                 <!-- MESSAGE LIST -->
                 <ul class="list media-list ">
                     <li class="media">
@@ -71,6 +71,7 @@
                     </li>
 
                 </ul>
+                </form>
                 <div class="pagination">
                     <ul>
                         <li class="previous"><a class="fui-arrow-left" href="#fakelink"></a></li>
@@ -139,6 +140,9 @@
 
                 </div>
                 <div class="pull-right">
+                    <a href="/mail/#mail/discardConfirm/" class="btn btn-primary compose-cancel">
+                        <?php _e('Discard message')?>
+                    </a>
                     <button type="button" class="btn btn-primary compose-cancel"><?php _e('Discard message')?> --> ADD CONFIRM!!!</button>
                 </div>
 
@@ -159,7 +163,7 @@
                 </p>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close')?></a>
+                    <a class="btn" data-dismiss="modal" aria-hidden="true" href="/mail/#mail/inbox/"><?php _e('Close')?></a>
                     <a class="btn btn-primary" href="/mail/#mail/delete/"><?php _e('Delete message')?></a>
                 </div>
             </div>

@@ -7,9 +7,12 @@
  */
 class dashboard {
 
+	static $deps = array( 'bidx-common' );
+
 	/**
 	 * Constructor
 	 */
+
 	function __construct() {
 		add_action( 'wp_enqueue_scripts', array( &$this, 'register_dashboard_bidx_ui_libs' ) );
 	}
@@ -19,8 +22,10 @@ class dashboard {
 	 */
 	function register_dashboard_bidx_ui_libs()
 	{
-		wp_register_script( 'dashboard', plugins_url( 'static/js/dashboard.js', __FILE__ ), array('bootstrap'), '20130501', TRUE );	
-		wp_register_style( 'dashboard', plugins_url( 'static/css/dashboard.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+
+		wp_register_script( 'dashboard', plugins_url( 'static/js/dashboard.js', __FILE__ ), self::$deps, '20130715', TRUE );
+        wp_register_style( 'dashboard', plugins_url( 'static/css/dashboard.css', __FILE__ ),  array(), '20130715', TRUE );/*should load mail css, not all other css files from other apps*/
+        wp_enqueue_style('dashboard');
 	}
 
 	/**
@@ -40,7 +45,7 @@ class dashboard {
 		//2. Service Group
 		//require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
 		//$groupSvc = new GroupService( );
-		
+
 		// 3. Determine the view needed
 		$command = $atts['view'];
 
@@ -57,11 +62,11 @@ class dashboard {
 		}
 		$view->render($template);
 
-	    
+
 
 	}
 
-	
+
 }
 
 ?>

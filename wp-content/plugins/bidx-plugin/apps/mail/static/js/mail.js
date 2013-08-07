@@ -130,7 +130,7 @@
             return;
         }
 
-        _formatValues();
+        _prepareMessage();
 
         var extraUrlParameters =
         [
@@ -173,7 +173,7 @@
 
     };
 
-    var _formatValues = function ()
+    var _prepareMessage = function ()
     {
         /*
             //  API expected format
@@ -195,9 +195,9 @@
             to.push( item.value );
         } );
 
-        bidx.utils.setValue( message, "userIds", to );
+ /*       bidx.utils.setValue( message, "userIds", to );
         bidx.utils.setValue( message, "subject", $currentView.find("[name=subject]").val() );
-        bidx.utils.setValue( message, "content", $currentView.find("[name=content]").val() );
+        bidx.utils.setValue( message, "content", $currentView.find("[name=content]").val() );*/
     };
 
     var _showError = function( msg )
@@ -247,7 +247,14 @@
         $view.find( ".btn[href]" ).each( function()
         {
             var $this=$(this);
-            $this.attr( "href", $this.attr("href") + id );
+
+            //  test hash for existing id, if found remove it
+
+            var href = _resetHref( $this.attr( "href" ) );
+
+            bidx.utils.log("ID", id);
+            bidx.utils.log("NEW HASH", href);
+            $this.attr( "href", href + id );
         });
         $view.modal({});
     };
@@ -256,19 +263,6 @@
     {
         var $view =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" );
         $view.modal('hide');
-    };
-
-    //  sets any given toolbar and associate toolbar buttons with ID
-    var _setToolbarTargetID = function ( id, v )
-    {
-        bidx.utils.log("TEST", arguments);
-        var $toolbar = $views.filter( _getViewName( v ) ).find( ".mail-toolbar" );
-        $toolbar.find(".btn").each( function()
-        {
-            var $this =  $ ( this );
-            $this.attr( "href", $this.attr( "href" ) + id);
-
-        });
     };
 
     var _getEmail = function ( id, v )
@@ -451,6 +445,43 @@
             }
         );
     };
+
+    //  HELP functions
+
+    //  sets any given toolbar and associate toolbar buttons with ID
+    var _setToolbarTargetID = function ( id, v )
+    {
+        var $toolbar = $views.filter( _getViewName( v ) ).find( ".mail-toolbar" )
+        ,   $this
+        ,   href
+        ;
+
+        $toolbar.find(".btn").each( function()
+        {
+            $this =  $ ( this );
+            href = _resetHref( $this.attr( "href" ) );
+            bidx.utils.log("NEW HREF", href + id);
+            $this.attr( "href", href + id);
+
+        });
+    };
+
+    //  Removes ID from hash string
+    var _resetHref = function ( str ){
+        var newHash = [];
+
+        $.each( str.split( "/" ), function( idx, item )
+        {
+            if( !item.match( /^\d+$/ ) )
+            {
+                newHash.push( item );
+            }
+        } );
+
+        return newHash.join( "/" );
+    };
+
+
 
 
     // ROUTER

@@ -8,6 +8,7 @@
     ,   $element
     ,   app
     ,   router
+    ,   sectionState
     ;
 
     var $mainStates     = $( ".mainState" )
@@ -270,6 +271,15 @@
         {
             bidx.utils.log( "AppRouter::mailInbox", section );
 
+            //  states that mattch the section argument
+            sectionState =
+            {
+                deleteConfirm:       true
+            ,   delete:              true
+            ,   discardConfirm:      true
+
+            };
+
             // if there is an id, switch state to viewing of email. Id could also be available under section
             if( ( section && section.match( /^\d+$/ ) ) || ( id && id.match( /^\d+$/ ) ) )
             {
@@ -285,8 +295,8 @@
                 {
                     id = section;
                 }
-
-                if( section && (section === "deleteConfirm" || section === "delete") )
+                //  check if the state matches the section value
+                if( section && sectionState[ section ] )
                 {
                     state = section;
                 }

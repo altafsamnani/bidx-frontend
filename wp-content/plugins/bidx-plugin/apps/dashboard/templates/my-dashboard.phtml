@@ -4,64 +4,65 @@
     <h1>My dashboard</h1>
     <div class="row-fluid">
 
-        <div class="span6 well bidx-tile" id="no-more-tables">
-            <h2 class="popover-title">My entrepreneur dashboard</h2>
-            <p>See here the business proposals you have created in the various groups you are a member of. Click on the title to view the proposal. You can edit it from the proposal page.</p>
-            <table class="table table-striped table-hover" >
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Completion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td data-title="Title">Business Proposal 1</td>
-                        <td data-title="Status">Published</td>
-                        <td data-title="Complettion">70% completed</td>
-                    </tr>
-                    <tr>
-                        <td data-title="Title">Business Proposal 2</td>
-                        <td data-title="Status">Unpublished</td>
-                        <td data-title="Completion">20% completed</td>
-                    </tr>
-                    <tr>
-                        <td data-title="Title">Business Proposal 3</td>
-                        <td data-title="Status">Unpublished</td>
-                        <td data-title="Completion">10% completed</td>
-                    </tr>
-                    <tr>
-                        <td data-title="Title">Business Proposal 1</td>
-                        <td data-title="Status">Published</td>
-                        <td data-title="Completion">100% completed</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="span6 well bidx-tile">
+            <div class="bidx-tile-wrap">
+                <h2 class="popover-title">My entrepreneur dashboard</h2>
+                <div class="bidx-tile-body">
+                <!-- TILE BODY GOES HERE -->
+                    <p>
+                        See here the business proposals you have created in the various groups you are a member of. Click on the title to view the proposal. You can edit it from the proposal page.
+                    </p>
 
-            <div class="pagination center">
-                <ul>
-                    <li class="previous"><a class="fui-arrow-left" href="#fakelink"></a></li>
-                    <li class="active"><a href="#fakelink">1</a></li>
-                    <li><a href="#fakelink">2</a></li>
-                    <li><a href="#fakelink">3</a></li>
-                    <li><a href="#fakelink">4</a></li>
-                    <li><a href="#fakelink">5</a></li>
-                    <li class="pagination-dropdown dropup">
-                    <i class="dropdown-arrow"></i>
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#fakelink">
-                    <i class="fui-triangle-up"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                    <li><a href="#fakelink">6&ndash;10</a></li>
-                    <li><a href="#fakelink">11&ndash;15</a></li>
-                    <li><a href="#fakelink">16&ndash;20</a></li>
-                    </ul>
-                    </li>
-                    <li class="next"><a class="fui-arrow-right" href="#fakelink"></a></li>
-                </ul>
+                    <div class="accordion entrepeneur-widget">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".entrepeneur-widget" href=".entrepeneur-body-1">
+                                    Business Proposal 1
+                                    <i class="fui-triangle-down-small pull-right"></i>
+                                </a>
+                            </div>
+                            <div class="accordion-body collapse entrepeneur-body-1">
+                                <div class="accordion-inner">
+                                   <div class="dashboard-item">
+                                        <label >Status:</label>
+                                        Published
+                                   </div>
+                                   <div class="dashboard-item">
+                                        <label >Completion:</label>
+                                        70% completed
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".entrepeneur-widget" href=".entrepeneur-body-2">
+                                    Business Proposal 2
+                                    <i class="fui-triangle-down-small pull-right"></i>
+                                </a>
+                            </div>
+                            <div class="accordion-body collapse entrepeneur-body-2">
+                                <div class="accordion-inner">
+                                   <div class="dashboard-item">
+                                        <label >Status:</label>
+                                        Unpublished
+                                   </div>
+                                    <div class="dashboard-item">
+                                        <label >Completion:</label>
+                                        20% completed
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- TILE BODY GOES HERE -->
+                <div class="bidx-tile-push"></div>
             </div>
-            <a href="#" class="btn btn-primary btn-wide">Go to entrepeneur dashboard<i class="fui-arrow-right"></i></a>
+
+            <div class="bidx-tile-footer">
+                <a href="#" class="btn btn-primary btn-wide">Go to entrepeneur dashboard<i class="fui-arrow-right"></i></a>
+            </div>
         </div>
 
         <div class="span6 well bidx-tile">
@@ -101,7 +102,7 @@
                         <td>Published</td>
                         <td>534</td>
                         <td>20</td>
-                        
+
                     </tr>
                 </tbody>
             </table>
@@ -189,7 +190,7 @@
                     </li>
                     <li class="next"><a class="fui-arrow-right" href="#fakelink"></a></li>
                 </ul>
-            </div>            
+            </div>
             <a href="/investor-dashboard" class="btn btn-primary btn-wide">Go to Investor Dashboard<i class="fui-arrow-right"></i></a>
         </div>
 
