@@ -122,6 +122,7 @@ class BidxShortcode {
 	 		wp_register_script( 'bidx-reflowrower', 			$bidxJsDir . '/bidx-reflowrower.js',			array( 'jquery', 'jquery-ui' ), '20130501', TRUE );
 	 		wp_register_script( 'bidx-data',					$bidxJsDir . '/data.js',						array( 'jquery' ), '20130626', TRUE );
 
+           // wp_localize_script( 'bidx-data', 'windows.bidx = bidx || {}','{}' ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
             wp_localize_script( 'bidx-data', 'staticdata', $staticData ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
             wp_register_script( 'bidx-i18n',					$bidxJsDir . '/i18n.js',						array( 'jquery' ), '20130626', TRUE );
