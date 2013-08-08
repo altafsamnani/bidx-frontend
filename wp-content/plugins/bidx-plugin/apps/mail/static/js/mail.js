@@ -3,6 +3,7 @@
     var $element                    = $( "#mail" )
     ,   $views                      = $element.find( ".view" )
     ,   $currentView
+    ,   $modal
     ,   $composeForm                = $views.filter( ".viewCompose" ).find( "form" )
     ,   $btnSubmit                = $composeForm.find(".compose-submit")
     ,   $btnCancel                = $composeForm.find(".compose-cancel")
@@ -235,36 +236,6 @@
         });
     };
 
-    //  show modal view with optionally and ID to be appended to the views buttons
-    var _showModal = function ( options )
-    {
-
-        if( options.id )
-        {
-            var id = options.id;
-        }
-        var $view =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" );
-        $view.find( ".btn[href]" ).each( function()
-        {
-            var $this=$(this);
-
-            //  test hash for existing id, if found remove it
-
-            var href = _resetHref( $this.attr( "href" ) );
-
-            bidx.utils.log("ID", id);
-            bidx.utils.log("NEW HASH", href);
-            $this.attr( "href", href + id );
-        });
-        $view.modal({});
-    };
-
-    var _closeModal = function ( options )
-    {
-        var $view =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" );
-        $view.modal('hide');
-    };
-
     var _getEmail = function ( id, v )
     {
 
@@ -410,7 +381,7 @@
     };
 
     //  delete email
-    var _delete = function ( options )
+    var _doDelete = function ( options )
     {
         bidx.api.call(
              "mail.delete"
@@ -446,7 +417,7 @@
         );
     };
 
-    //  HELP functions
+    //  ################################## HELPER #####################################  \\
 
     //  sets any given toolbar and associate toolbar buttons with ID
     var _setToolbarTargetID = function ( id, v )
@@ -459,27 +430,54 @@
         $toolbar.find(".btn").each( function()
         {
             $this =  $ ( this );
-            href = _resetHref( $this.attr( "href" ) );
-            bidx.utils.log("NEW HREF", href + id);
-            $this.attr( "href", href + id);
+            href = bidx.utils.removeIdFromHash( $this.attr( "href" ) );
+            bidx.utils.log("NEW HREF", href + id );
+            $this.attr( "href", href + id );
 
         });
     };
 
-    //  Removes ID from hash string
-    var _resetHref = function ( str ){
-        var newHash = [];
+    //  ################################## MODAL #####################################  \\
 
-        $.each( str.split( "/" ), function( idx, item )
+    //  show modal view with optionally and ID to be appended to the views buttons
+    var _showModal = function ( options )
+    {
+
+        if( options.id )
         {
-            if( !item.match( /^\d+$/ ) )
-            {
-                newHash.push( item );
-            }
+            var id = options.id;
+        }
+
+        $modal =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" );
+
+        $modal.find( ".btn[href]" ).each( function()
+        {
+            var $this=$(this);
+
+            $this.attr(
+                "href"
+            ,   bidx.utils.removeIdFromHash( $this.attr( "href" ) ) + ( id ? id : "" )
+            );
+
         } );
 
-        return newHash.join( "/" );
+        $modal.modal({});
+
+        if( options.onHide )
+        {
+            //  to prevent duplicate attachments only attach onces per modal view occurence
+            $modal.one( 'hide', options.onHide );
+        }
     };
+
+    //  closing of modal view state
+    var _closeModal = function ( options )
+    {
+        $modal =  $views.filter( _getViewName( options.view ) ).find( ".bidx-modal-deleteEmail" );
+
+        $modal.modal('hide');
+    };
+
 
 
 
@@ -504,9 +502,8 @@
             break;
 
             case "read":
-                bidx.utils.log("view EMAIL");
-                bidx.utils.log(arguments);
                 _getEmail ( id, "read" );
+
                 _showView( "read" );
             break;
 
@@ -516,20 +513,22 @@
                 {
                     view:   "deleteConfirm"
                 ,   id:     id
-                });
+
+                } );
             break;
 
             case "delete":
-                _delete(
-                 {
+                _doDelete(
+                {
                     view:   "deleteConfirm"
                 ,   id:     id
-                });
 
+                } );
             break;
 
             case "inbox":
             case "sent":
+
                 var type = "RECEIVED_EMAILS";
 
                 if( section === "sent" ) {
@@ -540,19 +539,31 @@
 
                 _populateList( type, "list", "list" );
                 _showView( "list" );
+/*                if( $modal )
+                {
+                    $modal.modal( 'hide');
+                }*/
                 //bidx.utils.log( "mailInbox::AppRouter::mail", section );
-
             break;
 
             case "compose":
 
                 _showView( "compose" );
                 _composeFormInit();
-
             break;
 
-            case "test":
-                _getContacts( id );
+            case "discardConfirm":
+                _showView( "discardConfirm" );
+                _showModal(
+                {
+                    view:   "discardConfirm"
+                ,   onHide:   function()
+                    {
+                        bidx.utils.log("ARGUMENTS", arguments);
+                        bidx.utils.updateHash( "#mail/compose" );
+                        navigate( "inbox", "compose" );
+                    }
+                } );
             break;
 
             default:

@@ -530,6 +530,32 @@
         return result;
     };
 
+    //  well....it updates the hash
+    var updateHash = function ( str )
+    {
+        document.location.hash = str;
+    };
+
+    //  Removes ID(s) from hash string
+    var removeIdFromHash = function ( str ){
+        var newHash = [];
+
+        $.each( str.split( "/" ), function( idx, item )
+        {
+            if( !item.match( /^\d+$/ ) )
+            {
+                newHash.push( item );
+            }
+            else
+            {
+                //replace matched ID for empty string so that the / delimeting of the HREF stays consistent
+                newHash.push( "" );
+            }
+        } );
+
+        return newHash.join( "/" );
+    };
+
     // Logger functions
     //
     var log = function()
@@ -578,6 +604,8 @@
     ,   getElementValue:            getElementValue
     ,   populateDropdown:           populateDropdown
     ,   setNestedStructure:         setNestedStructure
+    ,   removeIdFromHash:           removeIdFromHash
+    ,   updateHash:                 updateHash
 
     ,   log:                        log
     ,   warn:                       warn

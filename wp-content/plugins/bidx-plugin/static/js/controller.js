@@ -145,7 +145,8 @@
         ,   'register':                                         'register'
         ,   'resetpassword':                                    'resetpassword'
 
-        ,   'mail(/:section)(/:id)':                            'mail'
+        ,   'mail(/:section)(/:part1)(/:part2)':                'mail'
+        //,   'mail(/:section)(/:substate)(/:id)':                'mail'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
@@ -267,11 +268,27 @@
 
             _showMainState( state );
         }
-     ,   mail:              function( section, id )
+    //,   mail:              function( section,  id )
+    ,   mail:              function( section, part1, part2 )
         {
+            /*
+                - section is most of the the time a section, but it COULD be an ID. Part1 and 2 will be empty
+                - part1 can be substate OR id
+                - part2 is always an Id IF part1 is an substate
+
+                Example:
+                    #mail/inbox/deleteConfirm/3412
+                    #mail/inbox/delete/3412
+                    #mail/3433   -> view email
+                    #mail/inbox/3433 -> view email
+                    #mail/compose
+            */
             bidx.utils.log( "AppRouter::mailInbox", section );
 
-            //  states that mattch the section argument
+            var id
+            ,   substate
+            ;
+            //  little switch statement for states that match the section argument
             sectionState =
             {
                 deleteConfirm:       true
@@ -280,21 +297,12 @@
 
             };
 
-            // if there is an id, switch state to viewing of email. Id could also be available under section
-            if( ( section && section.match( /^\d+$/ ) ) || ( id && id.match( /^\d+$/ ) ) )
+            //  if section is an ID or part1 is an ID switch to state 'read'
+            if( ( section && section.match( /^\d+$/ ) ) || ( part1 && part1.match( /^\d+$/ ) ) )
             {
-                /*
-                    section:    inbox, sent --> state: list
-                                inbox, sent + /{ID} ---> state: read
-                                deleteConfirm, delete + /{ID} ---> state = section
-                                compose ---> state = section
-                */
+                //  if section holds the id, transfer its value to id. Otherwise use part1
+                id = ( section && section.match( /^\d+$/ ) ) ? section : part1;
 
-                //if Id was provided on the position of section, copy it onto ID
-                if ( section && section.match( /^\d+$/ ) )
-                {
-                    id = section;
-                }
                 //  check if the state matches the section value
                 if( section && sectionState[ section ] )
                 {
@@ -312,7 +320,7 @@
 
             }
 
-            _navigateToApp( "mail", state, section, id);
+            _navigateToApp( "mail", state, section, id, substate);
 
         }
     } );
