@@ -26,6 +26,8 @@
         ,   confirmRemove:      true
         ,   prependNewItems:    true
 
+        ,   txtAreYouSure:      "Are you sure?"
+
         ,   extraRowClasses:    "row-fluid"
 
         ,   removeItemOverride: null
@@ -92,7 +94,7 @@
                 else
                 {
                     orgText = $btn.text();
-                    $btn.text( "Are you sure? Click again..." );
+                    $btn.text( options.txtAreYouSure );
                     $btn.data( "confirm", true );
 
                     $btn.removeClass( "btn-mini" );
