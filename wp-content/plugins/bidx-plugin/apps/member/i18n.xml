@@ -3,4 +3,5 @@
     <Item value="selectInvestmentType">Select the investment type</Item>
     <Item value="selectInvestor">Select your investor</Item>
     <Item value="selectCountry">Select the country</Item>
+    <Item value="selectNationality">Select your nationality</Item>
 </I18N>

@@ -27,8 +27,10 @@
     ,   member
     ,   memberId
     ,   memberProfileId
-    ,   bidx            = window.bidx
-    ,   snippets        = {}
+    ,   bidx                        = window.bidx
+    ,   snippets                    = {}
+
+    ,   appName                     = "member"
 
     ,   languages
     ;
@@ -111,8 +113,12 @@
     //
     bidx.data.getItem( "country", function( err, countries )
     {
+        var $noValue            = $( "<option value='' />" );
+
         $personalDetailsNationality.empty();
-        $personalDetailsNationality.append( $( "<option value='' />" ).text( "Select your nationality" ));
+
+        $noValue.i18nText( "selectNationality", appName );
+        $personalDetailsNationality.append( $noValue );
 
         bidx.utils.populateDropdown( $personalDetailsNationality, countries );
     } );
@@ -132,16 +138,25 @@
     //
     bidx.data.getItem( "education", function( err, educations )
     {
+        var $noValue            = $( "<option value='' />" );
+
         $personalDetailsHighestEducation.empty();
-        $personalDetailsHighestEducation.append( $( "<option value='' />" ).text( "Select your highest education" ));
+
+        $noValue.i18nText( "selectCountry", appName );
+        $personalDetailsHighestEducation.append( $noValue );
 
         bidx.utils.populateDropdown( $personalDetailsHighestEducation, educations );
     } );
 
     bidx.data.getItem( "documentType", function( err, documentTypes )
     {
-        var $documentType = snippets.$attachment.find( "[name='documentType']" );
-        $documentType.append( $( "<option value='' />" ).text( "Select the type" ));
+        var $documentType = snippets.$attachment.find( "[name='documentType']" )
+        ,   $noValue        = $( "<option value='' />" )
+        ;
+
+        $noValue.i18nText( "selectDocumentType" );
+
+        $documentType.append( $noValue );
 
         bidx.utils.populateDropdown( $documentType, documentTypes );
     } );
@@ -276,7 +291,12 @@
                 ,   success:            function( response )
                     {
                         bidx.utils.log( "bidx::entityDocument::destroy::success", response );
-                        bidx.common.notifySuccess( "Attachment deleted" );
+
+                        bidx.i18n.getItem( "attachmentDeleted", function( err, label )
+                        {
+                            bidx.common.notifySuccess( label );
+                        });
+
 
                         cb();
 
@@ -286,7 +306,10 @@
                     {
                         bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
 
-                        alert( "Problems deleting attachment" );
+                        bidx.i18n.getItem( "errAttachmentDelete", function( err, label )
+                        {
+                            alert( label );
+                        } );
 
                         cb();
                     }
@@ -824,49 +847,6 @@
             } );
         } );
 
-        // Attachments
-        //
-        $attachmentsContainer.delegate( "a[href$=#deleteAttachment]", "click", function( e )
-        {
-            e.preventDefault();
-
-            var $btn            = $( this )
-            ,   $attachment     = $btn.closest( ".attachmentItem" )
-            ,   attachment      = $attachment.data( "bidxData" )
-            ,   documentId      = attachment.bidxEntityId
-            ;
-
-            if ( $btn.hasClass( "disabled" ))
-            {
-                return;
-            }
-
-            $btn.addClass( "disabled" );
-
-            bidx.api.call(
-                "entityDocument.destroy"
-            ,   {
-                    entityId:           memberProfileId
-                ,   documentId:         documentId
-                ,   groupDomain:        bidx.common.groupDomain
-                ,   success:            function( response )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
-
-                        $attachmentsContainer.reflowrower( "removeItem", $attachment );
-                    }
-                ,   error:            function( jqXhr, textStatus )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
-
-                        alert( "Problems deleting attachment" );
-
-                        $btn.removeClass( ".disabled" );
-                    }
-                }
-            );
-        } );
-
         // Fetch the member
         //
         bidx.api.call(
@@ -882,7 +862,11 @@
 
                     if ( !canEdit )
                     {
-                        _showError( "You do not have the rights to edit this profile" );
+                        bidx.i18n.getItem( "noProfileEditPermission", function( err, label )
+                        {
+                            _showError( label );
+                        } );
+
                         $btnCancel.removeClass( "disabled" );
                     }
                     else
@@ -1058,7 +1042,10 @@
         }
         else
         {
-            bidx.common.notifySuccess( "Attachment upload done" );
+            bidx.i18n.getItem( "attachmentUploadDone", function( err, label )
+            {
+                bidx.common.notifySuccess( label );
+            } );
 
             _addAttachmentToScreen( null, result.data );
         }
