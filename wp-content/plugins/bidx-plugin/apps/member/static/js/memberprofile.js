@@ -786,8 +786,8 @@
         ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
         ;
 
-        $btnSave.text( "Save profile" );
-        $btnCancel.text( "Cancel" );
+        $btnSave.i18nText( "btnSaveProfile" );
+        $btnCancel.i18nText( "btnCancel" );
 
         bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 
