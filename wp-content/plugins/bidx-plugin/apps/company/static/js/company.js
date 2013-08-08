@@ -31,6 +31,8 @@
     ,   companyProfileId
     ,   bidx            = window.bidx
     ,   snippets        = {}
+
+    ,   appName         = "company"
     ;
 
     if ( !$element.length )
@@ -87,32 +89,49 @@
     //
     bidx.data.getItem( "country", function( err, countries )
     {
+        var $noValue            = $( "<option value='' />" );
+
         $currentAddressCountry.empty();
-        $currentAddressCountry.append( $( "<option value='' />" ).text( "Select your country" ));
+
+        $noValue.i18nText( "selectCountry", appName );
+        $currentAddressCountry.append( $noValue );
 
         bidx.utils.populateDropdown( $currentAddressCountry, countries );
     } );
 
     bidx.data.getItem( "country", function( err, countries )
     {
-        var $countryOperationSpecificsCountry = snippets.$countryOperationSpecifics.find( "[name='country']" );
-        $countryOperationSpecificsCountry.append( $( "<option value='' />" ).text( "Select the country" ));
+        var $countryOperationSpecificsCountry   = snippets.$countryOperationSpecifics.find( "[name='country']" )
+        ,   $noValue                            = $( "<option value='' />" )
+        ;
+
+        $noValue.i18nText( "selectCountry", appName );
+        $currentAddressCountry.append( $noValue );
 
         bidx.utils.populateDropdown( $countryOperationSpecificsCountry, countries );
     } );
 
     bidx.data.getItem( "permitsObtained", function( err, permitsOptained )
     {
-        var $countryOperationSpecificsPermitsLicencesObtained = snippets.$countryOperationSpecifics.find( "[name='permitsLicencesObtained']" );
-        $countryOperationSpecificsPermitsLicencesObtained.append( $( "<option value='' />" ).text( "Select the obtained licenses" ));
+        var $countryOperationSpecificsPermitsLicencesObtained   = snippets.$countryOperationSpecifics.find( "[name='permitsLicencesObtained']" )
+        ,   $noValue                                            = $( "<option value='' />" )
+        ;
+
+        $noValue.i18nText( "selectPermitsObtained", appName );
+
+        $countryOperationSpecificsPermitsLicencesObtained.append( $noValue );
 
         bidx.utils.populateDropdown( $countryOperationSpecificsPermitsLicencesObtained, permitsOptained );
     } );
 
     bidx.data.getItem( "legalForm", function( err, legalForms )
     {
-        var $legalFormBusiness = $editForm.find( "[name='legalFormBusiness']" );
-        $legalFormBusiness.append( $( "<option value='' />" ).text( "Select the legal form of your company" ));
+        var $legalFormBusiness  = $editForm.find( "[name='legalFormBusiness']" )
+        ,   $noValue            = $( "<option value='' />" )
+        ;
+
+        $noValue.i18nText( "selectLegalFormBusiness", appName );
+        $legalFormBusiness.append( $noValue );
 
         bidx.utils.populateDropdown( $legalFormBusiness, legalForms );
     } );
@@ -519,8 +538,8 @@
         ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
         ;
 
-        $btnSave.text( state === "create" ? "Add company" : "Save company" );
-        $btnCancel.text( "Cancel" );
+        $btnSave.i18nText( ( state === "create" ? "btnAddCompany" : "btnSaveCompany" ), appName );
+        $btnCancel.i18nText( "btnCancel" );
 
         $controls.append( $btnSave );
 
@@ -595,7 +614,11 @@
 
                         if ( !canEdit )
                         {
-                            _showError( "You do not have the rights to edit this company" );
+                            bidx.i18n.getItem( "noProfileEditPermission", function( err, label )
+                            {
+                                _showError( label );
+                            } );
+
                             $btnCancel.removeClass( "disabled" );
                         }
                         else

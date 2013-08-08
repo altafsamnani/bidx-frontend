@@ -128,8 +128,12 @@
     //
     bidx.data.getItem( "country", function( err, countries )
     {
+        var $noValue            = $( "<option value='' />" );
+
         $currentAddressCountry.empty();
-        $currentAddressCountry.append( $( "<option value='' />" ).text( "Select your country" ));
+
+        $noValue.i18nText( "selectCountry", appName );
+        $currentAddressCountry.append( $noValue );
 
         bidx.utils.populateDropdown( $currentAddressCountry, countries );
     } );
@@ -142,7 +146,7 @@
 
         $personalDetailsHighestEducation.empty();
 
-        $noValue.i18nText( "selectCountry", appName );
+        $noValue.i18nText( "selectEducation", appName );
         $personalDetailsHighestEducation.append( $noValue );
 
         bidx.utils.populateDropdown( $personalDetailsHighestEducation, educations );

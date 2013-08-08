@@ -1,3 +1,10 @@
 <I18N>
-    <!-- <Item value=""></Item> -->
+    <Item value="selectCountry">Select the country</Item>
+    <Item value="selectPermitsObtained">Select the obtained licenses</Item>
+    <Item value="selectLegalForm">Select the legal form of your company</Item>
+    <Item value="selectLegalFormBusiness">Select the legal form of your company</Item>
+
+    <!-- Buttons -->
+    <Item value="btnAddCompany">Add company</Item>
+    <Item value="btnSaveCompany">Save company</Item>
 </I18N>
