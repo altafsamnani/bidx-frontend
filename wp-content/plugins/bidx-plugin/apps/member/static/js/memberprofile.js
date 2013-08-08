@@ -282,7 +282,7 @@
         itemsPerRow:        3
     ,   removeItemOverride: function( $item, cb )
         {
-            var attachment      = $item.data( "bidxItem" )
+            var attachment      = $item.data( "bidxData" )
             ,   documentId      = attachment.bidxEntityId
             ;
 
