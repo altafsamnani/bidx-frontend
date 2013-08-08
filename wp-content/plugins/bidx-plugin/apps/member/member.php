@@ -27,9 +27,10 @@ class member {
 
 		wp_register_script( 'entrepreneurprofile', 	plugins_url( 'static/js/entrepreneurprofile.js', 	__FILE__ ), array(), '20130501', TRUE );
 		wp_register_script( 'investorprofile', 		plugins_url( 'static/js/investorprofile.js', 		__FILE__ ), array(), '20130701', TRUE );
+		wp_register_script( 'memberprofile',		plugins_url( 'static/js/memberprofile.js', 			__FILE__ ), array(), '20130808', TRUE );
 
 
-		$deps = array_merge( self :: $deps, array( 'entrepreneurprofile', 'investorprofile' ) );
+		$deps = array_merge( self :: $deps, array( 'memberprofile', 'entrepreneurprofile', 'investorprofile' ) );
 
 	  	wp_register_script( 'member', plugins_url( 'static/js/member.js', __FILE__ ), $deps, '20130501', TRUE );
 	  	wp_register_style( 'member', plugins_url( 'static/css/member.css', __FILE__ ), array(), '20130501', 'all' );
