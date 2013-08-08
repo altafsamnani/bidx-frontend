@@ -191,8 +191,14 @@ class BidxCommon
         if (!empty ($this::$bidxSession[$subDomain]->data)) {
             $entities = $this::$bidxSession[$subDomain]->data->entities;
             foreach ($entities as $key => $value) {
-                $bidxEntityType = $value->bidxEntityType;
-                $bidxEntityValue = $value->bidxEntityId;
+
+                // New API has wrapped all it's data into a 'bidxMeta' block
+                // Below is for keeping it backwards/forwards compatible
+                //
+                $meta = isset( $value->bidxMeta ) ? $value->bidxMeta : $value;
+
+                $bidxEntityType = $meta->bidxEntityType;
+                $bidxEntityValue = $meta->bidxEntityId;
                 $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
             }
         }

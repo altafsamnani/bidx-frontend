@@ -2,9 +2,9 @@
 
 /**
  * Session service that returns a list of session variables.
- * 
+ *
  * @author Altaf Samnani
- * @version 1.0 
+ * @version 1.0
  * @link http://bidx.net/api/v1/member
  *
  */
@@ -37,14 +37,13 @@ class MemberService extends APIbridge {
     if (!empty($result->data->bidxMemberProfile->bidxCanEdit) && !empty($result->data) && ($memberId == $sessionData->data->id) ) {
       $result->data->isMyProfile = true;
     }
-    
+
     $return = $this->processMemberDetails($result, $sessionData);
-    
+
     return $return;
   }
 
   function processMemberDetails ( $result, $sessionData ) {
-
     $groupDetails = (!empty($result->data->groups)) ? $result->data->groups : array();
     $bidXGroupDomain = $result->bidxGroupDomain;
     $sessionGroups = (!empty($sessionData->data->groups)) ? $sessionData->data->groups : NULL;
@@ -53,14 +52,21 @@ class MemberService extends APIbridge {
     $groupInfo = NULL;
     foreach ($groupDetails as $groupKey => $groupValue) {
       //Group Info
-      $bidxGroupUrlVal = $this->getBidxSubdomain(false, $groupValue->bidxGroupUrl);
+
+      // New API has wrapped all it's data into a 'bidxMeta' block
+      // Below is for keeping it backwards/forwards compatible
+      //
+      $meta = isset( $groupValue->bidxMeta ) ? $groupValue->bidxMeta : $groupValue;
+
+      $bidxGroupUrlVal = $this->getBidxSubdomain(false, $meta->bidxGroupUrl );
+
 
       if ($bidxGroupUrlVal == $bidXGroupDomain) {
-         $groupInfo->groupName = $groupValue->name;
-         $groupInfo->slogan    = $groupValue->slogan;
-         $groupInfo->description = $groupValue->description;
-         $groupInfo->logo = $groupValue->logo;
-         
+         $groupInfo->groupName    = $groupValue->name;
+         $groupInfo->slogan       = isset( $groupValue->slogan )      ? $groupValue->slogan       : "";
+         $groupInfo->description  = isset( $groupValue->description ) ? $groupValue->description  : "";
+         $groupInfo->logo         = isset( $groupValue->logo )        ? $groupValue->logo         : "";
+
          $result->data->groupInfo = $groupInfo;
       }
 
@@ -71,14 +77,20 @@ class MemberService extends APIbridge {
 
     }
 
-    
+
     $result->data->groups = $groupDetails;
 
     $entityDetails = (!empty($result->data->entities)) ? $result->data->entities : array();
 
     foreach ( $entityDetails as $entityKey => $entityValue) {
-      if($entityValue -> bidxEntityType == 'bidxBusinessSummary') {
-        $resultEntity = $this->callBidxAPI('entity/' . $entityValue->bidxEntityId, array(), 'GET');
+
+      // New API has wrapped all it's data into a 'bidxMeta' block
+      // Below is for keeping it backwards/forwards compatible
+      //
+      $entityMeta = isset( $entityValue->bidxMeta ) ? $entityValue->bidxMeta : $entityValue;
+
+      if($entityMeta->bidxEntityType == 'bidxBusinessSummary') {
+        $resultEntity = $this->callBidxAPI('entity/' . $entityMeta->bidxEntityId, array(), 'GET');
         $rowValues = array('Tagline',
           'Summary',
           'Industry',
