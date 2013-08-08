@@ -153,13 +153,13 @@
 
     // Was data preloaded?
     //
-    if ( bidx.i18n && bidx.i18n.__preload )
+    if ( window.__bidxI18nPreload )
     {
         var preload;
 
         try
         {
-            preload = $.parseJSON( bidx.i18n.__preload );
+            preload = $.parseJSON( window.__bidxI18nPreload );
         }
         catch ( e )
         {

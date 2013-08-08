@@ -122,18 +122,18 @@ class BidxShortcode {
 	 		wp_register_script( 'bidx-data',					$bidxJsDir . '/data.js',						array( 'jquery' ), '20130626', TRUE );
 
            // wp_localize_script( 'bidx-data', 'windows.bidx = bidx || {}','{}' ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
-          
+
             /* Expose Locale Data to frontend */
 
             // 1. I18n  & Global Data
-            wp_localize_script( 'bidx-data', 'bidx.i18n.__preload', json_encode( BidxCommon::$scriptStaticJs['i18n'] ) ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+            wp_localize_script( 'bidx-data', '__bidxI18nPreload', json_encode( BidxCommon::$scriptStaticJs['i18n'] ) ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
             // 2. Static Data
-            wp_localize_script( 'bidx-data', 'bidx.data.__preload', json_encode( BidxCommon::$scriptStaticJs['static'] ) ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
-            
-            // 3. Global Data If needed 
+            wp_localize_script( 'bidx-data', '__bidxDataPreload', json_encode( BidxCommon::$scriptStaticJs['static'] ) ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+
+            // 3. Global Data If needed
            // wp_localize_script( 'bidx-data', 'bidx.global.__preload', json_encode( BidxCommon::$scriptStaticJs['__global'] ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
-            
+
 
             wp_register_script( 'bidx-i18n',					$bidxJsDir . '/i18n.js',						array( 'jquery' ), '20130626', TRUE );
 

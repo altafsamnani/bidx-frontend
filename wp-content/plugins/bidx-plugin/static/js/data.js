@@ -6,13 +6,6 @@
     var bidx                = window.bidx
     ;
 
-    // TODO: remove this when staticdata is moved to window.bidx.data.__preload
-    //
-    if ( !bidx.data || !bidx.data.__preload )
-    {
-        bidx.data = { __preload: staticdata };
-    }
-
         // Internal administration of cached items, let's keep it for now in an object, maybe later sync it to localstorage
         //
         // A cached item is identifed by it's key in the items object. This key is equal to the name of the list in the static data API
@@ -103,13 +96,13 @@
 
     // Was data preloaded?
     //
-    if ( bidx.data && bidx.data.__preload )
+    if ( window.__bidxDataPreload )
     {
         var preload;
 
         try
         {
-            preload = $.parseJSON( bidx.data.__preload );
+            preload = $.parseJSON( window.__bidxDataPreload );
         }
         catch ( e )
         {
