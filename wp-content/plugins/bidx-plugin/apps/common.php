@@ -369,15 +369,17 @@ class BidxCommon
 
             $return['data'] = $data;
 
-            //1. I18n data Locale
-            $return['i18n'] = $transientLocaleData['i18n'];
+            if ( isset( $transientLocaleData )) {
 
-            //2. I18n global Locale
-            $return['__global'] = $transientLocaleData['__global'];
+                //1. I18n data Locale
+                $return['i18n'] = $transientLocaleData['i18n'];
 
-            //3. Static data Locale
-            $return['static'] = $transientLocaleData['static'];
+                //2. I18n global Locale
+                $return['__global'] = $transientLocaleData['__global'];
 
+                //3. Static data Locale
+                $return['static'] = $transientLocaleData['static'];
+            }
 
             return $return;
         }
