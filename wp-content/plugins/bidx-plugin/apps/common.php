@@ -105,7 +105,7 @@ class BidxCommon
         $session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
         $this->clearSessionFromParam ($session_id);
 
-        //Set Cookie Timeout 
+        //Set Cookie Timeout
         session_set_cookie_params ($time);
         if ($session_id) {
             session_id ($session_id);
@@ -236,10 +236,11 @@ class BidxCommon
         $jsApiVars = (isset ($data)) ? json_encode ($data) : '{}';
 
         $scriptJs = "<script>
-            var bidxConfig = bidxConfig || {};
-            var windows.bidx = bidx || {};
-            var bidx.data = bidx.data || {};
-            bidx.i18n = bidx.i18n || {};
+            var bidxConfig  = bidxConfig || {};
+
+            window.bidx     = window.bidx || {};
+            bidx.data       = bidx.data || {};
+            bidx.i18n       = bidx.i18n || {};
 
             bidxConfig.context =  $jsApiVars ;
 
@@ -250,8 +251,8 @@ class BidxCommon
                  </script>
             ";
 
-        //Create Static Data Script and pass variables through local_script it in shortcode.php        
-        
+        //Create Static Data Script and pass variables through local_script it in shortcode.php
+
         //1 i18n Data
         if( isset( $result['i18n'])) {
         $i18n = $result['i18n'];
@@ -604,9 +605,9 @@ class BidxCommon
 
         if (!empty ($i18n)) {
             $moduleNameArr = implode(',',$i18n);
-            $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{'.$moduleNameArr.'}/{i18n.xml}', GLOB_BRACE);           
+            $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{'.$moduleNameArr.'}/{i18n.xml}', GLOB_BRACE);
         }
-     
+
         $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
 
         foreach ($fileArr as $fileName) {
@@ -618,7 +619,7 @@ class BidxCommon
             $count = 0;
             $transientI18nData[$appName] = array();
             foreach ($items as $xmlObj) {
-                
+
                 $arr = $xmlObj->attributes ();
                 $xmlLabel =  $xmlObj->__toString ();
 
@@ -637,7 +638,7 @@ class BidxCommon
             }
         }
 
-         
+
          $returnData['__global'] = $transientI18nData['__global'];
          //unset( $transientI18nData['global'] );
          $returnData['i18n'] = $transientI18nData;
