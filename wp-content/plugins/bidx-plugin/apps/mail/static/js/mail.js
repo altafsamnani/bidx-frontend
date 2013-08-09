@@ -281,8 +281,9 @@
     var _getEmails = function ( options )
     {
 
-        var $listItem               = $($("#listMessage").html().replace(/(<!--)*(-->)*/g, ""))
-        ,   $list                   = $("." + options.list)
+        var $listItem               = $( $( "#mailbox-listitem" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+        ,   $listEmpty              = $( $( "#mailbox-empty") .html().replace( /(<!--)*(-->)*/g, "" ) )
+        ,   $list                   = $("." + options.list )
         ,   $view                   = $views.filter( bidx.utils.getViewName( options.view ) )
         ,   messages
         ;
@@ -314,61 +315,69 @@
                         //clear listing
                         $list.empty();
 
-                        //loop through response
-                        $.each( response.data, function( index, item )
+                        if( response.data.length !== 0 )
                         {
-                            element   = $listItem.clone();
 
-                            //search for placeholders in snippit
-                            element.find( ".placeholder" ).each( function( i, el )
+                            //loop through response
+                            $.each( response.data, function( index, item )
                             {
-                                item.sendername = "Sender unspecified";
-                                item.read = false;
-                                //set sendername (this might change in the future, hence the current construction)
-                                if( item.recipients[0] && item.recipients[0].fullName ) {
-                                    item.sendername = item.recipients[0].fullName;
-                                    item.new = item.recipients[0].new;
-                                }
+                                element   = $listItem.clone();
 
-                                //isolate placeholder key
-                                cls = $(el).attr( "class" ).replace( "placeholder ", "" );
-
-                                //if key if available in item response
-                                if( item[cls] )
+                                //search for placeholders in snippit
+                                element.find( ".placeholder" ).each( function( i, el )
                                 {
-
-                                    textValue = item[cls];
-                                    //add hyperlink on sendername for now (to read email)
-                                    if( cls === "sendername")
-                                    {
-                                        textValue = "<a href=\"" + document.location.hash +  "/" + item.id + "\" class=\"" + (item.new ? "email-new" : "" ) + "\">" + textValue + "</a>";
+                                    item.sendername = "Sender unspecified";
+                                    item.read = false;
+                                    //set sendername (this might change in the future, hence the current construction)
+                                    if( item.recipients[0] && item.recipients[0].fullName ) {
+                                        item.sendername = item.recipients[0].fullName;
+                                        item.new = item.recipients[0].new;
                                     }
-                                    if( cls === "sentDate" )
-                                    {
-                                        textValue = bidx.utils.parseISODateTime( textValue );
-                                    }
-                                    element.find( "span." + cls ).replaceWith( textValue );
 
-                                }
+                                    //isolate placeholder key
+                                    cls = $(el).attr( "class" ).replace( "placeholder ", "" );
+
+                                    //if key if available in item response
+                                    if( item[cls] )
+                                    {
+
+                                        textValue = item[cls];
+                                        //add hyperlink on sendername for now (to read email)
+                                        if( cls === "sendername")
+                                        {
+                                            textValue = "<a href=\"" + document.location.hash +  "/" + item.id + "\" class=\"" + (item.new ? "email-new" : "" ) + "\">" + textValue + "</a>";
+                                        }
+                                        if( cls === "sentDate" )
+                                        {
+                                            textValue = bidx.utils.parseISODateTime( textValue );
+                                        }
+                                        element.find( "span." + cls ).replaceWith( textValue );
+
+                                    }
+                                });
+
+                                //add mail element to list
+                                $list.append( element );
                             });
 
-                            //add mail element to list
-                            $list.append(element);
-                        });
+                            //load checkbox plugin on element
+                            $list.find( '[data-toggle="checkbox"]' ).checkbox();
 
-                        //load checkbox plugin on element
-                        $list.find( '[data-toggle="checkbox"]' ).checkbox();
-
-                        //bind event to change all checkboxes from toolbar checkbox
-                        $view.find( ".messagesCheckall" ).change( function()
-                        {
-                            var masterCheck = $( this ).attr( "checked" );
-                            $list.find( ":checkbox" ).each( function()
+                            //bind event to change all checkboxes from toolbar checkbox
+                            $view.find( ".messagesCheckall" ).change( function()
                             {
-                                var $this = $(this);
-                                $this.checkbox( masterCheck ? 'check' : 'uncheck' );
+                                var masterCheck = $( this ).attr( "checked" );
+                                $list.find( ":checkbox" ).each( function()
+                                {
+                                    var $this = $(this);
+                                    $this.checkbox( masterCheck ? 'check' : 'uncheck' );
+                                });
                             });
-                        });
+                        }
+                        else
+                        {
+                            $list.append( $listEmpty );
+                        }
 
                         //  execute callback if provided
                         if( options && options.callback )
@@ -569,6 +578,11 @@
 
             case "inbox":
             case "sent":
+                _closeModal(
+                {
+                    unbindHide: true
+                } );
+
                 _showView( "load" );
                 var type = "RECEIVED_EMAILS";
 
@@ -598,15 +612,22 @@
             break;
 
             case "discardConfirm":
-                _showView( "discardConfirm" );
+
+
+
                 _showModal(
                 {
                     view:   "discardConfirm"
+                ,   id:     id
+                ,   section:  section
+
                 ,   onHide:   function()
                     {
-                        bidx.utils.log("ARGUMENTS", arguments);
+                        bidx.utils.log("I AM HIDING!!!!!!!!!!!!!!");
                         bidx.utils.updateHash( "#mail/compose" );
-                        navigate( "inbox", "compose" );
+                        /*bidx.utils.log("ARGUMENTS", arguments);
+                        bidx.utils.updateHash( "#mail/compose" );*/
+
                     }
                 } );
             break;
@@ -621,7 +642,7 @@
     var mail =
     {
         navigate:               navigate
-    ,   $element:               $element
+    //,   $element:               $element //not sure why this should be exposed but is cause an issue where this element receives a display:none from somewhere
     ,   getMembers:             getMembers
     };
 

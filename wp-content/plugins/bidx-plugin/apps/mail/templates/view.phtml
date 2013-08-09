@@ -141,7 +141,6 @@
                     <a href="/mail/#mail/discardConfirm" class="btn btn-primary compose-cancel">
                         <?php _e('Discard message')?>
                     </a>
-                    <button type="button" class="btn btn-primary compose-cancel"><?php _e('Discard message')?> --> ADD CONFIRM!!!</button>
                 </div>
 
             </form>
@@ -192,7 +191,7 @@
 
 </div>
 
-<script type="text/html" id="listMessage">
+<script type="text/html" id="mailbox-listitem">
 <!--
 <li class="media">
     <div class="pull-left check">
@@ -211,6 +210,17 @@
         <div class="subject">
             <span class="placeholder subject"/>
         </div>
+    </div>
+</li>
+-->
+</script>
+
+<script type="text/html" id="mailbox-empty">
+<!--
+<li class="media">
+    <div class="pull-left check"></div>
+    <div class="">
+        <?php _e('No messages available')?>
     </div>
 </li>
 -->
