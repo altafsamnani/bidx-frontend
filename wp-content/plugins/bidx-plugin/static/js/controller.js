@@ -272,9 +272,9 @@
     ,   mail:              function( section, part1, part2 )
         {
             /*
-                - section is most of the the time a section, but it COULD be an ID. Part1 and 2 will be empty
+                - section is most of the the time a section, but it COULD be an ID. Part1 and 2 should then be empty
                 - part1 can be substate OR id
-                - part2 is always an Id IF part1 is an substate
+                - part2 is always an id IF part1 is an substate
 
                 Example:
                     #mail/inbox/deleteConfirm/3412
@@ -288,6 +288,7 @@
             var id
             ,   substate
             ;
+
             //  little switch statement for states that match the section argument
             sectionState =
             {
@@ -304,23 +305,30 @@
                 id = ( section && section.match( /^\d+$/ ) ) ? section : part1;
 
                 //  check if the state matches the section value
-                if( section && sectionState[ section ] )
+                /*if( section && sectionState[ section ] )
                 {
                     state = section;
-                }
+                }*/
                 //else if must be a read on a mailbox (inbox, send etc)
-                else
-                {
+                //else
+                //{
                     state = "read";
-                }
+                //}
             }
             else
             {
-                state = section;
+                if( part1 && sectionState[ part1 ] )
+                {
+                    state = part1;
+                }
+                else {
+                    state = section;
+                }
+                id = part2;
 
             }
 
-            _navigateToApp( "mail", state, section, id, substate);
+            _navigateToApp( "mail", state, section, id);
 
         }
     } );

@@ -556,6 +556,13 @@
         return newHash.join( "/" );
     };
 
+    //  return view name. Expects v(iew) and optionally a c(lass)
+    var getViewName = function ( v, c )
+    {
+
+        return ( c ? c : ".view" ) + v.charAt( 0 ).toUpperCase() + v.substr( 1 );
+    };
+
     // Logger functions
     //
     var log = function()
@@ -606,6 +613,7 @@
     ,   setNestedStructure:         setNestedStructure
     ,   removeIdFromHash:           removeIdFromHash
     ,   updateHash:                 updateHash
+    ,   getViewName:                getViewName
 
     ,   log:                        log
     ,   warn:                       warn

@@ -98,7 +98,7 @@
                 <div class="btn-group">
                     <a class="btn btn-small btn-primary" href="#/mail/#mail/reply/"><?php _e('Reply')?></a>
                     <a class="btn btn-small btn-primary" href="/mail/#mail/forward/"><?php _e('Forward')?></a>
-                    <a class="btn btn-small btn-primary" href="/mail/#mail/deleteConfirm/"><?php _e('Delete')?></a>
+                    <a class="btn btn-small btn-primary" href="/mail/#mail/%section%/deleteConfirm/"><?php _e('Delete')?></a>
                 </div>
             </div>
 
@@ -148,9 +148,9 @@
         </article>
 
         <!--  ************************** MODAL VIEWS ****************************************** -->
-        <article class="view viewDeleteConfirm">
+        <article class="modalView modalDeleteConfirm">
             <!-- Modal -->
-            <div class="modal hide fade bidx-modal-deleteEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h3 id="myModalLabel"><?php _e('Delete message')?></h3>
@@ -161,15 +161,15 @@
                 </p>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn" data-dismiss="modal" aria-hidden="true" href="/mail/#mail/inbox/"><?php _e('Close')?></a>
-                    <a class="btn btn-primary" href="/mail/#mail/delete/"><?php _e('Delete message')?></a>
+                    <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close')?></a>
+                    <a class="btn btn-primary" href="/mail/#mail/%section%/delete/"><?php _e('Delete message')?></a>
                 </div>
             </div>
         </article>
 
-         <article class="view viewDiscardConfirm">
+         <article class="modalView modalDiscardConfirm">
             <!-- Modal -->
-            <div class="modal hide fade bidx-modal-deleteEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h3 id="myModalLabel"><?php _e('Discard message')?></h3>
