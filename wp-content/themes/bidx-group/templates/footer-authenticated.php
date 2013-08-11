@@ -6,9 +6,9 @@
 
 				<div class="span6">
 					<ul class="bottom-links">
-						<li><a href="#fakelink"><?php _e('About Us')?></a></li>
-						<li><a href="#fakelink"><?php _e('Store')?></a></li>
-						<li><a href="#fakelink"><?php _e('Links')?></a></li>
+						<li><a href="#fakelink"><?php _e('About Us','bidxtheme')?></a></li>
+						<li><a href="#fakelink"><?php _e('Store','bidxtheme')?></a></li>
+						<li><a href="#fakelink"><?php _e('Links','bidxtheme')?></a></li>
 					</ul>
 				</div>
 

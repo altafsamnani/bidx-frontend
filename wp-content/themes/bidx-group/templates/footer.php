@@ -38,11 +38,11 @@
             	</div>
 
             	<div class="pull-right right-block">
-            		<div class="copyright">&copy; <?php echo date("Y") ?>. bidX.net. <?php _e('All rights reserved')?></div>
+            		<div class="copyright">&copy; <?php echo date("Y") ?>. bidX.net. <?php _e('All rights reserved','bidxtheme')?></div>
                     <div class="inline-list footer-menu">
-            			<div><a href="/sitemap"><?php _e('Sitemap')?></a></div>
-            			<div><a href="/termsandconditions"><?php _e('Terms and conditions')?></a></div>
-            			<div><a href="/privacy"><?php _e('Privacy')?></a></div>
+            			<div><a href="/sitemap"><?php _e('Sitemap','bidxtheme')?></a></div>
+            			<div><a href="/termsandconditions"><?php _e('Terms and conditions','bidxtheme')?></a></div>
+            			<div><a href="/privacy"><?php _e('Privacy','bidxtheme')?></a></div>
             		</div>
             	</div>
             </div>

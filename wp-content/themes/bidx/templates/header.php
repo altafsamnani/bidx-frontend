@@ -13,9 +13,9 @@
 				</a>
 				<nav class="menu-top visible-desktop">
 					<ul class="unstyled inline nav">
-						<li><a href="/category/blog"><?php _e('Blog');?></a></li>
-						<li><a href="/about"><?php _e('About bidX');?></a></li>
-						<li><a href="/contact"><?php _e('Contact');?></a></li>
+						<li><a href="/category/blog"><?php _e('Blog','bidxtheme');?></a></li>
+						<li><a href="/about"><?php _e('About bidX','bidxtheme');?></a></li>
+						<li><a href="/contact"><?php _e('Contact','bidxtheme');?></a></li>
 					</ul>
                     <div class="bidlangswitcher"> <?php do_action('icl_language_selector');?></div>
 				</nav>
@@ -29,9 +29,9 @@
 				endif;
 				?>
 				<ul class="nav menu visible-phone">
-					<li><a href="/category/blog"><?php _e('Blog')?></a></li>
-					<li><a href="/about"><?php _e('About bidX')?></a></li>
-					<li><a href="/contact"><?php _e('Contact')?></a></li>
+					<li><a href="/category/blog"><?php _e('Blog','bidxtheme')?></a></li>
+					<li><a href="/about"><?php _e('About bidX','bidxtheme')?></a></li>
+					<li><a href="/contact"><?php _e('Contact','bidxtheme')?></a></li>
 				</ul>
 			</nav>
 		</div>

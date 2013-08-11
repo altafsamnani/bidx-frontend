@@ -1,7 +1,7 @@
 <?php if (!have_posts()) : ?>
 <div>
 	<div class="alert">
-    	<?php _e('Sorry, no results were found.'); ?>
+    	<?php _e('Sorry, no results were found.','bidxtheme'); ?>
   	</div>
   	<?php get_search_form(); ?>
 </div>

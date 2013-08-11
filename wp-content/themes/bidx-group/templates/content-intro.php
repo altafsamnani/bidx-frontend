@@ -87,13 +87,13 @@
     if ( !isset( $entities->bidxInvestorProfile )) {
 ?>
         <div class="well">
-            <h3><?php _e('Become an investor')?></h3>
+            <h3><?php _e('Become an investor','bidxtheme')?></h3>
             <div class="row-fluid">
                 <div class="span8">
-                    <p><?php _e('Create your business')?></p>
+                    <p><?php _e('Create your business','bidxtheme')?></p>
                 </div>
                 <div class="span4">
-                    <a class="btn btn-primary" href="/member/#createInvestor"><?php _e('Create')?></a>
+                    <a class="btn btn-primary" href="/member/#createInvestor"><?php _e('Create','bidxtheme')?></a>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
                     <p><?php _e('Create your business')?></p>
                 </div>
                 <div class="span4">
-                    <a class="btn btn-primary" href="/member/#createEntrepreneur"><?php _e('Create')?></a>
+                    <a class="btn btn-primary" href="/member/#createEntrepreneur"><?php _e('Create','bidxtheme')?></a>
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
     	<div class="entry-content">
     		<div class="row-fluid after-well" >
 	    		<div class="span12 text-center">
-	    			<a class="btn" href="/login?join=true"><?php _e('Join our group')?></a> <?php printf(__('Already have an account? Just %1$s'),'<a href="/login">login</a>');?>
+	    			<a class="btn" href="/login?join=true"><?php _e('Join our group','bidxtheme')?></a> <?php printf(__('Already have an account? Just %1$s','bidxtheme'),'<a href="/login">login</a>');?>
 	    		</div>
     		</div>
     	</div>
@@ -155,7 +155,7 @@
 	    <div class="entry-content">
 	    	<div class="row-fluid">
 				<div class="well">
-					<h4><?php _e('News and Events')?></h4>
+					<h4><?php _e('News and Events','bidxtheme')?></h4>
 					<div class="row-fluid">
 <?php
  $args=array(

@@ -2,7 +2,7 @@
 /**
  * Roots includes
  */
-load_theme_textdomain('bidx',WP_CONTENT_DIR.'/languages');
+load_theme_textdomain('bidxtheme',WP_CONTENT_DIR.'/languages/themes');
 require_once locate_template('/lib/utils.php');           // Utility functions
 require_once locate_template('/lib/init.php');            // Initial theme setup and constants
 //require_once locate_template('/lib/sidebar.php');         // Sidebar class
@@ -35,9 +35,9 @@ if ( !function_exists( 'child_theme_setup' ) ):
 function child_theme_setup() {
 
 	register_sidebar( array(
-	'name' => __( 'Horizontal Widget Content Template', 'bidx' ),
+	'name' => __( 'Horizontal Widget Content Template', 'bidxtheme' ),
 	'id' => 'horizontal-1',
-	'description' => __( 'An optional horizontal widget below the content', 'bidx' ),
+	'description' => __( 'An optional horizontal widget below the content', 'bidxtheme' ),
 	) );
 
 }
