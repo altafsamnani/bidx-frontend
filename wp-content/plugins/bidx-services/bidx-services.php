@@ -200,7 +200,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $is_form_uploa
       'body' => $body,
       'headers' => $headers,
       'cookies' => $cookieArr,
-      'timeout' => apply_filters( 'http_request_timeout', 60)
+      'timeout' => apply_filters ('http_request_timeout', 60)
     ));
 
     /*     * *********** 5. Set Cookies if Exist ************************* */
@@ -215,7 +215,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $is_form_uploa
     } else { // Wp Request timeout
         $bidxWPerror = $result;
         $result = array ();
-        $result['error'] =  $bidxWPerror;
+        $result['error'] = $bidxWPerror;
         $result['response']['code'] = 'timeout';
     }
 
@@ -329,41 +329,42 @@ function clear_bidx_cookies ()
  *
  * Create the Po file from settings->Bidx
  * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation
- *
+ * Working
  */
 
 add_action ('wp_ajax_bidx_translation', 'get_string_translation');
-///////////////Working 
+
 function get_string_translation ()
 {
-     if( $context == '__global') {
-         $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}';
-     } else {
-         if($context) {
-            $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/apps/*{'.$appName.'}/{i18n.xml}';
-         } else {
-             $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/apps/*{'.$appName.'}/{i18n.xml}';
-         }
-     }
+    if ($context == '__global') {
+        $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}';
+        $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}', GLOB_BRACE);
+    } else {
+        if ($context) {
+            $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $appName . '}/{i18n.xml}';
+            $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $appName . '}/{i18n.xml}', GLOB_BRACE);
+        } else {
+            $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $appName . '}/{i18n.xml}';
+        }
+    }
 
-    $i18Path = ($context == '__global') ? WP_PLUGIN_DIR .'/bidx-plugin/{i18n.xml}' : WP_PLUGIN_DIR .'/bidx-plugin/apps/*/{i18n.xml}';
+    $i18Path = ($context == '__global') ? WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}' : WP_PLUGIN_DIR . '/bidx-plugin/apps/*/{i18n.xml}';
     $i18AppsArr = glob ($i18Path, GLOB_BRACE);
     $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
 
-                foreach ($fileArr as $fileName) {
+    foreach ($fileArr as $fileName) {
 
-                    $body['is_app'] = (preg_match ("/apps/i", $fileName)) ? true : false;
+        $body['is_app'] = (preg_match ("/apps/i", $fileName)) ? true : false;
 
-                    $dirArr = (preg_match ("/apps\/(.*)\/i18n.xml/i", $fileName, $matches));
-                    $body['app'] = (isset ($matches[1])) ? $matches[1] : NULL;
+        $dirArr = (preg_match ("/apps\/(.*)\/i18n.xml/i", $fileName, $matches));
+        $body['app'] = (isset ($matches[1])) ? $matches[1] : NULL;
 
-                    $document = simplexml_load_file ($fileName);
-                    $items = $document->xpath ('//Item');
+        $document = simplexml_load_file ($fileName);
+        $items = $document->xpath ('//Item');
 
-                    $po .= other_wordpress_post_action ('pocreate', $items, $body);
-                }
-
-} 
+        $po .= other_wordpress_post_action ('pocreate', $items, $body);
+    }
+}
 
 /*
  * @author Altaf Samnani
@@ -390,13 +391,14 @@ function create_bidx_po ()
                 $result = call_bidx_service ('staticdata', NULL, 'GET');
                 $requestData = bidx_wordpress_post_action ('staticpo', $result, $_GET);
                 $po = $requestData->po;
+               
                 break;
-
             case 'module' :
                 $pathName = $_GET['path'];
-                $language = (isset($body['lang'])) ? $body['lang'] : 'Original';
-                $po = '# Language '.$language. PHP_EOL;;
-     
+                $language = (isset ($body['lang'])) ? $body['lang'] : 'Original';
+                $po = '# Language ' . $language . PHP_EOL;
+                
+
                 $body = $_GET;
                 $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*/{i18n.xml}', GLOB_BRACE);
                 $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}', GLOB_BRACE);
@@ -415,6 +417,23 @@ function create_bidx_po ()
 
                     $po .= other_wordpress_post_action ('pocreate', $items, $body);
                 }
+                break;
+            case 'bidxplugin' :
+                $plugin = $_GET['path'];
+                global $pluginStrings;
+                bidx_st_scan_plugin_files ($plugin);
+                $po = plugin_theme_po_action ($pluginStrings,$_GET);
+                
+
+                break;
+
+            case 'bidxtheme' :
+                $plugin = $_GET['path'];
+                global $pluginStrings;
+                bidx_st_scan_plugin_files ($plugin);
+                $po = plugin_theme_po_action ($pluginStrings,$_GET);
+
+                break;
         }
 
         if ($lang) {
@@ -438,6 +457,97 @@ function create_bidx_po ()
     }
 }
 
+function bidx_st_scan_plugin_files ($plugin)
+{
+    require_once WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/potx.php';
+    static $recursion, $scanned_files = array ();
+    static $scan_stats = false;
+
+    $dh = opendir ($plugin);
+    while (false !== ($file = readdir ($dh))) {
+        if (0 === strpos ($file, '.'))
+            continue;
+        if (is_dir ($plugin . "/" . $file)) {
+            $recursion++;
+            $scan_stats .= str_repeat ("\t", $recursion - 1) . sprintf (__ ('Opening folder: %s', 'wpml-string-translation'), "/" . $file) . PHP_EOL;
+            $pluginStrings = bidx_st_scan_plugin_files ($plugin . "/" . $file, $recursion);
+            $recursion--;
+        } elseif (preg_match ('#(\.php|\.inc|\.phtml)$#i', $file)) {
+            $scan_stats .= str_repeat ("\t", $recursion) . sprintf (__ ('Scanning file: %s', 'wpml-string-translation'), "/" . $file) . PHP_EOL;
+            $scanned_files[] = "/" . $file;
+            _potx_process_file ($plugin . "/" . $file, 0, '__bidx_scan_plugin_files_results', '_potx_save_version', POTX_API_7);
+        } else {
+            $scan_stats .= str_repeat ("\t", $recursion) . sprintf (__ ('Skipping file: %s', 'wpml-string-translation'), "/" . $file) . PHP_EOL;
+        }
+    }
+
+    $scan_stats .= __ ('Done scanning files', 'wpml-string-translation') . PHP_EOL;
+    
+}
+
+function __bidx_scan_plugin_files_results ($string, $domain, $_gettext_context, $file, $line)
+{
+    global $pluginStrings;
+    $textDomain = $_GET['type'];
+
+    if ($domain == $textDomain) {
+        $return->value = $string;
+        $return->domain = $domain;
+        $return->key = $_gettext_context;
+        $return->file = $file;
+        $return->line = $line;
+        $pluginStrings[] = $return;
+        return $return;
+    }
+}
+
+function plugin_theme_po_action ($displayData, $body)
+{
+
+    $language = (isset ($body['lang'])) ? $body['lang'] : 'Original';
+    $po = '# Language ' . $language . PHP_EOL;
+    $count = 1;
+    $validate = array ();
+
+    foreach ($displayData as $dataId) {
+        $msgId = str_replace ('"', '\"', $dataId->value);
+        $msgStr = (isset ($body['lang'])) ? $body['lang'] . $msgId : '';
+        $msgCtxt = str_replace ('"', '\"', $dataId->key);
+
+        if ($msgCtxt) {
+            $_tag = '# _x("<!--msgId-->", "<!--msgcTxt-->","' . $body['type'] . '");';
+            $_x = true;
+            $valCTxt = $msgCtxt;
+        } else {
+            $_tag = '# _e("<!--msgId-->","' . $body['type'] . '");';
+            $_x = false;
+            $valCTxt = 'nocontext';
+        }
+
+        
+        $tag = str_replace ('<!--msgId-->', $msgId, $_tag);
+        $tag = str_replace ('<!--msgcTxt-->', $msgCtxt, $tag);
+        $po .= PHP_EOL . '#' . $count . ') File -' . $dataId->file . ' -' . $dataId->line . PHP_EOL;
+        $po .= $tag . PHP_EOL;
+        $po .= '# Context ' . $msgCtxt . ' Textdomain ' . $dataId->domain . PHP_EOL;
+
+        if (!isset ($validate[$valCTxt][$msgId])) {
+
+            $po .= ($_x) ? 'msgctxt "' . str_replace ('"', '\"', $msgCtxt) . '"' . PHP_EOL : '';
+            $po .= 'msgid "' . str_replace ('"', '\"', $msgId) . '"' . PHP_EOL;
+            $po .= 'msgstr "' . str_replace ('"', '\"', $msgStr) . '"' . PHP_EOL;
+            $po .= PHP_EOL;
+            $validate[$valCTxt][$msgId] = true;
+        } else {
+            $po .= '# Already exists, doesnt need translation.' . PHP_EOL . PHP_EOL;
+        }
+
+        $count++;
+    }
+  
+    return $po;
+}
+
 /**
  * @author Altaf Samnani
  * @version 1.0
@@ -452,31 +562,30 @@ function other_wordpress_post_action ($url, $result, $body)
         case 'pocreate' :
             $count = 1;
             $po = '';
-   
-            if($body['is_app']) {
+
+            if ($body['is_app']) {
                 $_tag = '# _x("<!--msgId-->", "<!--msgcTxt-->","i18n");';
                 $_x = true;
-               
             } else {
-                 $_tag = '# _e("<!--msgId-->", "i18n");';
-                 $_x = false;
+                $_tag = '# _e("<!--msgId-->", "i18n");';
+                $_x = false;
             }
-          
+
             foreach ($result as $xmlObj) {
                 $msgId = $xmlObj->__toString ();
                 $arr = $xmlObj->attributes ();
                 //$msgcTxt = $arr['value'];
-                $msgcTxt = $body['app'];
-                $msgStr = (isset($body['lang'])) ? $body['lang'] . $msgId : '';                
-                $tag = str_replace('<!--msgId-->',$msgId, $_tag);
-                $tag = str_replace('<!--msgcTxt-->',$msgcTxt, $tag);
-                $po .= $tag. PHP_EOL;
-                $po .= '# Context '.$msgcTxt.' TextDomain i18n'. PHP_EOL;
-                $po .= ($_x) ? 'msgctxt "' . str_replace ('"', '\"', $msgcTxt) . '"' . PHP_EOL : '';
+                $msgCTxt = $body['app'];
+                $msgStr = (isset ($body['lang'])) ? $body['lang'] . $msgId : '';
+                $tag = str_replace ('<!--msgId-->', $msgId, $_tag);
+                $tag = str_replace ('<!--msgcTxt-->', $msgCTxt, $tag);
+                $po .= $tag . PHP_EOL;
+                $po .= '# Context ' . $msgCTxt . ' TextDomain i18n' . PHP_EOL;
+                $po .= ($_x) ? 'msgctxt "' . str_replace ('"', '\"', $msgCTxt) . '"' . PHP_EOL : '';
                 $po .= 'msgid "' . str_replace ('"', '\"', $msgId) . '"' . PHP_EOL;
                 $po .= 'msgstr "' . str_replace ('"', '\"', $msgStr) . '"' . PHP_EOL;
                 $po .= PHP_EOL;
-               
+
                 $count++;
             }
             return $po;
@@ -641,7 +750,7 @@ function bidx_request_timeout_time ($val)
 function bidx_wordpress_post_action ($url, $result, $body)
 {
 
-    $requestData = (isset($result['body'])) ? json_decode ($result['body']) : new stdClass();
+    $requestData = (isset ($result['body'])) ? json_decode ($result['body']) : new stdClass();
     $httpCode = $result['response']['code'];
     $groupName = (isset ($body['domain'])) ? $body['domain'] : NULL;
     $redirectUrl = NULL;
@@ -667,8 +776,8 @@ function bidx_wordpress_post_action ($url, $result, $body)
         $bidxWPerror = $result['error'];
         $errors = $bidxWPerror->get_error_messages ();
 
-        $error = implode(', ',$errors);
-      
+        $error = implode (', ', $errors);
+
         $requestData->text .= $error;
         //$this->clear_wp_bidx_session ();
     } else {
@@ -763,35 +872,33 @@ function bidx_wordpress_post_action ($url, $result, $body)
 
         case 'staticpo':
             $displayData = $requestData->data;
-            $language = (isset($body['lang'])) ? $body['lang'] : 'Original';
-            $po = '# Language '.$language. PHP_EOL;
+            $language = (isset ($body['lang'])) ? $body['lang'] : 'Original';
+            $po = '# Language ' . $language . PHP_EOL;
             $count = 1;
-            $validate = array();
+            $validate = array ();
 
             foreach ($displayData as $dataKey => $dataValue) {
-                
-                $po .= PHP_EOL.'#' . $count.' '.$dataKey . PHP_EOL;
-              
+
+                $po .= PHP_EOL . '#' . $count . ' ' . $dataKey . PHP_EOL;
+
                 foreach ($dataValue as $dataId) {
 
 
                     $msgId = str_replace ('"', '\"', $dataId->value);
-                    $msgStr = (isset($body['lang'])) ? $body['lang'].$msgId : '';
+                    $msgStr = (isset ($body['lang'])) ? $body['lang'] . $msgId : '';
                     $msgCtxt = str_replace ('"', '\"', $dataId->key);
-                    $po .= '#  _x("'.$msgId.'", "'.$msgCtxt.'", '.'"static");' . PHP_EOL;
-                    $po .= '# Context '.$msgCtxt.' Textdomain static' . PHP_EOL;
+                    $po .= '#  _x("' . $msgId . '", "' . $msgCtxt . '", ' . '"static");' . PHP_EOL;
+                    $po .= '# Context ' . $msgCtxt . ' Textdomain static' . PHP_EOL;
 
-                    if(!isset($validate[$msgCtxt][$msgId])) {
-                    $po .= 'msgctxt "' . $msgCtxt . '"' . PHP_EOL;
-                    $po .= 'msgid "' . $msgId . '"' . PHP_EOL;
-                    $po .= 'msgstr "' . $msgStr . '"' . PHP_EOL;
-                    $po .= PHP_EOL;
-                    $validate[$msgCtxt][$msgId] = $msgStr;
+                    if (!isset ($validate[$msgCtxt][$msgId])) {
+                        $po .= 'msgctxt "' . $msgCtxt . '"' . PHP_EOL;
+                        $po .= 'msgid "' . $msgId . '"' . PHP_EOL;
+                        $po .= 'msgstr "' . $msgStr . '"' . PHP_EOL;
+                        $po .= PHP_EOL;
+                        $validate[$msgCtxt][$msgId] = true;
                     } else {
-                        $po .= '# Already exists, doesnt need translation.' . PHP_EOL. PHP_EOL;
+                        $po .= '# Already exists, doesnt need translation.' . PHP_EOL . PHP_EOL;
                     }
-
-
                 }
                 $count++;
             }
@@ -1741,8 +1848,8 @@ function alter_site_menu ()
         }
     }
     add_filter ('admin_footer_text', 'remove_footer_admin');
-    
 }
+
 add_action ('admin_menu', 'alter_site_menu');
 
 /* Alter Network Admin menus to get Bidx branding
@@ -1753,35 +1860,49 @@ add_action ('admin_menu', 'alter_site_menu');
  *
  * @param bool $echo
  */
-function alter_network_menu() {
 
-    add_submenu_page( 'settings.php', __('Static PO Generator'), __('Bidx'), 'manage_network_options', 'static-po', 'bidx_options' );
+function alter_network_menu ()
+{
 
+    add_submenu_page ('settings.php', __ ('Static PO Generator'), __ ('Bidx'), 'manage_network_options', 'static-po', 'bidx_options');
 }
+
 add_action ('network_admin_menu', 'alter_network_menu');
 
-
-function bidx_options() {
+function bidx_options ()
+{
     /* 1 Create Bidx Static PO */
-	if ( current_user_can( 'manage_options' ) )  {
+    if (current_user_can ('manage_options')) {
 
-        $pluginDir = WP_PLUGIN_DIR.'/bidx-plugin/apps';
-        /* 1. Bidx Static Pot Generator*/
-        echo "<b>Bidx Static Api Pot Generator</b><br/>";
+        $pluginDir = WP_PLUGIN_DIR . '/bidx-plugin/apps';
+        echo "<h2>Bidx Pot File Generator </h2>";
+        /* 1. Bidx Static Pot Generator */
+        echo "<b>Bidx Static Api Pot Generator (Text domain static)</b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static'>here</a> to create static PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=es'>here</a> to create static Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=fr'>here</a> to create static Demo Fr PO <br/><br/>";
 
-        /* 2. Bidx Apps Pot Generator*/
-        echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin)</b><br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Apps PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Apps Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=".WP_PLUGIN_DIR.'/bidx-plugin'."&app=apps'>here</a> to create Apps Demo Fr PO <br/>";
-        
+        /* 2. Bidx Apps Pot Generator */
+        echo "<b>Bidx Wp Plugin I18n.xml Pot Generator (Text domain i18n) </b><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Es PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Fr PO <br/><br/>";
+
+        /* 3. Bidx Apps Pot Generator */
+        echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin) (Text domain bidxplugin)</b><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Es PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Fr PO <br/><br/>";
+
+        /* 4. Bidx Theme Pot Generator */
+        echo "<b>Bidx Wp Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
 
     } else {
-		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-	}
+        wp_die (__ ('You do not have sufficient permissions to access this page.'));
+    }
 }
 
 function wpc_remove_admin_elements ()
