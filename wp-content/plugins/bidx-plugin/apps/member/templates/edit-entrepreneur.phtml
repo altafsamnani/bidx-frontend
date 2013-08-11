@@ -2,12 +2,12 @@
 
     <!-- LOAD -->
     <div class="view viewLoad span12">
-        <span><?php _e('Retrieving entrepreneur information...'); ?></span>
+        <span><?php _e('Retrieving entrepreneur information...','bidxplugin'); ?></span>
     </div>
 
     <!-- ERROR -->
     <div class="view viewError span12">
-        <h2><?php _e('Error'); ?></h2>
+        <h2><?php _e('Error','bidxplugin'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
@@ -27,9 +27,9 @@
                         <div class="span12">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Summary'); ?></label>
+                                <label class="control-label"><?php _e('Summary','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <textarea name="summary" placeholder="<?php _e('Please type the summary of your entrepreneurship'); ?>" ></textarea>
+                                    <textarea name="summary" placeholder="<?php _e('Please type the summary of your entrepreneurship','bidxplugin'); ?>" ></textarea>
                                 </div>
                             </div>
                         </div>
@@ -38,9 +38,9 @@
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Focus industry'); ?></label>
+                                <label class="control-label"><?php _e('Focus industry','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Focus industry'); ?>">
+                                    <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Focus industry','bidxplugin'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -51,18 +51,18 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Have you ever own a business before?'); ?></label>
+                                <label class="control-label"><?php _e('Have you ever own a business before?','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <label class="radio inline"><input type="radio" value="true" name="prevRunBusiness" data-toggle="radio"/> <?php _e('Yes'); ?></label>
-                                    <label class="radio inline"><input type="radio" value="false" name="prevRunBusiness" data-toggle="radio"/> <?php _e('No'); ?></label>
+                                    <label class="radio inline"><input type="radio" value="true" name="prevRunBusiness" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
+                                    <label class="radio inline"><input type="radio" value="false" name="prevRunBusiness" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="toggle togglePrevRunBusiness intermediate-row">
-                        <h6><?php _e('Previous businesses'); ?></h6>
-                        <a href="#addPreviousBusiness" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add'); ?></a>
+                        <h6><?php _e('Previous businesses','bidxplugin'); ?></h6>
+                        <a href="#addPreviousBusiness" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
                     </div>
 
                     <div class="toggle togglePrevRunBusiness previousBusinessContainer"></div>
@@ -70,7 +70,7 @@
                 </fieldset>
 
                 <fieldset class="well hideOnCreate">
-                    <legend><?php _e('CV'); ?></legend>
+                    <legend><?php _e('CV','bidxplugin'); ?></legend>
 
                     <div class="fow-fluid cvContainer">
                         <div class="span4">
@@ -79,23 +79,23 @@
                                 <h3 class="documentName"></h3>
                                 <p class="uploadedDateTime"></p>
 
-                                <a href="#" class="documentLink"><?php _e('Download CV'); ?></a>
+                                <a href="#" class="documentLink"><?php _e('Download CV','bidxplugin'); ?></a>
                             </div>
 
                             <div class="noCV">
-                                <i><?php _e('No CV uploaded yet'); ?></i>
+                                <i><?php _e('No CV uploaded yet','bidxplugin'); ?></i>
                             </div>
 
                         </div>
                         <div class="span8 formfield">
-                            <p><span class="hasCV"><?php _e('Or upload a new document:'); ?></span><span class="noCV"><?php _e('Upload a document:'); ?></span></p>
+                            <p><span class="hasCV"><?php _e('Or upload a new document:'); ?></span><span class="noCV"><?php _e('Upload a document:','bidxplugin'); ?></span></p>
                             <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofilecv"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.cvUploadDone"}'/>
                         </div>
                     </div>
                 </fieldset>
 
                 <fieldset class="well hideOnCreate">
-                    <legend><?php _e('Other documents'); ?></legend>
+                    <legend><?php _e('Other documents','bidxplugin'); ?></legend>
 
                     <div class="formfield">
                         <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofileattachment"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.attachmentUploadDone"}'/>
@@ -112,27 +112,27 @@
     <div class="snippets hide">
         <div class="previousBusinessItem span4 well well-white">
             <div class="control-group formfield">
-                <label class="control-label"><?php _e('Name of company'); ?></label>
+                <label class="control-label"><?php _e('Name of company','bidxplugin'); ?></label>
                 <div class="controls">
-                    <input type="text" name="company" placeholder="<?php _e('Please type the name of the company'); ?>">
+                    <input type="text" name="company" placeholder="<?php _e('Please type the name of the company','bidxplugin'); ?>">
                 </div>
             </div>
 
             <div class="control-group formfield">
-                <label class="control-label"><?php _e('What happened?'); ?></label>
+                <label class="control-label"><?php _e('What happened?','bidxplugin'); ?></label>
                 <div class="controls">
                     <select name="businessOutcome"></select>
                 </div>
             </div>
 
             <div class="control-group formfield">
-                <label class="control-label"><?php _e('Company web-site?'); ?></label>
+                <label class="control-label"><?php _e('Company web-site?','bidxplugin'); ?></label>
                 <div class="controls">
-                    <input type="text" name="webSite" placeholder="<?php _e('Please type the URL of the company'); ?>">
+                    <input type="text" name="webSite" placeholder="<?php _e('Please type the URL of the company','bidxplugin'); ?>">
                 </div>
             </div>
 
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this business'); ?></a>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this business','bidxplugin'); ?></a>
         </div>
 
         <div class="attachmentItem span4 well well-white">
@@ -146,19 +146,19 @@
 
                     <div class="control-group formfield">
                         <div class="controls">
-                            <input type="text" name="purpose" placeholder="<?php _e('Short description'); ?>">
+                            <input type="text" name="purpose" placeholder="<?php _e('Short description','bidxplugin'); ?>">
                         </div>
                     </div>
 
                     <div class="control-group formfield">
-                        <label class="control-label"><?php _e('Document type'); ?></label>
+                        <label class="control-label"><?php _e('Document type','bidxplugin'); ?></label>
                         <div class="controls">
                             <select name="documentType"></select>
                         </div>
                     </div>
                 </div>
             </div>
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Delete'); ?></a>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Delete','bidxplugin'); ?></a>
         </div>
     </div>
 

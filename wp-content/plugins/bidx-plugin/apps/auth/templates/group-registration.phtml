@@ -22,66 +22,66 @@
 
 	<div class="row-fluid">
 		<div class="span4 well">
-			<h3><?php _e('Complete your profile');?></h3>
+			<h3><?php _e('Complete your profile','bidxplugin');?></h3>
 			<div class="formfield" >
-				<label><?php _e('First name');?></label>
-				<input type="text" name="personalDetails.firstName" placeholder="<?php _e('Please type your first name');?>" />
+				<label><?php _e('First name','bidxplugin');?></label>
+				<input type="text" name="personalDetails.firstName" placeholder="<?php _e('Please type your first name','bidxplugin');?>" />
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('Last name');?></label>
-				<input type="text" name="personalDetails.lastName" placeholder="<?php _e('Please type your last name');?>" />
+				<label><?php _e('Last name','bidxplugin');?></label>
+				<input type="text" name="personalDetails.lastName" placeholder="<?php _e('Please type your last name','bidxplugin');?>" />
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('E-mail');?></label>
+				<label><?php _e('E-mail','bidxplugin');?></label>
 				<input type="email" readonly="readonly" name="personalDetails.emailAddress" value="<?php echo $_POST["username"]; ?>"/>
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('What is your location?');?></label>
-				<input type="text" name="personalDetails.address[0]." placeholder="<?php _e('Please type your location');?>" data-type="location" data-type-arguments=''/>
+				<label><?php _e('What is your location?','bidxplugin');?></label>
+				<input type="text" name="personalDetails.address[0]." placeholder="<?php _e('Please type your location','bidxplugin');?>" data-type="location" data-type-arguments=''/>
 			</div>
 		</div>
 		<div class="span8 well">
-			<h3><?php _e('About your group');?></h3>
+			<h3><?php _e('About your group','bidxplugin');?></h3>
 			<div class="formfield">
-				<label><?php _e('Logo');?></label>
+				<label><?php _e('Logo','bidxplugin');?></label>
 				<input type="file" name="logo" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["groupProfileId","domain"]}' value=""/>
 			</div>
 			<div class="formfield">
-				<label><?php _e('Group Name');?></label>
-				<input type="text" name="businessGroupName" readonly="readonly" placeholder="<?php _e('Please type your group name');?>" value="<?php echo $_POST["groupName"]; ?>"/>
+				<label><?php _e('Group Name','bidxplugin');?></label>
+				<input type="text" name="businessGroupName" readonly="readonly" placeholder="<?php _e('Please type your group name','bidxplugin');?>" value="<?php echo $_POST["groupName"]; ?>"/>
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('Define your group in 15 words');?></label>
-				<textarea name="slogan" placeholder="<?php _e('Define your group');?>"></textarea>
+				<label><?php _e('Define your group in 15 words','bidxplugin');?></label>
+				<textarea name="slogan" placeholder="<?php _e('Define your group','bidxplugin');?>"></textarea>
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('Short description');?></label>
-				<textarea name="shortDescription" placeholder="<?php _e('Place provide a short description');?>"></textarea>
+				<label><?php _e('Short description','bidxplugin');?></label>
+				<textarea name="shortDescription" placeholder="<?php _e('Place provide a short description','bidxplugin');?>"></textarea>
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('Location');?></label>
-				<input type="text" name="companyLocation" placeholder="<?php _e('Please type your location');?>" />
+				<label><?php _e('Location','bidxplugin');?></label>
+				<input type="text" name="companyLocation" placeholder="<?php _e('Please type your location','bidxplugin');?>" />
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('Company');?></label>
-				<input type="text" name="company" placeholder="<?php _e('Please type your company name');?>" />
+				<label><?php _e('Company','bidxplugin');?></label>
+				<input type="text" name="company" placeholder="<?php _e('Please type your company name','bidxplugin');?>" />
 			</div>
 
-			<div class="formfield" data-validation='{"typecheck": [{"url":{"text":"<?php _e('Please fill in a valid URL');?>"}}]}'>
-				<label><?php _e('Website');?></label>
-				<input type="text" name="webSite"  placeholder="<?php _e('Please type your website');?>" />
+			<div class="formfield" data-validation='{"typecheck": [{"url":{"text":"<?php _e('Please fill in a valid URL','i18n');?>"}}]}'>
+				<label><?php _e('Website','bidxplugin');?></label>
+				<input type="text" name="webSite"  placeholder="<?php _e('Please type your website','bidxplugin');?>" />
 			</div>
 
 <!-- List must be loaded from static data service -->
 			<div class="formfield">
-				<label><?php _e('Focus industry');?></label>
+				<label><?php _e('Focus industry','bidxplugin');?></label>
 				<select name="focusIndustry" >
 					<option value="">Please select your focus industry</option>
 					<option value="AccountingAuditorsTaxBookkeepers">Accounting, Auditors, Tax & Bookkeepers</option>
@@ -130,17 +130,17 @@
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('Roles');?></label>
+				<label><?php _e('Roles','bidxplugin');?></label>
 				<select name="role">
-					<option value=""><?php _e('On which roles does your group focus');?></option>
-					<option value="investors"><?php _e('Investors');?></option>
-					<option value="entrepeneurs"><?php _e('Entrepeneurs');?></option>
+					<option value=""><?php _e('On which roles does your group focus','bidxplugin');?></option>
+					<option value="investors"><?php _e('Investors','bidxplugin');?></option>
+					<option value="entrepeneurs"><?php _e('Entrepeneurs','bidxplugin');?></option>
 				</select>
 			</div>
 
 <!-- List must be loaded from static data service -->
 			<div class="formfield" >
-				<label><?php _e('The social impact e.g. poverty reduction, job creation, religious tolerance, women, social inclusion, urban regeneration and None applicable.');?></label>
+				<label><?php _e('The social impact e.g. poverty reduction, job creation, religious tolerance, women, social inclusion, urban regeneration and None applicable.','bidxplugin');?></label>
 				<select name="socialImpact" >
 					<option value="">Please select the social impact of your group</option>
 					<option value="povertyReduction">Poverty reduction</option>
@@ -154,21 +154,21 @@
 			</div>
 
 			<div class="formfield">
-				<label><?php _e('Is the location of your focus based on a:');?></label>
-				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="city" checked> <?php _e('city (or a number of cities)?');?></label>
-				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="country"> <?php _e('country (or a number of countries)?');?></label>
-				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="coord"> <?php _e('specific location (or a number of specific locations)?');?></label>
+				<label><?php _e('Is the location of your focus based on a:','bidxplugin');?></label>
+				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="city" checked> <?php _e('city (or a number of cities)?','bidxplugin');?></label>
+				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="country"> <?php _e('country (or a number of countries)?','bidxplugin');?></label>
+				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="coord"> <?php _e('specific location (or a number of specific locations)?','bidxplugin');?></label>
 
 				<div class="location-list cities">
 
-					<div class="explanation"><?php _e('EXPLANATION OF HOW TO THIS OPTION WORKS');?></div>
+					<div class="explanation"><?php _e('EXPLANATION OF HOW TO THIS OPTION WORKS','bidxplugin');?></div>
 					<div>
-						<input type="text" name="focusCity" data-type="location" data-type-arguments='{"listResults":"true","listId":"locationList", "emptyClass":"empty","filter":"cities"}' placeholder="<?php _e('Please type your focus theme');?>" />
+						<input type="text" name="focusCity" data-type="location" data-type-arguments='{"listResults":"true","listId":"locationList", "emptyClass":"empty","filter":"cities"}' placeholder="<?php _e('Please type your focus theme','i18n');?>" />
 					</div>
 					<div class="list">
 						<ul id="locationList" class="unstyled clearfix">
 							<li>
-								<div class="label empty"><?php _e('Add a location');?></div>
+								<div class="label empty"><?php _e('Add a location','bidxplugin');?></div>
 							</li>
 
 						</ul>
@@ -176,24 +176,24 @@
 				</div>
 
 				<div class="location-list countries jqHidden">
-					<div class="explanation"><?php _e('EXPLANATION OF HOW TO THIS OPTION WORKS');?></div>
+					<div class="explanation"><?php _e('EXPLANATION OF HOW TO THIS OPTION WORKS','bidxplugin');?></div>
 					<div>
-						<input type="text" name="focusCountry" data-type="countryAutocomplete" data-type-arguments='{"listId":"countryList","emptyClass":"empty"}' placeholder="<?php _e('Please type your focus theme');?>" />
+						<input type="text" name="focusCountry" data-type="countryAutocomplete" data-type-arguments='{"listId":"countryList","emptyClass":"empty"}' placeholder="<?php _e('Please type your focus theme','bidxplugin');?>" />
 					</div>
 					<div class="list">
 						<ul id="countryList" class="unstyled clearfix">
 							<li>
-								<div class="label empty"><?php _e('Add a location');?></div>
+								<div class="label empty"><?php _e('Add a location','bidxplugin');?></div>
 							</li>
 
 						</ul>
 					</div>
 				</div>
 				<div class="location-map jqHidden">
-					<div class="explanation"><?php _e('EXPLANATION OF HOW TO USE THE MAP');?></div>
+					<div class="explanation"><?php _e('EXPLANATION OF HOW TO USE THE MAP','bidxplugin');?></div>
 					<div>
 
-						<input type="text" name="focusReach" data-type="location" data-type-arguments='{"showMap":"true","mapDimensions":"width:100%;height:400px;","setMarkers":"true", "drawCircle":"true"}' placeholder="<?php _e('Please type your focus theme');?>" />
+						<input type="text" name="focusReach" data-type="location" data-type-arguments='{"showMap":"true","mapDimensions":"width:100%;height:400px;","setMarkers":"true", "drawCircle":"true"}' placeholder="<?php _e('Please type your focus theme','bidxplugin');?>" />
 					</div>
 				</div>
 			</div>

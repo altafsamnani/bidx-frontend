@@ -1,8 +1,8 @@
 <div class="well">
 <div class="row-fluid">
-	<h3 class="pull-left"><?php _e('New members in this group')?></h3>
+	<h3 class="pull-left"><?php _e('New members in this group','bidxplugin')?></h3>
 	<span class="pull-right">
-		<a href="/member" class=""><?php _e('View all')?></a>
+		<a href="/member" class=""><?php _e('View all','bidxplugin')?></a>
 	</span>
 </div>
 
@@ -29,7 +29,7 @@ if (is_array($this -> members)) {
 		    	<h5 class="media-heading"><?php $this -> showProperty($member, 'firstName') . ' ' . $this -> showProperty($member, 'lastName'); ?></h5>
 				<div><?php $this -> showProperty($member, 'professionalTitle') ?></div>
 				<div><?php $this -> showProperty($member, 'country') ?></div>
-				<div class="member-connect"><a href="#fakelink"><?php _e('Connect')?></a></div>
+				<div class="member-connect"><a href="#fakelink"><?php _e('Connect','bidxplugin')?></a></div>
 		  </div>
 		</div>
 	</div>
@@ -48,7 +48,7 @@ if (is_array($this -> members)) {
 	<div class="span4 ">
 		<div class="media member-thumb img-rounded">
 			<div class="text-center vertical-middle">
-			   	<a href="/search" class=""><?php _e('Search new members')?></a>
+			   	<a href="/search" class=""><?php _e('Search new members','bidxplugin')?></a>
 			</div>
 		</div>
 	</div>

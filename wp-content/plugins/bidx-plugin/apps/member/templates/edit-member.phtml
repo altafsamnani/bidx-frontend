@@ -2,12 +2,12 @@
 
     <!-- LOAD -->
     <div class="view viewLoad span12">
-        <span><?php _e('Retrieving member information...'); ?></span>
+        <span><?php _e('Retrieving member information...','bidxplugin'); ?></span>
     </div>
 
     <!-- ERROR -->
     <div class="view viewError span12">
-        <h2><?php _e('Error'); ?></h2>
+        <h2><?php _e('Error','bidxplugin'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
@@ -18,11 +18,11 @@
 
             <div class="span3">
                 <ul class="nav nav-list nav-editMember nav-edit hidden-phone">
-                    <li><a href="#editMember/personalDetail"><?php _e('Personal detail'); ?></a>
-                    <li><a href="#editMember/language"><?php _e('Language'); ?></a>
-                    <li><a href="#editMember/currentAddress"><?php _e('Current address'); ?></a>
-                    <li><a href="#editMember/contactDetails"><?php _e('Contact details'); ?></a>
-                    <li><a href="#editMember/documents"><?php _e('Documents'); ?></a>
+                    <li><a href="#editMember/personalDetail"><?php _e('Personal detail','bidxplugin'); ?></a>
+                    <li><a href="#editMember/language"><?php _e('Language','bidxplugin'); ?></a>
+                    <li><a href="#editMember/currentAddress"><?php _e('Current address','bidxplugin'); ?></a>
+                    <li><a href="#editMember/contactDetails"><?php _e('Contact details','bidxplugin'); ?></a>
+                    <li><a href="#editMember/documents"><?php _e('Documents','bidxplugin'); ?></a>
                 </ul>
             </div>
 
@@ -34,36 +34,36 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editMember/personalDetail"></span>
-                    <legend><?php _e('Personal detail'); ?></legend>
+                    <legend><?php _e('Personal detail','bidxplugin'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('First name'); ?></label>
+                                <label class="control-label"><?php _e('First name','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.firstName" placeholder="<?php _e('Please type your first name'); ?>">
+                                    <input type="text" name="personalDetails.firstName" placeholder="<?php _e('Please type your first name','bidxplugin'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Last name'); ?></label>
+                                <label class="control-label"><?php _e('Last name','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.lastName" placeholder="<?php _e('Please type your last name'); ?>">
+                                    <input type="text" name="personalDetails.lastName" placeholder="<?php _e('Please type your last name','bidxplugin'); ?>">
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Professional title'); ?></label>
+                                <label class="control-label"><?php _e('Professional title','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.professionalTitle" placeholder="<?php _e('Please type your professional title'); ?>">
+                                    <input type="text" name="personalDetails.professionalTitle" placeholder="<?php _e('Please type your professional title','bidxplugin'); ?>">
                                 </div>
                             </div>
                         </div>
 
                         <div class="span6">
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Profile image'); ?></label>
+                                <label class="control-label"><?php _e('Profile image','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <div class="profilePictureContainer" id="editMemberProfilePicture"></div>
                                     <input type="file" name="fileContent" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"memberprofilepicture"}], "addFields":["memberProfileId","domain"], "imageContainer": "#editMemberProfilePicture"}'/>
@@ -77,7 +77,7 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Gender'); ?></label>
+                                <label class="control-label"><?php _e('Gender','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <label class="radio inline"><input type="radio" value="m" name="personalDetails.gender" data-toggle="radio"/> <?php _e('Male'); ?></label>
                                     <label class="radio inline"><input type="radio" value="f" name="personalDetails.gender" data-toggle="radio"/> <?php _e('Female'); ?></label>
@@ -88,7 +88,7 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Date of birth'); ?></label>
+                                <label class="control-label"><?php _e('Date of birth','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <input type="text" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('Please type your date of birth'); ?>">
                                 </div>
@@ -101,7 +101,7 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Nationality'); ?></label>
+                                <label class="control-label"><?php _e('Nationality','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <select name="personalDetails.nationality" ></select>
                                 </div> <!-- // controls -->
@@ -111,7 +111,7 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Highest Education'); ?></label>
+                                <label class="control-label"><?php _e('Highest Education','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <select name="personalDetails.highestEducation"></select>
                                 </div>
@@ -123,10 +123,10 @@
                     <div class="row-fluid">
                         <div class="span6">
 
-                            <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"<?php _e('Please fill in a valid email address'); ?>"}}]}'>
-                                <label class="control-label"><?php _e('Email address'); ?></label>
+                            <div class="control-group formfield" data-validation='{"typecheck": [{"email":{"text":"<?php _e('Please fill in a valid email address','bidxplugin'); ?>"}}]}'>
+                                <label class="control-label"><?php _e('Email address','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="email" name="personalDetails.emailAddress" placeholder="<?php _e('Please type your email address'); ?>" />
+                                    <input type="email" name="personalDetails.emailAddress" placeholder="<?php _e('Please type your email address','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
@@ -134,9 +134,9 @@
                         <div class="span6">
 
                             <div class="control-group formfield" >
-                                <label class="control-label"><?php _e('LinkedIn profile'); ?></label>
+                                <label class="control-label"><?php _e('LinkedIn profile','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.linkedIn" placeholder="<?php _e('Please type your LinkedIn profile url'); ?>" />
+                                    <input type="text" name="personalDetails.linkedIn" placeholder="<?php _e('Please type your LinkedIn profile url','bidxplugin'); ?>" />
                                 </div>
                             </div>
                         </div>
@@ -146,9 +146,9 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Skype'); ?></label>
+                                <label class="control-label"><?php _e('Skype','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.skype" placeholder="<?php _e('Please type your Skype identifier'); ?>" />
+                                    <input type="text" name="personalDetails.skype" placeholder="<?php _e('Please type your Skype identifier','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
@@ -156,9 +156,9 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Facebook profile'); ?></label>
+                                <label class="control-label"><?php _e('Facebook profile','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.facebook" placeholder="<?php _e('Please type your Facebook profile url'); ?>" />
+                                    <input type="text" name="personalDetails.facebook" placeholder="<?php _e('Please type your Facebook profile url','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
@@ -169,11 +169,11 @@
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Twitter'); ?></label>
+                                <label class="control-label"><?php _e('Twitter','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on">@</span>
-                                        <input type="text" name="personalDetails.twitter" placeholder="<?php _e('Please type your Twitter identifier'); ?>" />
+                                        <input type="text" name="personalDetails.twitter" placeholder="<?php _e('Please type your Twitter identifier','bidxplugin'); ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -187,19 +187,19 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editMember/language"></span>
-                    <legend><?php _e('Language'); ?></legend>
+                    <legend><?php _e('Language','bidxplugin'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group formfield addLanguageGroup">
-                                <label class="control-label"><?php _e('Select the languages you speak:'); ?></label>
+                                <label class="control-label"><?php _e('Select the languages you speak:','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <div class="row-fluid">
                                         <div class="span8">
                                             <input type="text" name="addLanguage" autocomplete="off" disabled />
                                         </div>
                                         <div class="span4">
-                                            <button type="button" class="btn btnAddLanguage pull-right" disabled><?php _e('Add to list'); ?></button>
+                                            <button type="button" class="btn btnAddLanguage pull-right" disabled><?php _e('Add to list','bidxplugin'); ?></button>
                                         </div>
                                     </div>
                                 </div>
@@ -209,10 +209,10 @@
 
                     <div class="row-fluid">
                         <div class="span4">
-                            <strong><?php _e('List of your languages'); ?></strong>
+                            <strong><?php _e('List of your languages','bidxplugin'); ?></strong>
                         </div>
                         <div class="span4">
-                            <strong><?php _e('Choose your mother tongue'); ?></strong>
+                            <strong><?php _e('Choose your mother tongue','bidxplugin'); ?></strong>
                         </div>
                     </div>
 
@@ -221,7 +221,7 @@
 
                 <fieldset class="well addressItem">
                     <span class="scrollPositionMarker" id="editMember/currentAddress"></span>
-                    <legend><?php _e('Your current address'); ?></legend>
+                    <legend><?php _e('Your current address','bidxplugin'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
@@ -229,44 +229,44 @@
                             <input type="hidden" name="personalDetails.address[0].coordinates"    />
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Country'); ?></label>
+                                <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <select name="personalDetails.address[0].country" ></select>
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('City'); ?></label>
+                                <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].cityTown" placeholder="<?php _e('Please type your city'); ?>" />
+                                    <input type="text" name="personalDetails.address[0].cityTown" placeholder="<?php _e('Please type your city','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Street'); ?></label>
+                                <label class="control-label"><?php _e('Street','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].street" placeholder="<?php _e('Please type your street'); ?>" />
+                                    <input type="text" name="personalDetails.address[0].street" placeholder="<?php _e('Please type your street','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Street number'); ?></label>
+                                <label class="control-label"><?php _e('Street number','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].streetNumber" placeholder="<?php _e('Please type your street number'); ?>" />
+                                    <input type="text" name="personalDetails.address[0].streetNumber" placeholder="<?php _e('Please type your street number','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Postal code'); ?></label>
+                                <label class="control-label"><?php _e('Postal code','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].postalCode" placeholder="<?php _e('Please type your postcode'); ?>" />
+                                    <input type="text" name="personalDetails.address[0].postalCode" placeholder="<?php _e('Please type your postcode','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Neighborhood'); ?></label>
+                                <label class="control-label"><?php _e('Neighborhood','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.address[0].neighborhood" placeholder="<?php _e('Please type your neighborhood'); ?>" />
+                                    <input type="text" name="personalDetails.address[0].neighborhood" placeholder="<?php _e('Please type your neighborhood','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
@@ -281,29 +281,29 @@
 
                 <fieldset class="well contactDetailItem">
                     <span class="scrollPositionMarker" id="editMember/contactDetails"></span>
-                    <legend><?php _e('Your contact details?'); ?></legend>
+                    <legend><?php _e('Your contact details?','bidxplugin'); ?></legend>
 
                     <div class="row-fluid">
                         <div class="span6">
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Landline'); ?></label>
+                                <label class="control-label"><?php _e('Landline','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.contactDetail[0].landLine" placeholder="<?php _e('Please type your landline number'); ?>" />
+                                    <input type="text" name="personalDetails.contactDetail[0].landLine" placeholder="<?php _e('Please type your landline number','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Mobile'); ?></label>
+                                <label class="control-label"><?php _e('Mobile','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.contactDetail[0].mobile" placeholder="<?php _e('Please type your mobile number'); ?>" />
+                                    <input type="text" name="personalDetails.contactDetail[0].mobile" placeholder="<?php _e('Please type your mobile number','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
                             <div class="control-group formfield">
-                                <label class="control-label"><?php _e('Fax'); ?></label>
+                                <label class="control-label"><?php _e('Fax','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="text" name="personalDetails.contactDetail[0].fax" placeholder="<?php _e('Please type your fax number'); ?>" />
+                                    <input type="text" name="personalDetails.contactDetail[0].fax" placeholder="<?php _e('Please type your fax number','bidxplugin'); ?>" />
                                 </div>
                             </div>
 
@@ -316,7 +316,7 @@
 
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editMember/documents"></span>
-                    <legend><?php _e('Documents'); ?></legend>
+                    <legend><?php _e('Documents','bidxplugin'); ?></legend>
 
                     <div class="formfield">
                         <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"memberprofileattachment"}], "addFields":["memberProfileId","domain"], "callback": "bidx.member.attachmentUploadDone"}'/>
@@ -338,8 +338,8 @@
                 <button class="btn pull-right btnRemoveLanguage"><i class="icon-trash"></i></button>
             </div>
             <div class="span4">
-                <button class="btn btnSetMotherLanguage"><?php _e('This is your mother tongue'); ?></button>
-                <p class="isCurrentMotherLanguage"><?php _e('My mother tongue'); ?></p>
+                <button class="btn btnSetMotherLanguage"><?php _e('This is your mother tongue','bidxplugin'); ?></button>
+                <p class="isCurrentMotherLanguage"><?php _e('My mother tongue','bidxplugin'); ?></p>
             </div>
         </div>
 
@@ -360,14 +360,14 @@
                     </div>
 
                     <div class="control-group formfield">
-                        <label class="control-label"><?php _e('Document type'); ?></label>
+                        <label class="control-label"><?php _e('Document type','bidxplugin'); ?></label>
                         <div class="controls">
                             <select name="documentType"></select>
                         </div>
                     </div>
                 </div>
             </div>
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Delete'); ?></a>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Delete','bidxplugin'); ?></a>
         </div>
     </div>
 

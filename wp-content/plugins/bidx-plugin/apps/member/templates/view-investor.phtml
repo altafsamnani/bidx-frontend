@@ -13,7 +13,7 @@ if ($investorDetails &&
 
         <div class="btn-group control-buttons">
             <?php if ($investorDetails->bidxCanEdit) { ?>
-                <a class="btn btn-primary" href="#editInvestor/<?php echo $this->exst ($investorDetails->ownerId); ?>"><?php _e('Edit'); ?></a>
+                <a class="btn btn-primary" href="#editInvestor/<?php echo $this->exst ($investorDetails->ownerId); ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
                     <?php
                         if ($investorDetails->bidxEntityStatus == 'DRAFT') {
@@ -45,7 +45,7 @@ if ($investorDetails &&
 
         // Summary
         //
-        $rowValues = array (__('Investor profile summary') => $this->exst ($investorDetails->summary));
+        $rowValues = array (__('Investor profile summary','bidxplugin') => $this->exst ($investorDetails->summary));
         echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'label'));
 
 ?>
@@ -55,13 +55,13 @@ if ($investorDetails &&
 
         // Investor type
         //
-        $rowValues = array (__('Investor type') => $investorType );
+        $rowValues = array (__('Investor type','bidxplugin') => $investorType );
         echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
         // Investment type
         //
         $values = $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', ');
-        $rowValues = array ( __('Investment types') => $values);
+        $rowValues = array ( __('Investment types','bidxplugin') => $values);
         echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
@@ -78,12 +78,12 @@ if ($investorDetails &&
 
             // Institution name
             //
-            $rowValues = array (__('Institution details') => $this->exst($investorDetails->institutionName));
+            $rowValues = array (__('Institution details','bidxplugin') => $this->exst($investorDetails->institutionName));
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Institution website
             //
-            $rowValues = array (__('Institution website') => $this->exst($investorDetails->institutionWebsite));
+            $rowValues = array (__('Institution website','bidxplugin') => $this->exst($investorDetails->institutionWebsite));
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Institution address
@@ -105,7 +105,7 @@ if ($investorDetails &&
 
                 $address = $this->createRowValue ($addressArr, ', ');
 
-                $rowValues = array (__('Address') => $address );
+                $rowValues = array (__('Address','bidxplugin') => $address );
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
         }
@@ -113,14 +113,14 @@ if ($investorDetails &&
 
 <?php
             $multiValueProperties = array(
-                __('Industry')              =>  $this->exst ($investorDetails->focusIndustry),
-                __('Social impact')         =>  $this->exst ($investorDetails->focusSocialImpact),
-                __('Enviromental impact')   =>  $this->exst ($investorDetails->focusEnvImpact),
-                __('Consumer type')         =>  $this->exst ($investorDetails->focusConsumerType),
-                __('Languages')             =>  $this->exst ($investorDetails->focusLanguage),
-                __('Countries')             =>  $this->exst ($investorDetails->focusCountry),
-                __('Stage of business')     =>  $this->exst ($investorDetails->focusStageBusiness),
-                __('Gender')                =>  $this->exst ($investorDetails->focusGender),
+                __('Industry','bidxplugin')              =>  $this->exst ($investorDetails->focusIndustry),
+                __('Social impact','bidxplugin')         =>  $this->exst ($investorDetails->focusSocialImpact),
+                __('Enviromental impact','bidxplugin')   =>  $this->exst ($investorDetails->focusEnvImpact),
+                __('Consumer type','bidxplugin')         =>  $this->exst ($investorDetails->focusConsumerType),
+                __('Languages','bidxplugin')             =>  $this->exst ($investorDetails->focusLanguage),
+                __('Countries','bidxplugin')             =>  $this->exst ($investorDetails->focusCountry),
+                __('Stage of business','bidxplugin')     =>  $this->exst ($investorDetails->focusStageBusiness),
+                __('Gender','bidxplugin')                =>  $this->exst ($investorDetails->focusGender),
             );
 
             foreach ( $multiValueProperties as $k => $v ) {
@@ -144,7 +144,7 @@ if ($investorDetails &&
                     }
                 }
 
-                $rowValues = array( __('City') => $this->getMultiValues( $focusCities, ', ' ) );
+                $rowValues = array( __('City','bidxplugin') => $this->getMultiValues( $focusCities, ', ' ) );
 
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
@@ -156,13 +156,13 @@ if ($investorDetails &&
                 $this->exst( $investorDetails->maxInvestment, '' )
             );
 
-            $rowValues = array (__('Investment size') => implode( $investmentSize, ' - ' ) );
+            $rowValues = array (__('Investment size','bidxplugin') => implode( $investmentSize, ' - ' ) );
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Typical involvement
             //
             $typicalInvolvement = $this->exst ($investorDetails->typicalInvolvement);
-            $rowValues = array (__('Typical involvement') => $typicalInvolvement);
+            $rowValues = array (__('Typical involvement','bidxplugin') => $typicalInvolvement);
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
@@ -173,7 +173,7 @@ if ($investorDetails &&
 <?php
             // Additional Preferences
             //
-            $rowValues = array (__('Other preferences') => $this->exst ($investorDetails->additionalPreferences));
+            $rowValues = array (_x('Other preferences','test','bidxplugin') => $this->exst ($investorDetails->additionalPreferences));
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'label'));
 
 ?>
@@ -184,12 +184,12 @@ if ($investorDetails &&
 
             // Number Investments
             //
-            $rowValues = array (__('Number of investments in the last 12 months') => $this->exst( $investorDetails->numberInvestments ));
+            $rowValues = array (__('Number of investments in the last 12 months','bidxplugin') => $this->exst( $investorDetails->numberInvestments ));
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Total Investments
             //
-            $rowValues = array (__('Total investments made in the last 12 months') => $this->exst( $investorDetails->totalInvestment ));
+            $rowValues = array (__('Total investments made in the last 12 months','bidxplugin') => $this->exst( $investorDetails->totalInvestment ));
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
@@ -198,13 +198,13 @@ if ($investorDetails &&
 <?php
             // Previous investments
             //
-            echo '<h5>' . __('Previous investments') . '</h5>';
+            echo '<h5>' . __('Previous investments','bidxplugin') . '</h5>';
 
             $header = array(
-                __('Name of Company')           => 'companyName',
-                __('Amount invested')           => 'investment',
-                __('Investment type')           => 'investmentType',
-                __('URL of Company website')    => 'companyWebsite'
+                __('Name of Company','bidxplugin')           => 'companyName',
+                __('Amount invested','bidxplugin')           => 'investment',
+                __('Investment type','bidxplugin')           => 'investmentType',
+                __('URL of Company website','bidxplugin')    => 'companyWebsite'
             );
 
             echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered' );

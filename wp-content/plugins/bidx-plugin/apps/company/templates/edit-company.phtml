@@ -2,12 +2,12 @@
 
     <!-- LOAD -->
     <div class="view viewLoad span12">
-        <span><?php _e('Retrieving company information...'); ?></span>
+        <span><?php _e('Retrieving company information...','bidxplugin'); ?></span>
     </div>
 
     <!-- ERROR -->
     <div class="view viewError span12">
-        <h2><?php _e('Error'); ?></h2>
+        <h2><?php _e('Error','bidxplugin'); ?></h2>
         <p class="errorMsg"></p>
     </div>
 
@@ -22,147 +22,147 @@
 
             <fieldset class="well">
                 <span class="scrollPositionMarker" id="editCompany/companyDetail"></span>
-                <legend><?php _e('Company detail'); ?></legend>
+                <legend><?php _e('Company detail','bidxplugin'); ?></legend>
 
                 <div class="row-fluid">
                     <div class="span4">
 
-                        <div class="control-group formfield" data-validation='{"required":{"text":"<?php _e('This field is mandatory'); ?>"}}'>
-                            <label class="control-label"><?php _e('Company name'); ?></label>
+                        <div class="control-group formfield" data-validation='{"required":{"text":"<?php _e('This field is mandatory','i18n'); ?>"}}'>
+                            <label class="control-label"><?php _e('Company name','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="name" placeholder="<?php _e('Please type your company name'); ?>">
+                                <input type="text" name="name" placeholder="<?php _e('Please type your company name','bidxplugin'); ?>">
                             </div>
                         </div>
 
-                        <div class="control-group formfield" data-validation='{"typecheck": [{"url":{"text":"<?php _e('Please fill in a valid URL'); ?>"}}]}'>
-                            <label class="control-label"><?php _e('Company website'); ?></label>
+                        <div class="control-group formfield" data-validation='{"typecheck": [{"url":{"text":"<?php _e('Please fill in a valid URL','i18n'); ?>"}}]}'>
+                            <label class="control-label"><?php _e('Company website','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="website" placeholder="<?php _e('Please type your website'); ?>">
+                                <input type="text" name="website" placeholder="<?php _e('Please type your website','bidxplugin'); ?>">
                             </div>
                         </div>
 
                         <input type="hidden" name="statutoryAddress.coordinates"    />
 
                         <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Country'); ?></label>
+                            <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
                             <div class="controls">
                                 <select name="statutoryAddress.country"></select>
                             </div>
                         </div>
 
                         <div class="control-group formfield">
-                            <label class="control-label"><?php _e('City'); ?></label>
+                            <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="statutoryAddress.cityTown" placeholder="<?php _e('Please type your city'); ?>" />
+                                <input type="text" name="statutoryAddress.cityTown" placeholder="<?php _e('Please type your city','bidxplugin'); ?>" />
                             </div>
                         </div>
 
                         <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Street'); ?></label>
+                            <label class="control-label"><?php _e('Street','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="statutoryAddress.street" placeholder="<?php _e('Please type your street'); ?>" />
+                                <input type="text" name="statutoryAddress.street" placeholder="<?php _e('Please type your street','bidxplugin'); ?>" />
                             </div>
                         </div>
 
                         <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Street number'); ?></label>
+                            <label class="control-label"><?php _e('Street number','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="statutoryAddress.streetNumber" placeholder="<?php _e('Please type your street number'); ?>" />
+                                <input type="text" name="statutoryAddress.streetNumber" placeholder="<?php _e('Please type your street number','bidxplugin'); ?>" />
                             </div>
                         </div>
 
                         <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Postal code'); ?></label>
+                            <label class="control-label"><?php _e('Postal code','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="statutoryAddress.postalCode" placeholder="<?php _e('Please type your postcode'); ?>" />
+                                <input type="text" name="statutoryAddress.postalCode" placeholder="<?php _e('Please type your postcode','bidxplugin'); ?>" />
                             </div>
                         </div>
 
                         <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Neighborhood'); ?></label>
+                            <label class="control-label"><?php _e('Neighborhood','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="statutoryAddress.neighborhood" placeholder="<?php _e('Please type your neighborhood'); ?>" />
+                                <input type="text" name="statutoryAddress.neighborhood" placeholder="<?php _e('Please type your neighborhood','bidxplugin'); ?>" />
                             </div>
                         </div>
 
                         <div class="currentAddressMap"></div>
 
                         <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Is your company registered?'); ?></label>
+                            <label class="control-label"><?php _e('Is your company registered?','bidxplugin'); ?></label>
                             <div class="controls">
-                                <label class="radio inline"><input type="radio" value="true"  name="registered" data-toggle="radio"/> <?php _e('Yes'); ?></label>
-                                <label class="radio inline"><input type="radio" value="false" name="registered" data-toggle="radio"/> <?php _e('No'); ?></label>
+                                <label class="radio inline"><input type="radio" value="true"  name="registered" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
+                                <label class="radio inline"><input type="radio" value="false" name="registered" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
                             </div>
                         </div>
 
                         <div class="control-group formfield toggle toggle-registered">
-                            <label class="control-label"><?php _e('Date of registration'); ?></label>
+                            <label class="control-label"><?php _e('Date of registration','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="dateCompanyEstab" data-type="date" placeholder="<?php _e('Please type your date of date of registration'); ?>">
+                                <input type="text" name="dateCompanyEstab" data-type="date" placeholder="<?php _e('Please type your date of date of registration','bidxplugin'); ?>">
                             </div>
                         </div>
 
                         <div class="control-group formfield toggle toggle-registered">
-                            <label class="control-label"><?php _e('Legal form of business'); ?></label>
+                            <label class="control-label"><?php _e('Legal form of business','bidxplugin'); ?></label>
                             <div class="controls">
                                 <select name="legalFormBusiness"></select>
                             </div>
                         </div>
 
                         <div class="control-group formfield toggle toggle-registered">
-                            <label class="control-label"><?php _e('Fiscal number'); ?></label>
+                            <label class="control-label"><?php _e('Fiscal number','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="fiscalNumber" placeholder="<?php _e('Please type your fiscal number'); ?>">
+                                <input type="text" name="fiscalNumber" placeholder="<?php _e('Please type your fiscal number','bidxplugin'); ?>">
                             </div>
                         </div>
 
                         <div class="control-group formfield toggle toggle-registered">
-                            <label class="control-label"><?php _e('Company registration number'); ?></label>
+                            <label class="control-label"><?php _e('Company registration number','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="text" name="registrationNumber" placeholder="<?php _e('Please type your registration number'); ?>">
+                                <input type="text" name="registrationNumber" placeholder="<?php _e('Please type your registration number','bidxplugin'); ?>">
                             </div>
                         </div>
 
                         <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Do you have employees?'); ?></label>
+                            <label class="control-label"><?php _e('Do you have employees?','bidxplugin'); ?></label>
                             <div class="controls">
-                                <label class="radio inline"><input type="radio" value="true"  name="haveEmployees" data-toggle="radio"/> <?php _e('Yes'); ?></label>
-                                <label class="radio inline"><input type="radio" value="false" name="haveEmployees" data-toggle="radio"/> <?php _e('No'); ?></label>
+                                <label class="radio inline"><input type="radio" value="true"  name="haveEmployees" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
+                                <label class="radio inline"><input type="radio" value="false" name="haveEmployees" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
                             </div>
                         </div>
 
                         <div class="control-group formfield toggle toggle-haveEmployees">
-                            <label class="control-label"><?php _e('Number of permanent female employees'); ?></label>
+                            <label class="control-label"><?php _e('Number of permanent female employees','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="number" name="numPermFemaleEmpl" placeholder="<?php _e('Please type the number of permanent female employees'); ?>">
+                                <input type="number" name="numPermFemaleEmpl" placeholder="<?php _e('Please type the number of permanent female employees','bidxplugin'); ?>">
                             </div>
                         </div>
 
                         <div class="control-group formfield toggle toggle-haveEmployees">
-                            <label class="control-label"><?php _e('Number of permanent male employees'); ?></label>
+                            <label class="control-label"><?php _e('Number of permanent male employees','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="number" name="numPermMaleEmpl" placeholder="<?php _e('Please type the number of permanent male employees'); ?>">
+                                <input type="number" name="numPermMaleEmpl" placeholder="<?php _e('Please type the number of permanent male employees','bidxplugin'); ?>">
                             </div>
                         </div>
 
                         <div class="control-group formfield toggle toggle-haveEmployees">
-                            <label class="control-label"><?php _e('Number of temporary female employees'); ?></label>
+                            <label class="control-label"><?php _e('Number of temporary female employees','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="number" name="numTempFemaleEmpl" placeholder="<?php _e('Please type the number of temporary female employees'); ?>">
+                                <input type="number" name="numTempFemaleEmpl" placeholder="<?php _e('Please type the number of temporary female employees','bidxplugin'); ?>">
                             </div>
                         </div>
 
                         <div class="control-group formfield toggle toggle-haveEmployees">
-                            <label class="control-label"><?php _e('Number of temporary male employees'); ?></label>
+                            <label class="control-label"><?php _e('Number of temporary male employees','bidxplugin'); ?></label>
                             <div class="controls">
-                                <input type="number" name="numTempMaleEmpl" placeholder="<?php _e('Please type the number of temporary male employees'); ?>">
+                                <input type="number" name="numTempMaleEmpl" placeholder="<?php _e('Please type the number of temporary male employees','bidxplugin'); ?>">
                             </div>
                         </div>
                     </div>
 
                     <div class="span4">
                         <div class="control-group formfield logo-control">
-                            <label class="control-label"><?php _e('Logo'); ?></label>
+                            <label class="control-label"><?php _e('Logo','bidxplugin'); ?></label>
                             <div class="controls">
                                 <div class="logoContainer" id="editCompanyLogo"></div>
                                 <input type="file" name="fileContent" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"companylogo"}], "addFields":["companyProfileId","domain"], "imageContainer": "#editCompanyLogo"}'/>
@@ -173,7 +173,7 @@
                     <div class="span4 countryOperationSpecifics">
                         <div class="accordion">
                         </div>
-                        <a href="#addCountryOperationSpecifics" class="btn btn-large btn-block btn-primary"><?php _e('Add country specific operations'); ?></a>
+                        <a href="#addCountryOperationSpecifics" class="btn btn-large btn-block btn-primary"><?php _e('Add country specific operations','bidxplugin'); ?></a>
                     </div>
                 </div>
 
@@ -196,21 +196,21 @@
             <div id="">
                 <div class="accordion-inner">
                     <div class="control-group formfield">
-                        <label class="control-label"><?php _e('Country'); ?></label>
+                        <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
                         <div class="controls">
                             <select name="country"></select>
                         </div>
                     </div>
 
                     <div class="control-group formfield">
-                        <label class="control-label"><?php _e('Company trade name'); ?></label>
+                        <label class="control-label"><?php _e('Company trade name','bidxplugin'); ?></label>
                         <div class="controls">
-                            <input type="text" name="companyTradeName" placeholder="<?php _e('Please type your company trade name'); ?>">
+                            <input type="text" name="companyTradeName" placeholder="<?php _e('Please type your company trade name','bidxplugin'); ?>">
                         </div>
                     </div>
 
                     <div class="control-group formfield">
-                        <label class="control-label"><?php _e('Permits licences obtained'); ?></label>
+                        <label class="control-label"><?php _e('Permits licences obtained','bidxplugin'); ?></label>
                         <div class="controls">
                             <select name="permitsLicencesObtained"></select>
                         </div>
