@@ -317,6 +317,12 @@ class ContentLoader
         $moi18nfile = $languagePath . '/i18n/' . $locale . '.mo';
         load_textdomain ($domain, $moi18nfile);
 
+        /* 2. Load Textdomain for Bidx Wp I18n */
+        $domain = 'bidxplugin'; // we use _e('String','i18n')
+        $locale = apply_filters ('plugin_locale', get_locale (), $domain);
+        $moPluginfile = $languagePath . '/plugins/' . $locale . '.mo';
+        load_textdomain ($domain, $moPluginfile);
+
     }
 
 }
