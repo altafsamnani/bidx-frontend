@@ -1,0 +1,3470 @@
+# Language Original
+
+#1) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/last-members.phtml -3
+# _e("New members in this group","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "New members in this group"
+msgstr ""
+
+
+#2) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/last-members.phtml -5
+# _e("View all","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "View all"
+msgstr ""
+
+
+#3) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/last-members.phtml -32
+# _e("Connect","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Connect"
+msgstr ""
+
+
+#4) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/last-members.phtml -51
+# _e("Search new members","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Search new members"
+msgstr ""
+
+
+#5) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -24
+# _e("Business name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Business name"
+msgstr ""
+
+
+#6) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -29
+# _e("Describe your business in 15 words","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Describe your business in 15 words"
+msgstr ""
+
+
+#7) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -35
+# _e("Industry","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Industry"
+msgstr ""
+
+
+#8) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -41
+# _e("Country of business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Country of business"
+msgstr ""
+
+
+#9) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -57
+# _e("Summary of this business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Summary of this business"
+msgstr ""
+
+
+#10) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -63
+# _e("Reason for submission of business summary","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Reason for submission of business summary"
+msgstr ""
+
+
+#11) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -69
+# _e("Social Impact","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Social Impact"
+msgstr ""
+
+
+#12) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -74
+# _e("Percentage equity you currently retain ( optional )","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Percentage equity you currently retain ( optional )"
+msgstr ""
+
+
+#13) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -79
+# _e("Finance needed","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Finance needed"
+msgstr ""
+
+
+#14) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -84
+# _e("Why do you need financing? Describe in maximum 30 words ( optional )","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Why do you need financing? Describe in maximum 30 words ( optional )"
+msgstr ""
+
+
+#15) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -133
+# _e("Role of entrepreneur in this business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Role of entrepreneur in this business"
+msgstr ""
+
+
+#16) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -138
+# _e("Please provide details of your expertise applicable to this business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please provide details of your expertise applicable to this business"
+msgstr ""
+
+
+#17) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -143
+# _e("Name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Name"
+msgstr ""
+
+
+#18) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -143
+# _e("Role of partner in this business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Role of partner in this business"
+msgstr ""
+
+
+#19) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -143
+# _e("Expertise of partner applicable","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Expertise of partner applicable"
+msgstr ""
+
+
+#20) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -147
+# _e("Supporting members of management team","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Supporting members of management team"
+msgstr ""
+
+
+#21) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -6
+# _e("Business summary","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Business summary"
+msgstr ""
+
+
+#22) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -7
+# _e("About the business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "About the business"
+msgstr ""
+
+
+#23) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -8
+# _e("About the supporting team","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "About the supporting team"
+msgstr ""
+
+
+#24) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -15
+# _e("Business summary","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#25) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -49
+# _e("About the business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#26) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/business-summary.phtml -124
+# _e("About the supporting team","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#27) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -18
+# _e("Edit","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Edit"
+msgstr ""
+
+
+#28) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -19
+# _e("Publish","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Publish"
+msgstr ""
+
+
+#29) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -24
+# _e("Business completion","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Business completion"
+msgstr ""
+
+
+#30) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -31
+# _e("Business summary","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#31) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -38
+# _e("Business summary","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#32) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -39
+# _e("Financial details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Financial details"
+msgstr ""
+
+
+#33) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -41
+# _e("Company details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company details"
+msgstr ""
+
+
+#34) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -43
+# _e("Documents","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Documents"
+msgstr ""
+
+
+#35) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -59
+# _e("View financial details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "View financial details"
+msgstr ""
+
+
+#36) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -70
+# _e("View business details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "View business details"
+msgstr ""
+
+
+#37) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -72
+# _e("View company details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "View company details"
+msgstr ""
+
+
+#38) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -74
+# _e("View documents","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "View documents"
+msgstr ""
+
+
+#39) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -88
+# _e("View Financial details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "View Financial details"
+msgstr ""
+
+
+#40) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -89
+# _e("View document","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "View document"
+msgstr ""
+
+
+#41) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -101
+# _e("View company details","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#42) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/summary.phtml -103
+# _e("View Financial details","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#43) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -153
+# _e("Financiel details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Financiel details"
+msgstr ""
+
+
+#44) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -157
+# _e("Number of years business has generated sales or incurred costs","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Number of years business has generated sales or incurred costs"
+msgstr ""
+
+
+#45) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -161
+# _e("What is the start date of the financial period","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "What is the start date of the financial period"
+msgstr ""
+
+
+#46) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -166
+# _e("After filling in this in a table will be generated","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "After filling in this in a table will be generated"
+msgstr ""
+
+
+#47) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -168
+# _e("Generate table","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Generate table"
+msgstr ""
+
+
+#48) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -194
+# _e("Income Statement","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Income Statement"
+msgstr ""
+
+
+#49) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -203
+# _e("Profit before tax","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Profit before tax"
+msgstr ""
+
+
+#50) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -210
+# _e("Net profit","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Net profit"
+msgstr ""
+
+
+#51) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -218
+# _e("Total sales reveneus","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Total sales reveneus"
+msgstr ""
+
+
+#52) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -223
+# _e("Cost of goods sold","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Cost of goods sold"
+msgstr ""
+
+
+#53) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -228
+# _e("Gross Profit","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Gross Profit"
+msgstr ""
+
+
+#54) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -239
+# _e("Salary","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Salary"
+msgstr ""
+
+
+#55) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -244
+# _e("Depreciation","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Depreciation"
+msgstr ""
+
+
+#56) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -249
+# _e("Other Operating Costs","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Other Operating Costs"
+msgstr ""
+
+
+#57) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -254
+# _e("Operating profit","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Operating profit"
+msgstr ""
+
+
+#58) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -263
+# _e("Interest Payment","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Interest Payment"
+msgstr ""
+
+
+#59) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -273
+# _e("Total profit before tax","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Total profit before tax"
+msgstr ""
+
+
+#60) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -291
+# _e("Cash flow Statement","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Cash flow Statement"
+msgstr ""
+
+
+#61) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -300
+# _e("Profit before tax","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#62) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -308
+# _e("Investing cash flow","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investing cash flow"
+msgstr ""
+
+
+#63) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -313
+# _e("Financing cash flow","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Financing cash flow"
+msgstr ""
+
+
+#64) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -318
+# _e("Total Change in cash","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Total Change in cash"
+msgstr ""
+
+
+#65) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -330
+# _e("Balance Sheet Statement","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Balance Sheet Statement"
+msgstr ""
+
+
+#66) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -339
+# _e("Total Assets","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Total Assets"
+msgstr ""
+
+
+#67) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -348
+# _e("Fixed Assets","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Fixed Assets"
+msgstr ""
+
+
+#68) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -353
+# _e("Total Fixed Assets","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Total Fixed Assets"
+msgstr ""
+
+
+#69) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -363
+# _e("Total inventory","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Total inventory"
+msgstr ""
+
+
+#70) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -368
+# _e("Net receivables","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Net receivables"
+msgstr ""
+
+
+#71) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -373
+# _e("Cash","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Cash"
+msgstr ""
+
+
+#72) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -378
+# _e("Current Assets","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Current Assets"
+msgstr ""
+
+
+#73) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/financial-details.phtml -387
+# _e("Total Assets","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#74) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -5
+# _e("Retrieving business summary information...","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Retrieving business summary information..."
+msgstr ""
+
+
+#75) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -10
+# _e("Error","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Error"
+msgstr ""
+
+
+#76) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -21
+# _e("Business summary","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#77) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -22
+# _e("About your business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "About your business"
+msgstr ""
+
+
+#78) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -23
+# _e("About you and supporting team","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "About you and supporting team"
+msgstr ""
+
+
+#79) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -33
+# _e("Business summary","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#80) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -39
+# _e("Describe your business name in 5 words","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Describe your business name in 5 words"
+msgstr ""
+
+
+#81) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -41
+# _e("Business name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#82) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -50
+# _e("Describe your business in 15 words ( optional )","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Describe your business in 15 words ( optional )"
+msgstr ""
+
+
+#83) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -52
+# _e("Please give a description of your business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please give a description of your business"
+msgstr ""
+
+
+#84) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -61
+# _e("Industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#85) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -63
+# _e("Industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#86) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -69
+# _e("Suggested industry","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Suggested industry"
+msgstr ""
+
+
+#87) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -71
+# _e("Suggested industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#88) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -80
+# _e("Country of business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#89) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -82
+# _e("Country of business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#90) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -88
+# _e("Stage of business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Stage of business"
+msgstr ""
+
+
+#91) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -99
+# _e("Products","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Products"
+msgstr ""
+
+
+#92) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -101
+# _e("Products","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#93) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -107
+# _e("Suggested product","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Suggested product"
+msgstr ""
+
+
+#94) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -109
+# _e("Suggested products","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Suggested products"
+msgstr ""
+
+
+#95) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -118
+# _e("Social impact","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Social impact"
+msgstr ""
+
+
+#96) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -120
+# _e("Social impact","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#97) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -126
+# _e("Environmental impact","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Environmental impact"
+msgstr ""
+
+
+#98) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -128
+# _e("Environmental impact","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#99) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -137
+# _e("Consumper type","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Consumper type"
+msgstr ""
+
+
+#100) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -145
+# _e("Investment type","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investment type"
+msgstr ""
+
+
+#101) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -157
+# _e("Tell us more about your business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Tell us more about your business"
+msgstr ""
+
+
+#102) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -162
+# _e("Provide a summary of your business in maximum 150 words","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Provide a summary of your business in maximum 150 words"
+msgstr ""
+
+
+#103) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -164
+# _e("Please give a summary of your business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please give a summary of your business"
+msgstr ""
+
+
+#104) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -173
+# _e("Reason for submission of business summary","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#105) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -184
+# _e("Percentage equity your currently retain ( optional )","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Percentage equity your currently retain ( optional )"
+msgstr ""
+
+
+#106) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -186
+# _e("Percentage","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Percentage"
+msgstr ""
+
+
+#107) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -195
+# _e("Finance needed","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#108) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -197
+# _e("Please give finance needed","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please give finance needed"
+msgstr ""
+
+
+#109) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -206
+# _e("Why do you need financing? Describe in maximum 30 words ( optional )","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#110) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -208
+# _e("Please give the reason you need financing","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please give the reason you need financing"
+msgstr ""
+
+
+#111) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -214
+# _e("Media","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Media"
+msgstr ""
+
+
+#112) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -219
+# _e("Add online video","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add online video"
+msgstr ""
+
+
+#113) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -221
+# _e("Please give online video","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please give online video"
+msgstr ""
+
+
+#114) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -227
+# _e("Add online audio","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add online audio"
+msgstr ""
+
+
+#115) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -229
+# _e("Please give online audio","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please give online audio"
+msgstr ""
+
+
+#116) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -238
+# _e("Tell us more about the people that are supporting you in this business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Tell us more about the people that are supporting you in this business"
+msgstr ""
+
+
+#117) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -243
+# _e("Role of entrepreneur in this business (5 words)","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Role of entrepreneur in this business (5 words)"
+msgstr ""
+
+
+#118) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -245
+# _e("Please give role of entrepreneur in this business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please give role of entrepreneur in this business"
+msgstr ""
+
+
+#119) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -254
+# _e("Please provide details of your expertise applicable to this business (30 words)","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please provide details of your expertise applicable to this business (30 words)"
+msgstr ""
+
+
+#120) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -256
+# _e("The details of your expertise for this business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "The details of your expertise for this business"
+msgstr ""
+
+
+#121) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businessplan/templates/edit-business-summary.phtml -262
+# _e("Supporting members of management team","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#122) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -5
+# _e("Retrieving company information...","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Retrieving company information..."
+msgstr ""
+
+
+#123) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -10
+# _e("Error","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#124) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -25
+# _e("Company detail","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company detail"
+msgstr ""
+
+
+#125) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -31
+# _e("Company name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company name"
+msgstr ""
+
+
+#126) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -33
+# _e("Please type your company name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your company name"
+msgstr ""
+
+
+#127) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -38
+# _e("Company website","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company website"
+msgstr ""
+
+
+#128) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -40
+# _e("Please type your website","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your website"
+msgstr ""
+
+
+#129) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -47
+# _e("Country","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Country"
+msgstr ""
+
+
+#130) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -54
+# _e("City","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "City"
+msgstr ""
+
+
+#131) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -56
+# _e("Please type your city","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your city"
+msgstr ""
+
+
+#132) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -61
+# _e("Street","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Street"
+msgstr ""
+
+
+#133) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -63
+# _e("Please type your street","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your street"
+msgstr ""
+
+
+#134) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -68
+# _e("Street number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Street number"
+msgstr ""
+
+
+#135) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -70
+# _e("Please type your street number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your street number"
+msgstr ""
+
+
+#136) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -75
+# _e("Postal code","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Postal code"
+msgstr ""
+
+
+#137) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -77
+# _e("Please type your postcode","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your postcode"
+msgstr ""
+
+
+#138) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -82
+# _e("Neighborhood","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Neighborhood"
+msgstr ""
+
+
+#139) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -84
+# _e("Please type your neighborhood","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your neighborhood"
+msgstr ""
+
+
+#140) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -91
+# _e("Is your company registered?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Is your company registered?"
+msgstr ""
+
+
+#141) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -93
+# _e("Yes","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Yes"
+msgstr ""
+
+
+#142) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -94
+# _e("No","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "No"
+msgstr ""
+
+
+#143) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -99
+# _e("Date of registration","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Date of registration"
+msgstr ""
+
+
+#144) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -101
+# _e("Please type your date of date of registration","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your date of date of registration"
+msgstr ""
+
+
+#145) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -106
+# _e("Legal form of business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Legal form of business"
+msgstr ""
+
+
+#146) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -113
+# _e("Fiscal number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Fiscal number"
+msgstr ""
+
+
+#147) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -115
+# _e("Please type your fiscal number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your fiscal number"
+msgstr ""
+
+
+#148) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -120
+# _e("Company registration number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company registration number"
+msgstr ""
+
+
+#149) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -122
+# _e("Please type your registration number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your registration number"
+msgstr ""
+
+
+#150) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -127
+# _e("Do you have employees?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Do you have employees?"
+msgstr ""
+
+
+#151) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -129
+# _e("Yes","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#152) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -130
+# _e("No","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#153) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -135
+# _e("Number of permanent female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Number of permanent female employees"
+msgstr ""
+
+
+#154) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -137
+# _e("Please type the number of permanent female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the number of permanent female employees"
+msgstr ""
+
+
+#155) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -142
+# _e("Number of permanent male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Number of permanent male employees"
+msgstr ""
+
+
+#156) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -144
+# _e("Please type the number of permanent male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the number of permanent male employees"
+msgstr ""
+
+
+#157) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -149
+# _e("Number of temporary female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Number of temporary female employees"
+msgstr ""
+
+
+#158) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -151
+# _e("Please type the number of temporary female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the number of temporary female employees"
+msgstr ""
+
+
+#159) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -156
+# _e("Number of temporary male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Number of temporary male employees"
+msgstr ""
+
+
+#160) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -158
+# _e("Please type the number of temporary male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the number of temporary male employees"
+msgstr ""
+
+
+#161) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -165
+# _e("Logo","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Logo"
+msgstr ""
+
+
+#162) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -176
+# _e("Add country specific operations","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add country specific operations"
+msgstr ""
+
+
+#163) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -199
+# _e("Country","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#164) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -206
+# _e("Company trade name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company trade name"
+msgstr ""
+
+
+#165) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -208
+# _e("Please type your company trade name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your company trade name"
+msgstr ""
+
+
+#166) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -213
+# _e("Permits licences obtained","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Permits licences obtained"
+msgstr ""
+
+
+#167) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -29
+# _e("Company name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#168) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -32
+# _e("Company website","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#169) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -37
+# _e("Date of registration","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#170) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -39
+# _e("Legal form of business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#171) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -58
+# _e("Statutory address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Statutory address"
+msgstr ""
+
+
+#172) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -71
+# _e("Statutory city, country","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Statutory city, country"
+msgstr ""
+
+
+#173) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -74
+# _e("Fiscal number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#174) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -76
+# _e("Company registration number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#175) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -81
+# _e("Number of permanent female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#176) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -83
+# _e("Number of permanent male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#177) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -85
+# _e("Number of temporary female employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#178) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -87
+# _e("Number of temporary male employees","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#179) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/view-company.phtml -20
+# _e("Company details","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#180) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -9
+# _e("Compose","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Compose"
+msgstr ""
+
+
+#181) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -10
+# _e("Inbox","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Inbox"
+msgstr ""
+
+
+#182) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -11
+# _e("Sent","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Sent"
+msgstr ""
+
+
+#183) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -21
+# _e("Loading...","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Loading..."
+msgstr ""
+
+
+#184) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -24
+# _e("Error","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#185) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -28
+# _e("No view defined for this state","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "No view defined for this state"
+msgstr ""
+
+
+#186) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -56
+# _e("Delete","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Delete"
+msgstr ""
+
+
+#187) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -57
+# _e("Mark read","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Mark read"
+msgstr ""
+
+
+#188) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -58
+# _e("Mark unread","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Mark unread"
+msgstr ""
+
+
+#189) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -69
+# _e("Loading...","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#190) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -99
+# _e("Reply","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Reply"
+msgstr ""
+
+
+#191) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -100
+# _e("Forward","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Forward"
+msgstr ""
+
+
+#192) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -101
+# _e("Delete","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#193) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -107
+# _e("Loading...","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#194) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -128
+# _e("Your subject goes here...","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Your subject goes here..."
+msgstr ""
+
+
+#195) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -133
+# _e("Please type your message here..","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your message here.."
+msgstr ""
+
+
+#196) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -137
+# _e("Send message","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Send message"
+msgstr ""
+
+
+#197) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -156
+# _e("Delete message","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Delete message"
+msgstr ""
+
+
+#198) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -160
+# _e("You are about to remove this message. Are you sure?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "You are about to remove this message. Are you sure?"
+msgstr ""
+
+
+#199) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -164
+# _e("Close","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Close"
+msgstr ""
+
+
+#200) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -165
+# _e("Delete message","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#201) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/view.phtml -209
+# _e("SENDER UNKNOWN IN API","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "SENDER UNKNOWN IN API"
+msgstr ""
+
+
+#202) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -6
+# _e("First name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "First name"
+msgstr ""
+
+
+#203) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -7
+# _e("Type your first name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Type your first name"
+msgstr ""
+
+
+#204) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -11
+# _e("Last name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Last name"
+msgstr ""
+
+
+#205) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -12
+# _e("Type your last name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Type your last name"
+msgstr ""
+
+
+#206) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -17
+# _e("Type your email address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Type your email address"
+msgstr ""
+
+
+#207) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -21
+# _e("What is your location?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "What is your location?"
+msgstr ""
+
+
+#208) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -22
+# _e("Please type your location","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your location"
+msgstr ""
+
+
+#209) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -26
+# _e("Register","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Register"
+msgstr ""
+
+
+#210) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -30
+# _e("Forgot your password. Click <a href=\\"#resetpassword\\">here</a> to recover.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Forgot your password. Click <a href=\\\"#resetpassword\\\">here</a> to recover."
+msgstr ""
+
+
+#211) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -31
+# _e("Login? Click <a href=\\"#login\\">here</a> to go to login.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Login? Click <a href=\\\"#login\\\">here</a> to go to login."
+msgstr ""
+
+
+#212) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -37
+# _e("Registration complete","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Registration complete"
+msgstr ""
+
+
+#213) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/registration.phtml -38
+# _e("The registration is complete. An e-mail has been dispatched with followup instructions.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "The registration is complete. An e-mail has been dispatched with followup instructions."
+msgstr ""
+
+
+#214) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/forget-password.phtml -8
+# _e("Email address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Email address"
+msgstr ""
+
+
+#215) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/forget-password.phtml -9
+# _e("Type your email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#216) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/forget-password.phtml -13
+# _e("Send me a new password","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Send me a new password"
+msgstr ""
+
+
+#217) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/forget-password.phtml -17
+# _e("Did you remember your password again?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Did you remember your password again?"
+msgstr ""
+
+
+#218) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/forget-password.phtml -17
+# _e("Click <a href=\\"/forgot-password\\">here</a> to recover.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Click <a href=\\\"/forgot-password\\\">here</a> to recover."
+msgstr ""
+
+
+#219) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -25
+# _e("Complete your profile","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Complete your profile"
+msgstr ""
+
+
+#220) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -27
+# _e("First name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#221) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -28
+# _e("Please type your first name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your first name"
+msgstr ""
+
+
+#222) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -32
+# _e("Last name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#223) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -33
+# _e("Please type your last name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your last name"
+msgstr ""
+
+
+#224) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -37
+# _e("E-mail","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "E-mail"
+msgstr ""
+
+
+#225) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -42
+# _e("What is your location?","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#226) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -43
+# _e("Please type your location","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#227) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -47
+# _e("About your group","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "About your group"
+msgstr ""
+
+
+#228) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -49
+# _e("Logo","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#229) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -53
+# _e("Group Name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Group Name"
+msgstr ""
+
+
+#230) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -54
+# _e("Please type your group name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your group name"
+msgstr ""
+
+
+#231) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -58
+# _e("Define your group in 15 words","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Define your group in 15 words"
+msgstr ""
+
+
+#232) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -59
+# _e("Define your group","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Define your group"
+msgstr ""
+
+
+#233) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -63
+# _e("Short description","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Short description"
+msgstr ""
+
+
+#234) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -64
+# _e("Place provide a short description","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Place provide a short description"
+msgstr ""
+
+
+#235) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -68
+# _e("Location","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Location"
+msgstr ""
+
+
+#236) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -69
+# _e("Please type your location","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#237) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -73
+# _e("Company","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company"
+msgstr ""
+
+
+#238) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -74
+# _e("Please type your company name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#239) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -78
+# _e("Website","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Website"
+msgstr ""
+
+
+#240) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -79
+# _e("Please type your website","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#241) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -84
+# _e("Focus industry","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Focus industry"
+msgstr ""
+
+
+#242) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -133
+# _e("Roles","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Roles"
+msgstr ""
+
+
+#243) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -135
+# _e("On which roles does your group focus","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "On which roles does your group focus"
+msgstr ""
+
+
+#244) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -136
+# _e("Investors","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investors"
+msgstr ""
+
+
+#245) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -137
+# _e("Entrepeneurs","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Entrepeneurs"
+msgstr ""
+
+
+#246) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -143
+# _e("The social impact e.g. poverty reduction, job creation, religious tolerance, women, social inclusion, urban regeneration and None applicable.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "The social impact e.g. poverty reduction, job creation, religious tolerance, women, social inclusion, urban regeneration and None applicable."
+msgstr ""
+
+
+#247) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -157
+# _e("Is the location of your focus based on a:","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Is the location of your focus based on a:"
+msgstr ""
+
+
+#248) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -158
+# _e("city (or a number of cities)?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "city (or a number of cities)?"
+msgstr ""
+
+
+#249) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -159
+# _e("country (or a number of countries)?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "country (or a number of countries)?"
+msgstr ""
+
+
+#250) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -160
+# _e("specific location (or a number of specific locations)?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "specific location (or a number of specific locations)?"
+msgstr ""
+
+
+#251) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -164
+# _e("EXPLANATION OF HOW TO THIS OPTION WORKS","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "EXPLANATION OF HOW TO THIS OPTION WORKS"
+msgstr ""
+
+
+#252) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -171
+# _e("Add a location","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add a location"
+msgstr ""
+
+
+#253) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -179
+# _e("EXPLANATION OF HOW TO THIS OPTION WORKS","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#254) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -181
+# _e("Please type your focus theme","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your focus theme"
+msgstr ""
+
+
+#255) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -186
+# _e("Add a location","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#256) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -193
+# _e("EXPLANATION OF HOW TO USE THE MAP","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "EXPLANATION OF HOW TO USE THE MAP"
+msgstr ""
+
+
+#257) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -196
+# _e("Please type your focus theme","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#258) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -5
+# _e("Not available!","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Not available!"
+msgstr ""
+
+
+#259) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -6
+# _e("Logout","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Logout"
+msgstr ""
+
+
+#260) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -6
+# _e("to use","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "to use"
+msgstr ""
+
+
+#261) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -15
+# _e("Your group name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Your group name"
+msgstr ""
+
+
+#262) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -18
+# _e("Your email address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Your email address"
+msgstr ""
+
+
+#263) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -21
+# _e("Your password","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Your password"
+msgstr ""
+
+
+#264) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -23
+# _e("Create your group","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Create your group"
+msgstr ""
+
+
+#265) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -27
+# _e("Your group is being created","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Your group is being created"
+msgstr ""
+
+
+#266) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -29
+# _e("This might take a moment of your time","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "This might take a moment of your time"
+msgstr ""
+
+
+#267) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-kickstart.phtml -61
+# _e("Group creation failed. Please reload the page and try again.<br/> If the problem persists, please contact us.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Group creation failed. Please reload the page and try again.<br/> If the problem persists, please contact us."
+msgstr ""
+
+
+#268) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -29
+# _e("Email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#269) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -30
+# _e("Type your email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#270) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -33
+# _e("Password","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Password"
+msgstr ""
+
+
+#271) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -34
+# _e("Type your password","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Type your password"
+msgstr ""
+
+
+#272) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -38
+# _e("Login","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Login"
+msgstr ""
+
+
+#273) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -43
+# _e("Forgot your password. Click <a href=\\"#resetpassword\\">here</a> to recover.","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#274) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -45
+# _e("Not a member? Click <a href=\\"#register\\">here</a> to register.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Not a member? Click <a href=\\\"#register\\\">here</a> to register."
+msgstr ""
+
+
+#275) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -73
+# _e("Email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#276) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -74
+# _e("Type your email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#277) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -78
+# _e("Send me a new password","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#278) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -82
+# _e("Did you remember your password again?.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Did you remember your password again?."
+msgstr ""
+
+
+#279) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -83
+# _e("Click <a href=\\"#login\\">here</a> to go to login.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Click <a href=\\\"#login\\\">here</a> to go to login."
+msgstr ""
+
+
+#280) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -88
+# _e("E-mail has been send","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "E-mail has been send"
+msgstr ""
+
+
+#281) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -89
+# _e("Password reset e-mail has been send","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Password reset e-mail has been send"
+msgstr ""
+
+
+#282) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -90
+# _e("A password reset link has been send to you. Please check your inbox and click on the link within the e-mail to reset your password.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "A password reset link has been send to you. Please check your inbox and click on the link within the e-mail to reset your password."
+msgstr ""
+
+
+#283) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/standard-auth.phtml -92
+# _e("Click <a href=\\"/\\">here</a> to go to homepage.","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Click <a href=\\\"/\\\">here</a> to go to homepage."
+msgstr ""
+
+
+#284) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -5
+# _e("Retrieving entrepreneur information...","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Retrieving entrepreneur information..."
+msgstr ""
+
+
+#285) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -10
+# _e("Error","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#286) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -30
+# _e("Summary","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Summary"
+msgstr ""
+
+
+#287) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -32
+# _e("Please type the summary of your entrepreneurship","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the summary of your entrepreneurship"
+msgstr ""
+
+
+#288) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -41
+# _e("Focus industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#289) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -43
+# _e("Focus industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#290) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -54
+# _e("Have you ever own a business before?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Have you ever own a business before?"
+msgstr ""
+
+
+#291) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -56
+# _e("Yes","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#292) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -57
+# _e("No","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#293) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -64
+# _e("Previous businesses","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Previous businesses"
+msgstr ""
+
+
+#294) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -65
+# _e("Add","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add"
+msgstr ""
+
+
+#295) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -73
+# _e("CV","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "CV"
+msgstr ""
+
+
+#296) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -82
+# _e("Download CV","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Download CV"
+msgstr ""
+
+
+#297) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -86
+# _e("No CV uploaded yet","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "No CV uploaded yet"
+msgstr ""
+
+
+#298) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -91
+# _e("Upload a document:","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Upload a document:"
+msgstr ""
+
+
+#299) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -98
+# _e("Other documents","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Other documents"
+msgstr ""
+
+
+#300) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -115
+# _e("Name of company","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Name of company"
+msgstr ""
+
+
+#301) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -117
+# _e("Please type the name of the company","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the name of the company"
+msgstr ""
+
+
+#302) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -122
+# _e("What happened?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "What happened?"
+msgstr ""
+
+
+#303) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -129
+# _e("Company web-site?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company web-site?"
+msgstr ""
+
+
+#304) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -131
+# _e("Please type the URL of the company","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the URL of the company"
+msgstr ""
+
+
+#305) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -135
+# _e("Remove this business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Remove this business"
+msgstr ""
+
+
+#306) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -149
+# _e("Short description","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#307) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -154
+# _e("Document type","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Document type"
+msgstr ""
+
+
+#308) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-entrepreneur.phtml -161
+# _e("Delete","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#309) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -5
+# _e("Retrieving member information...","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Retrieving member information..."
+msgstr ""
+
+
+#310) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -10
+# _e("Error","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#311) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -21
+# _e("Personal detail","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Personal detail"
+msgstr ""
+
+
+#312) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -22
+# _e("Language","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Language"
+msgstr ""
+
+
+#313) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -23
+# _e("Current address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Current address"
+msgstr ""
+
+
+#314) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -24
+# _e("Contact details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Contact details"
+msgstr ""
+
+
+#315) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -25
+# _e("Documents","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#316) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -37
+# _e("Personal detail","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#317) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -43
+# _e("First name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#318) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -45
+# _e("Please type your first name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#319) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -50
+# _e("Last name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#320) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -52
+# _e("Please type your last name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#321) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -57
+# _e("Professional title","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Professional title"
+msgstr ""
+
+
+#322) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -59
+# _e("Please type your professional title","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your professional title"
+msgstr ""
+
+
+#323) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -66
+# _e("Profile image","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Profile image"
+msgstr ""
+
+
+#324) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -80
+# _e("Gender","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Gender"
+msgstr ""
+
+
+#325) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -91
+# _e("Date of birth","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Date of birth"
+msgstr ""
+
+
+#326) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -104
+# _e("Nationality","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Nationality"
+msgstr ""
+
+
+#327) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -114
+# _e("Highest Education","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Highest Education"
+msgstr ""
+
+
+#328) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -126
+# _e("Please fill in a valid email address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please fill in a valid email address"
+msgstr ""
+
+
+#329) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -127
+# _e("Email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#330) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -129
+# _e("Please type your email address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your email address"
+msgstr ""
+
+
+#331) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -137
+# _e("LinkedIn profile","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "LinkedIn profile"
+msgstr ""
+
+
+#332) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -139
+# _e("Please type your LinkedIn profile url","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your LinkedIn profile url"
+msgstr ""
+
+
+#333) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -149
+# _e("Skype","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Skype"
+msgstr ""
+
+
+#334) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -151
+# _e("Please type your Skype identifier","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your Skype identifier"
+msgstr ""
+
+
+#335) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -159
+# _e("Facebook profile","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Facebook profile"
+msgstr ""
+
+
+#336) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -161
+# _e("Please type your Facebook profile url","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your Facebook profile url"
+msgstr ""
+
+
+#337) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -172
+# _e("Twitter","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Twitter"
+msgstr ""
+
+
+#338) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -176
+# _e("Please type your Twitter identifier","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your Twitter identifier"
+msgstr ""
+
+
+#339) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -190
+# _e("Language","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#340) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -195
+# _e("Select the languages you speak:","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Select the languages you speak:"
+msgstr ""
+
+
+#341) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -202
+# _e("Add to list","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add to list"
+msgstr ""
+
+
+#342) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -212
+# _e("List of your languages","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "List of your languages"
+msgstr ""
+
+
+#343) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -215
+# _e("Choose your mother tongue","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Choose your mother tongue"
+msgstr ""
+
+
+#344) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -224
+# _e("Your current address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Your current address"
+msgstr ""
+
+
+#345) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -232
+# _e("Country","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#346) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -239
+# _e("City","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#347) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -241
+# _e("Please type your city","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#348) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -246
+# _e("Street","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#349) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -248
+# _e("Please type your street","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#350) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -253
+# _e("Street number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#351) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -255
+# _e("Please type your street number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#352) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -260
+# _e("Postal code","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#353) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -262
+# _e("Please type your postcode","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#354) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -267
+# _e("Neighborhood","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#355) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -269
+# _e("Please type your neighborhood","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#356) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -284
+# _e("Your contact details?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Your contact details?"
+msgstr ""
+
+
+#357) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -290
+# _e("Landline","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Landline"
+msgstr ""
+
+
+#358) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -292
+# _e("Please type your landline number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your landline number"
+msgstr ""
+
+
+#359) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -297
+# _e("Mobile","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Mobile"
+msgstr ""
+
+
+#360) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -299
+# _e("Please type your mobile number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your mobile number"
+msgstr ""
+
+
+#361) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -304
+# _e("Fax","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Fax"
+msgstr ""
+
+
+#362) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -306
+# _e("Please type your fax number","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type your fax number"
+msgstr ""
+
+
+#363) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -319
+# _e("Documents","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#364) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -341
+# _e("This is your mother tongue","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "This is your mother tongue"
+msgstr ""
+
+
+#365) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -342
+# _e("My mother tongue","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "My mother tongue"
+msgstr ""
+
+
+#366) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -363
+# _e("Document type","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#367) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -370
+# _e("Delete","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#368) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -5
+# _e("Retrieving investor information...","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Retrieving investor information..."
+msgstr ""
+
+
+#369) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -10
+# _e("Creating investor...","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Creating investor..."
+msgstr ""
+
+
+#370) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -15
+# _e("Error","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#371) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -26
+# _e("General information","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "General information"
+msgstr ""
+
+
+#372) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -27
+# _e("Investment preferences","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investment preferences"
+msgstr ""
+
+
+#373) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -28
+# _e("Investment history","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investment history"
+msgstr ""
+
+
+#374) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -29
+# _e("References","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "References"
+msgstr ""
+
+
+#375) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -30
+# _e("Documents","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#376) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -42
+# _e("General information","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#377) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -48
+# _e("Describe yourself as investor","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Describe yourself as investor"
+msgstr ""
+
+
+#378) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -50
+# _e("Please type the summary of yourself as investor","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the summary of yourself as investor"
+msgstr ""
+
+
+#379) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -60
+# _e("Do you invest on behalf of an institution?","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Do you invest on behalf of an institution?"
+msgstr ""
+
+
+#380) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -62
+# _e("Yes","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#381) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -63
+# _e("No","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#382) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -72
+# _e("Institution type","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Institution type"
+msgstr ""
+
+
+#383) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -83
+# _e("Institution name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Institution name"
+msgstr ""
+
+
+#384) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -85
+# _e("Please type the name of the institution","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the name of the institution"
+msgstr ""
+
+
+#385) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -96
+# _e("Please type the website of the institution","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the website of the institution"
+msgstr ""
+
+
+#386) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -108
+# _e("Country","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#387) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -115
+# _e("City","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#388) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -117
+# _e("Please type your city","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#389) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -122
+# _e("Street","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#390) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -124
+# _e("Please type your street","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#391) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -129
+# _e("Street number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#392) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -131
+# _e("Please type your street number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#393) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -136
+# _e("Postal code","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#394) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -138
+# _e("Please type your postcode","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#395) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -143
+# _e("Neighborhood","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#396) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -145
+# _e("Please type your neighborhood","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#397) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -160
+# _e("Investment preferences","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#398) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -165
+# _e("Industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#399) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -167
+# _e("Focus industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#400) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -172
+# _e("Languages","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Languages"
+msgstr ""
+
+
+#401) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -174
+# _e("Languages","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#402) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -179
+# _e("Social impact","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#403) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -181
+# _e("Social impact","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#404) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -186
+# _e("Environmental impact","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#405) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -188
+# _e("Environmental impact","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#406) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -193
+# _e("Consumer type","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Consumer type"
+msgstr ""
+
+
+#407) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -195
+# _e("Consumer type","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#408) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -200
+# _e("Stage of business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#409) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -204
+# _e("Startup","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Startup"
+msgstr ""
+
+
+#410) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -209
+# _e("Established","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Established"
+msgstr ""
+
+
+#411) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -214
+# _e("Gender","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#412) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -218
+# _e("Male","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Male"
+msgstr ""
+
+
+#413) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -223
+# _e("Female","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Female"
+msgstr ""
+
+
+#414) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -228
+# _e("Investment type","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#415) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -237
+# _e("Location","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#416) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -239
+# _e("Country / Countries","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Country / Countries"
+msgstr ""
+
+
+#417) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -240
+# _e("City / Cities","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "City / Cities"
+msgstr ""
+
+
+#418) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -241
+# _e("Region","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Region"
+msgstr ""
+
+
+#419) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -244
+# _e("Country","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#420) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -246
+# _e("Country","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#421) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -251
+# _e("City","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#422) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -253
+# _e("City","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#423) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -258
+# _e("Region","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#424) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -270
+# _e("Investment size","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investment size"
+msgstr ""
+
+
+#425) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -275
+# _e("Minimal investment","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Minimal investment"
+msgstr ""
+
+
+#426) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -279
+# _e("Minimal investment","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#427) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -287
+# _e("Maximum investment","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Maximum investment"
+msgstr ""
+
+
+#428) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -291
+# _e("Maximum investment","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#429) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -302
+# _e("Other preferences (max. 60 words)","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Other preferences (max. 60 words)"
+msgstr ""
+
+
+#430) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -304
+# _e("Please type any additional preferences","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type any additional preferences"
+msgstr ""
+
+
+#431) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -314
+# _e("Investment history","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#432) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -319
+# _e("Number of investments in the last 12 months","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Number of investments in the last 12 months"
+msgstr ""
+
+
+#433) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -321
+# _e("Number of investments","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Number of investments"
+msgstr ""
+
+
+#434) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -330
+# _e("Amount invested in the last 12 months","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Amount invested in the last 12 months"
+msgstr ""
+
+
+#435) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -334
+# _e("Number of investments","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#436) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -344
+# _e("Typical involvement","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Typical involvement"
+msgstr ""
+
+
+#437) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -346
+# _e("Advisory","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Advisory"
+msgstr ""
+
+
+#438) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -347
+# _e("Hands-On","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Hands-On"
+msgstr ""
+
+
+#439) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -354
+# _e("Previous investment","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Previous investment"
+msgstr ""
+
+
+#440) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -355
+# _e("Add","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#441) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -364
+# _e("References","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#442) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -367
+# _e("Add","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#443) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -376
+# _e("Documents","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#444) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -395
+# _e("Company name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#445) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -397
+# _e("Please type the name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the name"
+msgstr ""
+
+
+#446) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -402
+# _e("Company web-site?","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#447) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -404
+# _e("Please type the URL","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the URL"
+msgstr ""
+
+
+#448) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -409
+# _e("Amount invested","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Amount invested"
+msgstr ""
+
+
+#449) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -413
+# _e("Amount invested","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#450) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -419
+# _e("Investment type","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#451) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -425
+# _e("Remove this investment","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Remove this investment"
+msgstr ""
+
+
+#452) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -431
+# _e("First name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#453) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -433
+# _e("Please type the first name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the first name"
+msgstr ""
+
+
+#454) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -438
+# _e("Last name","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#455) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -440
+# _e("Please type the last name","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the last name"
+msgstr ""
+
+
+#456) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -445
+# _e("Professional title","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#457) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -447
+# _e("Please type the professional title","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Please type the professional title"
+msgstr ""
+
+
+#458) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -452
+# _e("LinkedIn profile","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#459) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -454
+# _e("Please type your LinkedIn profile url","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#460) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -458
+# _e("Please fill in a valid email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#461) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -459
+# _e("Email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#462) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -461
+# _e("Please type your email address","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#463) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -466
+# _e("Landline","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#464) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -468
+# _e("Please type your landline number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#465) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -473
+# _e("Mobile","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#466) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -475
+# _e("Please type your mobile number","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#467) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -479
+# _e("Remove this reference","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Remove this reference"
+msgstr ""
+
+
+#468) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -494
+# _e("Short description","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#469) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -499
+# _e("Document type","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#470) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -507
+# _e("Delete","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#471) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -48
+# _e("Investor profile summary","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investor profile summary"
+msgstr ""
+
+
+#472) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -58
+# _e("Investor type","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investor type"
+msgstr ""
+
+
+#473) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -64
+# _e("Investment types","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Investment types"
+msgstr ""
+
+
+#474) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -81
+# _e("Institution details","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Institution details"
+msgstr ""
+
+
+#475) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -86
+# _e("Institution website","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Institution website"
+msgstr ""
+
+
+#476) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -108
+# _e("Address","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Address"
+msgstr ""
+
+
+#477) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -116
+# _e("Industry","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#478) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -117
+# _e("Social impact","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#479) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -118
+# _e("Enviromental impact","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Enviromental impact"
+msgstr ""
+
+
+#480) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -119
+# _e("Consumer type","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#481) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -120
+# _e("Languages","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#482) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -121
+# _e("Countries","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Countries"
+msgstr ""
+
+
+#483) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -122
+# _e("Stage of business","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#484) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -123
+# _e("Gender","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#485) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -147
+# _e("City","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#486) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -159
+# _e("Investment size","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#487) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -165
+# _e("Typical involvement","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#488) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -187
+# _e("Number of investments in the last 12 months","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#489) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -192
+# _e("Total investments made in the last 12 months","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Total investments made in the last 12 months"
+msgstr ""
+
+
+#490) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -201
+# _e("Previous investments","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Previous investments"
+msgstr ""
+
+
+#491) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -204
+# _e("Name of Company","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Name of Company"
+msgstr ""
+
+
+#492) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -205
+# _e("Amount invested","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#493) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -206
+# _e("Investment type","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#494) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -207
+# _e("URL of Company website","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "URL of Company website"
+msgstr ""
+
+
+#495) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -16
+# _e("Edit","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#496) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -176
+# _x("Other preferences", "test","bidxplugin");
+# Context test Textdomain bidxplugin
+msgctxt "test"
+msgid "Other preferences"
+msgstr ""
+
+
+#497) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -49
+# _e("Summary","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#498) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -55
+# _e("Focus Industry","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Focus Industry"
+msgstr ""
+
+
+#499) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -61
+# _e("Name of Company","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#500) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -61
+# _e("Outcome of business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Outcome of business"
+msgstr ""
+
+
+#501) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -61
+# _e("Company web-site","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Company web-site"
+msgstr ""
+
+
+#502) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -64
+# _e("Previous Business(es)","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Previous Business(es)"
+msgstr ""
+
+
+#503) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -69
+# _e("Documents","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#504) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -86
+# _e("My business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "My business"
+msgstr ""
+
+
+#505) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -86
+# _e("This person has a business","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "This person has a business"
+msgstr ""
+
+
+#506) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -105
+# _e("view more","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "view more"
+msgstr ""
+
+
+#507) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -210
+# _e("view more","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#508) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -15
+# _e("Edit","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#509) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-entrepreneur.phtml -228
+# _e("Add a company","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Add a company"
+msgstr ""
+
+
+#510) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -84
+# _e("E-mail","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#511) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -86
+# _e("Mobile","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#512) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -89
+# _e("Fax","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#513) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -91
+# _e("Landline","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#514) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -96
+# _e("Facebook","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Facebook"
+msgstr ""
+
+
+#515) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -97
+# _e("Twitter","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#516) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -98
+# _e("Linkedin","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Linkedin"
+msgstr ""
+
+
+#517) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -99
+# _e("Skype","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#518) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -120
+# _e("Documents","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#519) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -23
+# _e("Edit","bidxplugin");
+# Context  Textdomain bidxplugin
+# Already exists, doesnt need translation.
+
+
+#520) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -30
+# _e("Member","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Member"
+msgstr ""
+
+
+#521) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-group.phtml -49
+# _e("Joined groups","bidxplugin");
+# Context  Textdomain bidxplugin
+msgid "Joined groups"
+msgstr ""
+
