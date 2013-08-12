@@ -107,13 +107,22 @@
         {
             bidx.utils.warn( "bidx.i18n not having", context, "loaded. Calling API to retrieve it" );
 
-            bidx.api.call(
-                "I18N.TO_BE_DEFINED" // TODO: what API to call for this?
-            ,   {
-                    key:            context
-                ,   success:        function( data )
+            $.ajax(
+            {
+                url:        "/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&context=" + context
+            ,   dataType:   "json"
+            } )
+                .done( function( data, status, jqXHR )
+                {
+                    if ( !data || !data[ context ] )
                     {
-                        setItem( context, data );
+                        bidx.utils.error( "i18n::called the WP api for retrieving extra data, but unexpected response", data, status, jqXHR );
+
+                        cb( new Error( "Problem retrieving i18n data" ));
+                    }
+                    else
+                    {
+                        setItem( context, data[ context ] );
 
                         $.each( requestQueue[ context ], function( idx, cb )
                         {
@@ -122,14 +131,14 @@
 
                         delete requestQueue[ context ];
                     }
-                ,   error:          function( data )
-                    {
-                        bidx.utils.error( "problem retrieving static data" );
+                } )
+                .fail( function()
+                {
+                    bidx.utils.error( "problem retrieving i18n data" );
 
-                        cb( new Error( "problem retrieving static data"     ));
-                    }
-                }
-            );
+                    cb( new Error( "problem retrieving i18n data" ));
+                } )
+            ;
         }
     }
 
