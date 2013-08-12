@@ -23,7 +23,7 @@ $entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
 <div class="well profile-block">
 
     <div class="btn-group controls">
-        <?php if ($this->exst ($personalDetails->bidxCanEdit)) { ?>
+        <?php if ($this->exst ($personalDetailsBidxMeta->bidxCanEdit)) { ?>
             <a class="btn btn-primary" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><?php _e('Edit','bidxplugin'); ?></a>
         <?php } ?>
     </div>
