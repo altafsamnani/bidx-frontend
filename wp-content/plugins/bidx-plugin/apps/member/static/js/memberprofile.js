@@ -831,6 +831,18 @@
                 {
                     skypeUsername:              true
                 }
+            ,   "personalDetails.linkedIn":
+                {
+                    linkedInUsername:           true
+                }
+            ,   "personalDetails.facebook":
+                {
+                    facebookUsername:           true
+                }
+            ,   "peronsalDetails.twitter":
+                {
+                    twitterUsername:            true
+                }
             }
         ,   messages:
             {
@@ -853,6 +865,18 @@
             ,   "personalDetails.skype":
                 {
                     skypeUsername:              bidx.i18n.i( "frmInvalidSkypeUsername")
+                }
+            ,   "personalDetails.linkedIn":
+                {
+                    linkedInUsername:           bidx.i18n.i( "frmInvalidLinkedInUsername" )
+                }
+            ,   "personalDetails.facebook":
+                {
+                    facebookUsername:           bidx.i18n.i( "frmInvalidFacebookUsername" )
+                }
+            ,   "personalDetails.twitter":
+                {
+                    twitterUsername:            bidx.i18n.i( "frmInvalidTwitterUsername" )
                 }
             }
         ,   submitHandler:  function()

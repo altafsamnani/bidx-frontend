@@ -19,4 +19,48 @@
 
     }, "Not a valid Skype username" );
 
+    // http://help.linkedin.com/app/answers/detail/a_id/87
+    // 5 - 30 letters or numbers. Please do not use spaces, symbols, or special characters.
+    //
+    $.validator.addMethod( "linkedInUsername", function(value, element, param)
+    {
+        if ( this.optional( element ))
+        {
+            return true;
+        }
+
+        return /^[a-z0-9]{5,30}$/i.test( value );
+
+    }, "Not a valid LinkedIn username" );
+
+    // http://www.labnol.org/internet/change-facebook-page-username/21449/
+    //
+    $.validator.addMethod( "facebookUsername", function(value, element, param)
+    {
+        if ( this.optional( element ))
+        {
+            return true;
+        }
+
+        return /^[a-z0-9.]{5,}$/i.test( value );
+
+    }, "Not a valid Facebook username" );
+
+    // http://support.twitter.com/articles/101299-why-can-t-i-register-certain-usernames#
+    // 1-15 characters
+    // letters and underscores
+    //
+    $.validator.addMethod( "twitterUsername", function(value, element, param)
+    {
+        if ( this.optional( element ))
+        {
+            return true;
+        }
+
+        return /^[a-z0-9_]{1,15}$/i.test( value );
+
+    }, "Not a valid Twitter username" );
+
+
+
 } ( jQuery ) );

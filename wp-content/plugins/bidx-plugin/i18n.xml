@@ -18,4 +18,7 @@
     <Item value="frmInvalidDate">Please enter a valid date</Item>
     <Item value="frmInvalidEmail">Please enter a valid e-mail address</Item>
     <Item value="frmInvalidSkypeUsername">Please enter a valid Skype username</Item>
+    <Item value="frmInvalidLinkedInUsername">Please enter a valid LinkedIn username</Item>
+    <Item value="frmInvalidFacebookUsername">Please enter a valid Facebook username</Item>
+    <Item value="frmInvalidTwitterUsername">Please enter a valid Twitter username</Item>
 </I18N>
