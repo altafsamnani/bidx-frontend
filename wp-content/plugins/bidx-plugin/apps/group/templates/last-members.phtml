@@ -11,11 +11,14 @@
 <?php
 if (is_array($this -> members)) {
 	$i = 0;
+
 	foreach ($this -> members as $member) {
+
+		$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
 ?>
 	<div class="span4">
 		<div class="media member-thumb img-rounded">
-		  	<a class="pull-left" href="/member/<?php echo $member -> bidxMemberId; ?>">
+		  	<a class="pull-left" href="/member/<?php echo $memberBidxMeta -> bidxMemberId; ?>">
 			  	<?php
 				  	if ( empty( $member -> profilePicture ) ) {
 						echo '<img data-src="holder.js/50x50/social/auto/text:None" class="media-object img-rounded" />';
