@@ -95,6 +95,7 @@ class company extends Generic
             $view->bpSummary = true;
         } else if (isset ($sessionData->companyId)) {
             $companyId = $sessionData->companyId;
+            $bpSummary = false;
         }
 
         switch ($command) {
