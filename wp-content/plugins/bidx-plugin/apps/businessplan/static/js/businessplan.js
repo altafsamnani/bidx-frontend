@@ -12,6 +12,8 @@
     ,   state
     ,   bidx                        = window.bidx
     ,   snippets                    = {}
+
+    ,   appName                     = "businessplan"
     ;
 
         // Form fields
