@@ -4,10 +4,10 @@
  * Loads default data needed for the plugin into Wordpress.
  * Uses a definition xml setup based on pages schema.
  * All definition files should be in one location.
- * 
+ *
  * @author Jaap Gorjup
  * @version 1.0
- * 
+ *
  * @todo determine overwrite state of data
  */
 class ContentLoader
@@ -37,7 +37,7 @@ class ContentLoader
         $bidCommonObj = new BidxCommon();
         $bidCommonObj->getBidxSessionAndScript ();
         $this->scriptInject = $bidCommonObj->getScriptJs ();
-     
+
 
 
         add_action ('wp_head', array (&$this, 'addJsVariables'));
@@ -310,14 +310,14 @@ class ContentLoader
         $locale = apply_filters ('plugin_locale', get_locale (), $domain);
         $moStaticfile = $languagePath . '/static/' . $locale . '.mo';
         load_textdomain ($domain, $moStaticfile);
-        
+
         /* 2. Load Textdomain for Bidx Wp I18n */
         $domain = 'i18n'; // we use _e('String','i18n')
         $locale = apply_filters ('plugin_locale', get_locale (), $domain);
         $moi18nfile = $languagePath . '/i18n/' . $locale . '.mo';
         load_textdomain ($domain, $moi18nfile);
 
-        /* 2. Load Textdomain for Bidx Wp I18n */
+        /* 2. Load Textdomain for Bidx Plugin */
         $domain = 'bidxplugin'; // we use _e('String','i18n')
         $locale = apply_filters ('plugin_locale', get_locale (), $domain);
         $moPluginfile = $languagePath . '/plugins/' . $locale . '.mo';
