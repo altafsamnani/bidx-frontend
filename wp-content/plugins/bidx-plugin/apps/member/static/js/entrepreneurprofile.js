@@ -533,8 +533,8 @@
 
         // Inform the API we are updating the member profile
         //
-        member.bidxEntityType                           = "bidxEntrepreneurProfile";
-        member.bidxEntrepreneurProfile.bidxEntityType   = "bidxEntrepreneurProfile";
+        var bidxMeta = member.bidxEntrepreneurProfile.bidxMeta ? member.bidxEntrepreneurProfile.bidxMeta : member.bidxEntrepreneurProfile;
+        bidxMeta.bidxEntrepreneurProfile.bidxEntityType   = "bidxEntrepreneurProfile";
 
         // Update the member object
         //

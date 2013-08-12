@@ -839,7 +839,7 @@
                 {
                     facebookUsername:           true
                 }
-            ,   "peronsalDetails.twitter":
+            ,   "personalDetails.twitter":
                 {
                     twitterUsername:            true
                 }
@@ -999,7 +999,8 @@
 
         // Inform the API we are updating the member profile
         //
-        member.bidxEntityType = "bidxMemberProfile";
+        var bidxMeta = member.bidxMemberProfile.bidxMeta ? member.bidxMemberProfile.bidxMeta : member.bidxMemberProfile;
+        bidxMeta.bidxEntityType = "bidxMemberProfile";
 
         // Update the member object
         //
@@ -1010,7 +1011,7 @@
         ,   {
                 memberId:       memberId
             ,   groupDomain:    bidx.common.groupDomain
-            ,   data:           member
+            ,   data:           member.bidxMemberProfile
             ,   success:        function( response )
                 {
                     bidx.utils.log( "member.save::success::response", response );
