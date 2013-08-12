@@ -134,7 +134,6 @@ if ($companies) {
     ?>
     <div class="accordion" id="companies">
 <?php
-        xdebug_break();
         foreach ($companies as $index => $company) {
 
             $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;

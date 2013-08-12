@@ -235,26 +235,37 @@ input[type='text'].bidx-tagsinput {
 
 input[type='text'].bidx-tagsinput.enclosed {
     width:                          100px;
-    line-height:                    37px;
+    line-height:                    25px;
     padding:                        0;
     border:                         none;
     background-color:               transparent;
+    height:                         25px;
+    margin-bottom:                  5px;
 }
-
+.input-prepend {
+    background-color: #bdc3c7;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
 .input-prepend .bidx-tagsinput-container {
     border: 2px solid #bdc3c7;
     color: #34495e;
     background-color: #fff;
     font-family: "Lato", sans-serif;
     font-size: 14px;
-    padding: 0;
+    padding: 6px 1px 1px 6px;
     height: 100%;
-    overflow: auto;
-    white-space: normal;
-    text-indent: 6px;
-    width: 90%;
-    display: inline-block;
 
+    white-space: normal;
+    text-indent: 0;
+    width: 90.2%;
+    display: inline-block;
+    overflow-y: auto;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     -webkit-appearance: none;
     -webkit-border-radius: 0 6px 6px 0;
     -moz-border-radius: 0 6px 6px 0;
@@ -269,13 +280,18 @@ input[type='text'].bidx-tagsinput.enclosed {
     -webkit-backface-visibility: hidden;
 }
 
+.input-prepend .bidx-tagsinput-container .bidx-tag {
+    line-height: 11px;
+    vertical-align: middle;
+}
+
 .bidx-tag {
     background-color:               #1abc9c;
     color:                          #ffffff;
 
     border-radius:                  4px;
     margin-right:                   5px;
-    margin-bottom:                  3px;
+    margin-bottom:                  4px;
     overflow:                       hidden;
     line-height:                    22px;
     padding:                        7px 17px 8px 17px;
@@ -311,7 +327,7 @@ input[type='text'].bidx-tagsinput.enclosed {
         top:                            0;
         width:                          100%;
         z-index:                        2;
-        display:                        none\9;
+        /* display:                        none; */
     }
 
     .bidx-tag .tm-tag-remove:before {
@@ -331,7 +347,7 @@ input[type='text'].bidx-tagsinput.enclosed {
     .bidx-tag:hover .tm-tag-remove {
         color:                          #ffffff;
         opacity:                        1;
-        display:                        block\9;
+        display:                        block;
     }
 
     .vertical-middle {
@@ -719,9 +735,10 @@ form .row-fluid .input-prepend {
         box-sizing: border-box;
         width:                      10%;
         height:                     41px;
+        display:                    inline-block;
     }
     form .row-fluid .input-prepend input {
-        width:                      90%;
+        width:                      90.2%;
     }
 
 form {
