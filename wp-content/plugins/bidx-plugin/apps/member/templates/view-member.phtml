@@ -7,6 +7,10 @@ $lastName = $this->exst ($personalDetails->lastName);
 $useDataSrc = false;
 $picSrc = $this->exst ($personalDetails->profilePicture->document);
 
+$personalDetailsBidxMeta = isset( $personalDetails->bidxMeta )
+    ? $personalDetails->bidxMeta
+    : $personalDetails;
+
 if (!$personalDetails->profilePicture->document) {
     $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
     $useDataSrc = true;
