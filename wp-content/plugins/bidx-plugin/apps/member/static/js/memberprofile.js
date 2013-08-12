@@ -284,7 +284,7 @@
     ,   removeItemOverride: function( $item, cb )
         {
             var attachment      = $item.data( "bidxData" )
-            ,   documentId      = attachment.bidxEntityId
+            ,   documentId      = attachment.bidxMeta ? attachment.bidxMeta.bidxEntityId : attachment.bidxEntityId
             ;
 
             bidx.api.call(

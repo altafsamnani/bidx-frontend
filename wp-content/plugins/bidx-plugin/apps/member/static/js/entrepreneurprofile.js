@@ -167,7 +167,7 @@
     ,   removeItemOverride: function( $item, cb )
         {
             var attachment      = $item.data( "attachment" )
-            ,   documentId      = attachment.bidxEntityId
+            ,   documentId      = attachment.bidxMeta ? attachment.bidxMeta.bidxEntityId : attachment.bidxEntityId
             ;
 
             bidx.api.call(
@@ -534,7 +534,7 @@
         // Inform the API we are updating the member profile
         //
         var bidxMeta = member.bidxEntrepreneurProfile.bidxMeta ? member.bidxEntrepreneurProfile.bidxMeta : member.bidxEntrepreneurProfile;
-        bidxMeta.bidxEntrepreneurProfile.bidxEntityType   = "bidxEntrepreneurProfile";
+        bidxMeta.bidxEntityType   = "bidxEntrepreneurProfile";
 
         // Update the member object
         //

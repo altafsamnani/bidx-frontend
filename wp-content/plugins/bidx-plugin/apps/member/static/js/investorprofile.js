@@ -367,7 +367,7 @@
     ,   removeItemOverride: function( $item, cb )
         {
             var attachment      = $item.data( "bidxData" )
-            ,   documentId      = attachment.bidxEntityId
+            ,   documentId      = attachment.bidxMeta ? attachment.bidxMeta.bidxEntityId : attachment.bidxEntityId
             ;
 
             bidx.api.call(
@@ -1016,7 +1016,7 @@
         // Inform the API we are updating the member profile
         //
         var bidxMeta = member.bidxInvestorProfile.bidxMeta ? member.bidxInvestorProfile.bidxMeta : member.bidxInvestorProfile;
-        bidxMeta.bidxInvestorProfile.bidxEntityType   = "bidxInvestorProfile";
+        bidxMeta.bidxEntityType   = "bidxInvestorProfile";
 
         // Update the member object
         //
