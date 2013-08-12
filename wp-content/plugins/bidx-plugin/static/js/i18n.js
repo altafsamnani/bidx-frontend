@@ -223,7 +223,7 @@
 
         try
         {
-            preload = $.parseJSON( window.__bidxI18nPreload );
+            preload = window.__bidxI18nPreload;
         }
         catch ( e )
         {
