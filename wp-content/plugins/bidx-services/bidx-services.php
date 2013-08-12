@@ -380,7 +380,7 @@ function get_string_translation ()
                 $items = $document->xpath ('//Item');
 
                 $translatedArr[$body['app']] = other_wordpress_post_action ('translatei18n', $items, $body);
-            }
+            }             
 
             break;
 
@@ -414,7 +414,7 @@ function get_string_translation ()
         echo "</pre>";
         exit;
     } else {
-        echo json_encode($translatedArr);
+        echo json_encode($translatedArr);   
     }   
     
     exit;
@@ -646,7 +646,7 @@ function other_wordpress_post_action ($url, $result, $body)
             break;
 
         case 'translatei18n' :
-            $count = 1;
+            $count = 0;
             $appName = $body['app'];
             $i18nData = array();
             foreach ($result as $xmlObj) {
