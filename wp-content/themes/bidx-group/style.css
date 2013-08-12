@@ -248,7 +248,7 @@ input[type='text'].bidx-tagsinput.enclosed {
     -moz-border-radius: 6px;
     border-radius: 6px;
 }
-.input-prepend .bidx-tagsinput-container {
+.bidx-tagsinput-container {
     border: 2px solid #bdc3c7;
     color: #34495e;
     background-color: #fff;
@@ -280,7 +280,7 @@ input[type='text'].bidx-tagsinput.enclosed {
     -webkit-backface-visibility: hidden;
 }
 
-.input-prepend .bidx-tagsinput-container .bidx-tag {
+.bidx-tagsinput-container .bidx-tag {
     line-height: 11px;
     vertical-align: middle;
 }
