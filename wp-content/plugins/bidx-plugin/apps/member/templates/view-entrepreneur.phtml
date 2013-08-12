@@ -1,21 +1,29 @@
 <?php
 
 $entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
-$entityDetails = $this->exst ($this->data->wp->entities->bidxBusinessSummary);
+$businessSummary = $this->exst ($this->data->wp->entities->bidxBusinessSummary);
 $companies = $this->exst ($this->data->companies);
 
+$entrepreneurBidxMeta = isset( $entrepreneurDetails->bidxMeta )
+    ? $entrepreneurDetails->bidxMeta
+    : $entrepreneurDetails;
+
+$businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
+    ? $businessSummary->bidxMeta
+    : $businessSummary;
+
 if ($entrepreneurDetails &&
-    ( $entrepreneurDetails->bidxEntityStatus == 'PUBLISHED' || $entrepreneurDetails->bidxCanEdit  ) ) {
+    ( $entrepreneurDetails->bidxEntityStatus == 'PUBLISHED' || $entrepreneurBidxMeta->bidxCanEdit  ) ) {
     ?>
 
     <div class="well profile-block">
 
         <div class="btn-group control-buttons">
-            <?php if ($entrepreneurDetails->bidxCanEdit) { ?>
+            <?php if ($entrepreneurBidxMeta->bidxCanEdit) { ?>
                 <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurDetails->ownerId); ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
                     <?php
-                        if ($entrepreneurDetails->bidxEntityStatus == 'DRAFT') {
+                        if ($entrepreneurBidxMeta->bidxEntityStatus == 'DRAFT') {
 
                             // Encode the missing fields into an attribute so we can provide a nice
                             // UI feedback in the implementation of the publish button
@@ -33,8 +41,7 @@ if ($entrepreneurDetails &&
 
                             $missingFieldsAttribute = count($missingFields)
                                 ? sprintf( 'data-missingfields=\'%s\'', json_encode($missingFields) )
-                                : ''
-                            ;
+                                : '';
                     ?>
                 <a class="btn btn-primary" href="#publish/<?php echo $this->exst ($entrepreneurDetails->bidxEntityId); ?>" <?php echo $missingFieldsAttribute; ?>>Publish</a>
                     <?php
@@ -76,7 +83,7 @@ if ($entrepreneurDetails &&
 // Business Summary
 //
 
-if ($entityDetails) {
+if ($businessSummary) {
     ?>
     <div class="well profile-block">
 
@@ -94,21 +101,25 @@ if ($entityDetails) {
             <div class="span7">
                 <div class="row-fluid">
                     <div class="span12">
-                        <h5><?php echo $this->exst($entityDetails->name); ?></h5>
+                        <h5><?php echo $this->exst($businessSummary->name); ?></h5>
                     </div>
                 </div>
                 <!-- Personal details 6/6 Start -->
 
                 <?php
-                $industryVal = $this->getMultiValues ($this->exst ($entityDetails->industry), ', ');
-                $countryVal = $this->getMultiValues ($this->exst ($entityDetails->countryOperation), ', ', 'country', 'country');
-                $joinLink = ((isset ($entityDetails->bidxEntityId)) && $entityDetails->bidxEntityId) ? "<a href='/business/" . $entityDetails->bidxEntityId . "'>" . __('view more','bidxplugin') ."</a>" : '';
-                $rowValues = array ($entityDetails->slogan,
-                  $entityDetails->summary,
+                $industryVal = $this->getMultiValues ($this->exst ($businessSummary->industry), ', ');
+                $countryVal = $this->getMultiValues ($this->exst ($businessSummary->countryOperation), ', ', 'country', 'country');
+
+                $joinLink = ((isset ($businessSummaryBidxMeta->bidxEntityId)) && $businessSummaryBidxMeta->bidxEntityId)
+                    ? "<a href='/business/" . $businessSummaryBidxMeta->bidxEntityId . "'>" . __('view more','bidxplugin') ."</a>"
+                    : '';
+
+                $rowValues = array ($businessSummary->slogan,
+                  $businessSummary->summary,
                   $industryVal,
                   $countryVal);
-                echo $this->addMultipleRows ('span12', $rowValues);
 
+                echo $this->addMultipleRows ('span12', $rowValues);
                 echo $this->addMultipleRows ('span12 offset10', array ($joinLink));
                 ?>
             </div>
@@ -125,7 +136,9 @@ if ($companies) {
         <?php
         foreach ($companies as $index => $company) {
 
-            $collapseId = sprintf ('companyAccordion-%s', $company->bidxEntityId);
+            $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
+
+            $collapseId = sprintf ('companyAccordion-%s', $companyBidxMeta->bidxEntityId);
 
             $useDataSrc = false;
             $picSrc = $this->exst ($company->logo->document);
@@ -148,7 +161,7 @@ if ($companies) {
                 <div id="<?php echo $collapseId ?>" class="accordion-body collapse <?php echo ( $index == 0 ) ? 'in' : ''; ?>">
                     <div class="accordion-inner">
                         <div class="btn-group control-buttons">
-                        <?php if ($company->bidxCanEdit) { ?>
+                        <?php if ($companyBidxMeta->bidxCanEdit) { ?>
                             <a class="btn btn-primary" href="/company/<?php echo $company->ownerId; ?>/#editCompany/<?php echo $company->ownerId; ?>">Edit</a>
                         <?php } ?>
                         </div>
