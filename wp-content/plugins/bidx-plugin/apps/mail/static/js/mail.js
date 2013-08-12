@@ -298,7 +298,7 @@
                 ,   limit:                10
                 ,   sort:                 "sentDate"
                 ,   order:                "desc"
-                ,   showRemovedEmails:    true
+                ,   showRemovedEmails:    false
                 ,   inboxType:            options.type
                 }
             ,   groupDomain:              bidx.common.groupDomain
@@ -402,7 +402,6 @@
     //  delete email
     var _doDelete = function ( options )
     {
-        bidx.utils.log("OPTIONS>>>>" , options );
         bidx.api.call(
              "mail.delete"
         ,   {
@@ -414,9 +413,8 @@
 
                     if ( response.data && response.data.succeeded )
                     {
-                        bidx.utils.log("HASH RELOAD>>>", "#mail/" + ( options.section ? options.section : "inbox" ) );
-                        //set window location to provided section, otherwise fallback to inbox
-                        window.location.hash = "#mail/" + ( options.section ? options.section : "inbox" );
+                        window.bidx.controller.updateHash( "#mail/" + ( options.section ? options.section : "inbox"  ) );
+
                     }
                     if ( response.data && response.data.failed )
                     {
