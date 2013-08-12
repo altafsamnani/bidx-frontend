@@ -700,9 +700,11 @@
             {
                 bidx.utils.log( "company.save::success::response", response );
 
+                var bidxMeta = bidx.utils.getValue( response, "data.bidxMeta" ) || bidx.utils.getValue( response, "data" );
+
                 if ( state === "create" )
                 {
-                    companyId = bidx.utils.getValue( response, "data.ownerId" );
+                    companyId = bidx.utils.getValue( bidxMeta, "ownerId" );
                 }
 
                 bidx.common.notifyRedirect();

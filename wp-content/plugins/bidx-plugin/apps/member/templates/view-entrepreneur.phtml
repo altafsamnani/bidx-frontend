@@ -13,14 +13,14 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
     : $businessSummary;
 
 if ($entrepreneurDetails &&
-    ( $entrepreneurDetails->bidxEntityStatus == 'PUBLISHED' || $entrepreneurBidxMeta->bidxCanEdit  ) ) {
+    ( $entrepreneurBidxMeta->bidxEntityStatus == 'PUBLISHED' || $entrepreneurBidxMeta->bidxCanEdit  ) ) {
     ?>
 
     <div class="well profile-block">
 
         <div class="btn-group control-buttons">
             <?php if ($entrepreneurBidxMeta->bidxCanEdit) { ?>
-                <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurDetails->ownerId); ?>"><?php _e('Edit','bidxplugin'); ?></a>
+                <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurBidxMeta->bidxOwnerId); ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
                     <?php
                         if ($entrepreneurBidxMeta->bidxEntityStatus == 'DRAFT') {
@@ -133,7 +133,8 @@ if ($businessSummary) {
 if ($companies) {
     ?>
     <div class="accordion" id="companies">
-        <?php
+<?php
+        xdebug_break();
         foreach ($companies as $index => $company) {
 
             $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
@@ -162,7 +163,7 @@ if ($companies) {
                     <div class="accordion-inner">
                         <div class="btn-group control-buttons">
                         <?php if ($companyBidxMeta->bidxCanEdit) { ?>
-                            <a class="btn btn-primary" href="/company/<?php echo $company->ownerId; ?>/#editCompany/<?php echo $company->ownerId; ?>">Edit</a>
+                            <a class="btn btn-primary" href="/company/<?php echo $companyBidxMeta->bidxOwnerId; ?>/#editCompany/<?php echo $companyBidxMeta->bidxOwnerId; ?>">Edit</a>
                         <?php } ?>
                         </div>
 
@@ -220,7 +221,7 @@ if ($companies) {
 
                         <div class="bottom-controls">
         <?php
-        $viewMoreLink = "<a href='/company/" . $company->ownerId . "'>". __('view more','bidxplugin') ."</a>";
+        $viewMoreLink = "<a href='/company/" . $companyBidxMeta->bidxOwnerId . "'>". __('view more','bidxplugin') ."</a>";
         echo $viewMoreLink;
         ?>
                         </div>

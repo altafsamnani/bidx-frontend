@@ -16,7 +16,7 @@ if ($investorDetails &&
 
         <div class="btn-group control-buttons">
             <?php if ($investorDetailsBidxMeta->bidxCanEdit) { ?>
-                <a class="btn btn-primary" href="#editInvestor/<?php echo $this->exst ($investorDetails->ownerId); ?>"><?php _e('Edit','bidxplugin'); ?></a>
+                <a class="btn btn-primary" href="#editInvestor/<?php echo $this->exst ($investorDetailsBidxMeta->bidxOwnerId); ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
                     <?php
                         if ($investorDetailsBidxMeta->bidxEntityStatus == 'DRAFT') {
