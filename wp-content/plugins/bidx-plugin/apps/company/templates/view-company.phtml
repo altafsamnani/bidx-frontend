@@ -3,6 +3,10 @@
 $useDataSrc = false;
 $picSrc     = $this->exst($this->company->logo->document);
 
+$companyBidxMeta = isset( $this->company->bidxMeta )
+    ? $this->company->bidxMeta
+    : $this->company;
+
 if (!$picSrc) {
     $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
     $useDataSrc = true;
@@ -12,7 +16,7 @@ if (!$picSrc) {
 <div class="well profile-block">
 
     <div class="btn-group controls">
-    <?php if ($this->company->bidxCanEdit) { ?>
+    <?php if ($companyBidxMeta->bidxCanEdit) { ?>
         <a class="btn btn-primary" href="#editCompany/<?php echo $this->company->ownerId; ?>">Edit</a>
     <?php } ?>
     </div>
