@@ -409,4 +409,11 @@
     //
     $( "input.bidx-tagsinput:not(.defer)" ).tagsinput();
 
+    // Activate all datepickers (this was previously done as part of the form.js plugin)
+    //
+    $( "input[data-type=date]" ).datepicker(
+    {
+        "dateFormat":                     "d MM yy"
+    } );
+
 } ( jQuery ));
