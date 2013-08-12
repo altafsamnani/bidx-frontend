@@ -327,43 +327,97 @@ function clear_bidx_cookies ()
  * @author Altaf Samnani
  * @version 1.0
  *
- * Create the Po file from settings->Bidx
- * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation
- * Working
+ * String Translate API for Frontend
+ ********** i18n ************** 
+ *  1) For all data
+ *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&print=true
+ *  2) For App i18n.xml data
+ *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&context=company&print=true
+ *  3) For Global i18.xml data
+ *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&context=company&print=true
+ * 
+ ********** Static **************  
+ *  1) For all data
+ *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=static&print=true
+ *  2) For Particular category data
+ *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=static&statictype=documentType&print=true
+ *
+ * 
  */
 
 add_action ('wp_ajax_bidx_translation', 'get_string_translation');
-
+add_action ('wp_ajax_nopriv_bidx_translation', 'get_string_translation');
 function get_string_translation ()
 {
-    if ($context == '__global') {
-        $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}';
-        $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}', GLOB_BRACE);
+    $type = (isset($_GET['type'])) ? $_GET['type'] : NULL;
+    $print   = (isset($_GET['print'])) ? $_GET['print'] : NULL;
+    switch ($type) {
+
+        case 'i18n' :
+
+            $context = (isset ($_GET['context'])) ? $_GET['context'] : NULL;
+
+            $translatedArr = array ();
+            if ($context == '__global') {
+                $fileArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}', GLOB_BRACE);
+            } else {
+                if ($context) {
+                    $fileArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $context . '}/{i18n.xml}', GLOB_BRACE);
+                } else {
+                    $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $context . '}/{i18n.xml}', GLOB_BRACE);
+                    $i18GlobalArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}', GLOB_BRACE);
+                    $fileArr = array_merge ($i18GlobalArr, $i18PluginArr);
+                }
+            }
+
+            foreach ($fileArr as $fileName) {
+
+
+                $dirArr = (preg_match ("/apps\/(.*)\/i18n.xml/i", $fileName, $matches));
+                $body['app'] = (isset ($matches[1])) ? $matches[1] : '__global';
+
+                $document = simplexml_load_file ($fileName);
+                $items = $document->xpath ('//Item');
+
+                $translatedArr[$body['app']] = other_wordpress_post_action ('translatei18n', $items, $body);
+            }
+
+            break;
+
+        case 'static' :
+
+            $siteLocale = get_locale ();
+            $staticDataObj = new StaticDataService();
+            $transientKey = 'static' . $siteLocale; // Transient key for Static Data
+            $transientStaticData = get_transient ($transientKey);
+
+            /* If no value then set the site local transient */
+            if ($transientStaticData === false) {
+                $resultStaticData = $staticDataObj->getStaticData (NULL);
+                $staticDataVars = $resultStaticData->data;
+                $transientStaticData = $staticDataObj->getMultilingualStaticData ($staticDataVars);
+                // set_transient ($transientKey, $translatedArr, 5); //Second*Min*Hour
+            }
+            
+            if (isset ($_GET['statictype'])) {
+                $translatedArr[$_GET['statictype']] = $transientStaticData[$_GET['statictype']];
+            } else {
+                $translatedArr = $transientStaticData;
+            }
+
+            break;
+    }
+    
+    if($print) {
+        echo "<pre>";
+        print_r($translatedArr);
+        echo "</pre>";
+        exit;
     } else {
-        if ($context) {
-            $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $appName . '}/{i18n.xml}';
-            $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $appName . '}/{i18n.xml}', GLOB_BRACE);
-        } else {
-            $i18Path = WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $appName . '}/{i18n.xml}';
-        }
-    }
-
-    $i18Path = ($context == '__global') ? WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}' : WP_PLUGIN_DIR . '/bidx-plugin/apps/*/{i18n.xml}';
-    $i18AppsArr = glob ($i18Path, GLOB_BRACE);
-    $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
-
-    foreach ($fileArr as $fileName) {
-
-        $body['is_app'] = (preg_match ("/apps/i", $fileName)) ? true : false;
-
-        $dirArr = (preg_match ("/apps\/(.*)\/i18n.xml/i", $fileName, $matches));
-        $body['app'] = (isset ($matches[1])) ? $matches[1] : NULL;
-
-        $document = simplexml_load_file ($fileName);
-        $items = $document->xpath ('//Item');
-
-        $po .= other_wordpress_post_action ('pocreate', $items, $body);
-    }
+        echo json_encode($translatedArr);
+    }   
+    
+    exit;
 }
 
 /*
@@ -589,6 +643,32 @@ function other_wordpress_post_action ($url, $result, $body)
                 $count++;
             }
             return $po;
+            break;
+
+        case 'translatei18n' :
+            $count = 1;
+            $appName = $body['app'];
+            $i18nData = array();
+            foreach ($result as $xmlObj) {
+
+                $arr = $xmlObj->attributes ();
+                $xmlLabel =  $xmlObj->__toString ();
+
+                if($appName == '__global') {
+                    $label = __( $xmlLabel ,'i18n');
+                } else {
+                    $label = _x( $xmlLabel ,$appName, 'i18n');
+                }
+
+                $i18nData[$count]->value = $arr['value']->__toString();
+
+
+                $i18nData[$count]->label = $label;
+
+                $count++;
+            }
+            return $i18nData;
+
             break;
     }
     exit;
