@@ -111,6 +111,7 @@ class BidxShortcode {
 			wp_register_script( 'jquery-validation',        						$bidxJsDir . '/vendor/jquery.validate.js',             			array( 'jquery' ),      		'1.1.11', 	true );
 			wp_register_script( 'jquery-validation-jqueryui-datepicker',        	$bidxJsDir . '/vendor/jquery.ui.datepicker.validation.js',      array( 'jquery-validation' ),	'1.0.1',    true );
 			wp_register_script( 'jquery-validation-additional-methods',        		$bidxJsDir . '/vendor/additional-methods.js',      				array( 'jquery-validation' ),	'1.1.11',   true );
+			wp_register_script( 'jquery-validation-bidx-additional-methods',   		$bidxJsDir . '/additional-methods.js',      					array( 'jquery-validation' ),	'20130812', true );
 
 			//bidX scripts
 			wp_register_script( 'bidx-api-core', 				$bidxJsDir . '/bidxAPI/api-core.js', 			array( 'jquery' ), '20130501', TRUE );
