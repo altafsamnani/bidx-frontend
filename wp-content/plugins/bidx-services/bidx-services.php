@@ -334,7 +334,7 @@ function clear_bidx_cookies ()
  *  2) For App i18n.xml data
  *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&context=company&print=true
  *  3) For Global i18.xml data
- *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&context=company&print=true
+ *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&context=__global&print=true
  * 
  ********** Static **************  
  *  1) For all data
@@ -396,7 +396,7 @@ function get_string_translation ()
                 $resultStaticData = $staticDataObj->getStaticData (NULL);
                 $staticDataVars = $resultStaticData->data;
                 $transientStaticData = $staticDataObj->getMultilingualStaticData ($staticDataVars);
-                // set_transient ($transientKey, $translatedArr, 5); //Second*Min*Hour
+                set_transient ($transientKey, $transientStaticData, 60 * 5); //Second*Min*Hour
             }
             
             if (isset ($_GET['statictype'])) {
