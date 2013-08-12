@@ -352,6 +352,18 @@
         {
             text:           msg
         ,   type:           "error"
+        ,   closeWith:      [ "button" ]
+        ,   buttons:
+            [
+                {
+                    addClass:   "btn btn-primary"
+                ,   text:       "Ok"
+                ,   onClick: function($noty)
+                    {
+                        $noty.close();
+                    }
+                }
+            ]
         } );
     };
 
