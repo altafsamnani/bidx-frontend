@@ -612,7 +612,9 @@
                     {
                         // Do we have edit perms?
                         //
-                        var canEdit = bidx.utils.getValue( response, "bidxCanEdit" );
+                        var bidxMeta    = bidx.utils.getValue( response, "bidxMeta" ) || response
+                        ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
+                        ;
 
                         if ( !canEdit )
                         {
@@ -626,13 +628,11 @@
                         else
                         {
                             company = response;
+                            bidx.utils.log( "bidx::company", company );
 
                             // Set the global memberProfileId for convenience reasons
                             //
-                            companyProfileId = bidx.utils.getValue( company, "bidxEntityId" );
-
-
-                            bidx.utils.log( "bidx::company", company );
+                            companyProfileId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
 
                             _populateScreen();
 
@@ -662,7 +662,7 @@
         }
         else
         {
-            company = {};
+            company     = {};
 
             _populateScreen();
 
@@ -682,9 +682,11 @@
             return;
         }
 
+        var bidxMeta    = bidx.utils.getValue( company, "bidxMeta" ) || company;
+
         // Inform the API we are updating the company profile
         //
-        company.bidxEntityType = "bidxCompany";
+        bidxMeta.bidxEntityType = "bidxCompany";
 
         // Update the company object
         //
