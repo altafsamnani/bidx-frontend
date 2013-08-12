@@ -807,50 +807,84 @@
 
         // Setup form
         //
-        $editForm.form(
+        var $validator = $editForm.validate(
         {
-            errorClass:     'error'
-        ,   enablePlugins:  [ 'date', 'fileUpload' ]
-        } );
-
-        $editForm.submit( function( e )
-        {
-            e.preventDefault();
-
-            var valid = $editForm.form( "validateForm" );
-
-            if ( !valid || $btnSave.hasClass( "disabled" ) )
+            rules:
             {
-                return;
-            }
-
-            $btnSave.addClass( "disabled" );
-            $btnCancel.addClass( "disabled" );
-
-            _save(
-            {
-                error: function( jqXhr )
+                "personalDetails.firstName":
                 {
-                    var response;
-
-                    try
-                    {
-                        // Not really needed for now, but just have it on the screen, k thx bye
-                        //
-                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
-                    }
-                    catch ( e )
-                    {
-                        bidx.utils.error( "problem parsing error response from memberProfile save" );
-                    }
-
-                    bidx.common.notifyError( "Something went wrong during save: " + response );
-
-                    $btnSave.removeClass( "disabled" );
-                    $btnCancel.removeClass( "disabled" );
+                    required:                   true
                 }
-            } );
+            ,   "personalDetails.lastName":
+                {
+                    required:                   true
+                }
+            ,   "personalDetails.dateOfBirth":
+                {
+                    dpDate:                     true
+                }
+            ,   "personalDetails.emailAddress":
+                {
+                    email:                      true
+                }
+            }
+        ,   messages:
+            {
+                "personalDetails.firstName":
+                {
+                    required:                   bidx.i18n.i( "frmFieldRequired" )
+                }
+            ,   "personalDetails.lastName":
+                {
+                    required:                   bidx.i18n.i( "frmFieldRequired" )
+                }
+            ,   "personalDetails.dateOfBirth":
+                {
+                    dpDate:                     bidx.i18n.i( "frmInvalidDate" )
+                }
+            ,   "personalDetails.emailAddress":
+                {
+                    email:                      bidx.i18n.i( "frmInvalidEmail" )
+                }
+            }
+        ,   submitHandler:  function()
+            {
+                if ( $btnSave.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                $btnSave.addClass( "disabled" );
+                $btnCancel.addClass( "disabled" );
+
+                _save(
+                {
+                    error: function( jqXhr )
+                    {
+                        var response;
+
+                        try
+                        {
+                            // Not really needed for now, but just have it on the screen, k thx bye
+                            //
+                            response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                        }
+                        catch ( e )
+                        {
+                            bidx.utils.error( "problem parsing error response from memberProfile save" );
+                        }
+
+                        bidx.common.notifyError( "Something went wrong during save: " + response );
+
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+                    }
+                } );
+            }
         } );
+
+
+        $editForm.find( "[data-type=fileUpload]" ).fileUpload( { "parentForm": $editForm[0] });
 
         // Fetch the member
         //
@@ -863,7 +897,9 @@
                 {
                     // Do we have edit perms?
                     //
-                    var canEdit = bidx.utils.getValue( response, "bidxMemberProfile.bidxCanEdit" );
+                    var bidxMeta    = bidx.utils.getValue( response, "bidxMemberProfile.bidxMeta" ) || bidx.utils.getValue( response, "bidxMemberProfile" )
+                    ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
+                    ;
 
                     if ( !canEdit )
                     {
@@ -880,7 +916,7 @@
 
                         // Set the global memberProfileId for convenience reasons
                         //
-                        memberProfileId = bidx.utils.getValue( member, "bidxMemberProfile.bidxEntityId" );
+                        memberProfileId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
 
                         bidx.utils.log( "bidx::member", member );
 
@@ -1015,7 +1051,13 @@
                     $element.show();
                     _showView( "load" );
 
-                    _init();
+                    // Make sure the i18n translations for this app are available before initing
+                    //
+                    bidx.i18n.load( [ "__global", appName ] )
+                        .done( function()
+                        {
+                            _init();
+                        } );
                 }
 
                 if ( updateHash )
