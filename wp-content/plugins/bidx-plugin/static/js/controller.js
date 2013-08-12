@@ -124,7 +124,7 @@
 
     // Update Hash using Backbone Router
     //
-    var _updateHash = function ( newHash )
+    var updateHash = function ( newHash )
     {
         router.navigate( newHash );
     };
@@ -377,7 +377,7 @@
         {
             return getGroupIds();
         }
-    ,   updateHash: _updateHash
+    ,   updateHash: updateHash
     };
 
 
