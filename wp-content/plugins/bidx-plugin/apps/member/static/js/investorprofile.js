@@ -952,7 +952,10 @@
                     {
                         // Do we have edit perms?
                         //
-                        var canEdit = bidx.utils.getValue( response, "bidxInvestorProfile.bidxCanEdit" );
+                        var bidxMeta    = bidx.utils.getValue( response, "bidxInvestorProfile.bidxMeta" ) || bidx.utils.getValue( response, "bidxEntrepreneurProfile" )
+                        ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
+                        ;
+
 
                         if ( !canEdit )
                         {
@@ -969,7 +972,7 @@
 
                             // Set the global memberProfileId for convenience reasons
                             //
-                            investorProfileId = bidx.utils.getValue( member, "bidxInvestorProfile.bidxEntityId" );
+                            investorProfileId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
 
                             bidx.utils.log( "bidx::invvestor", member );
 

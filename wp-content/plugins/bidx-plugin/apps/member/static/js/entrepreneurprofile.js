@@ -22,11 +22,12 @@
     ,   member
     ,   memberId
     ,   entrepreneurProfileId
-    ,   state
-    ,   bidx            = window.bidx
-    ,   snippets        = {}
 
-    ,   appName         = "member"
+    ,   state
+    ,   bidx                        = window.bidx
+    ,   snippets                    = {}
+
+    ,   appName                     = "member"
     ;
 
     // Form fields
@@ -479,7 +480,9 @@
                     {
                         // Do we have edit perms?
                         //
-                        var canEdit = bidx.utils.getValue( response, "bidxEntrepreneurProfile.bidxCanEdit" );
+                        var bidxMeta    = bidx.utils.getValue( response, "bidxEntrepreneurProfile.bidxMeta" ) || bidx.utils.getValue( response, "bidxEntrepreneurProfile" )
+                        ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
+                        ;
 
                         if ( !canEdit )
                         {
@@ -496,7 +499,7 @@
 
                             // Set the global (for this app) entrepeneurProfileId for convenience reasons
                             //
-                            entrepreneurProfileId = bidx.utils.getValue( member, "bidxEntrepreneurProfile.bidxEntityId" );
+                            entrepreneurProfileId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
 
                             bidx.utils.log( "bidx::member", member );
 
