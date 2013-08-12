@@ -17,4 +17,5 @@
     <Item value="frmFieldRequired">This field is required</Item>
     <Item value="frmInvalidDate">Please enter a valid date</Item>
     <Item value="frmInvalidEmail">Please enter a valid e-mail address</Item>
+    <Item value="frmInvalidSkypeUsername">Please enter a valid Skype username</Item>
 </I18N>

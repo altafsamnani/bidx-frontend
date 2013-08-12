@@ -827,6 +827,10 @@
                 {
                     email:                      true
                 }
+            ,   "personalDetails.skype":
+                {
+                    skypeUsername:              true
+                }
             }
         ,   messages:
             {
@@ -845,6 +849,10 @@
             ,   "personalDetails.emailAddress":
                 {
                     email:                      bidx.i18n.i( "frmInvalidEmail" )
+                }
+            ,   "personalDetails.skype":
+                {
+                    skypeUsername:              bidx.i18n.i( "frmInvalidSkypeUsername")
                 }
             }
         ,   submitHandler:  function()
