@@ -57,11 +57,6 @@
         ,   'emailAddress'
         ,   'skype'
         ,   'twitter'
-        ,   'language'
-        ,   'motherLanguage'
-        ,   'workingLanguage'
-        ,   'ratingSpoken'
-        ,   'ratingWritten'
 
         ,   'landline'
         ,   'mobile'
