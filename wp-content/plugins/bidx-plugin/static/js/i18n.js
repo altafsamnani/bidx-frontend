@@ -4,6 +4,7 @@
 ( function( $ )
 {
     var bidx                = window.bidx
+    ,   g                   = "__global"
     ;
 
         // Internal administration of cached items, let's keep it for now in an object, maybe later sync it to localstorage
@@ -21,16 +22,72 @@
     ,   requestQueue        = {}
     ;
 
-    // Retr
+    // Blocking i18n item retrieval function. Can be used after the context has been succesfully loaded
+    //
+    function i( key, context )
+    {
+        if ( !context )
+        {
+            context = g;
+        }
+
+        if ( !items[ context ] )
+        {
+            bidx.utils.error( "bidx.i18n::context", context, "not loaded!" );
+        }
+
+        return bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
+    }
+
+    // Returns a promise which will be done() after loading all the contexts'
+    // TODO: handle error situation
+    //
+    function load( contexts )
+    {
+        var deferreds = [];
+
+        $.each( contexts, function( idx, context )
+        {
+            deferreds.push(
+                $.Deferred( function( d )
+                {
+                    getContext( context, function( err, item )
+                    {
+                        d.resolve();
+                    } );
+                } )
+            );
+        } );
+
+        return $.when.apply( $, deferreds );
+    }
+
+    // Retrieve the whole context
+    //
     function getContext( context, cb )
     {
         var first = false;
+
+        // Only called with a callback
+        //
+        if ( $.isFunction( context ))
+        {
+            cb = context;
+            context = null;
+        }
+
+        // When no context specified, it is the global context which by convention we named __global
+        //
+        if ( !context )
+        {
+            context = g;
+        }
 
         // Already loaded?
         //
         if ( items[ context ] )
         {
-            cb( null, items[ context ].data );
+            cb( null, items[ context ] );
             return;
         }
 
@@ -60,7 +117,7 @@
 
                         $.each( requestQueue[ context ], function( idx, cb )
                         {
-                            cb( null, items[ context ].data );
+                            cb( null, items[ context ] );
                         } );
 
                         delete requestQueue[ context ];
@@ -94,14 +151,14 @@
         //
         if ( !context )
         {
-            context = "__global";
+            context = g;
         }
 
         // Context not loaded? Retrieve it first, and then retry finding it
         //
         if ( !items[ context ] )
         {
-            getContext( context, function( err, data )
+            getContext( context, function( err, item )
             {
                 if ( err )
                 {
@@ -121,7 +178,7 @@
             //
             if ( !key )
             {
-                cb( null, item.data );
+                cb( null, item );
             }
             else
             {
@@ -205,5 +262,8 @@
         getItem:                    getItem
     ,   setItem:                    setItem
     ,   getContext:                 getContext
+    ,   load:                       load
+
+    ,   i:                          i
     };
 } ( jQuery ));
