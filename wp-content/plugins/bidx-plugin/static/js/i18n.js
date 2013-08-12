@@ -101,8 +101,6 @@
 
         // Retrieve data from API
         //
-        // TODO: proper implementation, currently no API available... shouldn't end up here
-        //
         if ( first )
         {
             bidx.utils.warn( "bidx.i18n not having", context, "loaded. Calling API to retrieve it" );
