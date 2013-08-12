@@ -588,9 +588,22 @@
 
             _save(
             {
-                error: function()
+                error: function( jqXhr )
                 {
-                    alert( "Something went wrong during save" );
+                    var response;
+
+                    try
+                    {
+                        // Not really needed for now, but just have it on the screen, k thx bye
+                        //
+                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                    }
+                    catch ( e )
+                    {
+                        bidx.utils.error( "problem parsing error response from company save" );
+                    }
+
+                    bidx.common.notifyError( "Something went wrong during save: " + response );
 
                     $btnSave.removeClass( "disabled" );
                     $btnCancel.removeClass( "disabled" );
