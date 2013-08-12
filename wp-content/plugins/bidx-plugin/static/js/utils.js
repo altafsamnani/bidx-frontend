@@ -530,12 +530,6 @@
         return result;
     };
 
-    //  well....it updates the hash
-    var updateHash = function ( str )
-    {
-        document.location.hash = str;
-    };
-
     //  Removes ID(s) from hash string
     var removeIdFromHash = function ( str ){
         var newHash = [];
@@ -559,7 +553,6 @@
     //  return view name. Expects v(iew) and optionally a c(lass)
     var getViewName = function ( v, c )
     {
-
         return ( c ? c : ".view" ) + v.charAt( 0 ).toUpperCase() + v.substr( 1 );
     };
 
@@ -612,7 +605,6 @@
     ,   populateDropdown:           populateDropdown
     ,   setNestedStructure:         setNestedStructure
     ,   removeIdFromHash:           removeIdFromHash
-    ,   updateHash:                 updateHash
     ,   getViewName:                getViewName
 
     ,   log:                        log

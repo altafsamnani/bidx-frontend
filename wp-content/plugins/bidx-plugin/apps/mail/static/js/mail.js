@@ -218,9 +218,10 @@
 
     var _updateMenu = function( )
     {
-        $( "#mail > .side-menu > a" ).each( function( index, item )
+        $( "#mail .side-menu > a" ).each( function( index, item )
         {
             var $this = $( item );
+
             if( $this.attr( "href" ) === window.location.hash )
             {
                 $this.addClass( "btn-primary" );
@@ -517,22 +518,72 @@
     var state;
 
 
-    var navigate = function( requestedState, section, id )
+    //var navigate = function( requestedState, section, id )
+    var navigate = function( options )
     {
-        bidx.utils.log( "Section",section );
-        bidx.utils.log( "id", id );
-        bidx.utils.log( "requestedState", requestedState );
+        bidx.utils.log("routing options", options);
+        var section
+        ,   id
+        ,   sectionState
+        ;
+
+        /*
+        - section is most of the the time a section, but it COULD be an ID. Part1 and 2 should then be empty
+        - part1 can be substate OR id
+        - part2 is always an id IF part1 is an substate
+
+        Example:
+            #mail/inbox/deleteConfirm/3412
+            #mail/inbox/delete/3412
+            #mail/3433   -> view email
+            #mail/inbox/3433 -> view email
+            #mail/compose
+        */
+
+
+
+            //  little switch statement for states that match the section argument
+            sectionState =
+            {
+                deleteConfirm:       true
+            ,   delete:              true
+            ,   discardConfirm:      true
+
+            };
+
+            //  if section is an ID or part1 is an ID switch to state 'read'
+            if( ( options.section && options.section.match( /^\d+$/ ) ) || ( options.part1 && options.part1.match( /^\d+$/ ) ) )
+            {
+                //  if section holds the id, transfer its value to id. Otherwise use part1
+                id = ( options.section && options.section.match( /^\d+$/ ) ) ? options.section : options.part1;
+                section = "read";
+            }
+            else
+            {
+                if( options.part1 && sectionState[ options.part1 ] )
+                {
+                    section = options.part1;
+                }
+                else {
+                    section = options.section;
+                }
+                id = options.part2;
+
+            }
 
 
 
 
-        switch ( requestedState )
+        switch ( section )
         {
             case "load" :
+
                 _showView( "load" );
+
             break;
 
             case "read":
+
                 _closeModal();
                 _showView( "load" );
                 _getEmail (
@@ -540,29 +591,34 @@
                     id:             id
                 ,   view:           "read"
 
-                ,   callback:       function()
+                ,   callback: function()
                     {
-                        _setToolbarButtons( id, requestedState, section );
+                        _setToolbarButtons( id, section, section );
                         _showView( "read" );
                     }
                 } );
+
             break;
 
             case "deleteConfirm":
+
                 _showModal(
                 {
-                    view:   "deleteConfirm"
-                ,   id:     id
-                ,   section:  section
-                ,   onHide:   function()
+                    view:       "deleteConfirm"
+                ,   id:         id
+                ,   section:    section
+
+                ,   onHide: function()
                     {
-                        bidx.utils.updateHash( "#mail/" + section + "/" + id );
+                        window.bidx.controller.updateHash( "#mail/" + section + "/" + id );
                     }
 
                 } );
+
             break;
 
             case "delete":
+
                 _closeModal(
                 {
                     unbindHide: true
@@ -572,19 +628,21 @@
                     view:   "deleteConfirm"
                 ,   id:     id
                 ,   section: section
-
                 } );
+
             break;
 
             case "inbox":
             case "sent":
+
+                var type = "RECEIVED_EMAILS";
+
                 _closeModal(
                 {
                     unbindHide: true
                 } );
 
                 _showView( "load" );
-                var type = "RECEIVED_EMAILS";
 
                 if( section === "sent" ) {
                     type = "SENT_EMAILS";
@@ -598,42 +656,41 @@
                     ,   list:       "list"
                     ,   view:       "list"
 
-                    ,   callback:   function()
+                    ,   callback: function()
                         {
                             _showView( "list" );
                         }
                 } );
+
             break;
 
             case "compose":
 
                 _showView( "compose" );
                 _composeFormInit();
+
             break;
 
             case "discardConfirm":
 
-
-
                 _showModal(
                 {
-                    view:   "discardConfirm"
-                ,   id:     id
-                ,   section:  section
+                    view:       "discardConfirm"
+                ,   id:         id
+                ,   section:    section
 
-                ,   onHide:   function()
+                ,   onHide: function()
                     {
-                        bidx.utils.log("I AM HIDING!!!!!!!!!!!!!!");
-                        bidx.utils.updateHash( "#mail/compose" );
-                        /*bidx.utils.log("ARGUMENTS", arguments);
-                        bidx.utils.updateHash( "#mail/compose" );*/
-
+                         window.bidx.controller.updateHash( "#mail/compose" );
                     }
                 } );
+
             break;
 
             default:
+
                 _showView( "undefined" );
+
             break;
         }
     };
@@ -642,7 +699,7 @@
     var mail =
     {
         navigate:               navigate
-    //,   $element:               $element //not sure why this should be exposed but is cause an issue where this element receives a display:none from somewhere
+    ,   $element:               $element
     ,   getMembers:             getMembers
     };
 

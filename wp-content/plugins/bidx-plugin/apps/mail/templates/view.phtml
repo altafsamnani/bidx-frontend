@@ -1,196 +1,194 @@
+<div id="mail" class="mainState mainStateMail">
+    <h1>Your inbox</h1>
+    <div class="row-fluid">
+        <!-- Left menu -->
+        <div class="span2 side-menu well">
+            <a class="btn btn-large btn-block btn-info" href="#mail/compose"><?php _e('Compose','bidxplugin')?></a>
+            <a class="btn btn-large btn-block" href="#mail/inbox"><?php _e('Inbox','bidxplugin')?></a>
+            <a class="btn btn-large btn-block" href="#mail/sent"><?php _e('Sent','bidxplugin')?></a>
+    <!--         <a class="btn btn-large btn-block" href="#drafts">Drafts</a>
+            <a class="btn btn-large btn-block" href="#archived">Archived</a>
+            <a class="btn btn-large btn-block" href="#trash">Trash</a> -->
+        </div>
+
+        <!-- mail stage: this is the ajax target -->
+        <section class="span10 well mail">
+
+            <!-- ************************* utility views *********************************** -->
+            <article class="view viewLoad"><?php _e('Loading...','bidxplugin')?></article>
+
+            <article class="view viewError">
+                <h1><?php _e('Error','bidxplugin')?></h1>
+                <span class="errorMsg"></span>
+            </article>
+
+            <article class="view viewUndefined"><h1><?php _e('No view defined for this state','bidxplugin')?></h1></article>
 
 
-<h1>Your inbox</h1>
+            <!-- ************************* application views *********************************** -->
 
-<div id="mail" class="row-fluid">
+            <!-- mail listview like mail, sent, drafts, archived or trash -->
+            <article class="view viewList">
 
-    <!-- Left menu -->
-    <div class="span2 side-menu well">
-        <a class="btn btn-large btn-block btn-info" href="#mail/compose"><?php _e('Compose','bidxplugin')?></a>
-        <a class="btn btn-large btn-block" href="#mail/inbox"><?php _e('Inbox','bidxplugin')?></a>
-        <a class="btn btn-large btn-block" href="#mail/sent"><?php _e('Sent','bidxplugin')?></a>
-<!--         <a class="btn btn-large btn-block" href="#drafts">Drafts</a>
-        <a class="btn btn-large btn-block" href="#archived">Archived</a>
-        <a class="btn btn-large btn-block" href="#trash">Trash</a> -->
-    </div>
+                <!-- Email searchbox  CURRENTLY NO SEARCH SUPPORTED IN API-->
+                <!-- <div class="mail-search text-right">
+                    <div class="control-group small">
+                        <div class="input-append">
+                            <input type="text" placeholder="Search" id="appendedInputButton-01" class="span2">
+                            <button type="button" class="btn btn-small"><span class="fui-search"></span></button>
+                        </div>
+                    </div>
+                </div> -->
 
-    <!-- mail stage: this is the ajax target -->
-    <section class="span10 well mail">
+                <div class="">
 
-        <!-- ************************* utility views *********************************** -->
-        <article class="view viewLoad"><?php _e('Loading...','bidxplugin')?></article>
+                    <!-- TOOLBAR -->
+                    <div class="mail-toolbar">
+                        <div class="check">
+                            <label class="checkbox">
+                                <input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
+                            </label>
+                        </div>
+                        <div class="btn-group">.
+                            <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Delete','bidxplugin')?></a>
+                            <a class="btn btn-small btn-primary" href="/mail/#mail/mark-read/"><?php _e('Mark read','bidxplugin')?></a>
+                            <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Mark unread','bidxplugin')?></a>
+                        </div>
 
-        <article class="view viewError">
-            <h1><?php _e('Error','bidxplugin')?></h1>
-            <span class="errorMsg"></span>
-        </article>
 
-        <article class="view viewUndefined"><h1><?php _e('No view defined for this state','bidxplugin')?></h1></article>
+                    </div>
+                    <form action="">
+                    <!-- MESSAGE LIST -->
+                    <ul class="list media-list ">
+                        <li class="media">
+                            <div class="pull-left check"></div>
+                            <div class="pull-left">
+                                <?php _e('Loading...','bidxplugin')?>
+                            </div>
+                        </li>
 
-
-        <!-- ************************* application views *********************************** -->
-
-        <!-- mail listview like mail, sent, drafts, archived or trash -->
-        <article class="view viewList">
-
-            <!-- Email searchbox  CURRENTLY NO SEARCH SUPPORTED IN API-->
-            <!-- <div class="mail-search text-right">
-                <div class="control-group small">
-                    <div class="input-append">
-                        <input type="text" placeholder="Search" id="appendedInputButton-01" class="span2">
-                        <button type="button" class="btn btn-small"><span class="fui-search"></span></button>
+                    </ul>
+                    </form>
+                    <div class="pagination">
+                        <ul>
+                            <li class="previous"><a class="fui-arrow-left" href="#fakelink"></a></li>
+                            <li class="active"><a href="#fakelink">1</a></li>
+                            <li><a href="#fakelink">2</a></li>
+                            <li><a href="#fakelink">3</a></li>
+                            <li><a href="#fakelink">4</a></li>
+                            <li><a href="#fakelink">5</a></li>
+                            <li><a href="#fakelink">6</a></li>
+                            <li><a href="#fakelink">7</a></li>
+                            <li><a href="#fakelink">8</a></li>
+                            <li><a href="#fakelink">9</a></li>
+                            <li><a href="#fakelink">10</a></li>
+                            <li class="next"><a class="fui-arrow-right" href="#fakelink"></a></li>
+                        </ul>
                     </div>
                 </div>
-            </div> -->
+            </article>
 
-            <div class="">
-
-                <!-- TOOLBAR -->
+            <!-- read view -->
+            <article class="view viewRead">
+                  <!-- TOOLBAR -->
                 <div class="mail-toolbar">
-                    <div class="check">
-                        <label class="checkbox">
-                            <input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
-                        </label>
+                    <div class="btn-group">
+                        <a class="btn btn-small btn-primary" href="#/mail/#mail/reply/"><?php _e('Reply','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary" href="/mail/#mail/forward/"><?php _e('Forward','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary" href="/mail/#mail/%section%/deleteConfirm/"><?php _e('Delete','bidxplugin')?></a>
                     </div>
-                    <div class="btn-group">.
-                        <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Delete','bidxplugin')?></a>
-                        <a class="btn btn-small btn-primary" href="/mail/#mail/mark-read/"><?php _e('Mark read','bidxplugin')?></a>
-                        <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Mark unread','bidxplugin')?></a>
-                    </div>
-
-
                 </div>
-                <form action="">
-                <!-- MESSAGE LIST -->
-                <ul class="list media-list ">
-                    <li class="media">
-                        <div class="pull-left check"></div>
-                        <div class="pull-left">
+
+                    <div class="row-fluid">
+                        <div class="span12 mail-message">
                             <?php _e('Loading...','bidxplugin')?>
                         </div>
-                    </li>
+                    </div>
 
-                </ul>
+
+            </article>
+
+
+            <!-- Compose view -->
+            <article class="view viewCompose">
+
+                <form action="">
+                    <div class="row-fluid">
+                        <div class="controls">
+                            <input type="text" name="contacts" class="bidx-tagsinput defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Recipient')?>">
+                        </div>
+
+                    </div>
+                    <div class="row-fluid">
+                        <div class="input-prepend">
+                            <span class="add-on">Subject</span>
+                            <input id="prependedInput" type="text" name="subject" placeholder="<?php _e('Your subject goes here...','bidxplugin')?>">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <textarea name="content" placeholder="<?php _e('Please type your message here..','bidxplugin')?>"></textarea>
+                        </div>
+                    </div>
+                    <div class="pull-left">
+                        <button type="submit" class="btn btn-primary compose-submit"><?php _e('Send message','bidxplugin')?></button>
+
+                    </div>
+                    <div class="pull-right">
+                        <a href="/mail/#mail/discardConfirm" class="btn btn-primary compose-cancel">
+                            <?php _e('Discard message')?>
+                        </a>
+
+                    </div>
+
                 </form>
-                <div class="pagination">
-                    <ul>
-                        <li class="previous"><a class="fui-arrow-left" href="#fakelink"></a></li>
-                        <li class="active"><a href="#fakelink">1</a></li>
-                        <li><a href="#fakelink">2</a></li>
-                        <li><a href="#fakelink">3</a></li>
-                        <li><a href="#fakelink">4</a></li>
-                        <li><a href="#fakelink">5</a></li>
-                        <li><a href="#fakelink">6</a></li>
-                        <li><a href="#fakelink">7</a></li>
-                        <li><a href="#fakelink">8</a></li>
-                        <li><a href="#fakelink">9</a></li>
-                        <li><a href="#fakelink">10</a></li>
-                        <li class="next"><a class="fui-arrow-right" href="#fakelink"></a></li>
-                    </ul>
-                </div>
-            </div>
-        </article>
+            </article>
 
-        <!-- read view -->
-        <article class="view viewRead">
-              <!-- TOOLBAR -->
-            <div class="mail-toolbar">
-                <div class="btn-group">
-                    <a class="btn btn-small btn-primary" href="#/mail/#mail/reply/"><?php _e('Reply','bidxplugin')?></a>
-                    <a class="btn btn-small btn-primary" href="/mail/#mail/forward/"><?php _e('Forward','bidxplugin')?></a>
-                    <a class="btn btn-small btn-primary" href="/mail/#mail/%section%/deleteConfirm/"><?php _e('Delete','bidxplugin')?></a>
-                </div>
-            </div>
-
-                <div class="row-fluid">
-                    <div class="span12 mail-message">
-                        <?php _e('Loading...','bidxplugin')?>
+            <!--  ************************** MODAL VIEWS ****************************************** -->
+            <article class="modalView modalDeleteConfirm">
+                <!-- Modal -->
+                <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel"><?php _e('Delete message','bidxplugin')?></h3>
                     </div>
-                </div>
-
-
-        </article>
-
-
-        <!-- Compose view -->
-        <article class="view viewCompose">
-
-            <form action="">
-                <div class="row-fluid">
-                    <div class="controls">
-                        <input type="text" name="contacts" class="bidx-tagsinput defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Recipient')?>">
-                    </div>
-
-                </div>
-                <div class="row-fluid">
-                    <div class="input-prepend">
-                        <span class="add-on">Subject</span>
-                        <input id="prependedInput" type="text" name="subject" placeholder="<?php _e('Your subject goes here...','bidxplugin')?>">
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span12">
-                        <textarea name="content" placeholder="<?php _e('Please type your message here..','bidxplugin')?>"></textarea>
-                    </div>
-                </div>
-                <div class="pull-left">
-                    <button type="submit" class="btn btn-primary compose-submit"><?php _e('Send message','bidxplugin')?></button>
-
-                </div>
-                <div class="pull-right">
-                    <a href="/mail/#mail/discardConfirm" class="btn btn-primary compose-cancel">
-                        <?php _e('Discard message')?>
-                    </a>
-
-                </div>
-
-            </form>
-        </article>
-
-        <!--  ************************** MODAL VIEWS ****************************************** -->
-        <article class="modalView modalDeleteConfirm">
-            <!-- Modal -->
-            <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel"><?php _e('Delete message','bidxplugin')?></h3>
-                </div>
-                <div class="modal-body">
-                <p>
-                    <?php _e('You are about to remove this message. Are you sure?','bidxplugin')?>
-                </p>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close','bidxplugin')?></a>
-                    <a class="btn btn-primary" href="/mail/#mail/%section%/delete/"><?php _e('Delete message','bidxplugin')?></a>
-
-                </div>
-            </div>
-        </article>
-
-         <article class="modalView modalDiscardConfirm">
-            <!-- Modal -->
-            <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel"><?php _e('Discard message')?></h3>
-                </div>
-                <div class="modal-body">
+                    <div class="modal-body">
                     <p>
-                        <?php _e('You are about to discard this message. Are you sure?')?>
+                        <?php _e('You are about to remove this message. Are you sure?','bidxplugin')?>
                     </p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close','bidxplugin')?></a>
+                        <a class="btn btn-primary" href="/mail/#mail/%section%/delete/"><?php _e('Delete message','bidxplugin')?></a>
+
+                    </div>
                 </div>
+            </article>
 
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Cancel')?></button>
-                    <a class="btn btn-primary" href="/mail/#mail/inbox"><?php _e('Discard message')?></a>
+             <article class="modalView modalDiscardConfirm">
+                <!-- Modal -->
+                <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel"><?php _e('Discard message')?></h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <?php _e('You are about to discard this message. Are you sure?')?>
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Cancel')?></button>
+                        <a class="btn btn-primary" href="/mail/#mail/inbox"><?php _e('Discard message')?></a>
+                    </div>
+
                 </div>
+            </article>
 
-            </div>
-        </article>
+        </section>
 
-    </section>
-
+    </div>
 </div>
 
 <script type="text/html" id="mailbox-listitem">

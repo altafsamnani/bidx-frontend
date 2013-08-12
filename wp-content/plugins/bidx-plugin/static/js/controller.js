@@ -83,7 +83,7 @@
 
     // Navigate to a certain app (and state within the app)
     //
-    var _navigateToApp = function( toApp, toState, section, id, part )
+    var _navigateToApp = function( toApp, options )
     {
         var differentApp = app !== bidx[ toApp ];
 
@@ -106,7 +106,7 @@
         // Perform a navigate request to the app, might come back with the
         // request for us to update the hash
         //
-        var newHash = app.navigate( toState, section, id, part );
+        var newHash = app.navigate( options );
 
         // Switch the UI to the app
         //
@@ -118,8 +118,15 @@
 
         if ( newHash )
         {
-            router.navigate( newHash );
+            _updateHash( newHash );
         }
+    };
+
+    // Update Hash using Backbone Router
+    //
+    var _updateHash = function ( newHash )
+    {
+        router.navigate( newHash );
     };
 
     // Router for main state
@@ -146,7 +153,6 @@
         ,   'resetpassword':                                    'resetpassword'
 
         ,   'mail(/:section)(/:part1)(/:part2)':                'mail'
-        //,   'mail(/:section)(/:substate)(/:id)':                'mail'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
@@ -159,7 +165,15 @@
 
             state   = "editMember";
 
-            _navigateToApp( "member", "edit", section, id );
+            _navigateToApp
+            (
+                "member"
+            ,   {
+                    requestedState: "edit"
+                ,   section:        section
+                ,   id:             id
+                }
+            );
         }
 
     ,   editEntrepreneur:             function( id, section )
@@ -168,7 +182,15 @@
 
             state       = "editEntrepreneur";
 
-            _navigateToApp( "entrepreneurprofile", "edit", section, id );
+            _navigateToApp
+            (
+                "entrepreneurprofile"
+            ,   {
+                    requestedState: "edit"
+                ,   section:        section
+                ,   id:             id
+                }
+            );
         }
     ,   createEntrepreneur:          function()
         {
@@ -176,7 +198,13 @@
 
             state       = "editEntrepreneur";
 
-            _navigateToApp( "entrepreneurprofile", "create" );
+             _navigateToApp
+            (
+                "entrepreneurprofile"
+            ,   {
+                    requestedState: "create"
+                }
+            );
         }
 
     ,   editInvestor:             function( id, section )
@@ -185,7 +213,16 @@
 
             state       = "editInvestor";
 
-            _navigateToApp( "investorprofile", "edit", section, id );
+            _navigateToApp
+            (
+                "investorprofile"
+            ,   {
+                    requestedState: "edit"
+                ,   section:        section
+                ,   id:             id
+                }
+            );
+
         }
     ,   createInvestor:          function()
         {
@@ -193,7 +230,13 @@
 
             state       = "editInvestor";
 
-            _navigateToApp( "investorprofile", "create" );
+             _navigateToApp
+            (
+                "investorprofile"
+            ,   {
+                    requestedState: "create"
+                }
+            );
         }
 
     ,   editCompany:             function( id, section )
@@ -202,7 +245,15 @@
 
             state       = "editCompany";
 
-            _navigateToApp( "company", "edit", section, id );
+            _navigateToApp
+            (
+                "company"
+            ,   {
+                    requestedState: "edit"
+                ,   section:        section
+                ,   id:             id
+                }
+            );
         }
     ,   createCompany:          function()
         {
@@ -210,7 +261,13 @@
 
             state       = "editCompany";
 
-            _navigateToApp( "company", "create" );
+             _navigateToApp
+            (
+                "company"
+            ,   {
+                    requestedState: "create"
+                }
+            );
         }
 
     ,   editBusinessSummary:    function( id, part, section )
@@ -219,7 +276,32 @@
 
             state   = "editBusinessSummary";
 
-            _navigateToApp( "businessSummary", "edit", section, id, part );
+            _navigateToApp
+            (
+                "businessSummary"
+            ,   {
+                    requestedState: "edit"
+                ,   section:        section
+                ,   id:             id
+                ,   part:           part
+                }
+            );
+        }
+    ,   mail:              function( section, part1, part2 )
+        {
+            bidx.utils.log( "AppRouter::mailInbox", section );
+
+            state = "mail";
+
+            _navigateToApp
+            (
+                "mail"
+            ,   {
+                    section:    section
+                ,   part1:      part1
+                ,   part2:      part2
+                }
+            );
         }
     ,   show:                   function()
         {
@@ -268,69 +350,6 @@
 
             _showMainState( state );
         }
-    //,   mail:              function( section,  id )
-    ,   mail:              function( section, part1, part2 )
-        {
-            /*
-                - section is most of the the time a section, but it COULD be an ID. Part1 and 2 should then be empty
-                - part1 can be substate OR id
-                - part2 is always an id IF part1 is an substate
-
-                Example:
-                    #mail/inbox/deleteConfirm/3412
-                    #mail/inbox/delete/3412
-                    #mail/3433   -> view email
-                    #mail/inbox/3433 -> view email
-                    #mail/compose
-            */
-            bidx.utils.log( "AppRouter::mailInbox", section );
-
-            var id
-            ,   substate
-            ;
-
-            //  little switch statement for states that match the section argument
-            sectionState =
-            {
-                deleteConfirm:       true
-            ,   delete:              true
-            ,   discardConfirm:      true
-
-            };
-
-            //  if section is an ID or part1 is an ID switch to state 'read'
-            if( ( section && section.match( /^\d+$/ ) ) || ( part1 && part1.match( /^\d+$/ ) ) )
-            {
-                //  if section holds the id, transfer its value to id. Otherwise use part1
-                id = ( section && section.match( /^\d+$/ ) ) ? section : part1;
-
-                //  check if the state matches the section value
-                /*if( section && sectionState[ section ] )
-                {
-                    state = section;
-                }*/
-                //else if must be a read on a mailbox (inbox, send etc)
-                //else
-                //{
-                    state = "read";
-                //}
-            }
-            else
-            {
-                if( part1 && sectionState[ part1 ] )
-                {
-                    state = part1;
-                }
-                else {
-                    state = section;
-                }
-                id = part2;
-
-            }
-
-            _navigateToApp( "mail", state, section, id);
-
-        }
     } );
 
     router = new AppRouter();
@@ -358,7 +377,7 @@
         {
             return getGroupIds();
         }
-
+    ,   updateHash: _updateHash
     };
 
 

@@ -29,6 +29,8 @@
     ,   company
     ,   companyId
     ,   companyProfileId
+    ,   state
+
     ,   bidx            = window.bidx
     ,   snippets        = {}
 
@@ -739,30 +741,29 @@
 
     // ROUTER
     //
-    var state;
 
-    var navigate = function( requestedState, section, id, cb )
+    var navigate = function( options )
     {
-        switch( requestedState )
+        switch( options.requestedState )
         {
             case "edit":
-                bidx.utils.log( "EditCompany::AppRouter::edit", id, section );
+                bidx.utils.log( "EditCompany::AppRouter::edit", options.id, options.section );
 
                 var updateHash      = false
-                ,   isId            = ( id && id.match( /^\d+$/ ) )
+                ,   isId            = ( options.id && options.id.match( /^\d+$/ ) )
                 ;
 
-                if ( id && !isId )
+                if ( options.id && !isId )
                 {
-                    section = id;
-                    id      = companyId;
+                    options.section = options.id;
+                    options.id      = companyId;
 
                     updateHash = true;
                 }
 
-                if ( !( state === "edit" && id === companyId ))
+                if ( !( state === "edit" && options.id === companyId ))
                 {
-                    companyId        = id;
+                    companyId        = options.id;
                     state           = "edit";
 
                     $element.show();
@@ -773,11 +774,11 @@
 
                 if ( updateHash )
                 {
-                    var hash = "editCompany/" + id;
+                    var hash = "editCompany/" + options.id;
 
-                    if ( section )
+                    if ( options.section )
                     {
-                         hash += "/" + section;
+                         hash += "/" + options.section;
                     }
 
                     return hash;

@@ -22,6 +22,7 @@
     ,   member
     ,   memberId
     ,   entrepreneurProfileId
+    ,   state
     ,   bidx            = window.bidx
     ,   snippets        = {}
 
@@ -602,24 +603,22 @@
 
     // ROUTER
     //
-    var state;
 
-
-    var navigate = function( requestedState, section, id, cb )
+    var navigate = function( options )
     {
-        switch ( requestedState )
+        switch ( options.requestedState )
         {
             case "edit":
-                bidx.utils.log( "EditEntrepreneur::AppRouter::edit", id, section );
+                bidx.utils.log( "EditEntrepreneur::AppRouter::edit", options.id, options.section );
 
                 var updateHash      = false
-                ,   isId            = ( id && id.match( /^\d+$/ ) )
+                ,   isId            = ( options.id && options.id.match( /^\d+$/ ) )
                 ;
 
-                if ( id && !isId )
+                if ( options.id && !isId )
                 {
-                    section = id;
-                    id      = memberId;
+                    options.section = options.id;
+                    options.id      = memberId;
 
                     updateHash = true;
                 }
@@ -628,14 +627,14 @@
                 //
                 if ( !memberId && !isId )
                 {
-                    id = bidx.utils.getValue( bidxConfig, "session.id" );
+                    options.id = bidx.utils.getValue( bidxConfig, "session.id" );
 
                     updateHash = true;
                 }
 
-                if ( !( state === "edit" && id === memberId ) )
+                if ( !( state === "edit" && options.id === memberId ) )
                 {
-                    memberId                = id;
+                    memberId                = options.id;
                     entrepreneurProfileId   = null;
                     state                   = "edit";
 
@@ -647,11 +646,11 @@
 
                 if ( updateHash )
                 {
-                    var hash = "editMember/" + id;
+                    var hash = "editMember/" + options.id;
 
-                    if ( section )
+                    if ( options.section )
                     {
-                         hash += "/" + section;
+                         hash += "/" + options.section;
                     }
 
                     return hash;

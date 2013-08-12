@@ -9,6 +9,7 @@
     ,   businessSummary
     ,   businessSummaryId
 
+    ,   state
     ,   bidx                        = window.bidx
     ,   snippets                    = {}
     ;
@@ -114,33 +115,33 @@
 
     // ROUTER
     //
-    var state;
 
 
-    var navigate = function( requestedState, section, id, part )
+    var navigate = function( options )
     {
-        bidx.utils.log("state", requestedState);
-        switch ( requestedState )
+        bidx.utils.log("NAVIGATE OPTIONS", options );
+
+        switch ( options.requestedState )
         {
             case "edit":
-                bidx.utils.log( "EditBusinessSummary::AppRouter::edit", id, part, section );
+                bidx.utils.log( "EditBusinessSummary::AppRouter::edit", options.id, options.part, options.section );
 
                 var newBusinessSummaryId
                 ,   splatItems
                 ,   updateHash      = false
-                ,   isId            = ( id && id.match( /^\d+$/ ) )
+                ,   isId            = ( options.id && options.id.match( /^\d+$/ ) )
                 ;
 
                 // TODO: implement the handling of parts
-                if ( !part )
+                if ( !options.part )
                 {
-                    part = "BusinessSummary";
+                    options.part = "BusinessSummary";
                 }
 
-                if ( id && !isId )
+                if ( options.id && !isId )
                 {
-                    section = id;
-                    id      = businessSummaryId;
+                    options.section = options.id;
+                    options.id      = businessSummaryId;
 
                     updateHash = true;
                 }
@@ -149,14 +150,14 @@
                 //
                 if ( !businessSummaryId && !isId )
                 {
-                    id = bidx.utils.getValue( bidxConfig, "context.bidxBusinessSummary" );
+                    options.id = bidx.utils.getValue( bidxConfig, "context.bidxBusinessSummary" );
 
                     updateHash = true;
                 }
 
-                if ( !( state === "edit" && id === businessSummaryId ) )
+                if ( !( state === "edit" && options.id === businessSummaryId ) )
                 {
-                    businessSummaryId   = id;
+                    businessSummaryId   = options.id;
                     state               = "edit";
 
                     $element.show();
@@ -167,11 +168,11 @@
 
                 if ( updateHash )
                 {
-                    var hash = "editBusinessSummary/" + id + "/" + part;
+                    var hash = "editBusinessSummary/" + options.id + "/" + options.part;
 
-                    if ( section )
+                    if ( options.section )
                     {
-                         hash += "/" + section;
+                         hash += "/" + options.section;
                     }
 
                     return hash;
@@ -179,7 +180,7 @@
             break;
 
             case "financialDetails":
-                _showView( requestedState );
+                _showView( options.requestedState );
             break;
         }
     };
