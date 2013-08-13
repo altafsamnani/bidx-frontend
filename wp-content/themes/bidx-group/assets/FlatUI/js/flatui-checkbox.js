@@ -118,30 +118,35 @@
     };
 
 
- /* CHECKBOX NO CONFLICT
-  * ================== */
+    /* CHECKBOX NO CONFLICT
+    * ================== */
 
-  $.fn.checkbox.noConflict = function () {
-    $.fn.checkbox = old;
-    return this;
-  };
+    $.fn.checkbox.noConflict = function () {
+        $.fn.checkbox = old;
+        return this;
+    };
 
 
- /* CHECKBOX DATA-API
-  * =============== */
+    /* CHECKBOX DATA-API
+    * =============== */
 
-  $(document).on('click.checkbox.data-api', '[data-toggle^=checkbox], .checkbox', function (e) {
-    var $checkbox = $(e.target);
-    e && e.preventDefault() && e.stopPropagation();
-    if (!$checkbox.hasClass('checkbox')) $checkbox = $checkbox.closest('.checkbox');
-    $checkbox.find(':checkbox').checkbox('toggle');
-  });
+    $(document).on('click.checkbox.data-api', '[data-toggle^=checkbox], .checkbox', function ( e )
+    {
+        var $checkbox = $(e.target);
+        e && e.preventDefault() && e.stopPropagation();
+        if( !$checkbox.hasClass( 'checkbox') )
+        {
+            $checkbox = $checkbox.closest( '.checkbox' );
+        }
+        $checkbox.find( ':checkbox' ).checkbox( 'toggle' );
+    } );
 
-  $(window).on('load', function () {
-    $('[data-toggle="checkbox"]').each(function () {
-      var $checkbox = $(this);
-      $checkbox.checkbox();
+    $( window ).on( 'load', function()
+    {
+        $('[data-toggle="checkbox"]').each( function () {
+            var $checkbox = $( this );
+            $checkbox.checkbox();
+        } );
     });
-  });
 
 }(window.jQuery);
