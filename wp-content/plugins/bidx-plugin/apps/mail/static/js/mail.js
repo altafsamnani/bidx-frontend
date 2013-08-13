@@ -357,12 +357,32 @@
                                     }
                                 });
 
+                                element.find( ":checkbox" ).data( "id", item.id );
                                 //add mail element to list
                                 $list.append( element );
                             });
 
                             //load checkbox plugin on element
-                            $list.find( '[data-toggle="checkbox"]' ).checkbox();
+                            $list.find( '[data-toggle="checkbox"]' ).checkbox( 'change', function()
+                            {
+                                var $this=$(this);
+
+                                if( $this.attr( "checked" ) )
+                                {
+                                    if( !window.bidx.mail.listItems[ $this.data( "id" ) ])
+                                    {
+                                        window.bidx.mail.listItems[ $this.data( "id" ) ] = true ;
+                                    }
+                                }
+                                else
+                                {
+                                    if( window.bidx.mail.listItems[ $this.data( "id" ) ] )
+                                    {
+                                    delete window.bidx.mail.listItems[ $this.data( "id" ) ];
+                                    }
+                                }
+
+                            } );
 
                             //bind event to change all checkboxes from toolbar checkbox
                             $view.find( ".messagesCheckall" ).change( function()
@@ -371,9 +391,28 @@
                                 $list.find( ":checkbox" ).each( function()
                                 {
                                     var $this = $(this);
-                                    $this.checkbox( masterCheck ? 'check' : 'uncheck' );
-                                });
-                            });
+                                    if( masterCheck )
+                                    {
+                                        $this.checkbox( 'check' );
+                                        if( window.bidx.mail.listItems )
+                                        {
+
+                                            if( !window.bidx.mail.listItems[ $this.data( "id" ) ])
+                                            {
+                                                window.bidx.mail.listItems[ $this.data( "id" ) ] = true ;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        $this.checkbox( 'uncheck' );
+                                        if( window.bidx.mail.listItems[ $this.data( "id" ) ] )
+                                        {
+                                            delete window.bidx.mail.listItems[ $this.data( "id" ) ];
+                                        }
+                                    }
+                                } );
+                            } );
                         }
                         else
                         {
@@ -699,6 +738,7 @@
         navigate:               navigate
     ,   $element:               $element
     ,   getMembers:             getMembers
+    ,   listItems:              {} //storage for selection of emails in listview. I chose object because so that I can check if key exists
     };
 
 

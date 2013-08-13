@@ -50,9 +50,9 @@
                             </label>
                         </div>
                         <div class="btn-group">.
-                            <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Delete','bidxplugin')?></a>
+                            <a class="btn btn-small btn-primary" href="/mail/#mail/delete-multiple/"><?php _e('Delete','bidxplugin')?></a>
                             <a class="btn btn-small btn-primary" href="/mail/#mail/mark-read/"><?php _e('Mark read','bidxplugin')?></a>
-                            <a class="btn btn-small btn-primary" href="#fakelink"><?php _e('Mark unread','bidxplugin')?></a>
+                            <a class="btn btn-small btn-primary" href="/mail/#mail/mark-unread/"><?php _e('Mark unread','bidxplugin')?></a>
                         </div>
 
 
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                     <div class="row-fluid">
-                        <div pclass="input-prepend">
+                        <div class="input-prepend">
                             <span class="add-on">Subject</span>
                             <input type="text" name="subject" placeholder="<?php _e('Your subject goes here...','bidxplugin')?>">
                         </div>
@@ -195,10 +195,10 @@
 
 <script type="text/html" id="mailbox-listitem">
 <!--
-<li class="media">
+<li class="media" >
     <div class="pull-left check">
         <label class="checkbox">
-            <input type="checkbox" data-toggle="checkbox"  value="">
+            <input type="checkbox" data-toggle="checkbox"  value="" data-id="">
         </label>
     </div>
     <a class="pull-left" href="#">

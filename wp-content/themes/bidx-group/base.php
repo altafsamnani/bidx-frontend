@@ -35,5 +35,6 @@
           get_template_part('templates/footer');
     }
 ?>
+<!-- W3TC-include-js-head -->
 </body>
 </html>

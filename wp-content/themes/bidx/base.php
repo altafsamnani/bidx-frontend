@@ -13,8 +13,7 @@
   <?php include roots_template_path(); ?><!-- includes page -->
       <div id="push"></div>
 </div><!-- sticky footer -->
-  <?php get_template_part('templates/footer'); ?>  
-  
-  
+  <?php get_template_part('templates/footer'); ?>
+<!-- W3TC-include-js-head -->
 </body>
 </html>
