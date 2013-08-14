@@ -264,9 +264,6 @@
                         </div>
                     </div>
 
-                    <div class="row-fluid">
-                    </div>
-
                     <h4><?php _e('Investment size','bidxplugin'); ?></h4>
 
                     <div class="row-fluid">
@@ -276,7 +273,7 @@
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on">$</span>
-                                        <input type="number" name="minInvestment" placeholder="<?php _e('Minimal investment','bidxplugin'); ?>" min="0">
+                                        <input type="text" name="minInvestment" placeholder="<?php _e('Minimal investment','bidxplugin'); ?>" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -288,7 +285,21 @@
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on">$</span>
-                                        <input type="number" name="maxInvestment" placeholder="<?php _e('Maximum investment','bidxplugin'); ?>" min="0">
+                                        <input type="text" name="maxInvestment" placeholder="<?php _e('Maximum investment','bidxplugin'); ?>" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group formfield">
+                                <label class="control-label"><?php _e('Total investment in last year','bidxplugin'); ?></label>
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <span class="add-on">$</span>
+                                        <input type="text" name="totalInvestment" placeholder="<?php _e('Total investment','bidxplugin'); ?>" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +329,7 @@
                             <div class="control-group formfield">
                                 <label class="control-label"><?php _e('Number of investments in the last 12 months','bidxplugin'); ?></label>
                                 <div class="controls">
-                                    <input type="number" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
+                                    <input type="text" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -331,7 +342,7 @@
                                 <div class="controls">
                                     <div class="input-prepend">
                                         <span class="add-on">$</span>
-                                        <input type="number" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
+                                        <input type="text" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -410,7 +421,7 @@
                 <div class="controls">
                     <div class="input-prepend">
                         <span class="add-on">$</span>
-                        <input type="number" name="investment" placeholder="<?php _e('Amount invested','bidxplugin'); ?>">
+                        <input type="text" name="investment" placeholder="<?php _e('Amount invested','bidxplugin'); ?>">
                     </div>
                 </div>
             </div>
