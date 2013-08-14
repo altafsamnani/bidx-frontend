@@ -991,6 +991,33 @@
                 {
                     tagsinputRequired:      true
                 }
+            ,   "minInvestment":
+                {
+                    monetaryAmount:         true
+                ,   max:                    function() { return $editForm.find( "[name='maxInvestment']" ).val(); }
+                }
+            ,   "maxInvestment":
+                {
+                    monetaryAmount:         true
+                ,   min:                    function() { return $editForm.find( "[name='minInvestment']" ).val(); }
+                }
+            ,   "focusIndustry":
+                {
+                    tagsinputRequired:      true
+                }
+            ,   "socialImpact":
+                {
+                    tagsinputRequired:      true
+                }
+            ,   "focusEnvImpact":
+                {
+                    tagsinputRequired:      true
+                }
+            ,   "totalInvestment":
+                {
+                    monetaryAmount:         true
+                }
+
             }
         ,   messages:
             {
