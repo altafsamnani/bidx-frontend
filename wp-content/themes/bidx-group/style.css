@@ -260,7 +260,7 @@ input[type='text'].bidx-tagsinput.enclosed {
 
     white-space: normal;
     text-indent: 0;
-    width: 90.2%;
+    width: 100%;
     display: inline-block;
     overflow-y: auto;
 
@@ -284,6 +284,7 @@ input[type='text'].bidx-tagsinput.enclosed {
     -webkit-border-radius: 0 6px 6px 0;
     -moz-border-radius: 0 6px 6px 0;
     border-radius: 0 6px 6px 0;
+    width: 90.2%;
 }
 
 
