@@ -910,7 +910,8 @@
             }
         } );
 
-
+        // Instantiate file upload
+        //
         $editForm.find( "[data-type=fileUpload]" ).fileUpload( { "parentForm": $editForm[0] });
 
         // Fetch the member
