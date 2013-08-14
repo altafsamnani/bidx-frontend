@@ -1,9 +1,20 @@
+<?php
+
+$sessionData = BidxCommon::$staticSession;
+$entities = $sessionData->data->wp->entities;
+
+$authenticated=false;
+if ($sessionData->authenticated == 'true') {
+  $authenticated=true;
+}
+
+?>
 <div class="container outer-content-container">
 	<article class="bidx type-bidx status-publish hentry">
         <?php echo bidx_get_status_msgs(); ?>
 	    <header>
             <div class="row-fluid">
-                <div class="span<?php echo is_user_logged_in() ? '9' : '12'; ?>">
+                <div class="span<?php echo $authenticated ? '9' : '12'; ?>">
         			<div id="myCarousel" class="carousel slide">
         			<?php
         						$images = get_children(
@@ -75,12 +86,10 @@
         			</div><!-- // carousel -->
                 </div><!-- span -->
 <?php
-    if ( is_user_logged_in() ) {
+    if ( $authenticated ) {
 ?>
                 <div class="span3">
 <?php
-    $sessionData = BidxCommon::$staticSession;
-    $entities = $sessionData->data->wp->entities;
 
     // Create investor
     //
@@ -128,7 +137,7 @@
             </div><!-- row -->
 	    </header>
 <?php
-    if ( ! is_user_logged_in() ) {
+    if ( ! $authenticated ) {
 ?>
 	    <div class="entry-content">
 	    	<?php echo do_shortcode( '[bidx app="group" view="group-intro"]' ); ?>
