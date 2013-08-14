@@ -122,16 +122,6 @@
         ,   inputNamePrefix = "previousBusiness[" + index + "]"
         ;
 
-        // Update all the input elements and prefix the names with the right index
-        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
-        //
-        $previousBusiness.find( "input, select, textarea" ).each( function( )
-        {
-            var $input = $( this );
-
-            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
-        } );
-
         if ( previousBusiness )
         {
             $.each( fields.previousBusiness, function( j, f )
@@ -147,7 +137,39 @@
             } );
         }
 
+        // Add it to the DOM
+        //
         $previousBusinessContainer.reflowrower( "addItem", $previousBusiness );
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $previousBusiness.find( "input, select, textarea" ).each( function( )
+        {
+            var $input          = $( this )
+            ,   baseName        = $input.prop( "name" )
+            ,   newName         = inputNamePrefix + "." + baseName
+            ;
+
+            $input.prop( "name", newName );
+
+            // Notify the form validator of the new elements
+            // Use 'orgName' since that is consistent over each itteration
+            //
+            switch ( baseName )
+            {
+                case "webSite":
+                    $input.rules( "add",
+                    {
+                        url:                    true
+                    } );
+                break;
+
+                default:
+                    // NOOP
+            }
+        } );
+
     };
 
     // Add an empty previous business block
@@ -419,6 +441,18 @@
         {
             rules:
             {
+                "summary":
+                {
+                    required:                   true
+                }
+            ,   "focusIndustry":
+                {
+                    tagsinputRequired:          true
+                }
+            ,   "prevRunBusiness":
+                {
+                    required:                   true
+                }
             }
         ,   messages:
             {
