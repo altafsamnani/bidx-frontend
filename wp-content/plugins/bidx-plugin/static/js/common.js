@@ -471,7 +471,10 @@
     //
     $( "input[data-type=date]" ).datepicker(
     {
-        "dateFormat":                     "d MM yy"
+        dateFormat:             "d MM yy"
+    ,   changeYear:             true
+    ,   changeMonth:            true
+    ,   yearRange:              "-100:+3"
     } );
 
 } ( jQuery ));
