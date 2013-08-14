@@ -21,4 +21,5 @@
     <Item value="frmInvalidLinkedInUsername">Please enter a valid LinkedIn username</Item>
     <Item value="frmInvalidFacebookUsername">Please enter a valid Facebook username</Item>
     <Item value="frmInvalidTwitterUsername">Please enter a valid Twitter username</Item>
+    <Item value="frmInvalidUrl">Please enter a valid url</Item>
 </I18N>

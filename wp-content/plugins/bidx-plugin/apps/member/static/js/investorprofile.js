@@ -887,37 +887,62 @@
 
         // Setup form
         //
-        $editForm.form(
+        var $validator = $editForm.validate(
         {
-            errorClass:     'error'
-        ,   enablePlugins:  [ 'date', 'fileUpload', 'location' ]
-        } );
-
-        $editForm.submit( function( e )
-        {
-            e.preventDefault();
-
-            var valid = $editForm.form( "validateForm" );
-
-            if ( !valid || $btnSave.hasClass( "disabled" ) )
+            rules:
             {
-                return;
-            }
-
-            $btnSave.addClass( "disabled" );
-            $btnCancel.addClass( "disabled" );
-
-            _save(
-            {
-                error: function()
+                "institutionWebsite":
                 {
-                    alert( "Something went wrong during save" );
-
-                    $btnSave.removeClass( "disabled" );
-                    $btnCancel.removeClass( "disabled" );
+                    url:                    true
                 }
-            } );
+            }
+        ,   messages:
+            {
+                "institutionWebsite":
+                {
+                    url:                    bidx.i18n.i( "frmInvalidUrl" )
+                }
+            }
+        ,   submitHandler: function( e )
+            {
+                if ( $btnSave.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                $btnSave.addClass( "disabled" );
+                $btnCancel.addClass( "disabled" );
+
+                _save(
+                {
+                    error: function( jqXhr )
+                    {
+                        var response;
+
+                        try
+                        {
+                            // Not really needed for now, but just have it on the screen, k thx bye
+                            //
+                            response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                        }
+                        catch ( e )
+                        {
+                            bidx.utils.error( "problem parsing error response from investorProfile save" );
+                        }
+
+                        bidx.common.notifyError( "Something went wrong during save: " + response );
+
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+                    }
+                } );
+            }
         } );
+
+        // Instantiate file upload and location plugin
+        //
+        $editForm.find( "[data-type=fileUpload]" ).fileUpload( { "parentForm": $editForm[0] });
+        $editForm.find( "[data-type=location]"   ).location({});
 
         if ( state === "create" )
         {
