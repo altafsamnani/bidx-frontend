@@ -30,4 +30,6 @@
     <Item value="frmInvalidUrl">Please enter a valid url</Item>
     <Item value="frmInvalidMonetaryAmount">Please enter a valid amount</Item>
     <Item value="frmInvalidMinItems">Please give at least {0} items</Item>
+    <Item value="frmInvalidMin">Please enter a value greater than or equal to {0}</Item>
+    <Item value="frmInvalidMax">Please enter a value less than or equal to {0}</Item>
 </I18N>
