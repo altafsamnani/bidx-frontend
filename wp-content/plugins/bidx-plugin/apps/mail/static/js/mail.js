@@ -6,12 +6,13 @@
     ,   $modals                     = $element.find( ".modalView" )
     ,   $modal
     ,   $composeForm                = $views.filter( ".viewCompose" ).find( "form" )
-    ,   $btnSubmit                = $composeForm.find(".compose-submit")
-    ,   $btnCancel                = $composeForm.find(".compose-cancel")
+    ,   $btnSubmit                  = $composeForm.find(".compose-submit")
+    ,   $btnCancel                  = $composeForm.find(".compose-cancel")
     ,   toolbar                     = {}
     ,   defaultView                 = "inbox"
     ,   bidx                        = window.bidx
     ,   message                     = {}
+    ,   listItems                   = {}
     ;
 
 
@@ -358,27 +359,30 @@
                                 });
 
                                 element.find( ":checkbox" ).data( "id", item.id );
-                                //add mail element to list
+                                //  add mail element to list
                                 $list.append( element );
                             });
 
-                            //load checkbox plugin on element
-                            $list.find( '[data-toggle="checkbox"]' ).checkbox( 'change', function()
+                            //  load checkbox plugin on element
+                            var $checkboxes = $list.find( '[data-toggle="checkbox"]' );
+                            $checkboxes.checkbox();
+                            //  set change event which add/removes the checkbox ID in the listElements variable
+                            $checkboxes.bind( 'change', function()
                             {
                                 var $this=$(this);
 
                                 if( $this.attr( "checked" ) )
                                 {
-                                    if( !window.bidx.mail.listItems[ $this.data( "id" ) ])
+                                    if( !listItems[ $this.data( "id" ) ])
                                     {
-                                        window.bidx.mail.listItems[ $this.data( "id" ) ] = true ;
+                                        listItems[ $this.data( "id" ) ] = true ;
                                     }
                                 }
                                 else
                                 {
-                                    if( window.bidx.mail.listItems[ $this.data( "id" ) ] )
+                                    if( listItems[ $this.data( "id" ) ] )
                                     {
-                                    delete window.bidx.mail.listItems[ $this.data( "id" ) ];
+                                    delete listItems[ $this.data( "id" ) ];
                                     }
                                 }
 
@@ -394,21 +398,21 @@
                                     if( masterCheck )
                                     {
                                         $this.checkbox( 'check' );
-                                        if( window.bidx.mail.listItems )
+                                        if( listItems )
                                         {
 
-                                            if( !window.bidx.mail.listItems[ $this.data( "id" ) ])
+                                            if( !listItems[ $this.data( "id" ) ])
                                             {
-                                                window.bidx.mail.listItems[ $this.data( "id" ) ] = true ;
+                                                listItems[ $this.data( "id" ) ] = true ;
                                             }
                                         }
                                     }
                                     else
                                     {
                                         $this.checkbox( 'uncheck' );
-                                        if( window.bidx.mail.listItems[ $this.data( "id" ) ] )
+                                        if( listItems[ $this.data( "id" ) ] )
                                         {
-                                            delete window.bidx.mail.listItems[ $this.data( "id" ) ];
+                                            delete listItems[ $this.data( "id" ) ];
                                         }
                                     }
                                 } );
@@ -441,6 +445,15 @@
     //  delete email
     var _doDelete = function ( options )
     {
+        var ids;
+        if( options.id )
+        {
+            ids = options.id;
+        }
+        else if( !$.isEmptyObject( window.bidx.mail.listItems ) )
+        {
+
+        }
         bidx.api.call(
              "mail.delete"
         ,   {
@@ -608,7 +621,8 @@
 
             }
 
-
+bidx.utils.log("Section", section);
+bidx.utils.log("id", id);
 
 
         switch ( section )
@@ -660,6 +674,7 @@
                 {
                     unbindHide: true
                 } );
+
                 _doDelete(
                 {
                     view:   "deleteConfirm"
@@ -668,6 +683,20 @@
                 } );
 
             break;
+
+
+            case "delete":
+
+                _doDelete(
+                {
+                    view:   "deleteConfirm"
+                ,   id:     id
+                ,   section: section
+                } );
+
+            break;
+
+
 
             case "inbox":
             case "sent":
@@ -681,7 +710,8 @@
 
                 _showView( "load" );
 
-                if( section === "sent" ) {
+                if( section === "sent" )
+                {
                     type = "SENT_EMAILS";
 
                 }
@@ -738,7 +768,12 @@
         navigate:               navigate
     ,   $element:               $element
     ,   getMembers:             getMembers
-    ,   listItems:              {} //storage for selection of emails in listview. I chose object because so that I can check if key exists
+
+    // START DEV API
+    //
+    ,   listItems:              listItems //storage for selection of emails in listview. I chose object because so that I can check if key exists
+    // END DEV API
+    //
     };
 
 
