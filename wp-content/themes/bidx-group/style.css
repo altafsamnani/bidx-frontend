@@ -831,6 +831,10 @@ form {
 		text-align: left;
 	}
 
+    select.error, input.error, textarea.error {
+        display: inline-block;
+    }
+
 	.error_separate {
 		background-color: #DBD9D9;
 		border: 1px solid #FFA8A8;
