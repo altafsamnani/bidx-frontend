@@ -556,6 +556,12 @@
         return ( c ? c : ".view" ) + v.charAt( 0 ).toUpperCase() + v.substr( 1 );
     };
 
+    var generateId = function()
+    {
+        return "bidx" + new Date().getTime() + "X" + Math.floor( Math.random() * 10000000 );
+    };
+
+
     // Logger functions
     //
     var log = function()
@@ -606,6 +612,7 @@
     ,   setNestedStructure:         setNestedStructure
     ,   removeIdFromHash:           removeIdFromHash
     ,   getViewName:                getViewName
+    ,   generateId:                 generateId
 
     ,   log:                        log
     ,   warn:                       warn
