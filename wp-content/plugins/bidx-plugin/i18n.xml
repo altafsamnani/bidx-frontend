@@ -28,4 +28,6 @@
     <Item value="frmInvalidFacebookUsername">Please enter a valid Facebook username</Item>
     <Item value="frmInvalidTwitterUsername">Please enter a valid Twitter username</Item>
     <Item value="frmInvalidUrl">Please enter a valid url</Item>
+    <Item value="frmInvalidMonetaryAmount">Please enter a valid amount</Item>
+    <Item value="frmInvalidMinItems">Please give at least {0} items</Item>
 </I18N>
