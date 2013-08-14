@@ -368,6 +368,8 @@
     // do not have to redefine them everywhere. Only app specific form validations are then
     // needed to be set when setting up form validation for that app.
     //
+    // wrap the ones that require variable replacement in $.validator.format()
+    //
     bidx.i18n.load( [ "__global" ] )
         .done( function()
         {
@@ -382,11 +384,15 @@
             ,   twitterUsername:        bidx.i18n.i( "frmInvalidTwitterUsername" )
             ,   url:                    bidx.i18n.i( "frmInvalidUrl" )
             ,   monetaryAmount:         bidx.i18n.i( "frmInvalidMonetaryAmount" )
+            ,   min:                    $.validator.format( bidx.i18n.i( "frmInvalidMin" ))
+            ,   max:                    $.validator.format( bidx.i18n.i( "frmInvalidMax" ))
 
                 // bidx-tagsinput
                 //
             ,   tagsinputRequired:      bidx.i18n.i( "frmFieldRequired" )
-            ,   tagsinputMinItems:      bidx.i18n.i( "frmInvalidMinItems" )
+            ,   tagsinputMinItems:      $.validator.format( bidx.i18n.i( "frmInvalidMinItems" ) )
+
+
             } );
         } );
 
