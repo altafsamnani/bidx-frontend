@@ -61,6 +61,29 @@
 
     }, "Not a valid Twitter username" );
 
+    // Alias number for now to validate monetary amount
+    //
+    $.validator.addMethod( "monetaryAmount", $.validator.methods.number
+    , "Not a valid monetary amount" );
 
+    // Since bidx-tagsinput is special input control we cannot simply say "required"
+    // This requires special handling
+    //
+    $.validator.addMethod( "tagsinputRequired", function( value, element, param )
+    {
+        var values = $( element ).tagsinput( "getValues" );
+
+        return !!values.length;
+    } );
+
+    // Since bidx-tagsinput is special input control we cannot simply say "min" or something
+    // This requires special handling
+    //
+    $.validator.addMethod( "tagsinputMinItems", function( value, element, param )
+    {
+        var values = $( element ).tagsinput( "getValues" );
+
+        return values.length > param;
+    } );
 
 } ( jQuery ) );
