@@ -184,16 +184,8 @@
 
         $previousInvestment.data( "bidxData", previousInvestment );
 
-        // Update all the input elements and prefix the names with the right index
-        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        // Are we adding an investment with data or just an empty item?
         //
-        $previousInvestment.find( "input, select, textarea" ).each( function( )
-        {
-            var $input = $( this );
-
-            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
-        } );
-
         if ( previousInvestment )
         {
             $.each( fields.previousInvestments, function( j, f )
@@ -209,7 +201,52 @@
             } );
         }
 
+        // Add it to the DOM!
+        //
         $previousInvestmentContainer.reflowrower( "addItem", $previousInvestment );
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $previousInvestment.find( "input, select, textarea" ).each( function( )
+        {
+            var $input          = $( this )
+            ,   baseName        = $input.prop( "name" )
+            ,   newName         = inputNamePrefix + "." + baseName
+            ;
+
+            $input.prop( "name", newName );
+
+            // Notify the form validator of the new elements
+            // Use 'orgName' since that is consistent over each itteration
+            //
+            switch ( baseName )
+            {
+                case "companyName":
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    } );
+                break;
+
+                case "companyWebsite":
+                    $input.rules( "add",
+                    {
+                        url:                    true
+                    } );
+                break;
+
+                case "investment":
+                    $input.rules( "add",
+                    {
+                        monetaryAmount:         true
+                    } );
+                break;
+
+                default:
+                    // NOOP
+            }
+        } );
     };
 
     // Add an empty previous business block
@@ -236,16 +273,8 @@
 
         $reference.data( "bidxData", reference );
 
-        // Update all the input elements and prefix the names with the right index
-        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        // Was data provided? (if not, it's just adding an empty reference block)
         //
-        $reference.find( "input, select, textarea" ).each( function( )
-        {
-            var $input = $( this );
-
-            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
-        } );
-
         if ( reference )
         {
             $.each( fields.references, function( j, f )
@@ -254,7 +283,53 @@
             } );
         }
 
+        // Add the reference to the DOM, via the reflowrower
+        //
         $referencesContainer.reflowrower( "addItem", $reference );
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $reference.find( "input, select, textarea" ).each( function( )
+        {
+            var $input          = $( this )
+            ,   baseName        = $input.prop( "name" )
+            ,   newName         = inputNamePrefix + "." + baseName
+            ;
+
+            $input.prop( "name", newName );
+
+            // Notify the form validator of the new elements
+            // Use 'orgName' since that is consistent over each itteration
+            //
+            switch ( baseName )
+            {
+                case "firstName":
+                case "lastName":
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    } );
+                break;
+
+                case "emailAddress":
+                    $input.rules( "add",
+                    {
+                        email:                  true
+                    } );
+                break;
+
+                case "linkedIn":
+                    $input.rules( "add",
+                    {
+                        linkedInUsername:       true
+                    } );
+                break;
+
+                default:
+                    // NOOP
+            }
+        } );
 
         function _setElementValue( data, field, prefix )
         {
@@ -889,19 +964,38 @@
         //
         var $validator = $editForm.validate(
         {
-            rules:
+            debug: true
+        ,   rules:
             {
-                "institutionWebsite":
+                "summary":
+                {
+                    required:               true
+                }
+            ,   "investsForInst":
+                {
+                    required:               true
+                }
+            ,   "institutionWebsite":
                 {
                     url:                    true
+                }
+            ,   "institutionAddress.cityTown":
+                {
+                    required:               function() { return $editForm.find( "[name='investsForInst']" ).val() === "true"; }
+                }
+            ,   "institutionAddress.country":
+                {
+                    required:               function() { return $editForm.find( "[name='investsForInst']" ).val() === "true"; }
+                }
+            ,   "investmentType":
+                {
+                    tagsinputRequired:      true
                 }
             }
         ,   messages:
             {
-                "institutionWebsite":
-                {
-                    url:                    bidx.i18n.i( "frmInvalidUrl" )
-                }
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
             }
         ,   submitHandler: function( e )
             {
@@ -1154,7 +1248,13 @@
                     $element.show();
                     _showView( "load" );
 
-                    _init();
+                    // Make sure the i18n translations for this app are available before initing
+                    //
+                    bidx.i18n.load( [ "__global", appName ] )
+                        .done( function()
+                        {
+                            _init();
+                        } );
                 }
 
                 if ( updateHash )
