@@ -381,8 +381,47 @@
             ,   facebookUsername:       bidx.i18n.i( "frmInvalidFacebookUsername" )
             ,   twitterUsername:        bidx.i18n.i( "frmInvalidTwitterUsername" )
             ,   url:                    bidx.i18n.i( "frmInvalidUrl" )
+            ,   monetaryAmount:         bidx.i18n.i( "frmInvalidMonetaryAmount" )
+
+                // bidx-tagsinput
+                //
+            ,   tagsinputRequired:      bidx.i18n.i( "frmFieldRequired" )
+            ,   tagsinputMinItems:      bidx.i18n.i( "frmInvalidMinItems" )
             } );
         } );
+
+    // Define validator defaults
+    //
+    $.validator.setDefaults(
+    {
+        debug:              true
+    ,   errorPlacement:     function( $error, $element )
+        {
+            var inserted = false
+            ,   $container
+            ;
+
+            // When handling a tagsinput, the error needs to go outside of the wrapper
+            //
+            if ( $element.data( "bidx-tagsinput" ) )
+            {
+                $container = $element.closest( ".control-group" );
+
+                if ( $container.length )
+                {
+                    $error.appendTo( $container );
+                    inserted = true;
+                }
+            }
+
+            // Didn't found a way to get inserted? Just insert it behind the input in the DOM
+            //
+            if ( !inserted )
+            {
+                $error.insertAfter( $element );
+            }
+        }
+    } );
 
     // Expose
     //
