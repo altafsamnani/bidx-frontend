@@ -323,8 +323,6 @@
         }
     };
 
-
-
     var notifySuccessModal = function( msg )
     {
         _notify(
@@ -344,7 +342,6 @@
         ,   timeout:        4000
         } );
     };
-
 
     var notifyError = function( msg )
     {
@@ -367,6 +364,28 @@
         } );
     };
 
+    // Make sure the i18n translations for the general form validations are available so we
+    // do not have to redefine them everywhere. Only app specific form validations are then
+    // needed to be set when setting up form validation for that app.
+    //
+    bidx.i18n.load( [ "__global" ] )
+        .done( function()
+        {
+            $.extend( $.validator.messages,
+            {
+                required:               bidx.i18n.i( "frmFieldRequired" )
+            ,   email:                  bidx.i18n.i( "frmFieldEmail" )
+            ,   dpDate:                 bidx.i18n.i( "frmInvalidDate" )
+            ,   skypeUsername:          bidx.i18n.i( "frmInvalidSkypeUsername" )
+            ,   linkedInUsername:       bidx.i18n.i( "frmInvalidLinkedInUsername" )
+            ,   facebookUsername:       bidx.i18n.i( "frmInvalidFacebookUsername" )
+            ,   twitterUsername:        bidx.i18n.i( "frmInvalidTwitterUsername" )
+            ,   url:                    bidx.i18n.i( "frmInvalidUrl" )
+            } );
+        } );
+
+    // Expose
+    //
     if ( !window.bidx )
     {
         window.bidx = bidx;

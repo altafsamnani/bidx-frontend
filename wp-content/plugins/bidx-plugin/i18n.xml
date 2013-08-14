@@ -13,7 +13,13 @@
     <Item value="btnCancel">Cancel</Item>
     <Item value="btnSaveProfile">Save profile</Item>
 
-    <!-- Form validations -->
+    <!--
+        Form validations
+
+        It is very likely that if you add something to this global list of form
+        validation messages you want to add it to the default list of messages maintained
+        in common.js. Just a friendly reminder!
+    -->
     <Item value="frmFieldRequired">This field is required</Item>
     <Item value="frmInvalidDate">Please enter a valid date</Item>
     <Item value="frmInvalidEmail">Please enter a valid e-mail address</Item>
