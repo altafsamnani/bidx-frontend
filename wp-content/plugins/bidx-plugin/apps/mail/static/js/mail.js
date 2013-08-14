@@ -1,4 +1,4 @@
-( function ( $ )
+;( function ( $ )
 {
     var $element                    = $( "#mail" )
     ,   $views                      = $element.find( ".view" )
@@ -178,6 +178,7 @@
 
     var _prepareMessage = function ()
     {
+
         /*
             //  API expected format
             {
@@ -191,16 +192,18 @@
         $currentView = $views.filter( ".viewCompose" );
 
         var to = [];
-        var recipients = $currentView.find("[name=contacts]").tagsinput('getValues');
+        var recipients = $currentView.find( "[ name=contacts ]" ).tagsinput( 'getValues' );
 
         $.each( recipients, function( index, item )
         {
             to.push( item.value );
         } );
 
- /*       bidx.utils.setValue( message, "userIds", to );
-        bidx.utils.setValue( message, "subject", $currentView.find("[name=subject]").val() );
-        bidx.utils.setValue( message, "content", $currentView.find("[name=content]").val() );*/
+        bidx.utils.setValue( message, "userIds", to );
+        bidx.utils.setValue( message, "subject", $currentView.find( "[name=subject]" ).val() );
+        bidx.utils.setValue( message, "content", $currentView.find( "[name=content]" ).val() );
+
+
     };
 
     var _showError = function( msg )
@@ -211,10 +214,19 @@
 
 
 
-    var _showView = function( v )
+    var _showView = function( view, state )
     {
-        bidx.utils.log("Showview", bidx.utils.getViewName( v ) );
-        $views.hide().filter( bidx.utils.getViewName( v ) ).show();
+        var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
+        //  show title of the view if available
+        if( state )
+        {
+            $view.find( ".title").hide().filter( bidx.utils.getViewName( state, "title" ) ).show();
+        }
+    };
+
+    var _showTitle = function ( v )
+    {
+        bidx.utils.log(this);
     };
 
     var _updateMenu = function( )
@@ -249,6 +261,8 @@
                 {
                     if( response.data && response.data[0] && response.data[0].content )
                     {
+
+                        _cacheMailMessage( response.data[0] );
                         //  filter HTML  before we can insert into the mailbody
                         var htmlParser = document.createElement("DIV");
                         htmlParser.innerHTML = response.data[0].content;
@@ -279,8 +293,14 @@
         );
     };
 
+    var _cacheMailMessage = function( msg )
+    {
+        message = msg;
+
+    };
+
     //  get ALL emails from selected mailbox
-    var _getEmails = function ( options )
+    var _getEmails = function( options )
     {
 
         var $listItem               = $( $( "#mailbox-listitem" ).html().replace( /(<!--)*(-->)*/g, "" ) )
@@ -365,6 +385,7 @@
 
                             //  load checkbox plugin on element
                             var $checkboxes = $list.find( '[data-toggle="checkbox"]' );
+                            //  enable flatui checkbox
                             $checkboxes.checkbox();
                             //  set change event which add/removes the checkbox ID in the listElements variable
                             $checkboxes.bind( 'change', function()
@@ -450,14 +471,20 @@
         {
             ids = options.id;
         }
-        else if( !$.isEmptyObject( window.bidx.mail.listItems ) )
+        else if( !$.isEmptyObject( listItems ) )
         {
-
+            //  convert listItems object to csv list
+            ids = $.map( listItems, function( el, key )
+            {
+                return key;
+            } );
+            ids.join(",");
         }
+
         bidx.api.call(
              "mail.delete"
         ,   {
-                mailId:                   options.id
+                mailId:                   ids
             ,   groupDomain:              bidx.common.groupDomain
 
             ,   success: function( response )
@@ -506,6 +533,17 @@
         });
     };
 
+    var _defineMailBoxType = function ( section )
+    {
+        var type = "RECEIVED_EMAILS";
+
+        if( section === "sent" )
+        {
+            type = "SENT_EMAILS";
+        }
+        return type;
+    };
+
     //  ################################## MODAL #####################################  \\
 
     //  show modal view with optionally and ID to be appended to the views buttons
@@ -520,7 +558,7 @@
 
         bidx.utils.log("OPTIONS", options );
 
-        $modal = $modals.filter( bidx.utils.getViewName ( options.view, ".modal" ) ).find( ".bidx-modal");
+        $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
 
 
 
@@ -559,7 +597,12 @@
         }
     };
 
-
+    // debug
+    var debugGetMessage = function ()
+    {
+        return message
+    }
+    // end debug
 
 
 
@@ -574,7 +617,8 @@
         bidx.utils.log("routing options", options);
         var section
         ,   id
-        ,   sectionState
+        ,   state
+        ,   subState
         ;
 
         /*
@@ -590,42 +634,37 @@
             #mail/compose
         */
 
+        //  define section substates, in which we want to make assign part1 as state
+        subState =
+        {
+            deleteConfirm:      true
+        ,   delete:             true
+        ,   discardConfirm:     true
+        ,   reply:              true
 
+        };
 
-            //  little switch statement for states that match the section argument
-            sectionState =
+        section = options.section;
+        //  if options.section is an ID or options.part1 is an ID switch to state 'read'
+        if( ( options.section && options.section.match( /^\d+$/ ) ) || ( options.part1 && options.part1.match( /^\d+$/ ) ) )
+        {
+            //  if section holds the id, transfer its value to id. Otherwise use part1
+            id = ( options.section && options.section.match( /^\d+$/ ) ) ? options.section : options.part1;
+            state = "read";
+        }
+        else
+        {
+            if( options.part1 && subState[ options.part1 ] )
             {
-                deleteConfirm:       true
-            ,   delete:              true
-            ,   discardConfirm:      true
-
-            };
-
-            //  if section is an ID or part1 is an ID switch to state 'read'
-            if( ( options.section && options.section.match( /^\d+$/ ) ) || ( options.part1 && options.part1.match( /^\d+$/ ) ) )
-            {
-                //  if section holds the id, transfer its value to id. Otherwise use part1
-                id = ( options.section && options.section.match( /^\d+$/ ) ) ? options.section : options.part1;
-                section = "read";
+                state = options.part1;
             }
-            else
-            {
-                if( options.part1 && sectionState[ options.part1 ] )
-                {
-                    section = options.part1;
-                }
-                else {
-                    section = options.section;
-                }
-                id = options.part2;
-
+            else {
+                state = options.section;
             }
+            id = options.part2;
+        }
 
-bidx.utils.log("Section", section);
-bidx.utils.log("id", id);
-
-
-        switch ( section )
+        switch ( state )
         {
             case "load" :
 
@@ -644,7 +683,8 @@ bidx.utils.log("id", id);
 
                 ,   callback: function()
                     {
-                        _setToolbarButtons( id, section, section );
+                        _setToolbarButtons( id, state, section );
+                        //_cacheMessage();
                         _showView( "read" );
                     }
                 } );
@@ -677,20 +717,28 @@ bidx.utils.log("id", id);
 
                 _doDelete(
                 {
-                    view:   "deleteConfirm"
-                ,   id:     id
+                    id:     id
                 ,   section: section
                 } );
 
             break;
 
+            case "delete-multiple":
+
+
+                _doDelete(
+                {
+                    id:     id
+                ,   section: section
+                } );
+
+            break;
 
             case "delete":
 
                 _doDelete(
                 {
-                    view:   "deleteConfirm"
-                ,   id:     id
+                    id:     id
                 ,   section: section
                 } );
 
@@ -701,8 +749,6 @@ bidx.utils.log("id", id);
             case "inbox":
             case "sent":
 
-                var type = "RECEIVED_EMAILS";
-
                 _closeModal(
                 {
                     unbindHide: true
@@ -710,16 +756,11 @@ bidx.utils.log("id", id);
 
                 _showView( "load" );
 
-                if( section === "sent" )
-                {
-                    type = "SENT_EMAILS";
-
-                }
                 _updateMenu();
 
                 _getEmails(
                 {
-                        type:       type
+                        type:       _defineMailBoxType( section )
                     ,   list:       "list"
                     ,   view:       "list"
 
@@ -731,9 +772,13 @@ bidx.utils.log("id", id);
 
             break;
 
+            case "reply":
             case "compose":
+                /*if( state === "compose" ){
+                    _initCompose();
+                }*/
 
-                _showView( "compose" );
+                _showView( "compose", state );
                 _composeFormInit();
 
             break;
@@ -772,6 +817,7 @@ bidx.utils.log("id", id);
     // START DEV API
     //
     ,   listItems:              listItems //storage for selection of emails in listview. I chose object because so that I can check if key exists
+    ,   message:                debugGetMessage()
     // END DEV API
     //
     };

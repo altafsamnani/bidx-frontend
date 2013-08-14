@@ -93,7 +93,7 @@
                   <!-- TOOLBAR -->
                 <div class="mail-toolbar">
                     <div class="btn-group">
-                        <a class="btn btn-small btn-primary" href="#/mail/#mail/reply/"><?php _e('Reply','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary" href="/mail/#mail/%section%/reply/"><?php _e('Reply','bidxplugin')?></a>
                         <a class="btn btn-small btn-primary" href="/mail/#mail/forward/"><?php _e('Forward','bidxplugin')?></a>
                         <a class="btn btn-small btn-primary" href="/mail/#mail/%section%/deleteConfirm/"><?php _e('Delete','bidxplugin')?></a>
                     </div>
@@ -111,6 +111,11 @@
 
             <!-- Compose view -->
             <article class="view viewCompose">
+                    <h2>
+                        <span class="title titleCompose"><?php _e('Create a new e-mail')?></span>
+                        <span class="title titleReply"><?php _e('Reply to message')?></span>
+                    </h2>
+
 
                 <form action="">
                     <div class="row-fluid">

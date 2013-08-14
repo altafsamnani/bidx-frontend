@@ -553,7 +553,7 @@
     //  return view name. Expects v(iew) and optionally a c(lass)
     var getViewName = function ( v, c )
     {
-        return ( c ? c : ".view" ) + v.charAt( 0 ).toUpperCase() + v.substr( 1 );
+        return ( c ? ( "." + c ) : ".view" ) + v.charAt( 0 ).toUpperCase() + v.substr( 1 );
     };
 
     var generateId = function()

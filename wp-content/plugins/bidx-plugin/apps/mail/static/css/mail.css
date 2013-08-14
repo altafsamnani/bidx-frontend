@@ -1,13 +1,19 @@
 #mail .side-menu {
 
 }
-
     #mail .side-menu a:first-child {
         margin-bottom: 20px;
     }
-.view {
+
+.view,
+.view h2 > .title {
     display: none;
 }
+
+    .view h2 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
 
 .viewList {
     background-color: #E0E0E0;
