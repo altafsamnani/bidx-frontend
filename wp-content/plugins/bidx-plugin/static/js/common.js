@@ -386,6 +386,7 @@
             ,   monetaryAmount:         bidx.i18n.i( "frmInvalidMonetaryAmount" )
             ,   min:                    $.validator.format( bidx.i18n.i( "frmInvalidMin" ))
             ,   max:                    $.validator.format( bidx.i18n.i( "frmInvalidMax" ))
+            ,   digits:                 bidx.i18n.i( "frmInvalidDigits" )
 
                 // bidx-tagsinput
                 //

@@ -32,4 +32,5 @@
     <Item value="frmInvalidMinItems">Please give at least {0} items</Item>
     <Item value="frmInvalidMin">Please enter a value greater than or equal to {0}</Item>
     <Item value="frmInvalidMax">Please enter a value less than or equal to {0}</Item>
+    <Item value="frmInvalidDigits">Please provide a positive number</Item>
 </I18N>

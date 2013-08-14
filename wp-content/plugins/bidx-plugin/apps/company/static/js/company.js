@@ -180,16 +180,6 @@
         ,   inputNamePrefix = "countryOperationSpecifics[" + index + "]"
         ;
 
-        // Update all the input elements and prefix the names with the right index
-        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
-        //
-        $countryOperationSpecifics.find( "input, select, textarea" ).each( function( )
-        {
-            var $input = $( this );
-
-            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
-        } );
-
         if ( countryOperationSpecifics )
         {
             $.each( fields.countryOperationSpecifics, function( j, f )
@@ -212,7 +202,39 @@
             } );
         }
 
+        // Add to the DOM
+        //
         $countryOperationSpecificsAccordion.append( $countryOperationSpecifics );
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $countryOperationSpecifics.find( "input, select, textarea" ).each( function( )
+        {
+            var $input          = $( this )
+            ,   baseName        = $input.prop( "name" )
+            ,   newName         = inputNamePrefix + "." + baseName
+            ;
+
+            $input.prop( "name", newName );
+
+            // Notify the form validator of the new elements
+            // Use 'orgName' since that is consistent over each itteration
+            //
+            switch ( baseName )
+            {
+                case "country":
+                case "permitsLicencesObtained":
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    } );
+                break;
+
+                default:
+                    // NOOP
+            }
+        } );
     };
 
     // Add an empty previous business block
@@ -370,11 +392,6 @@
             } );
         }
     };
-
-
-
-
-
 
     // Use the retrieved company object to populate the form and other screen elements
     //
@@ -566,51 +583,91 @@
 
         // Setup form
         //
-        $editForm.form(
+        var $validator = $editForm.validate(
         {
-            errorClass:     'error'
-        ,   enablePlugins:  [ 'date', 'fileUpload' ]
-        } );
-
-        $editForm.submit( function( e )
-        {
-            e.preventDefault();
-
-            var valid = $editForm.form( "validateForm" );
-
-            if ( !valid || $btnSave.hasClass( "disabled" ) )
+            rules:
             {
-                return;
-            }
-
-            $btnSave.addClass( "disabled" );
-            $btnCancel.addClass( "disabled" );
-
-            _save(
-            {
-                error: function( jqXhr )
+                "name":
                 {
-                    var response;
-
-                    try
-                    {
-                        // Not really needed for now, but just have it on the screen, k thx bye
-                        //
-                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
-                    }
-                    catch ( e )
-                    {
-                        bidx.utils.error( "problem parsing error response from company save" );
-                    }
-
-                    bidx.common.notifyError( "Something went wrong during save: " + response );
-
-                    $btnSave.removeClass( "disabled" );
-                    $btnCancel.removeClass( "disabled" );
+                    required:                   true
                 }
-            } );
-        } );
+            ,   "website":
+                {
+                    url:                        true
+                }
+            ,   "registered":
+                {
+                    required:                   true
+                }
+            ,   "statutoryAddress.country":
+                {
+                    required:                   function() { return $editForm.find( "input[name='registered']:checked" ).val() === "true"; }
+                }
+            ,   "statutoryAddress.cityTown":
+                {
+                    required:                   function() { return $editForm.find( "input[name='registered']:checked" ).val() === "true"; }
+                }
+            ,   "dateCompanyEstab":
+                {
+                    cpDate:                     true
+                }
+            ,   "numPermFemaleEmpl":
+                {
+                    digits:                     true
+                }
+            ,   "numTempFemaleEmpl":
+                {
+                    digits:                     true
+                }
+            ,   "numPermMaleEmpl":
+                {
+                    digits:                     true
+                }
+            ,   "numTempMaleEmpl":
+                {
+                    digits:                     true
+                }
+            }
+        ,   messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+        ,   submitHandler: function( e )
+            {
+                if ( $btnSave.hasClass( "disabled" ) )
+                {
+                    return;
+                }
 
+                $btnSave.addClass( "disabled" );
+                $btnCancel.addClass( "disabled" );
+
+                _save(
+                {
+                    error: function( jqXhr )
+                    {
+                        var response;
+
+                        try
+                        {
+                            // Not really needed for now, but just have it on the screen, k thx bye
+                            //
+                            response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                        }
+                        catch ( e )
+                        {
+                            bidx.utils.error( "problem parsing error response from company save" );
+                        }
+
+                        bidx.common.notifyError( "Something went wrong during save: " + response );
+
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+                    }
+                } );
+            }
+        } );
 
         if ( state === "edit" )
         {
