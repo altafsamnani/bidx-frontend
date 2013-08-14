@@ -841,38 +841,8 @@
             }
         ,   messages:
             {
-                "personalDetails.firstName":
-                {
-                    required:                   bidx.i18n.i( "frmFieldRequired" )
-                }
-            ,   "personalDetails.lastName":
-                {
-                    required:                   bidx.i18n.i( "frmFieldRequired" )
-                }
-            ,   "personalDetails.dateOfBirth":
-                {
-                    dpDate:                     bidx.i18n.i( "frmInvalidDate" )
-                }
-            ,   "personalDetails.emailAddress":
-                {
-                    email:                      bidx.i18n.i( "frmInvalidEmail" )
-                }
-            ,   "personalDetails.skype":
-                {
-                    skypeUsername:              bidx.i18n.i( "frmInvalidSkypeUsername")
-                }
-            ,   "personalDetails.linkedIn":
-                {
-                    linkedInUsername:           bidx.i18n.i( "frmInvalidLinkedInUsername" )
-                }
-            ,   "personalDetails.facebook":
-                {
-                    facebookUsername:           bidx.i18n.i( "frmInvalidFacebookUsername" )
-                }
-            ,   "personalDetails.twitter":
-                {
-                    twitterUsername:            bidx.i18n.i( "frmInvalidTwitterUsername" )
-                }
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
             }
         ,   submitHandler:  function()
             {
