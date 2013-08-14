@@ -176,9 +176,13 @@
             index = $countryOperationSpecificsAccordion.find( ".countryOperationSpecificsItem" ).length;
         }
 
-        var $countryOperationSpecifics = snippets.$countryOperationSpecifics.clone()
-        ,   inputNamePrefix = "countryOperationSpecifics[" + index + "]"
+        var $countryOperationSpecifics  = snippets.$countryOperationSpecifics.clone()
+        ,   inputNamePrefix             = "countryOperationSpecifics[" + index + "]"
+        ,   myId                        = bidx.utils.generateId()
         ;
+
+        $countryOperationSpecifics.find( ".accordion-toggle" ).attr( "href", "#" + myId );
+        $countryOperationSpecifics.find( ".accordion-body"   ).attr( "id", myId );
 
         if ( countryOperationSpecifics )
         {
