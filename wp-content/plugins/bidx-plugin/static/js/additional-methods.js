@@ -63,8 +63,17 @@
 
     // Alias number for now to validate monetary amount
     //
-    $.validator.addMethod( "monetaryAmount", $.validator.methods.number
-    , "Not a valid monetary amount" );
+
+    $.validator.addMethod( "monetaryAmount", function( value, element, param)
+    {
+        if ( this.optional( element ))
+        {
+            return true;
+        }
+
+        return /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value);
+    }, "Not a valid monetary amount" );
+
 
     // Since bidx-tagsinput is special input control we cannot simply say "required"
     // This requires special handling
