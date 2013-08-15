@@ -2,7 +2,7 @@
     <Item value="selectCountry">Select the country</Item>
     <Item value="selectPermitsObtained">Select the obtained licenses</Item>
     <Item value="selectLegalForm">Select the legal form of your company</Item>
-    <Item value="selectLegalFormBusiness">Select the legal form of your company</Item>
+    <Item value="selectLegalFormBusiness">Select the legal form of your company2</Item>
 
     <!-- Buttons -->
     <Item value="btnAddCompany">Add company</Item>

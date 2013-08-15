@@ -1,38 +1,86 @@
 # Language Original
-# _x("Select the outcome of this business", "auth","i18n");
-# Context auth TextDomain i18n
-msgctxt "auth"
+# _x("Select the country", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the country"
+msgstr ""
+
+# _x("Select the obtained licenses", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the obtained licenses"
+msgstr ""
+
+# _x("Select the legal form of your company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the legal form of your company"
+msgstr ""
+
+# _x("Select the legal form of your company2", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the legal form of your company2"
+msgstr ""
+
+# _x("Add company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Add company"
+msgstr ""
+
+# _x("Save company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Save company"
+msgstr ""
+
+# _x("On %date% at %time%, %sender% wrote:", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "On %date% at %time%, %sender% wrote:"
+msgstr ""
+
+# _x("On %date% at %time%, %sender% wrote1:", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "On %date% at %time%, %sender% wrote1:"
+msgstr ""
+
+# _x("Select the outcome of this business", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
 msgid "Select the outcome of this business"
 msgstr ""
 
-# _x("You do not have the rights to edit this profile", "auth","i18n");
-# Context auth TextDomain i18n
-msgctxt "auth"
-msgid "You do not have the rights to edit this profile"
-msgstr ""
-
-# _x("Select the outcome of this business", "memberprofile","i18n");
-# Context memberprofile TextDomain i18n
-msgctxt "memberprofile"
-msgid "Select the outcome of this business"
-msgstr ""
-
-# _x("Select the investment type", "memberprofile","i18n");
-# Context memberprofile TextDomain i18n
-msgctxt "memberprofile"
+# _x("Select the investment type", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
 msgid "Select the investment type"
 msgstr ""
 
-# _x("Select your investor", "memberprofile","i18n");
-# Context memberprofile TextDomain i18n
-msgctxt "memberprofile"
+# _x("Select your investor", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
 msgid "Select your investor"
 msgstr ""
 
-# _x("Select the country", "memberprofile","i18n");
-# Context memberprofile TextDomain i18n
-msgctxt "memberprofile"
+# _x("Select the country", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
 msgid "Select the country"
+msgstr ""
+
+# _x("Select your nationality", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your nationality"
+msgstr ""
+
+# _x("Select your highest education", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your highest education"
 msgstr ""
 
 # _e("You do not have the rights to edit this profile", "i18n");
@@ -78,5 +126,35 @@ msgstr ""
 # _e("This field is required", "i18n");
 # Context  TextDomain i18n
 msgid "This field is required"
+msgstr ""
+
+# _e("Please enter a valid date", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid date"
+msgstr ""
+
+# _e("Please enter a valid e-mail address", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid e-mail address"
+msgstr ""
+
+# _e("Please enter a valid Skype username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Skype username"
+msgstr ""
+
+# _e("Please enter a valid LinkedIn username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid LinkedIn username"
+msgstr ""
+
+# _e("Please enter a valid Facebook username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Facebook username"
+msgstr ""
+
+# _e("Please enter a valid Twitter username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Twitter username"
 msgstr ""
 
