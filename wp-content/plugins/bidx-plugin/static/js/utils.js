@@ -494,25 +494,45 @@
         return obj;
     };
 
-    var parseISODateTime = function( str )
+    var parseISODateTime = function( str, format )
     {
         if ( !str )
         {
             return;
         }
 
+        if( !format )
+        {
+            format = "datetime";
+        }
+
         var obj =
             {
-                    y:      parseInt( str.substr( 0, 4 ), 10 )
-                ,   m:      parseInt( str.substr( 5, 2 ), 10 )
-                ,   d:      parseInt( str.substr( 8, 2 ), 10 )
-                ,   h:      str.substr( 11,2 )
-                ,   n:      str.substr( 14,2 )
-                ,   s:      str.substr( 17,2 )
+                y:      parseInt( str.substr( 0, 4 ), 10 )
+            ,   m:      parseInt( str.substr( 5, 2 ), 10 )
+            ,   d:      parseInt( str.substr( 8, 2 ), 10 )
+            ,   h:      str.substr( 11,2 )
+            ,   n:      str.substr( 14,2 )
+            ,   s:      str.substr( 17,2 )
             }
         ,   d      = new Date( obj.y, obj.m, obj.d )
-        ,   result = d.getDate() + " " + months[ d.getMonth()-1 ] + " " + d.getFullYear() + " " + obj.h + ":" + obj.n + ":" + obj.s
+        ,   result
         ;
+
+        switch( format )
+        {
+            case "date":
+                result = d.getDate() + " " + months[ d.getMonth()-1 ] + " " + d.getFullYear();
+            break;
+
+            case "time":
+                result = obj.h + ":" + obj.n + ":" + obj.s;
+            break;
+
+            default:
+                result = d.getDate() + " " + months[ d.getMonth()-1 ] + " " + d.getFullYear() + " " + obj.h + ":" + obj.n + ":" + obj.s;
+        }
+
         return result;
     };
 
