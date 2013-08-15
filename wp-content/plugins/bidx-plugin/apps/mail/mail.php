@@ -11,7 +11,10 @@ class mail {
 
 
 
-    static $deps = array( 'bidx-form', 'bidx-tagsinput', 'bidx-common' );
+    static $deps = array( 'bidx-form', 'bidx-tagsinput', 'bidx-common','bidx-i18n', 'jquery-validation',
+            'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods'
+
+    );
 
 
 

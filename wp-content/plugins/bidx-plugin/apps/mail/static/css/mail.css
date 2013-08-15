@@ -109,5 +109,8 @@
         padding: 20px;
     }
 
+    .mail .viewCompose textarea {
+        height: 300px;
+    }
 
 

@@ -118,7 +118,7 @@
 
         if ( newHash )
         {
-            _updateHash( newHash );
+            updateHash( newHash );
         }
     };
 
@@ -127,6 +127,7 @@
     var updateHash = function ( newHash )
     {
         router.navigate( newHash );
+        bidx.utils.log("hash changed");
     };
 
     // Router for main state

@@ -366,6 +366,9 @@ class BidxCommon
                 case 'login' :
                     $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('auth'), $static = true, $i18nGlobal = true);
                     break;
+                case 'mail' :
+                    $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('mail'), $static = false, $i18nGlobal = true);
+                    break;
             }
 
 

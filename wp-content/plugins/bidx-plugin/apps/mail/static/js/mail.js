@@ -13,6 +13,7 @@
     ,   bidx                        = window.bidx
     ,   message                     = {}
     ,   listItems                   = {}
+    ,   appName                     = "mail"
     ;
 
 
@@ -83,13 +84,10 @@
     };
 
 
-
-
-
     //private functions
 
 
-    var _composeFormInit = function()
+    var _initComposeForm = function()
     {
         // Setup form
         //
@@ -123,6 +121,45 @@
                 }
             } );
         } );
+
+    };
+
+
+    //  preload compose form with reply values
+    var _initReply = function( section, id )
+    {
+
+        if( !$.isEmptyObject( message ) )
+        {
+            var recipients = []
+            ,   content    = message.content
+            ,   lbl
+            ;
+
+            recipients.push( message.userIdFrom.toString() );
+
+            //  add reply header with timestamp to content
+            bidx.i18n.getItem( "replyContentHeader", appName ,  function( err, label )
+            {
+                lbl     = label
+                            .replace( "%date%", bidx.utils.parseISODateTime( message.sentDate, "date" ) )
+                            .replace( "%time%", bidx.utils.parseISODateTime( message.sentDate, "time" ) )
+                            .replace( "%sender%", message.fullNameFrom )
+                        ;
+                content = "\n\n" + lbl + "\n" + content;
+
+                $composeForm.find( "[name=content]" ).val( content );
+                $composeForm.find( "[name=content]" ).trigger("focus"); // doesnt seem to work
+            } );
+
+            $composeForm.find( "[name=subject]" ).val( "Re: " + message.subject );
+            $composeForm.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
+        }
+        else
+        {
+            bidx.utils.error( "Message object is empty. Reply can not be inialized" );
+            window.bidx.controller.updateHash( "#mail/" + section + "/" + id );
+        }
 
     };
 
@@ -263,6 +300,7 @@
                     {
 
                         _cacheMailMessage( response.data[0] );
+
                         //  filter HTML  before we can insert into the mailbody
                         var htmlParser = document.createElement("DIV");
                         htmlParser.innerHTML = response.data[0].content;
@@ -285,9 +323,21 @@
 
             ,   error: function( jqXhr, textStatus )
                 {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                    _showError( "Something went wrong while retrieving the member: " + status );
+                    var response = $.parseJSON( jqXhr.responseText );
+
+
+                    if( bidx.utils.getValue( response, "code" ) === "userNotLoggedIn" )
+                    {
+                        //  reload so PHP can handle the redirect serverside
+                        //document.location.reload();
+                    }
+                    else
+                    {
+                        var status = bidx.utils.getValue( response, "status" ) || textStatus;
+                        _showError( "Something went wrong while retrieving the member: " + status );
+                    }
+
                 }
             }
         );
@@ -455,16 +505,26 @@
             ,   error: function( jqXhr, textStatus )
                 {
 
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+                    var response = $.parseJSON( jqXhr.responseText );
 
-                    _showError( "Something went wrong while retrieving the member: " + status );
+
+                    if( bidx.utils.getValue( response, "code" ) === "userNotLoggedIn" )
+                    {
+                        //  reload so PHP can handle the redirect serverside
+                        //document.location.reload();
+                    }
+                    else
+                    {
+                        var status = bidx.utils.getValue( response, "status" ) || textStatus;
+                        _showError( "Something went wrong while retrieving the member: " + status );
+                    }
                 }
             }
         );
     };
 
     //  delete email
-    var _doDelete = function ( options )
+    var _doDelete = function( options )
     {
         var ids;
         if( options.id )
@@ -510,6 +570,7 @@
             }
         );
     };
+
 
     //  ################################## HELPER #####################################  \\
 
@@ -598,10 +659,7 @@
     };
 
     // debug
-    var debugGetMessage = function ()
-    {
-        return message
-    }
+
     // end debug
 
 
@@ -672,6 +730,32 @@
 
             break;
 
+            case "inbox":
+            case "sent":
+
+                _closeModal(
+                {
+                    unbindHide: true
+                } );
+
+                _showView( "load" );
+
+                _updateMenu();
+
+                _getEmails(
+                {
+                        type:       _defineMailBoxType( section )
+                    ,   list:       "list"
+                    ,   view:       "list"
+
+                    ,   callback: function()
+                        {
+                            _showView( "list" );
+                        }
+                } );
+
+            break;
+
             case "read":
 
                 _closeModal();
@@ -691,6 +775,19 @@
 
             break;
 
+
+            case "reply":
+            case "compose":
+                if( state === "reply" ){
+                    _initReply( section, id );
+                }
+
+                _showView( "compose", state );
+                _initComposeForm();
+
+            break;
+
+
             case "deleteConfirm":
 
                 _showModal(
@@ -704,6 +801,22 @@
                         window.bidx.controller.updateHash( "#mail/" + section + "/" + id );
                     }
 
+                } );
+
+            break;
+
+            case "discardConfirm":
+
+                _showModal(
+                {
+                    view:       "discardConfirm"
+                ,   id:         id
+                ,   section:    section
+
+                ,   onHide: function()
+                    {
+                         window.bidx.controller.updateHash( "#mail/compose" );
+                    }
                 } );
 
             break;
@@ -734,70 +847,6 @@
 
             break;
 
-            case "delete":
-
-                _doDelete(
-                {
-                    id:     id
-                ,   section: section
-                } );
-
-            break;
-
-
-
-            case "inbox":
-            case "sent":
-
-                _closeModal(
-                {
-                    unbindHide: true
-                } );
-
-                _showView( "load" );
-
-                _updateMenu();
-
-                _getEmails(
-                {
-                        type:       _defineMailBoxType( section )
-                    ,   list:       "list"
-                    ,   view:       "list"
-
-                    ,   callback: function()
-                        {
-                            _showView( "list" );
-                        }
-                } );
-
-            break;
-
-            case "reply":
-            case "compose":
-                /*if( state === "compose" ){
-                    _initCompose();
-                }*/
-
-                _showView( "compose", state );
-                _composeFormInit();
-
-            break;
-
-            case "discardConfirm":
-
-                _showModal(
-                {
-                    view:       "discardConfirm"
-                ,   id:         id
-                ,   section:    section
-
-                ,   onHide: function()
-                    {
-                         window.bidx.controller.updateHash( "#mail/compose" );
-                    }
-                } );
-
-            break;
 
             default:
 
@@ -817,7 +866,6 @@
     // START DEV API
     //
     ,   listItems:              listItems //storage for selection of emails in listview. I chose object because so that I can check if key exists
-    ,   message:                debugGetMessage()
     // END DEV API
     //
     };
