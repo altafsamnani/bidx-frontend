@@ -259,7 +259,7 @@
             return values;
         }
 
-        // Set the tags using an array values
+        // Set the tags using an array with values (ids)
         //
     ,   setValues: function( values )
         {
@@ -305,7 +305,6 @@
                 $.each( state.valueQueue, function( idx, value )
                 {
                     var tagValue = value;
-
                     // If we retrieved the data using a webservice / bidx.data, use that data
                     //
                     if ( state.dataKey || state.dataService )
