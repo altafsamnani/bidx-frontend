@@ -84,13 +84,58 @@
     };
 
 
+    //  preload compose form with reply values of recipient, subject and content of message to be replied on
+    //
+    var _initReply = function( section, id )
+    {
+
+        if( !$.isEmptyObject( message ) )
+        {
+            var recipients = []
+            ,   content    = message.content
+            ,   lbl
+            ;
+
+            recipients.push( message.userIdFrom.toString() );
+
+            //  add reply header with timestamp to content
+            bidx.i18n.getItem( "replyContentHeader", appName ,  function( err, label )
+            {
+                lbl     = label
+                            .replace( "%date%", bidx.utils.parseISODateTime( message.sentDate, "date" ) )
+                            .replace( "%time%", bidx.utils.parseISODateTime( message.sentDate, "time" ) )
+                            .replace( "%sender%", message.fullNameFrom )
+                        ;
+                content = "\n\n" + lbl + "\n" + content;
+
+                $composeForm.find( "[name=content]" ).val( content );
+                $composeForm.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
+            } );
+
+            $composeForm.find( "[name=subject]" ).val( "Re: " + message.subject );
+            $composeForm.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
+        }
+        else
+        {
+            bidx.utils.error( "Message object is empty. Reply can not be inialized" );
+            window.bidx.controller.updateHash( "#mail/" + section + "/" + id );
+        }
+
+    };
+
     //private functions
 
-
+    // Setup compose form by resetting all values and binding the submit handler with validation
+    //
     var _initComposeForm = function()
     {
-        // Setup form
-        //
+
+        //  reset formfield values
+        $composeForm.find( ":input" ).val("");
+        $composeForm.find( ".bidx-tagsinput" ).tagsinput( "reset" );
+        $btnSubmit.removeClass( "disabled" );
+        $btnCancel.removeClass( "disabled" );
+
         $composeForm.form(
         {
             errorClass:     'error'
@@ -100,7 +145,8 @@
         {
             e.preventDefault();
 
-            var valid = $composeForm.form( "validateForm" );
+            var valid = $composeForm.form( "validateForm" ); // NOTE: this has to be replaced with new validation
+
             bidx.utils.log("VALIDATED", valid );
             if ( !valid || $btnSubmit.hasClass( "disabled" ) )
             {
@@ -125,43 +171,7 @@
     };
 
 
-    //  preload compose form with reply values
-    var _initReply = function( section, id )
-    {
 
-        if( !$.isEmptyObject( message ) )
-        {
-            var recipients = []
-            ,   content    = message.content
-            ,   lbl
-            ;
-
-            recipients.push( message.userIdFrom.toString() );
-
-            //  add reply header with timestamp to content
-            bidx.i18n.getItem( "replyContentHeader", appName ,  function( err, label )
-            {
-                lbl     = label
-                            .replace( "%date%", bidx.utils.parseISODateTime( message.sentDate, "date" ) )
-                            .replace( "%time%", bidx.utils.parseISODateTime( message.sentDate, "time" ) )
-                            .replace( "%sender%", message.fullNameFrom )
-                        ;
-                content = "\n\n" + lbl + "\n" + content;
-
-                $composeForm.find( "[name=content]" ).val( content );
-                $composeForm.find( "[name=content]" ).trigger("focus"); // doesnt seem to work
-            } );
-
-            $composeForm.find( "[name=subject]" ).val( "Re: " + message.subject );
-            $composeForm.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
-        }
-        else
-        {
-            bidx.utils.error( "Message object is empty. Reply can not be inialized" );
-            window.bidx.controller.updateHash( "#mail/" + section + "/" + id );
-        }
-
-    };
 
     var _send = function ( params )
     {
@@ -206,7 +216,7 @@
 
             ,   error:  function( jqXhr )
                 {
-                    params.error( jqXhr );
+                    params.error( "Error", jqXhr );
                 }
             }
         );
@@ -215,16 +225,17 @@
 
     var _prepareMessage = function ()
     {
-
         /*
-            //  API expected format
+            API expected format
             {
-                "userIds": [],
-                "emails": [],
-                "subject": "subject of the email",
-                "content": "content of the email blablablabla"
+                "userIds":  []
+            ,   "emails":   []
+            ,   "subject":  "subject of the email"
+            ,   "content":  "content of the email"
             }
         */
+
+        message = {}; // clear message because it can still hold the reply content
 
         $currentView = $views.filter( ".viewCompose" );
 
@@ -716,13 +727,14 @@
             {
                 state = options.part1;
             }
-            else {
+            else
+            {
                 state = options.section;
             }
             id = options.part2;
         }
 
-        switch ( state )
+        switch( state )
         {
             case "load" :
 
@@ -778,12 +790,15 @@
 
             case "reply":
             case "compose":
+
+                _initComposeForm();
+
                 if( state === "reply" ){
                     _initReply( section, id );
                 }
 
                 _showView( "compose", state );
-                _initComposeForm();
+
 
             break;
 
