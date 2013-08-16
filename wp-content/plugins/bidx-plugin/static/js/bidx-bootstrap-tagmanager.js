@@ -263,7 +263,7 @@
       var tlis = obj.data("tlis");
       var tlid = obj.data("tlid");
 
-      while (tlid.length > 0) {
+      while ( tlid && tlid.length > 0) { //BIDX added undefined check for tlid because deferrered loading of typeahead caused issue
         var tagId = tlid.pop();
         tlis.pop();
         // console.log("TagIdToRemove: " + tagId);

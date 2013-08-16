@@ -339,6 +339,7 @@
             ;
 
             $el.siblings( "." + options.tagClass ).remove();
+            $el.tagsManager( "empty" );
         }
     } );
 } )( jQuery );
