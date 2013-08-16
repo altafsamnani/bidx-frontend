@@ -53,11 +53,11 @@ msgctxt "mail"
 msgid "On %date% at %time%, %sender% wrote:"
 msgstr "esOn %date% at %time%, %sender% wrote:"
 
-# _x("On %date% at %time%, %sender% wrote:", "mail","i18n");
+# _x("Forwarded message", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
-msgid "On %date% at %time%, %sender% wrote1:"
-msgstr "esOn %date% at %time%, %sender% wrote2:"
+msgid "Forwarded message"
+msgstr "esForwarded message"
 
 # _x("Select the outcome of this business", "member","i18n");
 # Context member TextDomain i18n
@@ -169,3 +169,35 @@ msgstr "esPlease enter a valid Facebook username"
 # Context  TextDomain i18n
 msgid "Please enter a valid Twitter username"
 msgstr "esPlease enter a valid Twitter username"
+
+# _e("Please enter a valid date", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgid "Please enter a valid url"
+msgstr "esPlease enter a valid date"
+
+# _e("Please enter a valid date", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgid "Please enter a valid amount"
+msgstr "esPlease enter a valid date"
+
+# _e("Please give at least {0} items", "i18n");
+# Context  TextDomain i18n
+msgid "Please give at least {0} items"
+msgstr "esPlease give at least {0} items"
+
+# _e("Please enter a value greater than or equal to {0}", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "esPlease enter a value greater than or equal to {0}"
+
+# _e("Please enter a value less than or equal to {0}", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value less than or equal to {0}"
+msgstr "esPlease enter a value less than or equal to {0}"
+
+# _e("Please provide a positive number", "i18n");
+# Context  TextDomain i18n
+msgid "Please provide a positive number"
+msgstr "esPlease provide a positive number"

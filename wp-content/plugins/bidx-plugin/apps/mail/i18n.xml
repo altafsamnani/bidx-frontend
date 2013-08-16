@@ -1,5 +1,5 @@
 <I18N>
     <!-- <Item value=""></Item> -->
     <Item value="replyContentHeader">On %date% at %time%, %sender% wrote:</Item>
-    <Item value="replyContentHeader2">On %date% at %time%, %sender% wrote1:</Item>
+    <Item value="forwardContentHeader">Forwarded message</Item>
 </I18N>

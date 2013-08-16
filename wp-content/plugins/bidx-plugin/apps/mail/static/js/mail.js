@@ -86,7 +86,7 @@
 
     //  preload compose form with reply values of recipient, subject and content of message to be replied on
     //
-    var _initReply = function( section, id )
+    var _initForwardOrReply = function( section, id, state )
     {
 
         if( !$.isEmptyObject( message ) )
@@ -96,24 +96,55 @@
             ,   lbl
             ;
 
-            recipients.push( message.userIdFrom.toString() );
-
-            //  add reply header with timestamp to content
-            bidx.i18n.getItem( "replyContentHeader", appName ,  function( err, label )
+            switch ( state )
             {
-                lbl     = label
-                            .replace( "%date%", bidx.utils.parseISODateTime( message.sentDate, "date" ) )
-                            .replace( "%time%", bidx.utils.parseISODateTime( message.sentDate, "time" ) )
-                            .replace( "%sender%", message.fullNameFrom )
-                        ;
-                content = "\n\n" + lbl + "\n" + content;
 
-                $composeForm.find( "[name=content]" ).val( content );
-                $composeForm.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
-            } );
 
-            $composeForm.find( "[name=subject]" ).val( "Re: " + message.subject );
-            $composeForm.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
+                case "reply":
+
+                    recipients.push( message.userIdFrom.toString() );
+                    $composeForm.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
+
+                    $composeForm.find( "[name=subject]" ).val( "Re: " + message.subject );
+
+                    //  add reply header with timestamp to content
+                    bidx.i18n.getItem( "replyContentHeader", appName ,  function( err, label )
+                    {
+                        lbl     = label
+                                    .replace( "%date%", bidx.utils.parseISODateTime( message.sentDate, "date" ) )
+                                    .replace( "%time%", bidx.utils.parseISODateTime( message.sentDate, "time" ) )
+                                    .replace( "%sender%", message.fullNameFrom )
+                                ;
+                        content = "\n\n" + lbl + "\n" + content;
+
+                        $composeForm.find( "[name=content]" ).val( content );
+                        $composeForm.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
+                    } );
+
+                break;
+
+                case "forward":
+
+                    $composeForm.find( "[name=subject]" ).val( "Fwd: " + message.subject );
+
+                    //  add reply header with timestamp to content
+                    bidx.i18n.getItem( "forwardContentHeader", appName ,  function( err, label )
+                    {
+                        lbl     = "----------" + label + "----------";
+
+                        content = "\n\n" + lbl + "\n" + content;
+
+                        $composeForm.find( "[name=content]" ).val( content );
+                        $composeForm.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
+                    } );
+                break;
+            }
+
+
+
+
+
+
         }
         else
         {
@@ -710,6 +741,7 @@
         ,   delete:             true
         ,   discardConfirm:     true
         ,   reply:              true
+        ,   forward:            true
 
         };
 
@@ -789,12 +821,13 @@
 
 
             case "reply":
+            case "forward":
             case "compose":
 
                 _initComposeForm();
 
-                if( state === "reply" ){
-                    _initReply( section, id );
+                if( state === "reply" || state === "forward" ){
+                    _initForwardOrReply( section, id, state );
                 }
 
                 _showView( "compose", state );
