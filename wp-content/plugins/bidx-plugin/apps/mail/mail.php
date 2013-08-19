@@ -57,11 +57,8 @@ class mail {
         $command = $atts['view'];
 
         switch ($command) {
-            case 'overview':
-                $template = 'view.phtml';
-                break;
             default:
-                $template = 'view.phtml';
+                $template = 'views.phtml';
                 break;
         }
         $view->render($template);

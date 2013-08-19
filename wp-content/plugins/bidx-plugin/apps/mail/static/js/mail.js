@@ -5,15 +5,16 @@
     ,   $currentView
     ,   $modals                     = $element.find( ".modalView" )
     ,   $modal
-    ,   $composeForm                = $views.filter( ".viewCompose" ).find( "form" )
-    ,   $btnSubmit                  = $composeForm.find(".compose-submit")
-    ,   $btnCancel                  = $composeForm.find(".compose-cancel")
-    ,   toolbar                     = {}
-    ,   defaultView                 = "inbox"
+    ,   $frmCompose                 = $views.filter( ".viewCompose" ).find( "form" )
+    ,   $btnSubmit                  = $frmCompose.find(".compose-submit")
+    ,   $btnCancel                  = $frmCompose.find(".compose-cancel")
     ,   bidx                        = window.bidx
+    ,   currentGroupId              = bidx.common.getCurrentGroupId()
+    ,   appName                     = "mail"
+    ,   toolbar                     = {}
     ,   message                     = {}
     ,   listItems                   = {}
-    ,   appName                     = "mail"
+
     ;
 
 
@@ -23,6 +24,10 @@
 
     //public functions
 
+
+    // function that retrieves group members returned in an array of key/value objects
+    // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
+    //
     var getMembers = function ( callback )
     {
 
@@ -34,7 +39,7 @@
             }
         ,   {
                 label :     "fq",
-                value :     "type:bidxMemberProfile+AND+groupIds:" + bidx.controller.getCurrentGroupId()
+                value :     "type:bidxMemberProfile+AND+groupIds:" + currentGroupId
             }
         ,   {
                 label :     "rows",
@@ -46,7 +51,7 @@
         bidx.api.call(
             "groupMembers.fetch"
         ,   {
-                groupId:                  bidxConfig.session.currentGroup
+                groupId:                  currentGroupId
             ,   groupDomain:              bidx.common.groupDomain
             ,   extraUrlParameters:       extraUrlParameters
 
@@ -83,6 +88,7 @@
         );
     };
 
+    // private functions
 
     //  preload compose form with reply values of recipient, subject and content of message to be replied on
     //
@@ -99,15 +105,17 @@
             switch ( state )
             {
 
-
+                // reply form requires the recipient, subject and content field to be preloaded with data from replied message
+                //
                 case "reply":
 
                     recipients.push( message.userIdFrom.toString() );
-                    $composeForm.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
+                    $frmCompose.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
 
-                    $composeForm.find( "[name=subject]" ).val( "Re: " + message.subject );
+                    $frmCompose.find( "[name=subject]" ).val( "Re: " + message.subject );
 
                     //  add reply header with timestamp to content
+                    //
                     bidx.i18n.getItem( "replyContentHeader", appName ,  function( err, label )
                     {
                         lbl     = label
@@ -117,44 +125,41 @@
                                 ;
                         content = "\n\n" + lbl + "\n" + content;
 
-                        $composeForm.find( "[name=content]" ).val( content );
-                        $composeForm.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
+                        $frmCompose.find( "[name=content]" ).val( content );
+                        $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
                     } );
 
                 break;
 
+                // forward form requires the subject and content field to be preloaded with data from forwarded message
+                //
                 case "forward":
 
-                    $composeForm.find( "[name=subject]" ).val( "Fwd: " + message.subject );
+                    $frmCompose.find( "[name=subject]" ).val( "Fwd: " + message.subject );
 
                     //  add reply header with timestamp to content
+                    //
                     bidx.i18n.getItem( "forwardContentHeader", appName ,  function( err, label )
                     {
                         lbl     = "----------" + label + "----------";
 
                         content = "\n\n" + lbl + "\n" + content;
 
-                        $composeForm.find( "[name=content]" ).val( content );
-                        $composeForm.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
+                        $frmCompose.find( "[name=content]" ).val( content );
+                        $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
                     } );
                 break;
             }
-
-
-
-
-
-
         }
         else
         {
             bidx.utils.error( "Message object is empty. Reply can not be inialized" );
-            window.bidx.controller.updateHash( "#mail/" + section + "/" + id );
+            window.bidx.controller.updateHash( "#mail/" + section + "/" + id, true, false );
         }
 
     };
 
-    //private functions
+
 
     // Setup compose form by resetting all values and binding the submit handler with validation
     //
@@ -162,21 +167,22 @@
     {
 
         //  reset formfield values
-        $composeForm.find( ":input" ).val("");
-        $composeForm.find( ".bidx-tagsinput" ).tagsinput( "reset" );
+        //
+        $frmCompose.find( ":input" ).val("");
+        $frmCompose.find( ".bidx-tagsinput" ).tagsinput( "reset" );
         $btnSubmit.removeClass( "disabled" );
         $btnCancel.removeClass( "disabled" );
 
-        $composeForm.form(
+        $frmCompose.form(
         {
             errorClass:     'error'
         } );
 
-        $composeForm.submit( function( e )
+        $frmCompose.unbind("submit").submit( function( e )
         {
             e.preventDefault();
 
-            var valid = $composeForm.form( "validateForm" ); // NOTE: this has to be replaced with new validation
+            var valid = $frmCompose.form( "validateForm" ); // NOTE: this has to be replaced with new validation
 
             bidx.utils.log("VALIDATED", valid );
             if ( !valid || $btnSubmit.hasClass( "disabled" ) )
@@ -201,9 +207,7 @@
 
     };
 
-
-
-
+    // actual sending of message to API
     var _send = function ( params )
     {
         if ( !message )
@@ -231,18 +235,10 @@
 
             ,   success: function( response )
                 {
-
                     bidx.utils.log( "MAIL RESPONSE", response );
-                    document.location.href = document.location.href.split( "#" ).shift() + "#mail/inbox";
-
                     bidx.common.notifyCustomSuccess("Message sent");
-/*                    bidx.utils.log( "member.save::success::response", response );
 
-                    bidx.common.notifyRedirect();
-
-                    var url = document.location.href.split( "#" ).shift();
-
-                    document.location.href = url;*/
+                    bidx.controller.updateHash( "#mail/inbox", true, false );
                 }
 
             ,   error:  function( jqXhr )
@@ -254,6 +250,8 @@
 
     };
 
+    // this function prepares the message package for the API to accept
+    //
     var _prepareMessage = function ()
     {
         /*
@@ -285,6 +283,8 @@
 
     };
 
+    // display generic error view with msg provided
+    //
     var _showError = function( msg )
     {
         $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
@@ -292,7 +292,8 @@
     };
 
 
-
+    // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
+    //
     var _showView = function( view, state )
     {
         var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
@@ -308,9 +309,11 @@
         bidx.utils.log(this);
     };
 
+    // sync the sidemenu with the current hash value
+    //
     var _updateMenu = function( )
     {
-        $( "#mail .side-menu > a" ).each( function( index, item )
+        $element.find( ".side-menu > a" ).each( function( index, item )
         {
             var $this = $( item );
 
@@ -338,20 +341,20 @@
 
             ,   success: function( response )
                 {
-                    if( response.data && response.data[0] && response.data[0].content )
+                    if( response.data && response.data[ 0 ] && response.data[ 0 ].content )
                     {
 
-                        _cacheMailMessage( response.data[0] );
+                        _cacheMailMessage( response.data[ 0 ] );
 
                         //  filter HTML  before we can insert into the mailbody
-                        var htmlParser = document.createElement("DIV");
-                        htmlParser.innerHTML = response.data[0].content;
-                        var mailBody = $(htmlParser).text().replace(/\n/g,"<br/>");
+                        var htmlParser = document.createElement( "DIV" );
+                        htmlParser.innerHTML = response.data[ 0 ].content;
+                        var mailBody = $( htmlParser ).text().replace( /\n/g, "<br/>" );
 
                         //  insert mail body in to placeholder of the view
                         $views.filter( bidx.utils.getViewName( options.view ) )
-                            .find( ".mail-message")
-                            .html( mailBody );
+                                .find( ".mail-message")
+                                .html( mailBody );
 
                         //  execute callback if provided
                         if( options && options.callback )
@@ -365,9 +368,7 @@
 
             ,   error: function( jqXhr, textStatus )
                 {
-
                     var response = $.parseJSON( jqXhr.responseText );
-
 
                     if( bidx.utils.getValue( response, "code" ) === "userNotLoggedIn" )
                     {
@@ -385,13 +386,16 @@
         );
     };
 
+    // store the current message, for reply or forward purposes
+    //
     var _cacheMailMessage = function( msg )
     {
         message = msg;
 
     };
 
-    //  get ALL emails from selected mailbox
+    //  get all emails from selected mailbox
+    //
     var _getEmails = function( options )
     {
 
@@ -594,9 +598,9 @@
 
                     if ( response.data && response.data.succeeded )
                     {
-                        window.bidx.controller.updateHash( "#mail/" + ( options.section ? options.section : "inbox"  ) );
-
+                        bidx.controller.updateHash( "#mail/" + ( options.section ? options.section : "inbox" ), true, false );
                     }
+
                     if ( response.data && response.data.failed )
                     {
 
@@ -846,9 +850,8 @@
 
                 ,   onHide: function()
                     {
-                        window.bidx.controller.updateHash( "#mail/" + section + "/" + id );
+                        window.bidx.controller.updateHash( "#mail/" + section + "/" + id, true, false );
                     }
-
                 } );
 
             break;
@@ -863,7 +866,7 @@
 
                 ,   onHide: function()
                     {
-                         window.bidx.controller.updateHash( "#mail/compose" );
+                        window.bidx.controller.updateHash( "#mail/compose", true, false );
                     }
                 } );
 
