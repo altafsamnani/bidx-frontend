@@ -9,78 +9,11 @@
     ,   app
     ,   router
     ,   sectionState
-    ,   timeDifference  = ( bidx.utils.getValue( bidxConfig, "now" ) || ( new Date() ).getTime() ) - ( new Date() ).getTime()
     ;
 
     var $mainStates     = $( ".mainState" )
     ,   $controls       = $( ".editControls" )
     ;
-
-    // Retrieve the most reliable "now" Date object we can give at the moment. This is SYSTEM DATE! Not localized
-    //
-    function getNow()
-    {
-        var now = ( new Date() ).getTime() + timeDifference;
-
-        return new Date( now );
-    }
-
-    // Convenience function for itterating over the list of entities of the session
-    // data and lookup the existance (and id) of a specific entity
-    //
-    function getEntityId( entityType )
-    {
-        var result      = null
-        ,   entities    = bidx.utils.getValue( bidxConfig, "session.entities" )
-        ;
-
-        if ( entities )
-        {
-            $.each( entities, function( idx, entity )
-            {
-                if ( entity.bidxEntityType === entityType )
-                {
-                    if ( !result )
-                    {
-                        result = entity.bidxEntityId;
-                    }
-                    else
-                    {
-                        result = [ result ];
-                        result.push( entity.bidxEntityId );
-                    }
-                }
-            } );
-        }
-
-        return result;
-    }
-
-    // Convenience function for retrieving the id of the current group
-    //
-    function getCurrentGroupId()
-    {
-        return bidx.utils.getValue( bidxConfig, "session.currentGroup" );
-    }
-
-    // data and lookup the joined group id's
-    //
-    function getGroupIds()
-    {
-        var result      = []
-        ,   groups      = bidx.utils.getValue( bidxConfig, "session.groups" )
-        ;
-
-        if ( groups )
-        {
-            $.each( groups, function( idx, group )
-            {
-                result.push( group.bidxGroupId );
-            } );
-        }
-
-        return result;
-    }
 
     // Mainstate switcher. Expects html containers to exist with both the class mainState and mainState{{s}}, where s is the parameter being put into this function
     //
@@ -382,23 +315,14 @@
             $controls.append( btns );
         }
 
-    ,   getInvestorProfileId: function()
-        {
-            return getEntityId( "bidxInvestorProfile" );
-        }
-    ,   getEntrepreneurProfileId: function()
-        {
-            return getEntityId( "bidxEntrepreneurProfile" );
-        }
-
-    ,   getGroupIds: function()
-        {
-            return getGroupIds();
-        }
-
     ,   updateHash:                         updateHash
-    ,   getCurrentGroupId:                  getCurrentGroupId
-    ,   getNow:                             getNow
+
+        // The following functions are deprecated and should be called on bidx.common
+        //
+    ,   getInvestorProfileId:               bidx.common.getInvestorProfileId
+    ,   getEntrepreneurProfileId:           bidx.common.getEntrepreneurProfileId
+    ,   getGroupIds:                        bidx.common.getGroupIds
+
     };
 
 

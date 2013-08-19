@@ -1,11 +1,87 @@
+// Common.js is a miscelaneous home for 'state full' utilities
+//
 ( function( $ )
 {
     var bidx            = window.bidx || {}
     ,   bidxConfig      = window.bidxConfig || {}
-    ,   groupDomain     = bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain()
+
     ,   $body           = $( "body" )
+
+    ,   groupDomain     = bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain()
+    ,   timeDifference  = ( bidx.utils.getValue( bidxConfig, "now" ) || ( new Date() ).getTime() ) - ( new Date() ).getTime()
+
     ,   notifier
     ;
+
+    // Convenience function for retrieving the id of the current group
+    //
+    function getCurrentGroupId()
+    {
+        return bidx.utils.getValue( bidxConfig, "session.currentGroup" );
+    }
+
+    // Retrieve the most reliable "now" Date object we can give at the moment. This is SYSTEM DATE! Not localized
+    //
+    function getNow()
+    {
+        var now = ( new Date() ).getTime() + timeDifference;
+
+        return new Date( now );
+    }
+
+    // Convenience function for itterating over the list of entities of the session
+    // data and lookup the existance (and id) of a specific entity
+    //
+    function getEntityId( entityType )
+    {
+        var result      = null
+        ,   entities    = bidx.utils.getValue( bidxConfig, "session.entities" )
+        ;
+
+        if ( entities )
+        {
+            $.each( entities, function( idx, entity )
+            {
+                var bidxMeta = bidx.utils.getValue( entity, "bidxMeta" ) || {};
+
+                if ( bidxMeta.bidxEntityType === entityType )
+                {
+                    if ( !result )
+                    {
+                        result = bidxMeta.bidxEntityId;
+                    }
+                    else
+                    {
+                        result = [ result ];
+                        result.push( bidxMeta.bidxEntityId );
+                    }
+                }
+            } );
+        }
+
+        return result;
+    }
+
+    // data and lookup the joined group id's
+    //
+    function getGroupIds()
+    {
+        var result      = []
+        ,   groups      = bidx.utils.getValue( bidxConfig, "session.groups" )
+        ;
+
+        if ( groups )
+        {
+            $.each( groups, function( idx, group )
+            {
+                var bidxMeta = bidx.utils.getValue( group, "bidxMeta" ) || {};
+
+                result.push( bidxMeta.bidxGroupId );
+            } );
+        }
+
+        return result;
+    }
 
     // Search for any join group button on the page, on click, perform an API call to join the group and reload the page on success
     //
@@ -277,6 +353,8 @@
         );
     }
 
+
+
     // Notify the user, for now it's just a wrapper over noty... but if we replace this
     //
     var _notify = function( params )
@@ -448,6 +526,19 @@
     ,   notifySuccessModal:         notifySuccessModal
     ,   joinGroup:                  joinGroup
     ,   leaveGroup:                 leaveGroup
+
+    ,   getInvestorProfileId: function()
+        {
+            return getEntityId( "bidxInvestorProfile" );
+        }
+    ,   getEntrepreneurProfileId: function()
+        {
+            return getEntityId( "bidxEntrepreneurProfile" );
+        }
+
+    ,   getGroupIds:                getGroupIds
+    ,   getCurrentGroupId:          getCurrentGroupId
+    ,   getNow:                     getNow
 
         // DEV API - do not use these in code!
     ,   _notify:                    _notify
