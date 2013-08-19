@@ -461,6 +461,7 @@
             ,   facebookUsername:       bidx.i18n.i( "frmInvalidFacebookUsername" )
             ,   twitterUsername:        bidx.i18n.i( "frmInvalidTwitterUsername" )
             ,   url:                    bidx.i18n.i( "frmInvalidUrl" )
+            ,   urlOptionalProtocol:    bidx.i18n.i( "frmInvalidUrl" )
             ,   monetaryAmount:         bidx.i18n.i( "frmInvalidMonetaryAmount" )
             ,   min:                    $.validator.format( bidx.i18n.i( "frmInvalidMin" ))
             ,   max:                    $.validator.format( bidx.i18n.i( "frmInvalidMax" ))
