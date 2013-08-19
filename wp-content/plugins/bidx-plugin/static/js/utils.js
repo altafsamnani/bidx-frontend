@@ -581,6 +581,20 @@
         return "bidx" + new Date().getTime() + "X" + Math.floor( Math.random() * 10000000 );
     };
 
+    // Make sure the url always starts with a protocol. Use http:// by default
+    //
+    var prefixUrlWithProtocol = function( url )
+    {
+        var RE_STARTS_WITH_PROTOCOL = /:\/\//
+        ;
+
+        if ( url && !RE_STARTS_WITH_PROTOCOL.test( url ))
+        {
+            url = "http://" + url;
+        }
+
+        return url;
+    };
 
     // Logger functions
     //
@@ -633,6 +647,7 @@
     ,   removeIdFromHash:           removeIdFromHash
     ,   getViewName:                getViewName
     ,   generateId:                 generateId
+    ,   prefixUrlWithProtocol:      prefixUrlWithProtocol
 
     ,   log:                        log
     ,   warn:                       warn
