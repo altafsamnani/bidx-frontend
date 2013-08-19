@@ -1,7 +1,8 @@
 <I18N>
     <!-- Misc -->
     <Item value="noProfileEditPermission">You do not have the rights to edit this profile</Item>
-    <Item value="msgOnPageUnload">There are pending changes</Item>
+    <Item value="msgOnPageUnload">There are pending changes. Are you sure to navigate away and loose all of the pending changes?</Item>
+    <Item value="msgWaitForRedirect">Please wait for the redirect...</Item>
 
     <!-- Attachment -->
     <Item value="selectDocumentType">Select the type</Item>
