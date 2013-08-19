@@ -11,7 +11,98 @@
     ,   timeDifference  = ( bidx.utils.getValue( bidxConfig, "now" ) || ( new Date() ).getTime() ) - ( new Date() ).getTime()
 
     ,   notifier
+
+    ,   changesQueue    = [] // array holding app names that have pending changes
     ;
+
+    // Add something to the list of apps having a reason to ask the user for confirmation on page unload
+    // http://stackoverflow.com/questions/1119289/how-to-show-the-are-you-sure-you-want-to-navigate-away-from-this-page-when-ch
+    //
+    function addAppWithPendingChanges( appName )
+    {
+        if ( changesQueue.length === 0 )
+        {
+            window.onbeforeunload = function confirmOnPageExit( e )
+            {
+                // If we haven't been passed the event get the window.event
+                e = e || window.event;
+
+                var message = bidx.i18n.i( "msgOnPageUnload" );
+
+                // For IE6-8 and Firefox prior to version 4
+                if ( e )
+                {
+                    e.returnValue = message;
+                }
+
+                // For Chrome, Safari, IE8+ and Opera 12+
+                return message;
+            };
+        }
+
+        if ( $.inArray( appName, changesQueue ) !== -1 )
+        {
+            changesQueue.push( appName );
+        }
+    }
+
+    // Remove something from the list of apps that have a reason to ask for confirmation before unload
+    //
+    function removeAppWithPendingChanges( appName )
+    {
+        changesQueue = $.grep( changesQueue, function( appWithChanges )
+        {
+            return appWithChanges !== appName;
+        } );
+
+        if ( changesQueue.length === 0 )
+        {
+            window.onbeforeunload = null;
+        }
+    }
+
+    // Are there pending changes? If so, ask the end user if he really wants to navigate away
+    //
+    // @returns Boolean true when the user agrees, or there are no changes
+    //
+    function checkPendingChanges( cb )
+    {
+        var confirmationRequested = false;
+
+        if ( changesQueue.length )
+        {
+            confirmationRequested = true;
+
+            _notify(
+            {
+                text:       bidx.i18n.i( "msgOnPageUnload" )
+            ,   modal:      true
+            ,   type:       "confirm"
+            ,   layout:     "center"
+            ,   buttons:
+                [
+                    {
+                        addClass:       "btn btn-primary"
+                    ,   text:           "Ok"
+                    ,   onClick: function( $noty )
+                        {
+                            cb( true );
+                        }
+                    }
+                ,   {
+                        addClass:       "btn btn-danger"
+                    ,   text:           "Cancel"
+                    ,   onClick: function( $noty )
+                        {
+                            cb( false );
+                        }
+                    }
+                ]
+            } );
+        }
+
+        return confirmationRequested;
+    }
 
     // Convenience function for retrieving the id of the current group
     //
@@ -353,8 +444,6 @@
         );
     }
 
-
-
     // Notify the user, for now it's just a wrapper over noty... but if we replace this
     //
     var _notify = function( params )
@@ -475,8 +564,6 @@
                 //
             ,   tagsinputRequired:      bidx.i18n.i( "frmFieldRequired" )
             ,   tagsinputMinItems:      $.validator.format( bidx.i18n.i( "frmInvalidMinItems" ) )
-
-
             } );
         } );
 
@@ -522,15 +609,15 @@
 
     bidx.common =
     {
-        groupDomain:                groupDomain
-    ,   notifyRedirect:             notifyRedirect
-    ,   notifyCustom:               notifyCustom
-    ,   notifyCustomSuccess:        notifyCustomSuccess
-    ,   notifyError:                notifyError
-    ,   notifySuccess:              notifySuccess
-    ,   notifySuccessModal:         notifySuccessModal
-    ,   joinGroup:                  joinGroup
-    ,   leaveGroup:                 leaveGroup
+        groupDomain:                    groupDomain
+    ,   notifyRedirect:                 notifyRedirect
+    ,   notifyCustom:                   notifyCustom
+    ,   notifyCustomSuccess:            notifyCustomSuccess
+    ,   notifyError:                    notifyError
+    ,   notifySuccess:                  notifySuccess
+    ,   notifySuccessModal:             notifySuccessModal
+    ,   joinGroup:                      joinGroup
+    ,   leaveGroup:                     leaveGroup
 
     ,   getInvestorProfileId: function()
         {
@@ -541,12 +628,19 @@
             return getEntityId( "bidxEntrepreneurProfile" );
         }
 
-    ,   getGroupIds:                getGroupIds
-    ,   getCurrentGroupId:          getCurrentGroupId
-    ,   getNow:                     getNow
+    ,   getGroupIds:                    getGroupIds
+    ,   getCurrentGroupId:              getCurrentGroupId
+    ,   getNow:                         getNow
+
+    ,   addAppWithPendingChanges:       addAppWithPendingChanges
+    ,   removeAppWithPendingChanges:    removeAppWithPendingChanges
+    ,   getChangesQueue:                function()
+        {
+            return changesQueue.slice();
+        }
 
         // DEV API - do not use these in code!
-    ,   _notify:                    _notify
+    ,   _notify:                        _notify
     };
 
     // Control Bootstraps' tab control from outside of the tab header
