@@ -9,11 +9,21 @@
     ,   app
     ,   router
     ,   sectionState
+    ,   timeDifference  = ( bidx.utils.getValue( bidxConfig, "now" ) || ( new Date() ).getTime() ) - ( new Date() ).getTime()
     ;
 
     var $mainStates     = $( ".mainState" )
     ,   $controls       = $( ".editControls" )
     ;
+
+    // Retrieve the most reliable "now" Date object we can give at the moment. This is SYSTEM DATE! Not localized
+    //
+    function getNow()
+    {
+        var now = ( new Date() ).getTime() + timeDifference;
+
+        return new Date( now );
+    }
 
     // Convenience function for itterating over the list of entities of the session
     // data and lookup the existance (and id) of a specific entity
@@ -366,17 +376,17 @@
     //
     window.bidx.controller =
     {
-        addControlButtons:                  function( btns )
+        addControlButtons: function( btns )
         {
             $controls.empty();
             $controls.append( btns );
         }
 
-    ,   getInvestorProfileId:                         function()
+    ,   getInvestorProfileId: function()
         {
             return getEntityId( "bidxInvestorProfile" );
         }
-    ,   getEntrepreneurProfileId:                     function()
+    ,   getEntrepreneurProfileId: function()
         {
             return getEntityId( "bidxEntrepreneurProfile" );
         }
@@ -385,8 +395,10 @@
         {
             return getGroupIds();
         }
-    ,   updateHash:                 updateHash
-    ,   getCurrentGroupId:          getCurrentGroupId
+
+    ,   updateHash:                         updateHash
+    ,   getCurrentGroupId:                  getCurrentGroupId
+    ,   getNow:                             getNow
     };
 
 
