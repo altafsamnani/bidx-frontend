@@ -146,6 +146,8 @@
         e.preventDefault();
     } );
 
+    // Handle toggle states of showing/hiding complete toggle blocks
+    //
     var _handleToggleChange = function( show, group )
     {
         var fn = show ? "fadeIn" : "hide";
@@ -181,7 +183,11 @@
         ,   myId                        = bidx.utils.generateId()
         ;
 
-        $countryOperationSpecifics.find( ".accordion-toggle" ).attr( "href", "#" + myId );
+        // Set accordion / toggle controls
+        //
+        $countryOperationSpecifics.find( ".accordion-toggle" )
+            .attr( "href", "#" + myId );
+
         $countryOperationSpecifics.find( ".accordion-body"   ).attr( "id", myId );
 
         if ( countryOperationSpecifics )
@@ -206,9 +212,26 @@
             } );
         }
 
+        // Fix headers of the existing collapse controls by explicitly removing the collapsed clas
+        // This is an issue with the bootstrap plugin!
+        //
+        $countryOperationSpecificsAccordion.find( ".accordion-group" ).each( function()
+        {
+            var $group      = $( this )
+            ,   $toggle     = $group.find( "[data-toggle=collapse]" )
+            ;
+
+            $toggle.addClass( "collapsed" );
+        } );
+
         // Add to the DOM
         //
         $countryOperationSpecificsAccordion.append( $countryOperationSpecifics );
+
+        $countryOperationSpecifics.find( ".accordion-body" ).collapse(
+        {
+            parent:             "#countryOperationSpecificsAccordion"
+        } );
 
         // Update all the input elements and prefix the names with the right index
         // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
