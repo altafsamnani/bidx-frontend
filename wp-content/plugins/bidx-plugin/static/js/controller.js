@@ -35,40 +35,65 @@
     //
     var _navigateToApp = function( toApp, options )
     {
-        var differentApp = app !== bidx[ toApp ];
+        var differentApp    = app !== bidx[ toApp ]
+        ,   pendingChanges
+        ;
 
-        app     = bidx[ toApp ];
-
-        if ( !app )
-        {
-            bidx.utils.error( "bidx::controller trying to navigate ", toApp, " but that app is not loaded!" );
-            router.navigate( "" );
-            return;
-        }
-
-        // When switching to the app, start by scrolling to the top of the page
-        //
         if ( differentApp )
         {
-            $( "html, body" ).animate( {scrollTop: 0}, 500 );
+            pendingChanges  = bidx.common.checkPendingChanges( function( confirmed )
+            {
+                if ( confirmed )
+                {
+                    _doNavigateToApp();
+                }
+            } );
+
+            if ( !pendingChanges )
+            {
+                _doNavigateToApp();
+            }
+        }
+        else
+        {
+            _doNavigateToApp();
         }
 
-        // Perform a navigate request to the app, might come back with the
-        // request for us to update the hash
-        //
-        var newHash = app.navigate( options );
-
-        // Switch the UI to the app
-        //
-        _showMainState( state );
-
-        // Save a reference to the container element of the app
-        //
-        $element = app.$element;
-
-        if ( newHash )
+        function _doNavigateToApp()
         {
-            updateHash( newHash );
+            if ( !bidx[ toApp ] )
+            {
+                bidx.utils.error( "bidx::controller trying to navigate ", toApp, " but that app is not loaded!" );
+                router.navigate( "" );
+                return;
+            }
+
+            // When switching to the app, start by scrolling to the top of the page
+            //
+            if ( differentApp )
+            {
+                $( "html, body" ).animate( {scrollTop: 0}, 500 );
+            }
+
+            app = bidx[ toApp ];
+
+            // Perform a navigate request to the app, might come back with the
+            // request for us to update the hash
+            //
+            var newHash = bidx[ toApp ].navigate( options );
+
+            // Switch the UI to the app
+            //
+            _showMainState( state );
+
+            // Save a reference to the container element of the app
+            //
+            $element = app.$element;
+
+            if ( newHash )
+            {
+                updateHash( newHash );
+            }
         }
     };
 
@@ -272,30 +297,46 @@
         {
             bidx.utils.log( "AppRouter::show" );
 
-            // Bidx-business is handled differently
-            //
-            if ( !$( "body" ).hasClass( "bidx-business" ))
+            var pendingChanges = bidx.common.checkPendingChanges( function( confirmed )
             {
-                $controls.empty();
+                if ( confirmed )
+                {
+                    _doShow();
+                }
+            } );
+
+            if ( !pendingChanges )
+            {
+                _doShow();
             }
 
-            // Did we have an app loaded? Unload it!
-            //
-            if ( app && app.reset )
+            function _doShow()
             {
-                app.reset();
+                // Bidx-business is handled differently
+                //
+                if ( !$( "body" ).hasClass( "bidx-business" ))
+                {
+                    $controls.empty();
+                }
+
+                // Did we have an app loaded? Unload it!
+                //
+                if ( app && app.reset )
+                {
+                    app.reset();
+                }
+
+                if ( $element )
+                {
+                    $element.hide();
+                }
+
+                state       = "show";
+                app         = null;
+                $element    = null;
+
+                _showMainState( state );
             }
-
-            if ( $element )
-            {
-                $element.hide();
-            }
-
-            state       = "show";
-            app         = null;
-            $element    = null;
-
-            _showMainState( state );
         }
     } );
 

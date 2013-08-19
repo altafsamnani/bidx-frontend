@@ -40,7 +40,7 @@
             };
         }
 
-        if ( $.inArray( appName, changesQueue ) !== -1 )
+        if ( $.inArray( appName, changesQueue ) === -1 )
         {
             changesQueue.push( appName );
         }
@@ -86,7 +86,13 @@
                     ,   text:           "Ok"
                     ,   onClick: function( $noty )
                         {
+                            // Clear the queue, because the user confirmed it
+                            //
+                            changesQueue = [];
+
                             cb( true );
+
+                            $noty.close();
                         }
                     }
                 ,   {
@@ -95,6 +101,8 @@
                     ,   onClick: function( $noty )
                         {
                             cb( false );
+
+                            $noty.close();
                         }
                     }
                 ]
@@ -455,7 +463,7 @@
     //
     var notifyRedirect = function()
     {
-        notifySuccessModal( "Wait for the redirect..." );
+        notifySuccessModal( bidx.i18n.i( "msgWaitForRedirect" ) );
     };
 
     // Create custom Noty message
@@ -634,6 +642,7 @@
 
     ,   addAppWithPendingChanges:       addAppWithPendingChanges
     ,   removeAppWithPendingChanges:    removeAppWithPendingChanges
+    ,   checkPendingChanges:            checkPendingChanges
     ,   getChangesQueue:                function()
         {
             return changesQueue.slice();
