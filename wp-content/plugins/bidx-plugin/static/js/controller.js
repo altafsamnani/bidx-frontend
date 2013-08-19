@@ -303,6 +303,10 @@
                 {
                     _doShow();
                 }
+                else
+                {
+                    router.navigate( "" );
+                }
             } );
 
             if ( !pendingChanges )
