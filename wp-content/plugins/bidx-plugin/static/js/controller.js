@@ -9,6 +9,8 @@
     ,   app
     ,   router
     ,   sectionState
+    ,   previousHash
+    ,   currentHash
     ;
 
     var $mainStates     = $( ".mainState" )
@@ -305,7 +307,7 @@
                 }
                 else
                 {
-                    router.navigate( "" );
+                    router.navigate( previousHash || "" );
                 }
             } );
 
@@ -345,6 +347,14 @@
     } );
 
     router = new AppRouter();
+
+    // Just keep track of the previous hash, so we know where to go back to in case of a denied navigation
+    //
+    router.bind( "route", function()
+    {
+        previousHash    = currentHash;
+        currentHash     = document.location.hash;
+    } );
 
     // Expose
     //
