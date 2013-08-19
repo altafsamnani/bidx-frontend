@@ -329,7 +329,7 @@ class BidxCommon
                         $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('member', 'group'), $static = true, $i18nGlobal = true);
                     } else {
 
-                        $redirect = 'login'; //To redirect /member and not loggedin page to /login
+                        $redirect = 'auth'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
 
@@ -365,7 +365,7 @@ class BidxCommon
                         // To store static api values to site transient for Frontend
                         $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('member', 'group'), $static = true, $i18nGlobal = true);
                     } else {
-                        $redirect = 'login'; //To redirect /member and not loggedin page to /login
+                        $redirect = 'auth'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
 
@@ -407,7 +407,7 @@ class BidxCommon
     function redirectToLogin ()
     {
         $http = (is_ssl ()) ? 'https://' : 'http://';
-        $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/login';
+        $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/auth';
         header ("Location: " . $redirect_url);
         exit;
     }

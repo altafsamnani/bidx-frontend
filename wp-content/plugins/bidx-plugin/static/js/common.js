@@ -369,35 +369,39 @@
         notifySuccessModal( "Wait for the redirect..." );
     };
 
+    // Create custom Noty message
+    //
     var notifyCustom = function( msg )
     {
-        notifier = noty ({
+        notifier = noty (
+        {
             text:           msg
         ,   type:           "alert"
         ,   modal:          true
         } );
     };
 
+    // Create a succes Noty or update an existing Noty to succes with custom message
+    //
     var notifyCustomSuccess = function (msg)
     {
         if( notifier )
         {
-            notifier
-                .setText( msg )
-                .setType( "success" )
-                .setTimeout( 2000 )
-                ;
+            notifier.setText( msg )
+                    .setType( "success" )
+                    .setTimeout( 1500 )
+                    ;
 
         }
         else
         {
             _notify(
-                {
-                    text:           msg
-                ,   type:           "success"
-                ,   modal:          true
-                ,   timeout:        2000
-                } );
+            {
+                text:           msg
+            ,   type:           "success"
+            ,   modal:          true
+            ,   timeout:        1500
+            } );
         }
     };
 

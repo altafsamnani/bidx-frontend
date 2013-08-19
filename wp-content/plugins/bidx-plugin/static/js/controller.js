@@ -72,13 +72,15 @@
         }
     };
 
-    // Update Hash using Backbone Router
+    // Update Hash using Backbone Router. If you wish to also call the route function, set the trigger option to true.
+    // To update the URL without creating an entry in the browser's history, set the replace option to true.
     //
-    var updateHash = function ( newHash )
+    var updateHash = function ( newHash, trigger, replace )
     {
-        router.navigate( newHash );
-        bidx.utils.log("hash changed");
+        router.navigate( newHash, trigger, replace );
+        bidx.utils.log("hash changed to", newHash );
     };
+
 
     // Router for main state
     //
@@ -99,9 +101,7 @@
 
         ,   'editBusinessSummary(/:id)(/:part)(/:section)':     'editBusinessSummary'
 
-        ,   'login':                                            'login'
-        ,   'register':                                         'register'
-        ,   'resetpassword':                                    'resetpassword'
+        ,   'auth(/:section)':                                  'auth'
 
         ,   'mail(/:section)(/:part1)(/:part2)':                'mail'
 
@@ -238,7 +238,7 @@
                 }
             );
         }
-    ,   mail:              function( section, part1, part2 )
+    ,   mail:                   function( section, part1, part2 )
         {
             bidx.utils.log( "AppRouter::mailInbox", section );
 
@@ -251,6 +251,20 @@
                     section:    section
                 ,   part1:      part1
                 ,   part2:      part2
+                }
+            );
+        }
+    ,   auth:                   function( section )
+        {
+            bidx.utils.log( "AppRouter::auth", section );
+
+            state = "auth";
+
+            _navigateToApp
+            (
+                "auth"
+            ,   {
+                    section:    section
                 }
             );
         }
@@ -280,24 +294,6 @@
             state       = "show";
             app         = null;
             $element    = null;
-
-            _showMainState( state );
-        }
-    ,   login:              function()
-        {
-            state = "login";
-
-            _showMainState( state );
-        }
-    ,   register:           function()
-        {
-            state = "register";
-
-            _showMainState( state );
-        }
-    ,   resetpassword:      function()
-        {
-            state = "resetpassword";
 
             _showMainState( state );
         }

@@ -42,26 +42,30 @@ class auth extends Generic{
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/templates/' );
 		// 2. Determine the view needed
+
 		$command = $atts['view'];
         $type    = array_key_exists( 'type', $atts ) ? $atts['type'] : null;
+
+        // NOTE: because of changes in the App registration, the code below should be revised if Auth is used as a widget.
+        // Default the $command is currently 'views' which holds all the views (login, password reset and register)
 
         switch ($command) {
             case "standard-auth":
                 switch($type) {
                     case "login" :
                         $view->type = "login";
-                        $render = 'standard-auth';
+                        $render = 'views';
                         $view->showRegisterLink = false;
                         $view->showLoginLink = true;
                         break;
-                    case "register" :
+                    case "register" : //NOTE: #mattijs: I am under the impression that this block is not used??
                         $view->type = "register";
                         $render = 'registration';
                         $view->showLoginLink = false;
                         break;
                     default :
                         $view->type = "default";
-                        $render = 'standard-auth';
+                        $render = 'views';
                         $view->showRegisterLink = true;
                         $view->showLoginLink = true;
                 }

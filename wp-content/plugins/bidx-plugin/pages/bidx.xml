@@ -118,17 +118,17 @@
 		</post>
 		 <post>
 	     	<post_id>14</post_id>
-            <name>login</name>
-            <title>Login</title>
-            <mapping>^login?</mapping>
-            <content>[bidx app="auth" view="standard-auth"]</content>
+            <name>Authentication</name>
+            <title>Authentication</title>
+            <mapping>^auth</mapping>
+            <content>[bidx app="auth" view="views"]</content>
 	    </post>
 		<post>
 			<post_id>15</post_id>
 			<name>My messages</name>
 			<title>My messages</title>
 			<mapping>^mail</mapping>
-			<content>[bidx app="mail" view="view"]</content>
+			<content>[bidx app="mail" view="views"]</content>
 		</post>
 		<post>
 			<post_id>16</post_id>

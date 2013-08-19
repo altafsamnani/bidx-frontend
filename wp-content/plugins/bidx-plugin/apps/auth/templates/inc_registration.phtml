@@ -1,0 +1,41 @@
+
+
+<article  class="view viewRegister <?php //echo ($this->type=='register') ? 'mainStateShow':'';?>">
+	<form id="frmRegister" action="/">
+		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A first name is mandatory','i18n');?>"}}'>
+			<label><?php _e('First name','bidxplugin');?></label>
+			<input type="text" name="personalDetails.firstName" placeholder="<?php _e('Type your first name','bidxplugin');?>" />
+		</div>
+
+		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A last name is mandatory','i18n');?>"}}'>
+			<label><?php _e('Last name','bidxplugin');?></label>
+			<input type="text" name="personalDetails.lastName" placeholder="<?php _e('Type your last name','bidxplugin');?>" />
+		</div>
+
+		<div class="formfield" data-validation='{"required":{"text":"<?php _e('This field is mandatory','i18n');?>"},"typecheck":[{"email":{"text":"<?php _e('This is not a valid e-mail address','i18n');?>"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
+			<label><?php _e('Email address','bix-plugin');?></label>
+			<input type="text" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
+		</div>
+
+		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A location is mandatory','i18n');?>"}}'>
+			<label><?php _e('What is your location?','bidxplugin');?></label>
+			<input type="text" name="address" placeholder="<?php _e('Please type your location','bidxplugin');?>" data-type="location" data-type-arguments=''/>
+		</div>
+
+		<div class="buttonwrapper">
+			<button type="submit" class="btn btn-primary"><?php _e('Register','bidxplugin');?></button>
+		</div>
+        <?php if($this->showLoginLink) { ?>
+		<p>
+			<?php _e('Forgot your password. Click <a href="#resetpassword">here</a> to recover.','bidxplugin');?><br/>
+			<?php _e('Login? Click <a href="#login">here</a> to go to login.','bidxplugin');?>
+		</p>
+        <?php } ?>
+        <input type="hidden" name="urlparam" value="<?php  echo base64_encode('groupname='.$this->groupNotification);?>">
+	</form>
+
+	<div class="registerSuccess hide">
+		<h3><?php _e('Registration complete','bidxplugin');?></h3>
+		<p><?php _e('The registration is complete. An e-mail has been dispatched with followup instructions.','bidxplugin');?></p>
+    </div>
+</article>
