@@ -34,7 +34,7 @@
             }
         ,   {
                 label :     "fq",
-                value :     "type:bidxMemberProfile+AND+groupIds:21"
+                value :     "type:bidxMemberProfile+AND+groupIds:" + bidx.controller.getCurrentGroupId()
             }
         ,   {
                 label :     "rows",
