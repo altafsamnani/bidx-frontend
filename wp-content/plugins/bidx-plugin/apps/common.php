@@ -336,6 +336,8 @@ class BidxCommon
                     break;
 
                 case 'company':
+                    $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('company'), $static = true, $i18nGlobal = true);
+
                     $companyId = null;
                     if (!empty ($hostAddress[2])) {
                         $companyId = $hostAddress[2];
