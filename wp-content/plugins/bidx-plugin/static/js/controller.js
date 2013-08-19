@@ -46,6 +46,13 @@
         return result;
     }
 
+    // Convenience function for retrieving the id of the current group
+    //
+    function getCurrentGroupId()
+    {
+        return bidx.utils.getValue( bidxConfig, "session.currentGroup" );
+    }
+
     // data and lookup the joined group id's
     //
     function getGroupIds()
@@ -378,7 +385,8 @@
         {
             return getGroupIds();
         }
-    ,   updateHash: updateHash
+    ,   updateHash:                 updateHash
+    ,   getCurrentGroupId:          getCurrentGroupId
     };
 
 
