@@ -226,9 +226,9 @@
     // Initialize handlers
     _initHandlers();
 
-    // Only update the hash when user is authenticating
+    // Only update the hash when user is authenticating and when there is no hash defined
     //
-    if ( $( "body.bidx-authentication" ).length )
+    if ( $( "body.bidx-authentication" ).length && !bidx.utils.getValue(window, "location.hash").length )
     {
         document.location.hash = "#auth/login";
     }
