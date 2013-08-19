@@ -241,6 +241,10 @@ class BidxCommon
         $data = $result['data'];
         $jsApiVars = (isset ($data)) ? json_encode ($data) : '{}';
 
+        // milliseconds from 1 jan 1970 GMT
+        //
+        $now = time() * 1000;
+
         $scriptJs = "<script>
             var bidxConfig  = bidxConfig || {};
 
@@ -252,6 +256,8 @@ class BidxCommon
 
             /* Dump response of the session-api */
             bidxConfig.session = $jsSessionVars ;
+
+            bidxConfig.now = $now;
 
             bidxConfig.authenticated = {$jsAuthenticated};
                  </script>
