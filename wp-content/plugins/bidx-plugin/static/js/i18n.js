@@ -9,11 +9,12 @@
 
         // Internal administration of cached items, let's keep it for now in an object, maybe later sync it to localstorage
         //
-        // A cached item is identifed by it's key in the items object. This key is equal to the name of the list in the static data API
+        // A cached item is identifed by it's property in the items object. This property is equal to the name of the context in the WordPress world
         //
         // Every item should get a set of properties:
-        // - mtime          when was it set, in ms
-        // - data           the actual data
+        // - mtime          when it was set
+        // - data           the actual data (array)
+        // - byKey          the same data, but as a lookup by key / value
         //
     var items               = {}
 

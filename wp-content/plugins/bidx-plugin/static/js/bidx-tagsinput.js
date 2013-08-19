@@ -179,11 +179,11 @@
             //
             if ( options.state.dataKey )
             {
-                window.bidx.data.getItem( options.state.dataKey, function( err, result )
+                window.bidx.data.getContext( options.state.dataKey, function( err, result )
                 {
                     if ( err )
                     {
-                        window.bidx.utils.error( "Problem getting bidx.data for key", options.state.dataKey, "populate a tagsinput control" );
+                        window.bidx.utils.error( "Problem getting bidx.data for context/key", options.state.dataKey, "populate a tagsinput control" );
                     }
                     else
                     {

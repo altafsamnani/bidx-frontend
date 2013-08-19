@@ -21,14 +21,49 @@
     ,   requestQueue        = {}
     ;
 
+    // Blocking data item retrieval function. Can be used after the context has been succesfully loaded
+    //
+    function i( key, context )
+    {
+        if ( !items[ context ] )
+        {
+            bidx.utils.error( "bidx.data::context", context, "not loaded!" );
+        }
+
+        return bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
+    }
+
+    // Returns a promise which will be done() after loading all the contexts'
+    // TODO: handle error situation
+    //
+    function load( contexts )
+    {
+        var deferreds = [];
+
+        $.each( contexts, function( idx, context )
+        {
+            deferreds.push(
+                $.Deferred( function( d )
+                {
+                    getContext( context, function( err, item )
+                    {
+                        d.resolve();
+                    } );
+                } )
+            );
+        } );
+
+        return $.when.apply( $, deferreds );
+    }
+
     // Main function for access the data cache
     //
-    var getItem = function( context, cb )
+    function getContext( context, cb )
     {
             // Untill we have defined what the caching rules are.. let's just disable it and cache forever
             //
         var oldestAllowedMTime  = 0
-        ,   first
+        ,   first               = false
         ;
 
         // Is the item in the cache and not 'too' old? return it
@@ -39,7 +74,8 @@
             return;
         }
 
-
+        // Are we the first one to ask? Let's create a queue and perform the actual request
+        //
         if ( !requestQueue[ context ] )
         {
             requestQueue[ context ] = [];
@@ -49,8 +85,6 @@
         requestQueue[ context ].push( cb );
 
         // Retrieve data from API
-        //
-        // TODO: proper implementation, currently no API available... shouldn't end up here
         //
         if ( first )
         {
@@ -89,16 +123,65 @@
                 } )
             ;
         }
-    };
+    }
+
+    // Retrieve the label for a single key within a specific context in an async fashion
+    //
+    function getItem( key, context, cb )
+    {
+        var item, myItem;
+
+        // Context not loaded? Retrieve it first, and then retry finding it
+        //
+        if ( !items[ context ] )
+        {
+            getContext( context, function( err, item )
+            {
+                if ( err )
+                {
+                    cb( err, key );
+                }
+                else
+                {
+                    getItem( key, context, cb );
+                }
+            } );
+        }
+        else
+        {
+            item = items[ context ] || {};
+
+            // Was asked for the whole context or a single key?
+            //
+            if ( !key )
+            {
+                cb( null, item );
+            }
+            else
+            {
+                myItem = item.byKey[ key ] || {};
+
+                cb( null, myItem.label || key );
+            }
+        }
+    }
 
     // Internal setter of cache items
     //
     var setItem = function( context, data )
     {
+        var keys = {};
+
+        $.each( data, function( idx, item )
+        {
+            keys[ item.value ] = item;
+        });
+
         items[ context ] =
         {
             mtime:              +( new Date() )
         ,   data:               data
+        ,   byKey:              keys
         };
     };
 
@@ -137,5 +220,7 @@
     {
         getItem:                    getItem
     ,   setItem:                    setItem
+    ,   getContext:                 getContext
+    ,   i:                          i
     };
 } ( jQuery ));

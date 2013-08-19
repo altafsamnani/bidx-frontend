@@ -131,7 +131,7 @@
 
     // Populate the dropdowns with the values
     //
-    bidx.data.getItem( "investmentType", function( err, investmentTypes )
+    bidx.data.getContext( "investmentType", function( err, investmentTypes )
     {
         var $investmentType     = snippets.$previousInvestment.find( "[name='investmentType']" )
         ,   $noValue            = $( "<option value='' />" )
@@ -143,7 +143,7 @@
         bidx.utils.populateDropdown( $investmentType, investmentTypes );
     } );
 
-    bidx.data.getItem( "documentType", function( err, documentTypes )
+    bidx.data.getContext( "documentType", function( err, documentTypes )
     {
         var $documentType = snippets.$attachment.find( "[name='documentType']" )
         ,   $noValue        = $( "<option value='' />" )
@@ -482,7 +482,7 @@
 
     // Populate the dropdowns with the values
     //
-    bidx.data.getItem( "investorType", function( err, investorTypes )
+    bidx.data.getContext( "investorType", function( err, investorTypes )
     {
         var $noValue = $( "<option value='' />" );
 
@@ -494,7 +494,7 @@
 
     // Populate the dropdowns with the values
     //
-    bidx.data.getItem( "country", function( err, countries )
+    bidx.data.getContext( "country", function( err, countries )
     {
         var $noValue = $( "<option value='' />" );
 

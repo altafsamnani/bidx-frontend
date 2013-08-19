@@ -107,7 +107,7 @@
 
     // Populate the peronsalDetails.nationality select box using the data items
     //
-    bidx.data.getItem( "country", function( err, countries )
+    bidx.data.getContext( "country", function( err, countries )
     {
         var $noValue            = $( "<option value='' />" );
 
@@ -122,7 +122,7 @@
 
     // Populate the personalDetails.address[0].country select box using the data items
     //
-    bidx.data.getItem( "country", function( err, countries )
+    bidx.data.getContext( "country", function( err, countries )
     {
         var $noValue            = $( "<option value='' />" );
 
@@ -136,7 +136,7 @@
 
     // Populate the personalDetails.address[0].country select box using the data items
     //
-    bidx.data.getItem( "education", function( err, educations )
+    bidx.data.getContext( "education", function( err, educations )
     {
         var $noValue            = $( "<option value='' />" );
 
@@ -148,7 +148,7 @@
         bidx.utils.populateDropdown( $personalDetailsHighestEducation, educations );
     } );
 
-    bidx.data.getItem( "documentType", function( err, documentTypes )
+    bidx.data.getContext( "documentType", function( err, documentTypes )
     {
         var $documentType = snippets.$attachment.find( "[name='documentType']" )
         ,   $noValue        = $( "<option value='' />" )
@@ -168,7 +168,7 @@
 
     // Retrieve the list of languages from the data api
     //
-    bidx.data.getItem( "language", function( err, data )
+    bidx.data.getContext( "language", function( err, data )
     {
         languages = data;
 

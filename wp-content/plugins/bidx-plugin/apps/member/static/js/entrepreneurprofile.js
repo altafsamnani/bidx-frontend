@@ -61,7 +61,7 @@
     snippets.$attachment        = $snippets.children( ".attachmentItem"         ).remove();
     snippets.$previousBusiness  = $snippets.children( ".previousBusinessItem"   ).remove();
 
-    bidx.data.getItem( "businessOutcome", function( err, businessOutcomes )
+    bidx.data.getContext( "businessOutcome", function( err, businessOutcomes )
     {
         var $businessOutcome    = snippets.$previousBusiness.find( "[name='businessOutcome']" )
         ,   $noValue            = $( "<option value='' />" )
@@ -74,7 +74,7 @@
         bidx.utils.populateDropdown( $businessOutcome, businessOutcomes );
     } );
 
-    bidx.data.getItem( "documentType", function( err, documentTypes )
+    bidx.data.getContext( "documentType", function( err, documentTypes )
     {
         var $documentType   = snippets.$attachment.find( "[name='documentType']" )
         ,   $noValue        = $( "<option value='' />" )

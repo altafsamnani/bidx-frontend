@@ -89,7 +89,7 @@
 
     // Populate the peronsalDetails.nationality select box using the data items
     //
-    bidx.data.getItem( "country", function( err, countries )
+    bidx.data.getContext( "country", function( err, countries )
     {
         var $noValue            = $( "<option value='' />" );
 
@@ -101,7 +101,7 @@
         bidx.utils.populateDropdown( $currentAddressCountry, countries );
     } );
 
-    bidx.data.getItem( "country", function( err, countries )
+    bidx.data.getContext( "country", function( err, countries )
     {
         var $countryOperationSpecificsCountry   = snippets.$countryOperationSpecifics.find( "[name='country']" )
         ,   $noValue                            = $( "<option value='' />" )
@@ -113,7 +113,7 @@
         bidx.utils.populateDropdown( $countryOperationSpecificsCountry, countries );
     } );
 
-    bidx.data.getItem( "permitsObtained", function( err, permitsOptained )
+    bidx.data.getContext( "permitsObtained", function( err, permitsOptained )
     {
         var $countryOperationSpecificsPermitsLicencesObtained   = snippets.$countryOperationSpecifics.find( "[name='permitsLicencesObtained']" )
         ,   $noValue                                            = $( "<option value='' />" )
@@ -126,7 +126,7 @@
         bidx.utils.populateDropdown( $countryOperationSpecificsPermitsLicencesObtained, permitsOptained );
     } );
 
-    bidx.data.getItem( "legalForm", function( err, legalForms )
+    bidx.data.getContext( "legalForm", function( err, legalForms )
     {
         var $legalFormBusiness  = $editForm.find( "[name='legalFormBusiness']" )
         ,   $noValue            = $( "<option value='' />" )
