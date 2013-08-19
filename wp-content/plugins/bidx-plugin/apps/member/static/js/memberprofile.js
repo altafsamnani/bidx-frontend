@@ -28,6 +28,7 @@
     ,   memberId
     ,   memberProfileId
     ,   state
+    ,   currentView
     ,   bidx                        = window.bidx
     ,   snippets                    = {}
 
@@ -104,6 +105,16 @@
     snippets.$language      = $snippets.children( ".languageItem"   ).remove();
     snippets.$attachment    = $snippets.children( ".attachmentItem" ).remove();
 
+    // On any changes, how little doesn't matter, notify that we have a pending change
+    // But no need to track the changes when doing a member data load
+    //
+    $editForm.bind( "change", function()
+    {
+        if ( currentView === "edit" )
+        {
+            bidx.common.addAppWithPendingChanges( appName );
+        }
+    } );
 
     // Populate the peronsalDetails.nationality select box using the data items
     //
@@ -984,6 +995,8 @@
 
                     bidx.common.notifyRedirect();
 
+                    bidx.common.removeAppWithPendingChanges( appName );
+
                     var url = document.location.href.split( "#" ).shift();
 
                     document.location.href = url;
@@ -1006,6 +1019,8 @@
 
     var _showView = function( v )
     {
+        currentView = v;
+
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
     };
 
