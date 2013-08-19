@@ -29,8 +29,6 @@
     ,   $institutionAddressStreetNumber = $editForm.find( "[name='institutionAddress.streetNumber']"    )
     ,   $institutionAddressCoordinates  = $editForm.find( "[name='institutionAddress.coordinates']"     )
 
-
-
     ,   member
     ,   memberId
     ,   investorProfileId
@@ -232,7 +230,7 @@
                 case "companyWebsite":
                     $input.rules( "add",
                     {
-                        url:                    true
+                        urlOptionalProtocol:    true
                     } );
                 break;
 
@@ -928,6 +926,27 @@
         }
 
         bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", focusCity );
+
+        // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol
+        //
+        var institutionWebsite      = bidx.utils.getValue( member, "bidxInvestorProfile.institutionWebsite" );
+
+        institutionWebsite = bidx.utils.prefixUrlWithProtocol( institutionWebsite );
+
+        if ( institutionWebsite )
+        {
+            bidx.utils.setValue( member, "bidxInvestorProfile.institutionWebsite", institutionWebsite );
+        }
+
+        var previousInvestments     = bidx.utils.getValue( member, "bidxInvestorProfile.previousInvestments", true );
+
+        if ( previousInvestments )
+        {
+            $.each( previousInvestments, function( idx, previousInvestment )
+            {
+                previousInvestment.companyWebsite = bidx.utils.prefixUrlWithProtocol( previousInvestment.companyWebsite );
+            } );
+        }
     };
 
     // This is the startpoint
@@ -977,7 +996,7 @@
                 }
             ,   "institutionWebsite":
                 {
-                    url:                    true
+                    urlOptionalProtocol:    true
                 }
             ,   "institutionAddress.cityTown":
                 {

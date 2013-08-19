@@ -161,7 +161,7 @@
                 case "webSite":
                     $input.rules( "add",
                     {
-                        url:                    true
+                        urlOptionalProtocol:        true
                     } );
                 break;
 
@@ -402,6 +402,18 @@
 
             bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
         } );
+
+        // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol
+        //
+        var previousBusinesses     = bidx.utils.getValue( member, "bidxEntrepreneurProfile.previousBusiness", true );
+
+        if ( previousBusinesses )
+        {
+            $.each( previousBusinesses, function( idx, previousBusiness )
+            {
+                previousBusiness.webSite = bidx.utils.prefixUrlWithProtocol( previousBusiness.webSite );
+            } );
+        }
     };
 
     // This is the startpoint

@@ -566,6 +566,13 @@
                 bidx.utils.setValue( item, f, value );
             } );
         } );
+
+        // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol
+        //
+        if ( company.website )
+        {
+            company.website = bidx.utils.prefixUrlWithProtocol( company.website );
+        }
     };
 
     // This is the startpoint
@@ -620,7 +627,7 @@
                 }
             ,   "website":
                 {
-                    url:                        true
+                    urlOptionalProtocol:        true
                 }
             ,   "registered":
                 {
