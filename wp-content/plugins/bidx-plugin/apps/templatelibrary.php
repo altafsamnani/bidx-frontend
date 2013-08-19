@@ -450,7 +450,6 @@ class TemplateLibrary
             $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
             $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
 
-xdebug_break();
             foreach ($rowValues as $label => $rowValue) {
                 if ($rowValue && $rowValue != 'null') {
                     //Display Label
