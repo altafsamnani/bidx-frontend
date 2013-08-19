@@ -450,7 +450,7 @@ class TemplateLibrary
             $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
             $classValue = (isset ($properties['class_value']) && $properties['class_value']) ? " class = '" . $properties['class_value'] . "' " : '';
 
-
+xdebug_break();
             foreach ($rowValues as $label => $rowValue) {
                 if ($rowValue && $rowValue != 'null') {
                     //Display Label
@@ -464,7 +464,7 @@ class TemplateLibrary
                         foreach ($rowValue as $value) {
                             $rowHtml .= "<div class='row-fluid'>";
                             $rowHtml .= "<div class='" . $gridValue . "'>";
-                            $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $value->documentName . " </a>";
+                            $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $this->exst( $value->documentName ) . " </a>";
                             $rowHtml .= "</div>";
                             $rowHtml .= "</div>";
                         }
@@ -716,7 +716,6 @@ class TemplateLibrary
     /**
      * Display Attachments.
      *
-
      * @author Altaf S
      *
      * @param string $header Html Header
@@ -728,7 +727,6 @@ class TemplateLibrary
      */
     function displayAttachments ($header, $attachmentArr)
     {
-
         $html = NULL;
         $displayHeader = NULL;
         $returnHtml = '';
@@ -746,7 +744,11 @@ class TemplateLibrary
                     $html .= '<div class="span9">';
                     $html .= "<h5 class='documentName'>{$attachment->documentName}</h5>";
                     $html .= "<p>{$date} </p>";
-                    $html .= "<p>{$attachment->purpose} </p>";
+
+                    if ( $this->exst( $attachment->purpose )) {
+                        $html .= "<p>{$attachment->purpose} </p>";
+                    }
+
                     $html .= '</div>';
 
                     $html .= '</div>';
