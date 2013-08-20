@@ -5,8 +5,10 @@
     ,   $frmLogin                   = $views.filter( ".viewLogin" ).find( "form" )
     ,   $frmPasswordReset           = $views.filter( ".viewResetpassword" ).find( "form" )
     ,   $frmRegister                = $views.filter( ".viewRegister" ).find( "form" )
+    ,   $btnLogin                   = $frmLogin.find( ":submit" )
     ,   $btnPasswordReset           = $frmPasswordReset.find( ":submit" )
     ,   $btnRegister                = $frmRegister.find( ":submit" )
+    ,   $loginErrorMessage          = $frmLogin.find( ".error_separate" )
     ,   bidx                        = window.bidx
     ,   appName                     = "auth"
     ,   currentView
@@ -21,19 +23,86 @@
 
         // Initialise form and enable validation
         //
-        $frmLogin.form(
+
+        /*$frmLogin.form(
         {
             callToAction: '.jsLogin',
             errorClass: 'error',
             url: '/wp-admin/admin-ajax.php?action=bidx_signin'
+        } );*/
+
+        var $validator = $frmLogin.validate(
+        {
+            rules:
+            {
+                "log":
+                {
+                    required:               true
+                ,   email:                  true
+                }
+            ,   "pwd":
+                {
+                    required:               true
+                }
+
+            }
+        ,   messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+        ,   submitHandler:  function()
+            {
+                if ( $btnLogin.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                $btnLogin.addClass( "disabled" );
+                $loginErrorMessage.text( "" ).hide();
+
+                _doLogin(
+                {
+                    error: function( jqXhr )
+                    {
+                        $btnLogin.removeClass( "disabled" );
+                    }
+                } );
+                /*_save(
+                {
+                    error: function( jqXhr )
+                    {
+                        var response;
+
+                        try
+                        {
+                            // Not really needed for now, but just have it on the screen, k thx bye
+                            //
+                            response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                        }
+                        catch ( e )
+                        {
+                            bidx.utils.error( "problem parsing error response from memberProfile save" );
+                        }
+
+                        bidx.common.notifyError( "Something went wrong during save: " + response );
+
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+                    }
+                } );*/
+            }
         } );
+
+
 
         // initialize form and enable plugins
         //
-        $frmRegister.form({
+        $frmRegister.form(
+        {
                 errorClass : 'error',
                 enablePlugins: ['location','countryAutocomplete']
-        });
+        } );
 
         // bind the submithandler to the passwordReset form.
         //
@@ -76,6 +145,7 @@
                 }
             );
         } );
+
 
 
         // bind the register form submit handler
@@ -157,6 +227,65 @@
             );
 
         } );
+    };
+
+    // handle the login proces, fired by the validator when form is validated
+    //
+    var _doLogin = function( params )
+    {
+        $.ajax(
+        {
+            type:       'post'
+        ,   url:        '/wp-admin/admin-ajax.php?action=bidx_signin'
+        ,   dataType:   'json'
+        ,   data:       $frmLogin.find(":input:not(.ignore)").serialize() //+ "&apiurl=" + options.apiurl +  "&apimethod=" + options.apimethod
+
+        ,   success:     function( data, textStatus, jqXHR )
+            {
+                bidx.utils.log(data);
+
+                if ( data )
+                {
+                    if (data.status === 'OK')
+                    {
+                        if (data.redirect)
+                        {
+
+                            if ( window.noty )
+                            {
+                                var redirectText;
+                                bidx.i18n.getItem( "msgWaitForRedirect", function( err, label )
+                                {
+                                    redirectText = label;
+
+                                } );
+
+                                noty(
+                                {
+                                    type:           "success"
+                                ,   text:           redirectText
+                                } );
+                            }
+
+                            document.location=data.redirect;
+                        }
+                    }
+                    else if ( data.status === "ERROR" )
+                    {
+                        $loginErrorMessage.text( data.text).show();
+
+                        params.error( jqXHR );
+                    }
+                }
+
+
+            }
+        ,   error:      function( jqXhr )
+            {
+                params.error( jqXhr );
+            }
+        } );
+//
     };
 
     // This function prepares the form so that the user can trigger the submit

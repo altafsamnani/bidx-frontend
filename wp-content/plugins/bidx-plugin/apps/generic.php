@@ -10,13 +10,19 @@
 class Generic
 {
 
+static $deps = array( 'bidx-form', 'bidx-tagsinput', 'bidx-common','bidx-i18n', 'jquery-validation',
+            'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods'
+
+    );
+
     public function getWidgetJsDependency ($widgetType)
     {
         $uri = $_SERVER['REQUEST_URI'];
         $dep = array ();
         switch ($widgetType) {
             case 'auth' :
-                $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n');
+                $dep = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                        'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
                 if (strpos ($uri, 'member')) {
                     $dep[] = 'member';
                 }

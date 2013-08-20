@@ -4,6 +4,7 @@
  * Name lowercased for automatic loading.
  * @author Jaap Gorjup
  * @author Altaf Samnani (ajax functions)
+ * @author msp (js app)
  * @version 1.0
  */
 require_once( BIDX_PLUGIN_DIR . '/generic.php' );
@@ -13,8 +14,10 @@ class auth extends Generic{
 	 * Constructor
 	 * Registers hooks for ajax requests and security related material
 	 * Also registers the scripts for auth.
-	 * @todo generalize auth js functions in auth.js
 	 */
+
+
+
 	function __construct() {
 
 		add_action( 'wp_enqueue_scripts', array( &$this, 'register_auth_bidx_ui_libs' ) );
@@ -46,7 +49,7 @@ class auth extends Generic{
 		$command = $atts['view'];
         $type    = array_key_exists( 'type', $atts ) ? $atts['type'] : null;
 
-        // NOTE: because of changes in the App registration, the code below should be revised if Auth is used as a widget.
+        // NOTE: because of changes in this App setup, the code below should be revised if Auth is used as a widget.
         // Default the $command is currently 'views' which holds all the views (login, password reset and register)
 
         switch ($command) {

@@ -777,6 +777,7 @@ form {
 		box-shadow: 0 0 0 3px #DFDFDF inset !important;
 	}
 
+/*  $mattijs: these fields are not used anymore
 	.formfield  {
 
 		position:relative;
@@ -786,7 +787,7 @@ form {
 	.formfield input {
 		margin-bottom: 0;
 	}
-
+*/
 
 	.formfield .ajaxloader, .formfield-error .ajaxloader {
 		background: url("assets/img/ajax-loader.gif") no-repeat top right transparent;
@@ -835,7 +836,7 @@ form {
         display: inline-block;
     }
 
-	.error_separate {
+	.error_separate { /*still used for seperate error messages not linked to an input. Login uses it*/
 		background-color: #DBD9D9;
 		border: 1px solid #FFA8A8;
 		-webkit-border-radius: 4px;
@@ -844,6 +845,7 @@ form {
 		color: #E83E3E;
 		padding: 4px 10px;
 		margin:5px 0;
+        display: none;
 	}
 
 
