@@ -60,10 +60,10 @@ class BidxCommon
 
             if (!$isWordpress) {
                 //Start the session to store Bidx Session
-                $this->startSession ();
+               // $this->startSession ();
 
                 //If Bidx Cookie set do the following
-                if ($this->isSetBidxAuthCookie ()) {
+               // if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
 
                     $sessionVars = $this->getSessionVariables ($subDomain);
@@ -77,7 +77,7 @@ class BidxCommon
 
                     //If not Logged in forcefully login to WP
                     $this->forceWordpressLogin ($subDomain, $sessionVars);
-                }
+               // }
 
                 //Set static variables to access through pages
                 $sessionVars = isset ($sessionVars) ? $sessionVars : NULL;
@@ -262,30 +262,6 @@ class BidxCommon
             bidxConfig.authenticated = {$jsAuthenticated};
                  </script>
             ";
-
-        //Create Static Data Script and pass variables through local_script it in shortcode.php
-
-        //1 i18n Data
-        if( isset( $result['i18n'])) {
-        $i18n = $result['i18n'];
-        $this::$scriptStaticJs['i18n'] = $i18n;
-        }
-
-        //2 Global Data
-        if( isset( $result['__global'])) {
-        $global = $result['__global'];
-        $this::$scriptStaticJs['__global'] = $global;
-        }
-
-        //3 Static Data
-        if( isset( $result['static'])) {
-        $staticData = $result['static'];
-        $this::$scriptStaticJs['static'] = $staticData;
-        }
-
-
-
-
         return $scriptJs;
     }
 
@@ -325,8 +301,6 @@ class BidxCommon
                         $data->memberId = $memberId;
                         $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
                         $this::$bidxSession[$subDomain]->memberId = $memberId;
-                        // To store static api values to site transient for Frontend
-                        $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('member', 'group'), $static = true, $i18nGlobal = true);
                     } else {
 
                         $redirect = 'auth'; //To redirect /member and not loggedin page to /login
@@ -348,8 +322,7 @@ class BidxCommon
                     if ($companyId) {
                         $data->companyId = $companyId;
                         $this::$bidxSession[$subDomain]->companyId = $companyId;
-                        // To store static api values to site transient for Frontend
-                        //$transientStaticData = $this->getLocaleTransient(array('company'));
+                        
                     }
                     break;
 
@@ -362,17 +335,11 @@ class BidxCommon
                         $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
                         $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
 
-                        // To store static api values to site transient for Frontend
-                        $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('member', 'group'), $static = true, $i18nGlobal = true);
                     } else {
                         $redirect = 'auth'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
 
-                    break;
-
-                case 'login' :
-                    $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('auth'), $static = true, $i18nGlobal = true);
                     break;
                 case 'mail' :
                     $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('mail'), $static = false, $i18nGlobal = true);
@@ -385,18 +352,6 @@ class BidxCommon
             }
 
             $return['data'] = $data;
-
-            if ( isset( $transientLocaleData )) {
-
-                //1. I18n data Locale
-                $return['i18n'] = $transientLocaleData['i18n'];
-
-                //2. I18n global Locale
-                $return['__global'] = $transientLocaleData['__global'];
-
-                //3. Static data Locale
-                $return['static'] = $transientLocaleData['static'];
-            }
 
             return $return;
         }
@@ -598,6 +553,7 @@ class BidxCommon
      */
     public function getLocaleTransient ($i18n = array (), $static = true, $i18nGlobal = true)
     {
+        
         /* 1. Static Locale Data */
         if ($static) {
             $siteLocale = get_locale ();

@@ -101,7 +101,7 @@ class BidxShortcode {
 	 function register_script() {
 
 	 	$bidxJsDir = sprintf( '%s/../static/js', BIDX_PLUGIN_URI );
-
+ 
 	 	if ( BidxCommon :: isWPInternalFunction() ) {
 	 		Logger :: getLogger( 'shortcode' ) -> trace('Skipping enqueueing because of admin.');
 	 	} else {
@@ -129,12 +129,7 @@ class BidxShortcode {
 
             /* Expose Locale Data to frontend */
 
-            // 1. I18n  & Global Data
-            wp_localize_script( 'bidx-data', '__bidxI18nPreload', BidxCommon::$scriptStaticJs['i18n']  ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
-
-            // 2. Static Data
-            wp_localize_script( 'bidx-data', '__bidxDataPreload', BidxCommon::$scriptStaticJs['static']  ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
-
+            
             // 3. Global Data If needed
            // wp_localize_script( 'bidx-data', 'bidx.global.__preload', json_encode( BidxCommon::$scriptStaticJs['__global'] ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
@@ -145,23 +140,32 @@ class BidxShortcode {
 
 	 		wp_enqueue_script( 'bidx-common' );
 	 		wp_enqueue_script( 'bidx-controller' );
+
+            ob_start();
 	 	}
 	 }
 
-	/**
-	 * Conditionally print the script, only if added.
-	 */
-	 function print_script() {
+     /**
+     * Conditionally print the script, only if added.
+     */
+    function print_script ()
+    {
+        $bidxCommonObj = new BidxCommon();
+        $jsTransalationVars = $bidxCommonObj->getLocaleTransient (array(self::$script_id), $static = true, $i18nGlobal = true);
 
-	 	Logger::getLogger('shortcode') -> trace( 'Footer print_script called' );
-		if ( ! self::$add_script ) {
-			Logger::getLogger('shortcode') -> trace( 'DO NOT print_script : ' . self::$script_id );
-			return;
-		}
-		Logger :: getLogger('shortcode') -> trace( 'Add script ok, printing scripts : ' . self::$script_id );
-		wp_print_scripts( self::$script_id );
+        // 1. I18n  & Global Data
+        wp_localize_script ('bidx-data', '__bidxI18nPreload', $jsTransalationVars['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+        // 2. Static Data
+        wp_localize_script ('bidx-data', '__bidxDataPreload', $jsTransalationVars['static']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
-	 }
+        Logger::getLogger ('shortcode')->trace ('Footer print_script called');
+        if (!self::$add_script) {
+            Logger::getLogger ('shortcode')->trace ('DO NOT print_script : ' . self::$script_id);
+            return;
+        }
+        Logger :: getLogger ('shortcode')->trace ('Add script ok, printing scripts : ' . self::$script_id);
+        wp_print_scripts (self::$script_id);
+    }    
 
 }
 ?>
