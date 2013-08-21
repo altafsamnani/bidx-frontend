@@ -391,7 +391,7 @@ class BidxCommon
         //Other than login page and no user authenticated redirect him Moved to api service
 
         switch ($uriString) {
-            case 'login' :
+            case 'auth' :
                 if ($authenticated == 'true') {
                     $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/member' . $param;
                 } else {
@@ -415,7 +415,7 @@ class BidxCommon
                 break;
 
             default:
-                if ($uriString != 'login' && $authenticated == 'false') {
+                if ($uriString != 'auth' && $authenticated == 'false') {
 
                     //$redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/login/?q=' . base64_encode($current_url);
                 }
@@ -439,9 +439,9 @@ class BidxCommon
         $isWordpress = false;
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $params = $_GET;
-
+        
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
-        if (( $hostAddress[1] == 'login' && isset ($params['q']) ) || $this->isWPInternalFunction () || $hostAddress[1] == 'registration' ||
+        if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) || $this->isWPInternalFunction () || $hostAddress[1] == 'registration' ||
             strstr ($hostAddress[1], 'wp-login.php')) {
             $isWordpress = true;
         }

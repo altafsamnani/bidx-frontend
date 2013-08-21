@@ -99,7 +99,10 @@ abstract class APIbridge
                 foreach ($cookies as $bidxAuthCookie) {
                     if(!empty($bidxAuthCookie->name) && $bidxAuthCookie->name) {
                     $cookieDomain = $bidxAuthCookie->domain;
+                    ob_start(); // To avoid error headers already sent in apibridge setcookie 
                     setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
+                    ob_end_flush();
+
                     }
                 }
             }
@@ -109,7 +112,8 @@ abstract class APIbridge
             $result['response']['code'] = 'timeout';
         }
         $requestData = $this->processResponse ($urlService, $result, $groupDomain, $bidxWPerror);
-     
+        // Now start outputting to avoid headers already sent error for setcookie
+
         return $requestData;
     }
 
@@ -166,6 +170,7 @@ abstract class APIbridge
     function clear_wp_bidx_session() {
 
     /* Clear the Session */
+    if(isset($_COOKIE['session_id'])) {
     session_id($_COOKIE['session_id']);
     session_start ();
     session_destroy();
@@ -174,7 +179,7 @@ abstract class APIbridge
     //$sessionMsg = array ('status' => 'success','text' => 'Session Flused.');
     //echo json_encode ($sessionMsg);
     //exit;
-
+    }
 }
 
     /**
@@ -224,7 +229,7 @@ abstract class APIbridge
         $http = (is_ssl ()) ? 'https://' : 'http://';
         $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/login?q=' . base64_encode ($current_url) . '&emsg=1';
+        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) . '&emsg=1';
 
         header ("Location: " . $redirect_url);
         exit;
