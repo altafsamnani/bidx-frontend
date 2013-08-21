@@ -7,8 +7,7 @@
  * @author msp (js app)
  * @version 1.0
  */
-require_once( BIDX_PLUGIN_DIR . '/generic.php' );
-class auth extends Generic{
+class auth {
 
 	/**
 	 * Constructor
@@ -16,6 +15,8 @@ class auth extends Generic{
 	 * Also registers the scripts for auth.
 	 */
 
+    static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                        'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
 
 	function __construct() {
@@ -29,9 +30,9 @@ class auth extends Generic{
 	function register_auth_bidx_ui_libs() {
 
         //$deps = array( 'bootstrap','memberprofile') ;
-        $deps = $this->getWidgetJsDependency('auth');
+        //$deps = $this->getWidgetJsDependency('auth');
         //$deps = array('bootstrap');
-		wp_register_script( 'auth', plugins_url( 'static/js/auth.js', __FILE__ ), $deps, '20130501', TRUE );
+		wp_register_script( 'auth', plugins_url( 'static/js/auth.js', __FILE__ ), self::$deps, '20130501', TRUE );
 		wp_register_style( 'auth', plugins_url( 'static/css/auth.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
 	}
 

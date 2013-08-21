@@ -17,6 +17,9 @@ class BidxShortcode {
 	static $script_id;
 	// array of mappings for preloading
 	static $mapping = array();
+    // name of the script id
+	static $scriptIdArr = array();
+
 
 	/**
 	 * Constructor.
@@ -78,6 +81,7 @@ class BidxShortcode {
 		Logger :: getLogger( 'shortcode' ) -> trace( 'Shortcode called with ' . serialize( $atts ) );
 		$appname = $atts['app'];
 		self :: $script_id = $appname;
+        self::$scriptIdArr[$appname] = $appname;
 
 		if ( array_key_exists( $appname, self::$mapping ) ) {
 			$exec = self::$mapping[$appname];
@@ -148,24 +152,31 @@ class BidxShortcode {
      /**
      * Conditionally print the script, only if added.
      */
-    function print_script ()
+     function print_script ()
     {
+        $scriptArr = self::$scriptIdArr;
         $bidxCommonObj = new BidxCommon();
-        $jsTransalationVars = $bidxCommonObj->getLocaleTransient (array(self::$script_id), $static = true, $i18nGlobal = true);
-
+        $jsTransalationVars = $bidxCommonObj->getLocaleTransient ($scriptArr, $static = true, $i18nGlobal = true);
+        Logger :: getLogger ('shortcode')->trace ('Final scripts : ' . serialize (self::$scriptIdArr));
+        /**** Adding Translations to Js Variables before data.js */
         // 1. I18n  & Global Data
         wp_localize_script ('bidx-data', '__bidxI18nPreload', $jsTransalationVars['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
         // 2. Static Data
         wp_localize_script ('bidx-data', '__bidxDataPreload', $jsTransalationVars['static']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
         Logger::getLogger ('shortcode')->trace ('Footer print_script called');
-        if (!self::$add_script) {
-            Logger::getLogger ('shortcode')->trace ('DO NOT print_script : ' . self::$script_id);
-            return;
+
+        if ($scriptArr) {
+            foreach ($scriptArr as $scriptVal) {
+                if (!$scriptVal) {
+                    Logger::getLogger ('shortcode')->trace ('DO NOT print_script : ' . $scriptVal);
+                    return;
+                }
+                Logger :: getLogger ('shortcode')->trace ('Add script ok, printing scripts : ' . $scriptVal);
+                wp_print_scripts ($scriptVal);
+            }
         }
-        Logger :: getLogger ('shortcode')->trace ('Add script ok, printing scripts : ' . self::$script_id);
-        wp_print_scripts (self::$script_id);
-    }    
+    }
 
 }
 ?>
