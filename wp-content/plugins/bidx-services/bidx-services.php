@@ -689,13 +689,13 @@ function clear_wp_bidx_session ()
 {
 
     /* Clear the Session */
+    if(isset($_COOKIE['session_id'])) {
     session_id ($_COOKIE['session_id']);
     session_start ();
     session_destroy ();
     setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-    //$sessionMsg = array ('status' => 'success','text' => 'Session Flused.');
-    //echo json_encode ($sessionMsg);
-    //exit;
+    }
+   
 }
 
 /**
