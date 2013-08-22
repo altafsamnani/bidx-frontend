@@ -458,11 +458,12 @@ class BidxCommon
      */
     static public function isWPInternalFunction ()
     {
-        return preg_match ('/wp-admin/i', $_SERVER["REQUEST_URI"]);
+        $serverUri = $_SERVER["REQUEST_URI"];
+        return (preg_match ('/wp-admin/i', $serverUri) || preg_match ('/wp-login/i', $serverUri));
     }
 
     /**
-     * Force Wordpress Login for single sign on
+    * Force Wordpress Login for single sign on
      * @param string $subdomain
      */
     function forceWordpressLogin ($subDomain, $sessionData)
