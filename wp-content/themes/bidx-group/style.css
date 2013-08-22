@@ -64,11 +64,11 @@ h1 {
 
 }
 	h1 span {
-		display: block;
-		font-family: 'weblysleek_uisemilight',sans-serif,Arial;
-		font-size: 22px;
-		font-weight: 400;
-		margin-top: 15px;
+		display:          block;
+		font-family:      'weblysleek_uisemilight',sans-serif,Arial;
+		font-size:        22px;
+		font-weight:      400;
+		margin-top:       15px;
 	}
 
 h2 {
@@ -228,156 +228,6 @@ body.bidx-business span.scrollPositionMarker {
     width:                  14s%;
 }
 
-/* bidX tagsinput, uses bootstrap-tagmanager */
-input[type='text'].bidx-tagsinput {
-    width:                          50%;
-}
-
-input[type='text'].bidx-tagsinput.enclosed {
-
-    width:                          150px;
-    line-height:                    25px;
-    padding:                        0;
-    border:                         none;
-    background-color:               transparent;
-    height:                         25px;
-    margin-bottom:                  5px;
-}
-.input-prepend {
-    background-color: #bdc3c7;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-}
-.bidx-tagsinput-container {
-    border: 2px solid #bdc3c7;
-    color: #34495e;
-    background-color: #fff;
-    font-family: "Lato", sans-serif;
-    font-size: 14px;
-    padding: 6px 1px 1px 6px;
-    height: 100%;
-
-    white-space: normal;
-    text-indent: 0;
-    width: 100%;
-    display: inline-block;
-    overflow-y: auto;
-
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    -webkit-transition: border .25s linear, color .25s linear;
-    -moz-transition: border .25s linear, color .25s linear;
-    -o-transition: border .25s linear, color .25s linear;
-    transition: border .25s linear, color .25s linear;
-    -webkit-backface-visibility: hidden;
-}
-.input-prepend .bidx-tagsinput-container {
-    -webkit-border-radius: 0 6px 6px 0;
-    -moz-border-radius: 0 6px 6px 0;
-    border-radius: 0 6px 6px 0;
-    width: 90.2%;
-}
-
-
-.bidx-tagsinput-container .bidx-tag {
-    line-height: 11px;
-    vertical-align: middle;
-}
-
-.bidx-tag {
-    background-color:               #1abc9c;
-    color:                          #ffffff;
-
-    border-radius:                  4px;
-    margin-right:                   5px;
-    margin-bottom:                  4px;
-    overflow:                       hidden;
-    line-height:                    22px;
-    padding:                        7px 17px 8px 17px;
-    position:                       relative;
-    display:                        inline-block;
-    zoom:                           1;
-    *display:                       inline;
-    -webkit-transition:             0.14s linear;
-       -moz-transition:             0.14s linear;
-         -o-transition:             0.14s linear;
-            transition:             0.14s linear;
-    -webkit-backface-visibility:    hidden;
-}
-
-    .bidx-tag:hover {
-        background-color:               #16a085;
-        color:                          #ffffff;
-        padding-left:                   10px;
-        padding-right:                  24px;
-    }
-
-    .bidx-tag .tm-tag-remove {
-        bottom:                         0;
-        color:                          #ffffff;
-        cursor:                         pointer;
-        font-size:                      12px;
-        opacity:                        0;
-        padding:                        7px 7px 5px 0;
-        position:                       absolute;
-        right:                          0;
-        text-align:                     right;
-        text-decoration:                none;
-        top:                            0;
-        width:                          100%;
-        z-index:                        2;
-        /* display:                        none; */
-    }
-
-    .bidx-tag .tm-tag-remove:before {
-        color:                          #ffffff;
-        content:                        "\e00b";
-        font-family:                    "Flat-UI-Icons";
-        cursor:                         pointer;
-    }
-
-    .cross:before {
-        color:                          #000;
-        content:                        "\e00b";
-        font-family:                    "Flat-UI-Icons";
-        cursor:                         pointer;
-    }
-
-    .bidx-tag:hover .tm-tag-remove {
-        color:                          #ffffff;
-        opacity:                        1;
-        display:                        block;
-    }
-
-    .vertical-middle {
-        position: relative;
-        height: 100%;
-    }
-    .vertical-middle a {
-         left: 0;
-        margin-top: -10px;
-        position: absolute;
-        top: 50%;
-        width: 100%;
-    }
-
-    .well .block-title {
-        font-family: 'weblysleek_uisemibold',sans-serif,Arial;
-        font-size: 20px;
-        display: inline-block;
-        zoom: 1;
-        *display: block;
-        margin-bottom: 20px;
-    }
 
 /* End Global styles */
 
@@ -749,8 +599,6 @@ form .row-fluid .input-prepend {
         width:                      90.2%;
     }
 
-form {
-}
 
 	form label {
 		font-weight: 700;
@@ -763,9 +611,11 @@ form {
 
     form fieldset,
     form fieldset.well {
-        position:               relative;
-        padding-top:            50px;
+        position: relative;
+        padding-top: 50px;
     }
+
+
 
     form legend {
         position:               absolute;
@@ -777,28 +627,17 @@ form {
 		box-shadow: 0 0 0 3px #DFDFDF inset !important;
 	}
 
-/*  $mattijs: these fields are not used anymore
-	.formfield  {
-
-		position:relative;
-		margin-bottom:10px;
-
-	}
-	.formfield input {
-		margin-bottom: 0;
-	}
-*/
 
 	.formfield .ajaxloader, .formfield-error .ajaxloader {
-		background: url("assets/img/ajax-loader.gif") no-repeat top right transparent;
-		height:24px;
-		margin-top:-12px; /*margin-top should always be half the height of the ajaxloader */
-		margin-right:10px;
-		position: absolute;
-		top:50%;
-		display:block;
-		right: 0;
-		width: 100%;
+		background   : url("assets/img/ajax-loader.gif") no-repeat top right transparent;
+		height       : 24px;
+		margin-top   : -12px; /*margin-top should always be half the height of the ajaxloader */
+		margin-right : 10px;
+		position     : absolute;
+		top          : 50%;
+		display      : block;
+		right        : 0;
+		width        : 100%;
 	}
 	.formfield .ajaxwrapper, .formfield-error .ajaxwrapper {
 		position:relative;
@@ -808,47 +647,230 @@ form {
 		margin:20px 0;
 	}
 
+    /* candidate for removal*/
 	.formfield-error {
 		margin-bottom: 0;
 	}
 	.formfield-error input {
-		-webkit-border-radius: 4px 4px 0 0;
-		-moz-border-radius: 4px 4px 0 0;
-		border-radius: 4px 4px 0 0;
+		-webkit-border-radius : 4px 4px 0 0;
+		-moz-border-radius    : 4px 4px 0 0;
+		border-radius         : 4px 4px 0 0;
 
-		margin-bottom: 0;
+		margin-bottom         : 0;
 	}
 
-	.error {
-
-		color: #E83E3E;
-		padding:4px 8px;
-
-		-webkit-border-radius: 0 0 4px 4px;
-		-moz-border-radius: 0 0 4px 4px;
-		border-radius: 0 0 4px 4px;
-		background-color: #DBD9D9;
-		display: none;
-		text-align: left;
-	}
 
     select.error, input.error, textarea.error {
         display: inline-block;
     }
 
-	.error_separate { /*still used for seperate error messages not linked to an input. Login uses it*/
-		background-color: #DBD9D9;
-		border: 1px solid #FFA8A8;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		border-radius: 4px;
-		color: #E83E3E;
-		padding: 4px 10px;
-		margin:5px 0;
-        display: none;
-	}
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@ currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
+    /* please move Form css thhat is used inbetween this block */
 
 
+    .well form {
+        padding: 20px;
+    }
+    .error-icon {
+
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        display: block;
+        margin-right: -26px;
+        margin-top: 11px;
+
+        position: absolute;
+        right: 0;
+        top: 0;
+
+    }
+
+    /* bidX tagsinput, uses bootstrap-tagmanager */
+    input[type='text'].bidx-tagsinput {
+        width:                          50%;
+    }
+
+    input[type='text'].bidx-tagsinput.enclosed {
+
+        width:                          150px;
+        line-height:                    25px;
+        padding:                        0;
+        border:                         none;
+        background-color:               transparent;
+        height:                         25px;
+        margin-bottom:                  5px;
+    }
+    .input-prepend {
+        /* background-color: #bdc3c7; */ /* $mattijs: I dont know why I had to add a background here, so for now I commented it until I know why it is there */
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+    }
+    .bidx-tagsinput-container {
+        border:                     2px solid #bdc3c7;
+        color:                      #34495e;
+        background-color:           #fff;
+        font-family:                "Lato", sans-serif;
+        font-size:                  14px;
+        padding:                    6px 1px 1px 6px;
+        height:                     100%;
+
+        white-space:                normal;
+        text-indent:                0;
+        width:                      100%;
+        display:                    inline-block;
+        overflow-y:                 auto;
+
+        -webkit-box-sizing:         border-box;
+        -moz-box-sizing:            border-box;
+        box-sizing:                 border-box;
+
+        -webkit-appearance:         none;
+        -moz-appearance:            none;
+
+        -webkit-border-radius:      6px;
+        -moz-border-radius:         6px;
+        border-radius:              6px;
+
+        -webkit-box-shadow:         none;
+        -moz-box-shadow:            none;
+        box-shadow:                 none;
+
+        -webkit-transition: border .25s linear, color .25s linear;
+        -moz-transition: border .25s linear, color .25s linear;
+        -o-transition: border .25s linear, color .25s linear;
+        transition: border .25s linear, color .25s linear;
+        -webkit-backface-visibility: hidden;
+    }
+    .input-prepend .bidx-tagsinput-container {
+        -webkit-border-radius: 0 6px 6px 0;
+        -moz-border-radius: 0 6px 6px 0;
+        border-radius: 0 6px 6px 0;
+        width: 90.2%;
+    }
+
+
+    .bidx-tagsinput-container .bidx-tag {
+        line-height: 11px;
+        vertical-align: middle;
+    }
+
+    .bidx-tag {
+        background-color:               #1abc9c;
+        color:                          #ffffff;
+
+        border-radius:                  4px;
+        margin-right:                   5px;
+        margin-bottom:                  4px;
+        overflow:                       hidden;
+        line-height:                    22px;
+        padding:                        7px 17px 8px 17px;
+        position:                       relative;
+        display:                        inline-block;
+        zoom:                           1;
+        *display:                       inline;
+
+        -webkit-transition:             0.14s linear;
+           -moz-transition:             0.14s linear;
+             -o-transition:             0.14s linear;
+                transition:             0.14s linear;
+        -webkit-backface-visibility:    hidden;
+    }
+
+        .bidx-tag:hover {
+            background-color:               #16a085;
+            color:                          #ffffff;
+            padding-left:                   10px;
+            padding-right:                  24px;
+        }
+
+        .bidx-tag .tm-tag-remove {
+            bottom:                         0;
+            color:                          #ffffff;
+            cursor:                         pointer;
+            font-size:                      12px;
+            opacity:                        0;
+            padding:                        7px 7px 5px 0;
+            position:                       absolute;
+            right:                          0;
+            text-align:                     right;
+            text-decoration:                none;
+            top:                            0;
+            width:                          100%;
+            z-index:                        2;
+            /* display:                        none; */
+        }
+
+        .bidx-tag .tm-tag-remove:before {
+            color:                          #ffffff;
+            content:                        "\e00b";
+            font-family:                    "Flat-UI-Icons";
+            cursor:                         pointer;
+        }
+
+        .cross:before {
+            color:                          #000;
+            content:                        "\e00b";
+            font-family:                    "Flat-UI-Icons";
+            cursor:                         pointer;
+        }
+
+        .bidx-tag:hover .tm-tag-remove {
+            color:                          #ffffff;
+            opacity:                        1;
+            display:                        block;
+        }
+
+        .vertical-middle {
+            position: relative;
+            height: 100%;
+        }
+        .vertical-middle a {
+             left: 0;
+            margin-top: -10px;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+        }
+
+        .well .block-title {
+            font-family: 'weblysleek_uisemibold',sans-serif,Arial;
+            font-size: 20px;
+            display: inline-block;
+            zoom: 1;
+            *display: block;
+            margin-bottom: 20px;
+        }
+
+
+        .input-append, .input-prepend {
+            margin-bottom: 0;
+        }
+
+    	.error_separate { /*still used for seperate error messages not linked to an input. Login uses it*/
+    		background-color: #DBD9D9;
+    		border: 1px solid #FFA8A8;
+    		-webkit-border-radius: 4px;
+    		-moz-border-radius: 4px;
+    		border-radius: 4px;
+    		color: #E83E3E;
+    		padding: 4px 10px;
+    		margin:5px 0;
+            display: none;
+    	}
+
+        .error {
+
+            color: #E83E3E;
+            padding:4px 8px;
+
+            display: none;
+            text-align: left;
+        }
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@ End currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
 
 
 

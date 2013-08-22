@@ -6,8 +6,8 @@
     ,   $modals                     = $element.find( ".modalView" )
     ,   $modal
     ,   $frmCompose                 = $views.filter( ".viewCompose" ).find( "form" )
-    ,   $btnSubmit                  = $frmCompose.find(".compose-submit")
-    ,   $btnCancel                  = $frmCompose.find(".compose-cancel")
+    ,   $btnComposeSubmit           = $frmCompose.find(".compose-submit")
+    ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
     ,   bidx                        = window.bidx
     ,   currentGroupId              = bidx.common.getCurrentGroupId()
     ,   appName                     = "mail"
@@ -90,6 +90,93 @@
 
     // private functions
 
+    // function to initialize handlers that should only execute on pageload
+    //
+    var _initHandlers = function()
+    {
+/*        $.validator.addMethod(
+            "bixd-tagInput"
+        ,   function( value, element )
+            {
+                var $el         = $( element )
+                ,   $hiddenEl   = $( "hidden-" + $el.attr( "name" ) );
+
+                if( $hiddenEl.val() == "" )
+                {
+
+                }
+
+                bidx.utils.log(value);
+                bidx.utils.log(element.getAttribute("name"));
+                return this.optional(element) || /^http:\/\/mycorporatedomain.com/.test(value);
+            }
+        ,   "Please specify the correct domain for your documents"
+        );*/
+
+        var $validator = $frmCompose.validate(
+        {
+            rules:
+            {
+                "contacts":
+                {
+                    tagsinputRequired:        true
+                }
+            ,   "subject":
+                {
+                    required:               true
+                }
+            ,   "content":
+                {
+                    required:               true
+                }
+
+            }
+        ,   messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+        ,   errorPlacement: function(error, element) {
+
+                error.appendTo( element.parents( ".control-group" ) );
+                // add icon
+                element.parents( ".control-group" ).append( "<div class='error-icon' ></div>" );
+
+
+            }
+        ,   highlight: function(element, errorClass)
+            {
+                console.log("label", $(element).attr("class")  );
+            }
+        ,   submitHandler:  function()
+            {
+                if ( $btnComposeSubmit.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                $btnComposeSubmit.addClass( "disabled" );
+
+
+                _send(
+                {
+                    error: function()
+                    {
+                        alert( "Something went wrong during submit" );
+
+                        $btnComposeSubmit.removeClass( "disabled" );
+                        $btnComposeCancel.removeClass( "disabled" );
+                    }
+                } );
+            }
+        } );
+
+    };
+
+    var test = 23132;
+    var longvariable = 343;
+    var e = 3434;
+
     //  preload compose form with reply values of recipient, subject and content of message to be replied on
     //
     var _initForwardOrReply = function( section, id, state )
@@ -170,28 +257,28 @@
         //
         $frmCompose.find( ":input" ).val("");
         $frmCompose.find( ".bidx-tagsinput" ).tagsinput( "reset" );
-        $btnSubmit.removeClass( "disabled" );
-        $btnCancel.removeClass( "disabled" );
+        $btnComposeSubmit.removeClass( "disabled" );
+        $btnComposeCancel.removeClass( "disabled" );
 
-        $frmCompose.form(
+/*        $frmCompose.form(
         {
             errorClass:     'error'
-        } );
+        } );*/
 
-        $frmCompose.unbind("submit").submit( function( e )
+        /*$frmCompose.unbind("submit").submit( function( e )
         {
             e.preventDefault();
 
             var valid = $frmCompose.form( "validateForm" ); // NOTE: this has to be replaced with new validation
 
             bidx.utils.log("VALIDATED", valid );
-            if ( !valid || $btnSubmit.hasClass( "disabled" ) )
+            if ( !valid || $btnComposeSubmit.hasClass( "disabled" ) )
             {
                 return;
             }
 
-            $btnSubmit.addClass( "disabled" );
-            $btnCancel.addClass( "disabled" );
+            $btnComposeSubmit.addClass( "disabled" );
+            $btnComposeCancel.addClass( "disabled" );
 
             _send(
             {
@@ -199,11 +286,11 @@
                 {
                     alert( "Something went wrong during submit" );
 
-                    $btnSubmit.removeClass( "disabled" );
-                    $btnCancel.removeClass( "disabled" );
+                    $btnComposeSubmit.removeClass( "disabled" );
+                    $btnComposeCancel.removeClass( "disabled" );
                 }
             } );
-        } );
+        } );*/
 
     };
 
@@ -224,7 +311,19 @@
                 value :     "PLATFORM"
             }
         ];
-        bidx.common.notifyCustom("Sending message");
+
+        var key = "sendingMessage";
+        bidx.i18n.getItem( key, function( err, label )
+        {
+            if ( err )
+            {
+                bidx.utils.error( "Problem translating", key, err );
+                label = key;
+                _showError( label );
+            }
+        } );
+
+        bidx.common.notifyCustom( key );
 
         bidx.api.call(
             "mail.send"
@@ -235,14 +334,27 @@
 
             ,   success: function( response )
                 {
+
                     bidx.utils.log( "MAIL RESPONSE", response );
-                    bidx.common.notifyCustomSuccess("Message sent");
+                    var key = "messageSent";
+                    bidx.i18n.getItem( key, function( err, label )
+                    {
+                        if ( err )
+                        {
+                            bidx.utils.error( "Problem translating", key, err );
+                            label = key;
+                            _showError( label );
+                        }
+
+                    } );
+                    bidx.common.notifyCustomSuccess( key );
 
                     bidx.controller.updateHash( "#mail/inbox", true, false );
                 }
 
             ,   error:  function( jqXhr )
                 {
+
                     params.error( "Error", jqXhr );
                 }
             }
@@ -922,17 +1034,17 @@
     };
 
 
-
     if ( !window.bidx )
     {
         window.bidx = {};
     }
 
-    //_loadItems();
-
-
-
     window.bidx.mail = mail;
+
+    // Initialize handlers
+    //
+    _initHandlers();
+
 
     // Initialize the defered tagsinput
     //

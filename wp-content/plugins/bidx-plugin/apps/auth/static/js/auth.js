@@ -68,29 +68,7 @@
                         $btnLogin.removeClass( "disabled" );
                     }
                 } );
-                /*_save(
-                {
-                    error: function( jqXhr )
-                    {
-                        var response;
 
-                        try
-                        {
-                            // Not really needed for now, but just have it on the screen, k thx bye
-                            //
-                            response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
-                        }
-                        catch ( e )
-                        {
-                            bidx.utils.error( "problem parsing error response from memberProfile save" );
-                        }
-
-                        bidx.common.notifyError( "Something went wrong during save: " + response );
-
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
-                    }
-                } );*/
             }
         } );
 
@@ -101,7 +79,7 @@
         $frmRegister.form(
         {
                 errorClass : 'error',
-                enablePlugins: ['location','countryAutocomplete']
+                enablePlugins: [ 'location','countryAutocomplete' ]
         } );
 
         // bind the submithandler to the passwordReset form.
@@ -181,6 +159,7 @@
             //
             if ( $frmRegister.find( "[name='address']" ).val() )
             {
+                console.log("hiero");
                 // Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
                 // Just to not have to change the location.js plugin
                 //
@@ -304,7 +283,6 @@
         var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
 
     };
-
 
     // ROUTER
 

@@ -26,7 +26,7 @@
                     <div class="row-fluid">
                         <div class="span12">
 
-                            <div class="control-group formfield">
+                            <div class="control-group">
                                 <label class="control-label"><?php _e('Summary','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <textarea name="summary" placeholder="<?php _e('Please type the summary of your entrepreneurship','bidxplugin'); ?>" ></textarea>
@@ -37,7 +37,7 @@
 
                     <div class="row-fluid">
                         <div class="span6">
-                            <div class="control-group formfield">
+                            <div class="control-group">
                                 <label class="control-label"><?php _e('Focus industry','bidxplugin'); ?></label>
                                 <div class="bidx-tagsinput-container">
                                     <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Focus industry','bidxplugin'); ?>">
@@ -49,7 +49,7 @@
                     <div class="row-fluid">
                         <div class="span6">
 
-                            <div class="control-group formfield">
+                            <div class="control-group">
                                 <label class="control-label"><?php _e('Have you ever own a business before?','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <label class="radio inline"><input type="radio" value="true" name="prevRunBusiness" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
@@ -86,7 +86,7 @@
                             </div>
 
                         </div>
-                        <div class="span8 formfield">
+                        <div class="span8">
                             <p><span class="hasCV"><?php _e('Or upload a new document:'); ?></span><span class="noCV"><?php _e('Upload a document:','bidxplugin'); ?></span></p>
                             <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofilecv"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.cvUploadDone"}'/>
                         </div>
@@ -110,21 +110,21 @@
 
     <div class="snippets hide">
         <div class="previousBusinessItem span4 well well-white">
-            <div class="control-group formfield">
+            <div class="control-group">
                 <label class="control-label"><?php _e('Name of company','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="company" placeholder="<?php _e('Please type the name of the company','bidxplugin'); ?>">
                 </div>
             </div>
 
-            <div class="control-group formfield">
+            <div class="control-group">
                 <label class="control-label"><?php _e('What happened?','bidxplugin'); ?></label>
                 <div class="controls">
                     <select name="businessOutcome"></select>
                 </div>
             </div>
 
-            <div class="control-group formfield">
+            <div class="control-group">
                 <label class="control-label"><?php _e('Company web-site?','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="webSite" placeholder="<?php _e('Please type the URL of the company','bidxplugin'); ?>">
@@ -143,13 +143,13 @@
                     <h3 class="documentName"></h3>
                     <p class="uploadedDateTime"></p>
 
-                    <div class="control-group formfield">
+                    <div class="control-group">
                         <div class="controls">
                             <input type="text" name="purpose" placeholder="<?php _e('Short description','bidxplugin'); ?>">
                         </div>
                     </div>
 
-                    <div class="control-group formfield">
+                    <div class="control-group">
                         <label class="control-label"><?php _e('Document type','bidxplugin'); ?></label>
                         <div class="controls">
                             <select name="documentType"></select>

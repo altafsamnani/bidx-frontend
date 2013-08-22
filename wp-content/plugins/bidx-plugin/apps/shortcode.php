@@ -105,7 +105,7 @@ class BidxShortcode {
 	 function register_script() {
 
 	 	$bidxJsDir = sprintf( '%s/../static/js', BIDX_PLUGIN_URI );
- 
+
 	 	if ( BidxCommon :: isWPInternalFunction() ) {
 	 		Logger :: getLogger( 'shortcode' ) -> trace('Skipping enqueueing because of admin.');
 	 	} else {
@@ -133,7 +133,7 @@ class BidxShortcode {
 
             /* Expose Locale Data to frontend */
 
-            
+
             // 3. Global Data If needed
            // wp_localize_script( 'bidx-data', 'bidx.global.__preload', json_encode( BidxCommon::$scriptStaticJs['__global'] ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
