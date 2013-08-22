@@ -1,0 +1,1175 @@
+/*
+Theme Name: bidX Group Theme Template
+Author: Mattijs Spierings/Arne de Bree/Altaf Samnani/Jaap Gorjup
+Company: bidX;
+*/
+
+/*******************************************************************************************
+*
+*	Global styles
+*
+********************************************************************************************/
+html, body {
+	margin: 0;
+	padding: 0;
+    height: 100%;
+	font-family:'weblysleek_ui_normalregular',sans-serif,Arial;
+}
+
+body.bidx-edit {
+	padding-top:				80px;
+}
+
+/* Mattijs: not sure where this is used and if it is still necessary;
+body.bidx-business {
+    padding-top:                110px;
+}
+*/
+/* sticky footer part  */
+#wrap {
+    height: auto !important;
+    margin: 0 auto -50px;
+    min-height: 100%;
+}
+
+#wrap > .container {
+    padding-top: 171px;
+}
+#push, footer {
+    height: 50px;
+}
+/* end sticky footer */
+
+::-webkit-input-placeholder {
+   color: #333333;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #333333;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #333333;
+   opacity: 0.5;
+}
+
+:-ms-input-placeholder {
+   color: #333333;
+}
+
+h1 {
+	font-family: 'weblysleek_uisemibold',sans-serif,Arial;
+	font-size: 40px;
+	margin: 0 0 20px 0;
+
+}
+	h1 span {
+		display:          block;
+		font-family:      'weblysleek_uisemilight',sans-serif,Arial;
+		font-size:        22px;
+		font-weight:      400;
+		margin-top:       15px;
+	}
+
+h2 {
+	font-family: 'weblysleek_uisemibold',sans-serif,Arial;
+	font-size: 32px
+}
+
+
+h3 {
+	font-family: 'weblysleek_uisemibold',sans-serif,Arial;
+	font-size: 24px;
+
+}
+
+
+p {
+	font-family: 'weblysleek_ui_normalregular',sans-serif,Arial;
+}
+
+input, button, select, textarea {
+	font-family: 'weblysleek_ui_normalregular',sans-serif,Arial;
+}
+a, a:hover, a:visited, a:link  {
+	text-decoration: none;
+}
+
+.sprite{
+    background:url(assets/img/sprite.png) no-repeat;
+}
+
+.block-login {
+	margin:50px auto;
+	width:50%;
+
+	background: url(assets/img/hero_bg.jpg) repeat-x top left #EDEDED;
+	-webkit-border-radius:10px ;
+	-moz-border-radius:10px ;
+	border-radius: 10px ;
+	padding: 40px;
+}
+
+.block-login input {
+	width: 		100%;
+}
+
+
+.jqHidden {
+	display:none;
+}
+
+.sidebar-block-title {
+	margin-top:					0;
+}
+
+.sidebar-block-intro {
+	padding-left:				6px;
+}
+
+.sidebar-block-heading {
+    margin-bottom:				12px;
+}
+
+.sidebar-block-content {
+	padding-bottom:				12px;
+}
+
+.after-well {
+	margin-bottom: 				20px;
+}
+
+.intermediate-row {
+    margin-bottom:              10px;
+}
+
+.outer-content-container {
+    padding-top:                20px;
+}
+
+.bidx-label {
+    font-weight:                bold;
+}
+
+.accordion-heading {
+    background-color:           #f5f5f5;
+}
+
+.accordion-toggle {
+    position:                   relative;
+}
+
+.accordion-toggle .control-buttons {
+    font-size:                  28px;
+    position:                   absolute;
+    right:                      20px;
+    top:                        18px;
+}
+
+.bidx-collapse {
+    display:                    inline-block;
+}
+
+.bidx-expand {
+    display:                    none;
+}
+
+.collapsed .bidx-expand {
+    display:                    inline-block;
+}
+
+.collapsed .bidx-collapse {
+    display:                    none;
+}
+
+.accordion-inner .control-buttons {
+    position:                   absolute;
+    right:                      20px;
+    top:                        10px;
+}
+
+.accordion-inner .bottom-controls {
+    position:                   absolute;
+    right:                      20px;
+    bottom:                     10px;
+}
+
+
+
+span.scrollPositionMarker {
+    position:                   absolute;
+    top:                        -60px;
+}
+
+body.bidx-edit span.scrollPositionMarker {
+    top:                        -250px;
+}
+
+body.bidx-business span.scrollPositionMarker {
+    top:                        -300px;
+}
+
+
+.well-white {
+    background-color:           #fff;
+}
+
+.content-row {
+    padding-bottom:             20px;
+}
+
+.details-block label {
+    font-weight:                bold;
+}
+
+.nav-edit {
+    top:                    250px;
+    position:               fixed;
+    width:                  14s%;
+}
+
+
+/* End Global styles */
+
+/*******************************************************************************************
+*
+*	Header styles
+*
+********************************************************************************************/
+
+header.navbar {
+	background-color:      #FFF;
+
+	height:                auto;
+	z-index:               200;
+}
+
+header.navbar .navbar-inner {
+    min-height:             100px;
+    padding-top:            10px;
+}
+
+header.navbar .navbar-inner > .container {
+    position:               relative;
+}
+
+header.navbar .menu-top {
+    position:               absolute;
+    right:                  0;
+    top:                    0;
+}
+
+header.navbar .menu-top .iconbar {
+    margin:                 0;
+}
+
+header.navbar .menu-top .iconbar button {
+    padding:                25px 32px 25px 8px;
+    margin:                 0;
+    color:                  white;
+}
+
+header.navbar .search {
+    float:                  right;
+}
+
+header.navbar .search form {
+    margin:                 0 0 10px 0;
+}
+
+header.navbar .nav > li > a {
+    padding:                20px 40px;
+    font-size:              20px;
+}
+
+header.navbar .nav > li > a:first-child {
+    padding-left:           10px;
+}
+
+header.navbar .nav > li > a .caret {
+    margin-top:             6px;
+}
+
+header.navbar .nav > li > ul {
+    margin-top:             -18px;
+}
+
+header.navbar .header-logo {
+    min-height:             100px;
+    height:                 100px;
+    overflow:               hidden;
+}
+
+
+
+.pageHeader {
+    padding-top:            10px;
+    padding-bottom:		    10px;
+    background-color:       #fff;
+    z-index:                190;
+}
+
+.bidx-edit .pageHeader,
+.bp-summary .pageHeader {
+    position:               fixed;
+    top:                    161px;
+}
+
+    .pageHeader > .container {
+        height:             60px;
+    }
+
+
+    .pageHeader .editControls {
+        position:           absolute;
+        bottom:             10px;
+        right:              0;
+    }
+
+    .bp-summary .pageHeader .editControls {
+        bottom:             auto;
+        top:                10px;
+    }
+
+    .pageHeader .editControls a {
+        margin-left:        4px;
+    }
+
+	/************** GROUP DASHBARD *************************/
+
+
+/* end header styles */
+/*******************************************************************************************
+*
+*   Footer styles
+*
+********************************************************************************************/
+
+/** flatui override, since design seems to be aiming at a 50px footer but seems not te be in place yet completely but is now overlapping **/
+footer .bottom-menu {
+    padding: 10px 0;
+}
+
+footer .page-footer {
+    background-color:               #34495e;
+    /*line-height:                    48px;*/
+    color:                          #fff;
+    font-size:                      13px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top: 1px solid #aeb6bf;
+    border-bottom: 1px solid #aeb6bf;
+}
+
+footer .page-footer .footer-bar {
+    height: 48px;
+
+}
+    footer .page-footer .left-block {
+        margin-top: 5px;
+    }
+    footer .page-footer .right-block {
+        margin-top: 15px;
+    }
+
+
+        footer .page-footer .footer-bar > div > div,
+        footer .page-footer .inline-list,
+        footer .page-footer .copyright {
+            display: inline-block;
+        }
+
+
+        footer .page-footer a {
+            text-decoration:                underline;
+            color:                          #fff;
+        }
+
+        footer .page-footer .follow-us,
+        footer .page-footer .copyright  {
+           margin-right:                   20px;
+        }
+
+
+            footer .page-footer .inline-list > div {
+                display: inline;
+                margin-right: 10px;
+            }
+
+    footer .page-footer .social-links {
+        position: relative;
+        top: 7px;
+    }
+        footer .page-footer .social-links a {
+           display: inline-block;
+           height:25px;
+           width: 25px;
+            margin-right: 5px;
+        }
+
+
+.twitter {
+    background-position: 0 -150px;
+}
+
+
+.facebook {
+    background-position: -38px -150px;
+}
+
+.linkedin {
+    background-position: -75px -150px;
+}
+
+/* end footer styles */
+
+/*******************************************************************************************
+*
+*	Intro styles
+*
+********************************************************************************************/
+
+/*
+.hero-block .shade-top {
+	background: url(../img/hero-block-shade-top.png) no-repeat center top !important;
+}
+.hero-block .shade-bottom {
+	background: url(../img/hero-block-shade-bottom.png) no-repeat center top !important;
+}
+*/
+
+/*Mattijs: Is this still used? */
+/*
+.top-border, .bottom-border {
+	border-top: 1px solid #CCCCCC;
+	height: 1px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+.bottom-border  {
+	top: auto;
+	bottom:-1px;
+}
+.block-odd {
+	background-color: #FFF;
+
+}
+.block-even {
+	background-color: #f6f6f6;
+	border-top: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+}
+
+.block {
+	background-color: #f6f6f6;
+	border: 1px solid #eaeaea;
+	padding:25px;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.save-block {
+	clear:left;
+	text-align: right;
+	padding:25px;
+
+
+}*/
+
+body.home .carousel-inner img {
+    width:              100%;
+}
+
+.bid-social.twitter {
+    background: url("assets/img/social-media-icons.png") no-repeat scroll 0 -5024px transparent;
+    margin-right: 0;
+}
+
+.bid-social.facebook {
+    background: url("assets/img/social-media-icons.png") no-repeat scroll 0 -1536px transparent;
+}
+
+.bid-social {
+    display: block;
+    float: left;
+    height: 16px;
+    margin-right: 8px;
+    text-indent: -3333px;
+    width: 16px;
+}
+
+.skypeclass p {
+    margin:-15px;
+}
+
+.progress {
+    height: 24px;
+}
+
+.progress .bar {
+    background-color: #1ABC9C;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    line-height:24px;
+    font-weight:bold;
+}
+.scrollcontent {
+    z-index:-100;
+}
+.prevPageBtn{
+    margin-top:40px;
+    margin-bottom:10px;
+    float:left;
+    width:auto;
+}
+.nextPageBtn{
+    margin-top:40px;
+    margin-bottom:10px;
+    float:right;
+    width:auto;
+}
+.top-margin {
+    margin-top:47px;
+}
+.adjacentval{
+    margin-top:18px;
+    margin-bottom:18px;
+}
+
+.alert-error {
+    text-align:center;
+    margin-top:37px;
+}
+/*.logo {
+    height:88px;
+    width:116px;
+}
+*/
+
+
+/* end intro styles */
+
+
+
+
+/*******************************************************************************************
+*
+*	Form styles
+*
+********************************************************************************************/
+
+.row-fluid input, .row-fluid textarea {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+input[type="file"] {
+	line-height:               18px;
+}
+
+textarea {
+	min-height:                100px;
+}
+
+select {
+	width:                     100%;
+    height:                     41px;
+    margin-bottom:              0;
+}
+
+/* 'fix' for having the input prepends take up the whole width */
+form .row-fluid .input-prepend {
+    display:                    block;
+}
+    /* changed to .add-on because we are targetting a specific child class of input-prepend. Using span was affecting tags-input labels */
+    form .row-fluid .input-prepend .add-on {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width:                      10%;
+        height:                     41px;
+        display:                    inline-block;
+    }
+    form .row-fluid .input-prepend input {
+        width:                      90.2%;
+    }
+
+
+	form label {
+		font-weight: 700;
+		color: #9DA09C;
+	}
+
+	form label.bidx-radio {
+		font-weight: normal;
+	}
+
+    form fieldset,
+    form fieldset.well {
+        position: relative;
+        padding-top: 50px;
+    }
+
+
+
+    form legend {
+        position:               absolute;
+        top:                    8px;
+        border-bottom:          0;
+    }
+
+	.highlight {
+		box-shadow: 0 0 0 3px #DFDFDF inset !important;
+	}
+
+
+	.formfield .ajaxloader, .formfield-error .ajaxloader {
+		background   : url("assets/img/ajax-loader.gif") no-repeat top right transparent;
+		height       : 24px;
+		margin-top   : -12px; /*margin-top should always be half the height of the ajaxloader */
+		margin-right : 10px;
+		position     : absolute;
+		top          : 50%;
+		display      : block;
+		right        : 0;
+		width        : 100%;
+	}
+	.formfield .ajaxwrapper, .formfield-error .ajaxwrapper {
+		position:relative;
+	}
+
+	.buttonwrapper {
+		margin:20px 0;
+	}
+
+    /* candidate for removal*/
+	.formfield-error {
+		margin-bottom: 0;
+	}
+	.formfield-error input {
+		-webkit-border-radius : 4px 4px 0 0;
+		-moz-border-radius    : 4px 4px 0 0;
+		border-radius         : 4px 4px 0 0;
+
+		margin-bottom         : 0;
+	}
+
+
+    select.error, input.error, textarea.error {
+        display: inline-block;
+    }
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@ currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
+    /* please move Form css thhat is used inbetween this block */
+
+
+    .well form {
+        padding: 20px;
+    }
+    .error-icon {
+
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        display: block;
+        margin-right: -26px;
+        margin-top: 11px;
+
+        position: absolute;
+        right: 0;
+        top: 0;
+
+    }
+
+    /* bidX tagsinput, uses bootstrap-tagmanager */
+    input[type='text'].bidx-tagsinput {
+        width:                          50%;
+    }
+
+    input[type='text'].bidx-tagsinput.enclosed {
+
+        width:                          150px;
+        line-height:                    25px;
+        padding:                        0;
+        border:                         none;
+        background-color:               transparent;
+        height:                         25px;
+        margin-bottom:                  5px;
+    }
+    .input-prepend {
+        /* background-color: #bdc3c7; */ /* $mattijs: I dont know why I had to add a background here, so for now I commented it until I know why it is there */
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+    }
+    .bidx-tagsinput-container {
+        border:                     2px solid #bdc3c7;
+        color:                      #34495e;
+        background-color:           #fff;
+        font-family:                "Lato", sans-serif;
+        font-size:                  14px;
+        padding:                    6px 1px 1px 6px;
+        height:                     100%;
+
+        white-space:                normal;
+        text-indent:                0;
+        width:                      100%;
+        display:                    inline-block;
+        overflow-y:                 auto;
+
+        -webkit-box-sizing:         border-box;
+        -moz-box-sizing:            border-box;
+        box-sizing:                 border-box;
+
+        -webkit-appearance:         none;
+        -moz-appearance:            none;
+
+        -webkit-border-radius:      6px;
+        -moz-border-radius:         6px;
+        border-radius:              6px;
+
+        -webkit-box-shadow:         none;
+        -moz-box-shadow:            none;
+        box-shadow:                 none;
+
+        -webkit-transition: border .25s linear, color .25s linear;
+        -moz-transition: border .25s linear, color .25s linear;
+        -o-transition: border .25s linear, color .25s linear;
+        transition: border .25s linear, color .25s linear;
+        -webkit-backface-visibility: hidden;
+    }
+    .input-prepend .bidx-tagsinput-container {
+        -webkit-border-radius: 0 6px 6px 0;
+        -moz-border-radius: 0 6px 6px 0;
+        border-radius: 0 6px 6px 0;
+        width: 90.2%;
+    }
+
+
+    .bidx-tagsinput-container .bidx-tag {
+        line-height: 11px;
+        vertical-align: middle;
+    }
+
+    .bidx-tag {
+        background-color:               #1abc9c;
+        color:                          #ffffff;
+
+        border-radius:                  4px;
+        margin-right:                   5px;
+        margin-bottom:                  4px;
+        overflow:                       hidden;
+        line-height:                    22px;
+        padding:                        7px 17px 8px 17px;
+        position:                       relative;
+        display:                        inline-block;
+        zoom:                           1;
+        *display:                       inline;
+
+        -webkit-transition:             0.14s linear;
+           -moz-transition:             0.14s linear;
+             -o-transition:             0.14s linear;
+                transition:             0.14s linear;
+        -webkit-backface-visibility:    hidden;
+    }
+
+        .bidx-tag:hover {
+            background-color:               #16a085;
+            color:                          #ffffff;
+            padding-left:                   10px;
+            padding-right:                  24px;
+        }
+
+        .bidx-tag .tm-tag-remove {
+            bottom:                         0;
+            color:                          #ffffff;
+            cursor:                         pointer;
+            font-size:                      12px;
+            opacity:                        0;
+            padding:                        7px 7px 5px 0;
+            position:                       absolute;
+            right:                          0;
+            text-align:                     right;
+            text-decoration:                none;
+            top:                            0;
+            width:                          100%;
+            z-index:                        2;
+            /* display:                        none; */
+        }
+
+        .bidx-tag .tm-tag-remove:before {
+            color:                          #ffffff;
+            content:                        "\e00b";
+            font-family:                    "Flat-UI-Icons";
+            cursor:                         pointer;
+        }
+
+        .cross:before {
+            color:                          #000;
+            content:                        "\e00b";
+            font-family:                    "Flat-UI-Icons";
+            cursor:                         pointer;
+        }
+
+        .bidx-tag:hover .tm-tag-remove {
+            color:                          #ffffff;
+            opacity:                        1;
+            display:                        block;
+        }
+
+        .vertical-middle {
+            position: relative;
+            height: 100%;
+        }
+        .vertical-middle a {
+             left: 0;
+            margin-top: -10px;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+        }
+
+        .well .block-title {
+            font-family: 'weblysleek_uisemibold',sans-serif,Arial;
+            font-size: 20px;
+            display: inline-block;
+            zoom: 1;
+            *display: block;
+            margin-bottom: 20px;
+        }
+
+
+        .input-append, .input-prepend {
+            margin-bottom: 0;
+        }
+
+    	.error_separate { /*still used for seperate error messages not linked to an input. Login uses it*/
+    		background-color: #DBD9D9;
+    		border: 1px solid #FFA8A8;
+    		-webkit-border-radius: 4px;
+    		-moz-border-radius: 4px;
+    		border-radius: 4px;
+    		color: #E83E3E;
+    		padding: 4px 10px;
+    		margin:5px 0;
+            display: none;
+    	}
+
+        .error {
+
+            color: #E83E3E;
+            padding:4px 8px;
+
+            display: none;
+            text-align: left;
+        }
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@ End currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
+
+
+
+	/*IE hacks*/
+/*	.lt-ie8 .formfield {
+		padding-right:42px;
+	}
+	 .lt-ie8 textarea {
+		padding-right:20px;
+		min-height: 100px;
+	}
+	.lt-ie8 .ajaxwrapper .ajaxloader {
+		right:-30px;
+	}
+	.lt-ie8 .ie8-padding-correction {
+		padding-right:0;
+	}
+
+	.lt-ie8 .span8 {
+		width:55%;
+	}
+*/
+	/* LOCATION PLUGIN*/
+	.location-map .explanation, .location-list .explanation {
+		margin:10px 0;
+	}
+		.location-list ul {
+			margin-top:10px;
+			padding: 5px;
+			background-color: #CCCCCC;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+		}
+
+		.location-list ul li .label  {
+			margin:2px;
+
+			position: relative;
+			display: block;
+		}
+		.location-list ul li .label .control {
+			margin-left:50px;
+			position: absolute;
+			right:3px;
+			top:1px;
+		}
+
+		.map {
+			margin-top:10px;
+			border:1px solid #777;
+		}
+
+        /** fix for bootstrap messing up with the zoom controls in google maps **/
+        .map label { width: auto; display:inline; }
+        .map img { max-width: none; }
+	/* END LOCATION PLUGIN*/
+
+
+/*
+	fonts
+*/
+
+
+@font-face {
+    font-family: 'weblysleek_ui_normalregular';
+    src: url('assets/css/webfonts/weblysleek_ui_normal-webfont.eot');
+    src: url('assets/css/webfonts/weblysleek_ui_normal-webfont.eot?#iefix') format('embedded-opentype'),
+         url('assets/css/webfonts/weblysleek_ui_normal-webfont.woff') format('woff'),
+         url('assets/css/webfonts/weblysleek_ui_normal-webfont.ttf') format('truetype'),
+         url('assets/css/webfonts/weblysleek_ui_normal-webfont.svg#weblysleek_uisemilight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'weblysleek_uisemilight';
+    src: url('assets/css/webfonts/weblysleekuisl-webfont.eot');
+    src: url('assets/css/webfonts/weblysleekuisl-webfont.eot?#iefix') format('embedded-opentype'),
+         url('assets/css/webfonts/weblysleekuisl-webfont.woff') format('woff'),
+         url('assets/css/webfonts/weblysleekuisl-webfont.ttf') format('truetype'),
+         url('assets/css/webfonts/weblysleekuisl-webfont.svg#weblysleek_uisemilight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'weblysleek_uisemibold';
+    src: url('assets/css/webfonts/weblysleekuisb-webfont.eot');
+    src: url('assets/css/webfonts/weblysleekuisb-webfont.eot?#iefix') format('embedded-opentype'),
+         url('assets/css/webfonts/weblysleekuisb-webfont.woff') format('woff'),
+         url('assets/css/webfonts/weblysleekuisb-webfont.ttf') format('truetype'),
+         url('assets/css/webfonts/weblysleekuisb-webfont.svg#weblysleek_uisemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'weblysleek_uilight';
+    src: url('assets/css/webfonts/weblysleekuil-webfont.eot');
+    src: url('assets/css/webfonts/weblysleekuil-webfont.eot?#iefix') format('embedded-opentype'),
+         url('assets/css/webfonts/weblysleekuil-webfont.woff') format('woff'),
+         url('assets/css/webfonts/weblysleekuil-webfont.ttf') format('truetype'),
+         url('assets/css/webfonts/weblysleekuil-webfont.svg#weblysleek_uilight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+/*******************************************************************************************
+*
+*   Group homepage styles
+*
+********************************************************************************************/
+.group-members .media {
+    position: relative;
+}
+.group-members .media .member-connect {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0 6px 4px 0;
+}
+
+
+/*******************************************************************************************
+*
+*   Financial details styles
+*
+********************************************************************************************/
+.financial-details {
+    width: 100%;
+    margin-bottom: 20px;
+}
+    .financial-details caption {
+        font-family: 'weblysleek_uisemibold',sans-serif,Arial;
+        font-size: 20px;
+        text-align: left;
+        padding: 0 0 15px 0;
+    }
+
+    .financial-details colgroup col.item-spacer {
+        width: 30px;
+    }
+
+    .financial-details colgroup col.item-label {
+        width: 30%;
+    }
+
+    .financial-details colgroup col.item-value {
+
+    }
+
+
+    .financial-details thead th,
+    .financial-details.header th {
+        background-color: #fff;
+        padding: 6px;
+    }
+
+    .financial-details thead .item-label,
+    .financial-details tbody .item-label,
+    .financial-details tfoot .item-label {
+        text-align: left;
+    }
+
+
+
+    .financial-details thead tr .item-spacer,
+    .financial-details.header tr .item-spacer
+     {
+        background-color: #fff;
+
+    }
+        .financial-details thead tr .item-spacer .caret {
+        }
+
+    .financial-details tfoot td {
+        background-color: #E3E3E3;
+    }
+
+    .financial-details td {
+        padding: 4px;
+        background-color: #E3E3E3;
+        text-align: center;
+    }
+    .financial-details .subtotal td, .financial-details .total td {
+        background-color: #C8C8C8;
+        font-weight: bold;
+    }
+
+
+    .financial-details .spacer td {
+        height: 20px;
+        background-color: transparent;
+    }
+
+    .financial-details tr .item-spacer {
+        background-color:  transparent;
+    }
+
+
+
+
+/*******************************************************************************************
+*
+*	Responsive breakpoints
+*
+********************************************************************************************/
+
+@media (max-width: 979px) {
+	body,
+    body.bidx-edit {
+        padding-top:                0;
+	}
+
+	body.bidx-edit .pageHeader {
+        position:                   relative;
+        top:                        0;
+	}
+
+    header.navbar .nav {
+        margin-top:                 20px;
+    }
+
+    header.navbar .nav > li > a {
+        padding:                    7px 30px;
+    }
+
+    header.navbar .nav > li > ul {
+        margin-top:                 0;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .nav-edit {
+        position:                   relative;
+        top:                        0;
+        width:                      auto;
+    }
+}
+@media only screen and (max-width: 800px) {
+/* Experimental code*/
+
+    /* Force table to not be like tables anymore */
+    #no-more-tables table,
+    #no-more-tables thead,
+    #no-more-tables tbody,
+    #no-more-tables th,
+    #no-more-tables td,
+    #no-more-tables tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #no-more-tables thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #no-more-tables tr { border: 1px solid #ccc; }
+
+    #no-more-tables td {
+        /* Behave like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        text-align:left;
+    }
+
+    #no-more-tables td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+
+    /*
+    Label the data
+    */
+    #no-more-tables td:before { content: attr(data-title); }
+}
