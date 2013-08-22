@@ -58,7 +58,7 @@ if ($entrepreneurDetails &&
             ?>
             <br/>
             <?php
-            $focusIndustry = $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ');
+            $focusIndustry = $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ','industry');
             $rowValues = array ( __('Focus Industry','bidxplugin') => $focusIndustry);
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'h5', 'class_value' => 'adjacentval'));
             ?>
@@ -107,7 +107,7 @@ if ($businessSummary) {
                 <!-- Personal details 6/6 Start -->
 
                 <?php
-                $industryVal = $this->getMultiValues ($this->exst ($businessSummary->industry), ', ');
+                $industryVal = $this->getMultiValues ($this->exst ($businessSummary->industry), ', ','industry');
                 $countryVal = $this->getMultiValues ($this->exst ($businessSummary->countryOperation), ', ', 'country', 'country');
 
                 $joinLink = ((isset ($businessSummaryBidxMeta->bidxEntityId)) && $businessSummaryBidxMeta->bidxEntityId)

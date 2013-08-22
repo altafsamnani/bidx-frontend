@@ -13,12 +13,12 @@ class BidxShortcode {
 
 	// determine if the scripts should be loaded
 	static $add_script;
-	// name of the script id
-	static $script_id;
 	// array of mappings for preloading
 	static $mapping = array();
     // name of the script id
 	static $scriptIdArr = array();
+    // store translation vars
+	static $transalationVars = array();
 
 
 	/**
@@ -80,10 +80,27 @@ class BidxShortcode {
 
 		Logger :: getLogger( 'shortcode' ) -> trace( 'Shortcode called with ' . serialize( $atts ) );
 		$appname = $atts['app'];
-		self :: $script_id = $appname;
+	
         self::$scriptIdArr[$appname] = $appname;
 
 		if ( array_key_exists( $appname, self::$mapping ) ) {
+            //Handle the i18n Data     
+            $bidxCommonObj = new BidxCommon();
+            if (empty (self::$transalationVars)) { // First Shortcode
+ 
+                self::$transalationVars = $bidxCommonObj->getLocaleTransient (array ($appname), $static = true, $i18nGlobal = true);
+      
+            } else { // More than 1 shortcode
+                $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ($appname), $static = false, $i18nGlobal = false);
+                
+                self::$transalationVars['i18n'][$appname] = $appTranslationsArr['i18n'][$appname];
+               
+            }
+            
+            $bidxCommonObj->setI18nData(self::$transalationVars);
+
+            Logger :: getLogger ('shortcode')->trace ('Final scripts : ' . serialize (self::$scriptIdArr));
+
 			$exec = self::$mapping[$appname];
 			Logger :: getLogger( 'shortcode' ) -> trace( "Invoking bidX app '" . $appname . "'." );
 			return $exec :: load( $atts );
@@ -155,14 +172,12 @@ class BidxShortcode {
      function print_script ()
     {
         $scriptArr = self::$scriptIdArr;
-        $bidxCommonObj = new BidxCommon();
-        $jsTransalationVars = $bidxCommonObj->getLocaleTransient ($scriptArr, $static = true, $i18nGlobal = true);
-        Logger :: getLogger ('shortcode')->trace ('Final scripts : ' . serialize (self::$scriptIdArr));
+
         /**** Adding Translations to Js Variables before data.js */
         // 1. I18n  & Global Data
-        wp_localize_script ('bidx-data', '__bidxI18nPreload', $jsTransalationVars['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+        wp_localize_script ('bidx-data', '__bidxI18nPreload', self::$transalationVars['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
         // 2. Static Data
-        wp_localize_script ('bidx-data', '__bidxDataPreload', $jsTransalationVars['static']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+        wp_localize_script ('bidx-data', '__bidxDataPreload', self::$transalationVars['static']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
         Logger::getLogger ('shortcode')->trace ('Footer print_script called');
 

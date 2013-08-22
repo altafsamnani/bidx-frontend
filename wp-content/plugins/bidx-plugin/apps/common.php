@@ -19,6 +19,7 @@ class BidxCommon
     public static $staticSession = array ();
     public static $transientStaticData = array ();
     public static $scriptStaticJs;
+    public static $i18nData = array();
 
     public function __construct ()
     {
@@ -310,8 +311,7 @@ class BidxCommon
                     break;
 
                 case 'company':
-                    $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('company'), $static = true, $i18nGlobal = true);
-
+                   
                     $companyId = null;
                     if (!empty ($hostAddress[2])) {
                         $companyId = $hostAddress[2];
@@ -341,9 +341,7 @@ class BidxCommon
                     }
 
                     break;
-                case 'mail' :
-                    $transientLocaleData = $this->getLocaleTransient ($i18nApp = array ('mail'), $static = false, $i18nGlobal = true);
-                    break;
+             
             }
 
 
@@ -554,7 +552,8 @@ class BidxCommon
      */
     public function getLocaleTransient ($i18n = array (), $static = true, $i18nGlobal = true)
     {
-        
+
+      $transientStaticData = NULL;
         /* 1. Static Locale Data */
         if ($static) {
             $siteLocale = get_locale ();
@@ -615,13 +614,27 @@ class BidxCommon
         }
 
 
-         $returnData['__global'] = $transientI18nData['__global'];
-         //unset( $transientI18nData['global'] );
-         $returnData['i18n'] = $transientI18nData;
-         $returnData['static'] = $transientStaticData;
+         (isset($transientI18nData['__global'])) ? $returnData['__global'] = $transientI18nData['__global']:'';
+         ($transientStaticData) ? $returnData['static'] = $transientStaticData:'';
 
+        //unset( $transientI18nData['global'] );
+         $returnData['i18n'] = $transientI18nData;
+     
+        $this::setI18nData($returnData);
 
         return $returnData;
+    }
+
+    public function setI18nData( $returnData ) {
+        
+        $this::$i18nData = $returnData;
+  
+        return;
+    }
+
+    static function getI18nData() {
+
+        return self::$i18nData;
     }
 
 }

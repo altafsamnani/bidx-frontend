@@ -273,7 +273,7 @@ class ContentLoader
         //hardcoded for now
         $post_type = 'bidx';
 
-        $this->logger->trace ('Initializing custom Post handler for contentloaderaltaf: ' . $post_type);
+        $this->logger->trace ('Initializing custom Post handler for contentloader: ' . $post_type);
         if ($post_type != 'post' && $post_type != 'page') {
             $args = array (
               'public' => true,

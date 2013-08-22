@@ -182,28 +182,40 @@ class TemplateLibrary
         return $rowHtml;
     }
 
+    public function getStaticVal($type, $key) {
+        $staticData = BidxCommon::$i18nData['static'];
+       
+        $returnVal = $key;
+        foreach($staticData[$type] as $staticVal ) {
+            if( $staticVal->value == $key) {
+                $returnVal = $staticVal->label;
+                break;
+            }
+        }
+
+        return $returnVal;
+
+    }
+
+
     public function addExtraValuesToRows ($label, $values)
     {
-
+    
         switch ($label) {
 
             case 'gender':
-                if ($values == 'm') {
-                    $values = 'Male';
-                } elseif ($values == 'f') {
-                    $values = 'Female';
-                }
+                $values = $this->getStaticVal('gender', $values);
                 break;
 
             case 'motherlanguage':
-                $values = ($values) ? 'My mother language is  ' . $values : '';
+                $values = ($values) ? 'My mother language is  ' . $this->getStaticVal('language', $values) : '';
                 break;
             case 'language':
-                $values = ($values) ? 'I speak ' . $values : '';
+                $values = ($values) ? 'I speak ' .  $this->getStaticVal('language', $values) : '';
                 break;
 
             case 'nationality':
-                $values = $this->getNationalityValue ($values);
+                $values = $this->getStaticVal('language', $values);
 
                 break;
         }
@@ -211,67 +223,66 @@ class TemplateLibrary
         return $values;
     }
 
+    /*
+     *
+     * Array
+(
+    [0] => investorType
+    [1] => renderType
+    [2] => consumerType
+    [3] => documentType
+    [4] => locale
+    [5] => exportImport
+    [6] => investmentType
+    [7] => permitsObtained
+    [8] => stageBusiness
+    [9] => education
+    [10] => legalForm
+    [11] => businessOutcome
+    [12] => country
+    [13] => focusRole
+    [14] => socialImpact
+    [15] => envImpact
+    [16] => prefNotMethod
+    [17] => gender
+    [18] => language
+    [19] => languageRating
+    [20] => industry
+)
+     *
+     */
     public function getMultiReplacedValues ($label, $values)
     {
-
+    
         switch ($label) {
 
             case 'gender':
-                if ($values == 'm') {
-                    $values = 'Male';
-                } elseif ($values == 'f') {
-                    $values = 'Female';
-                }
+                $values = $this->getStaticVal('gender', $values);
 
                 break;
 
             case 'language' :
-                $values = $this->getLanguagesValue ($values);
+                $values =  $this->getStaticVal('language', $values);
 
                 break;
 
             case 'country':
-                $values = $this->getCountryValue ($values);
+                $values =  $this->getStaticVal('country', $values);
 
                 break;
 
-            default:
+            case 'industry':
+                $values =  $this->getStaticVal('industry', $values);
+
+                break;
+
+            
+            
         }
         return $values;
     }
 
-    public function getNationalityValue ($value)
-    {
 
-        $languageArr = array ('en' => 'English', 'es' => 'Spanish', 'fr' => ' French', 'nl' => 'Dutch');
-        $languageKey = strtolower ($value);
-        $returnLanguage = (isset ($languageArr[$languageKey]) ? $languageArr[$languageKey] : $value);
-
-        return $returnLanguage;
-    }
-
-    public function getLanguagesValue ($value)
-    {
-
-        $languageArr = array ('en' => 'English', 'es' => 'Spanish', 'fr' => ' French', 'nl' => 'Dutch', 'uk' => 'English(UK)');
-        $languageKey = strtolower ($value);
-        $returnLanguage = (isset ($languageArr[$languageKey]) ? $languageArr[$languageKey] : $value);
-
-        return $returnLanguage;
-    }
-
-    public function getCountryValue ($value)
-    {
-
-        $countryArr = array ('en' => 'United States',
-          'gb' => 'Great Britain',
-          'nl' => 'The Netherlands',
-          'fr' => 'France');
-        $countryKey = strtolower ($value);
-        $returnCountry = (isset ($countryArr[$countryKey]) ? $countryArr[$countryKey] : $value);
-
-        return $returnCountry;
-    }
 
     /**
      * Add bootstrap rows values/labels through views
