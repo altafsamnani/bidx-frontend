@@ -1,7 +1,7 @@
 <?php
 
 $sessionData = BidxCommon::$staticSession;
-$entities = $sessionData->data->wp->entities;
+$entities = (isset($sessionData->data->wp->entities)) ? $sessionData->data->wp->entities:NULL;
 
 $authenticated=false;
 if ($sessionData->authenticated == 'true') {
