@@ -848,7 +848,7 @@ form .row-fluid .input-prepend {
             margin-bottom: 0;
         }
 
-    	.error_separate { /*still used for seperate error messages not linked to an input. Login uses it*/
+    	.error-separate { /*still used for seperate error messages not linked to an input. Login uses it*/
     		background-color: #DBD9D9;
     		border: 1px solid #FFA8A8;
     		-webkit-border-radius: 4px;

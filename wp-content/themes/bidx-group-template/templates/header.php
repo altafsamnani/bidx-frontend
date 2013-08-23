@@ -9,10 +9,10 @@
 					<?php //do_action('icl_language_selector'); ?>
 				</div>
 				<div class="pull-right span2">
-					<a href="/auth/#auth/login" class="btn btn-primary btn-block"><?php _e('Login','bidxtheme');?></a>
+					<a href="/auth/#auth/login" class="btn btn-primary btn-block bidx-theme-colour-one"><?php _e('Login','bidxtheme');?></a>
 				</div>
 				<div class="pull-right span2">
-					<a href="/auth/#auth/register" class="btn btn-primary btn-block"><?php _e('Register','bidxtheme');?></a>
+					<a href="/auth/#auth/register" class="btn btn-primary btn-block bidx-theme-colour-two"><?php _e('Register','bidxtheme');?></a>
 				</div>
 			</div>
 			<div>

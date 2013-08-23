@@ -756,7 +756,7 @@ body.home .hero-block {
         text-shadow: 0 0 7px white;
     }
 
-    .error_separate {
+    .error-separate {
         background-color: #DBD9D9;
         border: 1px solid #FFA8A8;
         -webkit-border-radius: 4px;
