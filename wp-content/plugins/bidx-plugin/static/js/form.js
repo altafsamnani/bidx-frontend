@@ -173,7 +173,7 @@
 				}
 				//xhr post
 
-				var $error = $form.find( ".error_separate" );
+				var $error = $form.find( ".error-separate" );
 
 				if ( $error.length )
 				{
@@ -242,7 +242,7 @@
 									//add separate error message under button
 									var $button=$(globalOptions.callToAction);
 									if ( $error.length === 0) {
-										$error=$("<div class=\"error_separate jqHidden\">" + message + "</div>");
+										$error=$("<div class=\"error-separate jqHidden\">" + message + "</div>");
 										$button.parent().after($error);
 										$error.fadeIn('fast');
 									}

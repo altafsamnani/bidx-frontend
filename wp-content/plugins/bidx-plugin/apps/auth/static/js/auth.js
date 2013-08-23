@@ -8,7 +8,7 @@
     ,   $btnLogin                   = $frmLogin.find( ":submit" )
     ,   $btnPasswordReset           = $frmPasswordReset.find( ":submit" )
     ,   $btnRegister                = $frmRegister.find( ":submit" )
-    ,   $loginErrorMessage          = $frmLogin.find( ".error_separate" )
+    ,   $loginErrorMessage          = $frmLogin.find( ".error-separate" )
     ,   bidx                        = window.bidx
     ,   appName                     = "auth"
     ,   currentView
@@ -212,59 +212,60 @@
     //
     var _doLogin = function( params )
     {
-        $.ajax(
-        {
-            type:       'post'
-        ,   url:        '/wp-admin/admin-ajax.php?action=bidx_signin'
-        ,   dataType:   'json'
-        ,   data:       $frmLogin.find(":input:not(.ignore)").serialize() //+ "&apiurl=" + options.apiurl +  "&apimethod=" + options.apimethod
 
-        ,   success:     function( data, textStatus, jqXHR )
-            {
-                bidx.utils.log(data);
+        bidx.api.call(
+            "auth.login"
+        ,   {
 
-                if ( data )
+                data:       $frmLogin.find(":input:not(.ignore)").serialize()
+
+
+            ,   success: function( response, textStatus, jqXHR )
                 {
-                    if (data.status === 'OK')
+                    if ( response )
                     {
-                        if (data.redirect)
+                        if (response.status === 'OK')
                         {
-
-                            if ( window.noty )
+                            if (response.redirect)
                             {
-                                var redirectText;
-                                bidx.i18n.getItem( "msgWaitForRedirect", function( err, label )
-                                {
-                                    redirectText = label;
 
-                                } );
-
-                                noty(
+                                if ( window.noty )
                                 {
-                                    type:           "success"
-                                ,   text:           redirectText
-                                } );
+                                    var redirectText;
+                                    bidx.i18n.getItem( "msgWaitForRedirect", function( err, label )
+                                    {
+                                        redirectText = label;
+
+                                    } );
+
+                                    noty(
+                                    {
+                                        type:           "success"
+                                    ,   text:           redirectText
+                                    } );
+                                }
+
+                                document.location=response.redirect;
                             }
-
-                            document.location=data.redirect;
                         }
-                    }
-                    else if ( data.status === "ERROR" )
-                    {
-                        $loginErrorMessage.text( data.text).show();
+                        else if ( response.status === "ERROR" )
+                        {
+                            $loginErrorMessage.text( response.text).show();
 
-                        params.error( jqXHR );
+                            params.error( jqXHR );
+                        }
                     }
                 }
 
+            ,   error:  function( jqXhr )
+                {
 
+                    params.error( "Error", jqXhr );
+                }
             }
-        ,   error:      function( jqXhr )
-            {
-                params.error( jqXhr );
-            }
-        } );
-//
+        );
+
+
     };
 
     // This function prepares the form so that the user can trigger the submit

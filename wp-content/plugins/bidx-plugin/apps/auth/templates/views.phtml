@@ -18,15 +18,17 @@ if (!username_exists ($group_anonymous_login)) {
     add_user_to_blog ($blog_id, $user_id_anonymous, 'groupanonymous');
 }
 ?>
-<div id="auth" class="block-odd mainState mainStateAuth mainStateShow">
+<div id="auth" class="block-odd mainState mainStateAuth">
     <div class="container">
+
         <section class="block-login">
+
             <!-- LOGIN -->
             <article class="view viewLogin ">
 
                 <form id="frmLogin" action="/wp-login.php" method="post">
                     <div class="row-fluid">
-                        <div class="span12">
+                        <div class="span8">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
 
@@ -37,7 +39,7 @@ if (!username_exists ($group_anonymous_login)) {
                         </div>
                     </div>
                     <div class="row-fluid">
-                        <div class="span12">
+                        <div class="span8">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Password','bidxplugin');?></label>
 
@@ -47,11 +49,11 @@ if (!username_exists ($group_anonymous_login)) {
                             </div>
                         </div>
                     </div>
-                    <div class="error_separate"></div>
+                    <div class="error-separate"></div>
                     <div class="row-fluid">
-                        <div class="span12">
+                        <div class="span4">
                             <div class="buttonwrapper">
-                                <button type="submit" class="btn btn-primary"><?php _e('Login','bidxplugin');?></button>
+                                <button type="submit" class="btn btn-primary btn-block bidx-theme-colour-one"><?php _e('Login','bidxplugin');?></button>
                             </div>
                         </div>
                     </div>
@@ -102,6 +104,7 @@ if (!username_exists ($group_anonymous_login)) {
                 </div>
 
             </article>
+
             <!-- REGISTER -->
              <?php $this->render ('inc_registration.phtml'); ?>
 

@@ -103,7 +103,7 @@
                 params.error( jqXhr, textStatus, errorThrown );
             }
         } );
-    }
+    };
 
     api.mail = mail;
 } )( jQuery );
