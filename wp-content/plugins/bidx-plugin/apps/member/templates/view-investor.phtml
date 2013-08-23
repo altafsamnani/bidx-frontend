@@ -43,7 +43,7 @@ if ($investorDetails &&
                     ?>
         </div>
 
-        <h4>Investor profile</h4>
+        <h4><?php _e('Investor profile','bidxplugin');?></h4>
 <?php
 
         // Summary
@@ -116,19 +116,19 @@ if ($investorDetails &&
 
 <?php
             $multiValueProperties = array(
-                __('Industry','bidxplugin')              =>  $this->exst ($investorDetails->focusIndustry),
-                __('Social impact','bidxplugin')         =>  $this->exst ($investorDetails->focusSocialImpact),
-                __('Enviromental impact','bidxplugin')   =>  $this->exst ($investorDetails->focusEnvImpact),
-                __('Consumer type','bidxplugin')         =>  $this->exst ($investorDetails->focusConsumerType),
-                __('Languages','bidxplugin')             =>  $this->exst ($investorDetails->focusLanguage),
-                __('Countries','bidxplugin')             =>  $this->exst ($investorDetails->focusCountry),
-                __('Stage of business','bidxplugin')     =>  $this->exst ($investorDetails->focusStageBusiness),
-                __('Gender','bidxplugin')                =>  $this->exst ($investorDetails->focusGender),
+                __('Industry','bidxplugin')              =>  $this->getMultiValues($this->exst ($investorDetails->focusIndustry), ', ','industry'),
+                __('Social impact','bidxplugin')         =>  $this->getMultiValues($this->exst ($investorDetails->focusSocialImpact), ', ','socialImpact'),
+                __('Enviromental impact','bidxplugin')   =>  $this->getMultiValues($this->exst ($investorDetails->focusEnvImpact), ', ','envImpact'),
+                __('Consumer type','bidxplugin')         =>  $this->getMultiValues($this->exst ($investorDetails->focusConsumerType), ', ','consumerType'),
+                __('Languages','bidxplugin')             =>  $this->getMultiValues($this->exst ($investorDetails->focusLanguage), ', ','language'),
+                __('Countries','bidxplugin')             =>  $this->getMultiValues($this->exst ($investorDetails->focusCountry), ', ','country'),
+                __('Stage of business','bidxplugin')     =>  $this->getMultiValues($this->exst ($investorDetails->focusStageBusiness), ', ','stageBusiness'),
+                __('Gender','bidxplugin')                =>  $this->getMultiValues($this->exst ($investorDetails->focusGender), ', ','gender'),
             );
-
+          
             foreach ( $multiValueProperties as $k => $v ) {
-                $values = $this->getMultiValues($v, ', ');
-                $rowValues = array ( $k => $values);
+                //$values = $this->getMultiValues($v, ', ');
+                $rowValues = array ( $k => $v);
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
 

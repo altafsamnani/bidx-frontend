@@ -31,7 +31,7 @@
                 ?>
 
                 <?php
-                $industry = $this->getMultiValues ($this->exst ($businessSummary->industry), ', ');
+                $industry = $this->getMultiValues ($this->exst ($businessSummary->industry), ', ','industry');
                 $rowValues = array (__('Industry','bidxplugin') => $industry);
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
@@ -65,7 +65,7 @@
                 ?>
 
                 <?php
-                $socialImpact = $this->getMultiValues ($this->exst ($businessSummary->socialImpact), ', ');
+                $socialImpact = $this->getMultiValues ($this->exst ($businessSummary->socialImpact), ', ','socialImpact');
                 $rowValues = array (__('Social Impact','bidxplugin') => $socialImpact);
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>

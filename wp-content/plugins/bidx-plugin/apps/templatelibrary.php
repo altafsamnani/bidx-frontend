@@ -182,40 +182,39 @@ class TemplateLibrary
         return $rowHtml;
     }
 
-    public function getStaticVal($type, $key) {
+    public function getStaticVal ($type, $key)
+    {
         $staticData = BidxCommon::$i18nData['static'];
-       
+
         $returnVal = $key;
-        foreach($staticData[$type] as $staticVal ) {
-            if( $staticVal->value == $key) {
+        foreach ($staticData[$type] as $staticVal) {
+            if ($staticVal->value == $key) {
                 $returnVal = $staticVal->label;
                 break;
             }
         }
 
         return $returnVal;
-
     }
-
 
     public function addExtraValuesToRows ($label, $values)
     {
-    
+
         switch ($label) {
 
             case 'gender':
-                $values = $this->getStaticVal('gender', $values);
+                $values = $this->getStaticVal ('gender', $values);
                 break;
 
             case 'motherlanguage':
-                $values = ($values) ? 'My mother language is  ' . $this->getStaticVal('language', $values) : '';
+                $values = ($values) ? 'My mother language is  ' . $this->getStaticVal ('language', $values) : '';
                 break;
             case 'language':
-                $values = ($values) ? 'I speak ' .  $this->getStaticVal('language', $values) : '';
+                $values = ($values) ? 'I speak ' . $this->getStaticVal ('language', $values) : '';
                 break;
 
             case 'nationality':
-                $values = $this->getStaticVal('language', $values);
+                $values = $this->getStaticVal ('language', $values);
 
                 break;
         }
@@ -226,63 +225,63 @@ class TemplateLibrary
     /*
      *
      * Array
-(
-    [0] => investorType
-    [1] => renderType
-    [2] => consumerType
-    [3] => documentType
-    [4] => locale
-    [5] => exportImport
-    [6] => investmentType
-    [7] => permitsObtained
-    [8] => stageBusiness
-    [9] => education
-    [10] => legalForm
-    [11] => businessOutcome
-    [12] => country
-    [13] => focusRole
-    [14] => socialImpact
-    [15] => envImpact
-    [16] => prefNotMethod
-    [17] => gender
-    [18] => language
-    [19] => languageRating
-    [20] => industry
-)
+      (
+      [0] => investorType
+      [1] => renderType
+      [2] => consumerType
+      [3] => documentType
+      [4] => locale
+      [5] => exportImport
+      [6] => investmentType
+      [7] => permitsObtained
+      [8] => stageBusiness
+      [9] => education
+      [10] => legalForm
+      [11] => businessOutcome
+      [12] => country
+      [13] => focusRole
+      [14] => socialImpact
+      [15] => envImpact
+      [16] => prefNotMethod
+      [17] => gender
+      [18] => language
+      [19] => languageRating
+      [20] => industry
+      )
      *
      */
+
     public function getMultiReplacedValues ($label, $values)
     {
-    
+
         switch ($label) {
-
-            case 'gender':
-                $values = $this->getStaticVal('gender', $values);
-
-                break;
-
-            case 'language' :
-                $values =  $this->getStaticVal('language', $values);
-
-                break;
-
+            case 'investorType':
+            case 'renderType':
+            case 'consumerType':
+            case 'documentType':
+            case 'locale':
+            case 'exportImport':
+            case 'investmentType':
+            case 'permitsObtained':
+            case 'stageBusiness':
+            case 'education':
+            case 'legalForm':
+            case 'businessOutcome':
             case 'country':
-                $values =  $this->getStaticVal('country', $values);
-
-                break;
-
+            case 'focusRole':
+            case 'socialImpact':
+            case 'envImpact' :
+            case 'prefNotMethod':
+            case 'gender':
+            case 'language':
+            case 'languageRating':
             case 'industry':
-                $values =  $this->getStaticVal('industry', $values);
+                $values = $this->getStaticVal ($label, $values);
 
                 break;
-
-            
-            
         }
         return $values;
     }
-
-
 
     /**
      * Add bootstrap rows values/labels through views
@@ -474,7 +473,7 @@ class TemplateLibrary
                         foreach ($rowValue as $value) {
                             $rowHtml .= "<div class='row-fluid'>";
                             $rowHtml .= "<div class='" . $gridValue . "'>";
-                            $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $this->exst( $value->documentName ) . " </a>";
+                            $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $this->exst ($value->documentName) . " </a>";
                             $rowHtml .= "</div>";
                             $rowHtml .= "</div>";
                         }
@@ -514,39 +513,39 @@ class TemplateLibrary
 
         // exit;
         //Iterate variable and add seperator
-        if($data) {
-        foreach ($data as $key => $dataValue) {
+        if (!empty ($data)) {
+            foreach ($data as $key => $dataValue) {
 
 
-            if ($subVal) {
-                if ($condition) {
-                    foreach ($condition as $keyCondition => $valueCondition) {
-                        if ((!empty($dataValue->$keyCondition)) && $dataValue->$keyCondition == $valueCondition) {
-                            $writeValue = true;
-                        } else {
-                            $writeValue = false;
+                if ($subVal) {
+                    if ($condition) {
+                        foreach ($condition as $keyCondition => $valueCondition) {
+                            if ((!empty ($dataValue->$keyCondition)) && $dataValue->$keyCondition == $valueCondition) {
+                                $writeValue = true;
+                            } else {
+                                $writeValue = false;
+                            }
                         }
+
+                        $objValue = ($writeValue) ? $dataValue->$subVal : '';
+                    } else {
+                        $objValue = (!empty ($dataValue->$subVal)) ? $dataValue->$subVal : '';
                     }
 
-                    $objValue = ($writeValue) ? $dataValue->$subVal : '';
+                    $elementKey = ($elementKey) ? $elementKey : $subVal;
                 } else {
-                    $objValue = (!empty ($dataValue->$subVal)) ? $dataValue->$subVal : '';
+                    $objValue = $dataValue;
                 }
 
-                $elementKey = ($elementKey) ? $elementKey : $subVal;
-            } else {
-                $objValue = $dataValue;
-            }
+                $objValue = $this->getMultiReplacedValues ($elementKey, $objValue);
+                if ($objValue != 'null' && $objValue) {
+                    $htmlDisplay .= $sep . $objValue;
+                    $count++;
 
-            $objValue = $this->getMultiReplacedValues ($elementKey, $objValue);
-            if ($objValue != 'null' && $objValue) {
-                $htmlDisplay .= $sep . $objValue;
-                $count++;
-
-                $sep = ($count == $countData) ? $seperatorAnd : $seperator;
+                    $sep = ($count == $countData) ? $seperatorAnd : $seperator;
+                }
             }
         }
-    }
         return $htmlDisplay;
     }
 
@@ -567,7 +566,7 @@ class TemplateLibrary
 
         foreach ($valueArr as $rowLabel => $rowValue) {
 
-            if ($rowValue != 'null' && trim($rowValue) != '' && $rowValue) {
+            if ($rowValue != 'null' && trim ($rowValue) != '' && $rowValue) {
 
                 $rowValue = $this->getMultiReplacedValues ($rowLabel, $rowValue);
                 $html.= $sep . $rowValue;
@@ -755,7 +754,7 @@ class TemplateLibrary
                     $html .= "<h5 class='documentName'>{$attachment->documentName}</h5>";
                     $html .= "<p>{$date} </p>";
 
-                    if ( $this->exst( $attachment->purpose )) {
+                    if ($this->exst ($attachment->purpose)) {
                         $html .= "<p>{$attachment->purpose} </p>";
                     }
 
