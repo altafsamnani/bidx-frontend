@@ -72,16 +72,19 @@ class auth {
                         $render = 'views';
                         $view->showRegisterLink = true;
                         $view->showLoginLink = true;
+                        break;
                 }
                 break;
 
             default:
+                $view->showRegisterLink = true;
+                $view->showLoginLink = true;
                 $render = $command;
         }
 
         $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
 
-		return $view -> render( $render . '.phtml' );
+		$view -> render( $render . '.phtml' );
 
 	}
 }
