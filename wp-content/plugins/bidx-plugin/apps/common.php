@@ -19,7 +19,7 @@ class BidxCommon
     public static $staticSession = array ();
     public static $transientStaticData = array ();
     public static $scriptStaticJs;
-    public static $i18nData = array();
+    public static $i18nData = array ();
 
     public function __construct ()
     {
@@ -61,10 +61,11 @@ class BidxCommon
 
             if (!$isWordpress) {
                 //Start the session to store Bidx Session
-               // $this->startSession ();
+
+                $this->startSession ();
 
                 //If Bidx Cookie set do the following
-               // if ($this->isSetBidxAuthCookie ()) {
+                if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
 
                     $sessionVars = $this->getSessionVariables ($subDomain);
@@ -78,7 +79,7 @@ class BidxCommon
 
                     //If not Logged in forcefully login to WP
                     $this->forceWordpressLogin ($subDomain, $sessionVars);
-               // }
+                }
 
                 //Set static variables to access through pages
                 $sessionVars = isset ($sessionVars) ? $sessionVars : NULL;
@@ -196,7 +197,7 @@ class BidxCommon
                 // New API has wrapped all it's data into a 'bidxMeta' block
                 // Below is for keeping it backwards/forwards compatible
                 //
-                $meta = isset( $value->bidxMeta ) ? $value->bidxMeta : $value;
+                $meta = isset ($value->bidxMeta) ? $value->bidxMeta : $value;
 
                 $bidxEntityType = $meta->bidxEntityType;
                 $bidxEntityValue = $meta->bidxEntityId;
@@ -244,7 +245,7 @@ class BidxCommon
 
         // milliseconds from 1 jan 1970 GMT
         //
-        $now = time() * 1000;
+        $now = time () * 1000;
 
         $scriptJs = "<script>
             var bidxConfig  = bidxConfig || {};
@@ -311,7 +312,7 @@ class BidxCommon
                     break;
 
                 case 'company':
-                   
+
                     $companyId = null;
                     if (!empty ($hostAddress[2])) {
                         $companyId = $hostAddress[2];
@@ -322,7 +323,6 @@ class BidxCommon
                     if ($companyId) {
                         $data->companyId = $companyId;
                         $this::$bidxSession[$subDomain]->companyId = $companyId;
-                        
                     }
                     break;
 
@@ -334,14 +334,12 @@ class BidxCommon
                         $data->bidxBusinessSummary = $bpSummaryId;
                         $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
                         $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
-
                     } else {
                         $redirect = 'auth'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
                     }
 
                     break;
-             
             }
 
 
@@ -412,6 +410,20 @@ class BidxCommon
 
                 break;
 
+            case 'mail' :
+                if ($authenticated == 'false') {
+                    
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url).'/#auth/login';
+                    wp_clear_auth_cookie ();
+
+                    //Clear Session and Static variables
+                    session_destroy ();
+
+                    $this::$staticSession = NULL;
+                    unset ($this::$bidxSession[$subDomain]);
+                }
+                break;
+
             default:
                 if ($uriString != 'auth' && $authenticated == 'false') {
 
@@ -437,7 +449,7 @@ class BidxCommon
         $isWordpress = false;
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $params = $_GET;
-        
+
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
         if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) || $this->isWPInternalFunction () || $hostAddress[1] == 'registration' ||
             strstr ($hostAddress[1], 'wp-login.php')) {
@@ -461,7 +473,7 @@ class BidxCommon
     }
 
     /**
-    * Force Wordpress Login for single sign on
+     * Force Wordpress Login for single sign on
      * @param string $subdomain
      */
     function forceWordpressLogin ($subDomain, $sessionData)
@@ -553,7 +565,7 @@ class BidxCommon
     public function getLocaleTransient ($i18n = array (), $static = true, $i18nGlobal = true)
     {
 
-      $transientStaticData = NULL;
+        $transientStaticData = NULL;
         /* 1. Static Locale Data */
         if ($static) {
             $siteLocale = get_locale ();
@@ -562,7 +574,7 @@ class BidxCommon
             $transientStaticData = get_transient ($transientKey);
 
             /* If no value then set the site local transient */
-            if ($transientStaticData === false ) {
+            if ($transientStaticData === false) {
                 $resultStaticData = $staticDataObj->getStaticData (NULL);
                 $staticDataVars = $resultStaticData->data;
                 $transientStaticData = $staticDataObj->getMultilingualStaticData ($staticDataVars);
@@ -570,7 +582,7 @@ class BidxCommon
             }
         }
 
-         /* 2. I18n Global/App Locale Data */
+        /* 2. I18n Global/App Locale Data */
         $i18PluginArr = array ();
         $i18AppsArr = array ();
 
@@ -579,8 +591,8 @@ class BidxCommon
         }
 
         if (!empty ($i18n)) {
-            $moduleNameArr = implode(',',$i18n);
-            $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{'.$moduleNameArr.'}/{i18n.xml}', GLOB_BRACE);
+            $moduleNameArr = implode (',', $i18n);
+            $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $moduleNameArr . '}/{i18n.xml}', GLOB_BRACE);
         }
 
         $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
@@ -592,19 +604,19 @@ class BidxCommon
             $document = simplexml_load_file ($fileName);
             $items = $document->xpath ('//Item');
             $count = 0;
-            $transientI18nData[$appName] = array();
+            $transientI18nData[$appName] = array ();
             foreach ($items as $xmlObj) {
 
                 $arr = $xmlObj->attributes ();
-                $xmlLabel =  $xmlObj->__toString ();
+                $xmlLabel = $xmlObj->__toString ();
 
-                if($appName == '__global') {
-                    $label = __( $xmlLabel ,'i18n');
+                if ($appName == '__global') {
+                    $label = __ ($xmlLabel, 'i18n');
                 } else {
-                    $label = _x( $xmlLabel ,$appName, 'i18n');
+                    $label = _x ($xmlLabel, $appName, 'i18n');
                 }
 
-                $transientI18nData[$appName][$count]->value = $arr['value']->__toString();
+                $transientI18nData[$appName][$count]->value = $arr['value']->__toString ();
 
 
                 $transientI18nData[$appName][$count]->label = $label;
@@ -614,25 +626,27 @@ class BidxCommon
         }
 
 
-         (isset($transientI18nData['__global'])) ? $returnData['__global'] = $transientI18nData['__global']:'';
-         ($transientStaticData) ? $returnData['static'] = $transientStaticData:'';
+        (isset ($transientI18nData['__global'])) ? $returnData['__global'] = $transientI18nData['__global'] : '';
+        ($transientStaticData) ? $returnData['static'] = $transientStaticData : '';
 
         //unset( $transientI18nData['global'] );
-         $returnData['i18n'] = $transientI18nData;
-     
-        $this::setI18nData($returnData);
+        $returnData['i18n'] = $transientI18nData;
+
+        $this::setI18nData ($returnData);
 
         return $returnData;
     }
 
-    public function setI18nData( $returnData ) {
-        
+    public function setI18nData ($returnData)
+    {
+
         $this::$i18nData = $returnData;
-  
+
         return;
     }
 
-    static function getI18nData() {
+    static function getI18nData ()
+    {
 
         return self::$i18nData;
     }

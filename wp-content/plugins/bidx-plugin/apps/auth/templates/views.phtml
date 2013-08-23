@@ -69,7 +69,7 @@ if (!username_exists ($group_anonymous_login)) {
                     ?>
                     </p>
 
-                    <input type="hidden" name="redirect_to" value="[!Q!]" />
+                    <input type="hidden" name="redirect_to" value="<?php echo $this->redirectTo;?>" />
                     <input type="hidden" name="testcookie" value="1" />
                 </form>
             </article>

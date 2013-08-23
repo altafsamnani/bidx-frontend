@@ -29,18 +29,7 @@ function bidx_filter ($content)
             $hiddenElement .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
         }
     }
-
-    //Replace the redirect variable
-    if (isset ($_GET['q'])) {
-        $redirect = $_GET['q'];
-        $content = str_replace ('[!Q!]', $redirect, $content);
-    }
-
-    //Replace the redirect variable
-    if (isset ($_GET['q'])) {
-        $redirect = $_GET['q'];
-        $content = str_replace ('[!Q!]', $redirect, $content);
-    }
+ 
 
     //echo $content;exit;
     //Add Status Messages if any
