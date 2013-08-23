@@ -19,7 +19,7 @@ if ($sessionData->authenticated == 'true') {
         			<?php
         						$images = get_children(
         									array(
-        									'post_parent' => $post->ID,
+        									'post_parent' => (isset($post->ID) ? $post->ID : NULL),
         									'post_status' => 'inherit',
         									'post_type' => 'attachment',
         									'post_mime_type' => 'image',
