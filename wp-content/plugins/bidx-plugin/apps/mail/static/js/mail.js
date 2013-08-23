@@ -1050,4 +1050,13 @@
     //
     $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
 
+    // Only update the hash when user is authenticating and when there is no hash defined
+    //
+    if ( $( "body.bidx-my-messages" ).length && !bidx.utils.getValue(window, "location.hash").length )
+    {
+        document.location.hash = "#mail/inbox";
+    }
+
+
+
 } ( jQuery ));
