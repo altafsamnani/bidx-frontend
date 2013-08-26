@@ -34,10 +34,11 @@ class MemberService extends APIbridge {
     $result = $this->callBidxAPI('members/' . $memberId, array(), 'GET');
     //If edit rights inject js and render edit button
     $result->data->isMyProfile = false;
-    if (!empty($result->data->bidxMemberProfile->bidxCanEdit) && !empty($result->data) && ($memberId == $sessionData->data->id) ) {
+
+    if (!empty($result->data->bidxMemberProfile->bidxMeta->bidxCanEdit) && !empty($result->data) && ($memberId == $sessionData->data->id) ) {
       $result->data->isMyProfile = true;
     }
-
+xdebug_break();
     $return = $this->processMemberDetails($result, $sessionData);
 
     return $return;
