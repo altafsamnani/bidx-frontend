@@ -137,7 +137,7 @@
         {
             $.each( fields.previousBusiness, function( j, f )
             {
-                var $input  = $previousBusiness.find( "[name='" + inputNamePrefix + "." + f + "']" )
+                var $input  = $previousBusiness.find( "[name='" + f + "']" )
                 ,   value   = bidx.utils.getValue( previousBusiness, f )
                 ;
 
