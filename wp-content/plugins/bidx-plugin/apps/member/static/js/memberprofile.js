@@ -35,6 +35,7 @@
     ,   appName                     = "member"
 
     ,   languages
+    ,   removedLanguages
     ;
 
     // Form fields
@@ -224,7 +225,6 @@
 
             _addLanguageDetailToList( { language: value, motherLanguage: false } );
         }
-
     } );
 
     $btnAddLanguage.removeClass( "disabled" ).removeAttr( "disabled" );
@@ -236,13 +236,15 @@
         e.preventDefault();
 
         var $languageItem   = $( this ).closest( ".languageItem" )
-        ,   languageDetail  = $languageItem.data( "languageDetail" )
+        ,   languageDetail  = $languageItem.data( "bidxData" )
         ,   languageLabel   = _getLanguageLabelByValue( languageDetail.language )
         ;
 
         delete addedLanguages[ languageLabel ];
 
         $languageItem.remove();
+
+        removedLanguages.push( languageDetail );
     } );
 
     // Update the languages, and only set the clicked one to be the mother language
@@ -260,7 +262,7 @@
         $languageList.find( ".languageItem" ).each( function()
         {
             var $item           = $( this )
-            ,   languageDetail  = $item.data( "languageDetail" )
+            ,   languageDetail  = $item.data( "bidxData" )
             ;
 
             languageDetail.motherLanguage = false;
@@ -273,7 +275,7 @@
 
         // And set the motherLanguage on this item to true
         //
-        var languageDetail = $languageItem.data( "languageDetail" );
+        var languageDetail = $languageItem.data( "bidxData" );
 
         languageDetail.motherLanguage = true;
         $languageItem.data( "languageDetail", languageDetail );
@@ -717,7 +719,7 @@
             $language.find( ".isCurrentMotherLanguage" ).hide();
         }
 
-        $language.data( "languageDetail", languageDetail );
+        $language.data( "bidxData", languageDetail );
 
         $languageList.append( $language );
     };
@@ -769,10 +771,26 @@
         $languageList.find( ".languageItem" ).each( function()
         {
             var $languageItem   = $( this )
-            ,   data            = $languageItem.data( "languageDetail" )
+            ,   data            = $languageItem.data( "bidxData" )
             ;
 
             languageDetail.push( data );
+        } );
+
+        // Add the removed languages
+        $.each( removedLanguages, function( idx, removedLanguage )
+        {
+            // Iterate over the properties and set all, but bidxMeta, to null
+            //
+            $.each( removedLanguage, function( prop )
+            {
+                if ( prop !== "bidxMeta" )
+                {
+                    removedLanguage[ prop ] = null;
+                }
+            } );
+
+            languageDetail.push( removedLanguage );
         } );
 
         bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.languageDetail", languageDetail );
@@ -784,7 +802,8 @@
     {
         // Reset any state
         //
-        addedLanguages = [];
+        addedLanguages      = [];
+        removedLanguages    = [];
         $languageList.empty();
 
         $profilePictureContainer.empty();
@@ -938,7 +957,7 @@
 
                         // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
                         // center correctly. Probably because of some reflow / layout issue.
-                        // TODO: proper fix
+                        // @TODO: proper fix
                         //
                         setTimeout( function()
                         {

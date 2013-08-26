@@ -46,6 +46,8 @@
 
     // Form fields
     //
+    var arrayFields = [ "countryOperationSpecifics" ];
+
     var fields =
     {
         _root:
@@ -554,29 +556,31 @@
 
         // Collect the nested objects
         //
-        $.each( [ "statutoryAddress" ], function()
+        $.each( [ "statutoryAddress", "countryOperationSpecifics" ], function()
         {
-            var nest    = this
-            ,   item    = bidx.utils.getValue( company, nest )
+            var nest                = this + ""
+            ,   i                   = 0
+            ,   arrayField          = $.inArray( nest, arrayFields ) !== -1
+            ,   companyPath         = nest
+            ,   item                = bidx.utils.getValue( company, companyPath, true )
+            ,   count
             ;
 
-            if ( !item )
+            if ( arrayField )
             {
-                item = {};
-                bidx.utils.setValue( company, nest, item );
+                count   = $editForm.find( "." + nest + "Item" ).length;
+                item    = [];
+            }
+            else
+            {
+                item    = {};
             }
 
-            // TODO: make i itterate
+            bidx.utils.setValue( company, companyPath, item );
 
-            $.each( fields[ nest ], function( j, f )
-            {
-                var path    = nest + "." + f
-                ,   $input  = $editForm.find( "[name='" + path + "']" )
-                ,   value   = $input.is( ":visible" ) ? bidx.utils.getElementValue( $input ) : ""
-                ;
+            bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
 
-                bidx.utils.setValue( item, f, value );
-            } );
+            // TODO: implement deletion of items
         } );
 
         // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol

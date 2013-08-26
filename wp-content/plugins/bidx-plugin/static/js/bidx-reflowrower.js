@@ -35,6 +35,7 @@
         ,   state:
             {
                 $control:           null
+            ,   removedItems:       null
             }
         }
 
@@ -48,6 +49,8 @@
             var options    = widget.options;
 
             $el.addClass( options.widgetClass );
+
+            options.state.removedItems      = [];
 
 
             // If there is a control container added, wrap it in a row container
@@ -274,7 +277,11 @@
 
             $item.fadeOut( 600, function()
             {
-                $item.remove();
+                $item.detach();
+
+                // Push it on the list of removed items so we later know we removed it
+                //
+                options.state.removedItems.push( $item );
 
                 _reflow();
             } );
@@ -299,6 +306,17 @@
                     $row.remove();
                 }
             }
+        }
+
+        // Retrieve the list of removed items
+        //
+    ,   getRemovedItems:    function()
+        {
+            var widget          = this
+            ,   options         = widget.options
+            ;
+
+            return options.state.removedItems;
         }
     } );
 } )( jQuery );

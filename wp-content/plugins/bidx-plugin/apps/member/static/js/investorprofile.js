@@ -211,6 +211,10 @@
             } );
         }
 
+        // Store the data in the DOM for later referal / merging
+        //
+        $previousInvestment.data( "bidxData", previousInvestment );
+
         // Add it to the DOM!
         //
         $previousInvestmentContainer.reflowrower( "addItem", $previousInvestment );
@@ -919,6 +923,48 @@
             bidx.utils.setValue( member, memberPath, item );
 
             bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
+
+
+            // Now collect the removed items, clear the properties and push them to the list so the API will delete them
+            //
+            var $reflowContainer
+            ,   removedItems
+            ;
+
+            switch ( nest )
+            {
+                case "references":              $reflowContainer = $referencesContainer;            break;
+                case "attachment":              $reflowContainer = $attachmentsContainer;           break;
+                case "previousInvestments":     $reflowContainer = $previousInvestmentContainer;    break;
+
+                default:
+                    bidx.utils.error( "investorprofile, Unknown nest", nest );
+            }
+
+            if ( $reflowContainer )
+            {
+                removedItems = $reflowContainer.reflowrower( "getRemovedItems" );
+
+                $.each( removedItems, function( idx, removedItem )
+                {
+                    var $removedItem    = $( removedItem )
+                    ,   bidxData        = $removedItem.data( "bidxData" )
+                    ;
+
+                    // Iterate over the properties and set all, but bidxMeta, to null
+                    //
+                    $.each( bidxData, function( prop )
+                    {
+                        if ( prop !== "bidxMeta" )
+                        {
+                            bidxData[ prop ] = null;
+                        }
+                    } );
+
+                    item.push( bidxData );
+                } );
+            }
+
         } );
 
         // Focus City is a pretty special field. Its a tagsinput in the UI but a array of objects

@@ -148,6 +148,10 @@
             } );
         }
 
+        // Store the whole object in the DOM so we can later merge it with the changed values
+        //
+        $previousBusiness.data( "bidxData", previousBusiness );
+
         // Add it to the DOM
         //
         $previousBusinessContainer.reflowrower( "addItem", $previousBusiness );
@@ -199,7 +203,7 @@
         itemsPerRow:        3
     ,   removeItemOverride: function( $item, cb )
         {
-            var attachment      = $item.data( "attachment" )
+            var attachment      = $item.data( "bidxData" )
             ,   documentId      = attachment.bidxMeta ? attachment.bidxMeta.bidxEntityId : attachment.bidxEntityId
             ;
 
@@ -299,7 +303,7 @@
             $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
         } );
 
-        $attachment.data( "attachment", attachment );
+        $attachment.data( "bidxData", attachment );
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
         $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
@@ -402,7 +406,7 @@
         //
         $.each( [ "previousBusiness", "attachment" ], function()
         {
-            var nest                = this
+            var nest                = this + "" // unbox
             ,   i                   = 0
             ,   count               = $editForm.find( "." + nest + "Item" ).length
             ,   memberPath          = "bidxEntrepreneurProfile." + nest
@@ -410,8 +414,46 @@
             ;
 
             bidx.utils.setValue( member, memberPath, item );
-
             bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
+
+            // Now collect the removed items, clear the properties and push them to the list so the API will delete them
+            //
+            var $reflowContainer
+            ,   removedItems
+            ;
+
+            switch ( nest )
+            {
+                case "previousBusiness":    $reflowContainer = $previousBusinessContainer;  break;
+                case "attachment":          $reflowContainer = $attachmentsContainer;       break;
+
+                default:
+                    bidx.utils.error( "entrepreneurprofile, Unknown nest", nest );
+            }
+
+            if ( $reflowContainer )
+            {
+                removedItems = $reflowContainer.reflowrower( "getRemovedItems" );
+
+                $.each( removedItems, function( idx, removedItem )
+                {
+                    var $removedItem    = $( removedItem )
+                    ,   bidxData        = $removedItem.data( "bidxData" )
+                    ;
+
+                    // Iterate over the properties and set all, but bidxMeta, to null
+                    //
+                    $.each( bidxData, function( prop )
+                    {
+                        if ( prop !== "bidxMeta" )
+                        {
+                            bidxData[ prop ] = null;
+                        }
+                    } );
+
+                    item.push( bidxData );
+                } );
+            }
         } );
 
         // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol
