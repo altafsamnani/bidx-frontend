@@ -580,6 +580,7 @@
     $.validator.setDefaults(
     {
         debug:              true
+    ,   ignore:             ""
     ,   errorPlacement:     function( $error, $element )
         {
             var inserted            = false
@@ -603,10 +604,89 @@
             if ( !inserted )
             {
                 $error.insertAfter( $element );
-                // NOTE: I deliberately chose not to insert the errorIcon if there is no control-group or control present because I cannot guarantee the positioning
+                // NOTE $msp: I deliberately chose not to insert the errorIcon if there is no control-group or control present, because I cannot guarantee the positioning of the element
             }
         }
+        ,   highlight: function( element, errorClass, validClass)
+            {
+                var $element =  $( element );
+                // default highlight behaviour
+                //
+                if ( element.type === "radio" )
+                {
+                   this.findByName( element.name ).addClass( errorClass ).removeClass( validClass );
+                }
+                else
+                {
+                    $element.addClass( errorClass ).removeClass( validClass );
+                }
+                //
+                // end default highlight behaviour
+
+                // custom addition which adds errorClass to control wrapper
+                //
+                errorClass = "control-" + errorClass;
+                validClass = "control-" + validClass;
+                $element.closest( ".controls" ).addClass( errorClass ).removeClass( validClass );
+            }
+        ,   unhighlight: function( element, errorClass, validClass)
+            {
+                var $element =  $( element );
+
+                // default unhighlight behaviour
+                //
+                if ( element.type === "radio" )
+                {
+                    this.findByName( element.name ).removeClass( errorClass ).addClass( validClass );
+                }
+                else
+                {
+                    $element.removeClass( errorClass ).addClass( validClass );
+                }
+                //
+                // end default unhighlight behaviour
+
+                // custom addition which adds errorClass to control wrapper
+                //
+                errorClass = "control-" + errorClass;
+                validClass = "control-" + validClass;
+                $element.closest( ".controls" ).removeClass( errorClass ).addClass( validClass );
+            }
     } );
+
+    // extend of resetForm prototype
+    //
+    $.validator.prototype.originalResetForm = $.validator.prototype.resetForm;
+
+    $.validator.prototype.resetForm = function()
+    {
+        var $formElements
+        ,   $el
+        ;
+
+        // execute orginal function
+        //
+
+        this.originalResetForm();
+
+        // execute custom code
+        //
+
+        $formElements = $( this.currentForm ).find( ":input" );
+        // remove classes from the element and its control group
+        //
+        $formElements.each( function( idx, el )
+        {
+            $el = $( el );
+
+            $el.removeClass( "valid" );
+            $el.closest( ".controls" ).removeClass( "control-error control-valid" );
+        } );
+
+    };
+    //
+    // end extend of resetForm prototype
+
 
     // Expose
     //
