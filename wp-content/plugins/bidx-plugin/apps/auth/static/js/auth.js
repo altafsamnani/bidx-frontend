@@ -24,13 +24,6 @@
         // Initialise form and enable validation
         //
 
-        /*$frmLogin.form(
-        {
-            callToAction: '.jsLogin',
-            errorClass: 'error',
-            url: '/wp-admin/admin-ajax.php?action=bidx_signin'
-        } );*/
-
         var $validator = $frmLogin.validate(
         {
             rules:
