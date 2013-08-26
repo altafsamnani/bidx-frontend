@@ -33,6 +33,7 @@
     ,   memberId
     ,   investorProfileId
     ,   state
+    ,   currentView
     ,   bidx                        = window.bidx
     ,   snippets                    = {}
 
@@ -126,6 +127,17 @@
     snippets.$previousInvestment    = $snippets.children( ".previousInvestmentsItem" ).remove();
     snippets.$reference             = $snippets.children( ".referencesItem"          ).remove();
     snippets.$attachment            = $snippets.children( ".attachmentItem"          ).remove();
+
+    // On any changes, how little doesn't matter, notify that we have a pending change
+    // But no need to track the changes when doing a member data load
+    //
+    $editForm.bind( "change", function()
+    {
+        if ( currentView === "edit" )
+        {
+            bidx.common.addAppWithPendingChanges( appName );
+        }
+    } );
 
     // Populate the dropdowns with the values
     //
@@ -1200,6 +1212,8 @@
 
                     bidx.common.notifyRedirect();
 
+                    bidx.common.removeAppWithPendingChanges( appName );
+
                     var url = document.location.href.split( "#" ).shift();
 
                     // Maybe rs=true was already added, or not 'true' add it before reloading
@@ -1220,6 +1234,9 @@
                 }
             };
 
+        // Creating an entrepreneur is not possible via the member API, therefore the
+        // raw Entity API is used for the creation of the entrepreneur
+        //
         if ( state === "create" )
         {
             bidxAPIService          = "entity.save";
@@ -1248,12 +1265,13 @@
 
     var _showView = function( v )
     {
+        currentView = v;
+
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
     };
 
     // ROUTER
     //
-
     var navigate = function( options )
     {
         //requestedState, section, id, cb

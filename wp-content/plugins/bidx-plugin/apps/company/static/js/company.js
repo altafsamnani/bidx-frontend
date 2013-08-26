@@ -30,6 +30,7 @@
     ,   companyId
     ,   companyProfileId
     ,   state
+    ,   currentView
 
     ,   bidx            = window.bidx
     ,   snippets        = {}
@@ -86,6 +87,17 @@
     // Grab the snippets from the DOM
     //
     snippets.$countryOperationSpecifics  = $snippets.children( ".countryOperationSpecificsItem"   ).remove();
+
+    // On any changes, how little doesn't matter, notify that we have a pending change
+    // But no need to track the changes when doing a member data load
+    //
+    $editForm.bind( "change", function()
+    {
+        if ( currentView === "edit" )
+        {
+            bidx.common.addAppWithPendingChanges( appName );
+        }
+    } );
 
     // Populate the peronsalDetails.nationality select box using the data items
     //
@@ -812,6 +824,7 @@
                 }
 
                 bidx.common.notifyRedirect();
+                bidx.common.removeAppWithPendingChanges( appName );
 
                 var url = "/company/" + companyId;
 
@@ -844,12 +857,13 @@
 
     function _showView( v )
     {
+        currentView = v;
+
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
     }
 
     // ROUTER
     //
-
     var navigate = function( options )
     {
         switch( options.requestedState )
