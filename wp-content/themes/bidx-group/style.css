@@ -631,9 +631,6 @@ form .row-fluid .input-prepend {
         border-bottom:          0;
     }
 
-    .controls {
-        position:               relative;
-    }
 
 	.highlight {
 		box-shadow: 0 0 0 3px #DFDFDF inset !important;
@@ -679,23 +676,47 @@ form .row-fluid .input-prepend {
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@ currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
     /* please move Form css thhat is used inbetween this block */
 
-
-    .well form {
-        padding: 20px;
+    .controls {
+        position:               relative;
     }
-    .error-icon {
 
-        width: 20px;
-        height: 20px;
-        background-color: red;
+    .controls.control-error .error-icon {
+        background: url( assets/img/icons/icon-error.png ) no-repeat top left transparent;
+    }
+    .controls.control-valid .error-icon {
+        background: url( assets/img/icons/icon-valid.png ) no-repeat top left transparent;
+    }
+    .controls .error-icon {
+
+        width: 25px;
+        height: 25px;
+
         display: block;
-        margin-right: -26px;
-        margin-top: 11px;
+        margin-right: -32px;
+        margin-top: 7px;
 
         position: absolute;
         right: 0;
         top: 0;
 
+    }
+
+    .controls input.error,
+    .controls textarea.error,
+    .controls.control-error .bidx-tagsinput-container {
+        border-color: #E83E3E;
+    }
+
+    .controls input.valid,
+    .controls textarea.valid,
+    .controls.control-valid .bidx-tagsinput-container {
+        border-color: #2dcd6d;
+    }
+
+
+
+    .well form {
+        padding: 20px;
     }
 
     /* bidX tagsinput, uses bootstrap-tagmanager */

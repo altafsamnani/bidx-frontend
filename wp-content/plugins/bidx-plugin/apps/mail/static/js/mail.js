@@ -136,18 +136,6 @@
                 // Anything that is app specific, the general validations should have been set
                 // in common.js already
             }
-        ,   errorPlacement: function(error, element) {
-
-                error.appendTo( element.parents( ".control-group" ) );
-                // add icon
-                element.parents( ".control-group" ).append( "<div class='error-icon' ></div>" );
-
-
-            }
-        ,   highlight: function(element, errorClass)
-            {
-                console.log("label", $(element).attr("class")  );
-            }
         ,   submitHandler:  function()
             {
                 if ( $btnComposeSubmit.hasClass( "disabled" ) )
@@ -172,10 +160,6 @@
         } );
 
     };
-
-    var test = 23132;
-    var longvariable = 343;
-    var e = 3434;
 
     //  preload compose form with reply values of recipient, subject and content of message to be replied on
     //
@@ -260,37 +244,7 @@
         $btnComposeSubmit.removeClass( "disabled" );
         $btnComposeCancel.removeClass( "disabled" );
 
-/*        $frmCompose.form(
-        {
-            errorClass:     'error'
-        } );*/
-
-        /*$frmCompose.unbind("submit").submit( function( e )
-        {
-            e.preventDefault();
-
-            var valid = $frmCompose.form( "validateForm" ); // NOTE: this has to be replaced with new validation
-
-            bidx.utils.log("VALIDATED", valid );
-            if ( !valid || $btnComposeSubmit.hasClass( "disabled" ) )
-            {
-                return;
-            }
-
-            $btnComposeSubmit.addClass( "disabled" );
-            $btnComposeCancel.addClass( "disabled" );
-
-            _send(
-            {
-                error: function()
-                {
-                    alert( "Something went wrong during submit" );
-
-                    $btnComposeSubmit.removeClass( "disabled" );
-                    $btnComposeCancel.removeClass( "disabled" );
-                }
-            } );
-        } );*/
+        $frmCompose.validate().resetForm();
 
     };
 
