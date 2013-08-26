@@ -582,21 +582,20 @@
         debug:              true
     ,   errorPlacement:     function( $error, $element )
         {
-            var inserted = false
+            var inserted            = false
             ,   $container
+            ,   $errorIcon          = $( "<div>" ).addClass( "error-icon" )
             ;
 
-            // When handling a tagsinput, the error needs to go outside of the wrapper
+            // When handling any field, the error needs to go outside of the wrapper ("controls")
             //
-            if ( $element.data( "bidx-tagsinput" ) )
-            {
-                $container = $element.closest( ".control-group" );
+            $container = $element.closest( ".control-group" );
 
-                if ( $container.length )
-                {
-                    $error.appendTo( $container );
-                    inserted = true;
-                }
+            if ( $container.length )
+            {
+                $error.appendTo( $container );
+                $container.find( ".controls" ).append( $errorIcon );
+                inserted = true;
             }
 
             // Didn't found a way to get inserted? Just insert it behind the input in the DOM
@@ -604,6 +603,7 @@
             if ( !inserted )
             {
                 $error.insertAfter( $element );
+                // NOTE: I deliberately chose not to insert the errorIcon if there is no control-group or control present because I cannot guarantee the positioning
             }
         }
     } );
