@@ -603,7 +603,7 @@ class TemplateLibrary
                     break;
                 case 'linkedin':
                     $scriptContent = '<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-<script type="IN/MemberProfile" data-id="http://www.linkedin.com/in/' . $username . '" data-format="click" data-related="true"></script>';
+<script type="IN/MemberProfile" data-id="' . $username . '" data-format="click" data-related="true"></script>';
                     break;
 
                 case 'skype' :

@@ -794,6 +794,17 @@
         } );
 
         bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.languageDetail", languageDetail );
+
+        // Normalize the linked in username / url
+        //
+        var linkedIn      = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.linkedIn" );
+
+        linkedIn = bidx.utils.normalizeLinkedInUrl( linkedIn );
+
+        if ( linkedIn )
+        {
+            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.linkedIn", linkedIn );
+        }
     };
 
     // This is the startpoint
@@ -830,8 +841,36 @@
             $editForm.submit();
         } );
 
+
         // Setup form
         //
+        $.validator.addMethod( "linkedIn", function( value, element, param )
+        {
+            if ( this.optional( element ))
+            {
+                return true;
+            }
+
+            // We have two types of urls to validate:
+            // - generic / generated urls
+            //          http(s)?:\/\/([a-z]{2}|www).linkedin.com\/pub\/[a-z-]+/\d+/\d+/\d+
+            //
+            // - customized urls
+            //          http(s)?:\/\/([a-z]{2}|www).linkedin.com\/in\/[a-z0-9]{5,30}
+            //
+
+            value = bidx.utils.normalizeLinkedInUrl( value );
+
+            if (    /^http(s)?:\/\/([a-z]{2}|www).linkedin.com\/pub\/[a-z-]+\/\d+\/\d+\/\d+$/i.test( value ) ||
+                    /^http(s)?:\/\/([a-z]{2}|www).linkedin.com\/in\/[a-z0-9]{5,30}$/i.test( value ) )
+            {
+                return true;
+            }
+
+            return false;
+
+        }, "Sorry, this is not a valid URL.<br />To find your URL go to www.linkedin.com/profile when logged on; check your profile URL and copy/paste it here.<br />Example URL’s:<br />http://www.linkedin.com/in/test<br />http://www.linkedin.com/pub/test/0/123/1" );
+
         var $validator = $editForm.validate(
         {
             rules:
@@ -858,7 +897,7 @@
                 }
             ,   "personalDetails.linkedIn":
                 {
-                    linkedInUsername:           true
+                    linkedIn:                   true
                 }
             ,   "personalDetails.facebook":
                 {

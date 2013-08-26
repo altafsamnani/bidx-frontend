@@ -2,6 +2,26 @@
 {
     var months = [ "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
+    // Normalize some input into the best possible / guessable form of a linkedin profile url
+    //
+    function normalizeLinkedInUrl( input )
+    {
+        var result = input;
+
+        // Did we only get a username?
+        //
+        if ( /^[a-z0-9]{5,30}$/i.test( input ) )
+        {
+            result = "https://www.linkedin.com/in/" + input;
+        }
+        else if ( !/^http(s?):\/\//i.test( input ))
+        {
+            result = "https://" + input;
+        }
+
+        return result;
+    }
+
     // Convenience function for populating a <select />
     //
     var populateDropdown = function( $el, values )
@@ -648,6 +668,7 @@
     ,   getViewName:                getViewName
     ,   generateId:                 generateId
     ,   prefixUrlWithProtocol:      prefixUrlWithProtocol
+    ,   normalizeLinkedInUrl:       normalizeLinkedInUrl
 
     ,   log:                        log
     ,   warn:                       warn

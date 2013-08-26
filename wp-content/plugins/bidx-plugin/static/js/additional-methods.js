@@ -22,6 +22,9 @@
     // http://help.linkedin.com/app/answers/detail/a_id/87
     // 5 - 30 letters or numbers. Please do not use spaces, symbols, or special characters.
     //
+    // BIDX-1162 makes this even a bit more complex
+    // @TODO: implement rules as specified in BIDX-1162
+    //
     $.validator.addMethod( "linkedInUsername", function(value, element, param)
     {
         if ( this.optional( element ))
