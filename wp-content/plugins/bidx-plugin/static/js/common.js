@@ -581,6 +581,7 @@
     {
         debug:              true
     ,   ignore:             ""
+
     ,   errorPlacement:     function( $error, $element )
         {
             var inserted            = false
@@ -603,55 +604,58 @@
             //
             if ( !inserted )
             {
+
                 $error.insertAfter( $element );
+
                 // NOTE $msp: I deliberately chose not to insert the errorIcon if there is no control-group or control present, because I cannot guarantee the positioning of the element
+                bidx.utils.warn("No \'.controls\' wrapper found on element: ", $element);
             }
         }
-        ,   highlight: function( element, errorClass, validClass)
+    ,   highlight: function( element, errorClass, validClass)
+        {
+            var $element =  $( element );
+            // default highlight behaviour
+            //
+            if ( element.type === "radio" )
             {
-                var $element =  $( element );
-                // default highlight behaviour
-                //
-                if ( element.type === "radio" )
-                {
-                   this.findByName( element.name ).addClass( errorClass ).removeClass( validClass );
-                }
-                else
-                {
-                    $element.addClass( errorClass ).removeClass( validClass );
-                }
-                //
-                // end default highlight behaviour
-
-                // custom addition which adds errorClass to control wrapper
-                //
-                errorClass = "control-" + errorClass;
-                validClass = "control-" + validClass;
-                $element.closest( ".controls" ).addClass( errorClass ).removeClass( validClass );
+               this.findByName( element.name ).addClass( errorClass ).removeClass( validClass );
             }
-        ,   unhighlight: function( element, errorClass, validClass)
+            else
             {
-                var $element =  $( element );
-
-                // default unhighlight behaviour
-                //
-                if ( element.type === "radio" )
-                {
-                    this.findByName( element.name ).removeClass( errorClass ).addClass( validClass );
-                }
-                else
-                {
-                    $element.removeClass( errorClass ).addClass( validClass );
-                }
-                //
-                // end default unhighlight behaviour
-
-                // custom addition which adds errorClass to control wrapper
-                //
-                errorClass = "control-" + errorClass;
-                validClass = "control-" + validClass;
-                $element.closest( ".controls" ).removeClass( errorClass ).addClass( validClass );
+                $element.addClass( errorClass ).removeClass( validClass );
             }
+            //
+            // end default highlight behaviour
+
+            // custom addition which adds errorClass to control wrapper
+            //
+            errorClass = "control-" + errorClass;
+            validClass = "control-" + validClass;
+            $element.closest( ".controls" ).addClass( errorClass ).removeClass( validClass );
+        }
+    ,   unhighlight: function( element, errorClass, validClass)
+        {
+            var $element =  $( element );
+
+            // default unhighlight behaviour
+            //
+            if ( element.type === "radio" )
+            {
+                this.findByName( element.name ).removeClass( errorClass ).addClass( validClass );
+            }
+            else
+            {
+                $element.removeClass( errorClass ).addClass( validClass );
+            }
+            //
+            // end default unhighlight behaviour
+
+            // custom addition which adds errorClass to control wrapper
+            //
+            errorClass = "control-" + errorClass;
+            validClass = "control-" + validClass;
+            $element.closest( ".controls" ).removeClass( errorClass ).addClass( validClass );
+        }
     } );
 
     // extend of resetForm prototype
