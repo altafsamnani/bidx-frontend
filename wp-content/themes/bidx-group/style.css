@@ -587,7 +587,7 @@ form .row-fluid .input-prepend {
     display:                    block;
 }
     /* changed to .add-on because we are targetting a specific child class of input-prepend. Using span was affecting tags-input labels */
-    form .row-fluid .input-prepend .add-on {
+    form .control-group .input-prepend .add-on {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
@@ -595,8 +595,16 @@ form .row-fluid .input-prepend {
         height:                     41px;
         display:                    inline-block;
     }
-    form .row-fluid .input-prepend input {
+
+    form .control-group .input-prepend .controls {
+        display:                    inline-block;
+        zoom:                       1;
+        *display:                   inline;
         width:                      90.2%;
+    }
+
+    form .control-group .input-prepend input {
+        width:                      100%;
     }
 
 
@@ -621,6 +629,10 @@ form .row-fluid .input-prepend {
         position:               absolute;
         top:                    8px;
         border-bottom:          0;
+    }
+
+    .controls {
+        position:               relative;
     }
 
 	.highlight {
@@ -702,7 +714,7 @@ form .row-fluid .input-prepend {
         margin-bottom:                  5px;
     }
     .input-prepend {
-        /* background-color: #bdc3c7; */ /* $mattijs: I dont know why I had to add a background here, so for now I commented it until I know why it is there */
+        background-color: #bdc3c7;  /* this background-colors purpose is to make sure the prepend block has a solid colour when the input fields occupies more then one row */
         -webkit-border-radius: 6px;
         -moz-border-radius: 6px;
         border-radius: 6px;
@@ -747,7 +759,7 @@ form .row-fluid .input-prepend {
         -webkit-border-radius: 0 6px 6px 0;
         -moz-border-radius: 0 6px 6px 0;
         border-radius: 0 6px 6px 0;
-        width: 90.2%;
+        /* width: 90.2%; */ /* $ mattijs: this width is no longer necessary I think because form .control-group .input-prepend input has 100% width */
     }
 
 

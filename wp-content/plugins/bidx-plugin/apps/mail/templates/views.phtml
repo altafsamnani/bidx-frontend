@@ -123,8 +123,10 @@
                             <div class="input-prepend">
 
                                 <span class="add-on">Recipients</span>
-                                <div class="bidx-tagsinput-container">
-                                    <input type="text" name="contacts" class="bidx-tagsinput enclosed defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Add Recipient')?>">
+                                <div class="controls">
+                                    <div class="bidx-tagsinput-container">
+                                        <input type="text" name="contacts" class="bidx-tagsinput enclosed defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Add Recipient')?>">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -134,15 +136,18 @@
                             <div class="input-prepend">
 
                                 <span class="add-on">Subject</span>
-                                <input type="text" name="subject" placeholder="<?php _e('Your subject goes here...','bidxplugin')?>">
+                                <div class="controls">
+                                    <input type="text" name="subject" placeholder="<?php _e('Your subject goes here...','bidxplugin')?>">
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row-fluid">
-
-                                <div class="control-group">
+                        <div class="control-group">
+                            <div class="controls">
                                 <textarea name="content" placeholder="<?php _e('Please type your message here..','bidxplugin')?>"></textarea>
                             </div>
+                        </div>
 
                     </div>
                     <div class="pull-left">
