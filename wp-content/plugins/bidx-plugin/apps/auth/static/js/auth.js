@@ -159,7 +159,7 @@
             //
             if ( $frmRegister.find( "[name='address']" ).val() )
             {
-                console.log("hiero");
+
                 // Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
                 // Just to not have to change the location.js plugin
                 //
