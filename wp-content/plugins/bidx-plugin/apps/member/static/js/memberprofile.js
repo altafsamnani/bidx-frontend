@@ -675,7 +675,7 @@
         bidx.utils.setElementValue( $purpose,       attachment.purpose );
         bidx.utils.setElementValue( $documentType,  attachment.documentType );
 
-        imageSrc =  attachment.mimeType.match( /^image/ )
+        imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
             ? attachment.document
             : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
 
