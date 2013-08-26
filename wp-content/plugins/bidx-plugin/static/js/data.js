@@ -92,7 +92,7 @@
 
             $.ajax(
             {
-                url:        "/wp-admin/admin-ajax.php?action=bidx_translation&type=static&context=" + context
+                url:        "/wp-admin/admin-ajax.php?action=bidx_translation&type=static&statictype=" + context
             ,   dataType:   "json"
             } )
                 .done( function( data, status, jqXHR )
