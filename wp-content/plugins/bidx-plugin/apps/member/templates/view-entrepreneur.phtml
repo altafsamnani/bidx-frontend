@@ -233,13 +233,15 @@ if ($companies) {
     </div><!-- accordion #companies -->
         <?php
     }
-
+xdebug_break();
     if ( $this->exst($this->data->isMyProfile)) {
         ?>
 
-    <div class="pull-right">
-        <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company','bidxplugin'); ?></a>
-    </div>
+        <div class="clearfix">
+            <div class="pull-right">
+                <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company','bidxplugin'); ?></a>
+            </div>
+        </div>
 
 <?php } ?>
 
