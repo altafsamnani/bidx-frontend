@@ -275,24 +275,29 @@
             $item.fadeOut( 600, function()
             {
                 $item.remove();
+
+                _reflow();
             } );
 
-            // 'reflow' the previous business items. Move the first child (previousBusinessItem) of each next row, up one row. If the last row is empty, delete it.
-            //
-            $prevRow = $row;
-            $row.nextAll( "." + options.rowClass ).each( function()
+            function _reflow()
             {
-                $row = $( this );
-
-                var $item = $row.find( "." + options.itemClass + ":eq(0)" );
-                $prevRow.append( $item );
-
+                // 'reflow' the previous business items. Move the first child (previousBusinessItem) of each next row, up one row. If the last row is empty, delete it.
+                //
                 $prevRow = $row;
-            } );
+                $row.nextAll( "." + options.rowClass ).each( function()
+                {
+                    $row = $( this );
 
-            if ( $row.children().length === 0 )
-            {
-                $row.remove();
+                    var $item = $row.find( "." + options.itemClass + ":eq(0)" );
+                    $prevRow.append( $item );
+
+                    $prevRow = $row;
+                } );
+
+                if ( $row.children().length === 0 )
+                {
+                    $row.remove();
+                }
             }
         }
     } );
