@@ -572,6 +572,7 @@
                 //
             ,   tagsinputRequired:      bidx.i18n.i( "frmFieldRequired" )
             ,   tagsinputMinItems:      $.validator.format( bidx.i18n.i( "frmInvalidMinItems" ) )
+            ,   remoteApi:              bidx.i18n.i( "frmFieldRequired" )
             } );
         } );
 

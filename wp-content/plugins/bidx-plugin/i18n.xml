@@ -35,4 +35,7 @@
     <Item value="frmInvalidMin">Please enter a value greater than or equal to {0}</Item>
     <Item value="frmInvalidMax">Please enter a value less than or equal to {0}</Item>
     <Item value="frmInvalidDigits">Please provide a positive number</Item>
+
+    <!-- This value is a error Code coming from API for username exists check -->
+    <Item value="usernameExists">This email address is already used</Item>
 </I18N>

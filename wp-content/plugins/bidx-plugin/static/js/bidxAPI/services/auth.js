@@ -1,6 +1,5 @@
 /**
  * @version 1.0
- * @initiator adebree
  * @author msp
  */
 ;(function( $ )
@@ -24,12 +23,11 @@
         ,   form:                       true
         ,   baseUrl:                    baseUrl
         ,   extraUrlParameters:         params.extraUrlParameters
-        ,   wpCall:                     true
+        ,   supressBidxUrlParams:       true
         ,   data:                       params.data
 
         ,   success: function( data, textStatus, jqXhr )
             {
-                bidx.utils.log("Eerste lijn", arguments);
                 params.success( data, textStatus, jqXhr );
             }
         ,   error: function( jqXhr, textStatus, errorThrown )

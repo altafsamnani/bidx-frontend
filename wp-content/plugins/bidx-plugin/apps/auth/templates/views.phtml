@@ -33,7 +33,7 @@ if (!username_exists ($group_anonymous_login)) {
                                 <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
 
                                 <div class="controls">
-                                <input type="email" name="log" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
+                                    <input type="email" name="log" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@ if (!username_exists ($group_anonymous_login)) {
                         if ($this->showRegisterLink)
                         {
                     ?>
-                        <?php _e('Not a member? Click <a href="#register">here</a> to register.','bidxplugin');?>
+                        <?php _e('Not a member? Click <a href="#auth/register">here</a> to register.','bidxplugin');?>
                     <?php
                         }
                     ?>
@@ -79,9 +79,16 @@ if (!username_exists ($group_anonymous_login)) {
             <!-- FORGOT PASSWORD -->
             <article class="view viewResetpassword">
                 <form id="frmResetpassword" action="/">
-                    <div class="formfield" data-validation='{"required":{"text":"<?php _e('This fields is mandatory','i18n');?>"},"typecheck":[{"email":{"text":"<?php _e('This is not a valid e-mail address','i18n');?>"}}]}'>
-                        <label><?php _e('Email address','bidxplugin');?></label>
-                        <input type="text" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
+                    <div class="row-fluid">
+                        <div class="span8">
+                            <div class="control-group">
+                                <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
+
+                                <div class="controls">
+                                    <button type="email" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="buttonwrapper">

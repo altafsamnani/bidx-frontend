@@ -2,25 +2,49 @@
 
 <article  class="view viewRegister <?php //echo ($this->type=='register') ? 'mainStateShow':'';?>">
 	<form id="frmRegister" action="/">
-		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A first name is mandatory','i18n');?>"}}'>
-			<label><?php _e('First name','bidxplugin');?></label>
-			<input type="text" name="personalDetails.firstName" placeholder="<?php _e('Type your first name','bidxplugin');?>" />
-		</div>
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="control-group">
+                    <label class="control-label"><?php _e('First name','bidxplugin');?></label>
+                    <div class="controls">
+                        <input type="text" name="personalDetails.firstName" placeholder="<?php _e('Type your first name','bidxplugin');?>" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A last name is mandatory','i18n');?>"}}'>
-			<label><?php _e('Last name','bidxplugin');?></label>
-			<input type="text" name="personalDetails.lastName" placeholder="<?php _e('Type your last name','bidxplugin');?>" />
-		</div>
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="control-group">
+                    <label class="control-label"><?php _e('Last name','bidxplugin');?></label>
+                    <div class="controls">
+                        <input type="text" name="personalDetails.lastName" placeholder="<?php _e('Type your last name','bidxplugin');?>" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="formfield" data-validation='{"required":{"text":"<?php _e('This field is mandatory','i18n');?>"},"typecheck":[{"email":{"text":"<?php _e('This is not a valid e-mail address','i18n');?>"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
-			<label><?php _e('Email address','bix-plugin');?></label>
-			<input type="text" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
-		</div>
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="control-group">
+                    <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
+                    <div class="controls">
+                        <input type="text" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="formfield" data-validation='{"required":{"text":"<?php _e('A location is mandatory','i18n');?>"}}'>
-			<label><?php _e('What is your location?','bidxplugin');?></label>
-			<input type="text" name="address" placeholder="<?php _e('Please type your location','bidxplugin');?>" data-type="location" data-type-arguments=''/>
-		</div>
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="control-group">
+                    <label class="control-label"><?php _e('What is your location?','bidxplugin');?></label>
+                    <div class="controls">
+                        <input type="text" name="address" placeholder="<?php _e('Please type your location','bidxplugin');?>" data-type="location" data-type-arguments=''/>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 		<div class="buttonwrapper">
 			<button type="submit" class="btn btn-primary"><?php _e('Register','bidxplugin');?></button>
@@ -28,7 +52,7 @@
         <?php if($this->showLoginLink) { ?>
 		<p>
 			<?php _e('Forgot your password. Click <a href="#resetpassword">here</a> to recover.','bidxplugin');?><br/>
-			<?php _e('Login? Click <a href="#login">here</a> to go to login.','bidxplugin');?>
+			<?php _e('Login? Click <a href="/auth/#auth/login">here</a> to go to login.','bidxplugin');?>
 		</p>
         <?php } ?>
         <input type="hidden" name="urlparam" value="<?php  echo base64_encode('groupname='.$this->groupNotification);?>">

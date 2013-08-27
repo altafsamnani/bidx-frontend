@@ -21,10 +21,9 @@
     var _initHandlers = function()
     {
 
-        // Initialise form and enable validation
+        // set validation and submitHandler
         //
-
-        var $validator = $frmLogin.validate(
+        $frmLogin.validate(
         {
             rules:
             {
@@ -65,9 +64,46 @@
             }
         } );
 
+        // set validation and submitHandler
+        //
+        $frmPasswordReset.validate(
+        {
+            rules:
+            {
+                "username":
+                {
+                    required:               true
+                ,   email:                  true
+                }
+            }
+        ,   messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+        ,   submitHandler:  function()
+            {
+                if ( $btnPasswordReset.hasClass( "disabled" ) )
+                {
+                    bidx.utils.log("button disabled");
+                    return;
+                }
 
+                $btnPasswordReset.addClass( "disabled" );
+                $loginErrorMessage.text( "" ).hide();
 
-        // initialize form and enable plugins
+                _doResetPassword(
+                {
+                    error: function( jqXhr )
+                    {
+                        $btnPasswordReset.removeClass( "disabled" );
+                    }
+                } );
+
+            }
+        } );
+
+        // enable location plugin
         //
         $frmRegister.form(
         {
@@ -75,130 +111,245 @@
                 enablePlugins: [ 'location','countryAutocomplete' ]
         } );
 
-        // bind the submithandler to the passwordReset form.
+        // set validation and submitHandler
         //
-        $frmPasswordReset.submit(function(e)
+        $frmRegister.validate(
         {
-            e.preventDefault();
-
-            $btnPasswordReset.addClass("disabled");
-
-            bidx.api.call(
-                "resetpassword.save"
-            ,   {
-                    groupDomain: bidx.common.groupDomain
-                ,   data:
-                    {
-                        username: $frmPasswordReset.find( "[ name='username' ]" ).val()
-                    }
-
-                ,   success: function( response )
-                    {
-                        bidx.utils.log("resetpassword.save::success::response", response);
-
-                        // Go to group dashboard
-                        //
-
-                        $frmPasswordReset.hide();
-                        $views.filter( ".viewResetpassword" ).find(".resetpasswordSuccess").removeClass("hide");
-
-                        //                          window.location.href = url;
-                    }
-
-                ,   error: function(jqXhr)
-                    {
-                        bidx.utils.log( "error", jqXhr );
-
-                        $btnPasswordReset.removeClass( "disabled" );
-
-                        alert( "A problem occured while reseting the password" );
-                    }
+            ignore: ":hidden",
+            rules:
+            {
+                "personalDetails.firstName":
+                {
+                    required:               true
                 }
-            );
-        } );
+            ,   "personalDetails.lastName":
+                {
+                    required:               true
+                }
+            ,   "username":
+                {
+                    required:               true
+                ,   email:                  true
+                ,   remoteApi:
+                    {
+                        cb:                 _validateUsernameApi
+                    }
 
+                }
+            ,   "address":
+                {
+                    required:               true
+                ,
+                }
 
-
-        // bind the register form submit handler
-        //
-        $frmRegister.submit( function( e )
-        {
-            currentView = $views.filter( ".viewRegister" );
-            e.preventDefault();
-
-            var valid = $frmRegister.form( "validateForm" );
-
-            if ( !valid || $btnRegister.hasClass( "disabled" ) )
+            }
+        ,   messages:
             {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+        ,   submitHandler:  function()
+            {
+                bidx.utils.log("sdfsdfsdsdffsf");
+                bidx.utils.log("submit");
+
+
+
+                if ( $btnRegister.hasClass( "disabled" ) )
+                {
+                    bidx.utils.log("button disabled");
                     return;
-            }
+                }
 
-            $btnRegister.addClass( "disabled" );
+                $btnRegister.addClass( "disabled" );
 
-            // Build up the data for the member request
-            //
-            var member =
-            {
-                emailAddress:                   $frmRegister.find( "[name='username']" ).val()
-            ,   personalDetails:
-                    {
-                        firstName:              $frmRegister.find( "[name='personalDetails.firstName']" ).val()
-                    ,   lastName:               $frmRegister.find( "[name='personalDetails.lastName']" ).val()
-                    }
-            };
-
-            // Currently, address is required, so this is a bit of an unlogical test. Wouldn't be surprised it will
-            // be gone
-            //
-            if ( $frmRegister.find( "[name='address']" ).val() )
-            {
-
-                // Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
-                // Just to not have to change the location.js plugin
-                //
-                member.personalDetails.address =
-                [
-                        {
-                            coordinates:            $frmRegister.find( "[name$=location]" ).val()
-                        ,   postalCode:             $frmRegister.find( "[name$=postalCode]" ).val()
-                        ,   country:                $frmRegister.find( "[name$=country]" ).val()
-                        ,   cityTown:               $frmRegister.find( "[name$=cityTown]" ).val()
-                        ,   neighborhood:           $frmRegister.find( "[name$=neighborhood]" ).val()
-                        ,   streetNumber:           $frmRegister.find( "[name$=streetNumber]" ).val()
-                        ,   street:                 $frmRegister.find( "[name$=street]" ).val()
-                        }
-                ];
-            }
-
-            bidx.api.call(
-                "member.save"
-            ,   {
-                    groupDomain:    bidx.common.groupDomain
-                ,   data:           member
-                ,   success:        function( response )
-                    {
-                        bidx.utils.log( "member.save::success::response", response );
-
-                        // Go to group dashboard
-                        //
-
-
-                        $frmRegister.hide();
-                        currentView.find( ".registerSuccess" ).removeClass( "hide" );
-                        var urlparam = currentView.find("[name=urlparam]").length ? currentView.find("[name=urlparam]").val() : "";
-                        var url = window.location.protocol + "//" + window.location.host + "?smsg=4&rs=true&sparam=" + urlparam;
-                        window.location.href = url;
-                    }
-                ,   error:          function( jqXhr )
+                _doRegister(
+                {
+                    error: function( jqXhr )
                     {
                         $btnRegister.removeClass( "disabled" );
-
-                        alert( "Problem while registering" );
                     }
-                }
-            );
-
+                } );
+            }
         } );
+    };
+
+    var _doRegister = function( porams )
+    {
+        currentView = $views.filter( ".viewRegister" );
+
+        // Build up the data for the member request
+        //
+        var member =
+        {
+            emailAddress:                   $frmRegister.find( "[name='username']" ).val()
+        ,   personalDetails:
+                {
+                    firstName:              $frmRegister.find( "[name='personalDetails.firstName']" ).val()
+                ,   lastName:               $frmRegister.find( "[name='personalDetails.lastName']" ).val()
+                }
+        };
+
+        // Currently, address is required, so this is a bit of an unlogical test. Wouldn't be surprised it will
+        // be gone
+        //
+        if ( $frmRegister.find( "[name='address']" ).val() )
+        {
+
+            // Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
+            // Just to not have to change the location.js plugin
+            //
+            member.personalDetails.address =
+            [
+                    {
+                        coordinates:            $frmRegister.find( "[name$=location]" ).val()
+                    ,   postalCode:             $frmRegister.find( "[name$=postalCode]" ).val()
+                    ,   country:                $frmRegister.find( "[name$=country]" ).val()
+                    ,   cityTown:               $frmRegister.find( "[name$=cityTown]" ).val()
+                    ,   neighborhood:           $frmRegister.find( "[name$=neighborhood]" ).val()
+                    ,   streetNumber:           $frmRegister.find( "[name$=streetNumber]" ).val()
+                    ,   street:                 $frmRegister.find( "[name$=street]" ).val()
+                    }
+            ];
+        }
+
+        bidx.api.call(
+            "member.save"
+        ,   {
+                groupDomain:    bidx.common.groupDomain
+            ,   data:           member
+            ,   success:        function( response )
+                {
+                    bidx.utils.log( "member.save::success::response", response );
+
+                    // Go to group dashboard
+                    //
+
+
+                    $frmRegister.hide();
+                    currentView.find( ".registerSuccess" ).removeClass( "hide" );
+                    var urlparam = currentView.find("[name=urlparam]").length ? currentView.find("[name=urlparam]").val() : "";
+                    var url = window.location.protocol + "//" + window.location.host + "?smsg=4&rs=true&sparam=" + urlparam;
+                    window.location.href = url;
+                }
+            ,   error:          function( jqXhr )
+                {
+                    $btnRegister.removeClass( "disabled" );
+
+                    alert( "Problem while registering" );
+                }
+            }
+        );
+    };
+
+
+    // this is the callback the is passed to the validator. I have borrowed heavily from the remote method in handling of the success/error response
+    //
+    var _validateUsernameApi = function( value, element, param )
+    {
+        var validator       = this
+        ,   previous        = this.previousValue(element)
+        ,   valid           = false
+        ;
+
+
+
+        //  create message for this element
+        //
+        if ( !this.settings.messages[ element.name ] )
+        {
+            this.settings.messages[ element.name ] = {};
+        }
+
+        previous.originalMessage = this.settings.messages[element.name].remote;
+        this.settings.messages[element.name].remote = previous.message;
+
+        if ( previous.old === value ) {
+                return previous.valid;
+        }
+
+        previous.old = value;
+
+        // notify validator that we start a new request
+        //
+        //this.startRequest( element );
+        // execute bidx api call
+        //
+        bidx.api.call(
+            "validateUsername.fetch"
+        ,   {
+                groupDomain:        bidx.common.groupDomain
+            ,   data:
+                {
+                    username:       value
+                }
+
+            ,   success: function( response )
+                {
+                    if ( response )
+                    {
+                         validator.settings.messages[element.name].remoteApi = previous.originalMessage;
+
+                        if( response.status === "OK" )
+                        {
+                            bidx.utils.log("response: OK", response);
+                            // following code is based on success handler of validator's remote call
+                            //
+                            var submitted = validator.formSubmitted;
+
+                            valid = true;
+                            validator.prepareElement( element );
+                            validator.formSubmitted = submitted;
+                            validator.successList.push( element );
+                            delete validator.invalid[ element.name ];
+                            validator.showErrors();
+                        }
+                        else if ( response.status === "ERROR" )
+                        {
+                            bidx.utils.log("response: Error", response);
+                            // following code is based on fail handler of validator's remote call
+                            //
+                            var errors = {};
+                            var message = response.code || validator.defaultMessage( element, "remoteApi" );
+
+                            bidx.utils.log("MESSAGE", message);
+
+                            bidx.i18n.getItem( message, function( err, label )
+                            {
+                                message = label;
+
+                            } );
+                            valid = false;
+                            errors[element.name] = previous.message = $.isFunction( message ) ? message( value ) : message;
+                            validator.invalid[ element.name ] = true;
+                            validator.showErrors( errors );
+                        }
+                        previous.valid = valid;
+                        validator.stopRequest( element, valid );
+                    }
+                    else
+                    {
+                        bidx.utils.warn( "Error occured while checking existence of username: no response received" );
+                    }
+
+                    // notify validator request has finished
+                    //
+
+
+                }
+
+            ,   error:  function( jqXhr )
+                {
+                    // notify validator request has finished
+                    //
+                    previous.valid = valid;
+                    validator.stopRequest(element, valid);
+
+                    bidx.utils.log("ERROR", jqXhr);
+                }
+            }
+        );
+        return true; //return "pending";
     };
 
     // handle the login proces, fired by the validator when form is validated
@@ -257,8 +408,41 @@
                 }
             }
         );
+    };
 
+    //
 
+    var _doResetPassword = function( params )
+    {
+        bidx.api.call(
+            "resetpassword.save"
+        ,   {
+                groupDomain: bidx.common.groupDomain
+            ,   data:
+                {
+                    username: $frmPasswordReset.find( "[ name='username' ]" ).val()
+                }
+
+            ,   success: function( response )
+                {
+                    bidx.utils.log("resetpassword.save::success::response", response);
+
+                    // Go to group dashboard
+                    //
+
+                    $frmPasswordReset.hide();
+                    $views.filter( ".viewResetpassword" ).find(".resetpasswordSuccess").removeClass("hide");
+
+                    //                          window.location.href = url;
+                }
+
+            ,   error:  function( jqXhr )
+                {
+
+                    params.error( "Error", jqXhr );
+                }
+            }
+        );
     };
 
     // This function prepares the form so that the user can trigger the submit
