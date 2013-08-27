@@ -193,7 +193,7 @@
             }
         };
 
-        api.getUrl = function( baseUrl, id, groupDomain, extraUrlParameters, wpCall )
+        api.getUrl = function( baseUrl, id, groupDomain, extraUrlParameters, supressBidxUrlParams )
         {
             var result              = baseUrl;
             var extraUrlParams      = "";
@@ -217,7 +217,7 @@
 
             // the WordPress handler can't handle the extra url variables, so we only use this for direct API calls
             //
-            if( !wpCall )
+            if( !supressBidxUrlParams )
             {
                 result += "?csrf=false&bidxGroupDomain=" + encodeURIComponent( forcedGroupDomain || groupDomain ) + extraUrlParams;
             }
@@ -229,7 +229,7 @@
         //
         api._call = function( options )
         {
-            var url     = api.getUrl( options.baseUrl, options.id, options.groupDomain, options.extraUrlParameters, options.wpCall )
+            var url     = api.getUrl( options.baseUrl, options.id, options.groupDomain, options.extraUrlParameters, options.supressBidxUrlParams )
             ,   params  =
                 {
                     url:            url

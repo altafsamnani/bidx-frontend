@@ -113,7 +113,7 @@
         ,   "Please specify the correct domain for your documents"
         );*/
 
-        var $validator = $frmCompose.validate(
+        $frmCompose.validate(
         {
             rules:
             {
