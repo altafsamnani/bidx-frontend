@@ -40,7 +40,8 @@ if ( !BidxCommon :: isWPInternalFunction() ) {
 			'search',
 			'group',
 			'auth',
-			'mail'
+			'mail',
+			'media'
 	);
 	$shortcode = new BidxShortCode();
 	$shortcode -> addMappingArray( $ruleitems );

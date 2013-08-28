@@ -80,23 +80,23 @@ class BidxShortcode {
 
 		Logger :: getLogger( 'shortcode' ) -> trace( 'Shortcode called with ' . serialize( $atts ) );
 		$appname = $atts['app'];
-	
+
         self::$scriptIdArr[$appname] = $appname;
 
 		if ( array_key_exists( $appname, self::$mapping ) ) {
-            //Handle the i18n Data     
+            //Handle the i18n Data
             $bidxCommonObj = new BidxCommon();
             if (empty (self::$transalationVars)) { // First Shortcode
- 
+
                 self::$transalationVars = $bidxCommonObj->getLocaleTransient (array ($appname), $static = true, $i18nGlobal = true);
-      
+
             } else { // More than 1 shortcode
                 $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ($appname), $static = false, $i18nGlobal = false);
-                
+
                 self::$transalationVars['i18n'][$appname] = $appTranslationsArr['i18n'][$appname];
-               
+
             }
-            
+
             $bidxCommonObj->setI18nData(self::$transalationVars);
 
             Logger :: getLogger ('shortcode')->trace ('Final scripts : ' . serialize (self::$scriptIdArr));
@@ -133,6 +133,10 @@ class BidxShortcode {
 			wp_register_script( 'jquery-validation-jqueryui-datepicker',        	$bidxJsDir . '/vendor/jquery.ui.datepicker.validation.js',      array( 'jquery-validation' ),	'1.0.1',    true );
 			wp_register_script( 'jquery-validation-additional-methods',        		$bidxJsDir . '/vendor/additional-methods.js',      				array( 'jquery-validation' ),	'1.1.11',   true );
 			wp_register_script( 'jquery-validation-bidx-additional-methods',   		$bidxJsDir . '/additional-methods.js',      					array( 'jquery-validation' ),	'20130812', true );
+
+            // fileupload
+            wp_register_script( 'jquery-iframe-transport',      $bidxJsDir . '/vendor/jquery.iframe-transport.js',  array( 'jquery' ),                              '1.7',      true );
+            wp_register_script( 'jquery-fileupload',            $bidxJsDir . '/vendor/jquery.fileupload.js',        array( 'jquery', 'jquery-iframe-transport' ),   '5.32.2',   true );
 
 			//bidX scripts
 			wp_register_script( 'bidx-api-core', 				$bidxJsDir . '/bidxAPI/api-core.js', 			array( 'jquery' ), '20130501', TRUE );
