@@ -618,7 +618,13 @@
 
     ,   highlight: function( element, errorClass, validClass)
         {
-            var $element =  $( element );
+
+            var $element             = $( element )
+            ,   controlErrorClass
+            ,   controlValidClass
+
+            ;
+
             // default highlight behaviour
             //
             if ( element.type === "radio" )
@@ -641,7 +647,17 @@
 
     ,   unhighlight: function( element, errorClass, validClass)
         {
-            var $element =  $( element );
+            var $element            = $( element )
+            ,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
+            ,   $container
+            ;
+
+            // if element is currently on pending list, step out of this function
+            //
+            if( this.pending[ element.name ] )
+            {
+                return;
+            }
 
             // default unhighlight behaviour
             //
@@ -656,6 +672,15 @@
             //
             // end default unhighlight behaviour
 
+
+            // add validation-icon to control group if it is not already available
+            //
+            $container = $element.closest( ".control-group" );
+            if ( $container.length && !$container.find( ".controls" ).find( ".validation-icon" ).length )
+            {
+                $container.find( ".controls" ).append( $errorIcon );
+
+            }
             // custom addition which adds errorClass to control wrapper
             //
             errorClass = "control-" + errorClass;
@@ -667,7 +692,7 @@
         //
     ,   onfocusin: function( element, event )
         {
-            var $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
+/*            var $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
             ,   $element            = $( element )
             ,   $container
             ;
@@ -679,7 +704,7 @@
                 $container.find( ".controls" ).append( $errorIcon );
 
             }
-
+*/
         }
     } );
 
@@ -715,22 +740,6 @@
         } );
 
     };
-
-    // POSSIBLE UNNECESSARY FUNCTION, but still testing and not sure if I need to customize the showErrors function
-    $.validator.prototype.originalShowErrors = $.validator.prototype.showErrors;
-
-    $.validator.prototype.showErrors = function( errors )
-    {
-        // execute orginal function
-        //
-        this.originalShowErrors( errors );
-
-        // execute custom code
-        //
-
-
-    };
-
 
     //
     // end validator extentions

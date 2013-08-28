@@ -130,9 +130,11 @@
                 {
                     required:               true
                 ,   email:                  true
-                ,   remoteApi:
+                ,   remoteBidxApi:
                     {
-                        cb:                 _validateUsernameApi
+                        //cb:                 _validateUsernameApi
+                        url:                "validateUsername.fetch"
+
                     }
 
                 }
@@ -245,113 +247,10 @@
 
     // this is the callback the is passed to the validator. I have borrowed heavily from the remote method in handling of the success/error response
     //
-    var _validateUsernameApi = function( value, element, param )
+/*    var _validateUsernameApi = function( value, element, param )
     {
-        var validator       = this
-        ,   previous        = this.previousValue(element)
-        ,   valid           = false
-        ;
-
-
-
-        //  create message for this element
-        //
-        if ( !this.settings.messages[ element.name ] )
-        {
-            this.settings.messages[ element.name ] = {};
-        }
-
-        previous.originalMessage = this.settings.messages[element.name].remoteApi;
-        this.settings.messages[element.name].remoteApi = previous.message;
-
-        if ( previous.old === value ) {
-                return previous.valid;
-        }
-
-        previous.old = value;
-
-        // notify validator that we start a new request
-        //
-        this.startRequest( element );
-        // execute bidx api call
-        //
-        bidx.api.call(
-            "validateUsername.fetch"
-        ,   {
-                groupDomain:        bidx.common.groupDomain
-            ,   data:
-                {
-                    username:       value
-                }
-
-            ,   success: function( response )
-                {
-                    if ( response )
-                    {
-                         validator.settings.messages[element.name].remoteApi = previous.originalMessage;
-
-                        if( response.status === "OK" )
-                        {
-                            bidx.utils.log("response: OK", response);
-                            // following code is based on success handler of validator's remote call
-                            //
-                            var submitted = validator.formSubmitted;
-
-                            valid = true;
-                            validator.prepareElement( element );
-                            validator.formSubmitted = submitted;
-                            validator.successList.push( element );
-                            delete validator.invalid[ element.name ];
-                            validator.showErrors();
-                        }
-                        else if ( response.status === "ERROR" )
-                        {
-                            bidx.utils.log("response: Error", response);
-                            // following code is based on fail handler of validator's remote call
-                            //
-                            var errors = {};
-                            var message = response.code || validator.defaultMessage( element, "remoteApi" );
-
-                            bidx.utils.log("MESSAGE", message);
-
-                            bidx.i18n.getItem( message, function( err, label )
-                            {
-                                message = label;
-
-                            } );
-                            valid = false;
-                            errors[element.name] = previous.message = $.isFunction( message ) ? message( value ) : message;
-                            validator.invalid[ element.name ] = true;
-                            validator.showErrors( errors );
-                        }
-
-                    }
-                    else
-                    {
-                        bidx.utils.warn( "Error occured while checking existence of username: no response received" );
-                    }
-
-                    // notify validator request has finished
-                    //
-                    previous.valid = valid;
-                    validator.stopRequest( element, valid );
-
-
-                }
-
-            ,   error:  function( jqXhr )
-                {
-                    // notify validator request has finished
-                    //
-                    previous.valid = valid;
-                    validator.stopRequest(element, valid);
-
-                    bidx.utils.log("ERROR", jqXhr);
-                }
-            }
-        );
-        return true; //return "pending";
-    };
+        bidx.utils.log("I am called");
+    };*/
 
     // handle the login proces, fired by the validator when form is validated
     //

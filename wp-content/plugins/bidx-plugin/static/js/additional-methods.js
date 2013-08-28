@@ -110,21 +110,141 @@
 
     // bidx remoteApi call: expects cb function in param
     //
-    $.validator.addMethod( "remoteApi", function( value, element, param )
+    $.validator.addMethod( "remoteBidxApi", function( value, element, param )
     {
+        var validator       = this
+        ,   previous        = this.previousValue( element )
+        ,   valid           = false
+        ;
+
         if ( this.optional(element) ) {
             return "dependency-mismatch";
         }
 
-        if( param.cb )
+        //  create message for this element
+        //
+        if ( !this.settings.messages[ element.name ] )
         {
-            return param.cb.call( this, value, element, param );
+            this.settings.messages[ element.name ]          = {};
         }
-        else
+
+        previous.originalMessage                            = this.settings.messages[ element.name ].remoteApi;
+        this.settings.messages[ element.name ].remoteApi    = previous.message; //this is default the 'remote' message
+
+        // check if new value is the same as the previous value. In that case nothing changed so return valid
+        //
+        // NOTE: disabled check on previous because this cause an issue where the default message is set instead of the callback value
+/*        if ( previous.old === value )
         {
-            bidx.utils.warn( "No callback defined for remoteApi validation rule" );
-            return false;
-        }
+            return previous.valid;
+        }*/
+        // set new previous.old value
+        //
+        previous.old = value;
+
+        // notify validator that we start a new request
+        //
+        this.startRequest( element );
+        // execute bidx api call
+        //
+        bidx.api.call(
+            param.url
+        ,   {
+                groupDomain:        bidx.common.groupDomain
+            ,   data:
+                {
+                    username:       value
+                }
+
+            ,   success: function( response )
+                {
+
+                    var submitted
+                    ,   errors
+                    ,   message
+                    ;
+
+                    if ( response )
+                    {
+                        bidx.utils.log("<RESPONSE>", response);
+                        validator.settings.messages[element.name].remoteApi = previous.originalMessage;
+
+                        if( response.status === "OK" )
+                        {
+                            // following code is based on success handler of validator's remote call
+                            //
+                            validator.formSubmitted;
+
+                            valid                                   = true;
+                            validator.prepareElement( element );
+                            validator.formSubmitted                 = submitted;
+                            validator.successList.push( element );
+                            delete validator.invalid[ element.name ];
+                            validator.showErrors();
+                            // notify validator request has finished
+                            //
+                            previous.valid                          = valid;
+                            validator.stopRequest( element, valid );
+
+                            //expicit call to unhighlight to correct the classes on element and control group
+                            //
+                            validator.settings.unhighlight.call(validator, element, validator.settings.errorClass, validator.settings.validClass );
+
+                        }
+                        else if ( response.status === "ERROR" )
+                        {
+
+                            // following code is based on fail handler of validator's remote call
+                            //
+                            errors = {};
+                            message = response.code || validator.defaultMessage( element, "remoteApi" );
+
+                            bidx.i18n.getItem( message, function( err, label )
+                            {
+                                if ( err )
+                                {
+                                    throw new Error( "Error occured assigning translation for field " + element.name  );
+                                }
+
+                                message                             = label;
+                                valid                               = false;
+                                errors[ element.name ]              = previous.message = $.isFunction( message ) ? message( value ) : message;
+                                validator.invalid[ element.name ]   = true;
+                                validator.showErrors( errors );
+
+                                // notify validator request has finished
+                                //
+                                previous.valid                      = valid;
+                                validator.stopRequest( element, valid );
+
+                            } );
+                        }
+                    }
+                    else
+                    {
+                        // notify validator request has finished
+                        //
+                        previous.valid = valid;
+                        validator.stopRequest( element, valid );
+
+                        bidx.utils.warn( "Error occured while checking existence of username: no response received" );
+                    }
+                }
+
+            ,   error:  function( jqXhr )
+                {
+                    // notify validator request has finished
+                    //
+                    previous.valid = valid;
+                    validator.stopRequest(element, valid);
+
+                    bidx.utils.log("ERROR", jqXhr);
+                }
+            }
+        );
+
+        return "pending";
+
     }, "Default message remoteApi" );
 
 } ( jQuery ) );
