@@ -412,7 +412,7 @@ class BidxCommon
 
             case 'mail' :
                 if ($authenticated == 'false') {
-                    
+
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url).'/#auth/login';
                     wp_clear_auth_cookie ();
 
@@ -523,7 +523,7 @@ class BidxCommon
 
         $hostAddress = explode ('.', $_SERVER ["HTTP_HOST"]);
         if (is_array ($hostAddress)) {
-            if (eregi ("^www$", $hostAddress [0])) {
+            if ( strcasecmp( "www", $hostAddress [0]) == 0 ) {
                 $passBack = 1;
             } else {
                 $passBack = 0;
