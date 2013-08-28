@@ -587,7 +587,7 @@
         {
             var inserted            = false
             ,   $container
-            ,   $errorIcon          = $( "<div>" ).addClass( "error-icon" )
+            ,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
             ;
 
             // When handling any field, the error needs to go outside of the wrapper ("controls")
@@ -597,7 +597,11 @@
             if ( $container.length )
             {
                 $error.appendTo( $container );
-                $container.find( ".controls" ).append( $errorIcon );
+                if( !$container.find( ".controls" ).find( ".validation-icon" ).length )
+                {
+                    $container.find( ".controls" ).append( $errorIcon );
+                }
+
                 inserted = true;
             }
 
@@ -612,6 +616,7 @@
                 bidx.utils.warn("No \'.controls\' wrapper found on element: ", $element);
             }
         }
+
     ,   highlight: function( element, errorClass, validClass)
         {
             var $element =  $( element );
@@ -634,6 +639,7 @@
             validClass = "control-" + validClass;
             $element.closest( ".controls" ).addClass( errorClass ).removeClass( validClass );
         }
+
     ,   unhighlight: function( element, errorClass, validClass)
         {
             var $element =  $( element );
@@ -656,6 +662,25 @@
             errorClass = "control-" + errorClass;
             validClass = "control-" + validClass;
             $element.closest( ".controls" ).removeClass( errorClass ).addClass( validClass );
+        }
+
+        // when element receives focus and errorPlacement has not fired, add the validation-icon in the control wrapper
+        //
+    ,   onfocusin: function( element, event )
+        {
+            var $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
+            ,   $element            = $( element )
+            ,   $container
+            ;
+
+            $container = $element.closest( ".control-group" );
+
+            if ( $container.length && !$container.find( ".controls" ).find( ".validation-icon" ).length )
+            {
+                $container.find( ".controls" ).append( $errorIcon );
+
+            }
+
         }
     } );
 

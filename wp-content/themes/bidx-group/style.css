@@ -680,13 +680,13 @@ form .row-fluid .input-prepend {
         position:               relative;
     }
 
-    .controls.control-error .error-icon {
+    .controls.control-error .validation-icon {
         background: url( assets/img/icons/icon-error.png ) no-repeat top left transparent;
     }
-    .controls.control-valid .error-icon {
+    .controls.control-valid .validation-icon {
         background: url( assets/img/icons/icon-valid.png ) no-repeat top left transparent;
     }
-    .controls .error-icon {
+    .controls .validation-icon {
 
         width: 25px;
         height: 25px;
