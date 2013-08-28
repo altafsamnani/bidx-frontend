@@ -90,16 +90,16 @@ abstract class APIbridge
             ));
 
         $this->logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
-        
+
         // 5. Set Cookies if Exist
         if (is_array ($result)) {
-            
+
             if (isset($result['cookies']) && count ($result['cookies'])) {
                 $cookies = $result['cookies'];
                 foreach ($cookies as $bidxAuthCookie) {
                     if(!empty($bidxAuthCookie->name) && $bidxAuthCookie->name) {
                     $cookieDomain = $bidxAuthCookie->domain;
-                    ob_start(); // To avoid error headers already sent in apibridge setcookie 
+                    ob_start(); // To avoid error headers already sent in apibridge setcookie
                     setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
                     ob_end_flush();
 
@@ -152,7 +152,7 @@ abstract class APIbridge
                 do_action ('clear_auth_cookie');
                 $this->clear_wp_bidx_session();
                 $this->logger->trace (sprintf ('Authentication Failed for URL: %s ', $urlService));
-            
+
                 if ($urlService != 'session' && $this->isRedirectCheck) {
                     $this->bidxRedirectLogin ($groupDomain);
                 }
@@ -164,7 +164,7 @@ abstract class APIbridge
                 $this->clear_wp_bidx_session();
             }
             return $requestData;
-        
+
     }
 
     function clear_wp_bidx_session() {
@@ -192,16 +192,16 @@ abstract class APIbridge
      */
     function getBidxSubdomain ($echo = false,$url = false)
     {
-   
+
         $bidxUrl = $_SERVER ["HTTP_HOST"];
-        
+
         if($url) {
             $bidxUrl = str_replace(array('http://','https://'),'',$url);
         }
 
         $hostAddress = explode ('.', $bidxUrl);
         if (is_array ($hostAddress)) {
-            if (eregi ("^www$", $hostAddress [0])) {
+            if ( strcasecmp( "www", $hostAddress [0]) == 0 ) {
                 $passBack = 1;
             } else {
                 $passBack = 0;
