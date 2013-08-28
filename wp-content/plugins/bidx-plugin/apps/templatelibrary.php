@@ -471,11 +471,13 @@ class TemplateLibrary
                     //Display Value
                     if (is_array ($rowValue)) {
                         foreach ($rowValue as $value) {
-                            $rowHtml .= "<div class='row-fluid'>";
-                            $rowHtml .= "<div class='" . $gridValue . "'>";
-                            $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $this->exst ($value->documentName) . " </a>";
-                            $rowHtml .= "</div>";
-                            $rowHtml .= "</div>";
+                            if ( $this->exst( $value->document )) {
+                                $rowHtml .= "<div class='row-fluid'>";
+                                $rowHtml .= "<div class='" . $gridValue . "'>";
+                                $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $this->exst ($value->documentName) . " </a>";
+                                $rowHtml .= "</div>";
+                                $rowHtml .= "</div>";
+                            }
                         }
                     }
                 }
