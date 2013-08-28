@@ -811,4 +811,11 @@
     ,   yearRange:              "-100:+3"
     } );
 
+    // Disable disabled links
+    //
+    $body.delegate( "a.disabled", "click", function( e )
+    {
+        e.preventDefault();
+    } );
+
 } ( jQuery ));
