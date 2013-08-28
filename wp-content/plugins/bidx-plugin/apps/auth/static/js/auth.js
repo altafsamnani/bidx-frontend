@@ -261,8 +261,8 @@
             this.settings.messages[ element.name ] = {};
         }
 
-        previous.originalMessage = this.settings.messages[element.name].remote;
-        this.settings.messages[element.name].remote = previous.message;
+        previous.originalMessage = this.settings.messages[element.name].remoteApi;
+        this.settings.messages[element.name].remoteApi = previous.message;
 
         if ( previous.old === value ) {
                 return previous.valid;
@@ -272,7 +272,7 @@
 
         // notify validator that we start a new request
         //
-        //this.startRequest( element );
+        this.startRequest( element );
         // execute bidx api call
         //
         bidx.api.call(
@@ -324,8 +324,7 @@
                             validator.invalid[ element.name ] = true;
                             validator.showErrors( errors );
                         }
-                        previous.valid = valid;
-                        validator.stopRequest( element, valid );
+
                     }
                     else
                     {
@@ -334,6 +333,8 @@
 
                     // notify validator request has finished
                     //
+                    previous.valid = valid;
+                    validator.stopRequest( element, valid );
 
 
                 }

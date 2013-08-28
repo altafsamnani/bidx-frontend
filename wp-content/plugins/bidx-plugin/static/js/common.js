@@ -572,7 +572,6 @@
                 //
             ,   tagsinputRequired:      bidx.i18n.i( "frmFieldRequired" )
             ,   tagsinputMinItems:      $.validator.format( bidx.i18n.i( "frmInvalidMinItems" ) )
-            ,   remoteApi:              bidx.i18n.i( "frmFieldRequired" )
             } );
         } );
 
@@ -684,6 +683,9 @@
         }
     } );
 
+    //  Validator extentions
+    //
+
     // extend of resetForm prototype
     //
     $.validator.prototype.originalResetForm = $.validator.prototype.resetForm;
@@ -696,7 +698,6 @@
 
         // execute orginal function
         //
-
         this.originalResetForm();
 
         // execute custom code
@@ -714,8 +715,25 @@
         } );
 
     };
+
+    // POSSIBLE UNNECESSARY FUNCTION, but still testing and not sure if I need to customize the showErrors function
+    $.validator.prototype.originalShowErrors = $.validator.prototype.showErrors;
+
+    $.validator.prototype.showErrors = function( errors )
+    {
+        // execute orginal function
+        //
+        this.originalShowErrors( errors );
+
+        // execute custom code
+        //
+
+
+    };
+
+
     //
-    // end extend of resetForm prototype
+    // end validator extentions
 
 
     // Expose

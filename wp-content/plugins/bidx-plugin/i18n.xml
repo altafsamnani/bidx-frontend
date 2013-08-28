@@ -38,4 +38,6 @@
 
     <!-- This value is a error Code coming from API for username exists check -->
     <Item value="usernameExists">This email address is already used</Item>
+    <Item value="usernameInvalid">This is not a valid email address</Item>
+
 </I18N>
