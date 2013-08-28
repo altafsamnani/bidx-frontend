@@ -203,6 +203,13 @@
     {
         var keys = {};
 
+        if ( !data )
+        {
+            bidx.utils.warn( "[i18n] setItem called for context", context, "but no data" );
+
+            return;
+        }
+
         $.each( data, function( idx, item )
         {
             keys[ item.value ] = item;
