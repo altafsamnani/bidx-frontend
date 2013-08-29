@@ -5,17 +5,17 @@
         margin-bottom: 20px;
     }
 
-.view,
-.view h2 > .title {
+#mail .view,
+#mail .view h2 > .title {
     display: none;
 }
 
-    .view h2 {
+    #mail .view h2 {
         font-size: 26px;
         margin-bottom: 20px;
     }
 
-.viewList {
+#mail .viewList {
     background-color: #E0E0E0;
     padding :10px;
     -webkit-border-radius: 5px;
@@ -23,20 +23,20 @@
     border-radius: 5px;
 }
 
-    .viewList .mail-search .input-append {
+    #mail .viewList .mail-search .input-append {
         margin: 0px;
     }
-    .viewList .checkbox, .mail .radio {
+    #mail .viewList .checkbox, .mail .radio {
         margin: 0px;
     }
 
-    .viewList .check {
+    #mail .viewList .check {
         width: 20px;
         padding: 5px;
         float: left;
         margin-right: 10px;
     }
-    .mail .mail-toolbar {
+    #mail .mail .mail-toolbar {
         background-color: #34495E;
         -webkit-border-radius: 8px;
         -moz-border-radius: 8px;
@@ -48,12 +48,12 @@
 
     }
 
-    .mail .mail-toolbar .btn {
+    #mail .mail .mail-toolbar .btn {
         padding: 2px 13px;
         margin: 3px 0;
     }
 
-        .mail .mail-toolbar .search input {
+        #mail .mail .mail-toolbar .search input {
             padding: 2px;
             height:24px;
             min-height: 24px;
@@ -61,10 +61,10 @@
             width: 200px;
         }
 
-     .list {
+     #mail .list {
         background-color: #E0E0E0;
     }
-    .mail .list > li {
+    #mail .mail .list > li {
         padding: 5px 0 5px 3px;
         margin: 0px;
         background-color: #F5F5F5;
@@ -72,34 +72,34 @@
         border-top: 2px solid #E0E0E0;
 
     }
-    .mail .media-list.list > li:first-child {
+    #mail .mail .media-list.list > li:first-child {
         border-top: 0px;
     }
-    .mail .media-list.list > li:last-child {
+    #mail .mail .media-list.list > li:last-child {
         border-bottom: 0px;
     }
-    .mail .media-list.list > li:nth-child(2n+1)  {
+    #mail .mail .media-list.list > li:nth-child(2n+1)  {
 
     }
-        .mail .media-list.list > li a {
+        #mail .mail .media-list.list > li a {
             color: #34495E;
             font-size: 22px;
         }
-        .mail .media-list.list > li .email-new {
+        #mail .mail .media-list.list > li .email-new {
             font-weight: bold;
             color: #1abc9c;
         }
 
-    .mail .pagination {
+    #mail .mail .pagination {
         margin: 0;
     }
-        .mail .pagination a, .mail .pagination li.previous a, .mail .pagination li.next a {
+        #mail .mail .pagination a, .mail .pagination li.previous a, .mail .pagination li.next a {
             background-color: #BDC3C7;
             padding: 6px 17px;
 
         }
 
-    .mail .viewRead .mail-message {
+    #mail .mail .viewRead .mail-message {
         -webkit-border-radius: 6px;
         -moz-border-radius: 6px;
         border-radius: 6px;
@@ -109,7 +109,7 @@
         padding: 20px;
     }
 
-    .mail .viewCompose textarea {
+    #mail .mail .viewCompose textarea {
         height: 300px;
     }
 
