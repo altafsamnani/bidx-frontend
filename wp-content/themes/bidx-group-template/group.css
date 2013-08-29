@@ -1,0 +1,43 @@
+/*
+bidX Group Theme Specific styles
+Author: msp
+Company: bidX;
+*/
+
+/*******************************************************************************************
+*
+*   Group specific customizable styles
+*
+********************************************************************************************/
+
+    /* Addon classes */
+
+        body.bidx {
+            color:                      inherit;
+        }
+
+        .bidx .bidx-theme-colour-one,
+        .bidx .bidx-theme-colour-one:hover {
+            background-color:           #be2025;    /* background-color one */
+        }
+
+        .bidx  .bidx-theme-colour-two,
+        .bidx  .bidx-theme-colour-two:hover {
+            background-color:           #f39c12;    /* background-color two */
+        }
+
+        .bidx  .bidx-theme-colour-panel-one {
+            background-color:           #f6f0e8;    /* background-color three */
+        }
+
+    /* End addon classes */
+
+    /* Specific element overwrites. require LESS to replace colour with variable */
+
+        a, a:hover, a:focus {
+            color:                      #be2025;    /* text color one */
+        }
+
+    /* end element overwrites */
+
+

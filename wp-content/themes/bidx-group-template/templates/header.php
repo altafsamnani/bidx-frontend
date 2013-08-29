@@ -1,5 +1,5 @@
 <header class="banner navbar navbar-fixed-top" role="banner">
-  	<div class="navbar-inner">
+  	<div class="navbar-inner bidx-theme-colour-panel-one">
 		<div class="container">
 			<div class="row-fluid">
 				<div class="pull-left span6">
@@ -9,7 +9,7 @@
 					<?php //do_action('icl_language_selector'); ?>
 				</div>
 				<div class="pull-right span2">
-					<a href="/auth/#auth/login" class="btn btn-primary btn-block bidx-theme-colour-one"><?php _e('Login','bidxtheme');?></a>
+					<a href="/auth/#auth/login" class="btn btn-primary btn-block bidx-theme-colour-one"><i class="fui-login"></i><?php _e('Login','bidxtheme');?></a>
 				</div>
 				<div class="pull-right span2">
 					<a href="/auth/#auth/register" class="btn btn-primary btn-block bidx-theme-colour-two"><?php _e('Register','bidxtheme');?></a>
@@ -23,9 +23,9 @@
 						endif;
 					?>
 				</nav>
-				<div class="pull-right">
-			     	<?php get_template_part('templates/searchform'); ?>
-		        </div>
+<!-- 				<div class="pull-right">
+			     	<?php// get_template_part('templates/searchform'); ?>
+		        </div> -->
 			</div>
 		</div>
 	</div>

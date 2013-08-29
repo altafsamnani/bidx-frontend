@@ -1,8 +1,8 @@
 <header class="banner navbar navbar-fixed-top" role="banner">
-  	<div class="navbar-inner">
+  	<div class="navbar-inner bidx-theme-colour-panel-one">
 		<div class="container">
 			<div>
-				
+
 				<?php echo do_shortcode( '[bidx app="group" view="group-header"]' );?>
 			</div>
 			<div class="menu-top">

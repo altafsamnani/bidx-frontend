@@ -5,23 +5,10 @@ Company: bidX;
 */
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ New styles @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/*
+    fonts
+*/
 
-
-/*******************************************************************************************
-*
-*   Group related customizable styles
-*
-********************************************************************************************/
-
-    .bidx-theme-colour-one,
-    .bidx-theme-colour-one:hover {
-        background-color:           #79194f;
-    }
-
-    .bidx-theme-colour-two,
-    .bidx-theme-colour-two:hover {
-        background-color:           #f39c12;
-    }
 
 
 
@@ -34,8 +21,10 @@ Company: bidX;
     html, body {
         margin:                     0;
         padding:                    0;
+
+        color:                      #34495e;
         height:                     100%;
-        /* font-family:                'weblysleek_ui_normalregular', sans-serif,Arial; */
+
     }
 
     body.bidx-edit {
@@ -89,98 +78,170 @@ Company: bidX;
         background:                 url( assets/img/sprite.png ) no-repeat;
     }
 
-    .block-login {
-        margin:                     50px auto;
-        width:                      50%;
-        padding:                    40px;
-        background-color:           #f5f5f5;
-
-        -webkit-border-radius:      10px ;
-        -moz-border-radius:         10px;
-        border-radius:              10px;
+    .btn > [class^="fui-"] {
+        margin:                     0 4px;
+        position:                   relative;
+        top:                        1px;
+        vertical-align:             top;
+        display:                    inline-block;
+        zoom:                       1;
     }
 
-.iconbar {
-  background-color: #455560;
-  border-radius: 0 0 4px 4px;
-
-  margin: 0;
-  padding: 11px 0;
-
-}
-
-    .iconbar ul li {
-        float: left;
+    .btn .fui-login {
+        background: url( assets/img/icons/icon-login.png ) no-repeat top left transparent;
+        height:                     16px;
+        width:                      16px;
+        top:                        4px;
+        right:                      2px;
     }
-/* .iconbar-horizontal > ul > li {
-float: left;
-}
-.iconbar-horizontal {
-clear: both;
-float: left;
-}
-.iconbar-info {
-background-color: #3498db;
-}
-.iconbar > ul {
-  display: block;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.iconbar > ul > li {
-  margin: 0;
-  padding: 0;
-}
-.iconbar > ul > li.active > a {
-  color: #1abc9c;
-}
-.iconbar > ul > li:first-child > a {
-  padding-top: 32px;
-}
-.iconbar > ul > li > a {
-  color: #ffffff;
-  display: block;
-  font-size: 23.996px;
-  padding: 8px 30px 32px;
-  position: relative;
-  text-decoration: none;
-}
-.iconbar > ul > li > a:hover,
-.iconbar > ul > li > a:focus {
-  color: #1abc9c;
-}
- */
+
+
+    .iconbar {
+
+        border-radius:              0 0 4px 4px;
+
+        margin: 0;
+        padding:                    0;
+        height:                     42px
+
+    }
+
+     .iconbar > ul {
+        height:                     100%;
+        display:                    block;
+        list-style-type:            none;
+        margin:                     0;
+        padding:
+     }
+
+    .iconbar-horizontal > ul > li {
+        float:                      left;
+        height:                     100%;
+    }
+
+/*     .iconbar-horizontal > ul > li:first-child > a {
+    padding: 0px
+    } */
+    .iconbar-horizontal > ul > li > a {
+         padding: 0 12px;
+         height: 100%;
+    }
+    .iconbar > ul > li > a > i {
+        height: 100%;
+        width: 34px;
+        display: block;
+    }
+    .iconbar-info {
+        background-color:       #455560;
+    }
+
+    .iconbar > ul > li {
+        margin:                 0;
+        padding:                0;
+    }
+    .iconbar > ul > li.active > a {
+        color:                  #1abc9c;
+    }
+/*     .iconbar > ul > li:first-child > a {
+    padding-top:            0px;
+} */
+    .iconbar > ul > li > a {
+        color:                  #ffffff;
+        display:                block;
+        font-size:              23.996px;
+
+        position:               relative;
+        text-decoration:        none;
+    }
+    .iconbar > ul > li > a:hover,
+    .iconbar > ul > li > a:focus {
+        color:                  #1abc9c;
+    }
+
+    .fui-user {
+        background: url( assets/img/icons/icon-member.png ) no-repeat center center transparent;
+        height:                     17px;
+        width:                      34px;
+
+    }
+    .fui-mail {
+        background: url( assets/img/icons/icon-mail.png ) no-repeat center center transparent;
+        height:                     17px;
+        width:                      34px;
+
+    }
+    .fui-gear {
+        background: url( assets/img/icons/icon-gear.png ) no-repeat center center transparent;
+        height:                     17px;
+        width:                      34px;
+    }
+
+    .fui-cmd {
+        background: url( assets/img/icons/icon-dashboard.png ) no-repeat center center transparent;
+        height:                     17px;
+        width:                      34px;
+    }
+    .iconbar-horizontal .iconbar-unread {
+        right: 8px;
+        top: 3px;
+    }
+    .iconbar-info .iconbar-unread {
+        background-color: #226491;
+    }
+    .iconbar-unread {
+        background-color: #2a7aaf;
+        border-radius: 50%;
+        color: #ffffff;
+        font-family: "Lato", sans-serif;
+        font-size: 11.998px;
+        font-weight: 500;
+        line-height: 18.998px;
+        min-width: 14px;
+        padding: 0 2px;
+        position: absolute;
+        right: 20px;
+        text-align: center;
+        top: -2px;
+        -webkit-font-smoothing: auto;
+    }
+
+
 
     /************************ Typografic styles ***************************/
 
-    h1, h2, h3 {
-        font-family:                'weblysleek_uisemibold', sans-serif,Arial;
+    h1, h2, h3, label {
+        font-family:                'Lato', sans-serif;
+        font-weight:                700;
+        color:                      #34495e;
     }
 
     h1 {
-        font-size:                  40px;
+        font-size:                  23px;
         margin:                     0 0 20px 0;
 
     }
         h1 span {
             display:                block;
-            font-size:              22px;
+            font-size:              16px;
             font-weight:            400;
             margin-top:             15px;
         }
 
     h2 {
-        font-size:                  32px
+        font-size:                  18px
     }
 
     h3 {
-        font-size:                  24px;
+        font-size:                  14px;
     }
 
-    p, input, button, select, textarea, a {
-        font-family:                'weblysleek_ui_normalregular', sans-serif,Arial;
+    p, div, span, input, button, select, textarea, a {
+        font-family:                'Lato', sans-serif;
+        font-weight:                400;
     }
+
+
+
 
     /************************  End Typografic styles ***************************/
 
@@ -217,16 +278,56 @@ background-color: #3498db;
         text-indent:                10px;
         width:                      100%;
         border:                     2px solid #bdc3c7;
+        color:                      #999999;
     }
 
-    input.error, textarea.error, select.error {
-        border:                     2px solid #be2025;
+/*     input.error, textarea.error, select.error {
+    border:                     2px solid #be2025;
+}
+
+ */
+    form .controls {
+        position:               relative;
     }
 
-    .error {
+    form .controls.control-error .validation-icon {
+        background: url( assets/img/icons/icon-error.png ) no-repeat top left transparent;
+    }
+    form .controls.control-valid .validation-icon {
+        background: url( assets/img/icons/icon-valid.png ) no-repeat top left transparent;
+    }
+    form .controls .validation-icon {
+
+        width: 25px;
+        height: 25px;
+
+        display: block;
+        margin-right: -32px;
+        margin-top: 7px;
+
+        position: absolute;
+        right: 0;
+        top: 0;
+
+    }
+
+    form .controls input.error,
+    form .controls textarea.error,
+    form .controls.control-error .bidx-tagsinput-container {
+        border-color: #E83E3E;
+    }
+
+    form .controls input.valid,
+    form .controls textarea.valid,
+    form .controls.control-valid .bidx-tagsinput-container {
+        border-color: #2dcd6d;
+    }
+
+    form .control-group .error {
         color:                      #be2025;
     }
-    .error-separate { /*still used for seperate error messages not linked to an input. Login uses it*/
+
+    form .error-separate { /*still used for seperate error messages not linked to an input. Login uses it*/
         background-color:           #DBD9D9;
         color:                      #E83E3E;
         border:                     1px solid #FFA8A8;
@@ -243,6 +344,126 @@ background-color: #3498db;
 
 
     /************************  End input styles ********************************/
+
+
+    /************************  Template styles *******************************/
+
+        /* Bootstrap reset */
+
+        .navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner {
+            -webkit-box-shadow:     none;
+            -moz-box-shadow:        none;
+            box-shadow:             none;
+            background:             none;
+            border:                 none;
+        }
+
+        /* End Bootstrap reset */
+
+    .block-login {
+        margin:                     50px auto;
+        width:                      50%;
+        padding:                    40px;
+        background-color:           #f5f5f5;
+
+        -webkit-border-radius:      10px ;
+        -moz-border-radius:         10px;
+        border-radius:              10px;
+    }
+
+
+    header.navbar .navbar-inner {
+        height:                     109px;
+
+
+    }
+
+    header.navbar .navbar-inner > .container {
+        position:               relative;
+        padding-top:            10px;
+    }
+
+    header.navbar .menu-top {
+        position:               absolute;
+        right:                  0;
+        top:                    0;
+    }
+
+    header.navbar .menu-top .iconbar {
+    margin:                 0;
+    }
+
+    header.navbar .menu-top .iconbar button {
+    padding:                25px 32px 25px 8px;
+    margin:                 0;
+    color:                  white;
+    }
+
+    header.navbar .search {
+    float:                  right;
+    }
+
+    header.navbar .search form {
+    margin:                 0 0 10px 0;
+    }
+
+    header.navbar .nav > li > a {
+    padding:                20px 40px;
+    font-size:              20px;
+    }
+
+    header.navbar .nav > li > a:first-child {
+    padding-left:           10px;
+    }
+
+    header.navbar .nav > li > a .caret {
+    margin-top:             6px;
+    }
+
+    header.navbar .nav > li > ul {
+    margin-top:             -18px;
+    }
+
+    header.navbar .header-logo {
+    min-height:             100px;
+    height:                 100px;
+    overflow:               hidden;
+    }
+
+
+
+    .pageHeader {
+    padding-top:            10px;
+    padding-bottom:         10px;
+    background-color:       #fff;
+    z-index:                190;
+    }
+
+    .bidx-edit .pageHeader,
+    .bp-summary .pageHeader {
+    position:               fixed;
+    top:                    161px;
+    }
+
+    .pageHeader > .container {
+    height:             60px;
+    }
+
+
+    .pageHeader .editControls {
+    position:           absolute;
+    bottom:             10px;
+    right:              0;
+    }
+
+    .bp-summary .pageHeader .editControls {
+    bottom:             auto;
+    top:                10px;
+    }
+
+    .pageHeader .editControls a {
+    margin-left:        4px;
+    }
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ End New styles @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
@@ -385,109 +606,6 @@ body.bidx-business span.scrollPositionMarker {
 
 /* End Global styles */
 
-/*******************************************************************************************
-*
-*	Header styles
-*
-********************************************************************************************/
-
-header.navbar {
-	background-color:      #FFF;
-
-	height:                auto;
-	z-index:               200;
-}
-
-header.navbar .navbar-inner {
-    min-height:             100px;
-    padding-top:            10px;
-}
-
-header.navbar .navbar-inner > .container {
-    position:               relative;
-}
-
-header.navbar .menu-top {
-    position:               absolute;
-    right:                  0;
-    top:                    0;
-}
-
-header.navbar .menu-top .iconbar {
-    margin:                 0;
-}
-
-header.navbar .menu-top .iconbar button {
-    padding:                25px 32px 25px 8px;
-    margin:                 0;
-    color:                  white;
-}
-
-header.navbar .search {
-    float:                  right;
-}
-
-header.navbar .search form {
-    margin:                 0 0 10px 0;
-}
-
-header.navbar .nav > li > a {
-    padding:                20px 40px;
-    font-size:              20px;
-}
-
-header.navbar .nav > li > a:first-child {
-    padding-left:           10px;
-}
-
-header.navbar .nav > li > a .caret {
-    margin-top:             6px;
-}
-
-header.navbar .nav > li > ul {
-    margin-top:             -18px;
-}
-
-header.navbar .header-logo {
-    min-height:             100px;
-    height:                 100px;
-    overflow:               hidden;
-}
-
-
-
-.pageHeader {
-    padding-top:            10px;
-    padding-bottom:		    10px;
-    background-color:       #fff;
-    z-index:                190;
-}
-
-.bidx-edit .pageHeader,
-.bp-summary .pageHeader {
-    position:               fixed;
-    top:                    161px;
-}
-
-    .pageHeader > .container {
-        height:             60px;
-    }
-
-
-    .pageHeader .editControls {
-        position:           absolute;
-        bottom:             10px;
-        right:              0;
-    }
-
-    .bp-summary .pageHeader .editControls {
-        bottom:             auto;
-        top:                10px;
-    }
-
-    .pageHeader .editControls a {
-        margin-left:        4px;
-    }
 
 	/************** GROUP DASHBARD *************************/
 
@@ -754,10 +872,7 @@ form .row-fluid .input-prepend {
     }
 
 
-	form label {
-		font-weight: 700;
-		color: #9DA09C;
-	}
+
 
 	form label.bidx-radio {
 		font-weight: normal;
@@ -1065,64 +1180,7 @@ form .row-fluid .input-prepend {
 	/* END LOCATION PLUGIN*/
 
 
-/*
-	fonts
-*/
 
-
-@font-face {
-    font-family: 'weblysleek_ui_normalregular';
-    src: url('assets/css/webfonts/weblysleek_ui_normal-webfont.eot');
-    src: url('assets/css/webfonts/weblysleek_ui_normal-webfont.eot?#iefix') format('embedded-opentype'),
-         url('assets/css/webfonts/weblysleek_ui_normal-webfont.woff') format('woff'),
-         url('assets/css/webfonts/weblysleek_ui_normal-webfont.ttf') format('truetype'),
-         url('assets/css/webfonts/weblysleek_ui_normal-webfont.svg#weblysleek_uisemilight') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'weblysleek_uisemilight';
-    src: url('assets/css/webfonts/weblysleekuisl-webfont.eot');
-    src: url('assets/css/webfonts/weblysleekuisl-webfont.eot?#iefix') format('embedded-opentype'),
-         url('assets/css/webfonts/weblysleekuisl-webfont.woff') format('woff'),
-         url('assets/css/webfonts/weblysleekuisl-webfont.ttf') format('truetype'),
-         url('assets/css/webfonts/weblysleekuisl-webfont.svg#weblysleek_uisemilight') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'weblysleek_uisemibold';
-    src: url('assets/css/webfonts/weblysleekuisb-webfont.eot');
-    src: url('assets/css/webfonts/weblysleekuisb-webfont.eot?#iefix') format('embedded-opentype'),
-         url('assets/css/webfonts/weblysleekuisb-webfont.woff') format('woff'),
-         url('assets/css/webfonts/weblysleekuisb-webfont.ttf') format('truetype'),
-         url('assets/css/webfonts/weblysleekuisb-webfont.svg#weblysleek_uisemibold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'weblysleek_uilight';
-    src: url('assets/css/webfonts/weblysleekuil-webfont.eot');
-    src: url('assets/css/webfonts/weblysleekuil-webfont.eot?#iefix') format('embedded-opentype'),
-         url('assets/css/webfonts/weblysleekuil-webfont.woff') format('woff'),
-         url('assets/css/webfonts/weblysleekuil-webfont.ttf') format('truetype'),
-         url('assets/css/webfonts/weblysleekuil-webfont.svg#weblysleek_uilight') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
 
 
 /*******************************************************************************************
