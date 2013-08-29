@@ -139,7 +139,7 @@
 		</post>
 		<post>
 			<post_id>17</post_id>
-			<name>Media manager</name>
+			<name>media</name>
 			<title>Media manager</title>
 			<mapping>^media</mapping>
 			<content>[bidx app="media"]</content>
