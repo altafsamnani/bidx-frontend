@@ -132,6 +132,8 @@
 
         ,   'mail(/:section)(/:part1)(/:part2)':                'mail'
 
+        ,   'media(/:appState)':                                'media'
+
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
 
@@ -281,6 +283,22 @@
                 }
             );
         }
+
+    ,   media:             function( appState )
+        {
+            bidx.utils.log( "AppRouter::media", appState );
+
+            state       = "media";
+
+            _navigateToApp
+            (
+                "media"
+            ,   {
+                    requestedState: appState
+                }
+            );
+        }
+
     ,   auth:                   function( section )
         {
             bidx.utils.log( "AppRouter::auth", section );
