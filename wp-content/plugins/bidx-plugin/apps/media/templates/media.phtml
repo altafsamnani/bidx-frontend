@@ -1,1 +1,60 @@
-media
+<div id="media" class="row-fluid mainState mainStateMedia">
+
+    <!-- LOAD -->
+    <div class="view viewLoad span12">
+        <span><?php _e('Retrieving media library...','bidxplugin'); ?></span>
+    </div>
+
+    <!-- ERROR -->
+    <div class="view viewError span12">
+        <h2><?php _e('Error','bidxplugin'); ?></h2>
+        <p class="errorMsg"></p>
+    </div>
+
+    <!-- LIST -->
+    <div class="view viewList">
+
+        <div class="newFile">
+
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+                <i class="fui-plus"></i>
+                <span>Select file...</span>
+                <form>
+                <!-- The file input field used as target for the file upload widget -->
+                <input type="file" class="fileUpload" name="fileContent" />
+                </form>
+            </span>
+        </div>
+
+        <table class="fileList table table-striped">
+            <tbody class="files"></tbody>
+        </table>
+    </div>
+
+    <div class="snippets hide">
+
+        <table class="fileItem">
+            <tr class="fileItem">
+                <td>
+                    <span class="preview"></span>
+                </td>
+                <td>
+                    <p class="name"></p>
+                </td>
+                <td>
+                    <p class="purpose"></p>
+                    <p class="type"></p>
+                </td>
+                <td>
+                    <button class="btn btn-warning btnEdit">
+                        <i class="fui-new"></i>
+                        <span>Edit</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
