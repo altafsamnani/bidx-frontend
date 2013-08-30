@@ -6,6 +6,7 @@ if ( $this -> recursive_isset ( $this -> group, array( 'data','bidxGroupProfile'
 } else {
 	$name = '';
 }
+
 if ( $this -> recursive_isset ( $this -> group, array( 'data','bidxGroupProfile','logo','document' ) ) ) {
 	$logo =  $this -> group -> data -> bidxGroupProfile -> logo -> document;
 } else {

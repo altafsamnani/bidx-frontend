@@ -21,14 +21,9 @@
         }
 
         //do_action('get_header'); //$mattijs: Do we use this??
-        if($authenticated)
-        {
-            get_template_part('templates/header-authenticated');
-        }
-        else
-        {
-            get_template_part('templates/header');
-        }
+        // include the header. the authentication check is done within the template
+        //
+        get_template_part('templates/header');
 
         //  include the content
         //
