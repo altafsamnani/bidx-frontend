@@ -57,9 +57,9 @@ class member {
 	    /* 3. Render Member Profile Services for Initial View Display */
 	    $memberData = $memberObj->getMemberDetails(  );
 
-	    $view->data = $memberData->data;
+	    $view->data = (isset($memberData->data)) ? $memberData->data:NULL;
 
-	    $view->bidxGroupDomain = $memberData->bidxGroupDomain;
+	    $view->bidxGroupDomain = (isset($memberData->bidxGroupDomain)) ? $memberData->bidxGroupDomain : NULL;
 	    $view->sessionData = BidxCommon::$staticSession;
 
       	$view->render('member.phtml');

@@ -1,10 +1,10 @@
 <?php
 
-$groupDetails = $this->exst ($this->data->groups);
+$groupDetails = isset($this->data->groups) ? $this->data->groups : NULL ;
 
 $showGroup = (count( (array)$groupDetails)) ? true : false;
 
-$groupInfo = $this->exst ($this->data->groupInfo);
+$groupInfo = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
 
 
 ?>

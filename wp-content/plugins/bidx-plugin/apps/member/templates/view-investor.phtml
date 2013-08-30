@@ -1,6 +1,6 @@
 <?php
 
-$investorDetails = $this->exst ($this->data->bidxInvestorProfile);
+$investorDetails = isset($this->data->bidxInvestorProfile) ? $this->data->bidxInvestorProfile : NULL;
 $investorDetailsBidxMeta = isset( $investorDetails->bidxMeta )
     ? $investorDetails->bidxMeta
     : $investorDetails;
@@ -103,7 +103,7 @@ if ($investorDetails &&
 
                 $addressArr = array ($street . ' ' . $streetNumber,
                   $cityTown,
-                  __('country') => $institutionAddress->country,
+                  __('country') => $this->exst ($institutionAddress->country,''),
                   $institutionAddress->postalCode);
 
                 $address = $this->createRowValue ($addressArr, ', ');

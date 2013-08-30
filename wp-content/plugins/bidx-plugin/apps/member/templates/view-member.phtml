@@ -1,6 +1,6 @@
 <?php
 
-$personalDetails = $this->exst ($this->data->bidxMemberProfile->personalDetails);
+$personalDetails = isset($this->data->bidxMemberProfile->personalDetails) ? $this->data->bidxMemberProfile->personalDetails : NULL;
 $firstName = $this->exst ($personalDetails->firstName);
 $lastName = $this->exst ($personalDetails->lastName);
 
@@ -16,7 +16,7 @@ if (!$personalDetails->profilePicture->document) {
     $useDataSrc = true;
 }
 
-$entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
+$entrepreneurDetails = isset($this->data->bidxEntrepreneurProfile) ? $this->data->bidxEntrepreneurProfile: NULL ;
 
 ?>
 

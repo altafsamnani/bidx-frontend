@@ -1,10 +1,10 @@
 <?php
-$member = $this->exst($this->data->member->displayName);
+$member = isset($this->data->member->displayName) ?  $this->data->member->displayName: NULL ;
 ?>
 <div class="block-odd">
     <div class="pageHeader clearfix">
       <div class="container clearfix">
-        <h1 class="pull-left"><?php echo ($this->data->isMyProfile) ? __('My Profile') : $member; ?></h1>
+        <h1 class="pull-left"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></h1>
         <div class="editControls btn-group"></div>
       </div>
     </div>

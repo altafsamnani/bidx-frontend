@@ -1,8 +1,8 @@
 <?php
 
-$entrepreneurDetails = $this->exst ($this->data->bidxEntrepreneurProfile);
-$businessSummary = $this->exst ($this->data->wp->entities->bidxBusinessSummary);
-$companies = $this->exst ($this->data->companies);
+$entrepreneurDetails = isset($this->data->bidxEntrepreneurProfile) ? $this->data->bidxEntrepreneurProfile : NULL ;
+$businessSummary = isset ($this->data->wp->entities->bidxBusinessSummary) ? $this->data->wp->entities->bidxBusinessSummary : NULL;
+$companies = isset ($this->data->companies) ? $this->data->companies : NULL;
 
 $entrepreneurBidxMeta = isset( $entrepreneurDetails->bidxMeta )
     ? $entrepreneurDetails->bidxMeta
@@ -234,7 +234,7 @@ if ($companies) {
         <?php
     }
 xdebug_break();
-    if ( $this->exst($this->data->isMyProfile)) {
+    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
         ?>
 
         <div class="clearfix">
