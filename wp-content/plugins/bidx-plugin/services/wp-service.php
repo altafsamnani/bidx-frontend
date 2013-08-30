@@ -693,7 +693,7 @@ function get_bidx_subdomain ($echo = false)
 {
     $hostAddress = explode ('.', $_SERVER ["HTTP_HOST"]);
     if (is_array ($hostAddress)) {
-        if (eregi ("^www$", $hostAddress [0])) {
+        if (preg_match ("/www/", $hostAddress [0])) {
             $passBack = 1;
         } else {
             $passBack = 0;
@@ -1896,6 +1896,7 @@ function alter_site_menu ()
         $restricted = array ();
     } // check if admin and hide nothing
     else { // for all other users
+        $current_user = wp_get_current_user ();
         if ($current_user->user_level < 10) {
             remove_menu_page ('profile.php');
             remove_menu_page ('tools.php');
@@ -2052,3 +2053,42 @@ function bidx_staffmail ()
     echo $jsonData;
     die ();
 }
+/**
+ * Add a widget to the dashboard.
+ *
+ * This function is hooked into the 'wp_dashboard_setup' action below.
+ */
+function bidx_add_dashboard_widgets() {
+
+    $staticSession = (!empty(BidxCommon::$staticSession->data->roles)) ? BidxCommon::$staticSession->data->roles: array();
+
+    $currentUser = wp_get_current_user ();
+    if( in_array('groupadmin' , $currentUser->roles)) {
+    bidx_remove_core_widgets();
+
+    wp_add_dashboard_widget(
+                 'bidx_dashboard_widget',         // Widget slug.
+                 'Group growth',         // Title.
+                 'bidx_dashboard_widget_function' // Display function.
+        );
+    }
+  }
+
+add_action( 'wp_dashboard_setup', 'bidx_add_dashboard_widgets' );
+
+function bidx_remove_core_widgets() {
+   global $wp_meta_boxes;
+
+   unset($wp_meta_boxes['dashboard']['normal']['core']);
+   unset($wp_meta_boxes['dashboard']['side']['core']);
+
+}
+
+/**
+ * Create the function to output the contents of our Dashboard Widget.
+ */
+function bidx_dashboard_widget_function() {
+
+	// Display whatever it is you want to show.
+	echo "Nr of  members";
+} 

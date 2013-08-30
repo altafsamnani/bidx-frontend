@@ -58,17 +58,18 @@ class BidxCommon
         if (!$is_ajax) {
             // To check whther its login page or q= redirect already checked session.
             $isWordpress = $this->isWordpressPage ();
-
+       
             if (!$isWordpress) {
+         
                 //Start the session to store Bidx Session
-
-                $this->startSession ();
-
+                $this->startSession ();//Starting sessin because we want to display in dashboard widget bidx services
+    
                 //If Bidx Cookie set do the following
                 if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
 
                     $sessionVars = $this->getSessionVariables ($subDomain);
+                 
                     if (!$sessionVars) { // If Session set dont do anything
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
@@ -91,7 +92,9 @@ class BidxCommon
                 $scriptValue = $this->injectJsVariables ($subDomain);
                 $this->setScriptJs ($subDomain, $scriptValue);
             }
+
         }
+    
         return;
     }
 
@@ -124,9 +127,9 @@ class BidxCommon
      *
      * @return Starts php session and execute the same session if session_id cookie exists
      */
-    function clearSessionFromParam ($session_id)
+    function clearSessionFromParam ($session_id, $clearSession = false)
     {
-        if (isset ($_GET['rs']) && $_GET['rs']) {
+        if (isset ($_GET['rs']) && $_GET['rs'] || $clearSession) {
             /* Clear the Session */
             session_id ($session_id);
             session_start ();
@@ -383,8 +386,7 @@ class BidxCommon
             $urlSep = '&';
         }
 
-
-        //Other than login page and no user authenticated redirect him Moved to api service
+         //Other than login page and no user authenticated redirect him Moved to api service
 
         switch ($uriString) {
             case 'auth' :
@@ -424,6 +426,21 @@ class BidxCommon
                 }
                 break;
 
+            case 'wp-admin' :         
+                 if ($authenticated == 'false') {
+
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url);
+                    wp_clear_auth_cookie ();
+
+                    //Clear Session and Static variables
+                    session_destroy ();
+
+                    $this::$staticSession = NULL;
+                    unset ($this::$bidxSession[$subDomain]);
+                }
+                break;
+
+
             default:
                 if ($uriString != 'auth' && $authenticated == 'false') {
 
@@ -449,15 +466,17 @@ class BidxCommon
         $isWordpress = false;
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $params = $_GET;
-
+        $currentUser = wp_get_current_user ();
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
-        if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) || $this->isWPInternalFunction () || $hostAddress[1] == 'registration' ||
-            strstr ($hostAddress[1], 'wp-login.php')) {
+        if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) || $hostAddress[1] == 'registration' ||
+            strstr ($hostAddress[1], 'wp-login.php') ||
+            (isset($currentUser) && preg_match ('/wp-admin/i', $hostAddress[1]) && !in_array('groupadmin', $currentUser->roles))) { //Allow Groupadmin for wp-admin dashboard
             $isWordpress = true;
-        }
+            //$session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
+            //$this->clearSessionFromParam ($session_id);
 
+        } 
         //Login to Wordpress if already session exists
-
 
         return $isWordpress;
     }
@@ -491,7 +510,7 @@ class BidxCommon
             } else {
                 $userName = $groupName . 'groupmember';
             }
-
+        
             //If currently Logged in dont do anything
             if ($currentUser && isset ($currentUser->user_login) && $userName == $currentUser->user_login) {
 

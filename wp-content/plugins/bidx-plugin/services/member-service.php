@@ -25,24 +25,27 @@ class MemberService extends APIbridge {
    * In case of no API service check, the data in the Session profile will be very limited.
    * @return boolean if user is logged in
    */
-  function getMemberDetails() {
+  function getMemberDetails ()
+    {
 
-    $sessionData = BidxCommon::$staticSession;
-    $memberId = $sessionData->memberId;
+        $sessionData = BidxCommon::$staticSession;
+        $return = NULL;
+        if (isset ($sessionData->memberId)) {
+            $memberId = $sessionData->memberId;
 
-    //Call member profile
-    $result = $this->callBidxAPI('members/' . $memberId, array(), 'GET');
-    //If edit rights inject js and render edit button
-    $result->data->isMyProfile = false;
+            //Call member profile
+            $result = $this->callBidxAPI ('members/' . $memberId, array (), 'GET');
+            //If edit rights inject js and render edit button
+            $result->data->isMyProfile = false;
 
-    if (!empty($result->data->bidxMemberProfile->bidxMeta->bidxCanEdit) && !empty($result->data) && ($memberId == $sessionData->data->id) ) {
-      $result->data->isMyProfile = true;
+            if (!empty ($result->data->bidxMemberProfile->bidxMeta->bidxCanEdit) && !empty ($result->data) && ($memberId == $sessionData->data->id)) {
+                $result->data->isMyProfile = true;
+            }
+
+            $return = $this->processMemberDetails ($result, $sessionData);
+        }
+        return $return;
     }
-
-    $return = $this->processMemberDetails($result, $sessionData);
-
-    return $return;
-  }
 
   function processMemberDetails ( $result, $sessionData ) {
     $groupDetails = (!empty($result->data->groups)) ? $result->data->groups : array();

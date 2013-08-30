@@ -15,8 +15,8 @@ License: Commercial
 
 include ('apps/util.php' );
 
-//Bidx WP Hooks file
-require_once( BIDX_PLUGIN_DIR .'/../services/wp-service.php' );
+
+
 //
 // Activation of frontend apps
 //
@@ -25,6 +25,8 @@ require ( BIDX_PLUGIN_DIR . '/contentloader.php' );
 require ( BIDX_PLUGIN_DIR . '/shortcode.php' );
 require ( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 require_once ( BIDX_PLUGIN_DIR . '/common.php' );
+//Bidx WP Hooks file
+require_once( BIDX_PLUGIN_DIR .'/../services/wp-service.php' );
 
 
 //do not do this when site is bidx.net
