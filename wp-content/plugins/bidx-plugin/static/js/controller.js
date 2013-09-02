@@ -132,7 +132,7 @@
 
         ,   'mail(/:section)(/:part1)(/:part2)':                'mail'
 
-        ,   'media(/:appState)':                                'media'
+        ,   'media(/:appState)(/:id)':                          'media'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
@@ -284,9 +284,9 @@
             );
         }
 
-    ,   media:             function( appState )
+    ,   media:             function( appState, id )
         {
-            bidx.utils.log( "AppRouter::media", appState );
+            bidx.utils.log( "AppRouter::media", appState, id );
 
             state       = "media";
 
@@ -295,6 +295,7 @@
                 "media"
             ,   {
                     requestedState: appState
+                ,   id:             id
                 }
             );
         }
