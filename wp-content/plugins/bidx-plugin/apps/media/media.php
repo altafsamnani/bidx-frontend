@@ -28,8 +28,12 @@ class media {
      */
     function register_bidx_ui_libs() {
         wp_register_script( get_class(), plugins_url( 'static/js/media.js', __FILE__ ), self::$deps, '20130501', TRUE );
-        wp_register_style( 'media', plugins_url( 'static/css/media.css', __FILE__ ), array(), '20130501', 'all' );
-        wp_enqueue_style( 'media' );
+
+        // 'media' style is already in use by WP itself, unregistering it could be done, but might end up in unwanted results in case
+        // the built-in media is needed. Just prefixed it for ourselves with bidx- to circumvent this collision
+        //
+        wp_register_style( 'bidx-media', plugins_url( 'static/css/media.css', __FILE__ ), array(), '20130901', 'all' );
+        wp_enqueue_style( 'bidx-media' );
     }
 
     /**
