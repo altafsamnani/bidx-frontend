@@ -98,8 +98,8 @@ Company: bidX;
         background: url( assets/img/icons/icon-search.png ) no-repeat top left transparent;
         height:                     16px;
         width:                      16px;
-        top:                        0px;
-        right:                      0px;
+        top:                        0;
+        right:                      0;
     }
 
 
@@ -244,7 +244,7 @@ Company: bidX;
     /************************  End input styles ********************************/
 
 
-    /************************  Header styles ***********************************/
+    /************************  Generic Header styles ***********************************/
 
         /* Bootstrap reset */
 
@@ -261,17 +261,14 @@ Company: bidX;
 
     /* iconbar (topmenu) */
 
-    header .navbar-inner .iconbar {
-
-        border-radius:              0 0 4px 4px;
-
+    header.navbar .navbar-inner .iconbar {
         margin: 0;
         padding:                    0;
         height:                     42px
 
     }
 
-    header .navbar-inner .iconbar > ul {
+    header.navbar .navbar-inner .iconbar > ul {
         height:                     100%;
         display:                    block;
         list-style-type:            none;
@@ -373,10 +370,9 @@ Company: bidX;
     /* end Icon bar */
 
     /* searchbox */
-     header.navbar .search {
-        position:               absolute;
-        right:                  300px;
-        top:                    14px;
+
+    header.navbar .search .form-search {
+        margin:                     0;
     }
 
     header.navbar .search .form-search .input-append .btn {
@@ -414,36 +410,10 @@ Company: bidX;
         border-left-width: 0;
         background-color: #fff;
     }*/
+
     /* end searchbox */
 
     /* header */
-
-    header {
-        height:                     114px;
-    }
-
-
-
-        header.navbar .navbar-inner > .container {
-            position:               relative;
-
-
-        }
-
-        header.navbar .header-logo {
-
-            height:                 100%;
-            overflow:               hidden;
-            background-color: red;
-        }
-        header.navbar div
-        {
-            height:                 100%;
-        }
-
-        header.navbar div.bidx-autoHeight div {
-            height: auto;
-        }
 
 
 
@@ -478,32 +448,7 @@ Company: bidX;
 
 
 
-    header.navbar .menu-top {
-        position:               absolute;
-        right:                  0;
-        top:                    0;
-    }
-
-
-
-    header.navbar .nav > li > a {
-    padding:                20px 40px;
-    font-size:              20px;
-    }
-
-    header.navbar .nav > li > a:first-child {
-    padding-left:           10px;
-    }
-
-    header.navbar .nav > li > a .caret {
-    margin-top:             6px;
-    }
-
-    header.navbar .nav > li > ul {
-    margin-top:             -18px;
-    }
-
-
+   
 
     .pageHeader {
     padding-top:            10px;
@@ -1357,85 +1302,184 @@ form .row-fluid .input-prepend {
 *
 ********************************************************************************************/
 
-@media (max-width: 979px) {
-	body,
-    body.bidx-edit {
-        padding-top:                0;
-	}
 
-	body.bidx-edit .pageHeader {
-        position:                   relative;
-        top:                        0;
-	}
+    /* Large desktop */
+    @media (min-width: 1200px) {
 
-    header.navbar .nav {
-        margin-top:                 20px;
+
+
+
     }
 
-    header.navbar .nav > li > a {
-        padding:                    7px 30px;
-    }
+    /* styles shared by portrait tablet and above */
+    @media (min-width: 980px ) {
 
-    header.navbar .nav > li > ul {
-        margin-top:                 0;
-    }
+        /* header */
+/*         header {
+    height:                     114px;
 }
+ */
 
-@media (max-width: 767px) {
 
-    .nav-edit {
-        position:                   relative;
-        top:                        0;
-        width:                      auto;
+        header.navbar .navbar-inner > .container {
+            position:                   relative;
+        }
+
+        header.navbar .header-logo {
+
+            height:                     100%;
+            overflow:                   hidden;
+            background-color: red;
+            min-width:                  200px;
+            float:                      left;
+        }
+    
+        header.navbar .iconbar-wrapper {
+            float:                      right;
+        }
+
+        /* iconbar styles */
+
+        header.navbar .navbar-inner .iconbar {
+            border-radius:              0 0 4px 4px;
+        }
+
+        /* end iconbar styles*/
+
+        /* searchbox */
+
+        header.navbar .search {
+           text-align:                  right;
+           float:                       right;
+           margin-right:                30px;
+
+        }
+
+        header.navbar .search .input-append {
+           margin-right:                30px;
+           margin-top:                  14px;
+        }
+
+        /* end searchbox */
+
+
+
+        /* navigation styles*/
+        header.navbar ul.nav li.dropdown:hover > ul.dropdown-menu { 
+            /* results in on hove show of submenu */
+            display:                    block;
+        }
+        
+        header.navbar .menu-main {
+            margin: 10px 0;
+            float: right;
+        }
+
+        header.navbar .menu-main .nav {
+            margin-right:               0;
+        }
+
+        header.navbar .nav > li {
+            margin-right:               5px;
+        }
+        header.navbar .nav > li:last-child {
+            margin-right:               0;
+        }
+
+
+        header.navbar .nav > li > a {
+        padding:                5px 40px;
+        font-size:              20px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        }
+
+        
+        header.navbar .nav > li > a .caret {
+        margin-top:             6px;
+        }
+
+        header.navbar .nav > li > ul {
+        margin-top:             -18px;
+        }
+
+
+
+       header.navbar .nav > li.active > a, header.navbar .nav > li.active > a:hover, header.navbar .nav > li.active > a:focus {
+            background-color: #32495E;
+            color: #fff;
+
+        }
+        header.navbar .nav > li > a:hover,
+            header .navbar .nav > li > a:focus,
+            header .navbar .nav li.dropdown.open > .dropdown-toggle {
+            background-color: #EBEDEF;
+                color: #32495E;
+            }
+
+
     }
-}
-@media only screen and (max-width: 800px) {
-/* Experimental code*/
 
-    /* Force table to not be like tables anymore */
-    #no-more-tables table,
-    #no-more-tables thead,
-    #no-more-tables tbody,
-    #no-more-tables th,
-    #no-more-tables td,
-    #no-more-tables tr {
-        display: block;
+    /* Landscape phones and down */
+    @media  (max-width: 979px) {
+
+
+        body {
+            padding-left: 20px;
+            padding-right :20px;
+        }
+
+  
+        /* header styles */
+        header.navbar {
+            margin-left:                -20px;
+            margin-right:               -20px;
+        }
+        header.navbar .navbar-inner {
+            padding:                    0;
+        }
+        header.navbar .header-logo { 
+            height:                     100%;
+            overflow:                   hidden;
+            width:                      100%;
+            text-align:                 center;
+            margin:                     20px 0;
+        }
+    
+        header.navbar .iconbar-wrapper {
+            text-align:                 center;
+        }
+        
+        header.navbar .iconbar-wrapper .iconbar ul {
+            display:                    inline-block;
+            margin:                     0 auto;
+        }
+
+        header.navbar .search {
+           text-align:                  center;
+           display: 
+        }
+
+
+        /* End header styles */
+
+        /* general override to ditch caret from menu's*/
+        li a .caret {
+            display: none;
+        }
+
+
+
+
+
+
+
+        /* end contact page */
+
+
     }
 
-    /* Hide table headers (but not display: none;, for accessibility) */
-    #no-more-tables thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
 
-    #no-more-tables tr { border: 1px solid #ccc; }
 
-    #no-more-tables td {
-        /* Behave like a "row" */
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%;
-        white-space: normal;
-        text-align:left;
-    }
 
-    #no-more-tables td:before {
-        /* Now like a table header */
-        position: absolute;
-        /* Top/left values mimic padding */
-        top: 6px;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align:left;
-        font-weight: bold;
-    }
-
-    /*
-    Label the data
-    */
-    #no-more-tables td:before { content: attr(data-title); }
-}

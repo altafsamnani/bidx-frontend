@@ -46,7 +46,7 @@ class group {
 		//2. Service Group
 		require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
 		$groupSvc = new GroupService( );
-
+		
 		// 3. Determine the view needed
 		$command = $atts['view'];
 

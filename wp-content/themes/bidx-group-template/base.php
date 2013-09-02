@@ -20,10 +20,12 @@
        	    $authenticated=true;
         }
 
+
         //do_action('get_header'); //$mattijs: Do we use this??
         // include the header. the authentication check is done within the template
         //
-        get_template_part('templates/header');
+        include( locate_template( 'templates/header.php') );
+        //get_template_part('templates/header');
 
         //  include the content
         //
