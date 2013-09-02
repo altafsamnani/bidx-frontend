@@ -827,7 +827,17 @@
 
         bidx.utils.log( "Showing focusLocation state", focusLocationValue );
 
-        $toggleFocusLocationType.filter( "[value='" + focusLocationValue + "']" ).radio( "check" );
+        var $focusLocationType = $toggleFocusLocationType.filter( "[value='" + focusLocationValue + "']" );
+
+        if ( $focusLocationType.data( "radio" ) )
+        {
+            $focusLocationType.radio( "check" );
+        }
+        else
+        {
+            $focusLocationType.prop( "checked", true );
+        }
+
     };
 
     // Add the attachment to the screen, by cloning the snippet and populating it
@@ -1146,7 +1156,12 @@
         {
             member =
             {
-                bidxInvestorProfile: {}
+                bidxInvestorProfile:
+                {
+                    bidxMeta:
+                    {
+                    }
+                }
             };
 
             $hideOnCreate.hide();

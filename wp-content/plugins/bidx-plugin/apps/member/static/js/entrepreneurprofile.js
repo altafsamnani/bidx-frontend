@@ -568,7 +568,12 @@
         {
             member =
             {
-                bidxEntrepreneurProfile: {}
+                bidxEntrepreneurProfile:
+                {
+                    bidxMeta:
+                    {
+                    }
+                }
             };
 
             $hideOnCreate.hide();
