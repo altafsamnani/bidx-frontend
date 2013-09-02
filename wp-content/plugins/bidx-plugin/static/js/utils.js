@@ -237,7 +237,18 @@
                     case 'checkbox':
                         $el.each( function()
                         {
-                            $( this ).checkbox( "uncheck" );
+                            var $this = $( this );
+
+                            // If the checkbox plugin is used, use that to uncheck, otherwise just the native property
+                            //
+                            if ( $this.data( "checkbox" ) )
+                            {
+                                $this.checkbox( "uncheck" );
+                            }
+                            else
+                            {
+                                $this.prop( "checked", false );
+                            }
                         } );
 
                         if ( $.type( value ) === "array" )
