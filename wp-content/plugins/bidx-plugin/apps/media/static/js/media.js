@@ -162,7 +162,7 @@
         {
             bidx.utils.error( "[fileupload] Error", e, data );
 
-            bidx.common.notifyError( bidx.i18n.i( "attachmentUploadError" ) );
+            bidx.common.notifyError( bidx.i18n.i( "attachmentUploadError" ) + ": " + bidx.utils.getValue( data, "errorThrown" ));
 
             // Cleanup
             //
