@@ -54,6 +54,7 @@
                 {
                     getContext( context, function( err, item )
                     {
+                        bidx.utils.log( "[i18n] Resolving", context );
                         d.resolve();
                     } );
                 } )
@@ -127,15 +128,16 @@
                         {
                             cb( null, items[ context ] );
                         } );
-
-                        delete requestQueue[ context ];
                     }
+
+                    delete requestQueue[ context ];
                 } )
                 .fail( function()
                 {
                     bidx.utils.error( "problem retrieving i18n data" );
 
                     cb( new Error( "problem retrieving i18n data" ));
+                    delete requestQueue[ context ];
                 } )
             ;
         }
