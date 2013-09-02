@@ -389,6 +389,7 @@ class BidxCommon
          //Other than login page and no user authenticated redirect him Moved to api service
 
         switch ($uriString) {
+            
             case 'auth' :
                 if ($authenticated == 'true') {
                     $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/member' . $param;
@@ -426,7 +427,7 @@ class BidxCommon
                 }
                 break;
 
-            case 'wp-admin' :         
+            case 'wp-admin' :       // Group admin and wp-admin at that time only 
                  if ($authenticated == 'false') {
 
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url);
@@ -487,8 +488,10 @@ class BidxCommon
      */
     static public function isWPInternalFunction ()
     {
+        $currentUser = wp_get_current_user ();
         $serverUri = $_SERVER["REQUEST_URI"];
-        return (preg_match ('/wp-admin/i', $serverUri) || preg_match ('/wp-login/i', $serverUri));
+        $iswpInternalVar = ((isset($currentUser) && preg_match ('/wp-admin/i', $serverUri) && !in_array('groupadmin', $currentUser->roles)) || preg_match ('/wp-login/i', $serverUri));
+        return $iswpInternalVar;
     }
 
     /**

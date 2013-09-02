@@ -45,7 +45,7 @@ class dashboard {
 		//2. Service Group
 		//require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
 		//$groupSvc = new GroupService( );
-
+      
 		// 3. Determine the view needed
 		$command = $atts['view'];
 
@@ -56,7 +56,43 @@ class dashboard {
 			case 'investor-dashboard':
 				$template = 'investor-dashboard.phtml';
 				break;
+            case 'group-dashboard':
+                require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
+                $service = new SearchService( );
+              
+                $groupId = $view->sessionData->data->currentGroup;
+             
+                /* Bidx Member Query */
+                $searchParams['q']  = '*:*';
+                $searchParams['fq'] = 'type:bidxMemberProfile AND groupIds:'.$groupId;
+                $searchParams['sort'] ='created desc';
+                $searchParams['rows'] ='0';
+                $memberProfileQuery = $service -> cookQuery( $searchParams );
+                $memberProfileResults = $service -> getSearchResults( $memberProfileQuery );
+                $results->memberProfileCount = $memberProfileResults->data->numFound;
+                
+
+
+                /* Bidx Entrepreneur Query */
+                $searchParams['fq'] = 'type:bidxEntrepreneurProfile AND groupIds:'.$groupId;
+                $entrepreneurProfileQuery = $service -> cookQuery( $searchParams );
+                $entrepreneurResults = $service -> getSearchResults( $entrepreneurProfileQuery );
+                $results->entrepreneurCount = $entrepreneurResults->data->numFound;
+
+                /* Bidx Investor Query */
+                $searchParams['fq'] = 'type:BidxInvestorProfile AND groupIds:'.$groupId;
+                $investorProfileQuery = $service -> cookQuery( $searchParams );
+                $investorResults = $service -> getSearchResults( $investorProfileQuery );
+                $results->investorCount = $investorResults->data->numFound;
+
+                $view->data = $results;
+
+               
+
+                $template = 'group-dashboard.phtml';
+				break;
 			default:
+                
 				$template = 'my-dashboard.phtml';
 				break;
 		}

@@ -308,29 +308,30 @@ function clear_bidx_cookies ()
  * @version 1.0
  *
  * String Translate API for Frontend
- ********** i18n ************** 
+ * ********* i18n **************
  *  1) For all data
  *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&print=true
  *  2) For App i18n.xml data
  *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&context=company&print=true
  *  3) For Global i18.xml data
  *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=i18n&context=__global&print=true
- * 
- ********** Static **************  
+ *
+ * ********* Static **************
  *  1) For all data
  *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=static&print=true
  *  2) For Particular category data
  *  http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_translation&type=static&statictype=documentType&print=true
  *
- * 
+ *
  */
 
 add_action ('wp_ajax_bidx_translation', 'get_string_translation');
 add_action ('wp_ajax_nopriv_bidx_translation', 'get_string_translation');
+
 function get_string_translation ()
 {
-    $type = (isset($_GET['type'])) ? $_GET['type'] : NULL;
-    $print   = (isset($_GET['print'])) ? $_GET['print'] : NULL;
+    $type = (isset ($_GET['type'])) ? $_GET['type'] : NULL;
+    $print = (isset ($_GET['print'])) ? $_GET['print'] : NULL;
     switch ($type) {
 
         case 'i18n' :
@@ -360,7 +361,7 @@ function get_string_translation ()
                 $items = $document->xpath ('//Item');
 
                 $translatedArr[$body['app']] = other_wordpress_post_action ('translatei18n', $items, $body);
-            }             
+            }
 
             break;
 
@@ -378,7 +379,7 @@ function get_string_translation ()
                 $transientStaticData = $staticDataObj->getMultilingualStaticData ($staticDataVars);
                 set_transient ($transientKey, $transientStaticData, 60 * 5); //Second*Min*Hour
             }
-            
+
             if (isset ($_GET['statictype'])) {
                 $translatedArr[$_GET['statictype']] = $transientStaticData[$_GET['statictype']];
             } else {
@@ -387,16 +388,16 @@ function get_string_translation ()
 
             break;
     }
-    
-    if($print) {
+
+    if ($print) {
         echo "<pre>";
-        print_r($translatedArr);
+        print_r ($translatedArr);
         echo "</pre>";
         exit;
     } else {
-        echo json_encode($translatedArr);   
-    }   
-    
+        echo json_encode ($translatedArr);
+    }
+
     exit;
 }
 
@@ -425,13 +426,13 @@ function create_bidx_po ()
                 $result = call_bidx_service ('staticdata', NULL, 'GET');
                 $requestData = bidx_wordpress_post_action ('staticpo', $result, $_GET);
                 $po = $requestData->po;
-               
+
                 break;
             case 'module' :
                 $pathName = $_GET['path'];
                 $language = (isset ($body['lang'])) ? $body['lang'] : 'Original';
                 $po = '# Language ' . $language . PHP_EOL;
-                
+
 
                 $body = $_GET;
                 $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*/{i18n.xml}', GLOB_BRACE);
@@ -456,8 +457,8 @@ function create_bidx_po ()
                 $plugin = $_GET['path'];
                 global $pluginStrings;
                 bidx_st_scan_plugin_files ($plugin);
-                $po = plugin_theme_po_action ($pluginStrings,$_GET);
-                
+                $po = plugin_theme_po_action ($pluginStrings, $_GET);
+
 
                 break;
 
@@ -465,7 +466,7 @@ function create_bidx_po ()
                 $plugin = $_GET['path'];
                 global $pluginStrings;
                 bidx_st_scan_plugin_files ($plugin);
-                $po = plugin_theme_po_action ($pluginStrings,$_GET);
+                $po = plugin_theme_po_action ($pluginStrings, $_GET);
 
                 break;
         }
@@ -516,7 +517,6 @@ function bidx_st_scan_plugin_files ($plugin)
     }
 
     $scan_stats .= __ ('Done scanning files', 'wpml-string-translation') . PHP_EOL;
-    
 }
 
 function __bidx_scan_plugin_files_results ($string, $domain, $_gettext_context, $file, $line)
@@ -558,7 +558,7 @@ function plugin_theme_po_action ($displayData, $body)
             $valCTxt = 'nocontext';
         }
 
-        
+
         $tag = str_replace ('<!--msgId-->', $msgId, $_tag);
         $tag = str_replace ('<!--msgcTxt-->', $msgCtxt, $tag);
         $po .= PHP_EOL . '#' . $count . ') File -' . $dataId->file . ' -' . $dataId->line . PHP_EOL;
@@ -578,7 +578,7 @@ function plugin_theme_po_action ($displayData, $body)
 
         $count++;
     }
-  
+
     return $po;
 }
 
@@ -628,19 +628,19 @@ function other_wordpress_post_action ($url, $result, $body)
         case 'translatei18n' :
             $count = 0;
             $appName = $body['app'];
-            $i18nData = array();
+            $i18nData = array ();
             foreach ($result as $xmlObj) {
 
                 $arr = $xmlObj->attributes ();
-                $xmlLabel =  $xmlObj->__toString ();
+                $xmlLabel = $xmlObj->__toString ();
 
-                if($appName == '__global') {
-                    $label = __( $xmlLabel ,'i18n');
+                if ($appName == '__global') {
+                    $label = __ ($xmlLabel, 'i18n');
                 } else {
-                    $label = _x( $xmlLabel ,$appName, 'i18n');
+                    $label = _x ($xmlLabel, $appName, 'i18n');
                 }
 
-                $i18nData[$count]->value = $arr['value']->__toString();
+                $i18nData[$count]->value = $arr['value']->__toString ();
 
 
                 $i18nData[$count]->label = $label;
@@ -669,13 +669,12 @@ function clear_wp_bidx_session ()
 {
 
     /* Clear the Session */
-    if(isset($_COOKIE['session_id'])) {
-    session_id ($_COOKIE['session_id']);
-    session_start ();
-    session_destroy ();
-    setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+    if (isset ($_COOKIE['session_id'])) {
+        session_id ($_COOKIE['session_id']);
+        session_start ();
+        session_destroy ();
+        setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
     }
-   
 }
 
 /**
@@ -1960,7 +1959,6 @@ function bidx_options ()
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
-
     } else {
         wp_die (__ ('You do not have sufficient permissions to access this page.'));
     }
@@ -2053,42 +2051,54 @@ function bidx_staffmail ()
     echo $jsonData;
     die ();
 }
-/**
- * Add a widget to the dashboard.
- *
- * This function is hooked into the 'wp_dashboard_setup' action below.
- */
-function bidx_add_dashboard_widgets() {
 
-    $staticSession = (!empty(BidxCommon::$staticSession->data->roles)) ? BidxCommon::$staticSession->data->roles: array();
+/*************************** Bidx Dashboard Widget Start *****************************************/
+
+/* Add a widget to the dashboard.
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ */
+function bidx_add_dashboard_widgets ()
+{
 
     $currentUser = wp_get_current_user ();
-    if( in_array('groupadmin' , $currentUser->roles)) {
-    bidx_remove_core_widgets();
+    if (in_array ('groupadmin', $currentUser->roles)) {
+        bidx_remove_core_widgets (); // Remove core Wp widgets for Group admin role
 
-    wp_add_dashboard_widget(
-                 'bidx_dashboard_widget',         // Widget slug.
-                 'Group growth',         // Title.
-                 'bidx_dashboard_widget_function' // Display function.
+        wp_add_dashboard_widget (
+            'bidx_dashboard_widget', // Widget slug.
+            'Group growth', // Title.
+            'bidx_dashboard_widget_function' // Display function.
         );
     }
-  }
-
-add_action( 'wp_dashboard_setup', 'bidx_add_dashboard_widgets' );
-
-function bidx_remove_core_widgets() {
-   global $wp_meta_boxes;
-
-   unset($wp_meta_boxes['dashboard']['normal']['core']);
-   unset($wp_meta_boxes['dashboard']['side']['core']);
-
 }
 
-/**
- * Create the function to output the contents of our Dashboard Widget.
- */
-function bidx_dashboard_widget_function() {
+add_action ('wp_dashboard_setup', 'bidx_add_dashboard_widgets');
 
-	// Display whatever it is you want to show.
-	echo "Nr of  members";
-} 
+/* Remove Core Wp widgets on Dashboard.
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ */
+function bidx_remove_core_widgets ()
+{
+    global $wp_meta_boxes;
+
+    unset ($wp_meta_boxes['dashboard']['normal']['core']);
+    unset ($wp_meta_boxes['dashboard']['side']['core']);
+}
+
+/* Create the function to output the contents of our Dashboard Widget.
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ */
+
+function bidx_dashboard_widget_function ()
+{
+    echo do_shortcode( "[bidx app='dashboard' view='group-dashboard']" );
+  
+}
+
+/*************************** Bidx Dashboard Widget End *****************************************/

@@ -25,8 +25,7 @@ require ( BIDX_PLUGIN_DIR . '/contentloader.php' );
 require ( BIDX_PLUGIN_DIR . '/shortcode.php' );
 require ( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 require_once ( BIDX_PLUGIN_DIR . '/common.php' );
-//Bidx WP Hooks file
-require_once( BIDX_PLUGIN_DIR .'/../services/wp-service.php' );
+
 
 
 //do not do this when site is bidx.net
@@ -53,6 +52,8 @@ if ( !BidxCommon :: isWPInternalFunction() ) {
 	//cleanup body tag
 
 }
+//Bidx WP Hooks file
+require_once( BIDX_PLUGIN_DIR .'/../services/wp-service.php' );
 
 add_filter( 'body_class','my_class_names', 100000 );
 
