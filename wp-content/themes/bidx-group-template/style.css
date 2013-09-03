@@ -303,7 +303,11 @@ Company: bidX;
 
 
     /* iconbar (topmenu) */
-
+    header.navbar .navbar-inner,
+    header.navbar .navbar-inner .container,
+    header.navbar .navbar-inner .container .row-fluid {
+        height:                     100%;
+    }
     header.navbar .navbar-inner .iconbar {
         margin: 0;
         padding:                    0;
@@ -1363,10 +1367,10 @@ form .row-fluid .input-prepend {
     @media (min-width: 980px ) {
 
         /* header */
-/*         header {
-    height:                     114px;
-}
- */
+        header {
+            height:                     114px;
+        }
+ 
 
 
         header.navbar .navbar-inner > .container {
@@ -1429,7 +1433,10 @@ form .row-fluid .input-prepend {
         
         header.navbar .menu-main {
             margin: 10px 0 0 0;
-            float: right;
+            /*float: right;*/
+            position:                   absolute;
+            bottom:                     0;
+            right:                      0;
         }
 
         header.navbar .menu-main .nav {
