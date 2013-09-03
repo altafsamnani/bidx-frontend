@@ -1,7 +1,7 @@
-<div class="iconbar iconbar-horizontal iconbar-info">
+<div class="iconbar iconbar-horizontal iconbar-bidx">
 	<ul>
+        <li><a href="/wp-admin" class="fui-cmd" alt="Admin"></a></li>
         <li><a href="/member" class="fui-user" alt="Profile"></a></li>
-		<li><button class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-main"></button></li>
         <li>
         	<a href="/mail#mail/inbox" class="fui-mail" alt="Mail">
             	<!-- If messages are available -->
@@ -16,7 +16,7 @@ if ( !empty($this->sessionData) && !empty($roles)) {
 		 in_array( 'GroupOwner', $roles ) ) {
         $currentGroupAdmin = true;
 ?>
- 	<li><a href="/wp-admin" class="fui-cmd" alt="Admin"></a></li>
+ 	
 <?php
 	}
 }

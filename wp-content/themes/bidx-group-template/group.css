@@ -34,10 +34,18 @@ Company: bidX;
 
     /* Specific element overwrites. require LESS to replace colour with variable */
 
-        a, a:hover, a:focus {
+        a,
+        a:hover,
+        a:focus,
+        header.navbar .nav > li.active > a,
+        header.navbar .nav > li.active > a:hover,
+        header.navbar .nav > li.active > a:focus {
             color:                      #be2025;    /* text color one */
         }
 
     /* end element overwrites */
 
+
+
+    
 

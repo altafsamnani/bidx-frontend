@@ -40,19 +40,18 @@
 			 <?php 
 			 	} 
 			 ?>
-			</div>
-			<div class="row-fluid">
-				<div class="span12">
-					<nav class="nav-collapse collapse menu-main">
-						<?php
-							if (has_nav_menu('group_dashboard_navigation')) :
-								wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav'));
-							endif;
-						?>
-					</nav>
-				</div>
-			</div>
+
+			<nav class="nav-collapse collapse menu-main">
+				<?php
+					if (has_nav_menu('group_dashboard_navigation')) :
+						wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav'));
+					endif;
+				?>
+			</nav>
+	
+			
 
 		</div>
 	</div>
+
 </header>

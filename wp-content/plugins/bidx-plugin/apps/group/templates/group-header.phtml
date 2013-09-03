@@ -1,29 +1,7 @@
-<?php
-
-// validation because the fields may not be there
-if ( $this -> recursive_isset ( $this -> group, array( 'data','bidxGroupProfile','name' ) ) ) {
-	$name =  $this -> group -> data -> bidxGroupProfile -> name;
-} else {
-	$name = '';
-}
-
-if ( $this -> recursive_isset ( $this -> group, array( 'data','bidxGroupProfile','logo','document' ) ) ) {
-	$logo =  $this -> group -> data -> bidxGroupProfile -> logo -> document;
-} else {
-	$logo = '';
-}
-?>
-
-<div class="header-logo">
-    <?php if($logo != '') {    ?>
-	<a href="<?php echo home_url(); ?>/">
-
-        <img data-src="holder.js/210x100/social/text:Logo" class="logo img-rounded" src="<?php echo $logo ?>">
-	</a>
-    <?php
-        }
-        else {
-     ?>
-	<h1 class="sitetext"><?php echo $name ?></h1>
-    <?php } ?>
+<div class='header-logo'>
+<?php if ( get_theme_mod( 'themeslug_logo' ) ) : ?>
+    <a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><img src='<?php echo get_theme_mod( 'themeslug_logo' ); ?>' alt='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>'></a>
+<?php else : ?>
+   	<span class='site-title'><a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></span>
+<?php endif; ?>
 </div>
