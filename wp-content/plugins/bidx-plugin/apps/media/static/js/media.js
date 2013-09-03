@@ -327,7 +327,7 @@
     //
     function _updateFile( $container, file )
     {
-        var imageSrc = ( file && file.mimeType && file.contentType.match( /^image/ ) )
+        var imageSrc = ( file && file.mimeType && file.mimeType.match( /^image/ ) )
             ? file.document
             : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png"
         ;
@@ -378,7 +378,7 @@
         $details.find( ".created"       ).text( created );
         $details.find( ".filename"      ).text( upload.documentName );
         $details.find( ".size"          ).text( upload.size );
-        $details.find( ".contentType"   ).text( upload.contentType );
+        $details.find( ".contentType"   ).text( upload.mimeType );
 
         $details.find( ".btnDownload"   ).attr( "href", upload.document );
     }
