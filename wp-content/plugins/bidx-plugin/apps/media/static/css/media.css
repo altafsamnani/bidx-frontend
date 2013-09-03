@@ -28,3 +28,7 @@
 }
 #media .dropzone.fade {
 }
+
+#media .documentImage {
+    max-width:              150px;
+}
