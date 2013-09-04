@@ -423,7 +423,7 @@
         ,   groupClass  = "toggle-focusLocationType"
         ;
 
-bidx.utils.log( "$toggleFocusLocationType::change", value );
+        bidx.utils.log( "$toggleFocusLocationType::change", value );
 
         // FlatUI's radio plugin fires the change event for all radio's, but since
         // we check on [checked] only the change event for the newly selected
@@ -1042,6 +1042,27 @@ bidx.utils.log( "$toggleFocusLocationType::change", value );
             {
                 previousInvestment.companyWebsite = bidx.utils.prefixUrlWithProtocol( previousInvestment.companyWebsite );
             } );
+        }
+
+        // Delete the none-selected focus reach/city/country things, since a user can have selected a focusCity, but the radio control is now set to country. Sicne the API
+        // doesn't facility administrating this explicit "do not set the city" we need to unset it ourselves...
+        //
+        var focusLocationType = $toggleFocusLocationType.filter( "[checked]" ).val();
+
+        if ( focusLocationType !== "country" )
+        {
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusCountry", [] );
+        }
+
+        if ( focusLocationType !== "city" )
+        {
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", [] );
+        }
+
+        if ( focusLocationType !== "reach" )
+        {
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.coordinates", null );
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.reach", null );
         }
     };
 
