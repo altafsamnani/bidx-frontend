@@ -25,6 +25,7 @@ Company: bidX;
         color:                      #34495e;
         height:                     100%;
 
+
     }
 
     body.bidx-edit {
@@ -192,7 +193,7 @@ Company: bidX;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
-    
+
         height:                     40px;
         text-indent:                10px;
         width:                      100%;
@@ -201,8 +202,8 @@ Company: bidX;
     }
 
     /* reset bootstrap border coloring */
-    select:focus, 
-    textarea:focus, 
+    select:focus,
+    textarea:focus,
     input[type="text"]:focus,
     input[type="password"]:focus,
     input[type="datetime"]:focus,
@@ -218,7 +219,7 @@ Company: bidX;
     input[type="tel"]:focus,
     input[type="color"]:focus,
     .uneditable-input:focus,
-    .form-control:focus { 
+    .form-control:focus {
         border-color:               #bdc3c7;
         outline:                    none;
         -webkit-box-shadow:         none;
@@ -303,7 +304,6 @@ Company: bidX;
 
 
     /* iconbar (topmenu) */
-    header.navbar .navbar-inner,
     header.navbar .navbar-inner .container,
     header.navbar .navbar-inner .container .row-fluid {
         height:                     100%;
@@ -436,7 +436,7 @@ Company: bidX;
         border-radius: 0 5px 5px 0;
         padding-left: 4px;
         border-left-width: 0;
-        
+
 
         /* transition timing to match input field (standard bootstrap value) */
         -webkit-transition: border linear .2s,box-shadow linear .2s;
@@ -500,7 +500,7 @@ Company: bidX;
 
 
 
-   
+
 
     .pageHeader {
     padding-top:            10px;
@@ -588,9 +588,7 @@ Company: bidX;
     margin-bottom:              10px;
 }
 
-.outer-content-container {
-    padding-top:                20px;
-}
+
 
 .bidx-label {
     font-weight:                bold;
@@ -1367,10 +1365,10 @@ form .row-fluid .input-prepend {
     @media (min-width: 980px ) {
 
         /* header */
-        header {
-            height:                     114px;
+        header .navbar-inner {
+            height:                     109px;
         }
- 
+
 
 
         header.navbar .navbar-inner > .container {
@@ -1378,7 +1376,7 @@ form .row-fluid .input-prepend {
         }
 
         header.navbar .header-logo {
-            
+
             height:                     100%;
             overflow:                   hidden;
             min-width:                  200px;
@@ -1394,7 +1392,7 @@ form .row-fluid .input-prepend {
                 display: inline-block;
                 font-size: 24px;
             }
-    
+
         header.navbar .iconbar-wrapper {
             float:                      right;
         }
@@ -1426,11 +1424,11 @@ form .row-fluid .input-prepend {
 
 
         /* navigation styles*/
-        header.navbar ul.nav li.dropdown:hover > ul.dropdown-menu { 
+        header.navbar ul.nav li.dropdown:hover > ul.dropdown-menu {
             /* results in onhover show of submenu */
             display:                    block;
         }
-        
+
         header.navbar .menu-main {
             margin: 10px 0 0 0;
             /*float: right;*/
@@ -1513,7 +1511,7 @@ form .row-fluid .input-prepend {
             color:                                  #fff;
         }
 
-        
+
         header.navbar .nav > li > a .caret {
         margin-top:             10px;
         }
@@ -1540,6 +1538,31 @@ form .row-fluid .input-prepend {
                 color: #32495E;
             }
 
+        .white-spacer {
+            background-color:                       #fff;
+            height:                                 5px;
+        }
+
+        /* end header */
+
+        /* content */
+        .outer-content-container {
+            padding-top:                            114px;
+        }
+        .carousel .outer-carousel-control-container {
+            position:                               absolute;
+            height:                                 100%;
+            width:                                  100%;
+        }
+        .carousel  .container {
+            position:                               relative;
+            height:                                 100%;
+        }
+        .carousel .carousel-control {
+            z-index:                                999;
+        }
+        /* end content */
+
 
     }
 
@@ -1552,7 +1575,7 @@ form .row-fluid .input-prepend {
             padding-right :20px;
         }
 
-  
+
         /* header styles */
         header.navbar {
             margin-left:                -20px;
@@ -1561,18 +1584,18 @@ form .row-fluid .input-prepend {
         header.navbar .navbar-inner {
             padding:                    0;
         }
-        header.navbar .header-logo { 
+        header.navbar .header-logo {
             height:                     100%;
             overflow:                   hidden;
             width:                      100%;
             text-align:                 center;
             margin:                     20px 0;
         }
-    
+
         header.navbar .iconbar-wrapper {
             text-align:                 center;
         }
-        
+
         header.navbar .iconbar-wrapper .iconbar ul {
             display:                    inline-block;
             margin:                     0 auto;
@@ -1580,7 +1603,7 @@ form .row-fluid .input-prepend {
 
         header.navbar .search {
            text-align:                  center;
-           display: 
+           display:
         }
 
 
