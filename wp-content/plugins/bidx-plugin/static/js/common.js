@@ -580,7 +580,7 @@
     $.validator.setDefaults(
     {
         debug:              true
-    ,   ignore:             ""
+    ,   ignore:             ":hidden"
 
     ,   errorPlacement:     function( $error, $element )
         {
