@@ -89,14 +89,197 @@
     if ( $authenticated )
     {
 ?>
-        <!-- logged in -->
+    <!-- logged in -->
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span8">
+
+                <!-- NEWS BLOCK -->
+                <div class="feature-block spacer">
+                    <div class="feature-block-header bidx-theme-colour-one">
+                        News & Events
+                        <span class="pull-right"><a href="">view all</a></span>
+                    </div>
+                    <div class="feature-block-items">
+                        <div class="row-fluid spacer">
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Qatar Frienship Fund announces four new projects</strong></div>
+                                    <div>[ MM.DD.YY ]</div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Five projects in the pipeline</strong></div>
+                                    <div>[ MM.DD.YY ]</div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                        </div>
+                        <div class="row-fluid spacer">
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-events.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>A year that brought hope, 2013</strong></div>
+                                    <div>[ MM.DD.YY ]</div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Why Masker is settings new global benchmarks</strong></div>
+                                    <div>[ MM.DD.YY ]</div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BUSINESS BLOCK -->
+                <div class="feature-block spacer">
+                    <div class="feature-block-header bidx-theme-colour-one">
+                        New Business
+                        <span class="pull-right"><a href="">view all</a></span>
+                    </div>
+                    <div class="feature-block-items">
+                        <div class="row-fluid spacer">
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Business name#</strong></div>
+                                    <div>[ Industry ]</div>
+                                    <div>[ Country of operations ]</div>
+                                    <div>[ MM.DD.YY ]</div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Business name#</strong></div>
+                                    <div>[ Industry ]</div>
+                                    <div>[ Country of operations ]</div>
+                                    <div>[ MM.DD.YY ]</div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                        </div>
+                        <div class="row-fluid spacer">
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Business name#</strong></div>
+                                    <div>[ Industry ]</div>
+                                    <div>[ Country of operations ]</div>
+                                    <div>[ MM.DD.YY ]</div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Business name#</strong></div>
+                                    <div>[ Industry ]</div>
+                                    <div>[ Country of operations ]</div>
+                                    <div>[ MM.DD.YY ]</div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEMBERS BLOCK -->
+                <div class="feature-block spacer">
+                    <div class="feature-block-header bidx-theme-colour-one">
+                        New members in the group
+                        <span class="pull-right"><a href="">view all</a></span>
+                    </div>
+                    <div class="feature-block-items">
+                        <div class="row-fluid spacer">
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Member name#</strong></div>
+                                    <div>[ Professional title ]</div>
+                                    <div>[ Country ]</div>
+                                    <div><span class="label bidx-label-investor">Investor</span></div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Member name#</strong></div>
+                                    <div>[ Professional title ]</div>
+                                    <div>[ Country ]</div>
+                                    <div><span class="label bidx-label-member">Member</span></div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                        </div>
+                        <div class="row-fluid spacer">
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Member name#</strong></div>
+                                    <div>[ Professional title ]</div>
+                                    <div>[ Country ]</div>
+                                    <div><span class="label bidx-label-entrepeneur">Entrepeneur</span></div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                            <!-- feature item -->
+                            <div class="span6">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                                <div>
+                                    <div><strong>Member name#</strong></div>
+                                    <div>[ Professional title ]</div>
+                                    <div>[ Country ]</div>
+                                    <div><span class="label bidx-label-member">Member</span></div>
+                                </div>
+                            </div>
+                            <!-- // feature item -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="span4 info-block">
+                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/info-column.png" alt="">
+            </div>
+        </div>
+
+
+
+    </div>
+
+
 <?php
     }
     else
     {
  ?>
+     <!-- Not logged in -->
     <div class="container">
-        <!-- Not logged in -->
         <div class="row-fluid spacer">
             <div class="span6">
                 <a href="">
