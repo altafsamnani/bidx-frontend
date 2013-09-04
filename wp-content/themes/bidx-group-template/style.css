@@ -79,7 +79,9 @@ Company: bidX;
         background:                 url( assets/img/sprite.png ) no-repeat;
     }
 
-
+    .spacer{
+        margin-bottom:              40px;
+    }
     /************************ Button styles ***************************/
 
     .btn > [class^="fui-"] {
@@ -153,7 +155,7 @@ Company: bidX;
     /************************  Button styles ***********************************/
 
     .btn {
-        height:                     34px;
+        /*height:                     34px;*/
         background-image:           none;
         opacity:                    0.9;
         filter:                     alpha(opacity=90);
@@ -1421,6 +1423,18 @@ form .row-fluid .input-prepend {
 
         /* end searchbox */
 
+        /* header controls */
+
+        header.navbar .bidx-header-controls {
+            margin-top:                 34px;
+        }
+
+        header.navbar .bidx-header-controls .btn {
+            margin-top:                 0;
+            width:                      95%; /* made buttons a bit smaller to create more space between them */
+            float:                      right;
+        }
+        /* end header controls */
 
 
         /* navigation styles*/
@@ -1531,6 +1545,15 @@ form .row-fluid .input-prepend {
 
 
         }
+
+
+        header.navbar .nav > li.active > a,
+        header.navbar .nav > li.active > a:hover,
+        header.navbar .nav > li.active > a:focus {
+            font-weight:                bold;
+        }
+
+
         header.navbar .nav > li > a:hover,
             header .navbar .nav > li > a:focus,
             header .navbar .nav li.dropdown.open > .dropdown-toggle {
@@ -1538,7 +1561,7 @@ form .row-fluid .input-prepend {
                 color: #32495E;
             }
 
-        .white-spacer {
+        header.navbar .white-spacer {
             background-color:                       #fff;
             height:                                 5px;
         }
@@ -1549,10 +1572,13 @@ form .row-fluid .input-prepend {
         .outer-content-container {
             padding-top:                            114px;
         }
-        .carousel .outer-carousel-control-container {
+        .carousel .outer-carousel-control-container,
+        .carousel .carousel-inner .outer-carousel-control-container  {
             position:                               absolute;
             height:                                 100%;
             width:                                  100%;
+            top:                                    0;
+            left:                                   0;
         }
         .carousel  .container {
             position:                               relative;
@@ -1560,7 +1586,42 @@ form .row-fluid .input-prepend {
         }
         .carousel .carousel-control {
             z-index:                                999;
+            line-height:                            26px;
         }
+
+        .carousel .carousel-caption {
+
+
+            padding:                                0px;
+            background:                             #121d29;
+            width:                                  300px;
+
+            opacity:                                0.7;
+            padding:                                15px;
+            color:                                  #fff;
+            line-height:                            18px;
+            position:                               relative;
+            top:                                    30%;
+            left:                                   100px;
+        }
+
+        .feature-container {
+
+        }
+
+        .feature-container .feature-col,
+        .feature-container .feature-col h2 {
+            color:                                  #fff;
+        }
+        .feature-container .feature-col img {
+            margin-right:                           20px;
+        }
+
+        .join-our-group-block .btn {
+            margin-right: 20px;
+        }
+
+
         /* end content */
 
 

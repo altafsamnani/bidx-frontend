@@ -60,10 +60,16 @@
             $img = wp_get_attachment_image_src( $image->ID, 400 );
 ?>
             <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
-                <img class="img-rounded" src="<?php echo $img[0] ?>" />
-                <div class="carousel-caption img-rounded">
-                    <h4><?php echo $image -> post_title ?></h4>
-                    <p><?php echo $image -> post_content ?></p>
+                <img class="img" src="<?php echo $img[0] ?>" />
+                <div class="outer-carousel-control-container">
+                    <div class="container">
+                        <div class="carousel-caption img-rounded ">
+
+                            <?php echo $image -> post_content ?>
+
+
+                        </div>
+                    </div>
                 </div>
             </div>
 <?php
@@ -78,7 +84,190 @@
     <!-- // IMAGE Carousel -->
 
 
-	<div class="container">
+
+<?php
+    if ( $authenticated )
+    {
+?>
+        <!-- logged in -->
+<?php
+    }
+    else
+    {
+ ?>
+    <div class="container">
+        <!-- Not logged in -->
+        <div class="row-fluid spacer">
+            <div class="span6">
+                <a href="">
+                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/group-register-investor.png" alt="">
+                </a>
+            </div>
+            <div class="span6">
+                <a href="">
+                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/group-register-entrepeneur.png" alt="">
+                </a>
+            </div>
+        </div>
+
+        <div class="row-fluid spacer">
+            <div class="span12">
+                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/group-about-us.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- // container -->
+
+    <div class="feature-container bidx-theme-colour-one spacer">
+        <div class="container">
+            <div class="row-fluid">
+
+                <div class="span4 feature-col">
+                    <h2>New Business</h2>
+                    <div class="feature-col-items">
+                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left">
+                            <div>
+                                <div><strong>Business name#</strong></div>
+                                <div>[ Industry ]</div>
+                                <div>[ Country of operations ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+
+                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left">
+                            <div>
+                                <div><strong>Business name#</strong></div>
+                                <div>[ Industry ]</div>
+                                <div>[ Country of operations ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+
+                                                                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left">
+                            <div>
+                                <div><strong>Business name#</strong></div>
+                                <div>[ Industry ]</div>
+                                <div>[ Country of operations ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+                    </div>
+                </div>
+
+                <div class="span4 feature-col">
+                    <h2>New Members</h2>
+                    <div class="feature-col-items">
+                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left">
+                            <div>
+                                <div><strong>Member name#</strong></div>
+                                <div>[ Professional title ]</div>
+                                <div>[ Country ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+
+                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left">
+                            <div>
+                                <div><strong>Member name#</strong></div>
+                                <div>[ Professional title ]</div>
+                                <div>[ Country ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+
+                                                                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left">
+                            <div>
+                                <div><strong>Member name#</strong></div>
+                                <div>[ Professional title ]</div>
+                                <div>[ Country ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+                    </div>
+                </div>
+
+                <div class="span4 feature-col">
+                    <h2>News & Events</h2>
+                    <div class="feature-col-items">
+                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left">
+                            <div>
+                                <div><strong>Qatar Frienship Fund announces four new projects</strong></div>
+                                <div>[ MM.DD.YY ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+
+                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-events.png" alt="" align="left">
+                            <div>
+                                <div><strong>A year that brought hope 2013</strong></div>
+                                <div>[ MM.DD.YY ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+
+                                                                        <!-- feature item -->
+                        <div class="clearfix spacer">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left">
+                            <div>
+                                <div><strong>Five projects in the pipeline</strong></div>
+                                <div>[ MM.DD.YY ]</div>
+                            </div>
+                        </div>
+                        <!-- // feature item -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container join-our-group-block">
+        <div class="row-fluid spacer">
+            <div class="offset4 span4 center">
+                    <a href="/auth/#auth/register" class="btn btn-primary bidx-theme-colour-two"><?php _e('Join our group','bidxtheme');?></a>
+                    <span>Already have an account? Just <a href="/auth/#auth/login">login</a></span>
+            </div>
+        </div>
+
+    </div>
+    <!-- // container -->
+ <?php
+    }
+  ?>
+
+
+</div>
+<!-- // outer-content-container -->
+
+
+
+
+<!-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+     $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ARCHIVED CODE   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+     $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
+
+
+
+<script type="text/archive">
+
+
+    <div class="container">
 <?php
         if ( $authenticated )
         {
@@ -136,16 +325,16 @@
         if ( ! $authenticated )
         {
 ?>
-    	    <div class="entry-content">
-    	    	<?php echo do_shortcode( '[bidx app="group" view="group-intro"]' ); ?>
-        	</div>
-        	<div class="entry-content">
-        		<div class="row-fluid after-well" >
-    	    		<div class="span12 text-center">
-    	    			<a class="btn" href="/login?join=true"><?php _e('Join our group','bidxtheme')?></a> <?php printf(__('Already have an account? Just %1$s','bidxtheme'),'<a href="/login">login</a>');?>
-    	    		</div>
-        		</div>
-        	</div>
+            <div class="entry-content">
+                <?php echo do_shortcode( '[bidx app="group" view="group-intro"]' ); ?>
+            </div>
+            <div class="entry-content">
+                <div class="row-fluid after-well" >
+                    <div class="span12 text-center">
+                        <a class="btn" href="/login?join=true"><?php _e('Join our group','bidxtheme')?></a> <?php printf(__('Already have an account? Just %1$s','bidxtheme'),'<a href="/login">login</a>');?>
+                    </div>
+                </div>
+            </div>
 <?php
         }
         else
@@ -162,10 +351,10 @@
 
 
         <div class="entry-content">
-        	<div class="row-fluid">
-    			<div class="well">
-    				<h4><?php _e('News and Events','bidxtheme')?></h4>
-    				<div class="row-fluid">
+            <div class="row-fluid">
+                <div class="well">
+                    <h4><?php _e('News and Events','bidxtheme')?></h4>
+                    <div class="row-fluid">
 <?php
                     $args=array(
                       'post_type' => 'post',
@@ -181,31 +370,31 @@
                         {
                             $my_query->the_post();
 ?>
-                			<div class="span6 ">
-                				<div class="media member-thumb img-rounded">
-                  					<a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+                            <div class="span6 ">
+                                <div class="media member-thumb img-rounded">
+                                    <a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
 <?php
-                					if ( has_post_thumbnail() )
+                                    if ( has_post_thumbnail() )
                                     {
-                  						$size = array(100,100);
-                  						$atts = array('data-src' => 'holder.js/50x50/social/auto/text:News',
-                  									  'class' => 'media-object img-rounded');
-                  						the_post_thumbnail($size, $atts);
-                  					}
-                  					else
+                                        $size = array(100,100);
+                                        $atts = array('data-src' => 'holder.js/50x50/social/auto/text:News',
+                                                      'class' => 'media-object img-rounded');
+                                        the_post_thumbnail($size, $atts);
+                                    }
+                                    else
                                     {
 ?>
-	       					          <img data-src="holder.js/50x50/social/auto/text:None" class="media-object img-rounded" />
+                                      <img data-src="holder.js/50x50/social/auto/text:None" class="media-object img-rounded" />
 <?php
                                     }
 ?>
-                					</a>
-                					<div class="media-body centering">
-                						<h4><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h4>
-                						<p><?php the_excerpt(); ?></p>
-                					</div>
-                				</div>
-                			</div>
+                                    </a>
+                                    <div class="media-body centering">
+                                        <h4><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h4>
+                                        <p><?php the_excerpt(); ?></p>
+                                    </div>
+                                </div>
+                            </div>
 <?php
                         }
                     }
@@ -224,4 +413,4 @@
     <!-- // container -->
 
 </div>
-<!-- // outer-content-container -->
+</script>
