@@ -51,11 +51,14 @@
         ,   emptyClass:             "empty"
         ,   listId:                 null
 
+        ,   defaultZoom:            12
+
         ,   showMap:                true
         ,   initiallyShowMap:       false
 
         ,   setMarkers:             true
-        ,   drawCircle:             true
+        ,   drawCircle:             false
+        ,   showReach:              true
 
         ,   initialCenter:
             {
@@ -92,6 +95,8 @@
 
             ,   locationData:           null
             }
+
+        ,   reachChanged:          function( reach ) {}
         }
 
     ,   _create: function( params )
@@ -126,6 +131,13 @@
 
             state.autoComplete.bindTo( "bounds", state.map );
 
+            google.maps.event.addListener( state.map, "zoom_changed"
+            ,   function()
+                {
+                    bidx.utils.log( "zoom_changed", state.map.getZoom() ) ;
+                }
+            );
+
             google.maps.event.addListener(
                 state.autoComplete
             ,   "place_changed"
@@ -137,17 +149,17 @@
                 }
             );
 
-            $el.bind( "click", function()
+            // Inject a reach indicator in the DOM?
+            //
+            if ( options.drawCircle && options.showReach )
             {
-                widget._deleteOverlays();
-            } );
-
-            if ( options.showMap )
-            {
-                $el.focus( function()
+                state.$reach = $( "<p />",
                 {
-                    widget.showMap();
-                } );
+                    "id":           "reach-" + state.id
+                ,   "class":        "reach"
+                } ).hide();
+
+                $el.after( state.$reach );
             }
 
             if ( options.initiallyShowMap )
@@ -174,34 +186,47 @@
         {
             var widget      = this
             ,   options     = widget.options
-            ,   state       = options.state
+            ;
+
+            bidx.utils.log( "[bidx-location] setLocationData", location );
+
+            widget._updateLocationData( location );
+            widget.showMap();
+        }
+
+    ,   _drawLocationData: function()
+        {
+            var widget          = this
+            ,   options         = widget.options
+            ,   state           = options.state
+            ,   locationData    = state.locationData
             ,   center
             ,   arCoords
             ;
 
+            bidx.utils.log( "[bidx-location] _drawLocationData" );
+
             widget._deleteOverlays();
-            widget._updateLocationData( location );
 
             // Determine the center using the coordinates of the location
             //
-            if ( location.coordinates )
+            if ( locationData.coordinates )
             {
-                arCoords = location.coordinates.split( "," );
+                arCoords = locationData.coordinates.split( "," );
 
                 center = new google.maps.LatLng( arCoords[ 0 ], arCoords[ 1 ] );
-
                 state.map.setCenter( center );
 
                 if ( options.setMarkers )
                 {
-                    widget._drawMarker( center, location.reach );
+                    widget._drawMarker( center, locationData.reach );
                 }
             }
             else
             {
                 // No coordinates! Geocode it? Not really having a proper exit for this... :(
                 //
-                bidx.utils.error( "[bidx-location] SetLocationData called for a location without coordinates" );
+                bidx.utils.error( "[bidx-location] _drawLocationData called for a location without coordinates", locationData );
             }
         }
 
@@ -213,19 +238,77 @@
             ,   state       = options.state
             ;
 
+            bidx.utils.log( "[bidx-location] showMap" );
+
             state.$map.fadeIn( "fast", function()
             {
                 google.maps.event.trigger( state.map, "resize" );
+
+                widget._drawLocationData();
+
+                if ( state.$reach && state.$reach.length )
+                {
+                    state.$reach.show();
+                }
+
+                if ( cb )
+                {
+                    cb();
+                }
             } );
+        }
+
+        /**
+        in case 250px
+
+        reach   = zoom
+        15      = 10
+        30      = 9
+        60      = 8
+        120     = 7
+        240     = 6
+        480     = 5
+        960     = 4
+        */
+    ,   _getZoomForReach: function( reach )
+        {
+            var widget          = this
+            ,   options         = widget.options
+            ;
+
+            function fn( x )
+            {
+                var result;
+
+                if ( x <= 15 )
+                {
+                    result = 0;
+                }
+                else
+                {
+                    result = fn( Math.ceil( x / 2 ) ) + 1;
+                }
+
+                if ( result > 10 )
+                {
+                    result = 10;
+                }
+
+                return result;
+            }
+
+            return 10 - fn( reach );
         }
 
         // Update the internal administration of the set location
         //
     ,   _updateLocationData: function( data, merge )
         {
-            var widget      = this
-            ,   options     = widget.options
-            ,   state       = options.state
+            var widget          = this
+            ,   options         = widget.options
+            ,   state           = options.state
+            ,   locationData    = state.locationData || {}
+            ,   oldReach        = locationData.reach
             ;
 
             if ( !data )
@@ -239,6 +322,36 @@
             else
             {
                 state.locationData = data;
+
+                if ( !state.locationData.reach && oldReach )
+                {
+                    state.locationData.reach = oldReach;
+                }
+            }
+
+            bidx.utils.log( "[bidx-location] _updateLocationData", data, "merge?", merge, "result", state.locationData, state.locationData.reach, oldReach );
+
+            // Did the reach change? Notify the outside world
+            //
+            if ( state.locationData.reach !== oldReach )
+            {
+                // Reach will change, to what level are we going to zoom?
+                //
+                options.reachChanged( state.locationData.reach );
+
+                state.map.setZoom( widget._getZoomForReach( state.locationData.reach ));
+
+                if ( options.showReach )
+                {
+                    if ( state.locationData.reach )
+                    {
+                        state.$reach.text( "Reach: " + state.locationData.reach.toFixed( 1 ) + " km from center" ).show();
+                    }
+                    else
+                    {
+                        state.$reach.hide();
+                    }
+                }
             }
         }
 
@@ -254,8 +367,11 @@
             ,   $li
             ;
 
+            bidx.utils.log( "[bidx-location] _placeChanged", place );
+
             // Reset stored location data
             //
+            widget._deleteOverlays();
             widget._updateLocationData();
             $el.removeClass();
 
@@ -275,15 +391,8 @@
 
             // If the place has a geometry, then present it on a map.
             //
-            if ( place.geometry.viewport )
-            {
-                state.map.fitBounds( place.geometry.viewport );
-            }
-            else
-            {
-                state.map.setCenter( place.geometry.location );
-                state.map.setZoom( 17 );  // Why 17? Because it looks good.
-            }
+            state.map.setCenter( place.geometry.location );
+            state.map.setZoom( options.defaultZoom );
 
             // Should we list / show the results?
             //
@@ -351,6 +460,11 @@
             {
                 widget._drawMarker( place.geometry.location );
             }
+
+            if ( options.showMap )
+            {
+                widget.showMap();
+            }
         }
 
     ,   _drawMarker: function( position, reach )
@@ -364,6 +478,34 @@
             ,   image
             ;
 
+            function _updateCenter( latLng )
+            {
+                state.geocoder.geocode(
+                    {
+                        latLng:  latLng
+                    }
+                ,   function( responses )
+                    {
+                        var location;
+
+                        if ( responses && responses.length > 0 )
+                        {
+                            // Set the formatted address value in the input[type='text']
+                            //
+                            $el.val( responses[ 0 ].formatted_address );
+
+                            // update locationdata
+                            //
+                            location = _parseGooglePlaceIntoBidx( responses[ 0 ] );
+
+                            widget._updateLocationData( location );
+                        }
+                    }
+                );
+            }
+
+            bidx.utils.log( "[bidx-location] _drawMarker position", position, "reach", reach );
+
             marker = new google.maps.Marker(
             {
                 map:            state.map
@@ -375,6 +517,19 @@
 
             marker.setPosition( position );
             marker.setVisible( true );
+
+            // The circle as a whole can be dragged
+            //
+            google.maps.event.addListener( marker, "dragend", function()
+            {
+                var pos         = marker.position
+                ,   latlng      = new google.maps.LatLng( pos.lat(), pos.lng() )
+                ;
+
+                bidx.utils.log( "[bidx-location] dragend", latlng );
+
+                _updateCenter( latlng );
+            } );
 
             // If requested, add circle around marker
             //
@@ -391,12 +546,37 @@
                 ,   radius:             reach * 1000 || 1693
                 ,   fillColor:          "#69E853"
                 ,   editable:           true
-                ,   dragable:           false
+                ,   draggable:          false
                 ,   radius_changed:     function()
                     {
                         var radius = this.getRadius() / 1000;
 
+                        bidx.utils.log( "[bidx-location] radius_changed", radius );
+
                         widget._updateLocationData( { reach: radius }, true );
+                    }
+                ,   center_changed:     function()
+                    {
+                        bidx.utils.log( "center_changed this", this );
+
+                        if ( !this.centerChanges )
+                        {
+                            this.centerChanges = 1;
+                            return;
+                        }
+
+                        if ( this.updateCenterTimer )
+                        {
+                            clearTimeout( this.updateCenterTimer );
+                        }
+
+                        this.updateCenterTimer = setTimeout( function()
+                        {
+                            var latLng = circle.getCenter();
+
+                            bidx.utils.log( "[bidx-location] center_changed", latLng );
+                            _updateCenter( latLng );
+                        }, 500 );
                     }
                 } );
 
@@ -410,40 +590,6 @@
                 // might be changed in the radius_changed callback on the circle
                 //
                 widget._updateLocationData( { reach: circle.getRadius() / 1000 }, true );
-
-                // The circle as a whole can be dragged
-                //
-                google.maps.event.addListener( marker, "dragend", function()
-                {
-                    var pos         = marker.position
-                    ,   latlng      = new google.maps.LatLng( pos.lat(), pos.lng() )
-                    ;
-
-                    state.geocoder.geocode(
-                        {
-                            latLng:  latlng
-                        }
-                    ,   function( responses )
-                        {
-                            var location;
-
-                            if ( responses && responses.length > 0 )
-                            {
-                                // Set the formatted address value in the input[type='text']
-                                //
-                                $el.val( responses[ 0 ].formatted_address );
-
-                                // update locationdata
-                                //
-                                location = _parseGooglePlaceIntoBidx( responses[ 0 ] );
-
-                                widget._updateLocationData( location );
-                            }
-                        }
-                    );
-
-                    widget._updateLocationData( { reach: circle.getRadius() / 1000 }, true );
-                } );
             }
         }
 
@@ -522,8 +668,6 @@
         {
             result.coordinates = place.geometry.location.toUrlValue();
         }
-
-        bidx.utils.log( "[bidx-location] _parseGooglePlaceIntoBidx input", place, "result", result );
 
         return result;
     }

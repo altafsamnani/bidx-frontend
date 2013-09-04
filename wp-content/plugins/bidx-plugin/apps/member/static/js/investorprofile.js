@@ -423,6 +423,8 @@
         ,   groupClass  = "toggle-focusLocationType"
         ;
 
+bidx.utils.log( "$toggleFocusLocationType::change", value );
+
         // FlatUI's radio plugin fires the change event for all radio's, but since
         // we check on [checked] only the change event for the newly selected
         // radio does have a value at this point. We could have written the code
@@ -831,13 +833,32 @@
 
         if ( $focusLocationType.data( "radio" ) )
         {
+            bidx.utils.log( "using radio checkbox plugin to set reach data" );
+
             $focusLocationType.radio( "check" );
         }
         else
         {
+            bidx.utils.log( "using native checkbox prop() to set reach data" );
+
             $focusLocationType.prop( "checked", true );
+            $focusLocationType.trigger( "change" );
         }
 
+        // If we have a focusReach, feed the widget with the data so it can render the map, marker and circle
+        //
+        var $focusReach = $editForm.find( "[name='focusReach']" );
+
+        if ( focusLocation.reach )
+        {
+            $focusReach.bidx_location(
+                "setLocationData"
+            ,   {
+                    reach:          bidx.utils.getValue( member, "bidxInvestorProfile.focusReach.reach" )
+                ,   coordinates:    bidx.utils.getValue( member, "bidxInvestorProfile.focusReach.coordinates" )
+                }
+            );
+        }
     };
 
     // Add the attachment to the screen, by cloning the snippet and populating it
@@ -910,7 +931,7 @@
 
         // Collect the nested objects
         //
-        $.each( [ "institutionAddress", "references", "previousInvestments", "attachment", "focusReach" ], function()
+        $.each( [ "institutionAddress", "references", "previousInvestments", "attachment" ], function()
         {
             var nest                = this + "" // unbox that value!
             ,   i                   = 0
@@ -931,9 +952,7 @@
             }
 
             bidx.utils.setValue( member, memberPath, item );
-
             bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
-
 
             // Now collect the removed items, clear the properties and push them to the list so the API will delete them
             //
@@ -948,7 +967,7 @@
                 case "previousInvestments":     $reflowContainer = $previousInvestmentContainer;    break;
 
                 default:
-                    bidx.utils.error( "investorprofile, Unknown nest", nest );
+                    // NOOP
             }
 
             if ( $reflowContainer )
@@ -994,6 +1013,15 @@
         }
 
         bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", focusCity );
+
+        // Focus Reach is a special component. It's a widget with it's own API.
+        //
+        var $focusReach     = $editForm.find( "[name='focusReach']" )
+        ,   focusReach      = $focusReach.bidx_location( "getLocationData" ) || {}
+        ;
+
+        bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.coordinates",  focusReach.coordinates || "" );
+        bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.reach",        focusReach.reach || "" );
 
         // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol
         //
@@ -1150,7 +1178,10 @@
         // Instantiate file upload and location plugin
         //
         $editForm.find( "[data-type=fileUpload]" ).fileUpload( { "parentForm": $editForm[0] });
-        $editForm.find( "[data-type=location]"   ).location({});
+        $editForm.find( "[data-type=location]"   ).bidx_location(
+        {
+            drawCircle:                 true
+        } );
 
         if ( state === "create" )
         {
