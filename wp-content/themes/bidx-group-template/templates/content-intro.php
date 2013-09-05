@@ -270,8 +270,95 @@
 
 
 
-            <div class="span4 info-block">
-                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/info-column.png" alt="">
+            <div class="span4 side-bar">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h2>Create and grow</h2>
+
+                        <div class="call-to-action clearfix">
+                            <div class="pull-left">
+                                <div><strong>Become an entrepeneur</strong></div>
+                               <em>Create your business</em>
+                            </div>
+                            <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="fui-plus"></i>Create</a>
+                        </div>
+
+                        <div class="call-to-action clearfix">
+                            <div class="pull-left">
+                                <div><strong>Become an investor</strong></div>
+                                <em>Create your resources</em>
+                            </div>
+                            <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="fui-plus"></i>Invest</a>
+                        </div>
+
+                        <hr>
+
+                        <div class="call-to-action transparent clearfix">
+                            <div>
+                                <div class="pull-left">
+                                   <h2>People near you</h2>
+                                </div>
+                                <div class="btn-group pull-right bidx-btn-split">
+                                    <button class="btn">Show all</button>
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <!-- dropdown menu links -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <iframe width="100%" height="140" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=nl&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=Bidx&amp;sll=37.0625,-95.677068&amp;sspn=60.158465,135.263672&amp;t=h&amp;ie=UTF8&amp;hq=bidx+bv&amp;hnear=De+Ruijterkade,+Amsterdam,+Nederland&amp;ll=52.37787,4.905348&amp;spn=0.006295,0.014329&amp;output=embed"></iframe>
+                            <span class="label bidx-label-member">Entrepeneur</span>
+                            <span class="label bidx-label-entrepeneur">Entrepeneur</span>
+                            <span class="label bidx-label-investor">Entrepeneur</span>
+                        </div>
+
+                        <hr>
+
+
+                        <div class="call-to-action clearfix">
+                            <div class="pull-left ">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
+                            </div>
+                            <div class="pull-right">
+                                <div><strong>Tagline group goes here.</strong></div>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="fui-plus-white-transparent"></i></span>join group</button>
+                            </div>
+                        </div>
+                        <div class="call-to-action clearfix">
+                            <div class="pull-left ">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
+                            </div>
+                            <div class="pull-right">
+                                <div><strong>Tagline group goes here.</strong></div>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="fui-plus-white-transparent"></i></span>join group</button>
+                            </div>
+                        </div>
+                        <div class="call-to-action clearfix">
+                            <div class="pull-left ">
+                                <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
+                            </div>
+                            <div class="pull-right">
+                                <div><strong>Tagline group goes here.</strong></div>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="fui-plus-white-transparent"></i></span>join group</button>
+                            </div>
+                        </div>
+
+
+                        <div class="call-to-action transparent clearfix">
+                            <div class="pull-left">
+                                <a href="">Create a group</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="">Search for other groups</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
             </div>
         </div>
 

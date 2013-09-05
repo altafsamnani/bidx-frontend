@@ -18,7 +18,7 @@ Company: bidX;
 
         .bidx .bidx-theme-colour-one,
         .bidx .bidx-theme-colour-one:hover {
-            background-color:           #be2025;    /* background-color one */
+            background-color:           #BE2025;    /* background-color one */
         }
 
         .bidx  .bidx-theme-colour-two,
@@ -42,7 +42,7 @@ Company: bidX;
         header.navbar .nav > li.active > a,
         header.navbar .nav > li.active > a:hover,
         header.navbar .nav > li.active > a:focus {
-            color:                      #be2025;    /* text color one */
+            color:                      #BE2025;    /* text color one */
         }
 
     /* end element overwrites */
