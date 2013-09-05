@@ -33,7 +33,8 @@ class auth {
         //$deps = $this->getWidgetJsDependency('auth');
         //$deps = array('bootstrap');
 		wp_register_script( 'auth', plugins_url( 'static/js/auth.js', __FILE__ ), self::$deps, '20130501', TRUE );
-		wp_register_style( 'auth', plugins_url( 'static/css/auth.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
+		wp_register_style( 'auth', plugins_url( 'static/css/auth.css', __FILE__ ), array(), '20130501', 'all' );
+        wp_enqueue_style( 'auth' );
 	}
 
 	/**
