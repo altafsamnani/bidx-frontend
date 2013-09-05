@@ -61,6 +61,10 @@
 ?>
             <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
                 <img class="img" src="<?php echo $img[0] ?>" />
+<?php
+                if ( !empty($image -> post_content) )
+                {
+ ?>
                 <div class="outer-carousel-control-container">
                     <div class="container">
                         <div class="carousel-caption img-rounded ">
@@ -71,6 +75,9 @@
                         </div>
                     </div>
                 </div>
+<?php
+                }
+?>
             </div>
 <?php
         }
