@@ -303,7 +303,6 @@
 		return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
 	}
 	else if(typeof method === 'object' || !method) {
-		console.log(that);
 		return methods.init.apply(that, arguments);
 	}
 	else {
