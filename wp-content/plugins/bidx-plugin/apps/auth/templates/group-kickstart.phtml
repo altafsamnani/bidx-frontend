@@ -5,7 +5,7 @@ if ( is_user_logged_in() ) {
 	<h3><?php _e('Not available!','bidxplugin');?></h3>
 	<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="Logout"><?php _e('Logout','bidxplugin');?></a> <?php _e('to use','bidxplugin');?>
 </div>
-<?php 
+<?php
 } else {
 ?>
 <div class="signup span4 well">
@@ -22,7 +22,7 @@ if ( is_user_logged_in() ) {
 		</div>
 		<a href="#" class="btn btn-success jsCreateGroup"><?php _e('Create your group','bidxplugin');?></a>
 	</form>
-	
+
 	<div class="group-creation-progress">
 		<p class="lead"><?php _e('Your group is being created','bidxplugin');?></p>
 		<div class="loader"></div>
@@ -63,7 +63,7 @@ if ( is_user_logged_in() ) {
 	    					$(".group-creation-progress").append(data.text);
 	    				}
 	    			}
-	    			
+
 	    		});
 
 	    		(function() {
@@ -93,6 +93,6 @@ if ( is_user_logged_in() ) {
 			});
     </script>
 </div>
-<?php 
+<?php
 }
 ?>

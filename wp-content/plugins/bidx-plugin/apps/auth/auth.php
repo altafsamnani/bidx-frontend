@@ -54,6 +54,7 @@ class auth {
         // NOTE: because of changes in this App setup, the code below should be revised if Auth is used as a widget.
         // Default the $command is currently 'views' which holds all the views (login, password reset and register)
         //Set Redirect Params
+
         $view->redirectTo = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : NULL ;
 
        // echo $redirectTo;exit;

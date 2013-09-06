@@ -41,12 +41,9 @@
 		*/
 		init : function(options) {
 
-			if ( this.length === 0 ) {
-				alert( "Root element of form not found. Was a correct selector being provided? It doesn't match any elements..." );
-				return false;
-			}
 
-			if(this.prop("tagName").toLowerCase() !== "form") {
+
+			if( this.prop("tagName") && this.prop("tagName").toLowerCase() !== "form") {
 				alert("Please use this form plugin on a form tag only");
 				return false;
 			}
@@ -306,7 +303,8 @@
 		return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
 	}
 	else if(typeof method === 'object' || !method) {
-		return methods.init.apply(this, arguments);
+		console.log(that);
+		return methods.init.apply(that, arguments);
 	}
 	else {
 		$.error( 'Method ' +  method + ' does not exist on jQuery Form' );
