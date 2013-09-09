@@ -4,8 +4,7 @@
     $entities = $sessionData->data->wp->entities;
 
     $authenticated=false;
-    if ($sessionData->authenticated == 'true')
-    {
+    if ($sessionData->authenticated == 'true') {
         $authenticated=true;
     }
 ?>
@@ -19,25 +18,23 @@
     <div id="myCarousel" class="carousel slide">
 <?php
     $images = get_children(
-    array(
-    'post_parent' => $post->ID,
-    'post_status' => 'inherit',
-    'post_type' => 'attachment',
-    'post_mime_type' => 'image',
-    'order' => 'ASC',
-    'orderby' => 'menu_order' )
+        array(
+        'post_parent' => $post->ID,
+        'post_status' => 'inherit',
+        'post_type' => 'attachment',
+        'post_mime_type' => 'image',
+        'order' => 'ASC',
+        'orderby' => 'menu_order' )
     );
 
-    if ( count( $images ) > 0 )
-    {
+    if ( count( $images ) > 0 ) {
 ?>
         <div class="outer-carousel-control-container">
             <div class="container">
                 <ol class="carousel-indicators">
 <?php
                 $count = 0;
-                foreach ( $images as $id => $image )
-                {
+                foreach ( $images as $id => $image ) {
 ?>
                     <li data-target="#myCarousel" data-slide-to="<?php echo $count ?>" <?php if ($count == 0) { ?>class="active" <?php } $count++; ?> ></li>
 <?php
@@ -55,15 +52,13 @@
         <div class="carousel-inner">
 <?php
         $count = 0;
-        foreach ( $images as $id => $image )
-        {
+        foreach ( $images as $id => $image ) {
             $img = wp_get_attachment_image_src( $image->ID, 400 );
 ?>
             <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
                 <img class="img" src="<?php echo $img[0] ?>" />
 <?php
-                if ( !empty($image -> post_content) )
-                {
+                if ( !empty($image -> post_content) ) {
  ?>
                 <div class="outer-carousel-control-container">
                     <div class="container">
@@ -93,12 +88,15 @@
 
 
 <?php
-    if ( $authenticated )
-    {
+    if ( $authenticated ) {
 ?>
-    <!-- logged in -->
+    <!-- #########################################################################
+                                logged in
+    ###########################################################################-->
     <div class="container">
         <div class="row-fluid">
+
+            <!-- CONTENT B;ock -->
             <div class="span8">
 
                 <!-- NEWS BLOCK -->
@@ -216,60 +214,61 @@
                         <span class="pull-right"><a href="">view all</a></span>
                     </div>
                     <div class="feature-block-items">
-                        <div class="row-fluid spacer">
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Member name#</strong></div>
-                                    <div>[ Professional title ]</div>
-                                    <div>[ Country ]</div>
-                                    <div><span class="label bidx-label-investor">Investor</span></div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Member name#</strong></div>
-                                    <div>[ Professional title ]</div>
-                                    <div>[ Country ]</div>
-                                    <div><span class="label bidx-label-member">Member</span></div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                        </div>
-                        <div class="row-fluid spacer">
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Member name#</strong></div>
-                                    <div>[ Professional title ]</div>
-                                    <div>[ Country ]</div>
-                                    <div><span class="label bidx-label-entrepeneur">Entrepeneur</span></div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Member name#</strong></div>
-                                    <div>[ Professional title ]</div>
-                                    <div>[ Country ]</div>
-                                    <div><span class="label bidx-label-member">Member</span></div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                        </div>
+                        <?php echo do_shortcode( '[bidx app="group" view="last-members"]' ); ?>
+                       <!--  <div class="row-fluid spacer">
+                           feature item
+                           <div class="span6">
+                               <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                               <div>
+                                   <div><strong>Member name#</strong></div>
+                                   <div>[ Professional title ]</div>
+                                   <div>[ Country ]</div>
+                                   <div><span class="label bidx-label-investor">Investor</span></div>
+                               </div>
+                           </div>
+                           // feature item
+                           feature item
+                           <div class="span6">
+                               <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                               <div>
+                                   <div><strong>Member name#</strong></div>
+                                   <div>[ Professional title ]</div>
+                                   <div>[ Country ]</div>
+                                   <div><span class="label bidx-label-member">Member</span></div>
+                               </div>
+                           </div>
+                           // feature item
+                       </div>
+                       <div class="row-fluid spacer">
+                           feature item
+                           <div class="span6">
+                               <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                               <div>
+                                   <div><strong>Member name#</strong></div>
+                                   <div>[ Professional title ]</div>
+                                   <div>[ Country ]</div>
+                                   <div><span class="label bidx-label-entrepeneur">Entrepeneur</span></div>
+                               </div>
+                           </div>
+                           // feature item
+                           feature item
+                           <div class="span6">
+                               <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                               <div>
+                                   <div><strong>Member name#</strong></div>
+                                   <div>[ Professional title ]</div>
+                                   <div>[ Country ]</div>
+                                   <div><span class="label bidx-label-member">Member</span></div>
+                               </div>
+                           </div>
+                           // feature item
+                       </div> -->
                     </div>
                 </div>
             </div>
 
 
-
+            <!-- SIDE BAR -->
             <div class="span4 side-bar">
                 <div class="row-fluid">
                     <div class="span12">
@@ -368,11 +367,11 @@
 
 
 <?php
-    }
-    else
-    {
+    } else {
  ?>
-     <!-- Not logged in -->
+    <!-- #########################################################################
+                                Not logged in
+    ###########################################################################-->
     <div class="container">
         <div class="row-fluid spacer">
             <div class="span6">
@@ -546,16 +545,14 @@
 
     <div class="container">
 <?php
-        if ( $authenticated )
-        {
+        if ( $authenticated ) {
 ?>
             <div class="span3">
 <?php
 
             // Create investor
             //
-            if ( !isset( $entities->bidxInvestorProfile ))
-            {
+            if ( !isset( $entities->bidxInvestorProfile )) {
 ?>
                 <div class="well">
                     <h3><?php _e('Become an investor','bidxtheme')?></h3>
@@ -573,8 +570,7 @@
 
             // Create entrepreneur
             //
-            if ( !isset( $entities->bidxEntrepreneurProfile ))
-            {
+            if ( !isset( $entities->bidxEntrepreneurProfile )) {
 ?>
                 <div class="well">
                     <h3><?php _e('Become an entrepreneur')?></h3>
@@ -599,8 +595,7 @@
 
 
 <?php
-        if ( ! $authenticated )
-        {
+        if ( ! $authenticated ) {
 ?>
             <div class="entry-content">
                 <?php echo do_shortcode( '[bidx app="group" view="group-intro"]' ); ?>
@@ -613,9 +608,7 @@
                 </div>
             </div>
 <?php
-        }
-        else
-        {
+        } else {
             // Logged in but not joined this group
             //
 ?>
@@ -641,25 +634,20 @@
                     $my_query = null;
                     $my_query = new WP_Query($args);
 
-                    if( $my_query->have_posts() )
-                    {
-                        while ( $my_query->have_posts() )
-                        {
+                    if( $my_query->have_posts() ) {
+                        while ( $my_query->have_posts() ) {
                             $my_query->the_post();
 ?>
                             <div class="span6 ">
                                 <div class="media member-thumb img-rounded">
                                     <a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
 <?php
-                                    if ( has_post_thumbnail() )
-                                    {
+                                    if ( has_post_thumbnail() ) {
                                         $size = array(100,100);
                                         $atts = array('data-src' => 'holder.js/50x50/social/auto/text:News',
                                                       'class' => 'media-object img-rounded');
                                         the_post_thumbnail($size, $atts);
-                                    }
-                                    else
-                                    {
+                                    } else {
 ?>
                                       <img data-src="holder.js/50x50/social/auto/text:None" class="media-object img-rounded" />
 <?php
@@ -683,6 +671,7 @@
         </div>
 
         <div class="entry-content group-members">
+
             <?php echo do_shortcode( '[bidx app="group" view="last-members"]' ); ?>
         </div>
 

@@ -206,6 +206,7 @@ if ($sessionData->authenticated == 'true') {
 		</div>
 
 	    <div class="entry-content group-members">
+
 		<?php echo do_shortcode( '[bidx app="group" view="last-members"]' ); ?>
 		</div>
 
