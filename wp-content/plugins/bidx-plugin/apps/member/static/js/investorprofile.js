@@ -363,11 +363,18 @@
 
                     $.each( fields, function( idx, f )
                     {
+                        var item;
+
                         if ( isArray )
                         {
                             // TODO: itterate...
                             //
-                            _setElementValue( data[ fieldPathParts[1] ][0], f, newPrefix );
+                            item = data[ fieldPathParts[ 1 ] ];
+
+                            if ( item )
+                            {
+                                _setElementValue( item[0], f, newPrefix );
+                            }
                         }
                         else
                         {
@@ -1051,12 +1058,12 @@
 
         if ( focusLocationType !== "country" )
         {
-            bidx.utils.setValue( member, "bidxInvestorProfile.focusCountry", [] );
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusCountry", null );
         }
 
         if ( focusLocationType !== "city" )
         {
-            bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", [] );
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", null );
         }
 
         if ( focusLocationType !== "reach" )
