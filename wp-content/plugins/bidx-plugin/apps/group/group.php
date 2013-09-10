@@ -37,7 +37,6 @@ class group {
 	 * @param $atts attributes from the shorttag
 	 */
 	function load($atts) {
-
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/group/templates/' );
@@ -46,14 +45,19 @@ class group {
 		//2. Service Group
 		require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
 		$groupSvc = new GroupService( );
-		
+
 		// 3. Determine the view needed
 		$command = $atts['view'];
 
 		switch ( $command ) {
 			case "last-members" :
+
+				$view->span = isset($atts["span"]) ? $atts["span"] : "";
 				$view->members = $groupSvc->getLatestMembers(  );
 				return $view->render( 'last-members.phtml' );
+			case "latest-news" :
+				$view->span = isset($atts["span"]) ? $atts["span"] : "";
+				return $view->render( 'lastest-news.phtml' );
 			case "list-groups" :
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-list.phtml' );

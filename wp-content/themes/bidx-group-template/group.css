@@ -30,6 +30,10 @@ Company: bidX;
             background-color:           #f6f0e8;    /* background-color three */
         }
 
+        .bidx .bidx-theme-colour-footer {
+            background-color:           #34495e;
+        }
+
 
 
     /* End addon classes */

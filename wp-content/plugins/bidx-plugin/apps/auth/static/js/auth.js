@@ -25,7 +25,8 @@
         //
         $frmLogin.validate(
         {
-            rules:
+             debug:  false
+        ,    rules:
             {
                 "log":
                 {
@@ -68,7 +69,8 @@
         //
         $frmPasswordReset.validate(
         {
-            rules:
+             debug:  false
+        ,    rules:
             {
                 "username":
                 {
@@ -108,15 +110,16 @@
         $frmRegister.form(
         {
                 errorClass : 'error',
-                enablePlugins: [ 'location','countryAutocomplete' ]
+                enablePlugins: [ 'location' ]
         } );
 
         // set validation and submitHandler
         //
         $frmRegister.validate(
         {
-            ignore: ":hidden",
-            rules:
+            ignore: ":hidden"
+        ,   debug:  false
+        ,   rules:
             {
                 "personalDetails.firstName":
                 {
@@ -132,7 +135,6 @@
                 ,   email:                  true
                 ,   remoteBidxApi:
                     {
-                        //cb:                 _validateUsernameApi
                         url:                "validateUsername.fetch"
 
                     }

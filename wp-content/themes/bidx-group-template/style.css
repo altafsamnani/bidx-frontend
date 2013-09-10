@@ -148,8 +148,8 @@ Company: bidX;
     .btn.btn-bidx-transparent-circle .fui-plus-white-transparent {
         margin:                     0 6px;
         position:                   relative;
-        top:                        0;
-        left:                       -5px;
+        top:                        4px;
+        left:                      -2px;
         vertical-align:             top;
         display:                    inline-block;
         zoom:                       1;
@@ -532,11 +532,7 @@ Company: bidX;
 
     /* end searchbox */
 
-    /* header */
 
-
-
-    /* end header*/
 
 
 
@@ -1705,27 +1701,28 @@ form .row-fluid .input-prepend {
 
         /* content */
 
-        .outer-content-container {
+        .bidx.home .outer-content-container {
             padding-top:                            114px;
         }
-        .carousel .outer-carousel-control-container,
-        .carousel .carousel-inner .outer-carousel-control-container  {
+
+        .bidx.home .carousel .outer-carousel-control-container,
+        .bidx.home .carousel .carousel-inner .outer-carousel-control-container  {
             position:                               absolute;
             height:                                 100%;
             width:                                  100%;
             top:                                    0;
             left:                                   0;
         }
-        .carousel  .container {
+        .bidx.home .carousel  .container {
             position:                               relative;
             height:                                 100%;
         }
-        .carousel .carousel-control {
+        .bidx.home .carousel .carousel-control {
             z-index:                                999;
             line-height:                            26px;
         }
 
-        .carousel .carousel-caption {
+        .bidx.home .carousel .carousel-caption {
 
 
             padding:                                0px;
@@ -1770,6 +1767,7 @@ form .row-fluid .input-prepend {
                     color:                              #fff;
                     font-size:                          14px;
                 }
+
             .bidx.home .feature-block-items {
                 border:                                 1px solid #cccccc;
                 border-top:                             none;
@@ -1777,6 +1775,20 @@ form .row-fluid .input-prepend {
                 -moz-border-radius:                     0 0 4px 4px;
                 border-radius:                          0 0 4px 4px;
                 padding:                                40px 20px 0 20px;
+            }
+
+            .bidx.home .feature-block-items .bidx-latest-members .span6,
+            .bidx.home .feature-block-items .bidx-latest-news .span6 {
+                margin-bottom:                          40px;
+            }
+            .bidx.home .feature-block-items .bidx-latest-members .span6:nth-child(odd),
+            .bidx.home .feature-block-items .bidx-latest-news .span6:nth-child(odd) {
+                margin-left:                            0;
+            }
+            .bidx.home.not-auth .feature-col-items .bidx-latest-members .span12,
+            .bidx.home.not-auth .feature-col-items .bidx-latest-news .span12 {
+                margin-left:                            0;
+                margin-bottom:                          40px;
             }
             .bidx.home .feature-block img {
                 border:                                 1px solid #d7d7d7;

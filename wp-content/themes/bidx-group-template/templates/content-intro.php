@@ -11,9 +11,10 @@
 
 
 <div class="outer-content-container">
+<div class="container">
 
-<?php echo bidx_get_status_msgs(); ?>
-
+    <?php echo bidx_get_status_msgs(); ?>
+</div>
     <!-- IMAGE Carousel -->
     <div id="myCarousel" class="carousel slide">
 <?php
@@ -101,50 +102,18 @@
 
                 <!-- NEWS BLOCK -->
                 <div class="feature-block spacer">
+
+
                     <div class="feature-block-header bidx-theme-colour-one">
-                        News & Events
-                        <span class="pull-right"><a href="">view all</a></span>
+                        <?php _e('News and Events','bidxtheme')?>
+                        <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
                     </div>
                     <div class="feature-block-items">
-                        <div class="row-fluid spacer">
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Qatar Frienship Fund announces four new projects</strong></div>
-                                    <div>[ MM.DD.YY ]</div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Five projects in the pipeline</strong></div>
-                                    <div>[ MM.DD.YY ]</div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                        </div>
-                        <div class="row-fluid spacer">
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-events.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>A year that brought hope, 2013</strong></div>
-                                    <div>[ MM.DD.YY ]</div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Why Masker is settings new global benchmarks</strong></div>
-                                    <div>[ MM.DD.YY ]</div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
+                        <div class="bidx-latest-news clearfix">
+
+                            <!-- Grab news -->
+                            <?php echo do_shortcode( '[bidx app="group" view="latest-news"]' ); ?>
+
                         </div>
                     </div>
                 </div>
@@ -152,34 +121,10 @@
                 <!-- BUSINESS BLOCK -->
                 <div class="feature-block spacer">
                     <div class="feature-block-header bidx-theme-colour-one">
-                        New Business
-                        <span class="pull-right"><a href="">view all</a></span>
+                        <?php _e('News Business','bidxtheme')?>
+                        <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
                     </div>
                     <div class="feature-block-items">
-                        <div class="row-fluid spacer">
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Business name#</strong></div>
-                                    <div>[ Industry ]</div>
-                                    <div>[ Country of operations ]</div>
-                                    <div>[ MM.DD.YY ]</div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Business name#</strong></div>
-                                    <div>[ Industry ]</div>
-                                    <div>[ Country of operations ]</div>
-                                    <div>[ MM.DD.YY ]</div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                        </div>
                         <div class="row-fluid spacer">
                             <!-- feature item -->
                             <div class="span6">
@@ -210,59 +155,15 @@
                 <!-- MEMBERS BLOCK -->
                 <div class="feature-block spacer">
                     <div class="feature-block-header bidx-theme-colour-one">
-                        New members in the group
-                        <span class="pull-right"><a href="">view all</a></span>
+                        <?php _e('New members in the group','bidxtheme')?>
+                        <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
                     </div>
                     <div class="feature-block-items">
+                        <div class="bidx-latest-members clearfix">
+                        <!-- Grab latests members -->
                         <?php echo do_shortcode( '[bidx app="group" view="last-members"]' ); ?>
-                       <!--  <div class="row-fluid spacer">
-                           feature item
-                           <div class="span6">
-                               <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
-                               <div>
-                                   <div><strong>Member name#</strong></div>
-                                   <div>[ Professional title ]</div>
-                                   <div>[ Country ]</div>
-                                   <div><span class="label bidx-label-investor">Investor</span></div>
-                               </div>
-                           </div>
-                           // feature item
-                           feature item
-                           <div class="span6">
-                               <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
-                               <div>
-                                   <div><strong>Member name#</strong></div>
-                                   <div>[ Professional title ]</div>
-                                   <div>[ Country ]</div>
-                                   <div><span class="label bidx-label-member">Member</span></div>
-                               </div>
-                           </div>
-                           // feature item
-                       </div>
-                       <div class="row-fluid spacer">
-                           feature item
-                           <div class="span6">
-                               <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
-                               <div>
-                                   <div><strong>Member name#</strong></div>
-                                   <div>[ Professional title ]</div>
-                                   <div>[ Country ]</div>
-                                   <div><span class="label bidx-label-entrepeneur">Entrepeneur</span></div>
-                               </div>
-                           </div>
-                           // feature item
-                           feature item
-                           <div class="span6">
-                               <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
-                               <div>
-                                   <div><strong>Member name#</strong></div>
-                                   <div>[ Professional title ]</div>
-                                   <div>[ Country ]</div>
-                                   <div><span class="label bidx-label-member">Member</span></div>
-                               </div>
-                           </div>
-                           // feature item
-                       </div> -->
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -439,73 +340,20 @@
                 <div class="span4 feature-col">
                     <h2>New Members</h2>
                     <div class="feature-col-items">
-                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left">
-                            <div>
-                                <div><strong>Member name#</strong></div>
-                                <div>[ Professional title ]</div>
-                                <div>[ Country ]</div>
-                            </div>
+                        <div class="bidx-latest-members clearfix">
+                            <!-- Grab latests members -->
+                            <?php echo do_shortcode( '[bidx app="group" view="last-members" span="12"]' ); ?>
                         </div>
-                        <!-- // feature item -->
-
-                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left">
-                            <div>
-                                <div><strong>Member name#</strong></div>
-                                <div>[ Professional title ]</div>
-                                <div>[ Country ]</div>
-                            </div>
-                        </div>
-                        <!-- // feature item -->
-
-                                                                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left">
-                            <div>
-                                <div><strong>Member name#</strong></div>
-                                <div>[ Professional title ]</div>
-                                <div>[ Country ]</div>
-                            </div>
-                        </div>
-                        <!-- // feature item -->
                     </div>
                 </div>
 
                 <div class="span4 feature-col">
                     <h2>News & Events</h2>
                     <div class="feature-col-items">
-                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left">
-                            <div>
-                                <div><strong>Qatar Frienship Fund announces four new projects</strong></div>
-                                <div>[ MM.DD.YY ]</div>
-                            </div>
+                        <div class="bidx-latest-news clearfix">
+                            <!-- Grab news -->
+                            <?php echo do_shortcode( '[bidx app="group" view="latest-news" span="12"]' ); ?>
                         </div>
-                        <!-- // feature item -->
-
-                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-events.png" alt="" align="left">
-                            <div>
-                                <div><strong>A year that brought hope 2013</strong></div>
-                                <div>[ MM.DD.YY ]</div>
-                            </div>
-                        </div>
-                        <!-- // feature item -->
-
-                                                                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left">
-                            <div>
-                                <div><strong>Five projects in the pipeline</strong></div>
-                                <div>[ MM.DD.YY ]</div>
-                            </div>
-                        </div>
-                        <!-- // feature item -->
                     </div>
                 </div>
 
@@ -620,7 +468,7 @@
 ?>
 
 
-        <div class="entry-content">
+   /*     <div class="entry-content">
             <div class="row-fluid">
                 <div class="well">
                     <h4><?php _e('News and Events','bidxtheme')?></h4>
@@ -669,7 +517,7 @@
                 </div>
             </div>
         </div>
-
+*/
         <div class="entry-content group-members">
 
             <?php echo do_shortcode( '[bidx app="group" view="last-members"]' ); ?>

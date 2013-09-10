@@ -32,6 +32,7 @@ class GroupService extends APIbridge {
   public function getLatestMembers( $group_id = null ) {
 
   	$result = $this -> getGroupDetails( $group_id );
+
   	if ( property_exists( $result, 'data' ) ) {
   		return $result -> data -> latestMembers;
   	}
@@ -49,8 +50,9 @@ class GroupService extends APIbridge {
    */
   public function getGroupDetails( $group_id = null ) {
 
+
 	if ($group_id == null) {
-		if ( false === ( $result = get_transient( 'localgroup' ) ) ) {
+		//if ( false === ( $result = get_transient( 'localgroup' ) ) ) { //NOTE: according to Altaf we do not need this check??
 			// It wasn't there, so regenerate the data and save the transient
 // Outcommented in order to move to getting the group/[name] implementation
 // 			$session = BidxCommon :: $staticSession;
@@ -61,11 +63,13 @@ class GroupService extends APIbridge {
 // 				$this -> getLogger() -> trace( 'finding out id of ' . $session -> bidxGroupDomain );
 // 				$group_id = $this->getGroupId( $session -> bidxGroupDomain );
 // 			}
+      // new dBug(BidxCommon::get_bidx_subdomain());
+      // exit();
 			$result = $this->callBidxAPI( 'groups/' . BidxCommon::get_bidx_subdomain(), array(), 'GET' );
 
 
 			set_transient( 'localgroup', $result, 600 ); //10 minutes
-		}
+		//}
 	} else {
 		$result = $this->callBidxAPI( 'groups/' . $group_id, array(), 'GET' );
 	}

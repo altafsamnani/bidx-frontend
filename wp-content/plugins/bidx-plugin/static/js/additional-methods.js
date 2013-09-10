@@ -112,6 +112,7 @@
     //
     $.validator.addMethod( "remoteBidxApi", function( value, element, param )
     {
+
         var validator       = this
         ,   previous        = this.previousValue( element )
         ,   valid           = false
@@ -134,10 +135,10 @@
         // check if new value is the same as the previous value. In that case nothing changed so return valid
         //
         // NOTE: disabled check on previous because this cause an issue where the default message is set instead of the callback value
-/*        if ( previous.old === value )
+        if ( previous.old === value )
         {
             return previous.valid;
-        }*/
+        }
         // set new previous.old value
         //
         previous.old = value;
@@ -173,14 +174,14 @@
                         {
                             // following code is based on success handler of validator's remote call
                             //
-                            validator.formSubmitted;
-
+                            submitted                               = validator.formSubmitted;
                             valid                                   = true;
                             validator.prepareElement( element );
                             validator.formSubmitted                 = submitted;
                             validator.successList.push( element );
                             delete validator.invalid[ element.name ];
                             validator.showErrors();
+
                             // notify validator request has finished
                             //
                             previous.valid                          = valid;
