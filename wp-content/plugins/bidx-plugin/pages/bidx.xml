@@ -145,6 +145,14 @@
 			<content>[bidx app="media"]</content>
 		</post>
 
+		<post>
+			<post_id>18</post_id>
+			<name>businesssummary</name>
+			<title>Business Summary</title>
+			<mapping>^businesssummary/([^/]*)/?</mapping>
+			<content>[bidx app="businesssummary"]</content>
+		</post>
+
 	</posts>
 
 	<widgets>
