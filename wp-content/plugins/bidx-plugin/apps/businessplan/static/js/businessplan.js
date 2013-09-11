@@ -213,6 +213,6 @@
         window.bidx = {};
     }
 
-    window.bidx.businessSummary = app;
+    window.bidx._businessSummary = app;
 
 } ( jQuery ));
