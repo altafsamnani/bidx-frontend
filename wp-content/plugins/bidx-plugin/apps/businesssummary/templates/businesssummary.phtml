@@ -1,1 +1,273 @@
-businesssummary
+<?php
+
+$businessSummary    = $this->data;
+$progress           = trim ($businessSummary->rating->Completeness) . '%';
+
+$businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
+    ? $businessSummary->bidxMeta
+    : null;
+
+$canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
+$entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
+
+// To display Company Tab
+//
+$companyId = $this->exst ($businessSummary->company);
+
+// Default set of rowproperties
+//
+$viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label', 'class_value' => 'bidx-value', 'class_row' => '' );
+
+?>
+<div class="businessSummary" id="businessSummary">
+
+    <div class="pageHeader container">
+        <div class="row-fluid">
+            <div class="span4">
+                <h1>Business plan</h1>
+                <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
+            </div>
+
+            <div class="span4 completion">
+                <h2>Business completion</h2>
+                <div class="progress">
+                    <div style="width:<?php echo $progress ?>" class="bar"><?php echo $progress ?> completed</div>
+                </div>
+            </div>
+
+            <div class="span4 editControlsContainer">
+                <div class="editControls btn-group">
+
+                    <!-- SHOW -->
+                    <div class="view viewShow">
+
+<?php
+    if ( $canEdit ) {
+?>
+                        <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryBidxMeta->bidxEntityId; ?>"><?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+        if ( $entityStatus == 'DRAFT' ) {
+?>
+                        <a class="btn" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
+<?php
+        }
+    }
+?>
+                    </div>
+
+                    <!-- EDIT -->
+                    <div class="view viewEdit"></div>
+
+                </div>
+            </div>
+
+        </div>
+    </div><!-- /pageHeader -->
+
+
+    <div class="container">
+        <div class="accordion" id="businessSummaryAccordion">
+
+            <!-- General Overview -->
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-GeneralOverview"><?php _e('General overview','bidxplugin'); ?></a>
+                </div>
+                <div id="businessSummaryAccordion-GeneralOverview" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow">
+<?php
+                $rowValues = array (
+                    __('Business name','bidxplugin')
+                        => $this->exst($businessSummary->name),
+
+                    __('Describe your business in 15 words','bidxplugin')
+                        => $this->exst($businessSummary->slogan),
+
+                    __('Industry','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->industry), ', ', 'industry' ),
+
+                    __('Country of business','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' )
+                );
+                echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
+?>
+                        </div>
+
+                        <!-- LOAD -->
+                        <div class="view viewLoad">
+                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+                            edit
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /General Overview -->
+
+            <!-- About your business -->
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutYourBusiness"><?php _e('About the business','bidxplugin'); ?></a>
+                </div>
+                <div id="businessSummaryAccordion-AboutYourBusiness" class="accordion-body collapse">
+                    <div class="accordion-inner">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow">
+<?php
+                $rowValues = array (
+                    __('Summary of this business','bidxplugin')
+                        => $this->exst($businessSummary->summary),
+
+                    __('Reason for submission of business summary','bidxplugin')
+                        => $this->exst($businessSummary->reasonForSubmission),
+
+                    __('Percentage equity you currently retain','bidxplugin')
+                        => $this->exst($businessSummary->equityRetained),
+
+                    __('Finance needed','bidxplugin')
+                        => $this->exst($businessSummary->financingNeeded),
+
+                    __('Reason for financing','bidxplugin')
+                        => $this->exst($businessSummary->summaryFinancingNeeded)
+                );
+                echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
+?>
+                        </div>
+
+                        <!-- LOAD -->
+                        <div class="view viewLoad">
+                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+                            edit
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /About your business -->
+
+            <!-- About you & your team -->
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutYouAndYourTeam"><?php _e('About you & your team','bidxplugin'); ?></a>
+                </div>
+                <div id="businessSummaryAccordion-AboutYouAndYourTeam" class="accordion-body collapse">
+                    <div class="accordion-inner">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow">
+<?php
+                $rowValues = array (
+                    __('Role of entrepreneur in this business','bidxplugin')
+                        => $this->exst($businessSummary->personalRole),
+
+                    __('Expertise applicable to this business','bidxplugin')
+                        => $this->exst($businessSummary->personalDetails)
+                );
+                echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
+?>
+                        </div>
+
+                        <!-- LOAD -->
+                        <div class="view viewLoad">
+                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+                            edit
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /About you & your team -->
+
+            <!-- Financial details -->
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails">Financial Details</a>
+                </div>
+                <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse">
+                    <div class="accordion-inner">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow">
+                            show
+                        </div>
+
+                        <!-- LOAD -->
+                        <div class="view viewLoad">
+                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+                            edit
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /Financial details -->
+
+            <!-- Company details -->
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-CompanyDetails">Company Details</a>
+                </div>
+                <div id="businessSummaryAccordion-CompanyDetails" class="accordion-body collapse">
+                    <div class="accordion-inner">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow">
+                            show
+                        </div>
+
+                        <!-- LOAD -->
+                        <div class="view viewLoad">
+                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+                            edit
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /Company details -->
+
+            <!-- Documents -->
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-Documents">Documents</a>
+                </div>
+                <div id="businessSummaryAccordion-Documents" class="accordion-body collapse">
+                    <div class="accordion-inner">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow">
+                            show
+                        </div>
+
+                        <!-- LOAD -->
+                        <div class="view viewLoad">
+                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+                            edit
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /Documents -->
+
+        </div><!-- /#businessSummaryAccordion -->
+
+    </div><!-- /business summary content container -->
+
+</div><!-- /businesssummary -->

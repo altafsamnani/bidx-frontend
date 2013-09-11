@@ -1,0 +1,20 @@
+body.bidx-businesssummary .editControlsContainer {
+    position:                   relative;
+    min-height:                 40px;
+}
+
+body.bidx-businesssummary .editControlsContainer .editControls {
+    bottom:                     0;
+}
+
+body.bidx-businesssummary .pageHeader h2 {
+    font-size:                  13px;
+}
+
+body.bidx-businesssummary .pageHeader .progress {
+    margin-bottom:              0;
+}
+
+body.bidx-businesssummary .viewShow {
+    display:                    block;
+}
