@@ -1,7 +1,7 @@
 <?php
 $member = isset($this->data->member->displayName) ?  $this->data->member->displayName: NULL ;
 ?>
-<div class="block-odd">
+<div class="block-odd member">
     <div class="pageHeader clearfix">
       <div class="container clearfix">
         <h1 class="pull-left"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></h1>

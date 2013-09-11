@@ -987,13 +987,16 @@
                     ,   bidxData        = $removedItem.data( "bidxData" )
                     ;
 
-                    // Iterate over the properties and set all, but bidxMeta, to null
+                    // Iterate over the properties and set all, but bidxMeta, to null, except for array's, those must be set to an empty array...
                     //
                     $.each( bidxData, function( prop )
                     {
                         if ( prop !== "bidxMeta" )
                         {
-                            bidxData[ prop ] = null;
+                            bidxData[ prop ] = $.type( bidxData[ prop ] ) === "array"
+                                ? []
+                                : null
+                            ;
                         }
                     } );
 
@@ -1058,12 +1061,12 @@
 
         if ( focusLocationType !== "country" )
         {
-            bidx.utils.setValue( member, "bidxInvestorProfile.focusCountry", null );
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusCountry", [] );
         }
 
         if ( focusLocationType !== "city" )
         {
-            bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", null );
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", [] );
         }
 
         if ( focusLocationType !== "reach" )

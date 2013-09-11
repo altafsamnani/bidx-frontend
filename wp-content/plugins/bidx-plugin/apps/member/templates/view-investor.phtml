@@ -49,11 +49,11 @@ if ($investorDetails &&
         // Summary
         //
         $rowValues = array (__('Investor profile summary','bidxplugin') => $this->exst ($investorDetails->summary));
-        echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'label'));
+        echo $this->addRowsWithLabelBelow ('span12', 'span12 summary', $rowValues, array ('tag_label' => 'label'));
 
 ?>
         <div class="row-fluid">
-            <div class="span8">
+            <div class="span12">
 <?php
 
         // Investor type
@@ -66,14 +66,6 @@ if ($investorDetails &&
         $values = $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', ');
         $rowValues = array ( __('Investment types','bidxplugin') => $values);
         echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
-?>
-            </div>
-            <div class="span4"><!-- NOOP --></div>
-        </div>
-
-        <div class="row-fluid">
-            <div class="span8">
-<?php
 
         // A set of properties is only applicable to any other type than Angel or private
         //
@@ -121,34 +113,13 @@ if ($investorDetails &&
                 __('Enviromental impact','bidxplugin')   =>  $this->getMultiValues($this->exst ($investorDetails->focusEnvImpact), ', ','envImpact'),
                 __('Consumer type','bidxplugin')         =>  $this->getMultiValues($this->exst ($investorDetails->focusConsumerType), ', ','consumerType'),
                 __('Languages','bidxplugin')             =>  $this->getMultiValues($this->exst ($investorDetails->focusLanguage), ', ','language'),
-                __('Countries','bidxplugin')             =>  $this->getMultiValues($this->exst ($investorDetails->focusCountry), ', ','country'),
                 __('Stage of business','bidxplugin')     =>  $this->getMultiValues($this->exst ($investorDetails->focusStageBusiness), ', ','stageBusiness'),
                 __('Gender','bidxplugin')                =>  $this->getMultiValues($this->exst ($investorDetails->focusGender), ', ','gender'),
             );
-          
+
             foreach ( $multiValueProperties as $k => $v ) {
                 //$values = $this->getMultiValues($v, ', ');
                 $rowValues = array ( $k => $v);
-                echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
-            }
-
-            // The focusCity property exists of an array of objects having the following properties:
-            // - cityTown
-            // - country (optional)
-            //
-            // Convert the array of objects into a single array and make a row out of it
-            //
-            $focusCities = array();
-            if ($this->exst ($investorDetails->focusCity)) {
-
-                foreach ($investorDetails->focusCity as $focusCity ) {
-                    if ($this->exst ($focusCity->cityTown)) {
-                        $focusCities[] = $focusCity->cityTown;
-                    }
-                }
-
-                $rowValues = array( __('City','bidxplugin') => $this->getMultiValues( $focusCities, ', ' ) );
-
                 echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
 
@@ -169,8 +140,38 @@ if ($investorDetails &&
             echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
-            <div class="span4">
-                reach
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <h6>Reach</h6>
+<?php
+            // Reach
+            //
+            // - business says "there are one of three ways to specify reach"
+            // - api says "there are three ways of specifying reach"
+            //
+            // So we have to figure out which type this investor has picked.
+
+            // Focus country
+            //
+            $focusCountry = $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country');
+            $rowValues = array (__('Focus countries','bidxplugin') => $focusCountry);
+            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+
+            // Focus city
+            //
+            $focusCity = $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown');
+            $rowValues = array (__('Focus cities','bidxplugin') => $focusCity);
+            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+
+            // Focus reach
+            //
+            $focusReach = $this->exst($investorDetails->focusReach);
+            if ( $this->exst($focusReach->coordinates) && $this->exst($focusReach->coordinates) ) {
+
+            }
+?>
+
             </div>
         </div>
 <?php
