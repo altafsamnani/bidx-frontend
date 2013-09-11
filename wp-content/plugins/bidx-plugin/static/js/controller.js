@@ -21,7 +21,7 @@
     //
     function _showMainState( s )
     {
-        if ( s.match( /^(edit|create)/ ))
+        if ( s.match( /^(edit|create)/ ) && s !== "editBusinessSummary" )
         {
             $( "body" ).addClass( "bidx-edit" );
         }
@@ -126,7 +126,7 @@
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
 
-        ,   'editBusinessSummary(/:id)(/:part)(/:section)':     'editBusinessSummary'
+        ,   'editBusinessSummary(/:id)':                        'editBusinessSummary'
 
         ,   'auth(/:section)':                                  'auth'
 
@@ -250,9 +250,9 @@
             );
         }
 
-    ,   editBusinessSummary:    function( id, part, section )
+    ,   editBusinessSummary:    function( id )
         {
-            bidx.utils.log( "AppRouter::editBusinessSummary", id, part, section );
+            bidx.utils.log( "AppRouter::editBusinessSummary" );
 
             state   = "editBusinessSummary";
 
@@ -261,9 +261,7 @@
                 "businessSummary"
             ,   {
                     requestedState: "edit"
-                ,   section:        section
                 ,   id:             id
-                ,   part:           part
                 }
             );
         }
@@ -339,7 +337,7 @@
             {
                 // Bidx-business is handled differently
                 //
-                if ( !$( "body" ).hasClass( "bidx-business" ))
+                if ( !$( "body" ).hasClass( "bidx-business" ) && !$( "body" ).hasClass( "bidx-businesssummary" ))
                 {
                     $controls.empty();
                 }
