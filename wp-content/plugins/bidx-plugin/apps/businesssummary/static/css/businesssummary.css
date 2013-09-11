@@ -18,3 +18,14 @@ body.bidx-businesssummary .pageHeader .progress {
 body.bidx-businesssummary .viewShow {
     display:                    block;
 }
+
+body.bidx-businesssummary input[type=text],
+body.bidx-businesssummary textarea {
+
+    width:                      100%;
+    -webkit-box-sizing:         border-box;
+       -moz-box-sizing:         border-box;
+    line-height:                25px;
+    height:                     41px;
+
+}

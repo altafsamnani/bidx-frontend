@@ -103,7 +103,44 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- EDIT -->
                         <div class="view viewEdit">
-                            edit
+                            <form id="frmBusinessSummary-GeneralOverview">
+
+                                <!-- Name -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Business name','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <input type="text" name="name" placeholder="<?php _e('Business name','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+
+                                <!-- Slogan -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Describe your business in 15 words ( optional )','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <textarea type="text" name="slogan" placeholder="<?php _e('Please give a description of your business','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Industry -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="industry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Industry','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Country operation -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Country of business','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="countryOperation" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country of business','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -127,6 +164,9 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     __('Reason for submission of business summary','bidxplugin')
                         => $this->exst($businessSummary->reasonForSubmission),
 
+                    __('Social impact','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
+
                     __('Percentage equity you currently retain','bidxplugin')
                         => $this->exst($businessSummary->equityRetained),
 
@@ -147,7 +187,60 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- EDIT -->
                         <div class="view viewEdit">
-                            edit
+                            <form id="frmBusinessSummary-AboutYourBusiness">
+
+                                <!-- Summary -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Summary of this business','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <textarea type="text" name="summary" placeholder="<?php _e('Summary','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Reason For Submission -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <textarea type="text" name="reasonForSubmission" placeholder="<?php _e('Please give the reason for submission','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Social impact -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="socialImpact" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="socialImpact" placeholder="<?php _e('Social impact','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Equity Retained -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Percentage equity your currently retain ( optional )','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <input type="text" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+
+                                <!-- Finance Needed -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Finance needed','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <input type="text" name="financeNeeded" placeholder="<?php _e('Please give finance needed','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+
+                                <!-- Summary Financing Needed -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Why do you need financing? Describe in maximum 30 words ( optional )','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <textarea name="summaryFinancingNeeded" placeholder="<?php _e('Please give the reason you need financing','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
+
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -169,7 +262,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         => $this->exst($businessSummary->personalRole),
 
                     __('Expertise applicable to this business','bidxplugin')
-                        => $this->exst($businessSummary->personalDetails)
+                        => $this->exst($businessSummary->personalExpertise)
                 );
                 echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
 ?>
@@ -182,7 +275,25 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- EDIT -->
                         <div class="view viewEdit">
-                            edit
+                            <form id="frmBusinessSummary-AboutYouAndYourTeam">
+
+                                <!-- Personal Role -->
+                                <div class="control-group formfield">
+                                    <label class="control-label"><?php _e('Role of entrepreneur in this business (5 words)','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <input type="text" name="personalRole" placeholder="<?php _e('Please give role of entrepreneur in this business','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+
+                                <!-- Personal Expertise -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Please provide details of your expertise applicable to this business (30 words)','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <textarea name="personalExpertise" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
                 </div>
