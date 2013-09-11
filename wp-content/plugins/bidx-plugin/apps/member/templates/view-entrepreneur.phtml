@@ -111,7 +111,7 @@ if ($businessSummary) {
                 $countryVal = $this->getMultiValues ($this->exst ($businessSummary->countryOperation), ', ', 'country', 'country');
 
                 $joinLink = ((isset ($businessSummaryBidxMeta->bidxEntityId)) && $businessSummaryBidxMeta->bidxEntityId)
-                    ? "<a href='/business/" . $businessSummaryBidxMeta->bidxEntityId . "'>" . __('view more','bidxplugin') ."</a>"
+                    ? "<a href='/businesssummary/" . $businessSummaryBidxMeta->bidxEntityId . "'>" . __('view more','bidxplugin') ."</a>"
                     : '';
 
                 $rowValues = array ($businessSummary->slogan,
