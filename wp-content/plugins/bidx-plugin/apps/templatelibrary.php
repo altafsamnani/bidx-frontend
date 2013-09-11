@@ -340,6 +340,8 @@ class TemplateLibrary
      */
     public function addRowsWithLabelBelow ($gridLabel, $gridValue, $rowValues, $properties = array ())
     {
+        /** Class placed on the outer rows, defaults to the row-fluid from bootstrap **/
+        $classRow = (isset( $properties['class_row']) ? $properties['class_class']:'row-fluid');
 
         /** Class * */
         $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
@@ -357,26 +359,27 @@ class TemplateLibrary
         foreach ($rowValues as $label => $rowValue) {
             if ($rowValue && $rowValue != 'null') {
                 //Display Label
-                $rowHtml .= "<div class='row-fluid'>";
-                $rowHtml .= "<div class='" . $gridLabel . "'>";
+                $rowHtml .= $classRow   ? "<div class='" . $classRow . "'>"     : "";
+                $rowHtml .= $gridLabel  ? "<div class='" . $gridLabel . "'>"    : "";
+
                 $rowHtml .= "<$tagLabel " . $classLabel . $idLabel . "  > " . $label . " </$tagLabel>";
-                $rowHtml .= "</div>";
-                $rowHtml .= "</div>";
+                $rowHtml .= $gridLabel  ? "</div>" : "";
+                $rowHtml .= $classRow   ? "</div>" : "";
                 //Display Value
                 if (is_array ($rowValue)) {
                     foreach ($rowValue as $value) {
-                        $rowHtml .= "<div class='row-fluid'>";
-                        $rowHtml .= "<div class='" . $gridValue . "'>";
+                        $rowHtml .= $classRow   ? "<div class='" . $classRow . "'>"     : "";
+                        $rowHtml .= $gridLabel  ? "<div class='" . $gridValue . "'>"    : "";
                         $rowHtml .= "<$tagValue " . $classValue . $idValue . "  > " . $value . " </$tagValue>";
-                        $rowHtml .= "</div>";
-                        $rowHtml .= "</div>";
+                        $rowHtml .= $gridLabel  ? "</div>" : "";
+                        $rowHtml .= $classRow   ? "</div>" : "";
                     }
                 } else {
-                    $rowHtml .= "<div class='row-fluid'>";
-                    $rowHtml .= "<div class='" . $gridValue . "'>";
+                    $rowHtml .= $classRow   ? "<div class='" . $classRow . "'>"     : "";
+                    $rowHtml .= $gridLabel  ? "<div class='" . $gridValue . "'>"    : "";
                     $rowHtml .= "<$tagValue " . $classValue . " > " . $rowValue . " </$tagValue>";
-                    $rowHtml .= "</div>";
-                    $rowHtml .= "</div>";
+                    $rowHtml .= $gridLabel  ? "</div>" : "";
+                    $rowHtml .= $classRow   ? "</div>" : "";
                 }
             }
         }
