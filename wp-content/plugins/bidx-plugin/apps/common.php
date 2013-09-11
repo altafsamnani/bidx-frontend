@@ -58,18 +58,18 @@ class BidxCommon
         if (!$is_ajax) {
             // To check whther its login page or q= redirect already checked session.
             $isWordpress = $this->isWordpressPage ();
-       
+
             if (!$isWordpress) {
-         
+
                 //Start the session to store Bidx Session
                 $this->startSession ();//Starting sessin because we want to display in dashboard widget bidx services
-    
+
                 //If Bidx Cookie set do the following
                 if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
 
                     $sessionVars = $this->getSessionVariables ($subDomain);
-                 
+
                     if (!$sessionVars) { // If Session set dont do anything
                         $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
@@ -94,7 +94,7 @@ class BidxCommon
             }
 
         }
-    
+
         return;
     }
 
@@ -329,6 +329,21 @@ class BidxCommon
                     }
                     break;
 
+                case 'businesssummary':
+
+                    $businessSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
+
+                    if ($businessSummaryId) {
+                        $data->bidxBusinessSummary = $businessSummaryId;
+                        $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
+                        $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $businessSummaryId;
+                    } else {
+                        $redirect = 'auth'; //To redirect /member and not loggedin page to /login
+                        $statusMsgId = 1;
+                    }
+
+                    break;
+
                 case 'business':
 
                     $bpSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
@@ -389,7 +404,7 @@ class BidxCommon
          //Other than login page and no user authenticated redirect him Moved to api service
 
         switch ($uriString) {
-            
+
             case 'auth' :
                 if ($authenticated == 'true') {
                     $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/member' . $param;
@@ -427,7 +442,7 @@ class BidxCommon
                 }
                 break;
 
-            case 'wp-admin' :       // Group admin and wp-admin at that time only 
+            case 'wp-admin' :       // Group admin and wp-admin at that time only
                  if ($authenticated == 'false') {
 
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url);
@@ -476,7 +491,7 @@ class BidxCommon
             //$session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
             //$this->clearSessionFromParam ($session_id);
 
-        } 
+        }
         //Login to Wordpress if already session exists
 
         return $isWordpress;
@@ -513,7 +528,7 @@ class BidxCommon
             } else {
                 $userName = $groupName . 'groupmember';
             }
-        
+
             //If currently Logged in dont do anything
             if ($currentUser && isset ($currentUser->user_login) && $userName == $currentUser->user_login) {
 
