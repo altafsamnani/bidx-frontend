@@ -18,7 +18,7 @@ Company: bidX;
 
         .bidx .bidx-theme-colour-one,
         .bidx .bidx-theme-colour-one:hover {
-            background-color:           #339ce0 ;    /* background-color one */ /* temporary important until this style is placed inline */
+            background-color:           #339ce0 ;    /* background-color one */
         }
 
         .bidx  .bidx-theme-colour-two,
@@ -30,6 +30,9 @@ Company: bidX;
             background-color:           #f6f0e8;    /* background-color three */
         }
 
+        .bidx .bidx-theme-colour-header {
+            background-color:           #fff ;
+        }
         .bidx .bidx-theme-colour-footer {
             background-color:           #333333;
         }
