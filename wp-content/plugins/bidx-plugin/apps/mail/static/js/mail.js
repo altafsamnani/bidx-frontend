@@ -385,11 +385,11 @@
 
             if( $this.attr( "href" ) === window.location.hash )
             {
-                $this.addClass( "btn-primary" );
+                $this.addClass( "active" );
             }
             else
             {
-                $this.removeClass( "btn-primary" );
+                $this.removeClass( "active" );
             }
 
 

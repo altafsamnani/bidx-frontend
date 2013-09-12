@@ -1,5 +1,5 @@
 <footer>
-    <div class="page-footer">
+    <div class="page-footer bidx-theme-colour-footer">
         <div class="container">
             <div class="footer-bar">
             	<div class="pull-left left-block">

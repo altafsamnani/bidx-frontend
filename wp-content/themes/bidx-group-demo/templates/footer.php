@@ -1,5 +1,5 @@
 <footer>
-    <div class="page-footer">
+    <div class="page-footer bidx-theme-colour-footer">
         <div class="container">
             <div class="footer-bar">
             	<div class="pull-left left-block">
@@ -23,32 +23,5 @@
         </div>
     </div>
 </footer>
-
-<!-- <footer>
-	<div class="bottom-menu bottom-menu-inverse navbar-fixed-bottom">
-		<div class="container">
-			<div class="row">
-				<div class="span2">@ <?php echo date("Y") ?>. bidX.net </div>
-
-				<div class="span6">
-					<ul class="bottom-links">
-						<li><a href="#fakelink"><?php _e('About Us','bidxtheme')?></a></li>
-						<li><a href="#fakelink"><?php _e('Store','bidxtheme')?></a></li>
-						<li><a href="#fakelink"><?php _e('Links','bidxtheme')?></a></li>
-					</ul>
-				</div>
-
-				<div class="span2">
-					<ul class="bottom-icons">
-						<li><a href="#fakelink" class="fui-pinterest"></a></li>
-						<li><a href="#fakelink" class="fui-facebook"></a></li>
-						<li><a href="#fakelink" class="fui-twitter"></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</footer> -->
 <?php wp_footer(); ?>
-
 

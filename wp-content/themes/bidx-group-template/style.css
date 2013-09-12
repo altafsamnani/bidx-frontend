@@ -82,9 +82,24 @@ Company: bidX;
     .spacer{
         margin-bottom:              40px;
     }
+
+    /************************ bidX default colours ***************************/
+        /* most of these colours will be overwriten in the specific group style */
+
+        .bidx-default-bar {
+            background-color:       #455560;
+        }
+
+        .bidx-default-button {
+            background-color:       #bdc3c8;
+        }
+
+    /************************ End bidX default colours ***************************/
+
+
     /************************ Button styles ***************************/
 
-    .btn > [class^="fui-"], .btn > span > [class^="fui-"] {
+    .btn > [class^="bidx-"], .btn > span > [class^="bidx-"] {
         margin:                     0 6px;
         position:                   relative;
         top:                        1px;
@@ -93,21 +108,21 @@ Company: bidX;
         zoom:                       1;
     }
 
-    .btn .fui-login {
+    .btn .bidx-login {
         background: url( assets/img/icons/icon-login.png ) no-repeat top left transparent;
         height:                     16px;
         width:                      16px;
         top:                        4px;
         right:                      2px;
     }
-    .btn .fui-search {
+    .btn .bidx-search {
         background: url( assets/img/icons/icon-search.png ) no-repeat top left transparent;
         height:                     16px;
         width:                      16px;
         top:                        0;
         right:                      0;
     }
-    .btn .fui-plus {
+    .btn .bidx-plus {
         background: url( assets/img/icons/icon-plus.png ) no-repeat top left transparent;
         height:                     19px;
         width:                      18px;
@@ -115,7 +130,7 @@ Company: bidX;
         right:                      0;
     }
 
-    .btn .fui-plus-white-transparent {
+    .btn .bidx-plus-white-transparent {
         background: url( assets/img/icons/icon-plus-white-transparent.png ) no-repeat top left transparent;
         height:                     19px;
         width:                      18px;
@@ -145,7 +160,7 @@ Company: bidX;
         border-radius:              500px;
 
     }
-    .btn.btn-bidx-transparent-circle .fui-plus-white-transparent {
+    .btn.btn-bidx-transparent-circle .bidx-plus-white-transparent {
         margin:                     0 6px;
         position:                   relative;
         top:                        4px;
@@ -166,13 +181,28 @@ Company: bidX;
         font-family:                'Lato', sans-serif;
         font-weight:                700;
         color:                      #34495e;
-    }
-
-    h1 {
-        font-size:                  23px;
-        margin:                     0 0 20px 0;
 
     }
+    h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+        line-height: 1.2em;
+    }
+
+    h1,
+    .h1 {
+        font-size: 28px;
+        margin:                     20px 0;
+    }
+    h2,
+    .h2 {
+        font-size: 23px;
+        margin:                     20px 0;
+    }
+    h3,
+    .h3 {
+        font-size: 20px;
+
+    }
+
         h1 span {
             display:                block;
             font-size:              16px;
@@ -180,18 +210,13 @@ Company: bidX;
             margin-top:             15px;
         }
 
-    h2 {
-        font-size:                  18px
-    }
-
-    h3 {
-        font-size:                  14px;
-    }
 
     p, div, span, input, button, select, textarea, a {
         font-family:                'Lato', sans-serif;
         font-weight:                400;
     }
+
+
 
 
 
@@ -351,6 +376,145 @@ Company: bidX;
         display:                    none;
     }
 
+    /* bidx checbkox (based on flatui checkbox */
+    .checkbox,
+    .radio {
+        margin-bottom: 12px;
+        padding-left: 32px;
+        position: relative;
+        -webkit-transition: color 0.25s linear;
+        -moz-transition: color 0.25s linear;
+        -o-transition: color 0.25s linear;
+        transition: color 0.25s linear;
+        -webkit-backface-visibility: hidden;
+    }
+    .checkbox input,
+    .radio input {
+        outline: none !important;
+        display: none;
+    }
+    .checkbox .icons,
+    .radio .icons {
+        color: #bdc3c7;
+        display: block;
+        height: 20px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 20px;
+        text-align: center;
+        line-height: 20px;
+        font-size: 20px;
+        -webkit-transition: color 0.25s linear;
+        -moz-transition: color 0.25s linear;
+        -o-transition: color 0.25s linear;
+        transition: color 0.25s linear;
+        -webkit-backface-visibility: hidden;
+    }
+    .checkbox .icons .first-icon-icon,
+    .radio .icons .first-icon-icon,
+    .checkbox .icons .second-icon,
+    .radio .icons .second-icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 1;
+        filter: alpha(opacity=100);
+    }
+    .checkbox .icons .second-icon,
+    .radio .icons .second-icon {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    .checkbox:hover .first-icon,
+    .radio:hover .first-icon {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+
+    /* used for hovering of an unchecked checkbox */
+    .checkbox:hover .second-icon,
+    .radio:hover .second-icon {
+        opacity: 1;
+        background-color: #bec3c8;
+        filter: alpha(opacity=100);
+    }
+    .checkbox.checked,
+    .radio.checked {
+        color: #16a085;
+    }
+    .checkbox.checked .icons,
+    .radio.checked .icons {
+        color: #1abc9c;
+    }
+    .checkbox.checked .first-icon,
+    .radio.checked .first-icon {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    .checkbox.checked .second-icon,
+    .radio.checked .second-icon {
+        opacity: 1;
+        filter: alpha(opacity=100);
+    }
+    .checkbox.disabled,
+    .radio.disabled {
+        cursor: default;
+        color: #e6e8ea;
+    }
+    .checkbox.disabled .icons,
+    .radio.disabled .icons {
+        color: #e6e8ea;
+    }
+    .checkbox.disabled .first-icon,
+    .radio.disabled .first-icon {
+        opacity: 1;
+        filter: alpha(opacity=100);
+    }
+    .checkbox.disabled .second-icon,
+    .radio.disabled .second-icon {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    .checkbox.disabled.checked .icons,
+    .radio.disabled.checked .icons {
+        color: #e6e8ea;
+    }
+    .checkbox.disabled.checked .first-icon,
+    .radio.disabled.checked .first-icon {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    .checkbox.disabled.checked .second-icon,
+    .radio.disabled.checked .second-icon {
+        opacity: 1;
+        filter: alpha(opacity=100);
+    }
+    .checkbox.primary .icons,
+    .radio.primary .icons {
+        color: #34495e;
+    }
+    .checkbox.primary.checked,
+    .radio.primary.checked {
+        color: #16a085;
+    }
+    .checkbox.primary.checked .icons,
+    .radio.primary.checked .icons {
+        color: #1abc9c;
+    }
+    .checkbox.primary.disabled,
+    .radio.primary.disabled {
+        cursor: default;
+        color: #bdc3c7;
+    }
+    .checkbox.primary.disabled .icons,
+    .radio.primary.disabled .icons {
+        color: #bdc3c7;
+    }
+    .checkbox.primary.disabled.checked .icons,
+    .radio.primary.disabled.checked .icons {
+        color: #bdc3c7;
+    }
 
     /************************  End input styles ********************************/
 
@@ -403,9 +567,7 @@ Company: bidX;
         width: 34px;
         display: block;
     }
-    .iconbar-bidx {
-        background-color:       #455560;
-    }
+
 
     .iconbar > ul > li {
         margin:                 0;
@@ -454,28 +616,50 @@ Company: bidX;
         -webkit-font-smoothing: auto;
     }
 
-    .fui-user {
+    .bidx-user {
         background: url( assets/img/icons/icon-member.png ) no-repeat center center transparent;
         height:                     17px;
         width:                      34px;
 
     }
-    .fui-mail {
+    .bidx-mail {
         background: url( assets/img/icons/icon-mail.png ) no-repeat center center transparent;
         height:                     17px;
         width:                      34px;
 
     }
-    .fui-gear {
+    .bidx-gear {
         background: url( assets/img/icons/icon-gear.png ) no-repeat center center transparent;
         height:                     17px;
         width:                      34px;
     }
 
-    .fui-cmd {
+    .bidx-cmd {
         background: url( assets/img/icons/icon-dashboard.png ) no-repeat center center transparent;
         height:                     17px;
         width:                      34px;
+    }
+
+    .bidx-checkbox-unchecked {
+        width: 20px;
+        height: 20px;
+        background-color: #bdc3c7;
+        display: block;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+    .bidx-checkbox-checked {
+        width: 20px;
+        height: 20px;
+
+        background: url( assets/img/icons/icon-check.png ) no-repeat center center transparent;
+        background-color: #16a085;
+        display: block;
+
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
     }
 
     /* end Icon bar */
@@ -512,7 +696,7 @@ Company: bidX;
         transition: border linear .2s,box-shadow linear .2s;
     }
 
-     header.navbar .form-search .input-append .btn .fui-search {
+     header.navbar .form-search .input-append .btn .bidx-search {
         top: 2px;
      }
 
@@ -631,6 +815,75 @@ Company: bidX;
     margin-left:        4px;
     }
     /* // not verified*/
+
+
+
+
+/*******************************************************************************************
+*
+*   Group homepage styles (for all breakpoints)
+*
+********************************************************************************************/
+
+    /* open group page*/
+    .bidx.home .bidx-register-c2a {
+        background-color:                   #34495e;
+
+        -webkit-border-radius:              10px;
+        -moz-border-radius:                 10px;
+        border-radius:                      10px;
+        height:                             117px;
+
+
+
+        background-repeat:                  no-repeat;
+        background-position:                9% 50%;
+
+    }
+
+    .bidx.home .bidx-register-c2a .c2a-label {
+        line-height:                        30px;
+        font-size:                          24px;
+        padding-top:                        25px;
+        margin:                             0 0 0 25%;
+        color:                              white;
+        font-weight:                        bold;
+    }
+
+    .bidx.home .bidx-register-c2a .bidx-arrow-right {
+        background-image:                   url( assets/img/icons/icon-arrow-right.png );
+        background-repeat:                  no-repeat;
+        background-position:                95% 50%;
+        height:                             inherit;
+    }
+
+    .bidx.home .bidx-register-c2a.investor {
+        background-image:                   url( assets/img/icons/icon-investor.png );
+    }
+
+    .bidx.home .bidx-register-c2a.entrepeneur {
+        background-image:                   url( assets/img/icons/icon-entrepeneur.png );
+    }
+
+    .bidx.home .testimonial-container p {
+        font-size:                          15px;
+        line-height:                        24px;
+    }
+    .bidx.home .testimonial-container .bidx-testimonial {
+        background:                         url( assets/img/group-homepage-testimonial.png ) no-repeat top left transparent;
+        width:                              282px;
+        height:                             276px;
+        color:                              #34495e;
+        font-size:                          18px;
+    }
+        .bidx.home .testimonial-container .bidx-testimonial > div {
+            padding:                        50px 20px;
+            line-height:                    24px;
+
+        }
+
+    /* end open group page*/
+
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ End New styles @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
@@ -1032,12 +1285,10 @@ form .row-fluid .input-prepend {
         height:                     41px;
         display:                    inline-block;
     }
+
     form .row-fluid .input-prepend input {
         width:                      90.2%;
     }
-
-
-
 
 	form label.bidx-radio {
 		font-weight: normal;
@@ -1141,6 +1392,9 @@ form .row-fluid .input-prepend {
         -moz-border-radius: 6px;
         border-radius: 6px;
     }
+
+
+
     .bidx-tagsinput-container {
         border:                     2px solid #bdc3c7;
         color:                      #34495e;
@@ -1347,21 +1601,6 @@ form .row-fluid .input-prepend {
 
 
 
-
-/*******************************************************************************************
-*
-*   Group homepage styles
-*
-********************************************************************************************/
-.group-members .media {
-    position: relative;
-}
-.group-members .media .member-connect {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 0 6px 4px 0;
-}
 
 
 /*******************************************************************************************
@@ -1739,7 +1978,9 @@ form .row-fluid .input-prepend {
         }
 
             /* open group page*/
-
+            .bidx.home .feature-container {
+                padding-top:                         20px;
+            }
             .bidx.home .feature-container .feature-col,
             .bidx.home .feature-container .feature-col h2 {
                 color:                                  #fff;

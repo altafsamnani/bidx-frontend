@@ -18,12 +18,12 @@ Company: bidX;
 
         .bidx .bidx-theme-colour-one,
         .bidx .bidx-theme-colour-one:hover {
-            background-color:           #BE2025;    /* background-color one */
+            background-color:           #BE2025 ;    /* background-color one */ /* temporary important until this style is placed inline */
         }
 
         .bidx  .bidx-theme-colour-two,
         .bidx  .bidx-theme-colour-two:hover {
-            background-color:           #f39c12;    /* background-color two */
+            background-color:           #d2b58d;    /* background-color two */
         }
 
         .bidx  .bidx-theme-colour-panel-one {
@@ -40,14 +40,31 @@ Company: bidX;
 
     /* Specific element overwrites. require LESS to replace colour with variable */
 
-        a,
-        a:hover,
-        a:focus,
-        header.navbar .nav > li.active > a,
-        header.navbar .nav > li.active > a:hover,
-        header.navbar .nav > li.active > a:focus {
-            color:                      #BE2025;    /* text color one */
-        }
+        /************************ Typografic styles ***************************/
+            a,
+            a:hover,
+            a:focus,
+            header.navbar .nav > li.active > a,
+            header.navbar .nav > li.active > a:hover,
+            header.navbar .nav > li.active > a:focus {
+                color:                      #BE2025;    /* text color one */
+            }
+
+        /************************ End Typografic styles ***************************/
+
+        /************************  Form input styles *******************************/
+            .bidx-checkbox-checked,
+            .checkbox.checked:hover .second-icon, /* this is the hover while the checkbox has just been checked */
+            .radio.checked:hover .second-icon {
+                background-color: #5e84aa ;
+
+            }
+
+            .btn.active {
+                background-color:           #d2b58d;    /* background-color two */
+                color:                      #fff;
+            }
+        /************************  End Form input styles *******************************/
 
     /* end element overwrites */
 

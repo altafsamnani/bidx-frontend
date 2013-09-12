@@ -94,6 +94,7 @@
     <!-- #########################################################################
                                 logged in
     ###########################################################################-->
+
     <div class="container">
         <div class="row-fluid">
 
@@ -180,7 +181,7 @@
                                 <div><strong>Become an entrepeneur</strong></div>
                                <em>Create your business</em>
                             </div>
-                            <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="fui-plus"></i>Create</a>
+                            <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i>Create</a>
                         </div>
 
                         <div class="call-to-action clearfix">
@@ -188,7 +189,7 @@
                                 <div><strong>Become an investor</strong></div>
                                 <em>Create your resources</em>
                             </div>
-                            <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="fui-plus"></i>Invest</a>
+                            <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i>Invest</a>
                         </div>
 
                         <hr>
@@ -223,7 +224,7 @@
                             </div>
                             <div class="pull-right">
                                 <div><strong>Tagline group goes here.</strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="fui-plus-white-transparent"></i></span>join group</button>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span>join group</button>
                             </div>
                         </div>
                         <div class="call-to-action clearfix">
@@ -232,7 +233,7 @@
                             </div>
                             <div class="pull-right">
                                 <div><strong>Tagline group goes here.</strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="fui-plus-white-transparent"></i></span>join group</button>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span>join group</button>
                             </div>
                         </div>
                         <div class="call-to-action clearfix">
@@ -241,7 +242,7 @@
                             </div>
                             <div class="pull-right">
                                 <div><strong>Tagline group goes here.</strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="fui-plus-white-transparent"></i></span>join group</button>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span>join group</button>
                             </div>
                         </div>
 
@@ -273,23 +274,40 @@
     <!-- #########################################################################
                                 Not logged in
     ###########################################################################-->
+
     <div class="container">
-        <div class="row-fluid spacer">
-            <div class="span6">
-                <a href="">
-                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/group-register-investor.png" alt="">
-                </a>
+        <div class="row-fluid">
+            <div class="span6 bidx-register-c2a investor spacer">
+                <div class="bidx-arrow-right">
+                    <div class="c2a-label">Register as<br/> INVESTOR</div>
+                </div>
             </div>
-            <div class="span6">
-                <a href="">
-                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/group-register-entrepeneur.png" alt="">
-                </a>
+            <div class="span6 bidx-register-c2a entrepeneur spacer">
+                <div class="bidx-arrow-right">
+                    <div class="c2a-label">Register as<br/> ENTREPENEUR</div>
+                </div>
+
             </div>
         </div>
 
-        <div class="row-fluid spacer">
-            <div class="span12">
-                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/group-about-us.png" alt="">
+        <div class="row-fluid spacer testimonial-container">
+            <div class="span8">
+                <h1>New business</h1>
+                <p>
+                    <img data-src="holder.js/140x140" class="img-circle" alt="140x140" style="width: 140px; height: 140px;" align="right">
+                    <strong>Immediately after the Great Earthquake and Tsunami of 11th March 2011, H.H. Sheikh Hamad Bin Khalifa Al-Thani (Emir of the State of Qatar) announced a USD 100 million gift to Japan.</strong>
+                    To assist relief efforts and accelerate the recovery of victims.  He also ordered the formation of a 24-hour task force within Qatar Petroleum Company, to provide necessary assistance to Japan under direct supervision of H.H Sheikh Tamim Bin Hamad Al-Thani, Heir Apparent of the State of Qatar.
+
+                </p>
+
+            </div>
+            <div class="span4">
+                <div class="bidx-testimonial pull-right">
+                    <div>
+                    Client can post a mission and or vision about their business in this red box.  It’s a fixed height box. Text may not exceed the boundaries in the example text given.
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

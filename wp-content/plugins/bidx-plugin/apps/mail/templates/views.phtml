@@ -3,9 +3,9 @@
     <div class="row-fluid">
         <!-- Left menu -->
         <div class="span2 side-menu well">
-            <a class="btn btn-large btn-block btn-info" href="#mail/compose"><?php _e('Compose','bidxplugin')?></a>
-            <a class="btn btn-large btn-block" href="#mail/inbox"><?php _e('Inbox','bidxplugin')?></a>
-            <a class="btn btn-large btn-block" href="#mail/sent"><?php _e('Sent','bidxplugin')?></a>
+            <a class="btn btn-large btn-block btn-info bidx-theme-colour-one" href="#mail/compose"><?php _e('Compose','bidxplugin')?></a>
+            <a class="btn btn-large btn-block bidx-default-button " href="#mail/inbox"><?php _e('Inbox','bidxplugin')?></a>
+            <a class="btn btn-large btn-block bidx-default-button " href="#mail/sent"><?php _e('Sent','bidxplugin')?></a>
     <!--         <a class="btn btn-large btn-block" href="#drafts">Drafts</a>
             <a class="btn btn-large btn-block" href="#archived">Archived</a>
             <a class="btn btn-large btn-block" href="#trash">Trash</a> -->
@@ -43,7 +43,7 @@
                 <div class="">
 
                     <!-- TOOLBAR -->
-                    <div class="mail-toolbar">
+                    <div class="mail-toolbar bidx-default-bar bidx-theme-colour-one">
                         <div class="check">
                             <label class="checkbox">
                                 <input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
@@ -69,7 +69,7 @@
 
                     </ul>
                     </form>
-                    <div class="pagination">
+                   <!--  <div class="pagination">
                         <ul>
                             <li class="previous"><a class="fui-arrow-left" href="#fakelink"></a></li>
                             <li class="active"><a href="#fakelink">1</a></li>
@@ -84,7 +84,7 @@
                             <li><a href="#fakelink">10</a></li>
                             <li class="next"><a class="fui-arrow-right" href="#fakelink"></a></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </article>
 
@@ -118,32 +118,32 @@
 
 
                 <form action="">
+
+
+
                     <div class="row-fluid">
                         <div class="control-group">
-                            <div class="input-prepend">
 
-                                <span class="add-on">Recipients</span>
-                                <div class="controls">
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" name="contacts" class="bidx-tagsinput enclosed defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Add Recipient')?>">
-                                    </div>
+                            <label class="control-label"><?php _e('Recipient','bidxplugin'); ?></label>
+                            <div class="controls">
+                                <div class="bidx-tagsinput-container">
+                                    <input type="text" name="contacts" class="bidx-tagsinput enclosed defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Add Recipient')?>">
                                 </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="control-group">
+                            <label class="control-label"><?php _e('Subject','bidxplugin'); ?></label>
+                            <div class="controls">
+                                <input type="text" name="subject" placeholder="<?php _e('Your subject goes here...','bidxplugin')?>">
                             </div>
                         </div>
                     </div>
                     <div class="row-fluid">
                         <div class="control-group">
-                            <div class="input-prepend">
-
-                                <span class="add-on">Subject</span>
-                                <div class="controls">
-                                    <input type="text" name="subject" placeholder="<?php _e('Your subject goes here...','bidxplugin')?>">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="control-group">
+                            <label class="control-label"><?php _e('Message','bidxplugin'); ?></label>
                             <div class="controls">
                                 <textarea name="content" placeholder="<?php _e('Please type your message here..','bidxplugin')?>"></textarea>
                             </div>
@@ -151,11 +151,11 @@
 
                     </div>
                     <div class="pull-left">
-                        <button type="submit" class="btn btn-primary compose-submit"><?php _e('Send message','bidxplugin')?></button>
+                        <button type="submit" class="btn bidx-default-button compose-submit"><?php _e('Send message','bidxplugin')?></button>
 
                     </div>
                     <div class="pull-right">
-                        <a href="/mail/#mail/discardConfirm" class="btn btn-primary compose-cancel">
+                        <a href="/mail/#mail/discardConfirm" class="btn bidx-default-button compose-cancel">
                             <?php _e('Discard message')?>
                         </a>
 
@@ -179,7 +179,7 @@
                     </div>
                     <div class="modal-footer">
                         <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close','bidxplugin')?></a>
-                        <a class="btn btn-primary" href="/mail/#mail/%section%/delete/"><?php _e('Delete message','bidxplugin')?></a>
+                        <a class="btn bidx-default-button" href="/mail/#mail/%section%/delete/"><?php _e('Delete message','bidxplugin')?></a>
 
                     </div>
                 </div>
@@ -200,7 +200,7 @@
 
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Cancel')?></button>
-                        <a class="btn btn-primary" href="/mail/#mail/inbox"><?php _e('Discard message')?></a>
+                        <a class="btn bidx-default-button" href="/mail/#mail/inbox"><?php _e('Discard message')?></a>
                     </div>
 
                 </div>
