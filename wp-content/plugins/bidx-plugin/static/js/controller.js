@@ -134,6 +134,8 @@
 
         ,   'media(/:appState)(/:id)':                          'media'
 
+        ,   'dashboard(/:section)(/:part1)(/:part2)':           'dashboard'
+
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
 
@@ -281,6 +283,23 @@
                 }
             );
         }
+     ,  dashboard:               function( section, part1, part2 )
+        {
+            bidx.utils.log( "AppRouter::GroupDashboard", section );
+
+            state = "dashboard";
+
+            _navigateToApp
+            (
+                "dashboard"
+            ,   {
+                    section:    section
+                ,   part1:      part1
+                ,   part2:      part2
+                }
+            );
+        }
+
 
     ,   media:             function( appState, id )
         {

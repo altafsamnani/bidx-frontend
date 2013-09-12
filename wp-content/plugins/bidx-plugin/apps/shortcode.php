@@ -30,8 +30,9 @@ class BidxShortcode {
 		Logger :: getLogger( 'shortcode' ) -> trace( 'Constructing bidx shortcode instance for ' . get_bloginfo() );
 		add_shortcode( 'bidx', array( &$this, 'handle_bidx_shortcode' ) );
  		add_action( 'init', array( &$this, 'register_script' ) );
-		add_action( 'wp_footer', array( &$this, 'print_script' ) );
-		Logger :: getLogger( 'shortcode' ) -> trace( 'Ready constructing bidx shortcode instance' );
+        add_action( 'admin_init', array( &$this, 'register_script' ) );
+        add_action( 'wp_footer', array( &$this, 'print_script' ) );        
+		Logger :: getLogger( 'shortcode' ) -> trace( 'Ready constructing bidx shortcode instance' );       
 
 	}
 
@@ -67,7 +68,7 @@ class BidxShortcode {
 		}
 
 	}
-
+  
 	/**
 	 * Shortcode is called for a page.
 	 * If appname is not available a not found message is shown.
@@ -80,7 +81,7 @@ class BidxShortcode {
 
 		Logger :: getLogger( 'shortcode' ) -> trace( 'Shortcode called with ' . serialize( $atts ) );
 		$appname = $atts['app'];
-
+    
         self::$scriptIdArr[$appname] = $appname;
 
 		if ( array_key_exists( $appname, self::$mapping ) ) {
@@ -193,7 +194,7 @@ class BidxShortcode {
                     Logger::getLogger ('shortcode')->trace ('DO NOT print_script : ' . $scriptVal);
                     return;
                 }
-                Logger :: getLogger ('shortcode')->trace ('Add script ok, printing scripts : ' . $scriptVal);
+                Logger :: getLogger ('shortcode')->trace ('Add script ok, printing scripts : ' . $scriptVal);       
                 wp_print_scripts ($scriptVal);
             }
         }

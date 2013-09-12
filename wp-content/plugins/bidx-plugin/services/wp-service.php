@@ -1878,39 +1878,7 @@ function page_group_save ($post_id)
         update_post_meta ($post_id, 'page_group', $_POST['page_group']);
 }
 
-/* Alter Admin menus to get Bidx branding
- * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
- * @author Altaf Samnani
- * @version 1.0
- *
- *
- * @param bool $echo
- */
 
-function alter_site_menu ()
-{
-    global $menu;
-
-    if ((current_user_can ('install_themes'))) {
-        $restricted = array ();
-    } // check if admin and hide nothing
-    else { // for all other users
-        $current_user = wp_get_current_user ();
-        if ($current_user->user_level < 10) {
-            remove_menu_page ('profile.php');
-            remove_menu_page ('tools.php');
-            remove_menu_page ('edit-comments.php');
-            remove_submenu_page ('index.php', 'my-sites.php');
-
-            //apply_filters( 'show_admin_bar', false );
-            add_action ('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
-            add_action ('admin_head', 'wpc_remove_admin_elements');
-        }
-    }
-    add_filter ('admin_footer_text', 'remove_footer_admin');
-}
-
-add_action ('admin_menu', 'alter_site_menu');
 
 /* Alter Network Admin menus to get Bidx branding
  * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
@@ -1962,36 +1930,6 @@ function bidx_options ()
     } else {
         wp_die (__ ('You do not have sufficient permissions to access this page.'));
     }
-}
-
-function wpc_remove_admin_elements ()
-{
-    echo '<style type="text/css">
-           .versions #wp-version-message {display:none !important;}
-    </style>';
-}
-
-function remove_footer_admin ()
-{
-    echo '<span id="footer-thankyou">' . __ ('Thank you for creating with <a href="http://wordpress.org/">Bidx</a>.') . '</span>';
-}
-
-function annointed_admin_bar_remove ()
-{
-    global $wp_admin_bar;
-
-    /* Remove their stuff */
-    $wp_admin_bar->remove_menu ('wp-logo');
-    $wp_admin_bar->remove_menu ('comments');
-    $wp_admin_bar->remove_menu ('my-sites');
-    $wp_admin_bar->remove_menu ('my-account');
-
-    $current_user = wp_get_current_user ();
-    $user_login = str_replace ('groupadmin', '', $current_user->user_login);
-    $custom_menu = array ('id' => 'bidx-name', 'title' => $user_login, 'parent' => 'top-secondary', 'href' => '/member');
-    $wp_admin_bar->add_menu ($custom_menu);
-    $custom_menu_logout = array ('id' => 'bidx-logout', 'title' => 'Logout', 'parent' => 'bidx-name', 'href' => wp_logout_url ('/'));
-    $wp_admin_bar->add_menu ($custom_menu_logout);
 }
 
 /* Force Wordpress Login
@@ -2052,13 +1990,14 @@ function bidx_staffmail ()
     die ();
 }
 
-/*************************** Bidx Dashboard Widget Start *****************************************/
+/* * ************************* Bidx Dashboard Widget Start **************************************** */
 
 /* Add a widget to the dashboard.
  * @author Altaf Samnani
  * @version 1.0
  *
  */
+
 function bidx_add_dashboard_widgets ()
 {
 
@@ -2068,7 +2007,7 @@ function bidx_add_dashboard_widgets ()
 
         wp_add_dashboard_widget (
             'bidx_dashboard_widget', // Widget slug.
-            'Group growth', // Title.
+            'Bidx', // Title.
             'bidx_dashboard_widget_function' // Display function.
         );
     }
@@ -2081,6 +2020,7 @@ add_action ('wp_dashboard_setup', 'bidx_add_dashboard_widgets');
  * @version 1.0
  *
  */
+
 function bidx_remove_core_widgets ()
 {
     global $wp_meta_boxes;
@@ -2097,8 +2037,118 @@ function bidx_remove_core_widgets ()
 
 function bidx_dashboard_widget_function ()
 {
-    echo do_shortcode( "[bidx app='dashboard' view='group-dashboard']" );
-  
+    //wp_enqueue_style( 'dashboard' );
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard']");
 }
 
-/*************************** Bidx Dashboard Widget End *****************************************/
+/* Load Group Owner/Admin Dashboard Widget Css Scripts
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ */
+add_action ('admin_enqueue_scripts', function () {
+
+        $currentUser = wp_get_current_user ();
+
+        if (in_array ('groupadmin', $currentUser->roles)) {
+         
+            // 1 Load default root script/styles
+            roots_scripts ();          
+            $mailDepArr = array ('bidx-form', 'bidx-common', 'bidx-i18n', 'jquery-validation',
+              'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'flatui-checkbox');
+            wp_register_script ('dashboard-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', $mailDepArr, '20130715', TRUE);
+            wp_enqueue_script ('dashboard-admin');
+            wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
+            wp_enqueue_style ('mail');
+            wp_enqueue_style ('bidx-admin-theme', get_bloginfo('template_url').'/wp-admin.css');
+
+            //wp_print_scripts ('dashboard');
+            // 2 Load Bidx Common Default script/styles to render it in 3
+            //$shortcode = new BidxShortCode();
+            //$shortcode->register_script ();
+            //3 Load Dashboard Style/Scripts
+//        wp_register_script ('dashboard-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', array ('bidx-common'), '20130715', TRUE);
+//        wp_enqueue_script ('dashboard-admin');
+//
+//        wp_register_style ('dashboard-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array ('roots_bootstrap', 'roots_bootstrap_responsive'), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
+//        wp_enqueue_style ('dashboard-admin');
+            //roots_scripts ();
+        }
+    });
+
+add_action ('admin_footer', function () {
+        wp_print_scripts ('dashboard-admin');
+    });
+
+//add_action ('admin_enqueue_scripts', 'roots_scripts', 100);
+
+
+/* * ************************* Bidx Dashboard Widget End **************************************** */
+
+/* * **************** Bidx Admin Theme ************************************************ */
+
+/* Alter Admin menus to get Bidx branding
+ * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ *
+ * @param bool $echo
+ */
+
+function alter_site_menu ()
+{
+    global $menu;
+
+    if ((current_user_can ('install_themes'))) {
+        $restricted = array ();
+    } // check if admin and hide nothing
+    else { // for all other users
+        $current_user = wp_get_current_user ();
+        if ($current_user->user_level < 10) {
+            remove_menu_page ('profile.php');
+            remove_menu_page ('tools.php');
+            remove_menu_page ('edit-comments.php');
+            remove_submenu_page ('index.php', 'my-sites.php');
+
+            //apply_filters( 'show_admin_bar', false );
+            add_action ('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+            add_action ('admin_head', 'wpc_remove_admin_elements');
+        }
+    }
+    add_filter ('admin_footer_text', 'remove_footer_admin');
+}
+
+add_action ('admin_menu', 'alter_site_menu');
+
+function wpc_remove_admin_elements ()
+{
+    echo '<style type="text/css">
+           .versions #wp-version-message {display:none !important;}
+    </style>';
+}
+
+function remove_footer_admin ()
+{
+    echo '<span id="footer-thankyou">' . __ ('Thank you for creating with <a href="http://wordpress.org/">Bidx</a>.') . '</span>';
+}
+
+function annointed_admin_bar_remove ()
+{
+    global $wp_admin_bar;
+
+    /* Remove their stuff */
+    $wp_admin_bar->remove_menu ('wp-logo');
+    $wp_admin_bar->remove_menu ('comments');
+    $wp_admin_bar->remove_menu ('my-sites');
+    $wp_admin_bar->remove_menu ('my-account');
+
+    $current_user = wp_get_current_user ();
+    $user_login = str_replace ('groupadmin', '', $current_user->user_login);
+    $custom_menu = array ('id' => 'bidx-name', 'title' => $user_login, 'parent' => 'top-secondary', 'href' => '/member');
+    $wp_admin_bar->add_menu ($custom_menu);
+    $custom_menu_logout = array ('id' => 'bidx-logout', 'title' => 'Logout', 'parent' => 'bidx-name', 'href' => wp_logout_url ('/'));
+    $wp_admin_bar->add_menu ($custom_menu_logout);
+}
+
+//add_action ('login_enqueue_scripts', 'bidx_admin_theme_style');

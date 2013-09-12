@@ -143,8 +143,9 @@ class BidxCommon
     public function getSessionVariables ($subDomain)
     {
         //Get Previous Session Variables if Set and Not Failed Login
+        $authenticated = (isset($_SESSION[$subDomain]->authenticated)) ? $_SESSION[$subDomain]->authenticated : 'false';
         if (!empty ($_SESSION[$subDomain]) &&
-            ((!empty ($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $_SESSION[$subDomain]->authenticated)) {
+            ((!empty ($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $authenticated )) {
             $sessionVars = $_SESSION[$subDomain];
         } else {
             session_unset ();
@@ -362,7 +363,8 @@ class BidxCommon
 
 
             if ($jsSessionData) {
-                $this->redirectUrls ($hostAddress[1], $jsSessionData->authenticated, $redirect, $statusMsgId, $subDomain);
+                $authenticated = (isset($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
+                $this->redirectUrls ($hostAddress[1], $authenticated, $redirect, $statusMsgId, $subDomain);
             }
 
             $return['data'] = $data;
@@ -445,7 +447,7 @@ class BidxCommon
             case 'wp-admin' :       // Group admin and wp-admin at that time only
                  if ($authenticated == 'false') {
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url);
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url).'/#auth/login';;
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables
