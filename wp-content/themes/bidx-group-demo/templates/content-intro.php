@@ -277,12 +277,12 @@
 
     <div class="container">
         <div class="row-fluid">
-            <div class="span6 bidx-register-c2a investor spacer bidx-theme-colour-one">
+            <div class="span6 bidx-register-c2a investor spacer bidx-theme-colour-two">
                 <div class="bidx-arrow-right">
                     <div class="c2a-label">Register as<br/> INVESTOR</div>
                 </div>
             </div>
-            <div class="span6 bidx-register-c2a entrepeneur spacer bidx-theme-colour-one">
+            <div class="span6 bidx-register-c2a entrepeneur spacer bidx-theme-colour-two">
                 <div class="bidx-arrow-right">
                     <div class="c2a-label">Register as<br/> ENTREPENEUR</div>
                 </div>
