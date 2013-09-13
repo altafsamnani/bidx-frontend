@@ -239,7 +239,7 @@
 									//add separate error message under button
 									var $button=$(globalOptions.callToAction);
 									if ( $error.length === 0) {
-										$error=$("<div class=\"error-separate jqHidden\">" + message + "</div>");
+										$error=$("<div class=\"error-separate hide\">" + message + "</div>");
 										$button.parent().after($error);
 										$error.fadeIn('fast');
 									}

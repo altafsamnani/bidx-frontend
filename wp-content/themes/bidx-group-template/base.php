@@ -11,7 +11,7 @@
     $authClass = "not-auth";
     $authenticated = false;
 
-    if ($session->authenticated == 'true') {
+    if ($session->authenticated == 'true' ) {
         $authenticated = true;
         $authClass = "auth";
     }

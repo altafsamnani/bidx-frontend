@@ -44,9 +44,6 @@ Company: bidX;
         min-height:                 100%;
     }
 
-    #wrap > .container {
-        padding-top:                171px;
-    }
     #push, footer {
         height:                     50px;
     }
@@ -905,15 +902,6 @@ Company: bidX;
 
 
 
-/* .block-login input {
-    width:         100%;
-}
- */
-
-.jqHidden {
-	display:none;
-}
-
 .sidebar-block-title {
 	margin-top:					0;
 }
@@ -1035,19 +1023,13 @@ body.bidx-business span.scrollPositionMarker {
 *
 ********************************************************************************************/
 
-/** flatui override, since design seems to be aiming at a 50px footer but seems not te be in place yet completely but is now overlapping **/
-footer .bottom-menu {
-    padding: 10px 0;
-}
 
 footer .page-footer {
-    background-color:               #34495e;
-    /*line-height:                    48px;*/
     color:                          #fff;
     font-size:                      13px;
 
-    padding-left: 20px;
-    padding-right: 20px;
+/*    padding-left: 20px;
+    padding-right: 20px;*/
     border-top: 1px solid #aeb6bf;
     border-bottom: 1px solid #aeb6bf;
 }
@@ -1700,6 +1682,10 @@ form .row-fluid .input-prepend {
     /* styles shared by portrait tablet and above */
     @media (min-width: 980px ) {
 
+        #wrap > .container {
+            padding-top:                171px;
+        }
+
         /* header */
         header .navbar-inner {
             height:                     109px;
@@ -2048,59 +2034,91 @@ form .row-fluid .input-prepend {
     /* Landscape phones and down */
     @media  (max-width: 979px) {
 
+        /************************  General styles *******************************/
 
-        body {
-            padding-left: 20px;
-            padding-right :20px;
-        }
+            body {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        /************************  End general styles *******************************/
 
+        /************************  Header / Footer styles *******************************/
 
         /* header styles */
-        header.navbar {
-            margin-left:                -20px;
-            margin-right:               -20px;
-        }
-        header.navbar .navbar-inner {
-            padding:                    0;
-        }
-        header.navbar .header-logo {
-            height:                     100%;
-            overflow:                   hidden;
-            width:                      100%;
-            text-align:                 center;
-            margin:                     20px 0;
-        }
 
-        header.navbar .iconbar-wrapper {
-            text-align:                 center;
-        }
+            .navbar-fixed-top {
+                margin-bottom: 0;
+            }
 
-        header.navbar .iconbar-wrapper .iconbar ul {
-            display:                    inline-block;
-            margin:                     0 auto;
-        }
 
-        header.navbar .search {
-           text-align:                  center;
-           display:
-        }
+            header.navbar {
+                margin-left:                -20px;
+                margin-right:               -20px;
+            }
+            header.navbar .navbar-inner {
+                padding:                    0;
+            }
+            header.navbar .header-logo {
+                height:                     100%;
+                overflow:                   hidden;
+                width:                      100%;
+                text-align:                 center;
+                margin:                     20px 0;
+            }
+
+            header.navbar .iconbar-wrapper {
+                text-align:                 center;
+            }
+
+            header.navbar .iconbar-wrapper .iconbar ul {
+                display:                    inline-block;
+                margin:                     0 auto;
+            }
+
+            header.navbar .search {
+               text-align:                  center;
+               display:
+            }
 
 
         /* End header styles */
 
+        /* footer */
+
+            footer .page-footer {
+                margin-left:                -20px;
+                margin-right:               -20px;
+            }
+        /* end footer */
+
+        /************************  End Header / Footer styles *******************************/
+
         /* general override to ditch caret from menu's*/
-        li a .caret {
+/*        li a .caret {
             display: none;
-        }
-
-
-
-
-
-
-
+        }*/
         /* end contact page */
 
+
+        /************************  Template styles *******************************/
+
+            .block-login {
+                margin:                     0;
+                width:                      100%;
+                padding:                    0;
+                background-color:           #f5f5f5;
+
+                -webkit-border-radius:      0;
+                -moz-border-radius:         0;
+                border-radius:              0;
+            }
+
+            .bidx > .container,
+            .bidx header {
+                margin:                     0 20px;
+            }
+
+        /************************  End Template styles *******************************/
 
     }
 
