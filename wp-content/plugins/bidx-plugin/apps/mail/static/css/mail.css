@@ -36,8 +36,8 @@
         margin-right:                       10px;
     }
 
-    #mail form {
-        padding:                            0;
+    #mail .viewCompose form {
+        padding:                            20px;
     }
     #mail .mail-toolbar {
 

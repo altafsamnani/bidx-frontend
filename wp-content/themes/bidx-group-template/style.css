@@ -4,12 +4,9 @@ Author: msp
 Company: bidX;
 */
 
-/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ New styles @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-/*
-    fonts
-*/
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ New styles (work in progress) @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
-
+@import url('assets/css/Flat-UI.css'); /* we use flatui only for there fui-icons until we create our own vector font */
 
 
 /*******************************************************************************************
@@ -17,6 +14,7 @@ Company: bidX;
 *   Global styles
 *
 ********************************************************************************************/
+
 
     html, body {
         margin:                     0;
@@ -283,7 +281,7 @@ Company: bidX;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
 
-        height:                     40px;
+        height:                     41px;
         text-indent:                10px;
         width:                      100%;
         border:                     2px solid #bdc3c7;
@@ -376,14 +374,14 @@ Company: bidX;
     /* bidx checbkox (based on flatui checkbox */
     .checkbox,
     .radio {
-        margin-bottom: 12px;
-        padding-left: 32px;
-        position: relative;
-        -webkit-transition: color 0.25s linear;
-        -moz-transition: color 0.25s linear;
-        -o-transition: color 0.25s linear;
-        transition: color 0.25s linear;
-        -webkit-backface-visibility: hidden;
+        margin-bottom:                  12px;
+        padding-left:                   32px;
+        position:                       relative;
+        -webkit-transition:             color 0.25s linear;
+        -moz-transition:                color 0.25s linear;
+        -o-transition:                  color 0.25s linear;
+        transition:                     color 0.25s linear;
+        -webkit-backface-visibility:    hidden;
     }
     .checkbox input,
     .radio input {
@@ -392,7 +390,7 @@ Company: bidX;
     }
     .checkbox .icons,
     .radio .icons {
-        color: #bdc3c7;
+        /*color: #bdc3c7;*/
         display: block;
         height: 20px;
         left: 0;
@@ -432,17 +430,24 @@ Company: bidX;
     /* used for hovering of an unchecked checkbox */
     .checkbox:hover .second-icon,
     .radio:hover .second-icon {
-        opacity: 1;
-        background-color: #bec3c8;
-        filter: alpha(opacity=100);
+        opacity:                    1;
+        filter:                     alpha(opacity=100);
     }
-    .checkbox.checked,
-    .radio.checked {
-        color: #16a085;
+    /* temporary bg color assignment until we decide to use flatui icons or not. this colour fixes the hover bg color of checkbox*/
+    .checkbox:hover .second-icon {
+        background-color:           #bec3c8;
     }
+
+    /* don't need this colour, let it use inherited colour*/
+/*     .checkbox.checked,
+.radio.checked {
+    color: #16a085;
+} */
+
+    /* important for colouring of the icons */
     .checkbox.checked .icons,
     .radio.checked .icons {
-        color: #1abc9c;
+        color:                      #1abc9c;
     }
     .checkbox.checked .first-icon,
     .radio.checked .first-icon {
@@ -512,6 +517,25 @@ Company: bidX;
     .radio.primary.disabled.checked .icons {
         color: #bdc3c7;
     }
+
+    .input-append .add-on, .input-prepend .add-on {
+        min-width:                      32px;
+        padding:                        9px 5px;
+        font-size:                      17.99px;
+        line-height:                    18px;
+        height:                         19px;
+        background-color:               #bdc3c7;
+        border:                         2px solid #bdc3c7;
+        color:                          #ffffff;
+        text-shadow:                    none;
+        text-indent:                    2px;
+        -webkit-transition:             border .25s linear, color .25s linear, background-color .25s linear;
+        -moz-transition:                border .25s linear, color .25s linear, background-color .25s linear;
+        -o-transition:                  border .25s linear, color .25s linear, background-color .25s linear;
+        transition:                     border .25s linear, color .25s linear, background-color .25s linear;
+        -webkit-backface-visibility:    hidden;
+    }
+
 
     /************************  End input styles ********************************/
 
@@ -1335,9 +1359,7 @@ form .row-fluid .input-prepend {
     /* please move Form css thhat is used inbetween this block */
 
 
-    .well form {
-        padding: 20px;
-    }
+
 /*     .error-icon {
 
     width: 20px;
