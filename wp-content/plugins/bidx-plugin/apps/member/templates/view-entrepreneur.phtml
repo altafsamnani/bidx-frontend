@@ -98,7 +98,7 @@ if ($businessSummary) {
             <div class="span3">
                 <img data-src="holder.js/100x100/industrial/auto/text:No Image" class="img-rounded">
             </div>
-            <div class="span7">
+            <div class="span9">
                 <div class="row-fluid">
                     <div class="span12">
                         <h5><?php echo $this->exst($businessSummary->name); ?></h5>
@@ -120,8 +120,12 @@ if ($businessSummary) {
                   $countryVal);
 
                 echo $this->addMultipleRows ('span12', $rowValues);
-                echo $this->addMultipleRows ('span12 offset10', array ($joinLink));
-                ?>
+?>
+                <div class="pull-right">
+<?php
+                    echo $joinLink;
+?>
+                </div>
             </div>
         </div>
     </div>
