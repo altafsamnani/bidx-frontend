@@ -1656,9 +1656,9 @@ msgstr ""
 
 
 #245) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -137
-# _e("Entrepeneurs","bidxplugin");
+# _e("Entrepreneurs","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Entrepeneurs"
+msgid "Entrepreneurs"
 msgstr ""
 
 

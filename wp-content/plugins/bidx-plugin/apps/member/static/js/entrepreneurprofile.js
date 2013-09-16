@@ -619,7 +619,7 @@
                         {
                             member = response;
 
-                            // Set the global (for this app) entrepeneurProfileId for convenience reasons
+                            // Set the global (for this app) entrepreneurProfileId for convenience reasons
                             //
                             entrepreneurProfileId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
 

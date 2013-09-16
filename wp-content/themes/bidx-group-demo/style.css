@@ -253,7 +253,7 @@ Company: bidX;
     .label.bidx-label-member {
         background-color:           #bdc3c7;
     }
-    .label.bidx-label-entrepeneur {
+    .label.bidx-label-entrepreneur {
         background-color:           #f39c11;
 
     }
@@ -861,8 +861,8 @@ Company: bidX;
         background-image:                   url( assets/img/icons/icon-investor.png );
     }
 
-    .bidx.home .bidx-register-c2a.entrepeneur {
-        background-image:                   url( assets/img/icons/icon-entrepeneur.png );
+    .bidx.home .bidx-register-c2a.entrepreneur {
+        background-image:                   url( assets/img/icons/icon-entrepreneur.png );
     }
 
     .bidx.home .testimonial-container p {

@@ -178,7 +178,7 @@
 
                         <div class="call-to-action clearfix">
                             <div class="pull-left">
-                                <div><strong>Become an entrepeneur</strong></div>
+                                <div><strong>Become an entrepreneur</strong></div>
                                <em>Create your business</em>
                             </div>
                             <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i>Create</a>
@@ -210,9 +210,9 @@
                                 </div>
                             </div>
                             <iframe width="100%" height="140" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=nl&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=Bidx&amp;sll=37.0625,-95.677068&amp;sspn=60.158465,135.263672&amp;t=h&amp;ie=UTF8&amp;hq=bidx+bv&amp;hnear=De+Ruijterkade,+Amsterdam,+Nederland&amp;ll=52.37787,4.905348&amp;spn=0.006295,0.014329&amp;output=embed"></iframe>
-                            <span class="label bidx-label-member">Entrepeneur</span>
-                            <span class="label bidx-label-entrepeneur">Entrepeneur</span>
-                            <span class="label bidx-label-investor">Entrepeneur</span>
+                            <span class="label bidx-label-member">Entrepreneur</span>
+                            <span class="label bidx-label-entrepreneur">Entrepreneur</span>
+                            <span class="label bidx-label-investor">Entrepreneur</span>
                         </div>
 
                         <hr>
@@ -282,9 +282,9 @@
                     <div class="c2a-label">Register as<br/> INVESTOR</div>
                 </div>
             </div>
-            <div class="span6 bidx-register-c2a entrepeneur spacer bidx-theme-colour-two">
+            <div class="span6 bidx-register-c2a entrepreneur spacer bidx-theme-colour-two">
                 <div class="bidx-arrow-right">
-                    <div class="c2a-label">Register as<br/> ENTREPENEUR</div>
+                    <div class="c2a-label">Register as<br/> ENTREPRENEUR</div>
                 </div>
 
             </div>

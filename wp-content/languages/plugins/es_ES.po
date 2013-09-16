@@ -1383,10 +1383,10 @@ msgid "Investors"
 msgstr "esInvestors"
 
 # 245) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -137
-# _e("Entrepeneurs","bidxplugin");
+# _e("Entrepreneurs","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Entrepeneurs"
-msgstr "esEntrepeneurs"
+msgid "Entrepreneurs"
+msgstr "esEntrepreneurs"
 
 # 246) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/group-registration.phtml -143
 # _e("The social impact e.g. poverty reduction, job creation, religious tolerance, women, social inclusion, urban regeneration and None applicable.","bidxplugin");

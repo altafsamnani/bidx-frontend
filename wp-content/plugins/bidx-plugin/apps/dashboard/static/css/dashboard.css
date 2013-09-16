@@ -37,15 +37,15 @@
         height: 60px;
     }
 
-.entrepeneur-widget {
+.entrepreneur-widget {
 
 }
 
 
-    .entrepeneur-widget .dashboard-item  {
+    .entrepreneur-widget .dashboard-item  {
         clear: left;
     }
-    .entrepeneur-widget .dashboard-item label {
+    .entrepreneur-widget .dashboard-item label {
         float: left;
         width: 50%;
         font-weight: bold;
