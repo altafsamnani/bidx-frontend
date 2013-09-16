@@ -151,6 +151,11 @@ a, a:hover, a:visited, a:link  {
     font-weight:                bold;
 }
 
+.bidx-value {
+    padding-bottom:             10px;
+}
+
+
 .accordion-heading {
     background-color:           #f5f5f5;
 }
