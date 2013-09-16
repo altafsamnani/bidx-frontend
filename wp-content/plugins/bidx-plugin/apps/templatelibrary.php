@@ -341,7 +341,7 @@ class TemplateLibrary
     public function addRowsWithLabelBelow ($gridLabel, $gridValue, $rowValues, $properties = array ())
     {
         /** Class placed on the outer rows, defaults to the row-fluid from bootstrap **/
-        $classRow = (isset( $properties['class_row']) ? $properties['class_class']:'row-fluid');
+        $classRow = (isset( $properties['class_row']) ? $properties['class_row']:'row-fluid');
 
         /** Class * */
         $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
