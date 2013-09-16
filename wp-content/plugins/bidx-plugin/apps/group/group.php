@@ -50,8 +50,11 @@ class group {
 		$command = $atts['view'];
 
 		switch ( $command ) {
+			case "lastest-companies" :
+				$view->span = isset($atts["span"]) ? $atts["span"] : "";
+				$view->companies = $groupSvc->getLatestCompanies(  );
+				return $view->render( 'latest-companies.phtml' );
 			case "last-members" :
-
 				$view->span = isset($atts["span"]) ? $atts["span"] : "";
 				$view->members = $groupSvc->getLatestMembers(  );
 				return $view->render( 'last-members.phtml' );

@@ -89,6 +89,14 @@ Company: bidX;
             background-color:       #bdc3c8;
         }
 
+        .bidx-theme-colour-one {
+            background-color:       #34495E
+        }
+
+        .bidx-theme-colour-two {
+            background-color:       #1ABC9C;
+        }
+
     /************************ End bidX default colours ***************************/
 
 
@@ -846,14 +854,10 @@ Company: bidX;
 
     /* open group page*/
     .bidx.home .bidx-register-c2a {
-        background-color:                   #34495e;
-
         -webkit-border-radius:              10px;
         -moz-border-radius:                 10px;
         border-radius:                      10px;
         height:                             117px;
-
-
 
         background-repeat:                  no-repeat;
         background-position:                9% 50%;

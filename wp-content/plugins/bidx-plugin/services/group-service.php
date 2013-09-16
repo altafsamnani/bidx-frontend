@@ -42,6 +42,27 @@ class GroupService extends APIbridge {
 
   }
 
+
+  /**
+   * Retrieves the latest companies from a group
+   * @param string $group_id optional a group id otherwise the current
+   * @link http://bidx.net/api/v1/group
+   * @return partial result from the service in JSON form containing the members
+   */
+  public function getLatestCompanies( $group_id = null ) {
+
+    $result = $this -> getGroupDetails( $group_id );
+
+    if ( property_exists( $result, 'data' ) ) {
+      return $result -> data -> latestCompanies;
+    }
+    else {
+      return;
+    }
+
+  }
+
+
   /**
    * Retrieves the full group data
    * @param string $group_id optional a group id otherwise the current

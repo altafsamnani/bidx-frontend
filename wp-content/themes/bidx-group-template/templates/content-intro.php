@@ -126,29 +126,9 @@
                         <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
                     </div>
                     <div class="feature-block-items">
-                        <div class="row-fluid spacer">
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Business name#</strong></div>
-                                    <div>[ Industry ]</div>
-                                    <div>[ Country of operations ]</div>
-                                    <div>[ MM.DD.YY ]</div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
-                            <!-- feature item -->
-                            <div class="span6">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">
-                                <div>
-                                    <div><strong>Business name#</strong></div>
-                                    <div>[ Industry ]</div>
-                                    <div>[ Country of operations ]</div>
-                                    <div>[ MM.DD.YY ]</div>
-                                </div>
-                            </div>
-                            <!-- // feature item -->
+                        <div class="bidx-latest-members clearfix">
+                        <!-- Grab latests members -->
+                            <?php echo do_shortcode( '[bidx app="group" view="lastest-companies"]' ); ?>
                         </div>
                     </div>
                 </div>
@@ -277,12 +257,12 @@
 
     <div class="container">
         <div class="row-fluid">
-            <div class="span6 bidx-register-c2a investor spacer">
+            <div class="span6 bidx-register-c2a investor spacer bidx-theme-colour-one">
                 <div class="bidx-arrow-right">
                     <div class="c2a-label">Register as<br/> INVESTOR</div>
                 </div>
             </div>
-            <div class="span6 bidx-register-c2a entrepreneur spacer">
+            <div class="span6 bidx-register-c2a entrepreneur spacer bidx-theme-colour-one">
                 <div class="bidx-arrow-right">
                     <div class="c2a-label">Register as<br/> ENTREPRENEUR</div>
                 </div>
@@ -320,38 +300,10 @@
                 <div class="span4 feature-col">
                     <h2>New Business</h2>
                     <div class="feature-col-items">
-                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left">
-                            <div>
-                                <div><strong>Business name#</strong></div>
-                                <div>[ Industry ]</div>
-                                <div>[ Country of operations ]</div>
-                            </div>
+                        <div class="bidx-latest-members clearfix">
+                        <!-- Grab latests members -->
+                            <?php echo do_shortcode( '[bidx app="group" view="lastest-companies" span="12"]' ); ?>
                         </div>
-                        <!-- // feature item -->
-
-                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left">
-                            <div>
-                                <div><strong>Business name#</strong></div>
-                                <div>[ Industry ]</div>
-                                <div>[ Country of operations ]</div>
-                            </div>
-                        </div>
-                        <!-- // feature item -->
-
-                                                                        <!-- feature item -->
-                        <div class="clearfix spacer">
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left">
-                            <div>
-                                <div><strong>Business name#</strong></div>
-                                <div>[ Industry ]</div>
-                                <div>[ Country of operations ]</div>
-                            </div>
-                        </div>
-                        <!-- // feature item -->
                     </div>
                 </div>
 

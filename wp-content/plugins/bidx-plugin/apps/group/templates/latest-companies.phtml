@@ -1,0 +1,35 @@
+
+<?php
+        // check if span is empty, then revert to default 6
+        $span = !empty($this->span) ? $this->span : 6;
+
+        if (is_array($this -> companies)) {
+/*            new dBug($this -> companies);
+            exit();
+
+*/            foreach ($this -> companies as $company) {
+
+                $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
+ ?>
+
+                <div class="span<?php echo $span ?> clearfix">
+                    <?php
+                        if ( empty( $company -> profilePicture ) ) {
+                            echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">';
+                        }
+                        else {
+                            echo '<img src="' . $company -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
+                        }
+                    ?>
+                    <div>
+                        <div><strong><?php $this -> showProperty($company, 'displayName'); ?></strong></div>
+                        <div><?php $this -> showProperty($company, 'website') ?></div>
+                    </div>
+                </div>
+<?php
+            }
+            // end foreach
+        }
+?>
+
+
