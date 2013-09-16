@@ -567,6 +567,7 @@
             ,   min:                    $.validator.format( bidx.i18n.i( "frmInvalidMin" ))
             ,   max:                    $.validator.format( bidx.i18n.i( "frmInvalidMax" ))
             ,   digits:                 bidx.i18n.i( "frmInvalidDigits" )
+            ,   maxlength:              $.validator.format( bidx.i18n.i( "frmInvalidMaxlength" ))
 
                 // bidx-tagsinput
                 //

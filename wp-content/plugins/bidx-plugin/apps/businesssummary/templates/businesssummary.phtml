@@ -156,7 +156,20 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                 <div class="control-group">
                                     <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <textarea type="text" name="reasonForSubmission" placeholder="<?php _e('Please give the reason for submission','bidxplugin'); ?>"></textarea>
+                                        <select name="reasonForSubmission">
+                                            <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
+
+<?php
+                                        // Render the select based upon the items from the static data api for the 'reasonForSubmission' typeCode / groupCode / context
+                                        //
+                                        $typeCode = 'reasonForSubmission';
+                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                            foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
+                                                printf( '<option value="%s">%s</option>', $item->value, $item->label );
+                                            }
+                                        }
+?>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -322,7 +335,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                     <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <select name="socialImpact">
-                                            <option value=""><?php __( 'Select an item', 'bidxplugin' ); ?></option>
+                                            <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
 <?php
                                         // Render the select options based upon the items from the static data api for the 'socialImpact' typeCode / groupCode / context
                                         //
@@ -342,7 +355,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                     <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <select name="envImpact">
-                                            <option value=""><?php __( 'Select an item', 'bidxplugin' ); ?></option>
+                                            <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
 <?php
                                         // Render the select options based upon the items from the static data api for the 'envImpact' typeCode / groupCode / context
                                         //
@@ -450,6 +463,13 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                     </div>
                                 </div>
 
+                                <div class="intermediate-row">
+                                    <label><?php _e('Here you can give information about other members in your team.','bidxplugin'); ?></label>
+                                    <a href="#addManagementTeam" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
+                                </div>
+
+                                <div class="managementTeamContainer"></div>
+
                             </form>
                         </div>
                     </div>
@@ -552,5 +572,45 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
         </div><!-- /#businessSummaryAccordion -->
 
     </div><!-- /business summary content container -->
+
+    <!-- SNIPPETS -->
+    <div class="snippets hide">
+        <div class="managementTeamItem span6 well well-white">
+
+            <!-- First Name -->
+            <div class="control-group">
+                <label class="control-label"><?php _e('First name','bidxplugin'); ?></label>
+                <div class="controls">
+                    <input type="text" name="firstName" placeholder="<?php _e('Please type the first name','bidxplugin'); ?>">
+                </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="control-group">
+                <label class="control-label"><?php _e('Last name','bidxplugin'); ?></label>
+                <div class="controls">
+                    <input type="text" name="lastName" placeholder="<?php _e('Please type the last name','bidxplugin'); ?>">
+                </div>
+            </div>
+
+            <!-- Role -->
+            <div class="control-group">
+                <label class="control-label"><?php _e('Role of partner in this business','bidxplugin'); ?></label>
+                <div class="controls">
+                    <input type="text" name="role" placeholder="<?php _e('Amount invested','bidxplugin'); ?>">
+                </div>
+            </div>
+
+            <!-- Expertise -->
+            <div class="control-group">
+                <label class="control-label"><?php _e('Expertise of partner applicable to business','bidxplugin'); ?></label>
+                <div class="controls">
+                    <textarea type="text" name="expertise" placeholder="<?php _e('Please give the expertise of partner applicable to business','bidxplugin'); ?>"></textarea>
+                </div>
+            </div>
+
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this partner','bidxplugin'); ?></a>
+        </div>
+    </div>
 
 </div><!-- /businesssummary -->

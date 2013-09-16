@@ -9,6 +9,13 @@
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
+    ,   $frmGeneralOverview         = $element.find( "#frmBusinessSummary-GeneralOverview" )
+    ,   $frmAboutYourBusiness       = $element.find( "#frmBusinessSummary-AboutYourBusiness" )
+    ,   $frmAboutYouAndYourTeam     = $element.find( "#frmBusinessSummary-AboutYouAndYourTeam" )
+
+    ,   $btnAddManagementTeam       = $frmAboutYouAndYourTeam.find( "[href$='#addManagementTeam']" )
+    ,   $managementTeamContainer    = $frmAboutYouAndYourTeam.find( ".managementTeamContainer" )
+
     ,   businessSummary
     ,   businessSummaryId
 
@@ -21,9 +28,33 @@
 
     ;
 
+    var fields =
+    {
+        "generalOverview":
+        {
+
+        }
+
+    ,   "aboutYourBusiness":
+        {
+
+        }
+
+    ,   "aboutYouAndYourTeam":
+        {
+            "managementTeam":
+            [
+                "firstName"
+            ,   "lastName"
+            ,   "role"
+            ,   "expertise"
+            ]
+        }
+    };
+
     // Grab the snippets from the DOM
     //
-//    snippets.$language      = $snippets.children( ".languageItem"   ).remove();
+    snippets.$managementTeam       = $snippets.children( ".managementTeamItem"   ).remove();
 
     // On any changes, how little doesn't matter, notify that we have a pending change
     // But no need to track the changes when doing a member data load
@@ -34,6 +65,103 @@
         {
             bidx.common.addAppWithPendingChanges( appName );
         }
+    } );
+
+
+    // Instantiate the reflowrower components
+    //
+    $managementTeamContainer.reflowrower( { itemsPerRow: 2 } );
+
+    // Add the snippet for a previous investment
+    //
+    function _addManagementTeam( index, managementTeam )
+    {
+        if ( !index )
+        {
+            index = $managementTeamContainer.find( ".managementTeamItem" ).length;
+        }
+
+        var $managementTeam = snippets.$managementTeam.clone()
+        ,   inputNamePrefix = "managementTeam[" + index + "]"
+        ;
+
+        // Are we adding an investment with data or just an empty item?
+        //
+        if ( managementTeam )
+        {
+            $.each( fields.aboutYouAndYourTeam.managementTeam, function( j, f )
+            {
+                var $input  = $managementTeam.find( "[name='" + inputNamePrefix + "." + f + "']" )
+                ,   value   = bidx.utils.getValue( managementTeam, f )
+                ;
+
+                $input.each( function()
+                {
+                    bidx.utils.setElementValue( $( this ), value  );
+                } );
+            } );
+        }
+
+        // Store the data in the DOM for later referal / merging
+        //
+        $managementTeam.data( "bidxData", managementTeam );
+
+        // Add it to the DOM!
+        //
+        $managementTeamContainer.reflowrower( "addItem", $managementTeam );
+
+        // Update all the input elements and prefix the names with the right index
+        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        //
+        $managementTeam.find( "input, select, textarea" ).each( function( )
+        {
+            var $input          = $( this )
+            ,   baseName        = $input.prop( "name" )
+            ,   newName         = inputNamePrefix + "." + baseName
+            ;
+
+            $input.prop( "name", newName );
+
+            // Notify the form validator of the new elements
+            // Use 'orgName' since that is consistent over each itteration
+            //
+            switch ( baseName )
+            {
+                case "firstName":
+                case "lastName":
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    } );
+                break;
+
+                case "role":
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    } );
+                break;
+
+                case "expertise":
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    } );
+                break;
+
+                default:
+                    // NOOP
+            }
+        } );
+    }
+
+    // Add an empty previous business block
+    //
+    $btnAddManagementTeam.click( function( e )
+    {
+        e.preventDefault();
+
+        _addManagementTeam();
     } );
 
 
@@ -95,7 +223,96 @@
         $controlsForError.empty();
         $controlsForError.append( $btnCancel.clone( true ) );
 
+        // General Overview
+        //
+        $frmGeneralOverview.validate(
+        {
+            rules:
+            {
+                name:
+                {
+                    required:               true
+                ,   maxlength:              30
+                }
+            ,   slogan:
+                {
+                    maxlength:              90
+                }
+            ,   summary:
+                {
+                    required:               true
+                ,   maxlength:              900
+                }
+            ,   reasonForSubmission:
+                {
+                    required:               true
+                }
+            ,   equityRetained:
+                {
+                    required:               true
+                ,   digits:                 true
+                ,   min:                    0
+                ,   max:                    100
+                }
+            ,   financeNeeded:
+                {
+                    required:               true
+                ,   monetaryAmount:         true
+                }
+            ,   investmentType:
+                {
+                    required:               true
+                }
+            ,   summaryFinancingNeeded:
+                {
+                    maxlength:              180
+                }
+            }
+        ,   messages:
+            {
 
+            }
+        ,   submitHandler:          function( e )
+            {
+
+            }
+        } );
+
+        // About your business
+        //
+        $frmAboutYourBusiness.validate(
+        {
+            rules:
+            {
+
+            }
+        ,   messages:
+            {
+
+            }
+        ,   submitHandler:          function( e )
+            {
+
+            }
+        } );
+
+        // About you and your team
+        //
+        $frmAboutYouAndYourTeam.validate(
+        {
+            rules:
+            {
+
+            }
+        ,   messages:
+            {
+
+            }
+        ,   submitHandler:          function( e )
+            {
+
+            }
+        } );
 
         // var $validator = $editForm.validate(
         // {
@@ -199,6 +416,13 @@
     function _save( params )
     {
         if ( !businessSummary )
+        {
+            return;
+        }
+
+        // Only allow saving when all the sub forms are valid
+        //
+        if ( !$frmGeneralOverview.valid() || !$frmAboutYourBusiness.valid() || !$frmAboutYouAndYourTeam.valid() )
         {
             return;
         }
