@@ -188,12 +188,12 @@ class TemplateLibrary
 
         $returnVal = $key;
         if(isset($staticData[$type])) {
-        foreach ($staticData[$type] as $staticVal) {
-            if ($staticVal->value == $key) {
-                $returnVal = $staticVal->label;
-                break;
+            foreach ($staticData[$type] as $staticVal) {
+                if ($staticVal->value == $key) {
+                    $returnVal = $staticVal->label;
+                    break;
+                }
             }
-        }
         }
 
         return $returnVal;
