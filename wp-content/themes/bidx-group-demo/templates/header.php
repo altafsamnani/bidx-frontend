@@ -45,7 +45,7 @@
 
 				<nav class="nav-collapse collapse menu-main">
 <?php
-						if (has_nav_menu('group_dashboard_navigation')) :
+						if (has_nav_menu('primary_navigation')) :
 							wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav'));
 						endif;
 ?>

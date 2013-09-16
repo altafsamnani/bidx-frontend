@@ -750,8 +750,6 @@ Company: bidX;
 
 
     .block-login {
-        margin:                     50px auto;
-        width:                      50%;
         padding:                    40px;
         background-color:           #f5f5f5;
 
@@ -2124,16 +2122,16 @@ form .row-fluid .input-prepend {
 
         /************************  Template styles *******************************/
 
-            .block-login {
-                margin:                     0;
-                width:                      100%;
-                padding:                    0;
-                background-color:           #f5f5f5;
+/*             .block-login {
+    margin:                     0;
+    width:                      100%;
+    padding:                    0;
+    background-color:           #f5f5f5;
 
-                -webkit-border-radius:      0;
-                -moz-border-radius:         0;
-                border-radius:              0;
-            }
+    -webkit-border-radius:      0;
+    -moz-border-radius:         0;
+    border-radius:              0;
+} */
 
             .bidx > .container,
             .bidx header {
