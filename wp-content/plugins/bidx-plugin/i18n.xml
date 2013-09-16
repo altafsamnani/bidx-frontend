@@ -1,6 +1,7 @@
 <I18N>
     <!-- Misc -->
     <Item value="noProfileEditPermission">You do not have the rights to edit this profile</Item>
+    <Item value="noEditPermission">You do not have the rights to edit this</Item>
     <Item value="msgOnPageUnload">There are pending changes. Are you sure to navigate away and loose all of the pending changes?</Item>
     <Item value="msgWaitForRedirect">Please wait for the redirect...</Item>
 
@@ -15,6 +16,7 @@
     <Item value="btnNext">Next</Item>
     <Item value="btnCancel">Cancel</Item>
     <Item value="btnSave">Save</Item>
+    <Item value="btnSaveAndView">Save &amp; view</Item>
     <Item value="btnSaveProfile">Save profile</Item>
     <Item value="btnConfirm">Are you sure?</Item>
 
