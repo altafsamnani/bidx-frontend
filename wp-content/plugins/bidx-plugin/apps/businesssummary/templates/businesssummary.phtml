@@ -35,6 +35,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 </div>
             </div>
 
+
             <div class="span4 editControlsContainer">
                 <div class="editControls btn-group">
 
@@ -58,14 +59,17 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     <!-- EDIT -->
                     <div class="view viewEdit"></div>
 
+                    <!-- ERROR -->
+                    <div class="view viewError"></div>
+
                 </div>
             </div>
 
         </div>
     </div><!-- /pageHeader -->
 
-
     <div class="container">
+
         <div class="accordion" id="businessSummaryAccordion">
 
             <!-- General Overview -->
@@ -86,19 +90,38 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     __('Describe your business in 15 words','bidxplugin')
                         => $this->exst($businessSummary->slogan),
 
-                    __('Industry','bidxplugin')
-                        => $this->getMultiValues( $this->exst($businessSummary->industry), ', ', 'industry' ),
+                    __('Summary of this business','bidxplugin')
+                        => $this->exst($businessSummary->summary),
 
-                    __('Country of business','bidxplugin')
-                        => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' )
+                    __('Reason for submission of business summary','bidxplugin')
+                        => $this->exst($businessSummary->reasonForSubmission),
+
+                    __('Percentage equity you currently retain','bidxplugin')
+                        => $this->exst($businessSummary->equityRetained),
+
+                    __('Finance needed','bidxplugin')
+                        => $this->exst($businessSummary->financingNeeded),
+
+                    __('Investment type','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' ),
+
+                    __('Reason for financing','bidxplugin')
+                        => $this->exst($businessSummary->summaryFinancingNeeded)
                 );
                 echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
+
+                // @TODO: video
 ?>
                         </div>
 
                         <!-- LOAD -->
                         <div class="view viewLoad">
                             <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- ERROR -->
+                        <div class="view viewError">
+                            <p class="errorMsg"></p>
                         </div>
 
                         <!-- EDIT -->
@@ -121,23 +144,59 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                     </div>
                                 </div>
 
-                                <!-- Industry -->
+                                <!-- Summary -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Summary of this business','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="industry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Industry','bidxplugin'); ?>">
-                                        </div>
+                                        <textarea type="text" name="summary" placeholder="<?php _e('Summary','bidxplugin'); ?>"></textarea>
                                     </div>
                                 </div>
 
-                                <!-- Country operation -->
+                                <!-- Reason For Submission -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Country of business','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="countryOperation" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country of business','bidxplugin'); ?>">
-                                        </div>
+                                        <textarea type="text" name="reasonForSubmission" placeholder="<?php _e('Please give the reason for submission','bidxplugin'); ?>"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Equity Retained -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Percentage equity your currently retain ( optional )','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <input type="text" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+
+                                <!-- Finance Needed -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Finance needed','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <input type="text" name="financeNeeded" placeholder="<?php _e('Please give finance needed','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+
+                                <!-- Investment type -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
+                                    <div class="controls">
+<?php
+                                        // Render the checkboxes based upon the items from the static data api for the 'investmentType' typeCode / groupCode / context
+                                        //
+                                        if ( isset(BidxCommon::$i18nData['static']['investmentType']) ) {
+                                            foreach ( BidxCommon::$i18nData['static']['investmentType'] as $investmentType ) {
+                                                printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="investmentType" data-toggle="checkbox" />%s</label>', $investmentType->value, $investmentType->label );
+                                            }
+                                        }
+?>
+                                    </div>
+                                </div>
+
+                                <!-- Summary Financing Needed -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Why do you need financing? Describe in maximum 30 words ( optional )','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <textarea name="summaryFinancingNeeded" placeholder="<?php _e('Please give the reason you need financing','bidxplugin'); ?>"></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -158,23 +217,37 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         <div class="view viewShow">
 <?php
                 $rowValues = array (
-                    __('Summary of this business','bidxplugin')
-                        => $this->exst($businessSummary->summary),
 
-                    __('Reason for submission of business summary','bidxplugin')
-                        => $this->exst($businessSummary->reasonForSubmission),
+                    __('Industry','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->industry), ', ', 'industry' ),
+
+                    __('Suggested industry','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->suggestedIndustry), ', ' ),
+
+                    __('Product Service','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->productService), ', ', 'productService' ),
+
+                    __('Suggested product service','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->suggestedProductService), ', ' ),
+
+                    __('Country of business','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
 
                     __('Social impact','bidxplugin')
                         => $this->getMultiValues( $this->exst($businessSummary->socialImpact), ', ', 'socialImpact' ),
 
-                    __('Percentage equity you currently retain','bidxplugin')
-                        => $this->exst($businessSummary->equityRetained),
+                    __('Environmental impact','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->envImpact), ', ', 'envImpact' ),
 
-                    __('Finance needed','bidxplugin')
-                        => $this->exst($businessSummary->financingNeeded),
+                    __('Stage of business','bidxplugin')
+                        => $this->getStaticVal( 'stageBusiness', $this->exst($businessSummary->stageBusiness)),
 
-                    __('Reason for financing','bidxplugin')
-                        => $this->exst($businessSummary->summaryFinancingNeeded)
+                    // This is likely a mismatch in labeling. The UI label is set to Customer Type but the object property is Consumer Type
+                    // PM-163 for clarification
+                    // __('Customer type','bidxplugin')
+                    //     => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' ),
+
+
                 );
                 echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
 ?>
@@ -185,23 +258,62 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
                         </div>
 
+                        <!-- ERROR -->
+                        <div class="view viewError">
+                            <p class="errorMsg"></p>
+                        </div>
+
                         <!-- EDIT -->
                         <div class="view viewEdit">
                             <form id="frmBusinessSummary-AboutYourBusiness">
 
-                                <!-- Summary -->
+                                <!-- Industry -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Summary of this business','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <textarea type="text" name="summary" placeholder="<?php _e('Summary','bidxplugin'); ?>"></textarea>
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="industry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Industry','bidxplugin'); ?>">
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- Reason For Submission -->
+                                <!-- Suggested Industry -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Suggested industry','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <textarea type="text" name="reasonForSubmission" placeholder="<?php _e('Please give the reason for submission','bidxplugin'); ?>"></textarea>
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Product Service -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Product service','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="productService" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="productService" placeholder="<?php _e('Product service','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Suggested Product Service -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Suggested product service','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Country operation -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Country of business','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="countryOperation" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country of business','bidxplugin'); ?>">
+                                        </div>
                                     </div>
                                 </div>
 
@@ -209,33 +321,58 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                 <div class="control-group">
                                     <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="socialImpact" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="socialImpact" placeholder="<?php _e('Social impact','bidxplugin'); ?>">
-                                        </div>
+                                        <select name="socialImpact">
+                                            <option value=""><?php __( 'Select an item', 'bidxplugin' ); ?></option>
+<?php
+                                        // Render the select options based upon the items from the static data api for the 'socialImpact' typeCode / groupCode / context
+                                        //
+                                        $typeCode = 'socialImpact';
+                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                            foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
+                                                printf( '<option value="%s">%s</option>', $item->value, $item->label );
+                                            }
+                                        }
+?>
+                                        </select>
                                     </div>
                                 </div>
 
-                                <!-- Equity Retained -->
+                                <!-- Env impact -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Percentage equity your currently retain ( optional )','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <input type="text" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
+                                        <select name="envImpact">
+                                            <option value=""><?php __( 'Select an item', 'bidxplugin' ); ?></option>
+<?php
+                                        // Render the select options based upon the items from the static data api for the 'envImpact' typeCode / groupCode / context
+                                        //
+                                        $typeCode = 'envImpact';
+                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                            foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
+                                                printf( '<option value="%s">%s</option>', $item->value, $item->label );
+                                            }
+                                        }
+?>
+                                        </select>
                                     </div>
                                 </div>
 
-                                <!-- Finance Needed -->
-                                <div class="control-group">
-                                    <label class="control-label"><?php _e('Finance needed','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <input type="text" name="financeNeeded" placeholder="<?php _e('Please give finance needed','bidxplugin'); ?>">
-                                    </div>
-                                </div>
+                                <!-- Stage Business is read only -->
 
-                                <!-- Summary Financing Needed -->
+                                <!-- Consumer Type -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Why do you need financing? Describe in maximum 30 words ( optional )','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <textarea name="summaryFinancingNeeded" placeholder="<?php _e('Please give the reason you need financing','bidxplugin'); ?>"></textarea>
+<?php
+                                        // Render the checkboxes based upon the items from the static data api for the 'consumerType' typeCode / groupCode / context
+                                        //
+                                        $typeCode = 'consumerType';
+                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                            foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
+                                                printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="consumerType" data-toggle="checkbox" />%s</label>', $item->value, $item->label );
+                                            }
+                                        }
+?>
                                     </div>
                                 </div>
 
@@ -257,20 +394,40 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         <!-- SHOW -->
                         <div class="view viewShow">
 <?php
-                $rowValues = array (
-                    __('Role of entrepreneur in this business','bidxplugin')
-                        => $this->exst($businessSummary->personalRole),
+                            $rowValues = array (
+                                __('Role of entrepreneur in this business','bidxplugin')
+                                    => $this->exst($businessSummary->personalRole),
 
-                    __('Expertise applicable to this business','bidxplugin')
-                        => $this->exst($businessSummary->personalExpertise)
-                );
-                echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
+                                __('Expertise applicable to this business','bidxplugin')
+                                    => $this->exst($businessSummary->personalExpertise)
+                            );
+                            echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
+
+                            // Supporting members
+                            //
+                            $tableHeader = array (
+                                __('Name','bidxplugin') => 'name',
+                                __('Role of partner in this business','bidxplugin') => 'role',
+                                __('Expertise of partner applicable','bidxplugin') => 'expertise'
+                            );
+
+                            $merge['name'] = array ('firstName', 'lastName');
+
+                            $supportingMembersHtml = $this->addTableRows ($header, $supportingData, 'table table-bordered', $merge);
+
+                            $rowValues = array (__('Supporting members of management team','bidxplugin') => $supportingMembersHtml);
+                            echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
 ?>
                         </div>
 
                         <!-- LOAD -->
                         <div class="view viewLoad">
                             <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- ERROR -->
+                        <div class="view viewError">
+                            <p class="errorMsg"></p>
                         </div>
 
                         <!-- EDIT -->
@@ -317,6 +474,11 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
                         </div>
 
+                        <!-- ERROR -->
+                        <div class="view viewError">
+                            <p class="errorMsg"></p>
+                        </div>
+
                         <!-- EDIT -->
                         <div class="view viewEdit">
                             edit
@@ -343,6 +505,11 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
                         </div>
 
+                        <!-- ERROR -->
+                        <div class="view viewError">
+                            <p class="errorMsg"></p>
+                        </div>
+
                         <!-- EDIT -->
                         <div class="view viewEdit">
                             edit
@@ -367,6 +534,11 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         <!-- LOAD -->
                         <div class="view viewLoad">
                             <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        </div>
+
+                        <!-- ERROR -->
+                        <div class="view viewError">
+                            <p class="errorMsg"></p>
                         </div>
 
                         <!-- EDIT -->

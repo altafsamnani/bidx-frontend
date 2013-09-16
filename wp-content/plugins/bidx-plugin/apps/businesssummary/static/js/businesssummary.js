@@ -5,7 +5,9 @@
 
     ,   $views                      = $element.find( ".view" )
 
-    ,   $controlsForEdit            = $element.find( ".editControls .viewEdit" )
+    ,   $editControls               = $element.find( ".editControls" )
+    ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
+    ,   $controlsForError           = $editControls.find( ".viewError" )
 
     ,   businessSummary
     ,   businessSummaryId
@@ -49,7 +51,7 @@
 
     }
 
-    // This is the startpoint
+    // This is the startpoint for the edit state
     //
     function _init()
     {
@@ -60,12 +62,6 @@
         var $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    })
         ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
         ;
-
-        $btnSave.i18nText( "btnSaveAndView" );
-        $btnCancel.i18nText( "btnCancel" );
-
-        $controlsForEdit.empty();
-        $controlsForEdit.append( $btnSave, $btnCancel );
 
         $btnCancel.bind( "click", function( e )
         {
@@ -88,6 +84,17 @@
             // @TODO: are all forms valid?
             // _save();
         } );
+
+
+        $btnSave.i18nText( "btnSaveAndView" );
+        $btnCancel.i18nText( "btnCancel" );
+
+        $controlsForEdit.empty();
+        $controlsForEdit.append( $btnSave, $btnCancel );
+
+        $controlsForError.empty();
+        $controlsForError.append( $btnCancel.clone( true ) );
+
 
 
         // var $validator = $editForm.validate(
@@ -136,7 +143,7 @@
         //     }
         // } );
 
-        // Fetch the member
+        // Fetch the business summary
         //
         bidx.api.call(
             "entity.fetch"
@@ -146,6 +153,8 @@
 
             ,   success: function( response )
                 {
+                    bidx.utils.log( "[BusinessSummary] fetch", businessSummaryId, response );
+
                     // Do we have edit perms?
                     //
                     var bidxMeta    = bidx.utils.getValue( response, "bidxMeta" )
@@ -194,7 +203,7 @@
             return;
         }
 
-        // Update the member object
+        // Update the business summary object
         //
         _getFormValues();
 
@@ -261,7 +270,7 @@
                     updateHash = true;
                 }
 
-                // No memberId set yet and not one explicitly provided? Use the one from the session
+                // No businessSummaryId set yet and not one explicitly provided? Use the one from the bidxConfig.context
                 //
                 if ( !businessSummaryId && !isId )
                 {
