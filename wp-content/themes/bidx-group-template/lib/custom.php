@@ -14,6 +14,9 @@
  * @param string $content  Template Content
  * @param string $content  Replaced Template Content
  */
+
+require_once "class-wp-customize-control.php";
+
 add_filter ('the_content', 'bidx_filter', 5);
 add_filter('bidx', 'do_shortcode', 1);
 
@@ -158,8 +161,17 @@ function bidx_status_text ( $textId, $replaceString ) {
 
 }
 
-    
-function themeslug_theme_customizer( $wp_customize ) {
+/**
+ * Add logo section with upload control to theme customizer
+ *
+ * @author msp
+ * @since Sep 16 2013
+ *
+ * @param $wp_customize class
+ * @return void
+ * @access public
+   */
+function theme_customizer_logo( $wp_customize ) {
 
     $wp_customize->add_section( 'themeslug_logo_section' , array(
         'title'       => __( 'Logo', 'themeslug' ),
@@ -175,4 +187,38 @@ function themeslug_theme_customizer( $wp_customize ) {
         'settings' => 'themeslug_logo',
     ) ) );
 }
-add_action('customize_register', 'themeslug_theme_customizer');
+add_action('customize_register', 'theme_customizer_logo');
+
+
+
+
+
+/**
+ * Add groupstyle section with textarea control theme customizer
+ *
+ * @author msp
+ * @since Sep 16 2013
+ *
+ * @param $wp_customize class
+ * @return void
+ * @access public
+   */
+function theme_customizer_groupstyle( $wp_customize ) {
+    $wp_customize->add_section( 'group_styles', array(
+            'title'    => __( 'Group Styles' ),
+            'priority' => 20,
+    ) );
+    $wp_customize->add_setting( 'group_styles', array(
+        'default'        => 'Default text',
+    ) );
+
+
+    $wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'group_styles', array(
+        'label'   => 'Textarea Setting',
+        'section' => 'group_styles',
+        'settings'   => 'group_styles',
+    ) ) );
+}
+add_action( 'customize_register', 'theme_customizer_groupstyle' );
+
+

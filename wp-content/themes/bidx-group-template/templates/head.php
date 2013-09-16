@@ -16,7 +16,13 @@
 	  <script src="/<?php echo THEME_PATH; ?>/assets/js/vendor/html5shiv.js"></script>
 	<![endif]-->
 
-
-
+<?php
+		// add custom group_styles comming from the theme customizer
+		if ( get_theme_mod( 'group_styles' ) ) {
+			echo "<style>";
+			echo get_theme_mod( 'group_styles' );
+			echo "</style>";
+		}
+ ?>
 </head>
 

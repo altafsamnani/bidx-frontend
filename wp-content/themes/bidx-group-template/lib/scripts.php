@@ -7,7 +7,7 @@ function roots_scripts() {
     wp_enqueue_style('roots_bootstrap_responsive',  get_template_directory_uri() . '/assets/css/bootstrap-responsive.css', array('roots_bootstrap'), null);
 
     wp_enqueue_style('main-style',                  get_template_directory_uri() . '/style.css', false, null);
-    wp_enqueue_style('group-style',                  get_template_directory_uri() . '/group.css', false, null);
+
 
     if (is_single() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');

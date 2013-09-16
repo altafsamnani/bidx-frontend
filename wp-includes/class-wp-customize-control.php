@@ -815,3 +815,4 @@ class WP_Customize_Header_Image_Control extends WP_Customize_Image_Control {
 			$this->print_header_image( $choice, $header );
 	}
 }
+
