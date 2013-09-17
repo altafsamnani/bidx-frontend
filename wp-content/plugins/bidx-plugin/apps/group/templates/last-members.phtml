@@ -4,8 +4,11 @@
         $span = !empty($this->span) ? $this->span : 6;
 
         if (is_array($this -> members)) {
+            $index = 0;
         	foreach ($this -> members as $member) {
-
+                if ( $index == 3) {
+                    break;
+                }
 		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
  ?>
 
@@ -26,6 +29,7 @@
                     </div>
                 </div>
 <?php
+            $index++;
             }
             // end foreach
         }

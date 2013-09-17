@@ -12,8 +12,11 @@
     $my_query = new WP_Query($args);
 
     if( $my_query->have_posts() ) {
-
+        $index = 0;
         while ( $my_query->have_posts() ) {
+            if ( $index == 3) {
+                break;
+            }
             $my_query->the_post();
 ?>
                     <div class="span<?php echo $span ?> clearfix">
@@ -40,6 +43,7 @@
                     </div>
 <?php
         }
+         $index++;
     }
     wp_reset_query();
 ?>

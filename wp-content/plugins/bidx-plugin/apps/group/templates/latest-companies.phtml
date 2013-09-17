@@ -7,8 +7,12 @@
 /*            new dBug($this -> companies);
             exit();
 
-*/            foreach ($this -> companies as $company) {
-
+*/
+            $index = 0;
+            foreach ($this -> companies as $company) {
+                if ( $index == 3) {
+                    break;
+                }
                 $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
  ?>
 
@@ -27,6 +31,7 @@
                     </div>
                 </div>
 <?php
+                $index++;
             }
             // end foreach
         }
