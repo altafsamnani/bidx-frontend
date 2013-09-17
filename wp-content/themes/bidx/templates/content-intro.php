@@ -21,14 +21,14 @@
 									'orderby' => 'menu_order' )
 									);
 						?>
-						<ol class="carousel-indicators">
-						<?php
-							$count = 0;
-							foreach ( $images as $id => $image ) { ?>
-							<li data-target="#introCarousel" data-slide-to="<?php echo $count ?>"
-							<?php if ($count == 0) { ?> class="active" <?php } $count++; ?>></li>
-						<?php } ?>
-						</ol>
+<!-- 						<ol class="carousel-indicators">
+<?php
+	/*$count = 0;
+	foreach ( $images as $id => $image ) { ?>
+	<li data-target="#introCarousel" data-slide-to="<?php echo $count ?>"
+	<?php if ($count == 0) { ?> class="active" <?php } $count++; ?>></li>
+<?php }*/ ?>
+</ol> -->
 						<!-- Carousel items -->
 						<div class="carousel-inner">
 						<?php
@@ -38,10 +38,10 @@
 						?>
 							<div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
 								<img class="img-rounded" src="<?php echo $img[0] ?>" />
-							    <div class="carousel-caption img-rounded">
-			                      <h4><?php echo $image -> post_title ?></h4>
-			                      <p><?php echo $image -> post_content ?></p>
-			                    </div>
+							    <!-- <div class="carousel-caption img-rounded">
+							    			                      <h4><?php //echo $image -> post_title ?></h4>
+							    			                      <p><?php //echo $image -> post_content ?></p>
+							    			                    </div> -->
 							</div>
 						<?php } ?>
 						</div>
