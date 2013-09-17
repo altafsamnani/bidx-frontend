@@ -1,65 +1,70 @@
 
 
 <article  class="view viewRegister <?php //echo ($this->type=='register') ? 'mainStateShow':'';?>">
-	<form id="frmRegister" action="/">
-        <div class="row-fluid">
-            <div class="span8">
-                <div class="control-group">
-                    <label class="control-label"><?php _e('First name','bidxplugin');?></label>
-                    <div class="controls">
-                        <input type="text" name="personalDetails.firstName" placeholder="<?php _e('Type your first name','bidxplugin');?>" />
+                <div class="row-fluid">
+                    <div class="span6 offset3 block-login bidx-theme-colour-panel-one">
+                    	<form id="frmRegister" action="/">
+                            <h1><?php _e('Become a member','bidxplugin');?></h1>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('First name','bidxplugin');?></label>
+                                        <div class="controls">
+                                            <input type="text" name="personalDetails.firstName" placeholder="<?php _e('Type your first name','bidxplugin');?>" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Last name','bidxplugin');?></label>
+                                        <div class="controls">
+                                            <input type="text" name="personalDetails.lastName" placeholder="<?php _e('Type your last name','bidxplugin');?>" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
+                                        <div class="controls">
+                                            <input type="text" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('What is your location?','bidxplugin');?></label>
+                                        <div class="controls">
+                                            <input type="text" name="address" placeholder="<?php _e('Please type your location','bidxplugin');?>" data-type="location" data-type-arguments=''/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    		<div class="buttonwrapper">
+                    			<button type="submit" class="btn btn-primary bidx-theme-colour-one"><?php _e('Register','bidxplugin');?></button>
+                    		</div>
+                            <?php if($this->showLoginLink) { ?>
+                    		<p>
+                    			<?php _e('Forgot your password. Click <a href="#auth/resetpassword">here</a> to recover.','bidxplugin');?><br/>
+                    			<?php _e('Login? Click <a href="/auth/#auth/login">here</a> to go to login.','bidxplugin');?>
+                    		</p>
+                            <?php } ?>
+                            <input type="hidden" name="urlparam" value="<?php  echo base64_encode('groupname='.$this->groupNotification);?>">
+                    	</form>
+
+                    	<div class="registerSuccess hide">
+                    		<h3><?php _e('Registration complete','bidxplugin');?></h3>
+                    		<p><?php _e('The registration is complete. An e-mail has been dispatched with followup instructions.','bidxplugin');?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row-fluid">
-            <div class="span8">
-                <div class="control-group">
-                    <label class="control-label"><?php _e('Last name','bidxplugin');?></label>
-                    <div class="controls">
-                        <input type="text" name="personalDetails.lastName" placeholder="<?php _e('Type your last name','bidxplugin');?>" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row-fluid">
-            <div class="span8">
-                <div class="control-group">
-                    <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
-                    <div class="controls">
-                        <input type="text" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row-fluid">
-            <div class="span8">
-                <div class="control-group">
-                    <label class="control-label"><?php _e('What is your location?','bidxplugin');?></label>
-                    <div class="controls">
-                        <input type="text" name="address" placeholder="<?php _e('Please type your location','bidxplugin');?>" data-type="location" data-type-arguments=''/>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-		<div class="buttonwrapper">
-			<button type="submit" class="btn btn-primary bidx-theme-colour-one"><?php _e('Register','bidxplugin');?></button>
-		</div>
-        <?php if($this->showLoginLink) { ?>
-		<p>
-			<?php _e('Forgot your password. Click <a href="#auth/resetpassword">here</a> to recover.','bidxplugin');?><br/>
-			<?php _e('Login? Click <a href="/auth/#auth/login">here</a> to go to login.','bidxplugin');?>
-		</p>
-        <?php } ?>
-        <input type="hidden" name="urlparam" value="<?php  echo base64_encode('groupname='.$this->groupNotification);?>">
-	</form>
-
-	<div class="registerSuccess hide">
-		<h3><?php _e('Registration complete','bidxplugin');?></h3>
-		<p><?php _e('The registration is complete. An e-mail has been dispatched with followup instructions.','bidxplugin');?></p>
-    </div>
 </article>

@@ -77,7 +77,9 @@ Company: bidX;
     .spacer{
         margin-bottom:              40px;
     }
-
+    .jqHidden {
+        display:                    none; /* ditch this style asap, currently used for map plugin (its hidden by default with this class */
+    }
     /************************ bidX default colours ***************************/
         /* most of these colours will be overwriten in the specific group style */
 
@@ -95,6 +97,10 @@ Company: bidX;
 
         .bidx-theme-colour-two {
             background-color:       #1ABC9C;
+        }
+
+        .bidx-theme-colour-three {
+            background-color:       #34495E;
         }
 
     /************************ End bidX default colours ***************************/
@@ -772,7 +778,7 @@ Company: bidX;
     }
 
     .bidx.home .side-bar h2 {
-        margin:                     0;
+        margin:                     0 0 10px 0;
     }
 
     .bidx.home .side-bar .call-to-action {
@@ -798,52 +804,34 @@ Company: bidX;
          padding:                   0;
     }
 
-
-
-
-
-
-
-
-
-
-    /*not verified*/
-
+    /* This might need to change for smaller screen breakpoints  */
     .pageHeader {
-    padding-top:            10px;
-    padding-bottom:         10px;
-    background-color:       #fff;
-    z-index:                190;
+        padding-top:            10px;
+        padding-bottom:         10px;
+        background-color:       #fff;
+        z-index:                190;
     }
 
     .bidx-edit .pageHeader,
     .bp-summary .pageHeader {
-    position:               fixed;
-    top:                    161px;
-    }
-
-    .pageHeader > .container {
-    height:             60px;
+        position:               fixed;
+        top:                    114px;
     }
 
 
     .pageHeader .editControls {
-    position:           absolute;
-    bottom:             10px;
-    right:              0;
+        position:               absolute;
+        bottom:                 10px;
+        right:                  0;
     }
-
-    .bp-summary .pageHeader .editControls {
-    bottom:             auto;
-    top:                10px;
+  .bp-summary .pageHeader .editControls {
+        bottom:                 auto;
+        top:                    10px;
     }
 
     .pageHeader .editControls a {
-    margin-left:        4px;
+        margin-left:            4px;
     }
-    /* // not verified*/
-
-
 
 
 /*******************************************************************************************
@@ -1128,56 +1116,6 @@ footer .page-footer .footer-bar {
 *
 ********************************************************************************************/
 
-/*
-.hero-block .shade-top {
-	background: url(../img/hero-block-shade-top.png) no-repeat center top !important;
-}
-.hero-block .shade-bottom {
-	background: url(../img/hero-block-shade-bottom.png) no-repeat center top !important;
-}
-*/
-
-/*Mattijs: Is this still used? */
-/*
-.top-border, .bottom-border {
-	border-top: 1px solid #CCCCCC;
-	height: 1px;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
-.bottom-border  {
-	top: auto;
-	bottom:-1px;
-}
-.block-odd {
-	background-color: #FFF;
-
-}
-.block-even {
-	background-color: #f6f6f6;
-	border-top: 1px solid #eaeaea;
-	border-bottom: 1px solid #eaeaea;
-}
-
-.block {
-	background-color: #f6f6f6;
-	border: 1px solid #eaeaea;
-	padding:25px;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-}
-
-.save-block {
-	clear:left;
-	text-align: right;
-	padding:25px;
-
-
-}*/
 
 body.home .carousel-inner img {
     width:              100%;

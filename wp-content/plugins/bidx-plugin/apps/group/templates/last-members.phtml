@@ -4,7 +4,6 @@
         $span = !empty($this->span) ? $this->span : 6;
 
         if (is_array($this -> members)) {
-
         	foreach ($this -> members as $member) {
 
 		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
@@ -23,7 +22,7 @@
                         <div><strong><?php $this -> showProperty($member, 'firstName') . ' ' . $this -> showProperty($member, 'lastName'); ?></strong></div>
                         <div><?php $this -> showProperty($member, 'professionalTitle') ?></div>
                         <div><?php $this -> showProperty($member, 'country') ?></div>
-                        <div><span class="label bidx-label-investor">Investor</span></div>
+                        <!-- <div><span class="label bidx-label-investor">Investor</span></div> THIS NEEDS TO BE DONE CONDITIONALLY-->
                     </div>
                 </div>
 <?php

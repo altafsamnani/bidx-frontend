@@ -491,16 +491,16 @@ body.home .hero-block {
 .howitworks-generaterevenues {
     display:                inline-block;
     background:             url(assets/img/how-it-works_sprite.png) no-repeat;
-    width:                  122px;
-    height:                 122px;
+    width:                  75px;
+    height:                 75px;
 }
 
 .howitworks-sourceconnectfinance {
-    background-position:    -125px 0;
+    background-position:    -77px 0;
 }
 
 .howitworks-generaterevenues {
-    background-position:    -250px 0;
+    background-position:    -154px 0;
 }
 
 .home .notaserviceprovider {
@@ -531,8 +531,6 @@ body.home .hero-block {
     padding:                20px;
     background-color:       #0093cb;
     border:                 0px;
-    height:                 343px;
-
 }
 
 .signup h3 {

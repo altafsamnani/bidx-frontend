@@ -7,6 +7,18 @@
     if ($sessionData->authenticated == 'true') {
         $authenticated=true;
     }
+
+
+/*    $entrepreneurDetails = isset($this->data->bidxEntrepreneurProfile) ? $this->data->bidxEntrepreneurProfile : NULL ;
+
+
+$entrepreneurBidxMeta = isset( $entrepreneurDetails->bidxMeta )
+    ? $entrepreneurDetails->bidxMeta
+    : $entrepreneurDetails;
+
+$businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
+    ? $businessSummary->bidxMeta
+    : $businessSummary;*/
 ?>
 
 
@@ -154,24 +166,55 @@
             <div class="span4 side-bar">
                 <div class="row-fluid">
                     <div class="span12">
+
                         <h2>Create and grow</h2>
 
                         <div class="call-to-action clearfix">
+<?php
+                        // Create entrepreneur
+                        //
+                        if ( !isset( $entities->bidxEntrepreneurProfile ) ) {
+?>
                             <div class="pull-left">
                                 <div><strong>Become an entrepreneur</strong></div>
                                <em>Create your business</em>
                             </div>
-                            <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i>Create</a>
-                        </div>
-
-                        <div class="call-to-action clearfix">
+                            <a href="/member/#createEntrepreneur" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxtheme')?></a>
+<?php
+                        } else {
+?>
                             <div class="pull-left">
-                                <div><strong>Become an investor</strong></div>
-                                <em>Create your resources</em>
+<?php
+                                printf( __( 'View your %1$sentrepreneur profile%2$s', 'bidxtheme' ), '<a href="/member/#entrepreneur-profile">', '</a>' );
+?>
                             </div>
-                            <a href="" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i>Invest</a>
+<?php
+                        }
+ ?>
                         </div>
-
+<?php
+                        // Create investor
+                        //
+                        if ( !isset( $entities->bidxInvestorProfile )) {
+?>
+                            <div class="call-to-action clearfix">
+                                <div class="pull-left">
+                                    <div><strong>Become an investor</strong></div>
+                                    <em>Create your resources</em>
+                                </div>
+                                <a href="/member/#createInvestor" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Invest','bidxtheme')?></a>
+                            </div>
+<?php
+                        } else {
+?>
+                            <div class="pull-left">
+<?php
+                                printf( __( 'View your %1$investor profile%2$s', 'bidxtheme' ), '<a href="/member/#investor-profile">', '</a>' );
+?>
+                            </div>
+<?php
+                        }
+ ?>
                         <hr>
 
                         <div class="call-to-action transparent clearfix">
@@ -256,35 +299,37 @@
     ###########################################################################-->
 
     <div class="container">
-        <div class="row-fluid">
-            <div class="span6 bidx-register-c2a investor spacer bidx-theme-colour-one">
-                <div class="bidx-arrow-right">
-                    <div class="c2a-label">Register as<br/> INVESTOR</div>
-                </div>
-            </div>
-            <div class="span6 bidx-register-c2a entrepreneur spacer bidx-theme-colour-one">
-                <div class="bidx-arrow-right">
-                    <div class="c2a-label">Register as<br/> ENTREPRENEUR</div>
-                </div>
-
-            </div>
+<!--         <div class="row-fluid">
+    <div class="span6 bidx-register-c2a investor spacer bidx-theme-colour-three">
+        <div class="bidx-arrow-right">
+            <div class="c2a-label">Register as<br/> INVESTOR</div>
         </div>
+    </div>
+    <div class="span6 bidx-register-c2a entrepreneur spacer bidx-theme-colour-three">
+        <div class="bidx-arrow-right">
+            <div class="c2a-label">Register as<br/> ENTREPRENEUR</div>
+        </div>
+
+    </div>
+</div> -->
 
         <div class="row-fluid spacer testimonial-container">
             <div class="span8">
-                <h1>New business</h1>
+                <h1>What is the Bicycle Business Group?</h1>
                 <p>
-                    <img data-src="holder.js/140x140" class="img-circle" alt="140x140" style="width: 140px; height: 140px;" align="right">
-                    <strong>Immediately after the Great Earthquake and Tsunami of 11th March 2011, H.H. Sheikh Hamad Bin Khalifa Al-Thani (Emir of the State of Qatar) announced a USD 100 million gift to Japan.</strong>
-                    To assist relief efforts and accelerate the recovery of victims.  He also ordered the formation of a 24-hour task force within Qatar Petroleum Company, to provide necessary assistance to Japan under direct supervision of H.H Sheikh Tamim Bin Hamad Al-Thani, Heir Apparent of the State of Qatar.
+                    <img src="http://demogroup.beta.bidx.net/assets/sites/273/man-with-wheel.png" class="img-circle" alt="140x140" style="width: 140px; height: 140px;" align="right">
+                    This group focuses on businesses within, and connected to the bicycle industry. Here, entrepreneurs, investors, suppliers and other relevant parties can get in touch and collaborate to meet each other’s needs. So, if you’re an entrepreneur who wants to start a bicycle shop in Rwanda to provide the local community with affordable and accessible means of transportation, you can look for investors and suppliers here. Or maybe you work at a rubber company that provides tires for bikes? Then this might be the place to find a local buyer!
 
-                </p>
+               </p>
 
             </div>
             <div class="span4">
                 <div class="bidx-testimonial pull-right">
                     <div>
-                    Client can post a mission and or vision about their business in this red box.  It’s a fixed height box. Text may not exceed the boundaries in the example text given.
+                    <p>
+                    Our company would like to try to make cycling more common in our area and Rwanda in general. We are looking for buyers to sell our products to, so that more bikes can be produced and sold.
+                    </p>
+                    <em>Eric Uwambag</em>,  Steel Craftsman
                     </div>
                 </div>
 

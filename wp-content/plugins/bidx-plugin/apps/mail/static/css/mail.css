@@ -54,7 +54,7 @@
         padding:                            2px 13px;
         margin:                             3px 0;
         line-height:                        20px;
-        background-color:                   transparent;
+
         border:                             none;
 
         opacity:                            1;
@@ -64,7 +64,11 @@
         box-shadow:                         none;
     }
 
-     #mail .list {
+    #mail .mail .mail-toolbar.bidx-default-bar .btn {
+        background-color:                   transparent;
+    }
+
+    #mail .list {
         background-color:                   #E0E0E0;
     }
     #mail .mail .list > li {
