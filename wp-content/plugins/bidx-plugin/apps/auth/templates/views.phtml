@@ -82,42 +82,48 @@ if (!username_exists ($group_anonymous_login)) {
 
             <!-- FORGOT PASSWORD -->
             <article class="view viewResetpassword">
-                <form id="frmResetpassword" action="/">
-                    <div class="row-fluid">
-                        <div class="span8">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
+                <div class="row-fluid">
+                    <div class="span6 offset3 block-login bidx-theme-colour-panel-one">
+                        <form id="frmResetpassword" action="/">
+                            <div class="row-fluid">
+                                <div class="span8">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
 
-                                <div class="controls">
-                                    <input type="email" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
+                                        <div class="controls">
+                                            <input type="email" name="username" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="buttonwrapper">
+                                <button type="submit" class="btn btn-primary bidx-theme-colour-one"><?php _e('Send me a new password','bidxplugin');?></button>
+                            </div>
+
+                            <p>
+                                <?php _e('Did you remember your password again?.','bidxplugin');?><br/>
+                                <?php _e('Click <a href="#auth/login">here</a> to go to login.','bidxplugin');?>
+                            </p>
+                        </form>
+
+                        <div class="resetpasswordSuccess hide">
+                            <h3><?php _e('E-mail has been send','bidxplugin');?></h3>
+                            <p><?php _e('Password reset e-mail has been send','bidxplugin');?> <br>
+                                <?php _e('A password reset link has been send to you. Please check your inbox and click on the link within the e-mail to reset your password.','bidxplugin');?>
+                                <br/>
+                                <?php _e('Click <a href="/">here</a> to go to homepage.','bidxplugin');?>
+                            </p>
                         </div>
                     </div>
-
-                    <div class="buttonwrapper">
-                        <button type="submit" class="btn btn-primary bidx-theme-colour-one"><?php _e('Send me a new password','bidxplugin');?></button>
-                    </div>
-
-                    <p>
-                        <?php _e('Did you remember your password again?.','bidxplugin');?><br/>
-                        <?php _e('Click <a href="#auth/login">here</a> to go to login.','bidxplugin');?>
-                    </p>
-                </form>
-
-                <div class="resetpasswordSuccess hide">
-                    <h3><?php _e('E-mail has been send','bidxplugin');?></h3>
-                    <p><?php _e('Password reset e-mail has been send','bidxplugin');?> <br>
-                        <?php _e('A password reset link has been send to you. Please check your inbox and click on the link within the e-mail to reset your password.','bidxplugin');?>
-                        <br/>
-                        <?php _e('Click <a href="/">here</a> to go to homepage.','bidxplugin');?>
-                    </p>
                 </div>
-
             </article>
 
             <!-- REGISTER -->
-             <?php $this->render ('inc_registration.phtml'); ?>
+            <article  class="view viewRegister <?php //echo ($this->type=='register') ? 'mainStateShow':'';?>">
+                 <?php $this->render ('inc_registration.phtml'); ?>
+            </article>
+
 
             <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"></script>
 
