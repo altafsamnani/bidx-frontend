@@ -1,4 +1,4 @@
-(function()
+(function( $ )
 {
     var $element = $("#group-dashboard")
     ,   $views                      = $element.find( ".view" )
@@ -122,14 +122,14 @@
                         //clear listing
                         $list.empty();
 
-                    
+
 
                     // now format it into array of objects with value and label
                     //
                     if( response && response.docs )
                     {
                         var $input  = $frmCompose.find( "[name='contacts']" );
-                       
+
                         $.each( response.docs, function ( idx, item)
                         {
                             listMembers.push(
@@ -145,13 +145,13 @@
 
                             //$input.addTag(item.user);
                            // $input.tagsManager( "addtag", item.user );
-                            
+
                             // Member Display
                             element   = $listItem.clone();
                             //search for placeholders in snippit
                                 element.find( ".placeholder" ).each( function( i, el )
                                 {
-                                    
+
                                     //isolate placeholder key
                                     cls = $(el).attr( "class" ).replace( "placeholder ", "" );
 
@@ -312,7 +312,7 @@
         $.each( listItems, function( idx, item){
             bidx.utils.setElementValue( $input, idx );
         } );
-       
+
 
         if( options.onHide )
         {
@@ -400,7 +400,7 @@
 
             break;
             case "list":
-           
+
                 _closeModal(
                 {
                     unbindHide: true
@@ -421,7 +421,7 @@
                         }
                 } );
 
-            break;                   
+            break;
 
             case "dashboardCompose":
 
@@ -465,7 +465,7 @@
     {
         navigate:               navigate
     ,   $element:               $element
-   
+
     // START DEV API
     //
     ,   listItems:              listItems //storage for selection of emails in listview. I chose object because so that I can check if key exists
@@ -488,7 +488,7 @@
 
     // Initialize the defered tagsinput
     //
-    
+
 
     // Only update the hash when user is authenticating and when there is no hash defined
     //
@@ -506,5 +506,5 @@
     }
 
 
-}());
+}( jQuery ));
 
