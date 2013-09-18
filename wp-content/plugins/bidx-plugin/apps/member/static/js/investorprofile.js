@@ -1117,6 +1117,10 @@
                 {
                     required:               true
                 }
+            ,   "investorType":
+                {
+                    required:               true
+                }
             ,   "investsForInst":
                 {
                     required:               true
