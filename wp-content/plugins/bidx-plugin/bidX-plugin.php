@@ -13,6 +13,8 @@ License: Commercial
 //Generic config for paths
 //
 
+
+if( $blog_id != 1) {
 include ('apps/util.php' );
 
 
@@ -56,6 +58,7 @@ if ( !BidxCommon :: isWPInternalFunction() ) {
 //Bidx WP Hooks file
 require_once( BIDX_PLUGIN_DIR .'/../services/wp-service.php' );
 
+}
 add_filter( 'body_class','my_class_names', 100000 );
 
 function my_class_names($classes) {
