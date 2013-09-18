@@ -60,7 +60,7 @@
 
     service.save = function( params )
     {
-        var method = params.entity ? "PUT" : "POST";
+        var method = params.entityId ? "PUT" : "POST";
 
         api._call(
         {
