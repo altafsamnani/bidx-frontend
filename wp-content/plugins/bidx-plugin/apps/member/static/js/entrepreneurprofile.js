@@ -441,17 +441,20 @@
                     ,   bidxData        = $removedItem.data( "bidxData" )
                     ;
 
-                    // Iterate over the properties and set all, but bidxMeta, to null
-                    //
-                    $.each( bidxData, function( prop )
+                    if ( bidxData )
                     {
-                        if ( prop !== "bidxMeta" )
+                        // Iterate over the properties and set all, but bidxMeta, to null
+                        //
+                        $.each( bidxData, function( prop )
                         {
-                            bidxData[ prop ] = null;
-                        }
-                    } );
+                            if ( prop !== "bidxMeta" )
+                            {
+                                bidxData[ prop ] = null;
+                            }
+                        } );
 
-                    item.push( bidxData );
+                        item.push( bidxData );
+                    }
                 } );
             }
         } );

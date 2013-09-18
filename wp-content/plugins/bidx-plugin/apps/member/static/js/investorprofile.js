@@ -987,18 +987,21 @@
                     ,   bidxData        = $removedItem.data( "bidxData" )
                     ;
 
-                    // Iterate over the properties and set all, but bidxMeta, to null, except for array's, those must be set to an empty array...
-                    //
-                    $.each( bidxData, function( prop )
+                    if ( bidxData )
                     {
-                        if ( prop !== "bidxMeta" )
+                        // Iterate over the properties and set all, but bidxMeta, to null, except for array's, those must be set to an empty array...
+                        //
+                        $.each( bidxData, function( prop )
                         {
-                            bidxData[ prop ] = $.type( bidxData[ prop ] ) === "array"
-                                ? []
-                                : null
-                            ;
-                        }
-                    } );
+                            if ( prop !== "bidxMeta" )
+                            {
+                                bidxData[ prop ] = $.type( bidxData[ prop ] ) === "array"
+                                    ? []
+                                    : null
+                                ;
+                            }
+                        } );
+                    }
 
                     item.push( bidxData );
                 } );
