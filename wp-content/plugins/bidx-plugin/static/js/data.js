@@ -99,7 +99,7 @@
                 {
                     if ( !data || !data[ context ] )
                     {
-                        bidx.utils.error( "bidx.data::called the WP api for retrieving extra data, but unexpected response", data, status, jqXHR );
+                        bidx.utils.error( "bidx.data::called the WP api for retrieving extra data for context", context, ", but unexpected response", data, status, jqXHR );
 
                         cb( new Error( "Problem retrieving static data" ));
                     }
