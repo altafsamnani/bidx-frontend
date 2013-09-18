@@ -132,9 +132,13 @@
 <div class="container content-block howitworks">
 		<div class="row-fluid text-center">
 			<h2 ><?php _e('It’s all about growing businesses and creating jobs','bidxtheme');?></h2>
-			<p class="text-left"><?php _e('If your goal is to grow, start or finance businesses in emerging markets, then bidX offers you an online solution to improve your results and impact.','bidxtheme');?></p>
-			<p class="text-left"><?php _e('bidX is powered by BiD Network.  60,000 online members from 90 countries, 1500 mentors, 200 investors, 822 businesses started and grown, 130 businesses financed with over $17 million. 6500 jobs created.','bidxtheme');?></p>
-			<p class="text-left"><?php _e('Use bidX to create your own online community, using your own brand, identity and language. Decide on your Group’s focus: a city, country, sector or industry.  Invite entrepreneurs to submit or create their business plans. Connect them with mentors, investors, and advisors. If your businesses are seeking export opportunities or international finance and advice, through bidX they can connect to our global network of online groups.','bidxtheme');?></p>
+			<p class="text-center"><?php _e('If your goal is to grow, start or finance businesses in emerging markets, then bidX offers you an online solution to improve your results and impact.','bidxtheme');?></p>
+			<p class="text-center">
+				<?php printf(__('bidX is powered by BiD Network.  60,000 online members from 90 countries, 1500 mentors, 200 investors, 822 businesses started and grown, %1$s130 businesses financed with over $17 million. 6500 jobs created.','bidxtheme'), '<br/>'); ?>
+			</p>
+			<p class="text-center">
+				<?php printf( __( 'Use bidX to create your own online community, using your own brand, identity and language. Decide on your Group’s focus: a city, country, sector or industry.  %1$sInvite entrepreneurs to submit or create their business plans. Connect them with mentors, investors, and advisors. %1$sIf your businesses are seeking export opportunities or international finance and advice, through bidX they can connect to our global network of online groups.', 'bidxtheme' ), '<br/>'); ?>
+			</p>
 			<p><em><h5><?php _e('bidX provides the tools – you drive your network ','bidxtheme');?></em></h5></p>
 		</div>
 		<div class="row-fluid">
@@ -240,7 +244,7 @@
 		<div class="text-center">
 			<a href="/features" class="btn btn-bidx-blue"><?php _e('View our services','bidxtheme');?><i class="fui-arrow-right pull-right"></i></a>
 		</div>
-	<	hr />
+		<hr />
 	</div>
 
 	<div class="container content-block ">
@@ -250,7 +254,10 @@
 		</div>
 		<div class="row-fluid">
 			<div class="span12 bidx-well notaserviceprovider-block">
-				<?php _e('Over 80% of the new jobs in any economy are created by fewer than 10% of the companies operating in it - small and medium sized businesses that grow consistently year after year. Bidx is a web-services company with a mission to unite the often fragmented entrepreneurial ecosystems in countries to unleash the growth potential of small and medium sized businesses.','bidxtheme');?>
+				<p class="text-center">
+
+				<?php printf(__('Over 80%% of the new jobs in any economy are created by fewer than 10%% of the companies operating in it - small and medium sized businesses that grow consistently year after year. %1$s%1$sBidx is a web-services company with a mission to unite the often fragmented entrepreneurial ecosystems in countries to unleash the growth potential of small and medium sized businesses.','bidxtheme'), '<br/>'); ?>
+				</p>
 			</div>
 		</div>
 		<div class="text-center">
