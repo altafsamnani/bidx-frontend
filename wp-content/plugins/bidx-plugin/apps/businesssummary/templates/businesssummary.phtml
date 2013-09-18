@@ -185,7 +185,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                 <div class="control-group">
                                     <label class="control-label"><?php _e('Finance needed','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <input type="text" name="financeNeeded" placeholder="<?php _e('Please give finance needed','bidxplugin'); ?>">
+                                        <input type="text" name="financingNeeded" placeholder="<?php _e('Please give finance needed','bidxplugin'); ?>">
                                     </div>
                                 </div>
 
@@ -257,9 +257,8 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                     // This is likely a mismatch in labeling. The UI label is set to Customer Type but the object property is Consumer Type
                     // PM-163 for clarification
-                    // __('Customer type','bidxplugin')
-                    //     => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' ),
-
+                    __('Customer type','bidxplugin')
+                        => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' ),
 
                 );
                 echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );

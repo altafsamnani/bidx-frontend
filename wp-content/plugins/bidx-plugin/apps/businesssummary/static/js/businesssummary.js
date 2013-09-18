@@ -9,12 +9,24 @@
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
-    ,   $frmGeneralOverview         = $element.find( "#frmBusinessSummary-GeneralOverview" )
-    ,   $frmAboutYourBusiness       = $element.find( "#frmBusinessSummary-AboutYourBusiness" )
-    ,   $frmAboutYouAndYourTeam     = $element.find( "#frmBusinessSummary-AboutYouAndYourTeam" )
+    ,   forms                       =
+        {
+            generalOverview:
+            {
+                $el:                    $element.find( "#frmBusinessSummary-GeneralOverview" )
+            }
+        ,   aboutYourBusiness:
+            {
+                $el:                    $element.find( "#frmBusinessSummary-AboutYourBusiness" )
+            }
+        ,   aboutYouAndYourTeam:
+            {
+                $el:                    $element.find( "#frmBusinessSummary-AboutYouAndYourTeam" )
+            }
+        }
 
-    ,   $btnAddManagementTeam       = $frmAboutYouAndYourTeam.find( "[href$='#addManagementTeam']" )
-    ,   $managementTeamContainer    = $frmAboutYouAndYourTeam.find( ".managementTeamContainer" )
+    ,   $btnAddManagementTeam       = forms.aboutYouAndYourTeam.$el.find( "[href$='#addManagementTeam']" )
+    ,   $managementTeamContainer    = forms.aboutYouAndYourTeam.$el.find( ".managementTeamContainer" )
 
     ,   businessSummary
     ,   businessSummaryId
@@ -25,24 +37,61 @@
     ,   snippets                    = {}
 
     ,   appName                     = "businesssummary"
-
     ;
 
+    // Form fields
+    //
     var fields =
     {
         "generalOverview":
         {
-
+            "_root":
+            [
+                "name"
+            ,   "slogan"
+            ,   "summary"
+            ,   "reasonForSubmission"
+            ,   "equityRetained"
+            ,   "financingNeeded"
+            ,   "investmentType"
+            ,   "summaryFinancingNeeded"
+            ]
         }
 
     ,   "aboutYourBusiness":
         {
-
+            "_root":
+            [
+                "industry"
+            ,   "suggestedIndustry"
+            ,   "productService"
+            ,   "suggestedProductService"
+            ,   "countryOperation"
+            ,   "socialImpact"
+            ,   "envImpact"
+            ,   "consumerType"
+            ]
         }
 
     ,   "aboutYouAndYourTeam":
         {
-            "managementTeam":
+            "_root":
+            [
+                "personalRole"
+            ,   "personalExpertise"
+            ]
+
+        ,   "_arrayFields":
+            [
+                "managementTeam"
+            ]
+
+        ,   "_reflowRowerFields":
+            [
+                "managementTeam"
+            ]
+
+        ,   "managementTeam":
             [
                 "firstName"
             ,   "lastName"
@@ -75,7 +124,7 @@
     //
     bidx.data.getContext( "reasonForSubmission", function( err, reasons )
     {
-        var $reasonForSubmission    = $frmGeneralOverview.find( "[name='reasonForSubmission']" )
+        var $reasonForSubmission    = forms.generalOverview.$el.find( "[name='reasonForSubmission']" )
         ,   $noValue                = $( "<option value='' />" )
         ;
 
@@ -181,18 +230,141 @@
     } );
 
 
-    // Use the retrieved member object to populate the form and other screen elements
+    // Use the retrieved businesSummary entity to populate the form and other screen elements
     //
     function _populateScreen()
     {
+        $.each( fields, function( form, formFields )
+        {
+            var $form       = forms[ form ].$el;
 
+            if ( formFields._root )
+            {
+                $.each( formFields._root, function( i, f )
+                {
+                    var $input = $form.find( "[name='" + f + "']" )
+                    ,   value  = bidx.utils.getValue( businessSummary, f )
+                    ;
+
+                    $input.each( function()
+                    {
+                        // Value can be an array! Most likely we are targeting a
+                        //
+                        bidx.utils.setElementValue( $( this ), value );
+                    } );
+                } );
+            }
+        } );
+
+        // Now the nested objects
+        //
+        var managementTeam = bidx.utils.getValue( businessSummary, "managementTeam", true );
+
+        if ( managementTeam )
+        {
+            $.each( managementTeam, function( i, item )
+            {
+                _addManagementTeam( i, item );
+            } );
+        }
     }
 
     // Convert the form values back into the member object
     //
     function _getFormValues()
     {
+        $.each( fields, function( form, formFields )
+        {
+            var $form       = forms[ form ].$el
+            ;
 
+            if ( formFields._root )
+            {
+                $.each( formFields._root, function( i, f )
+                {
+                    var $input = $form.find( "[name='" + f + "']" )
+                    ,   value  = bidx.utils.getElementValue( $input )
+                    ;
+
+                    bidx.utils.setValue( businessSummary, f, value );
+                } );
+            }
+
+            // Collect the nested objects
+            //
+            $.each( formFields, function( nest )
+            {
+                // unbox that value!
+                //
+                nest += "";
+
+                // Properties that start with an _ are special properties and should be ignore
+                //
+                if ( nest.charAt( 0 ) === "_" )
+                {
+                    return;
+                }
+
+                var i                   = 0
+                ,   arrayField          = form._arrayFields && $.inArray( nest, form._arrayFields )
+                ,   reflowrowerField    = form._reflowRowerFields && $.inArray( nest, form._reflowRowerFields )
+                ,   objectPath          = nest
+                ,   item
+                ,   count
+                ;
+
+                if ( arrayField )
+                {
+                    count   = $form.find( "." + nest + "Item" ).length;
+                    item    = [];
+                }
+                else
+                {
+                    item    = {};
+                }
+
+                bidx.utils.setValue( businessSummary, objectPath, item );
+                bidx.utils.setNestedStructure( item, count, nest, $form, formFields[ nest ]  );
+
+                // Now collect the removed items, clear the properties and push them to the list so the API will delete them
+                //
+                var $reflowContainer
+                ,   removedItems
+                ;
+
+                if ( reflowrowerField )
+                {
+                    $reflowContainer = $form.find( "." + nest + "Container" );
+
+                    if ( $reflowContainer.length )
+                    {
+                        removedItems = $reflowContainer.reflowrower( "getRemovedItems" );
+
+                        $.each( removedItems, function( idx, removedItem )
+                        {
+                            var $removedItem    = $( removedItem )
+                            ,   bidxData        = $removedItem.data( "bidxData" )
+                            ;
+
+                            // Iterate over the properties and set all, but bidxMeta, to null, except for array's, those must be set to an empty array...
+                            //
+                            $.each( bidxData, function( prop )
+                            {
+                                if ( prop !== "bidxMeta" )
+                                {
+                                    bidxData[ prop ] = $.type( bidxData[ prop ] ) === "array"
+                                        ? []
+                                        : null
+                                    ;
+                                }
+                            } );
+
+                            item.push( bidxData );
+                        } );
+                    }
+                }
+            } );
+        } );
     }
 
     // This is the startpoint for the edit state
@@ -238,7 +410,7 @@
 
         // General Overview
         //
-        $frmGeneralOverview.validate(
+        forms.generalOverview.$el.validate(
         {
             rules:
             {
@@ -287,13 +459,13 @@
             }
         ,   submitHandler:          function( e )
             {
-                _save();
+                _doSave();
             }
         } );
 
         // About your business
         //
-        $frmAboutYourBusiness.validate(
+        forms.aboutYourBusiness.$el.validate(
         {
             rules:
             {
@@ -332,13 +504,13 @@
             }
         ,   submitHandler:          function( e )
             {
-                _save();
+                _doSave();
             }
         } );
 
         // About you and your team
         //
-        $frmAboutYouAndYourTeam.validate(
+        forms.aboutYouAndYourTeam.$el.validate(
         {
             rules:
             {
@@ -359,7 +531,7 @@
             }
         ,   submitHandler:          function( e )
             {
-                _save();
+                _doSave();
             }
         } );
 
@@ -419,12 +591,17 @@
         {
             // Only allow saving when all the sub forms are valid
             //
-            var generalOverviewValid    = $frmGeneralOverview.valid()
-            ,   aboutYourBusinessValid  = $frmAboutYourBusiness.valid()
-            ,   youAndYourTeam          = $frmAboutYouAndYourTeam.valid()
-            ;
+            var anyInvalid = false;
 
-            if ( !generalOverviewValid || !aboutYourBusinessValid || !youAndYourTeam )
+            $.each( forms, function( name, form )
+            {
+                if ( !form.$el.valid() )
+                {
+                    anyInvalid = true;
+                }
+            } );
+
+            if ( anyInvalid )
             {
                 return;
             }
@@ -463,6 +640,8 @@
         }
     }
 
+    // Beware! validation should have been tested, this is just a function for callin the API for saving
+    //
     function _save( params )
     {
         if ( !businessSummary )
