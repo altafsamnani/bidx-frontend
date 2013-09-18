@@ -152,7 +152,13 @@
 			<mapping>^businesssummary/([^/]*)/?</mapping>
 			<content>[bidx app="businesssummary"]</content>
 		</post>
-
+		 <post>
+	     	<post_id>19</post_id>
+            <name>login</name>
+            <title>Login</title>
+            <mapping>^login</mapping>
+            <content>[bidx app="login"]</content>
+	    </post>
 	</posts>
 
 	<widgets>

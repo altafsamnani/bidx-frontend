@@ -83,7 +83,8 @@ class BidxShortcode {
 		Logger :: getLogger( 'shortcode' ) -> trace( 'Shortcode called with ' . serialize( $atts ) );
 		$appname = $atts['app'];
 
-        self::$scriptIdArr[$appname] = $appname;
+        self::$scriptIdArr
+        [$appname] = $appname;
 
 		if ( array_key_exists( $appname, self::$mapping ) ) {
             //Handle the i18n Data

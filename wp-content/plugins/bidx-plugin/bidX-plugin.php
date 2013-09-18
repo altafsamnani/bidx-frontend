@@ -50,7 +50,10 @@ if ($blog_id != 1) {
           'media',
           'member',
           'mydashboard' => 'dashboard',
-          'search'
+          'search',
+          'login',
+          'register',
+          'resetpassword'
         );
         $shortcode = new BidxShortCode();
         $shortcode->addMappingArray ($ruleitems);
