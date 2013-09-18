@@ -1465,7 +1465,7 @@
                 //
                 if ( bidx.controller.getInvestorProfileId() )
                 {
-                    return navigate( "edit" );
+                    return navigate( { requestedState: "edit" } );
                 }
                 else
                 {
