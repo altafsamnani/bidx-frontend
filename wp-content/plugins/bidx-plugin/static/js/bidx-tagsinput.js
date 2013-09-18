@@ -95,23 +95,24 @@
             //
             function _processDataResponse( result )
             {
-                if ( !result || $.type( result ) !== "array" )
-                {
-                    bidx.utils.error( "Result used for setting up the typeahead in this bidx-tagsinput is not an array!", $item, result );
-                    return;
-                }
-
                 state.dataValues            = result;
                 state.dataValuesByValue     = {};
 
-                // Pre-parse the dataValues into an object structure with
-                //
-                $.each( result, function( idx, item )
+                if ( !result || $.type( result ) !== "array" )
                 {
-                    // Lowercase the keys so looking up can be done using a lowercase as well. Have had some inconsistencies
+                    bidx.utils.error( "Result used for setting up the typeahead in this bidx-tagsinput is not an array!", $item, result );
+                }
+                else
+                {
+                    // Pre-parse the dataValues into an object structure with
                     //
-                    state.dataValuesByValue[ ( item[ options.valueProperty ] + "" ).toLowerCase() ] = item;
-                } );
+                    $.each( result, function( idx, item )
+                    {
+                        // Lowercase the keys so looking up can be done using a lowercase as well. Have had some inconsistencies
+                        //
+                        state.dataValuesByValue[ ( item[ options.valueProperty ] + "" ).toLowerCase() ] = item;
+                    } );
+                }
 
                 state.dataRetrieved = true;
 
