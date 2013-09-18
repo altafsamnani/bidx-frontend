@@ -19,7 +19,8 @@ class BidxShortcode {
 	static $scriptIdArr = array();
     // store translation vars
 	static $transalationVars = array();
-
+    // hash value of app
+    static $hash = null;
 
 	/**
 	 * Constructor.
@@ -31,8 +32,8 @@ class BidxShortcode {
 		add_shortcode( 'bidx', array( &$this, 'handle_bidx_shortcode' ) );
  		add_action( 'init', array( &$this, 'register_script' ) );
         add_action( 'admin_init', array( &$this, 'register_script' ) );
-        add_action( 'wp_footer', array( &$this, 'print_script' ) );        
-		Logger :: getLogger( 'shortcode' ) -> trace( 'Ready constructing bidx shortcode instance' );       
+        add_action( 'wp_footer', array( &$this, 'print_script' ) );
+		Logger :: getLogger( 'shortcode' ) -> trace( 'Ready constructing bidx shortcode instance' );
 
 	}
 
@@ -68,7 +69,7 @@ class BidxShortcode {
 		}
 
 	}
-  
+
 	/**
 	 * Shortcode is called for a page.
 	 * If appname is not available a not found message is shown.
@@ -81,7 +82,7 @@ class BidxShortcode {
 
 		Logger :: getLogger( 'shortcode' ) -> trace( 'Shortcode called with ' . serialize( $atts ) );
 		$appname = $atts['app'];
-    
+
         self::$scriptIdArr[$appname] = $appname;
 
 		if ( array_key_exists( $appname, self::$mapping ) ) {
@@ -94,8 +95,11 @@ class BidxShortcode {
             } else { // More than 1 shortcode
                 $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ($appname), $static = false, $i18nGlobal = false);
 
-                self::$transalationVars['i18n'][$appname] = $appTranslationsArr['i18n'][$appname];
+                self::$transalationVars[ 'i18n' ][ $appname ] = $appTranslationsArr[ 'i18n' ][ $appname ];
 
+            }
+            if ( isset( $atts[ "hash" ] ) ) {
+                self::$hash = $atts[ "hash" ];
             }
 
             $bidxCommonObj->setI18nData(self::$transalationVars);
@@ -186,6 +190,11 @@ class BidxShortcode {
         // 2. Static Data
         wp_localize_script ('bidx-data', '__bidxDataPreload', self::$transalationVars['static']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
+        if ( self::$hash ) {
+            //
+            wp_localize_script ('bidx-data', '__bidxHash', self::$hash);
+        }
+
         Logger::getLogger ('shortcode')->trace ('Footer print_script called');
 
         if ($scriptArr) {
@@ -194,7 +203,7 @@ class BidxShortcode {
                     Logger::getLogger ('shortcode')->trace ('DO NOT print_script : ' . $scriptVal);
                     return;
                 }
-                Logger :: getLogger ('shortcode')->trace ('Add script ok, printing scripts : ' . $scriptVal);       
+                Logger :: getLogger ('shortcode')->trace ('Add script ok, printing scripts : ' . $scriptVal);
                 wp_print_scripts ($scriptVal);
             }
         }

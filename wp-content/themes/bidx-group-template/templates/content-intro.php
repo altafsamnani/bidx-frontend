@@ -185,36 +185,38 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 ?>
                             <div class="pull-left">
 <?php
-                                printf( __( 'View your %1$sentrepreneur profile%2$s', 'bidxtheme' ), '<a href="/member/#entrepreneur-profile">', '</a>' );
+                                printf( __( 'View your %sentrepreneur profile%s', 'bidxtheme' ), '<a href="/member/#entrepreneur-profile">', '</a>' );
 ?>
                             </div>
 <?php
                         }
  ?>
                         </div>
+                        <div class="call-to-action clearfix">
 <?php
                         // Create investor
                         //
                         if ( !isset( $entities->bidxInvestorProfile )) {
 ?>
-                            <div class="call-to-action clearfix">
+
                                 <div class="pull-left">
                                     <div><strong>Become an investor</strong></div>
                                     <em>Create your resources</em>
                                 </div>
                                 <a href="/member/#createInvestor" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Invest','bidxtheme')?></a>
-                            </div>
+
 <?php
                         } else {
 ?>
                             <div class="pull-left">
 <?php
-                                printf( __( 'View your %1$investor profile%2$s', 'bidxtheme' ), '<a href="/member/#investor-profile">', '</a>' );
+                                printf( __( 'View your %sinvestor profile%s', 'bidxtheme' ), '<a href="/member/#investor-profile">', '</a>' );
 ?>
                             </div>
 <?php
                         }
  ?>
+                        </div>
                         <hr>
 
                         <div class="call-to-action transparent clearfix">
@@ -363,7 +365,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                 </div>
 
                 <div class="span4 feature-col">
-                    <h2>News & Events</h2>
+                    <h2>News &amp; Events</h2>
                     <div class="feature-col-items">
                         <div class="bidx-latest-news clearfix">
                             <!-- Grab news -->

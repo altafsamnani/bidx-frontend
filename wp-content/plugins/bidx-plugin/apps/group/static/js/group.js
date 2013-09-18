@@ -4,5 +4,5 @@ $( document ).ready( function()
 	var thumb = $('.member-thumb');
 	//iterate through thumbs
 	//
-	
+
 } );

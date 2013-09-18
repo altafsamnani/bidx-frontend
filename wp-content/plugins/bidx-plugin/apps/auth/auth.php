@@ -51,44 +51,12 @@ class auth {
 		$command = $atts['view'];
         $type    = array_key_exists( 'type', $atts ) ? $atts['type'] : null;
 
-        // NOTE: because of changes in this App setup, the code below should be revised if Auth is used as a widget.
-        // Default the $command is currently 'views' which holds all the views (login, password reset and register)
-        //Set Redirect Params
-
         $view->redirectTo = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : NULL ;
-
-       // echo $redirectTo;exit;
-        switch ($command) {
-            case "standard-auth":
-                switch($type) {
-                    case "login" :
-                        $view->type = "login";
-                        $render = 'views';
-                        $view->showRegisterLink = false;
-                        $view->showLoginLink = true;
-                        break;
-                    case "register" : //NOTE: #mattijs: I am under the impression that this block is not used??
-                        $view->type = "register";
-                        $render = 'registration';
-                        $view->showLoginLink = false;
-                        break;
-                    default :
-                        $view->type = "default";
-                        $render = 'views';
-                        $view->showRegisterLink = true;
-                        $view->showLoginLink = true;
-                        break;
-                }
-                break;
-
-            default:
-                $view->showRegisterLink = true;
-                $view->showLoginLink = true;
-                $render = $command;
-        }
+        $view->showRegisterLink = true;
+        $view->showLoginLink = true;
+        $render = $command;
 
         $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
-
 		$view -> render( $render . '.phtml' );
 
 	}

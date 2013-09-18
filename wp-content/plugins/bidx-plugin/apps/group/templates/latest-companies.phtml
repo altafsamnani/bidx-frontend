@@ -9,8 +9,8 @@
 
 */
             $index = 0;
-            foreach ($this -> companies as $company) {
-                if ( $index == 3) {
+            foreach ( $this -> companies as $company ) {
+                if ( $index === 3 ) {
                     break;
                 }
                 $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
@@ -20,14 +20,13 @@
                     <?php
                         if ( empty( $company -> profilePicture ) ) {
                             echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">';
-                        }
-                        else {
+                        } else {
                             echo '<img src="' . $company -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
                         }
                     ?>
                     <div>
-                        <div><strong><?php $this -> showProperty($company, 'displayName'); ?></strong></div>
-                        <div><?php $this -> showProperty($company, 'website') ?></div>
+                        <div><strong><?php $this -> exst( $company -> displayName ) ; ?></strong></div>
+                        <div><?php $this -> exst( $company -> website); ?></div>
                     </div>
                 </div>
 <?php

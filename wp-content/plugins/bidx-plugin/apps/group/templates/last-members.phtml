@@ -6,7 +6,7 @@
         if (is_array($this -> members)) {
             $index = 0;
         	foreach ($this -> members as $member) {
-                if ( $index == 3) {
+                if ( $index === 3) {
                     break;
                 }
 		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
@@ -16,15 +16,14 @@
     			  	<?php
     				  	if ( empty( $member -> profilePicture ) ) {
     						echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">';
-    					}
-    					else {
+    					} else {
     						echo '<img src="' . $member -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
     				  	}
     			  	?>
                     <div>
-                        <div><strong><?php $this -> showProperty($member, 'firstName') . ' ' . $this -> showProperty($member, 'lastName'); ?></strong></div>
-                        <div><?php $this -> showProperty($member, 'professionalTitle') ?></div>
-                        <div><?php $this -> showProperty($member, 'country') ?></div>
+                        <div><strong><?php echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName ); ?></strong></div>
+                        <div><?php echo $this -> exst( $member -> professionalTitle); ?></div>
+                        <div><?php echo $this -> exst( $member -> country ); ?></div>
                         <!-- <div><span class="label bidx-label-investor">Investor</span></div> THIS NEEDS TO BE DONE CONDITIONALLY-->
                     </div>
                 </div>
