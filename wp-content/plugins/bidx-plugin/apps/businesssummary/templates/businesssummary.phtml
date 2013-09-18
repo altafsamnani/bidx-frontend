@@ -373,7 +373,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                                 <!-- Consumer Type -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Type of customer you sell to','bidxplugin'); ?></label>
                                     <div class="controls">
 <?php
                                         // Render the checkboxes based upon the items from the static data api for the 'consumerType' typeCode / groupCode / context
@@ -425,9 +425,17 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                             $merge['name'] = array ('firstName', 'lastName');
 
-                            $supportingMembersHtml = $this->addTableRows ($header, $supportingData, 'table table-bordered', $merge);
+                            $supportingMembersHtml = $this->addTableRows (
+                                $tableHeader,
+                                $this->exst( $businessSummary->managementTeam ),
+                                'table table-bordered',
+                                $merge
+                            );
 
-                            $rowValues = array (__('Supporting members of management team','bidxplugin') => $supportingMembersHtml);
+                            $rowValues = array (
+                                __('Supporting members of management team','bidxplugin') => $supportingMembersHtml
+                            );
+
                             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
 ?>
                         </div>
