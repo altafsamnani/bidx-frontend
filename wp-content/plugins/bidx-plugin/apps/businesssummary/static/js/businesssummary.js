@@ -67,10 +67,26 @@
         }
     } );
 
-
     // Instantiate the reflowrower components
     //
     $managementTeamContainer.reflowrower( { itemsPerRow: 2 } );
+
+    // Populate the dropdowns with the values
+    //
+    bidx.data.getContext( "reasonForSubmission", function( err, reasons )
+    {
+        var $reasonForSubmission    = $frmGeneralOverview.find( "[name='reasonForSubmission']" )
+        ,   $noValue                = $( "<option value='' />" )
+        ;
+
+        $reasonForSubmission.empty();
+
+        $noValue.i18nText( "selectReasonForSubmission", appName );
+        $reasonForSubmission.append( $noValue );
+
+        bidx.utils.populateDropdown( $reasonForSubmission, reasons );
+    } );
+
 
     // Add the snippet for a previous investment
     //
@@ -207,10 +223,7 @@
         {
             e.preventDefault();
 
-            alert( "todo" );
-
-            // @TODO: are all forms valid?
-            // _save();
+            _doSave();
         } );
 
 
@@ -274,7 +287,7 @@
             }
         ,   submitHandler:          function( e )
             {
-
+                _save();
             }
         } );
 
@@ -284,7 +297,34 @@
         {
             rules:
             {
-
+                industry:
+                {
+                    tagsinputRequired:      true
+                }
+            ,   suggestedIndustry:
+                {
+                }
+            ,   productService:
+                {
+                    tagsinputRequired:      true
+                }
+            ,   suggestedProductService:
+                {
+                }
+            ,   countryOperation:
+                {
+                    tagsinputRequired:      true
+                }
+            ,   socialImpact:
+                {
+                }
+            ,   envImpact:
+                {
+                }
+            ,   consumerType:
+                {
+                    required:               true
+                }
             }
         ,   messages:
             {
@@ -292,7 +332,7 @@
             }
         ,   submitHandler:          function( e )
             {
-
+                _save();
             }
         } );
 
@@ -302,7 +342,16 @@
         {
             rules:
             {
-
+                personalRole:
+                {
+                    required:               true
+                ,   maxlength:              30
+                }
+            ,   personalExpertise:
+                {
+                    required:               true
+                ,   maxlength:              180
+                }
             }
         ,   messages:
             {
@@ -310,55 +359,9 @@
             }
         ,   submitHandler:          function( e )
             {
-
+                _save();
             }
         } );
-
-        // var $validator = $editForm.validate(
-        // {
-        //     rules:
-        //     {
-        //     }
-        // ,   messages:
-        //     {
-        //         // Anything that is app specific, the general validations should have been set
-        //         // in common.js already
-        //     }
-        // ,   submitHandler:  function()
-        //     {
-        //         if ( $btnSave.hasClass( "disabled" ) )
-        //         {
-        //             return;
-        //         }
-
-        //         $btnSave.addClass( "disabled" );
-        //         $btnCancel.addClass( "disabled" );
-
-        //         _save(
-        //         {
-        //             error: function( jqXhr )
-        //             {
-        //                 var response;
-
-        //                 try
-        //                 {
-        //                     // Not really needed for now, but just have it on the screen, k thx bye
-        //                     //
-        //                     response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
-        //                 }
-        //                 catch ( e )
-        //                 {
-        //                     bidx.utils.error( "problem parsing error response from memberProfile save" );
-        //                 }
-
-        //                 bidx.common.notifyError( "Something went wrong during save: " + response );
-
-        //                 $btnSave.removeClass( "disabled" );
-        //                 $btnCancel.removeClass( "disabled" );
-        //             }
-        //         } );
-        //     }
-        // } );
 
         // Fetch the business summary
         //
@@ -409,20 +412,60 @@
                 }
             }
         );
+
+        // Try to save the businessSummary to the API
+        //
+        function _doSave( params )
+        {
+            // Only allow saving when all the sub forms are valid
+            //
+            var generalOverviewValid    = $frmGeneralOverview.valid()
+            ,   aboutYourBusinessValid  = $frmAboutYourBusiness.valid()
+            ,   youAndYourTeam          = $frmAboutYouAndYourTeam.valid()
+            ;
+
+            if ( !generalOverviewValid || !aboutYourBusinessValid || !youAndYourTeam )
+            {
+                return;
+            }
+
+            if ( $btnSave.hasClass( "disabled" ) )
+            {
+                return;
+            }
+
+            $btnSave.addClass( "disabled" );
+            $btnCancel.addClass( "disabled" );
+
+            _save(
+            {
+                error: function( jqXhr )
+                {
+                    var response;
+
+                    try
+                    {
+                        // Not really needed for now, but just have it on the screen, k thx bye
+                        //
+                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                    }
+                    catch ( e )
+                    {
+                        bidx.utils.error( "problem parsing error response from businessSummary save" );
+                    }
+
+                    bidx.common.notifyError( "Something went wrong during save: " + response );
+
+                    $btnSave.removeClass( "disabled" );
+                    $btnCancel.removeClass( "disabled" );
+                }
+            } );
+        }
     }
 
-    // Try to save the businessSummary to the API
-    //
     function _save( params )
     {
         if ( !businessSummary )
-        {
-            return;
-        }
-
-        // Only allow saving when all the sub forms are valid
-        //
-        if ( !$frmGeneralOverview.valid() || !$frmAboutYourBusiness.valid() || !$frmAboutYouAndYourTeam.valid() )
         {
             return;
         }
