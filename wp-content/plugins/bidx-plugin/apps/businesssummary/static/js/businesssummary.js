@@ -156,7 +156,7 @@
         {
             $.each( fields.aboutYouAndYourTeam.managementTeam, function( j, f )
             {
-                var $input  = $managementTeam.find( "[name='" + inputNamePrefix + "." + f + "']" )
+                var $input  = $managementTeam.find( "[name='" + f + "']" )
                 ,   value   = bidx.utils.getValue( managementTeam, f )
                 ;
 
@@ -306,8 +306,8 @@
                 }
 
                 var i                   = 0
-                ,   arrayField          = form._arrayFields && $.inArray( nest, form._arrayFields )
-                ,   reflowrowerField    = form._reflowRowerFields && $.inArray( nest, form._reflowRowerFields )
+                ,   arrayField          = formFields._arrayFields && $.inArray( nest, formFields._arrayFields ) !== -1
+                ,   reflowrowerField    = formFields._reflowRowerFields && $.inArray( nest, formFields._reflowRowerFields ) !== -1
                 ,   objectPath          = nest
                 ,   item
                 ,   count
@@ -346,18 +346,21 @@
                             ,   bidxData        = $removedItem.data( "bidxData" )
                             ;
 
-                            // Iterate over the properties and set all, but bidxMeta, to null, except for array's, those must be set to an empty array...
-                            //
-                            $.each( bidxData, function( prop )
+                            if ( bidxData )
                             {
-                                if ( prop !== "bidxMeta" )
+                                // Iterate over the properties and set all, but bidxMeta, to null, except for array's, those must be set to an empty array...
+                                //
+                                $.each( bidxData, function( prop )
                                 {
-                                    bidxData[ prop ] = $.type( bidxData[ prop ] ) === "array"
-                                        ? []
-                                        : null
-                                    ;
-                                }
-                            } );
+                                    if ( prop !== "bidxMeta" )
+                                    {
+                                        bidxData[ prop ] = $.type( bidxData[ prop ] ) === "array"
+                                            ? []
+                                            : null
+                                        ;
+                                    }
+                                } );
+                            }
 
                             item.push( bidxData );
                         } );
@@ -653,6 +656,12 @@
         //
         _getFormValues();
 
+        if ( businessSummary.stageBusiness )
+        {
+            businessSummary.stageBusiness = businessSummary.stageBusiness.toLowerCase();
+        }
+
+
         bidx.api.call(
             "entity.save"
         ,   {
@@ -666,9 +675,9 @@
                     bidx.common.notifyRedirect();
                     bidx.common.removeAppWithPendingChanges( appName );
 
-                    var url = document.location.href.split( "#" ).shift();
+                    var url = document.location.href.split( "#" ).shift().split( "?" ).shift();
 
-                    document.location.href = url;
+                    document.location.href = url + "?rs=true";
                 }
             ,   error:          function( jqXhr )
                 {
