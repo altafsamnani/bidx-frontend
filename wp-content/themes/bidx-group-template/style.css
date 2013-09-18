@@ -296,10 +296,8 @@ Company: bidX;
         box-sizing: border-box;
 
         height:                     41px;
-        text-indent:                10px;
         width:                      100%;
         border:                     2px solid #bdc3c7;
-        color:                      #999;
     }
 
     /* reset bootstrap border coloring */
