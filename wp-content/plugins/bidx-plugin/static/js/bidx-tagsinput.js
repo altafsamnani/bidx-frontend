@@ -43,6 +43,7 @@
         {
             var widget      = this
             ,   $item       = widget.element
+            ,   $container  = $item.closest( ".bidx-tagsinput-container" )
             ;
 
             widget.options  = $.extend( widget.options, params );
@@ -76,6 +77,16 @@
             $item.addClass( options.widgetClass );
 
             $item.attr( "data-type", "tagsinput" );
+
+            // Clicking somewhere in the container should end up with the cursor in the input
+            //
+            if ( $container.length )
+            {
+                $container.click( function()
+                {
+                    $item.focus();
+                } );
+            }
 
             // DRY function for processing async data result used for setting up the typeahead
             // This can come either from the bidx.data internal api or from a bidx.api call
