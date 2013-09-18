@@ -26,6 +26,11 @@
     //
     var populateDropdown = function( $el, values )
     {
+        if ( !values || $.type( values ) !== "array" )
+        {
+            return;
+        }
+
         $.each( values, function( i, option )
         {
             var $option = $(
