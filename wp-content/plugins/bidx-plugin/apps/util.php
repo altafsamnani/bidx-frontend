@@ -10,6 +10,17 @@
  */
 
 require 'vendor/log4php/Logger.php';
+/* Almost irritatingly wordpress doesn’t load the current user and auth cookie vars until after plugins are loaded.
+ * This means that you have to grab the current user by adding a callback to the action `plugins_loaded`.
+ * In my case my plugin was providing hooks for other plugins,
+ * and it needed to be able to provide the current user as a `WP_User` object before the `plugins_loaded` hook.
+ * @Link http://wordpress.stackexchange.com/questions/4163/how-is-network-activate-different-from-activate-by-implementation
+ * @Link http://david-coombes.com/wordpress-get-current-user-before-plugins-loaded/
+ */
+if (!function_exists ('wp_get_current_user'))
+    require_once(ABSPATH . "wp-includes/pluggable.php");
+
+wp_cookie_constants ();
 
 /**
  * Generic paths
