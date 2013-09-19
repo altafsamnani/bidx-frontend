@@ -209,7 +209,7 @@ function theme_customizer_groupstyle( $wp_customize ) {
             'priority' => 20,
     ) );
     $wp_customize->add_setting( 'group_styles', array(
-        'default'        => 'Default text',
+        'default'        => 'Put your group css here',
     ) );
 
 

@@ -51,7 +51,7 @@ class auth {
 		$command = $atts['view'];
         $type    = array_key_exists( 'type', $atts ) ? $atts['type'] : null;
 
-        $view->redirectTo = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : NULL ;
+        $view->redirectTo = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : NULL ; // I believe this is not used anymore
         $view->showRegisterLink = true;
         $view->showLoginLink = true;
         $render = $command;

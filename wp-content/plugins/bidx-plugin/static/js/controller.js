@@ -130,6 +130,10 @@
 
         ,   'auth(/:section)':                                  'auth'
 
+        ,   'login':                                            'login'
+        ,   'register':                                         'register'
+        ,   'resetpassword':                                    'resetpassword'
+
         ,   'mail(/:section)(/:part1)(/:part2)':                'mail'
 
         ,   'media(/:appState)(/:id)':                          'media'
@@ -329,6 +333,42 @@
             ,   {
                     section:    section
                 }
+            );
+        }
+    ,   login:                   function()
+        {
+            bidx.utils.log( "AppRouter::login" );
+
+            state = "login";
+
+            _navigateToApp
+            (
+                "login"
+            ,   {}
+            );
+        }
+    ,   register:                   function()
+        {
+            bidx.utils.log( "AppRouter::register" );
+
+            state = "register";
+
+            _navigateToApp
+            (
+                "register"
+            ,   {}
+            );
+        }
+    ,   resetpassword:                   function()
+        {
+            bidx.utils.log( "AppRouter::resetpassword" );
+
+            state = "resetpassword";
+
+            _navigateToApp
+            (
+                "resetpassword"
+            ,   {}
             );
         }
     ,   show:                   function()

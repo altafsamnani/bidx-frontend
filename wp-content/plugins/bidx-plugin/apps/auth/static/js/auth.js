@@ -154,10 +154,6 @@
             }
         ,   submitHandler:  function()
             {
-                bidx.utils.log("sdfsdfsdsdffsf");
-                bidx.utils.log("submit");
-
-
 
                 if ( $btnRegister.hasClass( "disabled" ) )
                 {
@@ -389,7 +385,6 @@
             break;
 
             default:
-
                 _showView( "login" );
 
         }

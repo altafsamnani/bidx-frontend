@@ -121,7 +121,7 @@
             <name>Authentication</name>
             <title>Authentication</title>
             <mapping>^auth</mapping>
-            <content>[bidx app="auth" view="views"]</content>
+            <content>[bidx app="auth" view="composite-view"]</content>
 	    </post>
 		<post>
 			<post_id>15</post_id>
@@ -158,6 +158,20 @@
             <title>Login</title>
             <mapping>^login</mapping>
             <content>[bidx app="login"]</content>
+	    </post>
+		 <post>
+	     	<post_id>20</post_id>
+            <name>register</name>
+            <title>Register</title>
+            <mapping>^register</mapping>
+            <content>[bidx app="register"]</content>
+	    </post>
+	    	    		 <post>
+	     	<post_id>21</post_id>
+            <name>resetpassword</name>
+            <title>Resetpassword</title>
+            <mapping>^resetpassword</mapping>
+            <content>[bidx app="resetpassword"]</content>
 	    </post>
 	</posts>
 
