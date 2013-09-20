@@ -317,22 +317,28 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
         <div class="row-fluid spacer testimonial-container">
             <div class="span8">
-                <h1>What is the Bicycle Business Group?</h1>
-                <p>
-                    <img src="http://demogroup.beta.bidx.net/assets/sites/273/man-with-wheel.png" class="img-circle" alt="140x140" style="width: 140px; height: 140px;" align="right">
-                    This group focuses on businesses within, and connected to the bicycle industry. Here, entrepreneurs, investors, suppliers and other relevant parties can get in touch and collaborate to meet each other’s needs. So, if you’re an entrepreneur who wants to start a bicycle shop in Rwanda to provide the local community with affordable and accessible means of transportation, you can look for investors and suppliers here. Or maybe you work at a rubber company that provides tires for bikes? Then this might be the place to find a local buyer!
-
-               </p>
-
+            <?php
+                $meta_key = 'box_intro_text';
+                if (get_post_meta( get_the_ID(), $meta_key, true )) {
+					echo get_post_meta( get_the_ID(), $meta_key, true );
+                } else {
+                	$output = "<h1>What is the [yourname here] Group?</h1><p>An introduction of your group here...</p>";
+                	echo $output;
+                	add_post_meta( get_the_ID(), $meta_key, $output, true );
+			    } ?>
             </div>
             <div class="span4">
                 <div class="bidx-testimonial pull-right">
-                    <div>
-                    <p>
-                    Our company would like to try to make cycling more common in our area and Rwanda in general. We are looking for buyers to sell our products to, so that more bikes can be produced and sold.
-                    </p>
-                    <em>Eric Uwambag</em>,  Steel Craftsman
-                    </div>
+                	<?php 
+                	 	$meta_key = 'box_testimonial_text';
+                		if (get_post_meta( get_the_ID(), $meta_key, true )) {
+							echo get_post_meta( get_the_ID(), $meta_key, true );
+                		} else {              		
+                			$output = "<div><p>Testimonial text here.</p><em>Firstname Lastname</em>,  Function</div>";
+							echo $output;
+                			add_post_meta( get_the_ID(), $meta_key, $output, true );
+                    	}
+                    ?>
                 </div>
 
             </div>
