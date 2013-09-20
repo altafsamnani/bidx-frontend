@@ -1,60 +1,54 @@
 <div id="login" class="block-odd mainState mainStateLogin mainStateAuth">
-<!--     <div class="container">
 
-    <div class="row-fluid">
-        <div class="span6 offset3 block-login bidx-theme-colour-panel-one"> -->
-                <form id="frmLogin" action="/wp-login.php" method="post">
-                    <h1>Login</h1>
-                    <div class="row-fluid">
-                        <div class="span8">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
+    <form id="frmLogin" action="/wp-login.php" method="post">
+        <h1>Login</h1>
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="control-group">
+                    <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
 
-                                <div class="controls">
-                                    <input type="email" name="log" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
-                                </div>
-                            </div>
-                        </div>
+                    <div class="controls">
+                        <input type="email" name="log" placeholder="<?php _e('Type your email address','bidxplugin');?>" />
                     </div>
-                    <div class="row-fluid">
-                        <div class="span8">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Password','bidxplugin');?></label>
-
-                                <div class="controls">
-                                    <input type="password" name="pwd" placeholder="<?php _e('Type your password','bidxplugin');?>" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="error-separate"></div>
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <div class="buttonwrapper">
-                                <button type="submit" class="btn btn-primary btn-block bidx-theme-colour-one"><?php _e('Login','bidxplugin');?></button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <p>
-                    <?php _e('Forgot your password. Click <a href="#auth/resetpassword">here</a> to recover.','bidxplugin');?><br/>
-                    <?php
-                        if ($this->showRegisterLink)
-                        {
-                    ?>
-                        <?php _e('Not a member? Click <a href="#auth/register">here</a> to register.','bidxplugin');?>
-                    <?php
-                        }
-                    ?>
-                    </p>
-
-                    <input type="hidden" name="redirect_to" value="<?php echo $this->redirectTo;?>" />
-                    <input type="hidden" name="testcookie" value="1" />
-                </form>
-<!--             </div>
+                </div>
+            </div>
         </div>
-    </div> -->
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="control-group">
+                    <label class="control-label"><?php _e('Password','bidxplugin');?></label>
+
+                    <div class="controls">
+                        <input type="password" name="pwd" placeholder="<?php _e('Type your password','bidxplugin');?>" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="error-separate"></div>
+        <div class="row-fluid">
+            <div class="span4">
+                <div class="buttonwrapper">
+                    <button type="submit" class="btn btn-primary btn-block bidx-theme-colour-one"><?php _e('Login','bidxplugin');?></button>
+                </div>
+            </div>
+        </div>
+
+
+        <p>
+        <?php _e('Forgot your password. Click <a href="#auth/resetpassword">here</a> to recover.','bidxplugin');?><br/>
+        <?php
+            if ($this->showRegisterLink)
+            {
+        ?>
+            <?php _e('Not a member? Click <a href="#auth/register">here</a> to register.','bidxplugin');?>
+        <?php
+            }
+        ?>
+        </p>
+
+        <input type="hidden" name="redirect_to" value="<?php echo $this->redirectTo;?>" />
+        <input type="hidden" name="testcookie" value="1" />
+    </form>
 </div>
 
 
