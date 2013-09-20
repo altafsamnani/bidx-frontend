@@ -65,11 +65,6 @@
             }
         ,   submitHandler:  function()
             {
-                bidx.utils.log("sdfsdfsdsdffsf");
-                bidx.utils.log("submit");
-
-
-
                 if ( $btnRegister.hasClass( "disabled" ) )
                 {
                     bidx.utils.log("button disabled");
@@ -204,7 +199,7 @@
 
     // Only update the hash when user is authenticating and when there is no hash defined
     //
-    if ( $( "body.bidx-register" ).length && !bidx.utils.getValue(window, "location.hash").length )
+    if ( $( "body.bidx-register" ).length && !bidx.utils.getValue(window, "location.hash" ) )
     {
         document.location.hash = "#register";
     }

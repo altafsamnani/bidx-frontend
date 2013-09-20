@@ -88,6 +88,7 @@
             //
             _showMainState( state );
 
+
             // Save a reference to the container element of the app
             //
             $element = app.$element;
