@@ -49,12 +49,12 @@ class GroupService extends APIbridge {
    * @link http://bidx.net/api/v1/group
    * @return partial result from the service in JSON form containing the members
    */
-  public function getLatestCompanies( $group_id = null ) {
+  public function getLatestBusinessSummaries( $group_id = null ) {
 
     $result = $this -> getGroupDetails( $group_id );
 
     if ( property_exists( $result, 'data' ) ) {
-      return $result -> data -> latestCompanies;
+      return $result -> data -> latestBusinessSummaries;
     }
     else {
       return;

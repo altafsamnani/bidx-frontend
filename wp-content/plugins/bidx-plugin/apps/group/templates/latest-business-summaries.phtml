@@ -3,30 +3,28 @@
         // check if span is empty, then revert to default 6
         $span = !empty($this->span) ? $this->span : 6;
 
-        if (is_array($this -> companies)) {
-/*            new dBug($this -> companies);
-            exit();
+        if (is_array($this -> summaries)) {
 
-*/
+
+
             $index = 0;
-            foreach ( $this -> companies as $company ) {
+            foreach ( $this -> summaries as $summary ) {
                 if ( $index === 3 ) {
                     break;
                 }
-                $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
+                $summaryBidxMeta = isset( $summary->bidxMeta ) ? $summary->bidxMeta : $summary;
  ?>
 
                 <div class="span<?php echo $span ?> clearfix">
                     <?php
-                        if ( empty( $company -> profilePicture ) ) {
+                        if ( empty( $summary -> profilePicture ) ) {
                             echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">';
                         } else {
-                            echo '<img src="' . $company -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
+                            echo '<img src="' . $summary -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
                         }
                     ?>
                     <div>
-                        <div><strong><?php $this -> exst( $company -> displayName ) ; ?></strong></div>
-                        <div><?php $this -> exst( $company -> website); ?></div>
+                        <div><strong><?php echo $this -> exst( $summary -> displayName ) ; ?></strong></div>
                     </div>
                 </div>
 <?php

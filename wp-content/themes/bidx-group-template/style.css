@@ -755,7 +755,23 @@ Company: bidX;
 
     /************************  Template styles *******************************/
 
-no-caroussel-images
+    .carousel.no-images {
+        height:                     373px;
+    }
+
+        .carousel .no-carousel-images,
+        .carousel .carousel-inner {
+            height:                 100%;
+
+        }
+            .no-carousel-images > .container {
+                background-color:   #fff;
+                padding:            30px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                border: 3px dashed red;
+            }
 
 
     .bidx-well {
@@ -1639,9 +1655,9 @@ form .row-fluid .input-prepend {
     /* styles shared by portrait tablet and above */
     @media (min-width: 980px ) {
 
-        #wrap > .container {
+        /* #wrap > .container {
             padding-top:                171px;
-        }
+        } */
 
         /* header */
         header .navbar-inner {
@@ -1663,7 +1679,7 @@ form .row-fluid .input-prepend {
             min-height:                 40px; /* min-height forces nav menu to float right */
         }
             header.navbar .header-logo img {
-                margin-top:                 11px;
+                margin-top:                 15px;
             }
 
             header.navbar .header-logo .site-title {

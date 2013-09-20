@@ -27,8 +27,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
     <?php echo bidx_get_status_msgs(); ?>
 </div>
-    <!-- IMAGE Carousel -->
-    <div id="myCarousel" class="carousel slide">
+
 <?php
     $images = get_children(
         array(
@@ -42,6 +41,8 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
     if ( count( $images ) > 0 ) {
 ?>
+    <!-- IMAGE Carousel -->
+    <div id="myCarousel" class="carousel slide">
         <div class="outer-carousel-control-container">
             <div class="container">
                 <ol class="carousel-indicators">
@@ -71,7 +72,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
             <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
                 <img class="img" src="<?php echo $img[0] ?>" />
 <?php
-                if ( !empty($image -> post_content) ) {
+                if ( !empty( $image -> post_content ) ) {
  ?>
                 <div class="outer-carousel-control-container">
                     <div class="container">
@@ -84,13 +85,26 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                     </div>
                 </div>
 <?php
-                }
+                } // !empty( $image  -> post_content )
 ?>
             </div>
 <?php
-        }
+        } // foreach
+    // $images > 0
+    }  else {
+?>
+<!-- IMAGE Carousel -->
+    <div id="myCarousel" class="carousel slide no-images">
+        <div class="outer-carousel-control-container">
+            <div class="carousel-inner">
+                <div class="no-carousel-images">
+                    <div class="container"><?php _e('Please add images using the mediamanager for this page in the Wordpress Admin', 'bidxtheme') ?></div>
+                </div>
+            </div>
+        </div>
 
-    } // $images > 0
+<?php
+    }
 ?>
         </div>
 
@@ -167,7 +181,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                 <div class="row-fluid">
                     <div class="span12">
 
-                        <h2>Create and grow</h2>
+                        <h2><?php _e('Create and grow', 'bidxtheme')?></h2>
 
                         <div class="call-to-action clearfix">
 <?php
@@ -176,8 +190,8 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                         if ( !isset( $entities->bidxEntrepreneurProfile ) ) {
 ?>
                             <div class="pull-left">
-                                <div><strong>Become an entrepreneur</strong></div>
-                               <em>Create your business</em>
+                                <div><strong><?php _e('Become an entrepreneur', 'bidxtheme')?></strong></div>
+                               <em><?php _e('Create your business', 'bidxtheme')?></em>
                             </div>
                             <a href="/member/#createEntrepreneur" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxtheme')?></a>
 <?php
@@ -200,8 +214,8 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 ?>
 
                                 <div class="pull-left">
-                                    <div><strong>Become an investor</strong></div>
-                                    <em>Create your resources</em>
+                                    <div><strong><?php _e('Become an investor', 'bidxtheme')?></strong></div>
+                                    <em><?php _e('Create your resources', 'bidxtheme')?></em>
                                 </div>
                                 <a href="/member/#createInvestor" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Invest','bidxtheme')?></a>
 
@@ -222,10 +236,10 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                         <div class="call-to-action transparent clearfix">
                             <div>
                                 <div class="pull-left">
-                                   <h2>People near you</h2>
+                                   <h2><?php _e('People near you', 'bidxtheme')?></h2>
                                 </div>
                                 <div class="btn-group pull-right bidx-btn-split">
-                                    <button class="btn">Show all</button>
+                                    <button class="btn"><?php _e('Show all', 'bidxtheme')?></button>
                                     <button class="btn dropdown-toggle" data-toggle="dropdown">
                                     <span class="caret"></span>
                                     </button>
@@ -235,9 +249,9 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                                 </div>
                             </div>
                             <iframe width="100%" height="140" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=nl&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=Bidx&amp;sll=37.0625,-95.677068&amp;sspn=60.158465,135.263672&amp;t=h&amp;ie=UTF8&amp;hq=bidx+bv&amp;hnear=De+Ruijterkade,+Amsterdam,+Nederland&amp;ll=52.37787,4.905348&amp;spn=0.006295,0.014329&amp;output=embed"></iframe>
-                            <span class="label bidx-label-member">Entrepreneur</span>
-                            <span class="label bidx-label-entrepreneur">Entrepreneur</span>
-                            <span class="label bidx-label-investor">Entrepreneur</span>
+                            <span class="label bidx-label-member"><?php _e('Entrepreneur', 'bidxtheme')?></span>
+                            <span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxtheme')?></span>
+                            <span class="label bidx-label-investor"><?php _e('Entrepreneur', 'bidxtheme')?></span>
                         </div>
 
                         <hr>
@@ -248,8 +262,8 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                                 <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
                             </div>
                             <div class="pull-right">
-                                <div><strong>Tagline group goes here.</strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span>join group</button>
+                                <div><strong><?php _e('Tagline group goes here.', 'bidxtheme')?></strong></div>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
                             </div>
                         </div>
                         <div class="call-to-action clearfix">
@@ -257,8 +271,8 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                                 <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
                             </div>
                             <div class="pull-right">
-                                <div><strong>Tagline group goes here.</strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span>join group</button>
+                                <div><strong><?php _e('Tagline group goes here.', 'bidxtheme')?></strong></div>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
                             </div>
                         </div>
                         <div class="call-to-action clearfix">
@@ -266,18 +280,18 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                                 <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
                             </div>
                             <div class="pull-right">
-                                <div><strong>Tagline group goes here.</strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span>join group</button>
+                                <div><strong><?php _e('Tagline group goes here.', 'bidxtheme')?></strong></div>
+                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
                             </div>
                         </div>
 
 
                         <div class="call-to-action transparent clearfix">
                             <div class="pull-left">
-                                <a href="">Create a group</a>
+                                <a href=""><?php _e('Create a group', 'bidxtheme')?></a>
                             </div>
                             <div class="pull-right">
-                                <a href="">Search for other groups</a>
+                                <a href=""><?php _e('Search for other groups', 'bidxtheme')?></a>
                             </div>
                         </div>
 
@@ -317,28 +331,25 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
         <div class="row-fluid spacer testimonial-container">
             <div class="span8">
-            <?php
-                $meta_key = 'box_intro_text';
-                if (get_post_meta( get_the_ID(), $meta_key, true )) {
-					echo get_post_meta( get_the_ID(), $meta_key, true );
-                } else {
-                	$output = "<h1>What is the [yourname here] Group?</h1><p>An introduction of your group here...</p>";
-                	echo $output;
-                	add_post_meta( get_the_ID(), $meta_key, $output, true );
-			    } ?>
+
+
+
+                <h1><?php echo get_custom_field_value( "homepage-group-description" , 0) ?> </h1>
+                <p>
+                    <img src="http://demogroup.beta.bidx.net/assets/sites/273/man-with-wheel.png" class="img-circle" alt="140x140" style="width: 140px; height: 140px;" align="right">
+                    <?php echo get_custom_field_value( "homepage-group-description", 1 ) ?>
+               </p>
+
             </div>
             <div class="span4">
                 <div class="bidx-testimonial pull-right">
-                	<?php 
-                	 	$meta_key = 'box_testimonial_text';
-                		if (get_post_meta( get_the_ID(), $meta_key, true )) {
-							echo get_post_meta( get_the_ID(), $meta_key, true );
-                		} else {              		
-                			$output = "<div><p>Testimonial text here.</p><em>Firstname Lastname</em>,  Function</div>";
-							echo $output;
-                			add_post_meta( get_the_ID(), $meta_key, $output, true );
-                    	}
-                    ?>
+                    <div>
+                        <p>
+                            <?php echo get_custom_field_value( "homepage-group-testimonial", 0 ) ?>
+
+                        </p>
+                    <em><?php echo get_custom_field_value( "homepage-group-testimonial", 1 ) ?></em><?php echo get_custom_field_value( "homepage-group-testimonial", 2 ) ?>
+                    </div>
                 </div>
 
             </div>
@@ -351,17 +362,17 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
             <div class="row-fluid">
 
                 <div class="span4 feature-col">
-                    <h2>New Business</h2>
+                    <h2><?php _e('New Business Summaries', 'bidxtheme')?></h2>
                     <div class="feature-col-items">
                         <div class="bidx-latest-members clearfix">
                         <!-- Grab latests members -->
-                            <?php echo do_shortcode( '[bidx app="group" view="lastest-companies" span="12"]' ); ?>
+                            <?php echo do_shortcode( '[bidx app="group" view="lastest-business-summaries" span="12"]' ); ?>
                         </div>
                     </div>
                 </div>
 
                 <div class="span4 feature-col">
-                    <h2>New Members</h2>
+                    <h2><?php _e('New Members', 'bidxtheme')?></h2>
                     <div class="feature-col-items">
                         <div class="bidx-latest-members clearfix">
                             <!-- Grab latests members -->
@@ -371,7 +382,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                 </div>
 
                 <div class="span4 feature-col">
-                    <h2>News &amp; Events</h2>
+                    <h2><?php _e('News &amp; Events', 'bidxtheme')?></h2>
                     <div class="feature-col-items">
                         <div class="bidx-latest-news clearfix">
                             <!-- Grab news -->
@@ -388,7 +399,9 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
         <div class="row-fluid spacer">
             <div class="offset4 span4 center">
                     <a href="/auth/#auth/register" class="btn btn-primary bidx-theme-colour-two"><?php _e('Join our group','bidxtheme');?></a>
-                    <span>Already have an account? Just <a href="/auth/#auth/login">login</a></span>
+                    <span>
+                        <?php printf(__('Already have an account? Just %1$slogin%2$s','bidxtheme'), '<a href="/auth/#auth/login">', '</a>'); ?>
+                    </span>
             </div>
         </div>
 

@@ -797,6 +797,9 @@ class TemplateLibrary
         return empty ($var) ? $var = $default : $var;
     }
 
+
+
+
 }
 
 ?>

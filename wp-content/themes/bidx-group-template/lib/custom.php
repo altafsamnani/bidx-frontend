@@ -222,3 +222,37 @@ function theme_customizer_groupstyle( $wp_customize ) {
 add_action( 'customize_register', 'theme_customizer_groupstyle' );
 
 
+/**
+ * Function get_custom_field_value() - retrieves the custom
+ *
+ * If $i is not provided, grap single value from custom field
+ * If $i has been provided and is less then arary count, get array value corresponding to index $i
+ *
+ * @param  string $key
+ * @param  number $i
+ *
+ * @return string
+ */
+function get_custom_field_value ( $key,  $i = null)
+{
+
+    $single = !$i ? true : false;
+    $result = get_post_meta( get_the_ID(), $key , $single );
+
+    // if multiple customfields with the same key are requested
+    //
+    if ( !$single ) {
+        if ( $i < count( $result) ) {
+            $value = $result[ $i ];
+        } else {
+            $value = "Error, requested array index " .  $i . " does not exist";
+        }
+    // if only one custom field value is requested
+    //
+    } else {
+        $value = $result;
+    }
+
+    return $value;
+}
+
