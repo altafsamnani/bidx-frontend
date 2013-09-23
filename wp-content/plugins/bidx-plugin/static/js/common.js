@@ -828,4 +828,23 @@
         e.preventDefault();
     } );
 
+    // Administer the toggle state of an accordion by putting a .accordion-open class on the group when the accordion group is open
+    // Usefull for setting icons / colors etc
+    //
+    $( ".accordion-body.collapse" )
+        .bind( "show", function()
+        {
+            var $accordionBody = $( this );
+
+            $accordionBody.closest( ".accordion-group" ).addClass( "accordion-open" );
+        } )
+        .bind( "hide", function()
+        {
+            var $accordionBody = $( this );
+
+            $accordionBody.closest( ".accordion-group" ).removeClass( "accordion-open" );
+        } );
+
+
+
 } ( jQuery ));
