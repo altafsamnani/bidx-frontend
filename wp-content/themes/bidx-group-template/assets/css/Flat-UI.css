@@ -120,7 +120,14 @@
 }
 .fui-radio-checked:before {
   content: "\e032";
-}.fui-checkbox-unchecked:before {
+}
+.fui-arrow-right:before {
+  content: "\e02c";
+}
+.fui-arrow-left:before {
+  content: "\e02d";
+}
+.fui-checkbox-unchecked:before {
   content: "\e033";
 }
 .fui-checkbox-checked:before {
