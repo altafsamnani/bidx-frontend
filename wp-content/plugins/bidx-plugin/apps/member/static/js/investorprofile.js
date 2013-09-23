@@ -1072,7 +1072,7 @@
             bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", [] );
         }
 
-        if ( focusLocationType !== "reach" )
+        if ( focusLocationType !== "reach" && !investorProfileId )
         {
             bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.coordinates", null );
             bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.reach", null );
