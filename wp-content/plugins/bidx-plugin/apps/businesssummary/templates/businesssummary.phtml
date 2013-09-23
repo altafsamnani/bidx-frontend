@@ -70,15 +70,20 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
     <div class="container">
 
+        <!-- Accordion -->
         <div class="accordion" id="businessSummaryAccordion">
 
             <!-- General Overview -->
-            <div class="accordion-group">
+            <div class="accordion-group accordion-open">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-GeneralOverview"><?php _e('General overview','bidxplugin'); ?></a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-GeneralOverview"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
                 </div>
                 <div id="businessSummaryAccordion-GeneralOverview" class="accordion-body collapse in">
                     <div class="accordion-inner">
+
+                        <div class="pull-right">
+                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">About the business <span class="fui-arrow-right"></span></a>
+                        </div>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -213,18 +218,23 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
+                        </div><!-- /EDIT -->
+
+                    </div><!-- /Accordion-inner -->
                 </div>
             </div><!-- /General Overview -->
 
-            <!-- About your business -->
+            <!-- About the business -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutYourBusiness"><?php _e('About the business','bidxplugin'); ?></a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutTheBusiness"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('About the business','bidxplugin'); ?></a>
                 </div>
-                <div id="businessSummaryAccordion-AboutYourBusiness" class="accordion-body collapse">
+                <div id="businessSummaryAccordion-AboutTheBusiness" class="accordion-body collapse">
                     <div class="accordion-inner">
+
+                        <div class="pull-right">
+                            <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">About you &amp; your team <span class="fui-arrow-right"></span></a>
+                        </div>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -387,21 +397,28 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 ?>
                                     </div>
                                 </div>
-
                             </form>
+                        </div><!-- /EDIT -->
 
+                        <div>
+                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> General Overview</a>
                         </div>
-                    </div>
+
+                    </div><!-- /accordion-inner -->
                 </div>
-            </div><!-- /About your business -->
+            </div><!-- /About the business -->
 
             <!-- About you & your team -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutYouAndYourTeam"><?php _e('About you & your team','bidxplugin'); ?></a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutYouAndYourTeam"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('About you & your team','bidxplugin'); ?></a>
                 </div>
                 <div id="businessSummaryAccordion-AboutYouAndYourTeam" class="accordion-body collapse">
                     <div class="accordion-inner">
+
+                        <div class="pull-right">
+                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Financial Details <span class="fui-arrow-right"></span></a>
+                        </div>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -478,18 +495,27 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                 <div class="managementTeamContainer"></div>
 
                             </form>
+                        </div><!-- /EDIT -->
+
+                        <div>
+                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> About the business</a>
                         </div>
-                    </div>
+
+                    </div><!-- /Accordion inner -->
                 </div>
             </div><!-- /About you & your team -->
 
             <!-- Financial details -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails">Financial Details</a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fui-arrow-right accordion-state-icon"></span> Financial Details</a>
                 </div>
                 <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse">
                     <div class="accordion-inner">
+
+                        <div class="pull-right">
+                            <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Company details <span class="fui-arrow-right"></span></a>
+                        </div>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -510,17 +536,26 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         <div class="view viewEdit">
                             edit
                         </div>
-                    </div>
+
+                        <div>
+                            <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> About you &amp; your team</a>
+                        </div>
+
+                    </div><!-- /Accordion-inner -->
                 </div>
             </div><!-- /Financial details -->
 
             <!-- Company details -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-CompanyDetails">Company Details</a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-CompanyDetails"><span class="fui-arrow-right accordion-state-icon"></span> Company Details</a>
                 </div>
                 <div id="businessSummaryAccordion-CompanyDetails" class="accordion-body collapse">
                     <div class="accordion-inner">
+
+                        <div class="pull-right">
+                            <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Documents <span class="fui-arrow-right"></span> </a>
+                        </div>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -540,18 +575,27 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         <!-- EDIT -->
                         <div class="view viewEdit">
                             edit
+                        </div><!-- /Edit -->
+
+                        <div>
+                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> Financial Details</a>
                         </div>
-                    </div>
+
+                    </div><!-- /Accordion inner -->
                 </div>
             </div><!-- /Company details -->
 
             <!-- Documents -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-Documents">Documents</a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-Documents"><span class="fui-arrow-right accordion-state-icon"></span> Documents</a>
                 </div>
                 <div id="businessSummaryAccordion-Documents" class="accordion-body collapse">
                     <div class="accordion-inner">
+
+                        <div class="pull-right">
+                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">General Overview <span class="fui-arrow-right"></span> </a>
+                        </div>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -572,8 +616,14 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         <div class="view viewEdit">
                             edit
                         </div>
-                    </div>
+
+                        <div>
+                            <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> Company Details</a>
+                        </div>
+
+                    </div><!-- /Accordion-inner -->
                 </div>
+
             </div><!-- /Documents -->
 
         </div><!-- /#businessSummaryAccordion -->
