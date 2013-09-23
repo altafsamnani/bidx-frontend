@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
+
+	<type>messages</type>
+	<description>List of messages</description>
+	<version>1.0</version>	
+	<messages>
+		<message>
+			<msg_id>1</msg_id>
+			<name>welcome</name>
+			<subject>Welcome to {{community_name}}</subject>
+			<content>Congratulations!
+
+Your account is now activated. You are part of {{community_name}}. 
+If {{group}} have any questions we will be happy to help you. Just send us an email at info@bidx.net
+
+Best regards, 
+bidX team
+			</content>
+		</message>
+				
+	</messages>
+	
+</data>

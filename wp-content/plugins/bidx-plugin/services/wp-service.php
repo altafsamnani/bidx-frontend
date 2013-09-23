@@ -1700,8 +1700,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                 update_option ('wpws_options', $wpws_values);
 
                 //Action 3 Enable Plugin Bidx Api Services
-                $result = activate_plugin ('bidx-services/bidx-services.php');
-
+                //$result = activate_plugin ('bidx-services/bidx-services.php');
                 //Action 4 Add Default Bidx Pages to render
                 $querystr = "SELECT wposts.*,wpostmeta2.meta_value as template_value
     FROM wp_posts AS wposts
@@ -1722,7 +1721,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     update_post_meta ($post_id, '_wp_page_template', $page->template_value);
                 }
 
-                create_custom_role_capabilities ($blog_id);
+                //create_custom_role_capabilities ($blog_id);
 
                 restore_current_blog ();
             }
@@ -1878,8 +1877,6 @@ function page_group_save ($post_id)
         update_post_meta ($post_id, 'page_group', $_POST['page_group']);
 }
 
-
-
 /* Alter Network Admin menus to get Bidx branding
  * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
  * @author Altaf Samnani
@@ -1928,7 +1925,7 @@ function bidx_options ()
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
     } else {
-        wp_die (__ ('You do not have sufficient permissions to access this page.'));
+        //wp_die (__ ('You do not have sufficient permissions to access this page.'));
     }
 }
 
@@ -2004,12 +2001,11 @@ function bidx_add_dashboard_widgets ()
     $currentUser = wp_get_current_user ();
     if (in_array ('groupadmin', $currentUser->roles)) {
         bidx_remove_core_widgets (); // Remove core Wp widgets for Group admin role
-
-        wp_add_dashboard_widget (
-            'bidx_dashboard_widget', // Widget slug.
-            'Bidx', // Title.
-            'bidx_dashboard_widget_function' // Display function.
-        );
+//        wp_add_dashboard_widget (
+//            'bidx_dashboard_widget', // Widget slug.
+//            'Bidx', // Title.
+//            'bidx_dashboard_widget_function' // Display function.
+//        );
     }
 }
 
@@ -2029,56 +2025,84 @@ function bidx_remove_core_widgets ()
     unset ($wp_meta_boxes['dashboard']['side']['core']);
 }
 
-/* Create the function to output the contents of our Dashboard Widget.
- * @author Altaf Samnani
- * @version 1.0
- *
- */
-
-function bidx_dashboard_widget_function ()
-{
-    //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard']");
-}
-
 /* Load Group Owner/Admin Dashboard Widget Css Scripts
  * @author Altaf Samnani
  * @version 1.0
  *
  */
-add_action ('admin_enqueue_scripts', function () {
+add_action ('admin_enqueue_scripts', 'bidx_dashboard_header');
 
-        $currentUser = wp_get_current_user ();
+function bidx_dashboard_header ()
+{
+    $menuTitle = strtolower(str_replace(" ","",get_admin_page_title ()));
+    $currentUser = wp_get_current_user ();
+    if (in_array ('groupadmin', $currentUser->roles)) {
+        roots_scripts ();
+        $menu = 'dashboard';
 
-        if (in_array ('groupadmin', $currentUser->roles)) {
-         
-            // 1 Load default root script/styles
-            roots_scripts ();          
-            $mailDepArr = array ('bidx-form', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-              'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'flatui-checkbox');
-            wp_register_script ('dashboard-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', $mailDepArr, '20130715', TRUE);
-            wp_enqueue_script ('dashboard-admin');
-            wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
-            wp_enqueue_style ('mail');
-            wp_enqueue_style ('bidx-admin-theme', get_bloginfo('template_url').'/wp-admin.css');
+        switch ($menuTitle) {
 
-            //wp_print_scripts ('dashboard');
-            // 2 Load Bidx Common Default script/styles to render it in 3
-            //$shortcode = new BidxShortCode();
-            //$shortcode->register_script ();
-            //3 Load Dashboard Style/Scripts
-//        wp_register_script ('dashboard-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', array ('bidx-common'), '20130715', TRUE);
-//        wp_enqueue_script ('dashboard-admin');
-//
-//        wp_register_style ('dashboard-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array ('roots_bootstrap', 'roots_bootstrap_responsive'), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
-//        wp_enqueue_style ('dashboard-admin');
-            //roots_scripts ();
+            case 'monitoring':
+                /* Style */
+                wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
+                wp_enqueue_style ('mail');
+
+                /* Script */
+                $mailDepArr = array ('bidx-form', 'bidx-common', 'bidx-i18n', 'jquery-validation',
+                  'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'flatui-checkbox');
+                wp_register_script ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', $mailDepArr, '20130715', TRUE);
+                wp_enqueue_script ('group-admin');
+                break;
+
+            case 'invite':
+                wp_register_style ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
+                wp_enqueue_style ('group-admin');
+                break;
         }
-    });
 
-add_action ('admin_footer', function () {
-        wp_print_scripts ('dashboard-admin');
-    });
+
+        // 1 Load default root script/styles
+
+
+        /* Have to add dashboard.css because of different styling for invite friend / group settings */
+        //wp_register_style ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
+        //wp_enqueue_style ('group-admin');
+        //wp_print_scripts ('dashboard');
+        // 2 Load Bidx Common Default script/styles to render it in 3
+        //$shortcode = new BidxShortCode();
+        //$shortcode->register_script ();
+        //3 Load Dashboard Style/Scripts
+//        wp_register_script ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', array ('bidx-common'), '20130715', TRUE);
+//        wp_enqueue_script ('group-admin');
+//
+//        wp_register_style ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array ('roots_bootstrap', 'roots_bootstrap_responsive'), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
+//        wp_enqueue_style ('group-admin');
+        //roots_scripts ();
+    }
+    wp_enqueue_style ('bidx-admin-theme', get_bloginfo ('template_url') . '/wp-admin.css');
+}
+
+add_action ('admin_footer', 'bidx_dashboard_footer');
+
+function bidx_dashboard_footer ()
+{
+
+    $menuTitle = strtolower(str_replace(" ","",get_admin_page_title ()));
+
+    $bidxCommonObj = new BidxCommon();
+    $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ('dashboard'), $static = false, $i18nGlobal = false);
+    // 1. I18n  & Global Data
+    wp_localize_script ('bidx-data', '__bidxI18nPreload', $appTranslationsArr['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+    switch ($menuTitle) {
+
+        case 'monitoring':
+            wp_print_scripts ('group-admin');
+            break;
+        case 'invite':
+            break;
+
+    }
+}
 
 //add_action ('admin_enqueue_scripts', 'roots_scripts', 100);
 
@@ -2087,39 +2111,7 @@ add_action ('admin_footer', function () {
 
 /* * **************** Bidx Admin Theme ************************************************ */
 
-/* Alter Admin menus to get Bidx branding
- * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
- * @author Altaf Samnani
- * @version 1.0
- *
- *
- * @param bool $echo
- */
 
-function alter_site_menu ()
-{
-    global $menu;
-
-    if ((current_user_can ('install_themes'))) {
-        $restricted = array ();
-    } // check if admin and hide nothing
-    else { // for all other users
-        $current_user = wp_get_current_user ();
-        if ($current_user->user_level < 10) {
-            remove_menu_page ('profile.php');
-            remove_menu_page ('tools.php');
-            remove_menu_page ('edit-comments.php');
-            remove_submenu_page ('index.php', 'my-sites.php');
-
-            //apply_filters( 'show_admin_bar', false );
-            add_action ('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
-            add_action ('admin_head', 'wpc_remove_admin_elements');
-        }
-    }
-    add_filter ('admin_footer_text', 'remove_footer_admin');
-}
-
-add_action ('admin_menu', 'alter_site_menu');
 
 function wpc_remove_admin_elements ()
 {
@@ -2152,3 +2144,87 @@ function annointed_admin_bar_remove ()
 }
 
 //add_action ('login_enqueue_scripts', 'bidx_admin_theme_style');
+/* Alter Admin menus to get Bidx branding
+ * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ *
+ * @param bool $echo
+ */
+
+function alter_site_menu ()
+{
+    global $menu;
+
+    if ((current_user_can ('install_themes'))) {
+        $restricted = array ();
+    } // check if admin and hide nothing
+    else { // for all other users
+        $current_user = wp_get_current_user ();
+
+        if (in_array ("groupadmin", $current_user->roles) || in_array ("groupowner", $current_user->roles) || in_array ("groupmember", $current_user->roles)) {
+            /* Removal of Wp Core Menus */
+            remove_menu_page ('profile.php');
+            remove_menu_page ('tools.php');
+            remove_menu_page ('edit-comments.php');
+            remove_menu_page ('index.php');
+            remove_submenu_page ('index.php', 'my-sites.php');
+            add_action ('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+            add_action ('admin_head', 'wpc_remove_admin_elements');
+
+            /* Dashboard GroupAdmin/GroupOwner Menus */
+            if (in_array ("groupadmin", $current_user->roles) || in_array ("groupowner", $current_user->roles)) {
+                add_menu_page ('Invite', 'Invite members', 'edit_theme_options', 'invite', 'bidx_dashboard_invite');
+                add_menu_page ('Monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
+                add_menu_page ('Getting Started', 'Getting Started', 'edit_theme_options', 'gettingstarted', 'bidx_getting_started');
+                add_menu_page ('Support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
+            }
+        }
+    }
+    add_filter ('admin_footer_text', 'remove_footer_admin');
+}
+
+add_action ('admin_menu', 'alter_site_menu');
+
+function bidx_dashboard_invite ()
+{
+
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='invite']");
+}
+
+/* Create the function to output the contents of our Dashboard Widget.
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ */
+
+function bidx_dashboard_monitoring ()
+{
+    //wp_enqueue_style( 'dashboard' );
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='monitoring']");
+}
+
+/* Create the function to output the contents of our Dashboard Widget.
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ */
+
+function bidx_getting_started ()
+{
+    //wp_enqueue_style( 'dashboard' );
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='gettingstarted']");
+}
+
+/* Create the function to output the contents of our Dashboard Widget.
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ */
+
+function bidx_getting_support ()
+{
+    //wp_enqueue_style( 'dashboard' );
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='gettingstarted']");
+}

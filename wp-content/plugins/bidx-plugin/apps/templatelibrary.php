@@ -187,7 +187,7 @@ class TemplateLibrary
         $staticData = BidxCommon::$i18nData['static'];
 
         $returnVal = $key;
-        if(isset($staticData[$type])) {
+        if (isset ($staticData[$type])) {
             foreach ($staticData[$type] as $staticVal) {
                 if ($staticVal->value == $key) {
                     $returnVal = $staticVal->label;
@@ -341,8 +341,8 @@ class TemplateLibrary
      */
     public function addRowsWithLabelBelow ($gridLabel, $gridValue, $rowValues, $properties = array ())
     {
-        /** Class placed on the outer rows, defaults to the row-fluid from bootstrap **/
-        $classRow = (isset( $properties['class_row']) ? $properties['class_row']:'row-fluid');
+        /** Class placed on the outer rows, defaults to the row-fluid from bootstrap * */
+        $classRow = (isset ($properties['class_row']) ? $properties['class_row'] : 'row-fluid');
 
         /** Class * */
         $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
@@ -360,27 +360,27 @@ class TemplateLibrary
         foreach ($rowValues as $label => $rowValue) {
             if ($rowValue && $rowValue != 'null') {
                 //Display Label
-                $rowHtml .= $classRow   ? "<div class='" . $classRow . "'>"     : "";
-                $rowHtml .= $gridLabel  ? "<div class='" . $gridLabel . "'>"    : "";
+                $rowHtml .= $classRow ? "<div class='" . $classRow . "'>" : "";
+                $rowHtml .= $gridLabel ? "<div class='" . $gridLabel . "'>" : "";
 
                 $rowHtml .= "<$tagLabel " . $classLabel . $idLabel . "  > " . $label . " </$tagLabel>";
-                $rowHtml .= $gridLabel  ? "</div>" : "";
-                $rowHtml .= $classRow   ? "</div>" : "";
+                $rowHtml .= $gridLabel ? "</div>" : "";
+                $rowHtml .= $classRow ? "</div>" : "";
                 //Display Value
                 if (is_array ($rowValue)) {
                     foreach ($rowValue as $value) {
-                        $rowHtml .= $classRow   ? "<div class='" . $classRow . "'>"     : "";
-                        $rowHtml .= $gridLabel  ? "<div class='" . $gridValue . "'>"    : "";
+                        $rowHtml .= $classRow ? "<div class='" . $classRow . "'>" : "";
+                        $rowHtml .= $gridLabel ? "<div class='" . $gridValue . "'>" : "";
                         $rowHtml .= "<$tagValue " . $classValue . $idValue . "  > " . $value . " </$tagValue>";
-                        $rowHtml .= $gridLabel  ? "</div>" : "";
-                        $rowHtml .= $classRow   ? "</div>" : "";
+                        $rowHtml .= $gridLabel ? "</div>" : "";
+                        $rowHtml .= $classRow ? "</div>" : "";
                     }
                 } else {
-                    $rowHtml .= $classRow   ? "<div class='" . $classRow . "'>"     : "";
-                    $rowHtml .= $gridLabel  ? "<div class='" . $gridValue . "'>"    : "";
+                    $rowHtml .= $classRow ? "<div class='" . $classRow . "'>" : "";
+                    $rowHtml .= $gridLabel ? "<div class='" . $gridValue . "'>" : "";
                     $rowHtml .= "<$tagValue " . $classValue . " > " . $rowValue . " </$tagValue>";
-                    $rowHtml .= $gridLabel  ? "</div>" : "";
-                    $rowHtml .= $classRow   ? "</div>" : "";
+                    $rowHtml .= $gridLabel ? "</div>" : "";
+                    $rowHtml .= $classRow ? "</div>" : "";
                 }
             }
         }
@@ -477,7 +477,7 @@ class TemplateLibrary
                     //Display Value
                     if (is_array ($rowValue)) {
                         foreach ($rowValue as $value) {
-                            if ( $this->exst( $value->document )) {
+                            if ($this->exst ($value->document)) {
                                 $rowHtml .= "<div class='row-fluid'>";
                                 $rowHtml .= "<div class='" . $gridValue . "'>";
                                 $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $this->exst ($value->documentName) . " </a>";
@@ -797,8 +797,50 @@ class TemplateLibrary
         return empty ($var) ? $var = $default : $var;
     }
 
+    function getBidxToken ($token)
+    {
+
+        switch ($token) {
+
+            case '{{community_name}}':
+            case '{{group}}':
+
+                if (isset(BidxCommon::$staticSession->data->currentGroup)) {
+                    $currentGroupId = BidxCommon::$staticSession->data->currentGroup;
+                    $tokenVal = BidxCommon::$staticSession->data->groups->$currentGroupId->name;
+                }
+
+                break;
+            case '':
+                break;
+            case '':
+                break;
+        }
+
+        return $tokenVal;
+    }
+
+    /**
+     * Validation function for nested objects
+     * @param String $fileName File Name
+     * @return String $audioVideoHtml Embed Video Html
+     */
+    function replaceMessageTokens ($body, $tokens = array ())
+    {
+        preg_match_all ("/{{(?:.*?)}}+/i", $body, $matches);
 
 
+        foreach ($matches[0] as $match) {
+            if (isset ($tokens[$match])) {
+                $body = str_replace ($match, $tokens[$match], $body);
+            } else {
+                $tokenVal = $this->getBidxToken ($match);
+                $body = str_replace ($match, $tokenVal, $body);
+            }
+        }
+
+        return $body;
+    }
 
 }
 

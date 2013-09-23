@@ -139,7 +139,7 @@
 
         ,   'media(/:appState)(/:id)':                          'media'
 
-        ,   'dashboard(/:section)(/:part1)(/:part2)':           'dashboard'
+        ,   'dashboard(/:section)(/:part1)':                    'dashboard'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
@@ -299,8 +299,7 @@
                 "dashboard"
             ,   {
                     section:    section
-                ,   part1:      part1
-                ,   part2:      part2
+                ,   part1:      part1                
                 }
             );
         }

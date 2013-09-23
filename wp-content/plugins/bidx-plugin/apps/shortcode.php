@@ -128,9 +128,9 @@ class BidxShortcode {
 	 function register_script() {
 
 	 	$bidxJsDir = sprintf( '%s/../static/js', BIDX_PLUGIN_URI );
-
+        
 	 	if ( BidxCommon :: isWPInternalFunction() ) {
-	 		Logger :: getLogger( 'shortcode' ) -> trace('Skipping enqueueing because of admin.');
+	 		Logger :: getLogger( 'shortcode' ) -> trace('Skipping enqueueing because of admin.');         
 	 	} else {
 
 		 	//vendor scripts

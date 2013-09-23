@@ -62,8 +62,7 @@ class BidxCommon
             if (!$isWordpress) {
 
                 //Start the session to store Bidx Session
-                $this->startSession ();//Starting sessin because we want to display in dashboard widget bidx services
-
+                $this->startSession (); //Starting sessin because we want to display in dashboard widget bidx services
                 //If Bidx Cookie set do the following
                 if ($this->isSetBidxAuthCookie ()) {
                     //Check Session Variables from Second call, dont need to make session call from second request
@@ -92,7 +91,6 @@ class BidxCommon
                 $scriptValue = $this->injectJsVariables ($subDomain);
                 $this->setScriptJs ($subDomain, $scriptValue);
             }
-
         }
 
         return;
@@ -129,7 +127,7 @@ class BidxCommon
      */
     function clearSessionFromParam ($session_id, $clearSession = false)
     {
-        if (isset ($_GET['rs']) && $_GET['rs'] || $clearSession) {
+        if ((isset ($_GET['rs']) && $_GET['rs']) || $clearSession) {
             /* Clear the Session */
             session_id ($session_id);
             session_start ();
@@ -143,7 +141,7 @@ class BidxCommon
     public function getSessionVariables ($subDomain)
     {
         //Get Previous Session Variables if Set and Not Failed Login
-        $authenticated = (isset($_SESSION[$subDomain]->authenticated)) ? $_SESSION[$subDomain]->authenticated : 'false';
+        $authenticated = (isset ($_SESSION[$subDomain]->authenticated)) ? $_SESSION[$subDomain]->authenticated : 'false';
         if (!empty ($_SESSION[$subDomain]) &&
             ((!empty ($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $authenticated )) {
             $sessionVars = $_SESSION[$subDomain];
@@ -363,7 +361,7 @@ class BidxCommon
 
 
             if ($jsSessionData) {
-                $authenticated = (isset($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
+                $authenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
                 $this->redirectUrls ($hostAddress[1], $authenticated, $redirect, $statusMsgId, $subDomain);
             }
 
@@ -403,7 +401,7 @@ class BidxCommon
             $urlSep = '&';
         }
 
-         //Other than login page and no user authenticated redirect him Moved to api service
+        //Other than login page and no user authenticated redirect him Moved to api service
 
         switch ($uriString) {
 
@@ -433,7 +431,7 @@ class BidxCommon
             case 'mail' :
                 if ($authenticated == 'false') {
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url).'/#auth/login';
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables
@@ -445,9 +443,10 @@ class BidxCommon
                 break;
 
             case 'wp-admin' :       // Group admin and wp-admin at that time only
-                 if ($authenticated == 'false') {
+                if ($authenticated == 'false') {
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url).'/#auth/login';;
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
+                    ;
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables
@@ -488,11 +487,10 @@ class BidxCommon
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
         if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) || $hostAddress[1] == 'registration' ||
             strstr ($hostAddress[1], 'wp-login.php') ||
-            (isset($currentUser) && preg_match ('/wp-admin/i', $hostAddress[1]) && !in_array('groupadmin', $currentUser->roles))) { //Allow Groupadmin for wp-admin dashboard
+            (isset ($currentUser) && preg_match ('/wp-admin/i', $hostAddress[1]) && !in_array ('groupadmin', $currentUser->roles))) { //Allow Groupadmin for wp-admin dashboard
             $isWordpress = true;
             //$session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
             //$this->clearSessionFromParam ($session_id);
-
         }
         //Login to Wordpress if already session exists
 
@@ -507,7 +505,7 @@ class BidxCommon
     {
         $currentUser = wp_get_current_user ();
         $serverUri = $_SERVER["REQUEST_URI"];
-        $iswpInternalVar = ((isset($currentUser) && preg_match ('/wp-admin/i', $serverUri) && !in_array('groupadmin', $currentUser->roles)) || preg_match ('/wp-login/i', $serverUri));
+        $iswpInternalVar = ((isset ($currentUser) && preg_match ('/wp-admin/i', $serverUri) && !in_array ('groupadmin', $currentUser->roles)) || preg_match ('/wp-login/i', $serverUri));
         return $iswpInternalVar;
     }
 
@@ -562,7 +560,7 @@ class BidxCommon
 
         $hostAddress = explode ('.', $_SERVER ["HTTP_HOST"]);
         if (is_array ($hostAddress)) {
-            if ( strcasecmp( "www", $hostAddress [0]) == 0 ) {
+            if (strcasecmp ("www", $hostAddress [0]) == 0) {
                 $passBack = 1;
             } else {
                 $passBack = 0;
@@ -664,6 +662,27 @@ class BidxCommon
             }
         }
 
+        /* Messages */
+        $filename = BIDX_PLUGIN_DIR . '/../pages/message.xml';
+        $countMessage = 0;
+        //try /catch / log ignore
+        $document = simplexml_load_file ($filename);
+        $messages = $document->xpath ('//message');
+
+        foreach ($messages as $message) {
+
+            $templateLibrary = new TemplateLibrary();
+            $body = $templateLibrary->replaceMessageTokens ($message->content);
+            $subject = $templateLibrary->replaceMessageTokens ($message->subject);
+
+            $transientI18nData['templates'][$countMessage]->value = $message->name.'subject';
+            $transientI18nData['templates'][$countMessage]->label = $subject;
+            $countMessage++;
+            $transientI18nData['templates'][$countMessage]->value = $message->name.'body';
+            $transientI18nData['templates'][$countMessage]->label = $body;
+            
+            $countMessage++;
+        }
 
         (isset ($transientI18nData['__global'])) ? $returnData['__global'] = $transientI18nData['__global'] : '';
         ($transientStaticData) ? $returnData['static'] = $transientStaticData : '';
