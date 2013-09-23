@@ -77,7 +77,7 @@
   }
 
   $.fn.checkbox.defaults = {
-    template: '<span class="icons"><span class="first-icon bidx-checkbox-unchecked"></span><span class="second-icon bidx-checkbox-checked"></span></span>'
+    template: '<span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>'
   }
 
 

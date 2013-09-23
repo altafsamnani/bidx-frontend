@@ -34,7 +34,7 @@ class login {
         //$deps = array('bootstrap');
         wp_register_script( 'login', plugins_url( 'static/js/login.js', __FILE__ ), self::$deps, '20130501', TRUE );
 //      wp_register_style( 'login', plugins_url( 'static/css/login.css', __FILE__ ), array(), '20130501', 'all' );
-        wp_enqueue_style( 'login' );
+//        wp_enqueue_style( 'login' );
     }
 
     /**
