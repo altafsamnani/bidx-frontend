@@ -1,15 +1,11 @@
 ;( function ( $ )
 {
     var $element                    = $( "#register" )
-//    ,   $views                      = $element.find( ".view" )
-    ,   $frmRegister                   = $element.find( "#frmRegister" )
-    ,   $btnRegister                   = $frmRegister.find( ":submit" )
+    ,   $frmRegister                = $element.find( "#frmRegister" )
+    ,   $btnRegister                = $frmRegister.find( ":submit" )
     ,   bidx                        = window.bidx
     ,   appName                     = "register"
-    ,   currentView
     ;
-
-
 
     // private functions
 
@@ -137,11 +133,13 @@
 
                     // Go to group dashboard
                     //
-
+                    var $urlparam = $frmRegister.find( "[name='urlparam']" );
 
                     $frmRegister.hide();
-                    currentView.find( ".registerSuccess" ).removeClass( "hide" );
-                    var urlparam = currentView.find("[name=urlparam]").length ? currentView.find("[name=urlparam]").val() : "";
+                    $element.find( ".registerSuccess" ).removeClass( "hide" );
+                    var urlparam = $urlparam.length
+                        ? $urlparam.val()
+                        : "";
                     var url = window.location.protocol + "//" + window.location.host + "?smsg=4&rs=true&sparam=" + urlparam;
                     window.location.href = url;
                 }
