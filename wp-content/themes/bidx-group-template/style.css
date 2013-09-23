@@ -1655,9 +1655,9 @@ form .row-fluid .input-prepend {
     /* styles shared by portrait tablet and above */
     @media (min-width: 980px ) {
 
-        /* #wrap > .container {
+        #wrap > .container.bidx-app {
             padding-top:                171px;
-        } */
+        }
 
         /* header */
         header .navbar-inner {
@@ -2043,7 +2043,7 @@ form .row-fluid .input-prepend {
                 text-align:                 center;
             }
 
-            header.navbar .iconbar-wrapper .iconbar ul {
+            header.navbar .iconbar-wrapper .iconbar > ul {
                 display:                    inline-block;
                 margin:                     0 auto;
             }
