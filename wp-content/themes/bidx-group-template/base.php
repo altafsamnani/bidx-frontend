@@ -20,7 +20,7 @@
 <body <?php body_class( "bidx " . $authClass ); ?>>
   <!--[if lt IE 7]><div class="alert">Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</div><![endif]-->
     <div id="wrap"> <!-- sticky footer -->
-
+        <div class="inner-wrap">
 
 <?php
 
@@ -34,7 +34,7 @@
         //
         include roots_template_path();
         ?>
-
+        </div>
         <div id="push"></div><!-- push element for sticky header  -->
     </div><!-- sticky footer -->
 

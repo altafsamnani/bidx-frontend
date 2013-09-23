@@ -20,20 +20,29 @@ Company: bidX;
         margin:                     0;
         padding:                    0;
 
+
         color:                      #34495e;
         height:                     100%;
 
 
     }
 
-    body.bidx-edit {
-        padding-top:                80px;
-    }
+    /* top paddings */
 
-    /* Mattijs: not sure where this is used and if it is still necessary;
-    body.bidx-business {
-        padding-top:                110px;
-    }
+        .home #wrap .inner-wrap {
+            padding-top:                114px;
+        }
+
+        .bidx-edit #wrap .inner-wrap {
+            padding-top:                250px;
+        }
+
+        #wrap .inner-wrap {
+            padding-top:                171px;
+        }
+
+    /* end top paddings */
+
 
     /* sticky footer   */
     #wrap {
@@ -1655,10 +1664,6 @@ form .row-fluid .input-prepend {
     /* styles shared by portrait tablet and above */
     @media (min-width: 980px ) {
 
-        #wrap > .container.bidx-app {
-            padding-top:                171px;
-        }
-
         /* header */
         header .navbar-inner {
             height:                     109px;
@@ -1898,10 +1903,6 @@ form .row-fluid .input-prepend {
         /* end header */
 
         /* content */
-
-        .bidx.home .outer-content-container {
-            padding-top:                            114px;
-        }
 
         .bidx.home .carousel .outer-carousel-control-container,
         .bidx.home .carousel .carousel-inner .outer-carousel-control-container  {

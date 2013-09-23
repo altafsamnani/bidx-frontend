@@ -1,7 +1,6 @@
 <header class="banner navbar navbar-fixed-top" role="banner">
   	<div class="navbar-inner bidx-theme-colour-header">
 		<div class="container">
-
 			<div class="row-fluid">
 <?php
 				if( $authenticated )
@@ -59,3 +58,5 @@
 	<div class="white-spacer"></div>
 
 </header>
+
+

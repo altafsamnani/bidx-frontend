@@ -1,3 +1,4 @@
+
 <?php while (have_posts()) : the_post(); ?>
 <div class="container">
 	<article <?php post_class(); ?>>
@@ -7,5 +8,5 @@
       the_content(); ?>
     </div>
   </article>
- </div> 
+ </div>
 <?php endwhile; ?>
