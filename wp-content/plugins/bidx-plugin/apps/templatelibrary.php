@@ -190,7 +190,7 @@ class TemplateLibrary
         if (isset ($staticData[$type])) {
             foreach ($staticData[$type] as $staticVal) {
                 if ($staticVal->value == $key) {
-                    $returnVal = $staticVal->label;
+                    $returnVal = $this->escapeHtml ($staticVal->label);
                     break;
                 }
             }
@@ -314,7 +314,7 @@ class TemplateLibrary
             if ($value && $value != 'null') {
                 //Display Label
                 $rowHtml .= "<div class='" . $gridLabel . "'>";
-                $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
+                $rowHtml .= "<$tagLabel " . $classLabel . " > " .$label . " </$tagLabel>";
                 $rowHtml .= "</div>";
                 //Display Value
                 $rowHtml .= "<div class='" . $gridValue . "'>";
@@ -411,7 +411,7 @@ class TemplateLibrary
             //Build Header
             $htmlHeader.= "<tr>";
             foreach ($header as $headerKey => $headerValue) {
-                $htmlHeader.= "<th>" . $headerKey . "</th>";
+                $htmlHeader.= "<th>" . $this->escapeHtml($headerKey) . "</th>";
             }
             $htmlHeader.= "</tr>";
             foreach ($rowsArr as $rowValue) {
@@ -421,13 +421,13 @@ class TemplateLibrary
                     if (isset ($merge[$headerValue])) { //If two values needs to be merged ex for Name header first_name/last_name
                         $sepMerge = "";
                         foreach ($merge[$headerValue] as $mergeKey => $mergeVal) {
-                            $html.= $sepMerge . $rowValue->$mergeVal;
+                            $html.= $sepMerge . $this->escapeHtml($rowValue->$mergeVal);
                             $sepMerge = " ";
                         }
 
                         $display = true;
                     } else if (isset ($rowValue->$headerValue)) {
-                        $html.= $rowValue->$headerValue;
+                        $html.= $this->escapeHtml($rowValue->$headerValue);
                         $display = true;
                     }
                     $html.= "</td>";
@@ -471,7 +471,7 @@ class TemplateLibrary
                     //Display Label
                     $rowHtml .= "<div class='row-fluid'>";
                     $rowHtml .= "<div class='" . $gridLabel . "'>";
-                    $rowHtml .= "<h5 " . $classLabel . " > " . $label . " </h5>";
+                    $rowHtml .= "<h5 " . $classLabel . " > " . $this->escapeHtml ($label) . " </h5>";
                     $rowHtml .= "</div>";
                     $rowHtml .= "</div>";
                     //Display Value
@@ -547,7 +547,7 @@ class TemplateLibrary
 
                 $objValue = $this->getMultiReplacedValues ($elementKey, $objValue);
                 if ($objValue != 'null' && $objValue) {
-                    $htmlDisplay .= $sep . $objValue;
+                    $htmlDisplay .= $sep . $this->escapeHtml ($objValue);
                     $count++;
 
                     $sep = ($count == $countData) ? $seperatorAnd : $seperator;
@@ -715,13 +715,13 @@ class TemplateLibrary
             if ($displayFlag) {
                 //Display Label
                 $rowHtml .= "<div class='" . $gridLabel . "'>";
-                $rowHtml .= "<$tagLabel " . $classLabel . " > " . $value . " </$tagLabel>";
+                $rowHtml .= "<$tagLabel " . $classLabel . " > " . $this->escapeHtml ($value) . " </$tagLabel>";
                 $rowHtml .= "</div>";
                 $displayFlag = false;
             } else {
                 //Display Value
                 $rowHtml .= "<div class='" . $gridValue . "'>";
-                $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
+                $rowHtml .= "<$tagValue " . $classValue . " > " . $this->escapeHtml ($value) . " </$tagValue>";
                 $rowHtml .= "</div>";
                 $displayFlag = true;
             }
@@ -759,11 +759,11 @@ class TemplateLibrary
                     $html .= '</div>';
 
                     $html .= '<div class="span9">';
-                    $html .= "<h5 class='documentName'>{$attachment->documentName}</h5>";
+                    $html .= "<h5 class='documentName'>" . $this->escapeHtml ($attachment->documentName) . "</h5>";
                     $html .= "<p>{$date} </p>";
 
                     if ($this->exst ($attachment->purpose)) {
-                        $html .= "<p>{$attachment->purpose} </p>";
+                        $html .= "<p>" . $this->escapeHtml ($attachment->purpose) . "</p>";
                     }
 
                     $html .= '</div>';
@@ -794,6 +794,7 @@ class TemplateLibrary
      */
     function exst (& $var, $default = null)
     {
+        $var = (is_string ($var)) ? $this->escapeHtml ($var) : $var;
         return empty ($var) ? $var = $default : $var;
     }
 
@@ -805,13 +806,12 @@ class TemplateLibrary
             case '{{community_name}}':
             case '{{group}}':
 
-                if (isset(BidxCommon::$staticSession->data->currentGroup)) {
+                if (isset (BidxCommon::$staticSession->data->currentGroup)) {
                     $currentGroupId = BidxCommon::$staticSession->data->currentGroup;
                     $tokenVal = BidxCommon::$staticSession->data->groups->$currentGroupId->name;
                 }
 
                 break;
-         
         }
 
         return $tokenVal;
@@ -837,6 +837,16 @@ class TemplateLibrary
         }
 
         return $body;
+    }
+
+    /**
+     * Escape Speical Html Chars
+     * @param String $htmlsanitize String
+     * @return String $audioVideoHtml Returns special html chars
+     */
+    function escapeHtml ($htmlsanitize)
+    {
+        return htmlspecialchars ($htmlsanitize, ENT_QUOTES, 'UTF-8');
     }
 
 }
