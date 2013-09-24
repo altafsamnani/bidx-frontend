@@ -26,7 +26,7 @@
             		<div class="copyright">&copy; <?php _e('2013. bidX.net. All rights reserved','bidxtheme')?></div>
                     <div class="inline-list footer-menu">
             			<div><a href="/sitemap"><?php _e('Sitemap','bidxtheme')?></a></div>
-            			<div><a href="/termsandconditions"><?php _e('Terms and conditions','bidxtheme')?></a></div>
+            			<div><a href="/terms-and-conditions"><?php _e('Terms and conditions','bidxtheme')?></a></div>
             			<div><a href="/privacy"><?php _e('Privacy','bidxtheme')?></a></div>
             		</div>
             	</div>

@@ -13,10 +13,21 @@
     ,   currentHash
     ;
 
-    var $mainStates     = $( ".mainState" )
-    ,   $subStates       = $( ".subState" )
+    var $mainStates     = $( "body .mainState" )
     ,   $controls       = $( ".editControls" )
     ;
+
+
+    // if there are more then 1 mainstates: filter all but primary (first level) mainStates, by only mapping the mainStates that do not have a parent
+    //
+    if ( $mainStates.length > 1 )
+    {
+        $mainStates = $mainStates.map( function()
+        {
+            var $mainState = $( this );
+            return !$( $mainState ).parents( ".mainState ").length ? $mainState.get() : null;
+        } );
+    }
 
     // Mainstate switcher. Expects html containers to exist with both the class mainState and mainState{{s}}, where s is the parameter being put into this function
     //
@@ -30,9 +41,10 @@
         {
             $( "body" ).removeClass( "bidx-edit" );
         }
-
+        bidx.utils.log("MAIN STATE CHANGES");
         $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
     }
+
 
 
     // Navigate to a certain app (and state within the app)
@@ -90,7 +102,6 @@
             //
             _showMainState( state );
 
-
             // Save a reference to the container element of the app
             //
             $element = app.$element;
@@ -113,9 +124,13 @@
 
     // show the substate of a app that is part of a composite app. NOTE: this function might be redundant if it turns out the the compisite view-app always handles the visibility of its child-apps
     //
-    function showSubState( s )
+    function showAppState( app, s )
     {
-        $subStates.hide().filter( ".subState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
+        $( ".mainState" + app.charAt( 0 ).toUpperCase() + app.substr( 1 ) )
+                .find( ".mainState" ).hide()
+                .filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
+
+        bidx.utils.log( "hide mainStates within app", app, " and show state ", s );
     }
 
 
@@ -452,7 +467,7 @@
         }
 
     ,   updateHash:                         updateHash
-    ,   showSubState:                       showSubState
+    ,   showAppState:                       showAppState
 
         // The following functions are deprecated and should be called on bidx.common
         //

@@ -14,11 +14,6 @@
 
         // enable location plugin
         //
-        $frmRegister.form(
-        {
-                errorClass : 'error',
-                enablePlugins: [ 'location' ]
-        } );
 
         // set validation and submitHandler
         //

@@ -36,7 +36,10 @@
         // call the navigate of the child app
         //
         bidx[ options.section ].navigate( options );
-        bidx.controller.showSubState( options.section );
+
+        // show apps sub app state
+        //
+        bidx.controller.showAppState( "auth", options.section );
 
         // show the child apps view
         //
