@@ -100,7 +100,7 @@
                 updateHash( newHash );
             }
         }
-    };blijken
+    };
 
     // Update Hash using Backbone Router. If you wish to also call the route function, set the trigger option to true.
     // To update the URL without creating an entry in the browser's history, set the replace option to true.
@@ -308,7 +308,7 @@
                 "dashboard"
             ,   {
                     section:    section
-                ,   part1:      part1                
+                ,   part1:      part1
                 }
             );
         }
