@@ -14,6 +14,7 @@
     ;
 
     var $mainStates     = $( ".mainState" )
+    ,   $subStates       = $( ".subState" )
     ,   $controls       = $( ".editControls" )
     ;
 
@@ -32,6 +33,7 @@
 
         $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
     }
+
 
     // Navigate to a certain app (and state within the app)
     //
@@ -98,7 +100,7 @@
                 updateHash( newHash );
             }
         }
-    };
+    };blijken
 
     // Update Hash using Backbone Router. If you wish to also call the route function, set the trigger option to true.
     // To update the URL without creating an entry in the browser's history, set the replace option to true.
@@ -108,6 +110,13 @@
         router.navigate( newHash, trigger, replace );
         bidx.utils.log("hash changed to", newHash );
     };
+
+    // show the substate of a app that is part of a composite app. NOTE: this function might be redundant if it turns out the the compisite view-app always handles the visibility of its child-apps
+    //
+    function showSubState( s )
+    {
+        $subStates.hide().filter( ".subState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
+    }
 
 
     // Router for main state
@@ -443,6 +452,7 @@
         }
 
     ,   updateHash:                         updateHash
+    ,   showSubState:                       showSubState
 
         // The following functions are deprecated and should be called on bidx.common
         //

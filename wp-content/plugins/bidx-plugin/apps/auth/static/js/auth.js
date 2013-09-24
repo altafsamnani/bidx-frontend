@@ -36,6 +36,7 @@
         // call the navigate of the child app
         //
         bidx[ options.section ].navigate( options );
+        bidx.controller.showSubState( options.section );
 
         // show the child apps view
         //
