@@ -799,7 +799,7 @@ class TemplateLibrary
 
     function getBidxToken ($token)
     {
-
+        $tokenVal = NULL;
         switch ($token) {
 
             case '{{community_name}}':
@@ -811,10 +811,7 @@ class TemplateLibrary
                 }
 
                 break;
-            case '':
-                break;
-            case '':
-                break;
+         
         }
 
         return $tokenVal;
