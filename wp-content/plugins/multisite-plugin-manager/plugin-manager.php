@@ -330,7 +330,7 @@ class PluginManager {
 		if ($blogs)	{
     	foreach ($blogs as $blog_id)	{
 	   		switch_to_blog($blog_id);
-		    deactivate_plugins($plugin, true); //silently deactivate the plugin
+		    deactivate_plugins($plugin); //silently deactivate the plugin
 		    restore_current_blog();
 			}
 			?><div id="message" class="updated fade"><p><span style="color:#FF3300;"><?php echo esc_html($plugin); ?></span><?php _e(' has been MASS DEACTIVATED.', 'pm'); ?></p></div><?php

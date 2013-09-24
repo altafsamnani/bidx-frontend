@@ -40,11 +40,10 @@ class ContentLoader
         add_action ('wp_head', array (&$this, 'addJsVariables'));
 
         $currentUser = wp_get_current_user ();
-     
+
         if (in_array ('groupadmin', $currentUser->roles)) {
 
-        add_action ('admin_head', array (&$this, 'addJsVariables'));
-
+            add_action ('admin_head', array (&$this, 'addJsVariables'));
         }
     }
 
@@ -71,12 +70,11 @@ class ContentLoader
      */
     public function load ($post_type = null)
     {
-
         add_rewrite_tag ('%bidx%', '([^&/]+)'); //main action per endpoint
         add_rewrite_tag ('%bidxparam1%', '([^&/]+)'); //control parameter if available
         add_rewrite_tag ('%bidxparam2%', '([^&/]+)'); //rest of url data if available
 
-
+       
         $this->logger->trace ('Start loading default data from location : ' . $this->location);
         foreach (glob (BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml') as $filename) {
             //try /catch / log ignore
@@ -178,6 +176,8 @@ class ContentLoader
                 $this->logger->trace ('Adding the navigation named : ' . $image->name);
             }
         }
+
+        //update_option (BIDX_VERSION_KEY, BIDX_VERSION_NUM);
     }
 
     /**
@@ -244,8 +244,10 @@ class ContentLoader
     {
 
         $this->logger->trace ("Unloading default data from location : " . $this->location);
+        global $wp_rewrite;
+        $wp_rewrite->flush_rules(  );
+        //flush_rewrite_rules ();
 
-        flush_rewrite_rules ();
 
         //remove posts : bidx for now
         $post_type = 'bidx';
@@ -256,16 +258,17 @@ class ContentLoader
           'nopaging' => true,
           'suppress_filters' => true)
         );
+        if ($posts_array) {
+            $this->logger->trace ('Removing ' . sizeof ($posts_array) . ' posts');
+            foreach ($posts_array as $post) {
 
-        $this->logger->trace ('Removing ' . sizeof ($posts_array) . ' posts');
-        foreach ($posts_array as $post) {
+                $postid = $post->ID;
+                wp_delete_post ($postid, true);
+                $this->logger->trace ('Removed post id : ' . $postid);
+            }
 
-            $postid = $post->ID;
-            wp_delete_post ($postid, true);
-            $this->logger->trace ('Removed post id : ' . $postid);
+            $this->logger->trace ('bidX rules de-activation succeeded');
         }
-
-        $this->logger->trace ('bidX rules de-activation succeeded');
     }
 
     /**
@@ -301,6 +304,7 @@ class ContentLoader
         $this->logger->trace ('Custom Post handler ready');
         $this->logger->trace (get_post_types ());
     }
+
     /**
      * Initialize Static Multilingual text domain data load
      * @param $post_type type that needs to created custom
@@ -327,7 +331,22 @@ class ContentLoader
         $locale = apply_filters ('plugin_locale', get_locale (), $domain);
         $moPluginfile = $languagePath . '/plugins/' . $locale . '.mo';
         load_textdomain ($domain, $moPluginfile);
+    }
 
+    /**
+     * If new Version update db options
+     * @param $new_version New Version of Plugin then do actions
+     * @example http://wp.smashingmagazine.com/2011/03/08/ten-things-every-wordpress-plugin-developer-should-know/
+     */
+    function isVersionUpdate ()
+    {
+        //if (get_option (BIDX_VERSION_KEY) != BIDX_VERSION_NUM) {
+
+           // if (!function_exists ('flush_rules'))
+           //     require_once(ABSPATH . "wp-includes/rewrite.php");
+           //$this->unload ();
+           //$this->load (); // Will update the version var in load function
+        //}
     }
 
 }
