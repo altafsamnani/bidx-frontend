@@ -136,8 +136,19 @@ abstract class APIbridge
 
             // Add Domain
             $requestData->bidxGroupDomain = $groupDomain;
+     
+            /* Return if Super admin, so that after previewing the app page admin doest gets logs out*/
+            if( is_super_admin() ) {
+                
+                $requestData->status = 'ERROR';
+                $requestData->authenticated = 'false';
+                $requestData->text = 'I am super admin, you idiot';
+                return $requestData;
+
+            }
 
             // Check the Http response and decide the status of request whether its error or ok
+
             if ($httpCode >= 200 && $httpCode < 300) {
                 //Keep the real status
                 //$requestData->status = 'OK';

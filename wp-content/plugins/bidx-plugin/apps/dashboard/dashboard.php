@@ -111,6 +111,9 @@ class dashboard
                         case 'gettingstarted' :
                             $template = 'getting-started.phtml';
                             break;
+                        case 'support' :
+                            $template = 'support.phtml';
+                            break;
                     }
                 }
 

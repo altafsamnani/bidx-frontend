@@ -242,6 +242,12 @@ function ajax_submit_signin ()
             //$url = 'http://test.bidx.net/api/v1/session?csrf=false&groupKey='.$groupName;
             $result = call_bidx_service ($url, $body);
 
+            //Flush Bidx Sessions/Cookies before login
+            clear_bidx_cookies ();
+            wp_clear_auth_cookie ();
+            clear_wp_bidx_session ();
+
+            // Clear all cookie and session before we process
             //3 Check validation error and include redirect logic
             $requestData = bidx_wordpress_post_action ($url, $result, $body);
 
@@ -2034,7 +2040,7 @@ add_action ('admin_enqueue_scripts', 'bidx_dashboard_header');
 
 function bidx_dashboard_header ()
 {
-    $menuTitle = strtolower(str_replace(" ","",get_admin_page_title ()));
+    $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
     $currentUser = wp_get_current_user ();
     if (in_array ('groupadmin', $currentUser->roles)) {
         roots_scripts ();
@@ -2057,6 +2063,18 @@ function bidx_dashboard_header ()
             case 'invite':
                 wp_register_style ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
                 wp_enqueue_style ('group-admin');
+                break;
+
+            case 'support':
+                /* Style */
+                wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
+                wp_enqueue_style ('mail');
+
+                /* Script */
+                $mailDepArr = array ('bidx-form', 'bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
+                  'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+                wp_register_script ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/js/mail.js', $mailDepArr, '20130715', TRUE);
+                wp_enqueue_script ('mail');
                 break;
         }
 
@@ -2087,7 +2105,7 @@ add_action ('admin_footer', 'bidx_dashboard_footer');
 function bidx_dashboard_footer ()
 {
 
-    $menuTitle = strtolower(str_replace(" ","",get_admin_page_title ()));
+    $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
 
     $bidxCommonObj = new BidxCommon();
     $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ('dashboard'), $static = false, $i18nGlobal = false);
@@ -2098,9 +2116,9 @@ function bidx_dashboard_footer ()
         case 'monitoring':
             wp_print_scripts ('group-admin');
             break;
-        case 'invite':
+        case 'support':
+            wp_print_scripts ('mail');
             break;
-
     }
 }
 
@@ -2223,8 +2241,8 @@ function bidx_getting_started ()
  *
  */
 
-function bidx_getting_support ()
+function bidx_dashboard_support ()
 {
     //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='gettingstarted']");
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='support']");
 }

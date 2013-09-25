@@ -58,7 +58,7 @@ class BidxCommon
         if (!$is_ajax) {
             // To check whther its login page or q= redirect already checked session.
             $isWordpress = $this->isWordpressPage ();
-
+    
             if (!$isWordpress) {
 
                 //Start the session to store Bidx Session
@@ -89,8 +89,10 @@ class BidxCommon
                 $this->processEntities ($subDomain);
 
                 $scriptValue = $this->injectJsVariables ($subDomain);
-                $this->setScriptJs ($subDomain, $scriptValue);
+                $this->setScriptJs ($subDomain, $scriptValue);                
             }
+          
+
         }
 
         return;
@@ -484,10 +486,15 @@ class BidxCommon
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $params = $_GET;
         $currentUser = wp_get_current_user ();
+     
+        //echo $currentUser;exit;
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
-        if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) || $hostAddress[1] == 'registration' ||
-            strstr ($hostAddress[1], 'wp-login.php') ||
-            (isset ($currentUser) && preg_match ('/wp-admin/i', $hostAddress[1]) && !in_array ('groupadmin', $currentUser->roles))) { //Allow Groupadmin for wp-admin dashboard
+        if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) ||
+            $hostAddress[1] == 'registration'              ||
+            strstr ($hostAddress[1], 'wp-login.php')       ||
+            (isset($currentUser) && $currentUser->ID == 1) ||
+            (isset ($currentUser) && preg_match ('/wp-admin/i', $hostAddress[1]) && !in_array ('groupadmin', $currentUser->roles))
+            ) { //Allow Groupadmin for wp-admin dashboard
             $isWordpress = true;
             //$session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
             //$this->clearSessionFromParam ($session_id);
