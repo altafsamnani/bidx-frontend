@@ -248,4 +248,18 @@
 
     }, "Default message remoteApi" );
 
+    // Since bidx-location is special input control we cannot simply say "required"
+    // This requires special handling
+    //
+    $.validator.addMethod( "bidxLocationRequired", function( value, element, param )
+    {
+        var values = $( element ).bidx_location( "getLocationData" );
+        bidx.utils.log(" element", $( element ));
+        bidx.utils.log("VALIDATE VALUE", values);
+
+        //return !!values.length;
+        return true;//for now
+    }, "This field is required" );
+
+
 } ( jQuery ) );

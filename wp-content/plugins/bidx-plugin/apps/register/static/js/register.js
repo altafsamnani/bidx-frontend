@@ -5,6 +5,7 @@
     ,   $btnRegister                = $frmRegister.find( ":submit" )
     ,   bidx                        = window.bidx
     ,   appName                     = "register"
+    ,   location
     ;
 
     // private functions
@@ -14,6 +15,11 @@
 
         // enable location plugin
         //
+        $frmRegister.find( "[data-type=location]"   ).bidx_location(
+        {
+            showMap:                false
+        } );
+
 
         // set validation and submitHandler
         //
@@ -42,9 +48,9 @@
                     }
 
                 }
-            ,   "address":
+            ,   "location":
                 {
-                    required:               true
+                    bidxLocationRequired:               true
                 ,
                 }
 
@@ -94,10 +100,9 @@
                 }
         };
 
-        // Currently, address is required, so this is a bit of an unlogical test. Wouldn't be surprised it will
-        // be gone
+        // fetch the address from the location plugin
         //
-        if ( $frmRegister.find( "[name='address']" ).val() )
+        if ( $frmRegister.find( "[name='location']" ).val() )
         {
 
             // Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
@@ -105,17 +110,10 @@
             //
             member.personalDetails.address =
             [
-                    {
-                        coordinates:            $frmRegister.find( "[name$=location]" ).val()
-                    ,   postalCode:             $frmRegister.find( "[name$=postalCode]" ).val()
-                    ,   country:                $frmRegister.find( "[name$=country]" ).val()
-                    ,   cityTown:               $frmRegister.find( "[name$=cityTown]" ).val()
-                    ,   neighborhood:           $frmRegister.find( "[name$=neighborhood]" ).val()
-                    ,   streetNumber:           $frmRegister.find( "[name$=streetNumber]" ).val()
-                    ,   street:                 $frmRegister.find( "[name$=street]" ).val()
-                    }
+                 $("#frmRegister").find( "[name='location']" ).bidx_location("getLocationData")
             ];
         }
+
 
         bidx.api.call(
             "member.save"

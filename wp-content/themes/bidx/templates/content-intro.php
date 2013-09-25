@@ -53,7 +53,7 @@
 						<!-- ##### Widget Signup Start ######-->
 						<form class="fieldset" method="post" action="/register">
 							<div><!-- this div is necessary for container overflow issue IE7 -->
-								<h3><?php _e('Join bidX! Create your group!','bidxtheme');?></h3>
+								<h3><?php _e('Join bidX, create your group!','bidxtheme');?></h3>
 
 								<div class="formfield control-group" data-validation='{"required":{"text":"<?php _e('This fields is mandatory')?>"},"typecheck":[{"email":{"text":"<?php _e('This is not a valid e-mail address')?>"}},{"custom":{"url":"/wp-admin/admin-ajax.php?action=bidx_request","apiurl":"members/validateUsername","apimethod":"get"}}]}'>
 									<input type="email" name="username" placeholder="<?php _e('Your email address','bidxtheme');?>">
@@ -183,12 +183,12 @@
 	<div class="container content-block">
 		<div class="row-fluid text-center">
 			<h2><?php _e('Ideal solutions','bidxtheme');?></h2>
-			<p><?php _e('For entrepreneurs, investors, incubators, chambers of commerce, banks, investment funds...etc.','bidxtheme');?></p>
+			<p><?php _e('For entrepreneurs, investors, incubators, chambers of commerce, banks, investment funds...and more.','bidxtheme');?></p>
 		</div>
 		<div class="row-fluid">
 			<div class="span4 usp-block bidx-well">
 				<h3 class="title"><span class="fui-check"></span> <?php _e('Governments & Cities','bidxtheme');?></h3>
-				<?php printf( __( 'Entrepreneurial ecosystems are often fragmented. Use bidX to integrate the players needed to grow businesses. Also use bidX to monitor the growth of bidX groups in your country, province or city. %1$sContact%2$s', 'bidxtheme' ), '<a href="mailto:info@bidx.net">', '</a>' ); ?>
+				<?php printf( __( 'Usually the parts of an entrepreneurial ecosystem are there, but they need to connected. Use bidX to integrate the players needed to grow businesses in your country or city. Also use bidX to monitor the growth of bidX Entrepreneurship groups in your country, province or city. %1$sContact%2$s', 'bidxtheme' ), '<a href="mailto:info@bidx.net">', '</a>' ); ?>
 			</div>
 			<div class="span4 usp-block bidx-well">
 				<h3 class="title"><span class="fui-check"></span> <?php _e('Financial Sector','bidxtheme');?></h3>
@@ -201,7 +201,7 @@
 		</div>
 		<div class="row-fluid">
 			<div class="span12 text-center">
-				<?php _e('Grow your local businesses and create new jobs!  Your economy depends on it!','bidxtheme');?>
+				<?php _e('Grow your local businesses and create new jobs. Your economy depends on it!','bidxtheme');?>
 			</div>
 		</div>
 		<hr />
@@ -228,7 +228,7 @@
 				</div>
 				<div class="sprite arrow-down solutions-arrow"></div>
 				<div>
-					<?php _e('We provide business plan templates, free mentoring, online tutorials and templates and Q&A functionality.','bidxtheme');?>
+					<?php _e('Financiers set their preferences and get alerts on business plans that are rated, filtered and match.','bidxtheme');?>
 				</div>
 			</div>
 			<div class="span4 usp-block bidx-well">
@@ -256,7 +256,7 @@
 			<div class="span12 bidx-well notaserviceprovider-block">
 				<p class="text-center">
 
-				<?php printf(__('Over 80%% of the new jobs in any economy are created by fewer than 10%% of the companies operating in it - small and medium sized businesses that grow consistently year after year. %1$s%1$sBidx is a web-services company with a mission to unite the often fragmented entrepreneurial ecosystems in countries to unleash the growth potential of small and medium sized businesses.','bidxtheme'), '<br/>'); ?>
+				<?php printf(__('Over 80%% of the new jobs in any economy are created by fewer than 10%% of the companies operating in it. These are the small and medium sized businesses that grow consistently year after year. %1$s%1$sBidx is a web-services company with a mission. We aim to integrate the often fragmented entrepreneurial ecosystems in countries thereby unleashing the growth potential of small fast growing businesses','bidxtheme'), '<br/>'); ?>
 				</p>
 			</div>
 		</div>
