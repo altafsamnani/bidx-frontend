@@ -41,7 +41,6 @@
         {
             $( "body" ).removeClass( "bidx-edit" );
         }
-        bidx.utils.log("MAIN STATE CHANGES");
         $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
     }
 
