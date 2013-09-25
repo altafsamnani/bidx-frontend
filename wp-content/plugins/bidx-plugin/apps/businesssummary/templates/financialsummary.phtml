@@ -1,0 +1,208 @@
+<?php
+
+$businessSummary = $this->data;
+
+$financialSummaryYearItem = <<<EOT
+    <div class="financialSummaryYearItem {{extraItemClasses}}" data-year="{{year}}">
+        <div class="fs-cell fs-header">
+            <div>
+                <header class="year">{{year}}</header>
+                <p class="yearLabel">{{year_label}}</p>
+            </div>
+        </div>
+
+        <div class="fs-cell fs-section-header"></div>
+
+        <!-- Sales revenues -->
+        <div class="fs-cell fs-row">
+            <input type="text" name="salesRevenue" class="view viewEdit">
+            <div class="view viewShow value">
+                <span>{{salesRevenue}}</span>
+            </div>
+        </div>
+
+        <!-- Operational Costs -->
+        <div class="fs-cell fs-row">
+            <input type="text" name="operationalCosts" class="view viewEdit">
+            <div class="view viewShow value">
+                <span>{{operationalCosts}}</span>
+            </div>
+        </div>
+
+        <!-- Operational Costs -->
+        <div class="fs-cell fs-row">
+            <div class="totalIncome value">
+                <span class="view viewEdit">-</span>
+                <span class="view viewShow">{{totalIncome}}</span>
+            </div>
+        </div>
+
+        <div class="fs-cell fs-section-header"></div>
+
+        <!-- Finance Needed -->
+        <div class="fs-cell fs-row">
+            <input type="text" name="financeNeeded" class="view viewEdit">
+            <div class="view viewShow value">
+                <span>{{financeNeeded}}</span>
+            </div>
+        </div>
+
+        <div class="fs-cell fs-section-header"></div>
+
+        <!-- Number Of Employees -->
+        <div class="fs-cell fs-row">
+            <input type="text" name="numberOfEmployees" class="view viewEdit">
+            <div class="view viewShow value">
+                <span>{{numberOfEmployees}}</span>
+            </div>
+        </div>
+
+    </div><!-- /financialSummaryYearItem -->
+EOT;
+
+$financialSummaries = $this->exst( $businessSummary->financialSummaries );
+
+$hasYears       = false;
+$hasPrevYear    = false;
+$hasNextYear    = false;
+
+
+if ( $financialSummaries ) {
+
+    $years          = get_object_vars( $financialSummaries );
+
+    if ( $years && count( $years )) {
+
+        $hasYears = true;
+
+        ksort( $years );
+
+        // Find the last year
+        //
+        end( $years );
+        $latestYear = key( $years );
+        reset( $years );
+
+        $curYear    = date( 'Y' );
+
+        foreach( $years as $year => $yearItem ) {
+            $yearDiff = $curYear - $year;
+
+            if ( $yearDiff > 1 )
+            {
+                $hasPrevYear = true;
+            }
+
+            if ( $yearDiff < 1 )
+            {
+                $hasNextYear = true;
+            }
+        }
+    }
+}
+?>
+<div class="financialSummary clearfix">
+
+    <div class="fs-col-labels">
+        <div class="fs-cell fs-header">
+            <div class="pull-right fs-controls">
+                <a href="#prev" class="btnPrev <?php echo ( $hasPrevYear ? '' : 'disabled' ); ?>"><span class="fui-arrow-left"></span></a>
+            </div>
+            <div>Currency in: <strong>US Dollars</strong></div>
+        </div>
+
+        <!-- Section: INCOME STATEMENT -->
+        <div class="fs-cell fs-section-header">
+            <div><strong>Income statement</strong></div>
+        </div>
+
+        <div class="fs-cell fs-row">
+            <div>Sales revenues</div>
+        </div>
+
+        <div class="fs-cell fs-row">
+            <div>Operational costs</div>
+        </div>
+
+        <div class="fs-cell fs-row">
+            <div><strong>Total income</strong></div>
+        </div>
+
+        <!-- Section: FINANCE NEEDED -->
+        <div class="fs-cell fs-section-header">
+            <div><strong>Finance needed</strong> (from external financiers in US Dollars)</div>
+        </div>
+
+        <div class="fs-cell fs-row">
+            <div>Needed</div>
+        </div>
+
+        <!-- Section: NUMBER OF EMPLOYEES -->
+        <div class="fs-cell fs-section-header">
+            <div><strong>Number of employees</strong> (being directly paid in this business)</div>
+        </div>
+
+        <div class="fs-cell fs-row">
+            <div>Numbers</div>
+        </div>
+
+    </div><!-- /col-label -->
+
+    <div class="fs-col-years clearfix">
+<?php
+    if ( $hasYears ) {
+
+        // Only display curYear - 1, curYear and curYear +1
+        //
+        foreach( $years as $year => $yearItem ) {
+
+            $extraItemClasses = array();
+
+            $yearDiff = $curYear - $year;
+
+            if ( $yearDiff > 1 || $yearDiff < -1 )
+            {
+                $extraItemClasses[] = "hide";
+            }
+
+            if ( $year < $curYear ) {
+                $yearLabel = __('Actuals','bidxplugin');
+            } else if ( $year > $curYear ) {
+                $yearLabel = __('Projected','bidxplugin');
+            } else {
+                $yearLabel = __('Current year','bidxplugin');
+
+                $extraItemClasses[] = "selected";
+            }
+
+            $tokens = array(
+                "{{year}}"                  => $year,
+                "{{year_label}}"            => $yearLabel,
+                "{{financeNeeded}}"         => $yearItem->financeNeeded,
+                "{{totalIncome}}"           => $yearItem->totalIncome,
+                "{{numberOfEmployees}}"     => $yearItem->numberOfEmployees,
+                "{{operationalCosts}}"      => $yearItem->operationalCosts,
+                "{{salesRevenue}}"          => $yearItem->salesRevenue,
+                "{{extraItemClasses}}"      => implode( " ", $extraItemClasses )
+            );
+
+            echo $this->replaceMessageTokens( $financialSummaryYearItem, $tokens );
+        }
+    }
+?>
+    </div><!-- /col-years -->
+
+    <div class="fs-col-right">
+        <div class="fs-controls">
+            <a href="#next" class="btnNext <?php echo ( $hasNextYear ? '' : 'disabled' ); ?>"><span class="fui-arrow-right"></span></a>
+        </div>
+    </div>
+
+    <!-- SNIPPETS -->
+    <div class="snippets hide">
+<?php
+        echo $financialSummaryYearItem;
+?>
+    </div>
+
+</div><!-- /financialSummary -->

@@ -25,7 +25,140 @@ body.bidx-businesssummary textarea {
     width:                      100%;
     -webkit-box-sizing:         border-box;
        -moz-box-sizing:         border-box;
+            box-sizing:         border-box;
     line-height:                25px;
     height:                     41px;
 
+}
+
+body.bidx-businesssummary .financialSummary {}
+
+    body.bidx-businesssummary .financialSummary .fs-controls {
+        padding:                    16px 8px;
+    }
+
+    body.bidx-businesssummary .financialSummary a.disabled {
+        color:                      #ccc;
+    }
+
+    body.bidx-businesssummary .financialSummary .btnPrev,
+    body.bidx-businesssummary .financialSummary .btnNext {
+        font-size:                  28px;
+    }
+
+    body.bidx-businesssummary .financialSummary .viewEdit {
+        display:                    none;
+    }
+
+    body.bidx-businesssummary .financialSummary input {
+        margin:                     2px 0 1px 0;
+        text-align:                 center;
+    }
+
+    body.bidx-businesssummary .fs-col-labels {
+        width:                      40%;
+        float:                      left;
+    }
+
+    body.bidx-businesssummary .fs-col-years {
+        width:                      56%;
+        float:                      left;
+        overflow:                   hidden;
+    }
+        body.bidx-businesssummary .fs-col-years .fs-header > div {
+            text-align:                 center;
+            position:                   static;
+        }
+
+        body.bidx-businesssummary .fs-col-years .fs-header {
+            background-color:           #BE2025;
+            color:                      white;
+        }
+
+        body.bidx-businesssummary .fs-col-years .fs-header .year {
+            font-size:                  22px;
+            font-weight:                bold;
+        }
+
+        body.bidx-businesssummary .fs-col-years .selected .fs-header {
+            color:                      #34495e;
+        }
+
+        body.bidx-businesssummary .fs-col-years .selected .fs-header {
+            background-color:           #d2b58d;
+        }
+        body.bidx-businesssummary .fs-col-years .selected .fs-row {
+            background-color:           #f6f0e8;
+        }
+
+    body.bidx-businesssummary .fs-col-right {
+        width:                      4%;
+        float:                      left;
+    }
+
+    body.bidx-businesssummary .fs-cell {
+        margin:                     0 1px 1px 0;
+        position:                   relative;
+
+    -webkit-box-sizing:             border-box;
+       -moz-box-sizing:             border-box;
+            box-sizing:             border-box;
+    }
+
+    body.bidx-businesssummary .fs-cell > div {
+        padding:                    12px;
+    }
+
+    body.bidx-businesssummary .fs-header {
+        height:                     60px;
+    }
+
+    body.bidx-businesssummary .fs-section-header {
+        height:                     80px;
+        background-color:           #f8f7f6;
+    }
+
+    body.bidx-businesssummary .fs-section-header > div {
+        position:                   absolute;
+        bottom:                     0;
+    }
+
+    body.bidx-businesssummary .fs-section-header strong {
+        font-weight:                bold;
+        font-size:                  18px;
+    }
+
+    body.bidx-businesssummary .fs-row {
+        background-color:           #e6e3de;
+    }
+
+    body.bidx-businesssummary .fs-cell .value {
+        text-align:                 center;
+    }
+
+    body.bidx-businesssummary .financialSummaryYearItem {
+        width:                      33.333%;
+        float:                      left;
+    }
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+    body.bidx-businesssummary .financialSummaryYearItem {
+        display:                    none;
+    }
+
+    body.bidx-businesssummary .financialSummaryYearItem.selected {
+        display:                    block;
+    }
+}
+
+@media (max-width: 480px) {
+    body.bidx-businesssummary .fs-col-labels,
+    body.bidx-businesssummary .fs-col-right {
+        display:                    none;
+    }
+
+    body.bidx-businesssummary .fs-col-years {
+        width:                      100%;
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 $businessSummary    = $this->data;
-$progress           = trim ($businessSummary->rating->Completeness) . '%';
+$progress           = trim ($this->exst($businessSummary->rating->Completeness)) . '%';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     ? $businessSummary->bidxMeta
@@ -78,7 +78,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-GeneralOverview"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
                 </div>
-                <div id="businessSummaryAccordion-GeneralOverview" class="accordion-body collapse in">
+                <div id="businessSummaryAccordion-GeneralOverview" class="accordion-body collapse"><!-- @todo: put back 'in' class! -->
                     <div class="accordion-inner">
 
                         <div class="pull-right">
@@ -510,7 +510,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fui-arrow-right accordion-state-icon"></span> Financial Details</a>
                 </div>
-                <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse">
+                <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse in">
                     <div class="accordion-inner">
 
                         <div class="pull-right">
@@ -519,7 +519,24 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- SHOW -->
                         <div class="view viewShow">
-                            show
+<?php
+                $numYearsSalesCosts = $this->exst($businessSummary->numYearsSalesCosts);
+                $periodStartDate    = $this->exst($businessSummary->periodStartDate);
+
+                // @TODO: what to do with $periodStartDate
+
+                // Either set or interpret it as 0
+                //
+                if ( $numYearsSalesCosts || property_exists( $businessSummary, "numYearsSalesCosts" ))
+                {
+                    $yearSinceGeneratingSales = date( 'Y' ) + $numYearsSalesCosts;
+
+                    $rowValues = array (
+                        __('Business sales started in','bidxplugin') => $yearSinceGeneratingSales
+                    );
+                    echo $this->addRowsWithLabelBelow( '', '',  $rowValues, $viewRowProperties );
+                }
+?>
                         </div>
 
                         <!-- LOAD -->
@@ -527,14 +544,39 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
                         </div>
 
+                        <!-- EDIT -->
+                        <div class="view viewEdit">
+
+                                <!-- numYear-->
+                                <div class="control-group formfield">
+                                    <label class="control-label"><?php _e('When did your business\'s sales start?','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <select name="yearSinceGeneratingSales">
+<?php
+                                            $todayYear = date( 'Y' );
+                                            $firstYear = $todayYear - 10;
+
+                                            for ( $i = $firstYear; $i <= $todayYear; $i++ ) {
+                                                printf( '<option value="%s">%s</option>', $i, $i );
+                                            }
+?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                        </div>
+
+                        <!-- VIEW and EDIT -->
+                        <div class="view viewShow viewEdit">
+<?php
+    $this->render('financialsummary.phtml');
+?>
+
+                        </div><!-- /VIEW and EDIT -->
+
                         <!-- ERROR -->
                         <div class="view viewError">
                             <p class="errorMsg"></p>
-                        </div>
-
-                        <!-- EDIT -->
-                        <div class="view viewEdit">
-                            edit
                         </div>
 
                         <div>

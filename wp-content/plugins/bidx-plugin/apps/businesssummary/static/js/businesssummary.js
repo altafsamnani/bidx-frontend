@@ -25,6 +25,9 @@
             }
         }
 
+    ,   $financialSummary               = $element.find( ".financialSummary")
+    ,   $financialSummaryYearsContainer = $financialSummary.find( ".fs-col-years" )
+
     ,   $btnAddManagementTeam       = forms.aboutYouAndYourTeam.$el.find( "[href$='#addManagementTeam']" )
     ,   $managementTeamContainer    = forms.aboutYouAndYourTeam.$el.find( ".managementTeamContainer" )
 
@@ -45,7 +48,9 @@
     {
         "generalOverview":
         {
-            "_root":
+            "_isForm":      true
+
+        ,   "_root":
             [
                 "name"
             ,   "slogan"
@@ -60,7 +65,9 @@
 
     ,   "aboutYourBusiness":
         {
-            "_root":
+            "_isForm":      true
+
+        ,   "_root":
             [
                 "industry"
             ,   "suggestedIndustry"
@@ -75,7 +82,9 @@
 
     ,   "aboutYouAndYourTeam":
         {
-            "_root":
+            "_isForm":      true
+
+        ,   "_root":
             [
                 "personalRole"
             ,   "personalExpertise"
@@ -99,6 +108,18 @@
             ,   "expertise"
             ]
         }
+
+    ,   "financialSummaries":
+        {
+            "_root":
+            [
+                "financeNeeded"
+            ,   "numberOfEmployees"
+            ,   "operationalCosts"
+            ,   "salesRevenue"
+            //  totalIncome is a field, but not a input
+            ]
+        }
     };
 
     // Grab the snippets from the DOM
@@ -113,6 +134,72 @@
         if ( currentView === "edit" )
         {
             bidx.common.addAppWithPendingChanges( appName );
+        }
+    } );
+
+    // FinancialSummmary
+    //
+    var $btnNext    = $financialSummary.find( "a[href$=#next]" )
+    ,   $btnPrev    = $financialSummary.find( "a[href$=#prev]" )
+    ;
+
+    $btnPrev.click( function( e )
+    {
+        e.preventDefault();
+
+        if ( $btnPrev.hasClass( "disabled" ) )
+        {
+            return;
+        }
+
+        var $prevItem = $financialSummaryYearsContainer.find( ".financialSummaryYearItem:visible:first" ).prev();
+
+        if ( $prevItem.length )
+        {
+            $prevItem.show();
+            $btnNext.removeClass( "disabled" );
+        }
+
+        var $visibles = $financialSummaryYearsContainer.find( ".financialSummaryYearItem:visible" );
+
+        if ( $visibles.length > 3 )
+        {
+            $visibles.eq(3).hide();
+        }
+
+        if ( $visibles.length <= 4 )
+        {
+            $btnPrev.addClass( "disabled" );
+        }
+    } );
+
+    $btnNext.click( function( e )
+    {
+        e.preventDefault();
+
+        if ( $btnNext.hasClass( "disabled" ) )
+        {
+            return;
+        }
+
+        var $lastItem = $financialSummaryYearsContainer.find( ".financialSummaryYearItem:visible:last" ).next();
+
+        if ( $lastItem.length )
+        {
+            $lastItem.show();
+            $btnPrev.removeClass( "disabled" );
+        }
+
+        var $visibles = $financialSummaryYearsContainer.find( ".financialSummaryYearItem:visible" );
+
+        if ( $visibles.length > 3 )
+        {
+            $visibles.eq(0).hide();
+        }
+
+        if ( $visibles.length <= 4 )
+        {
+            $btnNext.addClass( "disabled" );
         }
     } );
 
@@ -236,6 +323,11 @@
     {
         $.each( fields, function( form, formFields )
         {
+            if ( !formFields._isForm )
+            {
+                return;
+            }
+
             var $form       = forms[ form ].$el;
 
             if ( formFields._root )
@@ -267,6 +359,32 @@
                 _addManagementTeam( i, item );
             } );
         }
+
+        var financialSummaries = bidx.utils.getValue( businessSummary, "financialSummaries" );
+
+        if ( financialSummaries )
+        {
+            $.each( financialSummaries, function( year, data )
+            {
+                var $yearItem = $financialSummaryYearsContainer.find( "[data-year='" + year + "']" );
+
+                _updateFinancialSummaryYearItem( $yearItem, data );
+            } );
+        }
+    }
+
+    // Update the pre-rendered dom elements for the financial summarie
+    //
+    function _updateFinancialSummaryYearItem( $item, data )
+    {
+        $.each( fields.financialSummaries._root, function( idx, f )
+        {
+            var value = data[ f ] || "";
+
+            $item.find( "[name='" + f + "']" ).val( value );
+        } );
+
+        $item.find( ".totalIncome .viewEdit" ).text( data[ "totalIncome" ]);
     }
 
     // Convert the form values back into the member object
@@ -275,6 +393,11 @@
     {
         $.each( fields, function( form, formFields )
         {
+            if ( !formFields._isForm )
+            {
+                return;
+            }
+
             var $form       = forms[ form ].$el
             ;
 
