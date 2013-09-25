@@ -8,13 +8,15 @@
     ,   $frmCompose                 = $views.filter( ".viewCompose" ).find( "form" )
     ,   $btnComposeSubmit           = $frmCompose.find(".compose-submit")
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
+    ,   $mailFolderNavigation       = $element.find(".bidx-mailFolders")
     ,   bidx                        = window.bidx
     ,   currentGroupId              = bidx.common.getCurrentGroupId()
     ,   appName                     = "mail"
+    ,   mailboxes                   = {}
     ,   toolbar                     = {}
     ,   message                     = {}
     ,   listItems                   = {}
-
+    ,   state
     ;
 
 
@@ -25,94 +27,18 @@
     //public functions
 
 
-    // function that retrieves group members returned in an array of key/value objects
-    // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
-    //
-    var getMembers = function ( callback )
-    {
-
-        var extraUrlParameters =
-        [
-            {
-                label :     "q",
-                value :     "user:*"
-            }
-        ,   {
-                label :     "fq",
-                value :     "type:bidxMemberProfile+AND+groupIds:" + currentGroupId
-            }
-        ,   {
-                label :     "rows",
-                value :     "1000"
-            }
-        ];
-
-
-        bidx.api.call(
-            "groupMembers.fetch"
-        ,   {
-                groupId:                  currentGroupId
-            ,   groupDomain:              bidx.common.groupDomain
-            ,   extraUrlParameters:       extraUrlParameters
-
-            ,   success: function( response )
-                {
-
-                    var result          = []
-                    ;
-
-                    // now format it into array of objects with value and label
-                    //
-                    if( response && response.docs )
-                    {
-                        $.each( response.docs, function ( idx, item)
-                        {
-                            result.push(
-                            {
-                                value:      item.userId
-                            ,   label:      item.user
-                            });
-                        });
-                    }
-
-                    callback( result );
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
-
-                    _showError( "Something went wrong while retrieving contactlist of the member: " + status );
-                }
-            }
-        );
-    };
 
     // private functions
 
-    // function to initialize handlers that should only execute on pageload
+    // function to initialize handlers that should only execute on pageload and other onLoad constructs
     //
-    var _initHandlers = function()
+    var _oneTimeSetup = function()
     {
-/*        $.validator.addMethod(
-            "bixd-tagInput"
-        ,   function( value, element )
-            {
-                var $el         = $( element )
-                ,   $hiddenEl   = $( "hidden-" + $el.attr( "name" ) );
+        bidx.utils.log("oneTimeSetup");
 
-                if( $hiddenEl.val() == "" )
-                {
 
-                }
-
-                bidx.utils.log(value);
-                bidx.utils.log(element.getAttribute("name"));
-                return this.optional(element) || /^http:\/\/mycorporatedomain.com/.test(value);
-            }
-        ,   "Please specify the correct domain for your documents"
-        );*/
-
+        // initiate formvalidation for compose view
+        //
         $frmCompose.validate(
         {
             rules:
@@ -161,6 +87,47 @@
 
 
     };
+
+
+  // create the buttons for each mailbox. Later on a differtation has to be made for custom mailbox folders
+    //
+    var _initMailboxes = function()
+    {
+        _getMailBoxes( function( response )
+        {
+            if ( response.data )
+            {
+                // create buttons for each mailbox
+                //
+                $.each( response.data, function( idx, el )
+                {
+
+                    // store mailbox data for later use
+                    //
+                    mailboxes[ el.name.toLowerCase() ] = el;
+
+                    // create, translate and append button to navigation container
+                    //
+                    var button = $( "<a/>",
+                    {
+                        "class":      "btn btn-large btn-block bidx-default-button"
+                    ,   "href":       "#mail/mbx-" + el.name.toLowerCase()
+                    } );
+
+                    button.i18nText( el.name, appName );
+                    $mailFolderNavigation.append( button );
+
+                } );
+            }
+
+            // now load first mailbox
+
+        } );
+
+    };
+
+
+
 
     //  preload compose form with reply values of recipient, subject and content of message to be replied on
     //
@@ -268,6 +235,7 @@
         ];
 
         var key = "sendingMessage";
+
         bidx.i18n.getItem( key, function( err, label )
         {
             if ( err )
@@ -380,8 +348,9 @@
     //
     var _updateMenu = function( )
     {
-        $element.find( ".side-menu > a" ).each( function( index, item )
+        $element.find( ".side-menu > div.bidx-mailFolders > a" ).each( function( index, item )
         {
+            bidx.utils.log(item);
             var $this = $( item );
 
             if( $this.attr( "href" ) === window.location.hash )
@@ -397,61 +366,6 @@
         });
     };
 
-    //  get selected email
-    var _getEmail = function ( options )
-    {
-        bidx.api.call(
-             "mail.read"
-        ,   {
-                mailId:                   options.id
-            ,   groupDomain:              bidx.common.groupDomain
-
-            ,   success: function( response )
-                {
-                    if( response.data && response.data[ 0 ] && response.data[ 0 ].content )
-                    {
-
-                        _cacheMailMessage( response.data[ 0 ] );
-
-                        //  filter HTML  before we can insert into the mailbody
-                        var htmlParser = document.createElement( "DIV" );
-                        htmlParser.innerHTML = response.data[ 0 ].content;
-                        var mailBody = $( htmlParser ).text().replace( /\n/g, "<br/>" );
-
-                        //  insert mail body in to placeholder of the view
-                        $views.filter( bidx.utils.getViewName( options.view ) )
-                                .find( ".mail-message")
-                                .html( mailBody );
-
-                        //  execute callback if provided
-                        if( options && options.callback )
-                        {
-                            options.callback();
-                        }
-
-                    }
-
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-                    var response = $.parseJSON( jqXhr.responseText );
-
-                    if( bidx.utils.getValue( response, "code" ) === "userNotLoggedIn" )
-                    {
-                        //  reload so PHP can handle the redirect serverside
-                        //document.location.reload();
-                    }
-                    else
-                    {
-                        var status = bidx.utils.getValue( response, "status" ) || textStatus;
-                        _showError( "Something went wrong while retrieving the member: " + status );
-                    }
-
-                }
-            }
-        );
-    };
 
     // store the current message, for reply or forward purposes
     //
@@ -461,180 +375,6 @@
 
     };
 
-    //  get all emails from selected mailbox
-    //
-    var _getEmails = function( options )
-    {
-
-        var $listItem               = $( $( "#mailbox-listitem" ).html().replace( /(<!--)*(-->)*/g, "" ) )
-        ,   $listEmpty              = $( $( "#mailbox-empty") .html().replace( /(<!--)*(-->)*/g, "" ) )
-        ,   $list                   = $("." + options.list )
-        ,   $view                   = $views.filter( bidx.utils.getViewName( options.view ) )
-        ,   messages
-        ;
-
-        bidx.api.call(
-            "mail.fetch"
-        ,   {
-                data:
-                {
-                    offset:               0
-                ,   limit:                10
-                ,   sort:                 "sentDate"
-                ,   order:                "desc"
-                ,   showRemovedEmails:    false
-                ,   inboxType:            options.type
-                }
-            ,   groupDomain:              bidx.common.groupDomain
-
-            ,   success: function( response )
-                {
-                    if( response.data )
-                    {
-                        var item
-                        ,   element
-                        ,   cls
-                        ,   textValue
-                        ;
-
-                        //clear listing
-                        $list.empty();
-
-                        if( response.data.length !== 0 )
-                        {
-
-                            //loop through response
-                            $.each( response.data, function( index, item )
-                            {
-                                element   = $listItem.clone();
-
-                                //search for placeholders in snippit
-                                element.find( ".placeholder" ).each( function( i, el )
-                                {
-                                    item.sendername = "Sender unspecified";
-                                    item.read = false;
-                                    //set sendername (this might change in the future, hence the current construction)
-                                    if( item.recipients[0] && item.recipients[0].fullName ) {
-                                        item.sendername = item.recipients[0].fullName;
-                                        item.new = item.recipients[0].new;
-                                    }
-
-                                    //isolate placeholder key
-                                    cls = $(el).attr( "class" ).replace( "placeholder ", "" );
-
-                                    //if key if available in item response
-                                    if( item[cls] )
-                                    {
-
-                                        textValue = item[cls];
-                                        //add hyperlink on sendername for now (to read email)
-                                        if( cls === "sendername")
-                                        {
-                                            textValue = "<a href=\"" + document.location.hash +  "/" + item.id + "\" class=\"" + (item.new ? "email-new" : "" ) + "\">" + textValue + "</a>";
-                                        }
-                                        if( cls === "sentDate" )
-                                        {
-                                            textValue = bidx.utils.parseISODateTime( textValue );
-                                        }
-                                        element.find( "span." + cls ).replaceWith( textValue );
-
-                                    }
-                                });
-
-                                element.find( ":checkbox" ).data( "id", item.id );
-                                //  add mail element to list
-                                $list.append( element );
-                            });
-
-                            //  load checkbox plugin on element
-                            var $checkboxes = $list.find( '[data-toggle="checkbox"]' );
-                            //  enable flatui checkbox
-                            $checkboxes.checkbox();
-                            //  set change event which add/removes the checkbox ID in the listElements variable
-                            $checkboxes.bind( 'change', function()
-                            {
-                                var $this=$(this);
-
-                                if( $this.attr( "checked" ) )
-                                {
-                                    if( !listItems[ $this.data( "id" ) ])
-                                    {
-                                        listItems[ $this.data( "id" ) ] = true ;
-                                    }
-                                }
-                                else
-                                {
-                                    if( listItems[ $this.data( "id" ) ] )
-                                    {
-                                    delete listItems[ $this.data( "id" ) ];
-                                    }
-                                }
-
-                            } );
-
-                            //bind event to change all checkboxes from toolbar checkbox
-                            $view.find( ".messagesCheckall" ).change( function()
-                            {
-                                var masterCheck = $( this ).attr( "checked" );
-                                $list.find( ":checkbox" ).each( function()
-                                {
-                                    var $this = $(this);
-                                    if( masterCheck )
-                                    {
-                                        $this.checkbox( 'check' );
-                                        if( listItems )
-                                        {
-
-                                            if( !listItems[ $this.data( "id" ) ])
-                                            {
-                                                listItems[ $this.data( "id" ) ] = true ;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        $this.checkbox( 'uncheck' );
-                                        if( listItems[ $this.data( "id" ) ] )
-                                        {
-                                            delete listItems[ $this.data( "id" ) ];
-                                        }
-                                    }
-                                } );
-                            } );
-                        }
-                        else
-                        {
-                            $list.append( $listEmpty );
-                        }
-
-                        //  execute callback if provided
-                        if( options && options.callback )
-                        {
-                            options.callback();
-                        }
-                    }
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText );
-
-
-                    if( bidx.utils.getValue( response, "code" ) === "userNotLoggedIn" )
-                    {
-                        //  reload so PHP can handle the redirect serverside
-                        //document.location.reload();
-                    }
-                    else
-                    {
-                        var status = bidx.utils.getValue( response, "status" ) || textStatus;
-                        _showError( "Something went wrong while retrieving the member: " + status );
-                    }
-                }
-            }
-        );
-    };
 
     //  delete email
     var _doDelete = function( options )
@@ -685,6 +425,340 @@
     };
 
 
+    //  ################################## GETTERS #####################################  \\
+
+        // function that retrieves group members returned in an array of key/value objects
+        // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
+        //
+        var getMembers = function ( callback )
+        {
+
+            var extraUrlParameters =
+            [
+                {
+                    label :     "q",
+                    value :     "user:*"
+                }
+            ,   {
+                    label :     "fq",
+                    value :     "type:bidxMemberProfile+AND+groupIds:" + currentGroupId
+                }
+            ,   {
+                    label :     "rows",
+                    value :     "1000"
+                }
+            ];
+
+
+            bidx.api.call(
+                "groupMembers.fetch"
+            ,   {
+                    groupId:                  currentGroupId
+                ,   groupDomain:              bidx.common.groupDomain
+                ,   extraUrlParameters:       extraUrlParameters
+
+                ,   success: function( response )
+                    {
+
+                        var result          = []
+                        ;
+
+                        // now format it into array of objects with value and label
+                        //
+                        if( response && response.docs )
+                        {
+                            $.each( response.docs, function ( idx, item)
+                            {
+                                result.push(
+                                {
+                                    value:      item.userId
+                                ,   label:      item.user
+                                });
+                            });
+                        }
+
+                        callback( result );
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                        _showError( "Something went wrong while retrieving contactlist of the member: " + status );
+                    }
+                }
+            );
+        };
+
+
+        //  get selected email
+        //
+        var _getEmail = function ( options )
+        {
+            bidx.api.call(
+                 "mail.read"
+            ,   {
+                    mailId:                   options.id
+                ,   groupDomain:              bidx.common.groupDomain
+
+                ,   success: function( response )
+                    {
+                        if( response.data && response.data[ 0 ] && response.data[ 0 ].content )
+                        {
+
+                            _cacheMailMessage( response.data[ 0 ] );
+
+                            //  filter HTML  before we can insert into the mailbody
+                            var htmlParser = document.createElement( "DIV" );
+                            htmlParser.innerHTML = response.data[ 0 ].content;
+                            var mailBody = $( htmlParser ).text().replace( /\n/g, "<br/>" );
+
+                            //  insert mail body in to placeholder of the view
+                            $views.filter( bidx.utils.getViewName( options.view ) )
+                                    .find( ".mail-message")
+                                    .html( mailBody );
+
+                            //  execute callback if provided
+                            if( options && options.callback )
+                            {
+                                options.callback();
+                            }
+
+                        }
+
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+                        var response = $.parseJSON( jqXhr.responseText );
+
+                        if( bidx.utils.getValue( response, "code" ) === "userNotLoggedIn" )
+                        {
+                            //  reload so PHP can handle the redirect serverside
+                            //document.location.reload();
+                        }
+                        else
+                        {
+                            var status = bidx.utils.getValue( response, "status" ) || textStatus;
+                            _showError( "Something went wrong while retrieving the member: " + status );
+                        }
+
+                    }
+                }
+            );
+        };
+
+        // get mailboxes from API and execute callback
+        //
+
+        var _getMailBoxes = function ( cb )
+        {
+            // get all mailfolders for this user
+            //
+            bidx.api.call(
+                "mailbox.fetch"
+            ,   {
+                    success: function( response )
+                    {
+                        if ( response )
+                        {
+                            if ( cb) {
+                                cb( response );
+                            };
+                        }
+                        else
+                        {
+                            bidx.utils.warn( "No mailbox folders retrieved for this user ");
+                        }
+
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                        _showError( "Something went wrong while retrieving mailboxes of the member: " + status );
+                    }
+                }
+            );
+        };
+
+        //  get all emails from selected mailbox
+        //
+        var _getEmails = function( options )
+        {
+            bidx.utils.log("OPTINS", options );
+
+            var $listItem               = $( $( "#mailbox-listitem" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+            ,   $listEmpty              = $( $( "#mailbox-empty") .html().replace( /(<!--)*(-->)*/g, "" ) )
+            ,   $list                   = $("." + options.list )
+            ,   $view                   = $views.filter( bidx.utils.getViewName( options.view ) )
+            ,   messages
+            ;
+
+            bidx.api.call(
+                "mail.fetch"
+            ,   {
+                    data:
+                    {
+                        startOffset:          0
+                    ,   maxResults:           10
+                    ,   mailboxId:            2
+                    }
+                ,   groupDomain:              bidx.common.groupDomain
+
+                ,   success: function( response )
+                    {
+
+
+                        if( response.data )
+                        {
+                            var item
+                            ,   element
+                            ,   cls
+                            ,   textValue
+                            ;
+
+                            //clear listing
+                            $list.empty();
+
+                            if( response.data.length !== 0 )
+                            {
+
+                                //loop through response
+                                $.each( response.data, function( index, item )
+                                {
+                                    element   = $listItem.clone();
+
+                                    //search for placeholders in snippit
+                                    element.find( ".placeholder" ).each( function( i, el )
+                                    {
+                                        item.sendername = "Sender unspecified";
+                                        item.read = false;
+                                        //set sendername (this might change in the future, hence the current construction)
+                                        if( item.recipients[0] && item.recipients[0].fullName ) {
+                                            item.sendername = item.recipients[0].fullName;
+                                            item.new = item.recipients[0].new;
+                                        }
+
+                                        //isolate placeholder key
+                                        cls = $(el).attr( "class" ).replace( "placeholder ", "" );
+
+                                        //if key if available in item response
+                                        if( item[cls] )
+                                        {
+
+                                            textValue = item[cls];
+                                            //add hyperlink on sendername for now (to read email)
+                                            if( cls === "sendername")
+                                            {
+                                                textValue = "<a href=\"" + document.location.hash +  "/" + item.id + "\" class=\"" + (item.new ? "email-new" : "" ) + "\">" + textValue + "</a>";
+                                            }
+                                            if( cls === "sentDate" )
+                                            {
+                                                textValue = bidx.utils.parseISODateTime( textValue );
+                                            }
+                                            element.find( "span." + cls ).replaceWith( textValue );
+
+                                        }
+                                    });
+
+                                    element.find( ":checkbox" ).data( "id", item.id );
+                                    //  add mail element to list
+                                    $list.append( element );
+                                });
+
+                                //  load checkbox plugin on element
+                                var $checkboxes = $list.find( '[data-toggle="checkbox"]' );
+                                //  enable flatui checkbox
+                                $checkboxes.checkbox();
+                                //  set change event which add/removes the checkbox ID in the listElements variable
+                                $checkboxes.bind( 'change', function()
+                                {
+                                    var $this=$(this);
+
+                                    if( $this.attr( "checked" ) )
+                                    {
+                                        if( !listItems[ $this.data( "id" ) ])
+                                        {
+                                            listItems[ $this.data( "id" ) ] = true ;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if( listItems[ $this.data( "id" ) ] )
+                                        {
+                                        delete listItems[ $this.data( "id" ) ];
+                                        }
+                                    }
+
+                                } );
+
+                                //bind event to change all checkboxes from toolbar checkbox
+                                $view.find( ".messagesCheckall" ).change( function()
+                                {
+                                    var masterCheck = $( this ).attr( "checked" );
+                                    $list.find( ":checkbox" ).each( function()
+                                    {
+                                        var $this = $(this);
+                                        if( masterCheck )
+                                        {
+                                            $this.checkbox( 'check' );
+                                            if( listItems )
+                                            {
+
+                                                if( !listItems[ $this.data( "id" ) ])
+                                                {
+                                                    listItems[ $this.data( "id" ) ] = true ;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            $this.checkbox( 'uncheck' );
+                                            if( listItems[ $this.data( "id" ) ] )
+                                            {
+                                                delete listItems[ $this.data( "id" ) ];
+                                            }
+                                        }
+                                    } );
+                                } );
+                            }
+                            else
+                            {
+                                $list.append( $listEmpty );
+                            }
+
+                            //  execute callback if provided
+                            if( options && options.callback )
+                            {
+                                options.callback();
+                            }
+                        }
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText );
+
+
+                        if( bidx.utils.getValue( response, "code" ) === "userNotLoggedIn" )
+                        {
+                            //  reload so PHP can handle the redirect serverside
+                            //document.location.reload();
+                        }
+                        else
+                        {
+                            var status = bidx.utils.getValue( response, "status" ) || textStatus;
+                            _showError( "Something went wrong while retrieving the member: " + status );
+                        }
+                    }
+                }
+            );
+        };
+
+
     //  ################################## HELPER #####################################  \\
 
     //  sets any given toolbar and associate toolbar buttons with ID
@@ -707,16 +781,6 @@
         });
     };
 
-    var _defineMailBoxType = function ( section )
-    {
-        var type = "RECEIVED_EMAILS";
-
-        if( section === "sent" )
-        {
-            type = "SENT_EMAILS";
-        }
-        return type;
-    };
 
     //  ################################## MODAL #####################################  \\
 
@@ -779,7 +843,7 @@
 
     // ROUTER
 
-    var state;
+
 
 
     //var navigate = function( requestedState, section, id )
@@ -815,7 +879,6 @@
         ,   forward:            true
 
         };
-
         section = options.section;
         //  if options.section is an ID or options.part1 is an ID switch to state 'read'
         if( ( options.section && options.section.match( /^\d+$/ ) ) || ( options.part1 && options.part1.match( /^\d+$/ ) ) )
@@ -837,41 +900,17 @@
             id = options.part2;
         }
 
-        switch( state )
+
+
+        switch( true )
         {
-            case "load" :
+            case /^load$/.test( state ):
 
                 _showView( "load" );
 
             break;
 
-            case "inbox":
-            case "sent":
-
-                _closeModal(
-                {
-                    unbindHide: true
-                } );
-
-                _showView( "load" );
-
-                _updateMenu();
-
-                _getEmails(
-                {
-                        type:       _defineMailBoxType( section )
-                    ,   list:       "list"
-                    ,   view:       "list"
-
-                    ,   callback: function()
-                        {
-                            _showView( "list" );
-                        }
-                } );
-
-            break;
-
-            case "read":
+            case /^read$/.test( state ):
 
                 _closeModal();
                 _showView( "load" );
@@ -890,10 +929,9 @@
 
             break;
 
-
-            case "reply":
-            case "forward":
-            case "compose":
+            case /^reply$/.test( state ):
+            case /^forward$/.test( state ):
+            case /^compose$/.test( state ):
 
                 _initComposeForm();
 
@@ -906,8 +944,7 @@
 
             break;
 
-
-            case "deleteConfirm":
+            case /^deleteConfirm$/.test( state ):
 
                 _showModal(
                 {
@@ -923,7 +960,7 @@
 
             break;
 
-            case "discardConfirm":
+            case /^discardConfirm$/.test( state ):
 
                 _showModal(
                 {
@@ -939,8 +976,7 @@
 
             break;
 
-            case "delete":
-
+            case /^delete$/.test( state ):
                 _closeModal(
                 {
                     unbindHide: true
@@ -954,13 +990,47 @@
 
             break;
 
-            case "delete-multiple":
-
+            case /^delete-multipe$/.test( state ):
 
                 _doDelete(
                 {
                     id:     id
                 ,   section: section
+                } );
+
+            break;
+
+            case /^mbx-/.test( state ):
+                // catch all for mailbox folders; for example mbx-inbox. For convenience I remove the prefix within this closure
+                //
+                section = section.replace( /(^mbx-)/, "" );
+                // create the mailfolder buttons in the sidebar and load first mailbox
+                //
+                _initMailboxes();
+
+                bidx.utils.log("MAILBOXES", mailboxes);
+
+                _closeModal(
+                {
+                    unbindHide: true
+                } );
+
+                _showView( "load" );
+
+                _updateMenu();
+
+                _getEmails(
+                {
+                    startOffset:            0
+                ,   maxResults:             10
+                ,   mailboxId:              mailboxes[ section ]
+                ,   list:                   "list"
+                ,   view:                   "list"
+
+                ,   callback: function()
+                    {
+                        _showView( "list" );
+                    }
                 } );
 
             break;
@@ -998,7 +1068,7 @@
 
     // Initialize handlers
     //
-    _initHandlers();
+    _oneTimeSetup();
 
 
     // Initialize the defered tagsinput

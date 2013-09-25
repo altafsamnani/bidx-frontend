@@ -4,4 +4,7 @@
     <Item value="forwardContentHeader">Forwarded message</Item>
     <Item value="sendingMessage">Sending message</Item>
     <Item value="messageSent">Message sent</Item>
+    <Item value="Inbox">Inbox</Item>
+    <Item value="Sent">Sent</Item>
+    <Item value="Trash">Trash</Item>
 </I18N>
