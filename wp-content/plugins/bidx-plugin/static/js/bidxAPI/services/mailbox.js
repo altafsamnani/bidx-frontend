@@ -31,9 +31,11 @@
         api._call(
         {
             method:         method
+        ,   groupDomain:    params.groupDomain
         ,   baseUrl:        url
         ,   form:           true
         ,   data:           params.data
+
         ,   success:        function( response, textStatus, jqXhr )
             {
                 if ( response && response.data )

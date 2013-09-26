@@ -3,18 +3,18 @@
         <li><a href="/wp-admin" class="bidx-cmd" alt="Admin"></a></li>
         <li><a href="/member" class="bidx-user" alt="Profile"></a></li>
         <li>
-        	<a href="/mail#mail/inbox" class="bidx-mail" alt="Mail">
+        	<a href="/mail#mail" class="bidx-mail" alt="Mail">
             	<!-- If messages are available -->
               	<span class="iconbar-unread">?</span>
             </a>
 		</li>
 <?php
-$roles = (!empty($this -> sessionData -> data -> roles)) ? $this -> sessionData -> data -> roles:NULL;
-$currentGroupAdmin = false;
-if ( !empty($this->sessionData) && !empty($roles)) {
-	if ( in_array( 'GroupAdmin', $roles ) ||
-		 in_array( 'GroupOwner', $roles ) ) {
-        $currentGroupAdmin = true;
+        $roles = (!empty($this -> sessionData -> data -> roles)) ? $this -> sessionData -> data -> roles:NULL;
+        $currentGroupAdmin = false;
+        if ( !empty($this->sessionData) && !empty($roles)) {
+        	if ( in_array( 'GroupAdmin', $roles ) ||
+        		 in_array( 'GroupOwner', $roles ) ) {
+                $currentGroupAdmin = true;
 ?>
 
 <?php

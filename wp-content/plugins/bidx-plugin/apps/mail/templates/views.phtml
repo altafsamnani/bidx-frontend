@@ -1,5 +1,5 @@
 <div id="mail" class="mainState mainStateMail">
-    <h1>Your inbox</h1>
+    <h1>Your mailbox</h1>
     <div class="row-fluid">
         <!-- Left menu -->
         <div class="span2 side-menu well">
@@ -102,11 +102,14 @@
                     </div>
                 </div>
 
-                    <div class="row-fluid">
-                        <div class="span12 mail-message">
-                            <?php _e('Loading...','bidxplugin')?>
-                        </div>
+                <div class="row-fluid">
+                    <div class="span12 mail-subject"></div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 mail-message">
+                        <?php _e('Loading...','bidxplugin')?>
                     </div>
+                </div>
 
 
             </article>
@@ -228,7 +231,7 @@
     <div class="media-body">
         <div class="row-fluid">
             <div class="span10"><h6 class="media-heading"><span class="placeholder sendername"><?php _e('SENDER UNKNOWN IN API','bidxplugin')?></span></h6></div>
-            <div class="span2"><span class="placeholder sentDate"/></div>
+            <div class="span2"><span class="placeholder dateSent"/></div>
         </div>
         <div class="subject">
             <span class="placeholder subject"/>

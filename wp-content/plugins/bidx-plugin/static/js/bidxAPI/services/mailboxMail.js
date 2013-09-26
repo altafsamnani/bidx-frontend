@@ -1,29 +1,32 @@
 /**
  * @version 1.0
  * @initiator adebree
- * @author mattijs spierings
+ * @author msp
  */
 ;(function( $ )
 {
     var bidx            = window.bidx
     ,   api             = bidx.api
     ,   mailboxMail     = {}
-    ,   baseUrl         = "/api/v1/mailbox/mail"
+    ,   baseUrl         = "/api/v1/mailbox/mail/%mailId%"
     ,   params          = []
     ;
 
 
-    mailbox.fetch = function( params )
+    mailboxMail.fetch = function( params )
     {
-        var method = "GET";
+        var method = "GET"
+        ,   url    = baseUrl.replace( "%mailId%", params.mailId )
+        ;
 
         api._call(
         {
             method:         method
         ,   groupDomain:    params.groupDomain
-        ,   baseUrl:        baseUrl
+        ,   baseUrl:        url
         ,   form:           true
         ,   data:           params.data
+
         ,   success:        function( response, textStatus, jqXhr )
             {
                 if ( response && response.data )
