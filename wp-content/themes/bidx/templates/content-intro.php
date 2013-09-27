@@ -49,6 +49,7 @@
 								<img class="img-rounded" src="<?php echo $img[0] ?>" />
 							    <div class="carousel-caption img-rounded">
 
+									<h4><?php echo $image -> post_title ?></h4>
 			                    	<p><?php echo $image -> post_content ?></p>
 			                    </div>
 							</div>

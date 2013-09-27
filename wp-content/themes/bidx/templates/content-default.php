@@ -37,14 +37,14 @@
  		?>
 	</div>
 
-	<footer>
-		<!-- widget space -->
+	<!-- <footer>
+		widget space
 		<div class="container">
 			<div class="row-fluid">
-				<?php get_template_part('horizontal','1'); ?>
+				<?php// get_template_part('horizontal','1'); ?>
 			</div>
 		</div>
-	</footer>
+	</footer> -->
 
 </article>
 <?php endwhile; ?>
