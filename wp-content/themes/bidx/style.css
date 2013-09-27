@@ -202,11 +202,19 @@ a, a:hover, a:visited, a:link  {
 
 
     header .logo {
-        margin:                 10px 0;
+        margin:                     10px 0;
         width:                      134px;
         height:                     82px;
         display:                    inline-block;
         float: left;
+    }
+
+    header .logo img {
+        max-width:                  none;
+    }
+
+    header .navbar a {
+        font-family: Helvetica,Arial,sans-serif;
     }
     /* ! most header styles are located in media query section at the bottom of this document */
 
@@ -529,6 +537,7 @@ body.home .hero-block {
 .signup {
     /*padding-top:            20px;*/
     padding:                20px;
+    /* background-color:       #8ece4a; */
     background-color:       #0093cb;
     border:                 0px;
 }
@@ -865,6 +874,7 @@ body.home .hero-block {
                 -moz-border-radius: 5px;
                 border-radius: 5px;
                 margin-right:5px;
+
             }
             header .navbar .nav > li  {
 
@@ -884,6 +894,14 @@ body.home .hero-block {
             header .navbar .nav li.dropdown.open > .dropdown-toggle {
                 background-color: #EBEDEF;
                 color: #32495E;
+
+            }
+            header .navbar .nav > li > a:hover, .navbar .nav > li > a:focus {
+                color:                  #0093CB;
+            }
+            header .navbar .nav ul a:hover {
+                background-color:      #F49E34;
+
             }
 
             header .navbar .nav li.dropdown.open > .dropdown-toggle .caret,
@@ -938,6 +956,10 @@ body.home .hero-block {
             padding-top: 40px;
         }
 
+        .hero-block  .carousel .carousel-control {
+            z-index:                        999;
+            color:                          #fff;
+        }
 
         .navbar-inverse .navbar-inner {
             background-color: #2577ad;
