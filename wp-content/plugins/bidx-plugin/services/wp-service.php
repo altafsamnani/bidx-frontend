@@ -1450,7 +1450,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     case 'staff_email':
                         $params['subject'] = 'New group ' . $params['groupName'] . ' has been created';
 
-                        $body = "Dear Staff, <br/><br/> New group <strong>" . $params['groupName'] . "</strong> has been created by <strong>" . $params['username'] . "</strong> from country <strong>" . $params['country'] . "</strong><br/><br/>";
+                        $body = "Dear Staff, <br/><br/> New group <strong>" . $params['groupName'] . "</strong> is requested by <strong>" . $params['username'] . "</strong> from country <strong>" . $params['country'] . "</strong><br/><br/>";
                         $body.= 'Email     -' . $params['username'] . '<br/>';
                         $body.= 'GroupName -' . $params['groupName'] . '<br/>';
                         $body.= 'Country   -' . $params['country'] . '<br/><br/>';
