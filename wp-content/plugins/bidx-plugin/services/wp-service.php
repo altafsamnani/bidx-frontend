@@ -1975,11 +1975,10 @@ function bidx_staffmail ()
 
     $data = bidx_wordpress_pre_action ('staff_email');
     $params = $data['params'];
-    $fromName = "From: '" . $params['groupName'] . "' <" . $params['username'] . '>';
+    $fromName = "From: '" . $params['groupName'] . "' <info@bidx.net>";
 
     add_filter ('wp_mail_content_type', create_function ('', 'return "text/html"; '));
-    $mailSent = wp_mail ('info@bidnetwork.org', $params['subject'], $params['body'], $fromName);
-    $mailSentTest = wp_mail ('altaf.samnani@bidnetwork.org', $params['subject'], $params['body'], $fromName);
+    $mailSent = wp_mail ('info@bidx.net', $params['subject'], $params['body'], $fromName);
     if ($mailSent) {
         $requestData->status = 'OK';
         $requestData->text = 'Our Staff will contact you shortly, thank you. We appreciate your patience.';
@@ -2118,6 +2117,18 @@ function alter_site_menu ()
     }
     add_filter ('admin_footer_text', 'remove_footer_admin');
 }
+
+[mail function]
+; For Win32 only.
+; http://php.net/smtp
+SMTP = email-smtp.us-east-1.amazonaws.com
+; http://php.net/smtp-port
+smtp_port = 25
+
+auth_username = AKIAIH6HXHS6FSJEQBVA
+auth_password = AgNqqp71k46Cu9acBXHULgiRTaYku9UAJNc1nSp4JVDo
+sendmail_from = info@bidnetwork.org
+
 
 /* Load Group Owner/Admin Dashboard Widget Css Scripts
  * @author Altaf Samnani
