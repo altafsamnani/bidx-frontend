@@ -2118,18 +2118,6 @@ function alter_site_menu ()
     add_filter ('admin_footer_text', 'remove_footer_admin');
 }
 
-[mail function]
-; For Win32 only.
-; http://php.net/smtp
-SMTP = email-smtp.us-east-1.amazonaws.com
-; http://php.net/smtp-port
-smtp_port = 25
-
-auth_username = AKIAIH6HXHS6FSJEQBVA
-auth_password = AgNqqp71k46Cu9acBXHULgiRTaYku9UAJNc1nSp4JVDo
-sendmail_from = info@bidnetwork.org
-
-
 /* Load Group Owner/Admin Dashboard Widget Css Scripts
  * @author Altaf Samnani
  * @version 1.0
