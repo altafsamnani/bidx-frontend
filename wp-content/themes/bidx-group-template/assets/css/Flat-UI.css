@@ -133,6 +133,12 @@
 .fui-checkbox-checked:before {
   content: "\e034";
 }
+.fui-plus:before {
+  content: "\e009";
+}
+.fui-plus-inverted:before {
+  content: "\e031";
+}
 
 
 .checkbox,
