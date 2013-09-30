@@ -81,7 +81,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div id="businessSummaryAccordion-GeneralOverview" class="accordion-body collapse in">
                     <div class="accordion-inner">
 
-                        <div class="pull-right">
+                        <div class="accordion-controls-top">
                             <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">About the business <span class="fui-arrow-right"></span></a>
                         </div>
 
@@ -232,7 +232,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div id="businessSummaryAccordion-AboutTheBusiness" class="accordion-body collapse">
                     <div class="accordion-inner">
 
-                        <div class="pull-right">
+                        <div class="accordion-controls-top">
                             <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">About you &amp; your team <span class="fui-arrow-right"></span></a>
                         </div>
 
@@ -400,7 +400,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             </form>
                         </div><!-- /EDIT -->
 
-                        <div>
+                        <div class="accordion-controls-bottom">
                             <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> General Overview</a>
                         </div>
 
@@ -416,7 +416,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div id="businessSummaryAccordion-AboutYouAndYourTeam" class="accordion-body collapse">
                     <div class="accordion-inner">
 
-                        <div class="pull-right">
+                        <div class="accordion-controls-top">
                             <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Financial Details <span class="fui-arrow-right"></span></a>
                         </div>
 
@@ -497,7 +497,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             </form>
                         </div><!-- /EDIT -->
 
-                        <div>
+                        <div class="accordion-controls-bottom">
                             <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> About the business</a>
                         </div>
 
@@ -513,45 +513,36 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse">
                     <div class="accordion-inner">
 
-                        <div class="pull-right">
-                            <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Company details <span class="fui-arrow-right"></span></a>
-                        </div>
+                        <form id="frmBusinessSummary-FinancialDetails">
 
-                        <!-- SHOW -->
-                        <div class="view viewShow">
+                            <div class="accordion-controls-top">
+                                <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Company details <span class="fui-arrow-right"></span></a>
+                            </div>
+
+                            <!-- SHOW -->
+                            <div class="view viewShow">
 <?php
-                $numYearsSalesCosts = $this->exst($businessSummary->numYearsSalesCosts);
-                $periodStartDate    = $this->exst($businessSummary->periodStartDate);
-
-                // @TODO: what to do with $periodStartDate
-
-                // Either set or interpret it as 0
-                //
-                if ( $numYearsSalesCosts || property_exists( $businessSummary, "numYearsSalesCosts" ))
-                {
-                    $yearSinceGeneratingSales = date( 'Y' ) + $numYearsSalesCosts;
-
-                    $rowValues = array (
-                        __('Business sales started in','bidxplugin') => $yearSinceGeneratingSales
-                    );
-                    echo $this->addRowsWithLabelBelow( '', '',  $rowValues, $viewRowProperties );
-                }
+                $rowValues = array (
+                    __('Business sales started in','bidxplugin') => $this->exst($businessSummary->yearSalesStarted)
+                );
+                echo $this->addRowsWithLabelBelow( '', '',  $rowValues, $viewRowProperties );
 ?>
-                        </div>
+                            </div>
 
-                        <!-- LOAD -->
-                        <div class="view viewLoad">
-                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
-                        </div>
+                            <!-- LOAD -->
+                            <div class="view viewLoad">
+                                <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                            </div>
 
-                        <!-- EDIT -->
-                        <div class="view viewEdit">
+                            <!-- EDIT -->
+                            <div class="view viewEdit">
 
                                 <!-- numYear-->
                                 <div class="control-group formfield">
                                     <label class="control-label"><?php _e('When did your business\'s sales start?','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <select name="yearSinceGeneratingSales">
+                                        <select name="yearSalesStarted">
+                                            <option value=""><?php _e('Select year', 'bidxplugin');?></option>
 <?php
                                             $todayYear = date( 'Y' );
                                             $firstYear = $todayYear - 10;
@@ -564,25 +555,24 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                     </div>
                                 </div>
 
-                        </div>
+                            </div>
 
-                        <!-- VIEW and EDIT -->
-                        <div class="view viewShow viewEdit">
+                            <!-- VIEW and EDIT -->
+                            <div class="view viewShow viewEdit">
 <?php
     $this->render('financialsummary.phtml');
 ?>
+                            </div><!-- /VIEW and EDIT -->
 
-                        </div><!-- /VIEW and EDIT -->
+                            <!-- ERROR -->
+                            <div class="view viewError">
+                                <p class="errorMsg"></p>
+                            </div>
 
-                        <!-- ERROR -->
-                        <div class="view viewError">
-                            <p class="errorMsg"></p>
-                        </div>
-
-                        <div>
-                            <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> About you &amp; your team</a>
-                        </div>
-
+                            <div class="accordion-controls-bottom">
+                                <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> About you &amp; your team</a>
+                            </div>
+                        </form>
                     </div><!-- /Accordion-inner -->
                 </div>
             </div><!-- /Financial details -->
@@ -595,7 +585,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div id="businessSummaryAccordion-CompanyDetails" class="accordion-body collapse">
                     <div class="accordion-inner">
 
-                        <div class="pull-right">
+                        <div class="accordion-controls-top">
                             <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Documents <span class="fui-arrow-right"></span> </a>
                         </div>
 
@@ -619,7 +609,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             edit
                         </div><!-- /Edit -->
 
-                        <div>
+                        <div class="accordion-controls-bottom">
                             <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> Financial Details</a>
                         </div>
 
@@ -635,7 +625,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div id="businessSummaryAccordion-Documents" class="accordion-body collapse">
                     <div class="accordion-inner">
 
-                        <div class="pull-right">
+                        <div class="accordion-controls-top">
                             <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">General Overview <span class="fui-arrow-right"></span> </a>
                         </div>
 
@@ -659,7 +649,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             edit
                         </div>
 
-                        <div>
+                        <div class="accordion-controls-bottom">
                             <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> Company Details</a>
                         </div>
 

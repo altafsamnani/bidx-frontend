@@ -2,8 +2,8 @@
 
 $businessSummary = $this->data;
 
-$financialSummaryYearItem = <<<EOT
-    <div class="financialSummaryYearItem {{extraItemClasses}}" data-year="{{year}}">
+$financialSummariesItem = <<<EOT
+    <div class="financialSummariesItem {{extraItemClasses}}" data-year="{{year}}">
         <div class="fs-cell fs-header">
             <div>
                 <header class="year">{{year}}</header>
@@ -15,7 +15,7 @@ $financialSummaryYearItem = <<<EOT
 
         <!-- Sales revenues -->
         <div class="fs-cell fs-row">
-            <input type="text" name="salesRevenue" class="view viewEdit">
+            <input type="text" name="salesRevenue[{{idx}}]" class="view viewEdit">
             <div class="view viewShow value">
                 <span>{{salesRevenue}}</span>
             </div>
@@ -23,7 +23,7 @@ $financialSummaryYearItem = <<<EOT
 
         <!-- Operational Costs -->
         <div class="fs-cell fs-row">
-            <input type="text" name="operationalCosts" class="view viewEdit">
+            <input type="text" name="operationalCosts[{{idx}}]" class="view viewEdit">
             <div class="view viewShow value">
                 <span>{{operationalCosts}}</span>
             </div>
@@ -41,7 +41,7 @@ $financialSummaryYearItem = <<<EOT
 
         <!-- Finance Needed -->
         <div class="fs-cell fs-row">
-            <input type="text" name="financeNeeded" class="view viewEdit">
+            <input type="text" name="financeNeeded[{{idx}}]" class="view viewEdit">
             <div class="view viewShow value">
                 <span>{{financeNeeded}}</span>
             </div>
@@ -51,13 +51,13 @@ $financialSummaryYearItem = <<<EOT
 
         <!-- Number Of Employees -->
         <div class="fs-cell fs-row">
-            <input type="text" name="numberOfEmployees" class="view viewEdit">
+            <input type="text" name="numberOfEmployees[{{idx}}]" class="view viewEdit">
             <div class="view viewShow value">
                 <span>{{numberOfEmployees}}</span>
             </div>
         </div>
 
-    </div><!-- /financialSummaryYearItem -->
+    </div><!-- /financialSummariesItem -->
 EOT;
 
 $financialSummaries = $this->exst( $businessSummary->financialSummaries );
@@ -66,10 +66,13 @@ $hasYears       = false;
 $hasPrevYear    = false;
 $hasNextYear    = false;
 
+$nrPrevYears    = 0;
+$nrNextYears    = 0;
 
 if ( $financialSummaries ) {
 
-    $years          = get_object_vars( $financialSummaries );
+    $years      = get_object_vars( $financialSummaries );
+    $curYear    = date( 'Y' );
 
     if ( $years && count( $years )) {
 
@@ -82,18 +85,20 @@ if ( $financialSummaries ) {
         end( $years );
         $latestYear = key( $years );
         reset( $years );
+        $firstYear = key( $years );
 
-        $curYear    = date( 'Y' );
+        $nrPrevYears = $curYear - $firstYear;
+        $nrNextYears = $latestYear - $curYear;
 
         foreach( $years as $year => $yearItem ) {
             $yearDiff = $curYear - $year;
 
-            if ( $yearDiff > 1 )
+            if ( $yearDiff >= 1 )
             {
                 $hasPrevYear = true;
             }
 
-            if ( $yearDiff < 1 )
+            if ( $yearDiff <= 1 )
             {
                 $hasNextYear = true;
             }
@@ -149,8 +154,28 @@ if ( $financialSummaries ) {
     </div><!-- /col-label -->
 
     <div class="fs-col-years clearfix">
+
+        <div class="financialSummariesItem addItem <?php echo ( $nrNextYears >= 1 ? 'hide' : '' ); ?>">
+
+            <!-- EDIT -->
+            <div class="view viewEdit">
+                <p class="addYear">
+                    <a href="#addPreviousYear"><i class="fui-plus-inverted"></i> Add previous year</a>
+                </p>
+            </div><!-- /EDIT -->
+
+            <!-- SHOW -->
+            <div class="view viewShow">
+                <p class="noMoreYears">
+                    No more years
+                </p>
+            </div><!-- /SHOW -->
+
+        </div>
 <?php
     if ( $hasYears ) {
+
+        $count = 0;
 
         // Only display curYear - 1, curYear and curYear +1
         //
@@ -172,6 +197,8 @@ if ( $financialSummaries ) {
             } else {
                 $yearLabel = __('Current year','bidxplugin');
 
+                // Start with the current year being the selected one
+                //
                 $extraItemClasses[] = "selected";
             }
 
@@ -183,14 +210,32 @@ if ( $financialSummaries ) {
                 "{{numberOfEmployees}}"     => $yearItem->numberOfEmployees,
                 "{{operationalCosts}}"      => $yearItem->operationalCosts,
                 "{{salesRevenue}}"          => $yearItem->salesRevenue,
-                "{{extraItemClasses}}"      => implode( " ", $extraItemClasses )
+                "{{extraItemClasses}}"      => implode( " ", $extraItemClasses ),
+                "{{idx}}"                   => $count
             );
 
-            echo $this->replaceMessageTokens( $financialSummaryYearItem, $tokens );
+            echo $this->replaceMessageTokens( $financialSummariesItem, $tokens );
+
+            $count++;
         }
     }
 ?>
-    </div><!-- /col-years -->
+        <div class="financialSummariesItem addItem <?php echo ( $nrPrevYears >= 1 ? 'hide' : '' ); ?>">
+            <!-- EDIT -->
+            <div class="view viewEdit">
+                <p class="addYear">
+                    <a href="#addYearForward"><i class="fui-plus-inverted"></i> Add year forward</a>
+                </p>
+            </div><!-- /EDIT -->
+
+            <!-- SHOW -->
+            <div class="view viewShow">
+                <p class="noMoreYears">
+                    No more years
+                </p>
+            </div><!-- /SHOW -->
+        </div>
+    </div><!-- /fs-col-years -->
 
     <div class="fs-col-right">
         <div class="fs-controls">
@@ -201,7 +246,10 @@ if ( $financialSummaries ) {
     <!-- SNIPPETS -->
     <div class="snippets hide">
 <?php
-        echo $financialSummaryYearItem;
+        // Dump the item as a snippet, pull it through the replaceMessageTokens to have the template
+        // placeholders be replaced with empty values
+        //
+        echo $this->replaceMessageTokens( $financialSummariesItem, array() );
 ?>
     </div>
 
