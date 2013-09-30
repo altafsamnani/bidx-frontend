@@ -5,8 +5,6 @@
 
         if (is_array($this -> summaries)) {
 
-
-
             $index = 0;
             foreach ( $this -> summaries as $summary ) {
                 if ( $index === 3 ) {
@@ -16,15 +14,15 @@
  ?>
 
                 <div class="span<?php echo $span ?> clearfix">
-                    <?php
-                        if ( empty( $summary -> profilePicture ) ) {
-                            echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">';
-                        } else {
-                            echo '<img src="' . $summary -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
-                        }
-                    ?>
+<?php
+                    if ( empty( $summary -> profilePicture ) ) {
+                        echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">';
+                    } else {
+                        echo '<img src="' . $summary -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
+                    }
+?>
                     <div>
-                        <div><strong><?php echo $this -> exst( $summary -> displayName ) ; ?></strong></div>
+                        <div><strong><a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxProfileId ?>"><?php echo $this -> exst( $summary -> displayName ) ; ?></a></strong></div>
                     </div>
                 </div>
 <?php
