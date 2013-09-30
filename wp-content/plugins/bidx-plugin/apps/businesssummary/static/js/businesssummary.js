@@ -166,13 +166,18 @@
             bidx.utils.populateDropdown( $reasonForSubmission, reasons );
         } );
 
+        // Collect snippets from the DOM
+        //
         function _snippets()
         {
             // Grab the snippets from the DOM
             //
             snippets.$managementTeam       = $snippets.children( ".managementTeamItem"   ).remove();
+            snippets.$financialSummaries   = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
         }
 
+        // Setup the management team components
+        //
         function _managementTeam()
         {
             // Instantiate the reflowrower components
@@ -189,94 +194,53 @@
             } );
         }
 
+        // Setup the financial summary component
+        //
         function _financialSummary()
         {
             // FinancialSummmary
             //
-            var $btnNext    = $financialSummary.find( "a[href$=#next]" )
-            ,   $btnPrev    = $financialSummary.find( "a[href$=#prev]" )
+            var $btnNext        = $financialSummary.find( "a[href$=#next]" )
+            ,   $btnPrev        = $financialSummary.find( "a[href$=#prev]" )
+            ,   $btnAddPrev     = $financialSummary.find( "a[href$=#addPreviousYear]" )
+            ,   $btnAddNext     = $financialSummary.find( "a[href$=#addNextYear]" )
             ;
 
+            // Add on year to the left
+            //
+            $btnAddPrev.click( function( e )
+            {
+                e.preventDefault();
+
+                _addFinancialSummaryYear( "prev" );
+            } );
+
+            // Add on year to the right
+            //
+            $btnAddNext.click( function( e )
+            {
+                e.preventDefault();
+
+                _addFinancialSummaryYear( "next" );
+            } );
+
+
+            // Navigate one year to the left
+            //
             $btnPrev.click( function( e )
             {
                 e.preventDefault();
 
-                if ( $btnPrev.hasClass( "disabled" ) )
-                {
-                    return;
-                }
-
-                // Move selected marker to the next column
-                //
-                var $selectedYear   = $financialSummaryYearsContainer.find( ".financialSummariesItem.selected" )
-                ,   $prevYear       = $selectedYear.prev( ":not(.addItem)" )
-                ,   $visibleItems
-                ;
-
-                // Move the 'selected' class to the previous year
-                //
-                if ( $prevYear.length )
-                {
-                    $selectedYear.removeClass( "selected" );
-                    $prevYear.addClass( "selected" );
-
-                    $btnNext.removeClass( "disabled" );
-
-                    // Show the hidden item before the first, hide the last item
-                    //
-                    $visibleItems = $financialSummaryYearsContainer.find( ".financialSummariesItem:visible" );
-
-                    $visibleItems.filter( ":first" ).prev().show();
-                    $visibleItems.filter( ":last"  ).hide();
-                }
-
-                // Disable prev button when there is no more previous year
-                //
-                if ( !$prevYear.prev( ":not(.addItem)" ).length )
-                {
-                    $btnPrev.addClass( "disabled" );
-                }
+                _navigateYear( "prev" );
             } );
 
+            // Navigate one year to the right
+            //
             $btnNext.click( function( e )
             {
                 e.preventDefault();
 
-                if ( $btnNext.hasClass( "disabled" ) )
-                {
-                    return;
-                }
-
-                // Move selected marker to the next column
-                //
-                var $selectedYear   = $financialSummaryYearsContainer.find( ".financialSummariesItem.selected" )
-                ,   $nextYear       = $selectedYear.next( ":not(.addItem)" )
-                ,   $visibleItems
-                ;
-
-                // Move 'selected' to the next year
-                //
-                if ( $nextYear.length )
-                {
-                    $selectedYear.removeClass( "selected" );
-                    $nextYear.addClass( "selected" );
-
-                    $btnPrev.removeClass( "disabled" );
-
-                    // Show the hidden item after the last, hide the first item
-                    //
-                    $visibleItems = $financialSummaryYearsContainer.find( ".financialSummariesItem:visible" );
-
-                    $visibleItems.filter( ":first" ).hide();
-                    $visibleItems.filter( ":last"  ).next().show();
-                }
-
-                // Disable the next button if the selected year is the last year
-                //
-                if ( !$nextYear.next( ":not(.addItem)" ).length )
-                {
-                    $btnNext.addClass( "disabled" );
-                }
+                _navigateYear( "next" );
             } );
 
             // Calculate the totalincome when the salesRevenue and/or operationalCosts change
@@ -290,6 +254,74 @@
                 _calculateTotalIncome( $item );
             } );
 
+            // Add a financial year item
+            //
+            function _addFinancialSummaryYear( direction )
+            {
+                var $item       = snippets.$financialSummaries.clone()
+                ,   curYear     = bidx.common.getNow().getFullYear()
+                ,   year
+                ,   yearLabel
+                ,   otherYear
+                ,   $marker
+                ;
+
+                // What is the year we are going to add?
+                //
+                if ( direction === "prev" )
+                {
+                    $marker = $financialSummaryYearsContainer.find( ".addItem:first" );
+
+                    otherYear = $marker.next().data( "year" );
+
+                    if ( !otherYear )
+                    {
+                        year        = curYear;
+                        yearLabel   = "Current year";
+                    }
+                    else
+                    {
+                        year        = otherYear - 1;
+                        yearLabel   = "Actuals";
+                    }
+                }
+                else
+                {
+                    $marker = $financialSummaryYearsContainer.find( ".addItem:last" );
+
+                    otherYear = $marker.prev().data( "year" );
+
+                    if ( !otherYear )
+                    {
+                        year        = curYear;
+                        yearLabel   = "Current year";
+                    }
+                    else
+                    {
+                        year        = otherYear + 1;
+                        yearLabel   = "Projected";
+                    }
+
+                }
+
+                $item.data( "year", year );
+                $item.find( ".year" ).text( year );
+                $item.find( ".yearLabel" ).text( yearLabel );
+
+                if ( direction === "prev" )
+                {
+                    $marker.after( $item );
+                }
+                else
+                {
+                    $marker.before( $item );
+                }
+
+                _selectYear( $item );
+            }
+
+            // Calculate the new total income
+            //
             function _calculateTotalIncome( $item )
             {
                 var salesRevenue        = parseInt( $item.find( "input[name^='salesRevenue']"     ).val(), 10 )
@@ -298,6 +330,81 @@
                 ;
 
                 $item.find( ".totalIncome .viewEdit" ).text( totalIncome );
+            }
+
+            // Select a certain year, update the selected state, show the correct years and disable/enable the buttons
+            //
+            function _selectYear( $yearItem )
+            {
+                var $years          = $financialSummaryYearsContainer.find( ".financialSummariesItem" ).hide()
+                ,   $selectedYear   = $years.filter( ".selected" )
+                ,   $visibleItems
+                ,   $prevItem       = $yearItem.prev()
+                ,   $nextItem       = $yearItem.next()
+                ;
+
+                $selectedYear.removeClass( "selected" );
+                $yearItem.addClass( "selected" );
+
+                $yearItem.show();
+                $nextItem.show();
+                $prevItem.show();
+
+                if ( $prevItem.is( ".addItem" ) )
+                {
+                    $btnPrev.addClass( "disabled" );
+                }
+                else
+                {
+                    $btnPrev.removeClass( "disabled" );
+                }
+
+                if ( $nextItem.is( ".addItem" ) )
+                {
+                    $btnNext.addClass( "disabled" );
+                }
+                else
+                {
+                    $btnNext.removeClass( "disabled" );
+                }
+            }
+
+            // Either navigate next or prev
+            // Beware, direction is used as a jquery DOM function in this method
+            //
+            function _navigateYear( direction )
+            {
+                var $selectedYear   = $financialSummaryYearsContainer.find( ".financialSummariesItem.selected" )
+                ,   $otherYear
+                ,   $visibleItems
+                ,   $btn
+                ;
+
+                switch ( direction )
+                {
+                    case "next":
+                        $btn = $btnNext;
+                    break;
+
+                    case "prev":
+                        $btn = $btnPrev;
+                    break;
+
+                    default:
+                        // NOOP
+                        bidx.utils.warn( appName + "::_navigateYear: unknown direction: " + direction );
+                }
+
+                if ( !$btn || !$btn.length || $btn.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                // What is the year item we want to navigate to?
+                //
+                $otherYear = $selectedYear[ direction ]( ":not(.addItem)" );
+
+                _selectYear( $otherYear );
             }
         }
     }
