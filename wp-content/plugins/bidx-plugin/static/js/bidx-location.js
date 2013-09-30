@@ -59,6 +59,7 @@
         ,   setMarkers:             true
         ,   drawCircle:             false
         ,   showReach:              true
+        ,   readOnly:               false
 
         ,   initialCenter:
             {
@@ -509,7 +510,7 @@
             marker = new google.maps.Marker(
             {
                 map:            state.map
-            ,   draggable:      true
+            ,   draggable:      options.readOnly ? false : true
             } );
 
             state.markersArray.push( marker );
@@ -545,7 +546,7 @@
                     //
                 ,   radius:             reach * 1000 || 1693
                 ,   fillColor:          "#69E853"
-                ,   editable:           true
+                ,   editable:           options.readOnly ? false : true
                 ,   draggable:          false
                 ,   radius_changed:     function()
                     {
