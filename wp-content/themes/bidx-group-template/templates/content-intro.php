@@ -154,7 +154,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                     <div class="feature-block-items">
                         <div class="bidx-latest-members clearfix">
                         <!-- Grab latests members -->
-                            <?php echo do_shortcode( '[bidx app="group" view="lastest-companies"]' ); ?>
+                            <?php echo do_shortcode( '[bidx app="group" view="lastest-business-summaries"]' ); ?>
                         </div>
                     </div>
                 </div>
@@ -259,31 +259,31 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
                         <div class="call-to-action clearfix">
                             <div class="pull-left ">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
+                                <img src="https://acceptance.bidx.net/wp-content/uploads/2013/09/bidnetworklogo.png" alt="">
                             </div>
                             <div class="pull-right">
-                                <div><strong><?php _e('Tagline group goes here.', 'bidxtheme')?></strong></div>
+                                <div><strong><?php _e('BiD Network', 'bidxtheme')?></strong></div>
                                 <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
                             </div>
                         </div>
                         <div class="call-to-action clearfix">
                             <div class="pull-left ">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
+                                <img src="https://acceptance.bidx.net/wp-content/uploads/2013/09/sampoerna.png" alt="">
                             </div>
                             <div class="pull-right">
-                                <div><strong><?php _e('Tagline group goes here.', 'bidxtheme')?></strong></div>
+                                <div><strong><?php _e('Sampoerna', 'bidxtheme')?></strong></div>
                                 <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
                             </div>
                         </div>
-                        <div class="call-to-action clearfix">
-                            <div class="pull-left ">
-                                <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
-                            </div>
-                            <div class="pull-right">
-                                <div><strong><?php _e('Tagline group goes here.', 'bidxtheme')?></strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
-                            </div>
-                        </div>
+<!--                         <div class="call-to-action clearfix">
+    <div class="pull-left ">
+        <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
+    </div>
+    <div class="pull-right">
+        <div><strong><?php //_e('Tagline group goes here.', 'bidxtheme')?></strong></div>
+        <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
+    </div>
+</div> -->
 
 
                         <div class="call-to-action transparent clearfix">
@@ -343,11 +343,11 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
             </div>
             <div class="span4">
                 <div class="bidx-testimonial pull-right">
-                	<?php 
+                	<?php
                 	 	$meta_key = 'box_testimonial_text';
                 		if (get_post_meta( get_the_ID(), $meta_key, true )) {
 							echo get_post_meta( get_the_ID(), $meta_key, true );
-                		} else {              		
+                		} else {
                 			$output = "<div><p>Testimonial text here.</p><em>Firstname Lastname</em>,  Function</div>";
 							echo $output;
                 			add_post_meta( get_the_ID(), $meta_key, $output, true );
