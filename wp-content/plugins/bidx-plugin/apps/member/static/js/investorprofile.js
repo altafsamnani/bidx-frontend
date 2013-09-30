@@ -1483,7 +1483,13 @@
 
                     _showView( "load" );
 
-                    _init();
+                    // Make sure the i18n translations for this app are available before initing
+                    //
+                    bidx.i18n.load( [ "__global", appName ] )
+                        .done( function()
+                        {
+                            _init();
+                        } );
                 }
 
             break;
