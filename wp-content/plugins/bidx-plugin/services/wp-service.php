@@ -2130,7 +2130,7 @@ function bidx_dashboard_header ()
     $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
     $currentUser = wp_get_current_user ();
     if (in_array ('groupadmin', $currentUser->roles)) {
-        //roots_scripts ();
+        roots_scripts ();
         $menu = 'dashboard';
 
         switch ($menuTitle) {
@@ -2177,8 +2177,8 @@ function bidx_dashboard_header ()
 
                 $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
                               'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
-                wp_register_script( 'company', '/wp-content/plugins/bidx-plugin/apps/company/static/js/company.js',  $companyDepArr, '20130501', TRUE );
-                wp_enqueue_script ('company');
+                //wp_register_script( 'company', '/wp-content/plugins/bidx-plugin/apps/company/static/js/company.js',  $companyDepArr, '20130501', TRUE );
+                //wp_enqueue_script ('company');
 
                 break;
 
