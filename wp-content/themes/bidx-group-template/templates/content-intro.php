@@ -331,25 +331,28 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
         <div class="row-fluid spacer testimonial-container">
             <div class="span8">
-
-
-
-                <h1><?php echo get_custom_field_value( "homepage-group-description" , 0) ?> </h1>
-                <p>
-                    <img src="http://demogroup.beta.bidx.net/assets/sites/273/man-with-wheel.png" class="img-circle" alt="140x140" style="width: 140px; height: 140px;" align="right">
-                    <?php echo get_custom_field_value( "homepage-group-description", 1 ) ?>
-               </p>
-
+				<?php
+                $meta_key = 'box_intro_text';
+                if (get_post_meta( get_the_ID(), $meta_key, true )) {
+					echo get_post_meta( get_the_ID(), $meta_key, true );
+                } else {
+                	$output = "<h1>What is the [yourname here] Group?</h1><p>An introduction of your group here...</p>";
+                	echo $output;
+                	add_post_meta( get_the_ID(), $meta_key, $output, true );
+			    } ?>
             </div>
             <div class="span4">
                 <div class="bidx-testimonial pull-right">
-                    <div>
-                        <p>
-                            <?php echo get_custom_field_value( "homepage-group-testimonial", 0 ) ?>
-
-                        </p>
-                    <em><?php echo get_custom_field_value( "homepage-group-testimonial", 1 ) ?></em><?php echo get_custom_field_value( "homepage-group-testimonial", 2 ) ?>
-                    </div>
+                	<?php 
+                	 	$meta_key = 'box_testimonial_text';
+                		if (get_post_meta( get_the_ID(), $meta_key, true )) {
+							echo get_post_meta( get_the_ID(), $meta_key, true );
+                		} else {              		
+                			$output = "<div><p>Testimonial text here.</p><em>Firstname Lastname</em>,  Function</div>";
+							echo $output;
+                			add_post_meta( get_the_ID(), $meta_key, $output, true );
+                    	}
+                    ?>
                 </div>
 
             </div>
