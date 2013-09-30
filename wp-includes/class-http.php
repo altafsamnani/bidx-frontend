@@ -181,11 +181,8 @@ class WP_Http {
 		}
 
 		if ( ( ! is_null( $r['body'] ) && '' != $r['body'] ) || 'POST' == $r['method'] || 'PUT' == $r['method'] ) {
-			if ( is_array( $r['body'] ) || is_object( $r['body'] )) {
-
-             if(!(isset( $r['headers']['Content-Type']) && $r['headers']['Content-Type'] == 'multipart/form-data')) {
+			if ( is_array( $r['body'] ) || is_object( $r['body'] ) ) {
 				$r['body'] = http_build_query( $r['body'], null, '&' );
-            }
 
 				if ( ! isset( $r['headers']['Content-Type'] ) )
 					$r['headers']['Content-Type'] = 'application/x-www-form-urlencoded; charset=' . get_option( 'blog_charset' );
@@ -194,7 +191,7 @@ class WP_Http {
 			if ( '' === $r['body'] )
 				$r['body'] = null;
 
-			if ( ! isset( $r['headers']['Content-Length'] ) && ! isset( $r['headers']['content-length'] ) && is_string($r['body']) )
+			if ( ! isset( $r['headers']['Content-Length'] ) && ! isset( $r['headers']['content-length'] ) )
 				$r['headers']['Content-Length'] = strlen( $r['body'] );
 		}
 
@@ -1305,6 +1302,11 @@ class WP_Http_Curl {
 	 * @return int
 	 */
 	private function stream_body( $handle, $data ) {
+		if ( function_exists( 'ini_get' ) && ( ini_get( 'mbstring.func_overload' ) & 2 ) && function_exists( 'mb_internal_encoding' ) ) {
+			$mb_encoding = mb_internal_encoding();
+			mb_internal_encoding( 'ISO-8859-1' );
+		}
+
 		if ( $this->max_body_length && ( strlen( $this->body ) + strlen( $data ) ) > $this->max_body_length )
 			$data = substr( $data, 0, ( $this->max_body_length - strlen( $this->body ) ) );
 
@@ -1313,7 +1315,12 @@ class WP_Http_Curl {
 		else
 			$this->body .= $data;
 
-		return strlen( $data );
+		$data_length = strlen( $data );
+
+		if ( isset( $mb_encoding ) )
+			mb_internal_encoding( $mb_encoding );
+
+		return $data_length;
 	}
 
 	/**
