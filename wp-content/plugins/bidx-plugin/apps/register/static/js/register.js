@@ -91,26 +91,24 @@
         // Build up the data for the member request
         //
         var member =
-        {
-            emailAddress:                   $frmRegister.find( "[name='username']" ).val()
-        ,   personalDetails:
-                {
-                    firstName:              $frmRegister.find( "[name='personalDetails.firstName']" ).val()
-                ,   lastName:               $frmRegister.find( "[name='personalDetails.lastName']" ).val()
-                }
-        };
+            {
+                emailAddress:                   $frmRegister.find( "[name='username']" ).val()
+            ,   personalDetails:
+                    {
+                        firstName:              $frmRegister.find( "[name='personalDetails.firstName']" ).val()
+                    ,   lastName:               $frmRegister.find( "[name='personalDetails.lastName']" ).val()
+                    }
+            }
+        ,   $location   = $frmRegister.find( "[name='location']" )
+        ;
 
         // fetch the address from the location plugin
         //
-        if ( $frmRegister.find( "[name='location']" ).val() )
+        if ( $location.val() )
         {
-
-            // Finding the hidden fields is a hack, just search for the fields *ENDING* with names we are looking for
-            // Just to not have to change the location.js plugin
-            //
             member.personalDetails.address =
             [
-                 $("#frmRegister").find( "[name='location']" ).bidx_location("getLocationData")
+                 $location.bidx_location( "getLocationData" )
             ];
         }
 
