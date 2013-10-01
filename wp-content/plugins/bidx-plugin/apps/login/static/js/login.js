@@ -92,9 +92,10 @@
 
             ,   success: function( response, textStatus, jqXHR )
                 {
+
                     if ( response )
                     {
-                        if (response.status === 'OK')
+                        if ( response.status === 'OK' )
                         {
                             if (response.redirect)
                             {
@@ -118,12 +119,21 @@
                                 document.location=response.redirect;
                             }
                         }
-                        else if ( response.status === "ERROR" )
+                        else if ( response.status === "ERROR")
                         {
                             $loginErrorMessage.text( response.text).show();
 
                             params.error( jqXHR );
                         }
+                    }
+                     // response 0 means user is still logged into WP
+                    else
+                    {
+                        if( response === 0 )
+                        {
+                            $loginErrorMessage.text( "Please log out of Wordpress administrator").show();
+                        }
+                        params.error( jqXHR );
                     }
                 }
 
