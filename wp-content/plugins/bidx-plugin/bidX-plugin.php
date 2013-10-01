@@ -47,7 +47,7 @@
           'mail',
           'media',
           'member',
-          'mydashboard' => 'dashboard',
+          'dashboard',
           'search',
           'login',
           'register',

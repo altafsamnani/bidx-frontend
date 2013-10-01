@@ -2111,7 +2111,7 @@ function alter_site_menu ()
                 add_menu_page ('Monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
                 add_menu_page ('Getting Started', 'Getting Started', 'edit_theme_options', 'gettingstarted', 'bidx_getting_started');
                 add_menu_page ('Support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
-                //add_menu_page ('Group Settings', 'Group Settings', 'edit_theme_options', 'groupsettings', 'bidx_group_settings');
+                add_menu_page ('Group Settings', 'Group Settings', 'edit_theme_options', 'groupsettings', 'bidx_group_settings');
             }
         }
     }
@@ -2176,32 +2176,13 @@ function bidx_dashboard_header ()
                 wp_enqueue_script ('group');
 
                 $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                              'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
-                //wp_register_script( 'company', '/wp-content/plugins/bidx-plugin/apps/company/static/js/company.js',  $companyDepArr, '20130501', TRUE );
-                //wp_enqueue_script ('company');
+                              'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-location');
+                wp_register_script( 'company', '/wp-content/plugins/bidx-plugin/apps/company/static/js/company.js',  $companyDepArr, '20130501', TRUE );
+                wp_enqueue_script ('company');
 
                 break;
 
         }
-
-
-        // 1 Load default root script/styles
-
-
-        /* Have to add dashboard.css because of different styling for invite friend / group settings */
-        //wp_register_style ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
-        //wp_enqueue_style ('group-admin');
-        //wp_print_scripts ('dashboard');
-        // 2 Load Bidx Common Default script/styles to render it in 3
-        //$shortcode = new BidxShortCode();
-        //$shortcode->register_script ();
-        //3 Load Dashboard Style/Scripts
-//        wp_register_script ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', array ('bidx-common'), '20130715', TRUE);
-//        wp_enqueue_script ('group-admin');
-//
-//        wp_register_style ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array ('roots_bootstrap', 'roots_bootstrap_responsive'), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
-//        wp_enqueue_style ('group-admin');
-        //roots_scripts ();
     }
     wp_enqueue_style ('bidx-admin-theme', get_bloginfo ('template_url') . '/wp-admin.css');
 }
@@ -2283,5 +2264,23 @@ function bidx_group_settings ()
 {
     //wp_enqueue_style( 'dashboard' );
     echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='groupsettings']");
+}
+
+add_action ('wp_ajax_nopriv_bidx_option', 'bidx_set_option');
+add_action ('wp_ajax_priv_bidx_option', 'bidx_set_option');
+function bidx_set_option ()
+{
+
+    $type = (isset($_GET['type'])) ? $_GET['type'] : NULL;
+    $value = (isset($_GET['value'])) ? $_GET['value'] : NULL;
+    $data['response'] = 'error';
+
+    if( $type ) {
+        update_option($type,$value);
+        $data['response'] = 'ok';
+    }
+    echo json_encode($data);
+    exit;
+
 }
 

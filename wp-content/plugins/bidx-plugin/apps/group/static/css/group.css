@@ -19,3 +19,18 @@
 float:none;
 margin:0 auto
 }
+
+.groupsettings {
+    width:70%;
+}
+
+.row-focus,
+.row-company,
+.row-status {
+    margin-top:3%;
+}
+.groupsettings .controls {
+position: absolute;
+right: 31%;
+top: 20px;
+}

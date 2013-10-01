@@ -1,17 +1,18 @@
-(function( $ )
+(function($)
 {
     var $element = $("#group-dashboard")
-    , $views = $element.find(".view")
-    , $modals = $element.find(".modalView")
-    , $modal
-    , $frmCompose = $modals.find("form")
-    , $btnComposeSubmit = $frmCompose.find(".compose-submit")
-    , $btnComposeCancel = $frmCompose.find(".compose-cancel")
-    , $currentView
-    , bidx = window.bidx
-    , appName = "dashboard"
-    , currentGroupId = bidx.common.getCurrentGroupId()
-    , toolbar = {}
+            , $elementHelp = $(".startpage")
+            , $views = $element.find(".view")
+            , $modals = $element.find(".modalView")
+            , $modal
+            , $frmCompose = $modals.find("form")
+            , $btnComposeSubmit = $frmCompose.find(".compose-submit")
+            , $btnComposeCancel = $frmCompose.find(".compose-cancel")
+            , $currentView
+            , bidx = window.bidx
+            , appName = "dashboard"
+            , currentGroupId = bidx.common.getCurrentGroupId()
+            , toolbar = {}
     , message = {}
     , listItems = {}
     , listItemsAll = {}
@@ -302,6 +303,29 @@
                                 });
                     }
                 });
+
+
+        $elementHelp.change(function()
+        {
+            var startPageCheck = $(this).attr("checked");
+            var startValue = 0;
+            if (startPageCheck) {
+                startValue = 2;
+            }
+            $.ajax(
+                    {
+                        url: "/wp-admin/admin-ajax.php?action=bidx_option&type=investor-startingpage&value=" + startValue
+                                , dataType: "json"
+                    })
+                    .done(function(data, status, jqXHR)
+            {
+                console.log(data + 'Bidx option investor dashboard updated.');
+            })
+                    .fail(function()
+            {
+                bidx.utils.error("problem updating investor dashboard option.");
+            })
+        });
     }
 
     // actual sending of message to API
@@ -338,10 +362,9 @@
         bidx.api.call(
                 "mail.send"
                 , {
-                    groupDomain: bidx.common.groupDomain
+            groupDomain: bidx.common.groupDomain
                     , extraUrlParameters: extraUrlParameters
                     , data: message
-
                     , success: function(response)
             {
 
@@ -423,14 +446,14 @@
 
         if (listType == 'list') {
             var keySubject = "welcomesubject";
-           bidx.i18n.getItem(keySubject, 'templates' , function (err, labelSubject) {
-               $frmCompose.find("[name='subject']").val(labelSubject);
-           });
-            
-            
+            bidx.i18n.getItem(keySubject, 'templates', function(err, labelSubject) {
+                $frmCompose.find("[name='subject']").val(labelSubject);
+            });
+
+
             var keyBody = "welcomebody";
-            bidx.i18n.getItem(keyBody, 'templates', function (err, labelBody) {
-            $frmCompose.find("[name='content']").val(labelBody);
+            bidx.i18n.getItem(keyBody, 'templates', function(err, labelBody) {
+                $frmCompose.find("[name='content']").val(labelBody);
             });
 
         }
@@ -578,7 +601,6 @@
                         {
                             list: "list"
                                     , view: "list"
-
                                     , callback: function()
                             {
                                 _showMainView("list", "load");
@@ -593,7 +615,6 @@
                         {
                             list: "all"
                                     , view: "all"
-
                                     , callback: function()
                             {
                                 _showMainView("all", "goat");
@@ -722,5 +743,5 @@
     }
 
 
-}( jQuery ));
+}(jQuery));
 

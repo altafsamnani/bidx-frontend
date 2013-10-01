@@ -10,7 +10,7 @@ class dashboard
 {
 
     static $deps = array ('bidx-form', 'bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-      'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', '');
+      'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
     /**
      * Constructor
@@ -27,7 +27,7 @@ class dashboard
     {
 
         wp_register_script ('dashboard', plugins_url ('static/js/dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
-        wp_register_style ('dashboard', plugins_url ('static/css/dashboard.css', __FILE__), array ('bootstrap', 'bootstrap-responsive'), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
+        wp_register_style ('dashboard', plugins_url ('static/css/dashboard.css', __FILE__), array (), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
         wp_enqueue_style ('dashboard');
     }
 
@@ -56,11 +56,19 @@ class dashboard
                 $template = 'my-dashboard.phtml';
                 break;
             case 'investor-dashboard':
-                $template = 'investor-dashboard.phtml';
+
+
+                $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
+
+                if ($investorDashboard) {
+                    ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;;
+                    $template = 'investor/help.phtml';
+                } else {                    
+                    $template = 'investor/dashboard.phtml';
+                }                
                 break;
 
             case 'group-dashboard':
-
                 if (isset ($view->sessionData->data) && isset ($view->sessionData->data->currentGroup)) {
                     $menu = $atts['menu'];
                     switch ($menu) {
@@ -113,6 +121,14 @@ class dashboard
                             break;
                         case 'support' :
                             $template = 'support.phtml';
+                            break;
+                        case 'groupsettings' :
+
+                            require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
+                            $groupSvc = new GroupService( );
+                            $view->group = $groupSvc->getGroupDetails ();
+
+                            $template = 'group-settings.phtml';
                             break;
                     }
                 }
