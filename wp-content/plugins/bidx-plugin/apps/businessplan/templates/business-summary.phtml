@@ -26,7 +26,7 @@
                 ?>
 
                 <?php
-                $rowValues = array (__('Describe your business in 15 words','bidxplugin') => $this->exst ($businessSummary->summary));
+                $rowValues = array (__('Describe your business (max. 140 characters)','bidxplugin') => $this->exst ($businessSummary->summary));
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
@@ -81,7 +81,7 @@
                 ?>
 
                 <?php
-                $rowValues = array (__('Why do you need financing? Describe in maximum 30 words ( optional )','bidxplugin') => $this->exst ($businessSummary->summaryFinancingNeeded));
+                $rowValues = array (__('Why does your business need financing? (max. 300 characters)','bidxplugin') => $this->exst ($businessSummary->summaryFinancingNeeded));
                 echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                 ?>
 
@@ -135,12 +135,12 @@
                     ?>
 
                     <?php
-                    $rowValues = array (__('Please provide details of your expertise applicable to this business','bidxplugin') => $personalExpertise);
+                    $rowValues = array (__('PPlease provide details of your expertize with relation to this business','bidxplugin') => $personalExpertise);
                     echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'div', 'class_label' => 'bidx-label'));
                     ?>
 
                     <?php
-                    $header = array (__('Name','bidxplugin') => 'name', __('Role of partner in this business','bidxplugin') => 'role', __('Expertise of partner applicable','bidxplugin') => 'expertise');
+                    $header = array (__('Name','bidxplugin') => 'name', __('Role of partner in this business','bidxplugin') => 'role', __('Describe relevant expertize of business partner','bidxplugin') => 'expertise');
                     $merge['name'] = array ('firstName', 'lastName');
                     $supportingMembersHtml = $this->addTableRows ($header, $supportingData, 'table table-bordered', $merge);
 

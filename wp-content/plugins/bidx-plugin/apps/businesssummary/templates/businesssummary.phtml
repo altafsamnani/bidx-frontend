@@ -92,7 +92,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     __('Business name','bidxplugin')
                         => $this->exst($businessSummary->name),
 
-                    __('Describe your business in 15 words','bidxplugin')
+                    __('Describe your business (max. 140 characters) ','bidxplugin')
                         => $this->exst($businessSummary->slogan),
 
                     __('Summary of this business','bidxplugin')
@@ -143,7 +143,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                                 <!-- Slogan -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Describe your business in 15 words ( optional )','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Describe your business (max. 140 characters) optional','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <textarea type="text" name="slogan" placeholder="<?php _e('Please give a description of your business','bidxplugin'); ?>"></textarea>
                                     </div>
@@ -190,7 +190,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                 <div class="control-group">
                                     <label class="control-label"><?php _e('Finance needed','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <input type="text" name="financingNeeded" placeholder="<?php _e('Please give finance needed','bidxplugin'); ?>">
+                                        <input type="text" name="financingNeeded" placeholder="<?php _e('Please enter amount of finance needed','bidxplugin'); ?>">
                                     </div>
                                 </div>
 
@@ -212,7 +212,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                                 <!-- Summary Financing Needed -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Why do you need financing? Describe in maximum 30 words ( optional )','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Why does your business need financing? (max. 300 characters)','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <textarea name="summaryFinancingNeeded" placeholder="<?php _e('Please give the reason you need financing','bidxplugin'); ?>"></textarea>
                                     </div>
@@ -437,7 +437,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             $tableHeader = array (
                                 __('Name','bidxplugin') => 'name',
                                 __('Role of partner in this business','bidxplugin') => 'role',
-                                __('Expertise of partner applicable','bidxplugin') => 'expertise'
+                                __('Describe relevant expertize of business partner','bidxplugin') => 'expertise'
                             );
 
                             $merge['name'] = array ('firstName', 'lastName');
@@ -481,7 +481,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                                 <!-- Personal Expertise -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Please provide details of your expertise applicable to this business (30 words)','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Please provide details of your expertize with relation to this business (30 words)','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <textarea name="personalExpertise" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
                                     </div>
@@ -692,9 +692,9 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
             <!-- Expertise -->
             <div class="control-group">
-                <label class="control-label"><?php _e('Expertise of partner applicable to business','bidxplugin'); ?></label>
+                <label class="control-label"><?php _e('Describe relevant expertize of business partner','bidxplugin'); ?></label>
                 <div class="controls">
-                    <textarea type="text" name="expertise" placeholder="<?php _e('Please give the expertise of partner applicable to business','bidxplugin'); ?>"></textarea>
+                    <textarea type="text" name="expertise" placeholder="<?php _e('Please describe relevant expertize of business partner','bidxplugin'); ?>"></textarea>
                 </div>
             </div>
 
