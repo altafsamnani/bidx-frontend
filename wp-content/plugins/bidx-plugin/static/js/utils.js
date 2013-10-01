@@ -586,6 +586,47 @@
         return result;
     };
 
+    var parseTimestampToDateTime = function( ts, format )
+    {
+        if ( !ts )
+        {
+            return "";
+        }
+
+        if( !format )
+        {
+            format = "datetime";
+        }
+        var d       = new Date( parseInt( ts + "000", 10 ) )
+        ,   obj     =
+            {
+                y:      d.getFullYear()
+            ,   m:      months[ d.getMonth()-1 ]
+            ,   d:      d.getDate()
+            ,   h:      d.getHours()
+            ,   n:      d.getMinutes()
+            ,   s:      d.getSeconds()
+            }
+        ,   result
+        ;
+
+        switch( format )
+        {
+            case "date":
+                result = obj.d + " " + obj.m + " " + obj.y;
+            break;
+
+            case "time":
+                result = obj.h + ":" + obj.n + ":" + obj.s;
+            break;
+
+            default:
+                result = obj.d + " " + obj.m + " " + obj.y + " " + obj.h + ":" + obj.n + ":" + obj.s;
+        }
+        return result;
+    };
+
+
     //  Removes ID(s) from hash string
     var removeIdFromHash = function ( str ){
         var newHash = [];
@@ -676,6 +717,7 @@
     ,   parseISODate:               parseISODate
     ,   parseISODateTime:           parseISODateTime
     ,   parseTimestampToDateStr:    parseTimestampToDateStr
+    ,   parseTimestampToDateTime:   parseTimestampToDateTime
     ,   setElementValue:            setElementValue
     ,   getElementValue:            getElementValue
     ,   populateDropdown:           populateDropdown

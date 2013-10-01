@@ -71,7 +71,7 @@
                 $btnComposeSubmit.addClass( "disabled" );
 
 
-                _send(
+                _doSend(
                 {
                     error: function()
                     {
@@ -119,8 +119,10 @@
 
 
     // actual sending of message to API
-    function _send( params )
+    function _doSend( params )
     {
+        //var key = "sendingMessage";
+
         if ( !message )
         {
             return;
@@ -136,9 +138,9 @@
             }
         ];
 
-        var key = "sendingMessage";
+        bidx.common.notifyCustom( bidx.i18n.i( "sendingMessage", appName ) );
 
-        bidx.i18n.getItem( key, function( err, label )
+/*        bidx.i18n.getItem( key, function( err, label )
         {
             if ( err )
             {
@@ -146,12 +148,13 @@
                 label = key;
                 _showError( label );
             }
-        } );
+            bidx.common.notifyCustom( key );
+        } );*/
 
-        bidx.common.notifyCustom( key );
+
 
         bidx.api.call(
-            "mail.send"
+            "mailboxMail.send"
         ,   {
                 groupDomain:              bidx.common.groupDomain
             ,   extraUrlParameters:       extraUrlParameters
@@ -160,21 +163,12 @@
             ,   success: function( response )
                 {
 
-                    bidx.utils.log( "MAIL RESPONSE", response );
-                    var key = "messageSent";
-                    bidx.i18n.getItem( key, function( err, label )
-                    {
-                        if ( err )
-                        {
-                            bidx.utils.error( "Problem translating", key, err );
-                            label = key;
-                            _showError( label );
-                        }
+                    bidx.utils.log( "[mail] mail send", response );
+                    //var key = "messageSent";
 
-                    } );
-                    bidx.common.notifyCustomSuccess( key );
+                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", appName ) );
 
-                    bidx.controller.updateHash( "#mail/inbox", true, false );
+                    bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
                 }
 
             ,   error:  function( jqXhr )
@@ -194,10 +188,9 @@
         /*
             API expected format
             {
-                "userIds":  []
-            ,   "emails":   []
-            ,   "subject":  "subject of the email"
-            ,   "content":  "content of the email"
+                "userIds": ["number"]
+            ,   "subject": "string"
+            ,   "content": "string"
             }
         */
 
@@ -246,6 +239,7 @@
     //
     function _setActiveMenu()
     {
+        bidx.utils.log( "[mail] set active menu" );
         $element.find( ".side-menu > div.bidx-mailFolders > a" ).each( function( index, item )
         {
             var $this = $( item );
@@ -326,10 +320,14 @@
         // initialize the mailbox by loading the content and in the end displaying its view
         function _initMailBox()
         {
+            // if for some reason we forgot to remove the mbx- prefix, do it now
+            //
+            if( section.substring( 0, 4 ) === "mbx-" )
+            {
+                section = section.replace( /(^mbx-)/, "" );
+            }
+
             bidx.utils.log("[mail] Loading Mailbox" , section, " message");
-
-
-
 
             _getEmails(
             {
@@ -340,6 +338,12 @@
 
             ,   callback: function()
                 {
+                    // mark the menu that matches this current page
+                    //
+                    _setActiveMenu();
+
+                    // show the listing
+                    //
                     _showView( "list" );
                 }
             } );
@@ -371,6 +375,7 @@
 
             if( !$.isEmptyObject( message ) )
             {
+                bidx.utils.log("[mail] init forward/reply ", message);
                 var recipients = []
                 ,   content    = message.content
                 ,   lbl
@@ -383,25 +388,24 @@
                     //
                     case "reply":
 
-                        recipients.push( message.userIdFrom.toString() );
+                        //recipients.push( message.recipients[0].id.toString() );
+                        recipients.push( "27" );
+                        message.fullNameFrom = "[REPLACE THIS WHEN API IS CHANGED]";
                         $frmCompose.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
 
                         $frmCompose.find( "[name=subject]" ).val( "Re: " + message.subject );
 
                         //  add reply header with timestamp to content
                         //
-                        bidx.i18n.getItem( "replyContentHeader", appName ,  function( err, label )
-                        {
-                            lbl     = label
-                                        .replace( "%date%", bidx.utils.parseISODateTime( message.sentDate, "date" ) )
-                                        .replace( "%time%", bidx.utils.parseISODateTime( message.sentDate, "time" ) )
-                                        .replace( "%sender%", message.fullNameFrom )
-                                    ;
-                            content = "\n\n" + lbl + "\n" + content;
 
-                            $frmCompose.find( "[name=content]" ).val( content );
-                            $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
-                        } );
+                        lbl     = bidx.i18n.i( "replyContentHeader", appName )
+                                .replace( "%date%", bidx.utils.parseTimestampToDateTime( message.dateSent, "date" ) )
+                                .replace( "%time%", bidx.utils.parseTimestampToDateTime( message.dateSent, "time" ) )
+                                .replace( "%sender%", message.fullNameFrom );
+                        content = "\n\n" + lbl + "\n" + content;
+
+                        $frmCompose.find( "[name=content]" ).val( content );
+                        $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
 
                     break;
 
@@ -413,21 +417,19 @@
 
                         //  add reply header with timestamp to content
                         //
-                        bidx.i18n.getItem( "forwardContentHeader", appName ,  function( err, label )
-                        {
-                            lbl     = "----------" + label + "----------";
+                        lbl     = bidx.i18n.i( "forwardContentHeader", appName );
+                        lbl     = "----------" + lbl + "----------";
+                        content = "\n\n" + lbl + "\n" + content;
 
-                            content = "\n\n" + lbl + "\n" + content;
+                        $frmCompose.find( "[name=content]" ).val( content );
+                        $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
 
-                            $frmCompose.find( "[name=content]" ).val( content );
-                            $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
-                        } );
                     break;
                 }
             }
             else
             {
-                bidx.utils.error( "Message object is empty. Reply can not be inialized" );
+                bidx.utils.error( "Message object is empty. Forward or Reply can not be inialized" );
                 window.bidx.controller.updateHash( "#mail/" + section + "/" + id, true, false );
             }
 
@@ -442,49 +444,41 @@
         //
         function getMembers( callback )
         {
+            bidx.utils.log( "[mail] get members" );30
 
-            var extraUrlParameters =
-            [
-                {
-                    label :     "q",
-                    value :     "user:*"
-                }
-            ,   {
-                    label :     "fq",
-                    value :     "type:bidxMemberProfile+AND+groupIds:" + currentGroupId
-                }
-            ,   {
-                    label :     "rows",
-                    value :     "1000"
-                }
-            ];
 
 
             bidx.api.call(
-                "groupMembers.fetch"
+                "memberRelationships.fetch"
             ,   {
-                    groupId:                  currentGroupId
+                    requesterId:              bidx.common.getCurrentUserId()
                 ,   groupDomain:              bidx.common.groupDomain
-                ,   extraUrlParameters:       extraUrlParameters
 
                 ,   success: function( response )
                     {
-
                         var result          = []
                         ;
 
                         // now format it into array of objects with value and label
                         //
-                        if( response && response.docs )
+                        if( response && response.contact )
                         {
-                            $.each( response.docs, function ( idx, item)
+                            if( response.contact.Active )
                             {
-                                result.push(
+                                $.each( response.contact.Active , function ( idx, item)
                                 {
-                                    value:      item.userId
-                                ,   label:      item.user
+                                    result.push(
+                                    {
+                                        value:      item.requesteeId
+                                    ,   label:      item.requesteeName
+                                    });
                                 });
-                            });
+                            }
+                            else
+                            {
+                                bidx.utils.warn( "No active contacts available ");
+                            }
+
                         }
 
                         callback( result );
@@ -515,7 +509,7 @@
 
                 ,   success: function( response )
                     {
-                        bidx.utils.log("RESPONSE", response);
+                        bidx.utils.log("[mail] get email", response);
                         if( response.data )
                         {
                             var mailBody
@@ -526,6 +520,8 @@
                             // NOTE: not sure this is still used... 26-9-2013
                             //
                             _cacheMailMessage( response.data );
+
+                            bidx.utils.log("MAAAAAAIIOIL", response.data);
 
                             // filter HTML  before we can insert into the mailbody
                             //
@@ -572,9 +568,8 @@
             );
         }
 
-        // get mailboxes from API and execute callback
+        // get mailboxes from API, create mailbox navigation and execute callback if available
         //
-
         function _getMailBoxes( cb )
         {
             bidx.utils.log( "[mail] get mailboxes from API" );
@@ -818,7 +813,7 @@
             $this =  $ ( this );
             href = bidx.utils.removeIdFromHash( $this.attr( "href" ) );
             href = href.replace( "%section%", section );
-            bidx.utils.log("NEW HREF", href + id );
+            bidx.utils.log("[mail] linked href ", href + id );
             $this.attr( "href", href + id );
 
         });
@@ -957,6 +952,15 @@
 
                 _closeModal();
                 _showView( "load" );
+
+                // check if mailbox exists, else reload mailboxes and redraw folder navigation
+                if ( !mailboxes[ section ] )
+                {
+                    bidx.utils.warn("[mail] mailbox ", section, " does not exist, do retrieve mailboxes");
+                    // reload mailboxes, without callback
+                    //
+                    _getMailBoxes();
+                }
                 _getEmail (
                 {
                     id:             id
@@ -1071,17 +1075,12 @@
                     _initMailBox();
                 }
 
-                _setActiveMenu();
-
-
-
-
-
             break;
 
 
             default:
                 // fetch the mailbox folders from API and load the first folder
+                // unofficially we can assume that inbox, sent and trash will always be there
                 _getMailBoxes( function()
                 {
                     var folder;
@@ -1131,22 +1130,21 @@
 
     window.bidx.mail = mail;
 
-    // execute one time setup
+
+    // Make sure the i18n translations for this app are available before initing
     //
-    _oneTimeSetup();
+    bidx.i18n.load( [ "__global", appName ] )
+        .done( function()
+        {
+            // execute one time setup
+            //
+            _oneTimeSetup();
+        } );
+
 
 
     // Initialize the defered tagsinput
     //
     $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
-
-    // Only update the hash when user is authenticating and when there is no hash defined
-    //
-/*    if ( $( "body.bidx-my-messages" ).length && !bidx.utils.getValue(window, "location.hash").length )
-    {
-        document.location.hash = "#mail/inbox";
-    }
-*/
-
 
 } ( jQuery ));

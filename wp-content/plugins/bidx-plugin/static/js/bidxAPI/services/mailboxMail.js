@@ -43,6 +43,32 @@
         } );
     };
 
+    mailboxMail.send = function ( params )
+    {
+        var method = "POST"
+        ,   url    = baseUrl.replace( "/%mailId%", "" );
+
+
+        api._call(
+        {
+            method:                     method
+        ,   groupDomain:                params.groupDomain
+        ,   baseUrl:                    url
+        ,   extraUrlParameters:         params.extraUrlParameters
+        ,   data:                       params.data
+
+        ,   success: function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error: function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+
 
 
     api.mailboxMail = mailboxMail;

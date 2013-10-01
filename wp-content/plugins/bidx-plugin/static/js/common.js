@@ -119,6 +119,14 @@
         return bidx.utils.getValue( bidxConfig, "session.currentGroup" );
     }
 
+    // Convenience function for retrieving the id of the user group
+    //
+    function getCurrentUserId()
+    {
+        return bidx.utils.getValue( bidxConfig, "session.id" );
+    }
+
+
     // Retrieve the most reliable "now" Date object we can give at the moment. This is SYSTEM DATE! Not localized
     //
     function getNow()
@@ -776,6 +784,7 @@
 
     ,   getGroupIds:                    getGroupIds
     ,   getCurrentGroupId:              getCurrentGroupId
+    ,   getCurrentUserId:               getCurrentUserId
     ,   getNow:                         getNow
 
     ,   addAppWithPendingChanges:       addAppWithPendingChanges
