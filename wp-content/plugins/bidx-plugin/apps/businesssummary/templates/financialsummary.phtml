@@ -124,7 +124,7 @@ if ( $financialSummaries ) {
 
 // No years? Create a dummy minimal set
 //
-if ( !$hasYears ) {
+if ( $hasYears == false ) {
     $hasYears = true;
 
     $years = array( $curYear => (object)array(

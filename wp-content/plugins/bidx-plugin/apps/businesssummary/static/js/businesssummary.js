@@ -6,6 +6,10 @@
     ,   $views                      = $element.find( ".view" )
 
     ,   $editControls               = $element.find( ".editControls" )
+
+    ,   $btnSave
+    ,   $btnCancel
+
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
@@ -134,9 +138,8 @@
     function _oneTimeSetup()
     {
         _snippets();
-
+        _setupValidation();
         _financialSummary();
-
         _managementTeam();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
@@ -174,6 +177,159 @@
             //
             snippets.$managementTeam       = $snippets.children( ".managementTeamItem"   ).remove();
             snippets.$financialSummaries   = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
+        }
+
+        // Setup initial form validation
+        //
+        function _setupValidation()
+        {
+            // General Overview
+            //
+            forms.generalOverview.$el.validate(
+            {
+                rules:
+                {
+                    name:
+                    {
+                        required:               true
+                    ,   maxlength:              30
+                    }
+                ,   slogan:
+                    {
+                        maxlength:              140
+                    }
+                ,   summary:
+                    {
+                        required:               true
+                    ,   maxlength:              900
+                    }
+                ,   reasonForSubmission:
+                    {
+                        required:               true
+                    }
+                ,   equityRetained:
+                    {
+                        required:               true
+                    ,   digits:                 true
+                    ,   min:                    0
+                    ,   max:                    100
+                    }
+                ,   financeNeeded:
+                    {
+                        required:               true
+                    ,   monetaryAmount:         true
+                    }
+                ,   investmentType:
+                    {
+                        required:               true
+                    }
+                ,   summaryFinancingNeeded:
+                    {
+                        maxlength:              300
+                    }
+                }
+            ,   messages:
+                {
+
+                }
+            ,   submitHandler:          function( e )
+                {
+                    _doSave();
+                }
+            } );
+
+            // About your business
+            //
+            forms.aboutYourBusiness.$el.validate(
+            {
+                rules:
+                {
+                    industry:
+                    {
+                        tagsinputRequired:      true
+                    }
+                ,   suggestedIndustry:
+                    {
+                    }
+                ,   productService:
+                    {
+                        tagsinputRequired:      true
+                    }
+                ,   suggestedProductService:
+                    {
+                    }
+                ,   countryOperation:
+                    {
+                        tagsinputRequired:      true
+                    }
+                ,   socialImpact:
+                    {
+                    }
+                ,   envImpact:
+                    {
+                    }
+                ,   consumerType:
+                    {
+                        required:               true
+                    }
+                }
+            ,   messages:
+                {
+
+                }
+            ,   submitHandler:          function( e )
+                {
+                    _doSave();
+                }
+            } );
+
+            // About you and your team
+            //
+            forms.aboutYouAndYourTeam.$el.validate(
+            {
+                rules:
+                {
+                    personalRole:
+                    {
+                        required:               true
+                    ,   maxlength:              30
+                    }
+                ,   personalExpertise:
+                    {
+                        required:               true
+                    ,   maxlength:              180
+                    }
+                }
+            ,   messages:
+                {
+
+                }
+            ,   submitHandler:          function( e )
+                {
+                    _doSave();
+                }
+            } );
+
+            // Financial Details
+            //
+            forms.financialDetails.$el.validate(
+            {
+                rules:
+                {
+                    yearSalesStarted:
+                    {
+                        required:               true
+                    }
+                }
+            ,   messages:
+                {
+
+                }
+            ,   submitHandler:        function( e )
+                {
+                    _doSave();
+                }
+            } );
         }
 
         // Setup the management team components
@@ -254,6 +410,33 @@
                 _calculateTotalIncome( $item );
             } );
 
+            $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem)" ).each( function( )
+            {
+                var $yearItem = $( this );
+
+                _setupValidation( $yearItem );
+            } );
+
+            // Setup validation on a specific year item
+            //
+            function _setupValidation( $yearItem )
+            {
+                // Shortcut it for now by treating all the inputs the same
+                //
+                $yearItem.find( "input" ).each( function( )
+                {
+                    var $input          = $( this )
+                    ,   name            = $input.prop( "name" )
+                    ;
+
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    ,   monetaryAmount:         true
+                    } );
+                } );
+            }
+
             // Add a financial year item
             //
             function _addFinancialSummaryYear( direction )
@@ -316,6 +499,8 @@
                 {
                     $marker.before( $item );
                 }
+
+                _setupValidation( $item );
 
                 _selectYear( $item );
             }
@@ -728,9 +913,8 @@
         //
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
-        ;
+        $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  });
 
         $btnCancel.bind( "click", function( e )
         {
@@ -761,132 +945,6 @@
         $controlsForError.empty();
         $controlsForError.append( $btnCancel.clone( true ) );
 
-        // General Overview
-        //
-        forms.generalOverview.$el.validate(
-        {
-            rules:
-            {
-                name:
-                {
-                    required:               true
-                ,   maxlength:              30
-                }
-            ,   slogan:
-                {
-                    maxlength:              140
-                }
-            ,   summary:
-                {
-                    required:               true
-                ,   maxlength:              900
-                }
-            ,   reasonForSubmission:
-                {
-                    required:               true
-                }
-            ,   equityRetained:
-                {
-                    required:               true
-                ,   digits:                 true
-                ,   min:                    0
-                ,   max:                    100
-                }
-            ,   financeNeeded:
-                {
-                    required:               true
-                ,   monetaryAmount:         true
-                }
-            ,   investmentType:
-                {
-                    required:               true
-                }
-            ,   summaryFinancingNeeded:
-                {
-                    maxlength:              300
-                }
-            }
-        ,   messages:
-            {
-
-            }
-        ,   submitHandler:          function( e )
-            {
-                _doSave();
-            }
-        } );
-
-        // About your business
-        //
-        forms.aboutYourBusiness.$el.validate(
-        {
-            rules:
-            {
-                industry:
-                {
-                    tagsinputRequired:      true
-                }
-            ,   suggestedIndustry:
-                {
-                }
-            ,   productService:
-                {
-                    tagsinputRequired:      true
-                }
-            ,   suggestedProductService:
-                {
-                }
-            ,   countryOperation:
-                {
-                    tagsinputRequired:      true
-                }
-            ,   socialImpact:
-                {
-                }
-            ,   envImpact:
-                {
-                }
-            ,   consumerType:
-                {
-                    required:               true
-                }
-            }
-        ,   messages:
-            {
-
-            }
-        ,   submitHandler:          function( e )
-            {
-                _doSave();
-            }
-        } );
-
-        // About you and your team
-        //
-        forms.aboutYouAndYourTeam.$el.validate(
-        {
-            rules:
-            {
-                personalRole:
-                {
-                    required:               true
-                ,   maxlength:              30
-                }
-            ,   personalExpertise:
-                {
-                    required:               true
-                ,   maxlength:              180
-                }
-            }
-        ,   messages:
-            {
-
-            }
-        ,   submitHandler:          function( e )
-            {
-                _doSave();
-            }
-        } );
 
         // Fetch the business summary
         //
@@ -937,60 +995,60 @@
                 }
             }
         );
+    }
 
-        // Try to save the businessSummary to the API
+    // Try to save the businessSummary to the API
+    //
+    function _doSave( params )
+    {
+        // Only allow saving when all the sub forms are valid
         //
-        function _doSave( params )
+        var anyInvalid = false;
+
+        $.each( forms, function( name, form )
         {
-            // Only allow saving when all the sub forms are valid
-            //
-            var anyInvalid = false;
-
-            $.each( forms, function( name, form )
+            if ( !form.$el.valid() )
             {
-                if ( !form.$el.valid() )
-                {
-                    anyInvalid = true;
-                }
-            } );
-
-            if ( anyInvalid )
-            {
-                return;
+                anyInvalid = true;
             }
+        } );
 
-            if ( $btnSave.hasClass( "disabled" ) )
-            {
-                return;
-            }
-
-            $btnSave.addClass( "disabled" );
-            $btnCancel.addClass( "disabled" );
-
-            _save(
-            {
-                error: function( jqXhr )
-                {
-                    var response;
-
-                    try
-                    {
-                        // Not really needed for now, but just have it on the screen, k thx bye
-                        //
-                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
-                    }
-                    catch ( e )
-                    {
-                        bidx.utils.error( "problem parsing error response from businessSummary save" );
-                    }
-
-                    bidx.common.notifyError( "Something went wrong during save: " + response );
-
-                    $btnSave.removeClass( "disabled" );
-                    $btnCancel.removeClass( "disabled" );
-                }
-            } );
+        if ( anyInvalid )
+        {
+            return;
         }
+
+        if ( $btnSave.hasClass( "disabled" ) )
+        {
+            return;
+        }
+
+        $btnSave.addClass( "disabled" );
+        $btnCancel.addClass( "disabled" );
+
+        _save(
+        {
+            error: function( jqXhr )
+            {
+                var response;
+
+                try
+                {
+                    // Not really needed for now, but just have it on the screen, k thx bye
+                    //
+                    response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                }
+                catch ( e )
+                {
+                    bidx.utils.error( "problem parsing error response from businessSummary save" );
+                }
+
+                bidx.common.notifyError( "Something went wrong during save: " + response );
+
+                $btnSave.removeClass( "disabled" );
+                $btnCancel.removeClass( "disabled" );
+            }
+        } );
     }
 
     // Beware! validation should have been tested, this is just a function for callin the API for saving
