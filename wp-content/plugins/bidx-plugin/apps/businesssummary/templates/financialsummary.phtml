@@ -74,6 +74,8 @@ $hasNextYear    = false;
 $nrPrevYears    = 0;
 $nrNextYears    = 0;
 
+$curYear        = date( 'Y' );
+
 // The financial summary year template exists of two types of variables, dynamic and
 //
 $financialSummariesItemTranslations = array(
@@ -87,7 +89,6 @@ $financialSummariesItemTranslations = array(
 if ( $financialSummaries ) {
 
     $years      = get_object_vars( $financialSummaries );
-    $curYear    = date( 'Y' );
 
     if ( $years && count( $years )) {
 
@@ -120,6 +121,21 @@ if ( $financialSummaries ) {
         }
     }
 }
+
+// No years? Create a dummy minimal set
+//
+if ( !$hasYears ) {
+    $hasYears = true;
+
+    $years = array( $curYear => (object)array(
+        'financeNeeded'         => '-',
+        'totalIncome'           => '-',
+        'numberOfEmployees'     => '-',
+        'operationalCosts'      => '-',
+        'salesRevenue'          => '-'
+    ) );
+}
+
 ?>
 <div class="financialSummary clearfix">
 
