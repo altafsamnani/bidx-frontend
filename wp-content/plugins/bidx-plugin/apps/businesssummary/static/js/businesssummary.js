@@ -324,8 +324,8 @@
             //
             function _calculateTotalIncome( $item )
             {
-                var salesRevenue        = parseInt( $item.find( "input[name^='salesRevenue']"     ).val(), 10 )
-                ,   operationalCosts    = parseInt( $item.find( "input[name^='operationalCosts']" ).val(), 10 )
+                var salesRevenue        = parseInt( $item.find( "input[name^='salesRevenue']"     ).val(), 10 ) || 0
+                ,   operationalCosts    = parseInt( $item.find( "input[name^='operationalCosts']" ).val(), 10 ) || 0
                 ,   totalIncome         = salesRevenue - operationalCosts
                 ;
 
@@ -336,9 +336,9 @@
             //
             function _selectYear( $yearItem )
             {
-                var $years          = $financialSummaryYearsContainer.find( ".financialSummariesItem" ).hide()
+                var $years          = $financialSummaryYearsContainer.find( ".financialSummariesItem" )
                 ,   $selectedYear   = $years.filter( ".selected" )
-                ,   $visibleItems
+                ,   $visibleItems   = $years.filter( ":visible" )
                 ,   $prevItem       = $yearItem.prev()
                 ,   $nextItem       = $yearItem.next()
                 ;
@@ -346,9 +346,21 @@
                 $selectedYear.removeClass( "selected" );
                 $yearItem.addClass( "selected" );
 
+                // Hide all and show conditional the new situation
+                //
+                $years.hide();
+
+                // Show at least the newly selected year
+                //
                 $yearItem.show();
-                $nextItem.show();
-                $prevItem.show();
+
+                // Responsive design decision, how many items are currently visible? 3 or 1
+                //
+                if ( $visibleItems.length > 1 )
+                {
+                    $nextItem.show();
+                    $prevItem.show();
+                }
 
                 if ( $prevItem.is( ".addItem" ) )
                 {
@@ -376,7 +388,6 @@
             {
                 var $selectedYear   = $financialSummaryYearsContainer.find( ".financialSummariesItem.selected" )
                 ,   $otherYear
-                ,   $visibleItems
                 ,   $btn
                 ;
 

@@ -146,6 +146,10 @@ body.bidx-businesssummary .financialSummary {}
         text-align:                 center;
     }
 
+    body.bidx-businesssummary .fs-cell .fs-cell-label {
+        display:                    none;
+    }
+
     body.bidx-businesssummary .financialSummariesItem {
         width:                      33.333%;
         float:                      left;
@@ -172,10 +176,14 @@ body.bidx-businesssummary .financialSummary {}
 @media (max-width: 767px) {
     body.bidx-businesssummary .financialSummariesItem {
         display:                    none;
+        width:                      0;
+        overflow:                   hidden;
     }
 
     body.bidx-businesssummary .financialSummariesItem.selected {
         display:                    block;
+        width:                      100%;
+        float:                      none;
     }
 }
 
@@ -191,5 +199,12 @@ body.bidx-businesssummary .financialSummary {}
 
     body.bidx-businesssummary .fs-col-years .addItem {
         display:                    none;
+    }
+
+    body.bidx-businesssummary .fs-cell .fs-cell-label {
+        text-align:                 center;
+        display:                    block;
+        cursor:                     normal;
+        padding-top:                6px;
     }
 }

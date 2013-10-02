@@ -9,6 +9,14 @@ if ( !function_exists( '__' )) {
     }
 }
 
+if ( !function_exists( '_e' )) {
+    function _e($str,$plugin)
+    {
+        echo $str;
+    }
+}
+
+
 include '../../../templatelibrary.php';
 $view = new TemplateLibrary( './' );
 
