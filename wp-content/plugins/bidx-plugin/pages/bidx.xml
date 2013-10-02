@@ -48,22 +48,7 @@
 			<mapping>^search/near?</mapping>
 			<content>[bidx app="search" view="mapview" query=""]</content>
 		</post>
-<!-- 	view 'list' is not implemented on business app
-		<post>
-			<post_id>6</post_id>
-			<name>business_list</name>
-			<title>Business List</title>
-			<mapping>^business/?</mapping>
-			<content>[bidx app="businessplan" view="list"]</content>
-		</post>
- -->
-		<post>
-			<post_id>7</post_id>
-			<name>business</name>
-			<title>Business</title>
-			<mapping>^business/([^/]*)/?</mapping>
-			<content>[bidx app="businessplan"]</content>
-		</post>
+<!-- 6 and 7 are not used and free to be used -->
 		<post>
 			<post_id>8</post_id>
 			<name>last_members</name>
