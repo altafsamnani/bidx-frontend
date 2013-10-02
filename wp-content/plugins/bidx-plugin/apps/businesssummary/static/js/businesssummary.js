@@ -763,7 +763,7 @@
                 }
             ,   slogan:
                 {
-                    maxlength:              90
+                    maxlength:              140
                 }
             ,   summary:
                 {
@@ -792,7 +792,7 @@
                 }
             ,   summaryFinancingNeeded:
                 {
-                    maxlength:              180
+                    maxlength:              300
                 }
             }
         ,   messages:
