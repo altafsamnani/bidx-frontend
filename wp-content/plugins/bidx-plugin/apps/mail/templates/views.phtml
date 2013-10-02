@@ -9,6 +9,10 @@
             <div class="bidx-mailFolders">
                 <!-- menu items will be created by app -->
             </div>
+            <div class="bidx-contacts">
+                <a class="btn btn-large btn-block" href="/mail/#mail/contacts">Contacts</a>
+            </div>
+
     <!--         <a class="btn btn-large btn-block" href="#drafts">Drafts</a>
             <a class="btn btn-large btn-block" href="#archived">Archived</a>
             <a class="btn btn-large btn-block" href="#trash">Trash</a> -->
@@ -170,6 +174,83 @@
                 </form>
             </article>
 
+              <!-- contacts view -->
+            <article class="view viewContacts">
+
+
+                <h1>Contacts</h1>
+
+                <!-- new requests / send requests -->
+                <div class="accordion" id="contactRequests">
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#contactRequests" href="#newRequest">
+                                <?php _e('New contact requests')?>
+                            </a>
+                        </div>
+                        <div id="newRequest" class="accordion-body collapse in">
+                            <div class="accordion-inner">
+                                <ul class="unstyled">
+                                    <li class="clearfix">
+                                        <a class="pull-left" href="#">
+                                            <img class="media-object" data-src="holder.js/64x64">
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="row-fluid">
+                                                <div class="span10"><h6 class="media-heading"><span class="placeholder sendername"><?php _e('SENDER UNKNOWN IN API','bidxplugin')?></span></h6></div>
+                                                <div class="span2"><span class="placeholder dateSent"/></div>
+                                            </div>
+                                            <div class="subject">
+                                                <span class="placeholder subject"/>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#contactRequests" href="#yourRequests">
+                                <?php _e('Your contact requests')?>
+                            </a>
+                        </div>
+                        <div id="yourRequests" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                Anim pariatur cliche...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Pending list -->
+                <ul class="list pending  media-list ">
+                    <li>
+                        <div class="pull-left check">
+                            <label class="checkbox">
+                                <input type="checkbox" data-toggle="checkbox"  value="" data-id="">
+                            </label>
+                        </div>
+                        <a class="pull-left" href="#">
+                            <img class="media-object" data-src="holder.js/64x64">
+                        </a>
+                        <div class="media-body">
+                            <div class="row-fluid">
+                                <div class="span10"><h6 class="media-heading"><span class="placeholder sendername"><?php _e('SENDER UNKNOWN IN API','bidxplugin')?></span></h6></div>
+                                <div class="span2"><span class="placeholder dateSent"/></div>
+                            </div>
+                            <div class="subject">
+                                <span class="placeholder subject"/>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+
+
+            </article>
+
             <!--  ************************** MODAL VIEWS ****************************************** -->
             <article class="modalView modalDeleteConfirm">
                 <!-- Modal -->
@@ -225,9 +306,6 @@
             <input type="checkbox" data-toggle="checkbox"  value="" data-id="">
         </label>
     </div>
-    <a class="pull-left" href="#">
-        <img class="media-object" data-src="holder.js/64x64">
-    </a>
     <div class="media-body">
         <div class="row-fluid">
             <div class="span10"><h6 class="media-heading"><span class="placeholder sendername"><?php _e('SENDER UNKNOWN IN API','bidxplugin')?></span></h6></div>
@@ -247,6 +325,27 @@
     <div class="pull-left check"></div>
     <div class="">
         <?php _e('No messages available')?>
+    </div>
+</li>
+-->
+</script>
+
+
+<script type="text/html" id="contacts-listitem">
+<!--
+<li>
+    <div class="">
+        test
+    </div>
+</li>
+-->
+</script>
+
+<script type="text/html" id="contacts-empty">
+<!--
+<li>
+    <div class="">
+        <?php _e('No contacts available')?>
     </div>
 </li>
 -->

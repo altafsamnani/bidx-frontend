@@ -2,7 +2,11 @@
 
 }
     #mail .side-menu div:first-child {
-        margin-bottom: 20px;
+        margin-bottom:                      20px;
+    }
+
+    #mail .side-menu .bidx-contacts {
+        margin-top:                         20px;
     }
 
 #mail .view,

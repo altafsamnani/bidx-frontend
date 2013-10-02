@@ -8,21 +8,22 @@
     var bidx    = window.bidx
     ,   api     = bidx.api
     ,   memberRelationships  = {}
-    ,   baseUrl = "/api/v1/members/%requesterId%/relationships"
+    ,   baseUrl = "/api/v1/members/relationships"
     ,   params  = []
     ;
 
     memberRelationships.fetch = function( params )
     {
         var method = "GET"
-        ,   url     = baseUrl.replace( "%requesterId%", params.requesterId )
         ;
+
 
         api._call(
         {
-            method:         method
-        ,   groupDomain:    params.groupDomain
-        ,   baseUrl:        url
+            method:                     method
+        ,   groupDomain:                params.groupDomain
+        ,   baseUrl:                    baseUrl
+        ,   extraUrlParameters:         params.extraUrlParameters
         ,   success:        function( response, textStatus, jqXhr )
             {
                 if ( response && response.data )
@@ -39,7 +40,7 @@
         } );
     };
 
-    memberRelationships.save = function( params )
+ /*   memberRelationships.save = function( params )
     {
         var method = params.memberId ? "PUT" : "POST"
         ,   url     = baseUrl.replace( "%requesterId%", params.requesterId ) + "/" + params.requesteeId
@@ -57,7 +58,7 @@
 
         //to be finished later
         //api._call(...
-    };
+    };*/
 
 
     api.memberRelationships = memberRelationships;
