@@ -1727,7 +1727,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     update_post_meta ($post_id, '_wp_page_template', $page->template_value);
                 }
 
-                //create_custom_role_capabilities ($blog_id);
+                create_custom_role_capabilities ($blog_id);
 
                 restore_current_blog ();
             }
@@ -1981,7 +1981,7 @@ function bidx_staffmail ()
     $mailSent = wp_mail ('info@bidx.net', $params['subject'], $params['body'], $fromName);
     if ($mailSent) {
         $requestData->status = 'OK';
-        $requestData->text = 'Our Staff will contact you shortly, thank you. We appreciate your patience.';
+        $requestData->text = 'Our staff will contact you shortly, thank you for your patience';
     } else {
         $requestData->status = 'Mail is not configured, ERROR';
     }
@@ -2266,11 +2266,12 @@ function bidx_group_settings ()
     echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='groupsettings']");
 }
 
-add_action ('wp_ajax_nopriv_bidx_option', 'bidx_set_option');
-add_action ('wp_ajax_priv_bidx_option', 'bidx_set_option');
+add_action ('wp_ajax_nopriv_bidx_set_option', 'bidx_set_option');
+add_action ('wp_ajax_bidx_set_option', 'bidx_set_option');
+
 function bidx_set_option ()
 {
-
+   
     $type = (isset($_GET['type'])) ? $_GET['type'] : NULL;
     $value = (isset($_GET['value'])) ? $_GET['value'] : NULL;
     $data['response'] = 'error';

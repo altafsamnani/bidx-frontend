@@ -84,14 +84,14 @@
 						</form>
 
 						<div class="group-creation-progress">
-							<div class="text"><?php _e('Your request is being processed.','bidxtheme');?></div>
+							<div class="text"><?php _e('Your request is being processed','bidxtheme');?></div>
 
-							<div class="text sub"><?php _e('We appreciate your patience.','bidxtheme');?></div>
+							<div class="text sub"><?php _e('Thank you for your patience','bidxtheme');?></div>
 						</div>
                         <div class="group-creation-success">
-							<div class="text"><?php _e('Your request is sent.','bidxtheme');?></div>
+							<div class="text"><?php _e('You request has been sent','bidxtheme');?></div>
 
-							<div class="text sub"><?php _e('Our service desk will contact you soon.','bidxtheme');?></div>
+							<div class="text sub"><?php _e('Our service desk will contact you soon','bidxtheme');?></div>
 						</div>
 
 						<script type="text/javascript">
@@ -128,7 +128,7 @@
 					    			},
 					    			//custom error message for frontend registration in case group creation fails
 					    			error: function(data){
-					    				$(".group-creation-progress").html("<div class=\"text sub\"><?php _e('Group creation failed. Please reload the page and try again. If the problem persists, please contact us.','bidxtheme')?>");
+					    				$(".group-creation-progress").html("<div class=\"text sub\"><?php _e('Group creation failed. Please reload the page and try again. If the problem persists, please contact us','bidxtheme')?>");
 
 					    			}
 					    		});

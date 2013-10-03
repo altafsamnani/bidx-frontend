@@ -65,7 +65,7 @@ if ($entrepreneurDetails &&
             <br/>
             <?php
             $previousBusiness = $this->exst ($entrepreneurDetails->previousBusiness);
-            $header = array ( __('Name of Company','bidxplugin') => 'company', __('Outcome of business','bidxplugin') => 'businessOutcome', __('Company web-site','bidxplugin') => 'webSite');
+            $header = array ( __('Name of Company','bidxplugin') => 'company', __('Outcome of business','bidxplugin') => 'businessOutcome', __('Company website','bidxplugin') => 'webSite');
             $previousBusinessHtml = $this->addTableRows ($header, $previousBusiness, 'table table-bordered');
 
             $rowValues = array ( __('Previous Business(es)','bidxplugin') => $previousBusinessHtml);

@@ -314,7 +314,7 @@ class TemplateLibrary
             if ($value && $value != 'null') {
                 //Display Label
                 $rowHtml .= "<div class='" . $gridLabel . "'>";
-                $rowHtml .= "<$tagLabel " . $classLabel . " > " .$label . " </$tagLabel>";
+                $rowHtml .= "<$tagLabel " . $classLabel . " > " . $label . " </$tagLabel>";
                 $rowHtml .= "</div>";
                 //Display Value
                 $rowHtml .= "<div class='" . $gridValue . "'>";
@@ -411,7 +411,7 @@ class TemplateLibrary
             //Build Header
             $htmlHeader.= "<tr>";
             foreach ($header as $headerKey => $headerValue) {
-                $htmlHeader.= "<th>" . $this->escapeHtml($headerKey) . "</th>";
+                $htmlHeader.= "<th>" . $this->escapeHtml ($headerKey) . "</th>";
             }
             $htmlHeader.= "</tr>";
             foreach ($rowsArr as $rowValue) {
@@ -421,13 +421,13 @@ class TemplateLibrary
                     if (isset ($merge[$headerValue])) { //If two values needs to be merged ex for Name header first_name/last_name
                         $sepMerge = "";
                         foreach ($merge[$headerValue] as $mergeKey => $mergeVal) {
-                            $html.= $sepMerge . $this->escapeHtml($rowValue->$mergeVal);
+                            $html.= $sepMerge . $this->escapeHtml ($rowValue->$mergeVal);
                             $sepMerge = " ";
                         }
 
                         $display = true;
                     } else if (isset ($rowValue->$headerValue)) {
-                        $html.= $this->escapeHtml($rowValue->$headerValue);
+                        $html.= $this->escapeHtml ($rowValue->$headerValue);
                         $display = true;
                     }
                     $html.= "</td>";
@@ -786,7 +786,7 @@ class TemplateLibrary
      *
      * If the variable is set and not empty returns the variable (no transformation)
      * If the variable is not set or empty, returns the $default value
-     *
+     * @author Altaf S
      * @param  mixed $var
      * @param  mixed $default
      *
@@ -819,6 +819,7 @@ class TemplateLibrary
 
     /**
      * Validation function for nested objects
+     * @author Altaf S
      * @param String $fileName File Name
      * @return String $audioVideoHtml Embed Video Html
      */
@@ -841,12 +842,28 @@ class TemplateLibrary
 
     /**
      * Escape Speical Html Chars
+     * @author Altaf S
      * @param String $htmlsanitize String
      * @return String $audioVideoHtml Returns special html chars
      */
     function escapeHtml ($htmlsanitize)
     {
         return htmlspecialchars ($htmlsanitize, ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
+     * Escape Speical Html Chars
+     * @author Altaf S
+     *
+     * @return Print 404 Html defined by template
+     */
+
+    function return_404 ()
+    {
+        status_header (404);
+        nocache_headers ();
+        include( get_404_template () );
+        exit;
     }
 
 }

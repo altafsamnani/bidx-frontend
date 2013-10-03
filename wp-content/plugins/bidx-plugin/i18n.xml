@@ -2,11 +2,11 @@
     <!-- Misc -->
     <Item value="noProfileEditPermission">You do not have the rights to edit this profile</Item>
     <Item value="noEditPermission">You do not have the rights to edit this</Item>
-    <Item value="msgOnPageUnload">There are pending changes. Are you sure to navigate away and loose all of the pending changes?</Item>
-    <Item value="msgWaitForRedirect">Please wait for the redirect...</Item>
+    <Item value="msgOnPageUnload">Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?</Item>
+    <Item value="msgWaitForRedirect">Please wait while you are redirected…</Item>
 
     <!-- Attachment -->
-    <Item value="selectDocumentType">Select the type</Item>
+    <Item value="selectDocumentType">Select type</Item>
     <Item value="attachmentDeleted">Attachment deleted</Item>
     <Item value="attachmentUploadDone">Attachment upload done</Item>
     <Item value="attachmentUploadError">Problem uploading attachment</Item>
@@ -43,7 +43,7 @@
     <Item value="frmInvalidMaxlength">Please provide no more than maximum {0} characters</Item>
 
     <!-- This value is a error Code coming from API for username exists check -->
-    <Item value="usernameExists">This email address is already used</Item>
+    <Item value="usernameExists">This email address is already in use</Item>
     <Item value="usernameInvalid">This is not a valid email address</Item>
 
 </I18N>

@@ -26,7 +26,7 @@ if ( is_user_logged_in() ) {
 	<div class="group-creation-progress">
 		<p class="lead"><?php _e('Your group is being created','bidxplugin');?></p>
 		<div class="loader"></div>
-		<p><?php _e('This might take a moment of your time','bidxplugin');?></p>
+		<p><?php _e('This may take a moment of your time','bidxplugin');?></p>
 	</div>
 
 	<!-- externalize this -->
@@ -58,7 +58,7 @@ if ( is_user_logged_in() ) {
 	    			},
 	    			//custom error message for frontend registration in case group creation fails
 	    			error: function(data){
-	    				$(".group-creation-progress").html("<div class=\"text sub\"><?php _e('Group creation failed. Please reload the page and try again.<br/> If the problem persists, please contact us.','bidxplugin');?>");
+	    				$(".group-creation-progress").html("<div class=\"text sub\"><?php _e('Group creation failed. Please reload the page and try again.<br/> If the problem persists, please contact us','bidxplugin');?>");
 	    				if(data.text) {
 	    					$(".group-creation-progress").append(data.text);
 	    				}

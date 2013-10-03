@@ -108,6 +108,10 @@ class MemberService extends APIbridge {
 
   }
 
+  public function getMemberRole( ) {
+
+  }
+
 }
 
 ?>

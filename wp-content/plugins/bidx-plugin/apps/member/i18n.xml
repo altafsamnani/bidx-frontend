@@ -1,8 +1,8 @@
 <I18N>
     <Item value="selectOutcomeBusiness">Select the outcome of this business</Item>
-    <Item value="selectInvestmentType">Select the investment type</Item>
+    <Item value="selectInvestmentType">Select investment type</Item>
     <Item value="selectInvestor">Select your investor</Item>
-    <Item value="selectCountry">Select the country</Item>
+    <Item value="selectCountry">Select country</Item>
     <Item value="selectNationality">Select your nationality</Item>
-    <Item value="selectEducation">Select your highest education</Item>
+    <Item value="selectEducation">Select your highest level of education</Item>
 </I18N>
