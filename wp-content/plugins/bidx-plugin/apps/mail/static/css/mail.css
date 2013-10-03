@@ -1,13 +1,5 @@
-#mail .side-menu {
 
-}
-    #mail .side-menu div:first-child {
-        margin-bottom:                      20px;
-    }
 
-    #mail .side-menu .bidx-contacts {
-        margin-top:                         20px;
-    }
 
 #mail .view,
 #mail .view h2 > .title {
@@ -18,13 +10,28 @@
         margin-bottom:                      20px;
     }
 
-#mail .viewList {
-    background-color:                       #E0E0E0;
-    padding:                                10px;
-    -webkit-border-radius:                  5px;
-    -moz-border-radius:                     5px;
-    border-radius:                          5px;
-}
+
+/* // mailbox sidemenu */
+    #mail .side-menu div:first-child {
+        margin-bottom:                      20px;
+    }
+
+    #mail .side-menu .bidx-contacts {
+        margin-top:                         20px;
+    }
+
+/* \\ mailbox sidemenu */
+
+
+/* // email listing */
+
+    #mail .viewList {
+        background-color:                       #E0E0E0;
+        padding:                                10px;
+        -webkit-border-radius:                  5px;
+        -moz-border-radius:                     5px;
+        border-radius:                          5px;
+    }
 
     #mail .viewList .mail-search .input-append {
         margin:                             0px;
@@ -40,9 +47,63 @@
         margin-right:                       10px;
     }
 
+    #mail .list {
+        background-color:                   #E0E0E0;
+    }
+
+    #mail .mail .list > li {
+        padding:                            5px 0 5px 3px;
+        margin:                             0px;
+        background-color:                   #F5F5F5;
+        border-bottom:                      2px solid #E0E0E0;
+        border-top:                         2px solid #E0E0E0;
+
+    }
+    #mail .mail .media-list.list > li:first-child {
+        border-top:                         0px;
+    }
+    #mail .mail .media-list.list > li:last-child {
+        border-bottom:                      0px;
+    }
+    #mail .mail .media-list.list > li:nth-child(2n+1)  {
+
+    }
+        #mail .mail .media-list.list > li a {
+            color:                          #34495E;
+            font-size:                      22px;
+        }
+        #mail .mail .media-list.list > li .email-new {
+            font-weight:                    bold;
+        }
+
+
+
+/* \\ email listing */
+
+/* // compose */
+
     #mail .viewCompose form {
         padding:                            20px;
     }
+
+    #mail .mail .viewCompose textarea {
+        height:                             300px;
+    }
+
+/* \\ compose */
+
+/* // read */
+    #mail .mail .viewRead .mail-message {
+        -webkit-border-radius:              6px;
+        -moz-border-radius:                 6px;
+        border-radius:                      6px;
+        border:                             2px solid #BDC3C7;
+
+        background-color:                   #fff;
+        padding:                            20px;
+    }
+
+
     #mail .mail-toolbar {
 
         -webkit-border-radius:              8px;
@@ -72,47 +133,59 @@
         background-color:                   transparent;
     }
 
-    #mail .list {
-        background-color:                   #E0E0E0;
-    }
-    #mail .mail .list > li {
-        padding:                            5px 0 5px 3px;
-        margin:                             0px;
-        background-color:                   #F5F5F5;
-        border-bottom:                      2px solid #E0E0E0;
-        border-top:                         2px solid #E0E0E0;
-
-    }
-    #mail .mail .media-list.list > li:first-child {
-        border-top:                         0px;
-    }
-    #mail .mail .media-list.list > li:last-child {
-        border-bottom:                      0px;
-    }
-    #mail .mail .media-list.list > li:nth-child(2n+1)  {
-
-    }
-        #mail .mail .media-list.list > li a {
-            color:                          #34495E;
-            font-size:                      22px;
-        }
-        #mail .mail .media-list.list > li .email-new {
-            font-weight:                    bold;
-        }
+/* \\ read */
 
 
-    #mail .mail .viewRead .mail-message {
-        -webkit-border-radius:              6px;
-        -moz-border-radius:                 6px;
-        border-radius:                      6px;
-        border:                             2px solid #BDC3C7;
+/* // Contacts */
 
-        background-color:                   #fff;
-        padding:                            20px;
+    #mail #contactRequests .accordion-heading {
+        background-color:                       #F6F0E8;
+        -webkit-border-radius:                  4px 4px 0 0;
+        -moz-border-radius:                     4px 4px 0 0;
+        border-radius:                          4px 4px 0 0;
+    }
+    #mail .viewContacts .contact-request-list li .well {
+        position:                               relative;
+        padding:                                22px
+    }
+    #mail .viewContacts #contactRequests .contact-request-list li img,
+    #mail .viewContacts .contact-request-list li img {
+        margin-right:                           10px;
+    }
+    #mail .viewContacts #contactRequests .contact-request-list li .contact-request-buttons {
+        margin-top:                             10px;
+    }
+    #mail .viewContacts #contactRequests .contact-request-list li .contact-request-status {
+        margin-top:                             10px;
+        margin-bottom:                          0;
     }
 
-    #mail .mail .viewCompose textarea {
-        height:                             300px;
+    #mail .viewContacts #contactRequests .contact-request-list li:nth-child(2n+1),
+    #mail .viewContacts .contact-request-list.active-contacts li:nth-child(3n+1) {
+        margin-left:                            0;
     }
 
+    #mail .viewContacts .contact-request-list li .well .outer-check  {
+        position:                               absolute;
+        top:                                    0;
+        left:                                   0;
+        width:                                  21px;
+        height:                                 21px;
+        text-align:                             center;
+
+        background-color:                       #BDC3C7;
+        -webkit-border-radius:                  4px 0;
+        -moz-border-radius:                     4px 0;
+        border-radius:                          4px 0;
+        color:                                  #fff;
+        font-size:                              12px;
+    }
+
+    #mail .viewContacts .contact-request-list li .well .outer-check:hover {
+        background-color:                       #5E84AA;
+    }
+
+
+
+/* \\ Contacts */
 

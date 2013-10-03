@@ -1147,6 +1147,14 @@
             case /^contacts$/.test( state ):
                 _showView( "load" );
 
+
+                if ( $.isEmptyObject( mailboxes ) )
+                {
+                    bidx.utils.warn("[mail] mailbox ", section, " does not exist, do retrieve mailboxes");
+                    _getMailBoxes();
+                }
+
+
                 // start a promise chain
                 //
                 Q.fcall( _getContacts,
