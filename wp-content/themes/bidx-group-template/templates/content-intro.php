@@ -313,6 +313,15 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
     <!-- #########################################################################
                                 Not logged in
     ###########################################################################-->
+<?php 
+    if (get_theme_mod( 'front_content' )) {
+?>
+    <div class="container">
+        <?php echo get_theme_mod( 'front_content' ); ?>
+    </div>
+<?php
+    } else {
+?>
 
     <div class="container">
 <!--         <div class="row-fluid">
@@ -358,6 +367,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
             </div>
         </div>
     </div>
+
     <!-- // container -->
 
     <div class="feature-container bidx-theme-colour-one spacer">
@@ -413,7 +423,9 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
  <?php
     }
   ?>
-
+<?php
+    }
+?>
 
 </div>
 <!-- // outer-content-container -->

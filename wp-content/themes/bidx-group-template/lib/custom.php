@@ -224,7 +224,7 @@ add_action( 'customize_register', 'theme_customizer_groupstyle' );
 
 
 /**
- * Add groupstyle section with textarea control theme customizer
+ * Add footer section with textarea control theme customizer
  *
  * @author msp
  * @since Oct 01 2013
@@ -250,6 +250,36 @@ function theme_customizer_footer( $wp_customize ) {
     ) ) );
 }
 add_action( 'customize_register', 'theme_customizer_footer' );
+
+
+
+/**
+ * Add front main content section with textarea control theme customizer
+ *
+ * @author msp
+ * @since Oct 03 2013
+ *
+ * @param $wp_customize class
+ * @return void
+ * @access public
+   */
+function theme_customizer_front_content( $wp_customize ) {
+    $wp_customize->add_section( 'front_content', array(
+            'title'    => __( 'Front Main Content Area' ),
+            'priority' => 90,
+    ) );
+    $wp_customize->add_setting( 'front_content', array(
+        'default'        => '',
+    ) );
+
+
+    $wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'front_content', array(
+        'label'   => 'Custom HTML for the Front main content area',
+        'section' => 'front_content',
+        'settings'   => 'front_content',
+    ) ) );
+}
+add_action( 'customize_register', 'theme_customizer_front_content' );
 
 
 /**
