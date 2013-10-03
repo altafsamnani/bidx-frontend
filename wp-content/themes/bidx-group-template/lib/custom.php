@@ -222,6 +222,36 @@ function theme_customizer_groupstyle( $wp_customize ) {
 add_action( 'customize_register', 'theme_customizer_groupstyle' );
 
 
+
+/**
+ * Add groupstyle section with textarea control theme customizer
+ *
+ * @author msp
+ * @since Oct 01 2013
+ *
+ * @param $wp_customize class
+ * @return void
+ * @access public
+   */
+function theme_customizer_footer( $wp_customize ) {
+    $wp_customize->add_section( 'footer', array(
+            'title'    => __( 'Footer' ),
+            'priority' => 100,
+    ) );
+    $wp_customize->add_setting( 'footer', array(
+        'default'        => '',
+    ) );
+
+
+    $wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'footer', array(
+        'label'   => 'Custom HTML for the Footer',
+        'section' => 'footer',
+        'settings'   => 'footer',
+    ) ) );
+}
+add_action( 'customize_register', 'theme_customizer_footer' );
+
+
 /**
  * Function get_custom_field_value() - retrieves the custom
  *

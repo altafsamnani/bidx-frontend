@@ -1,3 +1,20 @@
+<?php
+    if ( get_theme_mod( 'footer' ) )
+    {
+?>
+
+<footer>
+    <div class="page-footer bidx-theme-colour-footer">
+        <div class="container">
+                <?php echo get_theme_mod( 'footer' ); ?>
+        </div>
+    </div>
+</footer>
+
+<?php
+    } else {
+?>
+
 <footer>
     <div class="page-footer bidx-theme-colour-footer">
         <div class="container">
@@ -23,5 +40,10 @@
         </div>
     </div>
 </footer>
+
+<?php 
+    }
+?>
+
 <?php wp_footer(); ?>
 
