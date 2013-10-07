@@ -51,7 +51,10 @@
 
         // Object used to expose functions on
         //
-    ,   financialSummary            = {}
+    ,   financialSummary            =
+        {
+            deletedYears:               {}
+        }
     ;
 
     // Form fields
@@ -483,12 +486,12 @@
                     if ( !otherYear )
                     {
                         year        = curYear;
-                        yearLabel   = "Current year";
+                        yearLabel   = bidx.i18n.i( "curentYear" );
                     }
                     else
                     {
                         year        = otherYear - 1;
-                        yearLabel   = "Actuals";
+                        yearLabel   = bidx.i18n.i( "actuals" );
                     }
                 }
                 else
@@ -500,12 +503,12 @@
                     if ( !otherYear )
                     {
                         year        = curYear;
-                        yearLabel   = "Current year";
+                        yearLabel   = bidx.i18n.i( "currentYear" );
                     }
                     else
                     {
                         year        = otherYear + 1;
-                        yearLabel   = "Projected";
+                        yearLabel   = bidx.i18n.i( "forecast" );
                     }
                 }
 
@@ -964,6 +967,8 @@
     {
         // Reset any state
         //
+        financialSummary.deletedYears = {};
+
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });

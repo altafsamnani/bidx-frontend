@@ -1,3 +1,6 @@
 <I18N>
     <Item value="selectReasonForSubmission">Select the reason for submission</Item>
+    <Item value="currentYear">Current year</Item>
+    <Item value="actuals">Actuals</Item>
+    <Item value="forecast">Forecast</Item>
 </I18N>
