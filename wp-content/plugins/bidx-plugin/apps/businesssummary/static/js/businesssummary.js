@@ -371,12 +371,14 @@
         //
         function _financialSummary()
         {
-            // FinancialSummmary
+            // FinancialSummary
             //
             var $btnNext        = $financialSummary.find( "a[href$=#next]" )
             ,   $btnPrev        = $financialSummary.find( "a[href$=#prev]" )
             ,   $btnAddPrev     = $financialSummary.find( "a[href$=#addPreviousYear]" )
             ,   $btnAddNext     = $financialSummary.find( "a[href$=#addNextYear]" )
+
+            ,   curYear         = bidx.common.getNow().getFullYear()
             ;
 
             // Add on year to the left
@@ -397,6 +399,18 @@
                 _addFinancialSummaryYear( "next" );
             } );
 
+            // Delete the year
+            //
+            $financialSummary.delegate( "a[href$=#deleteYear]", "click", function( e )
+            {
+                e.preventDefault();
+
+                var $financialSummariesItem = $( this ).closest( ".financialSummariesItem" )
+                ,   year                    = parseInt( $financialSummariesItem.attr( "data-year" ), 10 )
+                ;
+
+                _deleteFinancialSummaryYear( year );
+            } );
 
             // Navigate one year to the left
             //
@@ -427,11 +441,29 @@
                 _calculateTotalIncome( $item );
             } );
 
+            // Itterate over the server side rendered year items
+            //
             $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem)" ).each( function( )
             {
-                var $yearItem = $( this );
+                var $yearItem   = $( this )
+                ,   year        = parseInt( $yearItem.attr( "data-year" ), 10 )
+                ;
 
                 _setupValidationForYearItem( $yearItem );
+
+                // Show the delete button on the last / first year in case the year is not current year
+                //
+                if ( state === "edit" )
+                {
+                    if ( $yearItem.hasClass( "first" ) && year < curYear )
+                    {
+                        $yearItem.find( ".btnDelete" ).show();
+                    }
+                    else if ( $yearItem.hasClass( "last" ) && year > curYear )
+                    {
+                        $yearItem.find( ".btnDelete" ).show();
+                    }
+                }
             } );
 
             // Setup validation on a specific year item
@@ -465,7 +497,6 @@
             function _addFinancialSummaryYear( direction )
             {
                 var $item       = snippets.$financialSummaries.clone()
-                ,   curYear     = bidx.common.getNow().getFullYear()
                 ,   year
                 ,   yearLabel
                 ,   $otherYear
@@ -479,36 +510,36 @@
                 {
                     $marker     = $financialSummaryYearsContainer.find( ".addItem:first" );
                     $otherYear  = $marker.next();
-                    otherYear   = $otherYear.data( "year" );
+                    otherYear   = parseInt( $otherYear.attr( "data-year" ), 10 );
 
                     // Is there no other year? This can only happen when there are absolutely none year items in the DOM
                     //
                     if ( !otherYear )
                     {
                         year        = curYear;
-                        yearLabel   = bidx.i18n.i( "curentYear" );
+                        yearLabel   = bidx.i18n.i( "currentYear", appName );
                     }
                     else
                     {
                         year        = otherYear - 1;
-                        yearLabel   = bidx.i18n.i( "actuals" );
+                        yearLabel   = bidx.i18n.i( "actuals", appName );
                     }
                 }
                 else
                 {
                     $marker     = $financialSummaryYearsContainer.find( ".addItem:last" );
                     $otherYear  = $marker.prev();
-                    otherYear   = $otherYear.data( "year" );
+                    otherYear   = parseInt( $otherYear.attr( "data-year" ), 10 );
 
                     if ( !otherYear )
                     {
                         year        = curYear;
-                        yearLabel   = bidx.i18n.i( "currentYear" );
+                        yearLabel   = bidx.i18n.i( "currentYear", appName );
                     }
                     else
                     {
                         year        = otherYear + 1;
-                        yearLabel   = bidx.i18n.i( "forecast" );
+                        yearLabel   = bidx.i18n.i( "forecast", appName );
                     }
                 }
 
@@ -521,6 +552,11 @@
                 //
                 $item.find( ".year"         ).text( year );
                 $item.find( ".yearLabel"    ).text( yearLabel );
+
+                // Move the available delete year button to the new year
+                //
+                $otherYear.find( ".btnDelete" ).hide();
+                $item.find( ".btnDelete" ).show();
 
                 if ( direction === "prev" )
                 {
@@ -552,6 +588,57 @@
                 _setupValidationForYearItem( $item );
 
                 financialSummary.selectYear( year );
+            }
+
+            // Delete the year from the DOM and administer it's deleting so we can communicate it as being delete to the
+            // API
+            //
+            function _deleteFinancialSummaryYear( year )
+            {
+                var $year          = $financialSummaryYearsContainer.find( ".financialSummariesItem[data-year='" + year + "']" )
+                ,   newYear
+                ,   $newYear       = $year.next()
+                ;
+
+                // What to select as a new year?
+                //
+                if ( !$newYear.is( ".addItem" ) )
+                {
+                    newYear = year + 1;
+                }
+                else
+                {
+                    $newYear = $year.prev();
+
+                    if ( !$newYear.is( ".addItem" ) )
+                    {
+                        newYear = year - 1;
+                    }
+                    else
+                    {
+                        $newYear = undefined;
+                    }
+                }
+
+                // Now we know what we are to move next to, remove it from the DOM
+                //
+                $year.remove();
+                financialSummary.deletedYears[ year ] = true;
+
+                if ( $newYear )
+                {
+                    // If it isn't the current year, show the delete button on the new year
+                    //
+                    if ( newYear !== curYear && state === "edit" )
+                    {
+                        $newYear.find( ".btnDelete" ).show();
+                    }
+
+                    if ( newYear )
+                    {
+                        financialSummary.selectYear( newYear );
+                    }
+                }
             }
 
             // Calculate the new total income
@@ -589,9 +676,11 @@
                 //
                 $yearItem.show();
 
-                // Responsive design decision, how many items are currently visible? 3 or 1
+                // Responsive design decision. Is the year hugely smaller than the container?
+                // Seems to be more correct than testing for css display property which sometimes just says it's
+                // block while it isn't
                 //
-                if ( $selectedYear.css( "display" ) !== "block" )
+                if ( $yearItem.width() + 100 < $yearItem.parent().width()  )
                 {
                     $nextItem.show();
                     $prevItem.show();
@@ -650,7 +739,7 @@
                 // What is the year item we want to navigate to?
                 //
                 $otherYear  = $selectedYear[ direction ]( ":not(.addItem)" );
-                otherYear   = $otherYear.attr( "data-year" );
+                otherYear   = parseInt( $otherYear.attr( "data-year" ), 10 );
 
                 financialSummary.selectYear( otherYear );
             }
@@ -900,6 +989,21 @@
                             item[ year ][ f ] = value;
                         } );
                     } );
+
+                    // Is there anything in the deleted years object that is not present in the new situation?
+                    //
+                    var newYears            = $.map( item, function( v, k ) { return k; } )
+                    ,   deletedYears        = $.map( financialSummary.deletedYears, function( v, k ) { return k; } )
+                    ;
+
+                    $.grep( deletedYears, function( y )
+                    {
+                        if ( $.inArray( y, newYears ) === -1 )
+                        {
+                            bidx.utils.log( "[businesssummary] deleted year", y );
+                            item[ y ] = null;
+                        }
+                    } );
                 }
                 else
                 {
@@ -969,6 +1073,8 @@
         //
         financialSummary.deletedYears = {};
 
+        var curYear         = bidx.common.getNow().getFullYear();
+
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
@@ -1003,6 +1109,23 @@
         $controlsForError.empty();
         $controlsForError.append( $btnCancel.clone( true ) );
 
+        // Show the delete year buttons on the first/last year
+        //
+        var $firstYear  = $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem):first" )
+        ,   $lastYear   = $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem):last"  )
+        ,   firstYear   = parseInt( $firstYear.attr( "data-year" ), 10 )
+        ,   lastYear    = parseInt( $lastYear.attr( "data-year" ), 10 )
+        ;
+
+        if ( firstYear < curYear )
+        {
+            $firstYear.find( ".btnDelete" ).show();
+        }
+
+        if ( lastYear > curYear )
+        {
+            $lastYear.find( ".btnDelete" ).show();
+        }
 
         // Fetch the business summary
         //
@@ -1260,6 +1383,8 @@
         }
     };
 
+    // Reset the whole application
+    //
     function reset()
     {
         state = null;
@@ -1277,8 +1402,8 @@
         //
         if ( $year.length === 0 )
         {
-            $year = $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem):last" );
-            year = $year.attr( "data-year" );
+            $year   = $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem):last" );
+            year    = $year.attr( "data-year" );
         }
 
         financialSummary.selectYear( year );

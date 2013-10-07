@@ -14,6 +14,10 @@ $financialSummariesItem = <<<EOT
             <div class="fs-content">
                 <header class="year">{{year}}</header>
                 <p class="yearLabel">{{year_label}}</p>
+
+                <div class="view viewEdit">
+                    <a href="#deleteYear" class="btnDelete"><i class="fui-cross-inverted"></i> {{lblDeleteYear}}</a>
+                </div>
             </div>
 
             <div class="fs-header-controls-right">
@@ -101,11 +105,13 @@ $curYear        = date( 'Y' );
 // The financial summary year template exists of two types of variables, dynamic and
 //
 $financialSummariesItemTranslations = array(
-    '{{lblSalesRevenues}}'         => __('Sales revenues','bidxplugin'),
-    '{{lblOperationalCosts}}'      => __('Operational costs','bidxplugin'),
-    '{{lblTotalIncome}}'           => __('Total income','bidxplugin'),
-    '{{lblFinanceNeeded}}'         => __('Finance needed','bidxplugin'),
-    '{{lblNumberOfEmployees}}'     => __('Number of employees','bidxplugin')
+    '{{lblSalesRevenues}}'          => __('Sales revenues','bidxplugin'),
+    '{{lblOperationalCosts}}'       => __('Operational costs','bidxplugin'),
+    '{{lblTotalIncome}}'            => __('Total income','bidxplugin'),
+    '{{lblFinanceNeeded}}'          => __('Finance needed','bidxplugin'),
+    '{{lblNumberOfEmployees}}'      => __('Number of employees','bidxplugin'),
+    '{{lblDeleteYear}}'             => __('Delete year','bidxplugin')
+
 );
 
 if ( $financialSummaries ) {

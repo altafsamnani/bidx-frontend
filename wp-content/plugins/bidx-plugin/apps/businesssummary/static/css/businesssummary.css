@@ -73,7 +73,7 @@ body.bidx-businesssummary .financialSummary {}
     }
 
     body.bidx-businesssummary .fs-header {
-        height:                     60px;
+        height:                     74px;
         position:                   relative;
     }
 
@@ -115,7 +115,8 @@ body.bidx-businesssummary .financialSummary {}
             padding:                    12px;
         }
 
-        body.bidx-businesssummary .fs-col-years .fs-header {
+        body.bidx-businesssummary .fs-col-years .fs-header,
+        body.bidx-businesssummary .fs-col-years .fs-header a {
             background-color:           #BE2025;
             color:                      white;
         }
@@ -125,13 +126,20 @@ body.bidx-businesssummary .financialSummary {}
             font-weight:                bold;
         }
 
-        body.bidx-businesssummary .fs-col-years .selected .fs-header {
-            color:                      #34495e;
+        body.bidx-businesssummary .fs-col-years .fs-header p {
+            margin:                     0;
         }
 
-        body.bidx-businesssummary .fs-col-years .selected .fs-header {
+        body.bidx-businesssummary .fs-col-years .selected .fs-header,
+        body.bidx-businesssummary .fs-col-years .selected .fs-header a {
+            color:                      #34495e;
             background-color:           #d2b58d;
         }
+
+        body.bidx-businesssummary .fs-col-years .selected .fs-header a.btnDelete {
+            color:                      #BE2025;
+        }
+
         body.bidx-businesssummary .fs-col-years .selected .fs-row {
             background-color:           #f6f0e8;
         }
@@ -198,7 +206,8 @@ body.bidx-businesssummary .fs-header-controls-right {
     }
 
 body.bidx-businesssummary .financialSummariesItem .fs-header .btnAddPrev,
-body.bidx-businesssummary .financialSummariesItem .fs-header .btnAddNext {
+body.bidx-businesssummary .financialSummariesItem .fs-header .btnAddNext,
+body.bidx-businesssummary .financialSummariesItem .fs-header .btnDelete {
     display:                none;
 }
 
