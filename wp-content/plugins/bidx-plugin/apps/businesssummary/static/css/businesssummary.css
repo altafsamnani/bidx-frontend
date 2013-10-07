@@ -52,8 +52,10 @@ body.bidx-businesssummary .financialSummary {}
     }
 
     body.bidx-businesssummary .financialSummary .btnPrev,
-    body.bidx-businesssummary .financialSummary .btnNext {
-        font-size:                  28px;
+    body.bidx-businesssummary .financialSummary .btnAddPrev,
+    body.bidx-businesssummary .financialSummary .btnNext,
+    body.bidx-businesssummary .financialSummary .btnAddNext {
+        font-size:                  32px;
     }
 
     body.bidx-businesssummary .financialSummary .viewEdit {
@@ -70,12 +72,44 @@ body.bidx-businesssummary .financialSummary {}
         float:                      left;
     }
 
+    body.bidx-businesssummary .fs-header {
+        height:                     60px;
+        position:                   relative;
+    }
+
+    body.bidx-businesssummary .fs-section-header {
+        height:                     80px;
+        background-color:           #f8f7f6;
+    }
+
+    body.bidx-businesssummary .fs-section-header > div {
+        position:                   absolute;
+        bottom:                     0;
+    }
+
+    body.bidx-businesssummary .fs-section-header strong {
+        font-weight:                bold;
+        font-size:                  18px;
+    }
+
+    body.bidx-businesssummary .fs-row {
+        background-color:           #e6e3de;
+    }
+
+    body.bidx-businesssummary .fs-cell .value {
+        text-align:                 center;
+    }
+
+    body.bidx-businesssummary .fs-cell .fs-cell-label {
+        display:                    none;
+    }
+
     body.bidx-businesssummary .fs-col-years {
         width:                      56%;
         float:                      left;
         overflow:                   hidden;
     }
-        body.bidx-businesssummary .fs-col-years .fs-header > div {
+        body.bidx-businesssummary .fs-col-years .fs-header .fs-content {
             text-align:                 center;
             position:                   static;
             padding:                    12px;
@@ -116,43 +150,12 @@ body.bidx-businesssummary .financialSummary {}
             box-sizing:             border-box;
     }
 
-    body.bidx-businesssummary .fs-cell > div {
+    body.bidx-businesssummary .fs-cell .fs-content {
         padding:                    22px 12px;
     }
 
-        body.bidx-businesssummary .fs-cell > div.controls {
-            padding:                    10px 12px;
-        }
-
-    body.bidx-businesssummary .fs-header {
-        height:                     60px;
-    }
-
-    body.bidx-businesssummary .fs-section-header {
-        height:                     80px;
-        background-color:           #f8f7f6;
-    }
-
-    body.bidx-businesssummary .fs-section-header > div {
-        position:                   absolute;
-        bottom:                     0;
-    }
-
-    body.bidx-businesssummary .fs-section-header strong {
-        font-weight:                bold;
-        font-size:                  18px;
-    }
-
-    body.bidx-businesssummary .fs-row {
-        background-color:           #e6e3de;
-    }
-
-    body.bidx-businesssummary .fs-cell .value {
-        text-align:                 center;
-    }
-
-    body.bidx-businesssummary .fs-cell .fs-cell-label {
-        display:                    none;
+    body.bidx-businesssummary .fs-cell div.controls {
+        padding:                    10px 12px;
     }
 
     body.bidx-businesssummary .financialSummariesItem {
@@ -177,7 +180,49 @@ body.bidx-businesssummary .financialSummary {}
             font-size:              18px;
         }
 
-/* Landscape phone to portrait tablet */
+body.bidx-businesssummary .fs-header-controls-left,
+body.bidx-businesssummary .fs-header-controls-right {
+    display:                    none;
+
+    padding:                    16px 0;
+    position:                   absolute;
+    top:                        0;
+}
+
+    body.bidx-businesssummary .fs-header-controls-left {
+        left:                   0;
+    }
+
+    body.bidx-businesssummary .fs-header-controls-right {
+        right:                  0;
+    }
+
+body.bidx-businesssummary .financialSummariesItem .fs-header .btnAddPrev,
+body.bidx-businesssummary .financialSummariesItem .fs-header .btnAddNext {
+    display:                none;
+}
+
+body.bidx-businesssummary .businessSummary.edit .financialSummariesItem.first .fs-header .btnAddPrev {
+    display:                inline;
+}
+
+body.bidx-businesssummary .financialSummariesItem.first .fs-header .btnPrev {
+    display:                none;
+}
+
+body.bidx-businesssummary .businessSummary.edit .financialSummariesItem.last .fs-header .btnAddNext {
+    display:                inline;
+}
+
+body.bidx-businesssummary .financialSummariesItem.last .fs-header .btnNext {
+    display:                none;
+}
+
+/*
+    Landscape phone to portrait tablet
+
+    Single year from here on
+*/
 @media (max-width: 767px) {
     body.bidx-businesssummary .financialSummariesItem {
         display:                    none;
@@ -189,6 +234,15 @@ body.bidx-businesssummary .financialSummary {}
         display:                    block;
         width:                      100%;
         float:                      none;
+    }
+
+    body.bidx-businesssummary .fs-header-controls-left,
+    body.bidx-businesssummary .fs-header-controls-right {
+        display:                    block;
+    }
+
+    body.bidx-businesssummary .financialSummary .fs-controls {
+        display:                    none;
     }
 }
 

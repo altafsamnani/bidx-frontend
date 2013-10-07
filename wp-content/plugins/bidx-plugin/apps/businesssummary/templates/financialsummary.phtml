@@ -5,9 +5,20 @@ $businessSummary = $this->data;
 $financialSummariesItem = <<<EOT
     <div class="financialSummariesItem {{extraItemClasses}}" data-year="{{year}}">
         <div class="fs-cell fs-header">
-            <div>
+
+            <div class="fs-header-controls-left">
+                <a href="#prev" class="btnPrev"><span class="fui-arrow-left"></span></a>
+                <a href="#addPreviousYear" class="btnAddPrev"><i class="fui-plus-inverted"></i></a>
+            </div>
+
+            <div class="fs-content">
                 <header class="year">{{year}}</header>
                 <p class="yearLabel">{{year_label}}</p>
+            </div>
+
+            <div class="fs-header-controls-right">
+                <a href="#next" class="btnNext"><span class="fui-arrow-right"></span></a>
+                <a href="#addNextYear" class="btnAddNext"><i class="fui-plus-inverted"></i></a>
             </div>
         </div>
 
@@ -16,10 +27,10 @@ $financialSummariesItem = <<<EOT
         <!-- Sales revenues -->
         <div class="fs-cell fs-row control-group">
             <label class="fs-cell-label">{{lblSalesRevenues}}</label>
-            <div class="controls">
-                <input type="text" name="salesRevenue[{{idx}}]" class="view viewEdit">
+            <div class="controls view viewEdit">
+                <input type="text" name="salesRevenue[{{year}}]">
             </div>
-            <div class="view viewShow value">
+            <div class="view viewShow value fs-content">
                 <span>{{salesRevenue}}</span>
             </div>
         </div>
@@ -27,10 +38,10 @@ $financialSummariesItem = <<<EOT
         <!-- Operational Costs -->
         <div class="fs-cell fs-row control-group">
             <label class="fs-cell-label">{{lblOperationalCosts}}</label>
-            <div class="controls">
-                <input type="text" name="operationalCosts[{{idx}}]" class="view viewEdit">
+            <div class="controls view viewEdit">
+                <input type="text" name="operationalCosts[{{year}}]">
             </div>
-            <div class="view viewShow value">
+            <div class="view viewShow value fs-content">
                 <span>{{operationalCosts}}</span>
             </div>
         </div>
@@ -38,7 +49,7 @@ $financialSummariesItem = <<<EOT
         <!-- Operational Costs -->
         <div class="fs-cell fs-row">
             <label class="fs-cell-label">{{lblTotalIncome}}</label>
-            <div class="totalIncome value">
+            <div class="totalIncome value fs-content">
                 <span class="view viewEdit">-</span>
                 <span class="view viewShow">{{totalIncome}}</span>
             </div>
@@ -49,10 +60,10 @@ $financialSummariesItem = <<<EOT
         <!-- Finance Needed -->
         <div class="fs-cell fs-row control-group">
             <label class="fs-cell-label">{{lblFinanceNeeded}}</label>
-            <div class="controls">
-                <input type="text" name="financeNeeded[{{idx}}]" class="view viewEdit">
+            <div class="controls view viewEdit">
+                <input type="text" name="financeNeeded[{{year}}]">
             </div>
-            <div class="view viewShow value">
+            <div class="view viewShow value fs-content">
                 <span>{{financeNeeded}}</span>
             </div>
         </div>
@@ -62,10 +73,10 @@ $financialSummariesItem = <<<EOT
         <!-- Number Of Employees -->
         <div class="fs-cell fs-row control-group">
             <label class="fs-cell-label">{{lblNumberOfEmployees}}</label>
-            <div class="controls">
-                <input type="text" name="numberOfEmployees[{{idx}}]" class="view viewEdit">
+            <div class="controls view viewEdit">
+                <input type="text" name="numberOfEmployees[{{year}}]">
             </div>
-            <div class="view viewShow value">
+            <div class="view viewShow value fs-content">
                 <span>{{numberOfEmployees}}</span>
             </div>
         </div>
@@ -78,6 +89,9 @@ $financialSummaries = $this->exst( $businessSummary->financialSummaries );
 $hasYears       = false;
 $hasPrevYear    = false;
 $hasNextYear    = false;
+
+$lastYear       = NULL;
+$firstYear      = NULL;
 
 $nrPrevYears    = 0;
 $nrNextYears    = 0;
@@ -107,12 +121,12 @@ if ( $financialSummaries ) {
         // Find the last year
         //
         end( $years );
-        $latestYear = key( $years );
+        $lastYear = key( $years );
         reset( $years );
         $firstYear = key( $years );
 
         $nrPrevYears = $curYear - $firstYear;
-        $nrNextYears = $latestYear - $curYear;
+        $nrNextYears = $lastYear - $curYear;
 
         foreach( $years as $year => $yearItem ) {
             $yearDiff = $curYear - $year;
@@ -133,7 +147,11 @@ if ( $financialSummaries ) {
 // No years? Create a dummy minimal set
 //
 if ( $hasYears == false ) {
-    $hasYears = true;
+
+    $hasYears   = true;
+
+    $latstYear  = $curYear;
+    $firstYear  = $curYear;
 
     $years = array( $curYear => (object)array(
         'financeNeeded'         => '-',
@@ -152,42 +170,42 @@ if ( $hasYears == false ) {
             <div class="pull-right fs-controls">
                 <a href="#prev" class="btnPrev <?php echo ( $hasPrevYear ? '' : 'disabled' ); ?>"><span class="fui-arrow-left"></span></a>
             </div>
-            <div><strong><?php _e( 'Currency in: US Dollars', 'bidxplugin' ); ?></strong></div>
+            <div class="fs-content"><strong><?php _e( 'Currency in: US Dollars', 'bidxplugin' ); ?></strong></div>
         </div>
 
         <!-- Section: INCOME STATEMENT -->
         <div class="fs-cell fs-section-header">
-            <div><strong><?php _e('Income statement','bidxplugin'); ?></strong></div>
+            <div class="fs-content"><strong><?php _e('Income statement','bidxplugin'); ?></strong></div>
         </div>
 
         <div class="fs-cell fs-row">
-            <div><?php _e( 'Sales revenues','bidxplugin'); ?></div>
+            <div class="fs-content"><?php _e( 'Sales revenues','bidxplugin'); ?></div>
         </div>
 
         <div class="fs-cell fs-row">
-            <div><?php _e( 'Operational costs','bidxplugin'); ?></div>
+            <div class="fs-content"><?php _e( 'Operational costs','bidxplugin'); ?></div>
         </div>
 
         <div class="fs-cell fs-row">
-            <div><strong><?php _e( 'Total income','bidxplugin'); ?></strong></div>
+            <div class="fs-content"><strong><?php _e( 'Total income','bidxplugin'); ?></strong></div>
         </div>
 
         <!-- Section: FINANCE NEEDED -->
         <div class="fs-cell fs-section-header">
-            <div><strong><?php _e( 'Finance needed','bidxplugin'); ?></strong> (<?php _e('from external financiers in US Dollars','bidxplugin'); ?>)</div>
+            <div class="fs-content"><strong><?php _e( 'Finance needed','bidxplugin'); ?></strong> (<?php _e('from external financiers in US Dollars','bidxplugin'); ?>)</div>
         </div>
 
         <div class="fs-cell fs-row">
-            <div><?php _e( 'Needed','bidxplugin'); ?></div>
+            <div class="fs-content"><?php _e( 'Needed','bidxplugin'); ?></div>
         </div>
 
         <!-- Section: NUMBER OF EMPLOYEES -->
         <div class="fs-cell fs-section-header">
-            <div><strong><?php _e( 'Number of employees','bidxplugin'); ?></strong> (<?php _e('being directly paid in this business','bidxplugin'); ?>)</div>
+            <div class="fs-content"><strong><?php _e( 'Number of employees','bidxplugin'); ?></strong> (<?php _e('being directly paid in this business','bidxplugin'); ?>)</div>
         </div>
 
         <div class="fs-cell fs-row">
-            <div><?php _e( 'Numbers','bidxplugin'); ?></div>
+            <div class="fs-content"><?php _e( 'Numbers','bidxplugin'); ?></div>
         </div>
 
     </div><!-- /col-label -->
@@ -239,6 +257,15 @@ if ( $hasYears == false ) {
                 $extraItemClasses[] = "selected";
             }
 
+            if ( $curYear == $firstYear ) {
+                $extraItemClasses[] = "first";
+            }
+
+            if ( $curYear == $lastYear ) {
+                $extraItemClasses[] = "last";
+            }
+
+
             $tokens = array_merge( $financialSummariesItemTranslations, array(
                 // Data values
                 //
@@ -249,8 +276,7 @@ if ( $hasYears == false ) {
                 '{{numberOfEmployees}}'     => $yearItem->numberOfEmployees,
                 '{{operationalCosts}}'      => $yearItem->operationalCosts,
                 '{{salesRevenue}}'          => $yearItem->salesRevenue,
-                '{{extraItemClasses}}'      => implode( ' ', $extraItemClasses ),
-                '{{idx}}'                   => $count
+                '{{extraItemClasses}}'      => implode( ' ', $extraItemClasses )
             ));
 
             echo $this->replaceMessageTokens( $financialSummariesItem, $tokens );
@@ -260,6 +286,7 @@ if ( $hasYears == false ) {
     }
 ?>
         <div class="financialSummariesItem addItem <?php echo ( $nrPrevYears >= 1 ? 'hide' : '' ); ?>">
+
             <!-- EDIT -->
             <div class="view viewEdit">
                 <p class="addYear">

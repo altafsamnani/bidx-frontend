@@ -314,7 +314,8 @@
             //
             forms.financialDetails.$el.validate(
             {
-                rules:
+                ignore:                 ""
+            ,   rules:
                 {
                     yearSalesStarted:
                     {
@@ -373,7 +374,7 @@
 
             // Add on year to the left
             //
-            $btnAddPrev.click( function( e )
+            $financialSummary.delegate( "a[href$=#addPreviousYear]", "click", function( e )
             {
                 e.preventDefault();
 
@@ -382,7 +383,7 @@
 
             // Add on year to the right
             //
-            $btnAddNext.click( function( e )
+            $financialSummary.delegate( "a[href$=#addNextYear]", "click", function( e )
             {
                 e.preventDefault();
 
@@ -392,7 +393,7 @@
 
             // Navigate one year to the left
             //
-            $btnPrev.click( function( e )
+            $financialSummary.delegate( "a[href$=#prev]", "click", function( e )
             {
                 e.preventDefault();
 
@@ -401,7 +402,7 @@
 
             // Navigate one year to the right
             //
-            $btnNext.click( function( e )
+            $financialSummary.delegate( "a[href$=#next]", "click", function( e )
             {
                 e.preventDefault();
 
@@ -423,12 +424,12 @@
             {
                 var $yearItem = $( this );
 
-                _setupValidation( $yearItem );
+                _setupValidationForYearItem( $yearItem );
             } );
 
             // Setup validation on a specific year item
             //
-            function _setupValidation( $yearItem )
+            function _setupValidationForYearItem( $yearItem )
             {
                 // Shortcut it for now by treating all the inputs the same
                 //
@@ -460,6 +461,7 @@
                 ,   curYear     = bidx.common.getNow().getFullYear()
                 ,   year
                 ,   yearLabel
+                ,   $otherYear
                 ,   otherYear
                 ,   $marker
                 ;
@@ -468,10 +470,12 @@
                 //
                 if ( direction === "prev" )
                 {
-                    $marker = $financialSummaryYearsContainer.find( ".addItem:first" );
+                    $marker     = $financialSummaryYearsContainer.find( ".addItem:first" );
+                    $otherYear  = $marker.next();
+                    otherYear   = $otherYear.data( "year" );
 
-                    otherYear = $marker.next().data( "year" );
-
+                    // Is there no other year? This can only happen when there are absolutely none year items in the DOM
+                    //
                     if ( !otherYear )
                     {
                         year        = curYear;
@@ -485,9 +489,9 @@
                 }
                 else
                 {
-                    $marker = $financialSummaryYearsContainer.find( ".addItem:last" );
-
-                    otherYear = $marker.prev().data( "year" );
+                    $marker     = $financialSummaryYearsContainer.find( ".addItem:last" );
+                    $otherYear  = $marker.prev();
+                    otherYear   = $otherYear.data( "year" );
 
                     if ( !otherYear )
                     {
@@ -499,24 +503,40 @@
                         year        = otherYear + 1;
                         yearLabel   = "Projected";
                     }
-
                 }
 
-                $item.data( "year", year );
+                $item.attr( "data-year", year );
                 $item.find( ".year" ).text( year );
                 $item.find( ".yearLabel" ).text( yearLabel );
 
                 if ( direction === "prev" )
                 {
+                    $otherYear.removeClass( "first" );
+                    $item.addClass( "first" );
+
                     $marker.after( $item );
                 }
                 else
                 {
+                    $otherYear.removeClass( "last" );
+                    $item.addClass( "last" );
+
                     $marker.before( $item );
                 }
 
-                _setupValidation( $item );
+                // Rename all the input elements to include the year
+                //
+                $item.find( "input" ).each( function( )
+                {
+                    var $input      = $( this )
+                    ,   name        = $input.prop( "name" )
+                    ,   newName     = name.replace( "[]", "[" + year + "]" )
+                    ;
 
+                    $input.prop( "name", newName );
+                } );
+
+                _setupValidationForYearItem( $item );
                 _selectYear( $item );
             }
 
@@ -556,7 +576,7 @@
 
                 // Responsive design decision, how many items are currently visible? 3 or 1
                 //
-                if ( $visibleItems.length > 1 )
+                if ( $selectedYear.css( "display" ) !== "block" )
                 {
                     $nextItem.show();
                     $prevItem.show();
@@ -1137,6 +1157,8 @@
     //
     var navigate = function( options )
     {
+        $element.removeClass( "edit" );
+
         switch ( options.requestedState )
         {
             case "edit":
@@ -1180,6 +1202,8 @@
                             _init();
                         } );
                 }
+
+                $element.addClass( "edit" );
 
                 if ( updateHash )
                 {
