@@ -83,6 +83,7 @@ class MemberService extends APIbridge {
 
 
     $result->data->groups = $groupDetails;
+ 
 
     $entityDetails = (!empty($result->data->entities)) ? $result->data->entities : array();
 
@@ -94,12 +95,8 @@ class MemberService extends APIbridge {
       $entityMeta = isset( $entityValue->bidxMeta ) ? $entityValue->bidxMeta : $entityValue;
 
       if($entityMeta->bidxEntityType == 'bidxBusinessSummary') {
-        $resultEntity = $this->callBidxAPI('entity/' . $entityMeta->bidxEntityId, array(), 'GET');
-        $rowValues = array('Tagline',
-          'Summary',
-          'Industry',
-          'Location');
-        $result->data->wp->entities->bidxBusinessSummary = $resultEntity->data;
+
+        $result->data->wp->entities->bidxBusinessSummary[] = $entityValue;
       }
 
     }
@@ -108,9 +105,6 @@ class MemberService extends APIbridge {
 
   }
 
-  public function getMemberRole( ) {
-
-  }
 
 }
 

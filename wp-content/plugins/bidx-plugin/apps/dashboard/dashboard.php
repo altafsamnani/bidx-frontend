@@ -25,8 +25,7 @@ class dashboard
      */
     function register_dashboard_bidx_ui_libs ()
     {
-
-        wp_register_script ('dashboard', plugins_url ('static/js/dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
+        //Adding js in Load function as we need it different for investor/entrpreneur/groupadmin(wordpress)
         wp_register_style ('dashboard', plugins_url ('static/css/dashboard.css', __FILE__), array (), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
         wp_enqueue_style ('dashboard');
     }
@@ -43,8 +42,8 @@ class dashboard
         /* 1 Template Rendering */
         require_once(BIDX_PLUGIN_DIR . '/templatelibrary.php');
         $view = new TemplateLibrary (BIDX_PLUGIN_DIR . '/dashboard/templates/');
-        $view->sessionData = BidxCommon::$staticSession;
-
+        $sessionData = BidxCommon::$staticSession;
+        $view->sessionData = $sessionData;
         //2. Service Group
         //require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
         //$groupSvc = new GroupService( );
@@ -56,19 +55,26 @@ class dashboard
                 $template = 'my-dashboard.phtml';
                 break;
             case 'investor-dashboard':
+                wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
+                $roles = $sessionData->data->roles;
+                if (in_array ('Investor', $roles)) {
 
+                    $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
 
-                $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
-
-                if ($investorDashboard) {
-                    ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;;
-                    $template = 'investor/help.phtml';
-                } else {                    
-                    $template = 'investor/dashboard.phtml';
-                }                
+                    if ($investorDashboard) {
+                        ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
+                        ;
+                        $template = 'investor/help.phtml';
+                    } else {
+                        $template = 'investor/dashboard.phtml';
+                    }
+                } else {
+                    $view->return_404 ();
+                }
                 break;
 
             case 'group-dashboard':
+                wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 if (isset ($view->sessionData->data) && isset ($view->sessionData->data->currentGroup)) {
                     $menu = $atts['menu'];
                     switch ($menu) {

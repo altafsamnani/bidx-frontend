@@ -129,7 +129,7 @@ class BidxCommon
      */
     function clearSessionFromParam ($session_id, $clearSession = false)
     {
-        if ((isset ($_GET['rs']) && $_GET['rs']) || $clearSession) {
+        if ($session_id && ((isset ($_GET['rs']) && $_GET['rs']) || $clearSession )) {
             /* Clear the Session */
             session_id ($session_id);
             session_start ();

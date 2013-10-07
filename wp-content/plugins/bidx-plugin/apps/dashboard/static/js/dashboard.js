@@ -13,10 +13,10 @@
             , appName = "dashboard"
             , currentGroupId = bidx.common.getCurrentGroupId()
             , toolbar = {}
-    , message = {}
-    , listItems = {}
-    , listItemsAll = {}
-    , $list = $(".dlist")
+            , message = {}
+            , listItems = {}
+            , listItemsAll = {}
+            , $list = $(".dlist")
             , listMembers = [];
 
 
@@ -314,7 +314,7 @@
             }
             $.ajax(
                     {
-                        url: "/wp-admin/admin-ajax.php?action=bidx_option&type=investor-startingpage&value=" + startValue
+                        url: "/wp-admin/admin-ajax.php?action=bidx_set_option&type=investor-startingpage&value=" + startValue
                                 , dataType: "json"
                     })
                     .done(function(data, status, jqXHR)
