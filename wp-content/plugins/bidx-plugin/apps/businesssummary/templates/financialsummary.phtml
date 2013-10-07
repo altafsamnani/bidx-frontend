@@ -212,7 +212,7 @@ if ( $hasYears == false ) {
 
     <div class="fs-col-years clearfix">
 
-        <div class="financialSummariesItem addItem <?php echo ( $nrNextYears >= 1 ? 'hide' : '' ); ?>">
+        <div class="financialSummariesItem addItem <?php echo ( ( $hasPrevYear && $nrNextYears >= 1 ) ? 'hide' : '' ); ?>">
 
             <!-- EDIT -->
             <div class="view viewEdit">
@@ -240,7 +240,7 @@ if ( $hasYears == false ) {
 
             $yearDiff = $curYear - $year;
 
-            if ( $yearDiff > 1 || $yearDiff < -1 )
+            if ( ( $hasNextYear && $yearDiff > 1 ) || ( $yearDiff < -1 && $hasPrevYear ) )
             {
                 $extraItemClasses[] = "hide";
             }
@@ -257,11 +257,13 @@ if ( $hasYears == false ) {
                 $extraItemClasses[] = "selected";
             }
 
-            if ( $curYear == $firstYear ) {
+            // Add first and last markers on the items
+            //
+            if ( $year == $firstYear ) {
                 $extraItemClasses[] = "first";
             }
 
-            if ( $curYear == $lastYear ) {
+            if ( $year == $lastYear ) {
                 $extraItemClasses[] = "last";
             }
 
@@ -285,7 +287,7 @@ if ( $hasYears == false ) {
         }
     }
 ?>
-        <div class="financialSummariesItem addItem <?php echo ( $nrPrevYears >= 1 ? 'hide' : '' ); ?>">
+        <div class="financialSummariesItem addItem <?php echo ( ( $hasNextYear && $nrPrevYears >= 1 )  ? 'hide' : '' ); ?>">
 
             <!-- EDIT -->
             <div class="view viewEdit">

@@ -48,6 +48,10 @@
     ,   snippets                    = {}
 
     ,   appName                     = "businesssummary"
+
+        // Object used to expose functions on
+        //
+    ,   financialSummary            = {}
     ;
 
     // Form fields
@@ -505,9 +509,15 @@
                     }
                 }
 
+                // Add administration of the item
+                //
                 $item.attr( "data-year", year );
-                $item.find( ".year" ).text( year );
-                $item.find( ".yearLabel" ).text( yearLabel );
+                $item.addClass( "new" );
+
+                // Set content in the header
+                //
+                $item.find( ".year"         ).text( year );
+                $item.find( ".yearLabel"    ).text( yearLabel );
 
                 if ( direction === "prev" )
                 {
@@ -537,7 +547,8 @@
                 } );
 
                 _setupValidationForYearItem( $item );
-                _selectYear( $item );
+
+                financialSummary.selectYear( year );
             }
 
             // Calculate the new total income
@@ -554,11 +565,12 @@
 
             // Select a certain year, update the selected state, show the correct years and disable/enable the buttons
             //
-            function _selectYear( $yearItem )
+            function selectYear( year )
             {
                 var $years          = $financialSummaryYearsContainer.find( ".financialSummariesItem" )
                 ,   $selectedYear   = $years.filter( ".selected" )
                 ,   $visibleItems   = $years.filter( ":visible" )
+                ,   $yearItem       = $years.filter( "[data-year='" + year + "']" )
                 ,   $prevItem       = $yearItem.prev()
                 ,   $nextItem       = $yearItem.next()
                 ;
@@ -608,6 +620,7 @@
             {
                 var $selectedYear   = $financialSummaryYearsContainer.find( ".financialSummariesItem.selected" )
                 ,   $otherYear
+                ,   otherYear
                 ,   $btn
                 ;
 
@@ -633,10 +646,15 @@
 
                 // What is the year item we want to navigate to?
                 //
-                $otherYear = $selectedYear[ direction ]( ":not(.addItem)" );
+                $otherYear  = $selectedYear[ direction ]( ":not(.addItem)" );
+                otherYear   = $otherYear.attr( "data-year" );
 
-                _selectYear( $otherYear );
+                financialSummary.selectYear( otherYear );
             }
+
+            // Expose financial summary fucntinos
+            //
+            financialSummary.selectYear = selectYear;
         }
     }
 
@@ -1240,6 +1258,25 @@
     function reset()
     {
         state = null;
+
+        // Remove any created years that haven't been saved and select the current year
+        //
+        $financialSummaryYearsContainer.find( ".financialSummariesItem.new" ).remove();
+
+        var year     = bidx.common.getNow().getFullYear()
+        ,   $year    = $financialSummaryYearsContainer.find( ".financialSummariesItem[data-year='" + year + "']" )
+        ;
+
+        // No current year??
+        // Select the last one...
+        //
+        if ( $year.length === 0 )
+        {
+            $year = $financialSummaryYearsContainer.find( ".financialSummariesItem:not(.addItem):last" );
+            year = $year.attr( "data-year" );
+        }
+
+        financialSummary.selectYear( year );
     }
 
     // Engage!
