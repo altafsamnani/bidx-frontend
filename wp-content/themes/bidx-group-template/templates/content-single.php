@@ -1,8 +1,28 @@
+
 <?php while (have_posts()) : the_post(); ?>
 <br>
 <div class="container">
   <div class="row-fluid">
-    <div class="span8">
+
+<?php
+
+    // Add the proper class for the layout depending on if there is a category linked to the post
+    $spansize = '';
+    $categories = get_the_category(); 
+    foreach ($categories as $category) {
+      $countcat = count($categories);
+      if ($countcat == 1 && $category->slug == 'uncategorized') {
+      // If there is no category linked then wordpress links the post to uncategorized
+      // in that case we don't show the sidebar's related posts as links
+        $spansize = 'span12';
+      } else {
+      // We need the sidebar with the related posts links
+        $spansize = 'span8';
+      }
+     } // end foreach
+?>
+
+    <div class="<?php echo $spansize; ?>">
     	<article <?php post_class(); ?>>
         <header>
           <h1 class="entry-title"><?php the_title(); ?></h1>
@@ -26,31 +46,29 @@
 
 <?php endwhile; ?>
 
-<?php 
-
-    $category = get_the_category(); 
-
-    if ( $category ) { ?> 
+<?php
+    // Wordpress shifts the 'uncategorized' category to be the last object in this array
+    if ( $categories[0]->slug != 'uncategorized' ) :
+?> 
     <div class="span4 well">
-      <h4><?php echo $category[0]->name; ?></h4>
-    <?php
-
+      <h4><?php echo $categories[0]->name; ?></h4>
+      <ul>
+<?php
       // The Query
-      query_posts( array ( 'category_name' => $category[0]->category_nicename, 'posts_per_page' => -1 ) );
-
+      query_posts( array ( 'category_name' => $categories[0]->slug, 'posts_per_page' => -1 ) );
       // The Loop
-      while ( have_posts() ) : the_post(); ?>
-        <li>
-          <a href="<?php the_permalink() ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
-        </li>
-
-      <?php endwhile;
-
-      // Reset Query
-      wp_reset_query(); ?>
-      </div>
+      while ( have_posts() ) : the_post();
+?>
+        <li><a href="<?php the_permalink() ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></li>
 <?php 
-  }
+      endwhile;
+      // Reset Query
+      wp_reset_query();
+?>
+      </ul>
+    </div>
+<?php 
+    endif;
 ?>
     </div> 
   </div> 
