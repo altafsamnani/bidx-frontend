@@ -72,6 +72,10 @@ body.bidx-businesssummary .financialSummary {}
         float:                      left;
     }
 
+    body.bidx-businesssummary .fs-cell .fs-content {
+        padding:                    22px 12px;
+    }
+
     body.bidx-businesssummary .fs-header {
         height:                     74px;
         position:                   relative;
@@ -82,9 +86,10 @@ body.bidx-businesssummary .financialSummary {}
         background-color:           #f8f7f6;
     }
 
-    body.bidx-businesssummary .fs-section-header > div {
+    body.bidx-businesssummary .fs-section-header div.fs-content {
         position:                   absolute;
         bottom:                     0;
+        padding-bottom:             6px;
     }
 
     body.bidx-businesssummary .fs-section-header strong {
@@ -130,11 +135,16 @@ body.bidx-businesssummary .financialSummary {}
             margin:                     0;
         }
 
-        body.bidx-businesssummary .fs-col-years .selected .fs-header,
-        body.bidx-businesssummary .fs-col-years .selected .fs-header a {
+        body.bidx-businesssummary .fs-col-years .selected .fs-header {
             color:                      #34495e;
             background-color:           #d2b58d;
         }
+
+        body.bidx-businesssummary .fs-col-years .selected .fs-header a {
+            background-color:           #d2b58d;
+            color:                      #BE2025;
+        }
+
 
         body.bidx-businesssummary .fs-col-years .selected .fs-header a.btnDelete {
             color:                      #BE2025;
@@ -156,10 +166,6 @@ body.bidx-businesssummary .financialSummary {}
     -webkit-box-sizing:             border-box;
        -moz-box-sizing:             border-box;
             box-sizing:             border-box;
-    }
-
-    body.bidx-businesssummary .fs-cell .fs-content {
-        padding:                    22px 12px;
     }
 
     body.bidx-businesssummary .fs-cell div.controls {
@@ -227,12 +233,30 @@ body.bidx-businesssummary .financialSummariesItem.last .fs-header .btnNext {
     display:                none;
 }
 
+@media (max-width: 980px) {
+    body.bidx-businesssummary .fs-col-labels {
+        width:                      30%;
+    }
+
+    body.bidx-businesssummary .fs-col-years {
+        width:                      66%;
+    }
+}
+
 /*
     Landscape phone to portrait tablet
 
     Single year from here on
 */
 @media (max-width: 767px) {
+    body.bidx-businesssummary .fs-col-labels {
+        width:                      40%;
+    }
+
+    body.bidx-businesssummary .fs-col-years {
+        width:                      56%;
+    }
+
     body.bidx-businesssummary .financialSummariesItem {
         display:                    none;
         width:                      0;
