@@ -602,26 +602,31 @@
             //
             $container = $element.closest( ".control-group" );
 
-            if ( $container.length )
+            // Forms can be configured to have no validation icon behind the elements
+            //
+            if ( !this.settings.noIcon )
             {
-                $error.appendTo( $container );
-                if( !$container.find( ".controls" ).find( ".validation-icon" ).length )
+                if ( $container.length )
                 {
-                    $container.find( ".controls" ).append( $errorIcon );
+                    $error.appendTo( $container );
+                    if( !$container.find( ".controls" ).find( ".validation-icon" ).length )
+                    {
+                        $container.find( ".controls" ).append( $errorIcon );
+                    }
+
+                    inserted = true;
                 }
 
-                inserted = true;
-            }
+                // Didn't found a way to get inserted? Just insert it behind the input in the DOM
+                //
+                if ( !inserted )
+                {
 
-            // Didn't found a way to get inserted? Just insert it behind the input in the DOM
-            //
-            if ( !inserted )
-            {
+                    $error.insertAfter( $element );
 
-                $error.insertAfter( $element );
-
-                // NOTE $msp: I deliberately chose not to insert the errorIcon if there is no control-group or control present, because I cannot guarantee the positioning of the element
-                bidx.utils.warn("No \'.controls\' wrapper found on element: ", $element);
+                    // NOTE $msp: I deliberately chose not to insert the errorIcon if there is no control-group or control present, because I cannot guarantee the positioning of the element
+                    bidx.utils.warn("No \'.controls\' wrapper found on element: ", $element);
+                }
             }
         }
 
@@ -681,15 +686,19 @@
             //
             // end default unhighlight behaviour
 
-
-            // add validation-icon to control group if it is not already available
+            // Forms can be configured to have no validation icon behind the elements
             //
-            $container = $element.closest( ".control-group" );
-            if ( $container.length && !$container.find( ".controls" ).find( ".validation-icon" ).length )
+            if ( !this.settings.noIcon )
             {
-                $container.find( ".controls" ).append( $errorIcon );
-
+                // add validation-icon to control group if it is not already available
+                //
+                $container = $element.closest( ".control-group" );
+                if ( $container.length && !$container.find( ".controls" ).find( ".validation-icon" ).length )
+                {
+                    $container.find( ".controls" ).append( $errorIcon );
+                }
             }
+
             // custom addition which adds errorClass to control wrapper
             //
             errorClass = "control-" + errorClass;
