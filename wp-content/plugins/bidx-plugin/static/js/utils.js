@@ -420,6 +420,28 @@
         return result;
     };
 
+    // converts a query URL ( /key=value&key2=value2 OR ?key=one&key2=two )
+    //
+    var url2object = function( urlVariables )
+    {
+        if ( !urlVariables )
+        {
+            bidx.utils.warn( "No value provided for url2object function" );
+            return {};
+        }
+
+        // remove leading forward slash or questionmark and decode the urlVariables string
+        //
+        var decodedString = decodeURI( urlVariables.replace( /[?/]/g , "" ) );
+
+        // convert qyery oaran to object
+        //
+        return $.parseJSON( '{"' + decodedString
+                .replace( /&/g, '","' )
+                .replace( /=/g, '":"' ) + '"}' )
+        ;
+    };
+
     // Get safely a value from a JS object by specifying the property path as
     // a string
     //
@@ -727,6 +749,7 @@
     ,   generateId:                 generateId
     ,   prefixUrlWithProtocol:      prefixUrlWithProtocol
     ,   normalizeLinkedInUrl:       normalizeLinkedInUrl
+    ,   url2object:                 url2object
 
     ,   log:                        log
     ,   warn:                       warn

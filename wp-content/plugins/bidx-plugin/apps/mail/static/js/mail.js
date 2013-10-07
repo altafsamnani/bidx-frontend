@@ -321,18 +321,18 @@
         {
             // if for some reason we forgot to remove the mbx- prefix, do it now
             //
-            if( section.substring( 0, 4 ) === "mbx-" )
+            if( state.search( /(^mbx-)/ ) === 0 )
             {
-                section = section.replace( /(^mbx-)/, "" );
+                state = state.replace( /(^mbx-)/, "" );
             }
 
-            bidx.utils.log("[mail] Loading Mailbox" , section, " message");
+            bidx.utils.log("[mail] Loading Mailbox" , state, " message");
 
             _getEmails(
             {
                 startOffset:            0
             ,   maxResults:             10
-            ,   mailboxId:              mailboxes[ section ].id
+            ,   mailboxId:              mailboxes[ state ].id
             ,   view:                   "list"
 
             ,   callback: function()
@@ -369,8 +369,9 @@
 
         //  preload compose form with reply values of recipient, subject and content of message to be replied on
         //
-        function _initForwardOrReply( section, id, state )
+        function _initForwardOrReply( state, id, action )
         {
+
 
             if( !$.isEmptyObject( message ) )
             {
@@ -378,21 +379,45 @@
                 var recipients = []
                 ,   content    = message.content
                 ,   lbl
+                ,   subject
+                ,   mailbox
                 ;
 
-                switch ( state )
+                if( state.search( /(^mbx-)/ ) === 0 )
                 {
+                    mailbox = state.replace( /(^mbx-)/, "" );
+                }
+
+                switch ( action )
+                {
+
 
                     // reply form requires the recipient, subject and content field to be preloaded with data from replied message
                     //
                     case "reply":
 
-                        //recipients.push( message.recipients[0].id.toString() );
-                        recipients.push( "27" );
-                        message.fullNameFrom = "[REPLACE THIS WHEN API IS CHANGED]";
+                        // get list of recipients
+                        //
+
+                        if ( mailbox === "sent" )
+                        {
+                            $.each( message.recipients, function( idx, item )
+                            {
+                                recipients.push( item.id.toString() );
+                            } );
+                        }
+                        else
+                        {
+                            recipients.push( message.sender.id.toString() );
+                        }
+
+
+
+
                         $frmCompose.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
 
-                        $frmCompose.find( "[name=subject]" ).val( "Re: " + message.subject );
+                        subject = bidx.i18n.i( "Fwd", appName );
+                        $frmCompose.find( "[name=subject]" ).val( subject + ": " + message.subject );
 
                         //  add reply header with timestamp to content
                         //
@@ -400,7 +425,7 @@
                         lbl     = bidx.i18n.i( "replyContentHeader", appName )
                                 .replace( "%date%", bidx.utils.parseTimestampToDateTime( message.dateSent, "date" ) )
                                 .replace( "%time%", bidx.utils.parseTimestampToDateTime( message.dateSent, "time" ) )
-                                .replace( "%sender%", message.fullNameFrom );
+                                .replace( "%sender%", message.sender.displayName );
                         content = "\n\n" + lbl + "\n" + content;
 
                         $frmCompose.find( "[name=content]" ).val( content );
@@ -411,8 +436,8 @@
                     // forward form requires the subject and content field to be preloaded with data from forwarded message
                     //
                     case "forward":
-
-                        $frmCompose.find( "[name=subject]" ).val( "Fwd: " + message.subject );
+                        subject = bidx.i18n.i( "Fwd", appName );
+                        $frmCompose.find( "[name=subject]" ).val( subject + ": " + message.subject );
 
                         //  add reply header with timestamp to content
                         //
@@ -429,7 +454,7 @@
             else
             {
                 bidx.utils.error( "Message object is empty. Forward or Reply can not be inialized" );
-                window.bidx.controller.updateHash( "#mail/" + section + "/" + id, true, false );
+                window.bidx.controller.updateHash( "#mail/" + state + "/id=" + id + "&action=" + action, true, false );
             }
 
         }
@@ -463,6 +488,35 @@
         }
 
 
+        // set message data in view. Function expects message object in API format
+        //
+        function _initEmail( action, message )
+        {
+            var mailBody
+            ,   $htmlParser
+            ;
+            $currentView = $views.filter( bidx.utils.getViewName( action ) );
+
+
+            // filter HTML  before we can insert into the mailbody
+            //
+            $htmlParser = $( "<div/>" );
+            $htmlParser.html( message.content );
+            mailBody = $htmlParser.text().replace( /\n/g, "<br/>" );
+
+            // insert mail body in to placeholder of the view
+            //
+            $currentView.find( ".mail-subject").html( message.subject );
+
+            // insert mail body in to placeholder of the view
+            //
+            $currentView.find( ".mail-message").html( mailBody );
+
+
+
+        }
+
+
 
     //  ################################## GETTERS #####################################  \\
 
@@ -488,11 +542,12 @@
 
                         // now format it into array of objects with value and label
                         //
-                        if( response && response.contact )
+                        bidx.utils.log("[mail] retrieved following members ", response );
+                        if( response && response.relationshipType && response.relationshipType.contact )
                         {
-                            if( response.contact.active )
+                            if( response.relationshipType.contact.active )
                             {
-                                $.each( response.contact.active , function ( idx, item)
+                                $.each( response.relationshipType.contact.active , function ( idx, item)
                                 {
                                     result.push(
                                     {
@@ -524,14 +579,18 @@
 
         //  get selected email
         //
-        function _getEmail( options )
+        function _getEmail( id )
         {
-            bidx.utils.log( "[mail] fetching mail content", options );
+            bidx.utils.log( "[mail] fetching mail content for message ", id );
+
+            // create a promise object
+            //
+            var $d = $.Deferred();
 
             bidx.api.call(
                  "mailboxMail.fetch"
             ,   {
-                    mailId:                   options.id
+                    mailId:                   id
                 ,   groupDomain:              bidx.common.groupDomain
 
                 ,   success: function( response )
@@ -539,37 +598,21 @@
                         bidx.utils.log("[mail] get email", response);
                         if( response.data )
                         {
-                            var mailBody
-                            ,   $htmlParser
-                            ;
-                            $currentView = $views.filter( bidx.utils.getViewName( options.view ) );
-
                             // cache current email for later reply or forward action where we need the message content
                             //
                             _cacheMailMessage( response.data );
 
-                            // filter HTML  before we can insert into the mailbody
+                            // resolve the promise
                             //
-                            $htmlParser = $( "<div/>" );
-                            $htmlParser.html( response.data.content );
-                            mailBody = $htmlParser.text().replace( /\n/g, "<br/>" );
-
-                            // insert mail body in to placeholder of the view
-                            //
-                            $currentView.find( ".mail-subject").html( response.data.subject );
-
-                            // insert mail body in to placeholder of the view
-                            //
-                            $currentView.find( ".mail-message").html( mailBody );
-
-                            // execute callback if provided
-                            //
-                            if( options && options.callback )
-                            {
-                                options.callback();
-                            }
-
+                            $d.resolve( response.data );
                         }
+                        else
+                        {
+                            // reject the promise
+                            //
+                            $d.reject( new Error( "Get EMail: no data received from API" ) );
+                        }
+
 
                     }
 
@@ -588,16 +631,23 @@
                             _showError( "Something went wrong while retrieving the member: " + status );
                         }
 
+                        // reject the promise
+                        //
+                        $d.reject( new Error( response ) );
                     }
                 }
             );
+
+            // return a promise which will be resolved when the async call is finished
+            //
+            return $d.promise();
         }
 
         // get mailboxes from API, create mailbox navigation and execute callback if available
         //
         function _getMailBoxes( cb )
         {
-            bidx.utils.log( "[mail] get mailboxes from API" );
+            bidx.utils.log( "[mail] get mailboxes from API", state );
             // get all mailfolders for this user
             //
             bidx.api.call(
@@ -720,7 +770,7 @@
                                             //
                                             if( cls === "sendername")
                                             {
-                                                textValue = "<a href=\"" + document.location.hash +  "/" + item.id + "\" class=\"" + (item.read ? "email-new" : "" ) + "\">" + textValue + "</a>";
+                                                textValue = "<a href=\"" + document.location.hash +  "/id=" + item.id + "\" class=\"" + (item.read ? "email-new" : "" ) + "\">" + textValue + "</a>";
                                             }
                                             if( cls === "dateSent" )
                                             {
@@ -831,9 +881,9 @@
 
         function _getContacts( options )
         {
-            // create a new promise
+            // create a promise object
             //
-            var deferred = Q.defer();
+            var $d = $.Deferred();
 
             bidx.api.call(
                 "memberRelationships.fetch"
@@ -848,7 +898,7 @@
 
                         bidx.utils.log("[mail] contacts loaded ", response );
 
-                        if ( response.contact )
+                        if ( response.relationshipType &&  response.relationshipType.contact )
                         {
                             // if filter is defined, only add arrays that match the filter value
                             //
@@ -856,9 +906,9 @@
                             {
                                 $.each( options.filter, function( idx, value )
                                 {
-                                    if ( response.contact[ value ] )
+                                    if ( response.relationshipType.contact[ value ] )
                                     {
-                                        result[ value ] = response.contact[ value ];
+                                        result[ value ] = response.relationshipType.contact[ value ];
                                     }
                                 } );
                             }
@@ -869,10 +919,14 @@
                                 result = response.contact;
                             }
                         }
+                        else
+                        {
+                            bidx.utils.warn( "No contacts retrieved. Please check filtering" );
+                        }
 
                         // resolve the promise
                         //
-                        deferred.resolve( result );
+                        $d.resolve( result );
 
                     }
 
@@ -883,21 +937,22 @@
 
                         // reject the promise
                         //
-                        deferred.reject( new Error( response ) );
+                        $d.reject( new Error( response ) );
                     }
                 }
             );
 
             // return a promise which will be resolved when the async call is finished
             //
-            return deferred.promise;
+            return $d.promise();
+
         }
 
 
     //  ################################## HELPER #####################################  \\
 
         //  sets any given toolbar and associate toolbar buttons with ID
-        function _setToolbarButtons( id, v, section )
+        function _setToolbarButtons( id, state, v )
         {
             var $toolbar = $views.filter( bidx.utils.getViewName( v ) ).find( ".mail-toolbar" )
             ,   $this
@@ -908,10 +963,12 @@
             $toolbar.find(".btn").each( function()
             {
                 $this =  $ ( this );
-                href = bidx.utils.removeIdFromHash( $this.attr( "href" ) );
-                href = href.replace( "%section%", section );
-                bidx.utils.log("[mail] linked href ", href + id );
-                $this.attr( "href", href + id );
+                href = bidx.utils.removeIdFromHash( $this.attr( "href" ) )
+                        .replace( "%state%", state )
+                        .replace( "%id%", id )
+                ;
+                bidx.utils.log("[mail] linked href ", href );
+                $this.attr( "href", href );
 
             });
         }
@@ -979,116 +1036,150 @@
     // ROUTER
 
 
-
-
-    //var navigate = function( requestedState, section, id )
     function navigate( options )
     {
         bidx.utils.log("[mail] navigate", options);
 
+        // options argument holds 2 key/value pairs:
+        // -   state (which state of the mail app has to be displayed; mbx-inbox, mbx-sent, compose etc...)
+        // -   params; this object holds all remaining url variables. In most cases it consists of:
+        //     + an action
+        //     + an id
+        //
+        // if an ID is provided and but NO action is provided, the state/action will always be READ!
+        //
+        // Example URLs:
+        //     #mail/inbox/action=deleteConfirm&id=3412
+        //     #mail/inbox/action=delete&id=3412
+        //     #mail/inbox/id=3433                      -> read email (no action provided)
+        //     #mail/3433                               -> read email (no action provided)
+        //     #mail/compose
+
         var id
-        ,   state
-        ,   subState
+        ,   action
         ;
 
-        /*
-        - section is most of the the time a section, but it COULD be an ID. Part1 and 2 should then be empty
-        - part1 can be substate OR id
-        - part2 is always an id IF part1 is an substate
+        // state needs to be remembered so that we know in which state of the app we currently are
+        //
+        state = options.state;
+        // default the action will be the state, but can later on be replaced by a value from an action urlparameter
+        //
+        action = options.state;
 
-        Example:
-            #mail/inbox/deleteConfirm/3412
-            #mail/inbox/delete/3412
-            #mail/3433   -> view email
-            #mail/inbox/3433 -> view email
-            #mail/compose
-        */
-
-        //  define section substates, in which we want to make assign part1 as state
-        subState =
+        //  if options.state is an ID, OR params.id exists without an params.action ---> set action  to 'read'
+        //
+        if ( ( ( options.state && options.state.match( /^\d+$/ ) ) ) || ( options.params.id && !options.params.action ) )
         {
-            deleteConfirm:      true
-        ,   delete:             true
-        ,   discardConfirm:     true
-        ,   reply:              true
-        ,   forward:            true
-
-        };
-        section = options.section;
-        //  if options.section is an ID or options.part1 is an ID switch to state 'read'
-        if( ( options.section && options.section.match( /^\d+$/ ) ) || ( options.part1 && options.part1.match( /^\d+$/ ) ) )
-        {
-            //  if section holds the id, transfer its value to id. Otherwise use part1
-            id = ( options.section && options.section.match( /^\d+$/ ) ) ? options.section : options.part1;
-            state = "read";
+            //  if state holds the id, transfer its value to id
+            //
+            id = ( options.state && options.state.match( /^\d+$/ ) ) ? options.state : options.params.id;
+            action = "read";
         }
+        // state holds the actual state, the rest of variables are located in the options.param scope
+        //
         else
         {
-            if( options.part1 && subState[ options.part1 ] )
+            if ( !$.isEmptyObject( options.params ) )
             {
-                state = options.part1;
+                if ( options.params.id )
+                {
+                    id = options.params.id;
+                }
+
+                // when there is no action, do not overwrite default action
+                //
+                if( options.params.action )
+                {
+                    action = options.params.action;
+                }
+
             }
-            else
-            {
-                state = options.section;
-            }
-            id = options.part2;
+
         }
-
-
 
         switch( true )
         {
-            case /^load$/.test( state ):
+            case /^load$/.test( action ):
 
                 _showView( "load" );
 
             break;
 
-            case /^read$/.test( state ):
+            case /^read$/.test( action ):
 
                 _closeModal();
                 _showView( "load" );
 
                 // check if mailbox exists, else reload mailboxes and redraw folder navigation
-                if ( !mailboxes[ section ] )
+                if ( !mailboxes[ action ] )
                 {
-                    bidx.utils.warn("[mail] mailbox ", section, " does not exist, do retrieve mailboxes");
+                    bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
                     // reload mailboxes, without callback
                     //
                     _getMailBoxes();
                 }
-                _getEmail (
-                {
-                    id:             id
-                ,   view:           "read"
 
-                ,   callback: function()
-                    {
-                        _setToolbarButtons( id, state, section );
-                        //_cacheMessage();
-                        _showView( "read" );
-                    }
-                } );
+                // start a promise chain
+                //
+                _getEmail( id )
+                .then( function ( message )
+                {
+                    _initEmail( action, message );
+                    _setToolbarButtons( id, state, action );
+                } )
+                .then( function ( message )
+                {
+                    _showView( "read" );
+                } )
+                .fail( function ( error )
+                {
+                    bidx.utils.log( "Promised failed for loading message", error );
+                } )
+                .done();
 
             break;
 
-            case /^reply$/.test( state ):
-            case /^forward$/.test( state ):
-            case /^compose$/.test( state ):
+            case /^reply$/.test( action ):
+            case /^forward$/.test( action ):
+            case /^compose$/.test( action ):
 
                 _initComposeForm();
 
-                if( state === "reply" || state === "forward" ){
-                    _initForwardOrReply( section, id, state );
+                if( action === "reply" || action === "forward" )
+                {
+                    // if message has not been cached (this happens when you read a message first), get the message directly from the api
+                    //
+                    if( $.isEmptyObject( message ) )
+                    {
+                        // start a promise chain
+                        //
+                        _getEmail( id )
+                        .then( function()
+                        {
+                            // initialize forward or reply for (preloading with message content )
+                            //
+                            _initForwardOrReply( state, id, action );
+                        } )
+                        .fail( function ( error )
+                        {
+                            bidx.utils.log( "Promised failed while fetching message", error );
+                        } )
+                        .done();
+                    }
+                    else
+                    {
+                        // initialize forward or reply for (preloading with message content )
+                        //
+                        _initForwardOrReply( state, id, action );
+                    }
                 }
 
-                _showView( "compose", state );
+                _showView( "compose", action );
 
 
             break;
 
-            case /^deleteConfirm$/.test( state ):
+            case /^deleteConfirm$/.test( action ):
 
                 _showModal(
                 {
@@ -1104,7 +1195,7 @@
 
             break;
 
-            case /^discardConfirm$/.test( state ):
+            case /^discardConfirm$/.test( action ):
 
                 _showModal(
                 {
@@ -1120,7 +1211,7 @@
 
             break;
 
-            case /^delete$/.test( state ):
+            case /^delete$/.test( action ):
                 _closeModal(
                 {
                     unbindHide: true
@@ -1134,7 +1225,7 @@
 
             break;
 
-            case /^delete-multipe$/.test( state ):
+            case /^delete-multipe$/.test( action ):
 
                 _doDelete(
                 {
@@ -1144,7 +1235,7 @@
 
             break;
 
-            case /^contacts$/.test( state ):
+            case /^contacts$/.test( action ):
                 _showView( "load" );
 
 
@@ -1157,7 +1248,7 @@
 
                 // start a promise chain
                 //
-                Q.fcall( _getContacts,
+                _getContacts(
                 {
                     extraUrlParameters:
                     [
@@ -1166,7 +1257,7 @@
                             value: "contact"
                         }
                     ]
-                ,   filter:         [ 'active', 'pending', 'ignored']
+                ,   filter:         [ 'active', 'pending', 'ignored', 'incoming' ]
                 } )
                 .then( function( contacts )
                 {
@@ -1178,7 +1269,7 @@
                 } )
                 .fail( function ( error )
                 {
-                    bidx.utils.log( "Q fail", error );
+                    bidx.utils.log( "Error in promise chain ", error );
                 } )
                 .done();
 
@@ -1187,7 +1278,7 @@
 
             // catch all for mailbox folders; for example mbx-inbox. For convenience I remove the prefix within this closure
             //
-            case /^mbx-/.test( state ):
+            case /^mbx-/.test( action ):
 
                 _closeModal(
                 {
@@ -1196,16 +1287,15 @@
 
                 // For convenience I remove the prefix within to get the mailbox name as it is used within the API. We store the name in the app variable section
                 //
-                section = section.replace( /(^mbx-)/, "" );
-
-                bidx.utils.log( "[mail] requested load of mailbox ", section );
+                action = action.replace( /(^mbx-)/, "" );
+                bidx.utils.log( "[mail] requested load of mailbox ", action );
 
                 _showView( "load" );
 
                 // check if mailbox exists, else reload mailboxes and redraw folder navigation
-                if ( !mailboxes[ section ] )
+                if ( !mailboxes[ action ] )
                 {
-                    bidx.utils.warn("[mail] mailbox ", section, " does not exist, do retrieve mailboxes");
+                    bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
                     _getMailBoxes( _initMailBox );
                 }
                 else
@@ -1244,6 +1334,11 @@
         }
     }
 
+    function reset()
+    {
+
+        state = null;
+    }
 
 
     //expose
@@ -1272,12 +1367,12 @@
     // Make sure the i18n translations for this app are available before initing
     //
     bidx.i18n.load( [ "__global", appName ] )
-        .done( function()
-        {
-            // execute one time setup
-            //
-            _oneTimeSetup();
-        } );
+            .done( function()
+            {
+                // vámonos!!
+                //
+                _oneTimeSetup();
+            } );
 
 
 

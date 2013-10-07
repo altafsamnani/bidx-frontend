@@ -4,7 +4,7 @@
 ( function( $ )
 {
     var bidx = window.bidx = ( window.bidx || {} )
-    ,   state
+    ,   mainState
     ,   $element
     ,   app
     ,   router
@@ -33,6 +33,7 @@
     //
     function _showMainState( s )
     {
+        bidx.utils.log("mainstate", s);
         if ( s.match( /^(edit|create)/ ) && s !== "editBusinessSummary" )
         {
             $( "body" ).addClass( "bidx-edit" );
@@ -99,7 +100,7 @@
 
             // Switch the UI to the app
             //
-            _showMainState( state );
+            _showMainState( mainState );
 
             // Save a reference to the container element of the app
             //
@@ -158,7 +159,8 @@
         ,   'register':                                         'register'
         ,   'resetpassword':                                    'resetpassword'
 
-        ,   'mail(/:section)(/:part1)(/:part2)':                'mail'
+        ,   'mail(/:state)(*splat)':                         'mail'
+        //,   'mail(/:section)(/:part1)(/:part2)':                'mail'
 
         ,   'media(/:appState)(/:id)':                          'media'
 
@@ -173,7 +175,7 @@
 
             bidx.utils.log( "AppRouter::editMember", id, section );
 
-            state   = "editMember";
+            mainState   = "editMember";
 
             _navigateToApp
             (
@@ -190,7 +192,7 @@
         {
             bidx.utils.log( "AppRouter::editEntrepreneur", id, section );
 
-            state       = "editEntrepreneur";
+            mainState       = "editEntrepreneur";
 
             _navigateToApp
             (
@@ -206,7 +208,7 @@
         {
             bidx.utils.log( "AppRouter::createEntrepreneur" );
 
-            state       = "editEntrepreneur";
+            mainState       = "editEntrepreneur";
 
              _navigateToApp
             (
@@ -221,7 +223,7 @@
         {
             bidx.utils.log( "AppRouter::editInvestor", id, section );
 
-            state       = "editInvestor";
+            mainState       = "editInvestor";
 
             _navigateToApp
             (
@@ -238,7 +240,7 @@
         {
             bidx.utils.log( "AppRouter::createInvestor" );
 
-            state       = "editInvestor";
+            mainState       = "editInvestor";
 
              _navigateToApp
             (
@@ -253,7 +255,7 @@
         {
             bidx.utils.log( "AppRouter::editCompany", id, section );
 
-            state       = "editCompany";
+            mainState       = "editCompany";
 
             _navigateToApp
             (
@@ -269,7 +271,7 @@
         {
             bidx.utils.log( "AppRouter::createCompany" );
 
-            state       = "editCompany";
+            mainState       = "editCompany";
 
              _navigateToApp
             (
@@ -284,7 +286,7 @@
         {
             bidx.utils.log( "AppRouter::editBusinessSummary" );
 
-            state   = "editBusinessSummary";
+            mainState   = "editBusinessSummary";
 
             _navigateToApp
             (
@@ -295,19 +297,18 @@
                 }
             );
         }
-    ,   mail:                   function( section, part1, part2 )
+    ,   mail:                   function( state, params )
         {
-            bidx.utils.log( "AppRouter::mailInbox", section );
+            bidx.utils.log( "AppRouter::mailInbox", state, params );
 
-            state = "mail";
+            mainState = "mail";
 
             _navigateToApp
             (
                 "mail"
             ,   {
-                    section:    section
-                ,   part1:      part1
-                ,   part2:      part2
+                    state:    state
+                ,   params:   bidx.utils.url2object( params )
                 }
             );
         }
@@ -315,7 +316,7 @@
         {
             bidx.utils.log( "AppRouter::GroupDashboard", section );
 
-            state = "dashboard";
+            mainState = "dashboard";
 
             _navigateToApp
             (
@@ -332,7 +333,7 @@
         {
             bidx.utils.log( "AppRouter::media", appState, id );
 
-            state       = "media";
+            mainState       = "media";
 
             _navigateToApp
             (
@@ -348,7 +349,7 @@
         {
             bidx.utils.log( "AppRouter::auth", section );
 
-            state = "auth";
+            mainState = "auth";
 
             _navigateToApp
             (
@@ -362,7 +363,7 @@
         {
             bidx.utils.log( "AppRouter::login" );
 
-            state = "login";
+            mainState = "login";
 
             _navigateToApp
             (
@@ -374,7 +375,7 @@
         {
             bidx.utils.log( "AppRouter::register" );
 
-            state = "register";
+            mainState = "register";
 
             _navigateToApp
             (
@@ -386,7 +387,7 @@
         {
             bidx.utils.log( "AppRouter::resetpassword" );
 
-            state = "resetpassword";
+            mainState = "resetpassword";
 
             _navigateToApp
             (
@@ -436,11 +437,11 @@
                     $element.hide();
                 }
 
-                state       = "show";
+                mainState       = "show";
                 app         = null;
                 $element    = null;
 
-                _showMainState( state );
+                _showMainState( mainState );
             }
         }
     } );
