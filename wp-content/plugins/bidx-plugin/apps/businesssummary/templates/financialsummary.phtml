@@ -14,18 +14,22 @@ $financialSummariesItem = <<<EOT
         <div class="fs-cell fs-section-header"></div>
 
         <!-- Sales revenues -->
-        <div class="fs-cell fs-row">
+        <div class="fs-cell fs-row control-group">
             <label class="fs-cell-label">{{lblSalesRevenues}}</label>
-            <input type="text" name="salesRevenue[{{idx}}]" class="view viewEdit">
+            <div class="controls">
+                <input type="text" name="salesRevenue[{{idx}}]" class="view viewEdit">
+            </div>
             <div class="view viewShow value">
                 <span>{{salesRevenue}}</span>
             </div>
         </div>
 
         <!-- Operational Costs -->
-        <div class="fs-cell fs-row">
+        <div class="fs-cell fs-row control-group">
             <label class="fs-cell-label">{{lblOperationalCosts}}</label>
-            <input type="text" name="operationalCosts[{{idx}}]" class="view viewEdit">
+            <div class="controls">
+                <input type="text" name="operationalCosts[{{idx}}]" class="view viewEdit">
+            </div>
             <div class="view viewShow value">
                 <span>{{operationalCosts}}</span>
             </div>
@@ -43,9 +47,11 @@ $financialSummariesItem = <<<EOT
         <div class="fs-cell fs-section-header"></div>
 
         <!-- Finance Needed -->
-        <div class="fs-cell fs-row">
+        <div class="fs-cell fs-row control-group">
             <label class="fs-cell-label">{{lblFinanceNeeded}}</label>
-            <input type="text" name="financeNeeded[{{idx}}]" class="view viewEdit">
+            <div class="controls">
+                <input type="text" name="financeNeeded[{{idx}}]" class="view viewEdit">
+            </div>
             <div class="view viewShow value">
                 <span>{{financeNeeded}}</span>
             </div>
@@ -54,9 +60,11 @@ $financialSummariesItem = <<<EOT
         <div class="fs-cell fs-section-header"></div>
 
         <!-- Number Of Employees -->
-        <div class="fs-cell fs-row">
+        <div class="fs-cell fs-row control-group">
             <label class="fs-cell-label">{{lblNumberOfEmployees}}</label>
-            <input type="text" name="numberOfEmployees[{{idx}}]" class="view viewEdit">
+            <div class="controls">
+                <input type="text" name="numberOfEmployees[{{idx}}]" class="view viewEdit">
+            </div>
             <div class="view viewShow value">
                 <span>{{numberOfEmployees}}</span>
             </div>
@@ -109,12 +117,12 @@ if ( $financialSummaries ) {
         foreach( $years as $year => $yearItem ) {
             $yearDiff = $curYear - $year;
 
-            if ( $yearDiff >= 1 )
+            if ( $yearDiff > 0 )
             {
                 $hasPrevYear = true;
             }
 
-            if ( $yearDiff <= 1 )
+            if ( $yearDiff < 0 )
             {
                 $hasNextYear = true;
             }

@@ -129,7 +129,7 @@
             ,   "numberOfEmployees"
             ,   "operationalCosts"
             ,   "salesRevenue"
-            //  totalIncome is a field, but not a input
+            //  totalIncome is a derived field, but not a input
             ]
         }
     };
@@ -321,10 +321,19 @@
                         required:               true
                     }
                 }
+
+            ,   noIcon:                 true
+
             ,   messages:
                 {
 
                 }
+
+            ,   errorPlacement:         function( $error, $element )
+                {
+                    // NOOP, no error messsage
+                }
+
             ,   submitHandler:        function( e )
                 {
                     _doSave();
@@ -433,6 +442,12 @@
                     {
                         required:               true
                     ,   monetaryAmount:         true
+
+                    ,   messages:
+                        {
+                            required:               ""
+                        ,   monetaryAmount:         ""
+                        }
                     } );
                 } );
             }
