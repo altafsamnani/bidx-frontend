@@ -50,20 +50,35 @@
                 <div class="">
 
                     <!-- TOOLBAR -->
-                    <div class="mail-toolbar bidx-default-bar bidx-theme-colour-one">
+                    <nav class="mail-toolbar bidx-theme-colour-one">
                         <div class="check">
                             <label class="checkbox">
                                 <input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
                             </label>
                         </div>
-                        <div class="btn-group">.
-                            <a class="btn btn-small btn-primary" href="/mail/#mail/delete-multiple"><?php _e('Delete','bidxplugin')?></a>
-                            <a class="btn btn-small btn-primary" href="/mail/#mail/mark-read"><?php _e('Mark as read','bidxplugin')?></a>
-                            <a class="btn btn-small btn-primary" href="/mail/#mail/mark-unread"><?php _e('Mark as unread','bidxplugin')?></a>
+                        <div class="btn-group">
+                                <!-- generic folder buttons -->
+                                <a class="btn btn-small btn-primary btn-delete-multiple" href="/mail/#mail/delete-multiple"><?php _e('Delete','bidxplugin')?></a>
+                                <a class="btn btn-small btn-primary btn-mark-read" href="/mail/#mail/mark-read"><?php _e('Mark as read','bidxplugin')?></a>
+                                <a class="btn btn-small btn-primary btn-mark-unread" href="/mail/#mail/mark-unread"><?php _e('Mark as unread','bidxplugin')?></a>
+
+                                <!-- trash only buttons -->
+                                <a class="btn btn-small btn-primary btn-empty-trash-confirm" href="/mail/#mail/empty-trash-confirm"><?php _e('Empty trash','bidxplugin')?></a>
+                                <div class="btn-group">
+                                    <a class="btn btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <?php _e('Move message to folder','bidxplugin')?>
+                                    <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>dsfdfs</li>
+                                    <!-- dropdown menu links -->
+                                    </ul>
+                              </div>
+
                         </div>
 
 
-                    </div>
+                    </nav>
                     <form action="">
                     <!-- MESSAGE LIST -->
                     <ul class="list media-list ">
@@ -98,13 +113,13 @@
             <!-- read view -->
             <article class="view viewRead">
                   <!-- TOOLBAR -->
-                <div class="mail-toolbar">
+                <nav class="mail-toolbar bidx-theme-colour-one">
                     <div class="btn-group">
-                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
-                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="/mail/#mail/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
-                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="/mail/#mail/%state%/action=deleteConfirm&id=%id%"><?php _e('Delete','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Forward','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="#" data-href="/mail/#mail/%state%/action=deleteConfirm&id=%id%"><?php _e('Delete','bidxplugin')?></a>
                     </div>
-                </div>
+                </nav>
 
                 <div class="row-fluid">
                     <div class="span12 mail-subject"></div>
@@ -313,12 +328,12 @@
                     </div>
                     <div class="modal-body">
                     <p>
-                        <?php _e('You are about to discard this message. Are you sure?','bidxplugin')?>
+                        <?php _e('You are about to delete this message. Are you sure?','bidxplugin')?>
                     </p>
                     </div>
                     <div class="modal-footer">
                         <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close','bidxplugin')?></a>
-                        <a class="btn bidx-default-button" href="/mail/#mail/%section%/delete/"><?php _e('Delete message','bidxplugin')?></a>
+                        <a class="btn bidx-default-button" href="#" data-href="/mail/#mail/%state%/action=doDelete&id=%id%"><?php _e('Delete message','bidxplugin')?></a>
 
                     </div>
                 </div>
@@ -339,9 +354,29 @@
 
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Cancel')?></button>
-                        <a class="btn bidx-default-button" href="/mail/#mail/inbox"><?php _e('Discard message')?></a>
+                        <a class="btn bidx-default-button" href="#" data-href="/mail/#mail/inbox"><?php _e('Discard message')?></a>
                     </div>
 
+                </div>
+            </article>
+
+            <article class="modalView modalEmptyTrashConfirm">
+                <!-- Modal -->
+                <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel"><?php _e('Delete message','bidxplugin')?></h3>
+                    </div>
+                    <div class="modal-body">
+                    <p>
+                        <?php _e('You are about to empty the trash folder. Are you sure?','bidxplugin')?>
+                    </p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close','bidxplugin')?></a>
+                        <a class="btn bidx-default-button" href="#" data-href="/mail/#mail/%state%/action=doEmptyTrash"><?php _e('Empty trash','bidxplugin')?></a>
+
+                    </div>
                 </div>
             </article>
 
@@ -360,11 +395,11 @@
     </div>
     <div class="media-body">
         <div class="row-fluid">
-            <div class="span10"><h6 class="media-heading"><span class="placeholder sendername"><?php _e('SENDER UNKNOWN IN API','bidxplugin')?></span></h6></div>
-            <div class="span2"><span class="placeholder dateSent"/></div>
+            <div class="span10"><h6 class="media-heading"><span>%sendername%</span></h6></div>
+            <div class="span2"><span>%dateSent% %timeSent%</span></div>
         </div>
         <div class="subject">
-            <span class="placeholder subject"/>
+            <span>%subject%</span>
         </div>
     </div>
 </li>

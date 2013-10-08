@@ -308,7 +308,7 @@
                 "mail"
             ,   {
                     state:    state
-                ,   params:   bidx.utils.url2object( params )
+                ,   params:   params ? bidx.utils.url2object( params ) : null
                 }
             );
         }

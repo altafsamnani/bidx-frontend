@@ -59,6 +59,7 @@
         border-top:                         2px solid #E0E0E0;
 
     }
+
     #mail .mail .media-list.list > li:first-child {
         border-top:                         0px;
     }
@@ -75,7 +76,9 @@
         #mail .mail .media-list.list > li .email-new {
             font-weight:                    bold;
         }
-
+        #mail .mail .media-list.list > li .media-heading {
+            margin:                         7px 0 5px;
+        }
 
 
 /* \\ email listing */
@@ -127,11 +130,10 @@
         webkit-box-shadow:                  none;
         -moz-box-shadow:                    none;
         box-shadow:                         none;
-    }
-
-    #mail .mail .mail-toolbar.bidx-default-bar .btn {
         background-color:                   transparent;
     }
+
+
 
 /* \\ read */
 

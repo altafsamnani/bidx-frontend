@@ -233,6 +233,25 @@
         }
     }
 
+    // hide all the toolbar buttons for the toolbar of the vieww
+    //
+    function _hideToolbarButtons( view )
+    {
+        var $view               = $views.filter( bidx.utils.getViewName( view ) )
+        ,   $toolbarButtons     = $view.find( "nav.mail-toolbar .btn" )
+        ;
+        $toolbarButtons.hide();
+    }
+
+    function _showToolbarButtons( view, buttons )
+    {
+        var $view               = $views.filter( bidx.utils.getViewName( view ) )
+        ,   $toolbarButtons     = $view.find( "nav.mail-toolbar .btn" )
+        ;
+        bidx.utils.log("SHOW TOOLBAR BUTTONS");
+        $toolbarButtons.filter( buttons.toString() ).show();
+    }
+
 
     // sync the sidemenu with the current hash value
     //
@@ -267,9 +286,11 @@
 
 
     //  delete email
+    //
     function _doDelete( options )
     {
         var ids;
+
         if( options.id )
         {
             ids = options.id;
@@ -285,23 +306,18 @@
         }
 
         bidx.api.call(
-             "mail.delete"
+             "mailboxMail.delete"
         ,   {
-                mailId:                   ids
+                mailIds:                  ids
             ,   groupDomain:              bidx.common.groupDomain
 
             ,   success: function( response )
                 {
-
-                    if ( response.data && response.data.succeeded )
+                    if ( response && response.code === "emailDeletedOk" )
                     {
-                        bidx.controller.updateHash( "#mail/" + ( options.section ? options.section : "inbox" ), true, false );
+                        bidx.controller.updateHash( "#mail/" + options.state, true, false );
                     }
 
-                    if ( response.data && response.data.failed )
-                    {
-
-                    }
                 }
 
             ,   error: function( jqXhr, textStatus )
@@ -319,6 +335,8 @@
         // initialize the mailbox by loading the content and in the end displaying its view
         function _initMailBox()
         {
+            var buttons
+            ;
             // if for some reason we forgot to remove the mbx- prefix, do it now
             //
             if( state.search( /(^mbx-)/ ) === 0 )
@@ -340,6 +358,28 @@
                     // mark the menu that matches this current page
                     //
                     _setActiveMenu();
+
+                    // enable specific set of toolbar buttons
+                    //
+
+                    if ( state === "trash")
+                    {
+                        buttons = [
+                            ".btn-empty-trash-confirm"
+                        ,   ".dropdown-toggle"
+                        ];
+                    }
+                    else
+                    {
+                        buttons = [
+                            ".btn-delete-multiple"
+                        ,   ".btn-mark-read"
+                        ,   ".btn-mark-unread"
+                        ,   ".dropdown-toggle"
+                        ];
+                    }
+
+                    _showToolbarButtons( "list", buttons );
 
                     // show the listing
                     //
@@ -416,7 +456,7 @@
 
                         $frmCompose.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
 
-                        subject = bidx.i18n.i( "Fwd", appName );
+                        subject = bidx.i18n.i( "Re", appName );
                         $frmCompose.find( "[name=subject]" ).val( subject + ": " + message.subject );
 
                         //  add reply header with timestamp to content
@@ -469,7 +509,7 @@
             var $view                   = $views.filter( ".viewContacts" )
             ,   $lists                  = $view.find( ".list" )
             ,   $pendingList            = $lists.filter( ".pending" )
-            ,   $listItem               = $( $( "#contacts-listitem" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+            ,   $listItem               = $( $( "#contact-request-incoming" ).html().replace( /(<!--)*(-->)*/g, "" ) )
             ,   $listEmpty              = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
             ;
 
@@ -702,9 +742,10 @@
 
             var $view                   = $views.filter( bidx.utils.getViewName( options.view ) )
             ,   $list                   = $view.find( ".list" )
-            ,   $listItem               = $( $( "#mailbox-listitem" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+            ,   listItem               =  $( "#mailbox-listitem" ).html().replace( /(<!--)*(-->)*/g, "" )
             ,   $listEmpty              = $( $( "#mailbox-empty") .html().replace( /(<!--)*(-->)*/g, "" ) )
             ,   messages
+            ,   newListItem
             ;
 
             bidx.api.call(
@@ -721,10 +762,11 @@
 
                 ,   success: function( response )
                     {
-                        if( response.data )
+                        if( response.data && response.data.mail )
                         {
+                            bidx.utils.log("[mail] following emails received", response.data );
                             var item
-                            ,   element
+                            ,   $element
                             ,   cls
                             ,   textValue
                             ,   $checkboxes
@@ -738,57 +780,27 @@
                             //
                             if( response.data.mail.length > 0 )
                             {
-
                                 // loop through response
                                 //
                                 $.each( response.data.mail, function( index, item )
                                 {
-                                    element = $listItem.clone();
+                                    newListItem = listItem;
 
-                                    // search for placeholders in snippet
+                                    // replace placeholders
                                     //
-                                    element.find( ".placeholder" ).each( function( i, el )
-                                    {
-                                        // set sendername
-                                        //
-                                        item.sendername = item.sender.displayName;
-                                        item.read = item.read;
+                                    newListItem = newListItem
+                                            .replace( "%sendername%", "<a href=\"" + document.location.hash +  "/id=" + item.id + "\" class=\"" + (item.read ? "email-new" : "" ) + "\">" + item.sender.displayName + "</a>" )
+                                            .replace( "%dateSent%", bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
+                                            .replace( "%timeSent%", bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
+                                            .replace( "%subject%", item.subject )
+                                    ;
+                                    $element = $( newListItem );
 
-
-                                        //isolate placeholder key
-                                        //
-                                        cls = $(el).attr( "class" ).replace( "placeholder ", "" );
-
-                                        //if key if available in item response
-                                        //
-                                        if( item[cls] )
-                                        {
-
-                                            textValue = item[cls];
-
-                                            //add hyperlink on sendername for now (to read email)
-                                            //
-                                            if( cls === "sendername")
-                                            {
-                                                textValue = "<a href=\"" + document.location.hash +  "/id=" + item.id + "\" class=\"" + (item.read ? "email-new" : "" ) + "\">" + textValue + "</a>";
-                                            }
-                                            if( cls === "dateSent" )
-                                            {
-                                                textValue = bidx.utils.parseTimestampToDateStr( textValue );
-                                            }
-
-                                            // find the other place holders other than the onces specified above
-                                            //
-                                            element.find( "span." + cls ).replaceWith( textValue );
-
-                                        }
-                                    });
-
-                                    element.find( ":checkbox" ).data( "id", item.id );
+                                    $element.find( ":checkbox" ).attr( "data-id", item.id );
 
                                     // add mail element to list
                                     //
-                                    $list.append( element );
+                                    $list.append( $element );
                                 });
 
                                 // load checkbox plugin on element
@@ -838,7 +850,7 @@
 
                                                 if( !listItems[ $this.data( "id" ) ])
                                                 {
-                                                    listItems[ $this.data( "id" ) ] = true ;
+                                                    listItems[ $this.data( "id" ) ] = true;
                                                 }
                                             }
                                         }
@@ -852,7 +864,7 @@
                                         }
                                     } );
                                 } );
-                            }
+                            } // end of handling emails from response
                             else
                             {
                                 $list.append( $listEmpty );
@@ -952,7 +964,8 @@
     //  ################################## HELPER #####################################  \\
 
         //  sets any given toolbar and associate toolbar buttons with ID
-        function _setToolbarButtons( id, state, v )
+        //
+        function _setToolbarButtonsTarget( id, state, v )
         {
             var $toolbar = $views.filter( bidx.utils.getViewName( v ) ).find( ".mail-toolbar" )
             ,   $this
@@ -962,8 +975,10 @@
 
             $toolbar.find(".btn").each( function()
             {
-                $this =  $ ( this );
-                href = bidx.utils.removeIdFromHash( $this.attr( "href" ) )
+                $this = $( this );
+                // get the base href frin data-href and modify it for this message
+                //
+                href = $this.attr( "data-href" )
                         .replace( "%state%", state )
                         .replace( "%id%", id )
                 ;
@@ -977,6 +992,7 @@
     //  ################################## MODAL #####################################  \\
 
         //  show modal view with optionally and ID to be appended to the views buttons
+        //
         function _showModal( options )
         {
             var href;
@@ -986,7 +1002,7 @@
                 var id = options.id;
             }
 
-            bidx.utils.log("OPTIONS", options );
+            bidx.utils.log("[mail] show modal", options );
 
             $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
 
@@ -994,15 +1010,12 @@
 
             $modal.find( ".btn[href]" ).each( function()
             {
-                var $this=$(this);
+                var $this = $( this );
 
-                href = bidx.utils.removeIdFromHash( $this.attr( "href" ) );
-                href = href.replace( "%section%", options.section );
-                $this.attr(
-                    "href"
-                ,   href + ( id ? id : "" )
-                );
-
+                href = $this.attr( "data-href" )
+                        .replace( "%state%", options.state )
+                        .replace( "%id%", options.id );
+                $this.attr( "href", href );
             } );
 
             $modal.modal({});
@@ -1015,6 +1028,7 @@
         }
 
         //  closing of modal view state
+        //
         function _closeModal( options )
         {
             if( $modal)
@@ -1068,7 +1082,7 @@
 
         //  if options.state is an ID, OR params.id exists without an params.action ---> set action  to 'read'
         //
-        if ( ( ( options.state && options.state.match( /^\d+$/ ) ) ) || ( options.params.id && !options.params.action ) )
+        if ( ( ( options.state && options.state.match( /^\d+$/ ) ) ) || (  options.params && options.params.id && !options.params.action ) )
         {
             //  if state holds the id, transfer its value to id
             //
@@ -1125,17 +1139,16 @@
                 .then( function ( message )
                 {
                     _initEmail( action, message );
-                    _setToolbarButtons( id, state, action );
-                } )
-                .then( function ( message )
-                {
-                    _showView( "read" );
+                    _setToolbarButtonsTarget( id, state, action );
                 } )
                 .fail( function ( error )
                 {
                     bidx.utils.log( "Promised failed for loading message", error );
                 } )
-                .done();
+                .done( function ( message )
+                {
+                    _showView( "read" );
+                } );
 
             break;
 
@@ -1144,6 +1157,16 @@
             case /^compose$/.test( action ):
 
                 _initComposeForm();
+
+                // check if mailbox exists, else reload mailboxes and redraw folder navigation
+                if ( !mailboxes[ action ] )
+                {
+
+                    bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
+                    // reload mailboxes, without callback
+                    //
+                    _getMailBoxes();
+                }
 
                 if( action === "reply" || action === "forward" )
                 {
@@ -1185,11 +1208,11 @@
                 {
                     view:       "deleteConfirm"
                 ,   id:         id
-                ,   section:    section
+                ,   state:      state
 
                 ,   onHide: function()
                     {
-                        window.bidx.controller.updateHash( "#mail/" + section + "/" + id, true, false );
+                        window.bidx.controller.updateHash( "#mail/" + state + "/id=" + id, true, false );
                     }
                 } );
 
@@ -1201,7 +1224,7 @@
                 {
                     view:       "discardConfirm"
                 ,   id:         id
-                ,   section:    section
+                ,   state:      state
 
                 ,   onHide: function()
                     {
@@ -1211,7 +1234,22 @@
 
             break;
 
-            case /^delete$/.test( action ):
+            case /^empty-trash-confirm$/.test( action ):
+
+                _showModal(
+                {
+                    view:       "emptyTrashConfirm"
+                ,   state:      state
+
+                ,   onHide: function()
+                    {
+                        window.bidx.controller.updateHash( "#mail/mbx-trash", true, false );
+                    }
+                } );
+
+            break;
+
+            case /^doDelete$/.test( action ):
                 _closeModal(
                 {
                     unbindHide: true
@@ -1220,7 +1258,7 @@
                 _doDelete(
                 {
                     id:     id
-                ,   section: section
+                ,   state:  state
                 } );
 
             break;
@@ -1234,6 +1272,8 @@
                 } );
 
             break;
+
+
 
             case /^contacts$/.test( action ):
                 _showView( "load" );
@@ -1263,15 +1303,14 @@
                 {
                     _initContactListing( contacts );
                 })
-                .then( function()
-                {
-                    _showView( "contacts" );
-                } )
                 .fail( function ( error )
                 {
                     bidx.utils.log( "Error in promise chain ", error );
                 } )
-                .done();
+                .done( function()
+                {
+                    _showView( "contacts" );
+                } );
 
 
             break;
@@ -1291,15 +1330,20 @@
                 bidx.utils.log( "[mail] requested load of mailbox ", action );
 
                 _showView( "load" );
+                _hideToolbarButtons( "list" );
 
                 // check if mailbox exists, else reload mailboxes and redraw folder navigation
                 if ( !mailboxes[ action ] )
                 {
                     bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
+                    // NOTE: #matts; REFACTOR TO PROMISE CONSTRUCTION. The much hidden CallBacks in these functions
+                    //
                     _getMailBoxes( _initMailBox );
                 }
                 else
                 {
+                    // NOTE: #matts; REFACTOR TO PROMISE CONSTRUCTION. The much hidden CallBacks in these functions
+                    //
                     _initMailBox();
                 }
 
