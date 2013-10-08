@@ -51,16 +51,22 @@
     if ( $categories[0]->slug != 'uncategorized' ) :
 ?> 
     <div class="span4 well">
-      <h4><?php echo $categories[0]->name; ?></h4>
-      <ul>
+      <ul class="nav nav-list">
+      <li class="nav-header"><h3><?php echo $categories[0]->name; ?></h3></li>
 <?php
+      $id = get_the_ID();
       // The Query
       query_posts( array ( 'category_name' => $categories[0]->slug, 'posts_per_page' => -1 ) );
       // The Loop
       while ( have_posts() ) : the_post();
+      if ($categories[0]->object_id == $id) { ?>
+        <li class="active"><a href="<?php the_permalink() ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></li>
+<?php 
+      } else {
 ?>
         <li><a href="<?php the_permalink() ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></li>
-<?php 
+<?php
+      }
       endwhile;
       // Reset Query
       wp_reset_query();
