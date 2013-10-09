@@ -38,6 +38,14 @@ $entities       = $this->sessionData->data->wp->entities;
 ?>
             <div class="call-to-action clearfix">
                 <div class="pull-left">
+<?php
+                    printf( __( 'Go to %sInvestor dashboard%s', 'bidxtheme' ), '<a href="/investor-dashboard">', '</a>' );
+?>
+                </div>
+            </div>
+
+            <div class="call-to-action clearfix">
+                <div class="pull-left">
                     <div><strong><?php _e('Create a business summary', 'bidxplugin')?></strong></div>
                    <em><?php _e('Create your business', 'bidxplugin')?></em>
                 </div>
@@ -58,7 +66,18 @@ $entities       = $this->sessionData->data->wp->entities;
                 <a href="/member/#createInvestor" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Invest','bidxplugin')?></a>
             </div>
 <?php
+        } else {
+?>
+            <div class="call-to-action clearfix">
+                <div class="pull-left">
+<?php
+                    printf( __( 'Go to %sEntrepreneur dashboard%s', 'bidxtheme' ), '<a href="/entrepreneur-dashboard">', '</a>' );
+?>
+                </div>
+            </div>
+<?php
         }
+
     }
 
     $this->render('view-group.phtml');
