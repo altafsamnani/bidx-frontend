@@ -1084,12 +1084,27 @@
         {
             e.preventDefault();
 
-            bidx.common.removeAppWithPendingChanges( appName );
-            bidx.controller.updateHash( "" );
+            // In case of a create there doesn't seem to be logical place to go back to, for now just go to the main page
+            //
+            if ( state === "create" )
+            {
+                // Add a redirect note, because the response from the webserver / wp / php is very slow
+                //
+                bidx.common.notifyRedirect();
 
-            reset();
+                // @TODO: whereto in case of cancel of a businesssummary create?
+                //
+                document.location.href = "/";
+            }
+            else
+            {
+                bidx.common.removeAppWithPendingChanges( appName );
+                bidx.controller.updateHash( "" );
 
-            _showView( "show" );
+                reset();
+
+                _showView( "show" );
+            }
         } );
 
         $btnSave.bind( "click", function( e )
@@ -1099,8 +1114,7 @@
             _doSave();
         } );
 
-
-        $btnSave.i18nText( "btnSaveAndView" );
+        $btnSave.i18nText( ( state === "create" ? "btnAddAndView" : "btnSaveAndView" ) );
         $btnCancel.i18nText( "btnCancel" );
 
         $controlsForEdit.empty();
@@ -1127,55 +1141,69 @@
             $lastYear.find( ".btnDelete" ).show();
         }
 
-        // Fetch the business summary
-        //
-        bidx.api.call(
-            "entity.fetch"
-        ,   {
-                entityId:           businessSummaryId
-            ,   groupDomain:        bidx.common.groupDomain
+        if ( state === "edit" )
+        {
+            // Fetch the business summary
+            //
+            bidx.api.call(
+                "entity.fetch"
+            ,   {
+                    entityId:           businessSummaryId
+                ,   groupDomain:        bidx.common.groupDomain
 
-            ,   success: function( response )
-                {
-                    bidx.utils.log( "[BusinessSummary] fetch", businessSummaryId, response );
-
-                    // Do we have edit perms?
-                    //
-                    var bidxMeta    = bidx.utils.getValue( response, "bidxMeta" )
-                    ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
-                    ;
-
-                    if ( !canEdit )
+                ,   success: function( response )
                     {
-                        bidx.i18n.getItem( "noEditPermission", function( err, label )
+                        bidx.utils.log( "[BusinessSummary] fetch", businessSummaryId, response );
+
+                        // Do we have edit perms?
+                        //
+                        var bidxMeta    = bidx.utils.getValue( response, "bidxMeta" )
+                        ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
+                        ;
+
+                        if ( !canEdit )
                         {
-                            _showError( label );
-                        } );
+                            bidx.i18n.getItem( "noEditPermission", function( err, label )
+                            {
+                                _showError( label );
+                            } );
 
-                        $btnCancel.removeClass( "disabled" );
+                            $btnCancel.removeClass( "disabled" );
+                        }
+                        else
+                        {
+                            businessSummary = response;
+
+                            bidx.utils.log( "bidx::businessSummary", businessSummary );
+
+                            _populateScreen();
+
+                            $btnSave.removeClass( "disabled" );
+                            $btnCancel.removeClass( "disabled" );
+
+                            _showView( "edit" );
+                        }
                     }
-                    else
+                ,   error:          function( jqXhr, textStatus )
                     {
-                        businessSummary = response;
+                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                        bidx.utils.log( "bidx::businessSummary", businessSummary );
-
-                        _populateScreen();
-
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
-
-                        _showView( "edit" );
+                        _showError( "Something went wrong while retrieving the businessSummary: " + status );
                     }
                 }
-            ,   error:          function( jqXhr, textStatus )
-                {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+            );
+        }
+        else
+        {
+            businessSummary     = {};
 
-                    _showError( "Something went wrong while retrieving the businessSummary: " + status );
-                }
-            }
-        );
+            _populateScreen();
+
+            $btnSave.removeClass( "disabled" );
+            $btnCancel.removeClass( "disabled" );
+
+            _showView( "edit" );
+        }
     }
 
     // Try to save the businessSummary to the API
@@ -1269,12 +1297,19 @@
                 {
                     bidx.utils.log( "entity.save::success::response", response );
 
+                    var bidxMeta = bidx.utils.getValue( response, "data.bidxMeta" ) || bidx.utils.getValue( response, "data" );
+
+                    if ( state === "create" )
+                    {
+                        businessSummaryId = bidx.utils.getValue( bidxMeta, "ownerId" );
+                    }
+
                     bidx.common.notifyRedirect();
                     bidx.common.removeAppWithPendingChanges( appName );
 
-                    var url = document.location.href.split( "#" ).shift().split( "?" ).shift();
+                    var url = "/businesssummary/" + businessSummaryId + "?rs=true";
 
-                    document.location.href = url + "?rs=true";
+                    document.location.href = url;
                 }
             ,   error:          function( jqXhr )
                 {
@@ -1301,9 +1336,12 @@
 
     // ROUTER
     //
-    var navigate = function( options )
+    function navigate( options )
     {
-        $element.removeClass( "edit" );
+        if ( options.requestedState !== "edit" )
+        {
+            $element.removeClass( "edit" );
+        }
 
         switch ( options.requestedState )
         {
@@ -1381,7 +1419,7 @@
                     } );
             break;
         }
-    };
+    }
 
     // Reset the whole application
     //
@@ -1431,5 +1469,5 @@
         window.bidx = {};
     }
 
-    window.bidx.businessSummary = app;
+    window.bidx.businesssummary = app;
 } ( jQuery ));
