@@ -830,7 +830,7 @@
                 bidx.common.notifyRedirect();
                 bidx.common.removeAppWithPendingChanges( appName );
 
-                var url = "/company/" + companyId;
+                var url = "/company/" + companyId + "?rs=true";
 
                 document.location.href = url;
             }
