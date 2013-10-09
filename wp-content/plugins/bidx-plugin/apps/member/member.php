@@ -48,21 +48,35 @@ class member {
 	function load($atts) {
 
 	    /* 1 Template Rendering */
-	     require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
-	     $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/member/templates/');
+	    require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
+	    $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/member/templates/');
 
-	    /* 2. Service MemberProfile*/
-	    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
-	    $memberObj = new MemberService( );
+		// 3. Determine the view needed
+		$command = $atts['view'];
 
-	    /* 3. Render Member Profile Services for Initial View Display */
-	    $memberData = $memberObj->getMemberDetails(  );
+		switch ( $command ) {
+			case 'entrepreneur-profile-links':
+				$view->render('entrepreneur-profile-links.phtml');
+			break;
 
-	    $view->data = (isset($memberData->data)) ? $memberData->data:NULL;
+			case 'investor-profile-links':
+				$view->render('investor-profile-links.phtml');
+			break;
 
-	    $view->bidxGroupDomain = (isset($memberData->bidxGroupDomain)) ? $memberData->bidxGroupDomain : NULL;
-	    $view->sessionData = BidxCommon::$staticSession;
+			default:
+			    /* 2. Service MemberProfile*/
+			    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
+			    $memberObj = new MemberService( );
 
-      	$view->render('member.phtml');
+			    /* 3. Render Member Profile Services for Initial View Display */
+			    $memberData = $memberObj->getMemberDetails(  );
+
+			    $view->data = (isset($memberData->data)) ? $memberData->data:NULL;
+
+			    $view->bidxGroupDomain = (isset($memberData->bidxGroupDomain)) ? $memberData->bidxGroupDomain : NULL;
+			    $view->sessionData = BidxCommon::$staticSession;
+
+	      		$view->render('member.phtml');
+		}
 	}
 }
