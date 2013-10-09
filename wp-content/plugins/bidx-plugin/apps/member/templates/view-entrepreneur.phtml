@@ -92,15 +92,15 @@ if ($businessSummary) {
             $businessBidxMeta = isset( $business->bidxMeta ) ? $business->bidxMeta : $business;
 
             $collapseId = sprintf ('businessAccordion-%s', $businessBidxMeta->bidxEntityId);
-          
+
             $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
             $useDataSrc = true;
-          
+
             ?>
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#businesses" href="#<?php echo $collapseId ?>">
-                        
+
                         <h4><?php echo $business->name ?></h4>
                         <div class="control-buttons">
                             <span class="bidx-expand">+</span>
@@ -121,7 +121,7 @@ if ($businessSummary) {
                                     $businessSummary = $this->exst ( $business->summary );
                                     $businessCountry = $this->exst ( $business->countryOperation );
                                     $businessIndustry = $this->exst ( $business->industry );
-                                    
+
                                     printf ('<li><h4>%s</h4></li>', $business->name);
 
                                     if ($businessSlogan) {
@@ -135,10 +135,10 @@ if ($businessSummary) {
                                     if ($businessIndustry) {
                                         printf ('<li>%s</li>', $this->getMultiValues ($businessIndustry, ', ', 'industry'));
                                     }
-                                    
+
                                     if ($businessCountry) {
                                         printf ('<li>%s</li>', $this->getMultiValues ($businessCountry, ', ', 'country'));
-                                    }                                   
+                                    }
 
                                     ?>
                                 </ul>
@@ -171,7 +171,6 @@ if ($companies) {
         foreach ($companies as $index => $company) {
 
             $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
-
             $collapseId = sprintf ('companyAccordion-%s', $companyBidxMeta->bidxEntityId);
 
             $useDataSrc = false;
@@ -196,7 +195,7 @@ if ($companies) {
                     <div class="accordion-inner">
                         <div class="btn-group control-buttons">
                         <?php if ($companyBidxMeta->bidxCanEdit) { ?>
-                            <a class="btn btn-primary" href="/company/<?php echo $companyBidxMeta->bidxOwnerId; ?>/#editCompany/<?php echo $companyBidxMeta->bidxOwnerId; ?>">Edit</a>
+                            <a class="btn btn-primary" href="/company/<?php echo $companyBidxMeta->bidxOwnerId; ?>/#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>">Edit</a>
                         <?php } ?>
                         </div>
 
@@ -254,7 +253,7 @@ if ($companies) {
 
                         <div class="bottom-controls">
         <?php
-        $viewMoreLink = "<a href='/company/" . $companyBidxMeta->bidxOwnerId . "'>". __('view more','bidxplugin') ."</a>";
+        $viewMoreLink = "<a href='/company/" . $companyBidxMeta->bidxEntityId . "'>". __('view more','bidxplugin') ."</a>";
         echo $viewMoreLink;
         ?>
                         </div>
