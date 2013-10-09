@@ -182,30 +182,40 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                     <div class="span12">
 
                         <h2><?php _e('Create and grow', 'bidxtheme')?></h2>
-
-                        <div class="call-to-action clearfix">
 <?php
                         // Create entrepreneur
                         //
                         if ( !isset( $entities->bidxEntrepreneurProfile ) ) {
 ?>
+                        <div class="call-to-action clearfix">
                             <div class="pull-left">
                                 <div><strong><?php _e('Become an entrepreneur', 'bidxtheme')?></strong></div>
                                <em><?php _e('Create your business', 'bidxtheme')?></em>
                             </div>
                             <a href="/member/#createEntrepreneur" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxtheme')?></a>
+                        </div>
 <?php
                         } else {
 ?>
+                        <div class="call-to-action clearfix">
                             <div class="pull-left">
 <?php
                                 printf( __( 'View your %sentrepreneur profile%s', 'bidxtheme' ), '<a href="/member/#entrepreneur-profile">', '</a>' );
 ?>
                             </div>
+                        </div>
+
+                        <div class="call-to-action clearfix">
+                            <div class="pull-left">
+                                <div><strong><?php _e('Create a business summary', 'bidxtheme')?></strong></div>
+                               <em><?php _e('Create your business', 'bidxtheme')?></em>
+                            </div>
+                            <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxtheme')?></a>
+                        </div>
 <?php
                         }
  ?>
-                        </div>
+
                         <div class="call-to-action clearfix">
 <?php
                         // Create investor
@@ -313,7 +323,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
     <!-- #########################################################################
                                 Not logged in
     ###########################################################################-->
-<?php 
+<?php
     if (get_theme_mod( 'front_content' )) {
 ?>
     <div class="container">
