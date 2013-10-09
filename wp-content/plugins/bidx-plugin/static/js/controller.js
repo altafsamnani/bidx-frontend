@@ -45,11 +45,9 @@
         $mainStates.hide().filter( ".mainState" + s.charAt( 0 ).toUpperCase() + s.substr( 1 ) ).show();
     }
 
-
-
     // Navigate to a certain app (and state within the app)
     //
-    var _navigateToApp = function( toApp, options )
+    function _navigateToApp( toApp, options )
     {
         var differentApp    = app !== bidx[ toApp ]
         ,   pendingChanges
@@ -111,16 +109,16 @@
                 updateHash( newHash );
             }
         }
-    };
+    }
 
     // Update Hash using Backbone Router. If you wish to also call the route function, set the trigger option to true.
     // To update the URL without creating an entry in the browser's history, set the replace option to true.
     //
-    var updateHash = function ( newHash, trigger, replace )
+    function updateHash( newHash, trigger, replace )
     {
         router.navigate( newHash, trigger, replace );
         bidx.utils.log("hash changed to", newHash );
-    };
+    }
 
     // show the substate of a app that is part of a composite app. NOTE: this function might be redundant if it turns out the the compisite view-app always handles the visibility of its child-apps
     //
