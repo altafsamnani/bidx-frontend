@@ -3,29 +3,12 @@
 $useDataSrc = false;
 $picSrc     = $this->exst($this->company->logo->document);
 
-$companyBidxMeta = isset( $this->company->bidxMeta )
-    ? $this->company->bidxMeta
-    : $this->company;
-
 if (!$picSrc) {
     $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
     $useDataSrc = true;
 }
-
 ?>
-<div class="well profile-block">
-
-    <div class="btn-group controls">
-    <?php if ($companyBidxMeta->bidxCanEdit) { ?>
-        <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxOwnerId; ?>">Edit</a>
-    <?php } ?>
-    </div>
-
-    <h4><?php _e('Company details','bidxplugin'); ?></h4>
-
-    <div class="row-fluid">
-        <div class="span8">
-
+    <div>
 <?php
     $options = array( 'class_label' => 'bidx-label' );
 
@@ -96,5 +79,3 @@ if (!$picSrc) {
         <div class="span4">
             <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
         </div>
-    </div><!-- row -->
-</div><!-- well -->
