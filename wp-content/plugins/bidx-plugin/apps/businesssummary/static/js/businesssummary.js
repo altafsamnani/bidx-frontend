@@ -1282,8 +1282,12 @@
         //
         if ( state === "create" )
         {
-            businessSummary.periodStartDate = bidx.utils.getISODate( bidx.common.getNow() );
+            businessSummary.periodStartDate = bidx.common.getNow().getFullYear() + "-01-01";
         }
+
+        // Make sure the entitytype is set correctly, probably only needed for 'create'
+        //
+        bidx.utils.setValue( businessSummary, "bidxMeta.bidxEntityType", "bidxBusinessSummary" );
 
         // Save the data to the API
         //
@@ -1297,11 +1301,11 @@
                 {
                     bidx.utils.log( "entity.save::success::response", response );
 
-                    var bidxMeta = bidx.utils.getValue( response, "data.bidxMeta" ) || bidx.utils.getValue( response, "data" );
+                    var bidxMeta = bidx.utils.getValue( response, "data.bidxMeta" );
 
                     if ( state === "create" )
                     {
-                        businessSummaryId = bidx.utils.getValue( bidxMeta, "ownerId" );
+                        businessSummaryId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
                     }
 
                     bidx.common.notifyRedirect();
