@@ -512,6 +512,7 @@
                 "summary":
                 {
                     required:                   true
+                ,   maxlength:                  900
                 }
             ,   "focusIndustry":
                 {
