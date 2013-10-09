@@ -70,7 +70,7 @@ class BidxCommon
                     $sessionVars = $this->getSessionVariables ($subDomain);
 
                     if (!$sessionVars) { // If Session set dont do anything
-                        $sessionObj = new SessionService();
+                        $sessionObj = new SessionServicoke();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
 
                         //Set firsttime/new session variables
@@ -105,7 +105,7 @@ class BidxCommon
      */
     public function startSession ()
     {
-        $time = 60; //Default Time for nonactivity and make a new session call again
+        $time = 1800; //Default Time for nonactivity and make a new session call again
 
         $session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
         $this->clearSessionFromParam ($session_id);

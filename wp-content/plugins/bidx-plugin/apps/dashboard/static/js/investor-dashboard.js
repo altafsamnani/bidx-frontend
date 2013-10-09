@@ -1,11 +1,12 @@
 (function($)
 {
-    var $element = $("#investor-dashboard")            
-            , $views = $element.find(".view")
-            , bidx = window.bidx         
-            , currentGroupId = bidx.common.getCurrentGroupId()
-            , currentInvestorId = bidx.common.getInvestorProfileId()
-            ;
+    var $element          = $("#investor-dashboard")
+    ,   $views            = $element.find(".view")
+    ,   bidx              = window.bidx
+    ,   currentGroupId    = bidx.common.getCurrentGroupId()
+    ,   currentInvestorId = bidx.common.getInvestorProfileId()
+    ,   currentUserId     = bidx.common.getCurrentUserId()
+    ;
 
 
     //public functions
@@ -16,18 +17,21 @@
     //
     var getMatch = function(options)
     {
-        var $listItem = $($("#investor-matchitem").html().replace(/(<!--)*(-->)*/g, ""))
-        , $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
-        , $list       = $("." + options.list)        
+        var $listItem   = $($("#investor-matchitem").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $list       = $("." + options.list)
         ;
         var extraUrlParameters =
                 [
                     {
                         label: "investorId",
-                        value: currentInvestorId
+                        value: currentUserId
+                    }
+                  , {
+                        label: "rows",
+                        value: "6"
                     }                    
-                    
-                    , {
+                  , {
                         label: "sort",
                         value: "created desc"
                     }
@@ -95,6 +99,10 @@
                                 {
                                     textValue = '<img src="'+textValue+'"/>';
                                 }
+                                else if( cls === "entityid_l")
+                                {
+                                    textValue = '<a href="/businesssummary/' + textValue + '" >View Proposal</a>';
+                                }
                                
                                 element.find("span." + cls).replaceWith(textValue);
 
@@ -106,6 +114,126 @@
                        
                     });
                     
+                } else
+                {
+                    $list.append($listEmpty);
+                }
+
+                //  execute callback if provided
+                if (options && options.callback)
+                {
+                    options.callback();
+                }
+            }
+
+            , error: function(jqXhr, textStatus)
+            {
+                var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                _showError("Something went wrong while retrieving contactlist of the member: " + status);
+            }
+        }
+        );
+    };
+
+    // function that retrieves group members returned in an array of key/value objects
+    // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
+    //
+    var getPreference = function(options)
+    {
+        var $listItem   = $($("#investor-preferenceitem").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $list       = $("." + options.list)
+        ;
+  
+        bidx.api.call(
+            "entity.fetch"
+          , {
+            entityId          : currentInvestorId
+          , groupDomain       : bidx.common.groupDomain          
+          , success           : function(item)
+            {
+                var item
+                , element
+                , cls
+                , textValue
+                , sep 
+                ;
+                 
+                //clear listing
+                $list.empty();
+               
+                // now format it into array of objects with value and label                
+                if (item)
+                {
+                    
+                    // Member Display
+                    element = $listItem.clone();
+
+                    //search for placeholders in snippit
+                    element.find(".placeholder").each(function(i, el)
+                    {
+
+                        //isolate placeholder key
+                        cls = $(el).attr("class").replace("placeholder ", "");
+
+                        //if key if available in item response
+                        if (item[cls])
+                        {
+                           
+                            var clsArr = {     'focusIndustry':'industry'   ,
+                                               'focusSocialImpact': 'socialImpact',
+                                               'focusEnvImpact': 'envImpact',
+                                               'focusLanguage':'language'    ,
+                                               'focusCountry':'country',
+                                               'focusConsumerType':'consumerType',
+                                               'focusStageBusiness':'stageBusiness',
+                                               'focusGender':'gender' ,
+                                               'investmentType':'investmentType' };
+                           
+                            
+                            if( clsArr.hasOwnProperty(cls)) {
+                                textValue = "";
+                                sep       = "";
+                                $.each(item[cls], function(i,el) {
+                                   bidx.data.getItem(el, clsArr[cls], function(err, label)
+                                    {
+                                       textValue = textValue + sep + label;
+                                       sep = ", ";
+
+                                    });
+                                    
+                                })
+
+                            }
+                             else {
+                                textValue = item[cls];
+                            }
+                            
+                            element.find("div." + cls).replaceWith(textValue);
+
+                           // 
+                            //bidx.i18n.getItem(keySubject, 'templates', function(err, textValue) {
+                            //    $frmCompose.find("[name='subject']").val(labelSubject);
+                            //    element.find("span." + cls).replaceWith(textValue);
+                            //});
+//                                bidx.data.getContext("investorType", function(err, investorTypes)
+//                                {
+//                                    var $noValue = $("<option value='' />");
+//
+//                                    $noValue.i18nText("selectInvestor", appName);
+//                                    $investorType.append($noValue);
+//
+//                                    bidx.utils.populateDropdown($investorType, investorTypes);
+//                                });
+
+                        }
+                    });
+
+                    //  add mail element to list
+                    $list.append(element);
+                   
+
                 } else
                 {
                     $list.append($listEmpty);
@@ -171,7 +299,7 @@
 
 
                 _showView("load");
-               // _showView("goat");
+                _showView("goat");
              
                 getMatch(
                         {
@@ -183,8 +311,17 @@
                                 
                             }
                         });
+                 getPreference(
+                        {
+                            list: "preference"
+                          , view: "preference"
+                          , callback: function()
+                            {
 
+                                _showMainView("preference", "goat");
 
+                            }
+                        });
                 break;
 
         }

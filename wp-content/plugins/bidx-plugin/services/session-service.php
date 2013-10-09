@@ -35,5 +35,25 @@ class SessionService extends APIBridge {
 		return $this->sessionData;
 	}
 
+    /**
+	 * Checks if the user is having particular profile ex Investor, Entrprepneur,
+	 *
+	 * @param String $type Type of profile (investor,entrpreneur etc)
+	 * 
+	 * @return boolean if having profile or not
+	 */
+    function isHavingProfile($type) {
+        $sessionData = BidxCommon::$staticSession;
+        $entities = $sessionData->data->entities;
+        foreach($entities as $value) {
+            if($value->bidxMeta->bidxEntityType == $type) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
 }
 ?>

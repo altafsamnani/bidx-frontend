@@ -42,8 +42,10 @@ class dashboard
         /* 1 Template Rendering */
         require_once(BIDX_PLUGIN_DIR . '/templatelibrary.php');
         $view = new TemplateLibrary (BIDX_PLUGIN_DIR . '/dashboard/templates/');
+
         $sessionData = BidxCommon::$staticSession;
         $view->sessionData = $sessionData;
+      
         //2. Service Group
         //require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
         //$groupSvc = new GroupService( );
@@ -57,7 +59,10 @@ class dashboard
             case 'investor-dashboard':
                 wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 $roles = $sessionData->data->roles;
-                if (in_array ('Investor', $roles)) {
+              
+                $sessionSvc = new SessionService( );
+                $investorProfile = $sessionSvc->isHavingProfile( 'bidxInvestorProfile' );
+                if ($investorProfile) {
 
                     $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
 
