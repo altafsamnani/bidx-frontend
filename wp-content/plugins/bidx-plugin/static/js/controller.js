@@ -319,7 +319,7 @@
             //
             if( params )
             {
-                params = params.replace( /^[/]/, "");
+                params = params.replace( /^[/]/, "" );
                 params = bidx.utils.bidxDeparam( params );
             }
 

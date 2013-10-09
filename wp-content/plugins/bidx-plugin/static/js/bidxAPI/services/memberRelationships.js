@@ -40,26 +40,5 @@
         } );
     };
 
- /*   memberRelationships.save = function( params )
-    {
-        var method = params.memberId ? "PUT" : "POST"
-        ,   url     = baseUrl.replace( "%requesterId%", params.requesterId ) + "/" + params.requesteeId
-        ;
-
-        //to be finished later
-        //api._call(....
-    };
-
-    memberRelationships.destroy = function( params )
-    {
-        var method = "DELETE"
-        ,   url     = baseUrl.replace( "%requesterId%", params.requesterId ) + "/" + params.requesteeId
-        ;
-
-        //to be finished later
-        //api._call(...
-    };*/
-
-
     api.memberRelationships = memberRelationships;
 } )( jQuery );

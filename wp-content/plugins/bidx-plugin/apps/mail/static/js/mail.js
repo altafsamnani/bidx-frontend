@@ -356,6 +356,52 @@
         );
     }
 
+    function _doMoveToFolder( e )
+    {
+        // prevent anchor tag to navigate to href
+        //
+        if( e.preventDefault )
+        {
+            e.preventDefault();
+        }
+
+        var $this = $( this )
+        ,   href  = $this.attr( "href" ).replace( /^[/]/, "" )
+        ;
+
+        // convert back to object
+        //
+        href = bidx.utils.bidxDeparam( href );
+
+        bidx.api.call(
+             "mailbox.move"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   mailboxId:              href.folderId
+            ,   mailIds:                href.mailId
+
+            ,   success: function( response )
+                {
+                    bidx.utils.log("response", response );
+                    if ( response && response.code === "mailboxMoveMailOk" )
+                    {
+                        bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
+                    }
+
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                    _showError( "Something went wrong while retrieving the member: " + status );
+                }
+            }
+        );
+
+
+    }
+
     //  ################################## INIT #####################################  \\
 
         // initialize the mailbox by loading the content and in the end displaying its view
@@ -363,7 +409,7 @@
         {
             var buttons
             ;
-            // if for some reason we forgot to remove the mbx- prefix, do it now
+            // remove the mbx-prefix so we can use the state as a key to match the mailbox
             //
             if( state.search( /(^mbx-)/ ) === 0 )
             {
@@ -462,9 +508,8 @@
                     //
                     case "reply":
 
-                        // get list of recipients
+                        // get list of recipients for this email
                         //
-
                         if ( mailbox === "sent" )
                         {
                             $.each( message.recipients, function( idx, item )
@@ -577,12 +622,51 @@
             // insert mail body in to placeholder of the view
             //
             $currentView.find( ".mail-message").html( mailBody );
-
-
-
         }
 
+        // populate the folder dropdown in the toolbar. Required view name and current emailId or a comma separated list of emailIds
+        //
+        function _initMoveToFolderDropDown( view, mailIds )
+        {
+            if( mailboxes )
+            {
+                var $toolbar        = $views.filter( bidx.utils.getViewName( view ) ).find( ".mail-toolbar" )
+                ,   $dropdown       = $toolbar.find( ".btngroup-move-to-folder .dropdown-menu" )
+                ,   params          = {}
+                ,   $listItem
+                ,   $anchor
+                ;
 
+                // cleaer dropdown
+                //
+                $dropdown.empty();
+
+                // add folders to dropdown
+                //
+                $.each( mailboxes, function( idx, item )
+                {
+                    params.folderId = item.id;
+                    params.mailId   = mailIds;
+
+                    // add listitem with anchortag. Store params in href attribute
+                    //
+                    $listItem   = $( "<li/>" );
+                    $anchor     = $( "<a/>" );
+                    $anchor
+                        .attr( "href", "/" + $.param( params ) )
+                        .i18nText( item.name, appName )
+                    ;
+                    $anchor.bind( "click", _doMoveToFolder );
+
+                    $listItem.append ( $anchor );
+                    $dropdown.append( $listItem );
+                } );
+            }
+            else
+            {
+                bidx.utils.error( "Mailboxes not loaded. Cannot initialize MoveToFolder dropdown" );
+            }
+        }
 
     //  ################################## GETTERS #####################################  \\
 
@@ -694,7 +778,7 @@
                         else
                         {
                             var status = bidx.utils.getValue( response, "status" ) || textStatus;
-                            _showError( "Something went wrong while retrieving the member: " + status );
+                            _showError( "Something went wrong while retrieving the the email: " + status );
                         }
 
                         // reject the promise
@@ -713,7 +797,12 @@
         //
         function _getMailBoxes( cb )
         {
-            bidx.utils.log( "[mail] get mailboxes from API", state );
+            bidx.utils.log( "[mail] fetch mailboxes from API", state );
+
+            // create a promise object
+            //
+            var $d = $.Deferred();
+
             // get all mailfolders for this user
             //
             bidx.api.call(
@@ -723,6 +812,7 @@
                     {
                         if ( response && response.data )
                         {
+                            bidx.utils.log( "[mail] following mailboxes retrieved from API", response.data );
                             // store mailbox folders in local variable mailboxes
                             //
                             $.each( response.data, function( idx, el )
@@ -741,10 +831,16 @@
                             {
                                 cb( response );
                             }
+                            // resolve the promise
+                            //
+                            $d.resolve( response.data );
                         }
                         else
                         {
                             bidx.utils.error( "No mailbox folders retrieved for this user ");
+                            // reject the promise
+                            //
+                            $d.reject( new Error( response ) );
                         }
 
                     }
@@ -754,9 +850,16 @@
                         var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
                         _showError( "Something went wrong while retrieving mailboxes of the member: " + status );
+                         // reject the promise
+                        //
+                        $d.reject( new Error( jqXhr ) );
                     }
                 }
             );
+
+            // return a promise which will be resolved when the async call is finished
+            //
+            return $d.promise();
         }
 
         //  get all emails from selected mailbox
@@ -1004,12 +1107,17 @@
                 $this = $( this );
                 // get the base href frin data-href and modify it for this message
                 //
-                href = $this.attr( "data-href" )
-                        .replace( "%state%", state )
-                        .replace( "%id%", id )
-                ;
-                bidx.utils.log("[mail] linked href ", href );
-                $this.attr( "href", href );
+                if ( $this.attr( "data-href" ) )
+                {
+                    href = $this.attr( "data-href" )
+                            .replace( "%state%", state )
+                            .replace( "%id%", id )
+                    ;
+                    bidx.utils.log("[mail] linked href ", href );
+                    $this.attr( "href", href );
+                }
+
+
 
             });
         }
@@ -1095,8 +1203,10 @@
         //     #mail/3433                               -> read email (no action provided)
         //     #mail/compose
 
-        var id
+        var mailId
         ,   action
+        ,   buttons
+        ,   $pGetMailboxes
         ;
 
         // state needs to be remembered so that we know in which state of the app we currently are
@@ -1110,36 +1220,31 @@
         {
             //  if state holds the id, transfer its value to id
             //
-            id = ( options.state && options.state.match( /^\d+$/ ) ) ? options.state : options.params.id;
+            mailId = ( options.state && options.state.match( /^\d+$/ ) ) ? options.state : options.params.id;
             action = "read";
         }
         // state holds the actual state, the rest of variables are located in the options.param scope
         //
         else
         {
-            bidx.utils.log(1);
             if ( !$.isEmptyObject( options.params ) )
             {
-                bidx.utils.log(2);
                 if ( options.params.id )
                 {
-                    bidx.utils.log(3);
-                    id = options.params.id;
+                    mailId = options.params.id;
                 }
 
                 // only override action when an action is provided in params
                 //
                 if( options.params.action )
                 {
-                    bidx.utils.log(4);
                     action = options.params.action;
                 }
 
             }
 
         }
-        bidx.utils.log("STATE", state);
-        bidx.utils.log("ACTION", action);
+        bidx.utils.log( "[mail] state:", state, " action:", action );
 
         switch( true )
         {
@@ -1153,32 +1258,79 @@
 
                 _closeModal();
                 _showView( "load" );
+                _hideToolbarButtons( action );
 
-                // check if mailbox exists, else reload mailboxes and redraw folder navigation
-                if ( !mailboxes[ action ] )
+                // check if mailbox is not empty, else reload mailboxes and redraw folder navigation
+                //
+                if ( $.isEmptyObject( mailboxes ) )
                 {
                     bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
-                    // reload mailboxes, without callback
+
+                    // reload mailboxes, receiving a promise
                     //
-                    _getMailBoxes();
+                    $pGetMailboxes = _getMailBoxes();
                 }
 
                 // start a promise chain
                 //
-                _getEmail( id )
-                .then( function ( message )
-                {
-                    _initEmail( action, message );
-                    _setToolbarButtonsTarget( id, state, action );
-                } )
-                .fail( function ( error )
-                {
-                    bidx.utils.log( "Promised failed for loading message", error );
-                } )
-                .done( function ( message )
-                {
-                    _showView( "read" );
-                } );
+                _getEmail( mailId )
+                    .then( function ( message )
+                    {
+                        _initEmail( action, message );
+
+                        // enable specific set of toolbar buttons
+                        //
+                        buttons = [
+                            ".btn-reply"
+                        ,   ".btn-forward"
+                        ,   ".btn-delete"
+                        ];
+                        if ( state !== "mbx-sent")
+                        {
+                           buttons.push( ".btn-move-to-folder" );
+                        }
+
+                        _showToolbarButtons( action, buttons );
+
+                        _setToolbarButtonsTarget( mailId, state, action );
+
+                        // check if $pGetMailboxes is a Deferred object with a promise function
+                        if( $pGetMailboxes && $pGetMailboxes.promise )
+                        {
+                            // if promise is resolved, the mailboxes have been retrieved
+                            //
+                            $pGetMailboxes
+                                .fail( function()
+                                {
+                                    _showError( "mailboxes not retrieved, MoveToFolder dropdown not initialized");
+                                } )
+                                .done( function()
+                                {
+                                    // init the folder-dropdown of the toolbar
+                                    //
+                                    _initMoveToFolderDropDown( action, mailId );
+                                    // mark the menu that matches this current page
+                                    //
+                                    _setActiveMenu();
+                                } );
+
+                        }
+                        else
+                        {
+                            // init the folder-dropdown of the toolbar
+                            //
+                            _initMoveToFolderDropDown( action, mailId );
+                        }
+
+                    } )
+                    .fail( function ( error )
+                    {
+                        bidx.utils.log( "Promised failed for loading message", error );
+                    } )
+                    .done( function ( message )
+                    {
+                        _showView( "read" );
+                    } );
 
             break;
 
@@ -1188,8 +1340,9 @@
 
                 _initComposeForm();
 
-                // check if mailbox exists, else reload mailboxes and redraw folder navigation
-                if ( !mailboxes[ action ] )
+                // check if mailbox is not empty, else reload mailboxes and redraw folder navigation
+                //
+                if ( $.isEmptyObject( mailboxes ) )
                 {
 
                     bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
@@ -1206,12 +1359,12 @@
                     {
                         // start a promise chain
                         //
-                        _getEmail( id )
+                        _getEmail( mailId )
                         .then( function()
                         {
                             // initialize forward or reply for (preloading with message content )
                             //
-                            _initForwardOrReply( state, id, action );
+                            _initForwardOrReply( state, mailId, action );
                         } )
                         .fail( function ( error )
                         {
@@ -1223,7 +1376,7 @@
                     {
                         // initialize forward or reply for (preloading with message content )
                         //
-                        _initForwardOrReply( state, id, action );
+                        _initForwardOrReply( state, mailId, action );
                     }
                 }
 
@@ -1237,12 +1390,12 @@
                 _showModal(
                 {
                     view:       "deleteConfirm"
-                ,   id:         id
+                ,   id:         mailId
                 ,   state:      state
 
                 ,   onHide: function()
                     {
-                        window.bidx.controller.updateHash( "#mail/" + state + "/id=" + id, true, false );
+                        window.bidx.controller.updateHash( "#mail/" + state + "/id=" + mailId, true, false );
                     }
                 } );
 
@@ -1253,7 +1406,7 @@
                 _showModal(
                 {
                     view:       "discardConfirm"
-                ,   id:         id
+                ,   id:         mailId
                 ,   state:      state
 
                 ,   onHide: function()
@@ -1287,7 +1440,7 @@
 
                 _doEmptyTrash(
                 {
-                    id:     id
+                    id:     mailId
                 ,   state:  state
                 } );
 
@@ -1301,7 +1454,7 @@
 
                 _doDelete(
                 {
-                    id:     id
+                    id:     mailId
                 ,   state:  state
                 } );
 
@@ -1311,7 +1464,7 @@
 
                 _doDelete(
                 {
-                    id:     id
+                    id:     mailId
                 ,   section: section
                 } );
 
@@ -1370,7 +1523,7 @@
 
                 // For convenience I remove the prefix within to get the mailbox name as it is used within the API. We store the name in the app variable section
                 //
-                action = action.replace( /(^mbx-)/, "" );
+                //action = action.replace( /(^mbx-)/, "" );
                 bidx.utils.log( "[mail] requested load of mailbox ", action );
 
                 _showView( "load" );

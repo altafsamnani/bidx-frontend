@@ -61,13 +61,10 @@
                                 <a class="btn btn-small btn-primary btn-delete-multiple" href="/mail/#mail/delete-multiple"><?php _e('Delete','bidxplugin')?></a>
                                 <a class="btn btn-small btn-primary btn-mark-read" href="/mail/#mail/mark-read"><?php _e('Mark as read','bidxplugin')?></a>
                                 <a class="btn btn-small btn-primary btn-mark-unread" href="/mail/#mail/mark-unread"><?php _e('Mark as unread','bidxplugin')?></a>
-
-                                <!-- trash only buttons -->
-                                <a class="btn btn-small btn-primary btn-empty-trash-confirm" href="/mail/#mail/empty-trash-confirm"><?php _e('Empty trash','bidxplugin')?></a>
-                                <div class="btn-group">
+                                <div class="btn-group btn-move-to-folder">
                                     <a class="btn btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <?php _e('Move message to folder','bidxplugin')?>
-                                    <span class="caret"></span>
+                                        <?php _e('Move message to folder','bidxplugin')?>
+                                        <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>dsfdfs</li>
@@ -75,6 +72,8 @@
                                     </ul>
                               </div>
 
+                                <!-- trash only buttons -->
+                                <a class="btn btn-small btn-primary btn-empty-trash-confirm" href="/mail/#mail/empty-trash-confirm"><?php _e('Empty trash','bidxplugin')?></a>
                         </div>
 
 
@@ -115,9 +114,18 @@
                   <!-- TOOLBAR -->
                 <nav class="mail-toolbar bidx-theme-colour-one">
                     <div class="btn-group">
-                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
-                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Forward','bidxplugin')?></a>
-                        <a class="btn btn-small btn-primary bidx-theme-colour-one" href="#" data-href="/mail/#mail/%state%/action=deleteConfirm&id=%id%"><?php _e('Delete','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary btn-reply" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary btn-forward" href="#" data-href="/mail/#mail/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
+                        <a class="btn btn-small btn-primary btn-delete" href="#" data-href="/mail/#mail/%state%/action=deleteConfirm&id=%id%"><?php _e('Delete','bidxplugin')?></a>
+                        <div class="btn-group btngroup-move-to-folder">
+                            <a class="btn btn-small btn-primary btn-move-to-folder dropdown-toggle" data-toggle="dropdown" href="#">
+                                <?php _e('Move message to folder','bidxplugin')?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- dropdown menu links -->
+                            </ul>
+                      </div>
                     </div>
                 </nav>
 
@@ -136,16 +144,14 @@
 
             <!-- Compose view -->
             <article class="view viewCompose">
-                    <h2>
-                        <span class="title titleCompose"><?php _e('Create a new e-mail')?></span>
-                        <span class="title titleReply"><?php _e('Reply to message')?></span>
-                    </h2>
+                <h2>
+                    <span class="title titleCompose"><?php _e('Create a new e-mail')?></span>
+                    <span class="title titleReply"><?php _e('Reply to message')?></span>
+                    <span class="title titleForward"><?php _e('Forward message')?></span>
+                </h2>
 
 
                 <form action="">
-
-
-
                     <div class="row-fluid">
                         <div class="control-group">
 
@@ -373,7 +379,7 @@
                     </p>
                     </div>
                     <div class="modal-footer">
-                        <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close','bidxplugin')?></a>
+                        <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Cancel','bidxplugin')?></a>
                         <a class="btn bidx-default-button" href="#" data-href="/mail/#mail/%state%/action=doEmptyTrash"><?php _e('Empty trash','bidxplugin')?></a>
 
                     </div>
