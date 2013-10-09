@@ -183,63 +183,9 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
                         <h2><?php _e('Create and grow', 'bidxtheme')?></h2>
 <?php
-                        // Create entrepreneur
-                        //
-                        if ( !isset( $entities->bidxEntrepreneurProfile ) ) {
+                            echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
+                            echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
 ?>
-                        <div class="call-to-action clearfix">
-                            <div class="pull-left">
-                                <div><strong><?php _e('Become an entrepreneur', 'bidxtheme')?></strong></div>
-                               <em><?php _e('Create your business', 'bidxtheme')?></em>
-                            </div>
-                            <a href="/member/#createEntrepreneur" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxtheme')?></a>
-                        </div>
-<?php
-                        } else {
-?>
-                        <div class="call-to-action clearfix">
-                            <div class="pull-left">
-<?php
-                                printf( __( 'View your %sentrepreneur profile%s', 'bidxtheme' ), '<a href="/member/#entrepreneur-profile">', '</a>' );
-?>
-                            </div>
-                        </div>
-
-                        <div class="call-to-action clearfix">
-                            <div class="pull-left">
-                                <div><strong><?php _e('Create a business summary', 'bidxtheme')?></strong></div>
-                               <em><?php _e('Create your business', 'bidxtheme')?></em>
-                            </div>
-                            <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxtheme')?></a>
-                        </div>
-<?php
-                        }
-?>
-                        <div class="call-to-action clearfix">
-<?php
-                        // Create investor
-                        //
-                        if ( !isset( $entities->bidxInvestorProfile )) {
-?>
-
-                                <div class="pull-left">
-                                    <div><strong><?php _e('Become an investor', 'bidxtheme')?></strong></div>
-                                    <em><?php _e('Create your resources', 'bidxtheme')?></em>
-                                </div>
-                                <a href="/member/#createInvestor" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Invest','bidxtheme')?></a>
-
-<?php
-                        } else {
-?>
-                            <div class="pull-left">
-<?php
-                                printf( __( 'View your %sinvestor profile%s', 'bidxtheme' ), '<a href="/member/#investor-profile">', '</a>' );
-?>
-                            </div>
-<?php
-                        }
- ?>
-                        </div>
                         <hr>
 
                         <div class="call-to-action transparent clearfix">
