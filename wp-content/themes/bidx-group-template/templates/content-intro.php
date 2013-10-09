@@ -1,7 +1,7 @@
 <?php
 
-    $sessionData = BidxCommon::$staticSession;
-    $entities = $sessionData->data->wp->entities;
+    $sessionData    = BidxCommon::$staticSession;
+    $entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
 
     $authenticated=false;
     if ($sessionData->authenticated == 'true') {
@@ -214,8 +214,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                         </div>
 <?php
                         }
- ?>
-
+?>
                         <div class="call-to-action clearfix">
 <?php
                         // Create investor
