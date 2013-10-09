@@ -420,27 +420,139 @@
         return result;
     };
 
-    // converts a query URL ( /key=value&key2=value2 OR ?key=one&key2=two )
+    // Section: Deparam (from string)
+    // Borrowed from: https://github.com/cowboy/jquery-bbq/blob/master/jquery.ba-bbq.js
     //
-    var url2object = function( urlVariables )
+    // Method: jQuery.deparam
+    //
+    // Deserialize a params string into an object, optionally coercing numbers,
+    // booleans, null and undefined values; this method is the counterpart to the
+    // internal jQuery.param method.
+    //
+    // Usage:
+    //
+    // > jQuery.deparam( params [, coerce ] );
+    //
+    // Arguments:
+    //
+    //  params - (String) A params string to be parsed.
+    //  coerce - (Boolean) If true, coerces any numbers or true, false, null, and
+    //    undefined to their actual value. Defaults to false if omitted.
+    //
+    // Returns:
+    //
+    //  (Object) An object representing the deserialized params string.
+    //
+    var bidxDeparam = function ( params, coerce )
     {
-        if ( !urlVariables )
+        var obj = {},
+        coerce_types = { 'true': !0, 'false': !1, 'null': null },
+        decode = decodeURIComponent; // #msp: added decode shortcut which is used in original code
+
+        // Iterate over all name=value pairs.
+        $.each( params.replace( /\+/g, ' ' ).split( '&' ), function(j,v)
         {
-            bidx.utils.warn( "No value provided for url2object function" );
-            return {};
-        }
+            var param = v.split( '=' ),
+            key = decode( param[0] ),
+            val,
+            cur = obj,
+            i = 0,
 
-        // remove leading forward slash or questionmark and decode the urlVariables string
-        //
-        var decodedString = decodeURI( urlVariables.replace( /[?/]/g , "" ) );
+            // If key is more complex than 'foo', like 'a[]' or 'a[b][c]', split it
+            // into its component parts.
+            keys = key.split( '][' ),
+            keys_last = keys.length - 1;
 
-        // convert qyery oaran to object
-        //
-        return $.parseJSON( '{"' + decodedString
-                .replace( /&/g, '","' )
-                .replace( /=/g, '":"' ) + '"}' )
-        ;
+            // If the first keys part contains [ and the last ends with ], then []
+            // are correctly balanced.
+            if ( /\[/.test( keys[0] ) && /\]$/.test( keys[ keys_last ] ) )
+            {
+                // Remove the trailing ] from the last keys part.
+                keys[ keys_last ] = keys[ keys_last ].replace( /\]$/, '' );
+
+                // Split first keys part into two parts on the [ and add them back onto
+                // the beginning of the keys array.
+                keys = keys.shift().split('[').concat( keys );
+
+                keys_last = keys.length - 1;
+            }
+            else
+            {
+                // Basic 'foo' style key.
+                keys_last = 0;
+            }
+
+            // Are we dealing with a name=value pair, or just a name?
+            if ( param.length === 2 )
+            {
+                val = decode( param[1] );
+
+                // Coerce values.
+                if ( coerce )
+                {
+                  val = val && !isNaN(val)            ? +val              // number
+                    : val === 'undefined'             ? undefined         // undefined
+                    : coerce_types[val] !== undefined ? coerce_types[val] // true, false, null
+                    : val;                                                // string
+                }
+
+                if ( keys_last )
+                {
+                  // Complex key, build deep object structure based on a few rules:
+                  // * The 'cur' pointer starts at the object top-level.
+                  // * [] = array push (n is set to array length), [n] = array if n is
+                  //   numeric, otherwise object.
+                  // * If at the last keys part, set the value.
+                  // * For each keys part, if the current level is undefined create an
+                  //   object or array based on the type of the next keys part.
+                  // * Move the 'cur' pointer to the next level.
+                  // * Rinse & repeat.
+                  for ( ; i <= keys_last; i++ ) {
+                    key = keys[i] === '' ? cur.length : keys[i];
+                    cur = cur[key] = i < keys_last
+                      ? cur[key] || ( keys[i+1] && isNaN( keys[i+1] ) ? {} : [] )
+                      : val;
+                  }
+
+                }
+                else
+                {
+                    // Simple key, even simpler rules, since only scalars and shallow
+                    // arrays are allowed.
+
+                    if ( $.isArray( obj[key] ) )
+                    {
+                        // val is already an array, so push on the next value.
+                        obj[key].push( val );
+
+                    }
+                    else if ( obj[key] !== undefined )
+                    {
+                        // val isn't an array, but since a second value has been specified,
+                        // convert val into an array.
+                        obj[key] = [ obj[key], val ];
+
+                    }
+                    else
+                    {
+                        // val is a scalar.
+                        obj[key] = val;
+                    }
+                }
+
+            }
+            else if ( key )
+            {
+                // No value was defined, so set something meaningful.
+                obj[key] = coerce
+                  ? undefined
+                  : '';
+            }
+        } );
+
+        return obj;
     };
+
 
     // Get safely a value from a JS object by specifying the property path as
     // a string
@@ -728,8 +840,7 @@
     ,   generateId:                 generateId
     ,   prefixUrlWithProtocol:      prefixUrlWithProtocol
     ,   normalizeLinkedInUrl:       normalizeLinkedInUrl
-    ,   url2object:                 url2object
-
+    ,   bidxDeparam:                bidxDeparam
     ,   log:                        log
     ,   warn:                       warn
     ,   error:                      error
