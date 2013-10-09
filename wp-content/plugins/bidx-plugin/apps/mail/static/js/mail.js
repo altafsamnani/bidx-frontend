@@ -248,7 +248,7 @@
         var $view               = $views.filter( bidx.utils.getViewName( view ) )
         ,   $toolbarButtons     = $view.find( "nav.mail-toolbar .btn" )
         ;
-        bidx.utils.log("SHOW TOOLBAR BUTTONS");
+
         $toolbarButtons.filter( buttons.toString() ).show();
     }
 
@@ -316,6 +316,32 @@
                     if ( response && response.code === "emailDeletedOk" )
                     {
                         bidx.controller.updateHash( "#mail/" + options.state, true, false );
+                    }
+
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                    _showError( "Something went wrong while retrieving the member: " + status );
+                }
+            }
+        );
+    }
+
+    function _doEmptyTrash( options )
+    {
+        bidx.api.call(
+             "mailboxEmptyTrash.empty"
+        ,   {
+                groupDomain:              bidx.common.groupDomain
+
+            ,   success: function( response )
+                {
+                    if ( response && response.code === "mailboxEmptyTrashOk" )
+                    {
+                        bidx.controller.updateHash( "#mail/mbx-trash", true, false );
                     }
 
                 }
@@ -1074,11 +1100,9 @@
         ;
 
         // state needs to be remembered so that we know in which state of the app we currently are
-        //
-        state = options.state;
         // default the action will be the state, but can later on be replaced by a value from an action urlparameter
         //
-        action = options.state;
+        state = action = options.state;
 
         //  if options.state is an ID, OR params.id exists without an params.action ---> set action  to 'read'
         //
@@ -1093,23 +1117,29 @@
         //
         else
         {
+            bidx.utils.log(1);
             if ( !$.isEmptyObject( options.params ) )
             {
+                bidx.utils.log(2);
                 if ( options.params.id )
                 {
+                    bidx.utils.log(3);
                     id = options.params.id;
                 }
 
-                // when there is no action, do not overwrite default action
+                // only override action when an action is provided in params
                 //
                 if( options.params.action )
                 {
+                    bidx.utils.log(4);
                     action = options.params.action;
                 }
 
             }
 
         }
+        bidx.utils.log("STATE", state);
+        bidx.utils.log("ACTION", action);
 
         switch( true )
         {
@@ -1245,6 +1275,20 @@
                     {
                         window.bidx.controller.updateHash( "#mail/mbx-trash", true, false );
                     }
+                } );
+
+            break;
+
+            case /^doEmptyTrash$/.test( action ):
+                _closeModal(
+                {
+                    unbindHide: true
+                } );
+
+                _doEmptyTrash(
+                {
+                    id:     id
+                ,   state:  state
                 } );
 
             break;

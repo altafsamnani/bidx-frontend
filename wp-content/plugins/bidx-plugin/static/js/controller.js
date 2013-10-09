@@ -313,10 +313,16 @@
 
     ,   mail:                   function( state, params )
         {
-            bidx.utils.log( "AppRouter::mailInbox", state, params );
+            bidx.utils.log( "AppRouter::mailInbox State: ", state, " params: ", params );
+
             // remove leading forward slash from the splat
             //
-            params = params.replace( /^[/]/, "");
+            if( params )
+            {
+                params = params.replace( /^[/]/, "");
+                params = bidx.utils.bidxDeparam( params );
+            }
+
 
             mainState = "mail";
 
@@ -325,7 +331,7 @@
                 "mail"
             ,   {
                     state:    state
-                ,   params:   params ? bidx.utils.bidxDeparam( params ) : null
+                ,   params:   params
                 }
             );
         }

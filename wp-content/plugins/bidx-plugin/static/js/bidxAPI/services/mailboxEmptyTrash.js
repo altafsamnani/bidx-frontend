@@ -13,9 +13,9 @@
     ;
 
 
-    mailboxEmptyTrash.fetch = function( params )
+    mailboxEmptyTrash.empty = function( params )
     {
-        var method = "GET"
+        var method = "POST"
         ;
 
         api._call(
@@ -41,11 +41,6 @@
             }
         } );
     };
-
-
-
-
-
 
 
     api.mailboxEmptyTrash = mailboxEmptyTrash;
