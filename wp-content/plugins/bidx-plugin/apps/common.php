@@ -58,7 +58,7 @@ class BidxCommon
         if (!$is_ajax) {
             // To check whther its login page or q= redirect already checked session.
             $isWordpress = $this->isWordpressPage ();
-    
+
             if (!$isWordpress) {
 
                 //Start the session to store Bidx Session
@@ -89,9 +89,9 @@ class BidxCommon
                 $this->processEntities ($subDomain);
 
                 $scriptValue = $this->injectJsVariables ($subDomain);
-                $this->setScriptJs ($subDomain, $scriptValue);                
+                $this->setScriptJs ($subDomain, $scriptValue);
             }
-          
+
 
         }
 
@@ -293,7 +293,6 @@ class BidxCommon
          */
         //$this->getWordpressLogin($jsSessionData);
 
-
         if (is_array ($hostAddress)) {
 
             //Redirect URL Logic
@@ -335,24 +334,9 @@ class BidxCommon
                     $businessSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
 
                     if ($businessSummaryId) {
-                        $data->bidxBusinessSummary = $businessSummaryId;
+                        $data->businessSummaryId = $businessSummaryId;
                         $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
-                        $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $businessSummaryId;
-                    } else {
-                        $redirect = 'auth'; //To redirect /member and not loggedin page to /login
-                        $statusMsgId = 1;
-                    }
-
-                    break;
-
-                case 'business':
-
-                    $bpSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
-
-                    if ($bpSummaryId) {
-                        $data->bidxBusinessSummary = $bpSummaryId;
-                        $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
-                        $this::$bidxSession[$subDomain]->bidxBusinessSummaryId = $bpSummaryId;
+                        $this::$bidxSession[$subDomain]->businessSummaryId = $businessSummaryId;
                     } else {
                         $redirect = 'auth'; //To redirect /member and not loggedin page to /login
                         $statusMsgId = 1;
@@ -360,7 +344,6 @@ class BidxCommon
 
                     break;
             }
-
 
             if ($jsSessionData) {
                 $authenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
@@ -486,7 +469,7 @@ class BidxCommon
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $params = $_GET;
         $currentUser = wp_get_current_user ();
-     
+
         //echo $currentUser;exit;
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
         if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) ||
@@ -687,7 +670,7 @@ class BidxCommon
             $countMessage++;
             $transientI18nData['templates'][$countMessage]->value = $message->name.'body';
             $transientI18nData['templates'][$countMessage]->label = $body;
-            
+
             $countMessage++;
         }
 

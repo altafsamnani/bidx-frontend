@@ -41,9 +41,13 @@ class businesssummary
         require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
         $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/businesssummary/templates/');
 
+        $sessionData = BidxCommon::$staticSession;
+
         $businessSummaryId = null;
         if (isset ($atts) && isset ($atts['id'])) {
             $businessSummaryId = $atts['id'];
+        } else if (isset ($sessionData->businessSummaryId)) {
+            $businessSummaryId = $sessionData->businessSummaryId;
         }
 
         if ( !is_null( $businessSummaryId )) {
