@@ -1,3 +1,6 @@
+<?php 
+
+?>
 <header class="banner navbar navbar-fixed-top" role="banner">
   	<div class="navbar-inner bidx-theme-colour-header">
 		<div class="container">
@@ -33,7 +36,6 @@
 						<div class="span6">
 							<a href="/auth/#auth/login" class="btn btn-primary btn-block bidx-theme-colour-one"><i class="bidx-login"></i><?php _e('Login','bidxtheme');?></a>
 						</div>
-
 					</div>
 				</div>
 <?php
@@ -41,18 +43,28 @@
 			 	if( $authenticated )
 				{
 ?>
-
 				<nav class="nav-collapse collapse menu-main">
 <?php
-						if (has_nav_menu('primary_navigation')) :
-							wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav'));
-						endif;
+					if (has_nav_menu('primary_navigation')) :
+						wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav'));
+					endif;
 ?>
 				</nav>
 <?php
-				}
- ?>
-			</div>
+				} else {
+?>
+				<nav class="nav-collapse collapse menu-main">
+<?php
+					if (has_nav_menu('primary_notloggedin_navigation')) :
+						wp_nav_menu(array('theme_location' => 'primary_notloggedin_navigation', 'menu_class' => 'nav'));
+					endif;
+?>
+				</nav> 
+<?php
+				} 
+?>
+ 
+ 			</div>
 		</div>
 	</div>
 	<div class="white-spacer"></div>
