@@ -289,7 +289,7 @@
 
             _navigateToApp
             (
-                "businessSummary"
+                "businesssummary"
             ,   {
                     requestedState: "edit"
                 ,   id:             id
