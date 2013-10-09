@@ -200,7 +200,7 @@
         {
             $.each( fields.previousInvestments, function( j, f )
             {
-                var $input  = $previousInvestment.find( "[name='" + inputNamePrefix + "." + f + "']" )
+                var $input  = $previousInvestment.find( "[name='" + f + "']" )
                 ,   value   = bidx.utils.getValue( previousInvestment, f )
                 ;
 
