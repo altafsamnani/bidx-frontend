@@ -180,7 +180,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                                 <!-- Equity Retained -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Percentage equity your currently retain ( optional )','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Percentage equity your currently retain','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <input type="text" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
                                     </div>
@@ -631,7 +631,13 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- SHOW -->
                         <div class="view viewShow">
-                            show
+<?php
+                        if ( $companyId ) {
+                            echo do_shortcode( sprintf( '[bidx app="company" id="%d"]', $companyId ) );
+                        } else {
+                            _e( 'This business summary doesn\'t have a company', 'bidxplugin' );
+                        }
+?>
                         </div>
 
                         <!-- LOAD -->
