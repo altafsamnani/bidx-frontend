@@ -38,20 +38,26 @@ class businesssummary
     function load($atts) {
 
         /* 1 Template Rendering */
-         require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
-         $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/businesssummary/templates/');
+        require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
+        $view = new TemplateLibrary(BIDX_PLUGIN_DIR.'/businesssummary/templates/');
 
-        /* 2. Service Business Summary (entity)*/
-        require_once( BIDX_PLUGIN_DIR .'/../services/businesssummary-service.php' );
-        $businessSummaryObj = new BusinessSummaryService( );
+        $businessSummaryId = null;
+        if (isset ($atts) && isset ($atts['id'])) {
+            $businessSummaryId = $atts['id'];
+        }
 
-        /* 3. Render Services for Initial View Display */
-        $businessSummaryData = $businessSummaryObj->getSummaryDetails( );
+        if ( !is_null( $businessSummaryId )) {
+            /* 2. Service Business Summary (entity)*/
+            require_once( BIDX_PLUGIN_DIR .'/../services/businesssummary-service.php' );
+            $businessSummaryObj = new BusinessSummaryService( );
 
-        $view->data = $businessSummaryData->data;
+            /* 3. Render Services for Initial View Display */
+            $businessSummaryData = $businessSummaryObj->getSummaryDetails( );
+
+            $view->data = $businessSummaryData->data;
+        }
 
         $view->render('businesssummary.phtml');
-
     }
 }
 
