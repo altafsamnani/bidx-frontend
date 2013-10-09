@@ -150,6 +150,7 @@
         ,   'createCompany':                                    'createCompany'
 
         ,   'editBusinessSummary(/:id)':                        'editBusinessSummary'
+        ,   'createBusinessSummary':                            'createBusinessSummary'
 
         ,   'auth(/:section)':                                  'auth'
 
@@ -295,6 +296,21 @@
                 }
             );
         }
+    ,   createBusinessSummary:          function()
+        {
+            bidx.utils.log( "AppRouter::createBusinessSummary" );
+
+            mainState       = "editBusinessSummary";
+
+             _navigateToApp
+            (
+                "businesssummary"
+            ,   {
+                    requestedState: "create"
+                }
+            );
+        }
+
     ,   mail:                   function( state, params )
         {
             bidx.utils.log( "AppRouter::mailInbox", state, params );
