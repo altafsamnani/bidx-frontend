@@ -659,16 +659,16 @@ Company: bidX;
         border-radius:              10px;
     }
 
-    .bidx.home .side-bar {
+    .bidx .side-bar {
         background-color:           #e6e3de;
         padding:                    20px;
     }
 
-    .bidx.home .side-bar h2 {
+    .bidx .side-bar h2 {
         margin:                     0 0 10px 0;
     }
 
-    .bidx.home .side-bar .call-to-action {
+    .bidx .side-bar .call-to-action {
         background-color:           #fff;
         padding:                    20px 14px;
         line-height:                16px;
@@ -681,11 +681,11 @@ Company: bidX;
     }
 
 
-    .bidx.home .side-bar hr {
+    .bidx .side-bar hr {
         border: 1px solid #dcd7d0;
     }
 
-    .bidx.home .side-bar .call-to-action.transparent {
+    .bidx .side-bar .call-to-action.transparent {
          background-color:          transparent;
          border:                    none;
          padding:                   0;
