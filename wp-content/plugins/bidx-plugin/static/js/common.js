@@ -604,7 +604,7 @@
 
             // Forms can be configured to have no validation icon behind the elements
             //
-            if ( !this.settings.noIcon )
+            if ( !this.settings || !this.settings.noIcon )
             {
                 if ( $container.length )
                 {
