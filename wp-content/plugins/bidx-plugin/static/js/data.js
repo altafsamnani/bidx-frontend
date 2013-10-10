@@ -175,7 +175,24 @@
         $.each( data, function( idx, item )
         {
             keys[ item.value ] = item;
-        });
+        } );
+
+        // Make sure the array of items is in alphabetical order by the label property
+        //
+        data.sort( function ( a, b )
+        {
+            if ( a.label > b.label )
+            {
+                return 1;
+            }
+
+            if ( a.label < b.label )
+            {
+                return -1;
+            }
+
+            return 0;
+        } );
 
         items[ context ] =
         {
