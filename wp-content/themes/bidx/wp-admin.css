@@ -1,0 +1,26 @@
+/*
+Theme Name: bidX Admin Theme
+Author: Mattijs Spierings/Arne de Bree/Altaf Samnani/Jaap Gorjup
+Company: bidX;
+*/
+
+/*******************************************************************************************
+*
+*	Global styles
+*
+********************************************************************************************/
+#adminmenuback {
+    display:none;
+}
+
+ul.listheader  {
+margin-left: 0 !important;
+list-style: none !important;
+}
+
+#group-dashboard .checkbox {
+    background-color: rgba(0, 0, 0, 0);
+}
+.span12.latest-member {
+    margin-top:34px;
+}
