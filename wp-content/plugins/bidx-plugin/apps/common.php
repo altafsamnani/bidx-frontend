@@ -70,7 +70,7 @@ class BidxCommon
                     $sessionVars = $this->getSessionVariables ($subDomain);
 
                     if (!$sessionVars) { // If Session set dont do anything
-                        $sessionObj = new SessionServicoke();
+                        $sessionObj = new SessionService();
                         $bidxSessionVars = $sessionObj->isLoggedIn ();
 
                         //Set firsttime/new session variables
