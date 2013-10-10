@@ -398,8 +398,61 @@
                 }
             }
         );
+    }
 
+    function _doMutateContactRequest( e )
+    {
+        // prevent anchor tag to navigate to href
+        //
+        if( e.preventDefault )
+        {
+            e.preventDefault();
+        }
 
+        var $this                   = $( this )
+        ,   href                    = $this.attr( "href" ).replace( /^[/]/, "" )
+        ;
+
+        // convert back to object
+        //
+        href = bidx.utils.bidxDeparam( href );
+
+        bidx.api.call(
+             "memberRelationships.mutate"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   requesterId:            href.requesterId
+            ,   requesteeId:            href.requesteeId
+            ,   extraUrlParameters:
+                [
+                    {
+                        label:          "action"
+                    ,   value:          href.action
+                    }
+                ,   {
+                        label:          "type"
+                    ,   value:          href.type
+                    }
+                ]
+
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[contacts] mutated a contact",  response );
+                    if ( response && response.status === "OK" )
+                    {
+                        bidx.controller.updateHash( "#mail/contacts", true, false );
+                    }
+
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                    _showError( "Something went wrong while mutation the member: " + status );
+                }
+            }
+        );
     }
 
     //  ################################## INIT #####################################  \\
@@ -609,23 +662,20 @@
         //
         function _getContactsCallback( contactCategory )
         {
-            // NOTE: these function are executed within the _createListItems function and will therefor have the following variables at their disposal:
-            //       this         = current API contact
-            //       $listItem    = jQuery object of the contact category listItem
+            // these function are executed within the _createListItems function and will therefor have the following variables at their disposal:
+            //      this         = current API contact
+            //      $listItem    = jQuery object of the contact category listItem
             //
             var callbacks =
             {
                 active:     function()
                 {
-
                 }
             ,   pending:    function()
                 {
-
                 }
             ,   ignored:    function()
                 {
-
                 }
             ,   incoming:   function(  $listItem )
                 {
@@ -644,6 +694,7 @@
 
                     $listItem.find( ".btn-bidx-accept ")
                         .attr( "href", "/" + $.param( params ) )
+                        .click( _doMutateContactRequest )
                     ;
 
                     // change action to ignore amd set ignore href
@@ -652,6 +703,7 @@
 
                     $listItem.find( ".btn-bidx-ignore ")
                         .attr( "href", "/" +$.param( params ) )
+                        .click( _doMutateContactRequest )
                     ;
                 }
 

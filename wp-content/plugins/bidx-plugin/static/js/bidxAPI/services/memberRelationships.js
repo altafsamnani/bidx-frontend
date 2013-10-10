@@ -44,7 +44,7 @@
     memberRelationships.mutate = function( params )
     {
         var method  = "PUT"
-        ,   url     = baseUrl.replace( "%requesterId%", params.requesterId ).replace( "/%requesteeId%", params.requesteeId )
+        ,   url     = baseUrl.replace( "%requesterId%", params.requesterId ).replace( "%requesteeId%", params.requesteeId )
         ;
 
         api._call(

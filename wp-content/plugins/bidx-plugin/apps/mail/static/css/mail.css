@@ -153,6 +153,7 @@
     #mail .viewContacts #contactRequests .contact-request-list li img,
     #mail .viewContacts .contact-request-list li img {
         margin-right:                           10px;
+        max-width:                              90px;
     }
     #mail .viewContacts #contactRequests .contact-request-list li .contact-request-buttons {
         margin-top:                             10px;
