@@ -18,16 +18,17 @@
 				// the group-header is displayed for authenticated and non-authenticated
 ?>
 				<div class='header-logo'>
-<?php if ( get_theme_mod( 'themeslug_logo' ) ) { 
-		$img = parse_url( get_theme_mod( 'themeslug_logo' ) );
-		$img_url = $img['path']; //make relative
+<?php 
+				if ( get_theme_mod( 'themeslug_logo' ) ) { 
+					$img = parse_url( get_theme_mod( 'themeslug_logo' ) );
+					$img_url = $img['path']; //make relative
 ?>
 				    <a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
 				    	<img src='<?php echo $img_url; ?>' alt='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>'>
 				    </a>
-<?php } else { ?>
+<?php 			} else { ?>
    					<span class='site-title'><a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></span>
-<?php } ?>
+<?php 			} ?>
 				</div>
 				
 <?php 
