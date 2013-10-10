@@ -68,9 +68,11 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
         $count = 0;
         foreach ( $images as $id => $image ) {
             $img = wp_get_attachment_image_src( $image->ID, 400 );
+            //parse URL to ensure having only relative links
+            $img_url = parse_url($img[0]);
 ?>
             <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
-                <img class="img" src="<?php echo $img[0] ?>" />
+                <img class="img" src="<?php echo $img_url['path'] ?>" />
 <?php
                 if ( !empty( $image -> post_content ) ) {
  ?>
