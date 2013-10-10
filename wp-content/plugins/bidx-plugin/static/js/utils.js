@@ -813,7 +813,6 @@
         }
     };
 
-
     // Exports
     //
     if ( !window.bidx )

@@ -570,33 +570,151 @@
 
         }
 
-        // initializes the contactlisting. Expects an object with array per contact status (active, pending, ignore, ..etc )
+        // initializes the contactlisting. Expects an object with array per contact category (active, pending, ignore, incoming, ... )
         //
         function _initContactListing( contacts )
         {
             bidx.utils.log("[mail initialing contactlisting", contacts );
 
 
-            var $view                   = $views.filter( ".viewContacts" )
-            ,   $lists                  = $view.find( ".list" )
-            ,   $pendingList            = $lists.filter( ".pending" )
-            ,   $listItem               = $( $( "#contact-request-incoming" ).html().replace( /(<!--)*(-->)*/g, "" ) )
-            ,   $listEmpty              = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+            var $listEmpty              = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
             ;
 
-
-            // are there pending contact requests? if so, create listing
+            // loop through all contact categories and populate the associated lists
             //
-            if ( contacts.pending && contacts.pending.length > 0 )
+            $.each( contacts, function( key, items )
             {
-                $.each( contacts.pending, function( idx, item )
-                {
-                    bidx.utils.log("ITEM", item);
-                } );
-            }
 
+                // check if there are contacts in this particular group
+                //
+                if( items.length )
+                {
+                    // create the listItems for this category
+                    // the argument 'key' is key in finding the correct snippit and list associated with this category
+                    // the callback in this function is defined in the function that is called and also associated with the key
+                    //
+                    _createListItems(
+                    {
+                        snippitId:              "contact-request-" + key
+                    ,   items:                  items
+                    ,   view:                   "Contacts"
+                    ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
+                    ,   cb:                     _getContactsCallback( key)
+                    } );
+                }
+            } );
+        }
+
+        // This function is a collection of callbacks for the contactcategories. It is meant to execute contact-category specific code
+        //
+        function _getContactsCallback( contactCategory )
+        {
+            // NOTE: these function are executed within the _createListItems function and will therefor have the following variables at their disposal:
+            //       this         = current API contact
+            //       $listItem    = jQuery object of the contact category listItem
+            //
+            var callbacks =
+            {
+                active:     function()
+                {
+
+                }
+            ,   pending:    function()
+                {
+
+                }
+            ,   ignored:    function()
+                {
+
+                }
+            ,   incoming:   function(  $listItem )
+                {
+                    // this holds the current contact item (coming from API)
+                    //
+                    var item = this;
+                    // create params so we can store it in the href attribute
+                    //
+                    var params =
+                    {
+                        requesterId:     item.requesterId
+                    ,   requesteeId:     item.requesteeId
+                    ,   type:            "contact"
+                    ,   action:          "accept"
+                    };
+
+                    $listItem.find( ".btn-bidx-accept ")
+                        .attr( "href", "/" + $.param( params ) )
+                    ;
+
+                    // change action to ignore amd set ignore href
+                    //
+                    params.action = "ignore";
+
+                    $listItem.find( ".btn-bidx-ignore ")
+                        .attr( "href", "/" +$.param( params ) )
+                    ;
+                }
+
+            };
+
+            return callbacks[ contactCategory ];
+        }
+
+        // Generic function to create listitems based a snipped
+        // Arguments contain an option object:
+        // options:
+        // {
+        //      snippitId:  [ id of snippit script template ]
+        // ,    items:      [ the collection of items to be converted into listitems ]
+        // ,    view:       [ view selector ]
+        // ,    targetList: [ selector of target list ]
+        // ,    cb:         [ callback to do specific code for this contact item, $listItem is passed as argument ]
+        // }
+        //
+        function _createListItems( options )
+        {
+            var snippit    = $( "#" + options.snippitId ).html().replace( /(<!--)*(-->)*/g, "" )
+            ,   $list      = $views.filter( bidx.utils.getViewName( options.view ) ) .find( options.targetListSelector )
+            ,   $listItem
+            ,   listItem
+            ;
+
+            // first empty the list
+            //
+            $list.empty();
+
+            // iterate of each item an append a modified snippit to the list
+            //
+            $.each( options.items, function( idx, item )
+            {
+
+                // duplicate snippit source and replace all placeholders (not every snippit will have all of these placeholders )
+                //
+                listItem = snippit
+                    .replace( /%profilePicture%/g,   item.pictureUrl     ? item.pictureUrl       : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAACqElEQVR4Xu3bvY8BQRzG8d9GiJda6ES0lEL8+yoK0YlatBQSide7m0nmgnDGWV93yaOyt7PzrM8+O7vNJYvF4sP0eblAIuiXG/sAQTPOgoacBS1oSgDK0RotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWq0oCEBKEaNFjQkAMWo0YKGBKAYNVrQkAAUo0YLGhKAYtRoQUMCUIwaLWhIAIp5S6Nns5lNp1P/E5MksV6vZ4VCwW9//TuejcdjOx6PfrvZbFq1Wr3L8Yo574Y+MACHDpDlctlarZaNRiNbr9fW6XQ8er/ft2Kx6LdP92Wz2Zs/6xVzPmAYNRSHDs2r1+vWaDQsbLvm7nY73/Rr+3K5nG96qVTyF2Eymdh8PveN/+m4n/bF3ClRihGD/gy0w3WY16ADvGv4crm0brdrw+Hwu/m3Ll7MnBFGqQzBocNtHprp8NzfHMp2u/UtvWx02N7v935pORwOZ2v7M3OmohgxCQ7tzun0weVa7ABrtdrdRrtjw4WpVCp+jQ+fZ+aMcHp6yFugT886do1262lornswbjabm28kj8z5tGDkBDj0tds85q0jk8nYYDDwy0a73fbNdt/dg3G1Wp09KNN4k4n0ix6GQ7szC28M7ns+n/dY4fXt1nt0OOZy/Q5LyG/mjFZKYeBboFM47383haChSyZoQUMCUIwaLWhIAIpRowUNCUAxarSgIQEoRo0WNCQAxajRgoYEoBg1WtCQABSjRgsaEoBi1GhBQwJQjBotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWo0BP0Jeyr5I6MnsB4AAAAASUVORK5CYII=" )
+                    .replace( /%requesterId%/g,      item.requesterId    ? item.requesterId      : "%requesterId%" )
+                    .replace( /%requesteeId%/g,      item.requesteeId    ? item.requesteeId      : "%requesteeId%" )
+                    .replace( /%requesterName%/g,    item.requesterName  ? item.requesterName    : "%requesterName%" )
+                    .replace( /%requesteeName%/g,    item.requesteeName  ? item.requesteeName    : "%requesteeName%" )
+                ;
+                $listItem = $( listItem );
+
+                // execute cb function
+                //
+                if( $.isFunction( options.cb ) )
+                {
+                    // call Callback with current contact item as this scope and pass the current $listitem
+                    //
+                    options.cb.call( this, $listItem );
+                }
+
+                // finally append item to list
+                //
+                $list.append( $listItem );
+            } );
 
         }
+
 
 
         // set message data in view. Function expects message object in API format
@@ -918,10 +1036,12 @@
                                     // replace placeholders
                                     //
                                     newListItem = newListItem
-                                            .replace( "%sendername%", "<a href=\"" + document.location.hash +  "/id=" + item.id + "\" class=\"" + (item.read ? "email-new" : "" ) + "\">" + item.sender.displayName + "</a>" )
-                                            .replace( "%dateSent%", bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
-                                            .replace( "%timeSent%", bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
-                                            .replace( "%subject%", item.subject )
+                                            .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.id )
+                                            .replace( /%emailRead%/g, item.read ? "email-new" : "" )
+                                            .replace( /%sendername%/g, item.sender.displayName )
+                                            .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
+                                            .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
+                                            .replace( /%subject%/g, item.subject )
                                     ;
                                     $element = $( newListItem );
 
@@ -1152,7 +1272,7 @@
                 $this.attr( "href", href );
             } );
 
-            $modal.modal({});
+            $modal.modal( {} );
 
             if( options.onHide )
             {
@@ -1165,9 +1285,9 @@
         //
         function _closeModal( options )
         {
-            if( $modal)
+            if ( $modal )
             {
-                if( options && options.unbindHide )
+                if ( options && options.unbindHide )
                 {
                     $modal.unbind( 'hide' );
                 }
@@ -1496,18 +1616,18 @@
                     ]
                 ,   filter:         [ 'active', 'pending', 'ignored', 'incoming' ]
                 } )
-                .then( function( contacts )
-                {
-                    _initContactListing( contacts );
-                })
-                .fail( function ( error )
-                {
-                    bidx.utils.log( "Error in promise chain ", error );
-                } )
-                .done( function()
-                {
-                    _showView( "contacts" );
-                } );
+                    .then( function( contacts )
+                    {
+                        _initContactListing( contacts );
+                    })
+                    .fail( function ( error )
+                    {
+                        bidx.utils.log( "Error in promise chain ", error );
+                    } )
+                    .done( function()
+                    {
+                        _showView( "contacts" );
+                    } );
 
 
             break;
