@@ -11,7 +11,136 @@
 
     //public functions
 
+    var getContacts = function(options)
+    {
+        var $listItem   = $($("#investor-contactitem").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $list       = $("." + options.list)
+        ;
+        var extraUrlParameters =
+                [
+                    {
+                        label: "investorId",
+                        value: currentUserId
+                    }
+                  , {
+                        label: "rows",
+                        value: "6"
+                    }
+                  , {
+                        label: "sort",
+                        value: "created desc"
+                    }
+                ];
 
+        bidx.api.call(
+                "memberRelationships.fetch"
+            ,   {
+                    requesterId:              bidx.common.getCurrentUserId()
+                ,   groupDomain:              bidx.common.groupDomain
+                ,   success: function( response )
+                    {
+                    var item
+                    , element
+                    , cls
+                    , textValue
+                    ;
+
+                    //clear listing
+                    $list.empty();
+
+
+
+                    // now format it into array of objects with value and label
+                    //
+                    if( response && response.relationshipType && response.relationshipType.contact )
+                    {
+
+                    $.each(response.relationshipType.contact, function(status, itemStatus)
+                    {
+                        $.each(itemStatus, function(idx, item)
+                        {
+                            
+                            // Member Display
+                            element = $listItem.clone();
+                            //search for toggle elements
+                            
+                           item.id = item.requesterId;
+                           item.name = item.requesterName;
+                            if(item.requesterId == currentUserId) {
+                                item.id = item.requesteeId;
+                                item.name = item.requesteeName;
+                            }
+                            bidx.utils.log(item);
+                            datatargetId = 'toggle' + item.id;
+                            element.find(".accordion-toggle").attr('data-target', '#' + datatargetId);
+                            element.find(".accordian-body").attr('id', datatargetId);
+
+
+                            //search for placeholders in snippit
+                            element.find(".placeholder").each(function(i, el)
+                            {
+
+                                //isolate placeholder key
+                                cls = $(el).attr("class").replace("placeholder ", "");
+
+                                //if key if available in item response
+                                if (item[cls] || cls == 'bcstatus')
+                                {
+
+                                    textValue = item[cls];
+                                    //add hyperlink on sendername for now (to read email)
+                                    if (cls === "country")
+                                    {
+                                        bidx.data.getItem(item[cls], 'country', function(err, label)
+                                        {
+                                           textValue = label; 
+                                        })
+                                        
+                                        textValue = (textValue.city) ? textValue + textValue.city : textValue;
+
+                                    }
+                                    else if (cls === "bcstatus")
+                                    {
+                                        textValue = status;
+                                    }
+                                    else if(cls == 'startDate')
+                                    {
+                                       textValue = bidx.utils.parseTimestampToDateTime( item.startDate, "date" );
+                                    }
+                                
+                                    element.find("span." + cls).replaceWith(textValue);
+
+                                }
+                            });
+
+                            //  add mail element to list
+                            $list.append(element);
+
+                        });
+                    });
+
+                    } else
+                    {
+                        $list.append($listEmpty);
+                    }
+
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback();
+                    }
+                }
+
+                , error: function(jqXhr, textStatus)
+                {
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    _showError("Something went wrong while retrieving contactlist of the member: " + status);
+                }
+            }
+        );
+    };
     // function that retrieves group members returned in an array of key/value objects
     // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
     //
@@ -212,22 +341,7 @@
                             
                             element.find("div." + cls).replaceWith(textValue);
 
-                           // 
-                            //bidx.i18n.getItem(keySubject, 'templates', function(err, textValue) {
-                            //    $frmCompose.find("[name='subject']").val(labelSubject);
-                            //    element.find("span." + cls).replaceWith(textValue);
-                            //});
-//                                bidx.data.getContext("investorType", function(err, investorTypes)
-//                                {
-//                                    var $noValue = $("<option value='' />");
-//
-//                                    $noValue.i18nText("selectInvestor", appName);
-//                                    $investorType.append($noValue);
-//
-//                                    bidx.utils.populateDropdown($investorType, investorTypes);
-//                                });
-
-                        }
+                       }
                     });
 
                     //  add mail element to list
@@ -274,6 +388,14 @@
 
     };
 
+    // display generic error view with msg provided
+    //
+    function _showError( msg )
+    {
+        $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
+        _showView( "error" );
+    }
+
     // ROUTER
 
     var state;
@@ -299,8 +421,8 @@
 
 
                 _showView("load");
-                _showView("goat");
-             
+                _showView("loadpreference");
+                _showView("loadcontacts");
                 getMatch(
                         {
                             list: "match"
@@ -318,10 +440,22 @@
                           , callback: function()
                             {
 
-                                _showMainView("preference", "goat");
+                                _showMainView("preference", "loadpreference");
 
                             }
                         });
+                  getContacts(
+                        {
+                            list: "contacts"
+                          , view: "contacts"
+                          , callback: function()
+                            {
+
+                                _showMainView("contacts", "loadcontacts");
+
+                            }
+                        });
+
                 break;
 
         }

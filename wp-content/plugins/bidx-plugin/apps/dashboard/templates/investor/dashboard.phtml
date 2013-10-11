@@ -2,6 +2,10 @@
     <h1>Investor dashboard</h1>
     <section class="span12 well dashboard">
         <article class="view viewLoad"><?php _e ('Loading...', 'bidxplugin') ?></article>
+        <article class="view viewError">
+                <h1><?php _e('Error','bidxplugin')?></h1>
+                <span class="errorMsg"></span>
+            </article>
         <article class="view viewMatch">
             <div class="row-fluid ">
 
@@ -26,8 +30,9 @@
                     </table>
                 </div>
             </div>
-        </article>        
-        <article class="view viewAll">
+        </article>
+        <article class="view viewLoadcontacts"><?php _e ('Loading...', 'bidxplugin') ?></article>
+        <article class="view viewContacts">
             <div class="row-fluid">
 
                 <div class="span12 well">
@@ -36,14 +41,13 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Title</th>
                                 <th>Entrepreneur</th>
                                 <th>Location</th>
                                 <th>Industry</th>
                                 <th>Full access request</th>
                             </tr>
                         </thead>
-                        <tbody class="contactlist contacted-list ">
+                        <tbody class="contacts investor-contacts ">
                         <div class="pull-left">
                             <?php// _e ('Loading...', 'bidxplugin') ?>
                         </div>
@@ -53,7 +57,7 @@
             </div>
         </article>
 
-        <article class="view viewGoat"><?php //_e ('Loading...', 'bidxplugin') ?></article>
+        <article class="view viewLoadpreference"><?php _e ('Loading...', 'bidxplugin') ?></article>
         <article class="view viewPreference">
             <div class="row-fluid">
                 <div class="span12 profile-block well">
@@ -71,6 +75,51 @@
             </div>
         </article>
 </div>
+<script type="text/html" id="investor-contactitem">
+    <!--
+    <tr>
+    <td>
+    <span class="placeholder name"/>
+    </td>
+    <td>
+    <span class="placeholder country"/>
+    </td>
+    <td>
+    <span class="placeholder bcindustry"/>
+    </td>
+    <td>
+    <a  data-toggle="collapse" data-target="#table2-row1" class="accordion-toggle">
+    <span class="placeholder bcstatus"/>
+    </a>
+    </td>
+    </tr>
+    <tr>
+    <td colspan="5" class="detailRow">
+    <div class="accordian-body collapse" id="table2-row1">
+    <div class="row-fluid detailContent">
+    <div class="span12">
+    <h3>Acces requests</h3>
+    <div class="alert alert-info">
+
+    Subject: Request to view full details of your plan <BR>
+
+
+    To: <span class="placeholder name"/> <BR>
+
+    Date: <span class="placeholder startDate"/> <BR>
+
+    </div>
+
+    </div>
+    <div class="pull-right">
+    <a href="#">Send new email</a>
+    </div>
+    </div>
+    </div>
+    </td>
+    </tr>
+    -->
+</script>
 <script type="text/html" id="investor-preferenceitem">
     <!--
     <div class="row-fluid">
@@ -219,11 +268,7 @@
 </tr>
 -->
 </script>
-<script type="text/html" id="detail-listitem">
-    <!--
 
-    -->
-</script>
 <script type="text/html" id="entrepreneur-listitem">
     <!--
     <td colspan="5" class="detailRow">
@@ -271,52 +316,5 @@
     </td>
     -->
 </script>
-<script type="text/html" id="contacted-listitem">
-    <!--
-    <tr>
-    <td>
-    <span class="placeholder bctitle"/>
-    </td>
-    <td>
-    <span class="placeholder bcname"/>
-    </td>
-    <td>
-    <span class="placeholder bclocation"/>
-    </td>
-    <td>
-    <span class="placeholder bcindustry"/>
-    </td>
-    <td>
-    <a  data-toggle="collapse" data-target="#table2-row1" class="accordion-toggle">
-    <span class="placeholder bcstatus"/>
-    </a>
-    </td>
-    </tr>
-    <tr>
-    <td colspan="5" class="detailRow">
-    <div class="accordian-body collapse" id="table2-row1">
-    <div class="row-fluid detailContent">
-    <div class="span12">
-    <h3>Acces requests</h3>
-    <div class="alert alert-info">
 
-    Subject: Request to view full details of your plan <BR>
-
-
-    To: Entrepreneur <BR>
-
-    Date: dd/mm/yyyy <BR>
-
-    </div>
-
-    </div>
-    <div class="pull-right">
-    <a href="#">Send new email</a>
-    </div>
-    </div>
-    </div>
-    </td>
-    </tr>
-    -->
-</script>
 
