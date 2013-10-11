@@ -71,11 +71,10 @@
                                 item.id = item.requesteeId;
                                 item.name = item.requesteeName;
                             }
-                            bidx.utils.log(item);
+                           
                             datatargetId = 'toggle' + item.id;
                             element.find(".accordion-toggle").attr('data-target', '#' + datatargetId);
                             element.find(".accordian-body").attr('id', datatargetId);
-
 
                             //search for placeholders in snippit
                             element.find(".placeholder").each(function(i, el)
