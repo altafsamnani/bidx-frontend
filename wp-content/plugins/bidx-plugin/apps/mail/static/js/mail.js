@@ -654,6 +654,11 @@
                     ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
                     ,   cb:                     _getContactsCallback( key)
                     } );
+
+                    // update the counter for these contacts
+                    bidx.utils.log($( "#"+ key + "Requests" ).find( ".requestCount" ));
+                    $( "#"+ key + "Requests" ).find( ".requestCount" ).text( items.length);
+
                 }
             } );
         }
@@ -716,15 +721,16 @@
         // Arguments contain an option object:
         // options:
         // {
-        //      snippitId:  [ id of snippit script template ]
-        // ,    items:      [ the collection of items to be converted into listitems ]
-        // ,    view:       [ view selector ]
-        // ,    targetList: [ selector of target list ]
-        // ,    cb:         [ callback to do specific code for this contact item, $listItem is passed as argument ]
+        //      snippitId:          [ id of snippit script template ]
+        // ,    items:              [ the collection of items to be converted into listitems ]
+        // ,    view:               [ view selector ]
+        // ,    targetListSelector: [ selector of target list ]
+        // ,    cb:                 [ callback to do specific code for this contact item, $listItem is passed as argument ]
         // }
         //
         function _createListItems( options )
         {
+            bidx.utils.log("targetListSelector", options.targetListSelector);
             var snippit    = $( "#" + options.snippitId ).html().replace( /(<!--)*(-->)*/g, "" )
             ,   $list      = $views.filter( bidx.utils.getViewName( options.view ) ) .find( options.targetListSelector )
             ,   $listItem

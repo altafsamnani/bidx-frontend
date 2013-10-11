@@ -738,7 +738,10 @@ Company: bidX;
         background-position:                9% 50%;
 
     }
-
+    .bidx.home .bidx-register-c2a a {
+        display:                            block;
+        height:                             inherit;
+    }
     .bidx.home .bidx-register-c2a .c2a-label {
         line-height:                        30px;
         font-size:                          24px;

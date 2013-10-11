@@ -24,14 +24,14 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
     <div class="pageHeader container">
         <div class="row-fluid">
             <div class="span4">
-                <h1>Business plan</h1>
+                <h1><?php _e('Business plan', 'bidxplugin')?></h1>
                 <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
             </div>
 
             <div class="span4 completion">
-                <h2>Business completion</h2>
+                <h2><?php _e('Business completion', 'bidxplugin')?></h2>
                 <div class="progress">
-                    <div style="width:<?php echo $progress ?>" class="bar"><?php echo $progress ?> completed</div>
+                    <div style="width:<?php echo $progress ?>" class="bar"><?php echo $progress ?> <?php _e('completed', 'bidxplugin')?></div>
                 </div>
             </div>
 
@@ -82,11 +82,12 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     <div class="accordion-inner">
 
                         <div class="accordion-controls-top">
-                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">About the business <span class="fui-arrow-right"></span></a>
+                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><?php _e('About the business','bidxplugin')?> <span class="fui-arrow-right"></span></a>
                         </div>
-
+                        <p><?php _e('This section gives your the opportunity to describe your business. Think about what information you would like other people to know if you only had a few minutes to explain.','bidxplugin')?></p>
                         <!-- SHOW -->
                         <div class="view viewShow">
+
 <?php
                 $rowValues = array (
                     __('Business name','bidxplugin')
@@ -233,8 +234,11 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     <div class="accordion-inner">
 
                         <div class="accordion-controls-top">
-                            <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">About you &amp; your team <span class="fui-arrow-right"></span></a>
+                            <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><?php _e('About you &amp; your team', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
                         </div>
+                        <p>
+                            <?php _e('Here we have provided you with tools for you to provide more precise information about your business; what industry it operates in, what it produces and where it operates. This information will be used to match your initiative with other businesses, and investors.','bidxplugin')?>
+                        </p>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -401,7 +405,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         </div><!-- /EDIT -->
 
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> General Overview</a>
+                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('General Overview', 'bidxplugin')?></a>
                         </div>
 
                     </div><!-- /accordion-inner -->
@@ -417,8 +421,10 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     <div class="accordion-inner">
 
                         <div class="accordion-controls-top">
-                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Financial Details <span class="fui-arrow-right"></span></a>
+                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><?php _e('Financial Details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
                         </div>
+
+                        <p><?php _e('Your team is an essential part of the success of your business. Give more information here about you as part of this team, and about the other team members.', 'bidxplugin')?></p>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -498,7 +504,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         </div><!-- /EDIT -->
 
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> About the business</a>
+                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('About the business', 'bidxplugin')?></a>
                         </div>
 
                     </div><!-- /Accordion inner -->
@@ -508,7 +514,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
             <!-- Financial details -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fui-arrow-right accordion-state-icon"></span> Financial Details</a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
                 </div>
                 <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse">
                     <div class="accordion-inner">
@@ -516,8 +522,12 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         <form id="frmBusinessSummary-FinancialDetails">
 
                             <div class="accordion-controls-top">
-                                <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Company details <span class="fui-arrow-right"></span></a>
+                                <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><?php _e('Company details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
                             </div>
+
+                            <p>
+                                <?php _e('Here you should provide a very general overview of your finances, the financing you need, the number of employees you have currently and how you think your business has, and will continue to grow over time','bidxplugin')?>
+                            </p>
 
                             <!-- SHOW -->
                             <div class="view viewShow">
@@ -570,7 +580,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             </div>
 
                             <div class="accordion-controls-bottom">
-                                <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> About you &amp; your team</a>
+                                <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('About you &amp; your team', 'bidxplugin')?></a>
                             </div>
                         </form>
                     </div><!-- /Accordion-inner -->
@@ -580,14 +590,19 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
             <!-- Company details -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-CompanyDetails"><span class="fui-arrow-right accordion-state-icon"></span> Company Details</a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-CompanyDetails"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Company Details', 'bidxplugin')?></a>
                 </div>
                 <div id="businessSummaryAccordion-CompanyDetails" class="accordion-body collapse">
                     <div class="accordion-inner">
 
                         <div class="accordion-controls-top">
-                            <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">Documents <span class="fui-arrow-right"></span> </a>
+                            <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><?php _e('Documents', 'bidxplugin')?> <span class="fui-arrow-right"></span> </a>
                         </div>
+
+                        <p>
+                            <?php _e('In this section you can link your business to an existing company. If you do not yet have a company, you can skip this step by answering \'No\' to the first question. If you already created a company in the past, you can select it from the list', 'bidxplugin')?>
+
+                        </p>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -672,7 +687,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         </div><!-- /Edit -->
 
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> Financial Details</a>
+                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
                         </div>
 
                     </div><!-- /Accordion inner -->
@@ -682,14 +697,18 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
             <!-- Documents -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-Documents"><span class="fui-arrow-right accordion-state-icon"></span> Documents</a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-Documents"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Documents', 'bidxplugin')?></a>
                 </div>
                 <div id="businessSummaryAccordion-Documents" class="accordion-body collapse">
                     <div class="accordion-inner">
 
                         <div class="accordion-controls-top">
-                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn">General Overview <span class="fui-arrow-right"></span> </a>
+                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><?php _e('General Overview', 'bidxplugin')?> <span class="fui-arrow-right"></span> </a>
                         </div>
+
+                        <p>
+                            <?php _e('In this section you can upload any documents that you consider necessary to give a complete overview of your business. For example, investors will be very interested to see your full business and financial plans uploaded here. To help you with these documents we have provided templates that you can download and fill in. When you have completed them, you can upload them in the same way you would upload any other document.', 'bidx')?>
+                        </p>
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -718,7 +737,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         </div>
 
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> Company Details</a>
+                            <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('Company Details', 'bidxplugin')?></a>
                         </div>
 
                     </div><!-- /Accordion-inner -->

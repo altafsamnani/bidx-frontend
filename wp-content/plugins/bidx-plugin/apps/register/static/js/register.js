@@ -5,6 +5,7 @@
     ,   $btnRegister                = $frmRegister.find( ":submit" )
     ,   bidx                        = window.bidx
     ,   appName                     = "register"
+    ,   userPreferences             = {}
     ,   location
     ;
 
@@ -98,6 +99,7 @@
                         firstName:              $frmRegister.find( "[name='personalDetails.firstName']" ).val()
                     ,   lastName:               $frmRegister.find( "[name='personalDetails.lastName']" ).val()
                     }
+            ,   userPreferences:                userPreferences
             }
         ,   $location   = $frmRegister.find( "[name='location']" )
         ;
@@ -161,7 +163,13 @@
 
     var navigate = function( options )
     {
-        bidx.utils.log("routing options", options );
+        bidx.utils.log("routing of Register", options );
+
+        if(  options.params && options.params.firstLogin )
+        {
+            bidx.utils.setValue( userPreferences, "firstLogin", options.params.firstLogin);
+        }
+
 
      //   _showView( "register" );
 

@@ -281,19 +281,26 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 ?>
 
     <div class="container">
-<!--         <div class="row-fluid">
-    <div class="span6 bidx-register-c2a investor spacer bidx-theme-colour-three">
-        <div class="bidx-arrow-right">
-            <div class="c2a-label">Register as<br/> INVESTOR</div>
-        </div>
-    </div>
-    <div class="span6 bidx-register-c2a entrepreneur spacer bidx-theme-colour-three">
-        <div class="bidx-arrow-right">
-            <div class="c2a-label">Register as<br/> ENTREPRENEUR</div>
-        </div>
+        <div class="row-fluid">
 
-    </div>
-</div> -->
+                <div class="span6 bidx-register-c2a investor spacer bidx-theme-colour-three">
+                    <a class="clearfix" href="/auth/#auth/register/firstLogin=get-it-started-investor">
+                        <div class="bidx-arrow-right">
+                            <div class="c2a-label">Register as<br/> INVESTOR</div>
+                        </div>
+                    </a>
+                </div>
+
+
+                <div class="span6 bidx-register-c2a entrepreneur spacer bidx-theme-colour-three">
+                    <a href="/auth/#auth/register/profile=firstLogin=get-it-started-entrepreneur">
+                        <div class="bidx-arrow-right">
+                            <div class="c2a-label">Register as<br/> ENTREPRENEUR</div>
+                        </div>
+                    </a>
+                </div>
+
+        </div>
 
         <div class="row-fluid spacer testimonial-container">
             <div class="span8">

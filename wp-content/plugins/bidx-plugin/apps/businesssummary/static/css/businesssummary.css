@@ -30,11 +30,12 @@ body.bidx-businesssummary textarea {
 }
 
 body.bidx-businesssummary .accordion-controls-top {
-    height:                     20px;
+    /* height:                     40px;  */
 }
 
     body.bidx-businesssummary .accordion-controls-top a {
         float:                      right;
+        margin-left:                10px;
     }
 
 body.bidx-businesssummary .accordion-controls-bottom {

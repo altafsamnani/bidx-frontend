@@ -152,7 +152,7 @@
         ,   'editBusinessSummary(/:id)':                        'editBusinessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
 
-        ,   'auth(/:section)':                                  'auth'
+        ,   'auth(/:state)(*splat)':                            'auth'
 
         ,   'login':                                            'login'
         ,   'register':                                         'register'
@@ -368,9 +368,18 @@
             );
         }
 
-    ,   auth:                   function( section )
+    ,   auth:                   function( state, params )
         {
-            bidx.utils.log( "AppRouter::auth", section );
+            bidx.utils.log( "AppRouter::auth State: ", state, " params: ", params );
+
+            // remove leading forward slash from the splat
+            //
+            if( params )
+            {
+                params = params.replace( /^[/]/, "" );
+                params = bidx.utils.bidxDeparam( params );
+            }
+
 
             mainState = "auth";
 
@@ -378,7 +387,8 @@
             (
                 "auth"
             ,   {
-                    section:    section
+                    state:    state
+                ,   params:   params
                 }
             );
         }
