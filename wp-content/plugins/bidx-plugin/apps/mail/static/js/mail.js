@@ -914,8 +914,8 @@
                                 {
                                     result.push(
                                     {
-                                        value:      item.requesteeId
-                                    ,   label:      item.requesteeName
+                                        value:      item.contactId
+                                    ,   label:      item.contactName
                                     });
                                 });
                             }
