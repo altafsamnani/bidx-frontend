@@ -548,7 +548,7 @@
         $.each( fields._root, function( i, f )
         {
             var $input  = $editForm.find( "[name='" + f + "']" )
-            ,   value   = $input.is( ":visible" ) ? bidx.utils.getElementValue( $input ) : ""
+            ,   value   = $input.is( ":visible" ) || $input.is( "[type='radio']" ) ? bidx.utils.getElementValue( $input ) : ""
             ;
 
             bidx.utils.setValue( company, f, value );
@@ -651,15 +651,15 @@
                 }
             ,   "statutoryAddress.country":
                 {
-                    required:                   function() { return $editForm.find( "input[name='registered']:checked" ).val() === "true"; }
+                    required:                   true
                 }
             ,   "statutoryAddress.cityTown":
                 {
-                    required:                   function() { return $editForm.find( "input[name='registered']:checked" ).val() === "true"; }
+                    required:                   true
                 }
             ,   "dateCompanyEstab":
                 {
-                    cpDate:                     true
+                    dpDate:                     true
                 }
             ,   "numPermFemaleEmpl":
                 {
