@@ -49,8 +49,17 @@
 
         // Company Details
         //
+    ,   $companyDetails             = $element.find( "#businessSummaryAccordion-CompanyDetails" )
     ,   $hasCompany                 = forms.companyDetails.$el.find( "input[name='hasCompany']" )
-    ,   $companiesTable             = forms.companyDetails.$el.find( ".doesHaveCompany table" )
+    ,   $doesHaveCompany            = forms.companyDetails.$el.find( ".doesHaveCompany" )
+    ,   $companiesTable             = $doesHaveCompany.find( "table" )
+    ,   $addNewCompany              = $companyDetails.find( ".addNewCompany")
+    ,   $btnAddNewCompany           = $companyDetails.find( "a[href$='addNewCompany']" )
+
+        // Buttons under to control the add company form
+        //
+    ,   $btnAddCompany              = $companyDetails.find( "a[href$='addCompany']" )
+    ,   $btnCancelAddCompany        = $companyDetails.find( "a[href$='cancelAddCompany']" )
 
     ,   businessSummary
     ,   businessSummaryId
@@ -782,9 +791,6 @@
         //
         function _companyDetails()
         {
-            var $doesHaveCompany    = forms.companyDetails.$el.find( ".doesHaveCompany" ).hide()
-            ;
-
             $hasCompany.change( function( e )
             {
                 var value   = $hasCompany.filter( "[checked]" ).val()
@@ -793,9 +799,84 @@
 
                 $doesHaveCompany[ fn ]();
             } );
+
+            $btnAddNewCompany.click( function( e )
+            {
+                e.preventDefault();
+
+                var $btn = $( this );
+                $btn.hide();
+
+                $btnAddCompany.removeClass( "disabled" );
+                $btnCancelAddCompany.removeClass( "disabled" );
+
+                bidx.company.navigate(
+                {
+                    requestedState:     "create"
+                ,   callbacks:
+                    {
+                        success:            function( company )
+                        {
+                            _addCompany( null, company );
+
+                            $addNewCompany.hide();
+                            $btn.show();
+                        }
+                    ,   error:              function()
+                        {
+                            $btnAddCompany.removeClass( "disabled" );
+                            $btnCancelAddCompany.removeClass( "disabled" );
+                        }
+                    ,   ready:              function()
+                        {
+                            $btnAddCompany.removeClass( "disabled" );
+                            $btnCancelAddCompany.removeClass( "disabled" );
+                        }
+                    ,   saving:             function()
+                        {
+                            $btnAddCompany.addClass( "disabled" );
+                            $btnCancelAddCompany.addClass( "disabled" );
+                        }
+                    }
+                } );
+
+                $addNewCompany.fadeIn();
+            } );
+
+            // Validate and if valid, save the company
+            //
+            $btnAddCompany.click( function( e )
+            {
+                e.preventDefault();
+
+                if ( $btnAddCompany.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                bidx.company.save();
+            } );
+
+            // Cancel adding the company, hide the add company form and return to the previous state
+            //
+            $btnCancelAddCompany.click( function( e )
+            {
+                e.preventDefault();
+
+                if ( $btnCancelAddCompany.hasClass( "disabled" ) )
+                {
+                    return;
+                }
+
+                $addNewCompany.hide();
+                $btnAddNewCompany.show();
+            } );
+
         }
     }
 
+    // Add a company row to the table of existing companies
+    //
     function _addCompany( index, company )
     {
         if ( !index )
@@ -1208,6 +1289,8 @@
         //
         financialSummary.deletedYears = {};
         $companiesTable.find( "tbody" ).empty();
+        $doesHaveCompany.hide();
+        $addNewCompany.hide();
 
         var curYear         = bidx.common.getNow().getFullYear();
 
@@ -1321,6 +1404,10 @@
         }
     }
 
+    // Retrieve the list of companies of the currently logged in user
+    //
+    // @returns promise
+    //
     function _getCompanies()
     {
         var $d = $.Deferred();
@@ -1358,6 +1445,10 @@
         return $d;
     }
 
+    // Retrieve the business summary by ID
+    //
+    // @returns promise
+    //
     function _getBusinessSummary()
     {
         var $d = $.Deferred();
@@ -1416,7 +1507,7 @@
 
     // Try to save the businessSummary to the API
     //
-    function _doSave( params )
+    function _doSave()
     {
         // Only allow saving when all the sub forms are valid
         //

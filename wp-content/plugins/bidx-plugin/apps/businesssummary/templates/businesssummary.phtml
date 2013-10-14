@@ -607,67 +607,77 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                         <!-- SHOW -->
                         <div class="view viewShow">
 <?php
-                            $companyWebsite = null;
-                            if ( $this->exst( $company->website ) ) {
-                                $companyWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $company->website );
+                            // Is there a company object?
+                            //
+                            if ( !$this->exst( $company )) {
+
+                                _e( 'This business summary doesn\'t have a company', 'bidxplugin' );
+
+                            } else {
+
+                                $companyWebsite = null;
+
+                                if ( $this->exst( $company->website ) ) {
+                                    $companyWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $company->website );
+                                }
+
+                                $rowValues = array (
+                                    __('Company name','bidxplugin')
+                                        => $this->exst($company->name),
+
+                                    __('Company website','bidxplugin')
+                                        => $companyWebsite,
+
+                                    __('Registered','bidxplugin')
+                                        => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
+
+                                    __('Legal form','bidxplugin')
+                                        => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
+
+                                    __('Registration number','bidxplugin')
+                                        => $this->exst($company->registrationNumber),
+
+                                    __('Fiscal number','bidxplugin')
+                                        => $this->exst($company->fiscalNumber),
+
+                                    __('Date company established','bidxplugin')
+                                        => $this->exst($company->dateCompanyEstab),
+
+                                    __('Number permanent male employees','bidxplugin')
+                                        => $this->exst($company->numPermMaleEmp ),
+
+                                    __('Number permanent female employees','bidxplugin')
+                                        => $this->exst($company->numPermFemaleEmp ),
+
+                                    __('Number temporary male employees','bidxplugin')
+                                        => $this->exst($company->numTempMaleEmp ),
+
+                                    __('Number temporary female employees','bidxplugin')
+                                        => $this->exst($company->numTempFemaleEmp ),
+
+                                    __('Street','bidxplugin')
+                                        => $this->exst($company->statutoryAddress->street),
+
+                                    __('Street number','bidxplugin')
+                                        => $this->exst($company->statutoryAddress->streetNumber),
+
+                                    __('Neighborhood','bidxplugin')
+                                        => $this->exst($company->statutoryAddress->neighborhood),
+
+                                    __('Postalcode','bidxplugin')
+                                        => $this->exst($company->statutoryAddress->postalCode),
+
+                                    __('Postbox','bidxplugin')
+                                        => $this->exst($company->statutoryAddress->postBox),
+
+                                    __('City','bidxplugin')
+                                        => $this->exst($company->statutoryAddress->cityTown),
+
+                                    __('Country','bidxplugin')
+                                        => $this->getStaticVal( 'country', $this->exst($company->statutoryAddress->country) )
+                                );
+                                echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
                             }
-
-                            $rowValues = array (
-                                __('Company name','bidxplugin')
-                                    => $this->exst($company->name),
-
-                                __('Company website','bidxplugin')
-                                    => $companyWebsite,
-
-                                __('Registered','bidxplugin')
-                                    => $this->exst($company->registered) == true ? __('Yes','bidxplugin') : __('No','bidxplugin'),
-
-                                __('Legal form','bidxplugin')
-                                    => $this->getStaticVal( 'legalForm', $this->exst($company->legalFormBusiness) ),
-
-                                __('Registration number','bidxplugin')
-                                    => $this->exst($company->registrationNumber),
-
-                                __('Fiscal number','bidxplugin')
-                                    => $this->exst($company->fiscalNumber),
-
-                                __('Date company established','bidxplugin')
-                                    => $this->exst($company->dateCompanyEstab),
-
-                                __('Number permanent male employees','bidxplugin')
-                                    => $this->exst($company->numPermMaleEmp ),
-
-                                __('Number permanent female employees','bidxplugin')
-                                    => $this->exst($company->numPermFemaleEmp ),
-
-                                __('Number temporary male employees','bidxplugin')
-                                    => $this->exst($company->numTempMaleEmp ),
-
-                                __('Number temporary female employees','bidxplugin')
-                                    => $this->exst($company->numTempFemaleEmp ),
-
-                                __('Street','bidxplugin')
-                                    => $this->exst($company->statutoryAddress->street),
-
-                                __('Street number','bidxplugin')
-                                    => $this->exst($company->statutoryAddress->streetNumber),
-
-                                __('Neighborhood','bidxplugin')
-                                    => $this->exst($company->statutoryAddress->neighborhood),
-
-                                __('Postalcode','bidxplugin')
-                                    => $this->exst($company->statutoryAddress->postalCode),
-
-                                __('Postbox','bidxplugin')
-                                    => $this->exst($company->statutoryAddress->postBox),
-
-                                __('City','bidxplugin')
-                                    => $this->exst($company->statutoryAddress->cityTown),
-
-                                __('Country','bidxplugin')
-                                    => $this->getStaticVal( 'country', $this->exst($company->statutoryAddress->country) )
-                            );
-                            echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
 ?>
                         </div>
 
@@ -712,9 +722,18 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                             <!-- going into edit will populate this list with the response of the current company list of a member -->
                                         </tbody>
                                     </table>
-                                </div>
 
+                                    <a href="#addNewCompany" class="btn"><?php _e('Or add a new company', 'bidxplugin')?></a>
+                                </div>
                             </form>
+
+                            <div class="addNewCompany">
+<?php
+                                echo do_shortcode( '[bidx app="company"]' );
+?>
+                                <a href="#addCompany" class="btn btn-primary"><?php _e('Save to list', 'bidxplugin')?></a>
+                                <a href="#cancelAddCompany" class="btn"><?php _e('Cancel', 'bidxplugin')?></a>
+                            </div>
                         </div><!-- /Edit -->
 
                         <div class="accordion-controls-bottom">
@@ -743,13 +762,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- SHOW -->
                         <div class="view viewShow">
-<?php
-                        if ( $companyId ) {
-                            echo do_shortcode( sprintf( '[bidx app="company" id="%d"]', $companyId ) );
-                        } else {
-                            _e( 'This business summary doesn\'t have a company', 'bidxplugin' );
-                        }
-?>
+                            show documents
                         </div>
 
                         <!-- LOAD -->

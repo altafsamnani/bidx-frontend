@@ -10,6 +10,9 @@
     ,   $toggleRegistered                   = $element.find( "[name='registered']"      )
     ,   $toggleHaveEmployees                = $element.find( "[name='haveEmployees']"   )
 
+    ,   $btnSave
+    ,   $btnCancel
+
     ,   $logoControl                        = $editForm.find( ".logo-control" )
     ,   $logoContainer                      = $logoControl.find( ".logoContainer" )
 
@@ -36,6 +39,9 @@
     ,   snippets        = {}
 
     ,   appName         = "company"
+    ,   slaveApp        = true
+
+    ,   callbacks       = null
     ;
 
     if ( !$element.length )
@@ -481,29 +487,26 @@
             ,   item    = bidx.utils.getValue( company, nest )
             ;
 
-            if ( item )
+            $.each( fields[ nest ], function( j, f )
             {
-                $.each( fields[ nest ], function( j, f )
+                var $input  = $editForm.find( "[name='" + nest + "." + f + "']" )
+                ,   value   = bidx.utils.getValue( item, f )
+                ;
+
+                if ( f === "country" && value )
                 {
-                    var $input  = $editForm.find( "[name='" + nest + "." + f + "']" )
-                    ,   value   = bidx.utils.getValue( item, f )
-                    ;
+                    value = ( value + "" ).toUpperCase();
+                }
 
-                    if ( f === "country" && value )
-                    {
-                        value = ( value + "" ).toUpperCase();
-                    }
+                // HTML Unescape the values
+                //
+                value = $( "<div />" ).html( value ).text();
 
-                    // HTML Unescape the values
-                    //
-                    value = $( "<div />" ).html( value ).text();
-
-                    $input.each( function()
-                    {
-                        bidx.utils.setElementValue( $( this ), value  );
-                    } );
+                $input.each( function()
+                {
+                    bidx.utils.setElementValue( $( this ), value  );
                 } );
-            }
+            } );
         } );
 
         _updateCurrentAddressMap();
@@ -597,39 +600,48 @@
     {
         // Reset any state
         //
-        $controls.empty();
-
         $logoContainer.empty();
+
+        // This is a bit of a hack so not to refactor the whole bunch
+        // currently only when not running as a slave app these button are actually put inside the dom.
+        //
+        $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  });
 
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  })
-        ;
+        if ( !slaveApp )
+        {
+            $controls.empty();
 
-        $btnSave.i18nText( ( state === "create" ? "btnAddCompany" : "btnSaveCompany" ), appName );
-        $btnCancel.i18nText( "btnCancel" );
+            $btnSave.i18nText( ( state === "create" ? "btnAddCompany" : "btnSaveCompany" ), appName );
+            $btnCancel.i18nText( "btnCancel" );
 
-        $controls.append( $btnSave );
+            // Wire the submit button which can be anywhere in the DOM
+            //
+            $btnSave.click( function( e )
+            {
+                e.preventDefault();
+
+                $editForm.submit();
+            } );
+
+            $controls.append( $btnSave );
+
+            if ( state === "edit" )
+            {
+                $controls.append( $btnCancel );
+            }
+        }
 
         if ( state === "edit" )
         {
-            $controls.append( $btnCancel );
             $logoControl.show();
         }
         else
         {
             $logoControl.hide();
         }
-
-        // Wire the submit button which can be anywhere in the DOM
-        //
-        $btnSave.click( function( e )
-        {
-            e.preventDefault();
-
-            $editForm.submit();
-        } );
 
         // Setup form
         //
@@ -693,6 +705,11 @@
                 $btnSave.addClass( "disabled" );
                 $btnCancel.addClass( "disabled" );
 
+                if ( callbacks )
+                {
+                    callbacks.saving();
+                }
+
                 _save(
                 {
                     error: function( jqXhr )
@@ -718,6 +735,8 @@
                 } );
             }
         } );
+
+        $editForm.validate().resetForm();
 
         if ( state === "edit" )
         {
@@ -793,6 +812,13 @@
         }
     };
 
+    // Central save method, also exposed to the outside world
+    //
+    function save()
+    {
+        $editForm.submit();
+    }
+
     // Try to save the company to the API
     //
     var _save = function( params )
@@ -827,16 +853,33 @@
                     companyId = bidx.utils.getValue( bidxMeta, "ownerId" );
                 }
 
-                bidx.common.notifyRedirect();
-                bidx.common.removeAppWithPendingChanges( appName );
+                // If running as a slave app, notify the change via a callback
+                //
+                if ( callbacks )
+                {
+                    callbacks.success( response.data );
+                }
 
-                var url = "/company/" + companyId + "?rs=true";
+                if ( !slaveApp )
+                {
+                    bidx.common.notifyRedirect();
+                    bidx.common.removeAppWithPendingChanges( appName );
 
-                document.location.href = url;
+                    var url = "/company/" + companyId + "?rs=true";
+
+                    document.location.href = url;
+                }
             }
         ,   error:          function( jqXhr )
             {
                 params.error( jqXhr );
+
+                // If running as a slave app, notify the change via a callback
+                //
+                if ( callbacks )
+                {
+                    callbacks.error();
+                }
             }
         };
 
@@ -870,6 +913,26 @@
     //
     var navigate = function( options )
     {
+        // Set the slave mode when the navigate is called with a slaveApp mode
+        //
+        if ( typeof options.slaveApp !== "undefined" )
+        {
+            slaveApp = options.slaveApp;
+        }
+
+        // Register callbacks
+        //
+        if ( options.callbacks )
+        {
+            callbacks =
+            {
+                success:    options.callbacks.success   || function() {}
+            ,   ready:      options.callbacks.ready     || function() {}
+            ,   error:      options.callbacks.error     || function() {}
+            ,   saving:     options.callbacks.saving    || function() {}
+            };
+        }
+
         switch( options.requestedState )
         {
             case "edit":
@@ -900,7 +963,15 @@
                     bidx.i18n.load( [ "__global", appName ] )
                         .done( function()
                         {
-                            _init();
+                            _init( function()
+                            {
+                                // When callbacks is defined all callbacks exist
+                                //
+                                if ( callbacks )
+                                {
+                                    callbacks.ready();
+                                }
+                            });
                         } );
                 }
 
@@ -924,14 +995,31 @@
                 state       = "create";
 
                 $element.show();
-                _init();
+
+                // Make sure the i18n translations for this app are available before initing
+                //
+                bidx.i18n.load( [ "__global", appName ] )
+                    .done( function()
+                    {
+                        _init( function()
+                        {
+                            // When callbacks is defined all callbacks exist
+                            //
+                            if ( callbacks )
+                            {
+                                callbacks.ready();
+                            }
+                        } );
+                    } );
             break;
         }
     };
 
     var reset = function()
     {
-        state = null;
+        state       = null;
+        slaveApp    = null;
+        callbacks   = null;
 
         bidx.common.removeAppWithPendingChanges( appName );
     };
@@ -943,6 +1031,7 @@
         navigate:                   navigate
     ,   $element:                   $element
     ,   reset:                      reset
+    ,   save:                       save
 
         // START DEV API
         //
