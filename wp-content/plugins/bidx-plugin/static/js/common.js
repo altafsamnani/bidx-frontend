@@ -602,14 +602,14 @@
             //
             $container = $element.closest( ".control-group" );
 
-            if ( $container.length )
+            if ( $container.length && !$element.hasClass( "noValidationErrorMessage" ))
             {
                 $error.appendTo( $container );
             }
 
             // Forms can be configured to have no validation icon behind the elements
             //
-            if ( !this.settings || !this.settings.noIcon )
+            if ( ( !this.settings || !this.settings.noValidationIcon ) && !$element.hasClass( "noValidationIcon" ) )
             {
                 if ( $container.length )
                 {
@@ -692,7 +692,7 @@
 
             // Forms can be configured to have no validation icon behind the elements
             //
-            if ( !this.settings.noIcon )
+            if ( ( !this.settings || !this.settings.noValidationIcon ) && !$element.hasClass( "noValidationIcon" ) )
             {
                 // add validation-icon to control group if it is not already available
                 //

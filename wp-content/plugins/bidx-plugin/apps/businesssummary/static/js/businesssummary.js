@@ -240,7 +240,7 @@
                     ,   min:                    0
                     ,   max:                    100
                     }
-                ,   financeNeeded:
+                ,   financingNeeded:
                     {
                         required:               true
                     ,   monetaryAmount:         true
@@ -338,16 +338,37 @@
                     }
                 }
 
-            ,   noIcon:                 true
-
             ,   messages:
                 {
 
                 }
 
-            ,   errorPlacement:         function( $error, $element )
+            ,   submitHandler:        function( e )
                 {
-                    // NOOP, no error messsage
+                    _doSave();
+                }
+            } );
+
+            // Company details
+            //
+            forms.companyDetails.$el.validate(
+            {
+                ignore:                 ""
+            ,   rules:
+                {
+                    hasCompany:
+                    {
+                        required:               true
+                    }
+                ,   company:
+                    {
+                        required:               function() { return $hasCompany.filter( ":checked" ).val() === "true"; }
+                    }
+                }
+
+            ,   messages:
+                {
+
                 }
 
             ,   submitHandler:        function( e )
@@ -828,7 +849,13 @@
         //
         $company.data( "bidxData", company );
 
-        $company.find( "input[name='company']" ).attr( "value", index );
+        // Instantiate radio controls
+        //
+        $company
+            .find( "input[name='company']" )
+            .radio()
+            .attr( "value", index )
+        ;
 
         $companiesTable.find( "tbody" ).append( $company );
     }
