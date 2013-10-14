@@ -260,7 +260,16 @@
                         {
                             $.each( value, function( idx, v )
                             {
-                                $el.filter( "[value='" + v + "']" ).checkbox( "check" );
+                                var $f = $el.filter( "[value='" + v + "']" );
+
+                                if ( $f.data( "checkbox" ) )
+                                {
+                                    $f.checkbox( "check" );
+                                }
+                                else
+                                {
+                                    $f.prop( "checked", true );
+                                }
                             } );
                         }
                     break;
