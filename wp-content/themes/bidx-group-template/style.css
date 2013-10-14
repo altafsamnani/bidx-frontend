@@ -1227,7 +1227,7 @@ form .row-fluid .input-prepend {
 
     input[type='text'].bidx-tagsinput.enclosed {
 
-        width:                          150px;
+        width:                          200px; /* this width should actually be dynamic based on the length of the placeholder*/
         line-height:                    25px;
         padding:                        0;
         border:                         none;

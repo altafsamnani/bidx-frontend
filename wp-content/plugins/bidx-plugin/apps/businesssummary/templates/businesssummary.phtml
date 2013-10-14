@@ -251,7 +251,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     __('Suggested industry','bidxplugin')
                         => $this->getMultiValues( $this->exst($businessSummary->suggestedIndustry), ', ' ),
 
-                    __('Product Service','bidxplugin')
+                    __('Product / Service','bidxplugin')
                         => $this->getMultiValues( $this->exst($businessSummary->productService), ', ', 'productService' ),
 
                     __('Suggested product service','bidxplugin')
@@ -315,20 +315,20 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                                 <!-- Product Service -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Product service','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Product / service','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="productService" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="productService" placeholder="<?php _e('Product service','bidxplugin'); ?>">
+                                            <input type="text" autocomplete="off" name="productService" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="productService" placeholder="<?php _e('Product / service','bidxplugin'); ?>">
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Suggested Product Service -->
                                 <div class="control-group">
-                                    <label class="control-label"><?php _e('Suggested product service','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Suggested product / service','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
+                                            <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested product / service','bidxplugin'); ?>">
                                         </div>
                                     </div>
                                 </div>
