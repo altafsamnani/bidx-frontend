@@ -238,6 +238,7 @@
         getItem:                    getItem
     ,   setItem:                    setItem
     ,   getContext:                 getContext
+    ,   load:                       load
     ,   i:                          i
     };
 } ( jQuery ));
