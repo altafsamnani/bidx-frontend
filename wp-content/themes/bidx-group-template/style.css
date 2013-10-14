@@ -401,6 +401,11 @@ Company: bidX;
         -webkit-backface-visibility:    hidden;
     }
 
+    /* radio's and checkboxes with error should remain none-displayed since they have a proxy component */
+    .checkbox input.error,
+    .radio input.error {
+        display:                        none;
+    }
 
     .input-append .add-on, .input-prepend .add-on {
         min-width:                      32px;
