@@ -9,4 +9,8 @@
     <Item value="Trash">Trash</Item>
     <Item value="Fwd">Fwd</Item>
     <Item value="Re">Re</Item>
+    <Item value="incomingContactRequest">new contact request received</Item>
+    <Item value="incomingContactRequests">new contact requests received</Item>
+    <Item value="pendingContactRequest">contact request sent</Item>
+    <Item value="pendingContactRequests">contact requests sent</Item>
 </I18N>

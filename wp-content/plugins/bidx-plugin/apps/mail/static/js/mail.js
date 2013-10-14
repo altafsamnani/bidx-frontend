@@ -137,7 +137,7 @@
             }
         ];
 
-        bidx.common.notifyCustom( bidx.i18n.i( "sendingMessage", appName ) );
+        //bidx.common.notifyCustom( bidx.i18n.i( "sendingMessage", appName ) );
 
 /*        bidx.i18n.getItem( key, function( err, label )
         {
@@ -400,6 +400,8 @@
         );
     }
 
+    // this function mutates the relationship between two contacts. Possible mutations for relationship: action=[ignore / accept]
+    //
     function _doMutateContactRequest( e )
     {
         // prevent anchor tag to navigate to href
@@ -440,7 +442,10 @@
                     bidx.utils.log("[contacts] mutated a contact",  response );
                     if ( response && response.status === "OK" )
                     {
-                        bidx.controller.updateHash( "#mail/contacts", true, false );
+                        // NOTE: #msp 2013-1014; to be replace with list specific reload
+                        //
+                        document.location.reload();
+                        //bidx.controller.updateHash( "#mail/contacts", true, false );
                     }
 
                 }
@@ -630,7 +635,7 @@
             bidx.utils.log("[mail initialing contactlisting", contacts );
 
 
-            var $listEmpty              = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+            var $listEmpty = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
             ;
 
             // loop through all contact categories and populate the associated lists
@@ -649,6 +654,7 @@
                     _createListItems(
                     {
                         snippitId:              "contact-request-" + key
+                    ,   category:               key
                     ,   items:                  items
                     ,   view:                   "Contacts"
                     ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
@@ -691,8 +697,8 @@
                     //
                     var params =
                     {
-                        requesterId:     item.requesterId
-                    ,   requesteeId:     item.requesteeId
+                        requesterId:     item.contactId
+                    ,   requesteeId:     bidx.common.getCurrentUserId()
                     ,   type:            "contact"
                     ,   action:          "accept"
                     };
@@ -722,6 +728,7 @@
         // options:
         // {
         //      snippitId:          [ id of snippit script template ]
+        // ,    category:           [ the category of contacts ]
         // ,    items:              [ the collection of items to be converted into listitems ]
         // ,    view:               [ view selector ]
         // ,    targetListSelector: [ selector of target list ]
@@ -730,9 +737,10 @@
         //
         function _createListItems( options )
         {
-            bidx.utils.log("targetListSelector", options.targetListSelector);
             var snippit    = $( "#" + options.snippitId ).html().replace( /(<!--)*(-->)*/g, "" )
-            ,   $list      = $views.filter( bidx.utils.getViewName( options.view ) ) .find( options.targetListSelector )
+            ,   $view      = $views.filter( bidx.utils.getViewName( options.view ) )
+            ,   $list      = $view.find( options.targetListSelector )
+
             ,   $listItem
             ,   listItem
             ;
@@ -740,6 +748,10 @@
             // first empty the list
             //
             $list.empty();
+
+            // update counter displaying amount of contacts for this category
+            //
+            _setContactsCount( options.view, options.category, options.items.length );
 
             // iterate of each item an append a modified snippit to the list
             //
@@ -749,11 +761,9 @@
                 // duplicate snippit source and replace all placeholders (not every snippit will have all of these placeholders )
                 //
                 listItem = snippit
-                    .replace( /%profilePicture%/g,   item.pictureUrl     ? item.pictureUrl       : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAACqElEQVR4Xu3bvY8BQRzG8d9GiJda6ES0lEL8+yoK0YlatBQSide7m0nmgnDGWV93yaOyt7PzrM8+O7vNJYvF4sP0eblAIuiXG/sAQTPOgoacBS1oSgDK0RotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWq0oCEBKEaNFjQkAMWo0YKGBKAYNVrQkAAUo0YLGhKAYtRoQUMCUIwaLWhIAIp5S6Nns5lNp1P/E5MksV6vZ4VCwW9//TuejcdjOx6PfrvZbFq1Wr3L8Yo574Y+MACHDpDlctlarZaNRiNbr9fW6XQ8er/ft2Kx6LdP92Wz2Zs/6xVzPmAYNRSHDs2r1+vWaDQsbLvm7nY73/Rr+3K5nG96qVTyF2Eymdh8PveN/+m4n/bF3ClRihGD/gy0w3WY16ADvGv4crm0brdrw+Hwu/m3Ll7MnBFGqQzBocNtHprp8NzfHMp2u/UtvWx02N7v935pORwOZ2v7M3OmohgxCQ7tzun0weVa7ABrtdrdRrtjw4WpVCp+jQ+fZ+aMcHp6yFugT886do1262lornswbjabm28kj8z5tGDkBDj0tds85q0jk8nYYDDwy0a73fbNdt/dg3G1Wp09KNN4k4n0ix6GQ7szC28M7ns+n/dY4fXt1nt0OOZy/Q5LyG/mjFZKYeBboFM47383haChSyZoQUMCUIwaLWhIAIpRowUNCUAxarSgIQEoRo0WNCQAxajRgoYEoBg1WtCQABSjRgsaEoBi1GhBQwJQjBotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWo0BP0Jeyr5I6MnsB4AAAAASUVORK5CYII=" )
-                    .replace( /%requesterId%/g,      item.requesterId    ? item.requesterId      : "%requesterId%" )
-                    .replace( /%requesteeId%/g,      item.requesteeId    ? item.requesteeId      : "%requesteeId%" )
-                    .replace( /%requesterName%/g,    item.requesterName  ? item.requesterName    : "%requesterName%" )
-                    .replace( /%requesteeName%/g,    item.requesteeName  ? item.requesteeName    : "%requesteeName%" )
+                    .replace( /%pictureUrl%/g,      item.pictureUrl   ? item.pictureUrl     : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAACqElEQVR4Xu3bvY8BQRzG8d9GiJda6ES0lEL8+yoK0YlatBQSide7m0nmgnDGWV93yaOyt7PzrM8+O7vNJYvF4sP0eblAIuiXG/sAQTPOgoacBS1oSgDK0RotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWq0oCEBKEaNFjQkAMWo0YKGBKAYNVrQkAAUo0YLGhKAYtRoQUMCUIwaLWhIAIp5S6Nns5lNp1P/E5MksV6vZ4VCwW9//TuejcdjOx6PfrvZbFq1Wr3L8Yo574Y+MACHDpDlctlarZaNRiNbr9fW6XQ8er/ft2Kx6LdP92Wz2Zs/6xVzPmAYNRSHDs2r1+vWaDQsbLvm7nY73/Rr+3K5nG96qVTyF2Eymdh8PveN/+m4n/bF3ClRihGD/gy0w3WY16ADvGv4crm0brdrw+Hwu/m3Ll7MnBFGqQzBocNtHprp8NzfHMp2u/UtvWx02N7v935pORwOZ2v7M3OmohgxCQ7tzun0weVa7ABrtdrdRrtjw4WpVCp+jQ+fZ+aMcHp6yFugT886do1262lornswbjabm28kj8z5tGDkBDj0tds85q0jk8nYYDDwy0a73fbNdt/dg3G1Wp09KNN4k4n0ix6GQ7szC28M7ns+n/dY4fXt1nt0OOZy/Q5LyG/mjFZKYeBboFM47383haChSyZoQUMCUIwaLWhIAIpRowUNCUAxarSgIQEoRo0WNCQAxajRgoYEoBg1WtCQABSjRgsaEoBi1GhBQwJQjBotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWo0BP0Jeyr5I6MnsB4AAAAASUVORK5CYII=" )
+                    .replace( /%contactId%/g,       item.contactId    ? item.contactId      : "%contactId%" )
+                    .replace( /%contactName%/g,     item.contactName  ? item.contactName    : "%contactName%" )
                 ;
                 $listItem = $( listItem );
 
@@ -773,7 +783,38 @@
 
         }
 
+        // this function updates the count of contacts for a catergory (of contacts)
+        // category [incoming] and [pending] are treated differently with singular and plural forms
+        //
+        function _setContactsCount( view, category, count )
+        {
+            var $view       = $views.filter( bidx.utils.getViewName( view ) )
+            ,   $trigger    = $view.find( ".trigger-" + category + "-contacts" )
+            ,   text
+            ,   key
+            ;
 
+            if( category === "incoming" || category === "pending" )
+            {
+                // create i18n key
+                //
+                key = count === 1 ? category + "ContactRequest" : category + "ContactRequests";
+
+                // set translated text in trigger element
+                //
+                $trigger
+                    .i18nText( key, appName )
+                    .prepend( count + " ")
+                ;
+            }
+            else
+            {
+                // replace placeholder in trigger element (hyperlink)
+                //
+                $trigger.text( $trigger.text().replace( "%count-" + category + "-contacts%", count ) );
+            }
+
+        }
 
         // set message data in view. Function expects message object in API format
         //

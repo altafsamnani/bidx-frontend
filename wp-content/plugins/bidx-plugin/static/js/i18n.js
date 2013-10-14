@@ -265,6 +265,8 @@
 
             $el.text( label );
         } );
+
+        return $el;
     };
 
     // Exports

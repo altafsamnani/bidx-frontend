@@ -203,8 +203,8 @@
                 <div class="accordion" id="contactRequests">
                     <div class="accordion-group">
                         <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#contactRequests" href="#incomingRequests">
-                                <?php _e('5 new contact requests received)')?>
+                            <a class="accordion-toggle trigger-incoming-contacts" data-toggle="collapse" data-parent="#contactRequests" href="#incomingRequests">
+                                <?php _e('No new contact requests received')?>
                             </a>
                         </div>
 
@@ -225,8 +225,8 @@
                     <!-- SEND REQUESTS -->
                     <div class="accordion-group">
                         <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#contactRequests" href="#pendingRequests">
-                                <?php _e('4 contact requests sent')?>
+                            <a class="accordion-toggle trigger-pending-contacts" data-toggle="collapse" data-parent="#contactRequests" href="#pendingRequests">
+                                <?php _e('contact requests sent')?>
                             </a>
                         </div>
                         <div id="pendingRequests" class="accordion-body collapse">
@@ -244,32 +244,49 @@
                 </div> <!-- /END Request  -->
 
                 <hr>
-                <div id="activeRequests">
-                    <h3>Active contacts</h3>
 
-                    <ul class="contact-request-list active-contacts unstyled">
-                        <li class="span12 ">
-                            <div class="well">
-                                <?php _e('No active contacts','bidxplugin')?>
-                            </div>
+                <div class="tabbable"> <!-- Only required for left/right tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-active-contacts" class="trigger-active-contacts" data-toggle="tab">Active contacts (%count-active-contacts%)</a>
                         </li>
-
+                        <li>
+                            <a href="#tab-ignored-contacts" class="trigger-ignored-contacts" data-toggle="tab">Ignored contacts (%count-ignored-contacts%)</a>
+                        </li>
                     </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-active-contacts">
+                            <div id="activeRequests">
+
+                                <ul class="contact-request-list active-contacts unstyled">
+                                    <li class="span12 ">
+                                        <div class="well">
+                                            <?php _e('No active contacts','bidxplugin')?>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-ignored-contacts">
+                            <div id="ignoredRequests">
+
+                                <ul class="contact-request-list ignored-contacts unstyled">
+                                    <li class="span12 ">
+                                        <div class="well">
+                                            <?php _e('No ignored contacts','bidxplugin')?>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <hr style="clear:both;">
-                <div id="ignoredRequests">
-                    <h3>Ignored contacts</h3>
 
-                    <ul class="contact-request-list ignored-contacts unstyled">
-                        <li class="span12 ">
-                            <div class="well">
-                                <?php _e('No ignored contacts','bidxplugin')?>
-                            </div>
-                        </li>
 
-                    </ul>
-                </div>
+
 
 
 
@@ -382,10 +399,10 @@
             <div class="row-fluid">
                 <div class="span12">
                     <a class="pull-left clearfix" href="#">
-                        <img class="media-object" data-src="holder.js/90x90" src="%profilePicture%">
+                        <img class="media-object" data-src="holder.js/90x90" src="%pictureUrl%">
                     </a>
                     <div>
-                        <a href="/member/%requesterId%">%requesterName%</a>
+                        <a href="/member/%contactId%">%contactName%</a>
                     </div>
                 </div>
             </div>
@@ -405,12 +422,12 @@
         <div class="well">
             <div class="row-fluid">
                 <div class="span12">
-                    <a class="pull-left clearfix" href="/member/%requesteeId%">
-                        <img class="media-object" data-src="holder.js/90x90" src="%profilePicture%">
+                    <a class="pull-left clearfix" href="/member/%contactId%">
+                        <img class="media-object" data-src="holder.js/90x90" src="%pictureUrl%">
                     </a>
                     <div>
                         <span>Contact request sent to</span>
-                        <a href="/member/%requesteeId%"><strong>%requesteeName%</strong></a>
+                        <a href="/member/%contactId%"><strong>%contactName%</strong></a>
                     </div>
                 </div>
             </div>
@@ -434,11 +451,11 @@
             <div class="row-fluid">
                 <div class="span12">
                     <a class="pull-left clearfix" href="#">
-                        <img class="media-object" data-src="holder.js/90x90" src="%profilePicture%">
+                        <img class="media-object" data-src="holder.js/90x90" src="%pictureUrl%">
                     </a>
                     <div>
 
-                        <span><a href="/member/%requesteeId%">%requesteeName%</a></span>
+                        <span><a href="/member/%contactId%">%contactName%</a></span>
                         <strong></strong>
                     </div>
                 </div>
@@ -460,11 +477,11 @@
             <div class="row-fluid">
                 <div class="span12">
                     <a class="pull-left clearfix" href="#">
-                        <img class="media-object" data-src="holder.js/90x90" src="%profilePicture%">
+                        <img class="media-object" data-src="holder.js/90x90" src="%pictureUrl%">
                     </a>
                     <div>
 
-                        <span><a href="/member/%requesteeId%">%requesteeName%</a></span>
+                        <span><a href="/member/%contactId%">%contactName%</a></span>
                         <strong></strong>
                     </div>
                 </div>
