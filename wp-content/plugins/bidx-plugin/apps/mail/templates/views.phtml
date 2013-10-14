@@ -144,21 +144,21 @@
 
             <!-- Compose view -->
             <article class="view viewCompose">
-                <h2>
-                    <span class="title titleCompose"><?php _e('Create a new e-mail')?></span>
-                    <span class="title titleReply"><?php _e('Reply to message')?></span>
-                    <span class="title titleForward"><?php _e('Forward message')?></span>
-                </h2>
-
-
                 <form action="">
+
+                    <h2>
+                        <span class="title titleCompose"><?php _e('Create a new e-mail','bidxplugin')?></span>
+                        <span class="title titleReply"><?php _e('Reply to message','bidxplugin')?></span>
+                        <span class="title titleForward"><?php _e('Forward message','bidxplugin')?></span>
+                    </h2>
+
                     <div class="row-fluid">
                         <div class="control-group">
 
                             <label class="control-label"><?php _e('Recipient','bidxplugin'); ?></label>
                             <div class="controls">
                                 <div class="bidx-tagsinput-container">
-                                    <input type="text" name="contacts" class="bidx-tagsinput enclosed defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Add Recipient')?>">
+                                    <input type="text" name="contacts" class="bidx-tagsinput enclosed defer" autocomplete="off" data-bidxdataservice="mail.getMembers" placeholder="<?php _e('Add Recipient','bidxplugin')?>">
                                 </div>
                             </div>
 

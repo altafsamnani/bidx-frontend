@@ -23,9 +23,13 @@
             <fieldset class="well">
                 <span class="scrollPositionMarker" id="editCompany/companyDetail"></span>
                 <legend><?php _e('Company detail','bidxplugin'); ?></legend>
-
+                <p><?php _e('In this section you can link your business to an existing company. If you do not yet have a company, you can skip this step by answering \'No\' to the first question. If you already created a company in the past, you can select it from the list','bidxplugin')?>
+                </p>
                 <div class="row-fluid">
                     <div class="span4">
+
+                        <h3><?php _e('Or create a new company','bidxplugin')?></h3>
+                        <p><?php _e('Fill in below the details of the company under which you are running your business','bidxplugin')?></p>
 
                         <div class="control-group formfield">
                             <label class="control-label"><?php _e('Company name','bidxplugin'); ?></label>
@@ -42,6 +46,9 @@
                         </div>
 
                         <input type="hidden" name="statutoryAddress.coordinates"    />
+
+                        <h3>Company main address</h3>
+                        <p><?php _e('Enter the physical address where your company is registered.','bidxplugin')?></p>
 
                         <div class="control-group formfield">
                             <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>

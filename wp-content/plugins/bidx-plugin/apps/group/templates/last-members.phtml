@@ -10,6 +10,7 @@
                     break;
                 }
 		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
+
  ?>
 
                 <div class="span<?php echo $span ?> clearfix">
@@ -21,7 +22,8 @@
     				  	}
     			  	?>
                     <div>
-                        <div><strong><?php echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName ); ?></strong></div>
+
+                        <div><a href="/members/<?php echo $member -> bidxMeta -> bidxMemberId ?>"><strong><?php echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName ); ?></strong></a></div>
                         <div><?php echo $this -> exst( $member -> professionalTitle); ?></div>
                         <div><?php echo $this -> exst( $member -> country ); ?></div>
                         <!-- <div><span class="label bidx-label-investor">Investor</span></div> THIS NEEDS TO BE DONE CONDITIONALLY-->

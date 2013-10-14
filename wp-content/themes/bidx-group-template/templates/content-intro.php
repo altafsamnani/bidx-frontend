@@ -126,7 +126,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
     <div class="container">
         <div class="row-fluid">
 
-            <!-- CONTENT B;ock -->
+            <!-- CONTENT Block -->
             <div class="span8">
 
                 <!-- NEWS BLOCK -->
