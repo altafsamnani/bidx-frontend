@@ -357,7 +357,10 @@ Company: bidX;
         position:                   absolute;
         right:                      0;
         top:                        0;
+    }
 
+    form .controls.input-append .validation-icon {
+        margin-right:               -80px;
     }
 
     form .controls input.error,
