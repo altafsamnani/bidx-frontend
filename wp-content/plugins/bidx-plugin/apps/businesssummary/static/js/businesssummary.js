@@ -31,16 +31,31 @@
             {
                 $el:                    $element.find( "#frmBusinessSummary-FinancialDetails" )
             }
+        ,   companyDetails:
+            {
+                $el:                    $element.find( "#frmBusinessSummary-CompanyDetails" )
+            }
         }
 
+        // Financial Summary / Details
+        //
     ,   $financialSummary               = $element.find( ".financialSummary")
     ,   $financialSummaryYearsContainer = $financialSummary.find( ".fs-col-years" )
 
+        // Managament Team
+        //
     ,   $btnAddManagementTeam       = forms.aboutYouAndYourTeam.$el.find( "[href$='#addManagementTeam']" )
     ,   $managementTeamContainer    = forms.aboutYouAndYourTeam.$el.find( ".managementTeamContainer" )
 
+        // Company Details
+        //
+    ,   $hasCompany                 = forms.companyDetails.$el.find( "input[name='hasCompany']" )
+    ,   $companiesTable             = forms.companyDetails.$el.find( ".doesHaveCompany table" )
+
     ,   businessSummary
     ,   businessSummaryId
+
+    ,   companies
 
     ,   state
     ,   currentView
@@ -141,13 +156,15 @@
         }
     };
 
-
+    // Setup function for doing work that should only be done once
+    //
     function _oneTimeSetup()
     {
         _snippets();
         _setupValidation();
         _financialSummary();
         _managementTeam();
+        _companyDetails();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -182,8 +199,9 @@
         {
             // Grab the snippets from the DOM
             //
-            snippets.$managementTeam       = $snippets.children( ".managementTeamItem"   ).remove();
-            snippets.$financialSummaries   = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
+            snippets.$managementTeam        = $snippets.children( ".managementTeamItem"   ).remove();
+            snippets.$financialSummaries    = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
+            snippets.$company               = $snippets.find( "table tr.companyItem"  ).remove();
         }
 
         // Setup initial form validation
@@ -194,7 +212,8 @@
             //
             forms.generalOverview.$el.validate(
             {
-                rules:
+                ignore:         ""
+            ,   rules:
                 {
                     name:
                     {
@@ -226,7 +245,7 @@
                         required:               true
                     ,   monetaryAmount:         true
                     }
-                ,   investmentType:
+                ,   "investmentType[]":
                     {
                         required:               true
                     }
@@ -249,35 +268,24 @@
             //
             forms.aboutYourBusiness.$el.validate(
             {
-                rules:
+                ignore:         ""
+            ,   rules:
                 {
                     industry:
                     {
                         tagsinputRequired:      true
                     }
-                ,   suggestedIndustry:
-                    {
-                    }
                 ,   productService:
                     {
                         tagsinputRequired:      true
-                    }
-                ,   suggestedProductService:
-                    {
                     }
                 ,   countryOperation:
                     {
                         tagsinputRequired:      true
                     }
-                ,   socialImpact:
+                ,   "consumerType[]":
                     {
-                    }
-                ,   envImpact:
-                    {
-                    }
-                ,   consumerType:
-                    {
-                        required:               true
+                        required:      true
                     }
                 }
             ,   messages:
@@ -748,6 +756,79 @@
             //
             financialSummary.selectYear = selectYear;
         }
+
+        // Setup the Company Details component
+        //
+        function _companyDetails()
+        {
+            var $doesHaveCompany    = forms.companyDetails.$el.find( ".doesHaveCompany" ).hide()
+            ;
+
+            $hasCompany.change( function( e )
+            {
+                var value   = $hasCompany.filter( "[checked]" ).val()
+                ,   fn      = value === "true" ? "fadeIn" : "hide"
+                ;
+
+                $doesHaveCompany[ fn ]();
+            } );
+        }
+    }
+
+    function _addCompany( index, company )
+    {
+        if ( !index )
+        {
+            index = $companiesTable.find( "tbody .companyItem" ).length;
+        }
+
+        var $company        = snippets.$company.clone()
+        ,   hasEmployees
+        ,   location        = []
+        ,   country
+        ,   cityTown
+        ;
+
+        // Are we adding an investment with data or just an empty item?
+        //
+        if ( company )
+        {
+            $company.find( ".companyName"   ).text( bidx.utils.getValue( company, "name" ) );
+            $company.find( ".registered"    ).text( bidx.utils.getValue( company, "registered" ) === true ? bidx.i18n.i( 'yes' ) : bidx.i18n.i( 'no' ) );
+
+            hasEmployees = !!bidx.utils.getValue( company, "numPermFemaleEmpl" ) ||
+                !!bidx.utils.getValue( company, "numPermMaleEmpl" ) ||
+                !!bidx.utils.getValue( company, "numTempMaleEmpl" ) ||
+                !!bidx.utils.getValue( company, "numTempFemaleEmpl" );
+
+            $company.find( ".employees"     ).text( hasEmployees ? bidx.i18n.i( 'yes' ) : bidx.i18n.i( 'no' ) );
+
+            // CityTown
+            //
+            cityTown = bidx.utils.getValue( company, "statutoryAddress.cityTown" );
+
+            if ( cityTown )
+            {
+                location.push( cityTown );
+            }
+
+            // Country
+            //
+            country = bidx.utils.getValue( company, "statutoryAddress.country" );
+
+            if ( country )
+            {
+                location.push( bidx.data.i( country, "country" ));
+            }
+
+            $company.find( ".location"      ).text( location.join( ", " ) );
+        }
+
+        // Store the data in the DOM for later referal / merging
+        //
+        $company.data( "bidxData", company );
+
+        $companiesTable.find( "tbody" ).append( $company );
     }
 
     // Add the snippet for a previous investment
@@ -845,7 +926,7 @@
             {
                 $.each( formFields._root, function( i, f )
                 {
-                    var $input = $form.find( "[name='" + f + "']" )
+                    var $input = $form.find( "[name^='" + f + "']" )
                     ,   value  = bidx.utils.getValue( businessSummary, f )
                     ;
 
@@ -889,6 +970,16 @@
                 _updateFinancialSummariesItem( $yearItem, data );
             } );
         }
+
+        // Company list
+        //
+        if ( companies )
+        {
+            $.each( companies, function( idx, company )
+            {
+                _addCompany( idx, company );
+            } );
+        }
     }
 
     // Update the pre-rendered dom elements for the financial summarie
@@ -925,7 +1016,7 @@
             {
                 $.each( formFields._root, function( i, f )
                 {
-                    var $input = $form.find( "[name='" + f + "']" )
+                    var $input = $form.find( "[name^='" + f + "']" )
                     ,   value  = bidx.utils.getElementValue( $input )
                     ;
 
@@ -1063,6 +1154,21 @@
                 }
             } );
         } );
+
+        // Is there a company selected?
+        //
+        var $selectedCompany = $companiesTable.find( "input[name='company']:checked" ).closest( ".companyItem" )
+        ,   company
+        ,   companyId
+        ;
+
+        if ( $selectedCompany.length )
+        {
+            company     = $selectedCompany.data( "bidxData" );
+            companyId   = bidx.utils.getValue( company, "bidxMeta.bidxEntityId" );
+
+            bidx.utils.setValue( businessSummary, "company", companyId );
+        }
     }
 
     // This is the startpoint for the edit state
@@ -1072,6 +1178,7 @@
         // Reset any state
         //
         financialSummary.deletedYears = {};
+        $companiesTable.find( "tbody" ).empty();
 
         var curYear         = bidx.common.getNow().getFullYear();
 
@@ -1143,67 +1250,139 @@
 
         if ( state === "edit" )
         {
-            // Fetch the business summary
-            //
-            bidx.api.call(
-                "entity.fetch"
-            ,   {
-                    entityId:           businessSummaryId
-                ,   groupDomain:        bidx.common.groupDomain
+            _getBusinessSummary()
+                .then( function()
+                {
+                    return _getCompanies();
+                })
+                .fail( function()
+                {
+                    $btnCancel.removeClass( "disabled" );
+                })
+                .done( function()
+                {
+                    _populateScreen();
 
-                ,   success: function( response )
-                    {
-                        bidx.utils.log( "[BusinessSummary] fetch", businessSummaryId, response );
+                    $btnSave.removeClass( "disabled" );
+                    $btnCancel.removeClass( "disabled" );
 
-                        // Do we have edit perms?
-                        //
-                        var bidxMeta    = bidx.utils.getValue( response, "bidxMeta" )
-                        ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
-                        ;
-
-                        if ( !canEdit )
-                        {
-                            bidx.i18n.getItem( "noEditPermission", function( err, label )
-                            {
-                                _showError( label );
-                            } );
-
-                            $btnCancel.removeClass( "disabled" );
-                        }
-                        else
-                        {
-                            businessSummary = response;
-
-                            bidx.utils.log( "bidx::businessSummary", businessSummary );
-
-                            _populateScreen();
-
-                            $btnSave.removeClass( "disabled" );
-                            $btnCancel.removeClass( "disabled" );
-
-                            _showView( "edit" );
-                        }
-                    }
-                ,   error:          function( jqXhr, textStatus )
-                    {
-                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
-
-                        _showError( "Something went wrong while retrieving the businessSummary: " + status );
-                    }
-                }
-            );
+                    _showView( "edit" );
+                })
+            ;
         }
         else
         {
             businessSummary     = {};
 
-            _populateScreen();
+            _getCompanies()
+                .fail( function()
+                {
+                    $btnCancel.removeClass( "disabled" );
+                } )
+                .done( function()
+                {
+                    _populateScreen();
 
-            $btnSave.removeClass( "disabled" );
-            $btnCancel.removeClass( "disabled" );
+                    $btnSave.removeClass( "disabled" );
+                    $btnCancel.removeClass( "disabled" );
 
-            _showView( "edit" );
+                    _showView( "edit" );
+                } )
+            ;
         }
+    }
+
+    function _getCompanies()
+    {
+        var $d = $.Deferred();
+
+        // Fetch the business summary
+        //
+        bidx.api.call(
+            "memberCompanies.fetch"
+        ,   {
+                memberId:           bidx.common.getCurrentUserId()
+            ,   groupDomain:        bidx.common.groupDomain
+
+            ,   success: function( response )
+                {
+                    bidx.utils.log( "[Member Companies] fetch", businessSummaryId, response );
+
+                    companies = response;
+
+                    $d.resolve();
+                }
+            ,   error:          function( jqXhr, textStatus )
+                {
+                    var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                    ,   msg     = "Something went wrong while retrieving the companies: " + status
+                    ,   error   = new Error( msg )
+                    ;
+
+                    _showError( msg );
+
+                    $d.reject( error );
+                }
+            }
+        );
+
+        return $d;
+    }
+
+    function _getBusinessSummary()
+    {
+        var $d = $.Deferred();
+
+        // Fetch the business summary
+        //
+        bidx.api.call(
+            "entity.fetch"
+        ,   {
+                entityId:           businessSummaryId
+            ,   groupDomain:        bidx.common.groupDomain
+
+            ,   success: function( response )
+                {
+                    bidx.utils.log( "[BusinessSummary] fetch", businessSummaryId, response );
+
+                    // Do we have edit perms?
+                    //
+                    var bidxMeta    = bidx.utils.getValue( response, "bidxMeta" )
+                    ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
+                    ,   msg
+                    ;
+
+                    if ( !canEdit )
+                    {
+                        msg = bidx.i18n.i( "noEditPermission" );
+                        _showError( msg );
+
+                        $d.reject( new Error( msg ) );
+                    }
+                    else
+                    {
+                        businessSummary = response;
+
+                        bidx.utils.log( "bidx::businessSummary", businessSummary );
+
+                        $d.resolve();
+                    }
+                }
+            ,   error:          function( jqXhr, textStatus )
+                {
+                    var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                    ,   msg     = "Something went wrong while retrieving the business summary: " + status
+                    ,   error   = new Error( msg )
+                    ;
+
+                    _showError( msg );
+
+                    $d.reject( error );
+                }
+            }
+        );
+
+        return $d;
     }
 
     // Try to save the businessSummary to the API
@@ -1382,9 +1561,13 @@
 
                     _showView( "load" );
 
-                    // Make sure the i18n translations for this app are available before initing
+                    // Make sure the i18n translations and static data api items for this app are available before initing
                     //
                     bidx.i18n.load( [ "__global", appName ] )
+                        .then( function()
+                        {
+                            return bidx.data.load( [ "country" ] );
+                        } )
                         .done( function()
                         {
                             _init();
@@ -1430,6 +1613,8 @@
     function reset()
     {
         state = null;
+
+        bidx.common.removeAppWithPendingChanges( appName );
 
         // Remove any created years that haven't been saved and select the current year
         //

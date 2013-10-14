@@ -204,7 +204,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                         //
                                         if ( isset(BidxCommon::$i18nData['static']['investmentType']) ) {
                                             foreach ( BidxCommon::$i18nData['static']['investmentType'] as $investmentType ) {
-                                                printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="investmentType" data-toggle="checkbox" />%s</label>', $investmentType->value, $investmentType->label );
+                                                printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="investmentType[]" data-toggle="checkbox" />%s</label>', $investmentType->value, $investmentType->label );
                                             }
                                         }
 ?>
@@ -395,7 +395,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                         $typeCode = 'consumerType';
                                         if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
                                             foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="consumerType" data-toggle="checkbox" />%s</label>', $item->value, $item->label );
+                                                printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="consumerType[]" data-toggle="checkbox" />%s</label>', $item->value, $item->label );
                                             }
                                         }
 ?>
@@ -683,7 +683,38 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- EDIT -->
                         <div class="view viewEdit">
-                            edit
+
+                            <form id="frmBusinessSummary-CompanyDetails">
+
+                                <!-- Has Company? -->
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Does this business summary have a company?','bidxplugin'); ?></label>
+                                    <div class="controls">
+                                        <label class="radio inline"><input type="radio" value="true"  name="hasCompany" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
+                                        <label class="radio inline"><input type="radio" value="false" name="hasCompany" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
+                                    </div>
+                                </div>
+
+                                <!-- Does have a company -->
+                                <div class="doesHaveCompany">
+                                    <h2><?php _e('Select your company from the list below','bidxplugin'); ?></h2>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th><?php _e('Company name','bidxplugin'); ?></th>
+                                                <th><?php _e('Registered','bidxplugin'); ?></th>
+                                                <th><?php _e('Employees','bidxplugin'); ?></th>
+                                                <th><?php _e('Location','bidxplugin'); ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- going into edit will populate this list with the response of the current company list of a member -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </form>
                         </div><!-- /Edit -->
 
                         <div class="accordion-controls-bottom">
@@ -751,6 +782,21 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
     <!-- SNIPPETS -->
     <div class="snippets hide">
+
+        <!-- Existing company item -->
+        <table>
+            <tr class="companyItem">
+                <td>
+                    <input type="radio" name="company" data-toggle="radio" value="">
+                </td>
+                <td class="companyName"></td>
+                <td class="registered"></td>
+                <td class="employees"></td>
+                <td class="location"></td>
+            </tr>
+        </table>
+
+        <!-- Management Team Item -->
         <div class="managementTeamItem span6 well well-white">
 
             <!-- First Name -->
