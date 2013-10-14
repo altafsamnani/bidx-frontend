@@ -877,6 +877,8 @@
     var reset = function()
     {
         state = null;
+
+        bidx.common.removeAppWithPendingChanges( appName );
     };
 
     // Expose
