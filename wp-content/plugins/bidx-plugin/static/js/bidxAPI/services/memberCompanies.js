@@ -14,7 +14,7 @@
     service.fetch = function( params )
     {
         var method = "GET"
-        ,   url    = baseUrl.replace( "/%memberId%", params.memberId )
+        ,   url    = baseUrl.replace( "%memberId%", params.memberId )
         ;
 
         api._call(
@@ -41,5 +41,5 @@
 
     // Expose
     //
-    api.memberRelationships = service;
+    api.memberCompanies = service;
 } )( jQuery );
