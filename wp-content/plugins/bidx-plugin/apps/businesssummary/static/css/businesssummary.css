@@ -234,6 +234,12 @@ body.bidx-businesssummary .financialSummariesItem.last .fs-header .btnNext {
     display:                none;
 }
 
+body.bidx-businesssummary .companyItem label.radio {
+    margin:                 0;
+}
+
+/* media queries */
+
 @media (max-width: 980px) {
     body.bidx-businesssummary .fs-col-labels {
         width:                      30%;

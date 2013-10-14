@@ -828,6 +828,8 @@
         //
         $company.data( "bidxData", company );
 
+        $company.find( "input[name='company']" ).attr( "value", index );
+
         $companiesTable.find( "tbody" ).append( $company );
     }
 
