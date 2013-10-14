@@ -602,13 +602,17 @@
             //
             $container = $element.closest( ".control-group" );
 
+            if ( $container.length )
+            {
+                $error.appendTo( $container );
+            }
+
             // Forms can be configured to have no validation icon behind the elements
             //
             if ( !this.settings || !this.settings.noIcon )
             {
                 if ( $container.length )
                 {
-                    $error.appendTo( $container );
                     if( !$container.find( ".controls" ).find( ".validation-icon" ).length )
                     {
                         $container.find( ".controls" ).append( $errorIcon );
