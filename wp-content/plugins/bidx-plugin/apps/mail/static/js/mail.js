@@ -324,7 +324,7 @@
                 {
                     var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                    _showError( "Something went wrong while retrieving the member: " + status );
+                    _showError( "Something went wrong while deleting the member: " + status );
                 }
             }
         );
