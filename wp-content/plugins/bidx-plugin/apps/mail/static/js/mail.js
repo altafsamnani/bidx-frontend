@@ -661,10 +661,6 @@
                     ,   cb:                     _getContactsCallback( key)
                     } );
 
-                    // update the counter for these contacts
-                    bidx.utils.log($( "#"+ key + "Requests" ).find( ".requestCount" ));
-                    $( "#"+ key + "Requests" ).find( ".requestCount" ).text( items.length);
-
                 }
             } );
         }
