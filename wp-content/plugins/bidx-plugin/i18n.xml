@@ -5,6 +5,10 @@
     <Item value="msgOnPageUnload">Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?</Item>
     <Item value="msgWaitForRedirect">Please wait while you are redirected…</Item>
 
+    <!-- Booleans -->
+    <Item value="yes">Yes</Item>
+    <Item value="no">No</Item>
+
     <!-- Attachment -->
     <Item value="selectDocumentType">Select type</Item>
     <Item value="attachmentDeleted">Attachment deleted</Item>
