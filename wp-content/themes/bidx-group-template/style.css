@@ -1896,6 +1896,19 @@ form .row-fluid .input-prepend {
 
             /* end closed group page */
 
+            /* space for validation icons */
+            .bidx.auth .accordion-inner .control-group.span11 {
+                margin-left:                            0;
+            }
+            .bidx.auth .well .control-group.span11 {
+                margin-left:                            0;
+            }
+            .bidx.auth .well .btn.btn-danger.btn-block {
+                overflow:                               hidden;
+            }
+
+
+
         /* end content */
 
 

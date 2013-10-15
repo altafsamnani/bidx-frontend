@@ -42,7 +42,7 @@
                     <legend><?php _e('General information','bidxplugin'); ?></legend>
 
                     <div class="row-fluid">
-                        <div class="span12">
+                        <div class="span11">
 
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Describe yourself as an investor','bidxplugin'); ?></label>
@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Investor type','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Do you invest on behalf of an institution?','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="row-fluid toggle toggle-investsForInst">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Institution name','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="row-fluid toggle toggle-investsForInst">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Institution website'); ?></label>
                                 <div class="controls">
@@ -99,7 +99,7 @@
                     </div>
 
                     <div class="row-fluid institutionAddressItem">
-                        <div class="span6">
+                        <div class="span5">
 
                             <input type="hidden" name="institutionAddress.coordinates"    />
 
@@ -146,7 +146,7 @@
                             </div>
                         </div>
 
-                        <div class="span6">
+                        <div class="span6 offset1">
                             <div class="institutionAddressMap"></div>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                     <legend><?php _e('Investment preferences','bidxplugin'); ?></legend>
 
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -244,7 +244,7 @@
 
                         </div>
 
-                        <div class="span6">
+                        <div class="span5 offset1">
                             <h6><?php _e('Location','bidxplugin'); ?></h6>
 
                             <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country"><?php _e('Country / Countries','bidxplugin'); ?></label>
@@ -280,7 +280,7 @@
                     <h4><?php _e('Investment size','bidxplugin'); ?></h4>
 
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Minimum investment','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -292,7 +292,7 @@
                             </div>
                         </div>
 
-                        <div class="span6">
+                        <div class="span5 offset1">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Maximum investment','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -306,7 +306,7 @@
                     </div>
 
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Total investment in the previous year','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -320,7 +320,7 @@
                     </div>
 
                     <div class="row-fluid">
-                        <div class="span12">
+                        <div class="span11">
 
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Other preferences (max. 60 words)','bidxplugin'); ?></label>
@@ -338,7 +338,7 @@
                     <legend><?php _e('Investment history','bidxplugin'); ?></legend>
 
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Number of investments in the last 12 months','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -349,7 +349,7 @@
                     </div>
 
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Amount invested in the last 12 months','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -363,7 +363,7 @@
                     </div>
 
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="control-group">
                                 <label class="control-label"><?php _e('Typical involvement','bidxplugin'); ?></label>
                                 <div class="btn-group" data-toggle="buttons-radio" name="typicalInvolvement">
@@ -415,21 +415,21 @@
 
         <!-- Previous Investment -->
         <div class="previousInvestmentsItem span6 well well-white">
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Company name','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="companyName" placeholder="<?php _e('Please enter the company name','bidxplugin'); ?>">
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Company website?','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="companyWebsite" placeholder="<?php _e('Please enter the company URL','bidxplugin'); ?>">
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Amount invested','bidxplugin'); ?></label>
                 <div class="controls">
                     <div class="input-prepend">
@@ -439,7 +439,7 @@
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
                 <div class="controls">
                     <select name="investmentType"></select>
@@ -451,49 +451,49 @@
 
         <!-- Reference -->
         <div class="referencesItem span6 well well-white">
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('First name','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Last name','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Professional title','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="professionalTitle" placeholder="<?php _e('Please enter the professional title','bidxplugin'); ?>">
                 </div>
             </div>
 
-            <div class="control-group" >
+            <div class="control-group span11" >
                 <label class="control-label"><?php _e('LinkedIn profile','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Email address','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="email" name="emailAddress" placeholder="<?php _e('Please enter your email address','bidxplugin'); ?>" />
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Landline','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="contactDetail[0].landLine" placeholder="<?php _e('Please enter your landline number','bidxplugin'); ?>" />
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-group span11">
                 <label class="control-label"><?php _e('Mobile','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="contactDetail[0].mobile" placeholder="<?php _e('Please enter your mobile number','bidxplugin'); ?>" />
@@ -509,7 +509,7 @@
                 <div class="span4">
                     <a href="#" class="documentLink"><img class="img-rounded documentImage"></a>
                 </div>
-                <div class="span8">
+                <div class="span7">
                     <h3 class="documentName"></h3>
                     <p class="uploadedDateTime"></p>
 
