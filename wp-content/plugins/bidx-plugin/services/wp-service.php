@@ -781,10 +781,12 @@ function get_redirect ($url, $requestData, $domain = NULL)
     
     //Do user preference Speific Actions
     if( isset( $requestData->data->bidxMemberProfile->userPreferences->firstLogin ) ) {
-        $firstLogin         = $requestData->data->bidxMemberProfile->userPreferences->firstLogin;
-        $body['data']       = '{"bidxMeta": {"bidxEntityType":"bidxMemberProfile"} ,
-                                "userPreferences": {"firstLogin": ""}}'; //get-it-started-investor
         $body['domain']     = $domain;
+        $firstLogin         = $requestData->data->bidxMemberProfile->userPreferences->firstLogin;
+        /*'{"bidxMeta": {"bidxEntityType":"bidxMemberProfile"} , "userPreferences": {"firstLogin": ""}}'; //get-it-started-investor */
+        $data               = array('bidxMeta'        => array('bidxEntityType' => 'bidxMemberProfile'),
+                                    'userPreferences' => array('firstLogin'     => ''));
+        $body['data']       = json_encode($data);        
         $memberId           = $requestData->data->id;
         $result             = call_bidx_service ('members/' . $memberId, $body, 'PUT', 'json' );
         $redirect           = '/'.$firstLogin;
