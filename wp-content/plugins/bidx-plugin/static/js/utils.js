@@ -215,21 +215,22 @@
                 switch( elType )
                 {
                     case 'radio':
-                        if ( $el.val() === value )
+                        $el.each( function()
                         {
-                            if ( $el.data( "radio" ) )
+                            var $this = $( this );
+
+                            if ( $this.val() === value )
                             {
-                                $el.filter( "[value='" + value + "']" ).radio( "check" );
+                                if ( $this.data( "radio" ) )
+                                {
+                                    $this.radio( "check" );
+                                }
+                                else
+                                {
+                                    $this.prop( "checked", false );
+                                }
                             }
-                            else
-                            {
-                                $el.click();
-                            }
-                        }
-                        else if ( typeof value !== "undefined" && value !== "" )
-                        {
-                            // noop
-                        }
+                        } );
                     break;
 
                     case 'checkbox':
