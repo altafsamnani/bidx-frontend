@@ -1,9 +1,94 @@
+<?php
+    $sessionSvc = new SessionService( );
+
+    // define the profiles we currently want to display
+    //
+    $profiles = array(
+        'bidxInvestorProfile'        => array(
+            'Investor Dashboard' => '/member/#investor-profile'
+        ),
+        'bidxEntrepreneurProfile'   => array(
+            'Entrepreneur Dashboard' => '/member/#entrepreneur-profile'
+        )
+    );
+
+    // error_log(var_export($sessionSvc->getGroups(), true));
+
+    // check for each profile if it exists in the members entities
+    //
+    foreach (  $profiles as $profilekey => $profilevalue ) {
+
+        // check if current profile is existent, if not remove it from the array
+        //
+        if ( !$sessionSvc->isHavingProfile( $profilekey ) ) {
+            unset( $profiles[ $profilekey ] );
+        }
+    }
+
+    // get the groups for his user
+    //
+    $groups = $sessionSvc->getGroups();
+
+    // set boolean to display the profile menu
+    //
+    $hasProfiles = count( $profiles) !== 0;
+    $hasGroups = count( $profiles) !== 0;
+?>
+
 <div class="iconbar iconbar-horizontal bidx-default-bar">
 	<ul>
-        <li><a href="/wp-admin" class="bidx-cmd" alt="Admin"></a></li>
-        <li><a href="/member" class="bidx-user" alt="Profile"></a></li>
+<?php
+        // only when a member has profiles, show the profile dropdown
+        //
+        if ( $hasProfiles ) {
+ ?>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Profiles">
+                    <i class="bidx-cmd"></i>
+                </a>
+                <ul class="dropdown-menu">
+<?php
+                    foreach ( $profiles as $profilekey => $profilevalue ) {
+                        // fetch the key value for printing as text in the hyperlink
+                        //
+                        $key = array_keys($profilevalue);
+                        $key = $key[0];
+?>
+                        <li><a href="<?php echo $profilevalue[ $key ] ?>"><?php _e( $key, 'bidxplugin' ); ?></a></li>
+<?php
+                    }
+?>
+                </ul>
+            </li>
+<?php
+        }
+ ?>
+
+ <?php
+        // only when a has grous, show the group dropdown
+        //
+        if ( $hasGroups ) {
+ ?>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Groups">
+                    <i class="bidx-user"></i>
+                </a>
+                <ul class="dropdown-menu">
+<?php
+                    foreach ( $groups as $groupKey => $groupValue ) {
+?>
+                        <li><a href="<?php echo $groupValue[ "url" ] ?>"><?php echo $groupValue[ "name" ] ?></a></li>
+<?php
+                    }
+?>
+                </ul>
+            </li>
+<?php
+        }
+ ?>
+   <!--      <li><a href="/member" class="bidx-user" title="Profile"></a></li> -->
         <li>
-        	<a href="/mail#mail" class="bidx-mail" alt="Mail">
+        	<a href="/mail#mail" class="bidx-mail" title="Mail">
             	<!-- If messages are available -->
               	<span class="iconbar-unread">?</span>
             </a>
@@ -22,33 +107,40 @@
 }
 ?>
     	<li class="dropdown">
-    		<a href="#" class="dropdown-toggle" data-toggle="dropdown" alt="Personal">
+    		<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Personal">
     			<i class="bidx-gear"></i>
     		</a>
     		<ul class="dropdown-menu">
                 <li><a href="/media">Media manager</a></li>
 <?php
-if (!empty($this -> sessionData -> data)) {
+                if (!empty($this -> sessionData -> data)) {
 
-    $currentGroup   = $this->exst( $this->sessionData->data->currentGroup );
-    $groups         = $this->exst( $this->sessionData->data->groups );
-    $showLogout     = true;
-    if ( !empty( $currentGroup ) && !empty( $groups ) && !isset( $groups->$currentGroup )) {
+                    $currentGroup   = $this->exst( $this->sessionData->data->currentGroup );
+                    $groups         = $this->exst( $this->sessionData->data->groups );
+                    $showLogout     = true;
+
+                    if ( !empty( $currentGroup ) && !empty( $groups ) && !isset( $groups->$currentGroup )) {
 ?>
-                <li><a href="#joinGroup">Join this group</a></li>
+                        <li><a href="#joinGroup">Join this group</a></li>
 <?php
-    } else if(!$currentGroupAdmin) {
+                    } else if(!$currentGroupAdmin) {
 ?>
-				<li><a href="#leaveGroup">Leave this group</a></li>
+        				<li><a href="#leaveGroup">Leave this group</a></li>
 <?php
-    }
-}
-if(!$currentGroupAdmin) {
+                    }
+                }
+
+                if(!$currentGroupAdmin) {
 ?>
-				<li><a href="#messageOwner">Message to Group owner</a></li>
-<?php } if( $showLogout ) { ?>
+				    <li><a href="#messageOwner">Message to Group owner</a></li>
+<?php
+                }
+                if( $showLogout ) {
+?>
                      <li> <a href="<?php echo wp_logout_url( home_url() ); ?>" title="Logout">Logout</a>
-           <?php } ?>
+<?php
+                }
+?>
     		</ul>
     	</li>
 	</ul>
