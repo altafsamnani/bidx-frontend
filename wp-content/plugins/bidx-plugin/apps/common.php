@@ -57,9 +57,9 @@ class BidxCommon
 
         if (!$is_ajax) {
             // To check whther its login page or q= redirect already checked session.
-            $isWordpress = $this->isWordpressPage ();
+            $checkSession = $this->checkSession ();
 
-            if (!$isWordpress) {
+            if ($checkSession) {
 
                 //Start the session to store Bidx Session
                 $this->startSession (); //Starting sessin because we want to display in dashboard widget bidx services
@@ -462,10 +462,10 @@ class BidxCommon
      *
      * @return boolean
      */
-    public function isWordpressPage ()
+    public function checkSession ()
     {
        
-        $isWordpress = false;
+        $isCheck = true;
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $params = $_GET;        
 
@@ -475,13 +475,13 @@ class BidxCommon
             strstr ($hostAddress[1], 'wp-login.php')              ||
             is_super_admin()
             ) { //Allow Groupadmin for wp-admin dashboard
-            $isWordpress = true;
+            $isCheck = false;
             //$session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
             //$this->clearSessionFromParam ($session_id);
         }
         //Login to Wordpress if already session exists
 
-        return $isWordpress;
+        return $isCheck;
     }
 
     /**
