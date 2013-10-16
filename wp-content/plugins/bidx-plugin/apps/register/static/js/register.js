@@ -88,7 +88,6 @@
     var _doRegister = function( porams )
     {
 
-
         // Build up the data for the member request
         //
         var member =
@@ -168,6 +167,7 @@
         if(  options.params && options.params.firstLogin )
         {
             bidx.utils.setValue( userPreferences, "firstLogin", options.params.firstLogin);
+            bidx.utils.log(userPreferences);
         }
 
 
@@ -198,14 +198,22 @@
     //
     if ( $( "body.bidx-register" ).length && !bidx.utils.getValue(window, "location.hash" ) )
     {
-        document.location.hash = "#register";
+
+        // if there is a hash defined in the window scope, nagivate to this has
+        //
+        if ( bidx.utils.getValue( window, "__bidxHash" ) )
+        {
+            bidx.utils.log(document.location);
+            document.location.hash = window.__bidxHash;
+        }
+        // load default
+        //
+        else
+        {
+            document.location.hash = "#register";
+        }
+
     }
 
-    // if there is a hash defined in the window scope, nagivate to this has
-    //
-    if ( bidx.utils.getValue( window, "__bidxHash" ) )
-    {
-        document.location.hash = window.__bidxHash;
-    }
 
 } ( jQuery ));

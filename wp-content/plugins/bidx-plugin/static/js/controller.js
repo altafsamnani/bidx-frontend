@@ -155,7 +155,7 @@
         ,   'auth(/:state)(*splat)':                            'auth'
 
         ,   'login':                                            'login'
-        ,   'register':                                         'register'
+        ,   'register(/*splat)':                                'register'
         ,   'resetpassword':                                    'resetpassword'
 
         ,   'mail(/:state)(*splat)':                         'mail'
@@ -404,16 +404,27 @@
             ,   {}
             );
         }
-    ,   register:                   function()
+    ,   register:                   function( params )
         {
-            bidx.utils.log( "AppRouter::register" );
+            bidx.utils.log( "AppRouter::register params: ", params );
+
+
+            // remove leading forward slash from the splat
+            //
+            if( params )
+            {
+                params = params.replace( /^[/]/, "" );
+                params = bidx.utils.bidxDeparam( params );
+            }
 
             mainState = "register";
 
             _navigateToApp
             (
                 "register"
-            ,   {}
+            ,   {
+                   params:   params
+                }
             );
         }
     ,   resetpassword:                   function()
