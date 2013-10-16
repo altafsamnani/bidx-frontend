@@ -464,19 +464,16 @@ class BidxCommon
      */
     public function isWordpressPage ()
     {
-
+       
         $isWordpress = false;
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
-        $params = $_GET;
-        $currentUser = wp_get_current_user ();
+        $params = $_GET;        
 
-        //echo $currentUser;exit;
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
         if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) ||
-            $hostAddress[1] == 'registration'              ||
-            strstr ($hostAddress[1], 'wp-login.php')       ||
-            (isset($currentUser) && $currentUser->ID == 1) ||
-            (isset ($currentUser) && preg_match ('/wp-admin/i', $hostAddress[1]) && !in_array ('groupadmin', $currentUser->roles))
+            $hostAddress[1]   == 'registration'                   ||
+            strstr ($hostAddress[1], 'wp-login.php')              ||
+            is_super_admin()
             ) { //Allow Groupadmin for wp-admin dashboard
             $isWordpress = true;
             //$session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
@@ -495,7 +492,7 @@ class BidxCommon
     {
         $currentUser = wp_get_current_user ();
         $serverUri = $_SERVER["REQUEST_URI"];
-        $iswpInternalVar = ((isset ($currentUser) && preg_match ('/wp-admin/i', $serverUri) && !in_array ('groupadmin', $currentUser->roles)) || preg_match ('/wp-login/i', $serverUri));
+        $iswpInternalVar = ((is_super_admin()) || preg_match ('/wp-login/i', $serverUri));
         return $iswpInternalVar;
     }
 
