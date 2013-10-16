@@ -164,16 +164,9 @@
         ,   dateObj
         ;
 
-        // Convert booleans to their string versions
+        // Type coerce to string since all DOM control values are strings and we will later do a type strict comparison
         //
-        if ( value === true )
-        {
-            value = "true";
-        }
-        else if ( value === false )
-        {
-            value = "false";
-        }
+        value += "";
 
         // When an data-type is defined on the HTML that has presendence over the handling of regular form inputs
         //
