@@ -161,12 +161,16 @@
     {
         var elType      = $el.attr( 'type' )
         ,   dataType    = $el.attr( 'data-type' )
+        ,   valueType   = $.type( value )
         ,   dateObj
         ;
 
         // Type coerce to string since all DOM control values are strings and we will later do a type strict comparison
         //
-        value += "";
+        if ( valueType === "boolean" || valueType === "number" )
+        {
+            value += "";
+        }
 
         // When an data-type is defined on the HTML that has presendence over the handling of regular form inputs
         //

@@ -1028,7 +1028,7 @@
     //
     function _populateScreen()
     {
-        // Repoulate the companies table
+        // Repoulate the companies table, this data is not coming from the business summary but from a seperate API call
         //
         $companiesTable.find( "tbody" ).empty();
 
@@ -1054,12 +1054,9 @@
                     ,   value  = bidx.utils.getValue( businessSummary, f )
                     ;
 
-                    $input.each( function()
-                    {
-                        // Value can be an array! Most likely we are targeting a
-                        //
-                        bidx.utils.setElementValue( $( this ), value );
-                    } );
+                    if ( f === "investmentType" ) debugger;
+
+                    bidx.utils.setElementValue( $input, value );
                 } );
             }
         } );
@@ -1281,7 +1278,7 @@
             } );
         } );
 
-        // Is there a company selected?
+        // Did the user select that there is a company for this business summary and if so, what company was selected?
         //
         var $selectedCompany = $companiesTable.find( "input[name='company']:checked" ).closest( ".companyItem" )
         ,   company
@@ -1293,7 +1290,11 @@
             company     = $selectedCompany.data( "bidxData" );
             companyId   = bidx.utils.getValue( company, "bidxMeta.bidxEntityId" );
 
-            bidx.utils.setValue( businessSummary, "company", companyId );
+            businessSummary.company = companyId;
+        }
+        else
+        {
+            businessSummary.company = null;
         }
     }
 
