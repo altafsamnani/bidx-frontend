@@ -116,7 +116,7 @@ function bidx_login_session ()
  * @return Loggedin User
  */
 
-function call_bidx_service ($urlservice, $body, $method = 'POST', $is_form_upload = false)
+function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = false)
 {
 
     $authUsername = ( API_AUTH_UNAME ) ? API_AUTH_UNAME : 'bidx'; // Bidx Auth login
@@ -142,23 +142,32 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $is_form_uploa
     /*     * *********2. Set Headers ******************************** */
     //For Authentication
     $headers['Authorization'] = 'Basic ' . base64_encode ("$authUsername:$authPassword");
-
-    // 2.1 Is Form Upload
-    if ($is_form_upload) {
-        $headers['Content-Type'] = 'multipart/form-data';
-    }
-
+    
+   
     /* if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
       $body['username'] = 'admin@bidnetwork.org';
       $body['password'] = 'admin123';
 
       }
      */
-    // 2.2 Set the group domain header
+    // 2.1 Set the group domain header
     if (isset ($body['domain'])) {
         //Talk with arjan for domain on first page registration it will be blank when it goes live
         $headers['X-Bidx-Group-Domain'] = ($urlservice == 'groups' && $bidxMethod == 'POST') ? 'beta' : $body['domain'];
         //$bidx_get_params.= '&groupDomain=' . $body['domain'];
+    }
+
+    // 2.2 Is Form Upload
+    switch($formType) {
+        case 'upload':
+            $headers['Content-Type'] = 'multipart/form-data';
+            break;
+        case 'json':
+            $headers['Content-Type'] = 'application/json';
+            $body = $body['data'];
+            break;
+        default:
+            break;
     }
 
     /*     * ********* 3. Decide method to use************** */
@@ -190,6 +199,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $is_form_uploa
             foreach ($cookies as $bidxAuthCookie) {
                 $cookieDomain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'bidx.dev' : $bidxAuthCookie->domain;
                 setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
+                $_COOKIE[ $bidxAuthCookie->name ] = $bidxAuthCookie->value;
+
             }
         }
     } else { // Wp Request timeout
@@ -761,13 +772,24 @@ function disable_function ()
 function get_redirect ($url, $requestData, $domain = NULL)
 {
     $redirectUrl = NULL;
-    $domain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'site1.bidx.dev' : $domain;
     $redirect = NULL;
     /*     * **** If have a particular Redirect in params *************** */
     if (isset ($_POST['redirect_to'])) {
         $redirect_to = $_POST['redirect_to'];
         $redirect = base64_decode ($redirect_to);
     }
+    
+    //Do user preference Speific Actions
+    if( isset( $requestData->data->bidxMemberProfile->userPreferences->firstLogin ) ) {
+        $firstLogin         = $requestData->data->bidxMemberProfile->userPreferences->firstLogin;
+        $body['data']       = '{"bidxMeta": {"bidxEntityType":"bidxMemberProfile"} ,
+                                "userPreferences": {"firstLogin": ""}}'; //get-it-started-investor
+        $body['domain']     = $domain;
+        $memberId           = $requestData->data->id;
+        $result             = call_bidx_service ('members/' . $memberId, $body, 'PUT', 'json' );
+        $redirect           = '/'.$firstLogin;
+     
+     }
 
     /*     * ***** Decide on Redirect/Submit Logic ********** */
     switch ($url) {
@@ -910,7 +932,7 @@ function bidx_wordpress_post_action ($url, $result, $body)
                     }
                 }
 
-                $requestData = get_redirect ($url, $requestData);
+                $requestData = get_redirect ($url, $requestData, $groupName);
             }
 
             break;
@@ -1589,7 +1611,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                         $body = bidx_wordpress_pre_action ($type, $file_values);
 
                         $params = $body['params'];
-                        $result = call_bidx_service ('entity/' . $params['id'] . '/document', $params, 'POST', true);
+                        $result = call_bidx_service ('entity/' . $params['id'] . '/document', $params, 'POST', 'upload');
 
                         $request = bidx_wordpress_post_action ($type, $result, $body);
                     } else {
@@ -2129,6 +2151,7 @@ function bidx_dashboard_header ()
 {
     $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
     $currentUser = wp_get_current_user ();
+  
     if (in_array ('groupadmin', $currentUser->roles)) {
         roots_scripts ();
         $menu = 'dashboard';
@@ -2141,8 +2164,8 @@ function bidx_dashboard_header ()
                 wp_enqueue_style ('mail');
 
                 /* Script */
-                $mailDepArr = array ('bidx-form', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-                  'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'flatui-checkbox');
+                $mailDepArr = array( 'bidx-form', 'bidx-tagsinput', 'bidx-common','bidx-i18n', 'jquery-validation',
+            'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
                 wp_register_script ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', $mailDepArr, '20130715', TRUE);
                 wp_enqueue_script ('group-admin');
                 break;
