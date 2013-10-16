@@ -106,6 +106,17 @@
             ,   $el     = widget.element
             ;
 
+            // BIDX-1372 - Suppress submitting the form when the enter is pressed to select an item from the auto complete list
+            //
+            $el.keydown( function( e )
+            {
+                if ( e.which === 13 )
+                {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            } );
+
             widget.options  = $.extend( widget.options, params );
             var options     = widget.options;
             var state       = options.state;
@@ -189,8 +200,6 @@
             ,   options     = widget.options
             ;
 
-            bidx.utils.log( "[bidx-location] setLocationData", location );
-
             widget._updateLocationData( location );
             widget.showMap();
         }
@@ -204,8 +213,6 @@
             ,   center
             ,   arCoords
             ;
-
-            bidx.utils.log( "[bidx-location] _drawLocationData" );
 
             widget._deleteOverlays();
 
@@ -238,8 +245,6 @@
             ,   options     = widget.options
             ,   state       = options.state
             ;
-
-            bidx.utils.log( "[bidx-location] showMap" );
 
             state.$map.fadeIn( "fast", function()
             {
@@ -330,8 +335,6 @@
                 }
             }
 
-            bidx.utils.log( "[bidx-location] _updateLocationData", data, "merge?", merge, "result", state.locationData, state.locationData.reach, oldReach );
-
             // Did the reach change? Notify the outside world
             //
             if ( state.locationData.reach !== oldReach )
@@ -367,8 +370,6 @@
             ,   $list
             ,   $li
             ;
-
-            bidx.utils.log( "[bidx-location] _placeChanged", place );
 
             // Reset stored location data
             //
@@ -505,8 +506,6 @@
                 );
             }
 
-            bidx.utils.log( "[bidx-location] _drawMarker position", position, "reach", reach );
-
             marker = new google.maps.Marker(
             {
                 map:            state.map
@@ -526,8 +525,6 @@
                 var pos         = marker.position
                 ,   latlng      = new google.maps.LatLng( pos.lat(), pos.lng() )
                 ;
-
-                bidx.utils.log( "[bidx-location] dragend", latlng );
 
                 _updateCenter( latlng );
             } );
@@ -552,14 +549,10 @@
                     {
                         var radius = this.getRadius() / 1000;
 
-                        bidx.utils.log( "[bidx-location] radius_changed", radius );
-
                         widget._updateLocationData( { reach: radius }, true );
                     }
                 ,   center_changed:     function()
                     {
-                        bidx.utils.log( "center_changed this", this );
-
                         if ( !this.centerChanges )
                         {
                             this.centerChanges = 1;
@@ -575,7 +568,6 @@
                         {
                             var latLng = circle.getCenter();
 
-                            bidx.utils.log( "[bidx-location] center_changed", latLng );
                             _updateCenter( latLng );
                         }, 500 );
                     }
