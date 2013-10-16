@@ -935,7 +935,7 @@
         $company
             .find( "input[name='company']" )
             .radio()
-            .attr( "value", index )
+            .attr( "value", bidx.utils.getValue( company, "bidxMeta.bidxEntityId" ))
         ;
 
         $companiesTable.find( "tbody" ).append( $company );
@@ -1028,6 +1028,20 @@
     //
     function _populateScreen()
     {
+        // Repoulate the companies table
+        //
+        $companiesTable.find( "tbody" ).empty();
+
+        if ( companies )
+        {
+            $.each( companies, function( idx, company )
+            {
+                _addCompany( idx, company );
+            } );
+        }
+
+        // Go itteratively over all the forms and there fields
+        //
         $.each( fields, function( form, formFields )
         {
             var $form       = forms[ form ].$el;
@@ -1081,14 +1095,16 @@
             } );
         }
 
-        // Company list
-        //
-        if ( companies )
+        var companyId   = bidx.utils.getValue( businessSummary, "company.bidxMeta.bidxEntityId" );
+
+        if ( companyId )
         {
-            $.each( companies, function( idx, company )
-            {
-                _addCompany( idx, company );
-            } );
+            bidx.utils.setElementValue( $hasCompany, "true" );
+            bidx.utils.setElementValue( $companiesTable.find( "[name='company']" ), companyId );
+        }
+        else
+        {
+            bidx.utils.setElementValue( $hasCompany, false );
         }
     }
 
@@ -1272,7 +1288,7 @@
         ,   companyId
         ;
 
-        if ( $selectedCompany.length )
+        if ( $hasCompany.filter( ":checked" ).val() === "true" && $selectedCompany.length )
         {
             company     = $selectedCompany.data( "bidxData" );
             companyId   = bidx.utils.getValue( company, "bidxMeta.bidxEntityId" );
@@ -1288,9 +1304,11 @@
         // Reset any state
         //
         financialSummary.deletedYears = {};
-        $companiesTable.find( "tbody" ).empty();
+
         $doesHaveCompany.hide();
         $addNewCompany.hide();
+
+        bidx.utils.setElementValue( $hasCompany, "false" );
 
         var curYear         = bidx.common.getNow().getFullYear();
 
