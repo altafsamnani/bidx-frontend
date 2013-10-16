@@ -39,7 +39,7 @@
     ,   snippets        = {}
 
     ,   appName         = "company"
-    ,   slaveApp        = true
+    ,   slaveApp        = false
 
     ,   callbacks       = null
     ;
@@ -838,6 +838,11 @@
         //
         _getFormValues();
 
+        if ( !slaveApp )
+        {
+            bidx.common.notifySave();
+        }
+
         var requestParams =
         {
             groupDomain:    bidx.common.groupDomain
@@ -862,6 +867,7 @@
 
                 if ( !slaveApp )
                 {
+                    bidx.common.closeNotifications();
                     bidx.common.notifyRedirect();
                     bidx.common.removeAppWithPendingChanges( appName );
 
@@ -873,6 +879,8 @@
         ,   error:          function( jqXhr )
             {
                 params.error( jqXhr );
+
+                bidx.common.closeNotifications();
 
                 // If running as a slave app, notify the change via a callback
                 //

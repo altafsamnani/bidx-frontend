@@ -1054,8 +1054,6 @@
                     ,   value  = bidx.utils.getValue( businessSummary, f )
                     ;
 
-                    if ( f === "investmentType" ) debugger;
-
                     bidx.utils.setElementValue( $input, value );
                 } );
             }
@@ -1607,6 +1605,8 @@
         //
         bidx.utils.setValue( businessSummary, "bidxMeta.bidxEntityType", "bidxBusinessSummary" );
 
+        bidx.common.notifySave();
+
         // Save the data to the API
         //
         bidx.api.call(
@@ -1626,7 +1626,9 @@
                         businessSummaryId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
                     }
 
+                    bidx.common.closeNotifications();
                     bidx.common.notifyRedirect();
+
                     bidx.common.removeAppWithPendingChanges( appName );
 
                     var url = "/businesssummary/" + businessSummaryId + "?rs=true";
@@ -1636,6 +1638,8 @@
             ,   error:          function( jqXhr )
                 {
                     params.error( jqXhr );
+
+                    bidx.common.closeNotifications();
                 }
             }
         );

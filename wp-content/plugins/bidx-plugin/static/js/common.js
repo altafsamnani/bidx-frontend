@@ -474,6 +474,13 @@
         notifySuccessModal( bidx.i18n.i( "msgWaitForRedirect" ) );
     };
 
+    // Notify the user that a save action is taking place
+    //
+    var notifySave = function()
+    {
+        notifyInformationModal( bidx.i18n.i( "msgWaitForSave" ) );
+    };
+
     // Create custom Noty message
     //
     var notifyCustom = function( msg )
@@ -508,6 +515,21 @@
             ,   timeout:        1500
             } );
         }
+    };
+
+    var notifyInformationModal = function( msg )
+    {
+        _notify(
+        {
+            text:           msg
+        ,   type:           "information"
+        ,   modal:          true
+        } );
+    };
+
+    var closeNotifications = function()
+    {
+        $.noty.closeAll();
     };
 
     var notifySuccessModal = function( msg )
@@ -777,12 +799,19 @@
     bidx.common =
     {
         groupDomain:                    groupDomain
+
     ,   notifyRedirect:                 notifyRedirect
+    ,   notifySave:                     notifySave
+
     ,   notifyCustom:                   notifyCustom
     ,   notifyCustomSuccess:            notifyCustomSuccess
     ,   notifyError:                    notifyError
     ,   notifySuccess:                  notifySuccess
     ,   notifySuccessModal:             notifySuccessModal
+    ,   notifyInformationModal:         notifyInformationModal
+
+    ,   closeNotifications:             closeNotifications
+
     ,   joinGroup:                      joinGroup
     ,   leaveGroup:                     leaveGroup
 

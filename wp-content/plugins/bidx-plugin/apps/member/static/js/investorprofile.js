@@ -1315,6 +1315,10 @@
     //
     var _save = function( params )
     {
+        var bidxAPIService
+        ,   bidxAPIParams
+        ;
+
         if ( !member )
         {
             return;
@@ -1329,40 +1333,43 @@
         //
         _getFormValues();
 
+        bidx.common.notifySave();
+
         bidx.utils.log( "about to save member", member );
 
-        var bidxAPIService
-        ,   bidxAPIParams   =
+        bidxAPIParams   =
+        {
+            data:           member.bidxInvestorProfile
+        ,   groupDomain:    bidx.common.groupDomain
+        ,   success:        function( response )
             {
-                data:           member.bidxInvestorProfile
-            ,   groupDomain:    bidx.common.groupDomain
-            ,   success:        function( response )
+                bidx.utils.log( bidxAPIService + "::success::response", response );
+
+                bidx.common.closeNotifications();
+
+                bidx.common.notifyRedirect();
+                bidx.common.removeAppWithPendingChanges( appName );
+
+                var url = document.location.href.split( "#" ).shift();
+
+                // Maybe rs=true was already added, or not 'true' add it before reloading
+                //
+                var rs = bidx.utils.getQueryParameter( "rs", url );
+
+                if ( !rs || rs !== "true" )
                 {
-                    bidx.utils.log( bidxAPIService + "::success::response", response );
-
-                    bidx.common.notifyRedirect();
-
-                    bidx.common.removeAppWithPendingChanges( appName );
-
-                    var url = document.location.href.split( "#" ).shift();
-
-                    // Maybe rs=true was already added, or not 'true' add it before reloading
-                    //
-                    var rs = bidx.utils.getQueryParameter( "rs", url );
-
-                    if ( !rs || rs !== "true" )
-                    {
-                        url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
-                        url += "rs=true";
-                    }
-
-                    document.location.href = url;
+                    url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
+                    url += "rs=true";
                 }
-            ,   error:          function( jqXhr, textStatus )
-                {
-                    params.error( jqXhr );
-                }
-            };
+
+                document.location.href = url;
+            }
+        ,   error:          function( jqXhr, textStatus )
+            {
+                params.error( jqXhr );
+                bidx.common.closeNotifications();
+            }
+        };
 
         // Creating an entrepreneur is not possible via the member API, therefore the
         // raw Entity API is used for the creation of the entrepreneur

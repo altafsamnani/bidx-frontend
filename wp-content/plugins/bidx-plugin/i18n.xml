@@ -4,6 +4,7 @@
     <Item value="noEditPermission">You do not have the rights to edit this</Item>
     <Item value="msgOnPageUnload">Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?</Item>
     <Item value="msgWaitForRedirect">Please wait while you are redirected…</Item>
+    <Item value="msgWaitForSave">Processing request</Item>
 
     <!-- Booleans -->
     <Item value="yes">Yes</Item>

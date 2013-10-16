@@ -1041,6 +1041,8 @@
         //
         _getFormValues();
 
+        bidx.common.notifySave();
+
         bidx.api.call(
             "member.save"
         ,   {
@@ -1051,6 +1053,7 @@
                 {
                     bidx.utils.log( "member.save::success::response", response );
 
+                    bidx.common.closeNotifications();
                     bidx.common.notifyRedirect();
 
                     bidx.common.removeAppWithPendingChanges( appName );
@@ -1062,6 +1065,7 @@
             ,   error:          function( jqXhr )
                 {
                     params.error( jqXhr );
+                    bidx.common.closeNotifications();
                 }
             }
         );
