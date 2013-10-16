@@ -444,7 +444,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                             $tableHeader = array (
                                 __('Name','bidxplugin') => 'name',
                                 __('Role of partner in this business','bidxplugin') => 'role',
-                                __('Describe relevant expertize of business partner','bidxplugin') => 'expertise'
+                                __('Describe relevant expertise of business partner','bidxplugin') => 'expertise'
                             );
 
                             $merge['name'] = array ('firstName', 'lastName');
@@ -488,7 +488,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                                 <!-- Personal Expertise -->
                                 <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Please describe your expertize in relation to this business (300 characters)','bidxplugin'); ?></label>
+                                    <label class="control-label"><?php _e('Please describe your expertise in relation to this business (180 characters)','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <textarea name="personalExpertise" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
                                     </div>
@@ -841,9 +841,9 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
             <!-- Expertise -->
             <div class="control-group span11">
-                <label class="control-label"><?php _e('Describe relevant expertize of business partner','bidxplugin'); ?></label>
+                <label class="control-label"><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
                 <div class="controls">
-                    <textarea type="text" name="expertise" placeholder="<?php _e('Please describe relevant expertize of business partner','bidxplugin'); ?>"></textarea>
+                    <textarea type="text" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
                 </div>
             </div>
 
