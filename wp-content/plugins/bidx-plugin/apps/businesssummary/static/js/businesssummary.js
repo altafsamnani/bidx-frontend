@@ -813,6 +813,7 @@
                 bidx.company.navigate(
                 {
                     requestedState:     "create"
+                ,   slaveApp:           true
                 ,   callbacks:
                     {
                         success:            function( company )
