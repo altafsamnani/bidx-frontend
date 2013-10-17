@@ -63,8 +63,8 @@
 
         ,   initialCenter:
             {
-                lat:                    -33.8688
-            ,   lon:                    151.2195
+                lat:                    -2.284551
+            ,   lon:                    29.700165
             }
 
         ,   dimensions:
