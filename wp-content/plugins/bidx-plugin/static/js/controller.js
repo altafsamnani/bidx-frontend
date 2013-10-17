@@ -156,6 +156,7 @@
 
         ,   'login':                                            'login'
         ,   'register(/*splat)':                                'register'
+        ,   'account(/*splat)':                                 'account'
         ,   'resetpassword':                                    'resetpassword'
 
         ,   'mail(/:state)(*splat)':                         'mail'
@@ -437,6 +438,29 @@
             (
                 "resetpassword"
             ,   {}
+            );
+        }
+        ,   account:                   function( params )
+        {
+            bidx.utils.log( "AppRouter::account params: ", params );
+
+
+            // remove leading forward slash from the splat
+            //
+            if( params )
+            {
+                params = params.replace( /^[/]/, "" );
+                params = bidx.utils.bidxDeparam( params );
+            }
+
+            mainState = "account";
+
+            _navigateToApp
+            (
+                "account"
+            ,   {
+                   params:   params
+                }
             );
         }
     ,   show:                   function()

@@ -151,12 +151,19 @@
             <mapping>^register/([^/]*)/?</mapping>
             <content>[bidx app="register"]</content>
 	    </post>
-	    	    		 <post>
+	   	<post>
 	     	<post_id>21</post_id>
             <name>resetpassword</name>
             <title>Resetpassword</title>
             <mapping>^resetpassword</mapping>
             <content>[bidx app="resetpassword"]</content>
+	    </post>
+	   	<post>
+	     	<post_id>22</post_id>
+            <name>account</name>
+            <title>Account settings</title>
+            <mapping>^account/([^/]*)/?</mapping>
+            <content>[bidx app="account"]</content>
 	    </post>
 	</posts>
 

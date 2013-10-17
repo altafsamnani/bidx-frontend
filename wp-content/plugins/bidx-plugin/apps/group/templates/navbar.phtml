@@ -111,7 +111,11 @@
     			<i class="bidx-gear"></i>
     		</a>
     		<ul class="dropdown-menu">
-                <li><a href="/media">Media manager</a></li>
+                <li><a href="/member"><?php _e('Profile','bidxplugin')?></a></li>
+                <li><a href="/account"><?php _e('Account settings','bidxplugin')?></a></li>
+                <li><a href="/media"><?php _e('All my documents','bidxplugin')?></a></li>
+
+
 <?php
                 if (!empty($this -> sessionData -> data)) {
 
@@ -132,7 +136,8 @@
 
                 if(!$currentGroupAdmin) {
 ?>
-				    <li><a href="#messageOwner">Message to Group owner</a></li>
+				    <li><a href="#messageOwner"><?php _e('Ask a question','bidxplugin')?></a></li>
+                    <li><a href="#messageOwner"><?php _e('Help','bidxplugin')?></a></li>
 <?php
                 }
                 if( $showLogout ) {

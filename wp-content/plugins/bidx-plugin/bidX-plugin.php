@@ -40,6 +40,7 @@
         //Mattijs 8/7/2013: would be nice if this array is populated from XML so you dont have to define your apps twice
         $ruleitems = array (
           'auth',
+          'account',
           'businesssummary',
           'company',
           'group',
