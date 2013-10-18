@@ -129,7 +129,7 @@
                                 });
 
                                 if(i18nItem.city) {
-                                    i18nItem.location = i18nItem.country + i18nItem.city;
+                                    i18nItem.location = i18nItem.country +  ', '+ i18nItem.city;
                                 }
 
                              //search for placeholders in snippit
