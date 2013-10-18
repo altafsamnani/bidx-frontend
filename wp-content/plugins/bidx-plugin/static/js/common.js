@@ -112,20 +112,14 @@
         return confirmationRequested;
     }
 
-    // Convenience function for retrieving the id of the current group
-    //
-    function getCurrentGroupId()
-    {
-        return bidx.utils.getValue( bidxConfig, "session.currentGroup" );
-    }
 
-    // Convenience function for retrieving the id of the user group
+    // retrieve a value from the session object
     //
-    function getCurrentUserId()
+    function getSessionValue( key )
     {
-        return bidx.utils.getValue( bidxConfig, "session.id" );
-    }
+        return bidx.utils.getValue(bidxConfig, "session." + key);
 
+    }
 
     // Retrieve the most reliable "now" Date object we can give at the moment. This is SYSTEM DATE! Not localized
     //
@@ -598,6 +592,7 @@
             ,   max:                    $.validator.format( bidx.i18n.i( "frmInvalidMax" ))
             ,   digits:                 bidx.i18n.i( "frmInvalidDigits" )
             ,   maxlength:              $.validator.format( bidx.i18n.i( "frmInvalidMaxlength" ))
+            ,   minlength:              $.validator.format( bidx.i18n.i( "frmInvalidMinlength" ))
 
                 // bidx-tagsinput
                 //
@@ -825,8 +820,7 @@
         }
 
     ,   getGroupIds:                    getGroupIds
-    ,   getCurrentGroupId:              getCurrentGroupId
-    ,   getCurrentUserId:               getCurrentUserId
+    ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow
 
     ,   addAppWithPendingChanges:       addAppWithPendingChanges

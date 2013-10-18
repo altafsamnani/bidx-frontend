@@ -4,9 +4,9 @@
     ,   $views            = $element.find(".view")
     ,   $elementHelp      = $(".startpage")
     ,   bidx              = window.bidx
-    ,   currentGroupId    = bidx.common.getCurrentGroupId()
+    ,   currentGroupId    = bidx.common.getSessionValue( "currentGroup ")
     ,   currentInvestorId = bidx.common.getInvestorProfileId()
-    ,   currentUserId     = bidx.common.getCurrentUserId()
+    ,   currentUserId     = bidx.common.getSessionValue( "id" )
     ;
 
 
@@ -35,9 +35,9 @@
                     .fail(function()
                      {
                         bidx.utils.error("problem updating investor dashboard option.");
-                     })
+                     });
         });
-    }
+    };
 
     var getContacts = function(options)
     {
@@ -64,7 +64,7 @@
         bidx.api.call(
                 "memberRelationships.fetch"
             ,   {
-                    requesterId:              bidx.common.getCurrentUserId()
+                    requesterId:              bidx.common.getSessionValue( "id" )
                 ,   groupDomain:              bidx.common.groupDomain
                 ,   success: function( response )
                     {
@@ -88,18 +88,18 @@
                     {
                         $.each(itemStatus, function(idx, item)
                         {
-                            
+
                             // Member Display
                             element = $listItem.clone();
                             //search for toggle elements
-                            
+
                            item.id = item.requesterId;
                            item.name = item.requesterName;
                             if(item.requesterId == currentUserId) {
                                 item.id = item.requesteeId;
                                 item.name = item.requesteeName;
                             }
-                           
+
                             datatargetId = 'toggle' + item.id;
                             element.find(".accordion-toggle").attr('data-target', '#' + datatargetId);
                             element.find(".accordian-body").attr('id', datatargetId);
@@ -121,9 +121,9 @@
                                     {
                                         bidx.data.getItem(item[cls], 'country', function(err, label)
                                         {
-                                           textValue = label; 
+                                           textValue = label;
                                         })
-                                        
+
                                         textValue = (textValue.city) ? textValue + textValue.city : textValue;
 
                                     }
@@ -135,7 +135,7 @@
                                     {
                                        textValue = bidx.utils.parseTimestampToDateTime( item.startDate, "date" );
                                     }
-                                
+
                                     element.find("span." + cls).replaceWith(textValue);
 
                                 }
@@ -186,7 +186,7 @@
                   , {
                         label: "rows",
                         value: "6"
-                    }                    
+                    }
                   , {
                         label: "sort",
                         value: "created desc"
@@ -216,10 +216,10 @@
                 //
                 if (response && response.docs)
                 {
-                   
+
                     $.each(response.docs, function(idx, item)
                     {
-           
+
                         // Member Display
                         element = $listItem.clone();
                         //search for toggle elements
@@ -264,17 +264,17 @@
                                     textValue = '<a target = "_blank" href="/member/' + item['creatorId'] + '" >' +  textValue + '</a>';
 
                                 }
-                               
+
                                 element.find("span." + cls).replaceWith(textValue);
 
                             }
                         });
-              
+
                         //  add mail element to list
-                        $list.append(element);            
-                       
+                        $list.append(element);
+
                     });
-                    
+
                 } else
                 {
                     $list.append($listEmpty);
@@ -306,28 +306,28 @@
         ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list       = $("." + options.list)
         ;
-  
+
         bidx.api.call(
             "entity.fetch"
           , {
             entityId          : currentInvestorId
-          , groupDomain       : bidx.common.groupDomain          
+          , groupDomain       : bidx.common.groupDomain
           , success           : function(item)
             {
                 var item
                 , element
                 , cls
                 , textValue
-                , sep 
+                , sep
                 ;
-                 
+
                 //clear listing
                 $list.empty();
-               
-                // now format it into array of objects with value and label                
+
+                // now format it into array of objects with value and label
                 if (item)
                 {
-                    
+
                     // Member Display
                     element = $listItem.clone();
 
@@ -341,7 +341,7 @@
                         //if key if available in item response
                         if (item[cls])
                         {
-                           
+
                             var clsArr = {     'focusIndustry':'industry'   ,
                                                'focusSocialImpact': 'socialImpact',
                                                'focusEnvImpact': 'envImpact',
@@ -351,8 +351,8 @@
                                                'focusStageBusiness':'stageBusiness',
                                                'focusGender':'gender' ,
                                                'investmentType':'investmentType' };
-                           
-                            
+
+
                             if( clsArr.hasOwnProperty(cls)) {
                                 textValue = "";
                                 sep       = "";
@@ -363,14 +363,14 @@
                                        sep = ", ";
 
                                     });
-                                    
+
                                 })
 
                             }
                              else {
                                 textValue = item[cls];
                             }
-                            
+
                             element.find("div." + cls).replaceWith(textValue);
 
                        }
@@ -378,7 +378,7 @@
 
                     //  add mail element to list
                     $list.append(element);
-                   
+
 
                 } else
                 {
@@ -430,7 +430,7 @@
 
     // ROUTER
 
-   
+
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
     {
@@ -438,7 +438,7 @@
         var state;
 
         state = options.state;
- 
+
         switch (state)
         {
             case "load" :
@@ -460,7 +460,7 @@
                           , callback: function()
                             {
                                 _showMainView("match", "load");
-                                
+
                             }
                         });
                  getPreference(

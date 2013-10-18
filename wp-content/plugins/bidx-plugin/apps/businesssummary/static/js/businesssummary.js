@@ -1435,7 +1435,7 @@
         bidx.api.call(
             "memberCompanies.fetch"
         ,   {
-                memberId:           bidx.common.getCurrentUserId()
+                memberId:           bidx.common.getSessionValue( "id" )
             ,   groupDomain:        bidx.common.groupDomain
 
             ,   success: function( response )

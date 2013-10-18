@@ -11,7 +11,7 @@
             , $currentView
             , bidx = window.bidx
             , appName = "dashboard"
-            , currentGroupId = bidx.common.getCurrentGroupId()
+            , currentGroupId = bidx.common.getSessionValue( "currentGroup" )
             , toolbar = {}
             , message = {}
             , listItems = {}

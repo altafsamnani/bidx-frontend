@@ -12,7 +12,7 @@
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
     ,   $mailFolderNavigation       = $element.find(".bidx-mailFolders")
     ,   bidx                        = window.bidx
-    ,   currentGroupId              = bidx.common.getCurrentGroupId()
+    ,   currentGroupId              = bidx.common.getSessionValue( "currentGroup" )
     ,   appName                     = "mail"
     ,   mailboxes                   = {}
     ,   toolbar                     = {}
@@ -694,7 +694,7 @@
                     var params =
                     {
                         requesterId:     item.contactId
-                    ,   requesteeId:     bidx.common.getCurrentUserId()
+                    ,   requesteeId:     bidx.common.getSessionValue( "id" )
                     ,   type:            "contact"
                     ,   action:          "accept"
                     };
@@ -895,7 +895,7 @@
             bidx.api.call(
                 "memberRelationships.fetch"
             ,   {
-                    requesterId:              bidx.common.getCurrentUserId()
+                    requesterId:              bidx.common.getSessionValue( "id" )
                 ,   groupDomain:              bidx.common.groupDomain
 
                 ,   success: function( response )
@@ -1245,7 +1245,7 @@
                 "memberRelationships.fetch"
             ,   {
                     extraUrlParameters:       options.extraUrlParameters
-                ,   requesterId:              bidx.common.getCurrentUserId()
+                ,   requesterId:              bidx.common.getSessionValue( "id" )
                 ,   groupDomain:              bidx.common.groupDomain
 
                 ,   success: function( response )
