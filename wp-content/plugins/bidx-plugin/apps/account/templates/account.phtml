@@ -1,0 +1,67 @@
+<div id="account" class="block-odd mainState mainStateAccount">
+    <div class="container">
+
+        <div class="row-fluid">
+            <div class="span6 offset3 bidx-well bidx-theme-colour-panel-one">
+                    <form id="frmAccount" action="/">
+                        <h1><?php _e('Account settings','bidxplugin');?></h1>
+                        <h2>Login</h2>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('First name','bidxplugin');?></label>
+                                    <div class="controls">
+                                        <input type="text" name="personalDetails.firstName" placeholder="<?php _e('Enter your first name','bidxplugin');?>" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Last name','bidxplugin');?></label>
+                                    <div class="controls">
+                                        <input type="text" name="personalDetails.lastName" placeholder="<?php _e('Enter your last name','bidxplugin');?>" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('Email address','bidxplugin');?></label>
+                                    <div class="controls">
+                                        <input type="text" name="username" placeholder="<?php _e('Enter your email address','bidxplugin');?>" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="control-group">
+                                    <label class="control-label"><?php _e('What is your location?','bidxplugin');?></label>
+                                    <div class="controls">
+                                        <input type="text" name="location" placeholder="<?php _e('Please enter your location','bidxplugin');?>" data-type="location" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="buttonwrapper">
+                            <button type="submit" class="btn btn-primary bidx-theme-colour-one"><?php _e('Update','bidxplugin');?></button>
+                        </div>
+
+                    </form>
+
+                    <div class="accountChangeSuccess hide">
+                        <h3><?php _e('Account change complete','bidxplugin');?></h3>
+                        <p><?php _e('The registration is complete. An email has been sent to your email address with follow-up instructions','bidxplugin');?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
