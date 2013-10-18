@@ -165,6 +165,13 @@
             <mapping>^account/([^/]*)/?</mapping>
             <content>[bidx app="account"]</content>
 	    </post>
+                <post>
+            <post_id>23</post_id>
+            <name>Entrepreneur dashboard</name>
+            <title>Entrepreneur dashboard</title>
+            <mapping>^entrepreneur-dashboard</mapping>
+            <content>[bidx app="dashboard" view="entrepreneur-dashboard"]</content>
+           </post>
 	</posts>
 
 	<widgets>

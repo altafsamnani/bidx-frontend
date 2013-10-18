@@ -360,36 +360,36 @@
         bidx.common.notifyCustom(key);
 
         bidx.api.call(
-                "mail.send"
+                "mailboxMail.send"
                 , {
-            groupDomain: bidx.common.groupDomain
+                      groupDomain: bidx.common.groupDomain
                     , extraUrlParameters: extraUrlParameters
                     , data: message
                     , success: function(response)
-            {
+                      {
 
-                bidx.utils.log("MAIL RESPONSE", response);
-                var key = "messageSent";
-                bidx.i18n.getItem(key, function(err, label)
-                {
-                    if (err)
+                        bidx.utils.log("MAIL RESPONSE", response);
+                        var key = "messageSent";
+                        bidx.i18n.getItem(key, function(err, label)
+                        {
+                            if (err)
+                            {
+                                bidx.utils.error("Problem translating", key, err);
+                                label = key;
+                                _showError(label);
+                            }
+
+                        });
+                        bidx.common.notifyCustomSuccess(key);
+                        listItems = {};
+                        bidx.controller.updateHash("#dashboard/list", true, false);
+                      }
+
+                    , error: function(jqXhr)
                     {
-                        bidx.utils.error("Problem translating", key, err);
-                        label = key;
-                        _showError(label);
+
+                        params.error("Error", jqXhr);
                     }
-
-                });
-                bidx.common.notifyCustomSuccess(key);
-                listItems = {};
-                bidx.controller.updateHash("#dashboard/list", true, false);
-            }
-
-            , error: function(jqXhr)
-            {
-
-                params.error("Error", jqXhr);
-            }
         }
         );
 
@@ -466,38 +466,40 @@
     //  ################################## MODAL #####################################  \\
 
     //  show modal view with optionally and ID to be appended to the views buttons
-    var _showModal = function(options)
-    {
-        var href;
-
-
-        bidx.utils.log("OPTIONS", options);
-
-        $modal = $modals.filter(bidx.utils.getViewName(options.view, "modal")).find(".bidx-modal");
-
-
-        $modal.find(".btn[href]").each(function()
+    function _showModal( options )
         {
-            var $this = $(this);
+            var href;
 
-            href = bidx.utils.removeIdFromHash($this.attr("href"));
-            href = href.replace("%section%", options.section);
-//            $this.attr(
-//                "href"
-//            ,   href + ( id ? id : "" )
-//            );
+            if( options.id )
+            {
+                var id = options.id;
+            }
 
-        });
+            bidx.utils.log("[mail] show modal", options );
 
-        $modal.modal({});
+            $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
 
 
-        if (options.onHide)
-        {
-            //  to prevent duplicate attachments bind event only onces
-            $modal.one('hide', options.onHide);
+
+            $modal.find( ".btn[href]" ).each( function()
+            {
+                var $this = $( this );
+
+                href = $this.attr( "data-href" )
+                        .replace( "%state%", options.state )
+                        .replace( "%id%", options.id );
+                $this.attr( "href", href );
+            } );
+
+            $modal.modal( {} );
+
+            if( options.onHide )
+            {
+                //  to prevent duplicate attachments bind event only onces
+                $modal.one( 'hide', options.onHide );
+            }
         }
-    };
+
 
     //  closing of modal view state
     var _closeModal = function(options)
@@ -544,41 +546,31 @@
     var navigate = function(options)
     {
         bidx.utils.log("routing options", options);
-        var section
-                , id
-                , state
-                , subState
-                ;
+        var state
+        ,   dashboardId
+        ,   action
+        ;
+      
+        state = action = options.state;
 
-        /*
-         - section is most of the the time a section, but it COULD be an ID. Part1 and 2 should then be empty
-         - part1 can be substate OR id
-         - part2 is always an id IF part1 is an substate
-
-         Example:
-         #mail/inbox/deleteConfirm/3412
-         #mail/inbox/delete/3412
-         #mail/3433   -> view email
-         #mail/inbox/3433 -> view email
-         #mail/compose
-         */
-
-        //  define section substates, in which we want to make assign part1 as state
-        subState =
+        if ( !$.isEmptyObject( options.params ) )
+            {
+                if ( options.params.id )
                 {
-                    deleteConfirm: true
-                            , delete: true
-                            , discardConfirm: true
-                            , reply: true
-                            , forward: true
+                    dashboardId = options.params.id;
+                }
 
-                };
+                // only override action when an action is provided in params
+                //
+                if( options.params.action )
+                {
+                    action = options.params.action;
+                }
 
-        section = options.section;
+            }
 
-        state = options.part1;
 
-        switch (section)
+        switch (state)
         {
             case "load" :
 
@@ -638,9 +630,8 @@
                 _showModal(
                         {
                             view: "dashboardCompose"
-                                    , section: section
-
-                                    , onHide: function()
+                        ,   state:      state
+                        ,   onHide: function()
                             {
                                 window.bidx.controller.updateHash("#dashboard/list", false, false);
                             }
@@ -658,9 +649,8 @@
                 _showModal(
                         {
                             view: "dashboardCompose"
-                                    , section: section
-
-                                    , onHide: function()
+                        ,   state:      state
+                        ,   onHide: function()
                             {
                                 window.bidx.controller.updateHash("#dashboard/list", false, false);
                             }
@@ -676,11 +666,10 @@
 
                 _showModal(
                         {
-                            view: "discardConfirm"
-                                    , id: id
-                                    , section: section
-
-                                    , onHide: function()
+                            view : "discardConfirm"
+                        ,   id   : dashboardId
+                        ,   state: state
+                        ,   onHide: function()
                             {
                                 window.bidx.controller.updateHash("#dashboard/list", false, false);
                             }

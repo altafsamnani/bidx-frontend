@@ -57,9 +57,7 @@ class dashboard
                 $template = 'my-dashboard.phtml';
                 break;
             case 'investor-dashboard':
-                wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
-                $roles = $sessionData->data->roles;
-              
+                wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);             
                 $sessionSvc = new SessionService( );
                 $investorProfile = $sessionSvc->isHavingProfile( 'bidxInvestorProfile' );
                 if ($investorProfile) {
@@ -68,7 +66,7 @@ class dashboard
 
                     if ($investorDashboard) {
                         ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
-                        ;
+                        
                         $template = 'investor/help.phtml';
                     } else {
                         $template = 'investor/dashboard.phtml';
@@ -77,7 +75,26 @@ class dashboard
                     $view->return_404 ();
                 }
                 break;
-
+            case 'entrepreneur-dashboard':
+                wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);        
+                $sessionSvc = new SessionService( );
+                $entrepreneurProfile = $sessionSvc->isHavingProfile( 'bidxEntrepreneurProfile' );
+            
+                if ($entrepreneurProfile) {
+                   
+                    $entrepreneurDashboard = get_option ('entrepreneur-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
+                  
+                    if ($entrepreneurDashboard) {
+                        ($entrepreneurDashboard != 2 ) ? update_option ('entrepreneur-startingpage', 0) : $view->startingPage = $entrepreneurDashboard;
+                        
+                        $template = 'entrepreneur/help.phtml';
+                    } else {
+                        $template = 'entrepreneur/dashboard.phtml';
+                    }
+                } else {
+                    $view->return_404 ();
+                }
+                break;
             case 'group-dashboard':
                 wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 if (isset ($view->sessionData->data) && isset ($view->sessionData->data->currentGroup)) {

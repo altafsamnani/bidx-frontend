@@ -41,7 +41,7 @@ class MemberService extends APIbridge {
             if (!empty ($result->data->bidxMemberProfile->bidxMeta->bidxCanEdit) && !empty ($result->data) && ($memberId == $sessionData->data->id)) {
                 $result->data->isMyProfile = true;
             }
-
+                        
             $return = $this->processMemberDetails ($result, $sessionData);
         }
         return $return;

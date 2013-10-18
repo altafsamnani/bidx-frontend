@@ -42,17 +42,18 @@ class SessionService extends APIBridge {
 	 *
 	 * @return boolean if having profile or not
 	 */
-    function isHavingProfile($type) {
+    function isHavingProfile ($type)
+    {
         $sessionData = BidxCommon::$staticSession;
-        $entities = $sessionData->data->entities;
-        foreach($entities as $value) {
-            if($value->bidxMeta->bidxEntityType == $type) {
-                return true;
+        $entities = (isset($sessionData->data->entities)) ? $sessionData->data->entities : NULL;
+        if ($entities) {
+            foreach ($entities as $value) {
+                if ($value->bidxMeta->bidxEntityType == $type) {
+                    return true;
+                }
             }
         }
-
         return false;
-
     }
 
     /**
@@ -60,7 +61,7 @@ class SessionService extends APIBridge {
      *
      * @return array with groups or empty array if there are no group associated with this member
      */
-    function getGroups($type) {
+    function getGroups( ) {
         $sessionData = BidxCommon::$staticSession;
         $groups = $sessionData->data->groups;
         $result = array();

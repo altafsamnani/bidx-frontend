@@ -164,7 +164,7 @@
 
         ,   'media(/:appState)(/:id)':                          'media'
 
-        ,   'dashboard(/:section)(/:part1)':                    'dashboard'
+        ,   'dashboard(/:state)(*splat)':                    'dashboard'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
@@ -336,9 +336,17 @@
                 }
             );
         }
-     ,  dashboard:               function( section, part1, part2 )
+     ,  dashboard:               function( state, params )
         {
-            bidx.utils.log( "AppRouter::GroupDashboard", section );
+            bidx.utils.log( "AppRouter::dashboard State: ", state, " params: ", params );
+
+         //remove leading forward slash from the splat
+            //
+            if( params )
+            {
+                params = params.replace( /^[/]/, "" );
+                params = bidx.utils.bidxDeparam( params );
+            }
 
             mainState = "dashboard";
 
@@ -346,8 +354,8 @@
             (
                 "dashboard"
             ,   {
-                    section:    section
-                ,   part1:      part1
+                    state:    state
+                ,   params:   params
                 }
             );
         }

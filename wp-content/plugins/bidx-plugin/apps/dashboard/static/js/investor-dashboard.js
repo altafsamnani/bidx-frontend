@@ -2,6 +2,7 @@
 {
     var $element          = $("#investor-dashboard")
     ,   $views            = $element.find(".view")
+    ,   $elementHelp      = $(".startpage")
     ,   bidx              = window.bidx
     ,   currentGroupId    = bidx.common.getCurrentGroupId()
     ,   currentInvestorId = bidx.common.getInvestorProfileId()
@@ -10,6 +11,33 @@
 
 
     //public functions
+
+    var _initHandlers = function ()
+    {
+        $elementHelp.change(function()
+        {
+            var startPageCheck = $(this).attr("checked")
+            ,   startValue = 0;
+
+            if (startPageCheck) {
+                startValue = 2;
+            }
+
+            $.ajax(
+                    {
+                        url:      "/wp-admin/admin-ajax.php?action=bidx_set_option&type=investor-startingpage&value=" + startValue
+                    ,   dataType: "json"
+                    })
+                    .done(function(data, status, jqXHR)
+                     {
+                        console.log(data + 'Bidx option investor dashboard updated.');
+                     })
+                    .fail(function()
+                     {
+                        bidx.utils.error("problem updating investor dashboard option.");
+                     })
+        });
+    }
 
     var getContacts = function(options)
     {
@@ -229,7 +257,12 @@
                                 }
                                 else if( cls === "entityid_l")
                                 {
-                                    textValue = '<a href="/businesssummary/' + textValue + '" >View Proposal</a>';
+                                    textValue = '<a target = "_blank" href="/businesssummary/' + textValue + '" >View Proposal</a>';
+                                }
+                                else if(cls === 'creator')
+                                {
+                                    textValue = '<a target = "_blank" href="/member/' + item['creatorId'] + '" >' +  textValue + '</a>';
+
                                 }
                                
                                 element.find("span." + cls).replaceWith(textValue);
@@ -397,18 +430,16 @@
 
     // ROUTER
 
-    var state;
-
-
+   
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
     {
         bidx.utils.log("routing options", options);
-        var section; 
+        var state;
 
-        section = options.section;
-
-        switch (section)
+        state = options.state;
+ 
+        switch (state)
         {
             case "load" :
 
@@ -474,6 +505,9 @@
     }
 
     window.bidx.dashboard = dashboard;
+
+    //Initialize Handlers
+    _initHandlers();
 
 
     if ($("body.bidx-investor-dashboard").length && !bidx.utils.getValue(window, "location.hash").length)
