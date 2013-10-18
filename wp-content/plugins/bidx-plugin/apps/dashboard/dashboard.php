@@ -79,7 +79,7 @@ class dashboard
                 break;
             case 'entrepreneur-dashboard':
                 wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);        
-                $sessionSvc = new SessionService( );
+                $sessionSvc = new SessionService( );                
                 $entrepreneurProfile = $sessionSvc->isHavingProfile( 'bidxEntrepreneurProfile' );
             
                 if ($entrepreneurProfile) {

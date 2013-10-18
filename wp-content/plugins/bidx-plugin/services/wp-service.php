@@ -1937,23 +1937,69 @@ function bidx_options ()
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=es'>here</a> to create static Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=fr'>here</a> to create static Demo Fr PO <br/><br/>";
 
-        /* 2. Bidx Apps Pot Generator */
+        /* 1.2 Bidx Apps Pot Generator */
         echo "<b>Bidx Wp Plugin I18n.xml Pot Generator (Text domain i18n) </b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
-        /* 3. Bidx Apps Pot Generator */
+        /* 1.3. Bidx Apps Pot Generator */
         echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin) (Text domain bidxplugin)</b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
-        /* 4. Bidx Theme Pot Generator */
+        /* 1.4. Bidx Theme Pot Generator */
         echo "<b>Bidx Wp Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
+   
+        
+        /* 2 Bidx Push Notification */
+        $entrepreneurNotification = get_site_option('entrepreneur-notification');
+        $htmlEntrNotification =  "<br/><br/><b>Bidx Entrepreneur Notification</b><br/>";
+        $htmlEntrNotification .= "<textarea name='entrepreneur-notification'>".$entrepreneurNotification."</textarea>"  ;
+        $htmlEntrNotification .= "<div class='buttonwrapper'>
+                    <input type='hidden' value='entrepreneur-notification' name='notification'/>
+                    <input type='submit' name = 'action' value='Save'>
+                    <input type='submit' name = 'action' value='Reset' >
+                </div>";
+        echo get_site_option('entrepreneur-notification');
+        if(isset($_POST['action'])) {
+            $action = $_POST['action'];
+            $notificationType = $_POST['notification'];
+            $notificationVal  = $_POST[$notificationType];
+            if($action == 'Save') {
+                update_site_option($notificationType, $notificationVal);
+            } else {
+                
+            }
+
+        }
+        /* 3 Bidx Push Notification */
+        $investorNotification = get_site_option('investor-notification');
+        $htmlInvestorNotification =  "<br/><br/><b>Bidx Investor Notification</b><br/>";
+        $htmlInvestorNotification .= "<textarea name='investor-notification'>".$investorNotification."</textarea>"  ;
+        $htmlInvestorNotification .= "<div class='buttonwrapper'>
+                    <input type='hidden' value='investor-notification' name='notification'/>
+                    <input type='submit' name = 'action' value='Save'>
+                    <input type='submit' name = 'action' value='Reset' >
+                </div>";
+ 
+   
+        echo "<h2>Global Custom Options</h2>
+                <form method='post' action='settings.php?page=static-po'>
+                    {$htmlEntrNotification}                    
+                </form>
+                <form method='post' action='settings.php?page=static-po'>
+                    {$htmlInvestorNotification}
+                </form>
+                    ";
+
+
+
+
     } else {
         //wp_die (__ ('You do not have sufficient permissions to access this page.'));
     }
