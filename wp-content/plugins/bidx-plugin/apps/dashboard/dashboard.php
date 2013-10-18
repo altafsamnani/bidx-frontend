@@ -67,10 +67,12 @@ class dashboard
                     if ($investorDashboard) {
                         ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
                         
-                        $template = 'investor/help.phtml';
+                        $view->hash = '#dashboard/help';
                     } else {
-                        $template = 'investor/dashboard.phtml';
+                        $view->hash = '#dashboard/investor';
                     }
+
+                    $template = 'investor/dashboard.phtml';
                 } else {
                     $view->return_404 ();
                 }
@@ -87,10 +89,12 @@ class dashboard
                     if ($entrepreneurDashboard) {
                         ($entrepreneurDashboard != 2 ) ? update_option ('entrepreneur-startingpage', 0) : $view->startingPage = $entrepreneurDashboard;
                         
-                        $template = 'entrepreneur/help.phtml';
+                        $view->hash = '#dashboard/help';
                     } else {
-                        $template = 'entrepreneur/dashboard.phtml';
+                        $view->hash = '#dashboard/entrepreneur';
                     }
+
+                    $template = 'entrepreneur/dashboard.phtml';
                 } else {
                     $view->return_404 ();
                 }

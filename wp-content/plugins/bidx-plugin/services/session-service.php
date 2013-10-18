@@ -69,10 +69,10 @@ class SessionService extends APIBridge {
 
     $profiles = array(
         'bidxInvestorProfile'        => array(
-            'Investor Dashboard' => '/member/#investor-profile'
+            'Investor Dashboard' => '/investor-dashboard'
         ),
         'bidxEntrepreneurProfile'   => array(
-            'Entrepreneur Dashboard' => '/member/#entrepreneur-profile'
+            'Entrepreneur Dashboard' => '/entrepreneur-dashboard'
         )
     );
 

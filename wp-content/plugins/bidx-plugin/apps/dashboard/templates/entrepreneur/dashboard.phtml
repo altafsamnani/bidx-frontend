@@ -1,5 +1,8 @@
-<div id="entrepreneur-dashboard">
-    <h1>Entrepreneur dashboard</h1>
+<div class="row-fluid "  id="entrepreneur-dashboard">
+<?php echo $this->createLeftMenu('span2 menu', array('#dashboard/entrepreneur' => 'Dashboard' ,'#dashboard/help' => 'Help')); ?>
+
+<div class ="span10">
+    <h1 class="pagetitle">My entrepreneur dashboard</h1>
     <section class="span12 well dashboard">
         <article class="view viewLoad"><?php _e ('Loading...', 'bidxplugin') ?></article>
         <article class="view viewError">
@@ -61,7 +64,14 @@
                 </div>
             </div>
         </article>
+        <article class="view viewHelp">
+            <?php $this->render('entrepreneur/help.phtml'); ?>
 
+        </article>
+    
+        <input type="hidden" value="<?php echo $this->hash;?>" name="firstpage" class="firstpage" />
+    
+  </div>
 </div>
 <script type="text/html" id="entrepreneur-investorsitem">
     <!--
@@ -95,7 +105,7 @@
     <!--
     <tr>
         <td>
-           <span class="placeholder name"> %name% </span>
+           <span class="placeholder name"> <a data-toggle="collapse" data-target="#%accordion-id%" class="accordion-toggle">%name%</a> </span>
         </td>
         <td>
            <span class="placeholder industry"> %industry% </span>
@@ -116,6 +126,71 @@
            <span class="placeholder bidxCreationDateTime"> %bidxCreationDateTime% </span>
         </td>
     </tr>
+    <tr class="list detail-list" >
+   <td colspan="7" class="detailRow">
+      <div class="accordian-body collapse %toggleid%" id="%accordion-id%">
+         <div class="row-fluid">
+            <div class="span12">
+               <ul class="unstyled">
+                  <li>
+                     <label>Business proposal</label>
+                     <span class="placeholder name"> %name% </span>
+                  </li>
+                  <li>
+                     <label>Slogan</label>
+                     <span class="placeholder slogan"> %slogan% </span>
+                  </li>
+                  <li>
+                     <label>Summary</label>
+                     <span class="placeholder summary"> %summary% </span>
+                  </li>
+                  <li>
+                     <label>Reason for submission</label>
+                     <span class="placeholder reasonForSubmission"> %reasonForSubmission% </span>
+                  </li>
+                  <li>
+                     <label>Environmental Impact</label>
+                     <span class="placeholder envImpact"> %envImpact% </span>
+                  </li>
+                  <li>
+                     <label>Country</label>
+                     <span class="placeholder countryOperation"> %countryOperation% </span>
+                  </li>
+                  <li>
+                     <label>Business stage</label>
+                     <span class="placeholder stageBusiness"> %stageBusiness% </span>
+                  </li>
+                  <li>
+                     <label>Consumer type</label>
+                     <span class="placeholder consumerType"> %consumerType% </span>
+                  </li>
+                  <li>
+                     <label>Investment type</label>
+                     <span class="placeholder investmentType"> %investmentType% </span>
+                  </li>
+                  <li>
+                     <label>Finance needed</label>
+                     <span class="placeholder financingNeeded"> %financingNeeded% </span>
+                  </li>
+                  <li>
+                     <label>Summary of finance needed</label>
+                     <span class="placeholder summaryFinancingNeeded"> %summaryFinancingNeeded% </span>
+                  </li>
+
+               </ul>
+            </div>
+            <div class="span6">
+               <span class="placeholder companylogodoc_url"/>
+            </div>
+            <div class="span10">
+               <div class="pull-right">
+                  <span class="placeholder entityid_l"/>
+               </div>
+            </div>
+         </div>
+      </div>
+   </td>
+</tr>
     -->
 </script>
 <script type="text/html" id="entrepreneur-empty">

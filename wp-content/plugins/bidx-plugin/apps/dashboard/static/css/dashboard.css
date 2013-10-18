@@ -54,5 +54,14 @@
 #invite-members {
     width:60%;
 }
+#entrepreneur-dashboard ul.nav li {
+    font-size:20px;
+    padding-bottom:20%;
+}
+
+#entrepreneur-dashboard .menu,  #investor-dashboard .menu {
+    float:left;
+    margin-top:6%
+}
 
 

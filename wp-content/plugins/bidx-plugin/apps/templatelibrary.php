@@ -866,6 +866,25 @@ class TemplateLibrary
         exit;
     }
 
+    function createLeftMenu($spanGrid, $menuLabelArr, $activeMenu = NULL)
+    {
+
+        $html = " <div class='{$spanGrid}' >
+                    <ul class='nav nav-pills nav-stacked'>";
+
+        foreach ($menuLabelArr as $menuLink => $menuLabel) {
+
+            $menuClass = ($menuLabel == $activeMenu) ? ' active': '';
+            $html .= " <li class='limenu {$menuLabel}{$menuClass}'><a href='{$menuLink}'>{$menuLabel}</a></li>";
+
+        }
+
+        $html .= "   </ul>
+                  </div> ";
+
+        return $html;
+    }
+
 }
 
 ?>

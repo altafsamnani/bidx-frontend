@@ -3,10 +3,9 @@
     var $element          = $("#entrepreneur-dashboard")
     ,   $views            = $element.find(".view")
     ,   $elementHelp      = $(".startpage")
-    ,   bidx              = window.bidx
-    ,   currentGroupId    = bidx.common.getCurrentGroupId()
-    ,   currentInvestorId = bidx.common.getInvestorProfileId()
-    ,   currentUserId     = bidx.common.getCurrentUserId()
+    ,   $firstPage        = $element.find( "input[name='firstpage']" )
+    ,   bidx              = window.bidx    
+    ,   currentUserId     = bidx.common.getSessionValue( "id" )
     ;
 
     //public functions
@@ -243,11 +242,14 @@
                             //if( item.bidxEntityType == 'bidxBusinessSummary') {
                             bidxMeta = bidx.utils.getValue( item, "bidxMeta" );
       
-                            if( bidxMeta.bidxEntityType == 'bidxBusinessSummary') {
+                            if( bidxMeta.bidxEntityType == 'bidxBusinessSummary' && bidxMeta.bidxEntityStatus == 'PUBLISHED') {
 
                                 var i18nArr = {  'industry'         : 'industry'
                                                , 'countryOperation' : 'country'
                                                , 'stageBusiness'    : 'stageBusiness'
+                                               , 'envImpact'        : 'envImpact'
+                                               , 'consumerType'     : 'consumerType'
+                                               , 'investmentType'   : 'investmentType'
                                              };
                                              
                                getI18nVal(
@@ -261,6 +263,7 @@
 
                                 //search for placeholders in snippit
                                 listItem = snippit
+                                    .replace( /%accordion-id%/g,      bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : "%accordion-id%" )
                                     .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : "%name%" )
                                     .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
                                     .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : "%countryOperation%" )
@@ -268,6 +271,13 @@
                                     .replace( /%completion%/g,       i18nItem.stageBusiness    ? i18nItem.stageBusiness      : "%stageBusiness%" )
                                     .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : "%stageBusiness%" )
                                     .replace( /%bidxCreationDateTime%/g,     bidxMeta.bidxCreationDateTime  ? bidx.utils.parseTimestampToDateTime( bidxMeta.bidxCreationDateTime, "date" )    : "%bidxCreationDateTime%" )
+                                    .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : "%slogan%" )
+                                    .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : "%summary%" )
+                                    .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : "%reasonForSubmission%" )
+                                    .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : "%envImpact%" )
+                                    .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : "%consumerType%" )
+                                    .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : "%investmentType%" )
+                                    .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : "%summaryFinancingNeeded%" )
                                     ;
 
                                 
@@ -325,9 +335,16 @@
         _showView( "error" );
     }
 
+    function _menuActivateWithTitle ( menuItem,pageTitle) {
+        //Remove active class from li and add active class to current menu
+        $element.find(".limenu").removeClass('active').filter(menuItem).addClass('active');
+        /*Empty page title and add currentpage title
+        $element.find(".pagetitle").empty().append(pageTitle); */
+
+    }
     // ROUTER
 
-   
+    
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
     {
@@ -344,11 +361,16 @@
 
                 break;
 
+            case "help" :
+                _menuActivateWithTitle(".Help","My entrepreneur helppage");
+                _showView("help");                
+                break;
+
             case "entrepreneur":
 
-
+                _menuActivateWithTitle(".Dashboard","My entrepreneur dashboard");
                 _showView("load");
-     
+                
                 //_showView("loadinvestors");
 
                 getBusiness(
@@ -400,8 +422,7 @@
 
     if ($("body.bidx-entrepreneur-dashboard").length && !bidx.utils.getValue(window, "location.hash").length)
     {
-
-        document.location.hash = "#dashboard/entrepreneur";
+        document.location.hash = $firstPage.val();
     }
 
 
