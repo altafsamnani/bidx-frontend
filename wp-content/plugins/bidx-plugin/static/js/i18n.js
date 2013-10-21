@@ -27,6 +27,8 @@
     //
     function i( key, context )
     {
+        var result;
+
         if ( !context )
         {
             context = g;
@@ -37,7 +39,21 @@
             bidx.utils.error( "bidx.i18n::context", context, "not loaded!" );
         }
 
-        return bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
+        if ( $.isArray( key ) )
+        {
+            result = [];
+
+            $.each( key, function( idx, k )
+            {
+                result[ idx ] = bidx.utils.getValue( items, context + ".byKey." + k  + ".label" );
+            } );
+        }
+        else
+        {
+            result = bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
+        }
+
+        return result;
     }
 
     // Returns a promise which will be done() after loading all the contexts'
@@ -145,7 +161,12 @@
 
     function getItem( key, context, cb )
     {
-        var item, myItem;
+        var item
+        ,   myItem
+        ,   keyLen
+        ,   labels
+        ,   ticks
+        ;
 
         // When getItem() was called for a global item the context might be the callback
         // or there is no context and callback at all. Since context is fallbacked to
@@ -185,10 +206,31 @@
             item = items[ context ] || {};
 
             // Was asked for the whole context or a single key?
+            // When asked with an array, create a new array of same lenght containing the translated values
             //
             if ( !key )
             {
                 cb( null, item );
+            }
+            else if ( $.isArray( key ))
+            {
+                labels = [];
+                keyLen = key.length;
+
+                $.each( key, function( idx, k )
+                {
+                    getItem( k, context, function( err, label )
+                    {
+                        labels[ idx ] = label;
+
+                        ticks += 1;
+
+                        if ( ticks === keyLen )
+                        {
+                            cb( null, labels );
+                        }
+                    } );
+                } );
             }
             else
             {
