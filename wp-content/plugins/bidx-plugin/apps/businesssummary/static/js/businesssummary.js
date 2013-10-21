@@ -61,6 +61,12 @@
     ,   $btnAddCompany              = $companyDetails.find( "a[href$='addCompany']" )
     ,   $btnCancelAddCompany        = $companyDetails.find( "a[href$='cancelAddCompany']" )
 
+        // Documents component
+        //
+    ,   $documents                  = $element.find( "#businessSummaryAccordion-Documents" )
+    ,   $btnAddFiles                = $documents.find( "a[href$='addFiles']" )
+    ,   $addFiles                   = $documents.find( ".addFiles" )
+
     ,   businessSummary
     ,   businessSummaryId
 
@@ -174,6 +180,7 @@
         _financialSummary();
         _managementTeam();
         _companyDetails();
+        _documents();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -874,6 +881,68 @@
             } );
 
         }
+
+        // Setup the Documents component
+        //
+        function _documents()
+        {
+            // Clicking the add files button will load the media library
+            //
+            $btnAddFiles.click( function( e )
+            {
+                e.preventDefault();
+
+                var $btn = $( this );
+                $btn.hide();
+
+                // Navigate the media app into list mode for selecting files
+                //
+                bidx.media.navigate(
+                {
+                    requestedState:         "list"
+                ,   slaveApp:               true
+                ,   selectFile:             true
+                ,   multiSelect:            true
+                ,   callbacks:
+                    {
+                        ready:                  function( state )
+                        {
+                            bidx.utils.log( "[documents] ready in state", state );
+                        }
+
+                    ,   cancel:                 function()
+                        {
+                            // Stop selecting files, back to previous stage
+                            //
+                            $btn.show();
+                            $addFiles.hide();
+                        }
+
+                    ,   success:                function( file )
+                        {
+                            bidx.utils.log( "[documents] uploaded", file );
+
+                            // NOOP.. the parent app is not interested in when the file is uploaded
+                            // only when it is attached
+                        }
+
+                    ,   select:               function( file )
+                        {
+                            bidx.utils.log( "[documents] select", file );
+
+                            // Attach the file to the entity
+                            //
+                            // TODO: actual attach the file to the entity, or at least stage it to be saved
+                            //
+                            $btn.show();
+                            $addFiles.hide();
+                        }
+                    }
+                } );
+
+                $addFiles.fadeIn();
+            } );
+        }
     }
 
     // Add a company row to the table of existing companies
@@ -1307,6 +1376,7 @@
 
         $doesHaveCompany.hide();
         $addNewCompany.hide();
+        $addFiles.hide();
 
         bidx.utils.setElementValue( $hasCompany, "false" );
 
