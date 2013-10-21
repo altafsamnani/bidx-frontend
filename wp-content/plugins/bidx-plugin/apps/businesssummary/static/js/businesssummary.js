@@ -948,7 +948,7 @@
                 $addFiles.fadeIn();
             } );
 
-            // Initiate the reflowrower for the attachment list.
+            // Initiate the reflowrower for the attachment list
             //
             $attachmentContainer.reflowrower(
             {
