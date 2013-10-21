@@ -214,8 +214,9 @@
             }
             else if ( $.isArray( key ))
             {
-                labels = [];
-                keyLen = key.length;
+                labels  = [];
+                keyLen  = key.length;
+                ticks   = 0;
 
                 $.each( key, function( idx, k )
                 {
