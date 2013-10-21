@@ -47,68 +47,59 @@ class search {
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/templates/' );
 		$sessionData = BidxCommon::$staticSession;
 
-		if ( $sessionData -> authenticated === 'true' ) {
-			// 2a. Client side rendering authenticated
-			var_dump($sessionData);
-			$view->sessionData = $sessionData;
-			return $view->render( 'authenticated.phtml' );
+		// 2. Server side rendering anonymous
+		require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
+		$service = new SearchService( );
+		
+		if ( key_exists( 'q', $atts ) ) {
+			$view -> query = $service -> cookQuery( $atts );
+		} else if ( $_REQUEST['q'] != null ) {
+			$view -> query = $service -> cookQuery( );
 		}
-		else {
-			// 2b. Server side rendering anonymous
-			require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
-			$service = new SearchService( );
-			
-			if ( key_exists( 'q', $atts ) ) {
-				$view -> query = $service -> cookQuery( $atts );
-			} else if ( $_REQUEST['q'] != null ) {
-				$view -> query = $service -> cookQuery( );
-			}
-			$view -> results = $service -> getSearchResults( $view -> query );
-			
-			
-			// 3. Parse data for preparsing for presentations
-			if ( !property_exists( $view -> results, 'data' ) ) {
-				$data = array( 'numFound' => 0, 'error' => 'Communication failure' );
-				$view -> results -> data = $data;
-			}
-			
-			$rows = 10;
-			if ( key_exists( 'rows', $view -> query ) ) {
-				$rows = $view -> rows;
-			}
-			
-			// navigation previous
-			if ( key_exists( 'start', $view -> query ) ) {
-				if ( $view -> query['start'] > 0 ) {
-					$backParam = $view -> query;
-					$newIndex = $view -> query['start'] - $rows;
-					if ($newIndex >= 0) {
-						$backParam['start'] = $newIndex;
-					}
-					$view -> previousLink = BidxCommon:: buildHTTPQuery($backParam);
-					Logger :: getLogger('search') -> trace( 'previousLink : ' . $view -> previousLink );
+		$view -> results = $service -> getSearchResults( $view -> query );
+		
+		
+		// 3. Parse data for preparsing for presentations
+		if ( !property_exists( $view -> results, 'data' ) ) {
+			$data = array( 'numFound' => 0, 'error' => 'Communication failure' );
+			$view -> results -> data = $data;
+		}
+		
+		$rows = 10;
+		if ( key_exists( 'rows', $view -> query ) ) {
+			$rows = $view -> rows;
+		}
+		
+		// 4. navigation previous
+		if ( key_exists( 'start', $view -> query ) ) {
+			if ( $view -> query['start'] > 0 ) {
+				$backParam = $view -> query;
+				$newIndex = $view -> query['start'] - $rows;
+				if ($newIndex >= 0) {
+					$backParam['start'] = $newIndex;
 				}
+				$view -> previousLink = BidxCommon:: buildHTTPQuery($backParam);
+				Logger :: getLogger('search') -> trace( 'previousLink : ' . $view -> previousLink );
 			}
-			//  navigation next
-			$numFound = $view -> results -> data -> numFound;
-			$start = $view -> results -> data -> start;
-			if ($numFound - ( $start + $rows ) > 1 ) {
-				$nextParam = $view -> query;
-				$nextParam['start'] = $start + $rows;
-				$view -> nextLink = BidxCommon:: buildHTTPQuery( $nextParam );
-				Logger :: getLogger( 'search' ) -> trace( 'nextLink : ' . $view -> nextLink );
-			}
-			
-			// 4. Determine the view needed
-			if ( key_exists( 'view', $atts ) ) {
-				$command = $atts['view'];
-			} else {
-				$command = '';
-			}
-
-			return $view->render( 'listView.phtml' );	
+		}
+		//  5. navigation next
+		$numFound = $view -> results -> data -> numFound;
+		$start = $view -> results -> data -> start;
+		if ($numFound - ( $start + $rows ) > 1 ) {
+			$nextParam = $view -> query;
+			$nextParam['start'] = $start + $rows;
+			$view -> nextLink = BidxCommon:: buildHTTPQuery( $nextParam );
+			Logger :: getLogger( 'search' ) -> trace( 'nextLink : ' . $view -> nextLink );
+		}
+		
+		// 6. Determine the view needed
+		if ( key_exists( 'view', $atts ) ) {
+			$command = $atts['view'];
+		} else {
+			$command = 'listView.phtml';
 		}
 
+		return $view->render( $command.'.phtml' );	
 	}
 	
 }
