@@ -804,6 +804,13 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     // one attachment
                     //
                     echo "</div>";
+                } else {
+?>
+                <div class="alert alert-danger">
+                    <?php _e('This business summary doesn\'t have any Documents attached!', 'bidxplugin')?>
+                </div>
+
+<?php 
                 }
 ?>
                             </div>
