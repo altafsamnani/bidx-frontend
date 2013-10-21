@@ -39,7 +39,7 @@
 
     // Grab the snippets from the DOM
     //
-    snippets.$fileItem    = $snippets.children( "table.fileItem" ).find( "tr.fileItem" ).remove();
+    snippets.$fileItem    = $snippets.children( ".fileItemTable" ).find( "tr.fileItem" ).remove();
 
     function _oneTimeSetup()
     {
@@ -123,6 +123,42 @@
         $selectControls.find( ".btnSelectFile" ).click( function( e )
         {
             e.preventDefault();
+
+            var result
+            ,   $input
+            ,   $item
+            ,   bidxData
+            ;
+
+            // What files are selected? If multiSelect callback in an array, if not, a single object
+            //
+            if ( settings.multiSelect )
+            {
+                result = [];
+
+                $fileList.find( "[name='uploadCheckbox']:checked" ).each( function()
+                {
+                    $input      = $( this );
+                    $item       = $input.closest( ".fileItem" );
+                    bidxData    = $item.data( "bidxData" );
+
+                    result.push( bidxData );
+                } );
+            }
+            else
+            {
+                $input = $fileList.find( "[name='uploadRadio']:checked" );
+
+                if ( $input.length )
+                {
+                    $item       = $input.closest( ".fileItem" );
+                    bidxData    = $item.data( "bidxData" );
+
+                    result = bidxData;
+                }
+            }
+
+            callbacks.select( result );
         } );
 
         // Cancel the attempt to select a file

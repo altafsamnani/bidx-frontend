@@ -10,9 +10,32 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
 $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
 $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 
+$attachmentItem = <<<EOT
+    <div class="attachmentItem span4 well well-white">
+        <div class="row-fluid">
+            <div class="span4">
+                <a href="#" class="documentLink"><img class="img-rounded documentImage"></a>
+            </div>
+            <div class="span7">
+                <h3 class="documentName">{{documentName}}</h3>
+                <p class="purpose">{{purpose}}</p>
+                <p class="documentType">{{documentType}}</p>
+            </div>
+        </div>
+        <a href="#removeAttachmentItem" class="btn btn-danger btn-mini btn-block">{{lblRemoveAttachmentItem}}</a>
+    </div>
+EOT;
+
+// The attachments item template exists of two types of variables, dynamic values and translations
+//
+$attachmentItemTranslations = array(
+    '{{lblRemoveAttachmentItem}}'             => __('Remove document from business plan','bidxplugin')
+);
+
 // To display Company Tab
 //
-$company = $this->exst ($businessSummary->company);
+$company    = $this->exst ($businessSummary->company);
+$attachment = $this->exst ($businessSummary->attachment);
 
 // Default set of rowproperties
 //
@@ -273,7 +296,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                     // This is likely a mismatch in labeling. The UI label is set to Customer Type but the object property is Consumer Type
                     // PM-163 for clarification
                     __('Customer type','bidxplugin')
-                        => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' ),
+                        => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' )
 
                 );
                 echo $this->addRowsWithLabelBelow('', '', $rowValues, $viewRowProperties );
@@ -763,7 +786,44 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- SHOW -->
                         <div class="view viewShow">
-                            show documents
+                            <div class="attachmentList">
+<?php
+                if ( !is_null( $attachment ) ) {
+                    $count = 0;
+
+                    foreach ( $attachment as $a ) {
+
+                        if ( $count % 3 == 0  ) {
+
+                            if ( $count != 0 ) {
+                                echo "</div>";
+                            }
+
+                            echo '<div class="row-fluid">';
+                        }
+
+                        echo $this->replaceMessageTokens(
+                            $attachmentItem,
+                            array_merge(
+                                $attachmentItemTranslations,
+                                array(
+                                    '{{documentName}}'          => $this->exst( $a->documentName ),
+                                    '{{purpose}}'               => $this->exst( $a->purpose ),
+                                    '{{documentType}}'          => $this->getStaticVal( 'documenType', $this->exst( $a->dcoumentType ))
+                                )
+                            )
+                        );
+
+                        $count++;
+                    }
+
+                    // Closing the last row, this will always be the case since we wouldn't be here unless there was at least
+                    // one attachment
+                    //
+                    echo "</div>";
+                }
+?>
+                            </div>
                         </div>
 
                         <!-- LOAD -->
@@ -820,6 +880,14 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <td class="location"></td>
             </tr>
         </table>
+
+        <!-- Attachment -->
+<?php
+        // Dump the item as a snippet, pull it through the replaceMessageTokens to have the template
+        // placeholders be replaced with empty values
+        //
+        echo $this->replaceMessageTokens( $attachmentItem, $attachmentItemTranslations );
+?>
 
         <!-- Management Team Item -->
         <div class="managementTeamItem span6 well well-white">
