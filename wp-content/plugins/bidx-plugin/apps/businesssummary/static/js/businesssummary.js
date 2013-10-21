@@ -928,16 +928,23 @@
                             // only when it is attached / selected
                         }
 
-                    ,   select:               function( file )
+                    ,   select:               function( files )
                         {
-                            bidx.utils.log( "[documents] select", file );
+                            bidx.utils.log( "[documents] select", files );
 
                             // Attach the file to the entity
                             // By adding it to the reflowrower we can pick it up as soon
                             // as the entity is created or saved. The reflowrower keeps a list of
                             // added items
                             //
-                            _addAttachment( file );
+
+                            if ( files )
+                            {
+                                $.each( files, function( idx, file )
+                                {
+                                    _addAttachment( file );
+                                } );
+                            }
 
                             $btn.show();
                             $addFiles.hide();
