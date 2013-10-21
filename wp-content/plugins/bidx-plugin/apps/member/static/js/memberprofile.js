@@ -355,8 +355,13 @@
         ,   draggable:          false
         ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
         }
-    ,   currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions )
+    ,   currentAddressMap
     ;
+
+    if ( $currentAddressMap.length )
+    {
+        currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions );
+    }
 
     var geocoder        = new google.maps.Geocoder()
     ,   geocodeTimer    = null

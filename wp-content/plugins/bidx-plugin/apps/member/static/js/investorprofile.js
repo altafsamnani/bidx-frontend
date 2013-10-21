@@ -544,8 +544,13 @@
         ,   draggable:          false
         ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
         }
-    ,   institutionAddressMap       = new google.maps.Map( $institutionAddressMap[ 0 ], institutionAddressMapOptions )
+    ,   institutionAddressMap
     ;
+
+    if ( $institutionAddressMap.length )
+    {
+        institutionAddressMap = new google.maps.Map( $institutionAddressMap[ 0 ], institutionAddressMapOptions );
+    }
 
     var geocoder        = new google.maps.Geocoder()
     ,   geocodeTimer    = null
