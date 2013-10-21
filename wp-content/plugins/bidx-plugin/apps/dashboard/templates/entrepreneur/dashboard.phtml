@@ -1,15 +1,28 @@
 <div class="row-fluid "  id="entrepreneur-dashboard">
-<?php echo $this->createLeftMenu('span2 menu', array('#dashboard/entrepreneur' => 'Dashboard' ,'#dashboard/help' => 'Help')); ?>
+<?php //echo $this->createLeftMenu('span2 menu', array('#dashboard/entrepreneur' => 'Dashboard' ,'#dashboard/help' => 'Help')); ?>
 
 <div class ="span10">
     <h1 class="pagetitle">My entrepreneur dashboard</h1>
-    <section class="span12 well dashboard">
-        <article class="view viewLoad"><?php _e ('Loading...', 'bidxplugin') ?></article>
-        <article class="view viewError">
+    <div class="row-fluid dashboard">
+        <div class="accordion" id="entrepreneurDashboardAccordion">
+            <!-- Help -->
+             <div class="accordion-group <?php echo ($this->startingPage) ? 'accordion-open': '';?>">
+                <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Help"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
+                </div>
+                <div id="entrepreneurDashboardAccordion-Help" class="accordion-body collapse <?php echo ($this->startingPage) ? 'in': '';?>">
+                    <div class="accordion-inner">                    
+                       <?php $this->render('entrepreneur/help.phtml'); ?>
+                    </div>                  
+               </div>
+            </div>
+         </div>
+        <div class="view viewLoad"><?php _e ('Loading businesses ...', 'bidxplugin') ?></div>
+        <div class="view viewError">
                 <h1><?php _e('Error','bidxplugin')?></h1>
                 <span class="errorMsg"></span>
-            </article>
-        <article class="view viewBusiness">
+        </div>
+        <div class="view viewBusiness">
             <div class="row-fluid ">
 
                 <div class="span12 well">
@@ -35,9 +48,9 @@
                     </table>
                 </div>
             </div>
-        </article>
-        <article class="view viewLoadinvestors"><?php _e ('Loading...', 'bidxplugin') ?></article>
-        <article class="view viewInvestors">
+        </div>
+        <div class="view viewLoadinvestors"><?php _e ('Loading investors ...', 'bidxplugin') ?></div>
+        <div class="view viewInvestors">
             <div class="row-fluid">
 
                 <div class="span12 well">
@@ -63,15 +76,11 @@
                     </table>
                 </div>
             </div>
-        </article>
-        <article class="view viewHelp">
-            <?php $this->render('entrepreneur/help.phtml'); ?>
-
-        </article>
-    
-        <input type="hidden" value="<?php echo $this->hash;?>" name="firstpage" class="firstpage" />
-    
+        </div>
+        
+ 
   </div>
+</div>
 </div>
 <script type="text/html" id="entrepreneur-investorsitem">
     <!--
@@ -196,9 +205,11 @@
 <script type="text/html" id="entrepreneur-empty">
 <!--
 <tr class="business entrepreneur-business" >
-    <div class="pull-left">
-    <?php _e ('No businesses available', 'bidxplugin') ?>
-    </div>
+    <td colspan='8'>
+        <div class="pull-left">
+            <?php _e ('No businesses available', 'bidxplugin') ?>
+        </div>
+    </td>
 </tr>
 -->
 </script>

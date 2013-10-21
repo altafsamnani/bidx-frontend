@@ -1,19 +1,35 @@
 <div class="row-fluid "  id="investor-dashboard">
-<?php echo $this->createLeftMenu('span2 menu', array('#dashboard/investor' => 'Dashboard' ,'#dashboard/help' => 'Help')); ?>
+<?php //echo $this->createLeftMenu('span2 menu', array('#dashboard/investor' => 'Dashboard' ,'#dashboard/help' => 'Help')); ?>
 
 <div class ="span10">
     <h1 class="pagetitle">My investor dashboard</h1>
-    <section class="row-fluid dashboard">
-        <article class="view viewLoad"><?php _e ('Loading...', 'bidxplugin') ?></article>
-        <article class="view viewError alert">
+      <div class="row-fluid dashboard">
+        <div class="accordion" id="investorDashboardAccordion">
+            <!-- Help -->
+             <div class="accordion-group <?php echo ($this->startingPage) ? 'accordion-open': '';?>">
+                <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-Help"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
+                </div>
+                <div id="investorDashboardAccordion-Help" class="accordion-body collapse <?php echo ($this->startingPage) ? 'in': '';?>">
+                    <div class="accordion-inner">                    
+                       <?php $this->render('investor/help.phtml'); ?>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+
+  
+        <div class="view viewLoad"><?php _e ('Loading matches...', 'bidxplugin') ?></div>
+        <div class="view viewError alert">
                 <h1><?php _e('Error','bidxplugin')?></h1>
                 <span class="errorMsg"></span>
-            </article>
-        <article class="view viewMatch">
+            </div>
+        <div class="view viewMatch">
             <div class="row-fluid ">
 
                 <div class="span12 well">
-                    <h2>Recommended business</h2>
+                    <h2 id="dashboard/investor/recommended-plans">Recommended business</h2>
                     <p>These are the groups you have created. Click on the name of the group to edit appearances, create content or administrate members</p>
                     <table class="table table-striped table-hover">
                         <thead>
@@ -33,9 +49,9 @@
                     </table>
                 </div>
             </div>
-        </article>
-        <article class="view viewLoadcontacts"><?php _e ('Loading...', 'bidxplugin') ?></article>
-        <article class="view viewContacts">
+        </div>
+        <div class="view viewLoadcontacts"><?php _e ('Loading contacts...', 'bidxplugin') ?></div>
+        <div class="view viewContacts">
             <div class="row-fluid">
 
                 <div class="span12 well">
@@ -58,10 +74,10 @@
                     </table>
                 </div>
             </div>
-        </article>
+        </div>
 
-        <article class="view viewLoadpreference"><?php _e ('Loading...', 'bidxplugin') ?></article>
-        <article class="view viewPreference">
+        <div class="view viewLoadpreference"><?php _e ('Loading preference...', 'bidxplugin') ?></div>
+        <div class="view viewPreference">
             <div class="row-fluid">
                 <div class="span12 profile-block well">
                     <div class="btn-group control-buttons">
@@ -76,13 +92,9 @@
                     </div>
                 </div>
             </div>
-        </article>
-        <article class="view viewHelp">
-            <?php $this->render('investor/help.phtml'); ?>
-
-        </article>
-        <input type="hidden" value="<?php echo $this->hash;?>" name="firstpage" class="firstpage" />
+        </div>       
   </div>
+</div>
 </div>
 <script type="text/html" id="investor-contactitem">
     <!--
@@ -212,7 +224,7 @@
                <ul class="unstyled">
                   <li>
                      <label>Business proposal</label>
-                     <span class="placeholder name_s"><a target = "_blank" href="/businesssummary/%entityid_l%" >%name_s%</a></span>
+                     <span class="placeholder name_s"><a target = "_blank" href="/investorDashboard/%entityid_l%" >%name_s%</a></span>
                   </li>
                   <li>
                      <label>Entrepreneur</label>
@@ -249,7 +261,7 @@
             </div>
             <div class="span10">
                <div class="pull-right">
-                  <span class="placeholder entityid_l"><a target = "_blank" href="/businesssummary/%entityid_l%" >View Proposal</a> </span>
+                  <span class="placeholder entityid_l"><a target = "_blank" href="/investorDashboard/%entityid_l%" >View Proposal</a> </span>
                </div>
             </div>
          </div>
@@ -266,9 +278,11 @@
 <script type="text/html" id="investor-empty">
 <!--
 <tr class="match investor-match" >
-    <div class="pull-left">
-    <?php _e ('No matches available', 'bidxplugin') ?>
-    </div>
+    <td colspan='4'>
+       <div class="pull-left">
+          <?php _e ('No matches available', 'bidxplugin') ?>
+       </div>
+    </td>    
 </tr>
 -->
 </script>

@@ -66,11 +66,8 @@ class dashboard
 
                     if ($investorDashboard) {
                         ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
-                        
-                        $view->hash = '#dashboard/help';
-                    } else {
-                        $view->hash = '#dashboard/investor';
-                    }
+                                    
+                    }                   
 
                     $template = 'investor/dashboard.phtml';
                 } else {
@@ -88,11 +85,7 @@ class dashboard
                   
                     if ($entrepreneurDashboard) {
                         ($entrepreneurDashboard != 2 ) ? update_option ('entrepreneur-startingpage', 0) : $view->startingPage = $entrepreneurDashboard;
-                        
-                        $view->hash = '#dashboard/help';
-                    } else {
-                        $view->hash = '#dashboard/entrepreneur';
-                    }
+                    } 
 
                     $template = 'entrepreneur/dashboard.phtml';
                 } else {

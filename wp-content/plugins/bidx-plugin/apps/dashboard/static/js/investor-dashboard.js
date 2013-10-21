@@ -31,7 +31,7 @@
                     })
                     .done(function(data, status, jqXHR)
                      {
-                        console.log(data + 'Bidx option investor dashboard updated.');
+                       /* console.log(data + 'Bidx option investor dashboard updated.'); */
                      })
                     .fail(function()
                      {
@@ -40,34 +40,22 @@
         });
     };
 
-    var getI18nVal = function( options ) {
-        var i18nArr = options.i18nArr
+    var getStaticDataVal = function( options ) {
+        var dataArr      = options.dataArr
         ,   item         = options.item
+        ,   textVal
         ;
 
         //Get i18n arr like industry = [chemical, painting, software]
-        $.each(i18nArr, function(clsKey, clsVal) {
-              textVal = "";
-              sep       = "";
-              if( item.hasOwnProperty(clsKey)) {
-                if($.isArray(item[clsKey])) {
-                    $.each(item[clsKey], function(i,el) {
-                      bidx.data.getItem(el, clsVal, function(err, label)
+        $.each(dataArr, function(clsKey, clsVal) {
+              if( item.hasOwnProperty(clsKey)) {           
+                     bidx.data.getItem(item[clsKey], clsVal, function(err, label)
                         {
-                           textVal = textVal + sep + label;
-                           sep = ", ";
+                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;                         
 
                         });
-                    });
-                } else {
-                    bidx.data.getItem(item[clsKey], clsVal, function(err, label)
-                        {
-                           textVal =  label;
-                        }
-                    );
-                }
-              }
-              item[clsKey] = textVal;
+               item[clsKey] = textVal;
+              }              
        })
        //If callback set use it
        if (options && options.callback)
@@ -107,47 +95,35 @@
                         $.each(itemStatus, function(idx, item)
                         {
 
-//                     
-//                           item.id = item.requesterId;
-//                           item.name = item.requesterName;
-//                            if(item.requesterId == currentUserId) {
-//                                item.id = item.requesteeId;
-//                                item.name = item.requesteeName;
-//                            }
-//
-//                            datatargetId = 'toggle' + item.id;
-
-                            var i18nArr = {  'country'         : 'country' };
-
-                               getI18nVal(
+                            var dataArr = {  'country'         : 'country' };
+                            getStaticDataVal(
                                 {
-                                    i18nArr    : i18nArr
+                                    dataArr    : dataArr
                                   , item       : item
                                   , callback   : function (label) {
                                                     i18nItem = label;
                                                  }
                                 });
 
-                                if(i18nItem.city) {
-                                    i18nItem.location = i18nItem.country +  ', '+ i18nItem.city;
-                                }
+                            if(i18nItem.city) {
+                                i18nItem.location = i18nItem.country +  ', '+ i18nItem.city;
+                            }
 
-                             //search for placeholders in snippit
-                                listItem = snippit
-                                    .replace( /%accordion-id%/g,      i18nItem.contactId   ? i18nItem.contactId     : "%accordion-id%" )
-                                    .replace( /%contactName%/g,      i18nItem.contactName   ? i18nItem.contactName     : "%contactName%" )
-                                    .replace( /%location%/g,     i18nItem.location  ? i18nItem.location    : "%location%" )
-                                    .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
-                                    .replace( /%status%/g,       status    ? status      : "%status%" )
-                                    .replace( /%startDate%/g,     i18nItem.startDate  ? bidx.utils.parseTimestampToDateTime( i18nItem.startDate, "date" )    : "%startDate%" )
-                                ;
-
+                            //search for placeholders in snippit
+                            listItem = snippit
+                                .replace( /%accordion-id%/g,      i18nItem.contactId   ? i18nItem.contactId     : "%accordion-id%" )
+                                .replace( /%contactName%/g,      i18nItem.contactName   ? i18nItem.contactName     : "%contactName%" )
+                                .replace( /%location%/g,     i18nItem.location  ? i18nItem.location    : "%location%" )
+                                .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
+                                .replace( /%status%/g,       status    ? status      : "%status%" )
+                                .replace( /%startDate%/g,     i18nItem.startDate  ? bidx.utils.parseTimestampToDateTime( i18nItem.startDate, "date" )    : "%startDate%" )
+                            ;
                       
                             //  add mail element to list
                             $list.append( listItem );
 
-                        });
-                    });
+                          } );
+                    } );
 
                     } else
                     {
@@ -269,9 +245,9 @@
     //
     var getPreference = function(options)
     {
-        var snippit   = $("#investor-preferenceitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
-        ,   $list       = $("." + options.list)
+        var snippit       = $("#investor-preferenceitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   emptySnippet  = $("#investor-empty").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $list         = $("." + options.list)
         ;
 
         bidx.api.call(
@@ -291,7 +267,7 @@
                 if (item)
                 {                  
 
-                    var i18nArr = {     'focusIndustry':'industry'   ,
+                    var dataArr = {     'focusIndustry':'industry'   ,
                                         'focusSocialImpact': 'socialImpact',
                                         'focusEnvImpact': 'envImpact',
                                         'focusLanguage':'language'    ,
@@ -302,9 +278,9 @@
                                         'investmentType':'investmentType'
                                   };
 
-                    getI18nVal(
+                    getStaticDataVal(
                      {
-                         i18nArr    : i18nArr
+                         dataArr    : dataArr
                        , item       : item
                        , callback   : function (label) {
                                          i18nItem = label;
@@ -334,7 +310,7 @@
                 }
                 else
                 {
-                    $list.append($listEmpty);
+                    $list.append(emptySnippet);
                 }
 
                 //  execute callback if provided
@@ -354,14 +330,15 @@
         );
     };
 
-    var _showView = function(view, state)
+    var _showView = function(view, showAll)
     {
-        var $view = $views.hide().filter(bidx.utils.getViewName(view)).show();
+       
         //  show title of the view if available
-        if (state)
+        if (!showAll)
         {
-            $view.find(".title").hide().filter(bidx.utils.getViewName(state, "title")).show();
+            $views.hide();
         }
+         var $view = $views.filter(bidx.utils.getViewName(view)).show();
     };
 
     var _showMainView = function(view, hideview)
@@ -393,8 +370,7 @@
 
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
-    {
-        bidx.utils.log("routing options", options);
+    {        
         var state;
 
         state = options.state;
@@ -415,44 +391,43 @@
 
                 _menuActivateWithTitle(".Dashboard","My investor dashboard");
                 _showView("load");
-                _showView("loadpreference");
-                _showView("loadcontacts");
+                _showView("loadpreference", true );
+                _showView("loadcontacts", true);
                 getMatch(
-                        {
-                            list: "match"
-                          , view: "match"
-                          , callback: function()
-                            {
-                                _showMainView("match", "load");
+                {
+                    list: "match"
+                ,   view: "match"
+                ,   callback: function()
+                    {
+                        _showMainView("match", "load");
 
-                            }
-                        });
+                    }
+                } );
                  getPreference(
-                        {
-                            list: "preference"
-                          , view: "preference"
-                          , callback: function()
-                            {
+                 {
+                    list: "preference"
+                 ,  view: "preference"
+                 ,  callback: function()
+                    {
 
-                                _showMainView("preference", "loadpreference");
+                        _showMainView("preference", "loadpreference");
 
-                            }
-                        });
-                  getContacts(
-                        {
-                            list: "contacts"
-                          , view: "contacts"
-                          , callback: function()
-                            {
+                    }
+                 } );
+                 getContacts(
+                 {
+                    list: "contacts"
+                 ,  view: "contacts"
+                 ,  callback: function()
+                    {
 
-                                _showMainView("contacts", "loadcontacts");
+                        _showMainView("contacts", "loadcontacts");
 
-                            }
-                        });
+                    }
+                 } );
 
                 break;
-
-        }
+         }
     };
 
     //expose
@@ -477,7 +452,7 @@
     if ($("body.bidx-investor-dashboard").length && !bidx.utils.getValue(window, "location.hash").length)
     {
 
-        document.location.hash = $firstPage.val();
+        document.location.hash = "#dashboard/investor";
     }
 
 

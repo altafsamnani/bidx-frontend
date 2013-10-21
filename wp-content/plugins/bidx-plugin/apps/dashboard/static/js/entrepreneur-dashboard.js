@@ -2,7 +2,7 @@
 {
     var $element          = $("#entrepreneur-dashboard")
     ,   $views            = $element.find(".view")
-    ,   $elementHelp      = $(".startpage")
+    ,   $elementHelp      = $element.find(".startpage")
     ,   $firstPage        = $element.find( "input[name='firstpage']" )
     ,   bidx              = window.bidx    
     ,   currentUserId     = bidx.common.getSessionValue( "id" )
@@ -28,7 +28,7 @@
                     })
                     .done(function(data, status, jqXHR)
                      {
-                        console.log(data + 'Bidx option investor dashboard updated.');
+                        /*console.log(data + 'Bidx option investor dashboard updated.'); */
                      })
                     .fail(function()
                      {
@@ -62,9 +62,9 @@
                 ];
 
         bidx.api.call(
-                "memberRelationships.fetch"
+            "memberRelationships.fetch"
             ,   {
-                    requesterId:              bidx.common.getCurrentUserId()
+                    requesterId:              currentUserId
                 ,   groupDomain:              bidx.common.groupDomain
                 ,   success: function( response )
                     {
@@ -172,34 +172,23 @@
     // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
     //
 
-    var getI18nVal = function( options ) {
-        var i18nArr = options.i18nArr
+    var getStaticDataVal = function( options ) {
+        var dataArr      = options.dataArr
         ,   item         = options.item
+        ,   textVal
         ;
 
         //Get i18n arr like industry = [chemical, painting, software]
-        $.each(i18nArr, function(clsKey, clsVal) {
-              textVal = "";
-              sep       = "";
+        $.each(dataArr, function(clsKey, clsVal) {
               if( item.hasOwnProperty(clsKey)) {
-                if($.isArray(item[clsKey])) {
-                    $.each(item[clsKey], function(i,el) {
-                      bidx.data.getItem(el, clsVal, function(err, label)
+                     bidx.data.getItem(item[clsKey], clsVal, function(err, label)
                         {
-                           textVal = textVal + sep + label;
-                           sep = ", ";
+                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;                         
 
                         });
-                    });
-                } else {
-                    bidx.data.getItem(item[clsKey], clsVal, function(err, label)
-                        {
-                           textVal =  label;
-                        }
-                    );
-                }
+                        
+               item[clsKey] = textVal;
               }
-              item[clsKey] = textVal;
        })
        //If callback set use it
        if (options && options.callback)
@@ -213,7 +202,7 @@
     {
    
         var snippit     = $("#entrepreneur-businessitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty  = $($("#entrepreneur-empty").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   emptySnippit  = $("#entrepreneur-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   $list       = $("." + options.list)
         ,   i18nItem
         ;
@@ -234,7 +223,7 @@
 
                     // now format it into array of objects with value and label
              
-                    if (entities )
+                    if ( $.isEmptyObject(entities) )
                     {
                 
                         $.each(entities, function(idx, item)
@@ -244,7 +233,7 @@
       
                             if( bidxMeta.bidxEntityType == 'bidxBusinessSummary' && bidxMeta.bidxEntityStatus == 'PUBLISHED') {
 
-                                var i18nArr = {  'industry'         : 'industry'
+                                var dataArr = {  'industry'         : 'industry'
                                                , 'countryOperation' : 'country'
                                                , 'stageBusiness'    : 'stageBusiness'
                                                , 'envImpact'        : 'envImpact'
@@ -252,9 +241,9 @@
                                                , 'investmentType'   : 'investmentType'
                                              };
                                              
-                               getI18nVal(
+                               getStaticDataVal(
                                 {
-                                    i18nArr    : i18nArr                                  
+                                    dataArr    : dataArr
                                   , item       : item
                                   , callback   : function (label) {
                                                     i18nItem = label;
@@ -288,8 +277,8 @@
                         });
 
                     } else
-                    {
-                        $list.append($listEmpty);
+                    {                     
+                        $list.append(emptySnippit);
                     }
 
                     //  execute callback if provided
@@ -309,14 +298,15 @@
         );
     };
 
-    var _showView = function(view, state)
+    var _showView = function(view, showAll)
     {
-        var $view = $views.hide().filter(bidx.utils.getViewName(view)).show();
+
         //  show title of the view if available
-        if (state)
+        if (!showAll)
         {
-            $view.find(".title").hide().filter(bidx.utils.getViewName(state, "title")).show();
+            $views.hide();
         }
+         var $view = $views.filter(bidx.utils.getViewName(view)).show();
     };
 
     var _showMainView = function(view, hideview)
@@ -347,8 +337,7 @@
     
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
-    {
-        bidx.utils.log("routing options", options);
+    {       
         var state;
 
         state = options.state;
@@ -371,18 +360,19 @@
                 _menuActivateWithTitle(".Dashboard","My entrepreneur dashboard");
                 _showView("load");
                 
-                //_showView("loadinvestors");
+                /*_showView("loadinvestors",true); */
 
                 getBusiness(
-                        {
-                            list: "business"
-                          , view: "business"
-                          , callback: function()
-                            {
-                                _showMainView("business", "load");
-                                
-                            }
-                        });
+                {
+                    list: "business"
+                  , view: "business"
+                  , callback: function()
+                    {
+                        _showMainView("business", "load");
+
+                    }
+                });
+
                  /*
                  getInvestors(
                         {
@@ -394,8 +384,8 @@
                                 _showMainView("investors", "loadinvestors");
 
                             }
-                        });
-                  */
+                        }); */
+                  
                 break;
 
         }
@@ -422,7 +412,7 @@
 
     if ($("body.bidx-entrepreneur-dashboard").length && !bidx.utils.getValue(window, "location.hash").length)
     {
-        document.location.hash = $firstPage.val();
+        document.location.hash = "#dashboard/entrepreneur";
     }
 
 
