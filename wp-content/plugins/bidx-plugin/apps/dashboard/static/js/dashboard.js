@@ -1,23 +1,23 @@
 (function($)
 {
-    var $element = $("#group-dashboard")
-            , $elementHelp = $(".startpage")
-            , $views = $element.find(".view")
-            , $modals = $element.find(".modalView")
-            , $modal
-            , $frmCompose = $modals.find("form")
-            , $btnComposeSubmit = $frmCompose.find(".compose-submit")
-            , $btnComposeCancel = $frmCompose.find(".compose-cancel")
-            , $currentView
-            , bidx = window.bidx
-            , appName = "dashboard"
-            , currentGroupId = bidx.common.getSessionValue( "currentGroup" )
-            , toolbar = {}
-            , message = {}
-            , listItems = {}
-            , listItemsAll = {}
-            , $list = $(".dlist")
-            , listMembers = [];
+    var $element                    = $("#group-dashboard")
+    ,   $elementHelp                = $(".startpage")
+    ,   $views                      = $element.find(".view")
+    ,   $modals                     = $element.find(".modalView")
+    ,   $modal
+    ,   $frmCompose                 = $modals.find("form")
+    ,   $btnComposeSubmit           = $frmCompose.find(".compose-submit")
+    ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
+    ,   $currentView
+    ,   bidx                        = window.bidx
+    ,   appName                     = "dashboard"
+    ,   currentGroupId              = bidx.common.getSessionValue( "currentGroup" )
+    ,   message                     = {}
+    ,   listItems                   = {}
+    ,   listItemsAll                = {}
+    ,   $list                       = $(".dlist")
+    ,   listMembers                 = []
+    ;
 
 
     //public functions
@@ -26,192 +26,145 @@
     // function that retrieves group members returned in an array of key/value objects
     // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
     //
-    var getMembers = function(options)
+    getMembers = function(options)
     {
-        var $listItem = $($("#dashboard-listitem").html().replace(/(<!--)*(-->)*/g, ""))
-                , $listEmpty = $($("#dashboard-empty").html().replace(/(<!--)*(-->)*/g, ""))
-                , $list = $("." + options.list)
-                , $view = $views.filter(bidx.utils.getViewName(options.view))
-                , messages
-                , viewName = options.view;
+        var $listItem       = $($("#dashboard-listitem").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $listEmpty      = $($("#dashboard-empty").html().replace(/(<!--)*(-->)*/g, ""))
+        ,   $list           = $("." + options.list)
+        ,   $view           = $views.filter(bidx.utils.getViewName(options.view))
+        ,   messages
+        ,   viewName        = options.view;
         ;
-        var extraUrlParameters =
-                [
-                    {
-                        label: "q",
-                        value: "user:*"
-                    }
-                    , {
-                        label: "fq",
-                        value: "type:bidxMemberProfile+AND+groupIds:" + currentGroupId
-                    }
-                    , {
-                        label: "rows",
-                        value: "5"
-                    }
-                ];
 
-        if (options.view == 'list') {
+        var extraUrlParameters =
+            [
+                {
+                    label: "q"
+                ,   value: "user:*"
+                }
+            ,   {
+                    label: "fq",
+                    value: "type:bidxMemberProfile+AND+groupIds:" + currentGroupId
+                }
+            ,   {
+                    label: "rows",
+                    value: "5"
+                }
+            ];
+
+        if (options.view == 'list')
+        {
             extraUrlParameters.push(
-                    {
-                        label: "sort",
-                        value: "created desc"
-                    });
+            {
+                label: "sort",
+                value: "created desc"
+            });
         }
 
         bidx.api.call(
-                "groupMembers.fetch"
-                , {
-            groupId: currentGroupId
-                    , groupDomain: bidx.common.groupDomain
-                    , extraUrlParameters: extraUrlParameters
-
-                    , success: function(response)
-            {
-                var item
-                        , element
-                        , cls
-                        , textValue
-                        ;
-
-                //clear listing
-                $list.empty();
-
-
-
-                // now format it into array of objects with value and label
-                //
-                if (response && response.docs)
+            "groupMembers.fetch"
+        ,   {
+                groupId: currentGroupId
+            ,   groupDomain: bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   success: function(response)
                 {
-                    var $input = $frmCompose.find("[name='contacts']");
+                    var item
+                    ,   element
+                    ,   cls
+                    ,   textValue
+                    ;
 
-                    $.each(response.docs, function(idx, item)
+                    //clear listing
+                    $list.empty();
+
+                    // now format it into array of objects with value and label
+                    //
+                    if (response && response.docs)
                     {
+                        var $input = $frmCompose.find("[name='contacts']");
 
-                        listMembers.push(
-                                {
-                                    value: item.userId
-                                            , label: item.user
-                                });
-
-                        item.location = item.countrylabel_s;
-                        item.membersince = bidx.utils.parseISODateTime(item.created, "date");
-                        item.lastlogin = bidx.utils.parseISODateTime(item.modified, "date");
-                        item.role = 'Member';
-
-                        if (item.isentrepreneur_b == true) {
-                            item.role = 'Entrepreneur ';
-
-                        }
-                        if (item.isinvestor_b == true) {
-                            item.role = 'Investor';
-                        }
-
-
-                        //$input.addTag(item.user);
-                        // $input.tagsManager( "addtag", item.user );
-
-                        // Member Display
-                        element = $listItem.clone();
-                        //search for placeholders in snippit
-                        element.find(".placeholder").each(function(i, el)
+                        $.each(response.docs, function(idx, item)
                         {
 
-                            //isolate placeholder key
-                            cls = $(el).attr("class").replace("placeholder ", "");
+                            listMembers.push(
+                                    {
+                                        value: item.userId
+                                    ,   label: item.user
+                                    });
 
-                            //if key if available in item response
-                            if (item[cls])
-                            {
+                            item.location = item.countrylabel_s;
+                            item.membersince = bidx.utils.parseISODateTime(item.created, "date");
+                            item.lastlogin = bidx.utils.parseISODateTime(item.modified, "date");
+                            item.role = 'Member';
 
-                                textValue = item[cls];
-                                //add hyperlink on sendername for now (to read email)
-                                if (cls === "user")
-                                {
-                                    textValue = "<a href=\"" + document.location.hash + "/" + item.userId + "\" >" + textValue + "</a>";
-                                }
-                                if (cls === "location")
-                                {
-                                    textValue = item.location;
-                                }
-                                element.find("span." + cls).replaceWith(textValue);
+                            if (item.isentrepreneur_b == true) {
+                                item.role = 'Entrepreneur ';
 
                             }
-                        });
-
-                        element.find(":checkbox").data("id", item.userId);
-                        //  add mail element to list
-                        $list.append(element);
-
-                        //  load checkbox plugin on element
-                        var $checkboxes = $list.find('[data-toggle="checkbox"]');
-                        //  enable flatui checkbox
-                        $checkboxes.checkbox();
-                        //  set change event which add/removes the checkbox ID in the listElements variable
-                        $checkboxes.bind('change', function()
-                        {
-                            var $this = $(this);
-
-                            if ($this.attr("checked"))
-                            {
-                                if (viewName == 'list' && !listItems[ $this.data("id") ])
-                                {
-                                    listItems[ $this.data("id") ] = true;
-                                }
-                                if (viewName == 'all' && !listItemsAll[ $this.data("id") ])
-                                {
-                                    listItemsAll[ $this.data("id") ] = true;
-                                }
-
-                            }
-                            else
-                            {
-                                if (viewName == 'list' && listItems[ $this.data("id") ])
-                                {
-                                    delete listItems[ $this.data("id") ];
-                                }
-                                if (viewName == 'all' && listItemsAll[ $this.data("id") ])
-                                {
-                                    delete listItemsAll[ $this.data("id") ];
-                                }
+                            if (item.isinvestor_b == true) {
+                                item.role = 'Investor';
                             }
 
-                        });
 
-                        //bind event to change all checkboxes from toolbar checkbox
-                        $view.find(".messagesCheckall").change(function()
-                        {
-                            var masterCheck = $(this).attr("checked");
-                            $list.find(":checkbox").each(function()
+                            //$input.addTag(item.user);
+                            // $input.tagsManager( "addtag", item.user );
+
+                            // Member Display
+                            element = $listItem.clone();
+                            //search for placeholders in snippit
+                            element.find(".placeholder").each(function(i, el)
+                            {
+
+                                //isolate placeholder key
+                                cls = $(el).attr("class").replace("placeholder ", "");
+
+                                //if key if available in item response
+                                if (item[cls])
+                                {
+
+                                    textValue = item[cls];
+                                    //add hyperlink on sendername for now (to read email)
+                                    if (cls === "user")
+                                    {
+                                        textValue = "<a href=\"" + document.location.hash + "/" + item.userId + "\" >" + textValue + "</a>";
+                                    }
+                                    if (cls === "location")
+                                    {
+                                        textValue = item.location;
+                                    }
+                                    element.find("span." + cls).replaceWith(textValue);
+
+                                }
+                            });
+
+                            element.find(":checkbox").data("id", item.userId);
+                            //  add mail element to list
+                            $list.append(element);
+
+                            //  load checkbox plugin on element
+                            var $checkboxes = $list.find('[data-toggle="checkbox"]');
+                            //  enable flatui checkbox
+                            $checkboxes.checkbox();
+                            //  set change event which add/removes the checkbox ID in the listElements variable
+                            $checkboxes.bind('change', function()
                             {
                                 var $this = $(this);
-                                if (masterCheck)
+
+                                if ($this.attr("checked"))
                                 {
-                                    $this.checkbox('check');
-                                    if (viewName == 'list' && listItems)
+                                    if (viewName == 'list' && !listItems[ $this.data("id") ])
                                     {
-
-                                        if (!listItems[ $this.data("id") ])
-                                        {
-                                            listItems[ $this.data("id") ] = true;
-                                        }
-
+                                        listItems[ $this.data("id") ] = true;
                                     }
-                                    if (viewName == 'all' && listItemsAll)
+                                    if (viewName == 'all' && !listItemsAll[ $this.data("id") ])
                                     {
-
-                                        if (!listItemsAll[ $this.data("id") ])
-                                        {
-                                            listItemsAll[ $this.data("id") ] = true;
-                                        }
-
+                                        listItemsAll[ $this.data("id") ] = true;
                                     }
-
 
                                 }
                                 else
                                 {
-                                    $this.checkbox('uncheck');
                                     if (viewName == 'list' && listItems[ $this.data("id") ])
                                     {
                                         delete listItems[ $this.data("id") ];
@@ -220,37 +173,79 @@
                                     {
                                         delete listItemsAll[ $this.data("id") ];
                                     }
-
                                 }
+
                             });
+
+                            //bind event to change all checkboxes from toolbar checkbox
+                            $view.find(".messagesCheckall").change(function()
+                            {
+                                var masterCheck = $(this).attr("checked");
+                                $list.find(":checkbox").each(function()
+                                {
+                                    var $this = $(this);
+                                    if (masterCheck)
+                                    {
+                                        $this.checkbox('check');
+                                        if (viewName == 'list' && listItems)
+                                        {
+
+                                            if (!listItems[ $this.data("id") ])
+                                            {
+                                                listItems[ $this.data("id") ] = true;
+                                            }
+
+                                        }
+                                        if (viewName == 'all' && listItemsAll)
+                                        {
+
+                                            if (!listItemsAll[ $this.data("id") ])
+                                            {
+                                                listItemsAll[ $this.data("id") ] = true;
+                                            }
+
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        $this.checkbox('uncheck');
+                                        if (viewName == 'list' && listItems[ $this.data("id") ])
+                                        {
+                                            delete listItems[ $this.data("id") ];
+                                        }
+                                        if (viewName == 'all' && listItemsAll[ $this.data("id") ])
+                                        {
+                                            delete listItemsAll[ $this.data("id") ];
+                                        }
+
+                                    }
+                                });
+                            });
+
                         });
+                        //To load Tags input after the member retrieval Call
+                        //bidx.data.getContext('members',function (err, result) { console.log(result); });
 
-                    });
-                    //To load Tags input after the member retrieval Call
-                    //bidx.data.getContext('members',function (err, result) { console.log(result); });
+                    } else
+                    {
+                        $list.append($listEmpty);
+                    }
 
-
-
-
-                } else
-                {
-                    $list.append($listEmpty);
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback();
+                    }
                 }
-
-                //  execute callback if provided
-                if (options && options.callback)
+            ,   error: function(jqXhr, textStatus)
                 {
-                    options.callback();
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    _showError("Something went wrong while retrieving contactlist of the member: " + status);
                 }
             }
-
-            , error: function(jqXhr, textStatus)
-            {
-                var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-                _showError("Something went wrong while retrieving contactlist of the member: " + status);
-            }
-        }
         );
     };
 
@@ -259,50 +254,50 @@
     {
 
         $frmCompose.validate(
+        {
+            rules:
+            {
+                "contacts":
                 {
-                    rules:
-                            {
-                                "contacts":
-                                        {
-                                            tagsinputRequired: true
-                                        }
-                                , "subject":
-                                        {
-                                            required: true
-                                        }
-                                , "content":
-                                        {
-                                            required: true
-                                        }
+                    tagsinputRequired: true
+                }
+            ,   "subject":
+                {
+                    required: true
+                }
+            ,   "content":
+                {
+                    required: true
+                }
 
-                            }
-                    , messages:
-                            {
-                                // Anything that is app specific, the general validations should have been set
-                                // in common.js already
-                            }
-                    , submitHandler: function()
-                    {
-                        if ($btnComposeSubmit.hasClass("disabled"))
+            }
+            , messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+            , submitHandler: function()
+            {
+                if ($btnComposeSubmit.hasClass("disabled"))
+                {
+                    return;
+                }
+
+                $btnComposeSubmit.addClass("disabled");
+
+
+                _send(
                         {
-                            return;
-                        }
+                            error: function()
+                            {
+                                alert("Something went wrong during submit");
 
-                        $btnComposeSubmit.addClass("disabled");
-
-
-                        _send(
-                                {
-                                    error: function()
-                                    {
-                                        alert("Something went wrong during submit");
-
-                                        $btnComposeSubmit.removeClass("disabled");
-                                        $btnComposeCancel.removeClass("disabled");
-                                    }
-                                });
-                    }
-                });
+                                $btnComposeSubmit.removeClass("disabled");
+                                $btnComposeCancel.removeClass("disabled");
+                            }
+                        });
+            }
+        });
 
 
         $elementHelp.change(function()
@@ -318,14 +313,14 @@
                                 , dataType: "json"
                     })
                     .done(function(data, status, jqXHR)
-            {
-                console.log(data + 'Bidx option investor dashboard updated.');
-            })
-                    .fail(function()
-            {
-                bidx.utils.error("problem updating investor dashboard option.");
-            })
-        });
+                    {
+                        console.log(data + 'Bidx option investor dashboard updated.');
+                    })
+                            .fail(function()
+                    {
+                        bidx.utils.error("problem updating investor dashboard option.");
+                    })
+         });
     }
 
     // actual sending of message to API
@@ -360,37 +355,36 @@
         bidx.common.notifyCustom(key);
 
         bidx.api.call(
-                "mailboxMail.send"
-                , {
-                      groupDomain: bidx.common.groupDomain
-                    , extraUrlParameters: extraUrlParameters
-                    , data: message
-                    , success: function(response)
-                      {
+            "mailboxMail.send"
+        ,   {
+                groupDomain: bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   data: message
+            ,   success: function(response)
+                {
 
-                        bidx.utils.log("MAIL RESPONSE", response);
-                        var key = "messageSent";
-                        bidx.i18n.getItem(key, function(err, label)
-                        {
-                            if (err)
-                            {
-                                bidx.utils.error("Problem translating", key, err);
-                                label = key;
-                                _showError(label);
-                            }
-
-                        });
-                        bidx.common.notifyCustomSuccess(key);
-                        listItems = {};
-                        bidx.controller.updateHash("#dashboard/list", true, false);
-                      }
-
-                    , error: function(jqXhr)
+                    bidx.utils.log("MAIL RESPONSE", response);
+                    var key = "messageSent";
+                    bidx.i18n.getItem(key, function(err, label)
                     {
+                        if (err)
+                        {
+                            bidx.utils.error("Problem translating", key, err);
+                            label = key;
+                            _showError(label);
+                        }
 
-                        params.error("Error", jqXhr);
-                    }
-        }
+                    });
+                    bidx.common.notifyCustomSuccess(key);
+                    listItems = {};
+                    bidx.controller.updateHash("#dashboard/list", true, false);
+                }
+            ,   error: function(jqXhr)
+                {
+
+                    params.error("Error", jqXhr);
+                }
+             }
         );
 
     };
@@ -399,7 +393,6 @@
     //
     var _prepareMessage = function()
     {
-
         message = {}; // clear message because it can still hold the reply content
 
         $currentView = $element.find(".modalDashboardCompose");
@@ -467,38 +460,36 @@
 
     //  show modal view with optionally and ID to be appended to the views buttons
     function _showModal( options )
+    {
+        var href;
+
+        if( options.id )
         {
-            var href;
-
-            if( options.id )
-            {
-                var id = options.id;
-            }
-
-            bidx.utils.log("[mail] show modal", options );
-
-            $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
-
-
-
-            $modal.find( ".btn[href]" ).each( function()
-            {
-                var $this = $( this );
-
-                href = $this.attr( "data-href" )
-                        .replace( "%state%", options.state )
-                        .replace( "%id%", options.id );
-                $this.attr( "href", href );
-            } );
-
-            $modal.modal( {} );
-
-            if( options.onHide )
-            {
-                //  to prevent duplicate attachments bind event only onces
-                $modal.one( 'hide', options.onHide );
-            }
+            var id = options.id;
         }
+
+        bidx.utils.log("[mail] show modal", options );
+
+        $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
+
+        $modal.find( ".btn[href]" ).each( function()
+        {
+            var $this = $( this );
+
+            href = $this.attr( "data-href" )
+                    .replace( "%state%", options.state )
+                    .replace( "%id%", options.id );
+            $this.attr( "href", href );
+        } );
+
+        $modal.modal( {} );
+
+        if( options.onHide )
+        {
+            //  to prevent duplicate attachments bind event only onces
+            $modal.one( 'hide', options.onHide );
+        }
+    }
 
 
     //  closing of modal view state
@@ -554,20 +545,20 @@
         state = action = options.state;
 
         if ( !$.isEmptyObject( options.params ) )
+        {
+            if ( options.params.id )
             {
-                if ( options.params.id )
-                {
-                    dashboardId = options.params.id;
-                }
-
-                // only override action when an action is provided in params
-                //
-                if( options.params.action )
-                {
-                    action = options.params.action;
-                }
-
+                dashboardId = options.params.id;
             }
+
+            // only override action when an action is provided in params
+            //
+            if( options.params.action )
+            {
+                action = options.params.action;
+            }
+
+        }
 
 
         switch (state)
@@ -580,9 +571,9 @@
             case "list":
 
                 _closeModal(
-                        {
-                            unbindHide: true
-                        });
+                {
+                    unbindHide: true
+                } );
 
                 _showView("load");
                 _showView("goat");
@@ -590,90 +581,85 @@
                 // _updateMenu();
 
                 getMembers(
-                        {
-                            list: "list"
-                                    , view: "list"
-                                    , callback: function()
-                            {
-                                _showMainView("list", "load");
-                                //bidx.data.setItem('members',listMembers);
-                                // $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
-                            }
-                        });
+                {
+                    list: "list"
+                            , view: "list"
+                            , callback: function()
+                    {
+                        _showMainView("list", "load");
+                        //bidx.data.setItem('members',listMembers);
+                        // $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
+                    }
+                } );
 
 
 
                 getMembers(
-                        {
-                            list: "all"
-                                    , view: "all"
-                                    , callback: function()
-                            {
-                                _showMainView("all", "goat");
-                            }
-                        });
-
-
-
-
-
+                {
+                    list: "all"
+                            , view: "all"
+                            , callback: function()
+                    {
+                        _showMainView("all", "goat");
+                    }
+                } );
                 break;
 
             case "dashboardCompose":
 
                 _closeModal(
-                        {
-                            unbindHide: true
-                        });
+                {
+                    unbindHide: true
+                } );
 
                 _initComposeForm(listItems, 'list');
                 _showModal(
-                        {
-                            view: "dashboardCompose"
-                        ,   state:      state
-                        ,   onHide: function()
-                            {
-                                window.bidx.controller.updateHash("#dashboard/list", false, false);
-                            }
-                        });
+                {
+                    view: "dashboardCompose"
+                ,   state:      state
+                ,   onHide: function()
+                    {
+                        window.bidx.controller.updateHash("#dashboard/list", false, false);
+                    }
+                } );
 
                 break;
             case "dashboardComposeAll":
 
                 _closeModal(
-                        {
-                            unbindHide: true
-                        });
+                {
+                    unbindHide: true
+                } );
 
                 _initComposeForm(listItemsAll, 'all');
                 _showModal(
-                        {
-                            view: "dashboardCompose"
-                        ,   state:      state
-                        ,   onHide: function()
-                            {
-                                window.bidx.controller.updateHash("#dashboard/list", false, false);
-                            }
-                        });
+                {
+                    view: "dashboardCompose"
+                ,   state:      state
+                ,   onHide: function()
+                    {
+                        window.bidx.controller.updateHash("#dashboard/list", false, false);
+                    }
+                } );
 
                 break;
             case "discardConfirm":
 
                 _closeModal(
-                        {
-                            unbindHide: true
-                        });
+                {
+                    unbindHide: true
+                } );
 
                 _showModal(
-                        {
-                            view : "discardConfirm"
-                        ,   id   : dashboardId
-                        ,   state: state
-                        ,   onHide: function()
-                            {
-                                window.bidx.controller.updateHash("#dashboard/list", false, false);
-                            }
-                        });
+                {
+                    view : "discardConfirm"
+                ,   id   : dashboardId
+                ,   state: state
+                ,   onHide: function()
+                    {
+                        window.bidx.controller.updateHash("#dashboard/list", false, false);
+                    }
+                } );
 
                 break;
 
@@ -687,18 +673,13 @@
 
     //expose
     var dashboard =
-            {
-                navigate: navigate
-                        , $element: $element
-
-                        // START DEV API
-                        //
-                        , listItems: listItems //storage for selection of emails in listview. I chose object because so that I can check if key exists
-                        , listItemsAll: listItemsAll
-                        // END DEV API
-                        //
-            };
-
+    {
+        navigate: navigate
+    ,   $element: $element
+    ,   listItems: listItems //storage for selection of emails in listview. I chose object because so that I can check if key exists
+    ,   listItemsAll: listItemsAll
+   
+    };
 
     if (!window.bidx)
     {
@@ -708,22 +689,7 @@
     window.bidx.dashboard = dashboard;
 
     // Initialize handlers
-    //
     _initHandlers();
-
-
-    // Initialize the defered tagsinput
-    //
-
-
-    // Only update the hash when user is authenticating and when there is no hash defined
-    //
-//    if ( $( "body.bidx-my-messages" ).length && !bidx.utils.getValue(window, "location.hash").length )
-//    {
-//        document.location.hash = "#mail/inbox";
-//    }
-
-    //  bidx.api    = bidx.api || {};
 
     if ($("body.wp-admin").length && !bidx.utils.getValue(window, "location.hash").length)
     {
