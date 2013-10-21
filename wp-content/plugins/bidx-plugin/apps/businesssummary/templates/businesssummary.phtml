@@ -765,26 +765,27 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div id="businessSummaryAccordion-Documents" class="accordion-body collapse">
                     <div class="accordion-inner clearfix">
 
-
-
                         <!-- SHOW -->
                         <div class="view viewShow">
-                            <div class="attachmentList">
 <?php
                 if ( !is_null( $attachment ) ) {
                     $count = 0;
 
                     foreach ( $attachment as $a ) {
 
+                        // 3 attachments items per row, are we full? Add a new row
+                        //
                         if ( $count % 3 == 0  ) {
 
                             if ( $count != 0 ) {
                                 echo "</div>";
                             }
 
-                            echo '<div class="row-fluid">';
+                            echo '<div class="row-fluid reflow-row">';
                         }
 
+                        // Echo the attachment item with the values from the API
+                        //
                         echo $this->replaceMessageTokens(
                             $attachmentItem,
                             array_merge(
@@ -813,7 +814,6 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 <?php 
                 }
 ?>
-                            </div>
                         </div>
 
                         <!-- LOAD -->
@@ -828,6 +828,8 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
 
                         <!-- EDIT -->
                         <div class="view viewEdit">
+
+                            <div class="attachmentContainer"></div>
 
                             <div class="alert alert-info">
                                 <?php _e('Upload your full plans or other supporting documents or images here','bidxplugin');?>

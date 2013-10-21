@@ -66,6 +66,7 @@
     ,   $documents                  = $element.find( "#businessSummaryAccordion-Documents" )
     ,   $btnAddFiles                = $documents.find( "a[href$='addFiles']" )
     ,   $addFiles                   = $documents.find( ".addFiles" )
+    ,   $attachmentContainer        = $documents.find( ".attachmentContainer" )
 
     ,   businessSummary
     ,   businessSummaryId
@@ -215,9 +216,10 @@
         {
             // Grab the snippets from the DOM
             //
-            snippets.$managementTeam        = $snippets.children( ".managementTeamItem"   ).remove();
+            snippets.$managementTeam        = $snippets.children( ".managementTeamItem" ).remove();
             snippets.$financialSummaries    = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
-            snippets.$company               = $snippets.find( "table tr.companyItem"  ).remove();
+            snippets.$company               = $snippets.find( "table tr.companyItem"    ).remove();
+            snippets.$attachment            = $snippets.childeren( ".attachmentItem"    ).remove();
         }
 
         // Setup initial form validation
@@ -923,7 +925,7 @@
                             bidx.utils.log( "[documents] uploaded", file );
 
                             // NOOP.. the parent app is not interested in when the file is uploaded
-                            // only when it is attached
+                            // only when it is attached / selected
                         }
 
                     ,   select:               function( file )
@@ -931,9 +933,12 @@
                             bidx.utils.log( "[documents] select", file );
 
                             // Attach the file to the entity
+                            // By adding it to the reflowrower we can pick it up as soon
+                            // as the entity is created or saved. The reflowrower keeps a list of
+                            // added items
                             //
-                            // TODO: actual attach the file to the entity, or at least stage it to be saved
-                            //
+                            _addAttachment( file );
+
                             $btn.show();
                             $addFiles.hide();
                         }
@@ -942,7 +947,49 @@
 
                 $addFiles.fadeIn();
             } );
+
+            // Initiate the reflowrower for the attachment list.
+            //
+            $attachmentContainer.reflowrower(
+            {
+                itemsPerRow:        3
+            ,   itemClass:          "attachmentItem"
+            } );
         }
+    }
+
+    // Add an attachment to the screen
+    //
+    function _addAttachment( attachment )
+    {
+        if ( attachment === null )
+        {
+            bidx.util.warn( "businesssummary::_addAttachmentToScreen: attachment is null!" );
+            return;
+        }
+
+        var $attachment         = snippets.$attachment.clone()
+        ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
+        ,   imageSrc
+        ;
+
+        // Store the data so we can later use it to merge the updated data in
+        //
+        $attachment.data( "bidxData", attachment );
+
+        $attachment.find( ".documentName"       ).text( attachment.documentName );
+        $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
+        $attachment.find( ".purpose"            ).text( attachment.purpose );
+        $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
+
+        imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
+            ? attachment.document
+            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
+
+        $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
+        $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
+
+        $attachmentContainer.reflowrower( "addItem", $attachment );
     }
 
     // Add a company row to the table of existing companies
@@ -971,7 +1018,8 @@
             hasEmployees = !!bidx.utils.getValue( company, "numPermFemaleEmpl" ) ||
                 !!bidx.utils.getValue( company, "numPermMaleEmpl" ) ||
                 !!bidx.utils.getValue( company, "numTempMaleEmpl" ) ||
-                !!bidx.utils.getValue( company, "numTempFemaleEmpl" );
+                !!bidx.utils.getValue( company, "numTempFemaleEmpl" )
+            ;
 
             $company.find( ".employees"     ).text( hasEmployees ? bidx.i18n.i( 'yes' ) : bidx.i18n.i( 'no' ) );
 
@@ -1170,6 +1218,18 @@
         else
         {
             bidx.utils.setElementValue( $hasCompany, false );
+        }
+
+        // Documents are not using a form, just a reflowrower
+        //
+        var attachment = bidx.utils.getValue( businessSummary, "attachment", true );
+
+        if ( attachment )
+        {
+            $.each( attachment, function( idx, a )
+            {
+                _addAttachment( a );
+            } );
         }
     }
 
