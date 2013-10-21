@@ -1,3 +1,4 @@
+/* global bidx */
 ( function( $ )
 {
     var $element        = $( "#editCompany" )
@@ -35,7 +36,6 @@
     ,   state
     ,   currentView
 
-    ,   bidx            = window.bidx
     ,   snippets        = {}
 
     ,   appName         = "company"
