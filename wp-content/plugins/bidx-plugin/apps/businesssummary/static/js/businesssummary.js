@@ -219,7 +219,7 @@
             snippets.$managementTeam        = $snippets.children( ".managementTeamItem" ).remove();
             snippets.$financialSummaries    = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
             snippets.$company               = $snippets.find( "table tr.companyItem"    ).remove();
-            snippets.$attachment            = $snippets.childeren( ".attachmentItem"    ).remove();
+            snippets.$attachment            = $snippets.children( ".attachmentItem"    ).remove();
         }
 
         // Setup initial form validation
