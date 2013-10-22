@@ -76,8 +76,9 @@
         bidx.api.call(
                 "memberRelationships.fetch"
             ,   {
-                    requesterId:              bidx.common.getSessionValue( "id" )
-                ,   groupDomain:              bidx.common.groupDomain
+                    requesterId:    bidx.common.getSessionValue( "id" )
+                ,   groupDomain:    bidx.common.groupDomain
+                ,   async      :    false
                 ,   success: function( response )
                     {
               
@@ -177,6 +178,7 @@
             groupId           : currentGroupId
           , groupDomain       : bidx.common.groupDomain
           , extraUrlParameters: extraUrlParameters
+          , async             : false
           , success           : function(response)
             {
                 //clear listing
@@ -231,7 +233,8 @@
             }
 
             , error: function(jqXhr, textStatus)
-            {
+            {              
+             
                 var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
                  _showError("Something went wrong while retrieving contactlist of the member: " + status);
@@ -255,6 +258,7 @@
           , {
             entityId          : currentInvestorId
           , groupDomain       : bidx.common.groupDomain
+          , async             : false
           , success           : function(item)
             {
                 
