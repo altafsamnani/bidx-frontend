@@ -22,9 +22,9 @@
             	<div class="pull-left left-block">
             		<div class="follow-us">Follow us</div>
             	 	<div class="inline-list social-links">
-                        <a href="https://twitter.com/bid_x" class="sprite twitter"></a>
-                        <a href="https://www.facebook.com" class="sprite facebook"></a>
-                        <a href="http://www.linkedin.com/company/bidx" class="sprite linkedin"></a>
+                        <a target="_blank" href="https://twitter.com/bid_x" class="sprite twitter"></a>
+                        <a target="_blank" href="https://www.facebook.com" class="sprite facebook"></a>
+                        <a target="_blank" href="http://www.linkedin.com/company/bidx" class="sprite linkedin"></a>
                     </div>
             	</div>
 
@@ -41,7 +41,7 @@
     </div>
 </footer>
 
-<?php 
+<?php
     }
 ?>
 
