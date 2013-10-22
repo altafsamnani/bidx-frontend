@@ -1609,7 +1609,7 @@ form .row-fluid .input-prepend {
 
         header.navbar .iconbar ul li.dropdown:hover > ul.dropdown-menu {
             /* results in onhover show of submenu */
-            display:                    block;
+            /* display:                    block; */ /* remove the hover for now because it acts a bit nervously */
         }
 
         header.navbar .iconbar ul.dropdown-menu {
@@ -1882,16 +1882,16 @@ form .row-fluid .input-prepend {
                 padding:                                40px 20px 0 20px;
             }
 
-            .bidx.home .feature-block-items .bidx-latest-members .span6,
-            .bidx.home .feature-block-items .bidx-latest-news .span6 {
+            .bidx.home .feature-block-items .bidx-latest .span6,
+            .bidx.home .feature-block-items .bidx-latest .span6 {
                 margin-bottom:                          40px;
             }
-            .bidx.home .feature-block-items .bidx-latest-members .span6:nth-child(odd),
-            .bidx.home .feature-block-items .bidx-latest-news .span6:nth-child(odd) {
+            .bidx.home .feature-block-items .bidx-latest .span6:nth-child(odd),
+            .bidx.home .feature-block-items .bidx-latest .span6:nth-child(odd) {
                 margin-left:                            0;
             }
-            .bidx.home.not-auth .feature-col-items .bidx-latest-members .span12,
-            .bidx.home.not-auth .feature-col-items .bidx-latest-news .span12 {
+            .bidx.home.not-auth .feature-col-items .bidx-latest .span12,
+            .bidx.home.not-auth .feature-col-items .bidx-latest .span12 {
                 margin-left:                            0;
                 margin-bottom:                          40px;
             }
