@@ -96,7 +96,7 @@ class search {
 		if ( key_exists( 'view', $atts ) ) {
 			$command = $atts['view'];
 		} else {
-			$command = 'listView.phtml';
+			$command = 'listView';
 		}
 
 		return $view->render( $command.'.phtml' );	
