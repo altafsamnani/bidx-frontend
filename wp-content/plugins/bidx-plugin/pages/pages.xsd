@@ -12,12 +12,26 @@
 			<xs:element name="widgets" type="widgets" minOccurs="0"/>
 			<xs:element name="menuitems" type="menuitems" minOccurs="0"/>
 		</xs:sequence>
-	</xs:complexType>		
+	</xs:complexType>
 
 	<xs:element name="posttype" type="xs:string" />
 	<xs:element name="description" type="xs:string" />
 	<xs:element name="version" type="xs:string" />
-	
+
+	<xs:element name="htmlTemplate">
+		<xs:annotation>
+			<xs:documentation>htmlTemplate to be filled with non escaped markup. Language can be set explicitly although xml:lang could be used?</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+		  <xs:simpleContent>
+		    <xs:extension base="xs:string">
+		      <xs:attribute name="language" type="xs:string" use="optional" />
+		    </xs:extension>
+		  </xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+
+
 	<xs:element name="content">
 		<xs:annotation>
 			<xs:documentation>Content to be filled. Language can be set explicitly although xml:lang could be used?</xs:documentation>
@@ -31,6 +45,7 @@
 		</xs:complexType>
 	</xs:element>
 
+
 	<xs:element name="title">
 		<xs:annotation>
 			<xs:documentation>Title. Language can be set explicitly although xml:lang could be used?</xs:documentation>
@@ -42,7 +57,7 @@
 		    </xs:extension>
 		  </xs:simpleContent>
 		</xs:complexType>
-	</xs:element>	
+	</xs:element>
 
 	<xs:element name="mapping">
 		<xs:annotation>
@@ -55,12 +70,12 @@
 		    </xs:extension>
 		  </xs:simpleContent>
 		</xs:complexType>
-	</xs:element>	
-		
+	</xs:element>
+
 	<xs:complexType name="posts">
 		<xs:sequence>
 			<xs:element name="post" type="post" minOccurs="0" maxOccurs="unbounded" />
-		</xs:sequence>		
+		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="post">
@@ -77,13 +92,14 @@
 			<xs:element name="template" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Optional name of the template in a Theme</xs:documentation>
-				</xs:annotation>			
+				</xs:annotation>
 			</xs:element>
 			<xs:element name="update" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>If the post already exists should it be updated</xs:documentation>
-				</xs:annotation>			
+				</xs:annotation>
 			</xs:element>
+			<xs:element ref="htmlTemplate" maxOccurs="unbounded"></xs:element>
 			<xs:element ref="content" maxOccurs="unbounded"></xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -109,7 +125,7 @@
 			<xs:element ref="content" maxOccurs="unbounded"></xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	
+
 	<xs:complexType name="menuitems">
 		<xs:sequence>
 			<xs:element name="menuitem" type="menuitem" minOccurs="0" maxOccurs="unbounded" />
@@ -128,7 +144,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	
+
 	<xs:complexType name="images">
 		<xs:sequence>
 			<xs:element name="image" type="image" minOccurs="0" maxOccurs="unbounded" />
@@ -150,14 +166,14 @@
 			<xs:element ref="content" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Description text to add</xs:documentation>
-				</xs:annotation>			
+				</xs:annotation>
 			</xs:element>
 			<xs:element name="category" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Useful for placing the images in collections</xs:documentation>
-				</xs:annotation>			
+				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	
+
 </xs:schema>

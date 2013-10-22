@@ -4,14 +4,14 @@
 	<posttype>page</posttype>
 	<description>List of public editable page resources for the enduser to manage</description>
 	<version>1.0</version>
-	
+
 	<posts>
 		<post>
 			<post_id>1</post_id>
 			<name>TermsofService</name>
 			<title>Terms of Service</title>
 			<mapping>^termsofservice/?</mapping>
-			<update>false</update>
+			<update>true</update>
 			<content>
 				&lt;h2&gt;Terms of service&lt;/h2&gt;
 			</content>
@@ -21,11 +21,48 @@
 			<name>Privacy</name>
 			<title>Privacy</title>
 			<mapping>^privacy/?</mapping>
-			<update>false</update>
+			<update>true</update>
 			<content>
-				&lt;h2&gt;Terms of service&lt;/h2&gt;
+				&lt;h2&gt;Privacy&lt;/h2&gt;
 			</content>
-		</post>		
+		</post>
+		<post>
+			<post_id>3</post_id>
+			<name>Register as investor</name>
+			<title>Register as investor</title>
+			<mapping>^register-as-investor/?</mapping>
+			<update>true</update>
+			<htmlTemplate>register-as-investor</htmlTemplate>
+			<content></content>
+		</post>
+		<post>
+			<post_id>4</post_id>
+			<name>Register as entrepreneur</name>
+			<title>Register as entrepreneur</title>
+			<mapping>^register-as-entrepreneur/?</mapping>
+			<update>true</update>
+			<htmlTemplate>register-as-entrepreneur</htmlTemplate>
+			<content></content>
+		</post>
+		<post>
+			<post_id>5</post_id>
+			<name>Get it started investor</name>
+			<title>Get it started investor</title>
+			<mapping>^get-it-started-investor/?</mapping>
+			<update>true</update>
+			<htmlTemplate>get-it-started-investor</htmlTemplate>
+			<content></content>
+		</post>
+		<post>
+			<post_id>6</post_id>
+			<name>Get it started entrepreneur</name>
+			<title>Get it started entrepreneur</title>
+			<mapping>^get-it-started-entrepreneur/?</mapping>
+			<update>true</update>
+			<htmlTemplate>get-it-started-entrepreneur</htmlTemplate>
+			<content></content>
+		</post>
+
 	</posts>
-	
+
 </data>

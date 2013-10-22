@@ -162,7 +162,7 @@
 	     	<post_id>22</post_id>
             <name>account</name>
             <title>Account settings</title>
-            <mapping>^account/([^/]*)/?</mapping>
+            <mapping>^account([^/]*)/?</mapping>
             <content>[bidx app="account"]</content>
 	    </post>
                 <post>

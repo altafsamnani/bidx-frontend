@@ -50,13 +50,13 @@ class ContentLoader
     function addJsVariables ()
     {
         echo "<script>
-	      window.bidx = window.bidx || {};
-	      window.bidx.api = {
-	        settings: {
-	                  servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
-	                }
-	        };
-	    </script>";
+          window.bidx = window.bidx || {};
+          window.bidx.api = {
+            settings: {
+                      servicesPath:   '/wp-content/plugins/bidx-plugin/static/js/bidxAPI/services/'
+                    }
+            };
+        </script>";
 
         echo $this->scriptInject;
     }
@@ -74,7 +74,7 @@ class ContentLoader
         add_rewrite_tag ('%bidxparam1%', '([^&/]+)'); //control parameter if available
         add_rewrite_tag ('%bidxparam2%', '([^&/]+)'); //rest of url data if available
 
-       
+
         $this->logger->trace ('Start loading default data from location : ' . $this->location);
         foreach (glob (BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml') as $filename) {
             //try /catch / log ignore
@@ -105,13 +105,32 @@ class ContentLoader
                         $this->logger->trace ('Post exist, skipping : ' . $post->name);
                     }
                 }
+
+                // default get $post content
+                //
+                $content = $post->content;
+
+                // if htmpTemplate is available, replace the content with the source from the template file
+                //
+                if ( isset( $post->htmlTemplate ) && $post->htmlTemplate != '' ) {
+
+                    $this->logger->trace ('Getting content from htmlTemplate ' . $post->htmlTemplate . '.phtml' );
+                    // open template file and get content
+                    //
+                    $stream = fopen( BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml' , "r" );
+                    // replace $content with content from stream
+                    //
+                    $content = stream_get_contents( $stream );
+                    fclose( $stream );
+                }
+
                 $insertPostArr = array (
-                  'post_content' => $post->content
-                  , 'post_name' => $post->name
-                  , 'post_status' => 'publish'
-                  , 'post_title' => $post->title
-                  , 'post_type' => $document->posttype
-                  , 'post_author' => 1
+                    'post_content'  => $content
+                ,   'post_name'     => $post->name
+                ,   'post_status'   => 'publish'
+                ,   'post_title'    => $post->title
+                ,   'post_type'     => $document->posttype
+                ,   'post_author'   => 1
                 );
                 //$enPostArr = $insertPostArr;
                 //$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
