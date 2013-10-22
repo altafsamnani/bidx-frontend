@@ -222,16 +222,16 @@
                     $list.empty();
 
                     // now format it into array of objects with value and label
-             
-                    if ( $.isEmptyObject(entities) )
+                    
+                    if ( !$.isEmptyObject(entities) )
                     {
-                
+                        
                         $.each(entities, function(idx, item)
                         {
                             //if( item.bidxEntityType == 'bidxBusinessSummary') {
                             bidxMeta = bidx.utils.getValue( item, "bidxMeta" );
-      
-                            if( bidxMeta.bidxEntityType == 'bidxBusinessSummary' && bidxMeta.bidxEntityStatus == 'PUBLISHED') {
+                            
+                            if( bidxMeta && bidxMeta.bidxEntityType == 'bidxBusinessSummary' ) {
 
                                 var dataArr = {  'industry'         : 'industry'
                                                , 'countryOperation' : 'country'
