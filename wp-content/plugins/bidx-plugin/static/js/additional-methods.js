@@ -116,6 +116,7 @@
         var validator       = this
         ,   previous        = this.previousValue( element )
         ,   valid           = false
+        ,   postData        = {}
         ;
 
         if ( this.optional(element) ) {
@@ -148,14 +149,13 @@
         this.startRequest( element );
         // execute bidx api call
         //
+        postData[ param.paramKey ] = value;
+
         bidx.api.call(
             param.url
         ,   {
                 groupDomain:        bidx.common.groupDomain
-            ,   data:
-                {
-                    username:       value
-                }
+            ,   data:               postData
 
             ,   success: function( response )
                 {
@@ -234,12 +234,59 @@
 
             ,   error:  function( jqXhr )
                 {
+                    var response = $.parseJSON( jqXhr.responseText )
+                    ,   submitted
+                    ,   errors
+                    ,   message
+                    ;
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client error occured", response );
+
+                        // following code is based on fail handler of validator's remote call
+                        //
+                        errors = {};
+                        message = response.code || validator.defaultMessage( element, "remoteApi" );
+
+                        bidx.i18n.getItem( message, function( err, label )
+                        {
+                            if ( err )
+                            {
+                                throw new Error( "Error occured assigning translation for field " + element.name  );
+                            }
+
+                            message                             = label;
+                            valid                               = false;
+                            errors[ element.name ]              = previous.message = $.isFunction( message ) ? message( value ) : message;
+                            validator.invalid[ element.name ]   = true;
+                            validator.showErrors( errors );
+
+                            // notify validator request has finished
+                            //
+                            previous.valid                      = valid;
+                            validator.stopRequest( element, valid );
+
+                        } );
+
+
+                    }
+
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Server error occured", response );
+                    }
+
                     // notify validator request has finished
                     //
                     previous.valid = valid;
                     validator.stopRequest(element, valid);
 
-                    bidx.utils.log("ERROR", jqXhr);
+
                 }
             }
         );
