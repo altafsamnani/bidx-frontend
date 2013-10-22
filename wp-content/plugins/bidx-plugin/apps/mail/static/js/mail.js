@@ -1,6 +1,6 @@
 ;( function ( $ )
 {
-    "use strict"
+    "use strict";
 
     var $element                    = $( "#mail" )
     ,   $views                      = $element.find( ".view" )
