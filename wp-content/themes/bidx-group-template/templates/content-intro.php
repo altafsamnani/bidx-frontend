@@ -138,7 +138,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                         <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
                     </div>
                     <div class="feature-block-items">
-                        <div class="bidx-latest-news clearfix">
+                        <div class="bidx-latest clearfix">
 
                             <!-- Grab news -->
                             <?php echo do_shortcode( '[bidx app="group" view="latest-news"]' ); ?>
@@ -154,7 +154,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                         <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
                     </div>
                     <div class="feature-block-items">
-                        <div class="bidx-latest-members clearfix">
+                        <div class="bidx-latest clearfix">
                         <!-- Grab latests members -->
                             <?php echo do_shortcode( '[bidx app="group" view="lastest-business-summaries"]' ); ?>
                         </div>
@@ -168,7 +168,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                         <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
                     </div>
                     <div class="feature-block-items">
-                        <div class="bidx-latest-members clearfix">
+                        <div class="bidx-latest clearfix">
                         <!-- Grab latests members -->
                         <?php echo do_shortcode( '[bidx app="group" view="last-members"]' ); ?>
                         </div>
@@ -341,7 +341,8 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                 <div class="span4 feature-col">
                     <h2><?php _e('New Business Summaries', 'bidxtheme')?></h2>
                     <div class="feature-col-items">
-                        <div class="bidx-latest-members clearfix">
+                        <div class="bidx-latest clearfix">
+
                         <!-- Grab latests members -->
                             <?php echo do_shortcode( '[bidx app="group" view="lastest-business-summaries" span="12"]' ); ?>
                         </div>
@@ -351,7 +352,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                 <div class="span4 feature-col">
                     <h2><?php _e('New Members', 'bidxtheme')?></h2>
                     <div class="feature-col-items">
-                        <div class="bidx-latest-members clearfix">
+                        <div class="bidx-latest clearfix">
                             <!-- Grab latests members -->
                             <?php echo do_shortcode( '[bidx app="group" view="last-members" span="12"]' ); ?>
                         </div>
@@ -361,7 +362,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                 <div class="span4 feature-col">
                     <h2><?php _e('News &amp; Events', 'bidxtheme')?></h2>
                     <div class="feature-col-items">
-                        <div class="bidx-latest-news clearfix">
+                        <div class="bidx-latest clearfix">
                             <!-- Grab news -->
                             <?php echo do_shortcode( '[bidx app="group" view="latest-news" span="12"]' ); ?>
                         </div>

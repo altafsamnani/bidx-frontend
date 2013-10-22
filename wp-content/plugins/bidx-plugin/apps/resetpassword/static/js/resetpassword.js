@@ -80,7 +80,7 @@
                     //
 
                     $frmResetpassword.hide();
-                    $views.filter( ".viewResetpassword" ).find(".resetpasswordSuccess").removeClass("hide");
+                    $element.find(".resetpasswordSuccess").removeClass("hide");
 
                     //                          window.location.href = url;
                 }
