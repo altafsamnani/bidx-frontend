@@ -45,6 +45,7 @@
                 ,   remoteBidxApi:
                     {
                         url:                "validateUsername.fetch"
+                    ,   paramKey:           "username"
 
                     }
 
