@@ -1,7 +1,11 @@
 
 <?php
         // check if span is empty, then revert to default 6
+        //
         $span = !empty($this->span) ? $this->span : 6;
+        // check if user is logged in
+        //
+        $authenticated = isset($this->authenticated ) && $this->authenticated ==  'true';
 
         if (is_array($this -> members)) {
             $index = 0;
@@ -39,6 +43,15 @@
                         }
 ?>
                         <!-- <div><span class="label bidx-label-investor">Investor</span></div> THIS NEEDS TO BE DONE CONDITIONALLY-->
+<?php
+                        // only show connect link when authenticated
+                        //
+                        if ( $authenticated ) {
+?>
+                            <div><a href="/mail/#mail/contacts/action=connect&id=<?php echo $member -> bidxMeta -> bidxMemberId ?>"><?php _e('Connect', 'bidxplugin')?></a></div>
+<?php
+                        }
+?>
                     </div>
                 </div>
 <?php

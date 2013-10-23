@@ -54,10 +54,13 @@ class group {
 				$view->span = isset($atts["span"]) ? $atts["span"] : "";
 				$view->summaries = $groupSvc->getLatestBusinessSummaries();
 				return $view->render( 'latest-business-summaries.phtml' );
-			case "last-members" :
-				$view->span = isset($atts["span"]) ? $atts["span"] : "";
-				$view->members = $groupSvc->getLatestMembers(  );
+			case "last-members":
+
+				$view->span 			= isset( $atts[ "span" ] ) ? $atts[ "span" ] : "";
+				$view->authenticated 	= isset( $atts[ "authenticated" ] ) ? $atts[ "authenticated" ] : "";
+				$view->members 			= $groupSvc->getLatestMembers(  );
 				return $view->render( 'last-members.phtml' );
+
 			case "latest-news" :
 				$view->span = isset($atts["span"]) ? $atts["span"] : "";
 				return $view->render( 'latest-news.phtml' );
