@@ -84,7 +84,7 @@
             <post_id>11</post_id>
             <name>company</name>
             <title>Company Information</title>
-            <mapping>^company/([^/]*)/?</mapping>
+            <mapping>^company([^/]*)?</mapping>
             <content>[bidx app="company"]</content>
         </post>
         <post>
