@@ -833,12 +833,22 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                 <?php _e('Upload your full plans or other supporting documents or images here','bidxplugin');?>
                             </div>
 
-                            <a href="#addFiles" class="btn btn-primary"><?php _e('Add files', 'bidxplugin')?></a>
+                            <a href="#addFiles" data-toggle="modal" class="btn btn-primary"><?php _e('Add files', 'bidxplugin')?></a>
 
-                            <div class="addFiles">
+                            <div class="addFiles modal hide fade">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3 id="myModalLabel"><?php _e('Check the files you want to attach to your business plan'); ?></h3>
+                              </div>
+                                <div class="modal-body">
 <?php
-                                echo do_shortcode( '[bidx app="media"]' );
+                                    echo do_shortcode( '[bidx app="media"]' );
 ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                    <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                </div>
                             </div>
                         </div>
                         <div class="accordion-controls-bottom">

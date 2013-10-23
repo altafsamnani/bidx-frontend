@@ -912,8 +912,8 @@
             {
                 e.preventDefault();
 
-                var $btn = $( this );
-                $btn.hide();
+                var $selectBtn = $documents.find(".btnSelectFile");
+                var $cancelBtn = $documents.find(".btnCancelSelectFile");
 
                 // Navigate the media app into list mode for selecting files
                 //
@@ -923,6 +923,8 @@
                 ,   slaveApp:               true
                 ,   selectFile:             true
                 ,   multiSelect:            true
+                ,   btnSelect:              $selectBtn
+                ,   btnCancel:              $cancelBtn
                 ,   callbacks:
                     {
                         ready:                  function( state )
@@ -934,8 +936,7 @@
                         {
                             // Stop selecting files, back to previous stage
                             //
-                            $btn.show();
-                            $addFiles.hide();
+                            $addFiles.modal('hide');
                         }
 
                     ,   success:                function( file )
@@ -964,13 +965,12 @@
                                 } );
                             }
 
-                            $btn.show();
-                            $addFiles.hide();
+                            $addFiles.modal('hide');
                         }
                     }
                 } );
 
-                $addFiles.fadeIn();
+                $addFiles.modal();
             } );
 
             // Initiate the reflowrower for the attachment list
