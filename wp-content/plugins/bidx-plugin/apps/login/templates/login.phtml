@@ -1,6 +1,5 @@
 <div id="login" class="block-odd mainState mainStateLogin">
-
-    <form id="frmLogin" action="/wp-login.php" method="post">
+   <form id="frmLogin" action="/wp-login.php" method="post">
         <h1>Login</h1>
         <div class="row-fluid">
             <div class="span8">
@@ -35,13 +34,15 @@
 
 
         <p>
-        <?php _e('Forgot your password? Click <a href="#auth/resetpassword">here</a> to recover.','bidxplugin');?><br/>
-        <?php
-            if ($this->showRegisterLink)
+        <?php 
+            if ($this->showLink != "false")
             {
-        ?>
-            <?php _e('Not a member? Click <a href="#auth/register">here</a> to register.','bidxplugin');?>
-        <?php
+                 _e('Forgot your password? Click <a href="#auth/resetpassword">here</a> to recover.','bidxplugin');
+            
+
+        ?><br/>
+        <?php       
+                _e('Not a member? Click <a href="#auth/register">here</a> to register.','bidxplugin');
             }
         ?>
         </p>

@@ -188,7 +188,7 @@
 
     // Only update the hash when user is authenticating and when there is no hash defined
     //
-    if ( $( "body.bidx-login" ).length && !bidx.utils.getValue( window, "location.hash" ) )
+    if ( ($( "body.bidx-login" ).length || $( "body.bidx-sso-authentication" )) && !bidx.utils.getValue( window, "location.hash" ) )
     {
         document.location.hash = "#login";
     }

@@ -48,9 +48,11 @@ class login {
         $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/login/templates/' );
         // 2. Determine the view needed
 
+        
 
         $render    = array_key_exists( 'view', $atts ) ? $atts['view'] : "login";
-        $view->showRegisterLink = true;
+        $view->showLink = (isset($atts['link'])) ? $atts['link'] : "true";
+        $view->redirectTo = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : NULL ; // For SSO-Auth redirect_to = aHR0cHM6Ly9iaWR4Lm5ldC9hcHAvYXBpL3YxL29wZW5pZC9zc28=
 
         // ob_start is necessary to capture the shortcode response. ob_get_Clean returns the captured content
         //

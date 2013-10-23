@@ -1,198 +1,205 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
 
-	<posttype>bidx</posttype>
-	<description>List of page resources that are hidden for the end-user to manage</description>
-	<version>1.0</version>
+    <posttype>bidx</posttype>
+    <description>List of page resources that are hidden for the end-user to manage</description>
+    <version>1.0</version>
 
-	<posts>
-	  	<post>
-			<post_id>0</post_id>
-			<name>member_list</name>
-			<title>Member List</title>
-			<mapping>^memberlist/?</mapping>
-			<content>[bidx app="member" view="list"]</content>
-		</post>
-	  	<post>
-			<post_id>1</post_id>
-			<name>member_profile</name>
-			<title>Your Profile</title>
-			<mapping>^member/?</mapping>
-			<content>[bidx app="member"]</content>
-		</post>
-		<post>
-			<post_id>2</post_id>
-			<name>member</name>
-			<title>Memberprofile</title>
-			<mapping>^member/([^/]*)/?</mapping>
-			<content>[bidx app="member"]</content>
-		</post>
-		<post>
-			<post_id>3</post_id>
-			<name>search</name>
-			<title>Search</title>
-			<mapping>^search/?</mapping>
-			<content>[bidx app="search"]</content>
-		</post>
-		<post>
-			<post_id>4</post_id>
-			<name>search_business</name>
-			<title>Search Business</title>
-			<mapping>^search/business?</mapping>
-			<content>[bidx app="search" view="cardview" query=""]</content>
-		</post>
-		<post>
-			<post_id>5</post_id>
-			<name>search_map</name>
-			<title>Search Map</title>
-			<mapping>^search/near?</mapping>
-			<content>[bidx app="search" view="mapview" query=""]</content>
-		</post>
-<!-- 6 and 7 are not used and free to be used -->
-		<post>
-			<post_id>8</post_id>
-			<name>last_members</name>
-			<title>Last Members</title>
-			<mapping>^group/lastmembers?</mapping>
-			<content>[bidx app="group" view="last-members"]</content>
-		</post>
-		<post>
-			<post_id>9</post_id>
-			<name>group_info</name>
-			<title>Group Information</title>
-			<mapping>^group/groupinfo?</mapping>
-			<content>[bidx app="group" view="group-intro"]</content>
-		</post>
-		<post>
-			<post_id>10</post_id>
-			<name>homepage</name>
-			<title>Home</title>
-			<mapping>^home?</mapping>
-			<content>
+    <posts>
+        <post>
+            <post_id>0</post_id>
+            <name>member_list</name>
+            <title>Member List</title>
+            <mapping>^memberlist/?</mapping>
+            <content>[bidx app="member" view="list"]</content>
+        </post>
+        <post>
+            <post_id>1</post_id>
+            <name>member_profile</name>
+            <title>Your Profile</title>
+            <mapping>^member/?</mapping>
+            <content>[bidx app="member"]</content>
+        </post>
+        <post>
+            <post_id>2</post_id>
+            <name>member</name>
+            <title>Memberprofile</title>
+            <mapping>^member/([^/]*)/?</mapping>
+            <content>[bidx app="member"]</content>
+        </post>
+        <post>
+            <post_id>3</post_id>
+            <name>search</name>
+            <title>Search</title>
+            <mapping>^search/?</mapping>
+            <content>[bidx app="search"]</content>
+        </post>
+        <post>
+            <post_id>4</post_id>
+            <name>search_business</name>
+            <title>Search Business</title>
+            <mapping>^search/business?</mapping>
+            <content>[bidx app="search" view="cardview" query=""]</content>
+        </post>
+        <post>
+            <post_id>5</post_id>
+            <name>search_map</name>
+            <title>Search Map</title>
+            <mapping>^search/near?</mapping>
+            <content>[bidx app="search" view="mapview" query=""]</content>
+        </post>
+        <!-- 6 and 7 are not used and free to be used -->
+        <post>
+            <post_id>8</post_id>
+            <name>last_members</name>
+            <title>Last Members</title>
+            <mapping>^group/lastmembers?</mapping>
+            <content>[bidx app="group" view="last-members"]</content>
+        </post>
+        <post>
+            <post_id>9</post_id>
+            <name>group_info</name>
+            <title>Group Information</title>
+            <mapping>^group/groupinfo?</mapping>
+            <content>[bidx app="group" view="group-intro"]</content>
+        </post>
+        <post>
+            <post_id>10</post_id>
+            <name>homepage</name>
+            <title>Home</title>
+            <mapping>^home?</mapping>
+            <content>
 			&lt;div class="row-fluid"&gt;
 				&lt;div class="span8"&gt;
-					[bidx app="group" view="list-groups"]
-					[bidx app="group" view="last-members"]
+                [bidx app="group" view="list-groups"]
+                [bidx app="group" view="last-members"]
 				&lt;/div&gt;
 				&lt;div class="span4"&gt;
-					[bidx app="group" view="group-details"]
+                [bidx app="group" view="group-details"]
 				&lt;/div&gt;
 			&lt;/div&gt;
-			</content>
-		</post>
-		<post>
-			<post_id>11</post_id>
-			<name>company</name>
-			<title>Company Information</title>
-			<mapping>^company/([^/]*)/?</mapping>
-			<content>[bidx app="company"]</content>
-		</post>
-		<post>
-			<post_id>12</post_id>
-			<name>My dashboard</name>
-			<title>My dashboard</title>
-			<mapping>^my-dashboard</mapping>
-			<content>[bidx app="dashboard" view="my-dashboard"]</content>
-		</post>
-		<post>
-			<post_id>13</post_id>
-			<name>Investor dashboard</name>
-			<title>Investor dashboard</title>
-			<mapping>^investor-dashboard</mapping>
-			<content>[bidx app="dashboard" view="investor-dashboard"]</content>
-		</post>
-		 <post>
-	     	<post_id>14</post_id>
+            </content>
+        </post>
+        <post>
+            <post_id>11</post_id>
+            <name>company</name>
+            <title>Company Information</title>
+            <mapping>^company/([^/]*)/?</mapping>
+            <content>[bidx app="company"]</content>
+        </post>
+        <post>
+            <post_id>12</post_id>
+            <name>My dashboard</name>
+            <title>My dashboard</title>
+            <mapping>^my-dashboard</mapping>
+            <content>[bidx app="dashboard" view="my-dashboard"]</content>
+        </post>
+        <post>
+            <post_id>13</post_id>
+            <name>Investor dashboard</name>
+            <title>Investor dashboard</title>
+            <mapping>^investor-dashboard</mapping>
+            <content>[bidx app="dashboard" view="investor-dashboard"]</content>
+        </post>
+        <post>
+            <post_id>14</post_id>
             <name>Authentication</name>
             <title>Authentication</title>
             <mapping>^auth</mapping>
             <content>[bidx app="auth" view="composite-view"]</content>
-	    </post>
-		<post>
-			<post_id>15</post_id>
-			<name>My messages</name>
-			<title>My messages</title>
-			<mapping>^mail</mapping>
-			<content>[bidx app="mail" view="views"]</content>
-		</post>
-		<post>
-			<post_id>16</post_id>
-			<name>Group Registration</name>
-			<title>Group Registration</title>
-			<mapping>^registration</mapping>
-			<content>[bidx app="auth" view="group-registration"]</content>
-		</post>
-		<post>
-			<post_id>17</post_id>
-			<name>media</name>
-			<title>Media manager</title>
-			<mapping>^media</mapping>
-			<content>[bidx app="media"]</content>
-		</post>
+        </post>
+        <post>
+            <post_id>15</post_id>
+            <name>My messages</name>
+            <title>My messages</title>
+            <mapping>^mail</mapping>
+            <content>[bidx app="mail" view="views"]</content>
+        </post>
+        <post>
+            <post_id>16</post_id>
+            <name>Group Registration</name>
+            <title>Group Registration</title>
+            <mapping>^registration</mapping>
+            <content>[bidx app="auth" view="group-registration"]</content>
+        </post>
+        <post>
+            <post_id>17</post_id>
+            <name>media</name>
+            <title>Media manager</title>
+            <mapping>^media</mapping>
+            <content>[bidx app="media"]</content>
+        </post>
 
-		<post>
-			<post_id>18</post_id>
-			<name>businesssummary</name>
-			<title>Business Summary</title>
-			<mapping>^businesssummary/([^/]*)/?</mapping>
-			<content>[bidx app="businesssummary"]</content>
-		</post>
-		 <post>
-	     	<post_id>19</post_id>
+        <post>
+            <post_id>18</post_id>
+            <name>businesssummary</name>
+            <title>Business Summary</title>
+            <mapping>^businesssummary/([^/]*)/?</mapping>
+            <content>[bidx app="businesssummary"]</content>
+        </post>
+        <post>
+            <post_id>19</post_id>
             <name>login</name>
             <title>Login</title>
             <mapping>^login</mapping>
             <content>[bidx app="login"]</content>
-	    </post>
-		 <post>
-	     	<post_id>20</post_id>
+        </post>
+        <post>
+            <post_id>20</post_id>
             <name>register</name>
             <title>Register</title>
             <mapping>^register/([^/]*)/?</mapping>
             <content>[bidx app="register"]</content>
-	    </post>
-	   	<post>
-	     	<post_id>21</post_id>
+        </post>
+        <post>
+            <post_id>21</post_id>
             <name>resetpassword</name>
             <title>Resetpassword</title>
             <mapping>^resetpassword</mapping>
             <content>[bidx app="resetpassword"]</content>
-	    </post>
-	   	<post>
-	     	<post_id>22</post_id>
+        </post>
+        <post>
+            <post_id>22</post_id>
             <name>account</name>
             <title>Account settings</title>
             <mapping>^account([^/]*)/?</mapping>
             <content>[bidx app="account"]</content>
-	    </post>
-                <post>
+        </post>
+        <post>
             <post_id>23</post_id>
             <name>Entrepreneur dashboard</name>
             <title>Entrepreneur dashboard</title>
             <mapping>^entrepreneur-dashboard</mapping>
             <content>[bidx app="dashboard" view="entrepreneur-dashboard"]</content>
-           </post>
-	</posts>
+        </post>
+        <post>
+            <post_id>24</post_id>
+            <name>Sso Authentication</name>
+            <title>Sso Authentication</title>
+            <mapping>^app/sso/auth</mapping>
+            <content>[bidx app="login" link="false" ]</content>
+        </post>
+    </posts>
 
-	<widgets>
-		<widget>
-			<widget_id>last_members_of_group</widget_id>
-			<widget_type>static</widget_type>
-			<name>Latest Members Of Group</name>
-			<content></content>
-		</widget>
-		<widget>
-			<widget_id>group_info</widget_id>
-			<widget_type>static</widget_type>
-			<name>Group Information</name>
-			<content></content>
-		</widget>
-		<widget>
-			<widget_id>last_business_of_group</widget_id>
-			<widget_type>static</widget_type>
-			<name>Latest Businesses</name>
-			<content></content>
-		</widget>
-	</widgets>
+    <widgets>
+        <widget>
+            <widget_id>last_members_of_group</widget_id>
+            <widget_type>static</widget_type>
+            <name>Latest Members Of Group</name>
+            <content></content>
+        </widget>
+        <widget>
+            <widget_id>group_info</widget_id>
+            <widget_type>static</widget_type>
+            <name>Group Information</name>
+            <content></content>
+        </widget>
+        <widget>
+            <widget_id>last_business_of_group</widget_id>
+            <widget_type>static</widget_type>
+            <name>Latest Businesses</name>
+            <content></content>
+        </widget>
+    </widgets>
 
 </data>
