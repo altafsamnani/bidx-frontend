@@ -150,7 +150,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                 <!-- BUSINESS BLOCK -->
                 <div class="feature-block spacer">
                     <div class="feature-block-header bidx-theme-colour-one">
-                        <?php _e('News Business','bidxtheme')?>
+                        <?php _e('New Business Summaries','bidxtheme')?>
                         <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
                     </div>
                     <div class="feature-block-items">
