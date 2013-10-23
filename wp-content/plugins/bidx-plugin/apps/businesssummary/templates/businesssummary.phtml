@@ -11,10 +11,10 @@ $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
 $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 
 $attachmentItem = <<<EOT
-    <div class="attachmentItem span4 well well-white">
+    <div class="span4 well well-white">
         <div class="row-fluid">
             <div class="span4">
-                <a href="#" class="documentLink"><img class="img-rounded documentImage"></a>
+                <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
             </div>
             <div class="span7">
                 <h3 class="documentName">{{documentName}}</h3>
@@ -22,7 +22,6 @@ $attachmentItem = <<<EOT
                 <p class="documentType">{{documentType}}</p>
             </div>
         </div>
-        <a href="#removeItem" class="btn btn-danger btn-mini btn-block">{{lblRemoveAttachmentItem}}</a>
     </div>
 EOT;
 
@@ -184,7 +183,7 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                 <div class="control-group span11">
                                     <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <select name="reasonForSubmission">
+                                        <select name="reasonForSubmission" data-forcearray="true">
                                             <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
 
 <?php
@@ -810,7 +809,6 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                 <div class="alert alert-danger">
                     <?php _e('This business summary doesn\'t have any Documents attached!', 'bidxplugin')?>
                 </div>
-
 <?php
                 }
 ?>
@@ -876,12 +874,19 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
         </table>
 
         <!-- Attachment -->
-<?php
-        // Dump the item as a snippet, pull it through the replaceMessageTokens to have the template
-        // placeholders be replaced with empty values
-        //
-        echo $this->replaceMessageTokens( $attachmentItem, $attachmentItemTranslations );
-?>
+        <div class="attachmentItem span4 well well-white">
+            <div class="row-fluid">
+                <div class="span4">
+                    <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
+                </div>
+                <div class="span7">
+                    <h3 class="documentName"></h3>
+                    <p class="purpose"></p>
+                    <p class="documentType"></p>
+                </div>
+                <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e( 'Remove document from this business summary', 'bidxplugin' ); ?></a>
+            </div>
+        </div>
 
         <!-- Management Team Item -->
         <div class="managementTeamItem span6 well well-white">

@@ -99,6 +99,13 @@
                 "name"
             ,   "slogan"
             ,   "summary"
+
+                // This is actually an array in the data model, but presented as a dropdown in the UI designs.
+                // Conflict!
+                // We need to force it to be an array when sending into the API
+                // After disucssion with Jeroen created BIDX-1435 to request any non-array value to be interpreted as an array by the API,
+                // but until that is available, send in reasonforSubmsision as an array
+                //
             ,   "reasonForSubmission"
             ,   "equityRetained"
             ,   "financingNeeded"
@@ -220,6 +227,17 @@
             snippets.$financialSummaries    = $financialSummary.find( ".snippets" ).find( ".financialSummariesItem" ).remove();
             snippets.$company               = $snippets.find( "table tr.companyItem"    ).remove();
             snippets.$attachment            = $snippets.children( ".attachmentItem"    ).remove();
+
+            // Did we find all of the snippets?
+            // Not really app logic, but just a protection / early warning system
+            //
+            $.each( snippets, function( prop, $snippet )
+            {
+                if ( !$snippet.length )
+                {
+                    bidx.utils.error( "[BusinessSummary] Snippet not found! ", prop );
+                }
+            } );
         }
 
         // Setup initial form validation
@@ -1431,6 +1449,22 @@
         {
             businessSummary.company = null;
         }
+
+        // Documents
+        // Collect the whole situation from the DOM and set that array of bidxData items to be the new situation
+        //
+        var attachments = [];
+
+        $attachmentContainer.find( ".attachmentItem" ).each( function()
+        {
+            var $item       = $( this )
+            ,   bidxData    = $item.data( "bidxData" )
+            ;
+
+            attachments.push( bidxData );
+        } );
+
+        bidx.utils.setValue( businessSummary, "attachment", attachments );
     }
 
     // This is the startpoint for the edit state
@@ -1672,6 +1706,8 @@
         {
             if ( !form.$el.valid() )
             {
+                bidx.utils.warn( "[BusinessSummary] Invalid form", form.$el, form.$el.validate().errorList );
+
                 anyInvalid = true;
             }
         } );
