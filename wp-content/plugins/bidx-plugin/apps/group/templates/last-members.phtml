@@ -14,18 +14,30 @@
  ?>
 
                 <div class="span<?php echo $span ?> clearfix">
-    			  	<?php
+<?php
     				  	if ( empty( $member -> profilePicture ) ) {
     						echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">';
-    					} else {
+                        } else {
     						echo '<img src="' . $member -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
-    				  	}
-    			  	?>
+                        }
+?>
                     <div>
 
-                        <div><a href="/members/<?php echo $member -> bidxMeta -> bidxMemberId ?>"><strong><?php echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName ); ?></strong></a></div>
-                        <div><?php echo $this -> exst( $member -> professionalTitle); ?></div>
-                        <div><?php echo $this -> exst( $member -> country ); ?></div>
+                        <div><a href="/members/<?php echo $member -> bidxMeta -> bidxMemberId ?>"><strong>
+<?php
+                            echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName );
+?>
+                        </strong></a></div>
+
+<?php
+                        if ( $this -> exst( $member -> professionalTitle) ) {
+                            echo '<div>' . $member -> professionalTitle . '</div>';
+                        }
+
+                        if ( $this -> exst( $member -> country) ) {
+                            echo '<div>' . $member -> country . '</div>';
+                        }
+?>
                         <!-- <div><span class="label bidx-label-investor">Investor</span></div> THIS NEEDS TO BE DONE CONDITIONALLY-->
                     </div>
                 </div>
