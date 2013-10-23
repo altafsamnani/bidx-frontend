@@ -197,6 +197,8 @@
 
               <!-- contacts view -->
             <article class="view viewContacts">
+                <div class="toast-wrapper"></div>
+
 
                 <h3>Contacts requests</h3>
                 <!-- CONTACT REQUESTS -->
@@ -248,10 +250,10 @@
                 <div class="tabbable"> <!-- Only required for left/right tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#tab-active-contacts" class="trigger-active-contacts" data-toggle="tab">Active contacts (%count-active-contacts%)</a>
+                            <a href="#tab-active-contacts" class="trigger-active-contacts" data-toggle="tab">No active contacts</a>
                         </li>
                         <li>
-                            <a href="#tab-ignored-contacts" class="trigger-ignored-contacts" data-toggle="tab">Ignored contacts (%count-ignored-contacts%)</a>
+                            <a href="#tab-ignored-contacts" class="trigger-ignored-contacts" data-toggle="tab">No ignored contacts</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -358,6 +360,8 @@
 
     </div>
 </div>
+
+<!-- snippets -->
 
 <script type="text/html" id="mailbox-listitem">
 <!--
@@ -499,5 +503,15 @@
         <?php _e('No contacts available')?>
     </div>
 </li>
+-->
+</script>
+
+
+<script type="text/html" id="toast-snippet">
+<!--
+    <div class='alert alert-success hide'>
+        <button data-dismiss='alert' class='close fui-cross' type='button'></button>
+        <span class="messageContent"></span>
+    </div>
 -->
 </script>

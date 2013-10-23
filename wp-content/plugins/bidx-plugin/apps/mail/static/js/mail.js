@@ -12,7 +12,7 @@
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
     ,   $mailFolderNavigation       = $element.find(".bidx-mailFolders")
     ,   bidx                        = window.bidx
-    ,   currentGroupId              = bidx.common.getSessionValue( "currentGroup" )
+    ,   currentGroupId              = bidx.common.getCurrentGroupId( "currentGroup" )
     ,   appName                     = "mail"
     ,   mailboxes                   = {}
     ,   toolbar                     = {}
@@ -424,7 +424,6 @@
         ,   {
                 groupDomain:            bidx.common.groupDomain
             ,   requesterId:            href.requesterId
-            ,   requesteeId:            href.requesteeId
             ,   extraUrlParameters:
                 [
                     {
@@ -455,6 +454,86 @@
                     var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
                     _showError( "Something went wrong while mutation the member: " + status );
+                }
+            }
+        );
+    }
+
+    // Create a connection between requester and Requestee (the logged in user)
+    // @params: options
+    // {
+    //     requesterId: [ ID person to connect with ]
+    // ,   requesteeId: [ ID logged in user ]
+    // }
+    //
+    function _doSendContactRequest( options )
+    {
+        var $currentView    = $views.filter( bidx.utils.getViewName( "contacts" ) )
+        ,   $alert          = $currentView.find( ".alert" )
+        ,   $toastWrapper   = $currentView.find( ".toast-wrapper" )
+        ,   toastSnippet    = $( "#toast-snippet" ).html().replace( /(<!--)*(-->)*/g, "" )
+        ,   $toast          = $( toastSnippet )
+        ;
+
+
+        bidx.api.call(
+             "memberRelationships.create"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   requesterId:            options.requesterId
+            ,   requesteeId:            options.requesteeId
+            ,   data:
+                {
+                    "type":             "contact"
+                }
+
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[contacts] requested a relationship",  response );
+                    if ( response && response.status === "OK" )
+                    {
+
+                        $toastWrapper.append( $toast );
+                        // set text for success toast on contact overview page
+                        //
+
+
+                        $toast.find( ".messageContent" )
+                            .i18nText( "contactRequestSendTo", appName )
+                            .append( " " + response.data.requesteeName )
+                        ;
+
+                        // show the toast
+                        //
+                        $toast.show();
+
+                        // change hash to contacts overview
+                        //
+                        bidx.controller.updateHash( "#mail/contacts", true, false );
+                    }
+
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while mutation the member: " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong will connecting to a member: " + response.text );
+                    }
+
+
                 }
             }
         );
@@ -694,7 +773,7 @@
                     var params =
                     {
                         requesterId:     item.contactId
-                    ,   requesteeId:     bidx.common.getSessionValue( "id" )
+                    ,   requesteeId:     bidx.common.getCurrentUserId( "id" )
                     ,   type:            "contact"
                     ,   action:          "accept"
                     };
@@ -807,7 +886,7 @@
             {
                 // replace placeholder in trigger element (hyperlink)
                 //
-                $trigger.text( $trigger.text().replace( "%count-" + category + "-contacts%", count ) );
+                $trigger.i18nText( category + "Contact", appName ).append( " (" + count + ")" );
             }
 
         }
@@ -895,7 +974,7 @@
             bidx.api.call(
                 "memberRelationships.fetch"
             ,   {
-                    requesterId:              bidx.common.getSessionValue( "id" )
+                    requesterId:              bidx.common.getCurrentUserId( "id" )
                 ,   groupDomain:              bidx.common.groupDomain
 
                 ,   success: function( response )
@@ -1245,7 +1324,7 @@
                 "memberRelationships.fetch"
             ,   {
                     extraUrlParameters:       options.extraUrlParameters
-                ,   requesterId:              bidx.common.getSessionValue( "id" )
+                ,   requesterId:              bidx.common.getCurrentUserId( "id" )
                 ,   groupDomain:              bidx.common.groupDomain
 
                 ,   success: function( response )
@@ -1277,7 +1356,9 @@
                         }
                         else
                         {
+
                             bidx.utils.warn( "No contacts retrieved. Please check filtering" );
+
                         }
 
                         // resolve the promise
@@ -1726,6 +1807,38 @@
 
 
             break;
+
+            case /^connect$/.test( action ):
+
+                _showView( "load" );
+
+                // try to send contact request
+                //
+                if ( options.params.id && options.params.id.match( /^\d+$/ ) )
+                {
+                    _doSendContactRequest(
+                    {
+                        requesterId:    bidx.common.getCurrentUserId()
+                    ,   requesteeId:    options.params.id
+                    } )
+                    console.log("LOAD CONNECT");
+                }
+                else
+                {
+                    // no ID, request failed
+                    //
+                    _showError( "Something went wrong will connecting to a member: " + "No ID submitted or ID is not a number" );
+                }
+
+
+
+
+
+            break;
+
+
+
+
 
             // catch all for mailbox folders; for example mbx-inbox. For convenience I remove the prefix within this closure
             //

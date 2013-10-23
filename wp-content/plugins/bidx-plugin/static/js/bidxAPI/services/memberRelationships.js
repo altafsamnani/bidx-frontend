@@ -8,14 +8,14 @@
     var bidx    = window.bidx
     ,   api     = bidx.api
     ,   memberRelationships  = {}
-    ,   baseUrl = "/api/v1/members/%requesterId%/relationships/%requesteeId%"
+    ,   baseUrl = "/api/v1/members/relationships/%requesterId%"
     ,   params  = []
     ;
 
     memberRelationships.fetch = function( params )
     {
         var method = "GET"
-        ,   url    = baseUrl.replace( "/%requesterId%", "" ).replace( "/%requesteeId%", "" )
+        ,   url    = baseUrl.replace( "/%requesterId%", "" )
         ;
 
 
@@ -44,7 +44,7 @@
     memberRelationships.mutate = function( params )
     {
         var method  = "PUT"
-        ,   url     = baseUrl.replace( "%requesterId%", params.requesterId ).replace( "%requesteeId%", params.requesteeId )
+        ,   url     = baseUrl.replace( "%requesterId%", params.requesterId )
         ;
 
         api._call(
@@ -54,6 +54,34 @@
         ,   extraUrlParameters:     params.extraUrlParameters
         ,   baseUrl:                url
 
+        ,   success:        function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+    memberRelationships.create = function( params )
+    {
+        var method  = "POST"
+        //,   url     = baseUrl
+        ,   tempUrl = "/api/v1/members/%requesterId%/relationships/%requesteeId%" // NOTE: temp url until Jeroen changes
+        ,   url     = tempUrl
+                        .replace( "%requesterId%", params.requesterId )
+                        .replace( "%requesteeId%", params.requesteeId )
+        ;
+
+        api._call(
+        {
+            method:         method
+        ,   form:           true
+        ,   groupDomain:    params.groupDomain
+        ,   baseUrl:        url
+        ,   data:           params.data
         ,   success:        function( data, textStatus, jqXhr )
             {
                 params.success( data, textStatus, jqXhr );
