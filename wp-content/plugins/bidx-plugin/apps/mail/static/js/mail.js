@@ -257,8 +257,8 @@
     //
     function _setActiveMenu()
     {
-        bidx.utils.log( "[mail] set active menu" );
-        $element.find( ".side-menu > div.bidx-mailFolders > a" ).each( function( index, item )
+        bidx.utils.log( "[mail] set active menu" ,  $element.find( ".side-menu .bidx-menuitems a") );
+        $element.find( ".side-menu .bidx-menuitems a").each( function( index, item )
         {
             var $this = $( item );
 
@@ -1803,6 +1803,7 @@
                     .done( function()
                     {
                         _showView( "contacts" );
+                        _setActiveMenu();
                     } );
 
 
