@@ -391,6 +391,11 @@
             value = false;
         }
 
+        if ( $input.attr( "data-forcearray" ) === "true" && !$.isArray( value ))
+        {
+            value = [ value ];
+        }
+
         return value;
     };
 
