@@ -501,7 +501,7 @@
 
         _updateFile( $file, file );
 
-        $fileList.append( $file );
+        $fileList.prepend( $file );
 
         return $file;
     }
