@@ -923,6 +923,7 @@
                 ,   slaveApp:               true
                 ,   selectFile:             true
                 ,   multiSelect:            true
+                ,   showEditBtn:            false
                 ,   btnSelect:              $selectBtn
                 ,   btnCancel:              $cancelBtn
                 ,   callbacks:
