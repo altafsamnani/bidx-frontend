@@ -22,13 +22,28 @@
                     }
 ?>
                     <div>
-                        <div><strong><a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxProfileId ?>"><?php echo $this -> exst( $summary -> displayName ) ; ?></a></strong></div>
+                        <div><strong><a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxProfileId ?>">
+<?php
+                            echo $this -> exst( $summary -> displayName );
+?>
+                        </a></strong></div>
                     </div>
                 </div>
 <?php
                 $index++;
             }
             // end foreach
+
+            //  Fields to show here
+            //
+            //  Business Name
+            //  Country -- Multiple Field
+            //  Industry -- Multiple Field
+            //  Image / the logo of the company
+
+            //  -- LOGGED IN --
+            //  view link
+            //  the date when it was last published.
         }
 ?>
 
