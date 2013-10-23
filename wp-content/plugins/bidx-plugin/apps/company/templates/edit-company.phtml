@@ -16,10 +16,6 @@
 
         <form id="frmeditCompany">
 
-            <!-- "id" is actually the memberProfileId, but to not have to rewrite the file upload let's do it like this -->
-            <input type="hidden" name="companyProfileId"     />
-            <input type="hidden" name="domain"              />
-
             <fieldset class="well">
                 <span class="scrollPositionMarker" id="editCompany/companyDetail"></span>
                 <legend><?php _e('Company detail','bidxplugin'); ?></legend>
@@ -171,8 +167,24 @@
                         <div class="control-group formfield logo-control">
                             <label class="control-label"><?php _e('Logo','bidxplugin'); ?></label>
                             <div class="controls">
-                                <div class="logoContainer" id="editCompanyLogo"></div>
-                                <input type="file" name="fileContent" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"companylogo"}], "addFields":["companyProfileId","domain"], "imageContainer": "#editCompanyLogo"}'/>
+                                <div class="logoContainer"></div>
+                                <a href="#changeLogo" class="btn"><?php _e('Select logo','bidxplugin');?></a>
+
+                                <div class="changeLogoModal modal hide fade">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h3><?php _e('Select the file you want to use for a logo', 'bidxplugin' ); ?></h3>
+                                    </div>
+                                    <div class="modal-body">
+<?php
+                                        echo do_shortcode( '[bidx app="media"]' );
+?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                        <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

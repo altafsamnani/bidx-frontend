@@ -912,6 +912,10 @@
             {
                 e.preventDefault();
 
+                // Make sure the media app is within our modal
+                //
+                $( "#media" ).appendTo( $addFiles.find( ".modal-body" ) );
+
                 var $selectBtn = $documents.find(".btnSelectFile");
                 var $cancelBtn = $documents.find(".btnCancelSelectFile");
 

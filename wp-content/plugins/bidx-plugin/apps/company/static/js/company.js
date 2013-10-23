@@ -14,8 +14,12 @@
     ,   $btnSave
     ,   $btnCancel
 
+        // Profile picture
+        //
     ,   $logoControl                        = $editForm.find( ".logo-control" )
     ,   $logoContainer                      = $logoControl.find( ".logoContainer" )
+    ,   $btnChangeLogo                      = $logoControl.find( "a[href$='changeLogo']" )
+    ,   $changeLogoModal                    = $logoControl.find( ".changeLogoModal" )
 
     ,   $currentAddressMap                  = $editForm.find( ".currentAddressMap"                          )
     ,   $currentAddressCountry              = $editForm.find( "[name='statutoryAddress.country']"           )
@@ -440,6 +444,67 @@
         }
     };
 
+
+    $btnChangeLogo.click( function( e )
+    {
+        e.preventDefault();
+
+        // Make sure the media app is within our modal container
+        //
+        $( "#media" ).appendTo( $changeLogoModal.find( ".modal-body" ) );
+
+        var $selectBtn = $changeLogoModal.find(".btnSelectFile")
+        ,   $cancelBtn = $changeLogoModal.find(".btnCancelSelectFile");
+
+        // Navigate the media app into list mode for selecting files
+        //
+        bidx.media.navigate(
+        {
+            requestedState:         "list"
+        ,   slaveApp:               true
+        ,   selectFile:             true
+        ,   multiSelect:            false
+        ,   showEditBtn:            false
+        ,   btnSelect:              $selectBtn
+        ,   btnCancel:              $cancelBtn
+        ,   callbacks:
+            {
+                ready:                  function( state )
+                {
+                    bidx.utils.log( "[company] ready in state", state );
+                }
+
+            ,   cancel:                 function()
+                {
+                    // Stop selecting files, back to previous stage
+                    //
+                    $changeLogoModal.modal('hide');
+                }
+
+            ,   success:                function( file )
+                {
+                    bidx.utils.log( "[company] uploaded", file );
+
+                    // NOOP.. the parent app is not interested in when the file is uploaded
+                    // only when it is attached / selected
+                }
+
+            ,   select:               function( file )
+                {
+                    bidx.utils.log( "[company] selected profile picture", file );
+
+                    bidx.utils.setValue( company, "logo", file );
+
+                    $logoContainer.replaceWith( $( "<img />", { "src": file.document  } ));
+
+                    $changeLogoModal.modal( "hide" );
+                }
+            }
+        } );
+
+        $changeLogoModal.modal();
+    } );
+
     // Use the retrieved company object to populate the form and other screen elements
     //
     var _populateScreen = function()
@@ -465,7 +530,7 @@
             } );
         } );
 
-        // Profile picture is 'special'
+        // Logo is 'special'
         //
         var logo = bidx.utils.getValue( company, "logo", true );
 
@@ -473,11 +538,6 @@
         {
             $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document  } ));
         }
-
-        // Setup the hidden fields used in the file upload
-        //
-        $editForm.find( "[name='domain']"           ).val( bidx.common.groupDomain );
-        $editForm.find( "[name='companyProfileId']" ).val( companyProfileId );
 
         // Now the nested objects, NOT ARRAY's
         //
@@ -632,15 +692,6 @@
             {
                 $controls.append( $btnCancel );
             }
-        }
-
-        if ( state === "edit" )
-        {
-            $logoControl.show();
-        }
-        else
-        {
-            $logoControl.hide();
         }
 
         // Setup form

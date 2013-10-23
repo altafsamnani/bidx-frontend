@@ -13,6 +13,8 @@ class media {
             'jquery-fileupload'
     );
 
+    static $loads = 0;
+
 
     /**
    * Constructor
@@ -42,6 +44,12 @@ class media {
      * @param $atts
      */
     function load($atts) {
+
+        self::$loads += 1;
+
+        if ( self::$loads > 1 ) {
+            return;
+        }
 
         /* 1 Template Rendering */
         require_once(BIDX_PLUGIN_DIR .'/templatelibrary.php');
