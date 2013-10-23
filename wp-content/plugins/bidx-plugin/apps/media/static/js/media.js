@@ -519,7 +519,7 @@
 
         if ( file )
         {
-            $container.find( ".name"            ).text( file.originalFilename );
+            $container.find( ".name"            ).text( file.documentName );
             $container.find( ".purpose"         ).text( file.purpose );
             $container.find( ".documentType"    ).text( file.documentType ? bidx.data.i( file.documentType, "documentType" ) : "" );
 
