@@ -156,7 +156,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                     <div class="feature-block-items">
                         <div class="bidx-latest clearfix">
                         <!-- Grab latests members -->
-                            <?php echo do_shortcode( '[bidx app="group" view="lastest-business-summaries"]' ); ?>
+                            <?php echo do_shortcode( '[bidx app="group" view="latest-business-summaries"]' ); ?>
                         </div>
                     </div>
                 </div>
@@ -344,7 +344,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                         <div class="bidx-latest clearfix">
 
                         <!-- Grab latests members -->
-                            <?php echo do_shortcode( '[bidx app="group" view="lastest-business-summaries" span="12"]' ); ?>
+                            <?php echo do_shortcode( '[bidx app="group" view="latest-business-summaries" span="12"]' ); ?>
                         </div>
                     </div>
                 </div>
