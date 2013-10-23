@@ -156,10 +156,6 @@
     var navigate = function( options )
     {
         bidx.utils.log("routing of Account", options );
-
-
-
-
         _showView( "credentials" );
 
 
