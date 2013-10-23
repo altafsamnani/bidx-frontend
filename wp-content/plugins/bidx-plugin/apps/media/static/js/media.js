@@ -580,6 +580,10 @@
                 {
                     bidx.utils.log( "[media] upload.save::success::response", response );
 
+                    // Regardless if the app runs as slave app, now the data is saved it can be removed from the pending list
+                    //
+                    bidx.common.removeAppWithPendingChanges( appName );
+
                     if ( callbacks )
                     {
                         callbacks.success( response.data );
@@ -588,7 +592,6 @@
                     if ( !slaveApp )
                     {
                         bidx.common.notifyRedirect();
-                        bidx.common.removeAppWithPendingChanges( appName );
 
                         bidx.controller.updateHash( "#media/list", true );
                     }

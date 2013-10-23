@@ -858,6 +858,10 @@
                     companyId = bidx.utils.getValue( bidxMeta, "ownerId" );
                 }
 
+                // Regardless if the app runs as slave app, now the data is saved it can be removed from the pending list
+                //
+                bidx.common.removeAppWithPendingChanges( appName );
+
                 // If running as a slave app, notify the change via a callback
                 //
                 if ( callbacks )
@@ -869,7 +873,6 @@
                 {
                     bidx.common.closeNotifications();
                     bidx.common.notifyRedirect();
-                    bidx.common.removeAppWithPendingChanges( appName );
 
                     var url = "/company/" + companyId + "?rs=true";
 
