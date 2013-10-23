@@ -1753,6 +1753,11 @@ form .row-fluid .input-prepend {
             border-radius:                          0 0 6px 6px;
         }
 
+        header.navbar .nav ul li:only-child,
+        header.navbar .iconbar ul.dropdown-menu li:only-child {
+            border-radius:                          6px;
+        }
+
         header.navbar .nav ul li {
             background-color:                       #34495e;
             padding:                                0 3px 3px;
