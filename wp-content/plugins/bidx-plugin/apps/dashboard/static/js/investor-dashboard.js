@@ -5,9 +5,9 @@
     ,   $elementHelp      = $(".startpage")
     ,   $firstPage        = $element.find( "input[name='firstpage']" )
     ,   bidx              = window.bidx
-    ,   currentGroupId    = bidx.common.getSessionValue( "currentGroup ")
+    ,   currentGroupId    = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentInvestorId = bidx.common.getInvestorProfileId()
-    ,   currentUserId     = bidx.common.getSessionValue( "id" )
+    ,   currentUserId     = bidx.common.getCurrentUserId( "id" )
     ;
 
 
@@ -48,14 +48,14 @@
 
         //Get i18n arr like industry = [chemical, painting, software]
         $.each(dataArr, function(clsKey, clsVal) {
-              if( item.hasOwnProperty(clsKey)) {           
+              if( item.hasOwnProperty(clsKey)) {
                      bidx.data.getItem(item[clsKey], clsVal, function(err, label)
                         {
-                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;                         
+                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;
 
                         });
                item[clsKey] = textVal;
-              }              
+              }
        })
        //If callback set use it
        if (options && options.callback)
@@ -76,12 +76,12 @@
         bidx.api.call(
                 "memberRelationships.fetch"
             ,   {
-                    requesterId:    bidx.common.getSessionValue( "id" )
+                    requesterId:    bidx.common.getCurrentUserId( "id" )
                 ,   groupDomain:    bidx.common.groupDomain
                 ,   async      :    false
                 ,   success: function( response )
                     {
-              
+
 
                     //clear listing
                     $list.empty();
@@ -119,7 +119,7 @@
                                 .replace( /%status%/g,       status    ? status      : "%status%" )
                                 .replace( /%startDate%/g,     i18nItem.startDate  ? bidx.utils.parseTimestampToDateTime( i18nItem.startDate, "date" )    : "%startDate%" )
                             ;
-                      
+
                             //  add mail element to list
                             $list.append( listItem );
 
@@ -213,7 +213,7 @@
                                     ;
 
 
-                      
+
 
                         //  add mail element to list
                         $list.append( listItem );
@@ -233,8 +233,8 @@
             }
 
             , error: function(jqXhr, textStatus)
-            {              
-             
+            {
+
                 var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
                  _showError("Something went wrong while retrieving contactlist of the member: " + status);
@@ -261,7 +261,7 @@
           , async             : false
           , success           : function(item)
             {
-                
+
                 ;
 
                 //clear listing
@@ -269,7 +269,7 @@
 
                 // now format it into array of objects with value and label
                 if (item)
-                {                  
+                {
 
                     var dataArr = {     'focusIndustry':'industry'   ,
                                         'focusSocialImpact': 'socialImpact',
@@ -308,7 +308,7 @@
                          .replace( /%totalInvestment%/g,      i18nItem.totalInvestment   ? i18nItem.totalInvestment     : "%totalInvestment%" )
                          .replace( /%additionalPreferences%/g,       i18nItem.additionalPreferences    ? i18nItem.additionalPreferences      : "%additionalPreferences%" )
                          .replace( /%maxInvestment%/g,     i18nItem.maxInvestment  ? i18nItem.maxInvestment    : "%maxInvestment%" )
-                      ;                
+                      ;
 
                     $list.append( listItem );
                 }
@@ -336,7 +336,7 @@
 
     var _showView = function(view, showAll)
     {
-       
+
         //  show title of the view if available
         if (!showAll)
         {
@@ -374,7 +374,7 @@
 
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
-    {        
+    {
         var state;
 
         state = options.state;
@@ -388,7 +388,7 @@
                 break;
              case "help" :
                  _menuActivateWithTitle(".Help","My investor Helppage");
-                _showView("help");                
+                _showView("help");
                 break;
 
             case "investor":

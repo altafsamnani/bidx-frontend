@@ -11,7 +11,7 @@
     ,   $currentView
     ,   bidx                        = window.bidx
     ,   appName                     = "dashboard"
-    ,   currentGroupId              = bidx.common.getSessionValue( "currentGroup" )
+    ,   currentGroupId              = bidx.common.getCurrentGroupId()
     ,   message                     = {}
     ,   listItems                   = {}
     ,   listItemsAll                = {}
@@ -541,7 +541,7 @@
         ,   dashboardId
         ,   action
         ;
-      
+
         state = action = options.state;
 
         if ( !$.isEmptyObject( options.params ) )
@@ -678,7 +678,7 @@
     ,   $element: $element
     ,   listItems: listItems //storage for selection of emails in listview. I chose object because so that I can check if key exists
     ,   listItemsAll: listItemsAll
-   
+
     };
 
     if (!window.bidx)

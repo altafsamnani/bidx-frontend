@@ -116,12 +116,26 @@
         return confirmationRequested;
     }
 
+    // Convenience function for retrieving the id of the current group
+    //
+    function getCurrentGroupId()
+    {
+        return getSessionValue( "currentGroup" );
+    }
+
+    // Convenience function for retrieving the id of the current group
+    //
+    function getCurrentUserId()
+    {
+        return getSessionValue( "id" );
+    }
+
 
     // retrieve a value from the session object
     //
     function getSessionValue( key )
     {
-        return bidx.utils.getValue(bidxConfig, "session." + key);
+        return bidx.utils.getValue( bidxConfig, "session." + key );
 
     }
 
@@ -824,6 +838,8 @@
         }
 
     ,   getGroupIds:                    getGroupIds
+    ,   getCurrentGroupId:              getCurrentGroupId
+    ,   getCurrentUserId:               getCurrentUserId
     ,   getSessionValue:                getSessionValue
     ,   getNow:                         getNow
 
