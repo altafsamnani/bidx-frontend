@@ -62,6 +62,15 @@
 			<htmlTemplate>get-it-started-entrepreneur</htmlTemplate>
 			<content></content>
 		</post>
+		<post>
+			<post_id>7</post_id>
+			<name>Download financial templates</name>
+			<title>Download financial templates</title>
+			<mapping>^financial-details-templates/?</mapping>
+			<update>true</update>
+			<htmlTemplate>financial-details-templates</htmlTemplate>
+			<content></content>
+		</post>
 
 	</posts>
 
