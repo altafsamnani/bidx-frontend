@@ -43,7 +43,7 @@
         if ( $hasProfiles ) {
  ?>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Dashboards">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="<?php _e('Dashboards', 'bidxplugin')?>">
                     <i class="bidx-cmd"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -70,7 +70,7 @@
         if ( $hasGroups ) {
  ?>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Groups">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="<?php _e('Groups', 'bidxplugin')?>">
                     <i class="bidx-user"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -88,7 +88,7 @@
  ?>
    <!--      <li><a href="/member" class="bidx-user" title="Profile"></a></li> -->
         <li>
-        	<a href="/mail#mail" class="bidx-mail" title="Mail">
+        	<a href="/mail#mail" class="bidx-mail" title="<?php _e('Mail', 'bidxplugin')?>">
             	<!-- If messages are available -->
               	<span class="iconbar-unread">?</span>
             </a>
@@ -96,7 +96,7 @@
 <?php
         $roles = (!empty($this -> sessionData -> data -> roles)) ? $this -> sessionData -> data -> roles:NULL;
         $currentGroupAdmin = false;
-        if ( !empty($this->sessionData) && !empty($roles)) {
+        if ( !empty($this->sessionData) && !empty( $roles) ) {
         	if ( in_array( 'GroupAdmin', $roles ) ||
         		 in_array( 'GroupOwner', $roles ) ) {
                 $currentGroupAdmin = true;
@@ -107,7 +107,7 @@
 }
 ?>
     	<li class="dropdown">
-    		<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Personal">
+    		<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="<?php _e('Account settings')?>">
     			<i class="bidx-gear"></i>
     		</a>
     		<ul class="dropdown-menu">
@@ -117,7 +117,7 @@
 
 
 <?php
-                if (!empty($this -> sessionData -> data)) {
+                if (!empty( $this -> sessionData -> data ) ){
 
                     $currentGroup   = $this->exst( $this->sessionData->data->currentGroup );
                     $groups         = $this->exst( $this->sessionData->data->groups );
@@ -125,16 +125,16 @@
 
                     if ( !empty( $currentGroup ) && !empty( $groups ) && !isset( $groups->$currentGroup )) {
 ?>
-                        <li><a href="#joinGroup">Join this group</a></li>
+                        <li><a href="#joinGroup"><?php _e('Join this group', 'bidxplugin')?></a></li>
 <?php
                     } else if(!$currentGroupAdmin) {
 ?>
-        				<li><a href="#leaveGroup">Leave this group</a></li>
+        				<li><a href="#leaveGroup"><?php _e('Leave this group', 'bidxplugin')?></a></li>
 <?php
                     }
                 }
 
-                if(!$currentGroupAdmin) {
+                if( !$currentGroupAdmin ) {
 ?>
 				    <li><a href="#messageOwner"><?php _e('Ask a question','bidxplugin')?></a></li>
                     <li><a href="#messageOwner"><?php _e('Help','bidxplugin')?></a></li>
@@ -142,7 +142,7 @@
                 }
                 if( $showLogout ) {
 ?>
-                     <li> <a href="<?php echo wp_logout_url( home_url() ); ?>" title="Logout">Logout</a>
+                     <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e('Logout', 'bidxplugin')?></a>
 <?php
                 }
 ?>
