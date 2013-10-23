@@ -1,0 +1,49 @@
+<?php
+
+    // check if span is empty, then revert to default 6
+    $span = !empty($this->span) ? $this->span : 6;
+
+    $args=array(
+      'post_type' => 'post',
+      'post_status' => 'publish',
+      'posts_per_page' => 2
+      );
+    $my_query = null;
+    $my_query = new WP_Query($args);
+
+    if( $my_query->have_posts() ) {
+        $index = 0;
+        while ( $my_query->have_posts() ) {
+            if ( $index == 3) {
+                break;
+            }
+            $my_query->the_post();
+?>
+                    <div class="span<?php echo $span ?> clearfix">
+                        <a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+<?php
+                        if ( has_post_thumbnail() ) {
+                            $size = array(100,100);
+                            $atts = array('data-src' => 'holder.js/50x50/social/auto/text:News',
+                                          'class' => 'media-object img-circle',
+                                          'align' => 'left');
+                            the_post_thumbnail($size, $atts);
+                        } else {
+?>
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left" class="img-circle">
+<?php
+                        }
+?>
+                        </a>
+
+                        <div>
+                            <div><strong><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></strong></div>
+                            <div><?php the_excerpt(); ?></div>
+                        </div>
+                    </div>
+<?php
+        }
+         $index++;
+    }
+    wp_reset_query();
+?>
