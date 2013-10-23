@@ -48,6 +48,10 @@ if ( !defined( 'BIDX_VERSION_KEY') ) {
 if ( !defined('BIDX_VERSION_NUM') ) {
 	define( 'BIDX_VERSION_NUM', '0.1.2' );
 }
+/** OpenId Bidx URL **/
+if ( !defined('BIDX_OPENID_URL') ) {
+	define( 'BIDX_OPENID_URL', '/app/api/v1/openid/sso' );
+}
 add_option( BIDX_VERSION_KEY, BIDX_VERSION_NUM );
 
 /**
