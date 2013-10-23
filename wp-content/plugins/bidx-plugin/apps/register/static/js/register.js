@@ -130,11 +130,7 @@
 
                     $frmRegister.hide();
                     $element.find( ".registerSuccess" ).removeClass( "hide" );
-                    var urlparam = $urlparam.length
-                        ? $urlparam.val()
-                        : "";
-                    var url = window.location.protocol + "//" + window.location.host + "?smsg=4&rs=true&sparam=" + urlparam;
-                    window.location.href = url;
+
                 }
             ,   error:          function( jqXhr )
                 {
@@ -167,7 +163,12 @@
 
         if(  options.params && options.params.firstLogin )
         {
-            bidx.utils.setValue( userPreferences, "firstLogin", options.params.firstLogin);
+            bidx.utils.setValue( userPreferences, "firstLogin",
+            {
+                url:    options.params.firstLogin
+            ,   group:  bidxConfig.groupName
+            } );
+
             bidx.utils.log(userPreferences);
         }
 

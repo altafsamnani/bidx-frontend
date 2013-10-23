@@ -122,6 +122,11 @@ class ContentLoader
                     //
                     $content = stream_get_contents( $stream );
                     fclose( $stream );
+
+/*                    ob_start();
+                    include BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml';
+                    $content = ob_get_clean();*/
+
                 }
 
                 $insertPostArr = array (

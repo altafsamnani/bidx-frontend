@@ -264,6 +264,7 @@ class BidxCommon
             bidxConfig.session = $jsSessionVars ;
 
             bidxConfig.now = $now;
+            bidxConfig.groupName = '{$subDomain}';
 
             bidxConfig.authenticated = {$jsAuthenticated};
                  </script>
@@ -464,10 +465,10 @@ class BidxCommon
      */
     public function checkSession ()
     {
-       
+
         $isCheck = true;
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
-        $params = $_GET;        
+        $params = $_GET;
 
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
         if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) ||
