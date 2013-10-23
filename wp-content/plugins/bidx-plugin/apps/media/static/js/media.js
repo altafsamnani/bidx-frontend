@@ -29,6 +29,8 @@
     ,   settings                        =
         {
             selectFile:                     false
+        ,   multiSelect:                    false
+        ,   showEditBtn:                    true
         }
 
         // Object containing the upload details
@@ -124,41 +126,7 @@
         {
             e.preventDefault();
 
-            var result
-            ,   $input
-            ,   $item
-            ,   bidxData
-            ;
-
-            // What files are selected? If multiSelect callback in an array, if not, a single object
-            //
-            if ( settings.multiSelect )
-            {
-                result = [];
-
-                $fileList.find( "[name='uploadCheckbox']:checked" ).each( function()
-                {
-                    $input      = $( this );
-                    $item       = $input.closest( ".fileItem" );
-                    bidxData    = $item.data( "bidxData" );
-
-                    result.push( bidxData );
-                } );
-            }
-            else
-            {
-                $input = $fileList.find( "[name='uploadRadio']:checked" );
-
-                if ( $input.length )
-                {
-                    $item       = $input.closest( ".fileItem" );
-                    bidxData    = $item.data( "bidxData" );
-
-                    result = bidxData;
-                }
-            }
-
-            callbacks.select( result );
+            _select();
         } );
 
         // Cancel the attempt to select a file
@@ -167,14 +135,7 @@
         {
             e.preventDefault();
 
-            if ( callbacks )
-            {
-                callbacks.cancel();
-            }
-            else
-            {
-                bidx.utils.warn( "[media] cancel select file pressed, but no callback defined... " );
-            }
+            _cancelSelect();
         } );
 
         // Populate dropdown using the static data
@@ -377,6 +338,64 @@
         } );
     }
 
+    function _cancelSelect()
+    {
+        if ( callbacks )
+        {
+            callbacks.cancel();
+        }
+        else
+        {
+            bidx.utils.warn( "[media] cancel select file pressed, but no callback defined... " );
+        }
+    }
+
+    function _select()
+    {
+        var result
+        ,   $input
+        ,   $item
+        ,   bidxData
+        ;
+
+        // What files are selected? If multiSelect callback in an array, if not, a single object
+        //
+        if ( settings.multiSelect )
+        {
+            result = [];
+
+            $fileList.find( "[name='uploadCheckbox']:checked" ).each( function()
+            {
+                $input      = $( this );
+                $item       = $input.closest( ".fileItem" );
+                bidxData    = $item.data( "bidxData" );
+
+                result.push( bidxData );
+            } );
+        }
+        else
+        {
+            $input = $fileList.find( "[name='uploadRadio']:checked" );
+
+            if ( $input.length )
+            {
+                $item       = $input.closest( ".fileItem" );
+                bidxData    = $item.data( "bidxData" );
+
+                result = bidxData;
+            }
+        }
+
+        if ( callbacks )
+        {
+            callbacks.select( result );
+        }
+        else
+        {
+            bidx.utils.warn( "[media] select file pressed, but no callback defined... " );
+        }
+    }
+
     // Actually delete the file from the API
     //
     function _deleteUpload( cb )
@@ -456,6 +475,15 @@
             }
 
             $tdSelectFile.show();
+        }
+        else
+        {
+            $tdSelectFile.hide();
+        }
+
+        if ( settings.showEditBtn === false )
+        {
+            $file.find( ".btnEdit" ).hide();
         }
 
         // New or existing file?
@@ -731,6 +759,29 @@
         {
             settings.selectFile     = options.selectFile;
             settings.multiSelect    = options.multiSelect || false;
+        }
+
+        if ( typeof options.btnSelect !== "undefined" )
+        {
+            options.btnSelect.off( ".media" ).on( "click.media", function( e )
+            {
+                e.preventDefault();
+                _select();
+            } );
+        }
+
+        if ( typeof options.btnCancel !== "undefined" )
+        {
+            options.btnCancel.off( ".media" ).on( "click.media", function( e )
+            {
+                e.preventDefault();
+                _cancelSelect();
+            } );
+        }
+
+        if ( typeof options.showEditBtn !== "undefined" )
+        {
+            settings.showEditBtn = options.showEditBtn;
         }
 
         // Register callbacks
