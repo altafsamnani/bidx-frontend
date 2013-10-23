@@ -35,6 +35,8 @@
                     e.returnValue = message;
                 }
 
+                bidx.utils.log( "Apps with pending changes", changesQueue.join( ", " ));
+
                 // For Chrome, Safari, IE8+ and Opera 12+
                 return message;
             };
@@ -72,6 +74,8 @@
         if ( changesQueue.length )
         {
             confirmationRequested = true;
+
+            bidx.utils.log( "Apps with pending changes", changesQueue.join( ", " ));
 
             _notify(
             {
