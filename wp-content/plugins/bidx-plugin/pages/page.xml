@@ -7,6 +7,14 @@
 
 	<posts>
 		<post>
+			<post_id>0</post_id>
+			<name>Home</name>
+			<title>home</title>
+			<mapping>^home/?</mapping>
+			<update>true</update>
+			<content></content>
+		</post>
+		<post>
 			<post_id>1</post_id>
 			<name>TermsofService</name>
 			<title>Terms of Service</title>

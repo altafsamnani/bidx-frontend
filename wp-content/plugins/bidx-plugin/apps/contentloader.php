@@ -77,6 +77,7 @@ class ContentLoader
 
         $this->logger->trace ('Start loading default data from location : ' . $this->location);
         foreach (glob (BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml') as $filename) {
+
             //try /catch / log ignore
             $document = simplexml_load_file ($filename);
 
@@ -110,7 +111,7 @@ class ContentLoader
                 //
                 $content = $post->content;
 
-                // if htmpTemplate is available, replace the content with the source from the template file
+                // $msp: if htmpTemplate is available, replace the content with the source from the template file
                 //
                 if ( isset( $post->htmlTemplate ) && $post->htmlTemplate != '' ) {
 
@@ -123,9 +124,9 @@ class ContentLoader
                     $content = stream_get_contents( $stream );
                     fclose( $stream );
 
-/*                    ob_start();
-                    include BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml';
-                    $content = ob_get_clean();*/
+                    // ob_start();
+                    // include BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml';
+                    // $content = ob_get_clean();
 
                 }
 
@@ -160,7 +161,14 @@ class ContentLoader
                     //check here that all values from SimpleXML are explicitly casted to string
                     //$enMapping = str_replace('^','^/en/',$mappingOrig);
                     //$enTarget = $target.'_en';
-                    add_rewrite_rule ($mappingOrig, $target, 'top');
+
+                    // $msp: do not add rewrites for pages because they will use wordpress default
+                    //
+                    if ( $document->posttype != 'page' )
+                    {
+                        $this->logger->trace (" ADDING REWRITE FOR " . $document->posttype );
+                        add_rewrite_rule ($mappingOrig, $target, 'top');
+                    }
 
                     //$enMapping = str_replace('^','^/en/',$mappingOrig);
                     //$enTarget = $target.'_en';
@@ -171,6 +179,7 @@ class ContentLoader
                     //$this -> logger -> trace( 'Adding the rewrite rule ES: ' . $esMapping . ' to ' . $target );
                 }
             }
+            // end for eacht post
 
             flush_rewrite_rules (false);
             //if manual writeout is needed
@@ -179,7 +188,6 @@ class ContentLoader
             $widgets = $document->xpath ('//widget');
             $this->logger->trace ('Adding the widgets : ' . sizeof ($widgets) . ' found');
             foreach ($widgets as $widget) {
-
                 $this->logger->trace ('Adding the widget named : ' . $widget->name);
             }
 
@@ -200,6 +208,7 @@ class ContentLoader
                 $this->logger->trace ('Adding the navigation named : ' . $image->name);
             }
         }
+        // end for each xml file
 
         //update_option (BIDX_VERSION_KEY, BIDX_VERSION_NUM);
     }
