@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 ?>
 <header class="banner navbar navbar-fixed-top" role="banner">
@@ -14,12 +14,12 @@
 				</div>
 <?php
 				}
-				
+
 				// the group-header is displayed for authenticated and non-authenticated
 ?>
 				<div class='header-logo'>
-<?php 
-				if ( get_theme_mod( 'themeslug_logo' ) ) { 
+<?php
+				if ( get_theme_mod( 'themeslug_logo' ) ) {
 					$img = parse_url( get_theme_mod( 'themeslug_logo' ) );
 					$img_url = $img['path']; //make relative
 ?>
@@ -30,8 +30,8 @@
    					<span class='site-title'><a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></span>
 <?php 			} ?>
 				</div>
-				
-<?php 
+
+<?php
 				if( $authenticated )
 				{
 ?>
@@ -46,7 +46,7 @@
 	 			<div class="pull-right span4 bidx-header-controls">
 					<div class="row-fluid">
 						<div class="span6">
-							<a href="/auth/#auth/register" class="btn btn-primary btn-block bidx-theme-colour-two"><?php _e('Register','bidxtheme');?></a>
+							<a href="/auth/#auth/register/firstLogin=get-it-started-member" class="btn btn-primary btn-block bidx-theme-colour-two"><?php _e('Register','bidxtheme');?></a>
 						</div>
 						<div class="span6">
 							<a href="/auth/#auth/login" class="btn btn-primary btn-block bidx-theme-colour-one"><i class="bidx-login"></i><?php _e('Login','bidxtheme');?></a>
@@ -74,11 +74,11 @@
 						wp_nav_menu(array('theme_location' => 'primary_notloggedin_navigation', 'menu_class' => 'nav'));
 					endif;
 ?>
-				</nav> 
+				</nav>
 <?php
-				} 
+				}
 ?>
- 
+
  			</div>
 		</div>
 	</div>

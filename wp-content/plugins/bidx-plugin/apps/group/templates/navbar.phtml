@@ -117,6 +117,7 @@
 
 
 <?php
+
                 if (!empty( $this -> sessionData -> data ) ){
 
                     $currentGroup   = $this->exst( $this->sessionData->data->currentGroup );
@@ -134,7 +135,7 @@
                     }
                 }
 
-                if( !$currentGroupAdmin ) {
+                if( !$currentGroupAdmin && $hasGroups ) {
 ?>
 				    <li><a href="#messageOwner"><?php _e('Ask your question','bidxplugin')?></a></li>
                     <li><a href="#messageOwner"><?php _e('Help','bidxplugin')?></a></li>

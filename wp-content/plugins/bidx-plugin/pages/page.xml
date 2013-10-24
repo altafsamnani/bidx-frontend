@@ -96,7 +96,16 @@
 			<htmlTemplate>financial-details-templates</htmlTemplate>
 			<content></content>
 		</post>
-
+		<post>
+			<post_id>8</post_id>
+			<name>Get it started member</name>
+			<title>Get it started member</title>
+			<mapping>^get-it-started-member/?</mapping>
+			<update>true</update>
+			<htmlTemplate>get-it-started-member</htmlTemplate>
+			<content></content>
+		</post>
 	</posts>
 
 </data>
+http://sampoerna.local.bidx.net/get-it-started-member/
