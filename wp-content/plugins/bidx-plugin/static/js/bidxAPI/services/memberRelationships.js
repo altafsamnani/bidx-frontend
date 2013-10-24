@@ -8,14 +8,14 @@
     var bidx    = window.bidx
     ,   api     = bidx.api
     ,   memberRelationships  = {}
-    ,   baseUrl = "/api/v1/members/relationships/%requesterId%"
+    ,   baseUrl = "/api/v1/members/relationships/%id%"
     ,   params  = []
     ;
 
     memberRelationships.fetch = function( params )
     {
         var method = "GET"
-        ,   url    = baseUrl.replace( "/%requesterId%", "" )
+        ,   url    = baseUrl.replace( "/%id%", "" )
         ;
 
 
@@ -44,7 +44,7 @@
     memberRelationships.mutate = function( params )
     {
         var method  = "PUT"
-        ,   url     = baseUrl.replace( "%requesterId%", params.requesterId )
+        ,   url     = baseUrl.replace( "%id%", params.requesterId )
         ;
 
         api._call(
@@ -68,11 +68,8 @@
     memberRelationships.create = function( params )
     {
         var method  = "POST"
-        //,   url     = baseUrl
-        ,   tempUrl = "/api/v1/members/%requesterId%/relationships/%requesteeId%" // NOTE: temp url until Jeroen changes
-        ,   url     = tempUrl
-                        .replace( "%requesterId%", params.requesterId )
-                        .replace( "%requesteeId%", params.requesteeId )
+        ,   url     = baseUrl
+                        .replace( "%id%", params.requesteeId )
         ;
 
         api._call(

@@ -4,16 +4,33 @@
 	<posttype>page</posttype>
 	<description>List of public editable page resources for the enduser to manage</description>
 	<version>1.0</version>
-
+	<!--
+		WP Page preloader:
+		Use <content> only with escaped html
+		Use <htmlTenpplate> with the template name without extention that has to be available in the templates folder. The content of the htmlTemplate will overwrite the content of the <content> tag.
+		Add template filename in <template> tag set a template
+		Use <setHompage>true</setHompage> to set page as Homepage
+	-->
 	<posts>
-		<post>
-			<post_id>0</post_id>
-			<name>Home</name>
-			<title>home</title>
-			<mapping>^home/?</mapping>
-			<update>true</update>
-			<content></content>
-		</post>
+		 <post>
+            <post_id>0</post_id>
+            <name>homepage</name>
+            <title>Home</title>
+            <mapping>^home?</mapping>
+            <content>
+				&lt;div class="row-fluid"&gt;
+					&lt;div class="span8"&gt;
+	                [bidx app="group" view="list-groups"]
+	                [bidx app="group" view="last-members"]
+					&lt;/div&gt;
+					&lt;div class="span4"&gt;
+	                [bidx app="group" view="group-details"]
+					&lt;/div&gt;
+				&lt;/div&gt;
+            </content>
+            <template>page-intro.php</template>
+            <setHompage>true</setHompage>
+        </post>
 		<post>
 			<post_id>1</post_id>
 			<name>TermsofService</name>

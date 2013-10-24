@@ -64,23 +64,6 @@
             <content>[bidx app="group" view="group-intro"]</content>
         </post>
         <post>
-            <post_id>10</post_id>
-            <name>homepage</name>
-            <title>Home</title>
-            <mapping>^home?</mapping>
-            <content>
-			&lt;div class="row-fluid"&gt;
-				&lt;div class="span8"&gt;
-                [bidx app="group" view="list-groups"]
-                [bidx app="group" view="last-members"]
-				&lt;/div&gt;
-				&lt;div class="span4"&gt;
-                [bidx app="group" view="group-details"]
-				&lt;/div&gt;
-			&lt;/div&gt;
-            </content>
-        </post>
-        <post>
             <post_id>11</post_id>
             <name>company</name>
             <title>Company Information</title>

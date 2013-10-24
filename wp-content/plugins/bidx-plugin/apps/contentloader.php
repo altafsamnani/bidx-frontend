@@ -88,6 +88,7 @@ class ContentLoader
 
             foreach ($posts as $post) {
 
+
                 $this->logger->trace ('Adding the post named : ' . $post->name);
 
                 if ($post->update == 'false') {
@@ -141,13 +142,36 @@ class ContentLoader
                 //$enPostArr = $insertPostArr;
                 //$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
                 //$post_id = wp_insert_post($enPostArr);
+
+                // insert the post
+                //
                 $post_id = wp_insert_post ($insertPostArr);
-                if (!$post_id) {
-                    wp_die ('Error creating page');
+
+                // check if post was created
+                //
+                if ( !$post_id ) {
+                    wp_die ( 'Error creating page' );
                 } else {
-                    if (isset ($post->template)) {
-                        $this->logger->trace ('Adding template on post ' . $post_id . ' named : ' . $post->template);
-                        update_post_meta ($post_id, '_wp_page_template', $post->template);
+
+                    // check if a template needs te be set
+                    //
+                    if ( isset ( $post->template ) && $post->template !== '' ) {
+
+                        $this->logger->trace ( 'Adding template on post ' . $post_id . ' named : ' . $post->template );
+                        update_post_meta ( $post_id, '_wp_page_template', (string) $post->template );
+                    }
+
+                    // set page as Home page
+                    //
+                    if ( isset ( $post->setHompage ) && (string) $post->setHomepage !== 'true' ) {
+
+                        // Set "static page" as the option
+                        //
+                        update_option( 'show_on_front', 'page' );
+
+                        // Set the front page ID
+                        //
+                        update_option( 'page_on_front', $post_id );
                     }
 
                     // $post_translated_id = $this->mwm_wpml_translate_post($post_id,$insertPostArr,'es' );
@@ -178,6 +202,9 @@ class ContentLoader
                     //add_rewrite_rule( $esMapping, $esTarget, 'top' );
                     //$this -> logger -> trace( 'Adding the rewrite rule ES: ' . $esMapping . ' to ' . $target );
                 }
+
+
+
             }
             // end for eacht post
 

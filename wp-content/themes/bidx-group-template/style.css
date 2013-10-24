@@ -1568,6 +1568,11 @@ form .row-fluid .input-prepend {
     /* styles shared by portrait tablet and above */
     @media (min-width: 980px ) {
 
+        .inner-wrap > .container {
+            margin-bottom:              40px;
+        }
+
+
         /* header */
         header .navbar-inner {
             height:                     109px;

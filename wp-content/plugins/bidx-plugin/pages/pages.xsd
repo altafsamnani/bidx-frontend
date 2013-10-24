@@ -94,6 +94,11 @@
 					<xs:documentation>Optional name of the template in a Theme</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="setHompage" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional set page as homepage</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="update" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>If the post already exists should it be updated</xs:documentation>
