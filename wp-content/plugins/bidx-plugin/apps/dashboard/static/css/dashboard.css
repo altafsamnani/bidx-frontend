@@ -64,4 +64,11 @@
     margin-top:6%
 }
 
+.help.details-block label {
+    font-size:20px;
+    font-weight:normal;
+}
 
+.help a {
+    float:right;
+}
