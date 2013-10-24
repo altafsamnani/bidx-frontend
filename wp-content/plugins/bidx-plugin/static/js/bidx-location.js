@@ -176,6 +176,9 @@
 
             if ( options.initiallyShowMap )
             {
+                // added default coordinates for inital load
+                //
+                state.locationData.coordinates = options.initialCenter.lat + "," + options.initialCenter.lon;
                 widget.showMap();
             }
         }

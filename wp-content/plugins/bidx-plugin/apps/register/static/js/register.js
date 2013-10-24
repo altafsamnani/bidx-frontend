@@ -11,14 +11,15 @@
 
     // private functions
 
-    var _initHandlers = function()
+    var _oneTimeSetup = function()
     {
 
         // enable location plugin
         //
         $frmRegister.find( "[data-type=location]"   ).bidx_location(
         {
-            showMap:                false
+            showMap:                true
+        ,   initiallyShowMap:       true
         } );
 
 
@@ -81,6 +82,8 @@
                 } );
             }
         } );
+
+        $("[type=checkbox]").checkbox();
 
 
     };
@@ -190,7 +193,7 @@
     window.bidx.register = app;
 
     // Initialize handlers
-    _initHandlers();
+    _oneTimeSetup();
 
     // Only update the hash when user is authenticating and when there is no hash defined
     //
