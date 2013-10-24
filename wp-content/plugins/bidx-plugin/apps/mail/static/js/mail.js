@@ -480,7 +480,6 @@
              "memberRelationships.create"
         ,   {
                 groupDomain:            bidx.common.groupDomain
-            ,   requesterId:            options.requesterId
             ,   requesteeId:            options.requesteeId
             ,   data:
                 {
