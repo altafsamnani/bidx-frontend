@@ -163,12 +163,8 @@
 
         if(  options.params && options.params.firstLogin )
         {
-            bidx.utils.setValue( userPreferences, "firstLogin",
-            {
-                url:    options.params.firstLogin
-            ,   group:  bidxConfig.groupName
-            } );
-
+            bidx.utils.setValue( userPreferences, "firstLoginUrl", options.params.firstLogin );
+            bidx.utils.setValue( userPreferences, "firstLoginGroup", bidxConfig.groupName );
             bidx.utils.log(userPreferences);
         }
 

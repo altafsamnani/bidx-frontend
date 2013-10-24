@@ -142,8 +142,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     /*     * *********2. Set Headers ******************************** */
     //For Authentication
     $headers['Authorization'] = 'Basic ' . base64_encode ("$authUsername:$authPassword");
-    
-   
+
+
     /* if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
       $body['username'] = 'admin@bidnetwork.org';
       $body['password'] = 'admin123';
@@ -778,19 +778,24 @@ function get_redirect ($url, $requestData, $domain = NULL)
         $redirect_to = $_POST['redirect_to'];
         $redirect = base64_decode ($redirect_to);
     }
-    
-    //Do user preference Speific Actions
-    if( isset( $requestData->data->bidxMemberProfile->userPreferences->firstLogin ) ) {
+
+    // check if a user specifc Redirect is set in the userPreference
+    //
+    if( isset( $requestData->data->bidxMemberProfile->userPreferences->firstLoginUrl ) && isset( $requestData->data->bidxMemberProfile->userPreferences->firstLoginGroup ) ) {
         $body['domain']     = $domain;
-        $firstLogin         = $requestData->data->bidxMemberProfile->userPreferences->firstLogin;
+        $groupName          = $requestData->data->bidxMemberProfile->userPreferences->firstLoginGroup;
+        $firstLogin         = $requestData->data->bidxMemberProfile->userPreferences->firstLoginUrl;
         /*'{"bidxMeta": {"bidxEntityType":"bidxMemberProfile"} , "userPreferences": {"firstLogin": ""}}'; //get-it-started-investor */
-        $data               = array('bidxMeta'        => array('bidxEntityType' => 'bidxMemberProfile'),
-                                    'userPreferences' => array('firstLogin'     => ''));
-        $body['data']       = json_encode($data);        
+        $data               = array('bidxMeta'        => array('bidxEntityType'     => 'bidxMemberProfile'),
+                                    'userPreferences' => array('firstLoginUrl'      => '',
+                                                               'firstLoginGroup'    => '') );
+        $body['data']       = json_encode($data);
         $memberId           = $requestData->data->id;
         $result             = call_bidx_service ('members/' . $memberId, $body, 'PUT', 'json' );
-        $redirect           = '/'.$firstLogin;
-     
+        // to the redirect
+        //
+        $redirect           = '//' . $groupName . '.' . DOMAIN_CURRENT_SITE . '/'. $firstLogin;
+
      }
 
     /*     * ***** Decide on Redirect/Submit Logic ********** */
@@ -1954,8 +1959,8 @@ function bidx_options ()
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
-   
-        
+
+
         /* 2 Bidx Push Notification */
         $entrepreneurNotification = get_site_option('entrepreneur-notification');
         $htmlEntrNotification =  "<br/><br/><b>Bidx Entrepreneur Notification</b><br/>";
@@ -1973,7 +1978,7 @@ function bidx_options ()
             if($action == 'Save') {
                 update_site_option($notificationType, $notificationVal);
             } else {
-                
+
             }
 
         }
@@ -1986,11 +1991,11 @@ function bidx_options ()
                     <input type='submit' name = 'action' value='Save'>
                     <input type='submit' name = 'action' value='Reset' >
                 </div>";
- 
-   
+
+
         echo "<h2>Global Custom Options</h2>
                 <form method='post' action='settings.php?page=static-po'>
-                    {$htmlEntrNotification}                    
+                    {$htmlEntrNotification}
                 </form>
                 <form method='post' action='settings.php?page=static-po'>
                     {$htmlInvestorNotification}
@@ -2199,7 +2204,7 @@ function bidx_dashboard_header ()
 {
     $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
     $currentUser = wp_get_current_user ();
-  
+
     if (in_array ('groupadmin', $currentUser->roles)) {
         roots_scripts ();
         $menu = 'dashboard';
@@ -2342,7 +2347,7 @@ add_action ('wp_ajax_bidx_set_option', 'bidx_set_option');
 
 function bidx_set_option ()
 {
-   
+
     $type = (isset($_GET['type'])) ? $_GET['type'] : NULL;
     $value = (isset($_GET['value'])) ? $_GET['value'] : NULL;
     $data['response'] = 'error';
