@@ -54,7 +54,7 @@ class login {
         $view->showLink = (isset($atts['link'])) ? $atts['link'] : "true";
         $view->redirectTo = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : NULL ; // For SSO-Auth redirect_to = aHR0cHM6Ly9iaWR4Lm5ldC9hcHAvYXBpL3YxL29wZW5pZC9zc28=
 
-        if(isset($atts['ssoauth']) && !isset($view->redirectTo)) {
+        if(isset($atts['ssoauth'])) {
             $view->redirectTo = base64_encode(BIDX_OPENID_URL);
         }
 
