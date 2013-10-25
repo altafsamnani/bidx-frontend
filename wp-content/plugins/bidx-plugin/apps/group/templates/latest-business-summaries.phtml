@@ -1,4 +1,3 @@
-
 <?php
         // check if span is empty, then revert to default 6
         $span = !empty($this->span) ? $this->span : 6;
@@ -22,11 +21,41 @@
                     }
 ?>
                     <div>
-                        <div><strong><a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxProfileId ?>">
+                        <div><strong>
 <?php
-                            echo $this -> exst( $summary -> displayName );
+                        if ( $this -> sessionData -> authenticated == true ) :
 ?>
-                        </a></strong></div>
+                            <a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>">
+<?php
+                        endif;
+
+                        echo $this -> exst( $summary -> name );
+
+                        if ( $this -> sessionData -> authenticated == true ) :
+?>
+                        </a>
+<?php
+                        endif;
+?>
+
+                        </strong></div>
+                        <div>
+<?php
+                            $countries = implode( ", ", $this -> exst( $summary -> countryOperation ));
+                            echo $countries;
+?>
+                        </div>
+                        <div>
+<?php
+                            $industries = implode( ", ", $this -> exst( $summary -> industry ));
+                            echo $industries;
+?>
+                        </div>
+                        <div>
+<?php
+                            echo date( 'd M Y', $summary -> bidxMeta -> bidxCreationDateTime );
+?>
+                        </div>
                     </div>
                 </div>
 <?php
