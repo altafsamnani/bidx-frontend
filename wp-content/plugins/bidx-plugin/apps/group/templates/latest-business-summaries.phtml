@@ -1,8 +1,11 @@
+<!-- <pre><?php print_r($this -> sessionData -> authenticated); ?></pre> -->
 <?php
         // check if span is empty, then revert to default 6
-        $span = !empty($this->span) ? $this->span : 6;
+        $span = !empty( $this->span ) ? $this->span : 6;
+        $loggedin = $this -> sessionData -> authenticated;
 
-        if (is_array($this -> summaries)) {
+
+        if (is_array( $this -> summaries )) {
 
             $index = 0;
             foreach ( $this -> summaries as $summary ) {
@@ -23,19 +26,19 @@
                     <div>
                         <div><strong>
 <?php
-                        if ( $this -> sessionData -> authenticated == true ) :
+                        if ( $loggedin !== true ) {
 ?>
                             <a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>">
 <?php
-                        endif;
+                        }
 
                         echo $this -> exst( $summary -> name );
 
-                        if ( $this -> sessionData -> authenticated == true ) :
+                        if ( $loggedin !== true ) {
 ?>
-                        </a>
+                            </a>
 <?php
-                        endif;
+                        }
 ?>
 
                         </strong></div>
@@ -53,7 +56,7 @@
                         </div>
                         <div>
 <?php
-                            echo date( 'd M Y', $summary -> bidxMeta -> bidxCreationDateTime );
+                            echo date_i18n( 'd M Y', $summary -> bidxMeta -> bidxCreationDateTime );
 ?>
                         </div>
                     </div>
@@ -62,18 +65,5 @@
                 $index++;
             }
             // end foreach
-
-            //  Fields to show here
-            //
-            //  Business Name
-            //  Country -- Multiple Field
-            //  Industry -- Multiple Field
-            //  Image / the logo of the company
-
-            //  -- LOGGED IN --
-            //  view link
-            //  the date when it was last published.
         }
 ?>
-
-
