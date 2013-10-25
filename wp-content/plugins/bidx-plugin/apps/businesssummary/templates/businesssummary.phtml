@@ -39,6 +39,13 @@ $attachment = $this->exst ($businessSummary->attachment);
 //
 $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label', 'class_value' => 'bidx-value', 'class_row' => '' );
 
+
+// Find the Download Financial templates URL
+// TODO: Not the final version
+//
+$dlpage = get_page_by_title( 'Download financial templates' );
+$dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
+
 ?>
 <div class="businessSummary" id="businessSummary">
 
@@ -564,9 +571,20 @@ $viewRowProperties = array ('tag_label' => 'div', 'class_label' => 'bidx-label',
                                 </div>
                                 <!-- numYear-->
 
+<?php
+?>
+
                                 <!-- If there is no financial plan uploaded -->
                                 <a class="btn btn-primary" href=""><?php _e('Upload your financial plan', 'bidxplugin'); ?></a>
-                                <a  class="btn btn-link" href="/download-financial-templates"><?php _e('Or download a financial plan template here.', 'bidxplugin'); ?></a>
+
+<?php
+                                if ( $dlurl !== false) :
+?>
+                                    <a  class="btn btn-link" href="<?php echo $dlurl; ?>"><?php _e('Or download a financial plan template.', 'bidxplugin'); ?>&nbsp;<span class="icon-download text-info"></span></a>
+<?php
+                                endif;
+?>
+
 
                                 <hr>
                                 <div class="control-group formfield span11">
