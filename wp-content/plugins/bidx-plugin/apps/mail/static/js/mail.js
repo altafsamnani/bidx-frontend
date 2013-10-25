@@ -1501,6 +1501,7 @@
         var mailId
         ,   action
         ,   buttons
+        ,   recipientIds
         ,   $pGetMailboxes
         ;
 
@@ -1527,6 +1528,11 @@
                 if ( options.params.id )
                 {
                     mailId = options.params.id;
+                }
+
+                if(options.params.recipients)
+                {
+                    recipientIds = options.params.recipients;
                 }
 
                 // only override action when an action is provided in params
@@ -1673,6 +1679,11 @@
                         //
                         _initForwardOrReply( state, mailId, action );
                     }
+                } 
+                else if(action === "compose" && recipientIds )
+                {
+                    var recipients = recipientIds.split('|');
+                    $frmCompose.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
                 }
 
                 _showView( "compose", action );

@@ -60,6 +60,7 @@ class dashboard
                 wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);             
                 $sessionSvc = new SessionService( );
                 $investorProfile = $sessionSvc->isHavingProfile( 'bidxInvestorProfile' );
+          
                 if ($investorProfile) {
 
                     $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
