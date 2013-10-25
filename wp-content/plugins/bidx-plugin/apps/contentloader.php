@@ -68,45 +68,53 @@ class ContentLoader
      *
      * @todo language selector based on the language preference (how multiple languages are supported)
      */
-    public function load ($post_type = null)
+    public function load( $post_type = null )
     {
-        add_rewrite_tag ('%bidx%', '([^&/]+)'); //main action per endpoint
-        add_rewrite_tag ('%bidxparam1%', '([^&/]+)'); //control parameter if available
-        add_rewrite_tag ('%bidxparam2%', '([^&/]+)'); //rest of url data if available
+        add_rewrite_tag( '%bidx%', '([^&/]+)' ); //main action per endpoint
+        add_rewrite_tag( '%bidxparam1%', '([^&/]+)' ); //control parameter if available
+        add_rewrite_tag( '%bidxparam2%', '([^&/]+)' ); //rest of url data if available
 
 
-        $this->logger->trace ('Start loading default data from location : ' . $this->location);
-        foreach (glob (BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml') as $filename) {
-
+        $this->logger->trace( 'Start loading default data from location : ' . $this->location );
+        foreach ( glob( BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml' ) as $filename ) {
             //try /catch / log ignore
-            $document = simplexml_load_file ($filename);
+            $document = simplexml_load_file( $filename );
 
-            $this->logger->trace ('Start processing file : ' . $filename);
+            $this->logger->trace( 'Start processing file : ' . $filename );
 
-            $posts = $document->xpath ('//post');
-            $this->logger->trace ('Found posts : ' . sizeof ($posts));
+            $posts = $document->xpath ( '//post' );
+            $this->logger->trace( 'Found posts : ' . sizeof( $posts ) );
 
-            foreach ($posts as $post) {
+            foreach ( $posts as $post ) {
 
+                $this->logger->trace( 'Adding the post named : ' . $post->name );
 
-                $this->logger->trace ('Adding the post named : ' . $post->name);
+                $posts_array = get_posts ( array (
+                		'post_name' => (string) $post->name
+                		, 'post_status' => 'publish'
+                		, 'post_type' => $document->posttype
+                		, 'nopaging' => true,
+                		'suppress_filters' => false )
+                );
+                
+                if ( $post->update == 'false' ) {
 
-                if ($post->update == 'false') {
+                    $this->logger->trace( 'May not update the post : ' . $post->name );
 
-                    $this->logger->trace ('May not update the post : ' . $post->name);
-
-                    $posts_array = get_posts (array (
-                      'post_name' => (string) $post->name
-                      , 'post_status' => 'publish'
-                      , 'post_type' => $document->posttype
-                      , 'nopaging' => true,
-                      'suppress_filters' => false)
-                    );
-                    if (sizeof ($posts_array) > 0) {
+                    if ( sizeof( $posts_array ) > 0 ) {
                         break;
-                        $this->logger->trace ('Post exist, skipping : ' . $post->name);
+                        $this->logger->trace( 'Post exist, skipping : ' . $post->name );
                     }
+                    
+                } else {
+                	
+                	if ( sizeof( $posts_array ) > 0 ) {
+                        $this->logger->trace( 'Post exist, for update : ' . $posts_array[0]->ID );
+                        $post_id = $posts_array[0]->ID;
+                    }
+                    
                 }
+
 
                 // default get $post content
                 //
@@ -116,7 +124,7 @@ class ContentLoader
                 //
                 if ( isset( $post->htmlTemplate ) && $post->htmlTemplate != '' ) {
 
-                    $this->logger->trace ('Getting content from htmlTemplate ' . $post->htmlTemplate . '.phtml' );
+                    $this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . '.phtml' );
                     // open template file and get content
                     //
                     $stream = fopen( BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml' , "r" );
@@ -131,52 +139,49 @@ class ContentLoader
 
                 }
 
-                $insertPostArr = array (
-                    'post_content'  => $content
-                ,   'post_name'     => $post->name
-                ,   'post_status'   => 'publish'
-                ,   'post_title'    => $post->title
-                ,   'post_type'     => $document->posttype
-                ,   'post_author'   => 1
-                );
-                //$enPostArr = $insertPostArr;
-                //$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
-                //$post_id = wp_insert_post($enPostArr);
-
-                // insert the post
-                //
-                $post_id = wp_insert_post ($insertPostArr);
-
-                // check if post was created
-                //
-                if ( !$post_id ) {
-                    wp_die ( 'Error creating page' );
+                if ( $post_id ) {
+                	$this->logger->trace( 'Post updating : ' . $post->name );
+                	wp_update_post( array(
+                			'ID'           => $post_id,
+                			'post_content' => $content
+                		) );
                 } else {
-
-                    // check if a template needs te be set
-                    //
-                    if ( isset ( $post->template ) && $post->template !== '' ) {
-
-                        $this->logger->trace ( 'Adding template on post ' . $post_id . ' named : ' . $post->template );
-                        update_post_meta ( $post_id, '_wp_page_template', (string) $post->template );
-                    }
-
-                    // set page as Home page
-                    //
-                    if ( isset ( $post->setHompage ) && (string) $post->setHomepage !== 'true' ) {
-
-                        // Set "static page" as the option
-                        //
-                        update_option( 'show_on_front', 'page' );
-
-                        // Set the front page ID
-                        //
-                        update_option( 'page_on_front', $post_id );
-                    }
-
-                    // $post_translated_id = $this->mwm_wpml_translate_post($post_id,$insertPostArr,'es' );
+                	$this->logger->trace( 'Inserting new post : ' . $post->name );
+                	$insertPostArr = array (
+                			'post_content'  => $content
+                			,   'post_name'     => $post->name
+                			,   'post_status'   => 'publish'
+                			,   'post_title'    => $post->title
+                			,   'post_type'     => $document->posttype
+                			,   'post_author'   => 1
+                	);
+                	//$enPostArr = $insertPostArr;
+                	//$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
+                	//$post_id = wp_insert_post($enPostArr);
+                	                	
+	                $post_id = wp_insert_post( $insertPostArr );
+	                if (!$post_id) {
+	                    wp_die ('Error creating page');
+	                }
                 }
-
+                
+                // set page as Home page
+                //
+                if ( isset ( $post->setHompage ) && (string) $post->setHomepage !== 'true' ) {
+                
+	                // Set "static page" as the option
+	                update_option( 'show_on_front', 'page' );
+	                
+	                // Set the front page ID
+	                update_option( 'page_on_front', $post_id );
+                }
+                
+                if ( isset( $post->template ) ) {
+                	$this->logger->trace ('Adding template on post ' . $post_id . ' named : ' . $post->template);
+                	update_post_meta ($post_id, '_wp_page_template', (string) $post->template);
+                }
+                // $post_translated_id = $this->mwm_wpml_translate_post($post_id,$insertPostArr,'es' );
+                
                 if (isset ($post->mapping) && $post->mapping != '') {
                     $target = 'index.php?' . $document->posttype . '=' . $post->name;
                     $mappingOrig = (string) $post->mapping;
@@ -211,20 +216,19 @@ class ContentLoader
             flush_rewrite_rules (false);
             //if manual writeout is needed
             //$this -> add_rewrite_rules();
-            //Widgets to be added
-            $widgets = $document->xpath ('//widget');
-            $this->logger->trace ('Adding the widgets : ' . sizeof ($widgets) . ' found');
-            foreach ($widgets as $widget) {
-                $this->logger->trace ('Adding the widget named : ' . $widget->name);
-            }
+// No Widgets to be added (have to find out if this is useful dynamically)
+//             $widgets = $document->xpath ('//widget');
+//             $this->logger->trace ('Adding the widgets : ' . sizeof ($widgets) . ' found');
+//             foreach ($widgets as $widget) {
+//                 $this->logger->trace ('Adding the widget named : ' . $widget->name);
+//             }
 
-            //Navigation blocks to be added
-            $navigations = $document->xpath ('//navigation');
-            $this->logger->trace ('Adding the Navigation : ' . sizeof ($navigations) . ' found');
-            foreach ($navigations as $navigation) {
-
-                $this->logger->trace ('Adding the navigation named : ' . $navigation->name);
-            }
+// Manual actions for now : Navigation blocks to be added
+//             $navigations = $document->xpath ('//navigation');
+//             $this->logger->trace ('Adding the Navigation : ' . sizeof ($navigations) . ' found');
+//             foreach ($navigations as $navigation) {
+//                 $this->logger->trace ('Adding the navigation named : ' . $navigation->name);
+//             }
 
             //Image resource blocks to be added
             //Navigation blocks to be added
