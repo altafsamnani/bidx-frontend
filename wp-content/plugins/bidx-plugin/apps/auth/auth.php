@@ -52,7 +52,7 @@ class auth {
         $type    = array_key_exists( 'type', $atts ) ? $atts['type'] : null;
 
         $view->showRegisterLink = true;
-        $view->showLoginLink = 'altaf';
+        $view->showLoginLink = true;
         $render = $command;
 
         $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
