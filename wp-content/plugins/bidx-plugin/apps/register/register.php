@@ -49,13 +49,19 @@ class register {
         // 2. Determine the view needed
 
 
-        $render    = array_key_exists( 'view', $atts ) ? $atts['view'] : "register";
+        $render                      = array_key_exists( 'view', $atts ) ? $atts['view'] : "register";
+
+        // contenttitle can be provided in the shortcode tag
+        //
+        $view -> contenttitle        = isset( $atts[ "contenttitle" ] ) ? $atts[ "contenttitle" ] : "";
 
         // ob_start is necessary to capture the shortcode response. ob_get_Clean returns the captured content
         //
         ob_start();
         $view -> render( $render . '.phtml' );
         return ob_get_clean();
+
+
 
 
     }

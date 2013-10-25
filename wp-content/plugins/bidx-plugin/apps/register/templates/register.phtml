@@ -1,10 +1,25 @@
+<?php
+
+    // check if there is a contenttitle (Which would have been set in the shortcode tag). If not revert to standard text
+    //
+    if ( isset( $this -> contenttitle ) && $this -> contenttitle != '' ){
+
+        $title = $this -> contenttitle;
+    } else {
+
+        $title = _e( 'Become a member', 'bidxplugin' );
+    }
+
+ ?>
 <div id="register" class="block-odd mainState mainStateRegister">
 <!--     <div class="container">
 
     <div class="row-fluid">
         <div class="span6 offset3 block-login bidx-theme-colour-panel-one"> -->
+
                 <form id="frmRegister" action="/">
-                    <h1><?php _e('Become a member','bidxplugin');?></h1>
+
+                    <h1><?php echo $title; ?></h1>
                     <div class="row-fluid">
                         <div class="span12">
                             <div class="control-group">
@@ -58,7 +73,7 @@
 
 
                     <div class="buttonwrapper">
-                        <button type="submit" class="btn btn-primary bidx-theme-colour-two"><?php _e('Become a member','bidxplugin');?></button>
+                        <button type="submit" class="btn btn-primary bidx-theme-colour-two"><?php _e('Register','bidxplugin');?></button>
                     </div>
                     <?php if($this->showLoginLink) { ?>
                     <p>
