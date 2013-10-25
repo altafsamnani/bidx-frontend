@@ -583,8 +583,8 @@
                 getMembers(
                 {
                     list: "list"
-                            , view: "list"
-                            , callback: function()
+                ,   view: "list"
+                ,   callback: function()
                     {
                         _showMainView("list", "load");
                         //bidx.data.setItem('members',listMembers);

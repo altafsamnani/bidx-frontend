@@ -136,17 +136,17 @@ class dashboard
                             require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
                             $groupSvc = new GroupService( );
                             $view->members = $groupSvc->getLatestMembers ();
-                            $template = 'group-dashboard.phtml';
+                            $template = 'groupowner/monitoring.phtml';
                             break;
 
                         case 'invite' :
-                            $template = 'invite-members.phtml';
+                            $template = 'groupowner/invite-members.phtml';
                             break;
                         case 'gettingstarted' :
-                            $template = 'getting-started.phtml';
+                            $template = 'groupowner/getting-started.phtml';
                             break;
                         case 'support' :
-                            $template = 'support.phtml';
+                            $template = 'groupowner/support.phtml';
                             break;
                         case 'groupsettings' :
 
@@ -154,7 +154,7 @@ class dashboard
                             $groupSvc = new GroupService( );
                             $view->group = $groupSvc->getGroupDetails ();
 
-                            $template = 'group-settings.phtml';
+                            $template = 'groupowner/group-settings.phtml';
                             break;
                     }
                 }
