@@ -124,7 +124,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $bidxMethod = strtoupper ($method);
     $bidx_get_params = "";
     $cookie_string = "";
-    $sendDomain = 'bidx.net';
+    //$sendDomain = 'bidx.net';
     $cookieArr = array ();
 
 
@@ -135,8 +135,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $cookieInfo = $_COOKIE;
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
         if (preg_match ("/^bidx/i", $cookieKey)) {
-            $sendDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
-            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
+            //$sendDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
+            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => COOKIE_DOMAIN));
         }
     }
 
@@ -200,7 +200,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
             foreach ($cookies as $bidxAuthCookie) {
                 $cookieDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : $bidxAuthCookie->domain;
                 
-                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
+                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, ADMIN_COOKIE_PATH, COOKIE_DOMAIN, FALSE, $bidxAuthCookie->httponly);
                 $_COOKIE[ $bidxAuthCookie->name ] = $bidxAuthCookie->value;
 
             }
@@ -253,12 +253,14 @@ function ajax_submit_signin ()
             // Check external bidx check for username and password credentials
             $url = 'session';
             //$url = 'http://test.bidx.net/api/v1/session?csrf=false&groupKey='.$groupName;
+            //Flush Bidx Sessions/Cookies before login
+            clear_bidx_cookies ();
+            wp_clear_auth_cookie ();
+            clear_wp_bidx_session ();
+
             $result = call_bidx_service ($url, $body);
 
-            //Flush Bidx Sessions/Cookies before login
-            //clear_bidx_cookies ();
-            //wp_clear_auth_cookie ();
-            //clear_wp_bidx_session ();
+            
 
             // Clear all cookie and session before we process
             //3 Check validation error and include redirect logic
