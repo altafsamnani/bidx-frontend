@@ -135,6 +135,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $cookieInfo = $_COOKIE;
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
         if (preg_match ("/^bidx/i", $cookieKey)) {
+            $sendDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
             $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
         }
     }
@@ -197,7 +198,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
         if (isset ($result['cookies']) && count ($result['cookies'])) {
             $cookies = $result['cookies'];
             foreach ($cookies as $bidxAuthCookie) {
-                $cookieDomain = (DOMAIN_CURRENT_SITE == 'bidx.dev') ? 'bidx.dev' : $bidxAuthCookie->domain;
+                $cookieDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : $bidxAuthCookie->domain;
+                
                 setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
                 $_COOKIE[ $bidxAuthCookie->name ] = $bidxAuthCookie->value;
 
@@ -254,9 +256,9 @@ function ajax_submit_signin ()
             $result = call_bidx_service ($url, $body);
 
             //Flush Bidx Sessions/Cookies before login
-            clear_bidx_cookies ();
-            wp_clear_auth_cookie ();
-            clear_wp_bidx_session ();
+            //clear_bidx_cookies ();
+            //wp_clear_auth_cookie ();
+            //clear_wp_bidx_session ();
 
             // Clear all cookie and session before we process
             //3 Check validation error and include redirect logic
