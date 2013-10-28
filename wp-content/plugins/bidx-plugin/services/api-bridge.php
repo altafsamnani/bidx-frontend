@@ -50,7 +50,7 @@ abstract class APIbridge
         $cookieInfo = $_COOKIE;
         foreach ($_COOKIE as $cookieKey => $cookieValue) {
             if (preg_match ("/^bidx/i", $cookieKey)) {
-                $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $cookieDomain));
+                $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
             }
         }
 

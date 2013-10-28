@@ -137,7 +137,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
         if (preg_match ("/^bidx/i", $cookieKey)) {
             $sendDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
-            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $cookieDomain));
+            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
         }
     }
 
