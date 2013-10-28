@@ -117,7 +117,7 @@ class BidxCommon
         }
         session_start (); //or session_start();
         //if (!$session_id) {
-        setcookie ('session_id', session_id (), time () + $time, '/', '.' . DOMAIN_CURRENT_SITE);
+        setcookie ('session_id', session_id (), time () + $time, '/', '.' . COOKIE_DOMAIN);
         //}
     }
 
@@ -134,7 +134,7 @@ class BidxCommon
             session_id ($session_id);
             session_start ();
             session_destroy ();
-            setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE);
+            setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
         }
 
         return;

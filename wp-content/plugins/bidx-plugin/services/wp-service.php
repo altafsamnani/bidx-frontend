@@ -124,7 +124,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $bidxMethod = strtoupper ($method);
     $bidx_get_params = "";
     $cookie_string = "";
-    //$sendDomain = 'bidx.net';
+    $cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
+    $sendDomain = 'bidx.net';
     $cookieArr = array ();
 
 
@@ -135,8 +136,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $cookieInfo = $_COOKIE;
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
         if (preg_match ("/^bidx/i", $cookieKey)) {
-            //$sendDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
-            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => DOMAIN_CURRENT_SITE));
+            $sendDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
+            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $cookieDomain));
         }
     }
 
@@ -198,9 +199,9 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
         if (isset ($result['cookies']) && count ($result['cookies'])) {
             $cookies = $result['cookies'];
             foreach ($cookies as $bidxAuthCookie) {
-                $cookieDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : $bidxAuthCookie->domain;
+                //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : $bidxAuthCookie->domain;
                 
-                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE, FALSE, $bidxAuthCookie->httponly);
+                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
                 $_COOKIE[ $bidxAuthCookie->name ] = $bidxAuthCookie->value;
 
             }
@@ -319,7 +320,7 @@ function clear_bidx_cookies ()
     $cookieInfo = $_COOKIE;
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
         if (preg_match ("/^bidx/i", $cookieKey)) {
-            setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE);
+            setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
         }
     }
 }
@@ -694,7 +695,7 @@ function clear_wp_bidx_session ()
         session_id ($_COOKIE['session_id']);
         session_start ();
         session_destroy ();
-        setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE);
+        setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
     }
 }
 
