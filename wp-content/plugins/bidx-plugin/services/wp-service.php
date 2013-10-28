@@ -136,7 +136,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
         if (preg_match ("/^bidx/i", $cookieKey)) {
             //$sendDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
-            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => COOKIE_DOMAIN));
+            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => DOMAIN_CURRENT_SITE));
         }
     }
 
@@ -200,7 +200,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
             foreach ($cookies as $bidxAuthCookie) {
                 $cookieDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : $bidxAuthCookie->domain;
                 
-                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, ADMIN_COOKIE_PATH, COOKIE_DOMAIN, FALSE, $bidxAuthCookie->httponly);
+                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE, FALSE, $bidxAuthCookie->httponly);
                 $_COOKIE[ $bidxAuthCookie->name ] = $bidxAuthCookie->value;
 
             }
@@ -319,7 +319,7 @@ function clear_bidx_cookies ()
     $cookieInfo = $_COOKIE;
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
         if (preg_match ("/^bidx/i", $cookieKey)) {
-            setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+            setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE);
         }
     }
 }
@@ -694,7 +694,7 @@ function clear_wp_bidx_session ()
         session_id ($_COOKIE['session_id']);
         session_start ();
         session_destroy ();
-        setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+        setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE);
     }
 }
 

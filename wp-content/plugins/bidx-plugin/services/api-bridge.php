@@ -40,7 +40,7 @@ abstract class APIbridge
         $bidxMethod = strtoupper ($method);
         $bidx_get_params = "";
         $cookie_string = "";
-        $sendDomain = COOKIE_DOMAIN;
+        $sendDomain = DOMAIN_CURRENT_SITE;
         $cookieArr = array ();
         $bidxWPerror = NULL;
         $groupDomain = $this->getBidxSubdomain ();
@@ -98,7 +98,7 @@ abstract class APIbridge
                 $cookies = $result['cookies'];
                 foreach ($cookies as $bidxAuthCookie) {
                     if(!empty($bidxAuthCookie->name) && $bidxAuthCookie->name) {
-                    $cookieDomain = COOKIE_DOMAIN;
+                    $cookieDomain = DOMAIN_CURRENT_SITE;
                     ob_start(); // To avoid error headers already sent in apibridge setcookie
                     setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
                     ob_end_flush();
@@ -185,8 +185,8 @@ abstract class APIbridge
     session_id($_COOKIE['session_id']);
     session_start ();
     session_destroy();
-    setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-    //setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+    setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE);
+    //setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, DOMAIN_CURRENT_SITE);
     //$sessionMsg = array ('status' => 'success','text' => 'Session Flused.');
     //echo json_encode ($sessionMsg);
     //exit;
