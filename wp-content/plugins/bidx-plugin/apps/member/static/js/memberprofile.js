@@ -12,17 +12,32 @@
     ,   $personalDetailsNationality         = $editForm.find( "[name='personalDetails.nationality']" )
     ,   $personalDetailsHighestEducation    = $editForm.find( "[name='personalDetails.highestEducation']" )
 
-    ,   $profilePictureContainer    = $editForm.find( ".profilePictureContainer" )
+        // Profile picture
+        //
+    ,   $profilePictureControl              = $editForm.find( ".profilePictureControl" )
+    ,   $profilePictureContainer            = $profilePictureControl.find( ".profilePictureContainer" )
+    ,   $btnChangeProfilePicture            = $profilePictureControl.find( "a[href$='#changeProfilePicture']" )
+    ,   $changeProfilePictureModal          = $profilePictureControl.find( ".changeProfilePictureModal" )
 
-    ,   $attachmentsContainer       = $editForm.find( ".attachmentsContainer" )
+        // Attachnents
+        //
+    ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
+    ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
+    ,   $btnAddAttachments                  = $attachmentsControl.find( "a[href$='#addAttachments']")
+    ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
 
-    ,   $currentAddressMap          = $editForm.find( ".currentAddressMap" )
-    ,   $currentAddressCountry      = $editForm.find( "[name='personalDetails.address[0].country']"         )
-    ,   $currentAddressCityTown     = $editForm.find( "[name='personalDetails.address[0].cityTown']"        )
-    ,   $currentAddressPostalCode   = $editForm.find( "[name='personalDetails.address[0].postalCode']"      )
-    ,   $currentAddressStreet       = $editForm.find( "[name='personalDetails.address[0].street']"          )
-    ,   $currentAddressStreetNumber = $editForm.find( "[name='personalDetails.address[0].streetNumber']"    )
-    ,   $currentAddressCoordinates  = $editForm.find( "[name='personalDetails.address[0].coordinates']"     )
+        // Current Address
+        //
+    ,   $currentAddressMap                  = $editForm.find( ".currentAddressMap" )
+    ,   $currentAddressCountry              = $editForm.find( "[name='personalDetails.address[0].country']"         )
+    ,   $currentAddressCityTown             = $editForm.find( "[name='personalDetails.address[0].cityTown']"        )
+    ,   $currentAddressPostalCode           = $editForm.find( "[name='personalDetails.address[0].postalCode']"      )
+    ,   $currentAddressStreet               = $editForm.find( "[name='personalDetails.address[0].street']"          )
+    ,   $currentAddressStreetNumber         = $editForm.find( "[name='personalDetails.address[0].streetNumber']"    )
+    ,   $currentAddressCoordinates          = $editForm.find( "[name='personalDetails.address[0].coordinates']"     )
+
+    ,   geocoder
+    ,   currentAddressMap
 
     ,   member
     ,   memberId
@@ -34,7 +49,13 @@
 
     ,   appName                     = "member"
 
+        // Languages
+        //
     ,   languages
+
+        // Object for maintaining a list of currently selected languages, for optimizations only
+        //
+    ,   addedLanguages              = {}
     ,   removedLanguages
     ;
 
@@ -93,291 +114,387 @@
         ,   'mobile'
         ,   'fax'
         ]
-
-    ,   attachment:
-        [
-            "purpose"
-        ,   "documentType"
-        ]
     };
 
-    // Grab the snippets from the DOM
+    // Setup function for doing work that should only be done once
     //
-    snippets.$language      = $snippets.children( ".languageItem"   ).remove();
-    snippets.$attachment    = $snippets.children( ".attachmentItem" ).remove();
-
-    // On any changes, how little doesn't matter, notify that we have a pending change
-    // But no need to track the changes when doing a member data load
-    //
-    $editForm.bind( "change", function()
+    function _oneTimeSetup()
     {
-        if ( currentView === "edit" )
-        {
-            bidx.common.addAppWithPendingChanges( appName );
-        }
-    } );
+        _snippets();
+        _languages();
+        _attachments();
+        _currentAddress();
 
-    // Populate the peronsalDetails.nationality select box using the data items
-    //
-    bidx.data.getContext( "country", function( err, countries )
-    {
-        var $noValue            = $( "<option value='' />" );
-
-        $personalDetailsNationality.empty();
-
-        $noValue.i18nText( "selectNationality", appName );
-        $personalDetailsNationality.append( $noValue );
-
-        bidx.utils.populateDropdown( $personalDetailsNationality, countries );
-    } );
-
-
-    // Populate the personalDetails.address[0].country select box using the data items
-    //
-    bidx.data.getContext( "country", function( err, countries )
-    {
-        var $noValue            = $( "<option value='' />" );
-
-        $currentAddressCountry.empty();
-
-        $noValue.i18nText( "selectCountry", appName );
-        $currentAddressCountry.append( $noValue );
-
-        bidx.utils.populateDropdown( $currentAddressCountry, countries );
-    } );
-
-    // Populate the personalDetails.address[0].country select box using the data items
-    //
-    bidx.data.getContext( "education", function( err, educations )
-    {
-        var $noValue            = $( "<option value='' />" );
-
-        $personalDetailsHighestEducation.empty();
-
-        $noValue.i18nText( "selectEducation", appName );
-        $personalDetailsHighestEducation.append( $noValue );
-
-        bidx.utils.populateDropdown( $personalDetailsHighestEducation, educations );
-    } );
-
-    bidx.data.getContext( "documentType", function( err, documentTypes )
-    {
-        var $documentType = snippets.$attachment.find( "[name='documentType']" )
-        ,   $noValue        = $( "<option value='' />" )
-        ;
-
-        $noValue.i18nText( "selectDocumentType" );
-
-        $documentType.append( $noValue );
-
-        bidx.utils.populateDropdown( $documentType, documentTypes );
-    } );
-
-
-    // Object for maintaining a list of currently selected languages, for optimizations only
-    //
-    var addedLanguages = {};
-
-    // Retrieve the list of languages from the data api
-    //
-    bidx.data.getContext( "language", function( err, data )
-    {
-        languages = data;
-
-        // Initialize the autocompletes
+        // On any changes, how little doesn't matter, notify that we have a pending change
+        // But no need to track the changes when doing a member data load
         //
-        $inputAddLanguage.typeahead(
+        $editForm.bind( "change", function()
+        {
+            if ( currentView === "edit" )
             {
-                source:         function( query )
-                {
-                    return _.map( languages, function( language ) { return language.label; } );
-                }
-            ,   matcher:        function( item )
-                {
-                    if ( addedLanguages[ item ] )
-                    {
-                        return false;
-                    }
-
-                    return true;
-                }
+                bidx.common.addAppWithPendingChanges( appName );
             }
-        ).removeClass( "disabled" ).removeAttr( "disabled" );
-    } );
-
-    // Figure out the key of the to be added language
-    //
-    $btnAddLanguage.click( function( e )
-    {
-        // Determine if the value is in the list of languages, and if, add it to the list of added languages
-        //
-        var language        = $inputAddLanguage.val()
-        ,   value
-        ;
-
-        value = _getLanguageValueByLabel( language );
-
-        if ( value )
-        {
-            $inputAddLanguage.val( "" );
-
-            addedLanguages[ language ] = true;
-
-            _addLanguageDetailToList( { language: value, motherLanguage: false } );
-        }
-    } );
-
-    $btnAddLanguage.removeClass( "disabled" ).removeAttr( "disabled" );
-
-    // Remove the language from the list
-    //
-    $languageList.delegate( ".btnRemoveLanguage", "click", function( e )
-    {
-        e.preventDefault();
-
-        var $languageItem   = $( this ).closest( ".languageItem" )
-        ,   languageDetail  = $languageItem.data( "bidxData" )
-        ,   languageLabel   = _getLanguageLabelByValue( languageDetail.language )
-        ;
-
-        delete addedLanguages[ languageLabel ];
-
-        $languageItem.remove();
-
-        removedLanguages.push( languageDetail );
-    } );
-
-    // Update the languages, and only set the clicked one to be the mother language
-    //
-    $languageList.delegate( ".btnSetMotherLanguage", "click", function( e )
-    {
-        e.preventDefault();
-
-        var $btn            = $( this )
-        ,   $languageItem   = $btn.closest( ".languageItem" )
-        ;
-
-        // Unset motherLanguage on all the languages first
-        //
-        $languageList.find( ".languageItem" ).each( function()
-        {
-            var $item           = $( this )
-            ,   languageDetail  = $item.data( "bidxData" )
-            ;
-
-            languageDetail.motherLanguage = false;
-
-            $item.data( "languageDetail", languageDetail );
-
-            $item.find( ".btnSetMotherLanguage"     ).show();
-            $item.find( ".isCurrentMotherLanguage"  ).hide();
         } );
 
-        // And set the motherLanguage on this item to true
+        // Disable disabled links
         //
-        var languageDetail = $languageItem.data( "bidxData" );
-
-        languageDetail.motherLanguage = true;
-        $languageItem.data( "languageDetail", languageDetail );
-
-        $languageItem.find( ".isCurrentMotherLanguage"  ).show();
-        $languageItem.find( ".btnSetMotherLanguage"     ).hide();
-    } );
-
-    // Instantiate reflowrower on the attachments container
-    //
-    $attachmentsContainer.reflowrower(
-    {
-        itemsPerRow:        3
-    ,   removeItemOverride: function( $item, cb )
+        $element.delegate( "a.disabled", "click", function( e )
         {
-            var attachment      = $item.data( "bidxData" )
-            ,   documentId      = attachment.bidxMeta ? attachment.bidxMeta.bidxEntityId : attachment.bidxEntityId
+            e.preventDefault();
+        } );
+
+        // Populate the peronsalDetails.nationality select box using the data items
+        //
+        bidx.data.getContext( "country", function( err, countries )
+        {
+            var $noValue            = $( "<option value='' />" );
+
+            $personalDetailsNationality.empty();
+
+            $noValue.i18nText( "selectNationality", appName );
+            $personalDetailsNationality.append( $noValue );
+
+            bidx.utils.populateDropdown( $personalDetailsNationality, countries );
+        } );
+
+
+        // Populate the personalDetails.address[0].country select box using the data items
+        //
+        bidx.data.getContext( "country", function( err, countries )
+        {
+            var $noValue            = $( "<option value='' />" );
+
+            $currentAddressCountry.empty();
+
+            $noValue.i18nText( "selectCountry", appName );
+            $currentAddressCountry.append( $noValue );
+
+            bidx.utils.populateDropdown( $currentAddressCountry, countries );
+        } );
+
+        // Populate the personalDetails.address[0].country select box using the data items
+        //
+        bidx.data.getContext( "education", function( err, educations )
+        {
+            var $noValue            = $( "<option value='' />" );
+
+            $personalDetailsHighestEducation.empty();
+
+            $noValue.i18nText( "selectEducation", appName );
+            $personalDetailsHighestEducation.append( $noValue );
+
+            bidx.utils.populateDropdown( $personalDetailsHighestEducation, educations );
+        } );
+
+        // Profile picture
+        //
+        $btnChangeProfilePicture.click( function( e )
+        {
+            e.preventDefault();
+
+            // Make sure the media app is within our modal container
+            //
+            $( "#media" ).appendTo( $changeProfilePictureModal.find( ".modal-body" ) );
+
+            var $selectBtn = $changeProfilePictureModal.find( ".btnSelectFile" )
+            ,   $cancelBtn = $changeProfilePictureModal.find( ".btnCancelSelectFile" )
             ;
 
-            bidx.api.call(
-                "entityDocument.destroy"
-            ,   {
-                    entityId:           memberProfileId
-                ,   documentId:         documentId
-                ,   groupDomain:        bidx.common.groupDomain
-                ,   success:            function( response )
+            // Navigate the media app into list mode for selecting files
+            //
+            bidx.media.navigate(
+            {
+                requestedState:         "list"
+            ,   slaveApp:               true
+            ,   selectFile:             true
+            ,   multiSelect:            false
+            ,   showEditBtn:            false
+            ,   btnSelect:              $selectBtn
+            ,   btnCancel:              $cancelBtn
+            ,   callbacks:
+                {
+                    ready:                  function( state )
                     {
-                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
-
-                        bidx.i18n.getItem( "attachmentDeleted", function( err, label )
-                        {
-                            bidx.common.notifySuccess( label );
-                        });
-
-
-                        cb();
-
-                        $attachmentsContainer.reflowrower( "removeItem", $item, true );
+                        bidx.utils.log( "[profile picture] ready in state", state );
                     }
-                ,   error:            function( jqXhr, textStatus )
+
+                ,   cancel:                 function()
                     {
-                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
+                        // Stop selecting files, back to previous stage
+                        //
+                        $changeProfilePictureModal.modal('hide');
+                    }
 
-                        bidx.i18n.getItem( "errAttachmentDelete", function( err, label )
-                        {
-                            alert( label );
-                        } );
+                ,   success:                function( file )
+                    {
+                        bidx.utils.log( "[profile picture] uploaded", file );
 
-                        cb();
+                        // NOOP.. the parent app is not interested in when the file is uploaded
+                        // only when it is attached / selected
+                    }
+
+                ,   select:               function( file )
+                    {
+                        bidx.utils.log( "[profile picture] selected profile picture", file );
+
+                        bidx.utils.setValue( member, "logo", file );
+
+                        $profilePictureContainer.replaceWith( $( "<img />", { "src": file.document  } ));
+
+                        $changeProfilePictureModal.modal( "hide" );
                     }
                 }
-            );
-        }
-    } );
+            } );
 
+            $changeProfilePictureModal.modal();
+        } );
 
-    // Disable disabled links
-    //
-    $element.delegate( "a.disabled", "click", function( e )
-    {
-        e.preventDefault();
-    } );
-
-    // Build up the gmaps for the current address
-    //
-    var currentAddressMapOptions =
+        // PUll snippets from the DOM
+        //
+        function _snippets()
         {
-            center:             new google.maps.LatLng( 0, 0 )
-        ,   zoom:               1
-        ,   panControl:         false
-        ,   scrollwheel:        false
-        ,   zoomControl:        true
-        ,   streetViewControl:  false
-        ,   rotateControl:      false
-        ,   overviewMapControl: false
-        ,   mapTypeControl:     false
-        ,   draggable:          false
-        ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
+            snippets.$language      = $snippets.children( ".languageItem"   ).remove();
+            snippets.$attachment    = $snippets.children( ".attachmentItem" ).remove();
         }
-    ,   currentAddressMap
-    ;
 
-    if ( $currentAddressMap.length )
-    {
-        currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions );
+        // Lnaguages control
+        //
+        function _languages()
+        {
+            // Retrieve the list of languages from the data api
+            //
+            bidx.data.getContext( "language", function( err, data )
+            {
+                languages = data;
+
+                // Initialize the autocompletes
+                //
+                $inputAddLanguage.typeahead(
+                    {
+                        source:         function( query )
+                        {
+                            return _.map( languages, function( language ) { return language.label; } );
+                        }
+                    ,   matcher:        function( item )
+                        {
+                            if ( addedLanguages[ item ] )
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    }
+                ).removeClass( "disabled" ).removeAttr( "disabled" );
+            } );
+
+            // Figure out the key of the to be added language
+            //
+            $btnAddLanguage.click( function( e )
+            {
+                // Determine if the value is in the list of languages, and if, add it to the list of added languages
+                //
+                var language        = $inputAddLanguage.val()
+                ,   value
+                ;
+
+                value = _getLanguageValueByLabel( language );
+
+                if ( value )
+                {
+                    $inputAddLanguage.val( "" );
+
+                    addedLanguages[ language ] = true;
+
+                    _addLanguageDetailToList( { language: value, motherLanguage: false } );
+                }
+            } );
+
+            $btnAddLanguage.removeClass( "disabled" ).removeAttr( "disabled" );
+
+            // Remove the language from the list
+            //
+            $languageList.delegate( ".btnRemoveLanguage", "click", function( e )
+            {
+                e.preventDefault();
+
+                var $languageItem   = $( this ).closest( ".languageItem" )
+                ,   languageDetail  = $languageItem.data( "bidxData" )
+                ,   languageLabel   = _getLanguageLabelByValue( languageDetail.language )
+                ;
+
+                delete addedLanguages[ languageLabel ];
+
+                $languageItem.remove();
+
+                removedLanguages.push( languageDetail );
+            } );
+
+            // Update the languages, and only set the clicked one to be the mother language
+            //
+            $languageList.delegate( ".btnSetMotherLanguage", "click", function( e )
+            {
+                e.preventDefault();
+
+                var $btn            = $( this )
+                ,   $languageItem   = $btn.closest( ".languageItem" )
+                ;
+
+                // Unset motherLanguage on all the languages first
+                //
+                $languageList.find( ".languageItem" ).each( function()
+                {
+                    var $item           = $( this )
+                    ,   languageDetail  = $item.data( "bidxData" )
+                    ;
+
+                    languageDetail.motherLanguage = false;
+
+                    $item.data( "languageDetail", languageDetail );
+
+                    $item.find( ".btnSetMotherLanguage"     ).show();
+                    $item.find( ".isCurrentMotherLanguage"  ).hide();
+                } );
+
+                // And set the motherLanguage on this item to true
+                //
+                var languageDetail = $languageItem.data( "bidxData" );
+
+                languageDetail.motherLanguage = true;
+                $languageItem.data( "languageDetail", languageDetail );
+
+                $languageItem.find( ".isCurrentMotherLanguage"  ).show();
+                $languageItem.find( ".btnSetMotherLanguage"     ).hide();
+            } );
+        }
+
+        // Generic attachments
+        //
+        function _attachments()
+        {
+            // Clicking the add files button will load the media library
+            //
+            $btnAddAttachments.click( function( e )
+            {
+                e.preventDefault();
+
+                // Make sure the media app is within our modal
+                //
+                $( "#media" ).appendTo( $addAttachmentsModal.find( ".modal-body" ) );
+
+                var $selectBtn = $addAttachmentsModal.find( ".btnSelectFile" );
+                var $cancelBtn = $addAttachmentsModal.find( ".btnCancelSelectFile" );
+
+                // Navigate the media app into list mode for selecting files
+                //
+                bidx.media.navigate(
+                {
+                    requestedState:         "list"
+                ,   slaveApp:               true
+                ,   selectFile:             true
+                ,   multiSelect:            true
+                ,   showEditBtn:            false
+                ,   btnSelect:              $selectBtn
+                ,   btnCancel:              $cancelBtn
+                ,   callbacks:
+                    {
+                        ready:                  function( state )
+                        {
+                            bidx.utils.log( "[documents] ready in state", state );
+                        }
+
+                    ,   cancel:                 function()
+                        {
+                            // Stop selecting files, back to previous stage
+                            //
+                            $addAttachmentsModal.modal('hide');
+                        }
+
+                    ,   success:                function( file )
+                        {
+                            bidx.utils.log( "[attachments] uploaded", file );
+
+                            // NOOP.. the parent app is not interested in when the file is uploaded
+                            // only when it is attached / selected
+                        }
+
+                    ,   select:               function( files )
+                        {
+                            bidx.utils.log( "[attachments] select", files );
+
+                            // Attach the file to the entity
+                            // By adding it to the reflowrower we can pick it up as soon
+                            // as the entity is created or saved. The reflowrower keeps a list of
+                            // added items
+                            //
+
+                            if ( files )
+                            {
+                                $.each( files, function( idx, file )
+                                {
+                                    _addAttachment( file );
+                                } );
+                            }
+
+                            $addAttachmentsModal.modal('hide');
+                        }
+                    }
+                } );
+
+                $addAttachmentsModal.modal();
+            } );
+
+            // Instantiate reflowrower on the attachments container
+            //
+            $attachmentsContainer.reflowrower(
+            {
+                itemsPerRow:        3
+            ,   itemClass:          "attachmentItem"
+            } );
+        }
+
+        // Current address control
+        //
+        function _currentAddress()
+        {
+            // Build up the gmaps for the current address
+            //
+            var currentAddressMapOptions =
+                {
+                    center:             new google.maps.LatLng( 0, 0 )
+                ,   zoom:               1
+                ,   panControl:         false
+                ,   scrollwheel:        false
+                ,   zoomControl:        true
+                ,   streetViewControl:  false
+                ,   rotateControl:      false
+                ,   overviewMapControl: false
+                ,   mapTypeControl:     false
+                ,   draggable:          false
+                ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
+                }
+            ;
+
+            if ( $currentAddressMap.length )
+            {
+                currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions );
+            }
+
+            geocoder        = new google.maps.Geocoder();
+
+            $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
+            $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
+            $currentAddressStreet.change(       function() { _updateCurrentAddressMap();    } );
+            $currentAddressStreetNumber.change( function() { _updateCurrentAddressMap();    } );
+            $currentAddressPostalCode.change(   function() { _updateCurrentAddressMap();    } );
+        }
     }
-
-    var geocoder        = new google.maps.Geocoder()
-    ,   geocodeTimer    = null
-    ;
-
-    $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
-    $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
-    $currentAddressStreet.change(       function() { _updateCurrentAddressMap();    } );
-    $currentAddressStreetNumber.change( function() { _updateCurrentAddressMap();    } );
-    $currentAddressPostalCode.change(   function() { _updateCurrentAddressMap();    } );
 
     // Try to gecode the address (array)
     // On failure, pop one item from the address array and retry untill there is no
     // address left or we found a location
     //
-    var _geocode = function( region, address, cb )
+    function _geocode( region, address, cb )
     {
         geocoder.geocode(
             {
@@ -403,11 +520,11 @@
                 }
             }
         );
-    };
+    }
 
     // Update the address onto the map via geocodeing
     //
-    var _updateCurrentAddressMap = function()
+    function _updateCurrentAddressMap()
     {
         var address         = []
         ,   country         = $currentAddressCountry.val()
@@ -488,11 +605,11 @@
                 }
             } );
         }
-    };
+    }
 
     // Convenience function for translating a language key to it's description
     //
-    var _getLanguageLabelByValue = function( value )
+    function _getLanguageLabelByValue( value )
     {
         var label;
 
@@ -505,11 +622,11 @@
         } );
 
         return label;
-    };
+    }
 
     // Convenience function for translating a language description to it's key
     //
-    var _getLanguageValueByLabel = function( label )
+    function _getLanguageValueByLabel( label )
     {
         var key;
 
@@ -522,11 +639,11 @@
         } );
 
         return key;
-    };
+    }
 
     // Use the retrieved member object to populate the form and other screen elements
     //
-    var _populateScreen = function()
+    function _populateScreen()
     {
         $.each( fields.personalDetails, function( i, f )
         {
@@ -630,31 +747,25 @@
             $.each( attachments, function( idx, attachment )
             {
                 bidx.utils.log( "attachment ", idx, attachment );
-                _addAttachmentToScreen( idx, attachment );
+                _addAttachment( attachment );
             } );
         }
 
         _updateCurrentAddressMap();
-    };
+    }
 
     // Add the attachment to the screen, by cloning the snippet and populating it
     //
-    var _addAttachmentToScreen = function( index, attachment )
+    function _addAttachment( attachment )
     {
         if ( attachment === null )
         {
-            bidx.util.warn( "memberprofile::_addAttachmentToScreen: attachment is null!" );
+            bidx.util.warn( "memberprofile::_addAttachment: attachment is null!" );
             return;
         }
 
-        if ( !index )
-        {
-            index = $attachmentsContainer.find( ".attachmentItem" ).length;
-        }
-
         var $attachment         = snippets.$attachment.clone()
-        ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   inputNamePrefix     = "personalDetails.attachment[" + index + "]"
+        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
         ,   imageSrc
         ;
 
@@ -662,25 +773,11 @@
         //
         $attachment.data( "bidxData", attachment );
 
-        // Update all the input elements and prefix the names with the right index
-        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
-        //
-        $attachment.find( "input, select, textarea" ).each( function( )
-        {
-            var $input = $( this );
-
-            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
-        } );
-
         $attachment.find( ".documentName"       ).text( attachment.documentName );
-        $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
+        $attachment.find( ".createdDateTime"    ).text( createdDateTime );
 
-        var $purpose       = $attachment.find( "[name$='.purpose']" )
-        ,   $documentType  = $attachment.find( "[name$='.documentType']" )
-        ;
-
-        bidx.utils.setElementValue( $purpose,       attachment.purpose );
-        bidx.utils.setElementValue( $documentType,  attachment.documentType );
+        $attachment.find( ".purpose"            ).text( attachment.purpose );
+        $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
         imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
             ? attachment.document
@@ -690,11 +787,11 @@
         $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
-    };
+    }
 
     // Add an item to the language list and render the HTML for it
     //
-    var _addLanguageDetailToList = function( languageDetail )
+    function _addLanguageDetailToList( languageDetail )
     {
         var $language       = snippets.$language.clone()
         ,   languageDescr   = ""
@@ -727,11 +824,11 @@
         $language.data( "bidxData", languageDetail );
 
         $languageList.append( $language );
-    };
+    }
 
     // Convert the form values back into the member object
     //
-    var _getFormValues = function()
+    function _getFormValues()
     {
         $.each( fields.personalDetails, function( i, f )
         {
@@ -744,7 +841,7 @@
 
         // Collect the nested objects from inside personalDetails
         //
-        $.each( [ "address", "contactDetail", "attachment" ], function()
+        $.each( [ "address", "contactDetail" ], function()
         {
             var nest                = this + ""
             ,   i                   = 0
@@ -810,11 +907,27 @@
         {
             bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.linkedIn", linkedIn );
         }
-    };
+
+        // Documents
+        // Collect the whole situation from the DOM and set that array of bidxData items to be the new situation
+        //
+        var attachments = [];
+
+        $attachmentsContainer.find( ".attachmentItem" ).each( function()
+        {
+            var $item       = $( this )
+            ,   bidxData    = $item.data( "bidxData" )
+            ;
+
+            attachments.push( bidxData );
+        } );
+
+        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.attachment", attachments );
+    }
 
     // This is the startpoint
     //
-    var _init = function()
+    function _init()
     {
         // Reset any state
         //
@@ -954,10 +1067,6 @@
             }
         } );
 
-        // Instantiate file upload
-        //
-        $editForm.find( "[data-type=fileUpload]" ).fileUpload( { "parentForm": $editForm[0] });
-
         // Fetch the member
         //
         bidx.api.call(
@@ -1017,11 +1126,11 @@
                 }
             }
         );
-    };
+    }
 
     // Try to save the member to the API
     //
-    var _save = function( params )
+    function _save( params )
     {
         if ( !member )
         {
@@ -1074,26 +1183,26 @@
                 }
             }
         );
-    };
+    }
 
     // Private functions
     //
-    var _showError = function( msg )
+    function _showError( msg )
     {
         $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
         _showView( "error" );
-    };
+    }
 
-    var _showView = function( v )
+    function _showView( v )
     {
         currentView = v;
 
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
-    };
+    }
 
     // ROUTER
     //
-    var navigate = function( options )
+    function navigate( options )
     {
         switch ( options.requestedState )
         {
@@ -1154,41 +1263,24 @@
                 }
             break;
         }
-    };
+    }
 
-
-    var attachmentUploadDone = function( err, result )
-    {
-        bidx.utils.log( "attachmentUploadDone", err, result );
-
-        if ( err )
-        {
-            alert( "Problem uploading attachment" );
-        }
-        else
-        {
-            bidx.i18n.getItem( "attachmentUploadDone", function( err, label )
-            {
-                bidx.common.notifySuccess( label );
-            } );
-
-            _addAttachmentToScreen( null, result.data );
-        }
-    };
-
-    var reset = function()
+    function reset()
     {
         state = null;
 
         bidx.common.removeAppWithPendingChanges( appName );
-    };
+    }
+
+    // Engage!
+    //
+    _oneTimeSetup();
 
     // Expose
     //
     var app =
     {
-        attachmentUploadDone:       attachmentUploadDone
-    ,   navigate:                   navigate
+        navigate:                   navigate
     ,   reset:                      reset
 
     ,   $element:                   $element

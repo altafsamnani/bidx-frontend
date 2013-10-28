@@ -999,7 +999,7 @@
         }
 
         var $attachment         = snippets.$attachment.clone()
-        ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
+        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
         ,   imageSrc
         ;
 
@@ -1008,7 +1008,7 @@
         $attachment.data( "bidxData", attachment );
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
-        $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
+        $attachment.find( ".createdDateTime"    ).text( createdDateTime );
         $attachment.find( ".purpose"            ).text( attachment.purpose );
         $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
