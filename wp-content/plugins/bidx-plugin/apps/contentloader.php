@@ -89,14 +89,12 @@ class ContentLoader
 
                 $this->logger->trace( 'Adding the post named : ' . $post->name );
 
-                $posts_array = get_posts ( array (
-                		'post_name' => (string) $post->name
+                $posts_array = wp_list_pages ( array (
+                		  'post_name' => (string) $post->name
                 		, 'post_status' => 'publish'
-                		, 'post_type' => $document->posttype
-                		, 'nopaging' => true,
-                		'suppress_filters' => false )
+                		, 'post_type' => (string) $document->posttype )
                 );
-                
+
                 if ( $post->update == 'false' ) {
 
                     $this->logger->trace( 'May not update the post : ' . $post->name );
@@ -109,10 +107,12 @@ class ContentLoader
                 } else {
                 	
                 	if ( sizeof( $posts_array ) > 0 ) {
-                        $this->logger->trace( 'Post exist, for update : ' . $posts_array[0]->ID );
+                        $this->logger->trace( 'Post exist, for update : ' . $posts_array[0]->post_title . ' : '. $posts_array[0]->ID . ':' . sizeof( $posts_array ));
                         $post_id = $posts_array[0]->ID;
                     }
-                    
+                    else {
+                    	$this->logger->trace( 'Post not found : ' . (string) $post->name );
+                    }
                 }
 
 
@@ -127,12 +127,13 @@ class ContentLoader
                     $this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . '.phtml' );
                     // open template file and get content
                     //
-                    $stream = fopen( BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml' , "r" );
-                    // replace $content with content from stream
-                    //
-                    $content = stream_get_contents( $stream );
-                    fclose( $stream );
-
+                    try {
+                    	$stream = fopen( BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml' , "r" );
+                    	$content = stream_get_contents( $stream );
+                    	fclose( $stream );
+                    } catch (Exception $e) {
+                    	$this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . ' FAILED' );
+                    }
                     // ob_start();
                     // include BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml';
                     // $content = ob_get_clean();
