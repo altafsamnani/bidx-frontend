@@ -89,8 +89,10 @@ class ContentLoader
 
                 $this->logger->trace( 'Adding the post named : ' . $post->name );
 
-                $page = get_page_by_title( (string) $post->name, OBJECT, $document->posttype );
+                $page = get_page_by_title( (string) $post->name, 'OBJECT', $document->posttype );
    
+                $this->logger->trace( 'Checking for post : ' . $page -> ID );
+                
                 if ( $post->update == 'false' ) {
 
                     $this->logger->trace( 'May not update the post : ' . $post->name );
@@ -104,7 +106,7 @@ class ContentLoader
                 	
                 	if ( $page ) {
                         $this->logger->trace( 'Post exist, for update : ' . $page->post_title . ' : '. $page->ID );
-                        $post_id = $page->ID;
+                        $post_id = $page -> ID;
                     }
                     else {
                     	$this->logger->trace( 'Post not found : ' . (string) $post->name );
