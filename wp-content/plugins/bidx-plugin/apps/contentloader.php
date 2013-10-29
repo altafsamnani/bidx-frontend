@@ -89,32 +89,28 @@ class ContentLoader
 
                 $this->logger->trace( 'Adding the post named : ' . $post->name );
 
-                $posts_array = wp_list_pages ( array (
-                		  'post_name' => (string) $post->name
-                		, 'post_status' => 'publish'
-                		, 'post_type' => (string) $document->posttype )
-                );
-
+                $page = get_page_by_title( (string) $post->name, OBJECT, $document->posttype );
+   
                 if ( $post->update == 'false' ) {
 
                     $this->logger->trace( 'May not update the post : ' . $post->name );
 
-                    if ( sizeof( $posts_array ) > 0 ) {
+                    if ( $page ) {
                         break;
                         $this->logger->trace( 'Post exist, skipping : ' . $post->name );
                     }
                     
                 } else {
                 	
-                	if ( sizeof( $posts_array ) > 0 ) {
-                        $this->logger->trace( 'Post exist, for update : ' . $posts_array[0]->post_title . ' : '. $posts_array[0]->ID . ':' . sizeof( $posts_array ));
-                        $post_id = $posts_array[0]->ID;
+                	if ( $page ) {
+                        $this->logger->trace( 'Post exist, for update : ' . $page->post_title . ' : '. $page->ID );
+                        $post_id = $page->ID;
                     }
                     else {
                     	$this->logger->trace( 'Post not found : ' . (string) $post->name );
+                    	$post_id = false;
                     }
                 }
-
 
                 // default get $post content
                 //
@@ -141,7 +137,7 @@ class ContentLoader
                 }
 
                 if ( $post_id ) {
-                	$this->logger->trace( 'Post updating : ' . $post->name );
+                	$this->logger->trace( 'Post updating : ' . $post->name . ' : ' . $post_id);
                 	wp_update_post( array(
                 			'ID'           => $post_id,
                 			'post_content' => $content
@@ -313,7 +309,6 @@ class ContentLoader
         $wp_rewrite->flush_rules(  );
         //flush_rewrite_rules ();
 
-
         //remove posts : bidx for now
         $post_type = 'bidx';
 
@@ -415,5 +410,4 @@ class ContentLoader
     }
 
 }
-
 ?>
