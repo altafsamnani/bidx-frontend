@@ -1,4 +1,3 @@
-
 <?php
         // check if span is empty, then revert to default 6
         //
@@ -10,11 +9,11 @@
         if (is_array($this -> members)) {
             $index = 0;
         	foreach ($this -> members as $member) {
-                if ( $index === 3) {
+                $memitems = $authenticated ? 4 : 3;
+                if ( $index === $memitems) {
                     break;
                 }
 		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
-
  ?>
 
                 <div class="span<?php echo $span ?> clearfix">
@@ -41,8 +40,26 @@
                         if ( $this -> exst( $member -> country) ) {
                             echo '<div>' . $member -> country . '</div>';
                         }
+
+                        if ( $this -> exst( $member -> roles ) ) {
+                            echo '<div>';
+                            foreach ($member -> roles as $role) {
+                                if ( $role === 'entrepreneur' ) {
 ?>
-                        <!-- <div><span class="label bidx-label-investor">Investor</span></div> THIS NEEDS TO BE DONE CONDITIONALLY-->
+                                <span class="label bidx-label-entrepreneur"><?php _e('entrepreneur', 'bidxplugin') ?></span>&nbsp;
+<?php
+                                }
+                                if ( $role === 'investor' ) {
+?>
+                                <span class="label bidx-label-investor"><?php _e('investor', 'bidxplugin') ?></span>&nbsp;
+<?php
+                                }
+                            }
+                            echo '</div>';
+                        } else {
+                            echo '<div><span class="label bidx-label-member">Member</span></div>';
+                        }
+?>
 <?php
                         // only show connect link when authenticated
                         //
@@ -55,6 +72,8 @@
                     </div>
                 </div>
 <?php
+
+
             $index++;
             }
             // end foreach

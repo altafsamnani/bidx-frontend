@@ -2,11 +2,15 @@
 
     // check if span is empty, then revert to default 6
     $span = !empty($this->span) ? $this->span : 6;
+    // check if user is logged in
+    //
+    $authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+    $newsitems = $authenticated ? 4 : 3;
 
     $args=array(
       'post_type' => 'post',
       'post_status' => 'publish',
-      'posts_per_page' => 2
+      'posts_per_page' => $newsitems
       );
     $my_query = null;
     $my_query = new WP_Query($args);
@@ -14,7 +18,7 @@
     if( $my_query->have_posts() ) {
         $index = 0;
         while ( $my_query->have_posts() ) {
-            if ( $index == 3) {
+            if ( $index == $newsitems) {
                 break;
             }
             $my_query->the_post();
@@ -38,7 +42,12 @@
 
                         <div>
                             <div><strong><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></strong></div>
-                            <div><?php the_excerpt(); ?></div>
+                            <div><?php the_date( 'd M Y' ) ?></div>
+<?php
+                            if ( $authenticated ) {
+                                echo ucfirst( strtolower( substr( get_the_excerpt(),0,65 ) ) ) . '...';
+                            }
+?>
                         </div>
                     </div>
 <?php
