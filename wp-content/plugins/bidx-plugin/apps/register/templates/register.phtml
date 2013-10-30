@@ -61,18 +61,24 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="control-group">
-                    <label class="checkbox">
-                        <input type="checkbox" value="" name="acceptTerms" data-toggle="checkbox" /><?php _e( 'I accept the bidX', 'bidxplugin' )?>
-                    </label>
-                    <?php printf( __( '<a href="%s">Terms & Conditions </a>', 'bidxplugin'), "/termsandconditions" ); ?>
+                    <div class="controls">
+                        <label class="checkbox">
+                            <input type="checkbox" value="" name="acceptTerms" data-toggle="checkbox" /><?php _e( 'I accept the bidX', 'bidxplugin' )?>
+                        </label>
+                        <?php printf( __( '<a href="%s">Terms & Conditions </a>', 'bidxplugin'), "/termsandconditions" ); ?>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span12">
-                <label class="checkbox">
-                    <input type="checkbox" value="" name="preventSpam" data-toggle="checkbox" /> <?php _e( 'Please check this to help us prevent spam', 'bidxplugin' )?>
-                </label>
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="checkbox">
+                            <input type="checkbox" value="" name="preventSpam" data-toggle="checkbox" /><?php _e( 'Please check this to help us prevent spam', 'bidxplugin' )?>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
 

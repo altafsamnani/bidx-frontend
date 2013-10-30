@@ -27,7 +27,7 @@
         //
         $frmRegister.validate(
         {
-            ignore: ":hidden"
+            ignore: ""
         ,   debug:  false
         ,   rules:
             {
@@ -53,8 +53,16 @@
                 }
             ,   "location":
                 {
-                    bidxLocationRequired:               true
+                    bidxLocationRequired:   true
                 ,
+                }
+            ,   "acceptTerms":
+                {
+                    required:               true
+                }
+            ,   "preventSpam":
+                {
+                    required:               true
                 }
 
             }
