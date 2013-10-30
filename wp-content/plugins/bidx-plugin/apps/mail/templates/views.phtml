@@ -60,11 +60,11 @@
                         </div>
                         <div class="btn-group">
                                 <!-- generic folder buttons -->
-                                <a class="btn btn-small btn-primary btn-delete-multiple" href="/mail/#mail/delete-multiple"><?php _e('Delete','bidxplugin')?></a>
-                                <a class="btn btn-small btn-primary btn-mark-read" href="/mail/#mail/mark-read"><?php _e('Mark as read','bidxplugin')?></a>
-                                <a class="btn btn-small btn-primary btn-mark-unread" href="/mail/#mail/mark-unread"><?php _e('Mark as unread','bidxplugin')?></a>
-                                <div class="btn-group btn-move-to-folder">
-                                    <a class="btn btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                <a class="btn btn-small btn-primary bidx-btn-delete-multiple" href="/mail/#mail/delete-multiple"><?php _e('Delete','bidxplugin')?></a>
+                                <a class="btn btn-small btn-primary bidx-btn-mark-read-multiple" href="/mail/#mail/mark-read"><?php _e('Mark as read','bidxplugin')?></a>
+                                <a class="btn btn-small btn-primary bidx-btn-mark-unread-multiple" href="/mail/#mail/mark-unread"><?php _e('Mark as unread','bidxplugin')?></a>
+                                <div class="btn-group btngroup-move-to-folder">
+                                    <a class="btn btn-small btn-primary dropdown-toggle bidx-btn-move-to-folder-multiple" data-toggle="dropdown" href="#">
                                         <?php _e('Move message to folder','bidxplugin')?>
                                         <span class="caret"></span>
                                     </a>
@@ -72,10 +72,10 @@
                                         <li><a href="">[To be populated]</a></li>
                                     <!-- dropdown menu links -->
                                     </ul>
-                              </div>
+                                </div>
 
                                 <!-- trash only buttons -->
-                                <a class="btn btn-small btn-primary btn-empty-trash-confirm" href="/mail/#mail/empty-trash-confirm"><?php _e('Empty trash','bidxplugin')?></a>
+                                <a class="btn btn-small btn-primary bidx-btn-empty-trash-confirm" href="/mail/#mail/empty-trash-confirm"><?php _e('Empty trash','bidxplugin')?></a>
                         </div>
 
 
@@ -120,7 +120,7 @@
                         <a class="btn btn-small btn-primary btn-forward" href="#" data-href="/mail/#mail/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
                         <a class="btn btn-small btn-primary btn-delete" href="#" data-href="/mail/#mail/%state%/action=deleteConfirm&id=%id%"><?php _e('Delete','bidxplugin')?></a>
                         <div class="btn-group btngroup-move-to-folder">
-                            <a class="btn btn-small btn-primary btn-move-to-folder dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="btn btn-small btn-primary btn-move-to-folder dropdown-toggle bidx-btn-move-to-folder" data-toggle="dropdown" href="#">
                                 <?php _e('Move message to folder','bidxplugin')?>
                                 <span class="caret"></span>
                             </a>
@@ -247,7 +247,6 @@
                     </div>
                 </div> <!-- /END Request  -->
 
-                <hr>
 
                 <div class="tabbable"> <!-- Only required for left/right tabs -->
                     <ul class="nav nav-tabs">
@@ -302,16 +301,16 @@
                 <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel"><?php _e('Delete message','bidxplugin')?></h3>
+                        <h3 id="myModalLabel"><?php _e('Delete messages','bidxplugin')?></h3>
                     </div>
                     <div class="modal-body">
                     <p>
-                        <?php _e('You are about to delete this message. Are you sure?','bidxplugin')?>
+                        <?php _e('You are about to delete this/these message(s). Are you sure?','bidxplugin')?>
                     </p>
                     </div>
                     <div class="modal-footer">
                         <a class="btn" data-dismiss="modal" aria-hidden="true"><?php _e('Close','bidxplugin')?></a>
-                        <a class="btn bidx-default-button" href="#" data-href="/mail/#mail/%state%/action=doDelete&id=%id%"><?php _e('Delete message','bidxplugin')?></a>
+                        <a class="btn bidx-default-button" href="#" data-href="/mail/#mail/%state%/action=doDelete&id=%id%"><?php _e('Delete message(s)','bidxplugin')?></a>
 
                     </div>
                 </div>

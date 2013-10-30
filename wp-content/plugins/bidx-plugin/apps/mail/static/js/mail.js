@@ -14,10 +14,13 @@
     ,   bidx                        = window.bidx
     ,   currentGroupId              = bidx.common.getCurrentGroupId( "currentGroup" )
     ,   appName                     = "mail"
+    ,   toolbarButtons              = {}
     ,   mailboxes                   = {}
     ,   toolbar                     = {}
     ,   message                     = {}
     ,   listItems                   = {}
+    ,   $mailboxToolbar
+    ,   $mailboxToolbarButtons
     ,   state
     ,   section
     ;
@@ -82,6 +85,29 @@
                 } );
             }
         } );
+
+        // init the mailbox list toolbar buttons
+        //
+        $mailboxToolbar         = $views.filter( bidx.utils.getViewName( "list" ) ).find( ".mail-toolbar" );
+        $mailboxToolbarButtons  = $mailboxToolbar.find( ".btn" );
+
+        $mailboxToolbarButtons.filter( ".bidx-btn-delete-multiple" ).click( _doDeleteMultiple );
+        $mailboxToolbarButtons.filter( ".bidx-btn-mark-read-multiple" ).click( _doMarkAsReadMultiple );
+        $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread-multiple" ).click( _doMarkAsUnreadMultiple );
+        $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder-multiple" ).click( _doMoveToFolderMultiple );
+
+        /*toolbarButtons =
+        {
+            deleteMultiple:
+            {
+                selector:       ".btn-delete-multiple"
+            ,   handler:        doDeleteMultiple
+            }
+        };*/
+
+        // bind the handlers
+        //
+
 
 
     }
@@ -291,20 +317,15 @@
     {
         var ids;
 
-        if( options.id )
+        if( options.ids )
         {
-            ids = options.id;
+            ids = options.ids;
         }
-        else if( !$.isEmptyObject( listItems ) )
+        else
         {
-            //  convert listItems object to csv list
-            ids = $.map( listItems, function( el, key )
-            {
-                return key;
-            } );
-            ids.join(",");
+            bidx.utils.warn( "No IDs supplied to delete" );
+            return;
         }
-
         bidx.api.call(
              "mailboxMail.delete"
         ,   {
@@ -538,6 +559,67 @@
         );
     }
 
+    // handler for deleting multiple items
+    //
+    function _doDeleteMultiple( e )
+    {
+        var ids;
+
+        e.preventDefault();
+
+
+
+        if( !$.isEmptyObject( listItems ) )
+        {
+            //  convert listItems object to csv list
+            ids = $.map( listItems, function( el, key )
+            {
+                return key;
+            } );
+            ids.join(",");
+
+            _doDelete(
+            {
+                ids:    ids
+            ,   state:  state
+            } );
+
+        }
+        else
+        {
+            bidx.utils.warn( "No messages selected for deletion ");
+            return;
+        }
+    }
+
+    // handler for deleting multiple items
+    //
+    function _doMarkAsReadMultiple( e )
+    {
+        e.preventDefault();
+        console.log("Do Mark as Read multip");
+    }
+
+    // handler for deleting multiple items
+    //
+    function _doMarkAsUnreadMultiple( e )
+    {
+        e.preventDefault();
+        console.log("Do Mark as UnRead multip");
+    }
+
+    // handler for deleting multiple items
+    //
+    function _doMoveToFolderMultiple( e )
+    {
+        e.preventDefault();
+
+        // THERE ALREADY IS A doMoveToFolder function... maybe use that one?
+        console.log("Do Move multip");
+    }
+
+
+
     //  ################################## INIT #####################################  \\
 
         // initialize the mailbox by loading the content and in the end displaying its view
@@ -573,19 +655,20 @@
                     if ( state === "trash")
                     {
                         buttons = [
-                            ".btn-empty-trash-confirm"
-                        ,   ".dropdown-toggle"
+                            ".bidx-btn-empty-trash-confirm"
+                        ,   ".bidx-btn-move-to-folder"
                         ];
                     }
                     else
                     {
                         buttons = [
-                            ".btn-delete-multiple"
-                        ,   ".btn-mark-read"
-                        ,   ".btn-mark-unread"
-                        ,   ".dropdown-toggle"
+                            ".bidx-btn-delete-multiple"
+                        ,   ".bidx-btn-mark-read-multiple"
+                        ,   ".bidx-btn-mark-unread-multiple"
+                        ,   ".bidx-btn-move-to-folder-multiple"
                         ];
                     }
+
 
                     _showToolbarButtons( "list", buttons );
 
@@ -1156,6 +1239,7 @@
         //  get all emails from selected mailbox
         // NOTE: #mattijs; I think it would be nice to separate the creation of the HTML email Listitems in a different function, because now this function can only be used
         //       for one application only
+        //
         function _getEmails( options )
         {
             bidx.utils.log("[mail] get emails ", options );
@@ -1210,7 +1294,7 @@
                                     //
                                     newListItem = newListItem
                                             .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.id )
-                                            .replace( /%emailRead%/g, item.read ? "email-new" : "" )
+                                            .replace( /%emailRead%/g, !item.read ? "email-new" : "" )
                                             .replace( /%sendername%/g, item.sender.displayName )
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
                                             .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
@@ -1286,11 +1370,15 @@
                                         }
                                     } );
                                 } );
+
                             } // end of handling emails from response
                             else
                             {
                                 $list.append( $listEmpty );
                             }
+                            // uncheck the Big Kahuna checkbox on each list load
+                            //
+                            $view.find( ".messagesCheckall" ).checkbox("uncheck");
 
                             // execute callback if provided
                             //
@@ -1385,7 +1473,7 @@
         }
 
 
-    //  ################################## HELPER #####################################  \\
+    //  ################################## SETTERS #####################################  \\
 
         //  sets any given toolbar and associate toolbar buttons with ID
         //
@@ -1679,7 +1767,7 @@
                         //
                         _initForwardOrReply( state, mailId, action );
                     }
-                } 
+                }
                 else if(action === "compose" && recipientIds )
                 {
                     var recipients = recipientIds.split('|');
@@ -1760,21 +1848,22 @@
 
                 _doDelete(
                 {
-                    id:     mailId
+                    ids:     mailId
                 ,   state:  state
                 } );
 
             break;
 
-            case /^delete-multipe$/.test( action ):
-
+         /*   case /^delete-multiple$/.test( action ):
+            bidx.utils.log("test");
+                return;
                 _doDelete(
                 {
                     id:     mailId
                 ,   section: section
                 } );
 
-            break;
+            break;*/
 
 
 
@@ -1831,8 +1920,7 @@
                     {
                         requesterId:    bidx.common.getCurrentUserId()
                     ,   requesteeId:    options.params.id
-                    } )
-                    console.log("LOAD CONNECT");
+                    } );
                 }
                 else
                 {
@@ -1872,7 +1960,7 @@
                 if ( !mailboxes[ action ] )
                 {
                     bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
-                    // NOTE: #matts; REFACTOR TO PROMISE CONSTRUCTION. The much hidden CallBacks in these functions
+                    // NOTE: #matts; REFACTOR TO PROMISE CONSTRUCTION. Too much hidden CallBacks in these functions
                     //
                     _getMailBoxes( _initMailBox );
                 }
