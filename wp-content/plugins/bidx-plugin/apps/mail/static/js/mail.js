@@ -18,7 +18,7 @@
     ,   mailboxes                   = {}
     ,   toolbar                     = {}
     ,   message                     = {}
-    ,   listItems                   = {}
+    ,   itemList                    = {} // will contain key/value pairs where key=mailId and value always 1
     ,   $mailboxToolbar
     ,   $mailboxToolbarButtons
     ,   state
@@ -88,13 +88,17 @@
 
         // init the mailbox list toolbar buttons
         //
-        $mailboxToolbar         = $views.filter( bidx.utils.getViewName( "list" ) ).find( ".mail-toolbar" );
+        $mailboxToolbar         = $views.find( ".mail-toolbar" );
         $mailboxToolbarButtons  = $mailboxToolbar.find( ".btn" );
 
-        $mailboxToolbarButtons.filter( ".bidx-btn-delete-multiple" ).click( _doDeleteMultiple );
-        $mailboxToolbarButtons.filter( ".bidx-btn-mark-read-multiple" ).click( _doMarkAsReadMultiple );
-        $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread-multiple" ).click( _doMarkAsUnreadMultiple );
-        $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder-multiple" ).click( _doMoveToFolderMultiple );
+        //bidx-btn-delete
+
+        $mailboxToolbarButtons.filter( ".bidx-btn-delete" ).bind( "click", "delete", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-mark-read-multiple" ).bind( "click", "read", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread-multiple" ).bind( "click", "unread", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder-multiple" ).bind( "click", "move", _doAction );
+
+
 
         /*toolbarButtons =
         {
@@ -345,7 +349,7 @@
                 {
                     var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                    _showError( "Something went wrong while deleting the member: " + status );
+                    _showError( "Something went wrong while deleting the emails: " + status );
                 }
             }
         );
@@ -377,7 +381,7 @@
         );
     }
 
-    function _doMoveToFolder( e )
+    function _moveToFolder( e )
     {
         // prevent anchor tag to navigate to href
         //
@@ -389,10 +393,28 @@
         var $this = $( this )
         ,   href  = $this.attr( "href" ).replace( /^[/]/, "" )
         ;
-
         // convert back to object
         //
         href = bidx.utils.bidxDeparam( href );
+    }
+
+    function _doMoveToFolder( e )
+    {
+
+
+
+
+         var ids;
+
+        if( options.ids )
+        {
+            ids = options.ids;
+        }
+        else
+        {
+            bidx.utils.warn( "No IDs supplied to delete" );
+            return;
+        }
 
         bidx.api.call(
              "mailbox.move"
@@ -561,28 +583,74 @@
 
     // handler for deleting multiple items
     //
-    function _doDeleteMultiple( e )
+    function _doAction( e )
     {
-        var ids;
+
+        var action
+        ,   ids
+        ;
 
         e.preventDefault();
 
-
-
-        if( !$.isEmptyObject( listItems ) )
+        if ( !e.data )
         {
-            //  convert listItems object to csv list
-            ids = $.map( listItems, function( el, key )
+            bidx.utils.error( "No action defined" );
+            return;
+        }
+        action = e.data;
+
+/*         _showModal(
+        {
+            view:       "deleteConfirm"
+        ,   state:      state
+
+        ,   onHide: function()
+            {
+
+            }
+        } );
+            return;*/
+
+        if( !$.isEmptyObject( itemList ) )
+        {
+            //  convert itemList object to csv list
+            ids = $.map( itemList, function( el, key )
             {
                 return key;
             } );
             ids.join(",");
 
-            _doDelete(
+            bidx.utils.log("[MAIL] do action ", action, " for ids: ", ids );
+
+            switch ( action)
             {
-                ids:    ids
-            ,   state:  state
-            } );
+                case "delete":
+                    _doDelete(
+                    {
+                        ids:            ids
+                    ,   state:          state
+                    } );
+                break;
+
+                case "read":
+                    _doMark(
+                    {
+                        ids:            ids
+                    ,   state:          state
+                    ,   markAction:     "MARK_READ"
+                    } );
+                break;
+
+                case "unread":
+                    _doMark(
+                    {
+                        ids:            ids
+                    ,   state:          state
+                    ,   markAction:     "MARK_UNREAD"
+                    } );
+                break;
+            }
+
 
         }
         else
@@ -594,19 +662,52 @@
 
     // handler for deleting multiple items
     //
-    function _doMarkAsReadMultiple( e )
+    function _doMark( options )
     {
-        e.preventDefault();
-        console.log("Do Mark as Read multip");
+        var ids;
+
+        if( options.ids )
+        {
+            ids = options.ids;
+        }
+        else
+        {
+            bidx.utils.warn( "No IDs supplied to mark" );
+            return;
+        }
+        bidx.api.call(
+             "mailboxMark.mutate"
+        ,   {
+                extraUrlParameters:
+                [
+                    {
+                        label: "markAction",
+                        value: options.markAction
+                    }
+                ]
+            ,   mailIds:                  ids
+            ,   groupDomain:              bidx.common.groupDomain
+
+            ,   success: function( response )
+                {
+                    if ( response && response.code === "emailStatusUpdatedOK" )
+                    {
+                        bidx.controller.updateHash( "#mail/" + options.state, true, false );
+                    }
+
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
+
+                    _showError( "Something went wrong while marking the emails: " + status );
+                }
+            }
+        );
     }
 
-    // handler for deleting multiple items
-    //
-    function _doMarkAsUnreadMultiple( e )
-    {
-        e.preventDefault();
-        console.log("Do Mark as UnRead multip");
-    }
+
 
     // handler for deleting multiple items
     //
@@ -662,7 +763,7 @@
                     else
                     {
                         buttons = [
-                            ".bidx-btn-delete-multiple"
+                            ".bidx-btn-delete"
                         ,   ".bidx-btn-mark-read-multiple"
                         ,   ".bidx-btn-mark-unread-multiple"
                         ,   ".bidx-btn-move-to-folder-multiple"
@@ -808,7 +909,7 @@
                 //
                 if( items.length )
                 {
-                    // create the listItems for this category
+                    // create the itemList for this category
                     // the argument 'key' is key in finding the correct snippit and list associated with this category
                     // the callback in this function is defined in the function that is called and also associated with the key
                     //
@@ -880,13 +981,13 @@
             return callbacks[ contactCategory ];
         }
 
-        // Generic function to create listitems based a snipped
+        // Generic function to create itemList based a snipped
         // Arguments contain an option object:
         // options:
         // {
         //      snippitId:          [ id of snippit script template ]
         // ,    category:           [ the category of contacts ]
-        // ,    items:              [ the collection of items to be converted into listitems ]
+        // ,    items:              [ the collection of items to be converted into itemList ]
         // ,    view:               [ view selector ]
         // ,    targetListSelector: [ selector of target list ]
         // ,    cb:                 [ callback to do specific code for this contact item, $listItem is passed as argument ]
@@ -1237,7 +1338,7 @@
         }
 
         //  get all emails from selected mailbox
-        // NOTE: #mattijs; I think it would be nice to separate the creation of the HTML email Listitems in a different function, because now this function can only be used
+        // NOTE: #mattijs; I think it would be nice to separate the creation of the HTML email itemList in a different function, because now this function can only be used
         //       for one application only
         //
         function _getEmails( options )
@@ -1325,16 +1426,16 @@
 
                                     if( $this.attr( "checked" ) )
                                     {
-                                        if( !listItems[ $this.data( "id" ) ])
+                                        if( !itemList[ $this.data( "id" ) ])
                                         {
-                                            listItems[ $this.data( "id" ) ] = true ;
+                                            itemList[ $this.data( "id" ) ] = 1 ;
                                         }
                                     }
                                     else
                                     {
-                                        if( listItems[ $this.data( "id" ) ] )
+                                        if( itemList[ $this.data( "id" ) ] )
                                         {
-                                        delete listItems[ $this.data( "id" ) ];
+                                        delete itemList[ $this.data( "id" ) ];
                                         }
                                     }
 
@@ -1351,21 +1452,21 @@
                                         if( masterCheck )
                                         {
                                             $this.checkbox( 'check' );
-                                            if( listItems )
+                                            if( itemList )
                                             {
 
-                                                if( !listItems[ $this.data( "id" ) ])
+                                                if( !itemList[ $this.data( "id" ) ])
                                                 {
-                                                    listItems[ $this.data( "id" ) ] = true;
+                                                    itemList[ $this.data( "id" ) ] = 1;
                                                 }
                                             }
                                         }
                                         else
                                         {
                                             $this.checkbox( 'uncheck' );
-                                            if( listItems[ $this.data( "id" ) ] )
+                                            if( itemList[ $this.data( "id" ) ] )
                                             {
-                                                delete listItems[ $this.data( "id" ) ];
+                                                delete itemList[ $this.data( "id" ) ];
                                             }
                                         }
                                     } );
@@ -1488,7 +1589,7 @@
             $toolbar.find(".btn").each( function()
             {
                 $this = $( this );
-                // get the base href frin data-href and modify it for this message
+                // get the base href fron data-href and modify it for this message
                 //
                 if ( $this.attr( "data-href" ) )
                 {
@@ -1499,9 +1600,6 @@
                     bidx.utils.log("[mail] linked href ", href );
                     $this.attr( "href", href );
                 }
-
-
-
             });
         }
 
@@ -1569,7 +1667,7 @@
 
     function navigate( options )
     {
-        bidx.utils.log("[mail] navigate", options);
+        bidx.utils.log("[mail] navigate", options, "itemList:",  itemList );
 
         // options argument holds 2 key/value pairs:
         // -   state (which state of the mail app has to be displayed; mbx-inbox, mbx-sent, compose etc...)
@@ -1644,6 +1742,13 @@
             break;
 
             case /^read$/.test( action ):
+                // clear itemList
+                //
+                itemList = {};
+
+                // store mailId for current email for possible user actions
+                //
+                itemList[ mailId ] = 1;
 
                 _closeModal();
                 _showView( "load" );
@@ -1672,7 +1777,7 @@
                         buttons = [
                             ".btn-reply"
                         ,   ".btn-forward"
-                        ,   ".btn-delete"
+                        ,   ".bidx-btn-delete"
                         ];
                         if ( state !== "mbx-sent")
                         {
@@ -1942,6 +2047,9 @@
             // catch all for mailbox folders; for example mbx-inbox. For convenience I remove the prefix within this closure
             //
             case /^mbx-/.test( action ):
+                // clear itemList
+                //
+                itemList = {};
 
                 _closeModal(
                 {
@@ -2018,7 +2126,10 @@
 
     // START DEV API
     //
-    ,   listItems:              listItems //storage for selection of emails in listview. I chose object because so that I can check if key exists
+    ,   itemList:              function()
+        {
+            return itemList;
+        }
     // END DEV API
     //
     };
