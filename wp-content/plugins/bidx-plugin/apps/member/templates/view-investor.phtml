@@ -169,6 +169,18 @@ if ($investorDetails &&
             $focusReach = $this->exst($investorDetails->focusReach);
             if ( $this->exst($focusReach->coordinates) && $this->exst($focusReach->coordinates) ) {
 
+                $mapParams = array(
+                    'center'        => $focusReach->coordinates,
+                    'size'          => '300x300',
+                    'zoom'          => 6,
+                    'sensor'        => 'false'
+                );
+
+                printf(
+                    '<img src="%s?%s" />',
+                    'https://maps.googleapis.com/maps/api/staticmap',
+                    http_build_query( $mapParams )
+                );
             }
 ?>
 

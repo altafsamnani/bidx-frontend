@@ -165,7 +165,16 @@ if ($businessSummary) {
 if ($companies) {
     $labelCompany = ($this->data->isMyProfile) ? __('My Company','bidxplugin') : __('This person has a company','bidxplugin');
     ?>
-    <h4 id="company">Company</h4>
+    <div class="clearfix">
+<?php
+    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
+?>
+        <div class="pull-right">
+            <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company','bidxplugin'); ?></a>
+        </div>
+<?php } ?>
+        <h4 id="company"><?php _e( 'Company', 'bidxplugin' ); ?></h4>
+    </div>
     <div class="accordion" id="companies">
 <?php
         foreach ($companies as $index => $company) {
@@ -266,18 +275,3 @@ if ($companies) {
     </div><!-- accordion #companies -->
 <?php
     }
-
-    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
-?>
-
-        <div class="clearfix">
-            <div class="pull-right">
-                <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company','bidxplugin'); ?></a>
-            </div>
-        </div>
-
-<?php } ?>
-
-
-
-
