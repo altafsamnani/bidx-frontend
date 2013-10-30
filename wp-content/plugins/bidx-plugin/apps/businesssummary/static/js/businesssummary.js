@@ -1,4 +1,5 @@
-( function( $ )
+/* global bidx */
+;( function( $ )
 {
     var $element                    = $( "#businessSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
@@ -39,34 +40,35 @@
 
         // Financial Summary / Details
         //
-    ,   $financialSummary               = $element.find( ".financialSummary")
-    ,   $financialSummaryYearsContainer = $financialSummary.find( ".fs-col-years" )
+    ,   $financialSummary                   = $element.find( ".financialSummary")
+    ,   $financialSummaryYearsContainer     = $financialSummary.find( ".fs-col-years" )
 
         // Managament Team
         //
-    ,   $btnAddManagementTeam       = forms.aboutYouAndYourTeam.$el.find( "[href$='#addManagementTeam']" )
-    ,   $managementTeamContainer    = forms.aboutYouAndYourTeam.$el.find( ".managementTeamContainer" )
+    ,   $btnAddManagementTeam               = forms.aboutYouAndYourTeam.$el.find( "[href$='#addManagementTeam']" )
+    ,   $managementTeamContainer            = forms.aboutYouAndYourTeam.$el.find( ".managementTeamContainer" )
+    ,   $managementTeamProfilePictureModal  = forms.aboutYouAndYourTeam.$el.find( ".managementTeamProfilePictureModal")
 
         // Company Details
         //
-    ,   $companyDetails             = $element.find( "#businessSummaryAccordion-CompanyDetails" )
-    ,   $hasCompany                 = forms.companyDetails.$el.find( "input[name='hasCompany']" )
-    ,   $doesHaveCompany            = forms.companyDetails.$el.find( ".doesHaveCompany" )
-    ,   $companiesTable             = $doesHaveCompany.find( "table" )
-    ,   $addNewCompany              = $companyDetails.find( ".addNewCompany")
-    ,   $btnAddNewCompany           = $companyDetails.find( "a[href$='addNewCompany']" )
+    ,   $companyDetails                     = $element.find( "#businessSummaryAccordion-CompanyDetails" )
+    ,   $hasCompany                         = forms.companyDetails.$el.find( "input[name='hasCompany']" )
+    ,   $doesHaveCompany                    = forms.companyDetails.$el.find( ".doesHaveCompany" )
+    ,   $companiesTable                     = $doesHaveCompany.find( "table" )
+    ,   $addNewCompany                      = $companyDetails.find( ".addNewCompany")
+    ,   $btnAddNewCompany                   = $companyDetails.find( "a[href$='addNewCompany']" )
 
         // Buttons under to control the add company form
         //
-    ,   $btnAddCompany              = $companyDetails.find( "a[href$='addCompany']" )
-    ,   $btnCancelAddCompany        = $companyDetails.find( "a[href$='cancelAddCompany']" )
+    ,   $btnAddCompany                      = $companyDetails.find( "a[href$='addCompany']" )
+    ,   $btnCancelAddCompany                = $companyDetails.find( "a[href$='cancelAddCompany']" )
 
         // Documents component
         //
-    ,   $documents                  = $element.find( "#businessSummaryAccordion-Documents" )
-    ,   $btnAddFiles                = $documents.find( "a[href$='addFiles']" )
-    ,   $addFiles                   = $documents.find( ".addFiles" )
-    ,   $attachmentContainer        = $documents.find( ".attachmentContainer" )
+    ,   $documents                          = $element.find( "#businessSummaryAccordion-Documents" )
+    ,   $btnAddFiles                        = $documents.find( "a[href$='addFiles']" )
+    ,   $addFiles                           = $documents.find( ".addFiles" )
+    ,   $attachmentContainer                = $documents.find( ".attachmentContainer" )
 
     ,   businessSummary
     ,   businessSummaryId
@@ -75,7 +77,6 @@
 
     ,   state
     ,   currentView
-    ,   bidx                        = window.bidx
     ,   snippets                    = {}
 
     ,   appName                     = "businesssummary"
@@ -422,6 +423,76 @@
             // Instantiate the reflowrower components
             //
             $managementTeamContainer.reflowrower( { itemsPerRow: 2 } );
+
+            // Profile picture selection
+            // Each member block has it's own button, but a single modal is reused
+            //
+            $managementTeamContainer.delegate( "a[href$='#changeProfilePicture']", "click", function( e )
+            {
+                e.preventDefault();
+
+                var $btn                        = $( this )
+                ,   $profilePictureContainer    = $btn.closest( ".controls" ).find( ".profilePictureContainer")
+                ,   $managementTeamItem         = $btn.closest( ".managementTeamItem" )
+                ;
+
+                // Make sure the media app is within our modal
+                //
+                $( "#media" ).appendTo( $managementTeamProfilePictureModal.find( ".modal-body" ) );
+
+                var $selectBtn = $managementTeamProfilePictureModal.find( ".btnSelectFile" )
+                ,   $cancelBtn = $managementTeamProfilePictureModal.find( ".btnCancelSelectFile" )
+                ;
+
+                // Navigate the media app into list mode for selecting files
+                //
+                bidx.media.navigate(
+                {
+                    requestedState:         "list"
+                ,   slaveApp:               true
+                ,   selectFile:             true
+                ,   multiSelect:            false
+                ,   showEditBtn:            false
+                ,   btnSelect:              $selectBtn
+                ,   btnCancel:              $cancelBtn
+                ,   callbacks:
+                    {
+                        ready:                  function( state )
+                        {
+                            bidx.utils.log( "[management team profile picture] ready in state", state );
+                        }
+
+                    ,   cancel:                 function()
+                        {
+                            // Stop selecting files, back to previous stage
+                            //
+                            $addFiles.modal('hide');
+                        }
+
+                    ,   success:                function( file )
+                        {
+                            bidx.utils.log( "[management team profile picture] uploaded", file );
+
+                            // NOOP.. the parent app is not interested in when the file is uploaded
+                            // only when it is attached / selected
+                        }
+
+                    ,   select:               function( file )
+                        {
+                            bidx.utils.log( "[management team profile picture] select", file );
+
+                            $profilePictureContainer.replaceWith( $( "<img />", { src: file.document }));
+
+                            var managementTeam = $managementTeamItem.data( "bidxData" );
+                            managementTeam.profilePicture = file;
+
+                            $managementTeamProfilePictureModal.modal('hide');
+                        }
+                    }
+                } );
+
+                $managementTeamProfilePictureModal.modal();
+            } );
 
             // Add an empty previous business block
             //
@@ -1123,6 +1194,14 @@
         // Store the data in the DOM for later referal / merging
         //
         $managementTeam.data( "bidxData", managementTeam );
+
+        // Profile picture is special and is it's own entity
+        //
+        if ( managementTeam.profilePicture )
+        {
+            $managementTeam.find( ".profilePictureContainer" )
+                .append( $( "<img />", { src: managementTeam.profilePicture.document } ));
+        }
 
         // Add it to the DOM!
         //

@@ -527,6 +527,22 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                                 <div class="managementTeamContainer"></div>
 
+                                <div class="managementTeamProfilePictureModal modal hide fade">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h3><?php _e('Check the file you want to use as the picture for this member', 'bidxplugin' ); ?></h3>
+                                  </div>
+                                    <div class="modal-body">
+    <?php
+                                        echo do_shortcode( '[bidx app="media"]' );
+    ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                        <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                    </div>
+                                </div>
+
                             </form>
                         </div><!-- /EDIT -->
 
@@ -862,7 +878,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="addFiles modal hide fade">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3 id="myModalLabel"><?php _e('Check the files you want to attach to your business plan', 'bidxplugin' ); ?></h3>
+                                <h3><?php _e('Check the files you want to attach to your business plan', 'bidxplugin' ); ?></h3>
                               </div>
                                 <div class="modal-body">
 <?php
@@ -963,6 +979,15 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <label class="control-label"><?php _e('LinkedIn profile','bidxplugin'); ?></label>
                 <div class="controls">
                     <input type="text" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                </div>
+            </div>
+
+            <!-- Profile picture -->
+            <div class="profilePictureControl control-group span11">
+                <label class="control-label"><?php _e('Picture','bidxplugin'); ?></label>
+                <div class="controls">
+                    <div class="profilePictureContainer"></div>
+                    <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Change profile picture', 'bidxplugin')?></a>
                 </div>
             </div>
 
