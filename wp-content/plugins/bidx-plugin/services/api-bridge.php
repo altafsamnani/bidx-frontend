@@ -241,8 +241,8 @@ abstract class APIbridge
         $http = (is_ssl ()) ? 'https://' : 'http://';
         $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) . '&emsg=1';
-
+        //$redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) . '&emsg=1';
+        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?emsg=1';
         header ("Location: " . $redirect_url);
         exit;
     }
