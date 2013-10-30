@@ -33,10 +33,6 @@
 
             <div class="span9">
 
-                <!-- "id" is actually the memberProfileId, but to not have to rewrite the file upload let's do it like this -->
-                <input type="hidden" name="investorProfileId"     />
-                <input type="hidden" name="domain"              />
-
                 <fieldset class="well">
                     <span class="scrollPositionMarker" id="editInvestor/generalInformation"></span>
                     <legend><?php _e('General information','bidxplugin'); ?></legend>
@@ -395,15 +391,31 @@
 
                 </fieldset>
 
-                <fieldset class="well hideOnCreate">
+                <fieldset class="well attachmentsControl">
                     <span class="scrollPositionMarker" id="editInvestor/documents"></span>
                     <legend><?php _e('Documents','bidxplugin'); ?></legend>
 
-                    <div class="formfield">
-                        <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"investorprofileattachment"}], "addFields":["investorProfileId","domain"], "callback": "bidx.investorprofile.attachmentUploadDone"}'/>
-                    </div>
-
                     <div class="attachmentsContainer"></div>
+
+                    <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
+
+                    <div class="addAttachmentsModal modal hide fade">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3><?php _e('Check the files you want to attach to your member profile', 'bidxplugin' ); ?></h3>
+                      </div>
+                        <div class="modal-body">
+    <?php
+                            // Media app will only be inserted once, this is by design!
+                            //
+                            echo do_shortcode( '[bidx app="media"]' );
+    ?>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                            <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                        </div>
+                    </div>
 
                 </fieldset>
             </div>

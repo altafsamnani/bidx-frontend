@@ -1,4 +1,5 @@
-( function( $ )
+/* global bidx */
+;( function( $ )
 {
     var $element                    = $( "#editEntrepreneur" )
     ,   $views                      = $element.find( ".view" )
@@ -7,15 +8,25 @@
 
     ,   $hideOnCreate               = $element.find( ".hideOnCreate" )
 
-    ,   $attachmentsContainer       = $editForm.find( ".attachmentsContainer" )
-    ,   $cvContainer                = $editForm.find( ".cvContainer" )
-
     ,   $btnAddPreviousBusiness     = $editForm.find( "[href$='#addPreviousBusiness']" )
     ,   $previousBusinessContainer  = $editForm.find( ".previousBusinessContainer" )
 
     ,   $toggles                    = $element.find( ".toggle" ).hide()
     ,   $togglePrevRunBusiness      = $element.find( "[name='prevRunBusiness']"      )
 
+        // CV
+        //
+    ,   $cvControl                          = $editForm.find( ".cvControl" )
+    ,   $cvContainer                        = $cvControl.find( ".cvContainer" )
+    ,   $btnChangeCv                        = $cvControl.find( "a[href$='changeCv']" )
+    ,   $changeCvModal                      = $cvControl.find( ".changeCvModal" )
+
+        // Attachnents
+        //
+    ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
+    ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
+    ,   $btnAddAttachments                  = $attachmentsControl.find( "a[href$='#addAttachments']")
+    ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
 
         // Since the data is coming from the member API, let's call the variable 'member'
         //
@@ -25,7 +36,7 @@
 
     ,   state
     ,   currentView
-    ,   bidx                        = window.bidx
+
     ,   snippets                    = {}
 
     ,   appName                     = "member"
@@ -48,81 +59,237 @@
         ,   "businessOutcome"
         ,   "webSite"
         ]
-
-    ,   attachment:
-        [
-            "purpose"
-        ,   "documentType"
-        ]
     };
 
-    // Grab the snippets from the DOM
+    // Setup function for doing work that should only be done once
     //
-    snippets.$attachment        = $snippets.children( ".attachmentItem"         ).remove();
-    snippets.$previousBusiness  = $snippets.children( ".previousBusinessItem"   ).remove();
-
-    // On any changes, how little doesn't matter, notify that we have a pending change
-    // But no need to track the changes when doing a member data load
-    //
-    $editForm.bind( "change", function()
+    function _oneTimeSetup()
     {
-        if ( currentView === "edit" )
+        _snippets();
+        _previousBusiness();
+        _cv();
+        _attachments();
+
+        // On any changes, how little doesn't matter, notify that we have a pending change
+        // But no need to track the changes when doing a member data load
+        //
+        $editForm.bind( "change", function()
         {
-            bidx.common.addAppWithPendingChanges( appName );
+            if ( currentView === "edit" )
+            {
+                bidx.common.addAppWithPendingChanges( appName );
+            }
+        } );
+
+        // Disable disabled links
+        //
+        $element.delegate( "a.disabled", "click", function( e )
+        {
+            e.preventDefault();
+        } );
+
+        bidx.data.getContext( "businessOutcome", function( err, businessOutcomes )
+        {
+            var $businessOutcome    = snippets.$previousBusiness.find( "[name='businessOutcome']" )
+            ,   $noValue            = $( "<option value='' />" )
+            ;
+
+            $noValue.i18nText( "selectOutcomeBusiness", appName );
+
+            $businessOutcome.append( $noValue );
+
+            bidx.utils.populateDropdown( $businessOutcome, businessOutcomes );
+        } );
+
+        // Grab the snippets from the DOM
+        //
+        function _snippets()
+        {
+            snippets.$attachment        = $snippets.children( ".attachmentItem"         ).remove();
+            snippets.$previousBusiness  = $snippets.children( ".previousBusinessItem"   ).remove();
         }
-    } );
 
-    bidx.data.getContext( "businessOutcome", function( err, businessOutcomes )
-    {
-        var $businessOutcome    = snippets.$previousBusiness.find( "[name='businessOutcome']" )
-        ,   $noValue            = $( "<option value='' />" )
-        ;
+        // Initialize previous business
+        //
+        function _previousBusiness()
+        {
+            // Instantiate reflowrower on the previousbusiness container
+            //
+            $previousBusinessContainer.reflowrower();
 
-        $noValue.i18nText( "selectOutcomeBusiness", appName );
+            // Update the UI to show the input / previous run business'
+            //
+            $togglePrevRunBusiness.change( function()
+            {
+                var value   = $togglePrevRunBusiness.filter( "[checked]" ).val()
+                ,   fn      = value === "true" ? "show" : "hide"
+                ;
 
-        $businessOutcome.append( $noValue );
+                $toggles.filter( ".togglePrevRunBusiness" )[ fn ]();
+            } );
 
-        bidx.utils.populateDropdown( $businessOutcome, businessOutcomes );
-    } );
+            // Add an empty previous business block
+            //
+            $btnAddPreviousBusiness.click( function( e )
+            {
+                e.preventDefault();
 
-    bidx.data.getContext( "documentType", function( err, documentTypes )
-    {
-        var $documentType   = snippets.$attachment.find( "[name='documentType']" )
-        ,   $noValue        = $( "<option value='' />" )
-        ;
+                _addPreviousBusiness();
+            } );
+        }
 
-        $noValue.i18nText( "selectDocumentType" );
+        // Initialize CV attachment controls
+        //
+        function _cv()
+        {
+            $btnChangeCv.click( function( e )
+            {
+                e.preventDefault();
 
-        $documentType.append( $noValue );
+                // Make sure the media app is within our modal container
+                //
+                $( "#media" ).appendTo( $changeCvModal.find( ".modal-body" ) );
 
-        bidx.utils.populateDropdown( $documentType, documentTypes );
-    } );
+                var $selectBtn = $changeCvModal.find(".btnSelectFile")
+                ,   $cancelBtn = $changeCvModal.find(".btnCancelSelectFile");
 
-    // Disable disabled links
-    //
-    $element.delegate( "a.disabled", "click", function( e )
-    {
-        e.preventDefault();
-    } );
+                // Navigate the media app into list mode for selecting files
+                //
+                bidx.media.navigate(
+                {
+                    requestedState:         "list"
+                ,   slaveApp:               true
+                ,   selectFile:             true
+                ,   multiSelect:            false
+                ,   showEditBtn:            false
+                ,   btnSelect:              $selectBtn
+                ,   btnCancel:              $cancelBtn
+                ,   callbacks:
+                    {
+                        ready:                  function( state )
+                        {
+                            bidx.utils.log( "[entrepreneurprofile] ready in state", state );
+                        }
 
-    // Instantiate reflowrower on the previousbusiness container
-    //
-    $previousBusinessContainer.reflowrower();
+                    ,   cancel:                 function()
+                        {
+                            // Stop selecting files, back to previous stage
+                            //
+                            $changeCvModal.modal('hide');
+                        }
 
-    // Update the UI to show the input / previous run business'
-    //
-    $togglePrevRunBusiness.change( function()
-    {
-        var value   = $togglePrevRunBusiness.filter( "[checked]" ).val()
-        ,   fn      = value === "true" ? "show" : "hide"
-        ;
+                    ,   success:                function( file )
+                        {
+                            bidx.utils.log( "[entrepreneurprofile] uploaded", file );
 
-        $toggles.filter( ".togglePrevRunBusiness" )[ fn ]();
-    } );
+                            // NOOP.. the parent app is not interested in when the file is uploaded
+                            // only when it is attached / selected
+                        }
+
+                    ,   select:               function( file )
+                        {
+                            bidx.utils.log( "[entrepreneurprofile] selected cv", file );
+
+                            _addCv( file );
+
+                            $changeCvModal.modal( "hide" );
+                        }
+                    }
+                } );
+
+                $changeCvModal.modal();
+            } );
+        }
+
+        // Initialize attachments
+        //
+        function _attachments()
+        {
+            // Clicking the add files button will load the media library
+            //
+            $btnAddAttachments.click( function( e )
+            {
+                e.preventDefault();
+
+                // Make sure the media app is within our modal
+                //
+                $( "#media" ).appendTo( $addAttachmentsModal.find( ".modal-body" ) );
+
+                var $selectBtn = $addAttachmentsModal.find( ".btnSelectFile" );
+                var $cancelBtn = $addAttachmentsModal.find( ".btnCancelSelectFile" );
+
+                // Navigate the media app into list mode for selecting files
+                //
+                bidx.media.navigate(
+                {
+                    requestedState:         "list"
+                ,   slaveApp:               true
+                ,   selectFile:             true
+                ,   multiSelect:            true
+                ,   showEditBtn:            false
+                ,   btnSelect:              $selectBtn
+                ,   btnCancel:              $cancelBtn
+                ,   callbacks:
+                    {
+                        ready:                  function( state )
+                        {
+                            bidx.utils.log( "[documents] ready in state", state );
+                        }
+
+                    ,   cancel:                 function()
+                        {
+                            // Stop selecting files, back to previous stage
+                            //
+                            $addAttachmentsModal.modal('hide');
+                        }
+
+                    ,   success:                function( file )
+                        {
+                            bidx.utils.log( "[attachments] uploaded", file );
+
+                            // NOOP.. the parent app is not interested in when the file is uploaded
+                            // only when it is attached / selected
+                        }
+
+                    ,   select:               function( files )
+                        {
+                            bidx.utils.log( "[attachments] select", files );
+
+                            // Attach the file to the entity
+                            // By adding it to the reflowrower we can pick it up as soon
+                            // as the entity is created or saved. The reflowrower keeps a list of
+                            // added items
+                            //
+
+                            if ( files )
+                            {
+                                $.each( files, function( idx, file )
+                                {
+                                    _addAttachment( file );
+                                } );
+                            }
+
+                            $addAttachmentsModal.modal('hide');
+                        }
+                    }
+                } );
+
+                $addAttachmentsModal.modal();
+            } );
+
+            // Instantiate reflowrower on the attachments container
+            //
+            $attachmentsContainer.reflowrower(
+            {
+                itemsPerRow:        3
+            ,   itemClass:          "attachmentItem"
+            } );
+        }
+    }
 
     // Add the snippet for another run business
     //
-    var _addPreviousBusiness = function( index, previousBusiness )
+    function _addPreviousBusiness( index, previousBusiness )
     {
         if ( !index )
         {
@@ -184,74 +351,19 @@
                     // NOOP
             }
         } );
-
-    };
-
-    // Add an empty previous business block
-    //
-    $btnAddPreviousBusiness.click( function( e )
-    {
-        e.preventDefault();
-
-        _addPreviousBusiness();
-    } );
-
-    // Instantiate reflowrower on the attachments container
-    //
-    $attachmentsContainer.reflowrower(
-    {
-        itemsPerRow:        3
-    ,   removeItemOverride: function( $item, cb )
-        {
-            var attachment      = $item.data( "bidxData" )
-            ,   documentId      = attachment.bidxMeta ? attachment.bidxMeta.bidxEntityId : attachment.bidxEntityId
-            ;
-
-            bidx.api.call(
-                "entityDocument.destroy"
-            ,   {
-                    entityId:           entrepreneurProfileId
-                ,   documentId:         documentId
-                ,   groupDomain:        bidx.common.groupDomain
-                ,   success:            function( response )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
-
-                        bidx.i18n.getItem( "attachmentDeleted", function( err, label )
-                        {
-                            bidx.common.notifySuccess( label );
-                        });
-
-                        cb();
-
-                        $attachmentsContainer.reflowrower( "removeItem", $item, true );
-                    }
-                ,   error:            function( jqXhr, textStatus )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
-
-                        bidx.i18n.getItem( "errAttachmentDelete", function( err, label )
-                        {
-                            alert( label );
-                        } );
-
-                        cb();
-                    }
-                }
-            );
-        }
-    } );
-
+    }
 
     // Add the CV to the screen (or show the 'there is no cv')
     //
-    var _addCVToScreen = function( attachment )
+    function _addCv( attachment )
     {
-        var $hasCV              = $cvContainer.find( ".hasCV" )
-        ,   $noCV               = $cvContainer.find( ".noCV" )
-        ,   uploadedDateTime
+        var $hasCV              = $cvControl.find( ".hasCV" )
+        ,   $noCV               = $cvControl.find( ".noCV" )
+        ,   createdDateTime
         ,   imageSrc
         ;
+
+        $cvContainer.data( "bidxData", attachment );
 
         if ( !attachment )
         {
@@ -260,75 +372,56 @@
         }
         else
         {
-            uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime );
+            createdDateTime    = bidx.utils.parseTimestampToDateStr( attachment.created );
 
             $hasCV.find( ".documentName"       ).text( attachment.documentName );
-            $hasCV.find( ".uploadedDateTime"   ).text( uploadedDateTime );
+            $hasCV.find( ".createdDateTime"    ).text( createdDateTime );
 
             $hasCV.find( ".documentLink" ).attr( "href", attachment.document );
 
             $hasCV.show();
             $noCV.hide();
         }
-    };
+    }
 
     // Add the attachment to the screen, by cloning the snippet and populating it
     //
-    var _addAttachmentToScreen = function( index, attachment )
+    function _addAttachment( attachment )
     {
-        if ( !attachment )
+        if ( attachment === null )
         {
-            bidx.util.warn( "entrepreneurprofile::_addAttachmentToScreen: attachment is null!" );
+            bidx.util.warn( "memberprofile::_addAttachment: attachment is null!" );
             return;
         }
 
-        if ( !index )
-        {
-            index = $attachmentsContainer.find( ".attachmentItem" ).length;
-        }
-
         var $attachment         = snippets.$attachment.clone()
-        ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   inputNamePrefix     = "attachment[" + index + "]"
+        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
         ,   imageSrc
         ;
 
-        // Update all the input elements and prefix the names with the right index
-        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
+        // Store the data so we can later use it to merge the updated data in
         //
-        $attachment.find( "input, select, textarea" ).each( function( )
-        {
-            var $input = $( this );
-
-            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
-        } );
-
         $attachment.data( "bidxData", attachment );
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
-        $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
+        $attachment.find( ".createdDateTime"    ).text( createdDateTime );
 
-        var $purpose       = $attachment.find( "[name$='.purpose']" )
-        ,   $documentType  = $attachment.find( "[name$='.documentType']" )
-        ;
-
-        bidx.utils.setElementValue( $purpose,       attachment.purpose );
-        bidx.utils.setElementValue( $documentType,  attachment.documentType );
+        $attachment.find( ".purpose"            ).text( attachment.purpose );
+        $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
         imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
             ? attachment.document
             : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
 
-        $attachment.find( ".documentImage" ).attr( "src", imageSrc );
-        $attachment.find( ".documentLink"  ).attr( "href", attachment.document );
+        $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
+        $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
-    };
-
+    }
 
     // Use the retrieved member object to populate the form and other screen elements
     //
-    var _populateScreen = function()
+    function _populateScreen()
     {
         // Start by setting the toggles false, will switch to true if needed
         //
@@ -346,11 +439,6 @@
             } );
         } );
 
-        // Setup the hidden fields used in the file upload
-        //
-        $editForm.find( "[name='domain']"                   ).val( bidx.common.groupDomain );
-        $editForm.find( "[name='entrepreneurProfileId']"    ).val( entrepreneurProfileId );
-
         // Now the nested objects
         //
         var previousBusiness = bidx.utils.getValue( member, "bidxEntrepreneurProfile.previousBusiness", true );
@@ -363,7 +451,7 @@
             } );
         }
 
-        _addCVToScreen( bidx.utils.getValue( member, "bidxEntrepreneurProfile.cv" ) );
+        _addCv( bidx.utils.getValue( member, "bidxEntrepreneurProfile.cv" ) );
 
         // Attachments
         //
@@ -373,8 +461,8 @@
         {
             $.each( attachments, function( idx, attachment )
             {
-                bidx.utils.log( "attachment", attachment );
-                _addAttachmentToScreen( idx, attachment );
+                bidx.utils.log( "attachment ", idx, attachment );
+                _addAttachment( attachment );
             } );
         }
 
@@ -386,12 +474,11 @@
         {
             $togglePrevRunBusiness.filter( ":checked" ).radio( "setState" );
         }
-    };
-
+    }
 
     // Convert the form values back into the member object
     //
-    var _getFormValues = function()
+    function _getFormValues()
     {
         $.each( fields._root, function( i, f )
         {
@@ -404,7 +491,7 @@
 
         // Collect the nested objects
         //
-        $.each( [ "previousBusiness", "attachment" ], function()
+        $.each( [ "previousBusiness"], function()
         {
             var nest                = this + "" // unbox
             ,   i                   = 0
@@ -425,7 +512,6 @@
             switch ( nest )
             {
                 case "previousBusiness":    $reflowContainer = $previousBusinessContainer;  break;
-                case "attachment":          $reflowContainer = $attachmentsContainer;       break;
 
                 default:
                     bidx.utils.error( "entrepreneurprofile, Unknown nest", nest );
@@ -470,11 +556,33 @@
                 previousBusiness.webSite = bidx.utils.prefixUrlWithProtocol( previousBusiness.webSite );
             } );
         }
-    };
+
+        // Documents
+        // Collect the whole situation from the DOM and set that array of bidxData items to be the new situation
+        //
+        var attachments = [];
+
+        $attachmentsContainer.find( ".attachmentItem" ).each( function()
+        {
+            var $item       = $( this )
+            ,   bidxData    = $item.data( "bidxData" )
+            ;
+
+            attachments.push( bidxData );
+        } );
+
+        bidx.utils.setValue( member, "bidxEntrepreneurProfile.attachment", attachments );
+
+        // CV
+        //
+        var cv = $cvContainer.data( "bidxData" );
+        bidx.utils.setValue( member, "bidxEntrepreneurProfile.cv", cv );
+
+    }
 
     // This is the startpoint
     //
-    var _init = function()
+    function _init()
     {
         // Reset any state
         //
@@ -646,11 +754,11 @@
                 }
             );
         }
-    };
+    }
 
     // Try to save the member to the API
     //
-    var _save = function( params )
+    function _save( params )
     {
         var bidxAPIService
         ,   bidxAPIParams
@@ -726,27 +834,26 @@
             bidxAPIService
         ,   bidxAPIParams
         );
-    };
+    }
 
     // Private functions
     //
-    var _showError = function( msg )
+    function _showError( msg )
     {
         $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
         _showView( "error" );
-    };
+    }
 
-    var _showView = function( v )
+    function _showView( v )
     {
         currentView = v;
 
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
-    };
+    }
 
     // ROUTER
     //
-
-    var navigate = function( options )
+    function navigate( options )
     {
         switch ( options.requestedState )
         {
@@ -830,70 +937,28 @@
 
                     _init();
                 }
-
             break;
-
-
         }
-    };
+    }
 
-
-    // function called by file upload plugin when attachment upload is done
+    // Reset the app to it's initial state
     //
-    var attachmentUploadDone = function( err, result )
-    {
-        bidx.utils.log( "attachmentUploadDone", err, result );
-
-        if ( err )
-        {
-            alert( "Problem uploading attachment" );
-        }
-        else
-        {
-            bidx.i18n.getItem( "attachmentUploadDone", function( err, label )
-            {
-                bidx.common.notifySuccess( label );
-            } );
-
-            _addAttachmentToScreen( null, result.data );
-        }
-    };
-
-    // function called by file upload plugin when cv upload is done
-    //
-    var cvUploadDone = function( err, result )
-    {
-        bidx.utils.log( "cvUploadDone", err, result );
-
-        if ( err )
-        {
-            alert( "Problem uploading attachment" );
-        }
-        else
-        {
-            bidx.i18n.getItem( "attachmentUploadDone", function( err, label )
-            {
-                bidx.common.notifySuccess( label );
-            } );
-
-            _addCVToScreen( result.data );
-        }
-    };
-
-    var reset = function()
+    function reset()
     {
         state = null;
 
         bidx.common.removeAppWithPendingChanges( appName );
-    };
+    }
+
+    // Engage!
+    //
+    _oneTimeSetup();
 
     // Expose
     //
     var entrepreneurprofile =
     {
-        attachmentUploadDone:       attachmentUploadDone
-    ,   cvUploadDone:               cvUploadDone
-    ,   navigate:                   navigate
+        navigate:                   navigate
     ,   reset:                      reset
 
     ,   $element:                   $element

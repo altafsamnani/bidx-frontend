@@ -1,4 +1,5 @@
-( function( $ )
+/* global bidx */
+;( function( $ )
 {
     var $element                    = $( "#editMember" )
     ,   $views                      = $element.find( ".view" )
@@ -44,7 +45,7 @@
     ,   memberProfileId
     ,   state
     ,   currentView
-    ,   bidx                        = window.bidx
+
     ,   snippets                    = {}
 
     ,   appName                     = "member"
@@ -61,7 +62,7 @@
 
     // Form fields
     //
-    var arrayFields = [ "address", "contactDetail", "attachment" ];
+    var arrayFields = [ "address", "contactDetail" ];
 
     var fields =
     {
@@ -1265,6 +1266,8 @@
         }
     }
 
+    // Reset the app back to it's initial state
+    //
     function reset()
     {
         state = null;

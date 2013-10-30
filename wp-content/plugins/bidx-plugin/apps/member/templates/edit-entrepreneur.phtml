@@ -18,10 +18,6 @@
 
             <div class="span12">
 
-                <!-- "id" is actually the entrepreneurProfileId, but to not have to rewrite the file upload let's do it like this -->
-                <input type="hidden" name="entrepreneurProfileId"     />
-                <input type="hidden" name="domain"              />
-
                 <fieldset class="well">
                     <p>
                         <?php _e('Complete this short form with information about you as entrepreneur. Be aware that investors and other members potentially interested in your business will be very interested to know more about you, your motivation and what makes you thrive as an entrepreneur. Treat this form as your first contact with, and pitch to potential investors and business partners.', 'bidxplugin')?>
@@ -73,7 +69,7 @@
 
                 </fieldset>
 
-                <fieldset class="well hideOnCreate">
+                <fieldset class="well cvControl">
                     <legend><?php _e('CV','bidxplugin'); ?></legend>
 
                     <div class="fow-fluid cvContainer">
@@ -92,21 +88,54 @@
 
                         </div>
                         <div class="span8">
-                            <p><span class="hasCV"><?php _e('Or upload a new document:'); ?></span><span class="noCV"><?php _e('Upload a document:','bidxplugin'); ?></span></p>
-                            <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofilecv"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.cvUploadDone"}'/>
+                            <a href="#changeCv" data-toggle="modal" class="btn btn-primary"><span class="hasCV"><?php _e('Or select a different document'); ?></span><span class="noCV"><?php _e('Select a document','bidxplugin'); ?></span></a>
+
+                            <div class="changeCvModal modal hide fade">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3><?php _e('Check the file you want to use as your CV', 'bidxplugin' ); ?></h3>
+                              </div>
+                                <div class="modal-body">
+            <?php
+                                    // Media app will only be inserted once, this is by design!
+                                    //
+                                    echo do_shortcode( '[bidx app="media"]' );
+            ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                    <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </fieldset>
 
-                <fieldset class="well hideOnCreate">
+                <fieldset class="well attachmentsControl">
                     <legend><?php _e('Other documents','bidxplugin'); ?></legend>
-
-                    <div class="formfield">
-                        <input type="file" name="attachment" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "extraValues":[{"name": "uploadtype", "value":"entrepreneurprofileattachment"}], "addFields":["entrepreneurProfileId","domain"], "callback": "bidx.entrepreneurprofile.attachmentUploadDone"}'/>
-                    </div>
 
                     <div class="attachmentsContainer"></div>
 
+                    <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
+
+                    <div class="addAttachmentsModal modal hide fade">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3><?php _e('Check the files you want to attach to your member profile', 'bidxplugin' ); ?></h3>
+                      </div>
+                        <div class="modal-body">
+    <?php
+                            // Media app will only be inserted once, this is by design!
+                            //
+                            echo do_shortcode( '[bidx app="media"]' );
+    ?>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                            <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
 
@@ -139,6 +168,7 @@
             <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this business','bidxplugin'); ?></a>
         </div>
 
+        <!-- Attachment -->
         <div class="attachmentItem span4 well well-white">
             <div class="row-fluid">
                 <div class="span4">
@@ -146,24 +176,14 @@
                 </div>
                 <div class="span7">
                     <h3 class="documentName"></h3>
-                    <p class="uploadedDateTime"></p>
-
-                    <div class="control-group">
-                        <div class="controls">
-                            <input type="text" name="purpose" placeholder="<?php _e('Short description','bidxplugin'); ?>">
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label"><?php _e('Document type','bidxplugin'); ?></label>
-                        <div class="controls">
-                            <select name="documentType"></select>
-                        </div>
-                    </div>
+                    <p class="createdDateTime"></p>
+                    <p class="purpose"></p>
+                    <p class="documentType"></p>
                 </div>
             </div>
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Delete','bidxplugin'); ?></a>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove from profile','bidxplugin'); ?></a>
         </div>
+
     </div>
 
 </div><!-- // row -->

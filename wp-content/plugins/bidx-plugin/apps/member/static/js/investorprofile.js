@@ -1,4 +1,5 @@
-( function( $ )
+/* global bidx */
+;( function( $ )
 {
     var $element                        = $( "#editInvestor" )
     ,   $views                          = $element.find( ".view" )
@@ -15,7 +16,12 @@
     ,   $btnAddReference                = $editForm.find( "[href$='#addReference']" )
     ,   $referencesContainer            = $editForm.find( ".referencesContainer" )
 
-    ,   $attachmentsContainer           = $editForm.find( ".attachmentsContainer" )
+        // Attachnents
+        //
+    ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
+    ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
+    ,   $btnAddAttachments                  = $attachmentsControl.find( "a[href$='#addAttachments']")
+    ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
 
     ,   $toggles                        = $element.find( ".toggle" ).hide()
     ,   $toggleInvestsForInst           = $element.find( "[name='investsForInst']"      )
@@ -34,7 +40,7 @@
     ,   investorProfileId
     ,   state
     ,   currentView
-    ,   bidx                        = window.bidx
+
     ,   snippets                    = {}
 
     ,   appName                     = "member"
@@ -42,7 +48,7 @@
 
     // Form fields
     //
-    var arrayFields = [ "focusCity", "previousInvestments", "references", "attachment" ];
+    var arrayFields = [ "focusCity", "previousInvestments", "references" ];
 
     var fields =
     {
@@ -114,70 +120,202 @@
                 ]
             }
         ]
-
-    ,   attachment:
-        [
-            "purpose"
-        ,   "documentType"
-        ]
     };
 
-    // Grab the snippets from the DOM
+        // Setup function for doing work that should only be done once
     //
-    snippets.$previousInvestment    = $snippets.children( ".previousInvestmentsItem" ).remove();
-    snippets.$reference             = $snippets.children( ".referencesItem"          ).remove();
-    snippets.$attachment            = $snippets.children( ".attachmentItem"          ).remove();
-
-    // On any changes, how little doesn't matter, notify that we have a pending change
-    // But no need to track the changes when doing a member data load
-    //
-    $editForm.bind( "change", function()
+    function _oneTimeSetup()
     {
-        if ( currentView === "edit" )
+        _snippets();
+        _previousInvestment();
+        _references();
+        _attachments();
+
+        // On any changes, how little doesn't matter, notify that we have a pending change
+        // But no need to track the changes when doing a member data load
+        //
+        $editForm.bind( "change", function()
         {
-            bidx.common.addAppWithPendingChanges( appName );
+            if ( currentView === "edit" )
+            {
+                bidx.common.addAppWithPendingChanges( appName );
+            }
+        } );
+
+        // Disable disabled links
+        //
+        $element.delegate( "a.disabled", "click", function( e )
+        {
+            e.preventDefault();
+        } );
+
+        // Populate the dropdowns with the values
+        //
+        bidx.data.getContext( "investmentType", function( err, investmentTypes )
+        {
+            var $investmentType     = snippets.$previousInvestment.find( "[name='investmentType']" )
+            ,   $noValue            = $( "<option value='' />" )
+            ;
+
+            $noValue.i18nText( "selectInvestmentType", appName );
+            $investmentType.append( $noValue );
+
+            bidx.utils.populateDropdown( $investmentType, investmentTypes );
+        } );
+
+        // Populate the dropdowns with the values
+        //
+        bidx.data.getContext( "investorType", function( err, investorTypes )
+        {
+            var $noValue = $( "<option value='' />" );
+
+            $noValue.i18nText( "selectInvestor", appName );
+            $investorType.append( $noValue );
+
+            bidx.utils.populateDropdown( $investorType, investorTypes );
+        } );
+
+        // Populate the dropdowns with the values
+        //
+        bidx.data.getContext( "country", function( err, countries )
+        {
+            var $noValue = $( "<option value='' />" );
+
+            $noValue.i18nText( "selectCountry", appName );
+            $institutionAddressCountry.append( $noValue );
+
+            bidx.utils.populateDropdown( $institutionAddressCountry, countries );
+        } );
+
+        // Grab the snippets from the DOM
+        //
+        function _snippets()
+        {
+            snippets.$previousInvestment    = $snippets.children( ".previousInvestmentsItem" ).remove();
+            snippets.$reference             = $snippets.children( ".referencesItem"          ).remove();
+            snippets.$attachment            = $snippets.children( ".attachmentItem"          ).remove();
         }
-    } );
 
-    // Populate the dropdowns with the values
-    //
-    bidx.data.getContext( "investmentType", function( err, investmentTypes )
-    {
-        var $investmentType     = snippets.$previousInvestment.find( "[name='investmentType']" )
-        ,   $noValue            = $( "<option value='' />" )
-        ;
+        // Initialiazation of previous investment component
+        //
+        function _previousInvestment()
+        {
+            // Add an empty previous business block
+            //
+            $btnAddPreviousInvestment.click( function( e )
+            {
+                e.preventDefault();
 
-        $noValue.i18nText( "selectInvestmentType", appName );
-        $investmentType.append( $noValue );
+                _addPreviousInvestment();
+            } );
 
-        bidx.utils.populateDropdown( $investmentType, investmentTypes );
-    } );
+            // Instantiate reflowrower on the previousInvestment container
+            //
+            $previousInvestmentContainer.reflowrower( { itemsPerRow: 2 } );
+        }
 
-    bidx.data.getContext( "documentType", function( err, documentTypes )
-    {
-        var $documentType = snippets.$attachment.find( "[name='documentType']" )
-        ,   $noValue        = $( "<option value='' />" )
-        ;
+        // Initialize references
+        //
+        function _references()
+        {
+            // Add an empty previous business block
+            //
+            $btnAddReference.click( function( e )
+            {
+                e.preventDefault();
 
-        $noValue.i18nText( "selectDocumentType" );
+                _addReference();
+            } );
 
-        $documentType.append( $noValue );
+            $referencesContainer.reflowrower( { itemsPerRow: 2 } );
+        }
 
-        bidx.utils.populateDropdown( $documentType, documentTypes );
-    } );
+        // Initialize attachments
+        //
+        function _attachments()
+        {
+            // Clicking the add files button will load the media library
+            //
+            $btnAddAttachments.click( function( e )
+            {
+                e.preventDefault();
 
+                // Make sure the media app is within our modal
+                //
+                $( "#media" ).appendTo( $addAttachmentsModal.find( ".modal-body" ) );
 
-    // Disable disabled links
-    //
-    $element.delegate( "a.disabled", "click", function( e )
-    {
-        e.preventDefault();
-    } );
+                var $selectBtn = $addAttachmentsModal.find( ".btnSelectFile" );
+                var $cancelBtn = $addAttachmentsModal.find( ".btnCancelSelectFile" );
 
-    // Instantiate reflowrower on the previousInvestment container
-    //
-    $previousInvestmentContainer.reflowrower( { itemsPerRow: 2 } );
-    $referencesContainer.reflowrower( { itemsPerRow: 2 } );
+                // Navigate the media app into list mode for selecting files
+                //
+                bidx.media.navigate(
+                {
+                    requestedState:         "list"
+                ,   slaveApp:               true
+                ,   selectFile:             true
+                ,   multiSelect:            true
+                ,   showEditBtn:            false
+                ,   btnSelect:              $selectBtn
+                ,   btnCancel:              $cancelBtn
+                ,   callbacks:
+                    {
+                        ready:                  function( state )
+                        {
+                            bidx.utils.log( "[documents] ready in state", state );
+                        }
+
+                    ,   cancel:                 function()
+                        {
+                            // Stop selecting files, back to previous stage
+                            //
+                            $addAttachmentsModal.modal('hide');
+                        }
+
+                    ,   success:                function( file )
+                        {
+                            bidx.utils.log( "[attachments] uploaded", file );
+
+                            // NOOP.. the parent app is not interested in when the file is uploaded
+                            // only when it is attached / selected
+                        }
+
+                    ,   select:               function( files )
+                        {
+                            bidx.utils.log( "[attachments] select", files );
+
+                            // Attach the file to the entity
+                            // By adding it to the reflowrower we can pick it up as soon
+                            // as the entity is created or saved. The reflowrower keeps a list of
+                            // added items
+                            //
+
+                            if ( files )
+                            {
+                                $.each( files, function( idx, file )
+                                {
+                                    _addAttachment( file );
+                                } );
+                            }
+
+                            $addAttachmentsModal.modal('hide');
+                        }
+                    }
+                } );
+
+                $addAttachmentsModal.modal();
+            } );
+
+            // Instantiate reflowrower on the attachments container
+            //
+            $attachmentsContainer.reflowrower(
+            {
+                itemsPerRow:        3
+            ,   itemClass:          "attachmentItem"
+            } );
+        }
+    }
+
 
     // Add the snippet for a previous investment
     //
@@ -262,15 +400,6 @@
             }
         } );
     };
-
-    // Add an empty previous business block
-    //
-    $btnAddPreviousInvestment.click( function( e )
-    {
-        e.preventDefault();
-
-        _addPreviousInvestment();
-    } );
 
     // Add the snippet for a reference (and fill it with data)
     //
@@ -398,14 +527,6 @@
         }
     };
 
-    // Add an empty previous business block
-    //
-    $btnAddReference.click( function( e )
-    {
-        e.preventDefault();
-
-        _addReference();
-    } );
 
 
     var _handleToggleChange = function( show, group )
@@ -457,75 +578,42 @@
 
 
 
-    // Instantiate reflowrower on the attachments container
+    // Add the attachment to the screen, by cloning the snippet and populating it
     //
-    $attachmentsContainer.reflowrower(
+    function _addAttachment( attachment )
     {
-        itemsPerRow:        3
-    ,   removeItemOverride: function( $item, cb )
+        if ( attachment === null )
         {
-            var attachment      = $item.data( "bidxData" )
-            ,   documentId      = attachment.bidxMeta ? attachment.bidxMeta.bidxEntityId : attachment.bidxEntityId
-            ;
-
-            bidx.api.call(
-                "entityDocument.destroy"
-            ,   {
-                    entityId:           investorProfileId
-                ,   documentId:         documentId
-                ,   groupDomain:        bidx.common.groupDomain
-                ,   success:            function( response )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::success", response );
-
-                        bidx.i18n.getItem( "attachmentDeleted", function( err, label )
-                        {
-                            bidx.common.notifySuccess( label );
-                        });
-
-                        cb();
-
-                        $attachmentsContainer.reflowrower( "removeItem", $item, true );
-                    }
-                ,   error:            function( jqXhr, textStatus )
-                    {
-                        bidx.utils.log( "bidx::entityDocument::destroy::error", jqXhr, textStatus );
-
-                        bidx.i18n.getItem( "errAttachmentDelete", function( err, label )
-                        {
-                            alert( label );
-                        } );
-
-                        cb();
-                    }
-                }
-            );
+            bidx.util.warn( "investorprofile::_addAttachment: attachment is null!" );
+            return;
         }
-    } );
 
-    // Populate the dropdowns with the values
-    //
-    bidx.data.getContext( "investorType", function( err, investorTypes )
-    {
-        var $noValue = $( "<option value='' />" );
+        var $attachment         = snippets.$attachment.clone()
+        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
+        ,   imageSrc
+        ;
 
-        $noValue.i18nText( "selectInvestor", appName );
-        $investorType.append( $noValue );
+        // Store the data so we can later use it to merge the updated data in
+        //
+        $attachment.data( "bidxData", attachment );
 
-        bidx.utils.populateDropdown( $investorType, investorTypes );
-    } );
+        $attachment.find( ".documentName"       ).text( attachment.documentName );
+        $attachment.find( ".createdDateTime"    ).text( createdDateTime );
 
-    // Populate the dropdowns with the values
-    //
-    bidx.data.getContext( "country", function( err, countries )
-    {
-        var $noValue = $( "<option value='' />" );
+        $attachment.find( ".purpose"            ).text( attachment.purpose );
+        $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
-        $noValue.i18nText( "selectCountry", appName );
-        $institutionAddressCountry.append( $noValue );
+        imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
+            ? attachment.document
+            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
 
-        bidx.utils.populateDropdown( $institutionAddressCountry, countries );
-    } );
+        $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
+        $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
+
+        $attachmentsContainer.reflowrower( "addItem", $attachment );
+    }
+
+
 
 
     // Build up the gmaps for the current address
@@ -681,13 +769,8 @@
 
     // Use the retrieved member object to populate the form and other screen elements
     //
-    var _populateScreen = function()
+    function _populateScreen()
     {
-        // Setup the hidden fields used in the file upload
-        //
-        $editForm.find( "[name='domain']"               ).val( bidx.common.groupDomain );
-        $editForm.find( "[name='investorProfileId']"    ).val( investorProfileId );
-
         $.each( fields._root, function( i, f )
         {
             var $input  = $editForm.find( "[name='" + f + "']" )
@@ -800,8 +883,8 @@
         {
             $.each( attachments, function( idx, attachment )
             {
-                bidx.utils.log( "attachment", attachment );
-                _addAttachmentToScreen( idx, attachment );
+                bidx.utils.log( "attachment ", idx, attachment );
+                _addAttachment( attachment );
             } );
         }
 
@@ -871,66 +954,11 @@
                 }
             );
         }
-    };
-
-    // Add the attachment to the screen, by cloning the snippet and populating it
-    //
-    var _addAttachmentToScreen = function( index, attachment )
-    {
-        if ( attachment === null )
-        {
-            bidx.util.warn( "investorprofile::_addAttachmentToScreen: attachment is null!" );
-            return;
-        }
-
-        if ( !index )
-        {
-            index = $attachmentsContainer.find( ".attachmentItem" ).length;
-        }
-
-        var $attachment         = snippets.$attachment.clone()
-        ,   uploadedDateTime    = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   inputNamePrefix     = "attachment[" + index + "]"
-        ,   imageSrc
-        ;
-
-        // Store the data so we can later use it to merge the updated data in
-        //
-        $attachment.data( "bidxData", attachment );
-
-        // Update all the input elements and prefix the names with the right index
-        // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
-        //
-        $attachment.find( "input, select, textarea" ).each( function( )
-        {
-            var $input = $( this );
-
-            $input.prop( "name", inputNamePrefix + "." + $input.prop( "name" ) );
-        } );
-
-        $attachment.find( ".documentName"       ).text( attachment.documentName );
-        $attachment.find( ".uploadedDateTime"   ).text( uploadedDateTime );
-
-        var $purpose       = $attachment.find( "[name$='.purpose']" )
-        ,   $documentType  = $attachment.find( "[name$='.documentType']" )
-        ;
-
-        bidx.utils.setElementValue( $purpose,       attachment.purpose );
-        bidx.utils.setElementValue( $documentType,  attachment.documentType );
-
-        imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
-            ? attachment.document
-            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
-
-        $attachment.find( ".documentImage" ).attr( "src", imageSrc );
-        $attachment.find( ".documentLink"  ).attr( "href", attachment.document );
-
-        $attachmentsContainer.reflowrower( "addItem", $attachment );
-    };
+    }
 
     // Convert the form values back into the member object
     //
-    var _getFormValues = function()
+    function _getFormValues()
     {
         $.each( fields._root, function( i, f )
         {
@@ -943,7 +971,7 @@
 
         // Collect the nested objects
         //
-        $.each( [ "institutionAddress", "references", "previousInvestments", "attachment" ], function()
+        $.each( [ "institutionAddress", "references", "previousInvestments" ], function()
         {
             var nest                = this + "" // unbox that value!
             ,   i                   = 0
@@ -1082,11 +1110,27 @@
             bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.coordinates", null );
             bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.reach", null );
         }
-    };
+
+        // Documents
+        // Collect the whole situation from the DOM and set that array of bidxData items to be the new situation
+        //
+        var attachments = [];
+
+        $attachmentsContainer.find( ".attachmentItem" ).each( function()
+        {
+            var $item       = $( this )
+            ,   bidxData    = $item.data( "bidxData" )
+            ;
+
+            attachments.push( bidxData );
+        } );
+
+        bidx.utils.setValue( member, "bidxInvestorProfile.attachment", attachments );
+    }
 
     // This is the startpoint
     //
-    var _init = function()
+    function _init()
     {
         // Reset any state
         //
@@ -1314,11 +1358,11 @@
                 }
             );
         }
-    };
+    }
 
     // Try to save the member to the API
     //
-    var _save = function( params )
+    function _save( params )
     {
         var bidxAPIService
         ,   bidxAPIParams
@@ -1395,26 +1439,26 @@
             bidxAPIService
         ,   bidxAPIParams
         );
-    };
+    }
 
     // Private functions
     //
-    var _showError = function( msg )
+    function _showError( msg )
     {
         $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
         _showView( "error" );
-    };
+    }
 
-    var _showView = function( v )
+    function _showView( v )
     {
         currentView = v;
 
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
-    };
+    }
 
     // ROUTER
     //
-    var navigate = function( options )
+    function navigate( options )
     {
         //requestedState, section, id, cb
         switch ( options.requestedState )
@@ -1507,41 +1551,26 @@
             break;
 
         }
-    };
+    }
 
-
-    var attachmentUploadDone = function( err, result )
-    {
-        bidx.utils.log( "attachmentUploadDone", err, result );
-
-        if ( err )
-        {
-            alert( "Problem uploading attachment" );
-        }
-        else
-        {
-            bidx.i18n.getItem( "attachmentUploadDone", function( err, label )
-            {
-                bidx.common.notifySuccess( label );
-            } );
-
-            _addAttachmentToScreen( null, result.data );
-        }
-    };
-
-    var reset = function()
+    // Reset the app back to it's initial state
+    //
+    function reset()
     {
         state = null;
 
         bidx.common.removeAppWithPendingChanges( appName );
-    };
+    }
+
+    // Engage!
+    //
+    _oneTimeSetup();
 
     // Expose
     //
     var app =
     {
-        attachmentUploadDone:       attachmentUploadDone
-    ,   navigate:                   navigate
+        navigate:                   navigate
     ,   reset:                      reset
 
     ,   $element:                   $element
