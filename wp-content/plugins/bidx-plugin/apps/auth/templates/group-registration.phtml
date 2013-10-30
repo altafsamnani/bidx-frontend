@@ -46,10 +46,6 @@
 		<div class="span8 well">
 			<h3><?php _e('About your group','bidxplugin');?></h3>
 			<div class="formfield">
-				<label><?php _e('Logo','bidxplugin');?></label>
-				<input type="file" name="logo" data-type="fileUpload" data-type-arguments='{"url":"/wp-admin/admin-ajax.php?action=file_upload", "addFields":["groupProfileId","domain"]}' value=""/>
-			</div>
-			<div class="formfield">
 				<label><?php _e('Group Name','bidxplugin');?></label>
 				<input type="text" name="businessGroupName" readonly="readonly" placeholder="<?php _e('Please enter your group name','bidxplugin');?>" value="<?php echo $_POST["groupName"]; ?>"/>
 			</div>
@@ -216,7 +212,7 @@
 			url : '/wp-admin/admin-ajax.php?action=bidx_register',
 			apiurl:'ajax_register_action',
 			apimethod:'post',
-			enablePlugins: ['date','location','fileUpload','countryAutocomplete'],
+			enablePlugins: ['date','location','countryAutocomplete'],
 			beforeSubmit : function () {
 				/*document.location = "/group-creation-success/" */
 			}
