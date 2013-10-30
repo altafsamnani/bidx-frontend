@@ -153,6 +153,7 @@
             ,   "lastName"
             ,   "role"
             ,   "expertise"
+            ,   "linkedIn"
             ]
         }
 
@@ -1166,6 +1167,13 @@
                     } );
                 break;
 
+                case "linkedIn":
+                    $input.rules( "add",
+                    {
+                        linkedIn:               true
+                    } );
+                break;
+
                 default:
                     // NOOP
             }
@@ -1435,6 +1443,25 @@
                 }
             } );
         } );
+
+        // Normalize the linkedIn username / url for the management team members
+        //
+        var managementTeam      = bidx.utils.getValue( businessSummary, "managementTeam", true );
+
+        if ( managementTeam )
+        {
+            $.each( managementTeam, function( idx, managementTeamMember )
+            {
+                var linkedIn;
+
+                if ( managementTeamMember.linkedIn )
+                {
+                    linkedIn = bidx.utils.normalizeLinkedInUrl( managementTeamMember.linkedIn );
+
+                    managementTeamMember.linkedIn = linkedIn;
+                }
+            } );
+        }
 
         // Did the user select that there is a company for this business summary and if so, what company was selected?
         //

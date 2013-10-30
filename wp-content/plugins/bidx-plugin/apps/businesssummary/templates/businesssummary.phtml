@@ -464,9 +464,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             // Supporting members
                             //
                             $tableHeader = array (
-                                __('Name','bidxplugin') => 'name',
-                                __('Role of partner in this business','bidxplugin') => 'role',
-                                __('Describe relevant expertise of business partner','bidxplugin') => 'expertise'
+                                __('Name','bidxplugin')                                                 => 'name',
+                                __('Role of partner in this business','bidxplugin')                     => 'role',
+                                __('Describe relevant expertise of business partner','bidxplugin')      => 'expertise',
+                                'LinkedIn'                                                              => 'linkedIn'
                             );
 
                             $merge['name'] = array ('firstName', 'lastName');
@@ -954,6 +955,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <label class="control-label"><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
                 <div class="controls">
                     <textarea type="text" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
+                </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="control-group span11">
+                <label class="control-label"><?php _e('LinkedIn profile','bidxplugin'); ?></label>
+                <div class="controls">
+                    <input type="text" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
                 </div>
             </div>
 
