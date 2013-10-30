@@ -1142,6 +1142,13 @@ select {
     margin-bottom:              0;
 }
 
+#frmRegister label.checkbox {
+    display:                    inline-block;
+    zoom:                       1;
+    *display:                   inline;
+}
+
+
 /* 'fix' for having the input prepends take up the whole width */
 form .row-fluid .input-prepend {
     display:                    block;
