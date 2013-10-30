@@ -32,7 +32,7 @@
     // set boolean to display the profile menu
     //
     $hasProfiles = count( $profiles) !== 0;
-    $hasGroups = count( $groups) !== 0;
+    $hasGroups = count( $groups) > 1;
 ?>
 
 <div class="iconbar iconbar-horizontal bidx-default-bar">
@@ -88,7 +88,7 @@
  ?>
    <!--      <li><a href="/member" class="bidx-user" title="Profile"></a></li> -->
         <li>
-        	<a href="/mail#mail" class="bidx-mail" title="<?php _e('Mail', 'bidxplugin')?>">
+        	<a href="/mail/#mail" class="bidx-mail" title="<?php _e('Mail', 'bidxplugin')?>">
             	<!-- If messages are available -->
               	<span class="iconbar-unread">?</span>
             </a>
