@@ -45,7 +45,6 @@ abstract class APIbridge
         $bidxWPerror = NULL;
         $groupDomain = $this->getBidxSubdomain ();
         //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
-
         // 1. Retrieve Bidx Cookies and send back to api to check
         $cookieInfo = $_COOKIE;
         foreach ($_COOKIE as $cookieKey => $cookieValue) {
@@ -57,7 +56,6 @@ abstract class APIbridge
         // 2. Set Headers
         // 2.1 For Authentication
         //$headers['Authorization'] = 'Basic ' . base64_encode ("$this->authUsername:$this->authPassword");
-
         // 2.1 Is Form Upload
         if ($isFormUpload) {
             $headers['Content-Type'] = 'multipart/form-data';
@@ -87,23 +85,22 @@ abstract class APIbridge
           'body' => $body,
           'headers' => $headers,
           'cookies' => $cookieArr,
-          'timeout' => apply_filters( 'http_request_timeout', 60)
-            ));
+          'timeout' => apply_filters ('http_request_timeout', 60)
+        ));
 
         $this->logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
 
         // 5. Set Cookies if Exist
         if (is_array ($result)) {
 
-            if (isset($result['cookies']) && count ($result['cookies'])) {
+            if (isset ($result['cookies']) && count ($result['cookies'])) {
                 $cookies = $result['cookies'];
                 foreach ($cookies as $bidxAuthCookie) {
-                    if(!empty($bidxAuthCookie->name) && $bidxAuthCookie->name) {
-                    //$cookieDomain = $bidxAuthCookie->domain;
-                    ob_start(); // To avoid error headers already sent in apibridge setcookie
-                    setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
-                    ob_end_flush();
-
+                    if (!empty ($bidxAuthCookie->name) && $bidxAuthCookie->name) {
+                        //$cookieDomain = $bidxAuthCookie->domain;
+                        ob_start (); // To avoid error headers already sent in apibridge setcookie
+                        setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
+                        ob_end_flush ();
                     }
                 }
             }
@@ -130,69 +127,68 @@ abstract class APIbridge
 
         $this->logger->debug ($result);
 
-            $requestData = (isset($result['body'])) ? json_decode ($result['body']) : new stdClass();
+        $requestData = (isset ($result['body'])) ? json_decode ($result['body']) : new stdClass();
 
-            $httpCode = $result['response']['code'];
-            $redirectUrl = NULL;
+        $httpCode = $result['response']['code'];
+        $redirectUrl = NULL;
 
-            // Add Domain
-            $requestData->bidxGroupDomain = $groupDomain;
-     
-            /* Return if Super admin, so that after previewing the app page admin doest gets logs out*/
-            if( is_super_admin() ) {
-                
-                $requestData->status = 'ERROR';
-                $requestData->authenticated = 'false';
-                $requestData->text = 'I am super admin, you idiot';
-                return $requestData;
+        // Add Domain
+        $requestData->bidxGroupDomain = $groupDomain;
 
-            }
+        /* Return if Super admin, so that after previewing the app page admin doest gets logs out */
+        if (is_super_admin ()) {
 
-            // Check the Http response and decide the status of request whether its error or ok
-
-            if ($httpCode >= 200 && $httpCode < 300) {
-                //Keep the real status
-                //$requestData->status = 'OK';
-                $requestData->authenticated = 'true';
-            } else if ($httpCode >= 300 && $httpCode < 400) {
-                $requestData->status = 'ERROR';
-                $requestData->authenticated = 'true';
-            } else if ($httpCode == 401) {
-                $requestData->status = 'ERROR';
-                $requestData->authenticated = 'false';
-                //$this->bidxRedirectLogin($groupDomain);
-                do_action ('clear_auth_cookie');
-                $this->clear_wp_bidx_session();
-                $this->logger->trace (sprintf ('Authentication Failed for URL: %s ', $urlService));
-
-                if ($urlService != 'session' && $this->isRedirectCheck) {
-                    $this->bidxRedirectLogin ($groupDomain);
-                }
-            } else if ($httpCode == 'timeout') {
-                $requestData->status = 'ERROR';
-                $errors = $bidxWPerror->get_error_messages ();
-                $error = implode(', ',$errors);
-                $requestData->text .= $error;
-                $this->clear_wp_bidx_session();
-            }
+            $requestData->status = 'ERROR';
+            $requestData->authenticated = 'false';
+            $requestData->text = 'I am super admin, you idiot';
             return $requestData;
+        }
 
+        // Check the Http response and decide the status of request whether its error or ok
+
+        if ($httpCode >= 200 && $httpCode < 300) {
+            //Keep the real status
+            //$requestData->status = 'OK';
+            $requestData->authenticated = 'true';
+        } else if ($httpCode >= 300 && $httpCode < 400) {
+            $requestData->status = 'ERROR';
+            $requestData->authenticated = 'true';
+        } else if ($httpCode == 401) {
+            $requestData->status = 'ERROR';
+            $requestData->authenticated = 'false';
+            //$this->bidxRedirectLogin($groupDomain);
+            do_action ('clear_auth_cookie');
+            $this->clear_wp_bidx_session ();
+            $this->logger->trace (sprintf ('Authentication Failed for URL: %s ', $urlService));
+
+            if ($urlService != 'session' && $this->isRedirectCheck) {
+                $this->bidxRedirectLogin ($groupDomain);
+            }
+        } else if ($httpCode == 'timeout') {
+            $requestData->status = 'ERROR';
+            $errors = $bidxWPerror->get_error_messages ();
+            $error = implode (', ', $errors);
+            $requestData->text .= $error;
+            $this->clear_wp_bidx_session ();
+        }
+        return $requestData;
     }
 
-    function clear_wp_bidx_session() {
+    function clear_wp_bidx_session ()
+    {
 
-    /* Clear the Session */
-    if(isset($_COOKIE['session_id'])) {
-    session_id($_COOKIE['session_id']);
-    session_start ();
-    session_destroy();
-    setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-    //setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-    //$sessionMsg = array ('status' => 'success','text' => 'Session Flused.');
-    //echo json_encode ($sessionMsg);
-    //exit;
+        /* Clear the Session */
+        //if(isset($_COOKIE['session_id'])) {
+        //session_id($_COOKIE['session_id']);
+        session_start ();
+        session_destroy ();
+        //setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+        //setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+        //$sessionMsg = array ('status' => 'success','text' => 'Session Flused.');
+        //echo json_encode ($sessionMsg);
+        //exit;
+        //}
     }
-}
 
     /**
      * Grab the subdomain portion of the URL. If there is no sub-domain, the root
@@ -202,18 +198,18 @@ abstract class APIbridge
      * @param bool $echo optional parameter prints the response directly to
      * the screen.
      */
-    function getBidxSubdomain ($echo = false,$url = false)
+    function getBidxSubdomain ($echo = false, $url = false)
     {
 
         $bidxUrl = $_SERVER ["HTTP_HOST"];
 
-        if($url) {
-            $bidxUrl = str_replace(array('http://','https://'),'',$url);
+        if ($url) {
+            $bidxUrl = str_replace (array ('http://', 'https://'), '', $url);
         }
 
         $hostAddress = explode ('.', $bidxUrl);
         if (is_array ($hostAddress)) {
-            if ( strcasecmp( "www", $hostAddress [0]) == 0 ) {
+            if (strcasecmp ("www", $hostAddress [0]) == 0) {
                 $passBack = 1;
             } else {
                 $passBack = 0;
@@ -241,8 +237,8 @@ abstract class APIbridge
         $http = (is_ssl ()) ? 'https://' : 'http://';
         $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        //$redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) . '&emsg=1';
-        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?emsg=1';
+        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) . '&emsg=1';
+
         header ("Location: " . $redirect_url);
         exit;
     }

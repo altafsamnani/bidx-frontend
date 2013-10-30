@@ -107,17 +107,19 @@ class BidxCommon
     {
         $time = 1800; //Default Time for nonactivity and make a new session call again
 
-        $session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
+        //$session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
+        $session_id = NULL;
         $this->clearSessionFromParam ($session_id);
 
         //Set Cookie Timeout
-        session_set_cookie_params ($time);
-        if ($session_id) {
-            session_id ($session_id);
-        }
+        session_set_cookie_params ($time,'/','bidx.net');
+//        if ($session_id) {
+//            session_id ($session_id);
+//        }
         session_start (); //or session_start();
+      
         //if (!$session_id) {
-        setcookie ('session_id', session_id (), time () + $time, '/', '.' . COOKIE_DOMAIN);
+        //setcookie ('session_id', session_id (), time () + $time, '/', 'bidx.net' );
         //}
     }
 
@@ -129,12 +131,12 @@ class BidxCommon
      */
     function clearSessionFromParam ($session_id, $clearSession = false)
     {
-        if ($session_id && ((isset ($_GET['rs']) && $_GET['rs']) || $clearSession )) {
+        if (((isset ($_GET['rs']) && $_GET['rs']) || $clearSession )) {
             /* Clear the Session */
-            session_id ($session_id);
+            //session_id ($session_id);
             session_start ();
             session_destroy ();
-            setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+            //setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
         }
 
         return;
@@ -146,12 +148,13 @@ class BidxCommon
         $authenticated = (isset ($_SESSION[$subDomain]->authenticated)) ? $_SESSION[$subDomain]->authenticated : 'false';
         if (!empty ($_SESSION[$subDomain]) &&
             ((!empty ($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $authenticated )) {
-            $sessionVars = $_SESSION[$subDomain];
+            $sessionVars = $_SESSION[$subDomain];            
+
         } else {
             session_unset ();
             $sessionVars = false;
         }
-
+   
         return $sessionVars;
     }
 

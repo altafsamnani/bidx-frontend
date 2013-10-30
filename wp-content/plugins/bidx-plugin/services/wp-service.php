@@ -320,7 +320,7 @@ function clear_bidx_cookies ()
     $cookieInfo = $_COOKIE;
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
         if (preg_match ("/^bidx/i", $cookieKey)) {
-            setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
+            setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
         }
     }
 }
@@ -691,12 +691,12 @@ function clear_wp_bidx_session ()
 {
 
     /* Clear the Session */
-    if (isset ($_COOKIE['session_id'])) {
-        session_id ($_COOKIE['session_id']);
+   // if (isset ($_COOKIE['session_id'])) {
+        //session_id ($_COOKIE['session_id']);
         session_start ();
         session_destroy ();
-        setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-    }
+       // setcookie ('session_id', ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
+   // }
 }
 
 /**
@@ -2026,7 +2026,7 @@ function bidx_options ()
 function force_wordpress_login ($username)
 {
 
-    if ($user_id = username_exists ($username)) {   //just do an update
+    if ($user_id == username_exists ($username)) {   //just do an update
         // userdata will contain all information about the user
         $userdata = get_userdata ($user_id);
         $user = wp_set_current_user ($user_id, $username);
