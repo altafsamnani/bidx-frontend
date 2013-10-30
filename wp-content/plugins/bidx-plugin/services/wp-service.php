@@ -124,7 +124,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $bidxMethod = strtoupper ($method);
     $bidx_get_params = "";
     $cookie_string = "";
-    $cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
+    //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
     $sendDomain = 'bidx.net';
     $cookieArr = array ();
 
@@ -201,7 +201,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
             foreach ($cookies as $bidxAuthCookie) {
                 //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : $bidxAuthCookie->domain;
                 
-                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
+                setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
                 $_COOKIE[ $bidxAuthCookie->name ] = $bidxAuthCookie->value;
 
             }

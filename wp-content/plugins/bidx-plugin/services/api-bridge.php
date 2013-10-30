@@ -44,7 +44,7 @@ abstract class APIbridge
         $cookieArr = array ();
         $bidxWPerror = NULL;
         $groupDomain = $this->getBidxSubdomain ();
-        $cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
+        //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
 
         // 1. Retrieve Bidx Cookies and send back to api to check
         $cookieInfo = $_COOKIE;
@@ -101,7 +101,7 @@ abstract class APIbridge
                     if(!empty($bidxAuthCookie->name) && $bidxAuthCookie->name) {
                     //$cookieDomain = $bidxAuthCookie->domain;
                     ob_start(); // To avoid error headers already sent in apibridge setcookie
-                    setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $cookieDomain, FALSE, $bidxAuthCookie->httponly);
+                    setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
                     ob_end_flush();
 
                     }
