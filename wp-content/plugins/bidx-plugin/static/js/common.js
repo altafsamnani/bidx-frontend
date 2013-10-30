@@ -293,13 +293,6 @@
 
         var $btn = $( this );
 
-        if ( $btn.hasClass( "disabled" ))
-        {
-            return;
-        }
-
-        $btn.addClass( "disabled" );
-
         var groupId = $btn.data( "groupid" );
 
         if ( !groupId )
@@ -307,28 +300,55 @@
             groupId = bidx.utils.getValue( bidxConfig, "session.currentGroup" );
         }
 
-        leaveGroup( groupId, function( err )
+        _notify(
         {
-            $btn.removeClass( "disabled" );
+            text:       bidx.i18n.i( "btnConfirm" )
+        ,   modal:      true
+        ,   type:       "confirm"
+        ,   layout:     "center"
+        ,   buttons:
+            [
+                {
+                    addClass:       "btn btn-primary"
+                ,   text:           "Ok"
+                ,   onClick: function( $noty )
+                    {
 
-            if ( err )
-            {
-                alert( err );
-            }
-            else
-            {
-                bidx.common.notifyRedirect();
+                        leaveGroup( groupId, function( err )
+                        {
 
-                var url = document.location.protocol
-                    + "//"
-                    + document.location.hostname
-                    + ( document.location.port ? ":" + document.location.port : "" )
-                    + "?smsg=3&rs=true"
-                ;
+                            if ( err )
+                            {
+                                alert( err );
+                            }
+                            else
+                            {
+                                bidx.common.notifyRedirect();
 
-                document.location.href = url;
-            }
-        });
+                                var url = document.location.protocol
+                                    + "//"
+                                    + document.location.hostname
+                                    + ( document.location.port ? ":" + document.location.port : "" )
+                                    + "?smsg=3&rs=true"
+                                ;
+
+                                document.location.href = url;
+                            }
+                        });
+
+                        $noty.close();
+                    }
+                }
+            ,   {
+                    addClass:       "btn btn-danger"
+                ,   text:           "Cancel"
+                ,   onClick: function( $noty )
+                    {
+                        $noty.close();
+                    }
+                }
+            ]
+        } );
     } );
 
     // Perform an API call to join the group
