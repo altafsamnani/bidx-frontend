@@ -5,4 +5,6 @@
     <Item value="selectCountry">Select country</Item>
     <Item value="selectNationality">Select your nationality</Item>
     <Item value="selectEducation">Select your highest level of education</Item>
+
+    <Item value="frmNoCv">CV is required</Item>
 </I18N>

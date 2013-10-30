@@ -1,10 +1,15 @@
 /* global bidx */
 ;( function( $ )
 {
+    "use strict";
+
     var $element                    = $( "#editEntrepreneur" )
     ,   $views                      = $element.find( ".view" )
     ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                   = $element.find( ".snippets" )
+
+    ,   $btnSave
+    ,   $btnCancel
 
     ,   $hideOnCreate               = $element.find( ".hideOnCreate" )
 
@@ -18,8 +23,10 @@
         //
     ,   $cvControl                          = $editForm.find( ".cvControl" )
     ,   $cvContainer                        = $cvControl.find( ".cvContainer" )
+    ,   $cvControlGroup                     = $cvContainer.find( ".control-group" )
     ,   $btnChangeCv                        = $cvControl.find( "a[href$='changeCv']" )
     ,   $changeCvModal                      = $cvControl.find( ".changeCvModal" )
+
 
         // Attachnents
         //
@@ -381,6 +388,10 @@
 
             $hasCV.show();
             $noCV.hide();
+
+            // Hide the error message (if any)
+            //
+            $cvControlGroup.find( "label.error" ).hide();
         }
     }
 
@@ -593,9 +604,8 @@
 
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  })
-        ;
+        $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    });
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  });
 
         $btnSave.i18nText( "btnSaveProfile" );
         $btnCancel.i18nText( "btnCancel" );
@@ -610,6 +620,36 @@
 
             $editForm.submit();
         } );
+
+        function _extraValidation()
+        {
+            var valid = true;
+
+            var $cvErrorLabel
+            ;
+
+            // Custom validation, did we have a CV?
+            //
+            if ( !$cvContainer.data( "bidxData" ) )
+            {
+                valid = false;
+
+                $cvErrorLabel = $cvControlGroup.find( "label.error" );
+
+                if ( !$cvErrorLabel.length )
+                {
+                    $cvErrorLabel = $( "<label />", { "class": "error" } );
+                    $cvControlGroup.append( $cvErrorLabel );
+                }
+
+                $cvErrorLabel
+                    .text( bidx.i18n.i( 'frmNoCv', appName ))
+                    .show();
+            }
+
+
+            return valid;
+        }
 
         // Setup form
         //
@@ -636,39 +676,48 @@
                 // Anything that is app specific, the general validations should have been set
                 // in common.js already
             }
+        ,   invalidHandler: function( event, validator )
+            {
+                // Make sure our extra validation implemetnation is always executed
+                //
+                _extraValidation();
+            }
         ,   submitHandler: function( e )
             {
-                if ( $btnSave.hasClass( "disabled" ) )
+                if ( _extraValidation() )
                 {
-                    return;
-                }
-
-                $btnSave.addClass( "disabled" );
-                $btnCancel.addClass( "disabled" );
-
-                _save(
-                {
-                    error: function( jqXhr )
+                    if ( $btnSave.hasClass( "disabled" ) )
                     {
-                        var response;
-
-                        try
-                        {
-                            // Not really needed for now, but just have it on the screen, k thx bye
-                            //
-                            response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
-                        }
-                        catch ( e )
-                        {
-                            bidx.utils.error( "problem parsing error response from entrepreneurProfile save" );
-                        }
-
-                        bidx.common.notifyError( "Something went wrong during save: " + response );
-
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
+                        return;
                     }
-                } );
+
+                    $btnSave.addClass( "disabled" );
+                    $btnCancel.addClass( "disabled" );
+
+                    _save(
+                    {
+                        error: function( jqXhr )
+                        {
+                            var response;
+
+                            try
+                            {
+                                // Not really needed for now, but just have it on the screen, k thx bye
+                                //
+                                response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                            }
+                            catch ( e )
+                            {
+                                bidx.utils.error( "problem parsing error response from entrepreneurProfile save" );
+                            }
+
+                            bidx.common.notifyError( "Something went wrong during save: " + response );
+
+                            $btnSave.removeClass( "disabled" );
+                            $btnCancel.removeClass( "disabled" );
+                        }
+                    } );
+                }
             }
         } );
 
