@@ -179,7 +179,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
 
             <!-- SIDE BAR -->
-            <div class="span4 side-bar">
+            <div class="span4 side-bar well">
                 <div class="row-fluid">
                     <div class="span12">
 
