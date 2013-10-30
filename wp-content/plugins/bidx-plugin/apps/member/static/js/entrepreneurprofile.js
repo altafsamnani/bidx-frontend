@@ -672,10 +672,6 @@
             }
         } );
 
-        // Instantiate file upload and location plugin
-        //
-        $editForm.find( "[data-type=fileUpload]" ).fileUpload( { "parentForm": $editForm[0] });
-
         if ( state === "create" )
         {
             member =
@@ -930,9 +926,6 @@
 
                     $element.show();
 
-                    // Create the investor profile by doing a POST
-                    // We *need* this for the fileupload to work
-                    //
                     _showView( "load" );
 
                     _init();

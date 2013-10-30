@@ -1262,9 +1262,8 @@
             }
         } );
 
-        // Instantiate file upload and location plugin
+        // Instantiate location plugin
         //
-        $editForm.find( "[data-type=fileUpload]" ).fileUpload( { "parentForm": $editForm[0] });
         $editForm.find( "[data-type=location]"   ).bidx_location(
         {
             drawCircle:                 true
