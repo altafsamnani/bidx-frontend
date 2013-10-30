@@ -906,7 +906,7 @@
 
                 if ( state === "create" )
                 {
-                    companyId = bidx.utils.getValue( bidxMeta, "ownerId" );
+                    companyId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
                 }
 
                 // Regardless if the app runs as slave app, now the data is saved it can be removed from the pending list
