@@ -84,80 +84,82 @@ if ($entrepreneurDetails &&
 if ($businessSummary) {
     $labelBusiness = ($this->data->isMyProfile) ? __('My business','bidxplugin') : __('This person has a business','bidxplugin');
     ?>
-    <h4 id="businesssummary">Business Summary</h4>
-    <div class="accordion" id="businesses">
-<?php
-        foreach ($businessSummary as $index => $business) {
+    <div class="well profile-block">
+        <h4 id="businesssummary">Business Summary</h4>
+        <div class="accordion" id="businesses">
+    <?php
+            foreach ($businessSummary as $index => $business) {
 
-            $businessBidxMeta = isset( $business->bidxMeta ) ? $business->bidxMeta : $business;
+                $businessBidxMeta = isset( $business->bidxMeta ) ? $business->bidxMeta : $business;
 
-            $collapseId = sprintf ('businessAccordion-%s', $businessBidxMeta->bidxEntityId);
+                $collapseId = sprintf ('businessAccordion-%s', $businessBidxMeta->bidxEntityId);
 
-            $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
-            $useDataSrc = true;
+                $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
+                $useDataSrc = true;
 
+                ?>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#businesses" href="#<?php echo $collapseId ?>">
+
+                            <h4><?php echo $business->name ?></h4>
+                            <div class="control-buttons">
+                                <span class="bidx-expand">+</span>
+                                <span class="bidx-collapse">-</span>
+                            </div>
+                        </a>
+                    </div><!-- accordion-heading -->
+                    <div id="<?php echo $collapseId ?>" class="accordion-body collapse <?php echo ( $index == 0 ) ? 'in' : ''; ?>">
+                        <div class="accordion-inner">
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+                                </div>
+                                <div class="span8">
+                                    <ul class="unstyled">
+                                        <?php
+                                        $businessSlogan = $this->exst ( $business->slogan );
+                                        $businessSummary = $this->exst ( $business->summary );
+                                        $businessCountry = $this->exst ( $business->countryOperation );
+                                        $businessIndustry = $this->exst ( $business->industry );
+
+                                        printf ('<li><h4>%s</h4></li>', $business->name);
+
+                                        if ($businessSlogan) {
+                                            printf ('<li>%s</li>', $businessSlogan);
+                                        }
+
+                                        if ($businessSummary) {
+                                            printf ('<li>%s</li>', $businessSummary);
+                                        }
+
+                                        if ($businessIndustry) {
+                                            printf ('<li>%s</li>', $this->getMultiValues ($businessIndustry, ', ', 'industry'));
+                                        }
+
+                                        if ($businessCountry) {
+                                            printf ('<li>%s</li>', $this->getMultiValues ($businessCountry, ', ', 'country'));
+                                        }
+
+                                        ?>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bottom-controls">
+            <?php
+            $viewMoreLink = "<a href='/businesssummary/" . $businessBidxMeta->bidxEntityId . "'>". __('view more','bidxplugin') ."</a>";
+            echo $viewMoreLink;
             ?>
-            <div class="accordion-group">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#businesses" href="#<?php echo $collapseId ?>">
-
-                        <h4><?php echo $business->name ?></h4>
-                        <div class="control-buttons">
-                            <span class="bidx-expand">+</span>
-                            <span class="bidx-collapse">-</span>
-                        </div>
-                    </a>
-                </div><!-- accordion-heading -->
-                <div id="<?php echo $collapseId ?>" class="accordion-body collapse <?php echo ( $index == 0 ) ? 'in' : ''; ?>">
-                    <div class="accordion-inner">
-                        <div class="row-fluid">
-                            <div class="span4">
-                                <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
-                            </div>
-                            <div class="span8">
-                                <ul class="unstyled">
-                                    <?php
-                                    $businessSlogan = $this->exst ( $business->slogan );
-                                    $businessSummary = $this->exst ( $business->summary );
-                                    $businessCountry = $this->exst ( $business->countryOperation );
-                                    $businessIndustry = $this->exst ( $business->industry );
-
-                                    printf ('<li><h4>%s</h4></li>', $business->name);
-
-                                    if ($businessSlogan) {
-                                        printf ('<li>%s</li>', $businessSlogan);
-                                    }
-
-                                    if ($businessSummary) {
-                                        printf ('<li>%s</li>', $businessSummary);
-                                    }
-
-                                    if ($businessIndustry) {
-                                        printf ('<li>%s</li>', $this->getMultiValues ($businessIndustry, ', ', 'industry'));
-                                    }
-
-                                    if ($businessCountry) {
-                                        printf ('<li>%s</li>', $this->getMultiValues ($businessCountry, ', ', 'country'));
-                                    }
-
-                                    ?>
-                                </ul>
                             </div>
                         </div>
-
-                        <div class="bottom-controls">
-        <?php
-        $viewMoreLink = "<a href='/businesssummary/" . $businessBidxMeta->bidxEntityId . "'>". __('view more','bidxplugin') ."</a>";
-        echo $viewMoreLink;
+                    </div><!-- accordion-body -->
+                </div><!-- accordion-group -->
+            <?php
+        }
         ?>
-                        </div>
-                    </div>
-                </div><!-- accordion-body -->
-            </div><!-- accordion-group -->
-        <?php
-    }
-    ?>
-    </div><!-- accordion #companies -->
+        </div><!-- accordion #companies -->
+    </div>
 <?php
     }
 // Companies listing
