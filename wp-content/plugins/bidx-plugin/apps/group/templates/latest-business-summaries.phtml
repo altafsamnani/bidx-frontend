@@ -24,11 +24,11 @@
                     }
 ?>
                     <div>
-                        <div><strong>
+                        <div>
 <?php
                         if ( $authenticated ) {
 ?>
-                            <a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>">
+                            <a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>"><strong>
 <?php
                         }
 
@@ -36,12 +36,12 @@
 
                         if ( $authenticated ) {
 ?>
-                            </a>
+                            </strong></a>
 <?php
                         }
 ?>
 
-                        </strong></div>
+                        </div>
                         <div>
 <?php
                             $industries = implode( ", ", $this -> exst( $summary -> industry ));
