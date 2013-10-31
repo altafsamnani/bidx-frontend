@@ -185,10 +185,26 @@
                     bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
                 }
 
-            ,   error:  function( jqXhr )
+            ,   error: function( jqXhr, textStatus )
                 {
 
-                    params.error( "Error", jqXhr );
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while sending the email: " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while sending the email: " + response.text );
+                    }
+
                 }
             }
         );
@@ -306,7 +322,12 @@
     //
     function _doDelete( options )
     {
-        var ids;
+        var ids
+        ,   hash
+        ,   hashElements
+        ,   reloadState
+        ,   params          = {}
+        ;
 
         if( options.ids )
         {
@@ -316,6 +337,7 @@
         {
             bidx.utils.warn( "No IDs supplied to delete" );
             return;
+
         }
         bidx.api.call(
              "mailboxMail.delete"
@@ -325,23 +347,65 @@
 
             ,   success: function( response )
                 {
+
                     if ( response && response.code === "emailDeletedOk" )
                     {
-                        bidx.controller.updateHash( "#mail/" + options.state, true, false );
+                        // extract state and params from hash. Remove mail app and first forward slash. We then have the state and extra queryparams
+                        //
+                        hash            = document.location.hash.replace( /^#mail\//, "" );
+                        hashElements    = hash.split( "/" );
+                        reloadState     = hashElements[ 0 ];
+
+                        // if the are extra queryparams, convert them to object
+                        //
+                        if ( hashElements.length > 1 )
+                        {
+                            params = bidx.utils.bidxDeparam( hashElements[ 1 ] );
+                        }
+
+                        // if Id is available, update has with the mailbox of this moved message
+                        //
+                        if (params.id )
+                        {
+                           bidx.controller.updateHash( "#mail/" + reloadState, true, false );
+                        }
+                        // else just reload the current state
+                        //
+                        else
+                        {
+                            mail.navigate( {state: hashElements[0], params: {} } );
+                        }
                     }
 
                 }
 
             ,   error: function( jqXhr, textStatus )
                 {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                    _showError( "Something went wrong while deleting the emails: " + status );
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while deleting the email(s): " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while deleting the email(s): " + response.text );
+                    }
+
                 }
             }
         );
     }
 
+    // call the API to empty trash and reload the trash view
+    //
     function _doEmptyTrash( options )
     {
         bidx.api.call(
@@ -360,40 +424,37 @@
 
             ,   error: function( jqXhr, textStatus )
                 {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                    _showError( "Something went wrong while retrieving the member: " + status );
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while emptying the trash: " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while emptying the trash: " + response.text );
+                    }
+
                 }
             }
         );
     }
 
-/*    function _moveToFolder( e )
-    {
-        // prevent anchor tag to navigate to href
-        //
-        if( e.preventDefault )
-        {
-            e.preventDefault();
-        }
 
-        var $this = $( this )
-        ,   href  = $this.attr( "href" ).replace( /^[/]/, "" )
-        ;
-        // convert back to object
-        //
-        href = bidx.utils.bidxDeparam( href );
-    }*/
-
+    // move a selection of emails to a destination folder, it ID paramatized in its HREF. This function will be called directly from an event binding
+    //
     function _doMoveToFolder( e )
     {
+        e.preventDefault();
 
-        if( e.preventDefault )
-        {
-            e.preventDefault();
-        }
-
-        var $this   = $ ( this)
+        var $this   = $ ( this )
         ,   href    = $this.attr( "href" ).replace( /^[/]/, "")
         ,   params  = {}
         ,   ids
@@ -474,15 +535,15 @@
                     //
                     if ( jqXhr.status >= 400 && jqXhr.status < 500)
                     {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while moveing the email(s): " + response.text );
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while moving the email(s): " + response.text );
                     }
                     // 500 erors are Server errors
                     //
                     if ( jqXhr.status >= 500 && jqXhr.status < 600)
                     {
                         bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while moveing the email(s): " + response.text );
+                        _showError( "Something went wrong while moving the email(s): " + response.text );
                     }
 
                 }
@@ -542,9 +603,24 @@
 
             ,   error: function( jqXhr, textStatus )
                 {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                    _showError( "Something went wrong while mutation the member: " + status );
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while updating a relationship: " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while updating a relationship: " + response.text );
+                    }
+
                 }
             }
         );
@@ -612,15 +688,15 @@
                     //
                     if ( jqXhr.status >= 400 && jqXhr.status < 500)
                     {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while mutation the member: " + response.text );
+                        bidx.utils.error( "Client error occured", response );
+                        _showError( "Something went wrong while creating a relationship: " + response.text );
                     }
                     // 500 erors are Server errors
                     //
                     if ( jqXhr.status >= 500 && jqXhr.status < 600)
                     {
                         bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong will connecting to a member: " + response.text );
+                        _showError( "Something went wrong while creating a relationship: " + response.text );
                     }
 
 
@@ -787,9 +863,24 @@
 
             ,   error: function( jqXhr, textStatus )
                 {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                    _showError( "Something went wrong while marking the emails: " + status );
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while marking the email(s): " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while marking the email(s): " + response.text );
+                    }
+
                 }
             }
         );
@@ -805,21 +896,21 @@
         function _initMailBox()
         {
             var buttons
+            ,   currentState
             ;
             // remove the mbx-prefix so we can use the state as a key to match the mailbox
             //
             if( state.search( /(^mbx-)/ ) === 0 )
             {
-                state = state.replace( /(^mbx-)/, "" );
+                currentState = state.replace( /(^mbx-)/, "" );
             }
-
-            bidx.utils.log("[mail] Loading Mailbox" , state, " message");
+            bidx.utils.log("[mail] Loading Mailbox" , currentState, " message");
 
             _getEmails(
             {
                 startOffset:            0
             ,   maxResults:             10
-            ,   mailboxId:              mailboxes[ state ].id
+            ,   mailboxId:              mailboxes[ currentState ].id
             ,   view:                   "list"
 
             ,   callback: function()
@@ -830,7 +921,7 @@
 
                     // enable specific set of toolbar buttons
                     //
-                    if ( state === "trash")
+                    if ( currentState === "trash")
                     {
                         buttons = [
                             ".bidx-btn-empty-trash-confirm"
@@ -848,7 +939,7 @@
                     }
                     // API doesnt allow delete so remove button
                     //
-                    if ( state === "sent" )
+                    if ( currentState === "sent" )
                     {
                         buttons.splice( $.inArray( ".bidx-btn-delete", buttons ), 1 );
                         buttons.splice( $.inArray( ".bidx-btn-move-to-folder", buttons ), 1 );
@@ -1197,7 +1288,16 @@
                 ,   params          = {}
                 ,   $listItem
                 ,   $anchor
+                ,   currentState
                 ;
+
+                // remove the mbx-prefix so we can use the state as a key to match the mailbox
+                //
+                if( state.search( /(^mbx-)/ ) === 0 )
+                {
+                    currentState = state.replace( /(^mbx-)/, "" );
+                }
+
 
                 // cleaer dropdown
                 //
@@ -1209,7 +1309,7 @@
                 {
                     // if item is Send box or the current opened box (the state), then skip those values
                     //
-                    if( /^sent$/i.test( item.name )  || item.name.match( new RegExp( state, "i") ) )
+                    if( /^sent$/i.test( item.name )  || item.name.match( new RegExp( currentState, "i") ) )
                     {
                         return true;
                     }
@@ -1287,9 +1387,24 @@
 
                 ,   error: function( jqXhr, textStatus )
                     {
-                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                        _showError( "Something went wrong while retrieving contactlist of the member: " + status );
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while retrieving the members relationships: " + response.text );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while retrieving the members relationships: " + response.text );
+                        }
+
                     }
                 }
             );
@@ -1337,17 +1452,22 @@
 
                 ,   error: function( jqXhr, textStatus )
                     {
-                        var response = $.parseJSON( jqXhr.responseText );
 
-                        if( bidx.utils.getValue( response, "code" ) === "userNotLoggedIn" )
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
                         {
-                            //  reload so PHP can handle the redirect serverside
-                            //document.location.reload();
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while fetching the email: " + response.text );
                         }
-                        else
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
                         {
-                            var status = bidx.utils.getValue( response, "status" ) || textStatus;
-                            _showError( "Something went wrong while retrieving the the email: " + status );
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while fetching the email: " + response.text );
                         }
 
                         // reject the promise
@@ -1417,10 +1537,25 @@
 
                 ,   error: function( jqXhr, textStatus )
                     {
-                        var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                        _showError( "Something went wrong while retrieving mailboxes of the member: " + status );
-                         // reject the promise
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while fetching the mailboxes: " + response.text );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while fetching the mailboxes: " + response.text );
+                        }
+
+                        // reject the promise
                         //
                         $d.reject( new Error( jqXhr ) );
                     }
@@ -1588,9 +1723,22 @@
                 ,   error: function( jqXhr, textStatus )
                     {
 
-                        var response = $.parseJSON( jqXhr.responseText );
-                        var status = bidx.utils.getValue( response, "status" ) || textStatus;
-                        _showError( "Something went wrong while retrieving the emails: " + status );
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while retrieving the email(s): " + response.text );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while retrieving the email(s): " + response.text );
+                        }
 
                     }
                 }
@@ -1653,7 +1801,22 @@
                 ,   error: function( jqXhr, textStatus )
                     {
 
-                        var response = $.parseJSON( jqXhr.responseText );
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while fetching the relationship: " + response.text );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while fetching the relationship: " + response.text );
+                        }
 
                         // reject the promise
                         //
@@ -1856,6 +2019,8 @@
                 // store mailId for current email for possible user actions
                 //
                 itemList[ mailId ] = 1;
+
+
 
                 _closeModal();
                 _showView( "load" );
