@@ -17,6 +17,7 @@
  ?>
 
                 <div class="span<?php echo $span ?> clearfix">
+                    <a href="/members/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
 <?php
     				  	if ( empty( $member -> profilePicture ) ) {
     						echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">';
@@ -24,6 +25,7 @@
     						echo '<img src="' . $member -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
                         }
 ?>
+                    </a>
                     <div>
 
                         <div><a href="/members/<?php echo $member -> bidxMeta -> bidxMemberId ?>"><strong>

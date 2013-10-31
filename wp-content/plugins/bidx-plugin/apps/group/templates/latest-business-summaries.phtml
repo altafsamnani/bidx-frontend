@@ -17,11 +17,22 @@
 
                 <div class="span<?php echo $span ?> clearfix">
 <?php
+                    if ( $authenticated ) {
+?>
+                        <a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>">
+<?php
+                    }
+
                     if ( empty( $summary -> profilePicture ) ) {
                         echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" align="left" class="img-circle">';
                     } else {
                         echo '<img src="' . $summary -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
                     }
+                        if ( $authenticated ) {
+?>
+                            </a>
+<?php
+                        }
 ?>
                     <div>
                         <div>
