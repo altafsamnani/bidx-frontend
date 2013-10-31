@@ -170,6 +170,13 @@
         e.preventDefault();
     } );
 
+    // Fix for the symbol (+ or -) to the accordion header by adding the class .collapsed to the siblings of the element that was clicked
+    //
+    $element.delegate( "a.accordion-toggle", "click", function( e )
+    {
+        $( this ).parents( ".countryOperationSpecificsItem" ).siblings().find( ".accordion-toggle:not(.collapsed)" ).addClass( "collapsed" );
+    } );
+
     // Handle toggle states of showing/hiding complete toggle blocks
     //
     var _handleToggleChange = function( show, group )
