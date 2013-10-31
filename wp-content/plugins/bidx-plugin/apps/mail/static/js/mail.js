@@ -855,7 +855,7 @@
                     {
                         // after a marking you always want to reload the current state
                         //
-                        mail.navigate( {state: "mbx-" + options.state, params: {} } );
+                        mail.navigate( {state: options.state, params: {} } );
 
                     }
 
@@ -2049,11 +2049,11 @@
                         buttons = [
                             ".btn-reply"
                         ,   ".btn-forward"
-                        ,   ".bidx-btn-delete"
                         ];
                         if ( state !== "mbx-sent")
                         {
-                           buttons.push( ".btn-move-to-folder" );
+                            buttons.push( ".bidx-btn-delete" );
+                            buttons.push( ".btn-move-to-folder" );
                         }
 
                         _showToolbarButtons( action, buttons );
