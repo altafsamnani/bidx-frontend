@@ -91,28 +91,13 @@
         $mailboxToolbar         = $views.find( ".mail-toolbar" );
         $mailboxToolbarButtons  = $mailboxToolbar.find( ".btn" );
 
-        //bidx-btn-delete
 
-        $mailboxToolbarButtons.filter( ".bidx-btn-delete" ).bind( "click", "delete", _doAction );
-        $mailboxToolbarButtons.filter( ".bidx-btn-mark-read-multiple" ).bind( "click", "read", _doAction );
-        $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread-multiple" ).bind( "click", "unread", _doAction );
-        $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder-multiple" ).bind( "click", "move", _doAction );
-
-
-
-        /*toolbarButtons =
-        {
-            deleteMultiple:
-            {
-                selector:       ".btn-delete-multiple"
-            ,   handler:        doDeleteMultiple
-            }
-        };*/
-
-        // bind the handlers
+        // bind the toolbar buttons to their handlers. Reply and forward use HREF for navigation
         //
-
-
+        $mailboxToolbarButtons.filter( ".bidx-btn-delete" ).bind( "click", "action=delete&confirm=true", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-mark-read" ).bind( "click", "action=read&confirm=false", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread" ).bind( "click", "action=unread&confirm=false", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder" ).bind( "click", "action=move&confirm=false", _doAction );
 
     }
 
@@ -273,6 +258,8 @@
         $toolbarButtons.hide();
     }
 
+    // show provided list of buttons for this view
+    //
     function _showToolbarButtons( view, buttons )
     {
         var $view               = $views.filter( bidx.utils.getViewName( view ) )
@@ -381,7 +368,7 @@
         );
     }
 
-    function _moveToFolder( e )
+/*    function _moveToFolder( e )
     {
         // prevent anchor tag to navigate to href
         //
@@ -396,48 +383,108 @@
         // convert back to object
         //
         href = bidx.utils.bidxDeparam( href );
-    }
+    }*/
 
     function _doMoveToFolder( e )
     {
 
-
-
-
-         var ids;
-
-        if( options.ids )
+        if( e.preventDefault )
         {
-            ids = options.ids;
+            e.preventDefault();
         }
-        else
+
+        var $this   = $ ( this)
+        ,   href    = $this.attr( "href" ).replace( /^[/]/, "")
+        ,   params  = {}
+        ,   ids
+        ,   hash
+        ,   hashElements
+        ,   reloadState
+        ;
+
+        // only execute code if there are target Id's available
+        //
+        if( $.isEmptyObject( itemList ) )
         {
-            bidx.utils.warn( "No IDs supplied to delete" );
+            bidx.utils.warn( "No messages Id(s) available for action ");
             return;
         }
+
+        //convert back to object
+        //
+        href = bidx.utils.bidxDeparam( href );
+
+
+        //  convert itemList object to csv list
+        //
+        ids = $.map( itemList, function( el, key )
+        {
+            return key;
+        } )
+            .join(",")
+        ;
 
         bidx.api.call(
              "mailbox.move"
         ,   {
                 groupDomain:            bidx.common.groupDomain
             ,   mailboxId:              href.folderId
-            ,   mailIds:                href.mailId
+            ,   mailIds:                ids
 
             ,   success: function( response )
                 {
-                    bidx.utils.log("response", response );
                     if ( response && response.code === "mailboxMoveMailOk" )
                     {
-                        bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
+                        // extract state and params from hash. Remove mail app and first forward slash. We then have the state and extra queryparams
+                        //
+                        hash            = document.location.hash.replace( /^#mail\//, "" );
+                        hashElements    = hash.split( "/" );
+                        reloadState     = hashElements[ 0 ];
+
+                        // if the are extra queryparams, convert them to object
+                        //
+                        if ( hashElements.length > 1 )
+                        {
+                            params = bidx.utils.bidxDeparam( hashElements[ 1 ] );
+                        }
+
+                        // if Id is available, update has with the mailbox of this moved message
+                        //
+                        if (params.id )
+                        {
+                           bidx.controller.updateHash( "#mail/" + reloadState, true, false );
+                        }
+                        // else just reload the current state
+                        //
+                        else
+                        {
+                            mail.navigate( {state: hashElements[0], params: {} } );
+                        }
+
                     }
 
                 }
 
             ,   error: function( jqXhr, textStatus )
                 {
-                    var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
-                    _showError( "Something went wrong while retrieving the member: " + status );
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while moveing the email(s): " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while moveing the email(s): " + response.text );
+                    }
+
                 }
             }
         );
@@ -486,8 +533,9 @@
                     {
                         // NOTE: #msp 2013-1014; to be replace with list specific reload
                         //
-                        document.location.reload();
-                        //bidx.controller.updateHash( "#mail/contacts", true, false );
+                        //document.location.reload();
+                        mail.navigate( {state: "contacts" + state, params: {} } );
+
                     }
 
                 }
@@ -586,8 +634,9 @@
     function _doAction( e )
     {
 
-        var action
+        var params
         ,   ids
+        ,   actionFn
         ;
 
         e.preventDefault();
@@ -597,67 +646,103 @@
             bidx.utils.error( "No action defined" );
             return;
         }
-        action = e.data;
+        params = bidx.utils.bidxDeparam( e.data );
 
-/*         _showModal(
+        // Definition of action handlers with the actual action (trying to prevent duplicate code)
+        //
+        actionFn =
         {
-            view:       "deleteConfirm"
-        ,   state:      state
-
-        ,   onHide: function()
-            {
-
-            }
-        } );
-            return;*/
-
-        if( !$.isEmptyObject( itemList ) )
-        {
-            //  convert itemList object to csv list
-            ids = $.map( itemList, function( el, key )
-            {
-                return key;
-            } );
-            ids.join(",");
-
-            bidx.utils.log("[MAIL] do action ", action, " for ids: ", ids );
-
-            switch ( action)
-            {
-                case "delete":
+            delete:     function()
+                {
                     _doDelete(
                     {
                         ids:            ids
                     ,   state:          state
+                    ,   success:        function()
+                        {
+                            _closeModal(
+                            {
+                                unbindHide: true
+                            } );
+                            window.bidx.controller.updateHash( "#mail/" + state, true, false );
+
+                        }
                     } );
-                break;
-
-                case "read":
-                    _doMark(
-                    {
-                        ids:            ids
-                    ,   state:          state
-                    ,   markAction:     "MARK_READ"
-                    } );
-                break;
-
-                case "unread":
-                    _doMark(
-                    {
-                        ids:            ids
-                    ,   state:          state
-                    ,   markAction:     "MARK_UNREAD"
-                    } );
-                break;
-            }
+                }
+        };
 
 
-        }
-        else
+        // only execute code if there are target Id's available
+        //
+        if( $.isEmptyObject( itemList ) )
         {
             bidx.utils.warn( "No messages selected for deletion ");
             return;
         }
+
+        //  convert itemList object to csv list
+        //
+        ids = $.map( itemList, function( el, key )
+        {
+            return key;
+        } )
+            .join(",")
+        ;
+
+        bidx.utils.log("[MAIL] do action ", params.action, " for ids: ", ids );
+
+        // switch based on the action we want to execute
+        //
+        switch ( params.action)
+        {
+            case "delete":
+
+                if ( params.confirm )
+                {
+                    _showModal(
+                    {
+                        view:           "deleteConfirm"
+                    ,   state:          state
+                    ,   onConfirm:      function( e )
+                        {
+                            e.preventDefault();
+                            // excetute the action handler
+                            //
+                            actionFn[ params.action ]();
+                        }
+                    ,   onHide:         function(){}
+                    } );
+                }
+                else
+                {
+                    // excetute the action handler
+                    //
+                    actionFn[ params.action ]();
+                }
+
+            break;
+
+            case "read":
+
+                _doMark(
+                {
+                    ids:            ids
+                ,   state:          state
+                ,   markAction:     "MARK_READ"
+                } );
+            break;
+
+            case "unread":
+
+                _doMark(
+                {
+                    ids:            ids
+                ,   state:          state
+                ,   markAction:     "MARK_UNREAD"
+                } );
+            break;
+        }
+
     }
 
     // handler for deleting multiple items
@@ -692,7 +777,10 @@
                 {
                     if ( response && response.code === "emailStatusUpdatedOK" )
                     {
-                        bidx.controller.updateHash( "#mail/" + options.state, true, false );
+                        // after a marking you always want to reload the current state
+                        //
+                        mail.navigate( {state: "mbx-" + options.state, params: {} } );
+
                     }
 
                 }
@@ -708,16 +796,6 @@
     }
 
 
-
-    // handler for deleting multiple items
-    //
-    function _doMoveToFolderMultiple( e )
-    {
-        e.preventDefault();
-
-        // THERE ALREADY IS A doMoveToFolder function... maybe use that one?
-        console.log("Do Move multip");
-    }
 
 
 
@@ -752,7 +830,6 @@
 
                     // enable specific set of toolbar buttons
                     //
-
                     if ( state === "trash")
                     {
                         buttons = [
@@ -764,12 +841,22 @@
                     {
                         buttons = [
                             ".bidx-btn-delete"
-                        ,   ".bidx-btn-mark-read-multiple"
-                        ,   ".bidx-btn-mark-unread-multiple"
-                        ,   ".bidx-btn-move-to-folder-multiple"
+                        ,   ".bidx-btn-mark-read"
+                        ,   ".bidx-btn-mark-unread"
+                        ,   ".bidx-btn-move-to-folder"
                         ];
                     }
+                    // API doesnt allow delete so remove button
+                    //
+                    if ( state === "sent" )
+                    {
+                        buttons.splice( $.inArray( ".bidx-btn-delete", buttons ), 1 );
+                        buttons.splice( $.inArray( ".bidx-btn-move-to-folder", buttons ), 1 );
+                    }
 
+                    // init the folder-dropdown of the toolbar
+                    //
+                    _initMoveToFolderDropDown( "list" );
 
                     _showToolbarButtons( "list", buttons );
 
@@ -1101,7 +1188,7 @@
 
         // populate the folder dropdown in the toolbar. Required view name and current emailId or a comma separated list of emailIds
         //
-        function _initMoveToFolderDropDown( view, mailIds )
+        function _initMoveToFolderDropDown( view )
         {
             if( mailboxes )
             {
@@ -1120,8 +1207,13 @@
                 //
                 $.each( mailboxes, function( idx, item )
                 {
+                    // if item is Send box or the current opened box (the state), then skip those values
+                    //
+                    if( /^sent$/i.test( item.name )  || item.name.match( new RegExp( state, "i") ) )
+                    {
+                        return true;
+                    }
                     params.folderId = item.id;
-                    params.mailId   = mailIds;
 
                     // add listitem with anchortag. Store params in href attribute
                     //
@@ -1131,6 +1223,8 @@
                         .attr( "href", "/" + $.param( params ) )
                         .i18nText( item.name, appName )
                     ;
+                    // we can do a bind click because this dropdown will be emptied on every mail read action
+                    //
                     $anchor.bind( "click", _doMoveToFolder );
 
                     $listItem.append ( $anchor );
@@ -1283,12 +1377,13 @@
             bidx.api.call(
                 "mailbox.fetch"
             ,   {
-                    success: function( response )
+                    groupDomain:              bidx.common.groupDomain
+                ,   success: function( response )
                     {
                         if ( response && response.data )
                         {
                             bidx.utils.log( "[mail] following mailboxes retrieved from API", response.data );
-                            // store mailbox folders in local variable mailboxes
+                            // store mailbox folders in local variable mailboxes WITHOUT mbx- prefix
                             //
                             $.each( response.data, function( idx, el )
                             {
@@ -1621,17 +1716,29 @@
 
             $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
 
-
-
-            $modal.find( ".btn[href]" ).each( function()
+            // if callback is provided, we set our own handler directly to the confirm button
+            //
+            if( options.onConfirm )
             {
-                var $this = $( this );
+                $modal.find( ".bidx-btn-confirm" ).one( "click", options.onConfirm );
+            }
+            // else we write the url in the href with followup action
+            //
+            else
+            {
+                $modal.find( ".btn[href]" ).each( function()
+                {
+                    var $this = $( this );
 
-                href = $this.attr( "data-href" )
-                        .replace( "%state%", options.state )
-                        .replace( "%id%", options.id );
-                $this.attr( "href", href );
-            } );
+                    href = $this.attr( "data-href" )
+                            .replace( "%state%", options.state )
+                            .replace( "%id%", options.id );
+                    $this.attr( "href", href );
+                } );
+            }
+
+
+
 
             $modal.modal( {} );
 
@@ -1802,7 +1909,7 @@
                                 {
                                     // init the folder-dropdown of the toolbar
                                     //
-                                    _initMoveToFolderDropDown( action, mailId );
+                                    _initMoveToFolderDropDown( action );
                                     // mark the menu that matches this current page
                                     //
                                     _setActiveMenu();
@@ -1813,7 +1920,7 @@
                         {
                             // init the folder-dropdown of the toolbar
                             //
-                            _initMoveToFolderDropDown( action, mailId );
+                            _initMoveToFolderDropDown( action );
                         }
 
                     } )
@@ -1884,22 +1991,6 @@
 
             break;
 
-            case /^deleteConfirm$/.test( action ):
-
-                _showModal(
-                {
-                    view:       "deleteConfirm"
-                ,   id:         mailId
-                ,   state:      state
-
-                ,   onHide: function()
-                    {
-                        window.bidx.controller.updateHash( "#mail/" + state + "/id=" + mailId, true, false );
-                    }
-                } );
-
-            break;
-
             case /^discardConfirm$/.test( action ):
 
                 _showModal(
@@ -1932,6 +2023,7 @@
             break;
 
             case /^doEmptyTrash$/.test( action ):
+
                 _closeModal(
                 {
                     unbindHide: true
@@ -1944,32 +2036,6 @@
                 } );
 
             break;
-
-            case /^doDelete$/.test( action ):
-                _closeModal(
-                {
-                    unbindHide: true
-                } );
-
-                _doDelete(
-                {
-                    ids:     mailId
-                ,   state:  state
-                } );
-
-            break;
-
-         /*   case /^delete-multiple$/.test( action ):
-            bidx.utils.log("test");
-                return;
-                _doDelete(
-                {
-                    id:     mailId
-                ,   section: section
-                } );
-
-            break;*/
-
 
 
             case /^contacts$/.test( action ):
@@ -2034,15 +2100,7 @@
                     _showError( "Something went wrong will connecting to a member: " + "No ID submitted or ID is not a number" );
                 }
 
-
-
-
-
             break;
-
-
-
-
 
             // catch all for mailbox folders; for example mbx-inbox. For convenience I remove the prefix within this closure
             //
@@ -2056,13 +2114,14 @@
                     unbindHide: true
                 } );
 
-                // For convenience I remove the prefix within to get the mailbox name as it is used within the API. We store the name in the app variable section
-                //
-                //action = action.replace( /(^mbx-)/, "" );
-                bidx.utils.log( "[mail] requested load of mailbox ", action );
-
                 _showView( "load" );
                 _hideToolbarButtons( "list" );
+
+                // remove the prefix mbx- from the action because
+                //
+                action = action.replace( /(^mbx-)/, "" );
+
+                bidx.utils.log( "[mail] requested load of mailbox ", action );
 
                 // check if mailbox exists, else reload mailboxes and redraw folder navigation
                 if ( !mailboxes[ action ] )

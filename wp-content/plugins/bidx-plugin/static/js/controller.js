@@ -116,7 +116,9 @@
     //
     function updateHash( newHash, trigger, replace )
     {
+
         router.navigate( newHash, trigger, replace );
+
         bidx.utils.log("hash changed to", newHash );
     }
 
@@ -159,12 +161,12 @@
         ,   'account(/*splat)':                                 'account'
         ,   'resetpassword':                                    'resetpassword'
 
-        ,   'mail(/:state)(*splat)':                         'mail'
+        ,   'mail(/:state)(*splat)':                            'mail'
         //,   'mail(/:section)(/:part1)(/:part2)':                'mail'
 
         ,   'media(/:appState)(/:id)':                          'media'
 
-        ,   'dashboard(/:state)(*splat)':                    'dashboard'
+        ,   'dashboard(/:state)(*splat)':                       'dashboard'
 
         ,   'cancel':                                           'show'
         ,   '*path':                                            'show'
