@@ -199,8 +199,8 @@
 
               <!-- contacts view -->
             <article class="view viewContacts">
-                <div class="toast-wrapper"></div>
 
+                <div class="toast-wrapper"></div>
 
                 <h3>Contacts requests</h3>
                 <!-- CONTACT REQUESTS -->
@@ -235,13 +235,16 @@
                         </div>
                         <div id="pendingRequests" class="accordion-body collapse">
                             <div class="accordion-inner">
-                                <ul class="contact-request-list unstyled">
+                                <ul class="contact-request-list unstyled clearfix">
                                     <li class="span12 ">
                                         <div class="well">
                                             <?php _e('No sent contact requests','bidxplugin')?>
                                         </div>
                                     </li>
                                 </ul>
+                                <div class="text-center">
+                                    <a class="btn bidx-default-button bidx-btn-showMore" href="#"><?php _e('Show more', 'bidxplugin')?></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -286,13 +289,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
             </article>
 
             <!--  ************************** MODAL VIEWS ****************************************** -->
@@ -301,7 +297,7 @@
                 <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel"><?php _e('Delete messages','bidxplugin')?></h3>
+                        <h3 id="myModalLabel"><?php _e('Delete message(s)','bidxplugin')?></h3>
                     </div>
                     <div class="modal-body">
                     <p>

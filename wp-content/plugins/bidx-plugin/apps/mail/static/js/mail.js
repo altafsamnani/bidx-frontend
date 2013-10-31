@@ -19,6 +19,7 @@
     ,   toolbar                     = {}
     ,   message                     = {}
     ,   itemList                    = {} // will contain key/value pairs where key=mailId and value always 1
+    ,   CONTACTSPAGESIZE            = 6
     ,   $mailboxToolbar
     ,   $mailboxToolbarButtons
     ,   state
@@ -1096,6 +1097,8 @@
                         snippitId:              "contact-request-" + key
                     ,   category:               key
                     ,   items:                  items
+                    ,   pageSize:               CONTACTSPAGESIZE
+                    ,   currentPage:            1
                     ,   view:                   "Contacts"
                     ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
                     ,   cb:                     _getContactsCallback( key)
@@ -1188,7 +1191,7 @@
             // update counter displaying amount of contacts for this category
             //
             _setContactsCount( options.view, options.category, options.items.length );
-
+            console.log("OPPPITONSSSSS", options);
             // iterate of each item an append a modified snippit to the list
             //
             $.each( options.items, function( idx, item )
