@@ -102,7 +102,7 @@ if ($businessSummary) {
                     <div class="accordion-heading">
                         <a class="accordion-toggle <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#businesses" href="#<?php echo $collapseId ?>">
 
-                            <h4><?php echo $business->name ?></h4>
+                            <h5><?php echo $business->name ?></h5>
                             <div class="control-buttons">
                                 <span class="bidx-expand">+</span>
                                 <span class="bidx-collapse">-</span>
@@ -167,7 +167,7 @@ if ($businessSummary) {
 if ($companies) {
     $labelCompany = ($this->data->isMyProfile) ? __('My Company','bidxplugin') : __('This person has a company','bidxplugin');
     ?>
-    <div class="clearfix">
+    <div class="well profile-block">
 <?php
     if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
 ?>
@@ -176,7 +176,7 @@ if ($companies) {
         </div>
 <?php } ?>
         <h4 id="company"><?php _e( 'Company', 'bidxplugin' ); ?></h4>
-    </div>
+
     <div class="accordion" id="companies">
 <?php
         foreach ($companies as $index => $company) {
@@ -195,7 +195,7 @@ if ($companies) {
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#companies" href="#<?php echo $collapseId ?>">
-                        <h4><?php echo $company->name ?></h4>
+                        <h5><?php echo $company->name ?></h5>
                         <div class="control-buttons">
                             <span class="bidx-expand">+</span>
                             <span class="bidx-collapse">-</span>
@@ -275,5 +275,6 @@ if ($companies) {
     }
     ?>
     </div><!-- accordion #companies -->
+    </div>
 <?php
     }
