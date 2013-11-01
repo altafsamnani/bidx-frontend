@@ -147,8 +147,10 @@ class TemplateLibrary
      */
     public function addMultipleRows ($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div')
     {
-
-        $rowHtml = "<div class='row-fluid'>";
+        $rowHtml = "";
+        if ( $gridColumnVal === 'span12' ) {
+            $rowHtml = "<div class='row-fluid'>";
+        }
         $rowHtml .= "<div class='" . $gridColumnVal . "'>";
         $className = ($className) ? " class = '" . $className . "' " : '';
 
@@ -177,7 +179,10 @@ class TemplateLibrary
         }
 
         $rowHtml .= "</div>";
-        $rowHtml .= "</div>";
+
+        if ( $gridColumnVal === 'span12' ) {
+            $rowHtml .= "</div>";
+        }
 
         return $rowHtml;
     }
@@ -216,7 +221,7 @@ class TemplateLibrary
                 break;
 
             case 'nationality':
-                $values = $this->getStaticVal ('language', $values);
+                $values = $this->getStaticVal ('nationality', $values);
 
                 break;
         }

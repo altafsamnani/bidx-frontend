@@ -1046,25 +1046,51 @@ body.home .carousel-inner img {
 }
 
 .bid-social.twitter {
-    background: url("assets/img/social-media-icons.png") no-repeat scroll 0 -5024px transparent;
+    background: url("assets/img/flat-icons.png") no-repeat scroll -18px -16px transparent;
     margin-right: 0;
 }
 
 .bid-social.facebook {
-    background: url("assets/img/social-media-icons.png") no-repeat scroll 0 -1536px transparent;
+    background: url("assets/img/flat-icons.png") no-repeat scroll -112px -16px transparent;
 }
 
 .bid-social {
     display: block;
     float: left;
-    height: 16px;
+    height: 32px;
     margin-right: 8px;
     text-indent: -3333px;
-    width: 16px;
+    width: 32px;
+}
+
+.linkedin .li-connect-widget .li-connect-mark {
+    background: none !important;
+    height: 32px !important;
+    width: 32px !important;
+}
+
+.linkedin {
+    background: url("assets/img/flat-icons.png") no-repeat scroll -18px -62px transparent !important;
+    height: 32px !important;
+    width: 32px !important;
 }
 
 .skypeclass p {
-    margin:-15px;
+    margin: 0;
+}
+
+.skypeclass p a {
+    background: url("assets/img/flat-icons.png") no-repeat scroll -158px -62px transparent !important;
+    margin: 0;
+    display: block !important;
+    height: 32px !important;
+    width: 32px !important;
+}
+
+.skypeclass p img {
+    margin: 0 !important;
+    vertical-align: baseline !important;
+    visibility: hidden !important;
 }
 
 .progress {
