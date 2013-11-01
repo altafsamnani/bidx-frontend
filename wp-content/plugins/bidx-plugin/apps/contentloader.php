@@ -73,7 +73,7 @@ class ContentLoader
         add_rewrite_tag( '%bidx%', '([^&/]+)' ); //main action per endpoint
         add_rewrite_tag( '%bidxparam1%', '([^&/]+)' ); //control parameter if available
         add_rewrite_tag( '%bidxparam2%', '([^&/]+)' ); //rest of url data if available
-
+        $blog_title = strtolower (get_bloginfo ());
 
         $this->logger->trace( 'Start loading default data from location : ' . $this->location );
         foreach ( glob( BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml' ) as $filename ) {
@@ -146,13 +146,15 @@ class ContentLoader
                 		) );
                 } else {
                 	$this->logger->trace( 'Inserting new post : ' . $post->name );
+                    $group_owner_login = $blog_title . 'groupowner';
+                    $user = get_user_by('login',$group_owner_login);
                 	$insertPostArr = array (
                 			'post_content'  => $content
                 			,   'post_name'     => $post->name
                 			,   'post_status'   => 'publish'
                 			,   'post_title'    => $post->title
                 			,   'post_type'     => $document->posttype
-                			,   'post_author'   => 1
+                			,   'post_author'   => ($user->ID) ? $user->ID : 1
                 	);
                 	//$enPostArr = $insertPostArr;
                 	//$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
