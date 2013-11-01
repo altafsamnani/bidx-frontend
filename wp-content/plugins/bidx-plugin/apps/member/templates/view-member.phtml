@@ -1,79 +1,68 @@
 <?php
-$data = $this->data;
-$authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
-$personalDetails = isset( $data->bidxMemberProfile->personalDetails ) ? $data->bidxMemberProfile->personalDetails : NULL;
-$isEntrepreneur = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile : NULL ;
-$isInvestor = isset( $data->bidxInvestorProfile ) ? $data->bidxInvestorProfile : NULL;
 
+    $data                       = $this->data;
+    $authenticated              = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+    $personalDetails            = isset( $data->bidxMemberProfile->personalDetails ) ? $data->bidxMemberProfile->personalDetails : NULL;
+    $isEntrepreneur             = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile : NULL ;
+    $isInvestor                 = isset( $data->bidxInvestorProfile ) ? $data->bidxInvestorProfile : NULL;
+    $personalDetailsBidxMeta    = isset( $personalDetails->bidxMeta ) ? $personalDetails->bidxMeta : $personalDetails;
+    $entrepreneurDetails        = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile: NULL ;
+    $firstName                  = $this->exst( $personalDetails->firstName );
+    $lastName                   = $this->exst( $personalDetails->lastName );
+    $professionalTitle          = $this->exst( $personalDetails->professionalTitle );
+    $gender                     = $this->addExtraValuesToRows( 'gender', $this->exst( $personalDetails->gender ) );
+    $dateofBirth                = date( 'd M Y', strtotime ( $this->addExtraValuesToRows( 'dateOfBirth', $this->exst( $personalDetails->dateOfBirth ) ) ) );
+    $highestEducation           = $this->addExtraValuesToRows( 'highestEducation', $this->exst( $personalDetails->highestEducation ) );
+    $emailAddress               = $this->exst( $personalDetails->emailAddress );
+    $mobile                     = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile');
+    $fax                        = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax');
+    $landLine                   = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine');
+    $useDataSrc                 = false;
+    $picSrc                     = $this->exst ( $personalDetails->profilePicture->document );
+    $cvDetails                  = ( $this->exst( $entrepreneurDetails->cv ) )
+                                    ? '<a href="' . $entrepreneurDetails->cv->document . '" target="_blank" > ' . $entrepreneurDetails->cv->documentName . '</a>'
+                                    : NULL;
 
-$useDataSrc = false;
-$picSrc = $this->exst ( $personalDetails->profilePicture->document );
+    // Nationality - NOT LOOKING GOOD
+    $nationality                = $this->exst( $personalDetails->nationality );
+    $nationality                = $this->addExtraValuesToRows( 'nationality', $nationality );
 
-$personalDetailsBidxMeta = isset( $personalDetails->bidxMeta )
-    ? $personalDetails->bidxMeta
-    : $personalDetails;
+    // Language Details
+    $languageData               = $this->exst( $personalDetails->languageDetail );
+    $languageDetails            = ( $languageData ) ? $this->getMultiValues ( $languageData, ', ', 'language', 'language' ) : NULL;
+    $motherLanguageDetails      = $this->getMultiValues ( $languageData, ', ', 'language', 'language', array ( 'motherLanguage' => '1' ) );
+    $motherlanguage             = $this->addExtraValuesToRows( 'motherlanguage', $motherLanguageDetails );
 
-if ( !$personalDetails->profilePicture->document ) {
-    $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
-    $useDataSrc = true;
-}
-
-$entrepreneurDetails = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile: NULL ;
-$firstName              = $this->exst( $personalDetails->firstName );
-$lastName               = $this->exst( $personalDetails->lastName );
-$professionalTitle      = $this->exst( $personalDetails->professionalTitle );
-$gender                 = $this->addExtraValuesToRows( 'gender', $this->exst( $personalDetails->gender ) );
-$dateofBirth            = date( 'd M Y', strtotime ( $this->addExtraValuesToRows( 'dateOfBirth', $this->exst( $personalDetails->dateOfBirth ) ) ) );
-$highestEducation       = $this->addExtraValuesToRows( 'highestEducation', $this->exst( $personalDetails->highestEducation ) );
-//$linkedIn               = $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn));
-//$facebook               = $this->addSocialPluginScript ('facebook', $this->exst ($personalDetails->facebook));
-//$twitter                = $this->addSocialPluginScript ('twitter', $this->exst ($personalDetails->twitter));
-//$skype                  = $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype));
-$emailAddress           = $this->exst( $personalDetails->emailAddress );
-$mobile                 = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile');
-$fax                    = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax');
-$landLine               = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine');
-$cvDetails  = ($this->exst($entrepreneurDetails->cv)) ? '<a href="' . $entrepreneurDetails->cv->document . '" target="_blank" > ' . $entrepreneurDetails->cv->documentName . '</a>' : NULL;
-
-// Nationality - NOT LOOKING GOOD
-$nationality            = $this->exst( $personalDetails->nationality );
-$nationality            = $this->addExtraValuesToRows( 'nationality', $nationality );
-
-// Language Details
-$languageData           = $this->exst( $personalDetails->languageDetail );
-$languageDetails        = ( $languageData ) ? $this->getMultiValues ( $languageData, ', ', 'language', 'language' ) : NULL;
-$motherLanguageDetails  = $this->getMultiValues ( $languageData, ', ', 'language', 'language', array ( 'motherLanguage' => '1' ) );
-$motherlanguage         = $this->addExtraValuesToRows( 'motherlanguage', $motherLanguageDetails );
-
-// Address Details
-$address = '';
-if ($this->exst ($personalDetails->address[0]))
-{
-    if ( $authenticated ) {
-        $street             = $this->exst ($personalDetails->address[0]->street,'');
-        $streetNumber       = $this->exst ($personalDetails->address[0]->streetNumber,'');
-        $cityTown           = $this->exst ($personalDetails->address[0]->cityTown,'');
-        $postalCode         = $this->exst ($personalDetails->address[0]->postalCode,'');
-        $addressArr         = array (
-                                          $street . ' ' . $streetNumber,
-                                          $cityTown,
-                                          __('country') => $personalDetails->address[0]->country,
-                                          $personalDetails->address[0]->postalCode
-                                        );
-        $address            = $this->createRowValue ($addressArr, ', ');
-    } else {
-        $country            = array ( __('country') => $personalDetails->address[0]->country );
-        $address            = $this->createRowValue ($country);
-
+    if ( !$personalDetails->profilePicture->document )
+    {
+        $picSrc                 = 'holder.js/100x100/industrial/auto/text:No Image';
+        $useDataSrc             = true;
     }
-}
 
-
-// Profile Picture
-
-// CV name (attachment)
-
-//d($motherlanguage);
+    // Address Details
+    $address = '';
+    if ( $this->exst( $personalDetails->address[0] ) )
+    {
+        if ( $authenticated )
+        {
+            $street             = $this->exst( $personalDetails->address[0]->street,'' );
+            $streetNumber       = $this->exst( $personalDetails->address[0]->streetNumber,'' );
+            $cityTown           = $this->exst( $personalDetails->address[0]->cityTown,'' );
+            $postalCode         = $this->exst( $personalDetails->address[0]->postalCode,'' );
+            $addressArr         = array (
+                                            $street . ' ' . $streetNumber,
+                                            $cityTown,
+                                            __('country') => $personalDetails->address[0]->country,
+                                            $personalDetails->address[0]->postalCode
+                                        );
+            $address            = $this->createRowValue ($addressArr, ', ');
+        }
+        else
+        {
+            $country            = array ( __('country') => $personalDetails->address[0]->country );
+            $address            = $this->createRowValue ($country);
+        }
+    }
 ?>
 
 <div class="well profile-block">
@@ -98,10 +87,10 @@ if ($this->exst ($personalDetails->address[0]))
                 <div class="span12">
                     <?php echo $professionalTitle; ?>
                     <?php if ( $isEntrepreneur ) { ?>
-                        &nbsp;<span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>&nbsp;
+                        &nbsp;<span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
                     <?php } ?>
                     <?php if ( $isInvestor ) { ?>
-                        &nbsp;<span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>&nbsp;
+                        &nbsp;<span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>
                     <?php } ?>
                 </div>
             </div>
@@ -112,48 +101,35 @@ if ($this->exst ($personalDetails->address[0]))
                 <?php
                     // Fields for left column
                     $leftCol = array ( $gender, $nationality, $motherlanguage );
-                ?>
-                <?php echo $this->addMultipleRows('span5', $leftCol); ?>
+                    echo $this->addMultipleRows('span5', $leftCol);
 
-                <?php
                     // Fields for right column
                     $rightCol = array ( $dateofBirth, $highestEducation, $languageDetails, $address );
+                    echo $this->addMultipleRows('span7', $rightCol);
                 ?>
-                <?php echo $this->addMultipleRows('span7', $rightCol); ?>
             </div>
             <br>
             <div class="row-fluid">
                 <div class="span8">
                     <?php
-                    $rowValues = array (__('E-mail','bidxplugin') => $this->exst ($personalDetails->emailAddress));
-                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                    $rowValues = array (__('Mobile','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
-                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-
-                    $rowValues = array (__('Fax','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
-                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                    $rowValues = array (__('Landline','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
-                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                    ?>
-                    <br/>
-
-                    <?php
-                    //$rowValues = array('Facebook' => $this->addSocialPluginScript('facebook', $personalDetails->facebook),
-                    //                   'Twitter' => $this->addSocialPluginScript('twitter', $personalDetails->twitter));
-                    //echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
-                    //echo $this->addAdjacentRows('span6', $rowValues);
+                        $rowValues = array (__('E-mail','bidxplugin') => $this->exst ($personalDetails->emailAddress));
+                        echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                        $rowValues = array (__('Mobile','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
+                        echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                        $rowValues = array (__('Fax','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
+                        echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                        $rowValues = array (__('Landline','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
+                        echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
                     ?>
                 </div>
                 <div class="span4">
                     <?php
-                    $rowValues = array (__('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
-                      __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
-                      __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
-                      __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
-                    );
-
-                    echo $this->addAdjacentRows ('span3', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'linkedin' ));
-                    // echo $this->addRowsWithLabelAdjacent('span3', 'span3', $rowValues, array('class_label' => 'label label-info'));
+                        $rowValues = array (__('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
+                          __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
+                          __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
+                          __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
+                        );
+                        echo $this->addAdjacentRows ('span3', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'linkedin' ));
                     ?>
                 </div>
             </div>
@@ -163,7 +139,7 @@ if ($this->exst ($personalDetails->address[0]))
     <?php
 // Attachments
 //
-    echo $this->displayAttachments ($header = '<h4>' . __('Documents','bidxplugin') . '<h4>', $this->exst ($personalDetails->attachment));
+        echo $this->displayAttachments ($header = '<h4>' . __('Documents','bidxplugin') . '<h4>', $this->exst ($personalDetails->attachment));
     ?>
 
 </div>
