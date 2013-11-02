@@ -33,7 +33,7 @@
             method:         method
         ,   groupDomain:    params.groupDomain
         ,   baseUrl:        url
-        ,   data:           params.data
+        ,   extraUrlParameters:     params.extraUrlParameters
 
         ,   success:        function( response, textStatus, jqXhr )
             {

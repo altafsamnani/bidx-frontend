@@ -14,12 +14,15 @@
     ,   bidx                        = window.bidx
     ,   currentGroupId              = bidx.common.getCurrentGroupId( "currentGroup" )
     ,   appName                     = "mail"
+    ,   contactStatuses             = [ 'active', 'pending', 'ignored', 'incoming' ]
     ,   toolbarButtons              = {}
     ,   mailboxes                   = {}
     ,   toolbar                     = {}
     ,   message                     = {}
     ,   itemList                    = {} // will contain key/value pairs where key=mailId and value always 1
-    ,   CONTACTSPAGESIZE            = 6
+    ,   CONTACTSPAGESIZE            = 3
+    ,   MAILOFFSET                  = 5
+    ,   currentMailOffset           = 0
     ,   $mailboxToolbar
     ,   $mailboxToolbarButtons
     ,   state
@@ -99,6 +102,17 @@
         $mailboxToolbarButtons.filter( ".bidx-btn-mark-read" ).bind( "click", "action=read&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread" ).bind( "click", "action=unread&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder" ).bind( "click", "action=move&confirm=false", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).bind( "click", "action=showPrev&confirm=false", _doPaging );
+        $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).bind( "click", "action=showNext&confirm=false", _doPaging );
+
+
+        // hide showMore buttons on contacts and showMore handler
+        //
+        $views.filter( bidx.utils.getViewName( "contacts" ) ).find( ".bidx-btn-showMore" )
+            .hide()
+            .click( _doShowMoreContacts )
+        ;
+
 
     }
 
@@ -131,87 +145,6 @@
     }
 
 
-
-
-    // actual sending of message to API
-    function _doSend( params )
-    {
-        //var key = "sendingMessage";
-
-        if ( !message )
-        {
-            return;
-        }
-
-        _prepareMessage();
-
-        var extraUrlParameters =
-        [
-            {
-                label :     "mailType",
-                value :     "PLATFORM"
-            }
-        ];
-
-        //bidx.common.notifyCustom( bidx.i18n.i( "sendingMessage", appName ) );
-
-/*        bidx.i18n.getItem( key, function( err, label )
-        {
-            if ( err )
-            {
-                bidx.utils.error( "Problem translating", key, err );
-                label = key;
-                _showError( label );
-            }
-            bidx.common.notifyCustom( key );
-        } );*/
-
-
-
-        bidx.api.call(
-            "mailboxMail.send"
-        ,   {
-                groupDomain:              bidx.common.groupDomain
-            ,   extraUrlParameters:       extraUrlParameters
-            ,   data:                     message
-
-            ,   success: function( response )
-                {
-
-                    bidx.utils.log( "[mail] mail send", response );
-                    //var key = "messageSent";
-
-                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", appName ) );
-
-                    bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong while sending the email: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while sending the email: " + response.text );
-                    }
-
-                }
-            }
-        );
-
-    }
-
     // this function prepares the message package for the API to accept
     //
     function _prepareMessage()
@@ -227,7 +160,7 @@
 
         message = {}; // clear message because it can still hold the reply content
 
-        $currentView = $views.filter( ".viewCompose" );
+        $currentView = $views.filter( bidx.utils.getViewName( "compose" ) );
 
         var to = [];
         var recipients = $currentView.find( "[ name=contacts ]" ).tagsinput( 'getValues' );
@@ -248,7 +181,7 @@
     //
     function _showError( msg )
     {
-        $views.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
+        $views.filter( bidx.utils.getViewName( "error" ) ).find( ".errorMsg" ).text( msg );
         _showView( "error" );
     }
 
@@ -317,6 +250,125 @@
         message = msg;
 
     }
+
+
+    // this functions shows an amount of contacts in the related contactlist
+    // work in progress, waiting on API
+    //
+    function _doShowMoreContacts( e )
+    {
+        var $this       = $( this)
+        ,   status      = bidx.utils.bidxDeparam( $this.attr( "href") )
+        ;
+
+        e.preventDefault();
+
+        bidx.utils.log("SHOW MORE", status );
+
+        // start a promise chain
+        //
+        _getContacts(
+        {
+            extraUrlParameters:
+            [
+                {
+                    label:      "type",
+                    value:      "contact"
+                }
+            ,   {
+                    label:      "status",
+                    value:      status
+                }
+            ,   {
+                    label:      "limit",
+                    value:      CONTACTSPAGESIZE
+                }
+            ,   {
+                    label:      "offset",
+                    value:      1
+                }
+            ]
+        ,   filter:             contactStatuses
+        } )
+            .then( function( contacts )
+            {
+                console.log( "More contact", contacts);
+            })
+            .fail( function ( error )
+            {
+                bidx.utils.log( "Error in promise chain ", error );
+            } )
+            .done( function()
+            {
+
+            } );
+    }
+
+    // actual sending of message to API
+    //
+    function _doSend( params )
+    {
+        //var key = "sendingMessage";
+
+        if ( !message )
+        {
+            return;
+        }
+
+        _prepareMessage();
+
+        var extraUrlParameters =
+        [
+            {
+                label :     "mailType",
+                value :     "PLATFORM"
+            }
+        ];
+
+        bidx.api.call(
+            "mailboxMail.send"
+        ,   {
+                groupDomain:              bidx.common.groupDomain
+            ,   extraUrlParameters:       extraUrlParameters
+            ,   data:                     message
+
+            ,   success: function( response )
+                {
+
+                    bidx.utils.log( "[mail] mail send", response );
+                    //var key = "messageSent";
+
+                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", appName ) );
+
+                    bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while sending the email: " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while sending the email: " + response.text );
+                    }
+
+                }
+            }
+        );
+
+    }
+
 
 
     //  delete email
@@ -714,6 +766,7 @@
         var params
         ,   ids
         ,   actionFn
+        ,   currentState
         ;
 
         e.preventDefault();
@@ -724,6 +777,13 @@
             return;
         }
         params = bidx.utils.bidxDeparam( e.data );
+
+        // remove the mbx-prefix so we can use the state as a key to match the mailbox
+        //
+        if( state.search( /(^mbx-)/ ) === 0 )
+        {
+            currentState = state.replace( /(^mbx-)/, "" );
+        }
 
         // Definition of action handlers with the actual action (trying to prevent duplicate code)
         //
@@ -748,12 +808,11 @@
                 }
         };
 
-
         // only execute code if there are target Id's available
         //
         if( $.isEmptyObject( itemList ) )
         {
-            bidx.utils.warn( "No messages selected for deletion ");
+            bidx.utils.warn( "No messages selected for this action ");
             return;
         }
 
@@ -765,6 +824,7 @@
         } )
             .join(",")
         ;
+
 
         bidx.utils.log("[MAIL] do action ", params.action, " for ids: ", ids );
 
@@ -818,8 +878,105 @@
                 ,   markAction:     "MARK_UNREAD"
                 } );
             break;
+
+
         }
 
+    }
+
+    // this function handles the paging of the email messages of any box.
+    //
+    function _doPaging( e )
+    {
+       var params
+        ,   currentState
+        ;
+
+        e.preventDefault();
+
+        if ( !e.data )
+        {
+            bidx.utils.error( "No action defined" );
+            return;
+        }
+        params = bidx.utils.bidxDeparam( e.data );
+
+        // remove the mbx-prefix so we can use the state as a key to match the mailbox
+        //
+        if( state.search( /(^mbx-)/ ) === 0 )
+        {
+            currentState = state.replace( /(^mbx-)/, "" );
+        }
+
+
+
+
+
+        // switch based on the action we want to execute
+        //
+        switch ( params.action)
+        {
+            case "showPrev":
+
+                // add offset
+                currentMailOffset -= MAILOFFSET;
+                bidx.utils.log("currentMailOffset", currentMailOffset);
+
+                _getEmails(
+                {
+                    startOffset:            currentMailOffset
+                ,   maxResults:             MAILOFFSET
+                ,   mailboxId:              mailboxes[ currentState ].id
+                ,   view:                   "list"
+
+                ,   callback: function( response )
+                    {
+                        var mailboxTotal = response.data.total;
+                        // check if Newer button needs to be hidden
+                        //
+                        if ( currentMailOffset - MAILOFFSET < 0 )
+                        {
+                            $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).hide();
+                        }
+                        if ( currentMailOffset >= 0 )
+                        {
+                            $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).show();
+                        }
+                    }
+                } );
+
+            break;
+
+            case "showNext":
+
+                // add offset
+                currentMailOffset += MAILOFFSET;
+                bidx.utils.log("currentMailOffset", currentMailOffset);
+
+                _getEmails(
+                {
+                    startOffset:            currentMailOffset
+                ,   maxResults:             MAILOFFSET
+                ,   mailboxId:              mailboxes[ currentState ].id
+                ,   view:                   "list"
+
+                ,   callback: function( response )
+                    {
+                        var mailboxTotal = response.data.total;
+                        // check if Older button needs to be hidden
+                        //
+                        if ( currentMailOffset + MAILOFFSET >= mailboxTotal )
+                        {
+                            $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).hide();
+                        }
+                        if ( currentMailOffset > 0 )
+                        {
+                            $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).show();
+                        }
+                    }
+                } );
+            break;
+        }
     }
 
     // handler for deleting multiple items
@@ -909,16 +1066,19 @@
 
             _getEmails(
             {
-                startOffset:            0
-            ,   maxResults:             10
+                startOffset:            currentMailOffset
+            ,   maxResults:             MAILOFFSET
             ,   mailboxId:              mailboxes[ currentState ].id
             ,   view:                   "list"
 
-            ,   callback: function()
+            ,   callback: function( response )
                 {
+                    var mailboxTotal = response.data.total;
+
                     // mark the menu that matches this current page
                     //
                     _setActiveMenu();
+
 
                     // enable specific set of toolbar buttons
                     //
@@ -927,6 +1087,7 @@
                         buttons = [
                             ".bidx-btn-empty-trash-confirm"
                         ,   ".bidx-btn-move-to-folder"
+                        ,   ".bidx-btn-mail-next"
                         ];
                     }
                     else
@@ -936,8 +1097,18 @@
                         ,   ".bidx-btn-mark-read"
                         ,   ".bidx-btn-mark-unread"
                         ,   ".bidx-btn-move-to-folder"
+                        ,   ".bidx-btn-mail-next"
                         ];
                     }
+
+
+                    // check if Older button needs to be hidden which has to happen when total message
+                    //
+                    if ( mailboxTotal <= MAILOFFSET )
+                    {
+                       buttons.splice( $.inArray( ".bidx-btn-mail-next" , buttons ), 1 );
+                    }
+
                     // API doesnt allow delete so remove button
                     //
                     if ( currentState === "sent" )
@@ -1079,7 +1250,7 @@
             var $listEmpty = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
             ;
 
-            // loop through all contact categories and populate the associated lists
+            // loop through all contact statuses and populate the associated lists
             //
             $.each( contacts, function( key, items )
             {
@@ -1099,6 +1270,7 @@
                     ,   items:                  items
                     ,   pageSize:               CONTACTSPAGESIZE
                     ,   currentPage:            1
+                    ,   addShowMoreButton:      true
                     ,   view:                   "Contacts"
                     ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
                     ,   cb:                     _getContactsCallback( key)
@@ -1108,7 +1280,7 @@
             } );
         }
 
-        // This function is a collection of callbacks for the contactcategories. It is meant to execute contact-category specific code
+        // This function is a collection of callbacks for the contact categories. It is meant to execute contact-category specific code
         //
         function _getContactsCallback( contactCategory )
         {
@@ -1184,6 +1356,7 @@
             ,   listItem
             ;
 
+
             // first empty the list
             //
             $list.empty();
@@ -1191,7 +1364,7 @@
             // update counter displaying amount of contacts for this category
             //
             _setContactsCount( options.view, options.category, options.items.length );
-            console.log("OPPPITONSSSSS", options);
+
             // iterate of each item an append a modified snippit to the list
             //
             $.each( options.items, function( idx, item )
@@ -1218,7 +1391,24 @@
                 // finally append item to list
                 //
                 $list.append( $listItem );
+
+                // if max items per page have been reached, break out of loop
+                //
+                if( idx === CONTACTSPAGESIZE-1 )
+                {
+                    return false;
+                }
             } );
+
+            if ( options.addShowMoreButton )
+            {
+                $view.find( "#" + options.category + "Requests .bidx-btn-showMore" ).show();
+            }
+            else
+            {
+
+            }
+
 
         }
 
@@ -1589,12 +1779,18 @@
             bidx.api.call(
                 "mailbox.fetch"
             ,   {
-                    data:
-                    {
-                        startOffset:          0
-                    ,   maxResults:           10
+                    extraUrlParameters:
+                    [
+                        {
+                            label:      "startOffset",
+                            value:      currentMailOffset
+                        }
+                    ,   {
+                            label:      "maxResults",
+                            value:      MAILOFFSET
+                        }
 
-                    }
+                    ]
                 ,   mailboxId:                options.mailboxId
                 ,   groupDomain:              bidx.common.groupDomain
 
@@ -1718,7 +1914,7 @@
                             //
                             if( options && options.callback )
                             {
-                                options.callback();
+                                options.callback( response);
                             }
                         }
                     }
@@ -1835,6 +2031,7 @@
         }
 
 
+
     //  ################################## SETTERS #####################################  \\
 
         //  sets any given toolbar and associate toolbar buttons with ID
@@ -1881,6 +2078,8 @@
             bidx.utils.log("[mail] show modal", options );
 
             $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
+            bidx.utils.log("MODALS", $modals);
+            bidx.utils.log("MODAL", $modal);
 
             // if callback is provided, we set our own handler directly to the confirm button
             //
@@ -2224,11 +2423,15 @@
                     extraUrlParameters:
                     [
                         {
-                            label: "type",
-                            value: "contact"
+                            label:      "type",
+                            value:      "contact"
                         }
+                    // ,   {
+                    //         label:      "limit",
+                    //         value:      CONTACTSPAGESIZE
+                    //     }
                     ]
-                ,   filter:         [ 'active', 'pending', 'ignored', 'incoming' ]
+                ,   filter:             contactStatuses
                 } )
                     .then( function( contacts )
                     {
@@ -2276,6 +2479,7 @@
                 // clear itemList
                 //
                 itemList = {};
+                currentMailOffset = 0;
 
                 _closeModal(
                 {

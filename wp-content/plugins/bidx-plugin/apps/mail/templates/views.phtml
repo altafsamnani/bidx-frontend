@@ -60,16 +60,15 @@
                         </div>
                         <div class="btn-group">
                                 <!-- generic folder buttons -->
-                                <a class="btn btn-small btn-primary bidx-btn-delete" href="/mail/#mail/delete-multiple"><?php _e('Delete','bidxplugin')?></a>
-                                <a class="btn btn-small btn-primary bidx-btn-mark-read" href="/mail/#mail/mark-read"><?php _e('Mark as read','bidxplugin')?></a>
-                                <a class="btn btn-small btn-primary bidx-btn-mark-unread" href="/mail/#mail/mark-unread"><?php _e('Mark as unread','bidxplugin')?></a>
+                                <a class="btn btn-small btn-primary bidx-btn-delete" href="#"><?php _e('Delete','bidxplugin')?></a>
+                                <a class="btn btn-small btn-primary bidx-btn-mark-read" href="#"><?php _e('Mark as read','bidxplugin')?></a>
+                                <a class="btn btn-small btn-primary bidx-btn-mark-unread" href="#"><?php _e('Mark as unread','bidxplugin')?></a>
                                 <div class="btn-group btngroup-move-to-folder">
                                     <a class="btn btn-small btn-primary dropdown-toggle bidx-btn-move-to-folder" data-toggle="dropdown" href="#">
                                         <?php _e('Move message to folder','bidxplugin')?>
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="">[To be populated]</a></li>
                                     <!-- dropdown menu links -->
                                     </ul>
                                 </div>
@@ -77,10 +76,13 @@
                                 <!-- trash only buttons -->
                                 <a class="btn btn-small btn-primary bidx-btn-empty-trash-confirm" href="/mail/#mail/empty-trash-confirm"><?php _e('Empty trash','bidxplugin')?></a>
                         </div>
-
-
+                        <div class="pull-right">
+                            <a class="btn btn-small btn-primary bidx-btn-mail-prev" href="#"><?php _e('< Newer', 'bidxplugin')?></a>
+                            <a class="btn btn-small btn-primary bidx-btn-mail-next" href="#"><?php _e('Older >', 'bidxplugin')?></a>
+                        </div>
                     </nav>
                     <form action="">
+
                     <!-- MESSAGE LIST -->
                     <ul class="list media-list ">
                         <li class="media">
@@ -92,22 +94,6 @@
 
                     </ul>
                     </form>
-                   <!--  <div class="pagination">
-                        <ul>
-                            <li class="previous"><a class="fui-arrow-left" href="#fakelink"></a></li>
-                            <li class="active"><a href="#fakelink">1</a></li>
-                            <li><a href="#fakelink">2</a></li>
-                            <li><a href="#fakelink">3</a></li>
-                            <li><a href="#fakelink">4</a></li>
-                            <li><a href="#fakelink">5</a></li>
-                            <li><a href="#fakelink">6</a></li>
-                            <li><a href="#fakelink">7</a></li>
-                            <li><a href="#fakelink">8</a></li>
-                            <li><a href="#fakelink">9</a></li>
-                            <li><a href="#fakelink">10</a></li>
-                            <li class="next"><a class="fui-arrow-right" href="#fakelink"></a></li>
-                        </ul>
-                    </div> -->
                 </div>
             </article>
 
@@ -215,13 +201,16 @@
                         <!-- RECEIVED CONTACT REQUESTS -->
                         <div id="incomingRequests" class="accordion-body collapse">
                             <div class="accordion-inner">
-                                <ul class="contact-request-list unstyled">
+                                <ul class="contact-request-list unstyled clearfix">
                                     <li class="span12 ">
                                         <div class="well">
                                             <?php _e('No incoming contact requests','bidxplugin')?>
                                         </div>
                                     </li>
                                 </ul>
+                                <div class="text-center">
+                                    <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=incoming"><?php _e('Show more', 'bidxplugin')?></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -243,7 +232,7 @@
                                     </li>
                                 </ul>
                                 <div class="text-center">
-                                    <a class="btn bidx-default-button bidx-btn-showMore" href="#"><?php _e('Show more', 'bidxplugin')?></a>
+                                    <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=pending"><?php _e('Show more', 'bidxplugin')?></a>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +253,7 @@
                         <div class="tab-pane active" id="tab-active-contacts">
                             <div id="activeRequests">
 
-                                <ul class="contact-request-list active-contacts unstyled">
+                                <ul class="contact-request-list active-contacts unstyled clearfix">
                                     <li class="span12 ">
                                         <div class="well">
                                             <?php _e('No active contacts','bidxplugin')?>
@@ -272,19 +261,24 @@
                                     </li>
 
                                 </ul>
+                                <div class="text-center">
+                                    <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=active"><?php _e('Show more', 'bidxplugin')?></a>
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-ignored-contacts">
                             <div id="ignoredRequests">
 
-                                <ul class="contact-request-list ignored-contacts unstyled">
+                                <ul class="contact-request-list ignored-contacts unstyled clearfix">
                                     <li class="span12 ">
                                         <div class="well">
                                             <?php _e('No ignored contacts','bidxplugin')?>
                                         </div>
                                     </li>
-
                                 </ul>
+                                <div class="text-center">
+                                    <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=ignored"><?php _e('Show more', 'bidxplugin')?></a>
+                                </div>
                             </div>
                         </div>
                     </div>
