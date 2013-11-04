@@ -5,7 +5,14 @@ $entities       = $this->sessionData->data->wp->entities;
 <div class="block-odd member">
     <div class="pageHeader clearfix">
         <div class="container clearfix">
-            <h1 class="pull-left"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></h1>
+            <h1 class="pull-left bidx-page-heading">
+                <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></span>
+                <span class="editMember hide"><?php _e('Edit my member profile', 'bidxplugin')?></span>
+                <span class="editInvestor hide"><?php _e('Edit my investor profile', 'bidxplugin')?></span>
+                <span class="createInvestor hide"><?php _e('Create my investor profile', 'bidxplugin')?></span>
+                <span class="editEntrepreneur hide"><?php _e('Edit my entrepreneur profile', 'bidxplugin')?></span>
+                <span class="createEntrepreneur hide"><?php _e('Create my entrepreneur profile', 'bidxplugin')?></span>
+            </h1>
             <div class="editControls btn-group"></div>
         </div>
     </div>

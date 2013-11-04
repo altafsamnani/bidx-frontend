@@ -5,8 +5,9 @@
 {
     var bidx            = window.bidx = ( window.bidx || {} )
     ,   $bidx           = $( bidx )
-    ,   mainState
+    ,   $pageHeadings   = $( ".bidx-page-heading > span" )
     ,   $element
+    ,   mainState
     ,   app
     ,   router
     ,   sectionState
@@ -243,6 +244,8 @@
 
             bidx.utils.log( "AppRouter::editMember", id, section );
 
+            $pageHeadings.hide().filter( ".editMember" ).show();
+
             mainState   = "editMember";
 
             _navigateToApp
@@ -262,6 +265,8 @@
 
             mainState       = "editEntrepreneur";
 
+            $pageHeadings.hide().filter( ".editEntrepreneur" ).show();
+
             _navigateToApp
             (
                 "entrepreneurprofile"
@@ -278,6 +283,8 @@
 
             mainState       = "editEntrepreneur";
 
+            $pageHeadings.hide().filter( ".createEntrepreneur" ).show();
+
              _navigateToApp
             (
                 "entrepreneurprofile"
@@ -292,6 +299,8 @@
             bidx.utils.log( "AppRouter::editInvestor", id, section );
 
             mainState       = "editInvestor";
+
+            $pageHeadings.hide().filter( ".editInvestor" ).show();
 
             _navigateToApp
             (
@@ -309,6 +318,8 @@
             bidx.utils.log( "AppRouter::createInvestor" );
 
             mainState       = "editInvestor";
+
+            $pageHeadings.hide().filter( ".createInvestor" ).show();
 
              _navigateToApp
             (
@@ -580,6 +591,8 @@
                 {
                     $element.hide();
                 }
+
+                $pageHeadings.hide().filter( ".default" ).show();
 
                 mainState       = "show";
                 app         = null;

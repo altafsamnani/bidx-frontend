@@ -264,7 +264,7 @@ Company: bidX;
 
         h1 span {
             display:                block;
-            font-size:              16px;
+            font-size:              inherit;
             font-weight:            400;
             margin-top:             15px;
         }
