@@ -59,11 +59,8 @@ class company
         $companyId = null;
         if (isset ($atts) && isset ($atts['id'])) {
             $companyId = $atts['id'];
-            $bpSummary = true;
-            $view->bpSummary = true;
         } else if (isset ($sessionData->companyId)) {
             $companyId = $sessionData->companyId;
-            $bpSummary = false;
         }
 
         switch ($command) {
@@ -73,8 +70,8 @@ class company
             default :
                 if ($companyId) {
                     $view->company = $companySvc->getCompanyDetails ($companyId);
-                    ($bpSummary) ? $view->company->bidxCanEdit = false : '';
                 }
+                $view->noheader = $atts['noheader'];
                 return $view->render ('company.phtml');
         }
     }

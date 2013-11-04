@@ -6,7 +6,7 @@ $companyBidxMeta = isset( $this->company->bidxMeta )
 ?>
 <div class="block-odd">
 <?php
-    if(empty($this->bpSummary)) {
+    if(!$this->noheader) {
 ?>
     <div class="pageHeader clearfix">
         <div class="container clearfix">
@@ -43,8 +43,6 @@ $companyBidxMeta = isset( $this->company->bidxMeta )
         </div>
     </div>
 <?php
-    if(empty($this->bpSummary)) {
-        $this->render('edit-company.phtml');
-    }
+    $this->render('edit-company.phtml');
 ?>
 </div>
