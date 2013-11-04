@@ -71,6 +71,15 @@
 		</post>
 		<post>
 			<post_id>5</post_id>
+			<name>Register as member</name>
+			<title>Register as member</title>
+			<mapping>^register-as-member/?</mapping>
+			<update>true</update>
+			<htmlTemplate>register-as-member</htmlTemplate>
+			<content></content>
+		</post>
+		<post>
+			<post_id>6</post_id>
 			<name>Get it started investor</name>
 			<title>Get it started investor</title>
 			<mapping>^get-it-started-investor/?</mapping>
@@ -79,7 +88,7 @@
 			<content></content>
 		</post>
 		<post>
-			<post_id>6</post_id>
+			<post_id>7</post_id>
 			<name>Get it started entrepreneur</name>
 			<title>Get it started entrepreneur</title>
 			<mapping>^get-it-started-entrepreneur/?</mapping>
@@ -88,7 +97,7 @@
 			<content></content>
 		</post>
 		<post>
-			<post_id>7</post_id>
+			<post_id>8</post_id>
 			<name>Download financial templates</name>
 			<title>Download financial templates</title>
 			<mapping>^financial-details-templates/?</mapping>
@@ -97,7 +106,7 @@
 			<content></content>
 		</post>
 		<post>
-			<post_id>8</post_id>
+			<post_id>9</post_id>
 			<name>Get it started member</name>
 			<title>Get it started member</title>
 			<mapping>^get-it-started-member/?</mapping>
