@@ -117,7 +117,7 @@ class BidxCommon
 //            session_id ($session_id);
 //        }
         session_start (); //or session_start();
-      
+
         //if (!$session_id) {
         //setcookie ('session_id', session_id (), time () + $time, '/', 'bidx.net' );
         //}
@@ -148,13 +148,13 @@ class BidxCommon
         $authenticated = (isset ($_SESSION[$subDomain]->authenticated)) ? $_SESSION[$subDomain]->authenticated : 'false';
         if (!empty ($_SESSION[$subDomain]) &&
             ((!empty ($_SESSION[$subDomain]->code) && $_SESSION[$subDomain]->code != 'userNotLoggedIn') || $authenticated )) {
-            $sessionVars = $_SESSION[$subDomain];            
+            $sessionVars = $_SESSION[$subDomain];
 
         } else {
             session_unset ();
             $sessionVars = false;
         }
-   
+
         return $sessionVars;
     }
 
