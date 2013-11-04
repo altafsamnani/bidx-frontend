@@ -673,7 +673,7 @@
         // currently only when not running as a slave app these button are actually put inside the dom.
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "/member"  });
 
         // Inject the save and button into the controls
         //
@@ -695,10 +695,11 @@
 
             $controls.append( $btnSave );
 
-            if ( state === "edit" )
-            {
+            // NOTE: Currently we assume that the cancel always navigates back to the member page
+            //if ( state === "edit" )
+            //{
                 $controls.append( $btnCancel );
-            }
+            //}
         }
 
         // Setup form

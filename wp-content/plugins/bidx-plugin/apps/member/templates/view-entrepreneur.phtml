@@ -162,19 +162,22 @@ if ($businessSummary) {
     </div>
 <?php
     }
+
+    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
+?>
+    <div class="add-company-container clearfix">
+        <div class="pull-right">
+            <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company','bidxplugin'); ?></a>
+        </div>
+    </div>
+<?php }
 // Companies listing
 //
 if ($companies) {
     $labelCompany = ($this->data->isMyProfile) ? __('My Company','bidxplugin') : __('This person has a company','bidxplugin');
     ?>
     <div class="well profile-block">
-<?php
-    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
-?>
-        <div class="pull-right">
-            <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company','bidxplugin'); ?></a>
-        </div>
-<?php } ?>
+
         <h4 id="company"><?php _e( 'Company', 'bidxplugin' ); ?></h4>
 
     <div class="accordion" id="companies">
