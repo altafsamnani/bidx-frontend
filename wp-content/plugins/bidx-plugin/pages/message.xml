@@ -2,8 +2,17 @@
 <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
 
 	<type>messages</type>
-	<description>List of messages</description>
-	<version>1.0</version>	
+	<description>List of mail messages</description>
+	<version>1.0</version>
+	
+	<!--
+		WP Page preloader:
+		Use <content> only with escaped html
+		Use <htmlTemplate> with the template name without extention that has to be available in the templates folder. The content of the htmlTemplate will overwrite the content of the <content> tag.
+		Add template filename in <template> tag set a template
+		Update is optional field which can set to true/false/draft where the last status updates the content in draft
+		Use <setHomePage>true</setHomePage> to set page as home page. The last item mentioned is the one selected.
+	-->		
 	<messages>
 		<message>
 			<msg_id>1</msg_id>

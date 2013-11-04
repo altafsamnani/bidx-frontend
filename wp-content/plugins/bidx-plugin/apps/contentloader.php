@@ -168,7 +168,7 @@ class ContentLoader
                 
                 // set page as Home page
                 //
-                if ( isset ( $post->setHompage ) && (string) $post->setHomepage !== 'true' ) {
+                if ( isset ( $post->setHomePage ) && (string) $post->setHomePage !== 'true' ) {
                 
 	                // Set "static page" as the option
 	                update_option( 'show_on_front', 'page' );
