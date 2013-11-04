@@ -484,6 +484,7 @@
                             $profilePictureContainer.replaceWith( $( "<img />", { src: file.document }));
 
                             var managementTeam = $managementTeamItem.data( "bidxData" );
+
                             managementTeam.profilePicture = file;
 
                             $managementTeamProfilePictureModal.modal('hide');
@@ -1189,19 +1190,23 @@
                     bidx.utils.setElementValue( $( this ), value  );
                 } );
             } );
+
+            // Profile picture is special and is it's own entity
+            //
+            if ( managementTeam.profilePicture )
+            {
+                $managementTeam.find( ".profilePictureContainer" )
+                    .append( $( "<img />", { src: managementTeam.profilePicture.document } ));
+            }
+        }
+        else
+        {
+            managementTeam = {};
         }
 
         // Store the data in the DOM for later referal / merging
         //
         $managementTeam.data( "bidxData", managementTeam );
-
-        // Profile picture is special and is it's own entity
-        //
-        if ( managementTeam.profilePicture )
-        {
-            $managementTeam.find( ".profilePictureContainer" )
-                .append( $( "<img />", { src: managementTeam.profilePicture.document } ));
-        }
 
         // Add it to the DOM!
         //
