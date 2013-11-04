@@ -50,7 +50,7 @@
             {
                 "contacts":
                 {
-                    tagsinputRequired:        true
+                    tagsinputRequired:      true
                 }
             ,   "subject":
                 {
@@ -1700,6 +1700,12 @@
                             //
                             $.each( response.data, function( idx, el )
                             {
+                                // #DRAFTS_TO_BE_IMPLEMENTED# currently drafts is not implemented
+                                //
+                                if ( el.name === "Drafts")
+                                {
+                                    return true;
+                                }
                                 mailboxes[ el.name.toLowerCase() ] = el;
                             } );
                             bidx.utils.log( "[mail] mailboxes loaded ", mailboxes );
