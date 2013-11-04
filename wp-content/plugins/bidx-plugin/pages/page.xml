@@ -9,14 +9,13 @@
 		Use <content> only with escaped html
 		Use <htmlTenpplate> with the template name without extention that has to be available in the templates folder. The content of the htmlTemplate will overwrite the content of the <content> tag.
 		Add template filename in <template> tag set a template
-		Use <setHompage>true</setHompage> to set page as Homepage
+		Use <setHomePage>true</setHomePage> to set page as Homepage
 	-->
 	<posts>
 		 <post>
             <post_id>0</post_id>
             <name>homepage</name>
             <title>Home</title>
-            <mapping>^home?</mapping>
             <content>
 				&lt;div class="row-fluid"&gt;
 					&lt;div class="span8"&gt;
@@ -28,8 +27,9 @@
 					&lt;/div&gt;
 				&lt;/div&gt;
             </content>
+            <update>false</update>
             <template>page-intro.php</template>
-            <setHompage>true</setHompage>
+            <setHomePage>true</setHomePage>
         </post>
 		<post>
 			<post_id>1</post_id>
@@ -69,6 +69,7 @@
 			<htmlTemplate>register-as-entrepreneur</htmlTemplate>
 			<content></content>
 		</post>
+<!--
 		<post>
 			<post_id>5</post_id>
 			<name>Register as member</name>
@@ -78,6 +79,7 @@
 			<htmlTemplate>register-as-member</htmlTemplate>
 			<content></content>
 		</post>
+  -->		
 		<post>
 			<post_id>6</post_id>
 			<name>Get it started investor</name>
