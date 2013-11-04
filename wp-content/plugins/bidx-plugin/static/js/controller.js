@@ -3,7 +3,8 @@
  */
 ( function( $ )
 {
-    var bidx = window.bidx = ( window.bidx || {} )
+    var bidx            = window.bidx = ( window.bidx || {} )
+    ,   $bidx           = $( bidx )
     ,   mainState
     ,   $element
     ,   app
@@ -11,6 +12,9 @@
     ,   sectionState
     ,   previousHash
     ,   currentHash
+    ;
+
+    var INTERVAL_MAILBOX_STATE      = 5000     // check for mailbox state (unread count) every 5s
     ;
 
     var $mainStates     = $( "body .mainState" )
@@ -27,6 +31,68 @@
             var $mainState = $( this );
             return !$( $mainState ).parents( ".mainState ").length ? $mainState.get() : null;
         } );
+    }
+
+    // Start checking the state of the mailbox of this user
+    //
+    function _startCheckMailboxState()
+    {
+        var timer;
+
+        _checkMailboxState();
+
+        function _restartTimer()
+        {
+            if ( timer )
+            {
+                clearTimeout( timer );
+            }
+
+            timer = setTimeout( function()
+            {
+                _checkMailboxState();
+            }, INTERVAL_MAILBOX_STATE );
+        }
+
+        function _checkMailboxState()
+        {
+            bidx.api.call(
+                "mailbox.fetch"
+            ,   {
+                    groupDomain:              bidx.common.groupDomain
+
+                ,   success: function( response )
+                    {
+                        var mailboxState    = {}
+                        ,   data            = bidx.utils.getValue( response, "data", true )
+                        ;
+
+                        if ( data )
+                        {
+                            $.each( data, function( idx, mailbox )
+                            {
+                                var name = ( mailbox.name + "" ).toLowerCase();
+
+                                if ( name )
+                                {
+                                    mailboxState[ mailbox.name ] = mailbox;
+                                }
+                            } );
+                        }
+
+                        $bidx.trigger( "mailboxState", mailboxState );
+
+                        _restartTimer();
+                    }
+
+                ,   error:  function( jqXhr )
+                    {
+                        bidx.utils.error( "[controller._checkMailboxState] error ", jqXhr );
+                        _restartTimer();
+                    }
+                }
+            );
+        }
     }
 
     // Mainstate switcher. Expects html containers to exist with both the class mainState and mainState{{s}}, where s is the parameter being put into this function
@@ -555,9 +621,17 @@
 
     };
 
-
     // Engage
     //
     Backbone.history.start();
+
+    // Startup / do things only when the user is claimed to be authenticated
+    //
+    if ( bidx.utils.getValue( bidxConfig, "authenticated" ) )
+    {
+        // When the user is authenticated, start checking the mailbox for unread mail
+        //
+        _startCheckMailboxState();
+    }
 
 } ( jQuery ));

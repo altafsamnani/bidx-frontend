@@ -1,8 +1,22 @@
-//update group overview elements by loading information from the service
-$( document ).ready( function()
+/* global bidx */
+;( function( $ )
 {
-	var thumb = $('.member-thumb');
-	//iterate through thumbs
-	//
+    var $navbar         = $( ".bidx-navbar" )
+    ,   $bidx           = $( bidx )
 
-} );
+    ,   $unreadCount    = $navbar.find( ".iconbar-unread" )
+    ;
+
+    $bidx.on( "mailboxState", function( e, mailboxState )
+    {
+        var unread = bidx.utils.getValue( mailboxState, "Inbox.unread" );
+
+        if ( typeof unread === "undefined" )
+        {
+            unread = "?";
+        }
+
+        $unreadCount.text( unread );
+    } );
+
+} ( jQuery ));
