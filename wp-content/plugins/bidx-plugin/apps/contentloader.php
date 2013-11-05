@@ -175,18 +175,11 @@ class ContentLoader
 	                if (!$post_id) {
 	                    wp_die ('Error creating page');
 	                }
-
-                    if($post->setHomePage == 'true') {
-                        /* Set Homepage */
-                        update_option( 'show_on_front','page' );
-                        update_option( 'page_on_front',$post_id ) ;
-                    }
-
                 }
                 
                 // set page as Home page
                 //
-                if ( isset ( $post->setHomePage ) && (string) $post->setHomePage !== 'true' ) {
+                if ( isset ( $post->setHomePage ) && $post->setHomePage == 'true' ) {
                 
 	                // Set "static page" as the option
 	                update_option( 'show_on_front', 'page' );
