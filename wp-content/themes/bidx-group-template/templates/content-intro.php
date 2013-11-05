@@ -43,25 +43,33 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 ?>
     <!-- IMAGE Carousel -->
     <div id="myCarousel" class="carousel slide">
-        <div class="outer-carousel-control-container">
-            <div class="container">
-                <ol class="carousel-indicators">
 <?php
-                $count = 0;
-                foreach ( $images as $id => $image ) {
+        // If there is only 1 image in the array don't show the nav arrows and the indicator
+        // TODO: Don't load the carousel plugin and the extra markup
+        if ( count($images) != 1 ) {
 ?>
-                    <li data-target="#myCarousel" data-slide-to="<?php echo $count ?>" <?php if ($count == 0) { ?>class="active" <?php } $count++; ?> ></li>
+            <div class="outer-carousel-control-container">
+                <div class="container">
+                    <ol class="carousel-indicators">
 <?php
-                }
+                    $count = 0;
+                    foreach ( $images as $id => $image ) {
 ?>
-                </ol>
+                        <li data-target="#myCarousel" data-slide-to="<?php echo $count ?>" <?php if ($count == 0) { ?>class="active" <?php } $count++; ?> ></li>
+<?php
+                    }
+?>
+                    </ol>
 
-                <!-- Carousel nav -->
-                <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                    <!-- Carousel nav -->
+                    <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 
+                </div>
             </div>
-        </div>
+<?php
+        }
+?>
         <!-- Carousel items -->
         <div class="carousel-inner">
 <?php
