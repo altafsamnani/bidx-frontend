@@ -2,10 +2,13 @@
 {
     var $element                    = $( "#resetpassword" )
 //    ,   $views                      = $element.find( ".view" )
-    ,   $frmResetpassword                   = $element.find( "#frmResetpassword" )
-    ,   $btnResetpassword                   = $frmResetpassword.find( ":submit" )
+    ,   $frmResetpassword           = $element.find( "#frmResetpassword" )
+    ,   $btnResetpassword           = $frmResetpassword.find( ":submit" )
+    ,   $resetpasswordSuccess       = $element.find( ".resetpasswordSuccess" )
+    ,   $loginErrorMessage          = $frmResetpassword.find( ".error-separate" )
     ,   bidx                        = window.bidx
     ,   appName                     = "resetpassword"
+    ,   submitBtnLabel
     ,   currentView
     ;
 
@@ -42,14 +45,40 @@
                     return;
                 }
 
+                // set button to disabled and set Wait text. We store the current label so we can reset it when an error occurs
+                //
                 $btnResetpassword.addClass( "disabled" );
+                submitBtnLabel = $btnResetpassword.text();
+                $btnResetpassword.i18nText("btnPleaseWait");
+
                 $loginErrorMessage.text( "" ).hide();
 
                 _doResetPassword(
                 {
-                    error: function( jqXhr )
+                    error: function( jqXhr, textStatus )
                     {
-                        $btnResetpassword.removeClass( "disabled" );
+
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            $loginErrorMessage.i18nText( response.code, appName ).show();
+
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            $loginErrorMessage.text( response.text ).show();
+                        }
+
+                        $btnResetpassword.removeClass( "disabled" )
+                            .text( submitBtnLabel )
+                        ;
                     }
                 } );
 
@@ -76,19 +105,15 @@
                 {
                     bidx.utils.log("resetpassword.save::success::response", response);
 
-                    // Go to group dashboard
+                    // show success message
                     //
-
                     $frmResetpassword.hide();
-                    $element.find(".resetpasswordSuccess").removeClass("hide");
-
-                    //                          window.location.href = url;
+                    $resetpasswordSuccess.show();
                 }
 
-            ,   error:  function( jqXhr )
+            ,   error:  function( jqXhr, textStatus )
                 {
-
-                    params.error( "Error", jqXhr );
+                    params.error( jqXhr, textStatus );
                 }
             }
         );

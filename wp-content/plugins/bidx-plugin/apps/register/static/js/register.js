@@ -82,6 +82,8 @@
                     return;
                 }
 
+                // set button to disabled and set Wait text. We store the current label so we can reset it when an error occurs
+                //
                 $btnRegister.addClass( "disabled" );
                 submitBtnLabel = $btnRegister.text();
                 $btnRegister.i18nText("btnPleaseWait");
@@ -91,7 +93,8 @@
                     error: function( jqXhr )
                     {
                         $btnRegister.removeClass( "disabled" )
-                            .next( ".bidx-please-wait").hide();
+                            .text( submitBtnLabel )
+                        ;
                     }
                 } );
             }
