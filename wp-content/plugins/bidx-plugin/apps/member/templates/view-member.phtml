@@ -92,6 +92,9 @@
                     <?php if ( $isInvestor ) { ?>
                         &nbsp;<span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>
                     <?php } ?>
+                    <?php if ( !$isEntrepreneur || !$isInvestor ) { ?>
+                        &nbsp;<span class="label bidx-label-member"><?php _e('Member', 'bidxplugin') ?></span>
+                    <?php } ?>
                 </div>
             </div>
             <div class="row-fluid">
@@ -123,18 +126,22 @@
                     ?>
                 </div>
 
-                <?php if ( $authenticated ) { ?>
                     <div class="span4">
                         <?php
-                            $rowValues = array (__('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
-                              __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
-                              __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
-                              __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
+                            $rowValues1 = array (
+                                __('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
+                                __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
                             );
+                            if ( $authenticated ) {
+                                $rowValues2 = array (
+                                    __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
+                                    __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
+                                );
+                            }
+                            $rowValues = ( isset( $rowValues2 ) ) ? array_merge( $rowValues1, $rowValues2 ) : $rowValues1;
                             echo $this->addAdjacentRows ('span3', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'bid-social linkedin' ));
                         ?>
                     </div>
-                <?php } ?>
 
             </div>
         </div>
