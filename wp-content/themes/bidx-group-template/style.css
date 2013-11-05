@@ -121,6 +121,15 @@ Company: bidX;
         .bidx-theme-colour-footer {
             background-color:       #34495E;
         }
+        .bidx .btn.disabled,
+        .bidx .btn.disabled:hover,
+        .bdix .bnt.disabled:focus {
+            background-color:       #CCC;
+            color:                  #FFF;
+            opacity:                1;
+            filter:                 alpha(opacity=100);
+            outline:                none;
+        }
 
     /************************ End bidX default colours ***************************/
 
@@ -1251,6 +1260,8 @@ form .row-fluid .input-prepend {
     select.error, input.error, textarea.error {
         display: inline-block;
     }
+
+
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@ currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
     /* please move Form css thhat is used inbetween this block */

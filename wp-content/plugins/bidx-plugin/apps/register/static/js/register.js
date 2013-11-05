@@ -14,6 +14,7 @@
     var _oneTimeSetup = function()
     {
 
+
         // enable location plugin
         //
         $frmRegister.find( "[data-type=location]"   ).bidx_location(
@@ -73,19 +74,21 @@
             }
         ,   submitHandler:  function()
             {
+
                 if ( $btnRegister.hasClass( "disabled" ) )
                 {
                     bidx.utils.log("button disabled");
                     return;
                 }
 
-                $btnRegister.addClass( "disabled" );
+                $btnRegister.addClass( "disabled" ).next( ".bidx-please-wait").show();
 
                 _doRegister(
                 {
                     error: function( jqXhr )
                     {
-                        $btnRegister.removeClass( "disabled" );
+                        $btnRegister.removeClass( "disabled" )
+                            .next( ".bidx-please-wait").hide();
                     }
                 } );
             }

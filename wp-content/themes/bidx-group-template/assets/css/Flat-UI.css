@@ -429,7 +429,7 @@
 }
 .checkbox.checked,
 .radio.checked {
-  color: #16a085;
+  /* color: #16a085; */
 }
 .checkbox.checked .icons,
 .radio.checked .icons {
