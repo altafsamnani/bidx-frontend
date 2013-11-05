@@ -10,6 +10,8 @@
 		Use <htmlTenpplate> with the template name without extention that has to be available in the templates folder. The content of the htmlTemplate will overwrite the content of the <content> tag.
 		Add template filename in <template> tag set a template
 		Use <setHomePage>true</setHomePage> to set page as Homepage
+
+		NOTE: adding comment between the xml childs will break the import
 	-->
 	<posts>
 		 <post>
@@ -27,7 +29,7 @@
 					&lt;/div&gt;
 				&lt;/div&gt;
             </content>
-            <update>false</update>
+            <update>true</update>
             <template>page-intro.php</template>
             <setHomePage>true</setHomePage>
         </post>
@@ -35,7 +37,6 @@
 			<post_id>1</post_id>
 			<name>TermsofService</name>
 			<title>Terms of Service</title>
-			<mapping>^termsofservice/?</mapping>
 			<update>true</update>
 			<content>
 				&lt;h2&gt;Terms of service&lt;/h2&gt;
@@ -45,7 +46,6 @@
 			<post_id>2</post_id>
 			<name>Privacy</name>
 			<title>Privacy</title>
-			<mapping>^privacy/?</mapping>
 			<update>true</update>
 			<content>
 				&lt;h2&gt;Privacy&lt;/h2&gt;
@@ -55,7 +55,6 @@
 			<post_id>3</post_id>
 			<name>Register as investor</name>
 			<title>Register as investor</title>
-			<mapping>^register-as-investor/?</mapping>
 			<update>true</update>
 			<htmlTemplate>register-as-investor</htmlTemplate>
 			<content></content>
@@ -64,7 +63,6 @@
 			<post_id>4</post_id>
 			<name>Register as entrepreneur</name>
 			<title>Register as entrepreneur</title>
-			<mapping>^register-as-entrepreneur/?</mapping>
 			<update>true</update>
 			<htmlTemplate>register-as-entrepreneur</htmlTemplate>
 			<content></content>
@@ -74,7 +72,6 @@
 			<post_id>5</post_id>
 			<name>Register as member</name>
 			<title>Register as member</title>
-			<mapping>^register-as-member/?</mapping>
 			<update>true</update>
 			<htmlTemplate>register-as-member</htmlTemplate>
 			<content></content>
@@ -84,7 +81,6 @@
 			<post_id>6</post_id>
 			<name>Get it started investor</name>
 			<title>Get it started investor</title>
-			<mapping>^get-it-started-investor/?</mapping>
 			<update>true</update>
 			<htmlTemplate>get-it-started-investor</htmlTemplate>
 			<content></content>
@@ -93,7 +89,6 @@
 			<post_id>7</post_id>
 			<name>Get it started entrepreneur</name>
 			<title>Get it started entrepreneur</title>
-			<mapping>^get-it-started-entrepreneur/?</mapping>
 			<update>true</update>
 			<htmlTemplate>get-it-started-entrepreneur</htmlTemplate>
 			<content></content>
@@ -102,7 +97,6 @@
 			<post_id>8</post_id>
 			<name>Download financial templates</name>
 			<title>Download financial templates</title>
-			<mapping>^financial-details-templates/?</mapping>
 			<update>true</update>
 			<htmlTemplate>financial-details-templates</htmlTemplate>
 			<content></content>
@@ -111,7 +105,6 @@
 			<post_id>9</post_id>
 			<name>Get it started member</name>
 			<title>Get it started member</title>
-			<mapping>^get-it-started-member/?</mapping>
 			<update>true</update>
 			<htmlTemplate>get-it-started-member</htmlTemplate>
 			<content></content>
