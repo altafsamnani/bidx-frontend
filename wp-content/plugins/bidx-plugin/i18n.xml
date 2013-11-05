@@ -25,6 +25,7 @@
     <Item value="btnSaveProfile">Save profile</Item>
     <Item value="btnAddAndView">Create &amp; view</Item>
     <Item value="btnConfirm">Are you sure?</Item>
+    <Item value="btnPleaseWait">Please wait...</Item>
 
     <!--
         Form validations

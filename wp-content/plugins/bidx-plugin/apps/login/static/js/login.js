@@ -8,6 +8,7 @@
     ,   bidx                        = window.bidx
     ,   appName                     = "login"
     ,   currentView
+    ,   submitBtnLabel
     ;
 
 
@@ -49,15 +50,22 @@
                 {
                     return;
                 }
-
+                // set button to disabled and set Wait text. We store the current label so we can reset it when an error occurs
+                //
                 $btnLogin.addClass( "disabled" );
+                submitBtnLabel = $btnLogin.text();
+                $btnLogin.i18nText("btnPleaseWait");
+
                 $loginErrorMessage.text( "" ).hide();
 
                 _doLogin(
                 {
                     error: function( jqXhr )
                     {
-                        $btnLogin.removeClass( "disabled" );
+                        $btnLogin.removeClass( "disabled" )
+                            .text( submitBtnLabel )
+                        ;
+
                     }
                 } );
 

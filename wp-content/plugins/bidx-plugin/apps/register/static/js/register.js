@@ -6,6 +6,7 @@
     ,   bidx                        = window.bidx
     ,   appName                     = "register"
     ,   userPreferences             = {}
+    ,   submitBtnLabel
     ,   location
     ;
 
@@ -81,7 +82,9 @@
                     return;
                 }
 
-                $btnRegister.addClass( "disabled" ).next( ".bidx-please-wait").show();
+                $btnRegister.addClass( "disabled" );
+                submitBtnLabel = $btnRegister.text();
+                $btnRegister.i18nText("btnPleaseWait");
 
                 _doRegister(
                 {
