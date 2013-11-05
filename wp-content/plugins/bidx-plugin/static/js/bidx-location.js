@@ -385,7 +385,8 @@
                 // Inform the user that the place was not found and return.
                 //
                 $el.addClass( "notfound" );
-
+                widget._updateLocationData();
+                $el.val( "" );
                 return;
             }
 
@@ -405,7 +406,7 @@
             {
                 // hack to empty textfield after blur (only happens when you type and then tab into results)
                 //
-                $el.one( "blur", function()
+                $el.one( "change", function()
                 {
                     $el.val( "" );
                 } );
@@ -451,7 +452,7 @@
                     $list.append( $li );
                 }
 
-                // Exterme hack to clear the autocomplete field after you mouse click in result
+                // Extreme hack to clear the autocomplete field after you mouse click in result
                 //
                 setTimeout( function()
                     {
