@@ -72,10 +72,10 @@ $logAppenders = array();
 
 // FILE
 //
-$log_file_name = BIDX_PLUGIN_DIR . '/debug.log';
+$log_file_name = BIDX_PLUGIN_DIR . '/plugin_debug.log';
 
 $logAppenders[ 'file' ] = array(
-		'class'		=> 'LoggerAppenderDailyFile',
+		'class'		=> 'LoggerAppenderRollingFile',
 		'layout'	=> array(
 			'class'		=> 'LoggerLayoutPattern'
 		   ,'layout'    => array(
@@ -83,12 +83,13 @@ $logAppenders[ 'file' ] = array(
 	                       ,'params' => array(
 	                        	'conversionPattern' => '%date %logger %-5level %msg%n'
 	                        )
-                		),
-
-		)
-	   ,'params' => array(
-				'file'	=> $log_file_name
-		)
+                		)
+		 )
+	     ,'params' => array(
+				'file' 				=> $log_file_name,
+				'maxFileSize' 		=> '5MB',
+				'maxBackupIndex' 	=> 5
+	       )
 );
 
 Logger::configure(
