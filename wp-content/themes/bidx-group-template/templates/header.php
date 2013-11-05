@@ -46,7 +46,7 @@
 	 			<div class="pull-right span4 bidx-header-controls">
 					<div class="row-fluid">
 						<div class="span6">
-							<a href="register-as-member/#register/firstLogin=get-it-started-member" class="btn btn-primary btn-block bidx-theme-colour-two"><?php _e('Become a member','bidxtheme');?></a>
+							<a href="register-as-member/#register/firstLogin=getting-started-member" class="btn btn-primary btn-block bidx-theme-colour-two"><?php _e('Become a member','bidxtheme');?></a>
 						</div>
 						<div class="span6">
 							<a href="/auth/#auth/login" class="btn btn-primary btn-block bidx-theme-colour-one"><i class="bidx-login"></i><?php _e('Login','bidxtheme');?></a>

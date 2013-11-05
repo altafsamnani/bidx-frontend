@@ -284,7 +284,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
         <div class="row-fluid">
 
                 <div class="span6 bidx-register-c2a investor spacer bidx-theme-colour-three">
-                    <a class="clearfix" href="register-as-investor/#register/firstLogin=get-it-started-investor">
+                    <a class="clearfix" href="register-as-investor/#register/firstLogin=getting-started-investor">
                         <div class="bidx-arrow-right">
                             <div class="c2a-label">Register as<br/> INVESTOR</div>
                         </div>
@@ -293,7 +293,7 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 
 
                 <div class="span6 bidx-register-c2a entrepreneur spacer bidx-theme-colour-three">
-                    <a href="register-as-entrepreneur/#register/firstLogin=get-it-started-entrepreneur">
+                    <a href="register-as-entrepreneur/#register/firstLogin=getting-started-entrepreneur">
                         <div class="bidx-arrow-right">
                             <div class="c2a-label">Register as<br/> ENTREPRENEUR</div>
                         </div>
