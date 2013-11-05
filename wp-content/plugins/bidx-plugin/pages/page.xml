@@ -69,7 +69,7 @@
 			<htmlTemplate>register-as-entrepreneur</htmlTemplate>
 			<content></content>
 		</post>
-<!--
+
 		<post>
 			<post_id>5</post_id>
 			<name>Register as member</name>
@@ -79,7 +79,7 @@
 			<htmlTemplate>register-as-member</htmlTemplate>
 			<content></content>
 		</post>
-  -->		
+
 		<post>
 			<post_id>6</post_id>
 			<name>Get it started investor</name>
