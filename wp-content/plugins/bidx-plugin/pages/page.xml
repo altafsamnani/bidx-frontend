@@ -79,18 +79,18 @@
 
 		<post>
 			<post_id>6</post_id>
-			<name>Get it started investor</name>
-			<title>Get it started investor</title>
+			<name>Getting started investor</name>
+			<title>Getting started investor</title>
 			<update>true</update>
-			<htmlTemplate>get-it-started-investor</htmlTemplate>
+			<htmlTemplate>getting-started-investor</htmlTemplate>
 			<content></content>
 		</post>
 		<post>
 			<post_id>7</post_id>
-			<name>Get it started entrepreneur</name>
-			<title>Get it started entrepreneur</title>
+			<name>Getting started entrepreneur</name>
+			<title>Getting started entrepreneur</title>
 			<update>true</update>
-			<htmlTemplate>get-it-started-entrepreneur</htmlTemplate>
+			<htmlTemplate>getting-started-entrepreneur</htmlTemplate>
 			<content></content>
 		</post>
 		<post>
@@ -103,10 +103,10 @@
 		</post>
 		<post>
 			<post_id>9</post_id>
-			<name>Get it started member</name>
-			<title>Get it started member</title>
+			<name>Getting started member</name>
+			<title>Getting started member</title>
 			<update>true</update>
-			<htmlTemplate>get-it-started-member</htmlTemplate>
+			<htmlTemplate>getting-started-member</htmlTemplate>
 			<content></content>
 		</post>
 	</posts>
