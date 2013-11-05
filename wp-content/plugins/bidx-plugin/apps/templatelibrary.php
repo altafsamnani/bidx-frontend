@@ -206,7 +206,6 @@ class TemplateLibrary
 
     public function addExtraValuesToRows ($label, $values)
     {
-
         switch ($label) {
 
             case 'gender':
@@ -222,7 +221,10 @@ class TemplateLibrary
 
             case 'nationality':
                 $values = $this->getStaticVal ('nationality', $values);
+                break;
 
+            case 'highestEducation':
+                $values = $this->getStaticVal ('education', $values);
                 break;
         }
 
