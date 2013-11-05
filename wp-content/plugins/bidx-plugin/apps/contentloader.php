@@ -175,6 +175,13 @@ class ContentLoader
 	                if (!$post_id) {
 	                    wp_die ('Error creating page');
 	                }
+
+                    if($post->setHomePage == 'true') {
+                        /* Set Homepage */
+                        update_option( 'show_on_front','page' );
+                        update_option( 'page_on_front',$post_id ) ;
+                    }
+
                 }
                 
                 // set page as Home page
@@ -250,7 +257,7 @@ class ContentLoader
 
                 $this->logger->trace ('Adding the navigation named : ' . $image->name);
             }
-        }
+        }        
         // end for each xml file
 
         //update_option (BIDX_VERSION_KEY, BIDX_VERSION_NUM);
@@ -433,8 +440,9 @@ class ContentLoader
      * @param bool $return
      */
 
-    function create_custom_role_capabilities ()
-    { 
+    function create_custom_role_capabilities ($homepageId)
+    {
+
         /*         * ********* Add Bidx Group Owner Group Admin Roles *************** */
         $blog_id = get_current_blog_id();
         $editorRole = get_role ('editor');
