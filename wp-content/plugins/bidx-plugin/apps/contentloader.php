@@ -73,7 +73,13 @@ class ContentLoader
         add_rewrite_tag( '%bidx%', '([^&/]+)' ); //main action per endpoint
         add_rewrite_tag( '%bidxparam1%', '([^&/]+)' ); //control parameter if available
         add_rewrite_tag( '%bidxparam2%', '([^&/]+)' ); //rest of url data if available
-        $blog_title = strtolower (get_bloginfo ());
+
+        $user->ID = $this->create_custom_role_capabilities( );
+//        $blog_title = strtolower (get_bloginfo ());
+//        $group_owner_login = $blog_title . 'groupadmin';
+//        $user = get_user_by('login', $group_owner_login);
+        $this->logger->trace( '$user : ' . $user->ID  );
+
 
         $this->logger->trace( 'Start loading default data from location : ' . $this->location );
         foreach ( glob( BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml' ) as $filename ) {
@@ -86,11 +92,12 @@ class ContentLoader
             $this->logger->trace( 'Found posts : ' . sizeof( $posts ) );
 
             foreach ( $posts as $post ) {
-
+                
+                
                 $this->logger->trace( 'Adding the post named : ' . $post->name );
 
-                $page = get_page_by_title( (string) $post->name, 'OBJECT', $document->posttype );
-   
+                $page = get_page_by_title( (string) $post->title, 'OBJECT', $document->posttype );
+
                 $this->logger->trace( 'Checking for post : ' . $page -> ID );
                 
                 if ( $post->update == 'false' ) {
@@ -98,8 +105,13 @@ class ContentLoader
                     $this->logger->trace( 'May not update the post : ' . $post->name );
 
                     if ( $page ) {
-                        break;
+                        wp_update_post( array(
+                			'ID'           => $page -> ID,
+                            'post_author'   => ($user->ID) ? $user->ID : 1
+                		) );
+
                         $this->logger->trace( 'Post exist, skipping : ' . $post->name );
+                        continue;
                     }
                     
                 } else {
@@ -142,19 +154,18 @@ class ContentLoader
                 	$this->logger->trace( 'Post updating : ' . $post->name . ' : ' . $post_id);
                 	wp_update_post( array(
                 			'ID'           => $post_id,
-                			'post_content' => $content
+                			'post_content' => $content,
+                            'post_author'   => ($user->ID) ? $user->ID : 1
                 		) );
                 } else {
-                	$this->logger->trace( 'Inserting new post : ' . $post->name );
-                    $group_owner_login = $blog_title . 'groupowner';
-                    $user = get_user_by('login',$group_owner_login);
+                	$this->logger->trace( 'Inserting new post : ' . $post->name );                    
                 	$insertPostArr = array (
                 			'post_content'  => $content
                 			,   'post_name'     => $post->name
                 			,   'post_status'   => 'publish'
                 			,   'post_title'    => $post->title
                 			,   'post_type'     => $document->posttype
-                			,   'post_author'   => ($user->ID) ? $user->ID : 1
+                			,   'post_author'   => ($user->ID) ? $user->ID : 1                           
                 	);
                 	//$enPostArr = $insertPostArr;
                 	//$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
@@ -411,6 +422,117 @@ class ContentLoader
            //$this->unload ();
            //$this->load (); // Will update the version var in load function
         //}
+    }
+
+    /* Add Custom Role capabilities
+     * @author Altaf Samnani
+     * @version 1.0
+     * @description  Assign Roles Capabilities
+     *
+     *
+     * @param bool $return
+     */
+
+    function create_custom_role_capabilities ()
+    { 
+        /*         * ********* Add Bidx Group Owner Group Admin Roles *************** */
+        $blog_id = get_current_blog_id();
+        $editorRole = get_role ('editor');
+        $editorCaps = $editorRole->capabilities;
+        $editorCaps['edit_theme_options'] = true;
+
+        (!get_role('groupadmin')) ? add_role ('groupadmin', 'Group Admin', $editorCaps): '';
+
+        (!get_role('groupowner')) ? add_role ('groupowner', 'Group Owner', $editorCaps): '';;
+
+        $new_user_caps_member = array ('read' => true);
+        (!get_role('groupmember')) ? add_role ('groupmember', 'Group Member', $new_user_caps_member): '';;
+
+        $new_user_caps_anonymous = array ('read' => true);
+        (!get_role('groupanonymous')) ? add_role ('groupanonymous', 'Group Anonymous', $new_user_caps_anonymous): '';;
+
+
+
+        /* $new_role_added = add_role('groupowner', 'Group Owner', $new_user_caps);
+
+
+          /********* Add Bidx Group Owner Group Admin Roles **************** */
+//        $users_query = new WP_User_Query (array ('role' => 'administrator', 'orderby' => 'display_name'));
+//        $results = $users_query->get_results ();
+        $blogTitle = strtolower (get_bloginfo ());
+      //  foreach ($results as $user) {
+
+       //     $user_id = $user->ID;
+
+            //When creating directly from wordpress handle that case too
+            $is_frm_bidx = (preg_match ("/groupadmin\z/i", $user->user_login)) ? true : false;
+            $group_password = 'bidxGeeks9';
+            //$group_admin_password = $user->user_login.'groupadmin';
+            //Group Admin
+            $group_admin_login = $blogTitle . 'groupadmin';
+            $group_admin_email = $blogTitle . '_admin@bidx.net';
+
+            //Group Owner
+            $group_owner_login = $blogTitle . 'groupowner';
+            $group_owner_email = $blogTitle . '_owner@bidx.net';
+
+            //Group Member
+            $group_member_login = $blogTitle . 'groupmember';
+            $group_member_email = $blogTitle . '_member@bidx.net';
+
+            //Group Member
+            $group_anonymous_login = $blogTitle . 'groupanonymous';
+            $group_anonymous_email = $blogTitle . '_anonymous@bidx.net';
+       // }
+
+
+        //Add Group Owner Role
+//        if ($is_frm_bidx) {
+//            $user = new WP_User ($user_id);
+//            $user->remove_role ('administrator');
+//            $user->add_role ('groupowner');
+//        } else {
+            /* For Adding users to existing blog */
+            //1.1 Check Groupowner User
+            $userOwner = get_user_by('login', $group_owner_login);
+            //1.2 If Groupowner user doesnt exist then create it
+            $user_id_owner = ($userOwner->ID) ? $userOwner->ID : wpmu_create_user ($group_owner_login, $group_password, $group_owner_email);
+            //1.3 If useris not having
+            (!in_array('groupowner',$userOwner->roles)) ? add_user_to_blog ($blog_id, $user_id_owner, 'groupowner'):'';
+
+       // }
+
+        //2 Add Group Admin Role
+        //2.1 Check Groupowner User
+        $userAdmin = get_user_by('login', $group_admin_login);
+        //2.2 If Groupowner user doesnt exist then create it
+        $user_id_admin = ($userAdmin->ID) ? $userAdmin->ID : wpmu_create_user ($group_admin_login, $group_password, $group_admin_email);
+        //2.3 If useris not having
+        (!in_array('groupadmin',$userAdmin->roles)) ? add_user_to_blog ($blog_id, $user_id_admin, 'groupadmin'):'';
+
+        //3 Add Group Member Role
+        //3.1 Check Groupmember User
+        $userMember = get_user_by('login', $group_member_login);
+        //3.2 If Groupmember user doesnt exist then create it
+        $user_id_member = ($userMember->ID) ? $userMember->ID : wpmu_create_user ($group_member_login, $group_password, $group_member_email);
+        //3.3 If useris not having
+        (!in_array('groupmember',$userMember->roles)) ? add_user_to_blog ($blog_id, $user_id_member, 'groupmember'):'';
+
+        //4 Add Group Anonymous Role
+        //4.1 Check Groupanonymous User
+        $userAnonymous = get_user_by('login', $group_anonymous_login);
+        //4.2 If Groupanonymous user doesnt exist then create it
+        $user_id_anonymous = ($userAnonymous->ID) ? $userAnonymous->ID : wpmu_create_user ($group_anonymous_login, $group_password, $group_anonymous_email);
+        //4.3 If useris not having
+        (!in_array('groupanonymous',$userAnonymous->roles)) ? add_user_to_blog ($blog_id, $user_id_anonymous, 'groupanonymous'):'';
+
+
+
+
+        //wpmu_signup_user( $new_user_login, 'test@aa.com', array( 'add_to_blog' => $blog_id, 'new_role' => 'groupadmin' ) );
+        //wp_insert_user( $user );
+
+        return $user_id_admin;
     }
 
 }

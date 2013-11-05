@@ -511,11 +511,10 @@ class BidxCommon
             $groupName = $subDomain;
             $roles = $sessionData->data->roles;
             $currentUser = wp_get_current_user ();
-
-            if (in_array ('GroupAdmin', $roles)) {
-                $userName = $groupName . 'groupadmin';
-            } else if (in_array ('GroupOwner', $roles)) {
+            if (in_array ('GroupOwner', $roles)) {
                 $userName = $groupName . 'groupowner';
+            }else if (in_array ('GroupAdmin', $roles)) {
+                $userName = $groupName . 'groupadmin';
             } else {
                 $userName = $groupName . 'groupmember';
             }
