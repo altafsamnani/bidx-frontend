@@ -59,13 +59,13 @@ if ($investorDetails &&
         // Investor type
         //
         $rowValues = array (__('Investor type','bidxplugin') => $investorType );
-        echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+        echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
         // Investment type
         //
         $values = $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', ');
         $rowValues = array ( __('Investment types','bidxplugin') => $values);
-        echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+        echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
         // A set of properties is only applicable to any other type than Angel or private
         //
@@ -74,12 +74,12 @@ if ($investorDetails &&
             // Institution name
             //
             $rowValues = array (__('Institution details','bidxplugin') => $this->exst($investorDetails->institutionName));
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Institution website
             //
             $rowValues = array (__('Institution website','bidxplugin') => $this->exst($investorDetails->institutionWebsite));
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Institution address
             //
@@ -101,7 +101,7 @@ if ($investorDetails &&
                 $address = $this->createRowValue ($addressArr, ', ');
 
                 $rowValues = array (__('Address','bidxplugin') => $address );
-                echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+                echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
         }
 ?>
@@ -120,7 +120,7 @@ if ($investorDetails &&
             foreach ( $multiValueProperties as $k => $v ) {
                 //$values = $this->getMultiValues($v, ', ');
                 $rowValues = array ( $k => $v);
-                echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+                echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             }
 
             // Investment size
@@ -131,19 +131,19 @@ if ($investorDetails &&
             );
 
             $rowValues = array (__('Investment size','bidxplugin') => implode( $investmentSize, ' - ' ) );
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Typical involvement
             //
             $typicalInvolvement = $this->exst ($investorDetails->typicalInvolvement);
             $rowValues = array (__('Typical involvement','bidxplugin') => $typicalInvolvement);
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span12">
-                <h6>Reach</h6>
+                <h4>Reach</h4>
 <?php
             // Reach
             //
@@ -156,13 +156,13 @@ if ($investorDetails &&
             //
             $focusCountry = $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country');
             $rowValues = array (__('Focus countries','bidxplugin') => $focusCountry);
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Focus city
             //
             $focusCity = $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown');
             $rowValues = array (__('Focus cities','bidxplugin') => $focusCity);
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Focus reach
             //
@@ -193,7 +193,7 @@ if ($investorDetails &&
             echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'label'));
 
 ?>
-
+        <br>
         <div class="row-fluid">
             <div class="span12">
 <?php
@@ -201,12 +201,12 @@ if ($investorDetails &&
             // Number Investments
             //
             $rowValues = array (__('Number of investments in the last 12 months','bidxplugin') => $this->exst( $investorDetails->numberInvestments ));
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
             // Total Investments
             //
             $rowValues = array (__('Total investments made in the last 12 months','bidxplugin') => $this->exst( $investorDetails->totalInvestment ));
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 ?>
             </div>
         </div>

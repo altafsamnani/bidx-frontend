@@ -60,7 +60,7 @@ if ($entrepreneurDetails &&
             <?php
             $focusIndustry = $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ','industry');
             $rowValues = array ( __('Focus Industry','bidxplugin') => $focusIndustry);
-            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'h5', 'class_value' => 'adjacentval'));
+            echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
             ?>
             <br/>
             <?php
