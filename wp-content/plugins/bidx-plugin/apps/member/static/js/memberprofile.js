@@ -238,9 +238,8 @@
                     {
                         bidx.utils.log( "[profile picture] selected profile picture", file );
 
-                        bidx.utils.setValue( member, "logo", file );
-
-                        $profilePictureContainer.replaceWith( $( "<img />", { "src": file.document  } ));
+                        $profilePictureContainer.data( "bidxData", file );
+                        $profilePictureContainer.html( $( "<img />", { "src": file.document  } ));
 
                         $changeProfilePictureModal.modal( "hide" );
                     }
@@ -667,12 +666,13 @@
 
         // Profile picture is 'special'
         //
-        var profilePictureUrl       = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.document" )
+        var profilePicture = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture" )
         ;
 
-        if ( profilePictureUrl )
+        if ( profilePicture )
         {
-            $profilePictureContainer.append( $( "<img />", { "src": profilePictureUrl } ));
+            $profilePictureContainer.data( "bidxData", profilePicture );
+            $profilePictureContainer.append( $( "<img />", { "src": profilePicture } ));
         }
 
         // Setup the hidden fields used in the file upload
@@ -924,6 +924,11 @@
         } );
 
         bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.attachment", attachments );
+
+        // ProfilePicture
+        //
+        var profilePicture = $profilePictureContainer.data( "bidxData" );
+        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture", profilePicture );
     }
 
     // This is the startpoint

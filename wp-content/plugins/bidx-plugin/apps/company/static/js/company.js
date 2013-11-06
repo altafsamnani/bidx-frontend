@@ -500,9 +500,8 @@
                 {
                     bidx.utils.log( "[company] selected profile picture", file );
 
-                    bidx.utils.setValue( company, "logo", file );
-
-                    $logoContainer.replaceWith( $( "<img />", { "src": file.document  } ));
+                    $logoContainer.data( "bidxData", file );
+                    $logoContainer.html( $( "<img />", { "src": file.document  } ));
 
                     $changeLogoModal.modal( "hide" );
                 }
@@ -543,6 +542,7 @@
 
         if ( logo && logo.length && logo[ 0 ].document )
         {
+            $logoContainer.data( "bidxData", logo[ 0 ] );
             $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document  } ));
         }
 
@@ -659,6 +659,11 @@
         {
             company.website = bidx.utils.prefixUrlWithProtocol( company.website );
         }
+
+        // Logo
+        //
+        var logo = $logoContainer.data( "bidxData" );
+        bidx.utils.setValue( company, "logo", logo );
     };
 
     // This is the startpoint
