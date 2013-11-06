@@ -316,8 +316,9 @@ class TemplateLibrary
         $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
         $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
 
-        $rowHtml = "<div class='row-fluid'>";
+        $rowHtml = '';
         foreach ($rowValues as $label => $value) {
+        $rowHtml .= "<div class='row-fluid'>";
             if ($value && $value != 'null') {
                 //Display Label
                 $rowHtml .= "<div class='" . $gridLabel . "'>";
@@ -328,8 +329,8 @@ class TemplateLibrary
                 $rowHtml .= "<$tagValue " . $classValue . " > " . $value . " </$tagValue>";
                 $rowHtml .= "</div>";
             }
-        }
         $rowHtml .="</div>";
+        }
         return $rowHtml;
     }
 
@@ -407,7 +408,7 @@ class TemplateLibrary
      * @return String $rowHtml Row html
      *
      */
-    public function addTableRows ($header, $rowsArr, $class, $merge = NULL, $cellClasses )
+    public function addTableRows ($header, $rowsArr, $class, $merge = NULL, $cellClasses, $staticArray  )
     {
 
         $returnHtml = NULL;
@@ -456,7 +457,13 @@ class TemplateLibrary
                             $html .= sprintf( '<a href="%s" target="_blank"><img src="%s" /></a>', $document->document, $documentImage );
 
                         } else {
-                            $html.= $this->escapeHtml ($rowValue->$headerValue);
+
+                            $rowOutput = $rowValue->$headerValue;
+                            if ( in_array( $headerValue, $staticArray ) ) {
+                                $rowOutput = $this->getStaticVal( $headerValue, $rowValue->$headerValue );
+                            }
+
+                            $html.= $this->escapeHtml ( $rowOutput );
                         }
 
                         $display = true;
