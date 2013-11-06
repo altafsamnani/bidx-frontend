@@ -118,9 +118,9 @@ function bidx_login_session ()
 
 function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = false)
 {
-
-    $authUsername = ( API_AUTH_UNAME ) ? API_AUTH_UNAME : 'bidx'; // Bidx Auth login
-    $authPassword = ( API_AUTH_PASS ) ? API_AUTH_PASS : 'gobidx'; // Bidx Auth password
+    $logger = Logger::getLogger ("Bidx Service Login");
+    //$authUsername = ( API_AUTH_UNAME ) ? API_AUTH_UNAME : 'bidx'; // Bidx Auth login
+    //$authPassword = ( API_AUTH_PASS ) ? API_AUTH_PASS : 'gobidx'; // Bidx Auth password
     $bidxMethod = strtoupper ($method);
     $bidx_get_params = "";
     $cookie_string = "";
@@ -129,7 +129,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $cookieArr = array ();
 
 
-    error_log (sprintf ("	: %s, body: %s", $urlservice, var_export ($body, true)));
+    //error_log (sprintf ("	: %s, body: %s", $urlservice, var_export ($body, true)));
 
 
     /*     * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
@@ -145,13 +145,6 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     //For Authentication
     //$headers['Authorization'] = 'Basic ' . base64_encode ("$authUsername:$authPassword");
 
-
-    /* if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
-      $body['username'] = 'admin@bidnetwork.org';
-      $body['password'] = 'admin123';
-
-      }
-     */
     // 2.1 Set the group domain header
     if (isset ($body['domain'])) {
         //Talk with arjan for domain on first page registration it will be blank when it goes live
@@ -184,7 +177,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 
     $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
-    error_log ("URL: " . $url);
+    $logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $bidxMethod, var_export($body,true), var_export ($headers, true), var_export ($cookieArr, true)));
+
 
     $request = new WP_Http;
     $result = $request->request ($url, array ('method' => $bidxMethod,
@@ -193,7 +187,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
       'cookies' => $cookieArr,
       'timeout' => apply_filters ('http_request_timeout', 60)
     ));
-
+    $logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
     /*     * *********** 5. Set Cookies if Exist ************************* */
     if (is_array ($result)) {
         if (isset ($result['cookies']) && count ($result['cookies'])) {
@@ -832,7 +826,6 @@ add_filter ('http_request_timeout', 'bidx_request_timeout_time');
 
 function bidx_request_timeout_time ($val)
 {
-
     return 60;
 }
 
