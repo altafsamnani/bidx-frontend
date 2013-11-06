@@ -143,7 +143,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 
     /*     * *********2. Set Headers ******************************** */
     //For Authentication
-    $headers['Authorization'] = 'Basic ' . base64_encode ("$authUsername:$authPassword");
+    //$headers['Authorization'] = 'Basic ' . base64_encode ("$authUsername:$authPassword");
 
 
     /* if ($urlservice == 'session' && $bidxMethod == 'POST' && DOMAIN_CURRENT_SITE == 'bidx.dev') {
