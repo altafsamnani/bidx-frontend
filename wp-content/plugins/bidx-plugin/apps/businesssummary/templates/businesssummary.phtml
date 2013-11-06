@@ -464,6 +464,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             // Supporting members
                             //
                             $tableHeader = array (
+                                ''                                                                      => 'profilePicture',
                                 __('Name','bidxplugin')                                                 => 'name',
                                 __('Role of partner in this business','bidxplugin')                     => 'role',
                                 __('Describe relevant expertise of business partner','bidxplugin')      => 'expertise',
@@ -472,11 +473,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                             $merge['name'] = array ('firstName', 'lastName');
 
-                            $supportingMembersHtml = $this->addTableRows (
+                            $supportingMembersHtml = $this->addTableRows(
                                 $tableHeader,
                                 $this->exst( $businessSummary->managementTeam ),
                                 'table table-bordered',
-                                $merge
+                                $merge,
+                                array( 'profilePicture' => 'bidx-profilepicture' );
                             );
 
                             $rowValues = array (

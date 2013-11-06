@@ -407,7 +407,7 @@ class TemplateLibrary
      * @return String $rowHtml Row html
      *
      */
-    public function addTableRows ($header, $rowsArr, $class, $merge = NULL)
+    public function addTableRows ($header, $rowsArr, $class, $merge = NULL, $cellClasses )
     {
 
         $returnHtml = NULL;
@@ -424,7 +424,11 @@ class TemplateLibrary
             foreach ($rowsArr as $rowValue) {
                 $html.= "<tr>";
                 foreach ($header as $headerKey => $headerValue) {
-                    $html.= "<td>";
+
+                    $cellClass = isset( $cellClasses[ $headerValue ] ) ?  $cellClasses[ $headerValue ] : '';
+
+                    $html .= sprintf( '<td class="%s">', $cellClass );
+
                     if (isset ($merge[$headerValue])) { //If two values needs to be merged ex for Name header first_name/last_name
                         $sepMerge = "";
                         foreach ($merge[$headerValue] as $mergeKey => $mergeVal) {
@@ -434,7 +438,27 @@ class TemplateLibrary
 
                         $display = true;
                     } else if (isset ($rowValue->$headerValue)) {
-                        $html.= $this->escapeHtml ($rowValue->$headerValue);
+
+                        $entityType = $this->exst( $rowValue->$headerValue->bidxMeta->bidxEntityType );
+
+                        // If the value is a document, insert an image tag
+                        //
+                        if ( !empty( $entityType ) && $entityType == 'bidxDocument' ) {
+
+                            $documentImage = '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
+
+                            $document = $rowValue->$headerValue;
+
+                            if ( preg_match ("/^image/i", $document->mimeType) ) {
+                                $documentImage = $document->document;
+                            }
+
+                            $html .= sprintf( '<a href="%s" target="_blank"><img src="%s" /></a>', $document->document, $documentImage );
+
+                        } else {
+                            $html.= $this->escapeHtml ($rowValue->$headerValue);
+                        }
+
                         $display = true;
                     }
                     $html.= "</td>";
