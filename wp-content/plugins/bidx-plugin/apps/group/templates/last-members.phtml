@@ -36,7 +36,7 @@
 
 <?php
                         if ( $this -> exst( $member -> professionalTitle) ) {
-                            echo '<div>' . $member -> professionalTitle . '</div>';
+                            echo '<div>' . $this -> escapeHtml( $member -> professionalTitle ) . '</div>';
                         }
 
                         if ( $this -> exst( $member -> country) ) {
