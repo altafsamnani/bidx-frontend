@@ -56,6 +56,7 @@
         ,   showMap:                true
         ,   initiallyShowMap:       false
 
+
         ,   setMarkers:             true
         ,   drawCircle:             false
         ,   showReach:              true
@@ -88,6 +89,7 @@
         ,   state:
             {
                 markersArray:           null
+            ,   internalDrawMarker:     false // not entirely sure this internal variable should be part of the state, but I dont want it configurable
             ,   id:                     null
 
             ,   geocoder:               null
@@ -228,7 +230,7 @@
                 center = new google.maps.LatLng( arCoords[ 0 ], arCoords[ 1 ] );
                 state.map.setCenter( center );
 
-                if ( options.setMarkers )
+                if ( options.setMarkers && options.state.internalDrawMarker )
                 {
                     widget._drawMarker( center, locationData.reach );
                 }
@@ -385,10 +387,10 @@
                 // Inform the user that the place was not found and return.
                 //
                 $el.addClass( "notfound" );
-                widget._updateLocationData();
-                $el.val( "" );
                 return;
             }
+
+
 
             // Parse the google geocode place into the bidX structure
             //
@@ -461,6 +463,10 @@
                 ,   10
                 );
             }
+
+            // enable marker drawing
+            //
+            options.state.internalDrawMarker = true;
 
             if ( options.setMarkers )
             {

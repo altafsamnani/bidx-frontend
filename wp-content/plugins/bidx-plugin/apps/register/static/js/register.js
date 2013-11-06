@@ -55,7 +55,10 @@
                 }
             ,   "location":
                 {
-                    bidxLocationRequired:   true
+                    bidxLocationRequired:
+                    {
+                        requiredKeys:       [ 'cityTown', 'country' ]
+                    }
                 ,
                 }
             ,   "acceptTerms":

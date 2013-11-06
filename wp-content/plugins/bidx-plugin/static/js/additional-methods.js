@@ -330,12 +330,26 @@
     //
     $.validator.addMethod( "bidxLocationRequired", function( value, element, param )
     {
-        var values = $( element ).bidx_location( "getLocationData" );
-        bidx.utils.log(" element", $( element ));
-        bidx.utils.log("VALIDATE VALUE", values);
+        var locationData   = $( element ).bidx_location( "getLocationData" )
+        ,   valid           = true
+        ;
 
-        //return !!values.length;
-        return true;//for now
+        bidx.utils.log("locationDate", locationData );
+        if ( param.requiredKeys )
+        {
+            // check if required keys are availble in the locationData
+            //
+            $.each( param.requiredKeys, function(idx, item )
+            {
+                if ( !locationData[ item ] )
+                {
+                    valid = false;
+                }
+            } );
+        }
+
+        return valid;
+
     }, "This field is required" );
 
 
