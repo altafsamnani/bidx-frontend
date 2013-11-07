@@ -294,6 +294,46 @@ class TemplateLibrary
     }
 
     /**
+     * Create pairs of labels / values in a bootstrap row
+     * @param Array $pairs
+     * @param Array $properties Label's Tag and Value's Tag
+     *
+     * @return String $pairRow Row html
+     *
+     */
+    public function pairRows ( $pairs, $properties = array () )
+    {
+        /** Tag * */
+        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
+        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
+
+        foreach ($pairs as $label => $value) {
+            if ( $value != NULL ){
+                $items[$label]=$value;
+            }
+        }
+
+        $pairs = array_chunk($items, 2, true);
+        $pairRow = '';
+        foreach ($pairs as $pair) {
+            $pairRow .= "<div class='row-fluid'>";
+            foreach ($pair as $label => $col) {
+                if ($col && $col != 'null') {
+                    if ( is_array( $col ) ) {
+                        $col = implode(', ', $col);
+                    }
+                    $pairRow .= "<div class='span6'>";
+                    $pairRow .= "<$tagLabel>" . $label . " </$tagLabel>";
+                    $pairRow .= "<$tagValue>" . $col . " </$tagValue>";
+                    $pairRow .= "</div>";
+                }
+            }
+            $pairRow .= "</div>";
+        }
+        return $pairRow;
+    }
+
+    /**
      * Add bootstrap rows values/labels through views
      * @param int $gridColumnVal length of spangrid
      * @param String $rowValues Row values to be displayed
