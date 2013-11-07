@@ -33,10 +33,6 @@ Company: bidX;
             padding-top:                114px;
         }
 
-        .bidx-edit #wrap .inner-wrap {
-            padding-top:                250px;
-        }
-
         #wrap .inner-wrap {
             padding-top:                171px;
         }
@@ -732,19 +728,11 @@ Company: bidX;
         z-index:                190;
     }
 
-    .bidx-edit .pageHeader,
-    .bp-summary .pageHeader {
-        position:               fixed;
-        top:                    114px;
-    }
-
-
     .pageHeader .editControls {
-        position:               absolute;
-        bottom:                 10px;
-        right:                  0;
+        margin:                  20px 0;
     }
-  .bp-summary .pageHeader .editControls {
+
+    .bp-summary .pageHeader .editControls {
         bottom:                 auto;
         top:                    10px;
     }
@@ -2301,12 +2289,28 @@ form .row-fluid .input-prepend {
                 padding-top: 0;
             }
 
+            .bidx-edit #wrap .inner-wrap {
+                padding-top: 0;
+            }
+
         /************************  End Template styles *******************************/
 
     }
 
 
 @media  (max-width: 767px) {
+
+    /* Header */
+    header.navbar .iconbar .profiles ul.dropdown-menu {
+        right:              auto;
+    }
+
+    header.navbar .iconbar .profiles ul.dropdown-menu:after {
+        left:               22px;
+        right:              auto;
+    }
+
+    /* Footer */
     .footer-bar .pull-left,
     .footer-bar .pull-right {
         float: none;
