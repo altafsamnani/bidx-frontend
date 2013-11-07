@@ -97,6 +97,7 @@
             ,   autoComplete:           null
 
             ,   locationData:           null
+            ,   promise:                null
             }
 
         ,   reachChanged:          function( reach ) {}
@@ -160,11 +161,12 @@
             //
             $el.bind( "change",  function()
             {
-                bidx.utils.log("DEFERRED: ", state.$d);
+                bidx.utils.log("DEFERRED: ", state.$d );
                 if ( !state.$d || ( state.$d && state.$d.state() === "resolved") )
                 {
-                    bidx.utils.log(" CREATE DEFERRED");
+
                     state.$d = $.Deferred();
+                    bidx.utils.log(" CREATE DEFERRED", state.$d.state() );
                 }
 
 
@@ -216,9 +218,14 @@
             ,   options     = widget.options
             ,   state       = options.state
             ;
-            bidx.utils.log( "[2] getting Promise", state.$d ? state.$d.promise() :  null );
-            return state.$d ? state.$d.promise() :  null;
 
+            bidx.utils.log( "[2a] getting Promise", state.$d );
+            if ( state.$d  && !state.promise )
+            {
+                bidx.utils.log("[2b] creating a promise");
+                state.promise = state.$d.promise();
+            }
+            return  state.promise;
         }
 
         // Get the current location data

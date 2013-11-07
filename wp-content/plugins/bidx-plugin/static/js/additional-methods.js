@@ -420,7 +420,7 @@
             //
             if( $p.state() === "pending" )
             {
-                bidx.utils.log( "[5] Pending state" );
+                bidx.utils.log( "[5] Pending state", $p );
 
                 // get error message from i18n
                 //
@@ -436,8 +436,8 @@
                     validator.invalid[ element.name ]   = true;
                     validator.showErrors( errors );
                 } );
-
             }
+
             // standard we always return pending for the validation plugin to know the process hasnt finished
             //
             return "pending";
