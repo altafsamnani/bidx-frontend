@@ -80,7 +80,8 @@ class ContentLoader
 //        $user = get_user_by('login', $group_owner_login);
         $this->logger->trace( '$user : ' . $user->ID  );
 
-
+        $rewrite_rules = array();
+        
         $this->logger->trace( 'Start loading default data from location : ' . $this->location );
         foreach ( glob( BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml' ) as $filename ) {
             //try /catch / log ignore
@@ -94,17 +95,17 @@ class ContentLoader
             foreach ( $posts as $post ) {
                 
                 
-                $this->logger->trace( 'Adding the post named : ' . $post->name );
+                $this->logger->trace( 'Handling the post named : ' . $post->name );
 
                 $page = get_page_by_title( (string) $post->title, 'OBJECT', $document->posttype );
 
                 $this->logger->trace( 'Checking for post : ' . $page -> ID );
-                
+                //$this->logger->trace( 'Checking for post : ' . $page );
                 if ( $post->update == 'false' ) {
 
-                    $this->logger->trace( 'May not update the post : ' . $post->name );
+                    $this->logger->trace( 'Update is FALSE for post : ' . $post->name );
 
-                    if ( $page ) {
+                    if ( $page -> ID ) {
                         wp_update_post( array(
                 			'ID'           => $page -> ID,
                             'post_author'   => ($user->ID) ? $user->ID : 1
@@ -112,6 +113,8 @@ class ContentLoader
 
                         $this->logger->trace( 'Post exist, skipping : ' . $post->name );
                         continue;
+                    } else {
+                    	$post_id = false;
                     }
                     
                 } else {
@@ -133,7 +136,6 @@ class ContentLoader
                 // $msp: if htmpTemplate is available, replace the content with the source from the template file
                 //
                 if ( isset( $post->htmlTemplate ) && $post->htmlTemplate != '' ) {
-
                     $this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . '.phtml' );
                     // open template file and get content
                     //
@@ -147,7 +149,6 @@ class ContentLoader
                     // ob_start();
                     // include BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml';
                     // $content = ob_get_clean();
-
                 }
 
                 if ( $post_id ) {
@@ -155,18 +156,19 @@ class ContentLoader
                 	wp_update_post( array(
                 			'ID'           => $post_id,
                 			'post_content' => $content,
-                            'post_author'   => ($user->ID) ? $user->ID : 1
+                            'post_author'  => ($user->ID) ? $user->ID : 1
                 		) );
                 } else {
                 	$this->logger->trace( 'Inserting new post : ' . $post->name );                    
                 	$insertPostArr = array (
-                			'post_content'  => $content
+                				'post_content'  => $content
                 			,   'post_name'     => $post->name
                 			,   'post_status'   => 'publish'
                 			,   'post_title'    => $post->title
                 			,   'post_type'     => $document->posttype
                 			,   'post_author'   => ($user->ID) ? $user->ID : 1                           
                 	);
+                	
                 	//$enPostArr = $insertPostArr;
                 	//$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
                 	//$post_id = wp_insert_post($enPostArr);
@@ -180,11 +182,7 @@ class ContentLoader
                 // set page as Home page
                 //
                 if ( isset ( $post->setHomePage ) && $post->setHomePage == 'true' ) {
-                
-	                // Set "static page" as the option
 	                update_option( 'show_on_front', 'page' );
-	                
-	                // Set the front page ID
 	                update_option( 'page_on_front', $post_id );
                 }
                 
@@ -205,10 +203,12 @@ class ContentLoader
 
                     // $msp: do not add rewrites for pages because they will use wordpress default
                     //
-                    if ( $document->posttype != 'page' )
-                    {
-                        $this->logger->trace (" ADDING REWRITE FOR " . $document->posttype );
+                    if ( $document->posttype != 'page' ) {
+                        $this->logger->trace ("Adding rewrite for " . $document->posttype );
                         add_rewrite_rule ($mappingOrig, $target, 'top');
+                        $rewrite_rules[$mappingOrig] = $target;
+                    } else {
+                    	$this->logger->trace ("Skipping rewrite");
                     }
 
                     //$enMapping = str_replace('^','^/en/',$mappingOrig);
@@ -219,13 +219,16 @@ class ContentLoader
                     //add_rewrite_rule( $esMapping, $esTarget, 'top' );
                     //$this -> logger -> trace( 'Adding the rewrite rule ES: ' . $esMapping . ' to ' . $target );
                 }
-
-
-
             }
-            // end for eacht post
+            // end for each post
 
-            flush_rewrite_rules (false);
+            flush_rewrite_rules( false );
+            
+            add_option( 'BIDX_REWRITE_RULES', $rewrite_rules );
+        }   
+
+        flush_rewrite_rules (false);
+            
             //if manual writeout is needed
             //$this -> add_rewrite_rules();
 // No Widgets to be added (have to find out if this is useful dynamically)
@@ -244,17 +247,14 @@ class ContentLoader
 
             //Image resource blocks to be added
             //Navigation blocks to be added
-            $images = $document->xpath ('//images');
-            $this->logger->trace ('Adding the Image : ' . sizeof ($images) . ' found');
-            foreach ($images as $image) {
+//             $images = $document->xpath ('//images');
+//             $this->logger->trace ('Adding the Image : ' . sizeof ($images) . ' found');
+//             foreach ($images as $image) {
 
-                $this->logger->trace ('Adding the navigation named : ' . $image->name);
-            }
-        }        
+//                 $this->logger->trace ('Adding the navigation named : ' . $image->name);
+//             }
+     }        
         // end for each xml file
-
-        //update_option (BIDX_VERSION_KEY, BIDX_VERSION_NUM);
-    }
 
     /**
      * Creates a translation of a post (to be used with WPML)
@@ -267,8 +267,6 @@ class ContentLoader
      *  */
     function mwm_wpml_translate_post ($post_id, $insertPostArr, $lang)
     {
-
-
         // Include WPML API
         include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
 
@@ -300,24 +298,22 @@ class ContentLoader
      * Not for production usage
      * @param string $ep_mask use the default value
      */
-    private function add_rewrite_rules ($ep_mask = EP_NONE)
-    {
-        global $wp_rewrite;
-        $wp_rewrite->matches = 'matches'; // this is necessary to write the rules properly
-        $new_rules = $wp_rewrite->generate_rewrite_rules (false, $ep_mask);
-        $this->logger->trace ($new_rules);
-        //$rules = get_option('rewrite_rules');
-        //$rules = array_merge($new_rules, $rules);
-        //update_option('rewrite_rules', $rules);
-    }
+//     private function add_rewrite_rules ($ep_mask = EP_NONE) {
+//         global $wp_rewrite;
+//         $wp_rewrite->matches = 'matches'; // this is necessary to write the rules properly
+//         $new_rules = $wp_rewrite->generate_rewrite_rules (false, $ep_mask);
+//         $this->logger->trace ($new_rules);
+//         //$rules = get_option('rewrite_rules');
+//         //$rules = array_merge($new_rules, $rules);
+//         //update_option('rewrite_rules', $rules);
+//     }
 
     /**
      * Remove the data from Wordpress
      * @param string $post_type optional unloading for only one post_type
      * @todo check all the non default post types for deletion
      */
-    public function unload ($post_type = null)
-    {
+    public function unload ($post_type = null) {
 
         $this->logger->trace ("Unloading default data from location : " . $this->location);
         global $wp_rewrite;
@@ -344,6 +340,7 @@ class ContentLoader
 
             $this->logger->trace ('bidX rules de-activation succeeded');
         }
+        delete_option( 'BIDX_REWRITE_RULES' );
     }
 
     /**
@@ -433,7 +430,7 @@ class ContentLoader
      * @param bool $return
      */
 
-    function create_custom_role_capabilities ($homepageId)
+    function create_custom_role_capabilities ()
     {
 
         /*         * ********* Add Bidx Group Owner Group Admin Roles *************** */

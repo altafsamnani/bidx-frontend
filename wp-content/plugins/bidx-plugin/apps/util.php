@@ -51,10 +51,11 @@ if ( !defined('BIDX_VERSION_NUM') ) {
 /** OpenId Bidx URL **/
 if ( !defined('BIDX_OPENID_URL') ) {
 	define( 'BIDX_OPENID_URL', 'http://test.bidx.net/api/v1/openid/sso' );
-    //define('BIDX_OPENID_URL','http://192.168.16.153:8080/app/api/v1/openid/sso');
     //define('BIDX_OPENID_URL','http://bas.bidx.net:8080/app/api/v1/openid/sso');
 }
-add_option( BIDX_VERSION_KEY, BIDX_VERSION_NUM );
+
+//SLOW !!
+//add_option( BIDX_VERSION_KEY, BIDX_VERSION_NUM );
 
 /**
  * Logging configuration
@@ -74,6 +75,8 @@ $logAppenders = array();
 // FILE
 //
 $log_file_name = BIDX_PLUGIN_DIR . '/plugin_debug.log';
+//$log_file_name = BIDX_PLUGIN_DIR . '/var/log/bidx/plugin_debug.log';
+
 
 $logAppenders[ 'file' ] = array(
 		'class'		=> 'LoggerAppenderRollingFile',
@@ -93,11 +96,16 @@ $logAppenders[ 'file' ] = array(
 	       )
 );
 
+$level = 'ERROR';
+if (WP_DEBUG) {
+	$level = 'TRACE';
+}
+
 Logger::configure(
 	array(
 		'rootLogger'    => array(
 			'appenders'     => array_keys( $logAppenders )
-			,'level'        => 'TRACE'
+			,'level'        => $level
 		)
 	,'appenders' => $logAppenders
 	)
@@ -122,5 +130,36 @@ if (WP_DEVELOPMENT != true) {
 //   return $r;
 // }
 // add_filter('http_request_args', 'bidx_request_timeout_time', 100, 1);
+
+// rewrite rule flush protection --> should be moved to the correct file
+
+
+/**
+ * This is added here to ensure that rewrites work fine.
+ * Need to be placed in a different place later
+ * 
+ */
+add_filter('rewrite_rules_array', 'bidx_manage_rewrites');
+
+function bidx_manage_rewrites( $rules ) {
+
+	$bidx_rewrite_rules = get_option( 'BIDX_REWRITE_RULES' );
+	Logger::getLogger ( 'util' ) -> trace( 'Stored Rewrite Rules : ');
+	Logger::getLogger ( 'util' ) -> trace( $bidx_rewrite_rules );
+	
+	if ( isset( $bidx_rewrite_rules ) && is_array( $bidx_rewrite_rules ) ) {		
+    	foreach ( $rules as $rule => $rewrite ) {
+    		if ( in_array( $bidx_rewrite_rules, $rule ) ) {
+    			unset($bidx_rewrite_rules[$rule]);
+    		}
+    	}
+    	$new_rules = $bidx_rewrite_rules + $rules;
+    }
+    else {
+    	$new_rules = $rules;
+    }
+    
+    return $new_rules;
+}
 
 ?>
