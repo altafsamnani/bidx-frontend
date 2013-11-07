@@ -655,11 +655,13 @@
 
             // When handling any field, the error needs to go outside of the wrapper ("controls")
             //
-            $container = $element.closest( ".control-group" );
+            //$container = $element.closest( ".control-group" );
+            $container = $element.closest( ".controls" );
 
             if ( $container.length && !$element.hasClass( "noValidationErrorMessage" ))
             {
-                $error.appendTo( $container );
+             //   $error.appendTo( $container );
+                $container.after( $error );
             }
 
             // Forms can be configured to have no validation icon behind the elements
@@ -676,14 +678,15 @@
                     inserted = true;
                 }
 
-                // Didn't found a way to get inserted? Just insert it behind the input in the DOM
+                // Didn't find a way to have the icon inserted? We insert it behind the input in the DOM
                 //
                 if ( !inserted )
                 {
 
                     $error.insertAfter( $element );
 
-                    // NOTE $msp: I deliberately chose not to insert the errorIcon if there is no control-group or control present, because I cannot guarantee the positioning of the element
+                    // NOTE $msp: I deliberately choose not to insert the errorIcon if there is no control-group or control present, because I cannot guarantee the positioning of the element
+                    //
                     bidx.utils.warn("No \'.controls\' wrapper found on element: ", $element);
                 }
             }

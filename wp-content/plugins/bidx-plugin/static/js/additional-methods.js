@@ -330,25 +330,123 @@
     //
     $.validator.addMethod( "bidxLocationRequired", function( value, element, param )
     {
-        var locationData   = $( element ).bidx_location( "getLocationData" )
+
+        bidx.utils.log( "[1] executing validation for ", element.name );
+        var $p              = $( element ).bidx_location( "getPromise" )
         ,   valid           = true
+        ,   validator       = this
+        ,   previous        = this.previousValue( element )
+        ,   errors          = {}
+        ,   message
+
         ;
 
-        bidx.utils.log("locationDate", locationData );
-        if ( param.requiredKeys )
+        // if there is a Promise object
+        //
+        if ( $p )
         {
-            // check if required keys are availble in the locationData
-            //
-            $.each( param.requiredKeys, function(idx, item )
-            {
-                if ( !locationData[ item ] )
-                {
-                    valid = false;
-                }
-            } );
-        }
 
-        return valid;
+            bidx.utils.log( "[3] current deferred state ", $p.state() );
+
+            // notify validator that we start a new request
+            //
+            this.startRequest( element );
+
+
+            // handle resolved Deffered state
+            //
+            $p.then( function ( locationData )
+            {
+                bidx.utils.log( "[6] current deferred state ", $p.state(), "with location data ", locationData );
+
+
+                if ( param.requiredKeys )
+                {
+                    // check if required keys are availble in the locationData
+                    //
+                    $.each( param.requiredKeys, function(idx, item )
+                    {
+                        if ( !locationData[ item ] )
+                        {
+                            valid = false;
+                        }
+                    } );
+                }
+                bidx.utils.log( "[7] validation status " , valid );
+                // validation is valid. remove errors and stop pending request
+                //
+                if ( valid )
+                {
+
+                    var submitted                           = validator.formSubmitted;
+                    valid                                   = true;
+                    validator.prepareElement( element );
+                    validator.formSubmitted                 = submitted;
+                    validator.successList.push( element );
+                    delete validator.invalid[ element.name ];
+                    validator.showErrors();
+
+                    // notify validator request has finished
+                    //
+                    previous.valid                          = valid;
+                    validator.stopRequest( element, valid );
+                    bidx.utils.log( "[8a] Field validated" );
+                }
+                // something went wrong with the location plugin
+                //
+                else
+                {
+                    message                             = "Something went unexpectedly wrong";
+                    valid                               = false;
+                    errors[ element.name ]              =  $.isFunction( message ) ? message( value ) : message;
+                    validator.invalid[ element.name ]   = true;
+                    validator.showErrors( errors );
+
+                    // notify validator request has finished
+                    //
+                    previous.valid                      = valid;
+                    validator.stopRequest( element, valid );
+                    bidx.utils.log( "[8b] Field Not validated" );
+                }
+
+            } )
+                .done( function()
+                {
+                    bidx.utils.log( "[9]] End promise chain" );
+                } )
+            ;
+
+            // check if the promise is still in a pending state
+            //
+            if( $p.state() === "pending" )
+            {
+                bidx.utils.log( "[5] Pending state" );
+
+                // get error message from i18n
+                //
+                bidx.i18n.getItem( "selectLocation", "register", function( err, label )
+                {
+                    if ( err )
+                    {
+                        throw new Error( "Error occured assigning translation for field " + element.name  );
+                    }
+
+                    message                             = label;
+                    errors[ element.name ]              =  $.isFunction( message ) ? message( value ) : message;
+                    validator.invalid[ element.name ]   = true;
+                    validator.showErrors( errors );
+                } );
+
+            }
+            // standard we always return pending for the validation plugin to know the process hasnt finished
+            //
+            return "pending";
+        }
+        else
+        {
+            bidx.utils.log( "[XX] No value, no promise", $p);
+            return false;
+        }
 
     }, "This field is required" );
 

@@ -89,7 +89,7 @@
         ,   state:
             {
                 markersArray:           null
-            ,   internalDrawMarker:     false // not entirely sure this internal variable should be part of the state, but I dont want it configurable
+            ,   internalDrawMarker:     false // not entirely sure this internal variable should be part of the state, but I dont want it configurable. Purpose is to prevent initial marker placement
             ,   id:                     null
 
             ,   geocoder:               null
@@ -108,6 +108,7 @@
             ,   $el     = widget.element
             ;
 
+
             // BIDX-1372 - Suppress submitting the form when the enter is pressed to select an item from the auto complete list
             //
             $el.keydown( function( e )
@@ -122,6 +123,8 @@
             widget.options  = $.extend( widget.options, params );
             var options     = widget.options;
             var state       = options.state;
+
+
 
             $el.addClass( options.widgetClass );
 
@@ -138,7 +141,8 @@
             ,   "style":            "width:" + options.dimensions.width + ";height:" + options.dimensions.height
             } ).hide();
 
-            $el.after( state.$map );
+
+            $el.parents( ".control-group").append( state.$map );
 
             state.map           = new google.maps.Map( state.$map[0], options.mapOptions );
             state.autoComplete  = new google.maps.places.Autocomplete( $el[0], options.autoCompleteOptions );
@@ -152,6 +156,20 @@
                 }
             );
 
+            // we create a deferred object onChange for the validator plugin
+            //
+            $el.bind( "change",  function()
+            {
+                bidx.utils.log("DEFERRED: ", state.$d);
+                if ( !state.$d || ( state.$d && state.$d.state() === "resolved") )
+                {
+                    bidx.utils.log(" CREATE DEFERRED");
+                    state.$d = $.Deferred();
+                }
+
+
+            } );
+
             google.maps.event.addListener(
                 state.autoComplete
             ,   "place_changed"
@@ -160,6 +178,11 @@
                     var place = state.autoComplete.getPlace();
 
                     widget._placeChanged( place );
+
+                    bidx.utils.log( "[4] place changed, will resolve Promise" , widget.getLocationData());
+                    // resolve promise
+                    //
+                    state.$d.resolve( widget.getLocationData() );
                 }
             );
 
@@ -183,6 +206,19 @@
                 state.locationData.coordinates = options.initialCenter.lat + "," + options.initialCenter.lon;
                 widget.showMap();
             }
+        }
+
+        // Return the promise that was made onChange or null if no promise is available
+        //
+    ,   getPromise:         function()
+        {
+            var widget      = this
+            ,   options     = widget.options
+            ,   state       = options.state
+            ;
+            bidx.utils.log( "[2] getting Promise", state.$d ? state.$d.promise() :  null );
+            return state.$d ? state.$d.promise() :  null;
+
         }
 
         // Get the current location data
@@ -401,6 +437,10 @@
             //
             state.map.setCenter( place.geometry.location );
             state.map.setZoom( options.defaultZoom );
+
+            // resolve Deffered
+            //
+            //..
 
             // Should we list / show the results?
             //
