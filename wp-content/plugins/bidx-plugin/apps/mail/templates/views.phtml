@@ -188,13 +188,13 @@
 
                 <div class="toast-wrapper"></div>
 
-                <h3>Contacts requests</h3>
-                <!-- CONTACT REQUESTS -->
-                <div class="accordion" id="contactRequests">
+                <h3>Contacts </h3>
+                <!-- Accordion -->
+                <div class="accordion" id="contacts">
                     <div class="accordion-group">
                         <div class="accordion-heading">
-                            <a class="accordion-toggle trigger-incoming-contacts" data-toggle="collapse" data-parent="#contactRequests" href="#incomingRequests">
-                                <?php _e('No new contact requests received')?>
+                            <a class="accordion-toggle trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
+                                <?php _e('Contact requests received ( 0 )')?>
                             </a>
                         </div>
 
@@ -218,7 +218,7 @@
                     <!-- SEND REQUESTS -->
                     <div class="accordion-group">
                         <div class="accordion-heading">
-                            <a class="accordion-toggle trigger-pending-contacts" data-toggle="collapse" data-parent="#contactRequests" href="#pendingRequests">
+                            <a class="accordion-toggle trigger-pending-contacts" data-toggle="collapse" data-parent="#contacts" href="#pendingRequests">
                                 <?php _e('contact requests sent')?>
                             </a>
                         </div>
@@ -237,52 +237,58 @@
                             </div>
                         </div>
                     </div>
-                </div> <!-- /END Request  -->
 
-
-                <div class="tabbable"> <!-- Only required for left/right tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="#tab-active-contacts" class="trigger-active-contacts" data-toggle="tab">No active contacts</a>
-                        </li>
-                        <li>
-                            <a href="#tab-ignored-contacts" class="trigger-ignored-contacts" data-toggle="tab">No ignored contacts</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab-active-contacts">
-                            <div id="activeRequests">
-
-                                <ul class="contact-request-list active-contacts unstyled clearfix">
-                                    <li class="span12 ">
-                                        <div class="well">
-                                            <?php _e('No active contacts','bidxplugin')?>
-                                        </div>
-                                    </li>
-
-                                </ul>
-                                <div class="text-center">
-                                    <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=active"><?php _e('Show more', 'bidxplugin')?></a>
-                                </div>
-                            </div>
+                    <!-- ACTIVE REQUESTS -->
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
+                                <?php _e('contact requests sent')?>
+                            </a>
                         </div>
-                        <div class="tab-pane" id="tab-ignored-contacts">
-                            <div id="ignoredRequests">
-
-                                <ul class="contact-request-list ignored-contacts unstyled clearfix">
+                        <div id="activeRequests" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <ul class="contact-request-list unstyled clearfix">
                                     <li class="span12 ">
                                         <div class="well">
-                                            <?php _e('No ignored contacts','bidxplugin')?>
+                                            <?php _e('No active contact requests','bidxplugin')?>
                                         </div>
                                     </li>
                                 </ul>
                                 <div class="text-center">
-                                    <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=ignored"><?php _e('Show more', 'bidxplugin')?></a>
+                                    <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=pending"><?php _e('Show more', 'bidxplugin')?></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <!-- IGNORED REQUESTS -->
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle trigger-ignored-contacts" data-toggle="collapse" data-parent="#contacts" href="#ignoredRequests">
+                                <?php _e('contact requests sent')?>
+                            </a>
+                        </div>
+                        <div id="ignoredRequests" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <ul class="contact-request-list unstyled clearfix">
+                                    <li class="span12 ">
+                                        <div class="well">
+                                            <?php _e('No ignored contact requests','bidxplugin')?>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="text-center">
+                                    <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=pending"><?php _e('Show more', 'bidxplugin')?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- \\ END Accordion  -->
+
+
+
+
+
             </article>
 
             <!--  ************************** MODAL VIEWS ****************************************** -->

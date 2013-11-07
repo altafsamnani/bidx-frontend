@@ -21,8 +21,9 @@
     ,   message                     = {}
     ,   itemList                    = {} // will contain key/value pairs where key=mailId and value always 1
     ,   CONTACTSPAGESIZE            = 3
-    ,   MAILOFFSET                  = 5
-    ,   currentMailOffset           = 0
+    ,   contactsOffset              = 0
+    ,   MAILPAGESIZE                = 5
+    ,   mailOffset                  = 0
     ,   $mailboxToolbar
     ,   $mailboxToolbarButtons
     ,   state
@@ -919,13 +920,13 @@
             case "showPrev":
 
                 // add offset
-                currentMailOffset -= MAILOFFSET;
-                bidx.utils.log("currentMailOffset", currentMailOffset);
+                mailOffset -= MAILPAGESIZE;
+                bidx.utils.log("mailOffset", mailOffset);
 
                 _getEmails(
                 {
-                    startOffset:            currentMailOffset
-                ,   maxResults:             MAILOFFSET
+                    startOffset:            mailOffset
+                ,   maxResults:             MAILPAGESIZE
                 ,   mailboxId:              mailboxes[ currentState ].id
                 ,   view:                   "list"
 
@@ -934,11 +935,11 @@
                         var mailboxTotal = response.data.total;
                         // check if Newer button needs to be hidden
                         //
-                        if ( currentMailOffset - MAILOFFSET < 0 )
+                        if ( mailOffset - MAILPAGESIZE < 0 )
                         {
                             $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).hide();
                         }
-                        if ( currentMailOffset >= 0 )
+                        if ( mailOffset >= 0 )
                         {
                             $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).show();
                         }
@@ -950,13 +951,13 @@
             case "showNext":
 
                 // add offset
-                currentMailOffset += MAILOFFSET;
-                bidx.utils.log("currentMailOffset", currentMailOffset);
+                mailOffset += MAILPAGESIZE;
+                bidx.utils.log("mailOffset", mailOffset);
 
                 _getEmails(
                 {
-                    startOffset:            currentMailOffset
-                ,   maxResults:             MAILOFFSET
+                    startOffset:            mailOffset
+                ,   maxResults:             MAILPAGESIZE
                 ,   mailboxId:              mailboxes[ currentState ].id
                 ,   view:                   "list"
 
@@ -965,11 +966,11 @@
                         var mailboxTotal = response.data.total;
                         // check if Older button needs to be hidden
                         //
-                        if ( currentMailOffset + MAILOFFSET >= mailboxTotal )
+                        if ( mailOffset + MAILPAGESIZE >= mailboxTotal )
                         {
                             $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).hide();
                         }
-                        if ( currentMailOffset > 0 )
+                        if ( mailOffset > 0 )
                         {
                             $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).show();
                         }
@@ -1066,8 +1067,8 @@
 
             _getEmails(
             {
-                startOffset:            currentMailOffset
-            ,   maxResults:             MAILOFFSET
+                startOffset:            mailOffset
+            ,   maxResults:             MAILPAGESIZE
             ,   mailboxId:              mailboxes[ currentState ].id
             ,   view:                   "list"
 
@@ -1104,7 +1105,7 @@
 
                     // check if Older button needs to be hidden which has to happen when total message
                     //
-                    if ( mailboxTotal <= MAILOFFSET )
+                    if ( mailboxTotal <= MAILPAGESIZE )
                     {
                        buttons.splice( $.inArray( ".bidx-btn-mail-next" , buttons ), 1 );
                     }
@@ -1249,7 +1250,7 @@
 
             var $listEmpty = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
             ;
-
+            bidx.utils.log("CONTACTS", contacts);
             // loop through all contact statuses and populate the associated lists
             //
             $.each( contacts, function( key, items )
@@ -1355,7 +1356,7 @@
             ,   $listItem
             ,   listItem
             ;
-
+bidx.utils.log( "OPTIONS", options);
 
             // first empty the list
             //
@@ -1423,7 +1424,7 @@
             ,   key
             ;
 
-            if( category === "incoming" || category === "pending" )
+/*            if( category === "incoming" || category === "pending" )
             {
                 // create i18n key
                 //
@@ -1433,15 +1434,15 @@
                 //
                 $trigger
                     .i18nText( key, appName )
-                    .prepend( count + " ")
+                    .append( " ( " + count + " )" )
                 ;
             }
-            else
-            {
+            else*/
+            //{
                 // replace placeholder in trigger element (hyperlink)
                 //
-                $trigger.i18nText( category + "Contact", appName ).append( " (" + count + ")" );
-            }
+                $trigger.i18nText( category + "Contact", appName ).append( " ( " + count + ") " );
+            //}
 
         }
 
@@ -1789,11 +1790,11 @@
                     [
                         {
                             label:      "startOffset",
-                            value:      currentMailOffset
+                            value:      mailOffset
                         }
                     ,   {
                             label:      "maxResults",
-                            value:      MAILOFFSET
+                            value:      MAILPAGESIZE
                         }
 
                     ]
@@ -1980,6 +1981,7 @@
                                     if ( response.relationshipType.contact[ value ] )
                                     {
                                         result[ value ] = response.relationshipType.contact[ value ];
+
                                     }
                                 } );
                             }
@@ -2485,7 +2487,7 @@
                 // clear itemList
                 //
                 itemList = {};
-                currentMailOffset = 0;
+                mailOffset = 0;
 
                 _closeModal(
                 {
