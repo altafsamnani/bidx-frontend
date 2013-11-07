@@ -2296,7 +2296,8 @@ form .row-fluid .input-prepend {
                 margin:                     0;
             }
 
-            #wrap .inner-wrap {
+            #wrap .inner-wrap,
+            .home #wrap .inner-wrap {
                 padding-top: 0;
             }
 
