@@ -72,3 +72,11 @@
 .help a {
     float:right;
 }
+
+#entrepreneur-dashboard .bidx-mail {
+    background: url('/wp-content/themes/bidx-group-template/assets/img/icons/mail-icon.jpg') no-repeat center center transparent;
+    display: block;
+    height: 30px;
+    width:70px;
+
+}

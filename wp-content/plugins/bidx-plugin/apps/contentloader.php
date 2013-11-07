@@ -74,14 +74,14 @@ class ContentLoader
         add_rewrite_tag( '%bidxparam1%', '([^&/]+)' ); //control parameter if available
         add_rewrite_tag( '%bidxparam2%', '([^&/]+)' ); //rest of url data if available
 
-        $user->ID = $this->create_custom_role_capabilities( );
+        $userID = $this->create_custom_role_capabilities( );
 //        $blog_title = strtolower (get_bloginfo ());
 //        $group_owner_login = $blog_title . 'groupadmin';
 //        $user = get_user_by('login', $group_owner_login);
-        $this->logger->trace( '$user : ' . $user->ID  );
+        $this->logger->trace( '$user : ' . $userID  );
 
         $rewrite_rules = array();
-        
+
         $this->logger->trace( 'Start loading default data from location : ' . $this->location );
         foreach ( glob( BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml' ) as $filename ) {
             //try /catch / log ignore
@@ -93,8 +93,8 @@ class ContentLoader
             $this->logger->trace( 'Found posts : ' . sizeof( $posts ) );
 
             foreach ( $posts as $post ) {
-                
-                
+
+
                 $this->logger->trace( 'Handling the post named : ' . $post->name );
 
                 $page = get_page_by_title( (string) $post->title, 'OBJECT', $document->posttype );
@@ -108,7 +108,7 @@ class ContentLoader
                     if ( $page -> ID ) {
                         wp_update_post( array(
                 			'ID'           => $page -> ID,
-                            'post_author'   => ($user->ID) ? $user->ID : 1
+                            'post_author'   => ($userID) ? $userID : 1
                 		) );
 
                         $this->logger->trace( 'Post exist, skipping : ' . $post->name );
@@ -116,9 +116,9 @@ class ContentLoader
                     } else {
                     	$post_id = false;
                     }
-                    
+
                 } else {
-                	
+
                 	if ( $page ) {
                         $this->logger->trace( 'Post exist, for update : ' . $page->post_title . ' : '. $page->ID );
                         $post_id = $page -> ID;
@@ -156,42 +156,42 @@ class ContentLoader
                 	wp_update_post( array(
                 			'ID'           => $post_id,
                 			'post_content' => $content,
-                            'post_author'  => ($user->ID) ? $user->ID : 1
+                            'post_author'  => ($userID) ? $userID : 1
                 		) );
                 } else {
-                	$this->logger->trace( 'Inserting new post : ' . $post->name );                    
+                	$this->logger->trace( 'Inserting new post : ' . $post->name );
                 	$insertPostArr = array (
                 				'post_content'  => $content
                 			,   'post_name'     => $post->name
                 			,   'post_status'   => 'publish'
                 			,   'post_title'    => $post->title
                 			,   'post_type'     => $document->posttype
-                			,   'post_author'   => ($user->ID) ? $user->ID : 1                           
+                			,   'post_author'   => ($userID) ? $userID : 1
                 	);
-                	
+
                 	//$enPostArr = $insertPostArr;
                 	//$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
                 	//$post_id = wp_insert_post($enPostArr);
-                	                	
+
 	                $post_id = wp_insert_post( $insertPostArr );
 	                if (!$post_id) {
 	                    wp_die ('Error creating page');
 	                }
                 }
-                
+
                 // set page as Home page
                 //
                 if ( isset ( $post->setHomePage ) && $post->setHomePage == 'true' ) {
 	                update_option( 'show_on_front', 'page' );
 	                update_option( 'page_on_front', $post_id );
                 }
-                
+
                 if ( isset( $post->template ) ) {
                 	$this->logger->trace ('Adding template on post ' . $post_id . ' named : ' . $post->template);
                 	update_post_meta ($post_id, '_wp_page_template', (string) $post->template);
                 }
                 // $post_translated_id = $this->mwm_wpml_translate_post($post_id,$insertPostArr,'es' );
-                
+
                 if (isset ($post->mapping) && $post->mapping != '') {
                     $target = 'index.php?' . $document->posttype . '=' . $post->name;
                     $mappingOrig = (string) $post->mapping;
@@ -223,12 +223,12 @@ class ContentLoader
             // end for each post
 
             flush_rewrite_rules( false );
-            
+
             add_option( 'BIDX_REWRITE_RULES', $rewrite_rules );
-        }   
+        }
 
         flush_rewrite_rules (false);
-            
+
             //if manual writeout is needed
             //$this -> add_rewrite_rules();
 // No Widgets to be added (have to find out if this is useful dynamically)
@@ -253,7 +253,7 @@ class ContentLoader
 
 //                 $this->logger->trace ('Adding the navigation named : ' . $image->name);
 //             }
-     }        
+     }
         // end for each xml file
 
     /**
@@ -460,7 +460,7 @@ class ContentLoader
         $blogTitle = strtolower (get_bloginfo ());
       //  foreach ($results as $user) {
 
-       //     $user_id = $user->ID;
+       //     $user_id = $userID;
 
             //When creating directly from wordpress handle that case too
             $is_frm_bidx = (preg_match ("/groupadmin\z/i", $user->user_login)) ? true : false;
@@ -530,7 +530,7 @@ class ContentLoader
         //wpmu_signup_user( $new_user_login, 'test@aa.com', array( 'add_to_blog' => $blog_id, 'new_role' => 'groupadmin' ) );
         //wp_insert_user( $user );
 
-        return $user_id_admin;
+        return $user_id_owner;
     }
 
 }

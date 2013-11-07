@@ -4,7 +4,7 @@
     ,   $views            = $element.find(".view")
     ,   $elementHelp      = $element.find(".startpage")
     ,   $firstPage        = $element.find( "input[name='firstpage']" )
-    ,   bidx              = window.bidx    
+    ,   bidx              = window.bidx
     ,   currentUserId     = bidx.common.getSessionValue( "id" )
     ;
 
@@ -41,116 +41,83 @@
 
     var getInvestors = function(options)
     {
-        var $listItem   = $($("#entrepreneur-investorsitem").html().replace(/(<!--)*(-->)*/g, ""))
-        ,   $listEmpty  = $($("#entrepreneur-empty").html().replace(/(<!--)*(-->)*/g, ""))
+        var snippit   = $("#entrepreneur-investorsitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   emptySnippit  = $("#entrepreneur-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   $list       = $("." + options.list)
         ;
-        var extraUrlParameters =
-                [
-                    {
-                        label: "entrepreneurId",
-                        value: currentUserId
-                    }
-                  , {
-                        label: "rows",
-                        value: "6"
-                    }
-                  , {
-                        label: "sort",
-                        value: "created desc"
-                    }
-                ];
 
         bidx.api.call(
-            "memberRelationships.fetch"
+            "businesssummary.fetch"
             ,   {
-                    requesterId:              currentUserId
-                ,   groupDomain:              bidx.common.groupDomain
+                    groupDomain:    bidx.common.groupDomain
+                ,   async      :    false
                 ,   success: function( response )
                     {
-                    var item
-                    , element
-                    , cls
-                    , textValue
-                    ;
 
                     //clear listing
                     $list.empty();
 
-
-
                     // now format it into array of objects with value and label
-                    //
-                    if( response && response.relationshipType && response.relationshipType.investors )
+
+                    if( response && response.data && response.data.received )
                     {
 
-                    $.each(response.relationshipType.investors, function(status, itemStatus)
-                    {
-                        $.each(itemStatus, function(idx, item)
+                        $.each(response.data.received, function(id, item)
                         {
-                            
-                            // Member Display
-                            element = $listItem.clone();
-                            //search for toggle elements
-                            
-                           item.id = item.requesterId;
-                           item.name = item.requesterName;
-                            if(item.requesterId == currentUserId) {
-                                item.id = item.requesteeId;
-                                item.name = item.requesteeName;
-                            }
-                           
-                            datatargetId = 'toggle' + item.id;
-                            element.find(".accordion-toggle").attr('data-target', '#' + datatargetId);
-                            element.find(".accordian-body").attr('id', datatargetId);
 
-                            //search for placeholders in snippit
-                            element.find(".placeholder").each(function(i, el)
-                            {
+                            var dataArr = {    'industry'         : 'industry'
+                                          ,    'countryOperation' : 'country'
+                                          ,    'stageBusiness'    : 'stageBusiness'
+                                          ,    'productService'   : 'productService'
+                                          ,    'envImpact'        : 'envImpact'
+                                          ,    'consumerType'     : 'consumerType'
+                                          ,    'investmentType'   : 'investmentType'
+                                          };
 
-                                //isolate placeholder key
-                                cls = $(el).attr("class").replace("placeholder ", "");
-
-                                //if key if available in item response
-                                if (item[cls] || cls == 'bcstatus')
+                               getStaticDataVal(
                                 {
-
-                                    textValue = item[cls];
-                                    //add hyperlink on sendername for now (to read email)
-                                    if (cls === "country")
-                                    {
-                                        bidx.data.getItem(item[cls], 'country', function(err, label)
-                                        {
-                                           textValue = label; 
-                                        })
-                                        
-                                        textValue = (textValue.city) ? textValue + textValue.city : textValue;
-
-                                    }
-                                    else if (cls === "bcstatus")
-                                    {
-                                        textValue = status;
-                                    }
-                                    else if(cls == 'startDate')
-                                    {
-                                       textValue = bidx.utils.parseTimestampToDateTime( item.startDate, "date" );
-                                    }
-                                
-                                    element.find("span." + cls).replaceWith(textValue);
-
-                                }
-                            });
+                                    dataArr    : dataArr
+                                  , item       : item.businessSummary
+                                  , callback   : function (label) {
+                                                    i18nItem = label;
+                                                 }
+                                });
+                               bidx.utils.log(item.businessSummary.bidxMeta.bidxLastUpdateDateTime);
+                                //search for placeholders in snippit
+                                listItem = snippit
+                                    .replace( /%accordion-id%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : "%accordion-id%" )
+                                    .replace( /%bidxEntityId%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : "%bidxEntityId%" )
+                                    .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : "%name%" )
+                                    .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
+                                    .replace( /%status%/g,       item.status    ? item.status      : "%status%" )
+                                    .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : "%countryOperation%" )
+                                    .replace( /%bidxLastUpdateDateTime%/g, item.businessSummary.bidxMeta.bidxLastUpdateDateTime    ? bidx.utils.parseTimestampToDateStr(item.businessSummary.bidxMeta.bidxLastUpdateDateTime) : "%bidxLastUpdateDateTime%" )
+                                    .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : "%slogan%" )
+                                    .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : "%summary%" )
+                                    .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : "%reasonForSubmission%" )
+                                    .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : "%bidxOwnerId%" )
+                                    .replace( /%creator%/g, i18nItem.creator    ? i18nItem.creator      : "%creator%" )
+                                    .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : "%productService%" )
+                                    .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : "%financingNeeded%" )
+                                    .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : "%stageBusiness%" )
+                                    .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : "%envImpact%" )
+                                    .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : "%consumerType%" )
+                                    .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : "%investmentType%" )
+                                    .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : "%summaryFinancingNeeded%" )
+                                    .replace( /%displayName%/g,      item.investor.displayName   ? item.investor.displayName : "%displayName%" )
+                                    .replace( /%investorId%/g,      item.investor.id   ? item.investor.id     : "%investorId%" )
+                                    ;
 
                             //  add mail element to list
-                            $list.append(element);
+                            $list.append( listItem );
 
-                        });
-                    });
 
-                    } else
-                    {
-                        $list.append($listEmpty);
-                    }
+                            } );
+                        }
+                        else
+                        {
+                            $list.append(emptySnippit);
+                        }
 
                     //  execute callback if provided
                     if (options && options.callback)
@@ -183,10 +150,10 @@
               if( item.hasOwnProperty(clsKey)) {
                      bidx.data.getItem(item[clsKey], clsVal, function(err, label)
                         {
-                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;                         
+                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;
 
                         });
-                        
+
                item[clsKey] = textVal;
               }
        })
@@ -197,13 +164,14 @@
        }
 
     }
-    
+
     var getBusiness = function(options)
     {
-   
-        var snippit     = $("#entrepreneur-businessitem").html().replace(/(<!--)*(-->)*/g, "")
+
+        var snippit       = $("#entrepreneur-businessitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   emptySnippit  = $("#entrepreneur-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $list       = $("." + options.list)
+        ,   $list         = $("." + options.list)
+        ,   emptyList     = true
         ,   i18nItem
         ;
 
@@ -222,16 +190,17 @@
                     $list.empty();
 
                     // now format it into array of objects with value and label
-                    
+
                     if ( !$.isEmptyObject(entities) )
                     {
-                        
+
                         $.each(entities, function(idx, item)
                         {
                             //if( item.bidxEntityType == 'bidxBusinessSummary') {
                             bidxMeta = bidx.utils.getValue( item, "bidxMeta" );
-                            
-                            if( bidxMeta && bidxMeta.bidxEntityType == 'bidxBusinessSummary' ) {
+
+                            if( bidxMeta && bidxMeta.bidxEntityType == 'bidxBusinessSummary' )
+                            {
 
                                 var dataArr = {  'industry'         : 'industry'
                                                , 'countryOperation' : 'country'
@@ -240,7 +209,7 @@
                                                , 'consumerType'     : 'consumerType'
                                                , 'investmentType'   : 'investmentType'
                                              };
-                                             
+
                                getStaticDataVal(
                                 {
                                     dataArr    : dataArr
@@ -259,7 +228,7 @@
                                     .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : "%financingNeeded%" )
                                     .replace( /%yearSalesStarted%/g,       i18nItem.yearSalesStarted    ? i18nItem.yearSalesStarted      : "%yearSalesStarted%" )
                                     .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : "%stageBusiness%" )
-                                    .replace( /%periodStartDate%/g,     i18nItem.periodStartDate  ? i18nItem.periodStartDate     : "%periodStartDate%" )
+                                    .replace( /%bidxLastUpdateDateTime%/g,     bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : "%bidxLastUpdateDateTime%" )
                                     .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : "%slogan%" )
                                     .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : "%summary%" )
                                     .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : "%reasonForSubmission%" )
@@ -269,15 +238,19 @@
                                     .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : "%summaryFinancingNeeded%" )
                                     ;
 
-                                
+
                                 $list.append( listItem );
 
+                                emptyList = false;
+
                             }
-                            
+
                         });
 
-                    } else
-                    {                     
+                    }
+                    if(emptyList)
+                    {
+
                         $list.append(emptySnippit);
                     }
 
@@ -334,14 +307,14 @@
     }
     // ROUTER
 
-    
+
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
-    {       
+    {
         var state;
 
         state = options.state;
- 
+
         switch (state)
         {
             case "load" :
@@ -352,15 +325,14 @@
 
             case "help" :
                 _menuActivateWithTitle(".Help","My entrepreneur helppage");
-                _showView("help");                
+                _showView("help");
                 break;
 
             case "entrepreneur":
 
                 _menuActivateWithTitle(".Dashboard","My entrepreneur dashboard");
                 _showView("load");
-                
-                /*_showView("loadinvestors",true); */
+                _showView("loadinvestors",true);
 
                 getBusiness(
                 {
@@ -373,19 +345,19 @@
                     }
                 });
 
-                 /*
+
                  getInvestors(
-                        {
-                            list: "investors"
-                          , view: "investors"
-                          , callback: function()
-                            {
+                {
+                    list: "investors"
+                  , view: "investors"
+                  , callback: function()
+                    {
 
-                                _showMainView("investors", "loadinvestors");
+                        _showMainView("investors", "loadinvestors");
 
-                            }
-                        }); */
-                  
+                    }
+                });
+
                 break;
 
         }

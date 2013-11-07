@@ -65,19 +65,17 @@
 
     }
 
-    var getContacts = function(options)
+    var getContact = function(options)
     {
         var snippit   = $("#investor-contactitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list       = $("." + options.list)
         ;
 
-
         bidx.api.call(
-                "memberRelationships.fetch"
+                "businesssummary.fetch"
             ,   {
-                    requesterId:    bidx.common.getCurrentUserId( "id" )
-                ,   groupDomain:    bidx.common.groupDomain
+                    groupDomain:    bidx.common.groupDomain
                 ,   async      :    false
                 ,   success: function( response )
                     {
@@ -87,66 +85,75 @@
                     $list.empty();
 
                     // now format it into array of objects with value and label
-                    //
-                    if( response && response.relationshipType && response.relationshipType.contact )
-                    {
 
-                    $.each(response.relationshipType.contact, function(status, itemStatus)
-                    {
-                        $.each(itemStatus, function(idx, item)
+                    if( response && response.data && response.data.requested )
                         {
 
-                            var dataArr = {  'country'         : 'country' };
-                            getStaticDataVal(
-                                {
-                                    dataArr    : dataArr
-                                  , item       : item
-                                  , callback   : function (label) {
-                                                    i18nItem = label;
-                                                 }
-                                });
+                            $.each(response.data.requested, function(id, item)
+                            {
 
-                            if(i18nItem.city) {
-                                i18nItem.location = i18nItem.country +  ', '+ i18nItem.city;
-                            }
+                                    var dataArr = {    'industry'         : 'industry'
+                                                  ,    'countryOperation' : 'country'
+                                                  ,    'stageBusiness'    : 'stageBusiness'
+                                                  ,    'productService'   : 'productService'
+                                                  ,    'envImpact'        : 'envImpact'
+                                                  };
 
-                            //search for placeholders in snippit
-                            listItem = snippit
-                                .replace( /%accordion-id%/g,      i18nItem.contactId   ? i18nItem.contactId     : "%accordion-id%" )
-                                .replace( /%contactName%/g,      i18nItem.contactName   ? i18nItem.contactName     : "%contactName%" )
-                                .replace( /%location%/g,     i18nItem.location  ? i18nItem.location    : "%location%" )
-                                .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
-                                .replace( /%status%/g,       status    ? status      : "%status%" )
-                                .replace( /%startDate%/g,     i18nItem.startDate  ? bidx.utils.parseTimestampToDateTime( i18nItem.startDate, "date" )    : "%startDate%" )
-                            ;
+                                       getStaticDataVal(
+                                        {
+                                            dataArr    : dataArr
+                                          , item       : item.businessSummary
+                                          , callback   : function (label) {
+                                                            i18nItem = label;
+                                                         }
+                                        });
 
-                            //  add mail element to list
-                            $list.append( listItem );
+                                        //search for placeholders in snippit
+                                        listItem = snippit
+                                            .replace( /%accordion-id%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : "%accordion-id%" )
+                                            .replace( /%bidxEntityId%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : "%bidxEntityId%" )
+                                            .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : "%name%" )
+                                            .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
+                                            .replace( /%status%/g,       item.status    ? item.status      : "%status%" )
+                                            .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : "%countryOperation%" )
+                                            .replace( /%bidxCreationDateTime%/g, item.businessSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(item.businessSummary.bidxCreationDateTime, "date") : "%bidxCreationDateTime%" )
+                                            .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : "%bidxOwnerId%" )
+                                            .replace( /%creator%/g, i18nItem.creator    ? i18nItem.creator      : "%creator%" )
+                                            .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : "%productService%" )
+                                            .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : "%financingNeeded%" )
+                                            .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : "%stageBusiness%" )
+                                            .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : "%envImpact%" )
+                                            ;
 
-                          } );
-                    } );
 
-                    } else
-                    {
-                        $list.append($listEmpty);
+                                    //  add mail element to list
+                                    $list.append( listItem );
+
+
+                            } );
+
+                        }
+                        else
+                        {
+                            $list.append($listEmpty);
+                        }
+
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
                     }
 
-                    //  execute callback if provided
-                    if (options && options.callback)
+                    , error: function(jqXhr, textStatus)
                     {
-                        options.callback();
+                        var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                        _showError("Something went wrong while retrieving contactlist of the member: " + status);
                     }
                 }
-
-                , error: function(jqXhr, textStatus)
-                {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-                    _showError("Something went wrong while retrieving contactlist of the member: " + status);
-                }
-            }
-        );
-    };
+            );
+        };
     // function that retrieves group members returned in an array of key/value objects
     // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
     //
@@ -395,8 +402,9 @@
 
                 _menuActivateWithTitle(".Dashboard","My investor dashboard");
                 _showView("load");
+                _showView("loadcontact", true);
                 _showView("loadpreference", true );
-                _showView("loadcontacts", true);
+
                 getMatch(
                 {
                     list: "match"
@@ -407,6 +415,19 @@
 
                     }
                 } );
+
+                getContact(
+                 {
+                    list: "contact"
+                 ,  view: "contact"
+                 ,  callback: function()
+                    {
+
+                        _showMainView("contact", "loadcontact");
+
+                    }
+                 } );
+
                  getPreference(
                  {
                     list: "preference"
@@ -418,17 +439,7 @@
 
                     }
                  } );
-                 getContacts(
-                 {
-                    list: "contacts"
-                 ,  view: "contacts"
-                 ,  callback: function()
-                    {
 
-                        _showMainView("contacts", "loadcontacts");
-
-                    }
-                 } );
 
                 break;
          }
