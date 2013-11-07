@@ -2266,8 +2266,8 @@ form .row-fluid .input-prepend {
         /* footer */
 
             footer .page-footer {
-                margin-left:                -20px;
-                margin-right:               -20px;
+                margin-left:                0;
+                margin-right:               0;
             }
         /* end footer */
 
