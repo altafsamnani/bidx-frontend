@@ -634,6 +634,11 @@ Company: bidX;
             top: 2px;
          }
 
+        header.navbar .white-spacer {
+            background-color:                       #fff;
+            height:                                 5px;
+        }
+
 
 
         header.navbar .form-search .search-query {
@@ -1450,6 +1455,48 @@ form .row-fluid .input-prepend {
         }
 
 
+            .bidx.home .feature-block .feature-block-header {
+                color:                                  #fff;
+                font-size:                              23px;
+                padding:                                18px;
+                -webkit-border-radius:                  4px 4px 0 0;
+                -moz-border-radius:                     4px 4px 0 0;
+                border-radius:                          4px 4px 0 0;
+            }
+
+            .bidx.home .feature-block .feature-block-header a {
+                color:                              #fff;
+                font-size:                          14px;
+            }
+
+            .bidx.home .feature-block-items {
+                border:                                 1px solid #cccccc;
+                border-top:                             none;
+                -webkit-border-radius:                  0 0 4px 4px;
+                -moz-border-radius:                     0 0 4px 4px;
+                border-radius:                          0 0 4px 4px;
+                padding:                                40px 20px 0 20px;
+            }
+
+            .bidx.home .feature-block-items .bidx-latest .span6,
+            .bidx.home .feature-block-items .bidx-latest .span6 {
+                margin-bottom:                          30px;
+                min-height:                             110px;
+            }
+            .bidx.home .feature-block-items .bidx-latest .span6:nth-child(odd),
+            .bidx.home .feature-block-items .bidx-latest .span6:nth-child(odd) {
+                margin-left:                            0;
+            }
+            .bidx.home.not-auth .feature-col-items .bidx-latest .span12,
+            .bidx.home.not-auth .feature-col-items .bidx-latest .span12 {
+                margin-left:                            0;
+                margin-bottom:                          40px;
+            }
+            .bidx.home .feature-block img {
+                border:                                 1px solid #d7d7d7;
+                margin-right:                           20px;
+            }
+
 
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@ End currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
@@ -1593,7 +1640,99 @@ form .row-fluid .input-prepend {
     }
 
 
+       /* cancel out bootstrap dropdown-menu */
+        header.navbar .nav .dropdown-menu,
+        header.navbar .iconbar ul.dropdown-menu
+        {
+            border:                                 0;
+            background-color:                       transparent;
+            -webkit-box-shadow:                     none;
+            -moz-box-shadow:                        none;
+            box-shadow:                             none;
+            padding:                                0;
+        }
 
+        header.navbar .nav > li > .dropdown-menu:before
+         {
+            content: "";
+            border-style: solid;
+            border-width: 0 9px 9px 9px;
+            border-color: transparent transparent #34495e transparent;
+            height: 0;
+            position: absolute;
+            left: 15px;
+            top: 5px;
+            width: 0;
+            -webkit-transform: rotate(360deg);
+        }
+
+        header.navbar .nav > li >.dropdown-menu:after {
+            border-bottom: 6px solid #34495e;
+            content: '';
+        }
+
+
+        header.navbar .nav ul li:first-child,
+        header.navbar .iconbar ul.dropdown-menu li:first-child {
+            border-radius:                          6px 6px 0 0;
+            padding-top:                            3px;
+        }
+        header.navbar .nav ul li:last-child,
+        header.navbar .iconbar ul.dropdown-menu li:last-child {
+            border-radius:                          0 0 6px 6px;
+        }
+
+        header.navbar .nav ul li:only-child,
+        header.navbar .iconbar ul.dropdown-menu li:only-child {
+            border-radius:                          6px;
+        }
+
+        header.navbar .nav ul li {
+            background-color:                       #34495e;
+            padding:                                0 3px 3px;
+            position:                               relative;
+        }
+
+        header.navbar .dropdown-menu > li > a {
+            color:                                  #fff;
+        }
+
+        /* iconbar styles */
+
+        header.navbar .navbar-inner .iconbar {
+            border-radius:              0 0 4px 4px;
+        }
+
+        header.navbar .iconbar ul li.dropdown:hover > ul.dropdown-menu {
+            /* results in onhover show of submenu */
+            /* display:                    block; */ /* remove the hover for now because it acts a bit nervously */
+        }
+
+        header.navbar .iconbar ul.dropdown-menu {
+            /* positioning of submenu */
+            right:                      0;
+            left:                       auto;
+        }
+
+        header.navbar .iconbar ul.dropdown-menu li {
+            background-color: #34495e;
+            padding: 0 3px 3px;
+            position: relative;
+        }
+
+        header.navbar .iconbar > ul > li .dropdown-menu:after {
+            /* create little transparent arrow in iconbar */
+            position: absolute;
+            top: -6px;
+            right: 22px;
+            display: inline-block;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid #fff;
+            border-left: 6px solid transparent;
+            content: '';
+        }
+
+        /* end iconbar styles*/
 
 /*******************************************************************************************
 *
@@ -1651,42 +1790,6 @@ form .row-fluid .input-prepend {
             float:                      right;
         }
 
-        /* iconbar styles */
-
-        header.navbar .navbar-inner .iconbar {
-            border-radius:              0 0 4px 4px;
-        }
-
-        header.navbar .iconbar ul li.dropdown:hover > ul.dropdown-menu {
-            /* results in onhover show of submenu */
-            /* display:                    block; */ /* remove the hover for now because it acts a bit nervously */
-        }
-
-        header.navbar .iconbar ul.dropdown-menu {
-            /* positioning of submenu */
-            right:                      0;
-            left:                       auto;
-        }
-
-        header.navbar .iconbar ul.dropdown-menu li {
-            background-color: #34495e;
-            padding: 0 3px 3px;
-            position: relative;
-        }
-
-        header.navbar .iconbar > ul > li .dropdown-menu:after {
-            /* create little transparent arrow in iconbar */
-            position: absolute;
-            top: -6px;
-            right: 22px;
-            display: inline-block;
-            border-right: 6px solid transparent;
-            border-bottom: 6px solid #fff;
-            border-left: 6px solid transparent;
-            content: '';
-        }
-
-        /* end iconbar styles*/
 
         /* searchbox */
 
@@ -1761,62 +1864,7 @@ form .row-fluid .input-prepend {
         }
 
 
-        /* cancel out bootstrap dropdown-menu */
-        header.navbar .nav .dropdown-menu,
-        header.navbar .iconbar ul.dropdown-menu
-        {
-            border:                                 0;
-            background-color:                       transparent;
-            -webkit-box-shadow:                     none;
-            -moz-box-shadow:                        none;
-            box-shadow:                             none;
-            padding:                                0;
-        }
 
-        header.navbar .nav > li > .dropdown-menu:before
-         {
-            content: "";
-            border-style: solid;
-            border-width: 0 9px 9px 9px;
-            border-color: transparent transparent #34495e transparent;
-            height: 0;
-            position: absolute;
-            left: 15px;
-            top: 5px;
-            width: 0;
-            -webkit-transform: rotate(360deg);
-        }
-
-        header.navbar .nav > li >.dropdown-menu:after {
-            border-bottom: 6px solid #34495e;
-            content: '';
-        }
-
-
-        header.navbar .nav ul li:first-child,
-        header.navbar .iconbar ul.dropdown-menu li:first-child {
-            border-radius:                          6px 6px 0 0;
-            padding-top:                            3px;
-        }
-        header.navbar .nav ul li:last-child,
-        header.navbar .iconbar ul.dropdown-menu li:last-child {
-            border-radius:                          0 0 6px 6px;
-        }
-
-        header.navbar .nav ul li:only-child,
-        header.navbar .iconbar ul.dropdown-menu li:only-child {
-            border-radius:                          6px;
-        }
-
-        header.navbar .nav ul li {
-            background-color:                       #34495e;
-            padding:                                0 3px 3px;
-            position:                               relative;
-        }
-
-        header.navbar .dropdown-menu > li > a {
-            color:                                  #fff;
-        }
 
 
         header.navbar .nav > li > a .caret {
@@ -1853,11 +1901,6 @@ form .row-fluid .input-prepend {
             background-color: #EBEDEF;
                 color: #32495E;
             }
-
-        header.navbar .white-spacer {
-            background-color:                       #fff;
-            height:                                 5px;
-        }
 
         /* end header */
 
@@ -1914,47 +1957,6 @@ form .row-fluid .input-prepend {
             /* end open group page*/
 
             /* closed group page*/
-
-            .bidx.home .feature-block .feature-block-header {
-                color:                                  #fff;
-                font-size:                              23px;
-                padding:                                18px;
-                -webkit-border-radius:                  4px 4px 0 0;
-                -moz-border-radius:                     4px 4px 0 0;
-                border-radius:                          4px 4px 0 0;
-            }
-                .bidx.home .feature-block .feature-block-header a {
-                    color:                              #fff;
-                    font-size:                          14px;
-                }
-
-            .bidx.home .feature-block-items {
-                border:                                 1px solid #cccccc;
-                border-top:                             none;
-                -webkit-border-radius:                  0 0 4px 4px;
-                -moz-border-radius:                     0 0 4px 4px;
-                border-radius:                          0 0 4px 4px;
-                padding:                                40px 20px 0 20px;
-            }
-
-            .bidx.home .feature-block-items .bidx-latest .span6,
-            .bidx.home .feature-block-items .bidx-latest .span6 {
-                margin-bottom:                          30px;
-                min-height:                             110px;
-            }
-            .bidx.home .feature-block-items .bidx-latest .span6:nth-child(odd),
-            .bidx.home .feature-block-items .bidx-latest .span6:nth-child(odd) {
-                margin-left:                            0;
-            }
-            .bidx.home.not-auth .feature-col-items .bidx-latest .span12,
-            .bidx.home.not-auth .feature-col-items .bidx-latest .span12 {
-                margin-left:                            0;
-                margin-bottom:                          40px;
-            }
-            .bidx.home .feature-block img {
-                border:                                 1px solid #d7d7d7;
-                margin-right:                           20px;
-            }
 
 
 
@@ -2216,6 +2218,17 @@ form .row-fluid .input-prepend {
                 margin-bottom: 0;
             }
 
+            .nav-collapse, .nav-collapse.collapse {
+                height: auto;
+                display: inline;
+            }
+            .nav-collapse, .nav-collapse.collapse ul {
+                text-align: center;
+            }
+            .nav-collapse, .nav-collapse.collapse ul li {
+                display: inline-block;
+            }
+
 
             header.navbar {
                 margin-left:                -20px;
@@ -2234,6 +2247,7 @@ form .row-fluid .input-prepend {
 
             header.navbar .iconbar-wrapper {
                 text-align:                 center;
+                margin:                     0 3%;
             }
 
             header.navbar .iconbar-wrapper .iconbar > ul {
@@ -2242,8 +2256,8 @@ form .row-fluid .input-prepend {
             }
 
             header.navbar .search {
-               text-align:                  center;
-               display:
+                text-align:                 center;
+                margin-bottom:              10px;
             }
 
 
@@ -2268,11 +2282,22 @@ form .row-fluid .input-prepend {
 
         /************************  Template styles *******************************/
 
-
+            .container {
+                width:94%;
+                margin: 0 3%;
+            }
+            header .container {
+                width: 100%;
+                margin: 0;
+            }
 
             .bidx > .container,
             .bidx header {
-                margin:                     0 20px;
+                margin:                     0;
+            }
+
+            #wrap .inner-wrap {
+                padding-top: 0;
             }
 
         /************************  End Template styles *******************************/
@@ -2280,5 +2305,14 @@ form .row-fluid .input-prepend {
     }
 
 
-
-
+@media  (max-width: 767px) {
+    .footer-bar .pull-left,
+    .footer-bar .pull-right {
+        float: none;
+        text-align: center;
+    }
+    footer .page-footer .footer-bar {
+        height: auto;
+        padding: 10px 0 20px;
+    }
+}
