@@ -213,10 +213,10 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                                     </ul>
                                 </div>
                             </div>
-                            <iframe width="100%" height="140" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=nl&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=Bidx&amp;sll=37.0625,-95.677068&amp;sspn=60.158465,135.263672&amp;t=h&amp;ie=UTF8&amp;hq=bidx+bv&amp;hnear=De+Ruijterkade,+Amsterdam,+Nederland&amp;ll=52.37787,4.905348&amp;spn=0.006295,0.014329&amp;output=embed"></iframe>
-                            <span class="label bidx-label-member"><?php _e('Entrepreneur', 'bidxtheme')?></span>
+                            <iframe width="100%" height="280" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=nl&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=Bidx&amp;sll=37.0625,-95.677068&amp;sspn=60.158465,135.263672&amp;t=h&amp;ie=UTF8&amp;hq=bidx+bv&amp;hnear=De+Ruijterkade,+Amsterdam,+Nederland&amp;ll=52.37787,4.905348&amp;spn=0.006295,0.014329&amp;output=embed"></iframe>
+                            <span class="label bidx-label-member"><?php _e('Member', 'bidxtheme')?></span>
                             <span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxtheme')?></span>
-                            <span class="label bidx-label-investor"><?php _e('Entrepreneur', 'bidxtheme')?></span>
+                            <span class="label bidx-label-investor"><?php _e('Investor', 'bidxtheme')?></span>
                         </div>
 
                         <hr>
