@@ -1402,7 +1402,13 @@
 
                 // Maybe rs=true was already added, or not 'true' add it before reloading
                 //
-                var rs = bidx.utils.getQueryParameter( "rs", url );
+                var rs          = bidx.utils.getQueryParameter( "rs", url );
+                var redirect_to = bidx.utils.getQueryParameter( "redirect_to", url );
+
+
+                if( redirect_to ) {
+                    url = '/' + redirect_to;
+                }
 
                 if ( !rs || rs !== "true" )
                 {

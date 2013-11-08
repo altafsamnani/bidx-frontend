@@ -8,34 +8,6 @@
     ,   currentUserId     = bidx.common.getSessionValue( "id" )
     ;
 
-    //public functions
-
-    var _initHandlers = function ()
-    {
-        $elementHelp.change(function()
-        {
-            var startPageCheck = $(this).attr("checked")
-            ,   startValue = 0;
-
-            if (startPageCheck) {
-                startValue = 2;
-            }
-
-            $.ajax(
-                    {
-                        url:      "/wp-admin/admin-ajax.php?action=bidx_set_option&type=entrepreneur-startingpage&value=" + startValue
-                    ,   dataType: "json"
-                    })
-                    .done(function(data, status, jqXHR)
-                     {
-                        /*console.log(data + 'Bidx option investor dashboard updated.'); */
-                     })
-                    .fail(function()
-                     {
-                        bidx.utils.error("problem updating investor dashboard option.");
-                     })
-        });
-    }
 
     //public functions
 
@@ -379,7 +351,7 @@
     window.bidx.dashboard = dashboard;
 
     //Initialize Handlers
-    _initHandlers();
+    //_initHandlers();
 
 
     if ($("body.bidx-entrepreneur-dashboard").length && !bidx.utils.getValue(window, "location.hash").length)
