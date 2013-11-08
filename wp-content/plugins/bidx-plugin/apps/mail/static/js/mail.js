@@ -276,9 +276,9 @@
         }
         status = params.showMore;
 
-        contactsOffset[ status ] += CONTACTSPAGESIZE;
 
-        bidx.utils.log("SHOW MORE", status );
+        // update the contacats Offset
+        contactsOffset[ status ] += CONTACTSPAGESIZE;
 
         // start a promise chain
         //
@@ -305,18 +305,13 @@
             ]
         ,   filter:             contactStatuses
         } )
-            .then( function( contacts )
-            {
-                console.log( "More contact", contacts);
-                _initContactListing( contacts, true );
-            })
             .fail( function ( error )
             {
                 bidx.utils.log( "Error in promise chain ", error );
             } )
-            .done( function()
+            .done( function( contacts )
             {
-
+                _initContactListing( contacts, true );
             } );
     }
 
@@ -639,6 +634,7 @@
         //
         href = bidx.utils.bidxDeparam( href );
 
+
         bidx.api.call(
              "memberRelationships.mutate"
         ,   {
@@ -664,7 +660,7 @@
                         // NOTE: #msp 2013-1014; to be replace with list specific reload
                         //
                         //document.location.reload();
-                        mail.navigate( {state: "contacts" + state, params: {} } );
+                        mail.navigate( {state: "contacts" , params: {} } );
 
                     }
 
@@ -1265,36 +1261,35 @@
 
             var $listEmpty      = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
             ,   appendToList    = append ? true : false
+            ,   showMore
             ;
 
             // loop through all contact statuses and populate the associated lists
             //
             $.each( contacts, function( key, items )
             {
-
-                // check if there are contacts in this particular group
+                // decide if we show the ShowMore button again
                 //
-                if( items.members.length )
-                {
-                    // create the itemList for this category
-                    // the argument 'key' is key in finding the correct snippit and list associated with this category
-                    // the callback in this function is defined in the function that is called and also associated with the key
-                    //
-                    _createListItems(
-                    {
-                        snippitId:              "contact-request-" + key
-                    ,   category:               key
-                    ,   items:                  items
-                    ,   appendToList:           appendToList
-                    ,   pageSize:               CONTACTSPAGESIZE
-                    ,   currentPage:            1
-                    ,   addShowMoreButton:      true
-                    ,   view:                   "Contacts"
-                    ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
-                    ,   cb:                     _getContactsCallback( key)
-                    } );
+                showMore =  ( items.totals > ( contactsOffset[ key ] + CONTACTSPAGESIZE ) ) ? true : false;
 
-                }
+
+                // create the itemList for this category
+                // the argument 'key' is key in finding the correct snippit and list associated with this category
+                // the callback in this function is defined in the function that is called and also associated with the key
+                //
+                _createListItems(
+                {
+                    snippitId:              "contact-request-" + key
+                ,   category:               key
+                ,   items:                  items
+                ,   appendToList:           appendToList
+                ,   pageSize:               CONTACTSPAGESIZE
+                ,   currentPage:            1
+                ,   addShowMoreButton:      showMore
+                ,   view:                   "Contacts"
+                ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
+                ,   cb:                     _getContactsCallback( key)
+                } );
             } );
         }
 
@@ -1366,9 +1361,10 @@
         //
         function _createListItems( options )
         {
-            var snippit    = $( "#" + options.snippitId ).html().replace( /(<!--)*(-->)*/g, "" )
-            ,   $view      = $views.filter( bidx.utils.getViewName( options.view ) )
-            ,   $list      = $view.find( options.targetListSelector )
+            var snippit         = $( "#" + options.snippitId ).html().replace( /(<!--)*(-->)*/g, "" )
+            ,   emptySnippit    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
+            ,   $view           = $views.filter( bidx.utils.getViewName( options.view ) )
+            ,   $list           = $view.find( options.targetListSelector )
 
             ,   $listItem
             ,   listItem
@@ -1385,6 +1381,17 @@
             // update counter displaying amount of contacts for this category
             //
             _setContactsCount( options.view, options.category, options.items.totals );
+
+            // if list for this contact status is empty return
+            //
+            if ( options.items.members.length === 0 )
+            {
+                // add empty Listitem
+                //
+                $list.append( emptySnippit );
+
+                return;
+            }
 
             // iterate of each item an append a modified snippit to the list
             //
@@ -1427,7 +1434,7 @@
             }
             else
             {
-
+                $view.find( "#" + options.category + "Requests .bidx-btn-showMore" ).hide();
             }
 
 
@@ -1590,6 +1597,7 @@
                 ,   success: function( response )
                     {
                         var result          = []
+                        ,   exists
                         ;
 
                         // now format it into array of objects with value and label
@@ -1599,15 +1607,7 @@
                         {
                             if( response.relationshipType.contact.types.active )
                             {
-                                $.each( response.relationshipType.contact.types.active , function ( idx, item)
-                                {
-                                    result.push(
-                                    {
-                                        value:      item.contactId
-                                    ,   label:      item.contactName
-                                    });
-                                });
-                                // also add the admins and groupowners
+                                // first add the admins and groupowners
                                 //
                                 if ( response.relationshipType.contact.types.groupOwner )
                                 {
@@ -1621,6 +1621,35 @@
                                     });
                                 }
 
+                                // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
+                                //
+                                $.each( response.relationshipType.contact.types.active , function ( idx, item)
+                                {
+                                    exists = false;
+
+                                    // test the active contactid against a group owner id
+                                    //
+                                    $.map( response.relationshipType.contact.types.groupOwner, function( groupAdmin, index )
+                                    {
+
+                                        if ( groupAdmin.contactId === item.contactId )
+                                        {
+                                            exists = true;
+                                            return false;
+                                        }
+                                    } );
+
+                                    // if contactId is unique, add it to the result list
+                                    //
+                                    if ( !exists )
+                                    {
+                                        result.push(
+                                        {
+                                            value:      item.contactId
+                                        ,   label:      item.contactName
+                                        });
+                                    }
+                                });
                             }
                             else
                             {
@@ -2035,9 +2064,14 @@
                                         result[ value ] = {};
                                         result[ value ][ "members"] = response.relationshipType.contact.types[ value ];
                                         result[ value ][ "totals" ] = response.relationshipType.contact.totals[ value ];
-                                        // preset the offset for this contact type
-                                        //
-                                        contactsOffset[ value ] = 0;
+
+                                        if ( options.resetOffset )
+                                        {
+                                            // preset the offset for this contact type
+                                            //
+                                            contactsOffset[ value ] = 0;
+                                        }
+
 
                                     }
                                 } );
@@ -2252,14 +2286,14 @@
                     mailId = options.params.id;
                 }
 
-                if(options.params.recipients)
+                if( options.params.recipients )
                 {
                     recipientIds = options.params.recipients;
                 }
 
                 // only override action when an action is provided in params
                 //
-                if( options.params.action )
+                if ( options.params.action )
                 {
                     action = options.params.action;
                 }
@@ -2499,7 +2533,8 @@
                             value:      0
                         }
                     ]
-                    ,   filter:             contactStatuses
+                    ,   filter:         contactStatuses
+                    ,   resetOffset:    true
                 } )
                     .then( function( contacts )
                     {
