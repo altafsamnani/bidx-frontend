@@ -1250,7 +1250,7 @@
 
             var $listEmpty = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
             ;
-            bidx.utils.log("CONTACTS", contacts);
+
             // loop through all contact statuses and populate the associated lists
             //
             $.each( contacts, function( key, items )
@@ -1258,7 +1258,7 @@
 
                 // check if there are contacts in this particular group
                 //
-                if( items.length )
+                if( items.members.length )
                 {
                     // create the itemList for this category
                     // the argument 'key' is key in finding the correct snippit and list associated with this category
@@ -1356,7 +1356,7 @@
             ,   $listItem
             ,   listItem
             ;
-bidx.utils.log( "OPTIONS", options);
+
 
             // first empty the list
             //
@@ -1364,11 +1364,11 @@ bidx.utils.log( "OPTIONS", options);
 
             // update counter displaying amount of contacts for this category
             //
-            _setContactsCount( options.view, options.category, options.items.length );
+            _setContactsCount( options.view, options.category, options.items.totals );
 
             // iterate of each item an append a modified snippit to the list
             //
-            $.each( options.items, function( idx, item )
+            $.each( options.items.members, function( idx, item )
             {
 
                 // duplicate snippit source and replace all placeholders (not every snippit will have all of these placeholders )
@@ -1556,11 +1556,11 @@ bidx.utils.log( "OPTIONS", options);
                         // now format it into array of objects with value and label
                         //
                         bidx.utils.log("[mail] retrieved following members ", response );
-                        if( response && response.relationshipType && response.relationshipType.contact )
+                        if( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
                         {
-                            if( response.relationshipType.contact.active )
+                            if( response.relationshipType.contact.types.active )
                             {
-                                $.each( response.relationshipType.contact.active , function ( idx, item)
+                                $.each( response.relationshipType.contact.types.active , function ( idx, item)
                                 {
                                     result.push(
                                     {
@@ -1575,7 +1575,6 @@ bidx.utils.log( "OPTIONS", options);
                             }
 
                         }
-
                         callback( result );
                     }
 
@@ -1970,7 +1969,7 @@ bidx.utils.log( "OPTIONS", options);
 
                         bidx.utils.log("[mail] contacts loaded ", response );
 
-                        if ( response.relationshipType &&  response.relationshipType.contact )
+                        if ( response.relationshipType &&  response.relationshipType.contact &&  response.relationshipType.contact.types )
                         {
                             // if filter is defined, only add arrays that match the filter value
                             //
@@ -1978,9 +1977,11 @@ bidx.utils.log( "OPTIONS", options);
                             {
                                 $.each( options.filter, function( idx, value )
                                 {
-                                    if ( response.relationshipType.contact[ value ] )
+                                    if ( response.relationshipType.contact.types[ value ] )
                                     {
-                                        result[ value ] = response.relationshipType.contact[ value ];
+                                        result[ value ] = {};
+                                        result[ value ][ "members"] = response.relationshipType.contact.types[ value ];
+                                        result[ value ][ "totals" ] = response.relationshipType.contact.totals[ value ];
 
                                     }
                                 } );
@@ -1998,7 +1999,6 @@ bidx.utils.log( "OPTIONS", options);
                             bidx.utils.warn( "No contacts retrieved. Please check filtering" );
 
                         }
-
                         // resolve the promise
                         //
                         $d.resolve( result );

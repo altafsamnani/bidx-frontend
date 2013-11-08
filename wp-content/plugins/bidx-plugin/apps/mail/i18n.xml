@@ -9,7 +9,7 @@
     <Item value="Trash">Trash</Item>
     <Item value="Fwd">Fwd</Item>
     <Item value="Re">Re</Item>
-    <Item value="incomingContact">Incoming ontact requests</Item>
+    <Item value="incomingContact">Incoming contact requests</Item>
     <Item value="pendingContact">Pending contact requests</Item>
     <Item value="contactRequestSendTo">New contact request has been send to</Item>
     <Item value="activeContact">Active contacts</Item>
