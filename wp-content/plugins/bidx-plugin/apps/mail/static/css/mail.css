@@ -140,10 +140,10 @@
 
 /* // Contacts */
 
-    #mail #contactRequests img {
+    #mail #contacts img {
         height:                                 90px;
     }
-    #mail #contactRequests .accordion-heading {
+    #mail #contacts .accordion-heading {
         background-color:                       #F6F0E8;
         -webkit-border-radius:                  4px 4px 0 0;
         -moz-border-radius:                     4px 4px 0 0;
@@ -153,21 +153,21 @@
         position:                               relative;
         padding:                                22px
     }
-    #mail .viewContacts #contactRequests .contact-request-list li img,
+    #mail .viewContacts #contacts .contact-request-list li img,
     #mail .viewContacts .contact-request-list li img {
         margin-right:                           10px;
         max-width:                              90px;
     }
-    #mail .viewContacts #contactRequests .contact-request-list li .contact-request-buttons {
+    #mail .viewContacts #contacts .contact-request-list li .contact-request-buttons {
         margin-top:                             10px;
     }
-    #mail .viewContacts #contactRequests .contact-request-list li .contact-request-status {
+    #mail .viewContacts #contacts .contact-request-list li .contact-request-status {
         margin-top:                             10px;
         margin-bottom:                          0;
     }
 
-    #mail .viewContacts #contactRequests .contact-request-list li:nth-child(2n+1),
-    #mail .viewContacts .contact-request-list.active-contacts li:nth-child(3n+1) {
+    #mail .viewContacts #contacts .contact-request-list.span6-layout li:nth-child(2n+1),
+    #mail .viewContacts #contacts .contact-request-list.span4-layout li:nth-child(3n+1) {
         margin-left:                            0;
     }
 

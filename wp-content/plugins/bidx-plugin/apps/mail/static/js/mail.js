@@ -20,9 +20,7 @@
     ,   toolbar                     = {}
     ,   message                     = {}
     ,   itemList                    = {} // will contain key/value pairs where key=mailId and value always 1
-    ,   CONTACTSPAGESIZE            = 3
-    ,   contactsOffset              = 0
-    ,   MAILPAGESIZE                = 5
+    ,   contactsOffset              = {} // will contain key/value pairs for each contact status (category)
     ,   mailOffset                  = 0
     ,   $mailboxToolbar
     ,   $mailboxToolbarButtons
@@ -30,6 +28,12 @@
     ,   section
     ;
 
+    // Constants
+    //
+    var CONTACTSPAGESIZE            = 3
+    ,   ACTIVECONTACTSLIMIT         = 999
+    ,   MAILPAGESIZE                = 5
+    ;
 
 
 
@@ -258,11 +262,21 @@
     //
     function _doShowMoreContacts( e )
     {
+        e.preventDefault();
+
         var $this       = $( this)
-        ,   status      = bidx.utils.bidxDeparam( $this.attr( "href") )
+        ,   params      = bidx.utils.bidxDeparam( $this.attr( "href") )
+        ,   status
         ;
 
-        e.preventDefault();
+        // if there is no showMore defined, return
+        if( !params.showMore )
+        {
+            return;
+        }
+        status = params.showMore;
+
+        contactsOffset[ status ] += CONTACTSPAGESIZE;
 
         bidx.utils.log("SHOW MORE", status );
 
@@ -286,7 +300,7 @@
                 }
             ,   {
                     label:      "offset",
-                    value:      1
+                    value:      contactsOffset[ status ]
                 }
             ]
         ,   filter:             contactStatuses
@@ -294,6 +308,7 @@
             .then( function( contacts )
             {
                 console.log( "More contact", contacts);
+                _initContactListing( contacts, true );
             })
             .fail( function ( error )
             {
@@ -1243,12 +1258,13 @@
 
         // initializes the contactlisting. Expects an object with array per contact category (active, pending, ignore, incoming, ... )
         //
-        function _initContactListing( contacts )
+        function _initContactListing( contacts, append )
         {
             bidx.utils.log("[mail initialing contactlisting", contacts );
 
 
-            var $listEmpty = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+            var $listEmpty      = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
+            ,   appendToList    = append ? true : false
             ;
 
             // loop through all contact statuses and populate the associated lists
@@ -1269,6 +1285,7 @@
                         snippitId:              "contact-request-" + key
                     ,   category:               key
                     ,   items:                  items
+                    ,   appendToList:           appendToList
                     ,   pageSize:               CONTACTSPAGESIZE
                     ,   currentPage:            1
                     ,   addShowMoreButton:      true
@@ -1358,9 +1375,12 @@
             ;
 
 
-            // first empty the list
+            // if we do not want to append results to the list, clear it
             //
-            $list.empty();
+            if( !options.appendToList )
+            {
+                $list.empty();
+            }
 
             // update counter displaying amount of contacts for this category
             //
@@ -1536,16 +1556,35 @@
 
         // function that retrieves group members returned in an array of key/value objects
         //
-        function getMembers( callback )
+        function _getMembers( callback )
         {
-            bidx.utils.log( "[mail] get members" );
+            bidx.utils.log( "[members] get active contacts" );
 
-
+            var status = "active";
 
             bidx.api.call(
                 "memberRelationships.fetch"
             ,   {
-                    requesterId:              bidx.common.getCurrentUserId( "id" )
+                    extraUrlParameters:
+                    [
+                        {
+                            label:      "type",
+                            value:      "contact"
+                        }
+                    ,   {
+                            label:      "status",
+                            value:      status
+                        }
+                    ,   {
+                            label:      "limit",
+                            value:      ACTIVECONTACTSLIMIT
+                        }
+                    ,   {
+                            label:      "offset",
+                            value:      0
+                        }
+                    ]
+                ,   requesterId:              bidx.common.getCurrentUserId( "id" )
                 ,   groupDomain:              bidx.common.groupDomain
 
                 ,   success: function( response )
@@ -1555,7 +1594,7 @@
 
                         // now format it into array of objects with value and label
                         //
-                        bidx.utils.log("[mail] retrieved following members ", response );
+                        bidx.utils.log("[members] retrieved following active contacts ", response );
                         if( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
                         {
                             if( response.relationshipType.contact.types.active )
@@ -1568,6 +1607,20 @@
                                     ,   label:      item.contactName
                                     });
                                 });
+                                // also add the admins and groupowners
+                                //
+                                if ( response.relationshipType.contact.types.groupOwner )
+                                {
+                                   $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
+                                    {
+                                        result.push(
+                                        {
+                                            value:      item.contactId
+                                        ,   label:      item.contactName + " (A)"
+                                        });
+                                    });
+                                }
+
                             }
                             else
                             {
@@ -1982,6 +2035,9 @@
                                         result[ value ] = {};
                                         result[ value ][ "members"] = response.relationshipType.contact.types[ value ];
                                         result[ value ][ "totals" ] = response.relationshipType.contact.totals[ value ];
+                                        // preset the offset for this contact type
+                                        //
+                                        contactsOffset[ value ] = 0;
 
                                     }
                                 } );
@@ -2434,12 +2490,16 @@
                             label:      "type",
                             value:      "contact"
                         }
-                    // ,   {
-                    //         label:      "limit",
-                    //         value:      CONTACTSPAGESIZE
-                    //     }
+                    ,   {
+                            label:      "limit",
+                            value:      CONTACTSPAGESIZE
+                        }
+                    ,   {
+                            label:      "offset",
+                            value:      0
+                        }
                     ]
-                ,   filter:             contactStatuses
+                    ,   filter:             contactStatuses
                 } )
                     .then( function( contacts )
                     {
@@ -2561,7 +2621,7 @@
     {
         navigate:               navigate
     ,   $element:               $element
-    ,   getMembers:             getMembers
+    ,   getMembers:             _getMembers
 
     // START DEV API
     //
