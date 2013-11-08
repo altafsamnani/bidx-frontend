@@ -138,7 +138,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     __('Reason for financing','bidxplugin')
                         => $this->exst($businessSummary->summaryFinancingNeeded)
                 );
-                echo $this->pairRows($rowValues, $viewRowProperties );
+                echo $this->pairRows( $rowValues );
 
                 // @TODO: video
 ?>
@@ -299,7 +299,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         => $this->getMultiValues( $this->exst($businessSummary->consumerType), ', ', 'consumerType' )
 
                 );
-                echo $this->pairRows( $rowValues, $viewRowProperties );
+                echo $this->pairRows( $rowValues );
 ?>
                         </div>
 
@@ -459,7 +459,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 __('Expertise applicable to this business','bidxplugin')
                                     => $this->exst($businessSummary->personalExpertise)
                             );
-                            echo $this->pairRows( $rowValues, $viewRowProperties );
+                            echo $this->pairRows( $rowValues );
 
                             // Supporting members
                             //
@@ -727,7 +727,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     __('Country','bidxplugin')
                                         => $this->getStaticVal( 'country', $this->exst($company->statutoryAddress->country) )
                                 );
-                                echo $this->pairRows( $rowValues, $viewRowProperties );
+                                echo $this->pairRows( $rowValues );
                             }
 ?>
                         </div>

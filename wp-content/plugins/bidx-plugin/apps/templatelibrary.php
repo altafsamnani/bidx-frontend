@@ -301,11 +301,11 @@ class TemplateLibrary
      * @return String $pairRow Row html
      *
      */
-    public function pairRows ( $pairs, $properties = array () )
+    public function pairRows ( $pairs, $properties = array ( 'tag_label' => 'label', 'tag_value' => 'div' ) )
     {
-        /** Tag * */
-        $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
-        $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
+        /** Tags * */
+        $tagLabel = $properties['tag_label'];
+        $tagValue = $properties['tag_value'];
 
         foreach ($pairs as $label => $value) {
             if ( $value != NULL ){
