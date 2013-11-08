@@ -1,81 +1,63 @@
 <?php
+    $useDataSrc = false;
+    $picSrc     = $this->exst($this->company->logo->document);
 
-$useDataSrc = false;
-$picSrc     = $this->exst($this->company->logo->document);
-
-if (!$picSrc) {
-    $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
-    $useDataSrc = true;
-}
+    if (!$picSrc) {
+        $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
+        $useDataSrc = true;
+    }
 ?>
-    <div>
+
+<img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+<h4><?php _e('Company details','bidxplugin'); ?></h4>
+
+<div class="row-fluid">
+    <div class="span12">
 <?php
-    $options = array( 'class_label' => 'bidx-label' );
 
-    echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-        array( __('Company name','bidxplugin') => $this->exst($this->company->name )), $options );
-
-    echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-        array( __('Company website','bidxplugin') => $this->exst($this->company->website )), $options );
+    $rowValues = array(
+        __('Company name','bidxplugin') => $this->exst($this->company->name ),
+        __('Company website','bidxplugin') => sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst($this->company->website ))
+    );
+    echo $this->pairRows( $rowValues );
 
     if (!empty($this->company->registered)) {
-
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Date of registration','bidxplugin') =>   date( 'j F Y', strtotime( $this->company->dateCompanyEstab ))), $options );
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Legal form of business','bidxplugin') => $this->exst($this->company->legalFormBusiness)), $options );
 
         $statutoryAddress = $this->exst($this->company->statutoryAddress);
 
         $arStatutoryAddress = array();
-
-        if ($this->exst($statutoryAddress->street)) {
-            $arStatutoryAddress[] = $statutoryAddress->street;
-        }
-
-        if ($this->exst($statutoryAddress->streetNumber)) {
-            $arStatutoryAddress[] = $statutoryAddress->streetNumber;
-        }
-
-        if ($this->exst($statutoryAddress->postalCode)) {
-            $arStatutoryAddress[] = $statutoryAddress->postalCode;
-        }
-
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Statutory address','bidxplugin') => implode( ' ', $arStatutoryAddress )), $options );
+        if ($this->exst($statutoryAddress->street))         { $arStatutoryAddress[] = $statutoryAddress->street; }
+        if ($this->exst($statutoryAddress->streetNumber))   { $arStatutoryAddress[] = $statutoryAddress->streetNumber; }
+        if ($this->exst($statutoryAddress->postalCode))     { $arStatutoryAddress[] = $statutoryAddress->postalCode; }
 
         $arStatutoryCityCountry = array();
+        if ($this->exst($statutoryAddress->cityTown))       { $arStatutoryCityCountry[] = $statutoryAddress->cityTown; }
+        if ($this->exst($statutoryAddress->country))        { $arStatutoryCityCountry[] = $statutoryAddress->country; }
 
-        if ($this->exst($statutoryAddress->cityTown)) {
-            $arStatutoryCityCountry[] = $statutoryAddress->cityTown;
-        }
-
-        if ($this->exst($statutoryAddress->country)) {
-            $arStatutoryCityCountry[] = $statutoryAddress->country;
-        }
-
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Statutory city, country','bidxplugin') => implode( ' ', $arStatutoryCityCountry )), $options );
-
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber)), $options );
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Company registration number','bidxplugin') => $this->exst($this->company->registrationNumber)), $options );
+        $rowValues = array(
+            __('Date of registration','bidxplugin') =>  date( 'j F Y', strtotime( $this->company->dateCompanyEstab )),
+            __('Legal form of business','bidxplugin') => $this->exst($this->company->legalFormBusiness),
+            __('Statutory address','bidxplugin') => implode( ' ', $arStatutoryAddress ),
+            __('Statutory city, country','bidxplugin') => implode( ' ', $arStatutoryCityCountry ),
+            __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber),
+            __('Company registration number','bidxplugin') => $this->exst($this->company->registrationNumber)
+        );
+        echo $this->pairRows( $rowValues );
     }
 
-    if ($this->exst($this->company->numPermFemaleEmpl) || $this->exst($this->company->numPermMaleEmpl) || $this->exst($this->company->numTempFemaleEmpl) || $this->exst($this->company->numTempMaleEmpl)) {
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Number of permanent female employees','bidxplugin') => $this->exst($this->company->numPermFemaleEmpl)), $options );
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Number of permanent male employees','bidxplugin') => $this->exst($this->company->numPermMaleEmpl)), $options );
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Number of temporary female employees','bidxplugin') => $this->exst($this->company->numTempFemaleEmpl)), $options );
-        echo $this->addRowsWithLabelAdjacent( 'span6', 'span6',
-            array( __('Number of temporary male employees','bidxplugin') => $this->exst($this->company->numTempMaleEmpl)), $options );
+    if ( $this->exst($this->company->numPermFemaleEmpl) ||
+         $this->exst($this->company->numPermMaleEmpl) ||
+         $this->exst($this->company->numTempFemaleEmpl) ||
+         $this->exst($this->company->numTempMaleEmpl))
+    {
+        $rowValues = array(
+            __('Number of permanent female employees','bidxplugin') => $this->exst($this->company->numPermFemaleEmpl),
+            __('Number of permanent male employees','bidxplugin') => $this->exst($this->company->numPermMaleEmpl),
+            __('Number of temporary female employees','bidxplugin') => $this->exst($this->company->numTempFemaleEmpl),
+            __('Number of temporary male employees','bidxplugin') => $this->exst($this->company->numTempMaleEmpl)
+        );
+        echo $this->pairRows( $rowValues );
     }
 ?>
-        </div>
-
-        <div class="span4">
-            <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
-        </div>
+    </div>
+</div><!-- row -->

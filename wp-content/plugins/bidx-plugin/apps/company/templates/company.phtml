@@ -32,13 +32,8 @@ $companyBidxMeta = isset( $this->company->bidxMeta )
 ?>
                 </div>
 
-                <h4><?php _e('Company details','bidxplugin'); ?></h4>
+                <?php $this->render('view-company.phtml'); ?>
 
-                <div class="row-fluid">
-                    <div class="span8">
-                        <?php $this->render('view-company.phtml'); ?>
-                    </div>
-                </div><!-- row -->
             </div><!-- well -->
         </div>
     </div>
