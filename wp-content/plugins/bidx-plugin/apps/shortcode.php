@@ -126,11 +126,16 @@ class BidxShortcode
     function register_script ()
     {
 
-        $bidxJsDir = sprintf ('%s/../static/js', BIDX_PLUGIN_URI);
+        $bidxJsDir = sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
+        $vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
 
         if (BidxCommon :: isWPInternalFunction ()) {
             Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
         } else {
+
+            wp_register_style( 'chosen', $vendorDir . '/chosen_v1.0.0/chosen.css', array(), '20131111', 'all' );
+            wp_enqueue_style( 'chosen' );
+
 
             //vendor scripts
             wp_register_script ('gmaps-places', '//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places', array (), '20130501', TRUE);
@@ -169,6 +174,8 @@ class BidxShortcode
             wp_register_script ('bidx-i18n', $bidxJsDir . '/i18n.js', array ('jquery'), '20130626', TRUE);
 
             wp_register_script ('bidx-tagsinput', $bidxJsDir . '/bidx-tagsinput.js', array ('bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data'), '20130703', TRUE);
+
+            wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
 
             wp_enqueue_script ('bidx-common');
             wp_enqueue_script ('bidx-controller');

@@ -1,5 +1,6 @@
 <I18N>
     <Item value="selectOutcomeBusiness">Select the outcome of this business</Item>
+    <Item value="selectFocusIndustry">Enter the focus industry</Item>
     <Item value="selectInvestmentType">Select investment type</Item>
     <Item value="selectInvestor">Select your investor</Item>
     <Item value="selectCountry">Select country</Item>

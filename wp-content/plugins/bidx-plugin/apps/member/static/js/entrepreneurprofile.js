@@ -16,6 +16,9 @@
     ,   $btnAddPreviousBusiness     = $editForm.find( "[href$='#addPreviousBusiness']" )
     ,   $previousBusinessContainer  = $editForm.find( ".previousBusinessContainer" )
 
+
+    ,   $focusIndustry              = $element.find( "[name='focusIndustry']" )
+
     ,   $toggles                    = $element.find( ".toggle" ).hide()
     ,   $togglePrevRunBusiness      = $element.find( "[name='prevRunBusiness']"      )
 
@@ -26,7 +29,6 @@
     ,   $cvControlGroup                     = $cvContainer.find( ".control-group" )
     ,   $btnChangeCv                        = $cvControl.find( "a[href$='changeCv']" )
     ,   $changeCvModal                      = $cvControl.find( ".changeCvModal" )
-
 
         // Attachnents
         //
@@ -94,6 +96,20 @@
         {
             e.preventDefault();
         } );
+
+        // Populate the dropdowns with the values
+        //
+        bidx.data.getContext( "industry", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $focusIndustry, industries );
+
+            $focusIndustry.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
 
         bidx.data.getContext( "businessOutcome", function( err, businessOutcomes )
         {
@@ -485,6 +501,10 @@
         {
             $togglePrevRunBusiness.filter( ":checked" ).radio( "setState" );
         }
+
+        // Update the chosen components with our set values
+        //
+        $focusIndustry.trigger( "chosen:updated" );
     }
 
     // Convert the form values back into the member object
@@ -602,6 +622,13 @@
         $cvContainer.find( ".noCV"  ).hide();
         $cvContainer.find( ".hasCV" ).hide();
 
+        $element.find( ":input" )
+            .not( ":button, :submit, :reset" )
+            .val( "" )
+            .prop( "checked", false )
+            .prop( "selected", false )
+        ;
+
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    });
@@ -655,7 +682,8 @@
         //
         var $validator = $editForm.validate(
         {
-            rules:
+            ignore:                         ""
+        ,   rules:
             {
                 "summary":
                 {
@@ -664,7 +692,7 @@
                 }
             ,   "focusIndustry":
                 {
-                    tagsinputRequired:          true
+                    required:                   true
                 }
             ,   "prevRunBusiness":
                 {
