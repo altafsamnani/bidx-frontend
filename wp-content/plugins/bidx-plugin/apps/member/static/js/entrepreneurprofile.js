@@ -144,7 +144,7 @@
             //
             $togglePrevRunBusiness.change( function()
             {
-                var value   = $togglePrevRunBusiness.filter( "[checked]" ).val()
+                var value   = $togglePrevRunBusiness.filter( ":checked" ).val()
                 ,   fn      = value === "true" ? "show" : "hide"
                 ;
 
@@ -624,9 +624,10 @@
 
         $element.find( ":input" )
             .not( ":button, :submit, :reset" )
-            .val( "" )
-            .prop( "checked", false )
-            .prop( "selected", false )
+                .prop( "checked", false )
+                .prop( "selected", false )
+                .not( "[type='radio'], [type='checkbox']" )
+                    .val( "" )
         ;
 
         // Inject the save and button into the controls
