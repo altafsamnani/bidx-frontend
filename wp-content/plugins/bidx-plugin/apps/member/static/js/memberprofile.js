@@ -46,6 +46,7 @@
     ,   state
     ,   currentView
 
+    ,   redirect                    = {}
     ,   snippets                    = {}
 
     ,   appName                     = "member"
@@ -1180,6 +1181,15 @@
     //
     function navigate( options )
     {
+
+        // set redirect for this app's Save & Cancel button and the default redirect behaviour
+        //
+        redirect =
+        {
+            cancel:     ( options.params && options.params.cancel ) ? options.params.cancel : "member/" + options.id
+        ,   success:    ( options.params && options.params.success ) ? options.params.success : "member/" + options.id
+        };
+
         switch ( options.requestedState )
         {
             case "edit":

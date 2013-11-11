@@ -21,411 +21,456 @@
 
         <form id="frmeditInvestor">
 
-            <div class="span3">
-                <ul class="nav nav-list nav-edit nav-editInvestor hidden-phone">
-                    <li><a href="#editInvestor/generalInformation"><?php _e('General information','bidxplugin'); ?></a>
-                    <li><a href="#editInvestor/investmentPreferences"><?php _e('Investment preferences','bidxplugin'); ?></a>
-                    <li><a href="#editInvestor/investmentHistory"><?php _e('Investment history','bidxplugin'); ?></a>
-                    <li><a href="#editInvestor/references"><?php _e('References','bidxplugin'); ?></a>
-                    <li><a href="#editInvestor/documents"><?php _e('Documents','bidxplugin'); ?></a>
-                </ul>
-            </div>
 
-            <div class="span9">
+            <div class="accordion" id="investerAccordion">
 
-                <fieldset class="well">
-                    <span class="scrollPositionMarker" id="editInvestor/generalInformation"></span>
-                    <legend><?php _e('General information','bidxplugin'); ?></legend>
-                    <p>
-                        <?php _e('Tell visitors and members of the group how you see yourself as an investor. Give a brief description of your investment interests.', 'bidxplugin')?>
-                    </p>
-                    <div class="row-fluid">
-                        <div class="span11">
+                <!-- generalInformation -->
+                <div class="accordion-group">
 
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Describe yourself as an investor','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <textarea name="summary" placeholder="<?php _e('Please type in the description of you as an investor','bidxplugin'); ?>" ></textarea>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#investerAccordion" href="#generalInformation">
+                            <?php _e('General information','bidxplugin'); ?>
+                        </a>
                     </div>
 
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Investor type','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <select name="investorType"></select>
-                                </div>
+                    <div id="generalInformation" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <!-- accordion body -->
+
+                            <span class="scrollPositionMarker" id="editInvestor/generalInformation"></span>
+                            <div class="alert alert-info">
+                                <?php _e('Tell visitors and members of the group how you see yourself as an investor. Give a brief description of your investment interests.', 'bidxplugin')?>
                             </div>
-                        </div>
-                    </div>
+                            <div class="row-fluid">
+                                <div class="span11">
 
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Do you invest on behalf of an institution?','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <label class="radio inline"><input type="radio" value="true"  name="investsForInst" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
-                                    <label class="radio inline"><input type="radio" value="false" name="investsForInst" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row-fluid toggle toggle-investsForInst">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Institution name','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="institutionName" placeholder="<?php _e('Please enter the name of your institution','bidxplugin'); ?>">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row-fluid toggle toggle-investsForInst">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Institution website'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="institutionWebsite" placeholder="<?php _e('Please enter the name of your institution','bidxplugin'); ?>">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row-fluid institutionAddressItem">
-                        <div class="span5">
-
-                            <input type="hidden" name="institutionAddress.coordinates"    />
-
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <select name="institutionAddress.country" ></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="institutionAddress.cityTown" placeholder="<?php _e('Please enter your city','bidxplugin'); ?>" />
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Street','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="institutionAddress.street" placeholder="<?php _e('Please enter your street name','bidxplugin'); ?>" />
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Building number','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="institutionAddress.streetNumber" placeholder="<?php _e('Please enter your building number','bidxplugin'); ?>" />
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Postal code','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="institutionAddress.postalCode" placeholder="<?php _e('Please enter your postcode','bidxplugin'); ?>" />
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Neighborhood','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="institutionAddress.neighborhood" placeholder="<?php _e('Please enter your neighborhood','bidxplugin'); ?>" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="span6 offset1">
-                            <div class="institutionAddressMap"></div>
-                        </div>
-                    </div>
-
-                </fieldset>
-
-
-                <fieldset class="well">
-                    <span class="scrollPositionMarker" id="editInvestor/investmentPreferences"></span>
-                    <legend><?php _e('Investment preferences','bidxplugin'); ?></legend>
-                    <p>
-                        <?php _e('Use this section to define your investment preferences, such as countries, products or industries that you would like to invest in. This information will be used to match your profileto businesses that fit these criteria.', 'bidxplugin')?>
-                    </p>
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Focus industry','bidxplugin'); ?>">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Describe yourself as an investor','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <textarea name="summary" placeholder="<?php _e('Please type in the description of you as an investor','bidxplugin'); ?>" ></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Languages','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" autocomplete="off" name="focusLanguage" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="language" placeholder="<?php _e('Languages','bidxplugin'); ?>">
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Investor type','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <select name="investorType"></select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" autocomplete="off" name="focusSocialImpact" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="socialImpact" placeholder="<?php _e('Social impact','bidxplugin'); ?>">
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Do you invest on behalf of an institution?','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <label class="radio inline"><input type="radio" value="true"  name="investsForInst" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
+                                            <label class="radio inline"><input type="radio" value="false" name="investsForInst" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" autocomplete="off" name="focusEnvImpact" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="envImpact" placeholder="<?php _e('Environmental impact','bidxplugin'); ?>">
+                            <div class="row-fluid toggle toggle-investsForInst">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Institution name','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="institutionName" placeholder="<?php _e('Please enter the name of your institution','bidxplugin'); ?>">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Consumer type','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" autocomplete="off" name="focusConsumerType" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="consumerType" placeholder="<?php _e('Consumer type','bidxplugin'); ?>">
+                            <div class="row-fluid toggle toggle-investsForInst">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Institution website'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="institutionWebsite" placeholder="<?php _e('Please enter the name of your institution','bidxplugin'); ?>">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Stage of business','bidxplugin'); ?></label>
+                            <div class="row-fluid institutionAddressItem">
+                                <div class="span5">
 
-                                <label class="checkbox" for="cbFocusStageBusinessStartup">
-                                    <input type="checkbox" name="focusStageBusiness" value="startup" id="cbFocusStageBusinessStartup" data-toggle="checkbox">
-                                    <?php _e('Startup','bidxplugin'); ?>
-                                </label>
+                                    <input type="hidden" name="institutionAddress.coordinates"    />
 
-                                <label class="checkbox" for="cbFocusStageBusinessEstablished">
-                                    <input type="checkbox" name="focusStageBusiness" value="established" id="cbFocusStageBusinessEstablished" data-toggle="checkbox">
-                                    <?php _e('Established','bidxplugin'); ?>
-                                </label>
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <select name="institutionAddress.country" ></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="institutionAddress.cityTown" placeholder="<?php _e('Please enter your city','bidxplugin'); ?>" />
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Street','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="institutionAddress.street" placeholder="<?php _e('Please enter your street name','bidxplugin'); ?>" />
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Building number','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="institutionAddress.streetNumber" placeholder="<?php _e('Please enter your building number','bidxplugin'); ?>" />
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Postal code','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="institutionAddress.postalCode" placeholder="<?php _e('Please enter your postcode','bidxplugin'); ?>" />
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Neighborhood','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="institutionAddress.neighborhood" placeholder="<?php _e('Please enter your neighborhood','bidxplugin'); ?>" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="span6 offset1">
+                                    <div class="institutionAddressMap"></div>
+                                </div>
                             </div>
 
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Gender','bidxplugin');?></label>
+                            <!-- \\ accordion body -->
+                        </div>
+                    </div>
+                </div>
 
-                                <label class="checkbox" for="cbFocusGenderMale">
-                                    <input type="checkbox" name="focusGender" value="m" id="cbFocusGenderMale" data-toggle="checkbox">
-                                    <?php _e('Male','bidxplugin'); ?>
-                                </label>
+                <!-- investmentPreferences -->
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#investerAccordion" href="#investmentPreferences">
+                           <?php _e('Investment preferences','bidxplugin'); ?>
+                        </a>
+                    </div>
+                    <div id="investmentPreferences" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <!-- accordion body -->
 
-                                <label class="checkbox" for="cbFocusGenderFemale">
-                                    <input type="checkbox" name="focusGender" value="f" id="cbFocusGenderFemale" data-toggle="checkbox">
-                                    <?php _e('Female','bidxplugin'); ?>
-                                </label>
+                            <span class="scrollPositionMarker" id="editInvestor/investmentPreferences"></span>
+
+                            <div class="alert alert-info">
+                                <?php _e('Use this section to define your investment preferences, such as countries, products or industries that you would like to invest in. This information will be used to match your profileto businesses that fit these criteria.', 'bidxplugin')?>
                             </div>
 
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" autocomplete="off" name="investmentType" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="investmentType" placeholder="<?php _e('Investment type'); ?>">
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Focus industry','bidxplugin'); ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Languages','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="focusLanguage" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="language" placeholder="<?php _e('Languages','bidxplugin'); ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="focusSocialImpact" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="socialImpact" placeholder="<?php _e('Social impact','bidxplugin'); ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="focusEnvImpact" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="envImpact" placeholder="<?php _e('Environmental impact','bidxplugin'); ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Consumer type','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="focusConsumerType" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="consumerType" placeholder="<?php _e('Consumer type','bidxplugin'); ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Stage of business','bidxplugin'); ?></label>
+
+                                        <label class="checkbox" for="cbFocusStageBusinessStartup">
+                                            <input type="checkbox" name="focusStageBusiness" value="startup" id="cbFocusStageBusinessStartup" data-toggle="checkbox">
+                                            <?php _e('Startup','bidxplugin'); ?>
+                                        </label>
+
+                                        <label class="checkbox" for="cbFocusStageBusinessEstablished">
+                                            <input type="checkbox" name="focusStageBusiness" value="established" id="cbFocusStageBusinessEstablished" data-toggle="checkbox">
+                                            <?php _e('Established','bidxplugin'); ?>
+                                        </label>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Gender','bidxplugin');?></label>
+
+                                        <label class="checkbox" for="cbFocusGenderMale">
+                                            <input type="checkbox" name="focusGender" value="m" id="cbFocusGenderMale" data-toggle="checkbox">
+                                            <?php _e('Male','bidxplugin'); ?>
+                                        </label>
+
+                                        <label class="checkbox" for="cbFocusGenderFemale">
+                                            <input type="checkbox" name="focusGender" value="f" id="cbFocusGenderFemale" data-toggle="checkbox">
+                                            <?php _e('Female','bidxplugin'); ?>
+                                        </label>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="investmentType" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="investmentType" placeholder="<?php _e('Investment type'); ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="span5 offset1">
+                                    <h6><?php _e('Location','bidxplugin'); ?></h6>
+
+                                    <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country"><?php _e('Country / Countries','bidxplugin'); ?></label>
+                                    <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="city"><?php _e('City / Cities','bidxplugin'); ?></label>
+                                    <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="reach"><?php _e('Region','bidxplugin'); ?></label>
+
+                                    <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-country">
+                                        <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="focusCountry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country','bidxplugin'); ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-city">
+                                        <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput" placeholder="<?php _e('City','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group  toggle toggle-focusLocationType toggle-focusLocationType-reach">
+                                    <label class="control-label"><?php _e('Region','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="focusReach" data-type="location" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <h4><?php _e('Investment size','bidxplugin'); ?></h4>
+
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Minimum investment','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <span class="add-on">$</span>
+                                                <input type="text" name="minInvestment" placeholder="<?php _e('Minimal investment','bidxplugin'); ?>" min="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="span5 offset1">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Maximum investment','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <span class="add-on">$</span>
+                                                <input type="text" name="maxInvestment" placeholder="<?php _e('Maximum investment','bidxplugin'); ?>" min="0">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-
-                        <div class="span5 offset1">
-                            <h6><?php _e('Location','bidxplugin'); ?></h6>
-
-                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country"><?php _e('Country / Countries','bidxplugin'); ?></label>
-                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="city"><?php _e('City / Cities','bidxplugin'); ?></label>
-                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="reach"><?php _e('Region','bidxplugin'); ?></label>
-
-                            <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-country">
-                                <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" autocomplete="off" name="focusCountry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country','bidxplugin'); ?>">
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Total investment in the previous year','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <span class="add-on">$</span>
+                                                <input type="text" name="totalInvestment" placeholder="<?php _e('Total investment','bidxplugin'); ?>" min="0">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-city">
-                                <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput" placeholder="<?php _e('City','bidxplugin'); ?>">
-                                </div>
-                            </div>
+                            <div class="row-fluid">
+                                <div class="span11">
 
-                            <div class="control-group  toggle toggle-focusLocationType toggle-focusLocationType-reach">
-                            <label class="control-label"><?php _e('Region','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="focusReach" data-type="location" />
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <h4><?php _e('Investment size','bidxplugin'); ?></h4>
-
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Minimum investment','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="input-prepend">
-                                        <span class="add-on">$</span>
-                                        <input type="text" name="minInvestment" placeholder="<?php _e('Minimal investment','bidxplugin'); ?>" min="0">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Other preferences (max. 60 words)','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <textarea name="additionalPreferences" placeholder="<?php _e('Please enter any additional preferences','bidxplugin'); ?>"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="span5 offset1">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Maximum investment','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="input-prepend">
-                                        <span class="add-on">$</span>
-                                        <input type="text" name="maxInvestment" placeholder="<?php _e('Maximum investment','bidxplugin'); ?>" min="0">
+                            <!-- \\ accordion body -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- investmentHistory -->
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#investerAccordion" href="#investmentHistory">
+                            <?php _e('Investment history','bidxplugin'); ?>
+                        </a>
+                    </div>
+                    <div id="investmentHistory" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <!-- accordion body -->
+
+                            <span class="scrollPositionMarker" id="editInvestor/investmentHistory"></span>
+                            <div class="alert alert-info">>
+                                <?php _e('Entrepreneurs are interested in the investments you have made in the past. Give a few details about investments made in the last 12 months or earlier (if  any).', 'bidxplugin')?>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Number of investments in the last 12 months','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Total investment in the previous year','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="input-prepend">
-                                        <span class="add-on">$</span>
-                                        <input type="text" name="totalInvestment" placeholder="<?php _e('Total investment','bidxplugin'); ?>" min="0">
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Amount invested in the last 12 months','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <span class="add-on">$</span>
+                                                <input type="text" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="row-fluid">
-                        <div class="span11">
-
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Other preferences (max. 60 words)','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <textarea name="additionalPreferences" placeholder="<?php _e('Please enter any additional preferences','bidxplugin'); ?>"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </fieldset>
-
-                <fieldset class="well">
-                    <span class="scrollPositionMarker" id="editInvestor/investmentHistory"></span>
-                    <legend><?php _e('Investment history','bidxplugin'); ?></legend>
-                    <p>
-                        <?php _e('Entrepreneurs are interested in the investments you have made in the past. Give a few details about investments made in the last 12 months or earlier (if  any).', 'bidxplugin')?>
-                    </p>
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Number of investments in the last 12 months','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <input type="text" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Amount invested in the last 12 months','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="input-prepend">
-                                        <span class="add-on">$</span>
-                                        <input type="text" name="numberInvestments" placeholder="<?php _e('Number of investments','bidxplugin'); ?>">
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Typical involvement','bidxplugin'); ?></label>
+                                        <div class="btn-group" data-toggle="buttons-radio" name="typicalInvolvement">
+                                          <button type="button" class="btn btn-primary" value="advisory"><?php _e('Advisory','bidxplugin'); ?></button>
+                                          <button type="button" class="btn btn-primary" value="handsOn"><?php _e('Hands-On','bidxplugin'); ?></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="intermediate-row">
+                                <h6><?php _e('Previous investment','bidxplugin'); ?></h6>
+                                <a href="#addPreviousInvestment" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
+                            </div>
+
+                            <div class="previousInvestmentContainer"></div>
+
+                            <!-- \\ accordion body -->
                         </div>
                     </div>
+                </div>
 
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label class="control-label"><?php _e('Typical involvement','bidxplugin'); ?></label>
-                                <div class="btn-group" data-toggle="buttons-radio" name="typicalInvolvement">
-                                  <button type="button" class="btn btn-primary" value="advisory"><?php _e('Advisory','bidxplugin'); ?></button>
-                                  <button type="button" class="btn btn-primary" value="handsOn"><?php _e('Hands-On','bidxplugin'); ?></button>
+                <!-- references -->
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#investerAccordion" href="#references">
+                           <?php _e('References','bidxplugin'); ?>
+                        </a>
+                    </div>
+                    <div id="references" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <!-- accordion body -->
+
+                            <span class="scrollPositionMarker" id="editInvestor/references"></span>
+
+                            <div class="alert alert-info">
+                                <?php _e('References from other entrepreneurs or investment partners are important when getting in touch with another member of the platform. Fill in details of those you have worked with  and are willing recommend you.', 'bidxplugin')?>
+                            </div>
+                            <div class="intermediate-row">
+                                <a href="#addReference" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
+                            </div>
+
+                            <div class="referencesContainer"></div>
+
+                        </fieldset>
+
+                        <fieldset class="well attachmentsControl">
+                            <span class="scrollPositionMarker" id="editInvestor/documents"></span>
+                            <legend><?php _e('Documents','bidxplugin'); ?></legend>
+
+                            <div class="attachmentsContainer"></div>
+
+                            <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
+
+                            <div class="addAttachmentsModal modal hide fade">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3><?php _e('Check the files you want to attach to your member profile', 'bidxplugin' ); ?></h3>
+                              </div>
+                                <div class="modal-body">
+<?php
+                                    // Media app will only be inserted once, this is by design!
+                                    //
+                                    echo do_shortcode( '[bidx app="media"]' );
+?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                    <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
                                 </div>
                             </div>
+
+                            <!-- \\ accordion body -->
                         </div>
                     </div>
+                </div>
 
-                    <div class="intermediate-row">
-                        <h6><?php _e('Previous investment','bidxplugin'); ?></h6>
-                        <a href="#addPreviousInvestment" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
-                    </div>
-
-                    <div class="previousInvestmentContainer"></div>
-
-                </fieldset>
-
-                <fieldset class="well">
-                    <span class="scrollPositionMarker" id="editInvestor/references"></span>
-                    <legend><?php _e('References','bidxplugin'); ?></legend>
-                    <p>
-                        <?php _e('References from other entrepreneurs or investment partners are important when getting in touch with another member of the platform. Fill in details of those you have worked with  and are willing recommend you.', 'bidxplugin')?>
-                    </p>
-                    <div class="intermediate-row">
-                        <a href="#addReference" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
-                    </div>
-
-                    <div class="referencesContainer"></div>
-
-                </fieldset>
-
-                <fieldset class="well attachmentsControl">
-                    <span class="scrollPositionMarker" id="editInvestor/documents"></span>
-                    <legend><?php _e('Documents','bidxplugin'); ?></legend>
-
-                    <div class="attachmentsContainer"></div>
-
-                    <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
-
-                    <div class="addAttachmentsModal modal hide fade">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3><?php _e('Check the files you want to attach to your member profile', 'bidxplugin' ); ?></h3>
-                      </div>
-                        <div class="modal-body">
-    <?php
-                            // Media app will only be inserted once, this is by design!
-                            //
-                            echo do_shortcode( '[bidx app="media"]' );
-    ?>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                            <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
-                        </div>
-                    </div>
-
-                </fieldset>
+                <!-- \\ accordion -->
             </div>
 
         </form>

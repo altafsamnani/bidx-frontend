@@ -15,7 +15,7 @@
     ,   currentHash
     ;
 
-    var INTERVAL_MAILBOX_STATE      = 5000     // check for mailbox state (unread count) every 5s
+    var INTERVAL_MAILBOX_STATE      = 44445000     // check for mailbox state (unread count) every 5s
     ;
 
     var $mainStates     = $( "body .mainState" )
@@ -178,6 +178,23 @@
         }
     }
 
+    // private function which deparamatizes the splat string
+    //
+    function _deparamSplat( splat )
+    {
+        var params
+        ;
+
+        if ( splat )
+        {
+            params = splat.replace( /^[/]/, "" );
+            params = bidx.utils.bidxDeparam( params );
+        }
+        return params;
+    }
+
+
+
     // Update Hash using Backbone Router. If you wish to also call the route function, set the trigger option to true.
     // To update the URL without creating an entry in the browser's history, set the replace option to true.
     //
@@ -212,7 +229,7 @@
         ,   'editEntrepreneur(/:id)(/:section)':                'editEntrepreneur'
         ,   'createEntrepreneur':                               'createEntrepreneur'
 
-        ,   'editInvestor(/:id)(/:section)':                    'editInvestor'
+        ,   'editInvestor(/:id)(*splat)':                       'editInvestor'
         ,   'createInvestor':                                   'createInvestor'
 
         ,   'editMentor(/:id)(/:section)':                      'editMentor'
@@ -238,7 +255,7 @@
 
         ,   'dashboard(/:state)(*splat)':                       'dashboard'
 
-        ,   'cancel':                                           'show'
+        ,   'cancel(/*splat)':                                  'show'
         ,   '*path':                                            'show'
 
         }
@@ -297,9 +314,9 @@
             );
         }
 
-    ,   editInvestor:             function( id, section )
+    ,   editInvestor:             function( id, splat )
         {
-            bidx.utils.log( "AppRouter::editInvestor", id, section );
+            bidx.utils.log( "AppRouter::editInvestor", id, splat );
 
             mainState       = "editInvestor";
 
@@ -310,8 +327,8 @@
                 "investorprofile"
             ,   {
                     requestedState: "edit"
-                ,   section:        section
                 ,   id:             id
+                ,   params:         _deparamSplat( splat )
                 }
             );
 
@@ -430,18 +447,9 @@
             );
         }
 
-    ,   mail:                   function( state, params )
+    ,   mail:                   function( state, splat )
         {
-            bidx.utils.log( "AppRouter::mailInbox State: ", state, " params: ", params );
-
-            // remove leading forward slash from the splat
-            //
-            if( params )
-            {
-                params = params.replace( /^[/]/, "" );
-                params = bidx.utils.bidxDeparam( params );
-            }
-
+            bidx.utils.log( "AppRouter::mailInbox State: ", state );
 
             mainState = "mail";
 
@@ -450,21 +458,13 @@
                 "mail"
             ,   {
                     state:    state
-                ,   params:   params
+                ,   params:   _deparamSplat( splat )
                 }
             );
         }
-     ,  dashboard:               function( state, params )
+     ,  dashboard:               function( state, splat )
         {
-            bidx.utils.log( "AppRouter::dashboard State: ", state, " params: ", params );
-
-         //remove leading forward slash from the splat
-            //
-            if( params )
-            {
-                params = params.replace( /^[/]/, "" );
-                params = bidx.utils.bidxDeparam( params );
-            }
+            bidx.utils.log( "AppRouter::dashboard State: ", state );
 
             mainState = "dashboard";
 
@@ -473,7 +473,7 @@
                 "dashboard"
             ,   {
                     state:    state
-                ,   params:   params
+                ,   params:   _deparamSplat( splat )
                 }
             );
         }
@@ -495,17 +495,10 @@
             );
         }
 
-    ,   auth:                   function( state, params )
+    ,   auth:                   function( state, splat )
         {
-            bidx.utils.log( "AppRouter::auth State: ", state, " params: ", params );
+            bidx.utils.log( "AppRouter::auth State: ", state, splat );
 
-            // remove leading forward slash from the splat
-            //
-            if( params )
-            {
-                params = params.replace( /^[/]/, "" );
-                params = bidx.utils.bidxDeparam( params );
-            }
 
 
             mainState = "auth";
@@ -515,7 +508,7 @@
                 "auth"
             ,   {
                     state:    state
-                ,   params:   params
+                ,   params:   _deparamSplat( splat )
                 }
             );
         }
@@ -531,18 +524,9 @@
             ,   {}
             );
         }
-    ,   register:                   function( params )
+    ,   register:                   function( splat )
         {
-            bidx.utils.log( "AppRouter::register params: ", params );
-
-
-            // remove leading forward slash from the splat
-            //
-            if( params )
-            {
-                params = params.replace( /^[/]/, "" );
-                params = bidx.utils.bidxDeparam( params );
-            }
+            bidx.utils.log( "AppRouter::register splat: ", splat );
 
             mainState = "register";
 
@@ -550,7 +534,7 @@
             (
                 "register"
             ,   {
-                   params:   params
+                   params:   _deparamSplat( splat )
                 }
             );
         }
@@ -589,15 +573,24 @@
                 }
             );
         }
-    ,   show:                   function()
+    ,   show:                   function( splat )
         {
-            bidx.utils.log( "AppRouter::show" );
+            bidx.utils.log( "AppRouter::show", splat );
+            var params =  _deparamSplat( splat );
+
 
             var pendingChanges = bidx.common.checkPendingChanges( function( confirmed )
             {
                 if ( confirmed )
                 {
-                    _doShow();
+                    if ( params && params.redirect )
+                    {
+                        _doRedirect();
+                    }
+                    else
+                    {
+                        _doShow();
+                    }
                 }
                 else
                 {
@@ -607,7 +600,35 @@
 
             if ( !pendingChanges )
             {
-                _doShow();
+                if ( params && params.redirect )
+                {
+                    _doRedirect();
+                }
+                else
+                {
+                    _doShow();
+                }
+            }
+
+            function _doRedirect()
+            {
+                var uri = decodeURIComponent( params.redirect );
+
+                // check if redirect starts with a #, then use updateHash
+                //
+                if ( uri.charAt( 0 ) === "#" )
+                {
+                    bidx.utils.log("UPDATE HASH", uri );
+                    updateHash( uri );
+                }
+                else
+                {
+                    bidx.utils.log("UPDATE LOCATION", uri );
+                    document.location.href = uri;
+                }
+
+
+
             }
 
             function _doShow()

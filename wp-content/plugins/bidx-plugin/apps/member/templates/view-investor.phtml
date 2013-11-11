@@ -15,32 +15,37 @@ if ($investorDetails &&
     <div class="well profile-block details-block">
 
         <div class="btn-group control-buttons">
-            <?php if ($investorDetailsBidxMeta->bidxCanEdit) { ?>
-                <a class="btn btn-primary" href="#editInvestor/<?php echo $this->exst ($investorDetailsBidxMeta->bidxOwnerId); ?>"><?php _e('Edit','bidxplugin'); ?></a>
+<?php
+            if ($investorDetailsBidxMeta->bidxCanEdit) {
+                // #msp: optimal cancel & sucess uri would be #member, but currently not supported by member app
+                $href = "#editInvestor/" . $this -> exst( $investorDetailsBidxMeta -> bidxOwnerId ) . "/" . http_build_query( array( "success"=> "/member", "cancel"=> "/member" ) );
 
-                    <?php
-                        if ($investorDetailsBidxMeta->bidxEntityStatus == 'DRAFT') {
+?>
+                <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
-                            // Encode the missing fields into an attribute so we can provide a nice
-                            // UI feedback in the implementation of the publish button
-                            //
-                            // TODO: this is of couse only for the fields we know are going to be
-                            // missed and fail. This is not helping for the actual publishing which
-                            // might pop up with all kinds of errors. That should be handled in the
-                            // front-end when actually doing the publishing
-                            //
-                            $missingFields = array();
+<?php
+                    if ($investorDetailsBidxMeta->bidxEntityStatus == 'DRAFT') {
 
-                            $missingFieldsAttribute = count($missingFields)
-                                ? sprintf( 'data-missingfields=\'%s\'', json_encode($missingFields) )
-                                : ''
-                            ;
-                    ?>
-                <a class="btn btn-primary" href="#publish/<?php echo $this->exst ($investorDetailsBidxMeta->bidxEntityId); ?>" <?php echo $missingFieldsAttribute; ?>>Publish</a>
-                    <?php
-                        }
+                        // Encode the missing fields into an attribute so we can provide a nice
+                        // UI feedback in the implementation of the publish button
+                        //
+                        // TODO: this is of couse only for the fields we know are going to be
+                        // missed and fail. This is not helping for the actual publishing which
+                        // might pop up with all kinds of errors. That should be handled in the
+                        // front-end when actually doing the publishing
+                        //
+                        $missingFields = array();
+
+                        $missingFieldsAttribute = count($missingFields)
+                            ? sprintf( 'data-missingfields=\'%s\'', json_encode($missingFields) )
+                            : ''
+                        ;
+?>
+                        <a class="btn btn-primary" href="#publish/<?php echo $this->exst ($investorDetailsBidxMeta->bidxEntityId); ?>" <?php echo $missingFieldsAttribute; ?>>Publish</a>
+<?php
                     }
-                    ?>
+                }
+?>
         </div>
 
         <h4 id="investor-profile"><?php _e('Investor profile','bidxplugin');?></h4>

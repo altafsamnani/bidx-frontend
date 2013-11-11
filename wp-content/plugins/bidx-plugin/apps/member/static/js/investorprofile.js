@@ -40,8 +40,8 @@
     ,   investorProfileId
     ,   state
     ,   currentView
-
-    ,   snippets                    = {}
+    ,   redirect                        = {}
+    ,   snippets                        = {}
 
     ,   appName                     = "member"
     ;
@@ -1140,8 +1140,8 @@
 
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  })
+        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save" } )
+        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) } )
         ;
 
         $btnSave.i18nText( "btnSaveProfile" );
@@ -1465,6 +1465,15 @@
     //
     function navigate( options )
     {
+
+        // set redirect for this app's Save & Cancel button and the default redirect behaviour
+        //
+        redirect =
+        {
+            cancel:     ( options.params && options.params.cancel ) ? options.params.cancel : "member/" + options.id
+        ,   success:    ( options.params && options.params.success ) ? options.params.success : "member/" + options.id
+        };
+
         //requestedState, section, id, cb
         switch ( options.requestedState )
         {
@@ -1556,6 +1565,10 @@
             break;
 
         }
+
+        // lookup save & cancel buttons
+
+
     }
 
     // Reset the app back to it's initial state
