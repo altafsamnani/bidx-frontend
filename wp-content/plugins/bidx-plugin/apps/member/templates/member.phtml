@@ -7,11 +7,18 @@ $entities       = $this->sessionData->data->wp->entities;
         <div class="container clearfix">
             <h1 class="pull-left bidx-page-heading">
                 <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></span>
+
                 <span class="editMember hide"><?php _e('Edit my member profile', 'bidxplugin')?></span>
+
                 <span class="editInvestor hide"><?php _e('Edit my investor profile', 'bidxplugin')?></span>
                 <span class="createInvestor hide"><?php _e('Create my investor profile', 'bidxplugin')?></span>
+
                 <span class="editEntrepreneur hide"><?php _e('Edit my entrepreneur profile', 'bidxplugin')?></span>
                 <span class="createEntrepreneur hide"><?php _e('Create my entrepreneur profile', 'bidxplugin')?></span>
+
+                <span class="editMentor hide"><?php _e('Edit my mentor profile', 'bidxplugin')?></span>
+                <span class="createMentor hide"><?php _e('Create my mentor profile', 'bidxplugin')?></span>
+
             </h1>
             <div class="editControls btn-group pull-right"></div>
         </div>
@@ -95,4 +102,5 @@ $entities       = $this->sessionData->data->wp->entities;
     <?php $this->render('edit-member.phtml'); ?>
     <?php $this->render('edit-entrepreneur.phtml'); ?>
     <?php $this->render('edit-investor.phtml'); ?>
+    <?php $this->render('edit-mentor.phtml'); ?>
 </div>

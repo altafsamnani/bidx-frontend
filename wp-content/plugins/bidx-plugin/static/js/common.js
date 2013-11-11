@@ -860,6 +860,11 @@
         {
             return getEntityId( "bidxEntrepreneurProfile" );
         }
+    ,   getMentorProfileId: function()
+        {
+            return getEntityId( "bidxMentorProfile" );
+        }
+
 
     ,   getGroupIds:                    getGroupIds
     ,   getCurrentGroupId:              getCurrentGroupId

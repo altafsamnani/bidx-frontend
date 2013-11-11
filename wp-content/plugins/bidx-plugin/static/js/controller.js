@@ -215,6 +215,9 @@
         ,   'editInvestor(/:id)(/:section)':                    'editInvestor'
         ,   'createInvestor':                                   'createInvestor'
 
+        ,   'editMentor(/:id)(/:section)':                      'editMentor'
+        ,   'createMentor':                                     'createMentor'
+
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
 
@@ -324,6 +327,42 @@
              _navigateToApp
             (
                 "investorprofile"
+            ,   {
+                    requestedState: "create"
+                }
+            );
+        }
+
+    ,   editMentor:             function( id, section )
+        {
+            bidx.utils.log( "AppRouter::editMentor", id, section );
+
+            mainState       = "editMentor";
+
+            $pageHeadings.hide().filter( ".editMentor" ).show();
+
+            _navigateToApp
+            (
+                "mentorprofile"
+            ,   {
+                    requestedState: "edit"
+                ,   section:        section
+                ,   id:             id
+                }
+            );
+
+        }
+    ,   createMentor:          function()
+        {
+            bidx.utils.log( "AppRouter::createMentor" );
+
+            mainState       = "editMentor";
+
+            $pageHeadings.hide().filter( ".createMentor" ).show();
+
+             _navigateToApp
+            (
+                "mentorprofile"
             ,   {
                     requestedState: "create"
                 }

@@ -1,0 +1,158 @@
+<div id="editMentor" class="row-fluid mainState mainStateEditMentor">
+
+    <!-- LOAD -->
+    <div class="view viewLoad span12">
+        <span><?php _e('Retrieving mentor information...','bidxplugin'); ?></span>
+    </div>
+
+    <!-- CREATE -->
+    <div class="view viewCreate span12">
+        <span><?php _e('Creating mentor profile...','bidxplugin'); ?></span>
+    </div>
+
+    <!-- ERROR -->
+    <div class="view viewError span12">
+        <h2><?php _e('Error','bidxplugin'); ?></h2>
+        <p class="errorMsg"></p>
+    </div>
+
+    <!-- EDIT -->
+    <div class="view viewEdit">
+
+        <form id="frmeditMentor">
+
+            <div class="span3">
+                <ul class="nav nav-list nav-edit nav-editMentor hidden-phone">
+                    <li><a href="#editMentor/generalInformation"><?php _e('General information','bidxplugin'); ?></a>
+                    <li><a href="#editMentor/mentorPrefrences"><?php _e('Mentor preferences','bidxplugin'); ?></a>
+                    <li><a href="#editMentor/documents"><?php _e('Documents','bidxplugin'); ?></a>
+                </ul>
+            </div>
+
+            <div class="span9">
+
+                <fieldset class="well">
+                    <span class="scrollPositionMarker" id="editMentor/generalInformation"></span>
+                    <legend><?php _e('General information','bidxplugin'); ?></legend>
+                    <p>
+                        <?php _e('Tell visitors and members of the group how you see yourself as a mentor. Give a brief description of your mentor interests.', 'bidxplugin')?>
+                    </p>
+                    <div class="row-fluid">
+                        <div class="span11">
+
+                            <div class="control-group">
+                                <label class="control-label"><?php _e('Describe yourself as a mentor','bidxplugin'); ?></label>
+                                <div class="controls">
+                                    <textarea name="mentorProfileSummary" placeholder="<?php _e('Please type in the description of you as a mentor','bidxplugin'); ?>" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+                <fieldset class="well">
+                    <span class="scrollPositionMarker" id="editMentor/mentorPreferences"></span>
+                    <legend><?php _e('Mentor preferences','bidxplugin'); ?></legend>
+                    <p>
+                        <?php _e('Use this section to define your mentor preferences.', 'bidxplugin')?>
+                    </p>
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <div class="control-group">
+                                <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
+                                <div class="controls">
+                                    <div class="bidx-tagsinput-container">
+                                        <input type="text" autocomplete="off" name="focusIndustry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Focus industry','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="span5 offset1">
+                            <h6><?php _e('Location','bidxplugin'); ?></h6>
+
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country"><?php _e('Country / Countries','bidxplugin'); ?></label>
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="city"><?php _e('City / Cities','bidxplugin'); ?></label>
+                            <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="reach"><?php _e('Region','bidxplugin'); ?></label>
+
+                            <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-country">
+                                <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
+                                <div class="controls">
+                                    <div class="bidx-tagsinput-container">
+                                        <input type="text" autocomplete="off" name="focusCountry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-city">
+                                <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
+                                <div class="controls">
+                                    <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput" placeholder="<?php _e('City','bidxplugin'); ?>">
+                                </div>
+                            </div>
+
+                            <div class="control-group  toggle toggle-focusLocationType toggle-focusLocationType-reach">
+                            <label class="control-label"><?php _e('Region','bidxplugin'); ?></label>
+                                <div class="controls">
+                                    <input type="text" name="focusReach" data-type="location" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- ATTACHMENTS -->
+                <fieldset class="well attachmentsControl">
+                    <span class="scrollPositionMarker" id="editInvestor/documents"></span>
+                    <legend><?php _e('Documents','bidxplugin'); ?></legend>
+
+                    <div class="attachmentsContainer"></div>
+
+                    <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
+
+                    <div class="addAttachmentsModal modal hide fade">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3><?php _e('Check the files you want to attach to your member profile', 'bidxplugin' ); ?></h3>
+                      </div>
+                        <div class="modal-body">
+    <?php
+                            // Media app will only be inserted once, this is by design!
+                            //
+                            echo do_shortcode( '[bidx app="media"]' );
+    ?>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                            <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="snippets hide">
+
+        <!-- Attachment -->
+        <div class="attachmentItem span4 well well-white">
+            <div class="row-fluid">
+                <div class="span4">
+                    <a href="#" class="documentLink"><img class="img-rounded documentImage"></a>
+                </div>
+                <div class="span7">
+                    <h3 class="documentName"></h3>
+                    <p class="createdDateTime"></p>
+                    <p class="purpose"></p>
+                    <p class="documentType"></p>
+                </div>
+            </div>
+            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove from profile','bidxplugin'); ?></a>
+        </div>
+    </div>
+
+</div><!-- // row -->
