@@ -159,7 +159,7 @@
     //
     var setElementValue = function( $el, value )
     {
-        var elType      = $el.attr( 'type' )
+        var elType      = $el.attr( 'type' ) || $el[0].nodeName.toLowerCase()
         ,   dataType    = $el.attr( 'data-type' )
         ,   valueType   = $.type( value )
         ,   dateObj
@@ -269,6 +269,26 @@
                                     $f.prop( "checked", true );
                                 }
                             } );
+                        }
+                    break;
+
+                    case 'select':
+
+                        if ( $.type( value ) === "array" )
+                        {
+                            $.each( value, function( idx, v )
+                            {
+                                var $f = $el.find( "[value='" + v + "']" );
+
+                                $f.prop( "selected", true );
+                            } );
+                        }
+                        else
+                        {
+                            $el
+                                .find( "[value='" + value + "']" )
+                                .prop( "selected", true )
+                            ;
                         }
                     break;
 
