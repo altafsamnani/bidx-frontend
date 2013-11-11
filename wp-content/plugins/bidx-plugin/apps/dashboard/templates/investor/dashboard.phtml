@@ -36,7 +36,7 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Entrepreneur</th>
-                                <th>Country</th>
+                                <th class="hidden-phone">Country</th>
                                 <th>Industry</th>
 
                             </tr>
@@ -62,11 +62,11 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Entrepreneur</th>
-                                <th>Location</th>
+                                <th class="hidden-phone">Location</th>
                                 <th>Industry</th>
-                                <th>Your last visit</th>
-                                <th>Request status</th>
-                                <th>Changes since last visit?</th>
+                                <th class="hidden-phone">Your last visit</th>
+                                <th class="hidden-phone">Request status</th>
+                                <th class="hidden-phone">Changes since last visit?</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -111,21 +111,21 @@
     <td>
         <span class="placeholder name">%name%</span>
     </td>
-    <td>
+    <td class="hidden-phone">
         <span class="placeholder countryOperation">%countryOperation%</span>
     </td>
     <td>
         <span class="placeholder industry">%industry%</span>
     </td>
-    <td>
+    <td class="hidden-phone">
         <span class="placeholder bidxCreationDateTime">%bidxCreationDateTime%</span>
     </td>
-    <td>
+    <td class="hidden-phone">
         <a  data-toggle="collapse" data-target="#status-%accordion-id%" class="accordion-toggle">
         <span class="placeholder status">%status%</span>
         </a>
     </td>
-    <td>
+    <td class="hidden-phone">
         <span class="placeholder bidxCreationDateTime">%bidxCreationDateTime%</span>
     </td>
     <td>
@@ -287,7 +287,7 @@
    <td>
       <span class="placeholder creator"><a target = "_blank" href="/member/%creatorId%" >%creator%</a></span>
    </td>
-   <td>
+   <td class="hidden-phone">
       <span class="placeholder countrylabel_ss">%countrylabel_ss%</span>
    </td>
    <td>
@@ -360,7 +360,7 @@
 <script type="text/html" id="investor-empty">
 <!--
 <tr class="match investor-match" >
-    <td colspan='4'>
+    <td colspan='7'>
        <div class="pull-left">
           <?php _e ('No matches available', 'bidxplugin') ?>
        </div>
