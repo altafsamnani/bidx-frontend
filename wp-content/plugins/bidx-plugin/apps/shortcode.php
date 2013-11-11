@@ -133,8 +133,8 @@ class BidxShortcode
             Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
         } else {
 
-            wp_register_style( 'chosen', $vendorDir . '/chosen_v1.0.0/chosen.css', array(), '20131111', 'all' );
-            wp_enqueue_style( 'chosen' );
+            // wp_register_style( 'chosen', $vendorDir . '/chosen_v1.0.0/chosen.css', array(), '20131111', 'all' );
+            // wp_enqueue_style( 'chosen' );
 
 
             //vendor scripts
