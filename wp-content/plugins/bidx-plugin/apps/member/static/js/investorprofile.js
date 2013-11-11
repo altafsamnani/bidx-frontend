@@ -1566,15 +1566,6 @@
 
         bidx.common.removeAppWithPendingChanges( appName );
 
-        var url = document.location.href.split( "#" ).shift();
-        var redirect_to = bidx.utils.getQueryParameter( "redirect_to", url );
-
-        if( redirect_to ) {
-            url = '/' + redirect_to;
-            document.location.href = url;
-        }
-
-
 
     }
 
