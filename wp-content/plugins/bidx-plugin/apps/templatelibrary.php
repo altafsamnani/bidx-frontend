@@ -870,9 +870,9 @@ class TemplateLibrary
      *
      * @return mixed
      */
-    function exst (& $var, $default = null)
+    function exst (& $var, $default = null, $escape = true)
     {
-        $var = (is_string ($var)) ? $this->escapeHtml ($var) : $var;
+        $var = ($escape && is_string ($var)) ? $this->escapeHtml ($var) : $var;
         return empty ($var) ? $var = $default : $var;
     }
 
@@ -919,7 +919,7 @@ class TemplateLibrary
     }
 
     /**
-     * Escape Speical Html Chars
+     * Escape Special Html Chars
      * @author Altaf S
      * @param String $htmlsanitize String
      * @return String $audioVideoHtml Returns special html chars
