@@ -669,7 +669,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 $companyWebsite = null;
 
                                 if ( $this->exst( $company->website ) ) {
-                                    $companyWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $company->website );
+                                    $companyWebsite = sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst($company->website) );
                                 }
 
                                 $rowValues = array (
