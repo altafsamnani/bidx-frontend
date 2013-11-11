@@ -649,30 +649,31 @@
     ,   errorPlacement:     function( $error, $element )
         {
             var inserted            = false
-            ,   $container
+            ,   $controls
             ,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
             ;
 
-            // When handling any field, the error needs to go outside of the wrapper ("controls")
+            // When handling any field, the error needs to be inserted after the control tag
             //
-            //$container = $element.closest( ".control-group" );
-            $container = $element.closest( ".controls" );
+            $controls = $element.closest( ".controls" );
 
-            if ( $container.length && !$element.hasClass( "noValidationErrorMessage" ))
+
+            if ( $controls.length && !$element.hasClass( "noValidationErrorMessage" ))
             {
-             //   $error.appendTo( $container );
-                $container.after( $error );
+                // add the error after the control tag
+                //
+                $controls.after( $error );
             }
 
             // Forms can be configured to have no validation icon behind the elements
             //
             if ( ( !this.settings || !this.settings.noValidationIcon ) && !$element.hasClass( "noValidationIcon" ) )
             {
-                if ( $container.length )
+                if ( $controls.length )
                 {
-                    if( !$container.find( ".controls" ).find( ".validation-icon" ).length )
+                    if( !$controls.find( ".validation-icon" ).length )
                     {
-                        $container.find( ".controls" ).append( $errorIcon );
+                        $controls.append( $errorIcon );
                     }
 
                     inserted = true;
