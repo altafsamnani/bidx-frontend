@@ -10,6 +10,8 @@
 
     ,   $btnSave
     ,   $btnCancel
+    ,   $btnFullAccessRequest       = $editControls.find( ".bidxRequestFullAccess") // this button can be absent if user is viewing own summary
+
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
@@ -1059,6 +1061,17 @@
             ,   itemClass:          "attachmentItem"
             } );
         }
+
+        // setup Full Accesss Request
+        // only for users not owning the current summary
+        // #MSP: WORK IN PROGRESS
+        //
+        if ( $btnFullAccessRequest )
+        {
+
+        }
+
+
     }
 
     // Add an attachment to the screen

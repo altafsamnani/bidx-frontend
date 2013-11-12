@@ -47,14 +47,36 @@ class SessionService extends APIBridge {
         $sessionData = BidxCommon::$staticSession;
         $entities = (isset($sessionData->data->entities)) ? $sessionData->data->entities : NULL;
         if ($entities) {
-            foreach ($entities as $value) {
-                if ($value->bidxMeta->bidxEntityType == $type) {
+            foreach ($entities as $entity) {
+                if ($entity->bidxMeta->bidxEntityType == $type) {
                     return true;
                 }
             }
         }
         return false;
     }
+
+    /**
+     * Checks if the user is having particular profile ex Investor, Entrprepneur,
+     *
+     * @param String $type Type of profile (investor,entrpreneur etc)
+     *
+     * @return entity object if having the profilem or boolean if not
+     */
+    function returnEntity ( $type )
+    {
+        $sessionData = BidxCommon::$staticSession;
+        $entities = (isset($sessionData->data->entities)) ? $sessionData->data->entities : NULL;
+        if ($entities) {
+            foreach ($entities as $entity) {
+                if ($entity->bidxMeta->bidxEntityType == $type) {
+                    return $entity;
+                }
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Retrieve an array of the groups this member is associated with members
