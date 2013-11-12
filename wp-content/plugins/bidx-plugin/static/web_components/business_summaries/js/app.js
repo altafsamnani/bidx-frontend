@@ -233,14 +233,14 @@ bidx.widgets = {
         {
             // Get the body
             body: document.getElementsByTagName( 'body' )[0],
-
+            el:  document.querySelectorAll( '.bidx-businesssummaryselector' )[0],
             // Error for no matching element
             noElement: function()
             {
                 // Create a <p> tag an add a message for no <select> tag
                 var msg = document.createElement( 'p' );
                 msg.innerText = 'Please create a <select> element with a class of "bidx-businesssummaryselector"';
-                bidx.widgets.businessSummarySelector.error.body.appendChild( msg );
+                bidx.widgets.businessSummarySelector.error.el.appendChild( msg );
             },
 
             // Error for no findings
@@ -249,7 +249,7 @@ bidx.widgets = {
                 // Create a <p> tag an add a message for no no Businesses with Summary
                 var msg2 = document.createElement( 'p' );
                 msg2.innerText = 'Unfortunately there are no Businesses with Summary at the moment';
-                bidx.widgets.businessSummarySelector.error.body.appendChild( msg2 );
+                bidx.widgets.businessSummarySelector.error.el.appendChild( msg2 );
             },
 
             // Error for no connection
@@ -257,7 +257,7 @@ bidx.widgets = {
             {
                 var msg3 = document.createElement( 'p' );
                 msg3.innerText = 'No Connection or Not logged in';
-                bidx.widgets.businessSummarySelector.error.body.appendChild( msg3 );
+                bidx.widgets.businessSummarySelector.error.el.appendChild( msg3 );
             }
         } // error
     },
