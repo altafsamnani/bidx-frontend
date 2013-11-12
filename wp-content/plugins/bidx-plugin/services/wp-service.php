@@ -206,7 +206,6 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
         $result['response']['code'] = 'timeout';
     }
 
-
     return $result;
 }
 
@@ -893,22 +892,23 @@ function bidx_wordpress_post_action ($url, $result, $body)
 
                 if ($requestData->code == 'userLoggedIn') {
                     //Default Role is anonymous
-                    $username = $groupName . 'groupanonymous';
+                    $username = $groupName . WP_ANONYMOUS_ROLE;
 
                     if (!empty ($displayData->roles)) {
                         $roleArray = $displayData->roles;
-
+                        $bidxLoginPriority = explode('|',BIDX_LOGIN_PRIORITY);
                         if (in_array ("SysAdmin", $roleArray)) {
                             //$username = 'admin';
                             $username = 'admin';
-                        } else if (in_array ("GroupOwner", $roleArray)) {
+                        } else if (in_array ($bidxLoginPriority[0], $roleArray)) {
 
-                            $username = $groupName . 'groupowner';
-                        } else if (in_array ("GroupAdmin", $roleArray)) {
+                            $username = $groupName . WP_OWNER_ROLE;
+                        } else if (in_array ($bidxLoginPriority[1], $roleArray)) {
 
-                            $username = $groupName . 'groupadmin';
-                        } else if (in_array ("Member", $roleArray)) {
-                            $username = $groupName . 'groupmember';
+                            $username = $groupName . WP_ADMIN_ROLE;
+                        } else if (in_array ($bidxLoginPriority[2], $roleArray)) {
+
+                            $username = $groupName . WP_MEMBER_ROLE;
                         }
                     }
                 } else {
@@ -1129,7 +1129,7 @@ function bidx_delete_wp_pages ()
             $domain = $_SERVER['HTTP_HOST'];
             $groupDomainArr = array ('cambridge-angels', 'sampoerna', 'shell', 'burundi-fruits');
 
-            $roleArr = array ('', 'groupadmin', 'groupowner', 'groupmember', 'groupanonymous');
+            $roleArr = array ('', WP_ADMIN_ROLE, WP_OWNER_ROLE, WP_MEMBER_ROLE, WP_ANONYMOUS_ROLE);
 
 
             $blog_title = strtolower (get_bloginfo ());
@@ -1553,7 +1553,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
             $requestData = $requestGroupData;
         } else {
 
-            $username_wp = $_POST['businessGroupName'] . 'groupadmin';
+            $username_wp = $_POST['businessGroupName'] . WP_ADMIN_ROLE;
             force_wordpress_login ($username_wp);
             $requestData->status = 'OK';
             $requestData->submit = '/member';
@@ -1730,7 +1730,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
         restore_current_blog ();
     }
 
-    
+
 
     /* Start Add Custom Page attribute whether you want to add page in Group site creation
      * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
@@ -1842,7 +1842,7 @@ function bidx_options ()
             if ($action == 'Save') {
                 update_site_option ($notificationType, $notificationVal);
             } else {
-                
+
             }
         }
         /* 3 Bidx Push Notification */
@@ -1939,7 +1939,7 @@ function bidx_add_dashboard_widgets ()
 {
 
     $currentUser = wp_get_current_user ();
-    if (in_array ('groupadmin', $currentUser->roles)) {
+    if (in_array (WP_OWNER_ROLE, $currentUser->roles) || in_array (WP_ADMIN_ROLE, $currentUser->roles)) {
         bidx_remove_core_widgets (); // Remove core Wp widgets for Group admin role
 //        wp_add_dashboard_widget (
 //            'bidx_dashboard_widget', // Widget slug.
@@ -2026,7 +2026,7 @@ function alter_site_menu ()
     else { // for all other users
         $current_user = wp_get_current_user ();
 
-        if (in_array ("groupadmin", $current_user->roles) || in_array ("groupowner", $current_user->roles) || in_array ("groupmember", $current_user->roles)) {
+        if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles) || in_array (WP_MEMBER_ROLE, $current_user->roles)) {
             /* Removal of Wp Core Menus */
             remove_menu_page ('profile.php');
             remove_menu_page ('tools.php');
@@ -2037,7 +2037,7 @@ function alter_site_menu ()
             add_action ('admin_head', 'wpc_remove_admin_elements');
 
             /* Dashboard GroupAdmin/GroupOwner Menus */
-            if (in_array ("groupadmin", $current_user->roles) || in_array ("groupowner", $current_user->roles)) {
+            if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles)) {
                 add_menu_page ('Invite', 'Invite members', 'edit_theme_options', 'invite', 'bidx_dashboard_invite');
                 add_menu_page ('Monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
                 add_menu_page ('Getting Started', 'Getting Started', 'edit_theme_options', 'gettingstarted', 'bidx_getting_started');
@@ -2061,7 +2061,7 @@ function bidx_dashboard_header ()
     $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
     $currentUser = wp_get_current_user ();
 
-    if (in_array ('groupadmin', $currentUser->roles)) {
+    if (in_array (WP_ADMIN_ROLE, $currentUser->roles) || in_array (WP_OWNER_ROLE, $currentUser->roles) ) {
         roots_scripts ();
         $menu = 'dashboard';
 

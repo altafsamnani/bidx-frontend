@@ -54,6 +54,49 @@ if ( !defined('BIDX_OPENID_URL') ) {
     //define('BIDX_OPENID_URL','http://bas.bidx.net:8080/app/api/v1/openid/sso');
 }
 
+/***** Wordpress Roles for Bidx ******/
+/* Wordpress Group Owner Role */
+if ( !defined('WP_OWNER_ROLE') ) {
+    define( 'WP_OWNER_ROLE', 'groupowner' );
+}
+
+/* Wordpress Group Admin Role */
+if ( !defined('WP_ADMIN_ROLE') ) {
+    define( 'WP_ADMIN_ROLE', 'groupadmin' );
+}
+
+/* Wordpress Group Member Role */
+if ( !defined('WP_MEMBER_ROLE') ) {
+    define( 'WP_MEMBER_ROLE', 'groupmember' );
+}
+
+/* Wordpress Group Anonymous Role */
+if ( !defined('WP_ANONYMOUS_ROLE') ) {
+    define( 'WP_ANONYMOUS_ROLE', 'groupanonymous' );
+}
+
+/******** Bidx API Roles **************/
+/* Bidx Group Owner Role */
+if ( !defined('BIDX_OWNER_ROLE') ) {
+    define( 'BIDX_OWNER_ROLE', 'GroupOwner' );
+}
+
+/* Wordpress Group Admin Role */
+if ( !defined('BIDX_ADMIN_ROLE') ) {
+    define( 'BIDX_ADMIN_ROLE', 'GroupAdmin' );
+}
+
+/* Wordpress Group Member Role */
+if ( !defined('BIDX_MEMBER_ROLE') ) {
+    define( 'BIDX_MEMBER_ROLE', 'Member' );
+}
+
+/**** Bidx Login Priority who should login first ***/
+if ( !defined('BIDX_LOGIN_PRIORITY') ) {
+    //define( 'BIDX_LOGIN_PRIORITY', WP_OWNER_ROLE.'|'.WP_ADMIN_ROLE.'|'.WP_MEMBER_ROLE);
+    define( 'BIDX_LOGIN_PRIORITY', BIDX_OWNER_ROLE.'|'.BIDX_ADMIN_ROLE.'|'.BIDX_MEMBER_ROLE);
+}
+
 //SLOW !!
 //add_option( BIDX_VERSION_KEY, BIDX_VERSION_NUM );
 
@@ -137,7 +180,7 @@ if (WP_DEVELOPMENT != true) {
 /**
  * This is added here to ensure that rewrites work fine.
  * Need to be placed in a different place later
- * 
+ *
  */
 add_filter('rewrite_rules_array', 'bidx_manage_rewrites');
 
@@ -146,8 +189,8 @@ function bidx_manage_rewrites( $rules ) {
 	$bidx_rewrite_rules = get_option( 'BIDX_REWRITE_RULES' );
 	Logger::getLogger ( 'util' ) -> trace( 'Stored Rewrite Rules : ');
 	Logger::getLogger ( 'util' ) -> trace( $bidx_rewrite_rules );
-	
-	if ( isset( $bidx_rewrite_rules ) && is_array( $bidx_rewrite_rules ) ) {		
+
+	if ( isset( $bidx_rewrite_rules ) && is_array( $bidx_rewrite_rules ) ) {
     	foreach ( $rules as $rule => $rewrite ) {
     		if ( in_array( $bidx_rewrite_rules, $rule ) ) {
     			unset($bidx_rewrite_rules[$rule]);
@@ -158,7 +201,7 @@ function bidx_manage_rewrites( $rules ) {
     else {
     	$new_rules = $rules;
     }
-    
+
     return $new_rules;
 }
 

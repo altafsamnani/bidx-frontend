@@ -511,12 +511,13 @@ class BidxCommon
             $groupName = $subDomain;
             $roles = $sessionData->data->roles;
             $currentUser = wp_get_current_user ();
-            if (in_array ('GroupOwner', $roles)) {
-                $userName = $groupName . 'groupowner';
-            }else if (in_array ('GroupAdmin', $roles)) {
-                $userName = $groupName . 'groupadmin';
+            $bidxLoginPriority = explode('|',BIDX_LOGIN_PRIORITY);
+            if (in_array ($bidxLoginPriority[0], $roles)) {
+                $userName = $groupName . WP_OWNER_ROLE;
+            }else if (in_array ($bidxLoginPriority[1], $roles)) {
+                $userName = $groupName . WP_ADMIN_ROLE;
             } else {
-                $userName = $groupName . 'groupmember';
+                $userName = $groupName . WP_MEMBER_ROLE;
             }
 
             //If currently Logged in dont do anything
