@@ -128,6 +128,7 @@ class BidxShortcode
 
         $bidxJsDir = sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
         $vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
+        $staticDir = sprintf ('%s/../static', BIDX_PLUGIN_URI);
 
         if (BidxCommon :: isWPInternalFunction ()) {
             Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
@@ -176,6 +177,8 @@ class BidxShortcode
             wp_register_script ('bidx-tagsinput', $bidxJsDir . '/bidx-tagsinput.js', array ('bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data'), '20130703', TRUE);
 
             wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
+
+            wp_enqueue_script ('business-summaries', $staticDir . '/web_components/business_summaries/js/app.js', array ('jquery'), '20131112', TRUE);
 
             wp_enqueue_script ('bidx-common');
             wp_enqueue_script ('bidx-controller');
