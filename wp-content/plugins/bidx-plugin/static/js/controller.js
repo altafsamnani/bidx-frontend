@@ -206,6 +206,29 @@
         bidx.utils.log("hash changed to", newHash );
     }
 
+
+    function doRedirect( redirect )
+    {
+        var uri = decodeURIComponent( redirect );
+
+        // check if redirect starts with a #, then use updateHash
+        //
+
+        if ( uri.charAt( 0 ) === "#" )
+        {
+            bidx.utils.log("UPDATE HASH", uri );
+            updateHash( uri );
+        }
+        else
+        {
+            bidx.utils.log("UPDATE LOCATION", uri );
+            document.location.href = uri;
+        }
+
+
+
+    }
+
     // show the substate of a app that is part of a composite app. NOTE: this function might be redundant if it turns out the the compisite view-app always handles the visibility of its child-apps
     //
     function showAppState( app, s )
@@ -259,6 +282,7 @@
         ,   '*path':                                            'show'
 
         }
+
     ,   editMember:             function( id, section )
         {
 
@@ -585,7 +609,7 @@
                 {
                     if ( params && params.redirect )
                     {
-                        _doRedirect();
+                        doRedirect( params.redirect );
                     }
                     else
                     {
@@ -602,7 +626,7 @@
             {
                 if ( params && params.redirect )
                 {
-                    _doRedirect();
+                    doRedirect( params.redirect );
                 }
                 else
                 {
@@ -610,26 +634,6 @@
                 }
             }
 
-            function _doRedirect()
-            {
-                var uri = decodeURIComponent( params.redirect );
-
-                // check if redirect starts with a #, then use updateHash
-                //
-                if ( uri.charAt( 0 ) === "#" )
-                {
-                    bidx.utils.log("UPDATE HASH", uri );
-                    updateHash( uri );
-                }
-                else
-                {
-                    bidx.utils.log("UPDATE LOCATION", uri );
-                    document.location.href = uri;
-                }
-
-
-
-            }
 
             function _doShow()
             {
@@ -684,6 +688,7 @@
         }
 
     ,   updateHash:                         updateHash
+    ,   doRedirect:                         doRedirect
     ,   showAppState:                       showAppState
 
         // The following functions are deprecated and should be called on bidx.common

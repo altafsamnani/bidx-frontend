@@ -15,6 +15,8 @@
 
     ,   $btnAddReference                = $editForm.find( "[href$='#addReference']" )
     ,   $referencesContainer            = $editForm.find( ".referencesContainer" )
+    ,   $btnSave
+    ,   $btnCancel
 
         // Attachnents
         //
@@ -1140,8 +1142,8 @@
 
         // Inject the save and button into the controls
         //
-        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save" } )
-        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) } )
+        $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save" } );
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) } );
         ;
 
         $btnSave.i18nText( "btnSaveProfile" );
@@ -1365,6 +1367,9 @@
     {
         var bidxAPIService
         ,   bidxAPIParams
+        ,   url
+        ,   rs
+        ,   uriParts
         ;
 
         if ( !member )
@@ -1398,25 +1403,35 @@
                 bidx.common.notifyRedirect();
                 bidx.common.removeAppWithPendingChanges( appName );
 
-                var url = document.location.href.split( "#" ).shift();
 
+
+
+                // creation of redirect url
                 // Maybe rs=true was already added, or not 'true' add it before reloading
                 //
-                var rs          = bidx.utils.getQueryParameter( "rs", url );
-                var redirect_to = bidx.utils.getQueryParameter( "redirect_to", url );
+                url =  redirect.success;
+                rs  = bidx.utils.getQueryParameter( "rs", url );
 
+                if (!rs )
+                {
+                    uriParts = url.split( "#");
+                    if( uriParts.length > 1 )
+                    {
 
-                if( redirect_to ) {
-                    url = '/' + redirect_to;
+                        url = uriParts[ 0 ] + "?rs=true/#" + uriParts[ 1 ];
+                    }
                 }
 
-                if ( !rs || rs !== "true" )
+                /*if( redirect_to ) {
+                    url = '/' + redirect_to;
+                }*/
+
+               /* if ( !rs || rs !== "true" )
                 {
                     url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
                     url += "rs=true";
-                }
-
-                document.location.href = url;
+                }*/
+                bidx.controller.doRedirect( url );
             }
         ,   error:          function( jqXhr, textStatus )
             {
@@ -1465,15 +1480,17 @@
     //
     function navigate( options )
     {
-
+bidx.utils.log("OPTIONS", options);
         // set redirect for this app's Save & Cancel button and the default redirect behaviour
         //
+        bidx.utils.log(options.params);
         redirect =
         {
             cancel:     ( options.params && options.params.cancel ) ? options.params.cancel : "member/" + options.id
         ,   success:    ( options.params && options.params.success ) ? options.params.success : "member/" + options.id
         };
 
+bidx.utils.log("REDIRECT", redirect);
         //requestedState, section, id, cb
         switch ( options.requestedState )
         {
