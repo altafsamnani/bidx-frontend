@@ -1480,17 +1480,15 @@
     //
     function navigate( options )
     {
-bidx.utils.log("OPTIONS", options);
         // set redirect for this app's Save & Cancel button and the default redirect behaviour
         //
-        bidx.utils.log(options.params);
         redirect =
         {
             cancel:     ( options.params && options.params.cancel ) ? options.params.cancel : "member/" + options.id
         ,   success:    ( options.params && options.params.success ) ? options.params.success : "member/" + options.id
         };
 
-bidx.utils.log("REDIRECT", redirect);
+
         //requestedState, section, id, cb
         switch ( options.requestedState )
         {

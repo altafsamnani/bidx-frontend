@@ -151,8 +151,10 @@ if ($businessSummary) {
 
                             <div class="bottom-controls">
             <?php
-            $viewMoreLink = "<a href='/businesssummary/" . $businessBidxMeta->bidxEntityId . "'>". __('view more','bidxplugin') ."</a>";
-            echo $viewMoreLink;
+
+                //$redirect = http_build_query( array( "cancel"=> $_SERVER[ "REQUEST_URI" ] ) ); // @msp: currently useless because the view state doesnt have a hash and is not routed through Backbone
+                $viewMoreLink = "<a href='/businesssummary/" . $businessBidxMeta->bidxEntityId ."'>". __('view more','bidxplugin') ."</a>";
+                echo $viewMoreLink;
             ?>
                             </div>
                         </div>
