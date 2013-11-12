@@ -77,6 +77,10 @@ bidx.widgets = {
             {
                 api = '//test.bidx.net';
             }
+            else if ( host.indexOf( 'beta' ) >= 0  )
+            {
+                api = '//beta.bidx.net';
+            }
             else
             {
                 api = '//bidx.net';
