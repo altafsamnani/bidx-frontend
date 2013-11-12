@@ -248,14 +248,16 @@ bidx.widgets = {
             {
                 // Create a <p> tag an add a message for no no Businesses with Summary
                 var msg2 = document.createElement( 'p' );
-                msg2.innerText = 'Unfortunately there are no Businesses with Summary at the moment"';
+                msg2.innerText = 'Unfortunately there are no Businesses with Summary at the moment';
                 bidx.widgets.businessSummarySelector.error.body.appendChild( msg2 );
             },
 
             // Error for no connection
             noConnection: function ()
             {
-                alert('BidX Message: No Connection or Not logged in');
+                var msg3 = document.createElement( 'p' );
+                msg3.innerText = 'No Connection or Not logged in';
+                bidx.widgets.businessSummarySelector.error.body.appendChild( msg3 );
             }
         } // error
     },
