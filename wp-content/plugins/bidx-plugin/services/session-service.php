@@ -77,16 +77,6 @@ class SessionService extends APIBridge {
         return false;
     }
 
-    /*
-        PLEASE FINISH FUNCTION??
-    */
-    function isAdmin(  )
-    {
-
-
-        return false;
-    }
-
 
     /**
      * Retrieve an array of the groups this member is associated with members
@@ -94,24 +84,19 @@ class SessionService extends APIBridge {
      * @return array with groups or empty array if there are no group associated with this member
      */
     function getGroups( ) {
+    	
         $sessionData = BidxCommon::$staticSession;
         $groups = $sessionData->data->groups;
         $result = array();
-
-
-    $profiles = array(
-        'bidxInvestorProfile'        => array(
-            'Investor Dashboard' => '/investor-dashboard'
-        ),
-        'bidxEntrepreneurProfile'   => array(
-            'Entrepreneur Dashboard' => '/entrepreneur-dashboard'
-        )
-    );
-
-
-
+	    $profiles = array(
+	        'bidxInvestorProfile'        => array(
+	            'Investor Dashboard' => '/investor-dashboard'
+	        ),
+	        'bidxEntrepreneurProfile'   => array(
+	            'Entrepreneur Dashboard' => '/entrepreneur-dashboard'
+	        )
+	    );
         foreach($groups as $key => $value) {
-
             if ( $value -> bidxMeta -> bidxGroupType === "Open" )
             {
                 $result [ $key ] = array(
@@ -119,12 +104,25 @@ class SessionService extends APIBridge {
                     "url"   => $value -> bidxMeta -> bidxGroupUrl
                 );
             }
-
         }
-
         return $result;
-
     }
 
+    /**
+     * Checks if the user is an admin in the current group.
+     * @return boolean true if admin, false if not
+     */
+    function isAdmin( ) {
+    	$sessionData = BidxCommon::$staticSession;
+    	$roles = ( !empty($sessionData->data->roles ) ) ? $sessionData->data->roles:NULL;
+    	$currentGroupAdmin = false;
+    	if ( !empty($sessionData) && !empty($roles) ) {
+    		if ( in_array( 'GroupAdmin', $roles ) ||
+    			 in_array( 'GroupOwner', $roles ) ) {
+    			$currentGroupAdmin = true;
+    		}
+    	}
+    	return $currentGroupAdmin;
+    }
 }
 ?>
