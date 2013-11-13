@@ -33,6 +33,7 @@
     //
     $hasProfiles = count( $profiles) !== 0;
     $hasGroups = count( $groups) > 1;
+	$isAdmin = $sessionSvc->isAdmin();
 ?>
 
 <div class="iconbar iconbar-horizontal bidx-default-bar bidx-navbar">
@@ -40,7 +41,7 @@
 <?php
         // only when a member has profiles, show the profile dropdown
         //
-        if ( $hasProfiles ) {
+        if ( $hasProfiles || $isAdmin ) {
  ?>
             <li class="dropdown profiles">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="<?php _e('Dashboards', 'bidxplugin')?>">
@@ -57,6 +58,11 @@
                         <li><a href="<?php echo $profilevalue[ $key ] ?>"><?php _e( $key, 'bidxplugin' ); ?></a></li>
 <?php
                     }
+					if ( $isAdmin ) {
+?>
+						<li><a href="/wp-admin/"><?php _e( 'bidX Dashboard', 'bidxplugin' ); ?></a></li>
+<?php
+					}
 ?>
                 </ul>
             </li>
