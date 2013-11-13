@@ -10,13 +10,13 @@
 
     ,   $investorType                   = $editForm.find( "[name='investorType']" )
 
-    ,   $focusIndustry                  = $element.find( "[name='focusIndustry']" )
-    ,   $focusLanguage                  = $element.find( "[name='focusLanguage']" )
-    ,   $focusSocialImpact              = $element.find( "[name='focusSocialImpact']" )
-    ,   $focusEnvImpact                 = $element.find( "[name='focusEnvImpact']" )
-    ,   $focusConsumerType              = $element.find( "[name='focusConsumerType']" )
-    ,   $investmentType                 = $element.find( "[name='investmentType']" )
-    ,   $focusCountry                   = $element.find( "[name='focusCountry']" )
+    ,   $focusIndustry                  = $editForm.find( "[name='focusIndustry']" )
+    ,   $focusLanguage                  = $editForm.find( "[name='focusLanguage']" )
+    ,   $focusSocialImpact              = $editForm.find( "[name='focusSocialImpact']" )
+    ,   $focusEnvImpact                 = $editForm.find( "[name='focusEnvImpact']" )
+    ,   $focusConsumerType              = $editForm.find( "[name='focusConsumerType']" )
+    ,   $investmentType                 = $editForm.find( "[name='investmentType']" )
+    ,   $focusCountry                   = $editForm.find( "[name='focusCountry']" )
 
     ,   $btnAddPreviousInvestment       = $editForm.find( "[href$='#addPreviousInvestment']" )
     ,   $previousInvestmentContainer    = $editForm.find( ".previousInvestmentContainer" )
@@ -171,9 +171,9 @@
             } );
         } );
 
-        bidx.data.getContext( "language", function( err, industries )
+        bidx.data.getContext( "language", function( err, languages )
         {
-            bidx.utils.populateDropdown( $focusLanguage, industries );
+            bidx.utils.populateDropdown( $focusLanguage, languages );
 
             $focusLanguage.chosen(
             {
@@ -182,9 +182,9 @@
             } );
         } );
 
-        bidx.data.getContext( "socialImpact", function( err, industries )
+        bidx.data.getContext( "socialImpact", function( err, socialImpacts )
         {
-            bidx.utils.populateDropdown( $focusSocialImpact, industries );
+            bidx.utils.populateDropdown( $focusSocialImpact, socialImpacts );
 
             $focusSocialImpact.chosen(
             {
@@ -193,9 +193,9 @@
             } );
         } );
 
-        bidx.data.getContext( "envImpact", function( err, industries )
+        bidx.data.getContext( "envImpact", function( err, envImpacts )
         {
-            bidx.utils.populateDropdown( $focusEnvImpact, industries );
+            bidx.utils.populateDropdown( $focusEnvImpact, envImpacts );
 
             $focusEnvImpact.chosen(
             {
@@ -204,9 +204,9 @@
             } );
         } );
 
-        bidx.data.getContext( "consumerType", function( err, industries )
+        bidx.data.getContext( "consumerType", function( err, consumerTypes )
         {
-            bidx.utils.populateDropdown( $focusConsumerType, industries );
+            bidx.utils.populateDropdown( $focusConsumerType, consumerTypes );
 
             $focusConsumerType.chosen(
             {
@@ -215,44 +215,47 @@
             } );
         } );
 
-        bidx.data.getContext( "investmentType", function( err, industries )
+        bidx.data.getContext( "investmentType", function( err, investmentTypes )
         {
-            bidx.utils.populateDropdown( $investmentType, industries );
+            // Chosen dropdown
+            bidx.utils.populateDropdown( $investmentType, investmentTypes );
 
             $investmentType.chosen(
             {
                 "search_contains":              true
             ,   "width":                        "100%"
             } );
+
+            // previousInvestmentInvestmentType
+            var $previousInvestmentInvestmentType     = snippets.$previousInvestment.find( "[name='investmentType']" )
+            ,   $noValue            = $( "<option value='' />" )
+            ;
+
+            $noValue.i18nText( "selectInvestmentType", appName );
+            $previousInvestmentInvestmentType.append( $noValue );
+
+            bidx.utils.populateDropdown( $previousInvestmentInvestmentType, investmentTypes );
         } );
 
-        bidx.data.getContext( "country", function( err, industries )
+        bidx.data.getContext( "country", function( err, countries )
         {
-            bidx.utils.populateDropdown( $focusCountry, industries );
+
+            // institution Address Country
+            var $noValue = $( "<option value='' />" );
+
+            $noValue.i18nText( "selectCountry", appName );
+            $institutionAddressCountry.append( $noValue );
+
+            bidx.utils.populateDropdown( $institutionAddressCountry, countries );
+
+            // Chosen dropdown
+            bidx.utils.populateDropdown( $focusCountry, countries );
 
             $focusCountry.chosen(
             {
                 "search_contains":              true
             ,   "width":                        "100%"
             } );
-        } );
-
-
-
-
-
-        // Populate the dropdowns with the values
-        //
-        bidx.data.getContext( "investmentType", function( err, investmentTypes )
-        {
-            var $investmentType     = snippets.$previousInvestment.find( "[name='investmentType']" )
-            ,   $noValue            = $( "<option value='' />" )
-            ;
-
-            $noValue.i18nText( "selectInvestmentType", appName );
-            $investmentType.append( $noValue );
-
-            bidx.utils.populateDropdown( $investmentType, investmentTypes );
         } );
 
         // Populate the dropdowns with the values
@@ -265,18 +268,15 @@
             $investorType.append( $noValue );
 
             bidx.utils.populateDropdown( $investorType, investorTypes );
-        } );
 
-        // Populate the dropdowns with the values
-        //
-        bidx.data.getContext( "country", function( err, countries )
-        {
-            var $noValue = $( "<option value='' />" );
+            // Chosen dropdown
+            $investorType.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
 
-            $noValue.i18nText( "selectCountry", appName );
-            $institutionAddressCountry.append( $noValue );
-
-            bidx.utils.populateDropdown( $institutionAddressCountry, countries );
         } );
 
         // Grab the snippets from the DOM
@@ -439,6 +439,8 @@
                     bidx.utils.setElementValue( $( this ), value  );
                 } );
             } );
+
+            $previousInvestment.find( "[name='investmentType']" ).trigger( "chosen:updated" );
         }
 
         // Store the data in the DOM for later referal / merging

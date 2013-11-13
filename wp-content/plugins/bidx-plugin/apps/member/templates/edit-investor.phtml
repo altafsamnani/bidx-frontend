@@ -42,7 +42,7 @@
                                 <?php _e('Tell visitors and members of the group how you see yourself as an investor. Give a brief description of your investment interests.', 'bidxplugin')?>
                             </div>
                             <div class="row-fluid">
-                                <div class="span11">
+                                <div class="span5">
 
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Describe yourself as an investor','bidxplugin'); ?></label>
@@ -51,10 +51,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row-fluid">
-                                <div class="span5">
+                                <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Investor type','bidxplugin'); ?></label>
                                         <div class="controls">
@@ -63,7 +60,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row-fluid">
                                 <div class="span5">
                                     <div class="control-group">
@@ -85,10 +81,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row-fluid toggle toggle-investsForInst">
-                                <div class="span5">
+                                <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Institution website'); ?></label>
                                         <div class="controls">
@@ -179,27 +172,44 @@
                                         <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
                                         <select name="focusIndustry" multiple></select>
                                     </div>
-
+                                </div>
+                                <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Languages','bidxplugin'); ?></label>
                                         <select name="focusLanguage" multiple></select>
                                     </div>
-
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span5">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
                                         <select name="focusSocialImpact" multiple></select>
                                     </div>
-
+                                </div>
+                                <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
                                         <select name="focusEnvImpact" multiple></select>
                                     </div>
-
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span5">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Consumer type','bidxplugin'); ?></label>
                                         <select name="focusConsumerType" multiple></select>
                                     </div>
-
+                                </div>
+                                <div class="span5 offset1">
+                                    <div class="control-group">
+                                        <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
+                                        <select name="investmentType" multiple></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span5">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Stage of business','bidxplugin'); ?></label>
 
@@ -213,7 +223,8 @@
                                             <?php _e('Established','bidxplugin'); ?>
                                         </label>
                                     </div>
-
+                                </div>
+                                <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Gender','bidxplugin');?></label>
 
@@ -227,21 +238,18 @@
                                             <?php _e('Female','bidxplugin'); ?>
                                         </label>
                                     </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
-                                        <select name="investmentType" multiple></select>
-                                    </div>
-
                                 </div>
+                            </div>
 
-                                <div class="span5 offset1">
-                                    <h6><?php _e('Location','bidxplugin'); ?></h6>
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <label><?php _e('Location','bidxplugin'); ?></label>
 
                                     <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country"><?php _e('Country / Countries','bidxplugin'); ?></label>
                                     <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="city"><?php _e('City / Cities','bidxplugin'); ?></label>
                                     <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="reach"><?php _e('Region','bidxplugin'); ?></label>
-
+                                </div>
+                                <div class="span5 offset1">
                                     <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-country">
                                         <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
                                         <select name="focusCountry" multiple></select>
@@ -255,7 +263,7 @@
                                     </div>
 
                                     <div class="control-group  toggle toggle-focusLocationType toggle-focusLocationType-reach">
-                                    <label class="control-label"><?php _e('Region','bidxplugin'); ?></label>
+                                        <label class="control-label"><?php _e('Region','bidxplugin'); ?></label>
                                         <div class="controls">
                                             <input type="text" name="focusReach" data-type="location" />
                                         </div>
@@ -304,10 +312,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row-fluid">
-                                <div class="span11">
+                                <div class="span5 offset1">
 
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Other preferences (max. 60 words)','bidxplugin'); ?></label>
@@ -335,7 +340,7 @@
                             <!-- accordion body -->
 
                             <span class="scrollPositionMarker" id="editInvestor/investmentHistory"></span>
-                            <div class="alert alert-info">>
+                            <div class="alert alert-info">
                                 <?php _e('Entrepreneurs are interested in the investments you have made in the past. Give a few details about investments made in the last 12 months or earlier (if  any).', 'bidxplugin')?>
                             </div>
                             <div class="row-fluid">
@@ -347,10 +352,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row-fluid">
-                                <div class="span5">
+                                <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Amount invested in the last 12 months','bidxplugin'); ?></label>
                                         <div class="controls">
@@ -362,15 +364,13 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row-fluid">
                                 <div class="span5">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Typical involvement','bidxplugin'); ?></label>
-                                        <div class="btn-group" data-toggle="buttons-radio" name="typicalInvolvement">
-                                          <button type="button" class="btn btn-primary" value="advisory"><?php _e('Advisory','bidxplugin'); ?></button>
-                                          <button type="button" class="btn btn-primary" value="handsOn"><?php _e('Hands-On','bidxplugin'); ?></button>
-                                        </div>
+                                        <label class="radio"><input type="radio" data-toggle="radio" name="" value="advisory"><?php _e('Advisory','bidxplugin'); ?></label>
+                                        <label class="radio"><input type="radio" data-toggle="radio" name="" value="handsOn"><?php _e('Hands-On','bidxplugin'); ?></label>
+
                                     </div>
                                 </div>
                             </div>
