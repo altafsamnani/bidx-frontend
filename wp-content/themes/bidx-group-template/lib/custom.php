@@ -103,6 +103,17 @@ function bidx_get_status_msgs( ) {
         // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
     }
 
+    /* Message comes directly when we want to show error msg directly */
+    if (isset ($_GET['edmsg'])) {
+
+        $statusMessages = "<div class='alert alert-error'>
+                      <button data-dismiss='alert' class='close fui-cross' type='button'></button>
+                      ".base64_decode($_GET['edmsg']).
+                      "</div>";
+
+    }
+
+
 
     return $statusMessages;
 }

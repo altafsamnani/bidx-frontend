@@ -157,12 +157,16 @@ abstract class APIbridge
             $requestData->status = 'ERROR';
             $requestData->authenticated = 'false';
             //$this->bidxRedirectLogin($groupDomain);
-            do_action ('clear_auth_cookie');
+            wp_clear_auth_cookie ();
             $this->clear_wp_bidx_session ();
+            $this->clear_bidx_cookies();
             $this->logger->trace (sprintf ('Authentication Failed for URL: %s ', $urlService));
 
             if ($urlService != 'session' && $this->isRedirectCheck) {
-                $this->bidxRedirectLogin ($groupDomain);
+
+                $statusText = ($requestData->code == 'illegalRequest') ? $requestData->text : NULL;
+
+                $this->bidxRedirectLogin ($groupDomain, $statusText);
             }
         } else if ($httpCode == 'timeout') {
             $requestData->status = 'ERROR';
@@ -188,6 +192,18 @@ abstract class APIbridge
         //echo json_encode ($sessionMsg);
         //exit;
         //}
+    }
+
+    function clear_bidx_cookies ()
+    {
+
+        /***********Retrieve Bidx Cookies and send back to api to check ******* */
+        $cookieInfo = $_COOKIE;
+        foreach ($_COOKIE as $cookieKey => $cookieValue) {
+            if (preg_match ("/^bidx/i", $cookieKey)) {
+                setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
+            }
+        }
     }
 
     /**
@@ -231,13 +247,17 @@ abstract class APIbridge
      * @param String $password
      * @return Loggedin User
      */
-    function bidxRedirectLogin ($groupDomain)
+    function bidxRedirectLogin ($groupDomain,$statusText)
     {
         //wp_clear_auth_cookie();
         $http = (is_ssl ()) ? 'https://' : 'http://';
         $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) . '&emsg=1';
+        //If its illegal request like group is not backend that it sends back group missing with illegal request, so to know that error using edmsg
+        //To genuine session expire using emsg=1
+        $statusText = ($statusText) ? '&edmsg='.base64_encode($statusText) : '&emsg=1';
+
+        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) .$statusText ;
 
         header ("Location: " . $redirect_url);
         exit;
