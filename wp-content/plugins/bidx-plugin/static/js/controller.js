@@ -206,16 +206,16 @@
         bidx.utils.log("hash changed to", newHash );
     }
 
-
-    function doRedirect( redirect )
+    function doSuccess( redirect, addRs )
     {
         var url     = decodeURIComponent( redirect )
-        ,   rs      = bidx.utils.getQueryParameter( "rs", url )
+        ,   hasRs   = bidx.utils.getQueryParameter( "rs", url )
+        ,   uriParts
         ;
 
-        // if there is not (r)eload (s)ession param in the url, add it
+        // if we want to add a RS flag to the url and there is currently no RS flag in the url, add it
         //
-        if ( !rs )
+        if ( addRs && !hasRs )
         {
             uriParts = url.split( "#");
             // if no hash is present in the ur
@@ -245,9 +245,24 @@
             bidx.utils.log("[Update location]", url );
             document.location.href = url;
         }
+    }
 
+    function doCancel( redirect )
+    {
+        var url     = decodeURIComponent( redirect );
 
-
+        // check if redirect starts with a #, then use updateHash
+        //
+        if ( url.charAt( 0 ) === "#" )
+        {
+            bidx.utils.log("[do cancel] Update hash ", url );
+            updateHash( url );
+        }
+        else
+        {
+            bidx.utils.log("[do cancel] location ", url );
+            document.location.href = url;
+        }
     }
 
     // show the substate of a app that is part of a composite app. NOTE: this function might be redundant if it turns out the the compisite view-app always handles the visibility of its child-apps
@@ -299,7 +314,7 @@
 
         ,   'dashboard(/:state)(*splat)':                       'dashboard'
 
-        ,   'cancel(/*splat)':                                  'show'
+        ,   'cancel(/*splat)':                                  'showCancel'
         ,   '*path':                                            'show'
 
         }
@@ -618,24 +633,24 @@
                 }
             );
         }
-    ,   show:                   function( splat )
+    ,   showCancel:             function( splat )
+        {
+            // call the approuters show function with a "cancel" param
+            //
+            this.show( splat, "cancel" );
+
+        }
+    ,   show:                   function( splat, result )
         {
             bidx.utils.log( "AppRouter::show", splat );
             var params =  _deparamSplat( splat );
 
-
+            bidx.utils.log("RESSSSUULT", result);
             var pendingChanges = bidx.common.checkPendingChanges( function( confirmed )
             {
                 if ( confirmed )
                 {
-                    if ( params && params.redirect )
-                    {
-                        doRedirect( params.redirect );
-                    }
-                    else
-                    {
-                        _doShow();
-                    }
+                    _showOrRedirect( params, result );
                 }
                 else
                 {
@@ -645,9 +660,21 @@
 
             if ( !pendingChanges )
             {
+                _showOrRedirect( params, result );
+            }
+
+            function _showOrRedirect( params, result )
+            {
                 if ( params && params.redirect )
                 {
-                    doRedirect( params.redirect );
+                    if ( result === "cancel" )
+                    {
+                        doCancel( params.redirect );
+                    }
+                    else
+                    {
+                        doSuccess( params.redirect, true );
+                    }
                 }
                 else
                 {
@@ -709,7 +736,8 @@
         }
 
     ,   updateHash:                         updateHash
-    ,   doRedirect:                         doRedirect
+    ,   doCancel:                           doCancel
+    ,   doSuccess:                          doSuccess
     ,   showAppState:                       showAppState
 
         // The following functions are deprecated and should be called on bidx.common

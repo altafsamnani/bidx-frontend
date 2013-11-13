@@ -1256,6 +1256,7 @@
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save" } );
+
         cancelHref  = redirect.cancel ? "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) : "#cancel";
         $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: cancelHref } );
 
@@ -1482,9 +1483,6 @@
     {
         var bidxAPIService
         ,   bidxAPIParams
-        ,   url
-        ,   rs
-        ,   uriParts
         ;
 
         if ( !member )
@@ -1511,6 +1509,8 @@
         ,   groupDomain:    bidx.common.groupDomain
         ,   success:        function( response )
             {
+                var url;
+
                 bidx.utils.log( bidxAPIService + "::success::response", response );
 
                 bidx.common.closeNotifications();
@@ -1532,7 +1532,7 @@
                     url = document.location.href.split( "#" ).shift();
                 }
 
-                bidx.controller.doRedirect( url );
+                bidx.controller.doSuccess( url, true );
             }
         ,   error:          function( jqXhr, textStatus )
             {
