@@ -10,6 +10,14 @@
 
     ,   $investorType                   = $editForm.find( "[name='investorType']" )
 
+    ,   $focusIndustry                  = $element.find( "[name='focusIndustry']" )
+    ,   $focusLanguage                  = $element.find( "[name='focusLanguage']" )
+    ,   $focusSocialImpact              = $element.find( "[name='focusSocialImpact']" )
+    ,   $focusEnvImpact                 = $element.find( "[name='focusEnvImpact']" )
+    ,   $focusConsumerType              = $element.find( "[name='focusConsumerType']" )
+    ,   $investmentType                 = $element.find( "[name='investmentType']" )
+    ,   $focusCountry                   = $element.find( "[name='focusCountry']" )
+
     ,   $btnAddPreviousInvestment       = $editForm.find( "[href$='#addPreviousInvestment']" )
     ,   $previousInvestmentContainer    = $editForm.find( ".previousInvestmentContainer" )
 
@@ -150,6 +158,88 @@
         {
             e.preventDefault();
         } );
+
+
+        bidx.data.getContext( "industry", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $focusIndustry, industries );
+
+            $focusIndustry.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "language", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $focusLanguage, industries );
+
+            $focusLanguage.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "socialImpact", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $focusSocialImpact, industries );
+
+            $focusSocialImpact.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "envImpact", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $focusEnvImpact, industries );
+
+            $focusEnvImpact.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "consumerType", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $focusConsumerType, industries );
+
+            $focusConsumerType.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "investmentType", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $investmentType, industries );
+
+            $investmentType.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "country", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $focusCountry, industries );
+
+            $focusCountry.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+
+
+
 
         // Populate the dropdowns with the values
         //
@@ -956,6 +1046,18 @@
                 }
             );
         }
+
+        // Update the chosen components with our set values
+        //
+        $focusIndustry.trigger( "chosen:updated" );
+        $focusLanguage.trigger( "chosen:updated" );
+        $focusSocialImpact.trigger( "chosen:updated" );
+        $focusEnvImpact.trigger( "chosen:updated" );
+        $focusConsumerType.trigger( "chosen:updated" );
+        $investmentType.trigger( "chosen:updated" );
+        $focusCountry.trigger( "chosen:updated" );
+
+
     }
 
     // Convert the form values back into the member object
@@ -1140,11 +1242,20 @@
         $referencesContainer.reflowrower( "empty" );
         $previousInvestmentContainer.reflowrower( "empty" );
 
+        $element.find( ":input" )
+            .not( ":button, :submit, :reset" )
+                .prop( "checked", false )
+                .prop( "selected", false )
+                .not( "[type='radio'], [type='checkbox']" )
+                    .val( "" )
+        ;
+
+
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save" } );
         $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) } );
-        ;
+
 
         $btnSave.i18nText( "btnSaveProfile" );
         $btnCancel.i18nText( "btnCancel" );
@@ -1164,7 +1275,8 @@
         //
         var $validator = $editForm.validate(
         {
-            debug: true
+            debug: false
+        ,   ignore:                         ""
         ,   rules:
             {
                 "summary":
@@ -1193,7 +1305,7 @@
                 }
             ,   "investmentType":
                 {
-                    tagsinputRequired:      true
+                    required:               true
                 }
             ,   "minInvestment":
                 {
@@ -1207,15 +1319,15 @@
                 }
             ,   "focusIndustry":
                 {
-                    tagsinputRequired:      true
+                    required:               true
                 }
             ,   "socialImpact":
                 {
-                    tagsinputRequired:      true
+                    required:               true
                 }
             ,   "focusEnvImpact":
                 {
-                    tagsinputRequired:      true
+                    required:               true
                 }
             ,   "totalInvestment":
                 {
