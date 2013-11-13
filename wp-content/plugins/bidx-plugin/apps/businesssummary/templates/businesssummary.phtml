@@ -160,90 +160,94 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <?php _e('This section gives your the opportunity to describe your business. Think about what information you would like other people to know if you only had a few minutes to explain.','bidxplugin')?>
                             </div>
                             <form id="frmBusinessSummary-GeneralOverview">
+                                <div class="row-fluid">
+                                    <!-- Name -->
+                                    <div class="control-group span5">
+                                        <label class="control-label"><?php _e('Business name','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="name" placeholder="<?php _e('Business name','bidxplugin'); ?>">
+                                        </div>
+                                    </div>
 
-                                <!-- Name -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Business name','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <input type="text" name="name" placeholder="<?php _e('Business name','bidxplugin'); ?>">
+                                    <!-- Slogan -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Describe your business (max. 140 characters) optional','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <textarea type="text" name="slogan" placeholder="<?php _e('Please give a description of your business','bidxplugin'); ?>"></textarea>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <!-- Slogan -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Describe your business (max. 140 characters) optional','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <textarea type="text" name="slogan" placeholder="<?php _e('Please give a description of your business','bidxplugin'); ?>"></textarea>
+                                <div class="row-fluid">
+                                    <!-- Summary -->
+                                    <div class="control-group span5">
+                                        <label class="control-label"><?php _e('Summary of this business','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <textarea type="text" name="summary" placeholder="<?php _e('Summary','bidxplugin'); ?>"></textarea>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Summary -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Summary of this business','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <textarea type="text" name="summary" placeholder="<?php _e('Summary','bidxplugin'); ?>"></textarea>
-                                    </div>
-                                </div>
+                                    <!-- Reason For Submission -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <select name="reasonForSubmission" data-forcearray="true">
+                                                <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
 
-                                <!-- Reason For Submission -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <select name="reasonForSubmission" data-forcearray="true">
-                                            <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
-
-<?php
-                                        // Render the select based upon the items from the static data api for the 'reasonForSubmission' typeCode / groupCode / context
-                                        //
-                                        $typeCode = 'reasonForSubmission';
-                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
-                                            foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                printf( '<option value="%s">%s</option>', $item->value, $item->label );
+    <?php
+                                            // Render the select based upon the items from the static data api for the 'reasonForSubmission' typeCode / groupCode / context
+                                            //
+                                            $typeCode = 'reasonForSubmission';
+                                            if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                                foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
+                                                    printf( '<option value="%s">%s</option>', $item->value, $item->label );
+                                                }
                                             }
-                                        }
-?>
-                                        </select>
+    ?>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-
+                                <div class="row-fluid">
                                 <!-- Equity Retained -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Percentage equity your currently retain','bidxplugin'); ?></label>
-                                    <div class="controls input-append">
-                                        <input type="text" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
-                                        <span class="add-on">%</span>
+                                    <div class="control-group span5">
+                                        <label class="control-label"><?php _e('Percentage equity your currently retain','bidxplugin'); ?></label>
+                                        <div class="controls input-append">
+                                            <input type="text" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
+                                            <span class="add-on">%</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Finance Needed -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Finance needed','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="financingNeeded" placeholder="<?php _e('Please enter amount of finance needed','bidxplugin'); ?>">
+                                        </div>
                                     </div>
                                 </div>
-
-                                <!-- Finance Needed -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Finance needed','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <input type="text" name="financingNeeded" placeholder="<?php _e('Please enter amount of finance needed','bidxplugin'); ?>">
-                                    </div>
-                                </div>
-
-                                <!-- Investment type -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
-                                    <div class="controls">
+                                <div class="row-fluid">
+                                    <!-- Investment type -->
+                                    <div class="control-group span5">
+                                        <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
+                                        <div class="controls">
 <?php
-                                        // Render the checkboxes based upon the items from the static data api for the 'investmentType' typeCode / groupCode / context
-                                        //
-                                        if ( isset(BidxCommon::$i18nData['static']['investmentType']) ) {
-                                            foreach ( BidxCommon::$i18nData['static']['investmentType'] as $investmentType ) {
-                                                printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="investmentType[]" data-toggle="checkbox" />%s</label>', $investmentType->value, $investmentType->label );
+                                            // Render the checkboxes based upon the items from the static data api for the 'investmentType' typeCode / groupCode / context
+                                            //
+                                            if ( isset(BidxCommon::$i18nData['static']['investmentType']) ) {
+                                                foreach ( BidxCommon::$i18nData['static']['investmentType'] as $investmentType ) {
+                                                    printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="investmentType[]" data-toggle="checkbox" />%s</label>', $investmentType->value, $investmentType->label );
+                                                }
                                             }
-                                        }
 ?>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Summary Financing Needed -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Why does your business need financing? (max. 300 characters)','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <textarea name="summaryFinancingNeeded" placeholder="<?php _e('Please give the reason your business needs financing','bidxplugin'); ?>"></textarea>
+                                    <!-- Summary Financing Needed -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Why does your business need financing? (max. 300 characters)','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <textarea name="summaryFinancingNeeded" placeholder="<?php _e('Please give the reason your business needs financing','bidxplugin'); ?>"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -320,100 +324,105 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             </div>
                             <form id="frmBusinessSummary-AboutYourBusiness">
 
-                                <!-- Industry -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
-                                    <select name="industry" multiple></select>
-                                </div>
+                                <div class="row-fluid">
+                                    <!-- Industry -->
+                                    <div class="control-group span5">
+                                        <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
+                                        <select name="industry" multiple></select>
+                                    </div>
 
-                                <!-- Suggested Industry -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Suggested industry','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
+                                    <!-- Suggested Industry -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Suggested industry','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row-fluid">
+                                    <!-- Product Service -->
+                                    <div class="control-group span5">
+                                        <label class="control-label"><?php _e('Product / service','bidxplugin'); ?></label>
+                                        <select name="productService" multiple></select>
+                                    </div>
 
-                                <!-- Product Service -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Product / service','bidxplugin'); ?></label>
-                                    <select name="productService" multiple></select>
-                                </div>
-
-                                <!-- Suggested Product Service -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Suggested product / service','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested product / service','bidxplugin'); ?>">
+                                    <!-- Suggested Product Service -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Suggested product / service','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested product / service','bidxplugin'); ?>">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row-fluid">
+                                    <!-- Country operation -->
+                                    <div class="control-group span5">
+                                        <label class="control-label"><?php _e('Country of business','bidxplugin'); ?></label>
+                                        <select name="countryOperation" multiple></select>
+                                    </div>
 
-                                <!-- Country operation -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Country of business','bidxplugin'); ?></label>
-                                    <select name="countryOperation" multiple></select>
-                                </div>
-
-                                <!-- Social impact -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <select name="socialImpact">
-                                            <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
+                                    <!-- Social impact -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <select name="socialImpact">
+                                                <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
 <?php
-                                        // Render the select options based upon the items from the static data api for the 'socialImpact' typeCode / groupCode / context
-                                        //
-                                        $typeCode = 'socialImpact';
-                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
-                                            foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                printf( '<option value="%s">%s</option>', $item->value, $item->label );
+                                            // Render the select options based upon the items from the static data api for the 'socialImpact' typeCode / groupCode / context
+                                            //
+                                            $typeCode = 'socialImpact';
+                                            if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                                foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
+                                                    printf( '<option value="%s">%s</option>', $item->value, $item->label );
+                                                }
                                             }
-                                        }
 ?>
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <!-- Env impact -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <select name="envImpact">
-                                            <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
+                                <div class="row-fluid">
+                                    <!-- Env impact -->
+                                    <div class="control-group span5">
+                                        <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <select name="envImpact">
+                                                <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
 <?php
-                                        // Render the select options based upon the items from the static data api for the 'envImpact' typeCode / groupCode / context
-                                        //
-                                        $typeCode = 'envImpact';
-                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
-                                            foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                printf( '<option value="%s">%s</option>', $item->value, $item->label );
+                                            // Render the select options based upon the items from the static data api for the 'envImpact' typeCode / groupCode / context
+                                            //
+                                            $typeCode = 'envImpact';
+                                            if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                                foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
+                                                    printf( '<option value="%s">%s</option>', $item->value, $item->label );
+                                                }
                                             }
-                                        }
 ?>
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Stage Business is read only -->
+                                    <!-- Stage Business is read only -->
 
-                                <!-- Consumer Type -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Type of customer you sell to','bidxplugin'); ?></label>
-                                    <div class="controls">
+                                    <!-- Consumer Type -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Type of customer you sell to','bidxplugin'); ?></label>
+                                        <div class="controls">
 <?php
-                                        // Render the checkboxes based upon the items from the static data api for the 'consumerType' typeCode / groupCode / context
-                                        //
-                                        $typeCode = 'consumerType';
-                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
-                                            foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="consumerType[]" data-toggle="checkbox" />%s</label>', $item->value, $item->label );
+                                            // Render the checkboxes based upon the items from the static data api for the 'consumerType' typeCode / groupCode / context
+                                            //
+                                            $typeCode = 'consumerType';
+                                            if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                                foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
+                                                    printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="consumerType[]" data-toggle="checkbox" />%s</label>', $item->value, $item->label );
+                                                }
                                             }
-                                        }
 ?>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -493,20 +502,21 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <?php _e('Your team is an essential part of the success of your business. Give more information here about you as part of this team, and about the other team members.', 'bidxplugin')?>
                             </div>
                             <form id="frmBusinessSummary-AboutYouAndYourTeam">
-
-                                <!-- Personal Role -->
-                                <div class="control-group formfield span11">
-                                    <label class="control-label"><?php _e('Role of entrepreneur in this business (max. 30 characters)','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <input type="text" name="personalRole" placeholder="<?php _e('Please give role of entrepreneur in this business','bidxplugin'); ?>">
+                                <div class="row-fluid">
+                                    <!-- Personal Role -->
+                                    <div class="control-group formfield span5">
+                                        <label class="control-label"><?php _e('Role of entrepreneur in this business (max. 30 characters)','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="personalRole" placeholder="<?php _e('Please give role of entrepreneur in this business','bidxplugin'); ?>">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Personal Expertise -->
-                                <div class="control-group span11">
-                                    <label class="control-label"><?php _e('Please describe your expertise in relation to this business (180 characters)','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <textarea name="personalExpertise" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
+                                    <!-- Personal Expertise -->
+                                    <div class="control-group span5 offset1">
+                                        <label class="control-label"><?php _e('Please describe your expertise in relation to this business (180 characters)','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <textarea name="personalExpertise" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -594,20 +604,22 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 
                                 <hr>
-                                <div class="control-group formfield span11">
-                                    <label class="control-label"><?php _e('When did your business\'s sales start?','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <select name="yearSalesStarted">
-                                            <option value=""><?php _e('Select year', 'bidxplugin');?></option>
+                                <div class="row-fluid">
+                                    <div class="control-group formfield span5">
+                                        <label class="control-label"><?php _e('When did your business\'s sales start?','bidxplugin'); ?></label>
+                                        <div class="controls">
+                                            <select name="yearSalesStarted">
+                                                <option value=""><?php _e('Select year', 'bidxplugin');?></option>
 <?php
-                                            $todayYear = date( 'Y' );
-                                            $firstYear = $todayYear - 10;
+                                                $todayYear = date( 'Y' );
+                                                $firstYear = $todayYear - 10;
 
-                                            for ( $i = $firstYear; $i <= $todayYear; $i++ ) {
-                                                printf( '<option value="%s">%s</option>', $i, $i );
-                                            }
+                                                for ( $i = $firstYear; $i <= $todayYear; $i++ ) {
+                                                    printf( '<option value="%s">%s</option>', $i, $i );
+                                                }
 ?>
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
