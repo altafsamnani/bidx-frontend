@@ -93,7 +93,7 @@
                     <div class="controls">
 
                         <div class="multiSelectCheckbox">
-                            <label class="checkbox"><input type="checkbox" value="true" name="uploadCheckbox" /></label>
+                            <label class="checkbox"><input type="checkbox" value="true" name="uploadCheckbox"  /></label>
                         </div>
 
                         <div class="multiSelectRadio">
@@ -106,7 +106,11 @@
                         <img class="documentImage"></img>
                     </a>
 
-                    <img class="documentImage uploading"></img>
+                    <div class="uploading">
+                        <div class="progress progress-striped active">
+                            <div class="bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
                 </td>
                 <td>
                     <p class="name"></p>
@@ -116,13 +120,6 @@
                     <p class="documentType"></p>
                 </td>
                 <td>
-
-                    <div class="uploading">
-                        <div class="progress progress-striped active">
-                            <div class="bar" style="width: 0%;"></div>
-                        </div>
-                    </div>
-
                     <div class="done">
                         <a class="btn btn-warning btnEdit" href="#">
                             <i class="fui-new"></i>

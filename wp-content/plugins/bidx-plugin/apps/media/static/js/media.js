@@ -39,12 +39,17 @@
     ,   uploadId
     ;
 
-    // Grab the snippets from the DOM
-    //
-    snippets.$fileItem    = $snippets.children( ".fileItemTable" ).find( "tr.fileItem" ).remove();
-
     function _oneTimeSetup()
     {
+        _snippets();
+
+        function _snippets()
+        {
+            // Grab the snippets from the DOM
+            //
+            snippets.$fileItem    = $snippets.children( ".fileItemTable" ).find( "tr.fileItem" ).remove();
+        }
+
         // Drag/drop class administration. Can be used to highlight / animate.
         //
         var dropzoneTimeout;
@@ -189,7 +194,7 @@
 
                 if ( originalFiles )
                 {
-                    file.originalFilename = originalFiles[ 0 ].name;
+                    file.documentName = originalFiles[ 0 ].name;
                 }
 
                 data.context = _addFile( file, true );
@@ -211,6 +216,8 @@
 
                 data.context.find( ".done"      ).show();
                 data.context.find( ".uploading" ).hide();
+
+                data.context.find( ".selectFile .controls" ).fadeIn();
             }
 
         ,   fail: function( e, data )
@@ -492,6 +499,8 @@
         {
             $uploading.show();
             $done.hide();
+
+            $tdSelectFile.find( ".controls" ).hide();
         }
         else
         {
