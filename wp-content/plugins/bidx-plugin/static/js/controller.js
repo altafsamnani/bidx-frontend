@@ -209,20 +209,41 @@
 
     function doRedirect( redirect )
     {
-        var uri = decodeURIComponent( redirect );
+        var url     = decodeURIComponent( redirect )
+        ,   rs      = bidx.utils.getQueryParameter( "rs", url )
+        ;
+
+        // if there is not (r)eload (s)ession param in the url, add it
+        //
+        if ( !rs )
+        {
+            uriParts = url.split( "#");
+            // if no hash is present in the ur
+            //
+            if( uriParts.length === 1)
+            {
+                url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
+                url += "rs=true";
+            }
+            // else if there was a hash, insert rs=true before the hash
+            //
+            else if ( uriParts.length > 1 )
+            {
+                url = uriParts[ 0 ] + "?rs=true/#" + uriParts[ 1 ];
+            }
+        }
 
         // check if redirect starts with a #, then use updateHash
         //
-
-        if ( uri.charAt( 0 ) === "#" )
+        if ( url.charAt( 0 ) === "#" )
         {
-            bidx.utils.log("UPDATE HASH", uri );
-            updateHash( uri );
+            bidx.utils.log("[Update hash] ", url );
+            updateHash( url );
         }
         else
         {
-            bidx.utils.log("UPDATE LOCATION", uri );
-            document.location.href = uri;
+            bidx.utils.log("[Update location]", url );
+            document.location.href = url;
         }
 
 

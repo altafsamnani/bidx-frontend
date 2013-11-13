@@ -1236,6 +1236,8 @@
     //
     function _init()
     {
+        var cancelHref
+        ;
         // Reset any state
         //
         $attachmentsContainer.reflowrower( "empty" );
@@ -1254,7 +1256,8 @@
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save" } );
-        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) } );
+        cancelHref  = redirect.cancel ? "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) : "#cancel";
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: cancelHref } );
 
 
         $btnSave.i18nText( "btnSaveProfile" );
@@ -1515,34 +1518,20 @@
                 bidx.common.notifyRedirect();
                 bidx.common.removeAppWithPendingChanges( appName );
 
-
-
-
-                // creation of redirect url
-                // Maybe rs=true was already added, or not 'true' add it before reloading
+                // if a success redirect is defined
                 //
-                url =  redirect.success;
-                rs  = bidx.utils.getQueryParameter( "rs", url );
-
-                if (!rs )
+                if( redirect.success )
                 {
-                    uriParts = url.split( "#");
-                    if( uriParts.length > 1 )
-                    {
-
-                        url = uriParts[ 0 ] + "?rs=true/#" + uriParts[ 1 ];
-                    }
+                    url =  redirect.success;
+                }
+                // otherwise go to default state of app
+                //
+                else
+                {
+                    // grab the url before the #
+                    url = document.location.href.split( "#" ).shift();
                 }
 
-                /*if( redirect_to ) {
-                    url = '/' + redirect_to;
-                }*/
-
-               /* if ( !rs || rs !== "true" )
-                {
-                    url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
-                    url += "rs=true";
-                }*/
                 bidx.controller.doRedirect( url );
             }
         ,   error:          function( jqXhr, textStatus )
@@ -1592,13 +1581,17 @@
     //
     function navigate( options )
     {
-        // set redirect for this app's Save & Cancel button and the default redirect behaviour
+        // set redirect for this app's Save & Cancel button if overrides are set
         //
-        redirect =
+        if ( options.params && ( options.params.success || options.params.cancel ) )
         {
-            cancel:     ( options.params && options.params.cancel ) ? options.params.cancel : "member/" + options.id
-        ,   success:    ( options.params && options.params.success ) ? options.params.success : "member/" + options.id
-        };
+            redirect =
+            {
+                cancel:     ( options.params && options.params.cancel ) ? options.params.cancel : "member/" + options.id
+            ,   success:    ( options.params && options.params.success ) ? options.params.success : "member/" + options.id
+            };
+
+        }
 
 
         //requestedState, section, id, cb
