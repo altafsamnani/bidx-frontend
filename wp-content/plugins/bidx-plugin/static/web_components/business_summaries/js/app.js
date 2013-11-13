@@ -119,7 +119,7 @@ bidx.widgets = {
 
                     // Show only the ones that have Business Summary
                     // TODO: Should we check if it's PUBLISHED also?
-                    if ( getValue( entity, 'bidxMeta.bidxEntityType' ) == 'bidxBusinessSummary' )
+                    if ( getValue( entity, 'bidxMeta.bidxEntityType' ) === 'bidxBusinessSummary' )
                     {
                         // Set hasSummaries to TRUE as soon as we found at least 1 result
                         hasSummaries = true;
@@ -197,13 +197,13 @@ bidx.widgets = {
             // Find and Init the element
             bidx.widgets.businessSummarySelector.select();
 
-            if ( typeof bidx.widgets.businessSummarySelector.select == 'function' ) {
+            if ( typeof bidx.widgets.businessSummarySelector.select === 'function' ) {
 
                 // Fetch
                 bidx.widgets.getJsonp.fetch( bidx.widgets.businessSummarySelector.url() );
 
                 // Check the connection after a timeout
-                var timeOut;
+                var timeout;
 
                 timeout = setTimeout( function()
                 {
@@ -222,7 +222,7 @@ bidx.widgets = {
 
             function timeoutClear()
             {
-                clearTimeout(timeOut);
+                clearTimeout(timeout);
             }
         }, // run
 
@@ -240,7 +240,11 @@ bidx.widgets = {
                 // Create a <p> tag an add a message for no <select> tag
                 var msg = document.createElement( 'p' );
                 msg.innerText = 'Please create a <select> element with a class of "bidx-businesssummaryselector"';
-                bidx.widgets.businessSummarySelector.error.el.parentNode.appendChild( msg );
+
+                if ( bidx.widgets.businessSummarySelector.error.el )
+                {
+                    bidx.widgets.businessSummarySelector.error.el.parentNode.appendChild( msg );
+                }
             },
 
             // Error for no findings
@@ -288,7 +292,7 @@ bidx.widgets = {
             {
                 var validJSON = false;
 
-                if ( typeof data == 'string' )
+                if ( typeof data === 'string' )
                 {
                     try { validJSON = JSON.parse(data); } catch ( e )
                     {
