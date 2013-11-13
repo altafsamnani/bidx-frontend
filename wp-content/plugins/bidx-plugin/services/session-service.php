@@ -77,6 +77,16 @@ class SessionService extends APIBridge {
         return false;
     }
 
+    /*
+        PLEASE FINISH FUNCTION??
+    */
+    function isAdmin(  )
+    {
+
+
+        return false;
+    }
+
 
     /**
      * Retrieve an array of the groups this member is associated with members
