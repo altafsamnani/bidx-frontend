@@ -10,25 +10,6 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
 $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
 $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 
-// get the enitities of the current user
-//
-$sessionData    = BidxCommon::$staticSession;
-$entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
-
-
-// if a user has an investorProfile, he is allowed to request access to a business summary
-//
-$canRequestAccess = isset( $entities->bidxInvestorProfile );
-
-// get the current access requests for this user (from sessionservice ) which is located in the investorProfile Entity
-//
-$sessionSvc = new SessionService();
-$investorProfileEntity = $sessionSvc->returnEntity( "bidxInvestorProfile" );
-$accessRequest = isset( $investorProfileEntity -> authorizedBusinessSummaries ) ? $investorProfileEntity -> authorizedBusinessSummaries : null;
-
-// #MSP: WORK IN PROGRESS: check if the current summary matches the requests of the current user and update the status of the requestAccessbutton
-//d( $accessRequest );
-
 $attachmentItem = <<<EOT
     <div class="span4 well well-white">
         <div class="row-fluid">
@@ -88,30 +69,18 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                     <!-- SHOW -->
                     <div class="view viewShow">
-                        <a class="btn btn-primary" href="/member"><?php _e( 'Go back', 'bidxplugin' ); ?></a>
 
 <?php
-                    // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
-                    //
-                    if ( $canRequestAccess && !$canEdit )
-                    {
-?>
-                        <a class="btn btn-primary bidxRequestFullAccess" href="#"><?php _e( 'Request full access', 'bidxplugin' ); ?></a>
-<?php
-                    }
-
-                    // does a user have rights to edit ( is the owner )
-                    //
-                    if ( $canEdit ) {
+    if ( $canEdit ) {
 ?>
                         <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryBidxMeta->bidxEntityId; ?>"><?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
-                        if ( $entityStatus == 'DRAFT' ) {
+        if ( $entityStatus == 'DRAFT' ) {
 ?>
-                            <a class="btn" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
+                        <a class="btn" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
 <?php
-                        }
-                    }
+        }
+    }
 ?>
                     </div>
 
@@ -354,11 +323,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <!-- Industry -->
                                 <div class="control-group span11">
                                     <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="industry" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="industry" placeholder="<?php _e('Industry','bidxplugin'); ?>">
-                                        </div>
-                                    </div>
+                                    <select name="industry" multiple></select>
                                 </div>
 
                                 <!-- Suggested Industry -->
@@ -374,11 +339,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <!-- Product Service -->
                                 <div class="control-group span11">
                                     <label class="control-label"><?php _e('Product / service','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="productService" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="productService" placeholder="<?php _e('Product / service','bidxplugin'); ?>">
-                                        </div>
-                                    </div>
+                                    <select name="productService" multiple></select>
                                 </div>
 
                                 <!-- Suggested Product Service -->
@@ -394,11 +355,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <!-- Country operation -->
                                 <div class="control-group span11">
                                     <label class="control-label"><?php _e('Country of business','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <div class="bidx-tagsinput-container">
-                                            <input type="text" autocomplete="off" name="countryOperation" class="bidx-tagsinput enclosed disabled" disabled data-bidxdatakey="country" placeholder="<?php _e('Country of business','bidxplugin'); ?>">
-                                        </div>
-                                    </div>
+                                    <select name="countryOperation" multiple></select>
                                 </div>
 
                                 <!-- Social impact -->

@@ -8,10 +8,12 @@
 
     ,   $editControls               = $element.find( ".editControls" )
 
+    ,   $industry                   = $element.find( "[name='industry']" )
+    ,   $productService             = $element.find( "[name='productService']" )
+    ,   $countryOperation           = $element.find( "[name='countryOperation']" )
+
     ,   $btnSave
     ,   $btnCancel
-    ,   $btnFullAccessRequest       = $editControls.find( ".bidxRequestFullAccess") // this button can be absent if user is viewing own summary
-
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
@@ -221,6 +223,40 @@
             bidx.utils.populateDropdown( $reasonForSubmission, reasons );
         } );
 
+
+        bidx.data.getContext( "industry", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $industry, industries );
+
+            $industry.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "productService", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $productService, industries );
+
+            $productService.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "country", function( err, industries )
+        {
+            bidx.utils.populateDropdown( $countryOperation, industries );
+
+            $countryOperation.chosen(
+            {
+                "search_contains":              true
+            ,   "width":                        "100%"
+            } );
+        } );
+
         // Collect snippets from the DOM
         //
         function _snippets()
@@ -308,20 +344,21 @@
             //
             forms.aboutYourBusiness.$el.validate(
             {
-                ignore:         ""
+                debug: false
+            ,   ignore:         ""
             ,   rules:
                 {
                     industry:
                     {
-                        tagsinputRequired:      true
+                        required:      true
                     }
                 ,   productService:
                     {
-                        tagsinputRequired:      true
+                        required:      true
                     }
                 ,   countryOperation:
                     {
-                        tagsinputRequired:      true
+                        required:      true
                     }
                 ,   "consumerType[]":
                     {
@@ -1061,17 +1098,6 @@
             ,   itemClass:          "attachmentItem"
             } );
         }
-
-        // setup Full Accesss Request
-        // only for users not owning the current summary
-        // #MSP: WORK IN PROGRESS
-        //
-        if ( $btnFullAccessRequest )
-        {
-
-        }
-
-
     }
 
     // Add an attachment to the screen
@@ -1366,6 +1392,13 @@
                 _addAttachment( a );
             } );
         }
+
+        // Update the chosen components with our set values
+        //
+        $industry.trigger( "chosen:updated" );
+        $productService.trigger( "chosen:updated" );
+        $countryOperation.trigger( "chosen:updated" );
+
     }
 
     // Update the pre-rendered dom elements for the financial summarie
