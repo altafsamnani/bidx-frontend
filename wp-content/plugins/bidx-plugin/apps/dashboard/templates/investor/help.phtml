@@ -1,3 +1,6 @@
+<?php
+    $groupOwnerIds = implode ("|", $this->groupOwnersIdsArr);
+?>
 <div class="help details-block">
     <div class="row-fluid">
         <div class="span8">Welcome to your new bidX group! You can always come here to:</div>
@@ -68,7 +71,7 @@
             <div>
               For any additional questions over this group, functionalities, problems or suggestions, please contact your group moderator. He or she will be delighted to help you. If you encounter a problem with the platform, the group moderator will forward it to the bidX technical support.
            </div>
-           <div class="offset6 span6"><div><a href="/mail#mail/compose/recipients=28">Send message to group moderator</a> </div></div>
+           <div class="offset6 span6"><div><a href="/mail#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a> </div></div>
         </div>
 
     </div>

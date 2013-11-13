@@ -45,7 +45,7 @@ class dashboard
 
         $sessionData = BidxCommon::$staticSession;
         $view->sessionData = $sessionData;
-      
+
         //2. Service Group
         //require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
         //$groupSvc = new GroupService( );
@@ -57,18 +57,19 @@ class dashboard
                 $template = 'my-dashboard.phtml';
                 break;
             case 'investor-dashboard':
-                wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);             
+                wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 $sessionSvc = new SessionService( );
                 $investorProfile = $sessionSvc->isHavingProfile( 'bidxInvestorProfile' );
-          
+                $view->groupOwnersIdsArr     = $sessionSvc->getGroupOwnerIds( );
+
                 if ($investorProfile) {
 
                     $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
 
                     if ($investorDashboard) {
                         ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
-                                    
-                    }                   
+
+                    }
 
                     $template = 'investor/dashboard.phtml';
                 } else {
@@ -76,17 +77,18 @@ class dashboard
                 }
                 break;
             case 'entrepreneur-dashboard':
-                wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);        
-                $sessionSvc = new SessionService( );                
+                wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
+                $sessionSvc = new SessionService( );
                 $entrepreneurProfile = $sessionSvc->isHavingProfile( 'bidxEntrepreneurProfile' );
-            
+                $view->groupOwnersIdsArr     = $sessionSvc->getGroupOwnerIds( );
+
                 if ($entrepreneurProfile) {
-                   
+
                     $entrepreneurDashboard = get_option ('entrepreneur-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
-                  
+
                     if ($entrepreneurDashboard) {
                         ($entrepreneurDashboard != 2 ) ? update_option ('entrepreneur-startingpage', 0) : $view->startingPage = $entrepreneurDashboard;
-                    } 
+                    }
 
                     $template = 'entrepreneur/dashboard.phtml';
                 } else {

@@ -84,7 +84,7 @@ class SessionService extends APIBridge {
      * @return array with groups or empty array if there are no group associated with this member
      */
     function getGroups( ) {
-    	
+
         $sessionData = BidxCommon::$staticSession;
         $groups = $sessionData->data->groups;
         $result = array();
@@ -123,6 +123,17 @@ class SessionService extends APIBridge {
     		}
     	}
     	return $currentGroupAdmin;
+    }
+
+    function getGroupOwnerIds() {
+        $groupOwnerIdArr = array();
+        $sessionData = BidxCommon::$staticSession;
+        $groupOwners = $sessionData->data->groupOwners;
+        foreach ($groupOwners as $value) {
+            $groupOwnerIdArr[] = $value->id;
+        }
+
+        return $groupOwnerIdArr;
     }
 }
 ?>
