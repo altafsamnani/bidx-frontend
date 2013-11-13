@@ -1274,12 +1274,12 @@
 
 
                 // create the itemList for this category
-                // the argument 'key' is key in finding the correct snippit and list associated with this category
+                // the argument 'key' is key in finding the correct snippet and list associated with this category
                 // the callback in this function is defined in the function that is called and also associated with the key
                 //
                 _createListItems(
                 {
-                    snippitId:              "contact-request-" + key
+                    snippetId:              "contact-request-" + key
                 ,   category:               key
                 ,   items:                  items
                 ,   appendToList:           appendToList
@@ -1351,7 +1351,7 @@
         // Arguments contain an option object:
         // options:
         // {
-        //      snippitId:          [ id of snippit script template ]
+        //      snippetId:          [ id of snippet script template ]
         // ,    category:           [ the category of contacts ]
         // ,    items:              [ the collection of items to be converted into itemList ]
         // ,    view:               [ view selector ]
@@ -1361,8 +1361,8 @@
         //
         function _createListItems( options )
         {
-            var snippit         = $( "#" + options.snippitId ).html().replace( /(<!--)*(-->)*/g, "" )
-            ,   emptySnippit    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
+            var snippet         = $( "#" + options.snippetId ).html().replace( /(<!--)*(-->)*/g, "" )
+            ,   emptySnippet    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
             ,   $view           = $views.filter( bidx.utils.getViewName( options.view ) )
             ,   $list           = $view.find( options.targetListSelector )
 
@@ -1388,19 +1388,19 @@
             {
                 // add empty Listitem
                 //
-                $list.append( emptySnippit );
+                $list.append( emptySnippet );
 
                 return;
             }
 
-            // iterate of each item an append a modified snippit to the list
+            // iterate of each item an append a modified snippet to the list
             //
             $.each( options.items.members, function( idx, item )
             {
 
-                // duplicate snippit source and replace all placeholders (not every snippit will have all of these placeholders )
+                // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
                 //
-                listItem = snippit
+                listItem = snippet
                     .replace( /%pictureUrl%/g,      item.pictureUrl   ? item.pictureUrl     : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAACqElEQVR4Xu3bvY8BQRzG8d9GiJda6ES0lEL8+yoK0YlatBQSide7m0nmgnDGWV93yaOyt7PzrM8+O7vNJYvF4sP0eblAIuiXG/sAQTPOgoacBS1oSgDK0RotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWq0oCEBKEaNFjQkAMWo0YKGBKAYNVrQkAAUo0YLGhKAYtRoQUMCUIwaLWhIAIp5S6Nns5lNp1P/E5MksV6vZ4VCwW9//TuejcdjOx6PfrvZbFq1Wr3L8Yo574Y+MACHDpDlctlarZaNRiNbr9fW6XQ8er/ft2Kx6LdP92Wz2Zs/6xVzPmAYNRSHDs2r1+vWaDQsbLvm7nY73/Rr+3K5nG96qVTyF2Eymdh8PveN/+m4n/bF3ClRihGD/gy0w3WY16ADvGv4crm0brdrw+Hwu/m3Ll7MnBFGqQzBocNtHprp8NzfHMp2u/UtvWx02N7v935pORwOZ2v7M3OmohgxCQ7tzun0weVa7ABrtdrdRrtjw4WpVCp+jQ+fZ+aMcHp6yFugT886do1262lornswbjabm28kj8z5tGDkBDj0tds85q0jk8nYYDDwy0a73fbNdt/dg3G1Wp09KNN4k4n0ix6GQ7szC28M7ns+n/dY4fXt1nt0OOZy/Q5LyG/mjFZKYeBboFM47383haChSyZoQUMCUIwaLWhIAIpRowUNCUAxarSgIQEoRo0WNCQAxajRgoYEoBg1WtCQABSjRgsaEoBi1GhBQwJQjBotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWo0BP0Jeyr5I6MnsB4AAAAASUVORK5CYII=" )
                     .replace( /%contactId%/g,       item.contactId    ? item.contactId      : "%contactId%" )
                     .replace( /%contactName%/g,     item.contactName  ? item.contactName    : "%contactName%" )
