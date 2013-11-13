@@ -17,9 +17,7 @@ if ($investorDetails &&
         <div class="btn-group control-buttons">
 <?php
             if ($investorDetailsBidxMeta->bidxCanEdit) {
-                // #msp: optimal cancel & sucess uri would be #member, but currently not supported by member app
-                $href = "#editInvestor/" . $this -> exst( $investorDetailsBidxMeta -> bidxOwnerId ) . "/" . http_build_query( array( "success"=> "/member", "cancel"=> "/member" ) );
-
+                $href = "#editInvestor/" . $this -> exst( $investorDetailsBidxMeta -> bidxOwnerId );
 ?>
                 <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
