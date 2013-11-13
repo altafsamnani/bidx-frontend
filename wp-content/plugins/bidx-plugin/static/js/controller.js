@@ -210,12 +210,13 @@
     {
         var url     = decodeURIComponent( redirect )
         ,   hasRs   = bidx.utils.getQueryParameter( "rs", url )
+        ,   rs      = !addRs ? true : addRs
         ,   uriParts
         ;
 
         // if we want to add a RS flag to the url and there is currently no RS flag in the url, add it
         //
-        if ( addRs && !hasRs )
+        if ( rs && !hasRs )
         {
             uriParts = url.split( "#");
             // if no hash is present in the ur
