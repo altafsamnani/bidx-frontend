@@ -274,10 +274,13 @@
         {
             return;
         }
+        // the status or category we want to showMore results for
+        //
         status = params.showMore;
 
 
-        // update the contacats Offset
+        // update the contacts Offset
+        //
         contactsOffset[ status ] += CONTACTSPAGESIZE;
 
         // start a promise chain
@@ -311,7 +314,10 @@
             } )
             .done( function( contacts )
             {
-                _initContactListing( contacts, true );
+                var res = {};
+                res[ status ] = contacts[status];
+
+                _initContactListing( res, true );
             } );
     }
 
