@@ -123,6 +123,16 @@
         $currentAddressCountry.append( $noValue );
 
         bidx.utils.populateDropdown( $currentAddressCountry, countries );
+
+        // Chosen dropdown
+        $currentAddressCountry.chosen(
+        {
+            "search_contains":              true
+        ,   "disable_search_threshold":     10
+        ,   "width":                        "100%"
+        } );
+
+
     } );
 
     bidx.data.getContext( "country", function( err, countries )
@@ -608,6 +618,8 @@
         {
             $toggleHaveEmployees.filter( ":checked" ).radio( "setState" );
         }
+
+        $currentAddressCountry.trigger( "chosen:updated" );
     };
 
 

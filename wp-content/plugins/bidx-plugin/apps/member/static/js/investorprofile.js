@@ -256,6 +256,15 @@
                 "search_contains":              true
             ,   "width":                        "100%"
             } );
+
+            $institutionAddressCountry.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
+
+
         } );
 
         // Populate the dropdowns with the values
@@ -1058,7 +1067,8 @@
         $focusConsumerType.trigger( "chosen:updated" );
         $investmentType.trigger( "chosen:updated" );
         $focusCountry.trigger( "chosen:updated" );
-
+        $institutionAddressCountry.trigger( "chosen:updated" );
+        $investorType.trigger( "chosen:updated" );
 
     }
 

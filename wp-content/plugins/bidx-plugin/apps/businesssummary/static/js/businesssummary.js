@@ -12,6 +12,11 @@
     ,   $productService             = $element.find( "[name='productService']" )
     ,   $countryOperation           = $element.find( "[name='countryOperation']" )
 
+    ,   $reasonForSubmission        = $element.find( "[name='reasonForSubmission']" )
+    ,   $envImpact                  = $element.find( "[name='envImpact']" )
+    ,   $socialImpact               = $element.find( "[name='socialImpact']" )
+    ,   $yearSalesStarted           = $element.find( "[name='yearSalesStarted']" )
+
     ,   $btnSave
     ,   $btnCancel
 
@@ -221,6 +226,16 @@
             $reasonForSubmission.append( $noValue );
 
             bidx.utils.populateDropdown( $reasonForSubmission, reasons );
+
+            // Chosen dropdown
+            $reasonForSubmission.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
+
+
         } );
 
 
@@ -256,6 +271,43 @@
             ,   "width":                        "100%"
             } );
         } );
+
+        bidx.data.getContext( "envImpact", function( err, envImpacts )
+        {
+            bidx.utils.populateDropdown( $envImpact, envImpacts );
+
+            $envImpact.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "socialImpact", function( err, socialImpacts )
+        {
+            bidx.utils.populateDropdown( $socialImpact, socialImpacts );
+
+            $socialImpact.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
+        } );
+
+        bidx.data.getContext( "yearSalesStarted", function( err, yearSalesStarteds )
+        {
+            bidx.utils.populateDropdown( $yearSalesStarted, yearSalesStarteds );
+
+            $yearSalesStarted.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
+        } );
+
 
         // Collect snippets from the DOM
         //
@@ -1398,7 +1450,10 @@
         $industry.trigger( "chosen:updated" );
         $productService.trigger( "chosen:updated" );
         $countryOperation.trigger( "chosen:updated" );
-
+        $reasonForSubmission.trigger( "chosen:updated" );
+        $envImpact.trigger( "chosen:updated" );
+        $socialImpact.trigger( "chosen:updated" );
+        $yearSalesStarted.trigger( "chosen:updated" );
     }
 
     // Update the pre-rendered dom elements for the financial summarie
