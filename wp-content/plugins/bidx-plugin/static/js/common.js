@@ -695,7 +695,7 @@
 
     ,   highlight: function( element, errorClass, validClass)
         {
-            bidx.utils.log("highlight", element);
+            //bidx.utils.log("highlight", element);
             var $element             = $( element )
             ,   controlErrorClass
             ,   controlValidClass
@@ -728,7 +728,7 @@
 
     ,   unhighlight: function( element, errorClass, validClass)
         {
-            bidx.utils.log("Unhighlight", element);
+            //bidx.utils.log("Unhighlight", element);
             var $element            = $( element )
             ,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
             ,   $container
@@ -872,7 +872,6 @@
             //
             if ( $element.hasClass( "valid") && $element.data( "data-bidx-counted" ) )
             {
-                bidx.utils.log("REMOVE ERROR FOR" , element);
                 errorCount--;
                 $element.removeData( "data-bidx-counted" );
                 _showErrorCount();
