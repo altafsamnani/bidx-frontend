@@ -306,7 +306,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                             //
                                             if ( isset(BidxCommon::$i18nData['static']['investmentType']) ) {
                                                 foreach ( BidxCommon::$i18nData['static']['investmentType'] as $investmentType ) {
-                                                    printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="investmentType[]" data-toggle="checkbox" />%s</label>', $investmentType->value, $investmentType->label );
+                                                    printf( '<label class="checkbox"><input type="checkbox" value="%s" name="investmentType[]" data-toggle="checkbox" />%s</label>', $investmentType->value, $investmentType->label );
                                                 }
                                             }
 ?>
@@ -489,7 +489,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                             $typeCode = 'consumerType';
                                             if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
                                                 foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                    printf( '<label class="checkbox inline"><input type="checkbox" value="%s" name="consumerType[]" data-toggle="checkbox" />%s</label>', $item->value, $item->label );
+                                                    printf( '<label class="checkbox"><input type="checkbox" value="%s" name="consumerType[]" data-toggle="checkbox" />%s</label>', $item->value, $item->label );
                                                 }
                                             }
 ?>
@@ -825,8 +825,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <div class="control-group">
                                     <label class="control-label"><?php _e('Does this business summary have a company?','bidxplugin'); ?></label>
                                     <div class="controls">
-                                        <label class="radio inline"><input type="radio" value="true"  name="hasCompany" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
-                                        <label class="radio inline"><input type="radio" value="false" name="hasCompany" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
+                                        <label class="radio"><input type="radio" value="true"  name="hasCompany" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
+                                        <label class="radio"><input type="radio" value="false" name="hasCompany" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
                                     </div>
                                 </div>
 
