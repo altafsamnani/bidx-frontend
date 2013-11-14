@@ -156,7 +156,16 @@
             $noValue.i18nText( "selectNationality", appName );
             $personalDetailsNationality.append( $noValue );
 
+            // Chosen dropdown
             bidx.utils.populateDropdown( $personalDetailsNationality, countries );
+
+            $personalDetailsNationality.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
+
         } );
 
 
@@ -172,6 +181,14 @@
             $currentAddressCountry.append( $noValue );
 
             bidx.utils.populateDropdown( $currentAddressCountry, countries );
+
+            // Chosen dropdown
+            $currentAddressCountry.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
         } );
 
         // Populate the personalDetails.address[0].country select box using the data items
@@ -186,6 +203,15 @@
             $personalDetailsHighestEducation.append( $noValue );
 
             bidx.utils.populateDropdown( $personalDetailsHighestEducation, educations );
+
+            // Chosen dropdown
+            $personalDetailsHighestEducation.chosen(
+            {
+                "search_contains":              true
+            ,   "disable_search_threshold":     10
+            ,   "width":                        "100%"
+            } );
+
         } );
 
         // Profile picture
@@ -754,6 +780,10 @@
         }
 
         _updateCurrentAddressMap();
+
+        $personalDetailsNationality.trigger( "chosen:updated" );
+        $personalDetailsHighestEducation.trigger( "chosen:updated" );
+        $currentAddressCountry.trigger( "chosen:updated" );
     }
 
     // Add the attachment to the screen, by cloning the snippet and populating it
@@ -1061,10 +1091,7 @@
 
                     if ( !canEdit )
                     {
-                        bidx.i18n.getItem( "noProfileEditPermission", function( err, label )
-                        {
-                            _showError( label );
-                        } );
+                        _showError( bidx.i18n.i( "noProfileEditPermission" ));
 
                         $btnCancel.removeClass( "disabled" );
                     }
@@ -1233,6 +1260,8 @@
                         .done( function()
                         {
                             _init();
+
+                            bidx.i18n.i( "someLBale")
                         } );
                 }
 
