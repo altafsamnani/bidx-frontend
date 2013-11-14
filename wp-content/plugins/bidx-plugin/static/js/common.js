@@ -695,7 +695,7 @@
 
     ,   highlight: function( element, errorClass, validClass)
         {
-
+            bidx.utils.log("highlight", element);
             var $element             = $( element )
             ,   controlErrorClass
             ,   controlValidClass
@@ -720,10 +720,15 @@
             errorClass = "control-" + errorClass;
             validClass = "control-" + validClass;
             $element.closest( ".controls" ).addClass( errorClass ).removeClass( validClass );
+
+            // update error count in accordion heading (if exists)
+            //
+            updateAccordionHeadingErrors( element, "highlight" );
         }
 
     ,   unhighlight: function( element, errorClass, validClass)
         {
+            bidx.utils.log("Unhighlight", element);
             var $element            = $( element )
             ,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
             ,   $container
@@ -767,12 +772,17 @@
             errorClass = "control-" + errorClass;
             validClass = "control-" + validClass;
             $element.closest( ".controls" ).removeClass( errorClass ).addClass( validClass );
+
+            // update error count in accordion heading (if exists)
+            //
+            updateAccordionHeadingErrors( element, "unhighlight" );
         }
 
         // when element receives focus and errorPlacement has not fired, add the validation-icon in the control wrapper
         //
     ,   onfocusin: function( element, event )
         {
+
 /*            var $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
             ,   $element            = $( element )
             ,   $container
@@ -788,6 +798,122 @@
 */
         }
     } );
+
+    function updateAccordionHeadingErrors( element, action )
+    {
+        var accordionHeadingSelector    = ".accordion-heading"
+        ,   $element                    = $( element )
+        ,   $accordionGroup             = $element.closest( ".accordion-group" )
+        ,   $accordionHeading
+        ,   $errorCount
+        ,   errorCount
+        ;
+
+        // if element is not part of an accordiongroup, we do not need to proceed any further
+        //
+        if (!$accordionGroup.length )
+        {
+            return;
+        }
+
+        $accordionHeading = $accordionGroup.find( accordionHeadingSelector );
+
+        // get the error count from the data-error attribute
+        //
+        errorCount = $accordionHeading.data( "data-bidx-errorCount" );
+
+        // increase error count
+        //
+        if ( action === "highlight" )
+        {
+
+            // this element was already counted, exit function
+            //
+            if ( $element.data( "data-bidx-counted" ) )
+            {
+                return;
+            }
+
+
+            // set Element to be counted
+            //
+            $element.data( "data-bidx-counted", 1 );
+
+            // if no error count is set
+            //
+            if ( !errorCount )
+            {
+
+                $accordionHeading.addClass( "heading-error" );
+                errorCount = 1;
+                _showErrorCount();
+
+            }
+            // there are already errors in the accordion body. update error count
+            //
+            else
+            {
+                // update error count in heading
+                //
+                errorCount++;
+                _showErrorCount();
+
+
+            }
+
+
+        }
+
+        // Unhiglight called: decrease error count
+        //
+        else
+        {
+            // if element is valid but still had a count flag, it had an error just before the unhighlight function was fired
+            //
+            if ( $element.hasClass( "valid") && $element.data( "data-bidx-counted" ) )
+            {
+                bidx.utils.log("REMOVE ERROR FOR" , element);
+                errorCount--;
+                $element.removeData( "data-bidx-counted" );
+                _showErrorCount();
+            }
+        }
+
+        // private function to handle the show of error messages in the heading
+        //
+        function _showErrorCount()
+        {
+            var $errorCount = $accordionHeading.find( ".heading-error-count" );
+
+            // if error count does not yet exist
+            //
+            if ( !$errorCount.length )
+            {
+                $errorCount = $( "<span/>",
+                {
+                    class:      "pull-right heading-error-count"
+                } );
+
+                $accordionHeading.find( ".accordion-toggle" ).append( $errorCount );
+            }
+
+            if ( errorCount > 0 )
+            {
+                // change the errorCount value
+                //
+                $errorCount.text( errorCount );
+                $accordionHeading.data( "data-bidx-errorCount", errorCount );
+            }
+            else
+            {
+                // remove error count and error class from heading
+                //
+                $errorCount.remove();
+                $accordionHeading.removeClass( "heading-error" );
+                $accordionHeading.removeData( "data-bidx-errorCount" );
+            }
+        }
+    }
 
     //  Validator extentions
     //
@@ -821,7 +947,6 @@
         } );
 
     };
-
     //
     // end validator extentions
 

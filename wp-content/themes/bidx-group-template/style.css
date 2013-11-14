@@ -861,6 +861,10 @@ Company: bidX;
     background-color:           #f5f5f5;
 }
 
+.accordion-heading.heading-error {
+    background-color:           #F2DEDE;
+}
+
 .accordion-toggle {
     position:                   relative;
 }
@@ -886,6 +890,20 @@ Company: bidX;
         transition:                 transform 0.3s;
         -webkit-backface-visibility: hidden;
     }
+
+.accordion-heading .heading-error-count {
+    color:                      #FFF;
+    background-color:           #B94A48;
+    font-weight:                700;
+    display:                    inline-block;
+    width:                      20px;
+    height:                     20px;
+    text-align:                 center;
+
+    -webkit-border-radius:      999px;
+    -moz-border-radius:         999px;
+    border-radius:              999px;
+}
 
 .bidx-collapse {
     display:                    inline-block;
