@@ -646,7 +646,6 @@
             bidx.utils.log( "AppRouter::show", splat );
             var params =  _deparamSplat( splat );
 
-            bidx.utils.log("RESSSSUULT", result);
             var pendingChanges = bidx.common.checkPendingChanges( function( confirmed )
             {
                 if ( confirmed )
