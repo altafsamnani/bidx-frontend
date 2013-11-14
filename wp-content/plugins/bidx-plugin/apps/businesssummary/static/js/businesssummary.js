@@ -19,6 +19,9 @@
 
     ,   $btnSave
     ,   $btnCancel
+    ,   $btnFullAccessRequest       = $editControls.find( ".bidxRequestFullAccess")
+    ,   $bidxAccessRequestPending    = $editControls.find( ".bidxAccessRequestPending")
+
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
@@ -1150,7 +1153,82 @@
             ,   itemClass:          "attachmentItem"
             } );
         }
+
+        // setup Full Accesss Request
+        // only for users not owning the current summary
+        // #MSP: WORK IN PROGRESS
+        //
+        if ( $btnFullAccessRequest )
+        {
+                $btnFullAccessRequest.click( function( e )
+                {
+                    e.preventDefault();
+                    if ( businessSummaryId.match( /^\d+$/ ) )
+                    {
+                        _doAccessRequest();
+                    }
+                    else
+                    {
+                        bidx.utils.error( "Cannot request full access: No Id provided" );
+                    }
+                } );
+        }
+
+
+
     }
+
+
+
+    // Do a full access request to businessSummary owner
+    function _doAccessRequest()
+    {
+        bidx.api.call(
+             "businesssummaryRequestAccess.send"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   id:                     businessSummaryId
+            ,   success: function( response )
+                {
+                    bidx.utils.log("RESPONSE", response );
+                    if ( response.status === "OK" )
+                    {
+                        // show Pending button and hide Send button
+                        //
+                        $bidxAccessRequestPending.show();
+                        $btnFullAccessRequest.hide();
+                    }
+
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong sending the access request: " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong sending the access request: " + response.text );
+                    }
+
+                }
+            }
+        );
+
+
+    }
+
+
 
     // Add an attachment to the screen
     //
@@ -1821,6 +1899,7 @@
         // Fetch the business summary
         //
         bidx.api.call(
+
             "memberCompanies.fetch"
         ,   {
                 memberId:           bidx.common.getCurrentUserId()

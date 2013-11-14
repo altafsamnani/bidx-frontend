@@ -10,6 +10,40 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
 $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
 $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 
+// get the enitities of the current user
+//
+$sessionData    = BidxCommon::$staticSession;
+$entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
+
+
+// if a user has an investorProfile, he is allowed to request access to a business summary
+//
+$canRequestAccess = isset( $entities->bidxInvestorProfile );
+
+// get the current access requests for this user (from sessionservice ) which is located in the investorProfile Entity
+//
+$sessionSvc = new SessionService();
+$investorProfileEntity = $sessionSvc->returnEntity( "bidxInvestorProfile" );
+$accessRequests = isset( $investorProfileEntity -> authorizedBusinessSummaries ) ? $investorProfileEntity -> authorizedBusinessSummaries : null;
+
+// find the current businessSummary in the pending requests
+//
+$requestStatus = "";
+$businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
+
+foreach ( $accessRequests as $request ) {
+    // match cyrrent opened SummaryId
+    //
+    if ( $request -> businessSummary -> bidxMeta -> bidxEntityId  == $businessSummaryId ) {
+        $requestStatus = $request -> status;
+    }
+}
+
+
+
+// #MSP: WORK IN PROGRESS: check if the current summary matches the requests of the current user and update the status of the requestAccessbutton
+//d( $accessRequest );
+
 $attachmentItem = <<<EOT
     <div class="span4 well well-white">
         <div class="row-fluid">
@@ -69,18 +103,55 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                     <!-- SHOW -->
                     <div class="view viewShow">
+                        <a class="btn btn-primary" href="/member"><?php _e( 'Go back', 'bidxplugin' ); ?></a>
 
 <?php
-    if ( $canEdit ) {
+                    // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
+                    //
+                    if ( $canRequestAccess && !$canEdit )
+                    {
+                        $accessRequestControl = "";
+
+                        switch ( $requestStatus ) {
+                            case 'pending':
+                                $accessRequestProgress = '';
+                                $accessRequestSend = 'hide';
+                                $accessGranted = 'hide';
+                                break;
+                            case 'rejected':
+                                $accessRequestProgress = '';
+                                $accessRequestSend = 'hide';
+                                $accessGranted = 'hide';
+                                break;
+                            case 'granted':
+                                $accessRequestProgress = 'hide';
+                                $accessRequestSend = 'hide';
+                                $accessGranted = '';
+                                break;
+                            default:
+                                $accessRequestControl = '<a class="btn btn-primary bidxRequestFullAccess" href="#">' . __( 'Request full access', 'bidxplugin' ) . '</a>';
+                                break;
+                        }
 ?>
-                        <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryBidxMeta->bidxEntityId; ?>"><?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                        <a class="btn btn-primary disabled bidxAccessRequestPending <?php echo $accessRequestProgress; ?>" href="#"><?php echo _e( 'Access request pending', 'bidxplugin' ); ?></a>
+                        <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
+                        <a class="btn btn-primary disabled <?php echo $accessGranted; ?>" style="background-color: #468847;" href="#"><?php echo _e( 'Full Access granted', 'bidxplugin' ); ?></a>
+
 <?php
-        if ( $entityStatus == 'DRAFT' ) {
+                    }
+
+                    // does a user have rights to edit ( is the owner )
+                    //
+                    if ( $canEdit ) {
 ?>
-                        <a class="btn" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
+                        <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
-        }
-    }
+                        if ( $entityStatus == 'DRAFT' ) {
+?>
+                            <a class="btn" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
+<?php
+                        }
+                    }
 ?>
                     </div>
 
