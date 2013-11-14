@@ -355,9 +355,9 @@ Company: bidX;
     form .controls.control-error .validation-icon {
         background: url( assets/img/icons/icon-error.png ) no-repeat top left transparent;
     }
-    form .controls.control-valid .validation-icon {
-        background: url( assets/img/icons/icon-valid.png ) no-repeat top left transparent;
-    }
+/*     form .controls.control-valid .validation-icon {
+    background: url( assets/img/icons/icon-valid.png ) no-repeat top left transparent;
+} */
     form .controls .validation-icon {
 
         width:                      25px;
