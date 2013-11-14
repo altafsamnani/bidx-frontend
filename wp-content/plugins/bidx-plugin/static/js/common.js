@@ -937,7 +937,14 @@
             var $accordionBody = $( this );
 
             $accordionBody.closest( ".accordion-group" ).removeClass( "accordion-open" );
-        } );
+            $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).css({ overflow: 'hidden' });
+        } )
+        .bind( "shown", function ()
+        {
+            var $accordionBody = $( this );
+
+            $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).css({ overflow: 'visible' });
+        });
 
 
 
