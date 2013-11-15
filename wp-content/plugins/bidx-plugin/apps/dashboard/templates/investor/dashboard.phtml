@@ -85,7 +85,12 @@
             <div class="row-fluid">
                 <div class="span12 profile-block well">
                     <div class="btn-group control-buttons">
-                        <a class="btn btn-primary" href="/member?redirect_to=investor-dashboard#editInvestor/<?php echo $this->exst ($this->sessionData->data->id); ?>/investmentPreferences"><?php _e('Edit','bidxplugin'); ?></a>
+<?php
+                        // #msp: is it possible not to have an ID in the page?? what would the url be then..
+                        $id = $this->exst ( $this -> sessionData -> data -> id );
+                        $href = "/member#editInvestor/" . $id . "/" . http_build_query( array( "success"=> "/investor-dashboard/#dashboard/investor", "cancel"=> "/investor-dashboard/#dashboard/investor" ) );
+?>
+                        <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
                     </div>
                     <h2>My investment preferences</h2>
                     <p></p>
