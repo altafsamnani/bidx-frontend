@@ -449,6 +449,7 @@
                 } );
             } );
 
+
             $previousInvestment.find( "[name='investmentType']" ).trigger( "chosen:updated" );
         }
 
@@ -498,10 +499,24 @@
                     } );
                 break;
 
+                case "investmentType":
+
+                    // Chosen Dropdown
+                    //
+                    $input.chosen(
+                    {
+                        "search_contains":              true
+                    ,   "disable_search_threshold":     10
+                    ,   "width":                        "100%"
+                    } );
+                break;
+
                 default:
                     // NOOP
             }
         } );
+
+
     };
 
     // Add the snippet for a reference (and fill it with data)
