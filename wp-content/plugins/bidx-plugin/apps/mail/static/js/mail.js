@@ -11,6 +11,7 @@
     ,   $btnComposeSubmit           = $frmCompose.find(".compose-submit")
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
     ,   $mailFolderNavigation       = $element.find(".bidx-mailFolders")
+    ,   $contactsDropdown
     ,   bidx                        = window.bidx
     ,   currentGroupId              = bidx.common.getCurrentGroupId( "currentGroup" )
     ,   appName                     = "mail"
@@ -94,6 +95,55 @@
                 } );
             }
         } );
+
+
+
+        // get recipient list and initiate recipient compose combobox (chosen)
+        //
+        _getMembers(
+        {
+            status:     "active"
+        ,   limit:      ACTIVECONTACTSLIMIT
+        ,   offset:     0
+        ,   callback:   function( data )
+            {
+                // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
+                // which holds the contact info (unordered)
+                //
+                var listItems = []
+                ,   option
+                ;
+
+                $contactsDropdown = $frmCompose.find( "[name=contacts]" );
+
+                // sort the array
+                //
+                data.sortIndex = data.sortIndex.sort();
+
+                $.each( data.sortIndex, function( idx, key )
+                {
+                    option = $( "<option/>",
+                    {
+                        value: data.contacts[ key ].value
+                    } );
+                    option.text( data.contacts[ key ].label );
+
+                    listItems.push( option );
+                } );
+
+                $contactsDropdown.append( listItems );
+
+
+                $contactsDropdown.chosen(
+                {
+                    "search_contains":              true
+                ,   "width":                        "100%"
+                ,   "placeholder_text_multiple":    "Select a contact (i18n required)"
+                } );
+            }
+        } );
+
+
 
         // init the mailbox list toolbar buttons
         //
@@ -1567,13 +1617,21 @@
     //  ################################## GETTERS #####################################  \\
 
 
-        // function that retrieves group members returned in an array of key/value objects
+        // function that retrieves group members
         //
-        function _getMembers( callback )
+        function _getMembers( options )
         {
             bidx.utils.log( "[members] get active contacts" );
+            var status
+            ,   limit
+            ,   offset
+            ;
 
-            var status = "active";
+            // set values for api call or revert to default
+            //
+            status  = options.status ? options.status : "active";
+            limit   = options.limit ? options.limit : ACTIVECONTACTSLIMIT;
+            offset  = options.offset ? options.offset : 0;
 
             bidx.api.call(
                 "memberRelationships.fetch"
@@ -1590,11 +1648,11 @@
                         }
                     ,   {
                             label:      "limit",
-                            value:      ACTIVECONTACTSLIMIT
+                            value:      limit
                         }
                     ,   {
                             label:      "offset",
-                            value:      0
+                            value:      offset
                         }
                     ]
                 ,   requesterId:              bidx.common.getCurrentUserId( "id" )
@@ -1602,16 +1660,16 @@
 
                 ,   success: function( response )
                     {
-                        var result          = []
+                        var sortIndex           = []
+                        ,   contacts            = {}
+                        ,   result              = {}
                         ,   exists
                         ;
 
-                        // now format it into array of objects with value and label
-                        //
                         bidx.utils.log("[members] retrieved following active contacts ", response );
-                        if( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
+                        if ( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
                         {
-                            if( response.relationshipType.contact.types.active )
+                            if ( response.relationshipType.contact.types.active )
                             {
                                 // first add the admins and groupowners
                                 //
@@ -1619,13 +1677,15 @@
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
-                                        result.push(
+                                        contacts[ item.contactName.toLowerCase() ] =
                                         {
                                             value:      item.contactId
                                         ,   label:      item.contactName + " (A)"
-                                        });
-                                    });
+                                        };
+                                        sortIndex.push( item.contactName.toLowerCase() );
+                                    } );
                                 }
+
 
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
                                 //
@@ -1637,7 +1697,6 @@
                                     //
                                     $.map( response.relationshipType.contact.types.groupOwner, function( groupAdmin, index )
                                     {
-
                                         if ( groupAdmin.contactId === item.contactId )
                                         {
                                             exists = true;
@@ -1645,17 +1704,25 @@
                                         }
                                     } );
 
-                                    // if contactId is unique, add it to the result list
+                                    // if contactId is unique, add it to the contacts list
                                     //
                                     if ( !exists )
                                     {
-                                        result.push(
+                                        contacts[ item.contactName.toLowerCase() ] =
                                         {
                                             value:      item.contactId
                                         ,   label:      item.contactName
-                                        });
+                                        };
+                                        sortIndex.push( item.contactName.toLowerCase() );
                                     }
                                 });
+
+                                result =
+                                {
+                                    sortIndex:  sortIndex
+                                ,   contacts:   contacts
+                                };
+
                             }
                             else
                             {
@@ -1663,7 +1730,12 @@
                             }
 
                         }
-                        callback( result );
+                        // execute callback if it is available and of type function
+                        //
+                        if ( options.callback && $.isFunction( options.callback ) )
+                        {
+                            options.callback( result );
+                        }
                     }
 
                 ,   error: function( jqXhr, textStatus )
@@ -2697,6 +2769,6 @@
 
     // Initialize the defered tagsinput
     //
-    $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
+ //   $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
 
 } ( jQuery ));
