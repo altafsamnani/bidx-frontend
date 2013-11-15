@@ -222,6 +222,15 @@ Company: bidX;
         filter:                     alpha(opacity=100);
     }
 
+    .input-append .btn-large {
+        height:                     41px;
+        -webkit-webkit-box-shadow:  none;
+        webkit-box-shadow:          none;
+        padding:                    9px 19px;
+        border:                     2px solid #bdc3c7;
+        margin-left:                -2px;
+    }
+
     a.btn {
         line-height:                23px;  /* alter line-height so that <a> has same appearance as <button> */
     }
