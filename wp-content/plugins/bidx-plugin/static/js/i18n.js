@@ -88,7 +88,7 @@
 
         // Only called with a callback
         //
-        if ( $.isFunction( context ))
+        if ( $.isFunction( context ) )
         {
             cb = context;
             context = null;
