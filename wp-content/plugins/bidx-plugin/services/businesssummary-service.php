@@ -14,7 +14,7 @@ class BusinessSummaryService extends APIbridge
      * Constructs the API bridge.
      * Needed for operational logging.
      */
-    private $apiUrl = 'entity/';
+    private $apiUrl = 'businesssummary/';
 
     public function __construct ()
     {
