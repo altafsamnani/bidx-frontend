@@ -1154,43 +1154,32 @@
             } );
         }
 
-        // setup Full Accesss Request
-        // only for users not owning the current summary
-        // #MSP: WORK IN PROGRESS
+        // bind Full Accesss Request button
+        // only for users not owning the current summary ( summary owners do not get this button rendered )
         //
         if ( $btnFullAccessRequest )
         {
                 $btnFullAccessRequest.click( function( e )
                 {
                     e.preventDefault();
-                    if ( businessSummaryId.match( /^\d+$/ ) )
-                    {
-                        _doAccessRequest();
-                    }
-                    else
-                    {
-                        bidx.utils.error( "Cannot request full access: No Id provided" );
-                    }
+                    _doAccessRequest();
                 } );
         }
-
-
-
     }
 
 
 
-    // Do a full access request to businessSummary owner
+    // Do a full access request for this businessSummar
+    //
     function _doAccessRequest()
     {
         bidx.api.call(
              "businesssummaryRequestAccess.send"
         ,   {
                 groupDomain:            bidx.common.groupDomain
-            ,   id:                     businessSummaryId
+            ,   id:                     bidxConfig.context.businessSummaryId
             ,   success: function( response )
                 {
-                    bidx.utils.log("RESPONSE", response );
                     if ( response.status === "OK" )
                     {
                         // show Pending button and hide Send button

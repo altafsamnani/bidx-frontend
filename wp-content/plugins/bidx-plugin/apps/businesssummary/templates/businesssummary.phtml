@@ -1,6 +1,7 @@
 <?php
 
 $businessSummary    = $this->data;
+
 $progress           = trim ($this->exst($businessSummary->rating->Completeness)) . '%';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
@@ -20,29 +21,14 @@ $entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data
 //
 $canRequestAccess = isset( $entities->bidxInvestorProfile );
 
-// get the current access requests for this user (from sessionservice ) which is located in the investorProfile Entity
-//
-$sessionSvc = new SessionService();
-$investorProfileEntity = $sessionSvc->returnEntity( "bidxInvestorProfile" );
-$accessRequests = isset( $investorProfileEntity -> authorizedBusinessSummaries ) ? $investorProfileEntity -> authorizedBusinessSummaries : null;
-
-// find the current businessSummary in the pending requests
-//
-$requestStatus = "";
 $businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
 
-foreach ( $accessRequests as $request ) {
-    // match cyrrent opened SummaryId
-    //
-    if ( $request -> businessSummary -> bidxMeta -> bidxEntityId  == $businessSummaryId ) {
-        $requestStatus = $request -> status;
-    }
-}
+// get accessrequest status for this user and businesssummary
+//
+$requestStatus = $businessSummary->accessAuthorization;
 
 
 
-// #MSP: WORK IN PROGRESS: check if the current summary matches the requests of the current user and update the status of the requestAccessbutton
-//d( $accessRequest );
 
 $attachmentItem = <<<EOT
     <div class="span4 well well-white">
@@ -103,8 +89,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                     <!-- SHOW -->
                     <div class="view viewShow">
-                        <a class="btn btn-primary" href="/member"><?php _e( 'Go back', 'bidxplugin' ); ?></a>
-
 <?php
                     // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
                     //
@@ -128,8 +112,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 $accessRequestSend = 'hide';
                                 $accessGranted = '';
                                 break;
-                            default:
-                                $accessRequestControl = '<a class="btn btn-primary bidxRequestFullAccess" href="#">' . __( 'Request full access', 'bidxplugin' ) . '</a>';
+                            case 'None':
+                                $accessRequestProgress = 'hide';
+                                $accessRequestSend = '';
+                                $accessGranted = 'hide';
                                 break;
                         }
 ?>
