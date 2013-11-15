@@ -34,7 +34,7 @@ Company: bidX;
         }
 
         #wrap .inner-wrap {
-            padding-top:                171px;
+            padding-top:                114px;
         }
 
     /* end top paddings */
@@ -613,7 +613,7 @@ Company: bidX;
             color: #bdc3c7;
 
             height: 32px;
-            padding: 0 0 0 6px;
+            padding: 0 6px 0 0;
             -webkit-box-shadow: none;
             -moz-box-shadow: none;
             box-shadow: none;
@@ -651,7 +651,7 @@ Company: bidX;
         }
 
         header.navbar .form-search:hover .search-query, header.navbar .form-search:hover .input-append .btn {
-            border-color: #f39c12;
+
         }
 
     /* end searchbox */
