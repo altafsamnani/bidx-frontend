@@ -642,7 +642,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 $rowValues = array (
                     __('Business sales started in','bidxplugin') => $this->exst($businessSummary->yearSalesStarted)
                 );
-                echo $this->addRowsWithLabelBelow( '', '',  $rowValues, $viewRowProperties );
+                echo $this->pairRows( $rowValues );
 ?>
                             </div>
 

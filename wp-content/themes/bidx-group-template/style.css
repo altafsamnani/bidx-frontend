@@ -426,6 +426,11 @@ Company: bidX;
         display:                        none;
     }
 
+    .controls>.radio:first-child,
+    .controls>.checkbox:first-child {
+        padding-top:                    0;
+    }
+
     .input-append .add-on, .input-prepend .add-on {
         min-width:                      32px;
         padding:                        9px 5px;
@@ -823,10 +828,6 @@ Company: bidX;
 *
 ********************************************************************************************/
 
-
-
-
-
 .sidebar-block-title {
 	margin-top:					0;
 }
@@ -851,12 +852,6 @@ Company: bidX;
     margin-bottom:              10px;
 }
 
-
-
-.bidx-label {
-    font-weight:                bold;
-}
-
 .accordion-heading {
     background-color:           #f5f5f5;
 }
@@ -876,20 +871,20 @@ Company: bidX;
     top:                        18px;
 }
 
-    .accordion-open .accordion-state-icon {
-        -webkit-transform:          rotate(90deg);
-        -moz-transform:             rotate(90deg);
-        -ms-transform:              rotate(90deg);
-        -o-transform:               rotate(90deg);
-        transform:                  rotate(90deg);
-        filter:                     progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+.accordion-open .accordion-state-icon {
+    -webkit-transform:          rotate(90deg);
+    -moz-transform:             rotate(90deg);
+    -ms-transform:              rotate(90deg);
+    -o-transform:               rotate(90deg);
+    transform:                  rotate(90deg);
+    filter:                     progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 
-        -webkit-transition:         -webkit-transform 0.3s;
-        -moz-transition:            -moz-transform 0.3s;
-        -o-transition:              -o-transform 0.3s;
-        transition:                 transform 0.3s;
-        -webkit-backface-visibility: hidden;
-    }
+    -webkit-transition:         -webkit-transform 0.3s;
+    -moz-transition:            -moz-transform 0.3s;
+    -o-transition:              -o-transform 0.3s;
+    transition:                 transform 0.3s;
+    -webkit-backface-visibility: hidden;
+}
 
 .accordion-heading .heading-error-count {
     color:                      #FFF;
@@ -933,8 +928,6 @@ Company: bidX;
     bottom:                     10px;
 }
 
-
-
 span.scrollPositionMarker {
     position:                   absolute;
     top:                        -60px;
@@ -947,7 +940,6 @@ body.bidx-edit span.scrollPositionMarker {
 body.bidx-business span.scrollPositionMarker {
     top:                        -300px;
 }
-
 
 .well-white {
     background-color:           #fff;
@@ -964,7 +956,6 @@ body.bidx-business span.scrollPositionMarker {
 .nav-edit {
     top:                    250px;
     position:               fixed;
-    width:                  14s%;
 }
 
 
