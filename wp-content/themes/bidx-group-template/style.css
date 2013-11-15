@@ -270,8 +270,8 @@ Company: bidX;
         h1 span {
             display:                block;
             font-size:              inherit;
-            font-weight:            400;
-            margin-top:             15px;
+            font-weight:            700;
+            margin-top:             0;
         }
 
 
@@ -347,6 +347,9 @@ Company: bidX;
         box-shadow:                 none;
     }
 
+    textarea {
+        resize:                     vertical;
+    }
 
     form .controls {
         position:               relative;
@@ -1592,9 +1595,10 @@ form .row-fluid .input-prepend {
           position:                                 relative;
           z-index:                                  1010;
           margin:                                   0;
-          padding:                                  3px 4px;
+          padding:                                  13px 19px;
           white-space:                              nowrap;
-          margin:                                   10px 15px;
+          margin:                                   0;
+          border-bottom:                            2px solid #bdc3c7;
         }
         .chosen-container-single .chosen-search input[type="text"] {
           -webkit-box-sizing:                       border-box;
