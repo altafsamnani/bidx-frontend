@@ -998,7 +998,8 @@
 
         var $validator = $editForm.validate(
         {
-            rules:
+            ignore: ""
+        ,   rules:
             {
                 "personalDetails.firstName":
                 {
