@@ -40,6 +40,13 @@ Company: bidX;
     /* end top paddings */
 
 
+        .inner-wrap > .container {
+            margin-bottom:              40px;
+            margin-top:                 20px;
+        }
+
+
+
     /* sticky footer   */
     #wrap {
         height:                     auto;
@@ -351,8 +358,12 @@ Company: bidX;
         resize:                     vertical;
     }
 
+    .bidx-edit form {
+        margin:                     0;
+    }
+
     form .controls {
-        position:               relative;
+        position:                   relative;
     }
 
     form .controls.control-error .validation-icon {
@@ -730,8 +741,7 @@ Company: bidX;
 
     /* This might need to change for smaller screen breakpoints  */
     .pageHeader {
-        padding-top:            10px;
-        padding-bottom:         10px;
+        padding:                0;
         background-color:       #fff;
         z-index:                190;
     }
@@ -2204,11 +2214,6 @@ form .row-fluid .input-prepend {
 
     /* styles shared by portrait tablet and above */
     @media (min-width: 980px ) {
-
-        .inner-wrap > .container {
-            margin-bottom:              40px;
-        }
-
 
         /* header */
         header .navbar-inner {
