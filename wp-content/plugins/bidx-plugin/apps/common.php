@@ -546,10 +546,10 @@ class BidxCommon
      *
      * @param bool $echo
      */
-    static function get_bidx_subdomain ($echo = false)
+    static function get_bidx_subdomain ($echo = false, $url = NULL)
     {
-
-        $hostAddress = explode ('.', $_SERVER ["HTTP_HOST"]);
+        $httpHost = ($url) ? str_replace(array("http://", "https://"),"",$url) : $_SERVER ["HTTP_HOST"];
+        $hostAddress = explode ('.', $httpHost );
         if (is_array ($hostAddress)) {
             if (strcasecmp ("www", $hostAddress [0]) == 0) {
                 $passBack = 1;
