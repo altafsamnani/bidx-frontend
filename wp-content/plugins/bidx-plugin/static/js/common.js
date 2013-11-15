@@ -860,8 +860,6 @@
 
 
             }
-
-
         }
 
         // Unhiglight called: decrease error count
@@ -882,7 +880,7 @@
         //
         function _showErrorCount()
         {
-            var $errorCount = $accordionHeading.find( ".heading-error-count" );
+            var $errorCount = $accordionHeading.find( ".badge-important" );
 
             // if error count does not yet exist
             //
@@ -890,7 +888,7 @@
             {
                 $errorCount = $( "<span/>",
                 {
-                    class:      "pull-right heading-error-count"
+                    class:      "pull-right badge badge-important"
                 } );
 
                 $accordionHeading.find( ".accordion-toggle" ).append( $errorCount );
