@@ -74,7 +74,7 @@ class GroupService extends APIbridge {
 	if ($group_id == null) {
 		if ( false === ( $result = get_transient( 'localgroup' ) ) ) { 		
 			// It wasn't there, so regenerate the data and save the transient
-			$result = $this->callBidxAPI( 'groups/' . $this -> get_bidx_subdomain(), array(), 'GET' );
+			$result = $this->callBidxAPI( 'groups/' . $this -> getBidxSubdomain(), array(), 'GET' );
 			set_transient( 'localgroup', $result, 3600 ); //1 hour
 		} else {
 			$result = $result = get_transient( 'localgroup');
