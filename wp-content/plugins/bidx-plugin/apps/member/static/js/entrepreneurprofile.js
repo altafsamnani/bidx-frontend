@@ -336,6 +336,7 @@
                     bidx.utils.setElementValue( $( this ), value  );
                 } );
             } );
+            $previousBusiness.find( "[name='businessOutcome']" ).trigger( "chosen:updated" );
         }
 
         // Store the whole object in the DOM so we can later merge it with the changed values
@@ -367,6 +368,17 @@
                     $input.rules( "add",
                     {
                         urlOptionalProtocol:        true
+                    } );
+                break;
+                case "businessOutcome":
+
+                    // Chosen Dropdown
+                    //
+                    $input.chosen(
+                    {
+                        "search_contains":              true
+                    ,   "disable_search_threshold":     10
+                    ,   "width":                        "100%"
                     } );
                 break;
 
