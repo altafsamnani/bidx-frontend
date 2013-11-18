@@ -145,7 +145,7 @@ class BidxShortcode
             wp_register_script ('jquery-validation-additional-methods', $bidxJsDir . '/vendor/additional-methods.js', array ('jquery-validation'), '1.1.11', true);
             wp_register_script ('jquery-validation-bidx-additional-methods', $bidxJsDir . '/additional-methods.js', array ('jquery-validation'), '20130812', true);
             wp_register_script ('bootstrap-paginator', $bidxJsDir . '/vendor/bootstrap-paginator.js', array ('bootstrap', 'jquery-ui'), '20131103', TRUE);
-
+            wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
 
             // fileupload
             wp_register_script ('jquery-iframe-transport', $bidxJsDir . '/vendor/jquery.iframe-transport.js', array ('jquery'), '1.7', true);
@@ -165,6 +165,7 @@ class BidxShortcode
             wp_register_script ('bidx-data', $bidxJsDir . '/data.js', array ('jquery'), '20130626', TRUE);
             wp_register_script ('bidx-delaykeyup', $bidxJsDir . '/bidx-delaykeyup.js', array ('jquery'), '20131103', TRUE);
             wp_register_script ('bidx-location', $bidxJsDir . '/bidx-location.js', array ('jquery', 'bidx-utils', 'jquery-ui', 'gmaps-places'), '20130904', true);
+            wp_register_script ('bidx-chosen',  $bidxJsDir . '/bidx-chosen.js', array ('jquery', 'chosen'),  '20131118', TRUE);
 
             // wp_localize_script( 'bidx-data', 'windows.bidx = bidx || {}','{}' ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
 
@@ -178,8 +179,6 @@ class BidxShortcode
             wp_register_script ('bidx-i18n', $bidxJsDir . '/i18n.js', array ('jquery'), '20130626', TRUE);
 
             wp_register_script ('bidx-tagsinput', $bidxJsDir . '/bidx-tagsinput.js', array ('bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data'), '20130703', TRUE);
-
-            wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
 
             wp_enqueue_script ('business-summaries', $staticDir . '/web_components/business_summaries/js/app.js', array ('jquery'), '20131112', TRUE);
 
