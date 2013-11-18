@@ -475,7 +475,7 @@ class BidxCommon
 
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
         if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) ||
-            $hostAddress[1]   == 'registration'                   ||
+            //$hostAddress[1]   == 'registration'                   ||
             strstr ($hostAddress[1], 'wp-login.php')              ||
             is_super_admin()
             ) { //Allow Groupadmin for wp-admin dashboard
