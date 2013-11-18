@@ -99,17 +99,11 @@
 
         // Populate the dropdowns with the values
         //
-        bidx.data.getContext( "industry", function( err, industries )
+        $focusIndustry.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $focusIndustry, industries );
-
-            $focusIndustry.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
-
+            dataKey:            "industry"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
         bidx.data.getContext( "businessOutcome", function( err, businessOutcomes )
         {

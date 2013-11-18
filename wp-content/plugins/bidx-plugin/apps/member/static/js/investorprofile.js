@@ -159,73 +159,65 @@
             e.preventDefault();
         } );
 
-
-        bidx.data.getContext( "industry", function( err, industries )
+        // Populate the selects
+        //
+        $focusIndustry.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $focusIndustry, industries );
+            dataKey:            "industry"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $focusIndustry.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "language", function( err, languages )
+        $focusLanguage.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $focusLanguage, languages );
+            dataKey:            "language"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $focusLanguage.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "socialImpact", function( err, socialImpacts )
+        $focusSocialImpact.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $focusSocialImpact, socialImpacts );
+            dataKey:            "socialImpact"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $focusSocialImpact.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "envImpact", function( err, envImpacts )
+        $focusEnvImpact.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $focusEnvImpact, envImpacts );
+            dataKey:            "envImpact"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $focusEnvImpact.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "consumerType", function( err, consumerTypes )
+        $focusConsumerType.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $focusConsumerType, consumerTypes );
+            dataKey:            "consumerType"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $focusConsumerType.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
+        $investmentType.bidx_chosen(
+        {
+            dataKey:            "investmentType"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
+        $institutionAddressCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
+        $focusCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
+        $investorType.bidx_chosen(
+        {
+            dataKey:            "investorType"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
+
 
         bidx.data.getContext( "investmentType", function( err, investmentTypes )
         {
-            // Chosen dropdown
-            bidx.utils.populateDropdown( $investmentType, investmentTypes );
-
-            $investmentType.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-
             // previousInvestmentInvestmentType
             var $previousInvestmentInvestmentType     = snippets.$previousInvestment.find( "[name='investmentType']" )
             ,   $noValue            = $( "<option value='' />" )
@@ -235,57 +227,6 @@
             $previousInvestmentInvestmentType.append( $noValue );
 
             bidx.utils.populateDropdown( $previousInvestmentInvestmentType, investmentTypes );
-        } );
-
-        bidx.data.getContext( "country", function( err, countries )
-        {
-
-            // institution Address Country
-            var $noValue = $( "<option value='' />" );
-
-            $noValue.i18nText( "selectCountry", appName );
-            $institutionAddressCountry.append( $noValue );
-
-            bidx.utils.populateDropdown( $institutionAddressCountry, countries );
-
-            // Chosen dropdown
-            bidx.utils.populateDropdown( $focusCountry, countries );
-
-            $focusCountry.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-
-            $institutionAddressCountry.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-
-
-        } );
-
-        // Populate the dropdowns with the values
-        //
-        bidx.data.getContext( "investorType", function( err, investorTypes )
-        {
-            var $noValue = $( "<option value='' />" );
-
-            $noValue.i18nText( "selectInvestor", appName );
-            $investorType.append( $noValue );
-
-            bidx.utils.populateDropdown( $investorType, investorTypes );
-
-            // Chosen dropdown
-            $investorType.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-
         } );
 
         // Grab the snippets from the DOM

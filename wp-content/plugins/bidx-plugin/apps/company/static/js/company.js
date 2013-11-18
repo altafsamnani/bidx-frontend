@@ -111,41 +111,18 @@
         }
     } );
 
-    // Populate the peronsalDetails.nationality select box using the data items
-    //
-    bidx.data.getContext( "country", function( err, countries )
+    $currentAddressCountry.bidx_chosen(
     {
-        var $noValue            = $( "<option value='' />" );
+        dataKey:            "country"
+    ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
+    });
 
-        $currentAddressCountry.empty();
-
-        $noValue.i18nText( "selectCountry", appName );
-        $currentAddressCountry.append( $noValue );
-
-        bidx.utils.populateDropdown( $currentAddressCountry, countries );
-
-        // Chosen dropdown
-        $currentAddressCountry.chosen(
-        {
-            "search_contains":              true
-        ,   "disable_search_threshold":     10
-        ,   "width":                        "100%"
-        } );
-
-
-    } );
-
-    bidx.data.getContext( "country", function( err, countries )
+    snippets.$countryOperationSpecifics.find( "[name='country']" ).bidx_chosen(
     {
-        var $countryOperationSpecificsCountry   = snippets.$countryOperationSpecifics.find( "[name='country']" )
-        ,   $noValue                            = $( "<option value='' />" )
-        ;
+        dataKey:            "country"
+    ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
+    });
 
-        $noValue.i18nText( "selectCountry", appName );
-        $currentAddressCountry.append( $noValue );
-
-        bidx.utils.populateDropdown( $countryOperationSpecificsCountry, countries );
-    } );
 
     bidx.data.getContext( "permitsObtained", function( err, permitsOptained )
     {

@@ -217,85 +217,41 @@
 
         // Populate the dropdowns with the values
         //
-        bidx.data.getContext( "reasonForSubmission", function( err, reasons )
+        forms.generalOverview.$el.find( "[name='reasonForSubmission']" ).bidx_chosen(
         {
-            var $reasonForSubmission    = forms.generalOverview.$el.find( "[name='reasonForSubmission']" )
-            ,   $noValue                = $( "<option value='' />" )
-            ;
+            dataKey:            "reasonForSubmission"
+        ,   emptyValue:         bidx.i18n.i( "selectReasonForSubmission", appName )
+        });
 
-            $reasonForSubmission.empty();
-
-            $noValue.i18nText( "selectReasonForSubmission", appName );
-            $reasonForSubmission.append( $noValue );
-
-            bidx.utils.populateDropdown( $reasonForSubmission, reasons );
-
-            // Chosen dropdown
-            //
-            $reasonForSubmission.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "industry", function( err, industries )
+        $industry.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $industry, industries );
+            dataKey:            "industry"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $industry.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "productService", function( err, industries )
+        $productService.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $productService, industries );
+            dataKey:            "productService"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $productService.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "country", function( err, industries )
+        $countryOperation.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $countryOperation, industries );
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $countryOperation.chosen(
-            {
-                "search_contains":              true
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "envImpact", function( err, envImpacts )
+        $envImpact.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $envImpact, envImpacts );
+            dataKey:            "envImpact"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $envImpact.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        bidx.data.getContext( "socialImpact", function( err, socialImpacts )
+        $socialImpact.bidx_chosen(
         {
-            bidx.utils.populateDropdown( $socialImpact, socialImpacts );
-
-            $socialImpact.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-        } );
+            dataKey:            "socialImpact"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
         // Collect snippets from the DOM
         //

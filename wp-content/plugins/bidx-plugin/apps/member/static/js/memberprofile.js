@@ -145,74 +145,25 @@
             e.preventDefault();
         } );
 
-        // Populate the peronsalDetails.nationality select box using the data items
+        // Populate the select's
         //
-        bidx.data.getContext( "country", function( err, countries )
+        $personalDetailsNationality.bidx_chosen(
         {
-            var $noValue            = $( "<option value='' />" );
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $personalDetailsNationality.empty();
-
-            $noValue.i18nText( "selectNationality", appName );
-            $personalDetailsNationality.append( $noValue );
-
-            // Chosen dropdown
-            bidx.utils.populateDropdown( $personalDetailsNationality, countries );
-
-            $personalDetailsNationality.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-
-        } );
-
-
-        // Populate the personalDetails.address[0].country select box using the data items
-        //
-        bidx.data.getContext( "country", function( err, countries )
+        $currentAddressCountry.bidx_chosen(
         {
-            var $noValue            = $( "<option value='' />" );
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
-            $currentAddressCountry.empty();
-
-            $noValue.i18nText( "selectCountry", appName );
-            $currentAddressCountry.append( $noValue );
-
-            bidx.utils.populateDropdown( $currentAddressCountry, countries );
-
-            // Chosen dropdown
-            $currentAddressCountry.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-        } );
-
-        // Populate the personalDetails.address[0].country select box using the data items
-        //
-        bidx.data.getContext( "education", function( err, educations )
+        $personalDetailsHighestEducation.bidx_chosen(
         {
-            var $noValue            = $( "<option value='' />" );
-
-            $personalDetailsHighestEducation.empty();
-
-            $noValue.i18nText( "selectEducation", appName );
-            $personalDetailsHighestEducation.append( $noValue );
-
-            bidx.utils.populateDropdown( $personalDetailsHighestEducation, educations );
-
-            // Chosen dropdown
-            $personalDetailsHighestEducation.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-
-        } );
+            dataKey:            "education"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
         // Profile picture
         //
