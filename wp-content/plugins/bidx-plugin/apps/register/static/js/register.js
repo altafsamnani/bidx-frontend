@@ -1,9 +1,13 @@
+/* global bidx */
 ;( function ( $ )
 {
     var $element                    = $( "#register" )
     ,   $frmRegister                = $element.find( "#frmRegister" )
+
+    ,   $addressCountry             = $frmRegister.find( "[name='personalDetails.address.country']" )
+
     ,   $btnRegister                = $frmRegister.find( ":submit" )
-    ,   bidx                        = window.bidx
+
     ,   appName                     = "register"
     ,   userPreferences             = {}
     ,   submitBtnLabel
@@ -11,19 +15,14 @@
     ;
 
     // private functions
-
-    var _oneTimeSetup = function()
+    //
+    function _oneTimeSetup()
     {
-
-
-        // enable location plugin
-        //
-        $frmRegister.find( "[data-type=location]"   ).bidx_location(
+        $addressCountry.bidx_chosen(
         {
-            showMap:                true
-        ,   initiallyShowMap:       true
-        } );
-
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+        });
 
         // set validation and submitHandler
         //
@@ -51,15 +50,14 @@
                     ,   paramKey:           "username"
 
                     }
-
                 }
-            ,   "location":
+            ,   "personalDetails.address.country":
                 {
-                    bidxLocationRequired:
-                    {
-                        requiredKeys:       [ 'cityTown', 'country' ]
-                    }
-                ,
+                    required:               true
+                }
+            ,   "personalDetails.address.cityTown":
+                {
+                    required:               true
                 }
             ,   "acceptTerms":
                 {
@@ -78,7 +76,6 @@
             }
         ,   submitHandler:  function()
             {
-
                 if ( $btnRegister.hasClass( "disabled" ) )
                 {
                     bidx.utils.log("button disabled");
@@ -104,39 +101,30 @@
         } );
 
         $("[type=checkbox]").checkbox();
+    }
 
 
-    };
-
-
-    var _doRegister = function( porams )
+    function _doRegister( porams )
     {
-
         // Build up the data for the member request
         //
         var member =
             {
-                emailAddress:                   $frmRegister.find( "[name='username']" ).val()
+                emailAddress:           $frmRegister.find( "[name='username']" ).val()
             ,   personalDetails:
+                {
+                    firstName:              $frmRegister.find( "[name='personalDetails.firstName']" ).val()
+                ,   lastName:               $frmRegister.find( "[name='personalDetails.lastName']" ).val()
+                ,   address:
                     {
-                        firstName:              $frmRegister.find( "[name='personalDetails.firstName']" ).val()
-                    ,   lastName:               $frmRegister.find( "[name='personalDetails.lastName']" ).val()
+                        country:                $addressCountry.val()
+                    ,   cityTown:               $frmRegister.find( "[name='personalDetails.address.country" ).val()
                     }
+                }
             ,   userPreferences:                userPreferences
             }
-        ,   $location   = $frmRegister.find( "[name='location']" )
+
         ;
-
-        // fetch the address from the location plugin
-        //
-        if ( $location.val() )
-        {
-            member.personalDetails.address =
-            [
-                 $location.bidx_location( "getLocationData" )
-            ];
-        }
-
 
         bidx.api.call(
             "member.save"
@@ -163,21 +151,10 @@
                 }
             }
         );
-    };
-
-
-
-    // generic view function. Hides all views and then shows the requested view
-    //
-/*    var _showView = function( view )
-    {
-
-        var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
-
-    };*/
+    }
 
     // ROUTER
-
+    //
     var state;
 
     var navigate = function( options )
@@ -190,11 +167,6 @@
             bidx.utils.setValue( userPreferences, "firstLoginGroup", bidxConfig.groupName );
             bidx.utils.log(userPreferences);
         }
-
-
-     //   _showView( "register" );
-
-
     };
 
     //expose
