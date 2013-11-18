@@ -153,25 +153,12 @@
             google.maps.event.addListener( state.map, "zoom_changed"
             ,   function()
                 {
-                    bidx.utils.log( "zoom_changed", state.map.getZoom() ) ;
+                    // NOOP
                 }
             );
 
-            // we create a deferred object onChange for the validator plugin
+            // Listen for the event the user triggers by selecting a place from the floating list
             //
-            $el.bind( "change",  function()
-            {
-                bidx.utils.log("DEFERRED: ", state.$d );
-                if ( !state.$d || ( state.$d && state.$d.state() === "resolved") )
-                {
-
-                    state.$d = $.Deferred();
-                    bidx.utils.log(" CREATE DEFERRED", state.$d.state() );
-                }
-
-
-            } );
-
             google.maps.event.addListener(
                 state.autoComplete
             ,   "place_changed"
@@ -181,10 +168,13 @@
 
                     widget._placeChanged( place );
 
-                    bidx.utils.log( "[4] place changed, will resolve Promise" , widget.getLocationData());
-                    // resolve promise
+                    // resolve Deferred (if any)
                     //
-                    state.$d.resolve( widget.getLocationData() );
+                    if ( state.$d )
+                    {
+                        state.$d.resolve( widget.getLocationData() );
+                        delete state.$d;
+                    }
                 }
             );
 
@@ -210,22 +200,22 @@
             }
         }
 
-        // Return the promise that was made onChange or null if no promise is available
-        //
-    ,   getPromise:         function()
+    ,   generateDeferredAndGetPromise:    function()
         {
             var widget      = this
             ,   options     = widget.options
             ,   state       = options.state
             ;
 
-            bidx.utils.log( "[2a] getting Promise", state.$d );
-            if ( state.$d  && !state.promise )
+            if ( state.$d )
             {
-                bidx.utils.log("[2b] creating a promise");
-                state.promise = state.$d.promise();
+                state.$d.reject();
+                delete state.$d;
             }
-            return  state.promise;
+
+            state.$d = $.Deferred();
+
+            return state.$d.promise();
         }
 
         // Get the current location data
