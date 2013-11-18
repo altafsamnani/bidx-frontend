@@ -253,7 +253,11 @@ bidx.widgets = {
                 // Create a <p> tag an add a message for no no Businesses with Summary
                 var msg2 = document.createElement( 'p' );
                 msg2.innerText = 'Unfortunately there are no Businesses with Summary at the moment';
-                bidx.widgets.businessSummarySelector.error.el.parentNode.appendChild( msg2 );
+
+                if ( bidx.widgets.businessSummarySelector.error.el )
+                {
+                    bidx.widgets.businessSummarySelector.error.el.parentNode.appendChild( msg2 );
+                }
             },
 
             // Error for no connection
@@ -261,7 +265,11 @@ bidx.widgets = {
             {
                 var msg3 = document.createElement( 'p' );
                 msg3.innerText = 'No Connection or Not logged in';
-                bidx.widgets.businessSummarySelector.error.el.parentNode.appendChild( msg3 );
+
+                if ( bidx.widgets.businessSummarySelector.error.el )
+                {
+                    bidx.widgets.businessSummarySelector.error.el.parentNode.appendChild( msg3 );
+                }
             }
         } // error
     },
