@@ -231,16 +231,14 @@
             bidx.utils.populateDropdown( $reasonForSubmission, reasons );
 
             // Chosen dropdown
+            //
             $reasonForSubmission.chosen(
             {
                 "search_contains":              true
             ,   "disable_search_threshold":     10
             ,   "width":                        "100%"
             } );
-
-
         } );
-
 
         bidx.data.getContext( "industry", function( err, industries )
         {
@@ -299,19 +297,6 @@
             } );
         } );
 
-        bidx.data.getContext( "yearSalesStarted", function( err, yearSalesStarteds )
-        {
-            bidx.utils.populateDropdown( $yearSalesStarted, yearSalesStarteds );
-
-            $yearSalesStarted.chosen(
-            {
-                "search_contains":              true
-            ,   "disable_search_threshold":     10
-            ,   "width":                        "100%"
-            } );
-        } );
-
-
         // Collect snippets from the DOM
         //
         function _snippets()
@@ -344,6 +329,7 @@
             forms.generalOverview.$el.validate(
             {
                 ignore:         ""
+            ,   debug:          false
             ,   rules:
                 {
                     name:
@@ -399,7 +385,7 @@
             //
             forms.aboutYourBusiness.$el.validate(
             {
-                debug: false
+                debug:          false
             ,   ignore:         ""
             ,   rules:
                 {
@@ -434,7 +420,9 @@
             //
             forms.aboutYouAndYourTeam.$el.validate(
             {
-                rules:
+                ignore:         ""
+            ,   debug:          false
+            ,   rules:
                 {
                     personalRole:
                     {
@@ -462,6 +450,7 @@
             forms.financialDetails.$el.validate(
             {
                 ignore:                 ""
+            ,   debug:                  false
             ,   rules:
                 {
                     yearSalesStarted:
@@ -486,6 +475,7 @@
             forms.companyDetails.$el.validate(
             {
                 ignore:                 ""
+            ,   debug:                  false
             ,   rules:
                 {
                     hasCompany:
@@ -1930,9 +1920,9 @@
         // Fetch the business summary
         //
         bidx.api.call(
-            "entity.fetch"
+            "businesssummary.fetch"
         ,   {
-                entityId:           businessSummaryId
+                businessSummaryId:  businessSummaryId
             ,   groupDomain:        bidx.common.groupDomain
 
             ,   success: function( response )
@@ -1941,7 +1931,7 @@
 
                     // Do we have edit perms?
                     //
-                    var bidxMeta    = bidx.utils.getValue( response, "bidxMeta" )
+                    var bidxMeta    = bidx.utils.getValue( response, "data.bidxMeta" )
                     ,   canEdit     = bidx.utils.getValue( bidxMeta, "bidxCanEdit" )
                     ,   msg
                     ;
@@ -1955,7 +1945,7 @@
                     }
                     else
                     {
-                        businessSummary = response;
+                        businessSummary = response.data;
 
                         bidx.utils.log( "bidx::businessSummary", businessSummary );
 
@@ -2069,14 +2059,16 @@
         // Save the data to the API
         //
         bidx.api.call(
-            "entity.save"
+            "businesssummary.save"
         ,   {
-                entityId:       businessSummaryId
-            ,   groupDomain:    bidx.common.groupDomain
-            ,   data:           businessSummary
+                                        // Undefined when creating the business summary
+                                        //
+                businessSummaryId:      businessSummaryId
+            ,   groupDomain:            bidx.common.groupDomain
+            ,   data:                   businessSummary
             ,   success:        function( response )
                 {
-                    bidx.utils.log( "entity.save::success::response", response );
+                    bidx.utils.log( "businesssummary.save::success::response", response );
 
                     var bidxMeta = bidx.utils.getValue( response, "data.bidxMeta" );
 
