@@ -226,6 +226,10 @@ class TemplateLibrary
             case 'highestEducation':
                 $values = $this->getStaticVal ('education', $values);
                 break;
+
+            case 'investorType':
+                $values = $this->getStaticVal ('investorType', $values);
+                break;
         }
 
         return $values;

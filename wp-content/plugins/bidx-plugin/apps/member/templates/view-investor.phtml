@@ -9,7 +9,7 @@ $investorDetailsBidxMeta = isset( $investorDetails->bidxMeta )
 if ($investorDetails &&
     ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED' || $investorDetailsBidxMeta->bidxCanEdit  ) ) {
 
-    $investorType = $this->exst ($investorDetails->investorType);
+    //$investorType = $this->exst ($investorDetails->investorType);
 ?>
 
     <div class="well profile-block details-block">
@@ -72,7 +72,7 @@ if ($investorDetails &&
 
         $rowValues = array(
             __('Investor profile summary','bidxplugin')   =>  $this->exst ($investorDetails->summary),
-            __('Investor type','bidxplugin')              =>  $investorType,
+            __('Investor type','bidxplugin')              =>  $this->addExtraValuesToRows('investorType', $this->exst ($investorDetails->investorType)),
             __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', '),
             __('Institution details','bidxplugin')        =>  $this->exst($investorDetails->institutionName),
             __('Institution website','bidxplugin')        =>  $this->exst($investorDetails->institutionWebsite),
@@ -145,7 +145,7 @@ if ($investorDetails &&
 
         // A set of properties is only applicable to any other type than Angel or private
         //
-        if ( $investorType && $investorType != 'AngelInvPrivIndiv' ) {
+        //if ( $investorType && $investorType != 'AngelInvPrivIndiv' ) {
 
             // Institution name
             //
@@ -157,7 +157,7 @@ if ($investorDetails &&
             // $rowValues = array (__('Institution website','bidxplugin') => $this->exst($investorDetails->institutionWebsite));
             // echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
 
-        }
+        //}
 ?>
 
 <?php
