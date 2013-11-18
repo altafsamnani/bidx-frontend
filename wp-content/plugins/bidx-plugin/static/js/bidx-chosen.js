@@ -4,10 +4,11 @@
     var pluginName  = "bidx_chosen"
     ,   defaults    =
         {
-            chose:
+            chosen:
             {
                 "search_contains":              true
             ,   "width":                        "100%"
+            ,   "disable_search_threshold":     10
             }
         }
     ;
