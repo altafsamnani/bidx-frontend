@@ -144,6 +144,8 @@ class BidxShortcode
             wp_register_script ('jquery-validation-jqueryui-datepicker', $bidxJsDir . '/vendor/jquery.ui.datepicker.validation.js', array ('jquery-validation'), '1.0.1', true);
             wp_register_script ('jquery-validation-additional-methods', $bidxJsDir . '/vendor/additional-methods.js', array ('jquery-validation'), '1.1.11', true);
             wp_register_script ('jquery-validation-bidx-additional-methods', $bidxJsDir . '/additional-methods.js', array ('jquery-validation'), '20130812', true);
+            wp_register_script ('bootstrap-paginator', $bidxJsDir . '/vendor/bootstrap-paginator.js', array ('bootstrap', 'jquery-ui'), '20131103', TRUE);
+
 
             // fileupload
             wp_register_script ('jquery-iframe-transport', $bidxJsDir . '/vendor/jquery.iframe-transport.js', array ('jquery'), '1.7', true);
@@ -154,13 +156,14 @@ class BidxShortcode
             wp_register_script ('bidx-form', $bidxJsDir . '/form.js', array ('jquery', 'jquery-ui'), '20130501', TRUE);
             wp_register_script ('bidx-utils', $bidxJsDir . '/utils.js', array ('jquery'), '20130501', TRUE);
 
+
             wp_register_script ('bidx-bootstrap-tagmanager', $bidxJsDir . '/bidx-bootstrap-tagmanager.js', array ('bootstrap', 'jquery-ui'), '20130703', TRUE);
             wp_register_script ('bidx-common', $bidxJsDir . '/common.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'bidx-tagsinput', 'jquery-validation', 'bidx-i18n', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods'), '20130501', TRUE);
             wp_register_script ('bidx-controller', $bidxJsDir . '/controller.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'backbone'), '20130501', TRUE);
 
             wp_register_script ('bidx-reflowrower', $bidxJsDir . '/bidx-reflowrower.js', array ('jquery', 'jquery-ui'), '20130501', TRUE);
             wp_register_script ('bidx-data', $bidxJsDir . '/data.js', array ('jquery'), '20130626', TRUE);
-
+            wp_register_script ('bidx-delaykeyup', $bidxJsDir . '/bidx-delaykeyup.js', array ('jquery'), '20131103', TRUE);
             wp_register_script ('bidx-location', $bidxJsDir . '/bidx-location.js', array ('jquery', 'bidx-utils', 'jquery-ui', 'gmaps-places'), '20130904', true);
 
             // wp_localize_script( 'bidx-data', 'windows.bidx = bidx || {}','{}' ); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/

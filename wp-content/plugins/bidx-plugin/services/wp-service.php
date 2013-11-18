@@ -1131,8 +1131,9 @@ function bidx_delete_wp_pages ()
 
             $roleArr = array ('', WP_ADMIN_ROLE, WP_OWNER_ROLE, WP_MEMBER_ROLE, WP_ANONYMOUS_ROLE);
 
+            $blogUrl   = strtolower (get_site_url());
+            $blog_title = BidxCommon::get_bidx_subdomain(false,$blogUrl);
 
-            $blog_title = strtolower (get_bloginfo ());
             //Delete the Sites and users if exist
             foreach ($groupDomainArr as $groupName) {
                 $site_id = $body['response']['site_id'];
@@ -2073,7 +2074,7 @@ function bidx_dashboard_header ()
                 wp_enqueue_style ('mail');
 
                 /* Script */
-                $mailDepArr = array ('bidx-form', 'bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
+                $mailDepArr = array ('bidx-form', 'bidx-tagsinput','bootstrap-paginator', 'bidx-delaykeyup','bidx-common', 'bidx-i18n', 'jquery-validation',
                   'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
                 wp_register_script ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', $mailDepArr, '20130715', TRUE);
                 wp_enqueue_script ('group-admin');

@@ -24,3 +24,15 @@ list-style: none !important;
 .span12.latest-member {
     margin-top:34px;
 }
+
+
+.viewLoadlist, viewList, .viewLoadall, .viewAll {
+    height:310px;
+}
+.viewLoadlist, .viewLoadall {
+    background: url(/wp-content/themes/bidx/assets/img/ajax-loader.gif) no-repeat 12% 0%;
+}
+.pagercontainer-list, .pagercontainer-all {
+    text-align:center;
+        
+}

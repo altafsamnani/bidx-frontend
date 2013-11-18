@@ -338,7 +338,7 @@ class ContentLoader
 
             $this->logger->trace ('bidX rules de-activation succeeded');
         }
-    
+
         remove_role( WP_ADMIN_ROLE );
         remove_role( WP_OWNER_ROLE );
         remove_role( WP_MEMBER_ROLE );
@@ -502,7 +502,7 @@ class ContentLoader
             $this->logger->trace( '$userOwnerdump : ' .$group_owner_login  );
             //1.2 If Groupowner user doesnt exist then create it
             $user_id_owner = ($userOwner->ID) ? $userOwner->ID : wpmu_create_user ($group_owner_login, $group_password, $group_owner_email);
-          
+
 
             //1.3 If useris not having
             (!in_array(WP_OWNER_ROLE,$userOwner->roles)) ? add_user_to_blog ($blog_id, $user_id_owner, WP_OWNER_ROLE):'';
@@ -534,7 +534,7 @@ class ContentLoader
         (!in_array(WP_ANONYMOUS_ROLE,$userAnonymous->roles)) ? add_user_to_blog ($blog_id, $user_id_anonymous, WP_ANONYMOUS_ROLE):'';
 
 
-        
+
 
         //wpmu_signup_user( $new_user_login, 'test@aa.com', array( 'add_to_blog' => $blog_id, 'new_role' => 'groupadmin' ) );
         //wp_insert_user( $user );

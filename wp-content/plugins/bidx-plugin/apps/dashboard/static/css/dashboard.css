@@ -1,3 +1,5 @@
+/*** Group Admin Dashboard ****************
+********************************************/
 .dashboard {
     padding: 0;
 }
@@ -24,10 +26,6 @@
 .bidx-tile-wrap .bidx-tile-body {
     padding: 19px;
 }
-.dashboard .bidx-tile .popover-title {
-
-
-}
 
 .dashboard .bidx-tile .bidx-tile-footer {
     background-color: #E3E4E5;
@@ -37,10 +35,8 @@
     height: 60px;
 }
 
-.entrepreneur-widget {
-
-}
-
+/*** Entrepreneur Dashboard ****************
+********************************************/
 
 .entrepreneur-widget .dashboard-item  {
     clear: left;
@@ -80,3 +76,6 @@
     width:70px;
 
 }
+
+/*** Investor Dashboard ****************
+********************************************/
