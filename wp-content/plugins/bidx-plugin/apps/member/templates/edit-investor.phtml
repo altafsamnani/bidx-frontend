@@ -170,13 +170,17 @@
                                 <div class="span5">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
-                                        <select name="focusIndustry" multiple></select>
+                                        <div class="controls">
+                                            <select name="focusIndustry" multiple></select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Languages','bidxplugin'); ?></label>
-                                        <select name="focusLanguage" multiple></select>
+                                        <div class="controls">
+                                            <select name="focusLanguage" multiple></select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -184,13 +188,17 @@
                                 <div class="span5">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
-                                        <select name="focusSocialImpact" multiple></select>
+                                        <div class="controls">
+                                            <select name="focusSocialImpact" multiple></select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
-                                        <select name="focusEnvImpact" multiple></select>
+                                        <div class="controls">
+                                            <select name="focusEnvImpact" multiple></select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -198,13 +206,17 @@
                                 <div class="span5">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Consumer type','bidxplugin'); ?></label>
-                                        <select name="focusConsumerType" multiple></select>
+                                        <div class="controls">
+                                            <select name="focusConsumerType" multiple></select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="span5 offset1">
                                     <div class="control-group">
                                         <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
-                                        <select name="investmentType" multiple></select>
+                                        <div class="controls">
+                                            <select name="investmentType" multiple></select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -252,13 +264,17 @@
                                 <div class="span5 offset1">
                                     <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-country">
                                         <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
-                                        <select name="focusCountry" multiple></select>
+                                        <div class="controls">
+                                            <select name="focusCountry" multiple></select>
+                                        </div>
                                     </div>
 
                                     <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-city">
                                         <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
                                         <div class="controls">
-                                            <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput" placeholder="<?php _e('City','bidxplugin'); ?>">
+                                            <div class="bidx-tagsinput-container">
+                                                <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed" placeholder="<?php _e('City','bidxplugin'); ?>">
+                                            </div>
                                         </div>
                                     </div>
 
