@@ -1,3 +1,9 @@
+<?php
+    $host = $_SERVER['HTTP_HOST'];
+    Header("content-type: application/javascript");
+    ob_start();
+ ?>
+
 var bidx = bidx ? bidx: {};
 
 bidx.widgets = {
@@ -61,31 +67,8 @@ bidx.widgets = {
         // Construct the url
         url: function()
         {
-            // TODO: Check the api host
-            var host = window.location.host;
-            var api;
 
-            if ( host.indexOf( 'acc' ) >= 0 )
-            {
-                api = '//acceptance.bidx.net';
-            }
-            else if ( host.indexOf( 'local' ) >= 0  )
-            {
-                api = '//test.bidx.net';
-            }
-            else if ( host.indexOf( 'tes' ) >= 0  )
-            {
-                api = '//test.bidx.net';
-            }
-            else if ( host.indexOf( 'beta' ) >= 0  )
-            {
-                api = '//beta.bidx.net';
-            }
-            else
-            {
-                api = '//bidx.net';
-            }
-
+            var api = "//<?php echo $host; ?>";
             // Return the constructed url
             return api + '/api/v1/session/full?bidxGroupDomain=' + bidx.widgets.businessSummarySelector.groupName + '&callback=bidx.widgets.businessSummarySelector.summaryResponse';
 
@@ -364,7 +347,14 @@ bidx.widgets.businessSummarySelector.run();
 
 
 
+<?php
+    $result = ob_get_clean();
 
+    // Compess the result before to echoing it
+    echo $result;
+
+
+?>
 
 
 
