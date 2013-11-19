@@ -280,6 +280,7 @@
 
     // Router for main state
     //
+
     var AppRouter = Backbone.Router.extend(
     {
         routes:
@@ -556,7 +557,7 @@
             );
         }
 
-    ,   auth:                   function( state, splat )
+    ,   auth:                       function( state, splat )
         {
             bidx.utils.log( "AppRouter::auth State: ", state, splat );
 
@@ -573,7 +574,7 @@
                 }
             );
         }
-    ,   login:                   function()
+    ,   login:                      function()
         {
             bidx.utils.log( "AppRouter::login" );
 
@@ -599,7 +600,7 @@
                 }
             );
         }
-    ,   resetpassword:                   function()
+    ,   resetpassword:             function()
         {
             bidx.utils.log( "AppRouter::resetpassword" );
 
@@ -611,29 +612,30 @@
             ,   {}
             );
         }
-        ,   account:                   function( params )
+
+    ,   account:                   function( params )
+    {
+        bidx.utils.log( "AppRouter::account params: ", params );
+
+
+        // remove leading forward slash from the splat
+        //
+        if( params )
         {
-            bidx.utils.log( "AppRouter::account params: ", params );
-
-
-            // remove leading forward slash from the splat
-            //
-            if( params )
-            {
-                params = params.replace( /^[/]/, "" );
-                params = bidx.utils.bidxDeparam( params );
-            }
-
-            mainState = "account";
-
-            _navigateToApp
-            (
-                "account"
-            ,   {
-                   params:   params
-                }
-            );
+            params = params.replace( /^[/]/, "" );
+            params = bidx.utils.bidxDeparam( params );
         }
+
+        mainState = "account";
+
+        _navigateToApp
+        (
+            "account"
+        ,   {
+               params:   params
+            }
+        );
+    }
     ,   showCancel:             function( splat )
         {
             // call the approuters show function with a "cancel" param

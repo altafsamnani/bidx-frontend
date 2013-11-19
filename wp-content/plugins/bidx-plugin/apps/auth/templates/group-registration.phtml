@@ -11,201 +11,174 @@
 		padding-right:		10px;
 	}
 </style>
+<div id="groupRegistration" class="mainState mainStateShow">
+	<form  name="registration">
+		<?php
+			//generate hiddenfields. REMARK: we might not want to print all values here!!
+			foreach ( $_POST as $key => $value ) {
+				 echo  "<input type='hidden' name='" . $key . "' value='" . $value . "'>" ;
+			}
+		 ?>
 
-<form id="registration"  name="registration">
-	<?php
-		//generate hiddenfields. REMARK: we might not want to print all values here!!
-		foreach ( $_POST as $key => $value ) {
-			 echo  "<input type='hidden' name='" . $key . "' value='" . $value . "'>" ;
-		}
-	 ?>
+		<div class="row-fluid">
 
-	<div class="row-fluid">
-		<div class="span4 well">
-			<h3><?php _e('Complete your profile','bidxplugin');?></h3>
-			<div class="formfield" >
-				<label><?php _e('First name','bidxplugin');?></label>
-				<input type="text" name="personalDetails.firstName" placeholder="<?php _e('Please enter your first name','bidxplugin');?>" />
-			</div>
+			<div class="span4 well">
 
-			<div class="formfield">
-				<label><?php _e('Last name','bidxplugin');?></label>
-				<input type="text" name="personalDetails.lastName" placeholder="<?php _e('Please enter your last name','bidxplugin');?>" />
-			</div>
+				<div class="row-fluid">
 
-			<div class="formfield">
-				<label><?php _e('E-mail','bidxplugin');?></label>
-				<input type="email" readonly="readonly" name="personalDetails.emailAddress" value="<?php echo $_POST["username"]; ?>"/>
-			</div>
+					<div class="span11">
 
-			<div class="formfield">
-				<label><?php _e('What is your location?','bidxplugin');?></label>
-				<input type="text" name="personalDetails.address[0]." placeholder="<?php _e('Please enter your location','bidxplugin');?>" data-type="location" data-type-arguments=''/>
-			</div>
-		</div>
-		<div class="span8 well">
-			<h3><?php _e('About your group','bidxplugin');?></h3>
-			<div class="formfield">
-				<label><?php _e('Group Name','bidxplugin');?></label>
-				<input type="text" name="businessGroupName" readonly="readonly" placeholder="<?php _e('Please enter your group name','bidxplugin');?>" value="<?php echo $_POST["groupName"]; ?>"/>
-			</div>
 
-			<div class="formfield">
-				<label><?php _e('Define your group (max. 140 characters)','bidxplugin');?></label>
-				<textarea name="slogan" maxlength="140" placeholder="<?php _e('Define your group','bidxplugin');?>"></textarea>
-			</div>
+						<h3><?php _e('Complete your profile','bidxplugin');?></h3>
 
-			<div class="formfield">
-				<label><?php _e('Short description','bidxplugin');?></label>
-				<textarea name="shortDescription" placeholder="<?php _e('Please provide a short description','bidxplugin');?>"></textarea>
-			</div>
+		                <div class="control-group">
+		                    <label class="control-label"><?php _e('First name','bidxplugin'); ?></label>
+		                    <div class="controls">
+		                        <input type="text" name="personalDetails.firstName" placeholder="<?php _e('Please enter your first name','bidxplugin'); ?>">
+		                    </div>
+		                </div>
 
-			<div class="formfield">
-				<label><?php _e('Location','bidxplugin');?></label>
-				<input type="text" name="companyLocation" placeholder="<?php _e('Please enter your location','bidxplugin');?>" />
-			</div>
+		                <div class="control-group">
+		                    <label class="control-label"><?php _e('Last name','bidxplugin'); ?></label>
+		                    <div class="controls">
+		                        <input type="text" name="personalDetails.lastName" placeholder="<?php _e('Please enter your last name','bidxplugin'); ?>">
+		                    </div>
+		                </div>
 
-			<div class="formfield">
-				<label><?php _e('Company','bidxplugin');?></label>
-				<input type="text" name="company" placeholder="<?php _e('Please enter your company name','bidxplugin');?>" />
-			</div>
+		                <div class="control-group">
+		                    <label class="control-label"><?php _e('E-mail','bidxplugin'); ?></label>
+		                    <div class="controls">
+		                        <input type="text" name="personalDetails.emailAddress" value="<?php echo isset( $_POST["username"] ) ?  $_POST["username"]: ""; ?>"/>
+		                    </div>
+		                </div>
 
-			<div class="formfield" data-validation='{"typecheck": [{"url":{"text":"<?php _e('Please fill in a valid URL','i18n');?>"}}]}'>
-				<label><?php _e('Website','bidxplugin');?></label>
-				<input type="text" name="webSite"  placeholder="<?php _e('Please fill in your website address','bidxplugin');?>" />
-			</div>
-
-<!-- List must be loaded from static data service -->
-			<div class="formfield">
-				<label><?php _e('Focus industry','bidxplugin');?></label>
-				<select name="focusIndustry" >
-					<option value="">Please select your focus industry</option>
-					<option value="AccountingAuditorsTaxBookkeepers">Accounting, Auditors, Tax & Bookkeepers</option>
-					<option value="AdvertisingPublicRelations">Advertising & Public Relations</option>
-					<option value="AgricultureProductsServices">Agriculture Products & Services</option>
-					<option value="AnimalProducts">Animal Products</option>
-					<option value="ApparelAccessoriesTextiles">Apparel / Accessories / Textiles</option>
-					<option value="ArchitecturalEngineeringTechnical">Architectural, Engineering & Technical</option>
-					<option value="BankingFinancialServices">Banking & Financial Services</option>
-					<option value="BeveragesAlcoholicNon-alcoholic">Beverages, Alcoholic & Non-alcoholic</option>
-					<option value="BuildingSystemsMaterialsFixtures">Building Systems / Materials / Fixtures</option>
-					<option value="BusinessConsultancyAdvisory">Business Consultancy & Advisory</option>
-					<option value="Chemicals">Chemicals</option>
-					<option value="ComputerITProductsServices">Computer & IT Products & Services</option>
-					<option value="ConstructionGeneral">Construction General</option>
-					<option value="EducationTraining">Education & Training</option>
-					<option value="EntertainmentRecreation">Entertainment & Recreation</option>
-					<option value="EnvironmentalProductsServices">Environmental Products & Services</option>
-					<option value="ExecutiveSearchPersonnelRecruitment">Executive Search & Personnel Recruitment</option>
-					<option value="FarmEquipment">Farm Equipment</option>
-					<option value="FoodManufacturingDistributionServices">Food Manufacturing / Distribution / Services</option>
-					<option value="GasesNaturalProcessed">Gases, Natural & Processed</option>
-					<option value="HealthHygieneProductsServices">Health / Hygiene Products & Services</option>
-					<option value="HotelsRestaurantsCaterers">Hotels / Restaurants / Caterers</option>
-					<option value="IndustrialEquipment">Industrial Equipment</option>
-					<option value="InformationCommunicationsTechnology">Information & Communications Technology</option>
-					<option value="InspectionSafetySecurity">Inspection, Safety & Security</option>
-					<option value="Insurance">Insurance</option>
-					<option value="LegalPractice">Legal Practice</option>
-					<option value="MarketingCommunications">Marketing & Communications</option>
-					<option value="OutplacementServices">Outplacement Services</option>
-					<option value="PetroleumPetroleumProducts">Petroleum & Petroleum Products</option>
-					<option value="PharmaceuticalMedicinalProducts">Pharmaceutical & Medicinal Products</option>
-					<option value="PowerElectrical">Power & Electrical</option>
-					<option value="PrintingPublishing">Printing & Publishing</option>
-					<option value="PropertyRealEstateServices">Property & Real Estate Services</option>
-					<option value="RetailConsumerProducts">Retail Consumer Products</option>
-					<option value="ScientificMedicalInstruments">Scientific & Medical Instruments</option>
-					<option value="SecurityInvestigativeServicesProducts">Security, Investigative Services & Products</option>
-					<option value="SourcingTradingBuying">Sourcing, Trading & Buying</option>
-					<option value="TransportVehiclesParts">Transport Vehicles & Parts</option>
-					<option value="TransportationLogistics">Transportation & Logistics</option>
-					<option value="TravelTourism">Travel & Tourism</option>
-					<option value="WaterSanitation">Water & Sanitation</option>
-				</select>
-			</div>
-
-			<div class="formfield">
-				<label><?php _e('Roles','bidxplugin');?></label>
-				<select name="role">
-					<option value=""><?php _e('Which member roles does your group focus on','bidxplugin');?></option>
-					<option value="investors"><?php _e('Investors','bidxplugin');?></option>
-					<option value="entrepreneurs"><?php _e('Entrepreneurs','bidxplugin');?></option>
-				</select>
-			</div>
-
-<!-- List must be loaded from static data service -->
-			<div class="formfield" >
-				<label><?php _e('Social Impact','bidxplugin');?></label>
-				<select name="socialImpact" >
-					<option value="">Please select the social impact of your group</option>
-					<option value="povertyReduction">Poverty reduction</option>
-					<option value="jobCreation">Job Creation</option>
-					<option value="womenBusiness">Women in Business</option>
-					<option value="religiousTolerance">Religious tolerance</option>
-					<option value="socialInclusion">Social inclusion</option>
-					<option value="urbanRegeneration">Urban regeneration</option>
-					<option value="none">None of the above</option>
-				</select>
-			</div>
-
-			<div class="formfield">
-				<label><?php _e('Is your focus location based on a:','bidxplugin');?></label>
-				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="city" checked> <?php _e('city (or a number of cities)?','bidxplugin');?></label>
-				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="country"> <?php _e('country (or a number of countries)?','bidxplugin');?></label>
-				<label class="radio"><input type="radio" data-toggle="radio" name="location-type" value="coord"> <?php _e('specific location (or a number of specific locations)?','bidxplugin');?></label>
-
-				<div class="location-list cities">
-
-					<div class="explanation"><?php _e('EXPLANATION OF HOW TO THIS OPTION WORKS','bidxplugin');?></div>
-					<div>
-						<input type="text" name="focusCity" data-type="location" data-type-arguments='{"listResults":"true","listId":"locationList", "emptyClass":"empty","filter":"cities"}' placeholder="<?php _e('Please select your focus theme','i18n');?>" />
-					</div>
-					<div class="list">
-						<ul id="locationList" class="unstyled clearfix">
-							<li>
-								<div class="label empty"><?php _e('Add a location','bidxplugin');?></div>
-							</li>
-
-						</ul>
-					</div>
-				</div>
-
-				<div class="location-list countries hide">
-
-					<div class="explanation"><?php _e('EXPLANATION OF HOW TO THIS OPTION WORKS','bidxplugin');?></div>
-					<div>
-						<input type="text" name="focusCountry" data-type="countryAutocomplete" data-type-arguments='{"listId":"countryList","emptyClass":"empty"}' placeholder="<?php _e('Please select your focus theme','bidxplugin');?>" />
-					</div>
-					<div class="list">
-						<ul id="countryList" class="unstyled clearfix">
-							<li>
-								<div class="label empty"><?php _e('Add a location','bidxplugin');?></div>
-							</li>
-
-						</ul>
-					</div>
-				</div>
-				<div class="location-map hide">
-					<div class="explanation"><?php _e('EXPLANATION OF HOW TO USE THE MAP','bidxplugin');?></div>
-					<div>
-
-						<input type="text" name="focusReach" data-type="location" data-type-arguments='{"showMap":"true","mapDimensions":"width:100%;height:400px;","setMarkers":"true", "drawCircle":"true"}' placeholder="<?php _e('Please select your focus theme','bidxplugin');?>" />
+		                <div class="control-group">
+		                    <label class="control-label"><?php _e('What is your location?','bidxplugin');?></label>
+		                    <div class="controls">
+		                        <input type="text" name="personalDetails.address" placeholder="<?php _e('Please enter your location','bidxplugin');?>" data-type="location" data-type-arguments=''/>
+		                    </div>
+		                </div>
 					</div>
 				</div>
 			</div>
-			<div>
-				<a href="#" class="btn btn-primary jsSave">Save Profile</a>
 
+			<div class="span8 well">
+
+				<h3><?php _e('About your group','bidxplugin');?></h3>
+
+ 				<div class="control-group">
+                    <label class="control-label"><?php _e('Group Name','bidxplugin');?></label>
+                    <div class="controls">
+                    	<input type="text" name="businessGroupName" readonly="readonly" placeholder="<?php _e('Please enter your group name','bidxplugin');?>" value="<?php echo isset( $_POST["groupName"] ) ?  $_POST["groupName"]: ""; ?>"/>
+                    </div>
+                </div>
+
+	            <div class="control-group">
+                    <label class="control-label"><?php _e('Define your group (max. 140 characters)','bidxplugin');?></label>
+                    <div class="controls">
+                       <textarea name="slogan" maxlength="140" placeholder="<?php _e('Define your group','bidxplugin');?>"></textarea>
+                    </div>
+                </div>
+
+	            <div class="control-group">
+                    <label class="control-label"><?php _e('Short description','bidxplugin');?></label>
+                    <div class="controls">
+						<textarea name="description" placeholder="<?php _e('Please provide a short description','bidxplugin');?>"></textarea>
+                    </div>
+                </div>
+
+	            <div class="control-group">
+                    <label class="control-label"><?php _e('Company','bidxplugin');?></label>
+                    <div class="controls">
+						<input type="text" name="company" placeholder="<?php _e('Please enter your company name','bidxplugin');?>" />
+                    </div>
+                </div>
+
+	            <div class="control-group">
+                    <label class="control-label"><?php _e('Website','bidxplugin');?></label>
+                    <div class="controls">
+						<input type="text" name="website"  placeholder="<?php _e('Please fill in your website address','bidxplugin');?>" />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
+                     <div class="controls">
+                    	<select name="focusIndustry" multiple></select>
+                    </div>
+                </div>
+
+
+				<div class="control-group">
+					<label class="control-label"><?php _e('Roles','bidxplugin');?></label>
+					<div class="controls">
+						<select name="role">
+							<option value=""><?php _e('Which member roles does your group focus on','bidxplugin');?></option>
+							<option value="investors"><?php _e('Investors','bidxplugin');?></option>
+							<option value="entrepreneurs"><?php _e('Entrepreneurs','bidxplugin');?></option>
+						</select>
+					</div>
+				</div>
+
+                <div class="control-group">
+                    <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
+					<div class="controls">
+	                    <select name="focusSocialImpact" multiple></select>
+	                </div>
+                </div>
+
+                <div>
+                	<label><?php _e('Location','bidxplugin'); ?></label>
+
+                    <label class="radio">
+                    	<input type="radio" data-toggle="radio" name="focusLocationType" value="country"><?php _e('Country / Countries','bidxplugin'); ?>
+                    </label>
+                    <label class="radio">
+                    	<input type="radio" data-toggle="radio" name="focusLocationType" value="city"><?php _e('City / Cities','bidxplugin'); ?>
+                    </label>
+                    <label class="radio">
+                    	<input type="radio" data-toggle="radio" name="focusLocationType" value="reach"><?php _e('Region','bidxplugin'); ?>
+                    </label>
+                </div>
+
+                <div>
+                	 <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-country">
+	                    <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
+	                    <div class="controls">
+	                        <select name="focusCountry" multiple></select>
+	                    </div>
+	                </div>
+
+	                <div class="control-group toggle toggle-focusLocationType toggle-focusLocationType-city">
+	                    <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
+	                    <div class="controls">
+	                    	<div class="bidx-tagsinput-container">
+		                        <input type="text" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed" placeholder="<?php _e('City','bidxplugin'); ?>">
+	                        </div>
+	                    </div>
+	                </div>
+
+	                <div class="control-group  toggle toggle-focusLocationType toggle-focusLocationType-reach">
+	                    <label class="control-label"><?php _e('Region','bidxplugin'); ?></label>
+	                    <div class="controls">
+	                        <input type="text" name="focusReach" data-type="location" />
+	                    </div>
+	                </div>
+
+                </div>
+
+				<div>
+					<button type="submit" class="btn btn-primary bidx-theme-colour-one">Save Profile</button>
+				</div>
 			</div>
+
 		</div>
 
-	</div>
-
-</form>
+	</form>
+</div>
 <script type="text/javascript">
-	$(function(){
 
+/*
 		$("form").form({
 			callToAction : '.jsSave',
 			errorClass : 'error',
@@ -214,7 +187,7 @@
 			apimethod:'post',
 			enablePlugins: ['date','location','countryAutocomplete'],
 			beforeSubmit : function () {
-				/*document.location = "/group-creation-success/" */
+				///*document.location = "/group-creation-success/"
 			}
 		});
 
@@ -250,8 +223,6 @@
 					});
 				break;
 			}
-		});
+		});*/
 
-	});
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"></script>

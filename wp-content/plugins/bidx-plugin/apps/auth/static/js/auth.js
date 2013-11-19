@@ -13,22 +13,6 @@
 
     };
 
-
-    //expose
-    var app =
-    {
-        $element:               $element
-    };
-
-    if ( !window.bidx )
-    {
-        window.bidx = {};
-    }
-
-
-    window.bidx.auth = app;
-
-
     var navigate = function( options )
     {
         bidx.utils.log("routing options of Auth", options );

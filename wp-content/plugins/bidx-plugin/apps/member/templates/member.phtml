@@ -24,7 +24,6 @@ $entities       = $this->sessionData->data->wp->entities;
         </div>
     </div>
 
-
     <div class="row-fluid mainState mainStateShow">
         <div class="span8">
             <?php $this->render('view-member.phtml');  ?>
@@ -95,8 +94,22 @@ $entities       = $this->sessionData->data->wp->entities;
 
     }
 
-    $this->render('view-group.phtml');
+        $this->render('view-group.phtml');
+
+    //    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
 ?>
+            <div class="sidebar-block">
+                <div class="add-company-container clearfix">
+                    <div class="pull-right">
+                        <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company','bidxplugin'); ?></a>
+                    </div>
+                </div>
+
+            </div>
+<?php
+          //  }
+?>
+
         </div>
     </div>
     <?php $this->render('edit-member.phtml'); ?>
