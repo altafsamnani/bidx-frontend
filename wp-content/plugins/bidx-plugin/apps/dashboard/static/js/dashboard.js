@@ -1,4 +1,4 @@
-(function( $ )
+;(function( $ )
 {
     var $element                    = $("#group-dashboard")
     ,   $elementHelp                = $(".startpage")
@@ -70,39 +70,40 @@
             }
         } );
 
-    $(".searchname").delayKeyup( function( $searchname )
-    {
-
-        if( $searchname.val().length >= $searchname.data('maxlength') )
+        $(".searchname").delayKeyup( function( $searchname )
         {
 
-            var listType          =    $searchname.data('searchtype')
-            ,   loadType          =    'load' + listType
-            ,   composeBtn        =    '.compose-' + listType
-            ,   pagerContainer    =    '.pagercontainer-' + listType
-            ,   pagerHtml         =    "<div class='pager-" +  listType + "' ></div>"
-            ;
-
-            $( composeBtn ).toggleClass( 'btn-primary' );
-            _showMainView(loadType, listType);
-
-            $( pagerContainer ).html( pagerHtml );
-            getMembers(
+            if( $searchname.val().length >= $searchname.data('maxlength') )
             {
-                list:        listType
-            ,   view:        listType
-            ,   load:        loadType
-            ,   searchName:  $searchname.val()
-            ,   callback:    function()
-                {
-                    _showMainView(listType, loadType);
-                    $( composeBtn ).toggleClass( 'btn-primary' );
 
-                }
-            } );
+                var listType          =    $searchname.data('searchtype')
+                ,   loadType          =    'load' + listType
+                ,   composeBtn        =    '.compose-' + listType
+                ,   pagerContainer    =    '.pagercontainer-' + listType
+                ,   pagerHtml         =    "<div class='pager-" +  listType + "' ></div>"
+                ;
+
+                $( composeBtn ).toggleClass( 'btn-primary' );
+                _showMainView(loadType, listType);
+
+                $( pagerContainer ).html( pagerHtml );
+                getMembers(
+                {
+                    list:        listType
+                ,   view:        listType
+                ,   load:        loadType
+                ,   searchName:  $searchname.val()
+                ,   callback:    function()
+                    {
+                        _showMainView(listType, loadType);
+                        $( composeBtn ).toggleClass( 'btn-primary' );
+
+                    }
+                } );
+            }
         }
+        ,  1000 );
     }
-    ,  1000 );
 
     var getMembers = function(options)
     {
@@ -789,4 +790,4 @@
     }
 
 
-}(jQuery));
+} ( jQuery ))
