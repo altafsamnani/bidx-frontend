@@ -24,7 +24,7 @@
               if( item.hasOwnProperty(clsKey)) {
                      bidx.data.getItem(item[clsKey], clsVal, function(err, label)
                         {
-                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;
+                           textVal = ($.isArray(item[clsKey])) ?  label.join(',&nbsp;'): label;
 
                         });
                item[clsKey] = textVal;
@@ -40,9 +40,12 @@
 
     var getContact = function(options)
     {
-        var snippit   = $("#investor-contactitem").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit     = $("#investor-contactitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list       = $("." + options.list)
+        ,   listItem
+        ,   i18nItem
+        ,   emptyVal    = "-"
         ;
 
         bidx.api.call(
@@ -80,22 +83,24 @@
                                                             i18nItem = label;
                                                          }
                                         });
+                                       bidx.utils.log(item.businessSummary);
 
                                         //search for placeholders in snippit
                                         listItem = snippit
-                                            .replace( /%accordion-id%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : "%accordion-id%" )
-                                            .replace( /%bidxEntityId%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : "%bidxEntityId%" )
-                                            .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : "%name%" )
-                                            .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
-                                            .replace( /%status%/g,       item.status    ? item.status      : "%status%" )
-                                            .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : "%countryOperation%" )
-                                            .replace( /%bidxCreationDateTime%/g, item.businessSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(item.businessSummary.bidxCreationDateTime, "date") : "%bidxCreationDateTime%" )
-                                            .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : "%bidxOwnerId%" )
-                                            .replace( /%creator%/g, i18nItem.creator    ? i18nItem.creator      : "%creator%" )
-                                            .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : "%productService%" )
-                                            .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : "%financingNeeded%" )
-                                            .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : "%stageBusiness%" )
-                                            .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : "%envImpact%" )
+                                            .replace( /%accordion-id%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : emptyVal )
+                                            .replace( /%bidxEntityId%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : emptyVal )
+                                            .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
+                                            .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : emptyVal )
+                                            .replace( /%status%/g,       item.status    ? item.status      : emptyVal )
+                                            .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
+                                            .replace( /%bidxCreationDateTime%/g, item.businessSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(item.businessSummary.bidxCreationDateTime, "date") : emptyVal )
+                                            .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : emptyVal )
+                                            .replace( /%creator%/g, i18nItem.creator    ? i18nItem.creator      : emptyVal )
+                                            .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : emptyVal)
+                                            .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
+                                            .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
+                                            .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
+                                            .replace( /%document%/g,      !$.isEmptyObject( item.businessSummary.company )    ? item.businessSummary.company.logo.document     : 'http://placehold.it/150x100' )
                                             ;
 
 
@@ -132,9 +137,10 @@
     //
     var getMatch = function(options)
     {
-        var snippit   = $("#investor-matchitem").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit     = $("#investor-matchitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list       = $("." + options.list)
+        ,   emptyVal    = '-'
         ;
         var extraUrlParameters =
                 [
@@ -177,19 +183,19 @@
 
                                 //search for placeholders in snippit
                                 listItem = snippit
-                                    .replace( /%accordion-id%/g,      i18nItem.id   ? i18nItem.id     : "%accordion-id%" )
-                                    .replace( /%name_s%/g,       i18nItem.name_s    ? i18nItem.name_s      : "%name_s%" )
-                                    .replace( /%creator%/g,       i18nItem.creator    ? i18nItem.creator      : "%creator%" )
-                                    .replace( /%creatorId%/g,       i18nItem.creatorId    ? i18nItem.creatorId      : "%creatorId%" )
-                                    .replace( /%countrylabel_ss%/g,       i18nItem.countrylabel_ss    ? i18nItem.countrylabel_ss      : "%countrylabel_ss%" )
-                                    .replace( /%industrylabel_ss%/g,       i18nItem.industrylabel_ss    ? i18nItem.industrylabel_ss      : "%industrylabel_ss%" )
-                                    .replace( /%productservicelabel_ss%/g,       i18nItem.productservicelabel_ss    ? i18nItem.productservicelabel_ss      : "%productservicelabel_ss%" )
-                                    .replace( /%financingneeded_d%/g,       i18nItem.financingneeded_d    ? i18nItem.financingneeded_d      : "%financingneeded_d%" )
-                                    .replace( /%stagebusinesslabel_s%/g,       i18nItem.stagebusinesslabel_s    ? i18nItem.stagebusinesslabel_s      : "%stagebusinesslabel_s%" )
-                                    .replace( /%envimpactlabel_ss%/g,       i18nItem.envimpactlabel_ss    ? i18nItem.envimpactlabel_ss      : "%envimpactlabel_ss%" )
-                                    .replace( /%productservicelabel_ss%/g,       i18nItem.productservicelabel_ss    ? i18nItem.productservicelabel_ss      : "%productservicelabel_ss%" )
-                                    .replace( /%companylogodoc_url%/g,      i18nItem.companylogodoc_url   ? i18nItem.companylogodoc_url     : "/" )
-                                    .replace( /%entityid_l%/g,       i18nItem.entityid_l    ? i18nItem.entityid_l      : "%entityid_l%" )
+                                    .replace( /%accordion-id%/g,      i18nItem.id   ? i18nItem.id     : emptyVal )
+                                    .replace( /%name_s%/g,       i18nItem.name_s    ? i18nItem.name_s      : emptyVal )
+                                    .replace( /%creator%/g,       i18nItem.creator    ? i18nItem.creator      : emptyVal )
+                                    .replace( /%creatorId%/g,       i18nItem.creatorId    ? i18nItem.creatorId      : emptyVal )
+                                    .replace( /%countrylabel_ss%/g,       i18nItem.countrylabel_ss    ? i18nItem.countrylabel_ss      : emptyVal )
+                                    .replace( /%industrylabel_ss%/g,       i18nItem.industrylabel_ss    ? i18nItem.industrylabel_ss      : emptyVal )
+                                    .replace( /%productservicelabel_ss%/g,       i18nItem.productservicelabel_ss    ? i18nItem.productservicelabel_ss      : emptyVal )
+                                    .replace( /%financingneeded_d%/g,       i18nItem.financingneeded_d    ? i18nItem.financingneeded_d      : emptyVal )
+                                    .replace( /%stagebusinesslabel_s%/g,       i18nItem.stagebusinesslabel_s    ? i18nItem.stagebusinesslabel_s      : emptyVal )
+                                    .replace( /%envimpactlabel_ss%/g,       i18nItem.envimpactlabel_ss    ? i18nItem.envimpactlabel_ss      : emptyVal )
+                                    .replace( /%productservicelabel_ss%/g,       i18nItem.productservicelabel_ss    ? i18nItem.productservicelabel_ss      : emptyVal)
+                                    .replace( /%companylogodoc_url%/g,      i18nItem.companylogodoc_url   ? i18nItem.companylogodoc_url     : "http://placehold.it/150x100" )
+                                    .replace( /%entityid_l%/g,       i18nItem.entityid_l    ? i18nItem.entityid_l      : emptyVal )
                                     ;
 
 
@@ -231,6 +237,7 @@
         var snippit       = $("#investor-preferenceitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   emptySnippet  = $("#investor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   $list         = $("." + options.list)
+        ,   emptyVal      = '-'
         ;
 
         bidx.api.call(
@@ -273,21 +280,21 @@
 
                      //search for placeholders in snippit
                      listItem = snippit
-                         .replace( /%focusIndustry%/g,      i18nItem.focusIndustry   ? i18nItem.focusIndustry     : "%focusIndustry%" )
-                         .replace( /%focusSocialImpact%/g,      i18nItem.focusSocialImpact   ? i18nItem.focusSocialImpact     : "%focusSocialImpact%" )
-                         .replace( /%focusEnvImpact%/g,       i18nItem.focusEnvImpact    ? i18nItem.focusEnvImpact      : "%focusEnvImpact%" )
-                         .replace( /%focusLanguage%/g,     i18nItem.focusLanguage  ? i18nItem.focusLanguage    : "%focusLanguage%" )
-                         .replace( /%focusCountry%/g,      i18nItem.focusCountry   ? i18nItem.focusCountry     : "%focusCountry%" )
-                         .replace( /%focusConsumerType%/g,       i18nItem.focusConsumerType    ? i18nItem.focusConsumerType      : "%focusConsumerType%" )
-                         .replace( /%focusStageBusiness%/g,     i18nItem.focusStageBusiness  ? i18nItem.focusStageBusiness    : "%focusStageBusiness%" )
-                         .replace( /%focusGender%/g,       i18nItem.focusGender    ? i18nItem.focusGender      : "%focusGender%" )
-                         .replace( /%investmentType%/g,     i18nItem.investmentType  ? i18nItem.investmentType    : "%investmentType%" )
-                         .replace( /%totalInvestment%/g,      i18nItem.totalInvestment   ? i18nItem.totalInvestment     : "%totalInvestment%" )
-                         .replace( /%minInvestment%/g,       i18nItem.minInvestment    ? i18nItem.minInvestment      : "%minInvestment%" )
-                         .replace( /%maxInvestment%/g,     i18nItem.maxInvestment  ? i18nItem.maxInvestment    : "%maxInvestment%" )
-                         .replace( /%totalInvestment%/g,      i18nItem.totalInvestment   ? i18nItem.totalInvestment     : "%totalInvestment%" )
-                         .replace( /%additionalPreferences%/g,       i18nItem.additionalPreferences    ? i18nItem.additionalPreferences      : "%additionalPreferences%" )
-                         .replace( /%maxInvestment%/g,     i18nItem.maxInvestment  ? i18nItem.maxInvestment    : "%maxInvestment%" )
+                         .replace( /%focusIndustry%/g,      i18nItem.focusIndustry   ? i18nItem.focusIndustry     : emptyVal )
+                         .replace( /%focusSocialImpact%/g,      i18nItem.focusSocialImpact   ? i18nItem.focusSocialImpact     : emptyVal )
+                         .replace( /%focusEnvImpact%/g,       i18nItem.focusEnvImpact    ? i18nItem.focusEnvImpact      : emptyVal )
+                         .replace( /%focusLanguage%/g,     i18nItem.focusLanguage  ? i18nItem.focusLanguage    : emptyVal )
+                         .replace( /%focusCountry%/g,      i18nItem.focusCountry   ? i18nItem.focusCountry     : emptyVal )
+                         .replace( /%focusConsumerType%/g,       i18nItem.focusConsumerType    ? i18nItem.focusConsumerType      : emptyVal )
+                         .replace( /%focusStageBusiness%/g,     i18nItem.focusStageBusiness  ? i18nItem.focusStageBusiness    : emptyVal )
+                         .replace( /%focusGender%/g,       i18nItem.focusGender    ? i18nItem.focusGender      : emptyVal )
+                         .replace( /%investmentType%/g,     i18nItem.investmentType  ? i18nItem.investmentType    : emptyVal )
+                         .replace( /%totalInvestment%/g,      i18nItem.totalInvestment   ? i18nItem.totalInvestment     : emptyVal )
+                         .replace( /%minInvestment%/g,       i18nItem.minInvestment    ? i18nItem.minInvestment      : emptyVal )
+                         .replace( /%maxInvestment%/g,     i18nItem.maxInvestment  ? i18nItem.maxInvestment    : emptyVal )
+                         .replace( /%totalInvestment%/g,      i18nItem.totalInvestment   ? i18nItem.totalInvestment     : emptyVal )
+                         .replace( /%additionalPreferences%/g,       i18nItem.additionalPreferences    ? i18nItem.additionalPreferences      : emptyVal )
+                         .replace( /%maxInvestment%/g,     i18nItem.maxInvestment  ? i18nItem.maxInvestment    : emptyVal )
                       ;
 
                     $list.append( listItem );

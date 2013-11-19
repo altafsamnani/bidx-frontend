@@ -106,7 +106,7 @@
 </div>
 </div>
 <script type="text/html" id="investor-contactitem">
-    <!--
+<!--
 <tr>
     <td>
       <a data-toggle="collapse" data-target="#%accordion-id%" class="accordion-toggle">
@@ -141,48 +141,56 @@
     <td colspan="8" class="detailRow">
         <div class="accordion-body collapse" id="%accordion-id%">
             <div class="row-fluid">
-                <div class="span6">
-                    <ul class="unstyled">
-                        <li>
-                            <label>Business proposal</label>
-                            <span class="placeholder name"><a target = "_blank" href="/businesssummary/%bidxEntityId%" >%name%</a></span>
-                        </li>
-                        <li>
-                            <label>Entrepreneur</label>
-                            <span class="placeholder creator"><a target = "_blank" href="/member/%bidxOwnerId%" >%creator%</a></span>
-                        </li>
-                        <li>
-                            <label>Industry</label>
-                            <span class="placeholder industry">%industry%</span>
-                        </li>
-                        <li>
-                            <label>Product</label>
-                            <span class="placeholder productService">%productService%</span>
-                        </li>
-                        <li>
-                            <label>Country</label>
-                            <span class="placeholder countryOperation">%countryOperation%</span>
-                        </li>
-                        <li>
-                            <label>Investment needed</label>
-                            <span class="placeholder financingNeeded">%financingNeeded%</span>
-                        </li>
-                        <li>
-                            <label>Business stage</label>
-                            <span class="placeholder stageBusiness">%stageBusiness%</span>
-                        </li>
-                        <li>
-                            <label>Environmental Impact</label>
-                            <span class="placeholder envImpact">%envImpact%</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="span6">
+                <div class="span3">
                     <span class="placeholder document"><img src="%document%"/></span>
                 </div>
-                <div class="span10">
-                    <div class="pull-right">
-                        <span class="placeholder bidxEntityId"><a target = "_blank" href="/businesssummary/%bidxEntityId%" >View Proposal</a> </span>
+                <div class="span9">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <label>Business proposal</label>
+                            <div class="placeholder name"><a target = "_blank" href="/businesssummary/%bidxEntityId%">%name%</a></div>
+                        </div>
+                        <div class="span6">
+                             <label>Entrepreneur</label>
+                             <div class="placeholder creator"><a target = "_blank" href="/member/%bidxOwnerId%">%creator%</a></div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <label>Industry</label>
+                            <div class="placeholder industry">%industry%</div>
+                        </div>
+                        <div class="span6">
+                            <label>Product</label>
+                            <div class="placeholder productService">%productService%</div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <label>Country</label>
+                            <div class="placeholder countryOperation">%countryOperation%</div>
+                        </div>
+                        <div class="span6">
+                            <label>Investment needed</label>
+                            <div class="placeholder financingNeeded">%financingNeeded%</div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <label>Business stage</label>
+                            <div class="placeholder stageBusiness">%stageBusiness%</div>
+                        </div>
+                        <div class="span6">
+                            <label>Environmental Impact</label>
+                            <div class="placeholder envImpact">%envImpact%</div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6 offset6">
+                            <div class="pull-right">
+                                <span class="placeholder bidxEntityId"><a target = "_blank" href="/businesssummary/%bidxEntityId%">View Proposal</a> </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,10 +216,10 @@
         </div>
     </td>
 </tr>
-    -->
+-->
 </script>
 <script type="text/html" id="investor-preferenceitem">
-    <!--
+<!--
     <div class="row-fluid">
         <div class="span6">
             <label>Industry</label>
@@ -302,56 +310,60 @@
 <tr class="list detail-list" >
    <td colspan="5" class="detailRow">
       <div class="accordion-body collapse" id="%accordion-id%">
-        <div class="row-fluid">
-            <div class="span6">
-                <label>Business proposal</label>
-                <div class="placeholder name_s"><a target = "_blank" href="/businesssummary/%entityid_l%">%name_s%</a></div>
-            </div>
-            <div class="span6">
-                 <label>Entrepreneur</label>
-                 <div class="placeholder creator"><a target = "_blank" href="/member/%creatorId%">%creator%</a></div>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
-                <label>Industry</label>
-                <div class="placeholder industrylabel_ss">%industrylabel_ss%</div>
-            </div>
-            <div class="span6">
-                <label>Product</label>
-                <div class="placeholder productservicelabel_ss">%productservicelabel_ss%</div>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
-                <label>Country</label>
-                <div class="placeholder countrylabel_ss">%countrylabel_ss%</div>
-            </div>
-            <div class="span6">
-                <label>Investment needed</label>
-                <div class="placeholder financingneeded_d">%financingneeded_d%</div>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
-                <label>Business stage</label>
-                <div class="placeholder stagebusinesslabel_s">%stagebusinesslabel_s%</div>
-            </div>
-            <div class="span6">
-                <label>Environmental Impact</label>
-                <div class="placeholder envimpactlabel_ss">%envimpactlabel_ss%</div>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
+      <div class="row-fluid">
+            <div class="span3">
                 <span class="placeholder companylogodoc_url"><img src="%companylogodoc_url%"/></span>
             </div>
-            <div class="span6">
-                <div class="pull-right">
-                    <span class="placeholder entityid_l"><a target = "_blank" href="/businesssummary/%entityid_l%">View Proposal</a> </span>
+        <div class="span9">
+            <div class="row-fluid">
+                <div class="span6">
+                    <label>Business proposal</label>
+                    <div class="placeholder name_s"><a target = "_blank" href="/businesssummary/%entityid_l%">%name_s%</a></div>
+                </div>
+                <div class="span6">
+                     <label>Entrepreneur</label>
+                     <div class="placeholder creator"><a target = "_blank" href="/member/%creatorId%">%creator%</a></div>
                 </div>
             </div>
-        </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <label>Industry</label>
+                    <div class="placeholder industrylabel_ss">%industrylabel_ss%</div>
+                </div>
+                <div class="span6">
+                    <label>Product</label>
+                    <div class="placeholder productservicelabel_ss">%productservicelabel_ss%</div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <label>Country</label>
+                    <div class="placeholder countrylabel_ss">%countrylabel_ss%</div>
+                </div>
+                <div class="span6">
+                    <label>Investment needed</label>
+                    <div class="placeholder financingneeded_d">%financingneeded_d%</div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <label>Business stage</label>
+                    <div class="placeholder stagebusinesslabel_s">%stagebusinesslabel_s%</div>
+                </div>
+                <div class="span6">
+                    <label>Environmental Impact</label>
+                    <div class="placeholder envimpactlabel_ss">%envimpactlabel_ss%</div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6 offset6">
+                    <div class="pull-right">
+                        <span class="placeholder entityid_l"><a target = "_blank" href="/businesssummary/%entityid_l%">View Proposal</a> </span>
+                    </div>
+                </div>
+            </div>
+         </div>
+      </div>
       </div>
    </td>
 </tr>

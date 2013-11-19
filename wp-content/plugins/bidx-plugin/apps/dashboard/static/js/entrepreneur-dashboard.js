@@ -13,9 +13,10 @@
 
     var getInvestors = function(options)
     {
-        var snippit   = $("#entrepreneur-investorsitem").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit       = $("#entrepreneur-investorsitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   emptySnippit  = $("#entrepreneur-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $list       = $("." + options.list)
+        ,   $list         = $("." + options.list)
+        ,   emptyVal      = "-"
         ;
 
         bidx.api.call(
@@ -57,27 +58,28 @@
                                bidx.utils.log(item.businessSummary.bidxMeta.bidxLastUpdateDateTime);
                                 //search for placeholders in snippit
                                 listItem = snippit
-                                    .replace( /%accordion-id%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : "%accordion-id%" )
-                                    .replace( /%bidxEntityId%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : "%bidxEntityId%" )
-                                    .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : "%name%" )
-                                    .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
-                                    .replace( /%status%/g,       item.status    ? item.status      : "%status%" )
-                                    .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : "%countryOperation%" )
-                                    .replace( /%bidxLastUpdateDateTime%/g, item.businessSummary.bidxMeta.bidxLastUpdateDateTime    ? bidx.utils.parseTimestampToDateStr(item.businessSummary.bidxMeta.bidxLastUpdateDateTime) : "%bidxLastUpdateDateTime%" )
-                                    .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : "%slogan%" )
-                                    .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : "%summary%" )
-                                    .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : "%reasonForSubmission%" )
-                                    .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : "%bidxOwnerId%" )
-                                    .replace( /%creator%/g, i18nItem.creator    ? i18nItem.creator      : "%creator%" )
-                                    .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : "%productService%" )
-                                    .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : "%financingNeeded%" )
-                                    .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : "%stageBusiness%" )
-                                    .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : "%envImpact%" )
-                                    .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : "%consumerType%" )
-                                    .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : "%investmentType%" )
-                                    .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : "%summaryFinancingNeeded%" )
-                                    .replace( /%displayName%/g,      item.investor.displayName   ? item.investor.displayName : "%displayName%" )
-                                    .replace( /%investorId%/g,      item.investor.id   ? item.investor.id     : "%investorId%" )
+                                    .replace( /%accordion-id%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : emptyVal )
+                                    .replace( /%bidxEntityId%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : emptyVal )
+                                    .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
+                                    .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : emptyVal )
+                                    .replace( /%status%/g,       item.status    ? item.status      : emptyVal )
+                                    .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
+                                    .replace( /%bidxLastUpdateDateTime%/g, item.businessSummary.bidxMeta.bidxLastUpdateDateTime    ? bidx.utils.parseTimestampToDateStr(item.businessSummary.bidxMeta.bidxLastUpdateDateTime) : emptyVal )
+                                    .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : emptyVal )
+                                    .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : emptyVal )
+                                    .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : emptyVal )
+                                    .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : emptyVal )
+                                    .replace( /%creator%/g, i18nItem.creator    ? i18nItem.creator      : emptyVal )
+                                    .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : emptyVal )
+                                    .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
+                                    .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
+                                    .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
+                                    .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
+                                    .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
+                                    .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
+                                    .replace( /%displayName%/g,      item.investor.displayName   ? item.investor.displayName : emptyVal )
+                                    .replace( /%investorId%/g,      item.investor.id   ? item.investor.id     : emptyVal )
+                                    .replace( /%document%/g,      !$.isEmptyObject( item.businessSummary.company )    ? item.businessSummary.company.logo.document     : 'http://placehold.it/150x100' )
                                     ;
 
                             //  add mail element to list
@@ -122,7 +124,7 @@
               if( item.hasOwnProperty(clsKey)) {
                      bidx.data.getItem(item[clsKey], clsVal, function(err, label)
                         {
-                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;
+                           textVal = ($.isArray(item[clsKey])) ?  label.join(',&nbsp;'): label;
 
                         });
 
@@ -145,6 +147,7 @@
         ,   $list         = $("." + options.list)
         ,   emptyList     = true
         ,   i18nItem
+        ,   emptyVal      = "-"
         ;
 
         bidx.api.call(
@@ -193,21 +196,23 @@
 
                                 //search for placeholders in snippit
                                 listItem = snippit
-                                    .replace( /%accordion-id%/g,      bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : "%accordion-id%" )
-                                    .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : "%name%" )
-                                    .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : "%industry%" )
-                                    .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : "%countryOperation%" )
-                                    .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : "%financingNeeded%" )
-                                    .replace( /%yearSalesStarted%/g,       i18nItem.yearSalesStarted    ? i18nItem.yearSalesStarted      : "%yearSalesStarted%" )
-                                    .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : "%stageBusiness%" )
-                                    .replace( /%bidxLastUpdateDateTime%/g,     bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : "%bidxLastUpdateDateTime%" )
-                                    .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : "%slogan%" )
-                                    .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : "%summary%" )
-                                    .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : "%reasonForSubmission%" )
-                                    .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : "%envImpact%" )
-                                    .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : "%consumerType%" )
-                                    .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : "%investmentType%" )
-                                    .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : "%summaryFinancingNeeded%" )
+                                    .replace( /%accordion-id%/g,      bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
+                                    .replace( /%bidxEntityId%/g,      bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
+                                    .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
+                                    .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : emptyVal )
+                                    .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
+                                    .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
+                                    .replace( /%yearSalesStarted%/g,       i18nItem.yearSalesStarted    ? i18nItem.yearSalesStarted      : emptyVal )
+                                    .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
+                                    .replace( /%bidxLastUpdateDateTime%/g,     bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : emptyVal )
+                                    .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : emptyVal )
+                                    .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : emptyVal )
+                                    .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : emptyVal )
+                                    .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
+                                    .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
+                                    .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
+                                    .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
+                                    .replace( /%document%/g,      !$.isEmptyObject( item.company )    ? item.company.logo.document     : 'http://placehold.it/150x100' )
                                     ;
 
 
