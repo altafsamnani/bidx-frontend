@@ -87,11 +87,10 @@ class BidxCommon
 
                 //Iterate entities and store it properly ex data->entities->bidxEntrepreneurProfile = 2
                 $this->processEntities ($subDomain);
-
-                $scriptValue = $this->injectJsVariables ($subDomain);
-                $this->setScriptJs ($subDomain, $scriptValue);
             }
 
+            $scriptValue = $this->injectJsVariables ($subDomain);
+            $this->setScriptJs ($subDomain, $scriptValue);
 
         }
 
@@ -238,17 +237,17 @@ class BidxCommon
      */
     public function injectJsVariables ($subDomain)
     {
-        $jsSessionData = $this::$bidxSession[$subDomain];
+        $jsSessionData = (isset($this::$bidxSession[$subDomain])) ?  $this::$bidxSession[$subDomain] : NULL;
         $jsSessionVars = (isset ($jsSessionData->data)) ? json_encode ($jsSessionData->data) : '{}';
-        $jsAuthenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : '{}';
+        $jsAuthenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
         $bidxJsDir = sprintf ('%s/../static/js', BIDX_PLUGIN_URI);
 
 
         //API Response data
-        $result = $this->getURIParams ($subDomain, $jsSessionData);
+        $result = ($jsSessionData) ? $this->getURIParams ($subDomain, $jsSessionData) : NULL;
 
-        $data = $result['data'];
-        $jsApiVars = (isset ($data)) ? json_encode ($data) : '{}';
+        //$data = $result['data'];
+        $jsApiVars = (isset ($result['data'])) ? json_encode ($result['data']) : '{}';
 
         // milliseconds from 1 jan 1970 GMT
         //
