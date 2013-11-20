@@ -1,14 +1,19 @@
 <div id="investor-dashboard">
-<?php //echo $this->createLeftMenu('span2 menu', array('#dashboard/investor' => 'Dashboard' ,'#dashboard/help' => 'Help')); ?>
 
-<div>
     <h1 class="pagetitle">My investor dashboard</h1>
-      <div class="dashboard">
+    <div class="dashboard">
+
+        <div class="view viewError alert">
+            <h1><?php _e('Error','bidxplugin')?></h1>
+            <span class="errorMsg"></span>
+        </div>
+
+
         <div class="accordion" id="investorDashboardAccordion">
             <!-- Help -->
              <div class="accordion-group <?php echo ($this->startingPage) ? 'accordion-open': '';?>">
                 <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-Help"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-Help"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
                 </div>
                 <div id="investorDashboardAccordion-Help" class="accordion-body collapse <?php echo ($this->startingPage) ? 'in': '';?>">
                     <div class="accordion-inner">
@@ -16,94 +21,107 @@
                     </div>
                  </div>
             </div>
-        </div>
+
 
 
 
         <div class="view viewLoad"><?php _e ('Loading matches...', 'bidxplugin') ?></div>
-        <div class="view viewError alert">
-                <h1><?php _e('Error','bidxplugin')?></h1>
-                <span class="errorMsg"></span>
-            </div>
-        <div class="view viewMatch">
-            <div class="row-fluid ">
 
-                <div class="span12 well">
-                    <h2 id="dashboard/investor/recommended-plans">Recommended business</h2>
-                    <p>These are the groups you have created. Click on the name of the group to edit appearances, create content or administrate members</p>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Entrepreneur</th>
-                                <th class="hidden-phone">Country</th>
-                                <th>Industry</th>
 
-                            </tr>
-                        </thead>
-                        <tbody class="match investor-match">
-                        <div class="pull-left">
-                            <?php //_e ('Loading...', 'bidxplugin') ?>
-                        </div>
-                        </tbody>
-                    </table>
+            <div class="accordion-group accordion-open view viewMatch">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-RecommendedBusiness"><span class="fui-arrow-right accordion-state-icon"></span> Recommended business</a>
+                </div>
+                <div id="investorDashboardAccordion-RecommendedBusiness" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <h2 id="dashboard/investor/recommended-plans">Recommended business</h2>
+                        <p>These are the groups you have created. Click on the name of the group to edit appearances, create content or administrate members</p>
+                        <table class="table table-striped table-hover accordion">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Entrepreneur</th>
+                                    <th class="hidden-phone">Country</th>
+                                    <th>Industry</th>
+                                </tr>
+                            </thead>
+                            <tbody class="match investor-match">
+                                <div class="pull-left">
+                                    <?php //_e ('Loading...', 'bidxplugin') ?>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="view viewLoadcontact"><?php _e ('Loading businesses contacted...', 'bidxplugin') ?></div>
-        <div class="view viewContact">
-            <div class="row-fluid">
 
-                <div class="span12 well">
-                    <h2 id="dashboard/investor/businesses-contacted">Businesses contacted</h2>
-                    <p></p>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Entrepreneur</th>
-                                <th class="hidden-phone">Location</th>
-                                <th>Industry</th>
-                                <th class="hidden-phone">Your last visit</th>
-                                <th class="hidden-phone">Request status</th>
-                                <th class="hidden-phone">Changes since last visit?</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="contact investor-contact ">
-                        <div class="pull-left">
-                            <?php// _e ('Loading...', 'bidxplugin') ?>
-                        </div>
-                        </tbody>
-                    </table>
+
+            <div class="view viewLoadcontact"><?php _e ('Loading businesses contacted...', 'bidxplugin') ?></div>
+
+            <div class="accordion-group view viewContact">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-BusinessesContacted"><span class="fui-arrow-right accordion-state-icon"></span> Businesses contacted</a>
+                </div>
+                <div id="investorDashboardAccordion-BusinessesContacted" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <h2 id="dashboard/investor/businesses-contacted">Businesses contacted</h2>
+                        <p></p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Entrepreneur</th>
+                                    <th class="hidden-phone">Location</th>
+                                    <th>Industry</th>
+                                    <th class="hidden-phone">Your last visit</th>
+                                    <th class="hidden-phone">Request status</th>
+                                    <th class="hidden-phone">Changes since last visit?</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="contact investor-contact ">
+                                <div class="pull-left">
+                                    <?php// _e ('Loading...', 'bidxplugin') ?>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="view viewLoadpreference"><?php _e ('Loading preference...', 'bidxplugin') ?></div>
-        <div class="view viewPreference">
-            <div class="row-fluid">
-                <div class="span12 profile-block well">
-                    <div class="btn-group control-buttons">
+
+
+            <div class="view viewLoadpreference"><?php _e ('Loading preference...', 'bidxplugin') ?></div>
+
+            <div class="accordion-group view viewPreference">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-InvestmentPreferences"><span class="fui-arrow-right accordion-state-icon"></span> My investment preferences</a>
+                </div>
+                <div id="investorDashboardAccordion-InvestmentPreferences" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="btn-group control-buttons">
 <?php
-                        // #msp: is it possible not to have an ID in the page?? what would the url be then..
-                        $id = $this->exst ( $this -> sessionData -> data -> id );
-                        $href = "/member#editInvestor/" . $id . "/" . http_build_query( array( "success"=> "/investor-dashboard/#dashboard/investor", "cancel"=> "/investor-dashboard/#dashboard/investor" ) );
+                            // #msp: is it possible not to have an ID in the page?? what would the url be then..
+                            $id = $this->exst ( $this -> sessionData -> data -> id );
+                            $href = "/member#editInvestor/" . $id . "/" . http_build_query( array( "success"=> "/investor-dashboard/#dashboard/investor", "cancel"=> "/investor-dashboard/#dashboard/investor" ) );
 ?>
-                        <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
-                    </div>
-                    <h2>My investment preferences</h2>
-                    <p></p>
-                    <div class="preference investor-preference ">
-                        <div class="pull-left">
-                            <?php //_e ('Loading...', 'bidxplugin') ?>
+                            <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
+                        </div>
+                        <h2>My investment preferences</h2>
+                        <p></p>
+                        <div class="preference investor-preference ">
+                            <div class="pull-left">
+                                <?php //_e ('Loading...', 'bidxplugin') ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-  </div>
-</div>
+
+
+        </div><!-- accordion -->
+
+    </div>
 </div>
 <script type="text/html" id="investor-contactitem">
 <!--
