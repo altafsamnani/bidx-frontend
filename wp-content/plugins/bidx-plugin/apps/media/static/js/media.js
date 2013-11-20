@@ -535,7 +535,7 @@
             $container.find( ".documentImage"   ).attr( "src",      imageSrc );
             $container.find( ".documentLink"    ).attr( "href",     file.document );
 
-            $container.find( ".btnEdit"         ).attr( "href",     "#media/edit/" + file.id );
+            $container.find( ".btnEdit"         ).attr( "href",     "#media/edit/" + file.bidxMeta.bidxUploadId );
         }
     }
 
@@ -549,7 +549,7 @@
             return;
         }
 
-        var created = bidx.utils.parseTimestampToDateStr( upload.created )
+        var created = bidx.utils.parseTimestampToDateStr( upload.bidxMeta.bidxCreationDateTime )
         ;
 
         // Form items
