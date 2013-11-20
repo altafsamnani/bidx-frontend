@@ -819,17 +819,47 @@ Company: bidX;
         line-height:                        24px;
     }
     .bidx.home .testimonial-container .bidx-testimonial {
-        background:                         url( assets/img/group-homepage-testimonial.png ) no-repeat top left transparent;
+        background-color:                   #d2b48c;
         width:                              282px;
-        height:                             276px;
+        min-height:                         240px;
         color:                              #34495e;
         font-size:                          18px;
+        position:                           relative;
+        margin-bottom:                      25px;
     }
-        .bidx.home .testimonial-container .bidx-testimonial > div {
-            padding:                        50px 20px;
-            line-height:                    24px;
-
-        }
+    .bidx.home .testimonial-container .bidx-testimonial .fillspace {
+        display:                            block;
+        height:                             25px;
+        width:                              257px;
+        background-color:                   #d2b48c;
+        position:                           absolute;
+        bottom:                             -25px;
+        left:                               0;
+    }
+    .bidx.home .testimonial-container .bidx-testimonial .triange {
+        width:                              0px;
+        height:                             0px;
+        border-style:                       solid;
+        border-width:                       25px 25px 0 0;
+        border-color:                       #b0936d transparent transparent transparent;
+        position:                           absolute;
+        bottom:                             -25px;
+        right:                              0;
+    }
+    .bidx.home .testimonial-container .bidx-testimonial div:before {
+        content:                            " ” ";
+        color:                              #ebdecc;
+        position:                           absolute;
+        top:                                5px;
+        right:                              8px;
+        font-size:                          80px;
+        line-height:                        1;
+        font-family:                        Arial, Verdana;
+    }
+    .bidx.home .testimonial-container .bidx-testimonial > div {
+        padding:                            50px 20px;
+        line-height:                        24px;
+    }
 
     /* end open group page*/
 

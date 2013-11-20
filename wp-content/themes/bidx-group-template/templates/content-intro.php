@@ -334,6 +334,8 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                 			add_post_meta( get_the_ID(), $meta_key, $output, true );
                     	}
                     ?>
+                    <span class="triange"></span>
+                    <span class="fillspace"></span>
                 </div>
 
             </div>
