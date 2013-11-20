@@ -335,7 +335,9 @@ class BidxCommon
 
                 case 'businesssummary':
 
-                    $businessSummaryId = ( $hostAddress[2] ) ? $hostAddress[2] : $jsSessionData->data->wp->entities->bidxBusinessSummary;
+                    $businessSummaryId = ( $hostAddress[2] )
+                        ? $hostAddress[2]
+                        : ( isset( $jsSessionData->data->wp->entities->bidxBusinessSummary ) ? $jsSessionData->data->wp->entities->bidxBusinessSummary : NULL );
 
                     if ($businessSummaryId) {
                         $data->businessSummaryId = $businessSummaryId;
