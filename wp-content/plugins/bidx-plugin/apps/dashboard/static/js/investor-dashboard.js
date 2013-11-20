@@ -1,4 +1,4 @@
-(function($)
+;(function($)
 {
     var $element          = $("#investor-dashboard")
     ,   $views            = $element.find(".view")

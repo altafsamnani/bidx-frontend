@@ -1,5 +1,5 @@
 /* global bidx */
-( function( $ )
+;( function( $ )
 {
     var $element        = $( "#editCompany" )
     ,   $controls       = $( ".editControls" )

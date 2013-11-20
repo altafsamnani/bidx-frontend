@@ -1,5 +1,5 @@
 /* global bidx */
-( function( $ )
+;( function( $ )
 {
     var $element                        = $( "#media" )
     ,   $views                          = $element.find( ".view" )
