@@ -32,6 +32,17 @@
         {
             var plugin = this;
 
+            function _create()
+            {
+                // Instantiate the chosen plugin
+                //
+                plugin.$element.chosen( plugin.settings.chosen );
+
+                // Inform the world we are ready
+                //
+                plugin.$element.trigger( pluginName + ":ready" );
+            }
+
             if ( plugin.settings.emptyValue )
             {
                 plugin.$element.append(
@@ -44,24 +55,30 @@
                 );
             }
 
-            // Retrieve the items from the static data API
+            // if there is a datakey provided, get data from static data API
             //
-            bidx.data.getContext( this.settings.dataKey, function( err, items )
+            if ( this.settings.dataKey )
             {
-                plugin.items = items;
-
-                // Convert the items retrieved from the static API into <option />s
+                // Retrieve the items from the static data API
                 //
-                plugin.populateItems();
+                bidx.data.getContext( this.settings.dataKey, function( err, items )
+                {
+                    plugin.items = items;
 
-                // Instantiate the chosen plugin
-                //
-                plugin.$element.chosen( plugin.settings.chosen );
+                    // Convert the items retrieved from the static API into <option />s
+                    //
+                    plugin.populateItems();
 
-                // Inform the world we are ready
-                //
-                plugin.$element.trigger( pluginName + ":ready" );
-            } );
+                    _create();
+                } );
+            }
+            // population of options takes place somewhere else and we just want to initialize the plugin
+            //
+            else
+            {
+                _create();
+            }
+
 
             // Make sure the validator plugin picks up the selected value for validation
             //
@@ -102,9 +119,19 @@
     {
         return this.each(function()
         {
+            var $this = $( this );
+
+            // test if the element is not already a chosen plugin
+            //
             if ( !$.data( this, "plugin_" + pluginName ) )
             {
                 $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
+            }
+            // element is a chosen plugin, so run an update
+            //
+            else
+            {
+                $this.trigger("chosen:updated");
             }
         });
     };

@@ -52,11 +52,13 @@
         //
         $frmCompose.validate(
         {
-            rules:
+            ignore: ""
+
+        ,   rules:
             {
                 "contacts":
                 {
-                    tagsinputRequired:      true
+                    required:      true
                 }
             ,   "subject":
                 {
@@ -96,54 +98,9 @@
             }
         } );
 
-
-
-        // get recipient list and initiate recipient compose combobox (chosen)
+        // load the active members in the chosen selectbox
         //
-        _getMembers(
-        {
-            status:     "active"
-        ,   limit:      ACTIVECONTACTSLIMIT
-        ,   offset:     0
-        ,   callback:   function( data )
-            {
-                // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
-                // which holds the contact info (unordered)
-                //
-                var listItems = []
-                ,   option
-                ;
-
-                $contactsDropdown = $frmCompose.find( "[name=contacts]" );
-
-                // sort the array
-                //
-                data.sortIndex = data.sortIndex.sort();
-
-                $.each( data.sortIndex, function( idx, key )
-                {
-                    option = $( "<option/>",
-                    {
-                        value: data.contacts[ key ].value
-                    } );
-                    option.text( data.contacts[ key ].label );
-
-                    listItems.push( option );
-                } );
-
-                $contactsDropdown.append( listItems );
-
-
-                $contactsDropdown.chosen(
-                {
-                    "search_contains":              true
-                ,   "width":                        "100%"
-                ,   "placeholder_text_multiple":    "Select a contact (i18n required)"
-                } );
-            }
-        } );
-
-
+        _loadActiveMembers();
 
         // init the mailbox list toolbar buttons
         //
@@ -169,6 +126,60 @@
         ;
 
 
+    }
+
+    function _loadActiveMembers()
+    {
+          // get recipient list and initiate recipient compose combobox (chosen)
+        //
+        _getMembers(
+        {
+            status:     "active"
+        ,   limit:      ACTIVECONTACTSLIMIT
+        ,   offset:     0
+        ,   callback:   function( data )
+            {
+                // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
+                // which holds the contact info (unordered)
+                //
+                var listItems       = []
+                ,   option
+                ,   $options
+                ;
+
+                $contactsDropdown = $frmCompose.find( "[name=contacts]" );
+                $options = $contactsDropdown.find( "option" );
+
+                if ( $options.length )
+                {
+                    $options.empty();
+                }
+
+
+                // sort the array
+                //
+                data.sortIndex = data.sortIndex.sort();
+
+                $.each( data.sortIndex, function( idx, key )
+                {
+                    option = $( "<option/>",
+                    {
+                        value: data.contacts[ key ].value
+                    } );
+                    option.text( data.contacts[ key ].label );
+
+                    listItems.push( option );
+                } );
+
+                // add the options to the select
+                //
+                $contactsDropdown.append( listItems );
+
+                // init bidx_chosen plugin
+                //
+                $contactsDropdown.bidx_chosen();
+            }
+        } );
     }
 
 
@@ -212,20 +223,11 @@
             ,   "content": "string"
             }
         */
-
         message = {}; // clear message because it can still hold the reply content
 
         $currentView = $views.filter( bidx.utils.getViewName( "compose" ) );
 
-        var to = [];
-        var recipients = $currentView.find( "[ name=contacts ]" ).tagsinput( 'getValues' );
-
-        $.each( recipients, function( index, item )
-        {
-            to.push( item.value );
-        } );
-
-        bidx.utils.setValue( message, "userIds", to );
+        bidx.utils.setValue( message, "userIds", $contactsDropdown.val() );
         bidx.utils.setValue( message, "subject", $currentView.find( "[name=subject]" ).val() );
         bidx.utils.setValue( message, "content", $currentView.find( "[name=content]" ).val() );
 
@@ -713,9 +715,13 @@
                     bidx.utils.log("[contacts] mutated a contact",  response );
                     if ( response && response.status === "OK" )
                     {
-                        // NOTE: #msp 2013-1014; to be replace with list specific reload
+
+                        // load the active members in the chosen selectbox
                         //
-                        //document.location.reload();
+                        _loadActiveMembers();
+
+                        // navigate to contacts page
+                        //
                         mail.navigate( {state: "contacts" , params: {} } );
 
                     }
@@ -2734,7 +2740,7 @@
     {
         navigate:               navigate
     ,   $element:               $element
-    ,   getMembers:             _getMembers
+    //,   getMembers:             _getMembers //NOTE: not necessary anymore
 
     // START DEV API
     //
@@ -2764,11 +2770,5 @@
                 //
                 _oneTimeSetup();
             } );
-
-
-
-    // Initialize the defered tagsinput
-    //
- //   $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
 
 } ( jQuery ));
