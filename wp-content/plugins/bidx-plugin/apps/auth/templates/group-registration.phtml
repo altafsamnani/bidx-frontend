@@ -21,13 +21,9 @@
 		 ?>
 
 		<div class="row-fluid">
-
 			<div class="span4 well">
-
 				<div class="row-fluid">
-
 					<div class="span11">
-
 
 						<h3><?php _e('Complete your profile','bidxplugin');?></h3>
 
@@ -48,7 +44,7 @@
 		                <div class="control-group">
 		                    <label class="control-label"><?php _e('E-mail','bidxplugin'); ?></label>
 		                    <div class="controls">
-		                        <input type="text" name="personalDetails.emailAddress" value="<?php echo isset( $_POST["username"] ) ?  $_POST["username"]: ""; ?>"/>
+		                        <input type="text" name="personalDetails.emailAddress" disabled value="<?php echo isset( $_POST["username"] ) ?  $_POST["username"]: ""; ?>"/>
 		                    </div>
 		                </div>
 
@@ -74,16 +70,16 @@
                 </div>
 
 	            <div class="control-group">
-                    <label class="control-label"><?php _e('Define your group (max. 140 characters)','bidxplugin');?></label>
+                    <label class="control-label"><?php _e('Description ','bidxplugin');?></label>
                     <div class="controls">
-                       <textarea name="slogan" maxlength="140" placeholder="<?php _e('Define your group','bidxplugin');?>"></textarea>
+						<textarea name="description" maxlength="200" placeholder="<?php _e('Please provide a short description','bidxplugin');?>"></textarea>
                     </div>
                 </div>
 
 	            <div class="control-group">
-                    <label class="control-label"><?php _e('Short description','bidxplugin');?></label>
+                    <label class="control-label"><?php _e('Define your group (max. 140 characters)','bidxplugin');?></label>
                     <div class="controls">
-						<textarea name="description" placeholder="<?php _e('Please provide a short description','bidxplugin');?>"></textarea>
+                       <textarea name="slogan" maxlength="140" placeholder="<?php _e('Define your group','bidxplugin');?>"></textarea>
                     </div>
                 </div>
 
@@ -114,8 +110,8 @@
 					<div class="controls">
 						<select name="role">
 							<option value=""><?php _e('Which member roles does your group focus on','bidxplugin');?></option>
-							<option value="investors"><?php _e('Investors','bidxplugin');?></option>
-							<option value="entrepreneurs"><?php _e('Entrepreneurs','bidxplugin');?></option>
+							<option value="investor"><?php _e('Investors','bidxplugin');?></option>
+							<option value="entrepreneur"><?php _e('Entrepreneurs','bidxplugin');?></option>
 						</select>
 					</div>
 				</div>
