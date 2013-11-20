@@ -164,37 +164,31 @@
         $focusIndustry.bidx_chosen(
         {
             dataKey:            "industry"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $focusLanguage.bidx_chosen(
         {
             dataKey:            "language"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $focusSocialImpact.bidx_chosen(
         {
             dataKey:            "socialImpact"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $focusEnvImpact.bidx_chosen(
         {
             dataKey:            "envImpact"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $focusConsumerType.bidx_chosen(
         {
             dataKey:            "consumerType"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $investmentType.bidx_chosen(
         {
             dataKey:            "investmentType"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $institutionAddressCountry.bidx_chosen(

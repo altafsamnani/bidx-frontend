@@ -102,7 +102,6 @@
         $focusIndustry.bidx_chosen(
         {
             dataKey:            "industry"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         bidx.data.getContext( "businessOutcome", function( err, businessOutcomes )
