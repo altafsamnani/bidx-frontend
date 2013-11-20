@@ -226,31 +226,26 @@
         $industry.bidx_chosen(
         {
             dataKey:            "industry"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $productService.bidx_chosen(
         {
             dataKey:            "productService"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $countryOperation.bidx_chosen(
         {
             dataKey:            "country"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $envImpact.bidx_chosen(
         {
             dataKey:            "envImpact"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $socialImpact.bidx_chosen(
         {
             dataKey:            "socialImpact"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         // Collect snippets from the DOM

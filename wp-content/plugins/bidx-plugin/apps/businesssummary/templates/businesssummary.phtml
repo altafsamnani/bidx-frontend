@@ -247,20 +247,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <div class="control-group span5 offset1">
                                         <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
                                         <div class="controls">
-                                            <select name="reasonForSubmission" data-forcearray="true">
-                                                <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
-
-    <?php
-                                            // Render the select based upon the items from the static data api for the 'reasonForSubmission' typeCode / groupCode / context
-                                            //
-                                            $typeCode = 'reasonForSubmission';
-                                            if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
-                                                foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                    printf( '<option value="%s">%s</option>', $item->value, $item->label );
-                                                }
-                                            }
-    ?>
-                                            </select>
+                                            <select name="reasonForSubmission" data-forcearray="true"></select>
                                         </div>
                                     </div>
                                 </div>
@@ -426,19 +413,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <div class="control-group span5 offset1">
                                         <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
                                         <div class="controls">
-                                            <select name="socialImpact">
-                                                <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
-<?php
-                                            // Render the select options based upon the items from the static data api for the 'socialImpact' typeCode / groupCode / context
-                                            //
-                                            $typeCode = 'socialImpact';
-                                            if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
-                                                foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                    printf( '<option value="%s">%s</option>', $item->value, $item->label );
-                                                }
-                                            }
-?>
-                                            </select>
+                                            <select name="socialImpact" multiple></select>
                                         </div>
                                     </div>
                                 </div>
@@ -447,19 +422,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <div class="control-group span5">
                                         <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
                                         <div class="controls">
-                                            <select name="envImpact">
-                                                <option value=""><?php _e( 'Select an item', 'bidxplugin' ); ?></option>
-<?php
-                                            // Render the select options based upon the items from the static data api for the 'envImpact' typeCode / groupCode / context
-                                            //
-                                            $typeCode = 'envImpact';
-                                            if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
-                                                foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
-                                                    printf( '<option value="%s">%s</option>', $item->value, $item->label );
-                                                }
-                                            }
-?>
-                                            </select>
+                                            <select name="envImpact" multiple></select>
                                         </div>
                                     </div>
 
