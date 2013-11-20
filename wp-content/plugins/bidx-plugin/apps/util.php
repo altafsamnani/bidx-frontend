@@ -117,9 +117,13 @@ $logAppenders = array();
 
 // FILE
 //
-$log_file_name = BIDX_PLUGIN_DIR . '/plugin_debug.log';
-//$log_file_name = BIDX_PLUGIN_DIR . '/var/log/bidx/plugin_debug.log';
-
+if (WP_DEBUG) {
+	$log_file_name = BIDX_PLUGIN_DIR . '/plugin_debug.log';
+	$level = 'ERROR';
+} else {
+	$log_file_name = BIDX_PLUGIN_DIR . '/var/log/bidx/plugin_debug.log';
+	$level = 'TRACE';
+}
 
 $logAppenders[ 'file' ] = array(
 		'class'		=> 'LoggerAppenderRollingFile',
@@ -138,11 +142,6 @@ $logAppenders[ 'file' ] = array(
 				'maxBackupIndex' 	=> 5
 	       )
 );
-
-$level = 'ERROR';
-if (WP_DEBUG) {
-	$level = 'TRACE';
-}
 
 Logger::configure(
 	array(
