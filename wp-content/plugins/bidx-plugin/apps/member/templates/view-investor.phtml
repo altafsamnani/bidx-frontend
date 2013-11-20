@@ -172,6 +172,23 @@ if ($investorDetails &&
 
 <?php
             // TODO: list references (personaldetails)
+        // Previous investments
+        //
+        echo '<h5>' . __('References','bidxplugin') . '</h5>';
+
+        $header = array(
+            __('Name','bidxplugin')                     => 'name',
+            __('Professional title','bidxplugin')       => 'professionalTitle',
+            __('LinkedIn profile','bidxplugin')         => 'linkedIn',
+            __('Email address','bidxplugin')            => 'emailAddress'
+            // __('Landline','bidxplugin')                 => 'contactDetail[0].landLine',
+            // __('Mobile','bidxplugin')                   => 'contactDetail[0].mobile'
+        );
+
+        $merge['name'] = array ('firstName', 'lastName');
+
+        echo $this->addTableRows($header, $this->exst( $investorDetails->references ), 'table table-bordered', $merge );
+
 ?>
     </div><!-- // details-block of investor -->
 <?php

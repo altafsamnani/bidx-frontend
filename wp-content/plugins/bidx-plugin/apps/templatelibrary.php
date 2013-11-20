@@ -452,7 +452,7 @@ class TemplateLibrary
      * @return String $rowHtml Row html
      *
      */
-    public function addTableRows ($header, $rowsArr, $class, $merge = NULL, $cellClasses, $staticArray  )
+    public function addTableRows ($header, $rowsArr, $class, $merge = NULL, $cellClasses = array(), $staticArray = array()  )
     {
 
         $returnHtml = NULL;
