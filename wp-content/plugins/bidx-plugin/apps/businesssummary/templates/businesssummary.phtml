@@ -102,7 +102,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 $accessRequestSend = 'hide';
                                 $accessGranted = 'hide';
                                 break;
-                            case 'rejected':
+                            case 'refused':
                                 $accessRequestProgress = '';
                                 $accessRequestSend = 'hide';
                                 $accessGranted = 'hide';
@@ -117,6 +117,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 $accessRequestSend = '';
                                 $accessGranted = 'hide';
                                 break;
+                            default:
+                                $accessRequestProgress = 'hide';
+                                $accessRequestSend = 'hide';
+                                $accessGranted = 'hide';
                         }
 ?>
                         <a class="btn btn-primary disabled bidxAccessRequestPending <?php echo $accessRequestProgress; ?>" href="#"><?php echo _e( 'Access request pending', 'bidxplugin' ); ?></a>
