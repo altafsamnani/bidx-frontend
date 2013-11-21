@@ -3,8 +3,8 @@
 {
     var $element                    = $( "#register" )
     ,   $frmRegister                = $element.find( "#frmRegister" )
-
-    ,   $addressCountry             = $frmRegister.find( "[name='personalDetails.address.country']" )
+    ,   $formfields                 = $frmRegister.find( ":input" )
+    ,   $addressCountry             = $formfields.filter( "[name='personalDetails.address.country']" )
 
     ,   $btnRegister                = $frmRegister.find( ":submit" )
 
@@ -104,27 +104,28 @@
     }
 
 
-    function _doRegister( porams )
+    function _doRegister( params )
     {
         // Build up the data for the member request
         //
         var member =
+        {
+            emailAddress:               $formfields.filter( "[name='username']" ).val()
+        ,   personalDetails:
             {
-                emailAddress:           $frmRegister.find( "[name='username']" ).val()
-            ,   personalDetails:
-                {
-                    firstName:              $frmRegister.find( "[name='personalDetails.firstName']" ).val()
-                ,   lastName:               $frmRegister.find( "[name='personalDetails.lastName']" ).val()
-                ,   address:
+                firstName:              $formfields.filter( "[name='personalDetails.firstName']" ).val()
+            ,   lastName:               $formfields.filter( "[name='personalDetails.lastName']" ).val()
+            ,   address:
+                [
                     {
-                        country:                $addressCountry.val()
-                    ,   cityTown:               $frmRegister.find( "[name='personalDetails.address.country" ).val()
+                        country:            $addressCountry.val()
+                    ,   cityTown:           $formfields.filter( "[name='personalDetails.address.cityTown']" ).val()
                     }
-                }
-            ,   userPreferences:                userPreferences
+                ]
             }
+        ,   userPreferences:                userPreferences
+        };
 
-        ;
 
         bidx.api.call(
             "member.save"
@@ -145,9 +146,7 @@
                 }
             ,   error:          function( jqXhr )
                 {
-                    $btnRegister.removeClass( "disabled" );
-
-                    alert( "Problem while registering" );
+                    params.error( jqXhr );
                 }
             }
         );
