@@ -156,9 +156,12 @@
                 }
 
 
-                // sort the array
+                // sort the array, if not empty
                 //
-                data.sortIndex = data.sortIndex.sort();
+                if ( data.sortIndex.length )
+                {
+                    data.sortIndex = data.sortIndex.sort();
+                }
 
                 $.each( data.sortIndex, function( idx, key )
                 {

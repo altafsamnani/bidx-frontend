@@ -206,13 +206,6 @@
             ,   "slogan" : ""
             ,   "company" : ""
             ,   "website" : ""
-            ,   "focusIndustry:
-                [
-                     {
-                         value: ""
-                     ,   label: ""
-                     }
-                ]
             ,   "focusRole:
                 [
                      {
@@ -405,6 +398,8 @@
         //
         _doSaveMember( _doSaveGroup( function()
         {
+            // go to logged in homepage
+            //
             document.location = "/";
         } ) );
     }
