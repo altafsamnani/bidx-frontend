@@ -196,70 +196,71 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
                             echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
                             echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
 ?>
+                    <!--
                         <hr>
 
                         <div class="call-to-action transparent clearfix">
                             <div>
                                 <div class="pull-left">
-                                   <h2><?php _e('People near you', 'bidxtheme')?></h2>
+                                   <h2><?php // _e('People near you', 'bidxtheme')?></h2>
                                 </div>
                                 <div class="btn-group pull-right bidx-btn-split">
-                                    <button class="btn"><?php _e('Show all', 'bidxtheme')?></button>
+                                    <button class="btn"><?php //_e('Show all', 'bidxtheme')?></button>
                                     <button class="btn dropdown-toggle" data-toggle="dropdown">
                                     <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                    <!-- dropdown menu links -->
                                     </ul>
                                 </div>
                             </div>
                             <iframe width="100%" height="280" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=nl&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=Bidx&amp;sll=37.0625,-95.677068&amp;sspn=60.158465,135.263672&amp;t=h&amp;ie=UTF8&amp;hq=bidx+bv&amp;hnear=De+Ruijterkade,+Amsterdam,+Nederland&amp;ll=52.37787,4.905348&amp;spn=0.006295,0.014329&amp;output=embed"></iframe>
-                            <span class="label bidx-label-member"><?php _e('Member', 'bidxtheme')?></span>
-                            <span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxtheme')?></span>
-                            <span class="label bidx-label-investor"><?php _e('Investor', 'bidxtheme')?></span>
+                            <span class="label bidx-label-member"><?php // _e('Member', 'bidxtheme')?></span>
+                            <span class="label bidx-label-entrepreneur"><?php //_e('Entrepreneur', 'bidxtheme')?></span>
+                            <span class="label bidx-label-investor"><?php //_e('Investor', 'bidxtheme')?></span>
                         </div>
 
-                        <hr>
+                         <hr> -->
 
+<!-- Note #msp: currently these c2a buttons are not used, needs to be dynamic -->
+<!--                         <div class="call-to-action clearfix">
+    <div class="pull-left ">
+        <img src="https://acceptance.bidx.net/wp-content/uploads/2013/09/bidnetworklogo.png" alt="">
+    </div>
+    <div class="pull-right">
+        <div><strong><?php// _e('BiD Network', 'bidxtheme')?></strong></div>
+        <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php // _e('join group', 'bidxtheme')?></button>
+    </div>
+</div>
+<div class="call-to-action clearfix">
+    <div class="pull-left ">
+        <img src="https://acceptance.bidx.net/wp-content/uploads/2013/09/sampoerna.png" alt="">
+    </div>
+    <div class="pull-right">
+        <div><strong><?php// _e('Sampoerna', 'bidxtheme')?></strong></div>
+        <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php // _e('join group', 'bidxtheme')?></button>
+    </div>
+</div> -->
 
-                        <div class="call-to-action clearfix">
-                            <div class="pull-left ">
-                                <img src="https://acceptance.bidx.net/wp-content/uploads/2013/09/bidnetworklogo.png" alt="">
-                            </div>
-                            <div class="pull-right">
-                                <div><strong><?php _e('BiD Network', 'bidxtheme')?></strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
-                            </div>
-                        </div>
-                        <div class="call-to-action clearfix">
-                            <div class="pull-left ">
-                                <img src="https://acceptance.bidx.net/wp-content/uploads/2013/09/sampoerna.png" alt="">
-                            </div>
-                            <div class="pull-right">
-                                <div><strong><?php _e('Sampoerna', 'bidxtheme')?></strong></div>
-                                <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
-                            </div>
-                        </div>
 <!--                         <div class="call-to-action clearfix">
     <div class="pull-left ">
         <img src="/wp-content/themes/bidx-group-template/assets/img/icons/icon-members-large.png" alt="">
     </div>
     <div class="pull-right">
         <div><strong><?php //_e('Tagline group goes here.', 'bidxtheme')?></strong></div>
-        <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php _e('join group', 'bidxtheme')?></button>
+        <button class="btn btn-bidx-transparent-circle"><span class="bidx-theme-colour-one"><i class="bidx-plus-white-transparent"></i></span><?php // _e('join group', 'bidxtheme')?></button>
     </div>
 </div> -->
 
-
+<!--
                         <div class="call-to-action transparent clearfix">
                             <div class="pull-left">
-                                <a href=""><?php _e('Create a group', 'bidxtheme')?></a>
+                                <a href=""><?php// _e('Create a group', 'bidxtheme')?></a>
                             </div>
                             <div class="pull-right">
-                                <a href=""><?php _e('Search for other groups', 'bidxtheme')?></a>
+                                <a href=""><?php// _e('Search for other groups', 'bidxtheme')?></a>
                             </div>
                         </div>
-
+ -->
 
                     </div>
 
