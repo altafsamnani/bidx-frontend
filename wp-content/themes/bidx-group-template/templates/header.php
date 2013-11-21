@@ -43,7 +43,7 @@
 				if( !$authenticated )
 				{
 ?>
-	 			<div class="pull-right span4 bidx-header-controls">
+	 			<div class="pull-right span5 bidx-header-controls">
 					<div class="row-fluid">
 						<div class="span6">
 							<a href="/register-as-member/#register/firstLogin=getting-started-member" class="btn btn-primary btn-block bidx-theme-colour-two"><?php _e('Become a member','bidxtheme');?></a>

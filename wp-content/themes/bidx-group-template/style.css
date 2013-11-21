@@ -2715,6 +2715,10 @@ form .row-fluid .input-prepend {
                 margin-bottom:              10px;
             }
 
+            .bidx-header-controls {
+                padding:            0 3% 20px;
+            }
+
 
         /* End header styles */
 
