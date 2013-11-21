@@ -2765,14 +2765,18 @@ form .row-fluid .input-prepend {
         right:              auto;
     }
 
+    .bidx-header-controls {
+        padding:            0 3% 20px;
+    }
+
     /* Footer */
     .footer-bar .pull-left,
     .footer-bar .pull-right {
-        float: none;
-        text-align: center;
+        float:              none;
+        text-align:         center;
     }
     footer .page-footer .footer-bar {
         height: auto;
-        padding: 10px 0 20px;
+        padding:            10px 0 20px;
     }
 }
