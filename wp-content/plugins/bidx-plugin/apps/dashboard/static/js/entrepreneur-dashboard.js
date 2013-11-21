@@ -16,6 +16,13 @@
         var snippit       = $("#entrepreneur-investorsitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   emptySnippit  = $("#entrepreneur-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   $list         = $("." + options.list)
+        ,   $btn
+        ,   entityId
+        ,   dataArr
+        ,   investorId
+        ,   accessParams
+        ,   listItem
+        ,   i18nItem
         ,   emptyVal      = "-"
         ;
 
@@ -34,64 +41,140 @@
 
                     if( response && response.data && response.data.received )
                     {
+                        dataArr =   {       'industry'         : 'industry'
+                                        ,   'countryOperation' : 'country'
+                                        ,   'stageBusiness'    : 'stageBusiness'
+                                        ,   'productService'   : 'productService'
+                                        ,   'envImpact'        : 'envImpact'
+                                        ,   'consumerType'     : 'consumerType'
+                                        ,   'investmentType'   : 'investmentType'
+                                    };
 
                         $.each(response.data.received, function(id, item)
                         {
 
-                            var dataArr = {    'industry'         : 'industry'
-                                          ,    'countryOperation' : 'country'
-                                          ,    'stageBusiness'    : 'stageBusiness'
-                                          ,    'productService'   : 'productService'
-                                          ,    'envImpact'        : 'envImpact'
-                                          ,    'consumerType'     : 'consumerType'
-                                          ,    'investmentType'   : 'investmentType'
-                                          };
+                            entityId    =   item.businessSummary.bidxMeta.bidxEntityId;
+                            investorId  =   item.investor.id;
+                            getStaticDataVal(
+                            {
+                                dataArr    : dataArr
+                              , item       : item.businessSummary
+                              , callback   : function (label) {
+                                                i18nItem = label;
+                                             }
+                            });
 
-                               getStaticDataVal(
-                                {
-                                    dataArr    : dataArr
-                                  , item       : item.businessSummary
-                                  , callback   : function (label) {
-                                                    i18nItem = label;
-                                                 }
-                                });
-                               bidx.utils.log(item.businessSummary.bidxMeta.bidxLastUpdateDateTime);
-                                //search for placeholders in snippit
-                                listItem = snippit
-                                    .replace( /%accordion-id%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : emptyVal )
-                                    .replace( /%bidxEntityId%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : emptyVal )
-                                    .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
-                                    .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : emptyVal )
-                                    .replace( /%status%/g,       item.status    ? item.status      : emptyVal )
-                                    .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
-                                    .replace( /%bidxLastUpdateDateTime%/g, item.businessSummary.bidxMeta.bidxLastUpdateDateTime    ? bidx.utils.parseTimestampToDateStr(item.businessSummary.bidxMeta.bidxLastUpdateDateTime) : emptyVal )
-                                    .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : emptyVal )
-                                    .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : emptyVal )
-                                    .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : emptyVal )
-                                    .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : emptyVal )
-                                    .replace( /%creator%/g, i18nItem.creator    ? i18nItem.creator      : emptyVal )
-                                    .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : emptyVal )
-                                    .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
-                                    .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
-                                    .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
-                                    .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
-                                    .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
-                                    .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
-                                    .replace( /%displayName%/g,      item.investor.displayName   ? item.investor.displayName : emptyVal )
-                                    .replace( /%investorId%/g,      item.investor.id   ? item.investor.id     : emptyVal )
-                                    .replace( /%document%/g,      !$.isEmptyObject( item.businessSummary.company )    ? item.businessSummary.company.logo.document     : 'http://placehold.it/150x100' )
-                                    ;
+                            //search for placeholders in snippit
+                            listItem = snippit
+                                .replace( /%accordion-id%/g,      entityId   ? entityId     : emptyVal )
+                                .replace( /%bidxEntityId%/g,      entityId  ? entityId     : emptyVal )
+                                .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
+                                .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : emptyVal )
+                                .replace( /%status%/g,       item.status    ? item.status.charAt(0).toUpperCase() + item.status.slice(1)     : emptyVal )
+                                .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
+                                .replace( /%bidxLastUpdateDateTime%/g, item.businessSummary.bidxMeta.bidxLastUpdateDateTime    ? bidx.utils.parseTimestampToDateStr(item.businessSummary.bidxMeta.bidxLastUpdateDateTime) : emptyVal )
+                                .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : emptyVal )
+                                .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : emptyVal )
+                                .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : emptyVal )
+                                .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : emptyVal )
+                                .replace( /%creator%/g, i18nItem.creator    ? i18nItem.creator      : emptyVal )
+                                .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : emptyVal )
+                                .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
+                                .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
+                                .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
+                                .replace( /%investorType%/g,       i18nItem.investorType    ? i18nItem.investorType      : emptyVal )
+                                .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
+                                .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
+                                .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
+                                .replace( /%displayName%/g,      item.investor.displayName   ? item.investor.displayName : emptyVal )
+                                .replace( /%investorId%/g,      investorId   ? investorId    : emptyVal )
+                                .replace( /%document%/g,      !$.isEmptyObject( item.businessSummary.company )    ? item.businessSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                                ;
 
                             //  add mail element to list
                             $list.append( listItem );
 
+                            //  load checkbox plugin on element
 
-                            } );
-                        }
-                        else
-                        {
-                            $list.append(emptySnippit);
-                        }
+                            if(item.status === 'pending')
+                            {
+                                $btn   = $list.find( '[data-summaryid="' + entityId + '"][data-investorid="' + investorId + '"]' );
+
+                                if ( $btn )
+                                {
+                                    $btn.click( function( e )
+                                    {
+                                        var $this = $(this);
+                                        e.preventDefault();
+                                        accessParams = {   'id'           :  $this.data('summaryid')
+                                                        ,  'investorId'   :  $this.data('investorid')
+                                                        ,  'action'       :  $this.data('btn')
+                                                        };
+
+                                        bidx.common._notify(
+                                        {
+                                            text:       bidx.i18n.i( "btnConfirm" )
+                                        ,   modal:      true
+                                        ,   type:       "confirm"
+                                        ,   layout:     "center"
+                                        ,   buttons:
+                                            [
+                                                {
+                                                    addClass:       "btn btn-primary"
+                                                ,   text:           "Ok"
+                                                ,   onClick: function( $noty )
+                                                    {
+
+                                                       bidx.utils.log(accessParams);
+                                                        _doGrantRequest( accessParams, function( err )
+                                                        {
+                                                            if ( err )
+                                                            {
+                                                                alert( err );
+                                                            }
+                                                            else
+                                                            {
+                                                                bidx.common.notifyRedirect();
+                                                                var statusMsg = (accessParams.action ==='accept') ? 6 : 7;
+                                                                var url = document.location.protocol
+                                                                    + "//"
+                                                                    + document.location.hostname
+                                                                    + ( document.location.port ? ":" + document.location.port : "" )
+                                                                    + '/entrepreneur-dashboard/'
+                                                                    + "?smsg=" + statusMsg
+                                                                ;
+
+                                                                document.location.href = url;
+                                                            }
+                                                        });
+
+                                                        $noty.close();
+                                                    }
+                                                }
+                                            ,   {
+                                                    addClass:       "btn btn-danger"
+                                                ,   text:           "Cancel"
+                                                ,   onClick: function( $noty )
+                                                    {
+                                                        $noty.close();
+                                                    }
+                                                }
+                                            ]
+                                        } );
+                                    } );
+                                }
+                            }
+                            else
+                            {
+                                var controlButtons = '.btn-' + entityId + '-' +  investorId ;
+                                $list.find(controlButtons).addClass('hide');
+                            }
+                        } );
+                    }
+                    else
+                    {
+                        $list.append(emptySnippit);
+                    }
 
                     //  execute callback if provided
                     if (options && options.callback)
@@ -109,6 +192,43 @@
             }
         );
     };
+
+    // Perform an API call to join the group
+    //
+    var _doGrantRequest = function( params, cb )
+    {
+
+        bidx.api.call(
+            "businesssummaryGrantAccess.send"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   id:                     params.id
+            ,   investorId:             params.investorId
+            ,   extraUrlParameters:
+                [
+                    {
+                        label:          "action"
+                    ,   value:          params.action
+                    }
+                ]
+            ,   success:            function( response )
+                {
+                    bidx.utils.log( "bidx::requestAccess::save::success", response );
+
+                    cb();
+                }
+            ,   error:            function( jqXhr, textStatus )
+                {
+                    bidx.utils.log( "bidx::requestAccess::save::error", jqXhr, textStatus );
+
+                    cb( new Error( "Problem granting access" ) );
+                }
+            }
+        );
+    };
+
+
+
     // function that retrieves group members returned in an array of key/value objects
     // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
     //
@@ -130,14 +250,14 @@
 
                item[clsKey] = textVal;
               }
-       })
+       });
        //If callback set use it
        if (options && options.callback)
        {
         options.callback(item);
        }
 
-    }
+    };
 
     var getBusiness = function(options)
     {
@@ -146,6 +266,7 @@
         ,   emptySnippit  = $("#entrepreneur-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   $list         = $("." + options.list)
         ,   emptyList     = true
+        ,   listItem
         ,   i18nItem
         ,   emptyVal      = "-"
         ;
@@ -172,9 +293,9 @@
                         $.each(entities, function(idx, item)
                         {
                             //if( item.bidxEntityType == 'bidxBusinessSummary') {
-                            bidxMeta = bidx.utils.getValue( item, "bidxMeta" );
+                            var bidxMeta = bidx.utils.getValue( item, "bidxMeta" );
 
-                            if( bidxMeta && bidxMeta.bidxEntityType == 'bidxBusinessSummary' )
+                            if( bidxMeta && bidxMeta.bidxEntityType === 'bidxBusinessSummary' )
                             {
 
                                 var dataArr = {  'industry'         : 'industry'
@@ -212,7 +333,7 @@
                                     .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
                                     .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
                                     .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
-                                    .replace( /%document%/g,      !$.isEmptyObject( item.company )    ? item.company.logo.document     : 'http://placehold.it/150x100' )
+                                    .replace( /%document%/g,      !$.isEmptyObject( item.company )    ? item.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                     ;
 
 

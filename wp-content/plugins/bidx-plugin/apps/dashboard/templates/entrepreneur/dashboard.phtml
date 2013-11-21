@@ -68,6 +68,7 @@
                                 <th class="hidden-phone">Type of Investment</th>
                                 <th class="hidden-phone">Request status</th>
                                 <th class="hidden-phone">Last time viewed plan</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody class="investors entrepreneur-investors">
@@ -114,22 +115,28 @@
     </td>
 
     <td class="hidden-phone">
-        <a  data-toggle="collapse" data-target="#status-%accordion-id%" class="accordion-toggle">
         <span class="placeholder status">%status%</span>
         </a>
     </td>
     <td class="hidden-phone">
         <span class="placeholder bidxLastUpdateDateTime">%bidxLastUpdateDateTime%</span>
     </td>
+    <td class="controlbuttons">
+        <div class="btn-%bidxEntityId%-%investorId%">
+            <button type="button" data-btn="accept" class="grantAccess btn btn-success" data-summaryid="%bidxEntityId%" data-investorid="%investorId%">Accept</button>
+            <button type="button" data-btn="reject" class="grantAccess btn btn-danger" data-summaryid="%bidxEntityId%" data-investorid="%investorId%" >Reject</button>
+        </div>
+    </td>
+
 </tr>
 <tr class="list detail-list" >
-    <td colspan="8" class="detailRow">
+    <td colspan="9" class="detailRow">
         <div class="accordion-body collapse" id="investor-%accordion-id%">
             <div class="row-fluid">
-                <div class="span3">
+                <div class="span2">
                     <span class="placeholder document"><img src="%document%"/></span>
                 </div>
-                <div class="span9">
+                <div class="span10">
                     <div class="row-fluid">
                         <div class="span6">
                             <label>Business proposal</label>
@@ -199,25 +206,6 @@
    </td>
 </tr>
 
-<tr>
-    <td colspan="5" class="detailRow">
-        <div class="accordion-body collapse" id="status-%accordion-id%">
-            <div class="row-fluid detailContent">
-                <div class="span12">
-                    <h3>Acces requests</h3>
-                    <div class="alert alert-info">
-                        Subject: Request to view full details of your plan <BR>
-                        To: <span class="placeholder contactName">%contactName%</span> <BR>
-                        Date: <span class="placeholder startDate">%startDate%</span> <BR>
-                    </div>
-                </div>
-                <div class="pull-right">
-                    <a href="#">Send new email</a>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
     -->
 </script>
 <script type="text/html" id="entrepreneur-businessitem">
@@ -249,10 +237,10 @@
         <td colspan="7" class="detailRow">
             <div class="accordion-body collapse" id="%accordion-id%">
                 <div class="row-fluid">
-                    <div class="span3">
+                    <div class="span2">
                         <span class="placeholder document"><img src="%document%"/></span>
                     </div>
-                    <div class="span9">
+                    <div class="span10">
                         <div class="row-fluid">
                             <div class="span6">
                                 <label>Business proposal</label>

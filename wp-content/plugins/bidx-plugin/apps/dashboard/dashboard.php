@@ -65,7 +65,7 @@ class dashboard
                 if ($investorProfile) {
 
                     $investorDashboard = get_option ('investor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
-
+                    $view->startingPage = 0;
                     if ($investorDashboard) {
                         ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
 
@@ -85,7 +85,7 @@ class dashboard
                 if ($entrepreneurProfile) {
 
                     $entrepreneurDashboard = get_option ('entrepreneur-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
-
+                    $view->startingPage = 0;
                     if ($entrepreneurDashboard) {
                         ($entrepreneurDashboard != 2 ) ? update_option ('entrepreneur-startingpage', 0) : $view->startingPage = $entrepreneurDashboard;
                     }

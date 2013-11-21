@@ -151,6 +151,12 @@ function bidx_status_text ( $textId, $replaceString ) {
     case '5':
         $text = 'Successfully published!';
         break;
+    case '6':
+        $text = 'Request accepted!';
+        break;
+    case '7':
+        $text = 'Request refused!';
+        break;
 
     default :
         $text = 'Add your notification message to custom.php with id ';

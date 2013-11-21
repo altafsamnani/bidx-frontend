@@ -76,6 +76,15 @@
     width:70px;
 
 }
+#entrepreneur-dashboard .btn-danger {
+   position:absolute;
+   margin-left:2px;
+}
+
+.controlbuttons {
+    width:135px;
+}
+
 
 /*** Investor Dashboard ****************
 ********************************************/
