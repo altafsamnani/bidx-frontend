@@ -690,7 +690,10 @@ Company: bidX;
 
 
     /************************  Template styles *******************************/
-
+    .carousel {
+        width: 940px;
+        margin: 0 auto 20px;
+    }
     .carousel.no-images {
         height:                     373px;
     }
@@ -2195,8 +2198,9 @@ form .row-fluid .input-prepend {
     /* Large desktop */
     @media (min-width: 1200px) {
 
-
-
+        .carousel {
+            width: 1170px;
+        }
 
     }
 
@@ -2652,6 +2656,13 @@ form .row-fluid .input-prepend {
                 padding-left: 0;
                 padding-right: 0;
             }
+
+            .carousel {
+                width: 94%;
+                margin: 0 3% 20px;
+            }
+
+
         /************************  End general styles *******************************/
 
         /************************  Header / Footer styles *******************************/
@@ -2728,7 +2739,7 @@ form .row-fluid .input-prepend {
 
             .container {
                 width:94%;
-                margin: 0 3%;
+                margin: 0 3% 20px;
             }
             header .container {
                 width: 100%;
