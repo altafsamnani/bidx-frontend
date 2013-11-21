@@ -405,11 +405,12 @@ Company: bidX;
         border-color:               #E83E3E;
     }
 
-    form .controls input.valid,
-    form .controls textarea.valid,
-    form .controls.control-valid .bidx-tagsinput-container {
-        border-color:               #2dcd6d;
-    }
+    /* no green color on border when valid according to style guide */
+   /*  form .controls input.valid,
+   form .controls textarea.valid,
+   form .controls.control-valid .bidx-tagsinput-container {
+       border-color:               #2dcd6d;
+   } */
 
     form .control-group .error {
         color:                      #be2025;
