@@ -12,184 +12,195 @@ if ($investorDetails &&
     //$investorType = $this->exst ($investorDetails->investorType);
 ?>
 
-    <div class="well profile-block details-block">
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionProfile" href="#accordionInvestor">
+            <span class="fui-arrow-right accordion-state-icon"></span>
+            <?php _e('Investor profile','bidxplugin');?>
+        </a>
+    </div>
+    <div id="accordionInvestor" class="accordion-body collapse">
+        <div class="accordion-inner">
 
-        <div class="btn-group control-buttons">
-<?php
-            if ($investorDetailsBidxMeta->bidxCanEdit) {
-                $href = "#editInvestor/" . $this -> exst( $investorDetailsBidxMeta -> bidxOwnerId );
-?>
-                <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
-<?php
-                    if ($investorDetailsBidxMeta->bidxEntityStatus == 'DRAFT') {
+        <div class="profile-block details-block">
 
-                        // Encode the missing fields into an attribute so we can provide a nice
-                        // UI feedback in the implementation of the publish button
-                        //
-                        // TODO: this is of couse only for the fields we know are going to be
-                        // missed and fail. This is not helping for the actual publishing which
-                        // might pop up with all kinds of errors. That should be handled in the
-                        // front-end when actually doing the publishing
-                        //
-                        $missingFields = array();
+            <div class="btn-group control-buttons">
+    <?php
+                if ($investorDetailsBidxMeta->bidxCanEdit) {
+                    $href = "#editInvestor/" . $this -> exst( $investorDetailsBidxMeta -> bidxOwnerId );
+    ?>
+                    <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
-                        $missingFieldsAttribute = count($missingFields)
-                            ? sprintf( 'data-missingfields=\'%s\'', json_encode($missingFields) )
-                            : ''
-                        ;
-?>
-                        <a class="btn btn-primary" href="#publish/<?php echo $this->exst ($investorDetailsBidxMeta->bidxEntityId); ?>" <?php echo $missingFieldsAttribute; ?>>Publish</a>
-<?php
+    <?php
+                        if ($investorDetailsBidxMeta->bidxEntityStatus == 'DRAFT') {
+
+                            // Encode the missing fields into an attribute so we can provide a nice
+                            // UI feedback in the implementation of the publish button
+                            //
+                            // TODO: this is of couse only for the fields we know are going to be
+                            // missed and fail. This is not helping for the actual publishing which
+                            // might pop up with all kinds of errors. That should be handled in the
+                            // front-end when actually doing the publishing
+                            //
+                            $missingFields = array();
+
+                            $missingFieldsAttribute = count($missingFields)
+                                ? sprintf( 'data-missingfields=\'%s\'', json_encode($missingFields) )
+                                : ''
+                            ;
+    ?>
+                            <a class="btn btn-primary" href="#publish/<?php echo $this->exst ($investorDetailsBidxMeta->bidxEntityId); ?>" <?php echo $missingFieldsAttribute; ?>>Publish</a>
+    <?php
+                        }
                     }
-                }
-?>
-        </div>
-
-        <h4 id="investor-profile"><?php _e('Investor profile','bidxplugin');?></h4>
-<?php
-        // Institution address
-        //
-        $address = '';
-        if ($this->exst ($investorDetails->institutionAddress )) {
-
-            $institutionAddress = $investorDetails->institutionAddress;
-
-            $addressArr = array (
-                $this->exst ($institutionAddress->street,'') . ' ' . $this->exst ($institutionAddress->streetNumber,''),
-                $this->exst ($institutionAddress->cityTown,''),
-                __('country') => $this->exst ($institutionAddress->country,''),
-                $this->exst ($institutionAddress->postalCode)
-            );
-
-            $address = $this->createRowValue ($addressArr, ', ');
-        }
-
-        $investmentSize = array(
-            $this->exst( $investorDetails->minInvestment, '' ),
-            $this->exst( $investorDetails->maxInvestment, '' )
-        );
-
-        $rowValues = array(
-            __('Investor profile summary','bidxplugin')   =>  $this->exst ($investorDetails->summary),
-            __('Investor type','bidxplugin')              =>  $this->getStaticVal('investorType', $this->exst ($investorDetails->investorType)),
-            __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', '),
-            __('Institution details','bidxplugin')        =>  $this->exst($investorDetails->institutionName),
-            __('Institution website','bidxplugin')        =>  $this->exst($investorDetails->institutionWebsite),
-            __('Address','bidxplugin')                    =>  $address,
-            __('Industry','bidxplugin')                   =>  $this->getMultiValues($this->exst ($investorDetails->focusIndustry), ', ','industry'),
-            __('Social impact','bidxplugin')              =>  $this->getMultiValues($this->exst ($investorDetails->focusSocialImpact), ', ','socialImpact'),
-            __('Environmental impact','bidxplugin')       =>  $this->getMultiValues($this->exst ($investorDetails->focusEnvImpact), ', ','envImpact'),
-            __('Consumer type','bidxplugin')              =>  $this->getMultiValues($this->exst ($investorDetails->focusConsumerType), ', ','consumerType'),
-            __('Languages','bidxplugin')                  =>  $this->getMultiValues($this->exst ($investorDetails->focusLanguage), ', ','language'),
-            __('Stage of business','bidxplugin')          =>  $this->getMultiValues($this->exst ($investorDetails->focusStageBusiness), ', ','stageBusiness'),
-            __('Gender','bidxplugin')                     =>  $this->getMultiValues($this->exst ($investorDetails->focusGender), ', ','gender'),
-            __('Investment size','bidxplugin')            =>  implode( $investmentSize, ' - ' )
-        );
-        echo $this->pairRows( $rowValues );
-?>
-        <h4>Reach</h4>
-<?php
-
-        $focusReach = $this->exst($investorDetails->focusReach);
-        if ( $this->exst($focusReach->coordinates) && $this->exst($focusReach->coordinates) ) {
-?>
-            <div class="row-fluid">
-                <div class="span6">
-<?php
-            $mapParams = array(
-                'center'        => $focusReach->coordinates,
-                'size'          => '300x300',
-                'zoom'          => 6,
-                'sensor'        => 'false'
-            );
-
-            printf(
-                '<img src="%s?%s" />',
-                'https://maps.googleapis.com/maps/api/staticmap',
-                http_build_query( $mapParams )
-            );
-?>
-                </div>
+    ?>
             </div>
-<?php
-        }
 
-        $rowValues = array (
-            __('Focus countries','bidxplugin') => $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country'),
-            __('Focus cities','bidxplugin') => $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown'),
-            _x('Other preferences','test','bidxplugin') => $this->exst ($investorDetails->additionalPreferences),
-            __('Number of investments in the last 12 months','bidxplugin') => $this->exst( $investorDetails->numberInvestments ),
-            __('Total investments made in the last 12 months','bidxplugin') => $this->exst( $investorDetails->totalInvestment )
-        );
-        echo $this->pairRows( $rowValues );
-
-        // Previous investments
-        //
-        echo '<h5>' . __('Previous investments','bidxplugin') . '</h5>';
-
-        $header = array(
-            __('Name of Company','bidxplugin')           => 'companyName',
-            __('Amount invested','bidxplugin')           => 'investment',
-            __('Investment type','bidxplugin')           => 'investmentType',
-            __('URL of Company website','bidxplugin')    => 'companyWebsite'
-        );
-
-        echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered' );
-
-        echo $this->getAttachmentsDisplay ('', '', array ('Documents' => $this->exst ($investorDetails->attachment)));
-?>
-
-<?php
-
-
-        // A set of properties is only applicable to any other type than Angel or private
-        //
-        //if ( $investorType && $investorType != 'AngelInvPrivIndiv' ) {
-
-            // Institution name
+    <?php
+            // Institution address
             //
-            // $rowValues = array (__('Institution details','bidxplugin') => $this->exst($investorDetails->institutionName));
-            // echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            $address = '';
+            if ($this->exst ($investorDetails->institutionAddress )) {
 
-            // Institution website
+                $institutionAddress = $investorDetails->institutionAddress;
+
+                $addressArr = array (
+                    $this->exst ($institutionAddress->street,'') . ' ' . $this->exst ($institutionAddress->streetNumber,''),
+                    $this->exst ($institutionAddress->cityTown,''),
+                    __('country') => $this->exst ($institutionAddress->country,''),
+                    $this->exst ($institutionAddress->postalCode)
+                );
+
+                $address = $this->createRowValue ($addressArr, ', ');
+            }
+
+            $investmentSize = array(
+                $this->exst( $investorDetails->minInvestment, '' ),
+                $this->exst( $investorDetails->maxInvestment, '' )
+            );
+
+            $rowValues = array(
+                __('Investor profile summary','bidxplugin')   =>  $this->exst ($investorDetails->summary),
+                __('Investor type','bidxplugin')              =>  $this->getStaticVal('investorType', $this->exst ($investorDetails->investorType)),
+                __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', '),
+                __('Institution details','bidxplugin')        =>  $this->exst($investorDetails->institutionName),
+                __('Institution website','bidxplugin')        =>  $this->exst($investorDetails->institutionWebsite),
+                __('Address','bidxplugin')                    =>  $address,
+                __('Industry','bidxplugin')                   =>  $this->getMultiValues($this->exst ($investorDetails->focusIndustry), ', ','industry'),
+                __('Social impact','bidxplugin')              =>  $this->getMultiValues($this->exst ($investorDetails->focusSocialImpact), ', ','socialImpact'),
+                __('Environmental impact','bidxplugin')       =>  $this->getMultiValues($this->exst ($investorDetails->focusEnvImpact), ', ','envImpact'),
+                __('Consumer type','bidxplugin')              =>  $this->getMultiValues($this->exst ($investorDetails->focusConsumerType), ', ','consumerType'),
+                __('Languages','bidxplugin')                  =>  $this->getMultiValues($this->exst ($investorDetails->focusLanguage), ', ','language'),
+                __('Stage of business','bidxplugin')          =>  $this->getMultiValues($this->exst ($investorDetails->focusStageBusiness), ', ','stageBusiness'),
+                __('Gender','bidxplugin')                     =>  $this->getMultiValues($this->exst ($investorDetails->focusGender), ', ','gender'),
+                __('Investment size','bidxplugin')            =>  implode( $investmentSize, ' - ' )
+            );
+            echo $this->pairRows( $rowValues );
+    ?>
+            <h4>Reach</h4>
+    <?php
+
+            $focusReach = $this->exst($investorDetails->focusReach);
+            if ( $this->exst($focusReach->coordinates) && $this->exst($focusReach->coordinates) ) {
+    ?>
+                <div class="row-fluid">
+                    <div class="span6">
+    <?php
+                $mapParams = array(
+                    'center'        => $focusReach->coordinates,
+                    'size'          => '300x300',
+                    'zoom'          => 6,
+                    'sensor'        => 'false'
+                );
+
+                printf(
+                    '<img src="%s?%s" />',
+                    'https://maps.googleapis.com/maps/api/staticmap',
+                    http_build_query( $mapParams )
+                );
+    ?>
+                    </div>
+                </div>
+    <?php
+            }
+
+            $rowValues = array (
+                __('Focus countries','bidxplugin') => $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country'),
+                __('Focus cities','bidxplugin') => $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown'),
+                _x('Other preferences','test','bidxplugin') => $this->exst ($investorDetails->additionalPreferences),
+                __('Number of investments in the last 12 months','bidxplugin') => $this->exst( $investorDetails->numberInvestments ),
+                __('Total investments made in the last 12 months','bidxplugin') => $this->exst( $investorDetails->totalInvestment )
+            );
+            echo $this->pairRows( $rowValues );
+
+            // Previous investments
             //
-            // $rowValues = array (__('Institution website','bidxplugin') => $this->exst($investorDetails->institutionWebsite));
-            // echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+            echo '<h5>' . __('Previous investments','bidxplugin') . '</h5>';
 
-        //}
+            $header = array(
+                __('Name of Company','bidxplugin')           => 'companyName',
+                __('Amount invested','bidxplugin')           => 'investment',
+                __('Investment type','bidxplugin')           => 'investmentType',
+                __('URL of Company website','bidxplugin')    => 'companyWebsite'
+            );
 
-            // Reach
+            echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered' );
+
+            echo $this->getAttachmentsDisplay ('', '', array ('Documents' => $this->exst ($investorDetails->attachment)));
+    ?>
+
+    <?php
+
+
+            // A set of properties is only applicable to any other type than Angel or private
             //
-            // - business says "there are one of three ways to specify reach"
-            // - api says "there are three ways of specifying reach"
+            //if ( $investorType && $investorType != 'AngelInvPrivIndiv' ) {
+
+                // Institution name
+                //
+                // $rowValues = array (__('Institution details','bidxplugin') => $this->exst($investorDetails->institutionName));
+                // echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+
+                // Institution website
+                //
+                // $rowValues = array (__('Institution website','bidxplugin') => $this->exst($investorDetails->institutionWebsite));
+                // echo $this->addRowsWithLabelAdjacent ('span4', 'span8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+
+            //}
+
+                // Reach
+                //
+                // - business says "there are one of three ways to specify reach"
+                // - api says "there are three ways of specifying reach"
+                //
+                // So we have to figure out which type this investor has picked.
+
+                // TODO: list references (personaldetails)
+            // Previous investments
             //
-            // So we have to figure out which type this investor has picked.
+            echo '<h5>' . __('References','bidxplugin') . '</h5>';
 
-            // TODO: list references (personaldetails)
-        // Previous investments
-        //
-        echo '<h5>' . __('References','bidxplugin') . '</h5>';
+            $header = array(
+                __('Name','bidxplugin')                     => 'name',
+                __('Professional title','bidxplugin')       => 'professionalTitle',
+                __('LinkedIn profile','bidxplugin')         => 'linkedIn',
+                __('Email address','bidxplugin')            => 'emailAddress'
+                // __('Landline','bidxplugin')                 => 'contactDetail[0].landLine',
+                // __('Mobile','bidxplugin')                   => 'contactDetail[0].mobile'
+            );
 
-        $header = array(
-            __('Name','bidxplugin')                     => 'name',
-            __('Professional title','bidxplugin')       => 'professionalTitle',
-            __('LinkedIn profile','bidxplugin')         => 'linkedIn',
-            __('Email address','bidxplugin')            => 'emailAddress'
-            // __('Landline','bidxplugin')                 => 'contactDetail[0].landLine',
-            // __('Mobile','bidxplugin')                   => 'contactDetail[0].mobile'
-        );
+            $merge['name'] = array ('firstName', 'lastName');
 
-        $merge['name'] = array ('firstName', 'lastName');
+            echo $this->addTableRows($header, $this->exst( $investorDetails->references ), 'table table-bordered', $merge );
 
-        echo $this->addTableRows($header, $this->exst( $investorDetails->references ), 'table table-bordered', $merge );
+    ?>
+        </div><!-- // details-block of investor -->
+    <?php
+    }
+    ?>
 
-?>
-    </div><!-- // details-block of investor -->
-<?php
-}
-?>
-
-
-
+        </div>
+    </div>
+</div>
 

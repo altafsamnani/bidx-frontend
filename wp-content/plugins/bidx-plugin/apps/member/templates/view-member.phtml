@@ -64,93 +64,105 @@
         }
     }
 ?>
-
-<div class="well profile-block">
-
-    <div class="btn-group controls">
-        <?php if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) ) { ?>
-            <a class="btn btn-primary" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><?php _e('Edit','bidxplugin'); ?></a>
-        <?php } ?>
+<div class="accordion-group accordion-open">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionProfile" href="#accordionMember">
+            <span class="fui-arrow-right accordion-state-icon"></span>
+            <?php _e('Member profile','bidxplugin');?>
+        </a>
     </div>
+    <div id="accordionMember" class="accordion-body collapse in">
+        <div class="accordion-inner">
 
 
-    <div class="row-fluid">
-        <div class="span3">
-            <h4><?php _e('Member','bidxplugin'); ?></h4>
-            <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
-        </div>
-        <div class="span9">
-            <div class="row-fluid">
-                <div class="span12"><h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4></div>
-            </div>
-            <div class="row-fluid">
-                <div class="span12">
-                    <?php echo $professionalTitle; ?>
-                    <?php if ( $isEntrepreneur ) { ?>
-                        &nbsp;<span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
-                    <?php } ?>
-                    <?php if ( $isInvestor ) { ?>
-                        &nbsp;<span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>
-                    <?php } ?>
-                    <?php if ( !$isEntrepreneur || !$isInvestor ) { ?>
-                        &nbsp;<span class="label bidx-label-member"><?php _e('Member', 'bidxplugin') ?></span>
+            <div class="profile-block">
+
+                <div class="btn-group controls">
+                    <?php if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) ) { ?>
+                        <a class="btn btn-primary" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><?php _e('Edit','bidxplugin'); ?></a>
                     <?php } ?>
                 </div>
-            </div>
-            <div class="row-fluid">
-                <div class="span12"> <hr> </div>
-            </div>
-            <div class="row-fluid">
-                <?php
-                    // Fields for left column
-                    $leftCol = array ( $gender, $nationality, $motherlanguage );
-                    echo $this->addMultipleRows('span5', $leftCol);
 
-                    // Fields for right column
-                    $rightCol = array ( $dateofBirth, $highestEducation, $languageDetails, $address );
-                    echo $this->addMultipleRows('span7', $rightCol);
-                ?>
-            </div>
-            <br>
-            <div class="row-fluid">
-                <div class="span8">
-                    <?php
-                        $rowValues = array (__('E-mail','bidxplugin') => $this->exst ($personalDetails->emailAddress));
-                        echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                        $rowValues = array (__('Mobile','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
-                        echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                        $rowValues = array (__('Fax','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
-                        echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                        $rowValues = array (__('Landline','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
-                        echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                    ?>
-                </div>
 
-                    <div class="span4">
-                        <?php
-                            $rowValues1 = array (
-                                __('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
-                                __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
-                            );
-                            if ( $authenticated ) {
-                                $rowValues2 = array (
-                                    __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
-                                    __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
-                                );
-                            }
-                            $rowValues = ( isset( $rowValues2 ) ) ? array_merge( $rowValues1, $rowValues2 ) : $rowValues1;
-                            echo $this->addAdjacentRows ('span3', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'bid-social linkedin' ));
-                        ?>
+                <div class="row-fluid">
+                    <div class="span3">
+                        <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
                     </div>
+                    <div class="span9">
+                        <div class="row-fluid">
+                            <div class="span12"><h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4></div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <?php echo $professionalTitle; ?>
+                                <?php if ( $isEntrepreneur ) { ?>
+                                    &nbsp;<span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
+                                <?php } ?>
+                                <?php if ( $isInvestor ) { ?>
+                                    &nbsp;<span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>
+                                <?php } ?>
+                                <?php if ( !$isEntrepreneur || !$isInvestor ) { ?>
+                                    &nbsp;<span class="label bidx-label-member"><?php _e('Member', 'bidxplugin') ?></span>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12"> <hr> </div>
+                        </div>
+                        <div class="row-fluid">
+                            <?php
+                                // Fields for left column
+                                $leftCol = array ( $gender, $nationality, $motherlanguage );
+                                echo $this->addMultipleRows('span5', $leftCol);
+
+                                // Fields for right column
+                                $rightCol = array ( $dateofBirth, $highestEducation, $languageDetails, $address );
+                                echo $this->addMultipleRows('span7', $rightCol);
+                            ?>
+                        </div>
+                        <br>
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <?php
+                                    $rowValues = array (__('E-mail','bidxplugin') => $this->exst ($personalDetails->emailAddress));
+                                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                                    $rowValues = array (__('Mobile','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
+                                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                                    $rowValues = array (__('Fax','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
+                                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                                    $rowValues = array (__('Landline','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
+                                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                                ?>
+                            </div>
+
+                                <div class="span4">
+                                    <?php
+                                        $rowValues1 = array (
+                                            __('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
+                                            __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
+                                        );
+                                        if ( $authenticated ) {
+                                            $rowValues2 = array (
+                                                __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
+                                                __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
+                                            );
+                                        }
+                                        $rowValues = ( isset( $rowValues2 ) ) ? array_merge( $rowValues1, $rowValues2 ) : $rowValues1;
+                                        echo $this->addAdjacentRows ('span3', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'bid-social linkedin' ));
+                                    ?>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <?php
+            // Attachments
+            //
+                    echo $this->displayAttachments ($header = '<h4>' . __('Documents','bidxplugin') . '<h4>', $this->exst ($personalDetails->attachment));
+                ?>
 
             </div>
         </div>
     </div>
-
-    <?php
-// Attachments
-//
-        echo $this->displayAttachments ($header = '<h4>' . __('Documents','bidxplugin') . '<h4>', $this->exst ($personalDetails->attachment));
-    ?>
-
 </div>

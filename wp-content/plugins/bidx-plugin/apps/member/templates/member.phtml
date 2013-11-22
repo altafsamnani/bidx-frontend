@@ -26,9 +26,11 @@ $entities       = $this->sessionData->data->wp->entities;
 
     <div class="row-fluid mainState mainStateShow">
         <div class="span8">
-            <?php $this->render('view-member.phtml');  ?>
-            <?php $this->render('view-entrepreneur.phtml'); ?>
-            <?php $this->render('view-investor.phtml'); ?>
+            <div class="accordion" id="accordionProfile">
+                <?php $this->render('view-member.phtml');  ?>
+                <?php $this->render('view-entrepreneur.phtml'); ?>
+                <?php $this->render('view-investor.phtml'); ?>
+            </div>
         </div>
         <div class="span4 side-bar well">
 <?php
