@@ -187,7 +187,7 @@
         ,   add: function( e, data )
             {
                 bidx.utils.log( "[fileupload] Add", e, data );
-                debugger;
+
                 var file            = {}
                 ,   originalFiles   = bidx.utils.getValue( data, "originalFiles", true )
                 ;
