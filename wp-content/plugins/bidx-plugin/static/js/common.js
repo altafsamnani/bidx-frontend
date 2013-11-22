@@ -1048,26 +1048,24 @@
     // Usefull for setting icons / colors etc
     //
     $( ".accordion-body.collapse" )
-        .bind( "show", function()
+        .on( "show", function()
         {
             var $accordionBody = $( this );
 
-            $accordionBody.closest( ".accordion-group" ).addClass( "accordion-open" );
+            $accordionBody.closest( ".accordion-group" ).first().addClass( "accordion-open" );
         } )
-        .bind( "hide", function()
+        .on( "hide", function(e)
         {
             var $accordionBody = $( this );
-
-            $accordionBody.closest( ".accordion-group" ).removeClass( "accordion-open" );
-            $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).css({ overflow: 'hidden' });
+            $accordionBody.closest( ".accordion-group" ).first().removeClass( "accordion-open" );
+            $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).first().css({ overflow: 'hidden' });
         } )
-        .bind( "shown", function ()
+        .on( "shown", function ()
         {
             var $accordionBody = $( this );
 
-            $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).css({ overflow: 'visible' });
-        });
-
+            $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).first().css({ overflow: 'visible' });
+        } );
 
 
 } ( jQuery ));
