@@ -1,0 +1,133 @@
+<div id="groupHome" class="outer-content-container mainState mainStateGroupHome">
+    <div class="container">
+<?php
+        echo bidx_get_status_msgs();
+?>
+    </div>
+
+<?php
+    // include the carousel ( id=groupCarousel )
+    //
+    require_once "inc/inc_carousel.phtml";
+?>
+    <div class="container">
+
+        <div class="row-fluid">
+
+            <!-- CONTENT Block -->
+            <div class="span8 contentBlock">
+
+                <section class="views">
+                    <article class="view viewHome">
+                        <!-- NEWS BLOCK -->
+                        <div class="feature-block spacer">
+
+
+                            <div class="feature-block-header bidx-theme-colour-one">
+                                <?php _e('News and Events','bidxtheme')?>
+                                <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
+                            </div>
+                            <div class="feature-block-items">
+                                <div class="bidx-latest clearfix">
+
+                                    <!-- Grab news -->
+                                    <?php echo do_shortcode( '[bidx app="group" view="latest-news"]' ); ?>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BUSINESS BLOCK -->
+                        <div class="feature-block spacer">
+                            <div class="feature-block-header bidx-theme-colour-one">
+                                <?php _e('New Business Summaries','bidxtheme')?>
+                                <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
+                            </div>
+                            <div class="feature-block-items">
+                                <div class="bidx-latest clearfix">
+                                <!-- Grab latests members -->
+                                    <?php echo do_shortcode( '[bidx app="group" view="latest-business-summaries"]' ); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MEMBERS BLOCK -->
+                        <div class="feature-block spacer">
+                            <div class="feature-block-header bidx-theme-colour-one">
+                                <?php _e('New members in the group','bidxtheme')?>
+                                <span class="pull-right"><a href="#home/members"><?php _e('view all','bidxtheme')?></a></span>
+                            </div>
+                            <div class="feature-block-items">
+                                <div class="bidx-latest clearfix">
+                                <!-- Grab latests members -->
+                                <?php echo do_shortcode( '[bidx app="group" view="last-members" authenticated="true"]' ); ?>
+                                </div>
+
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="view viewBusinessummaries">
+                        <h1>Businesssummaries</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, necessitatibus, sed, obcaecati, incidunt deleniti a unde officia quos debitis deserunt voluptatem culpa quidem totam illum voluptates aspernatur explicabo corrupti ipsam.
+                        </p>
+                    </article>
+
+                    <article class="view viewMembers">
+                        <h1>Members</h1>
+                        <div class="memberList">
+
+                        </div>
+                    </article>
+                </section>
+
+            </div>
+
+
+            <!-- SIDE BAR -->
+            <div class="span4 side-bar well sideBar">
+                <div class="row-fluid">
+                    <div class="span12">
+
+                        <h2><?php _e('Create and grow', 'bidxtheme')?></h2>
+<?php
+                            echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
+                            echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
+?>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="snippets hide">
+
+        <!-- member Snippit -->
+        <div class="snippet" data-key="member">
+            <div class="span12 clearfix well">
+                <a href="/member/1441">
+                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                </a>
+                <div>
+                    <div>
+                        <a href="/member/%memberId%">%firstName% %lastName%</a>
+                    </div>
+                    <div>%country%</div>
+                    <div>
+                        %roles%
+                        <span class="label bidx-label-%value%">%value%</span>
+                        %/roles%
+                    </div>
+                    <div><a href="/mail/#mail/contacts/action=connect&id=%memberId%">Connect</a></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -316,11 +316,28 @@
 
         ,   'dashboard(/:state)(*splat)':                       'dashboard'
 
+        ,   'home(/:section)':                                  'groupHome'
         ,   'cancel(/*splat)':                                  'showCancel'
         ,   '*path':                                            'show'
 
         }
 
+    ,   groupHome:                   function( section )
+        {
+            bidx.utils.log( "AppRouter::group Home loaded", section );
+
+            mainState   = "groupHome";
+
+            _navigateToApp
+            (
+                "group"
+            ,   {
+                    requestedState: "home"
+                ,   section:        section
+                }
+            );
+
+        }
     ,   editMember:             function( id, section )
         {
 

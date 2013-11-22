@@ -14,7 +14,7 @@
  */
 class group {
 
-	static $deps = array('jquery', 'bootstrap',  'bidx-location', 'bidx-utils', 'bidx-form', 'bidx-api-core');
+	static $deps = array('jquery', 'bootstrap',  'bidx-location', 'bidx-utils', 'bidx-api-core', 'member');
 
 	/**
 	 * Constructor
@@ -54,32 +54,56 @@ class group {
 				$view->span = isset($atts["span"]) ? $atts["span"] : "";
 				$view->summaries = $groupSvc->getLatestBusinessSummaries();
 				return $view->render( 'latest-business-summaries.phtml' );
+				break;
 			case "last-members":
 
 				$view->span 			= isset( $atts[ "span" ] ) ? $atts[ "span" ] : "";
 				$view->authenticated 	= isset( $atts[ "authenticated" ] ) ? $atts[ "authenticated" ] : "";
 				$view->members 			= $groupSvc->getLatestMembers(  );
 				return $view->render( 'last-members.phtml' );
-
+				break;
 			case "latest-news" :
 				$view->span = isset($atts["span"]) ? $atts["span"] : "";
 				return $view->render( 'latest-news.phtml' );
+				break;
 			case "list-groups" :
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-list.phtml' );
+				break;
 			case "group-intro" :
 				$view->group = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-intro.phtml' );
+				break;
 			case "join-group":
 				return $view->render( 'group-join.phtml' );
+				break;
 			case "group-header" :
         		$groupSvc->isRedirectCheck = false;
 				$view->group = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-header.phtml' );
+				break;
 			case "profile-dropDown" :
 				return $view->render( 'profile-dropdown.phtml' );
+				break;
 			case "navbar" :
 				return $view->render( 'navbar.phtml' );
+				break;
+			case "home" :
+
+				$sessionData    = BidxCommon::$staticSession;
+    			$entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
+    			$authenticated=false;
+    			if ( $sessionData->authenticated == 'true' ) {
+        			$authenticated=true;
+    			}
+
+    			if ( $authenticated ) {
+					return $view->render( 'group-home-private.phtml' );
+    			} else {
+					return $view->render( 'group-home-public.phtml' );
+    			}
+    			break;
+
 			default :
 				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-list.phtml' );

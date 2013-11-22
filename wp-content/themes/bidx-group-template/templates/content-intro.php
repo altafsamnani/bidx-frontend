@@ -1,5 +1,15 @@
 <?php
 
+    // for now a shortcode call in the template. will be replaced to page.xml asap
+    echo do_shortcode( '[bidx app="group" view="home"]' );
+?>
+
+
+<?php
+
+    return;
+    // to be removed, replaced, moved whateva..when I am ready refactoring
+
     $sessionData    = BidxCommon::$staticSession;
     $entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
 
@@ -10,7 +20,6 @@
 
 
 /*    $entrepreneurDetails = isset($this->data->bidxEntrepreneurProfile) ? $this->data->bidxEntrepreneurProfile : NULL ;
-
 
 $entrepreneurBidxMeta = isset( $entrepreneurDetails->bidxMeta )
     ? $entrepreneurDetails->bidxMeta
@@ -254,10 +263,10 @@ $businessSummaryBidxMeta = isset( $businessSummary->bidxMeta )
 <!--
                         <div class="call-to-action transparent clearfix">
                             <div class="pull-left">
-                                <a href=""><?php// _e('Create a group', 'bidxtheme')?></a>
+                                <a href=""><?php // _e('Create a group', 'bidxtheme'); ?></a>
                             </div>
                             <div class="pull-right">
-                                <a href=""><?php// _e('Search for other groups', 'bidxtheme')?></a>
+                                <a href=""><?php // _e('Search for other groups', 'bidxtheme'); ?></a>
                             </div>
                         </div>
  -->
