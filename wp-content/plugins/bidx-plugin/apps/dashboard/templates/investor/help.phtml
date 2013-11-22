@@ -23,7 +23,7 @@
              <div>
                 If you want to update your preferences, you can easily do that from your dashboard. Specify different preferences to get new opportunities.
              </div>
-             <div class="pull-right"><div><a href="/member?redirect_to=investor-dashboard#editInvestor/<?php echo $this->exst ($this->sessionData->data->id); ?>/investmentPreferences">Go to investment preferences</a> </div></div>
+             <div class="pull-right"><div><a class="btn" href="/member?redirect_to=investor-dashboard#editInvestor/<?php echo $this->exst ($this->sessionData->data->id); ?>/investmentPreferences">Go to investment preferences</a> </div></div>
          </div>
          <!-- 2. Keep up with new plans -->
         <div class="span6">
@@ -31,7 +31,7 @@
             <div>
                bidX finds  your best suited plans as soon as these are published. We match your investor profile date with that of new businesses. The section Recommended plans in your dashboard lists the plans that could be interesting for you.
             </div>
-            <div class="pull-right"><div><a href="#dashboard/investor/recommended-plans">Go to recommended plans</a> </div></div>
+            <div class="pull-right"><div><a class="btn" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-RecommendedBusiness">Go to recommended plans</a> </div></div>
         </div>
     </div>
 
@@ -43,7 +43,7 @@
             <div>
                 We will also send you weekly updates to your inbox. These messages contain the list of businesses that have been published during the last seven days.  If during your registration you accepted that we could send you emails to your personal inbox, you will receive those alerts there too. If you didn’t do so during your registration, but you would like to receive them now, you can change that setting at your Account Settings
            </div>
-           <div class="pull-right"><div><a href="/mail#mail">Go to inbox</a> </div></div>
+           <div class="pull-right"><div><a class="btn" href="/mail#mail">Go to inbox</a> </div></div>
         </div>
     <!-- 4. One click, one contact -->
         <div class="span6">
@@ -51,7 +51,7 @@
              <div>
                Invite other members to become your contacts and grow your own network. Click on the Contact link at the member profiles and an invitation to become a contact will be send to them.
             </div>
-            <div class="pull-right"><div><a href="/mail/#mail/contacts">Go to contacts</a> </div></div>
+            <div class="pull-right"><div><a class="btn" href="/mail/#mail/contacts">Go to contacts</a> </div></div>
         </div>
 
     </div>
@@ -63,7 +63,7 @@
             <div>
               If you see a business that you are interested about, you can request the entrepreneur to grant you access to view full data of the business. This will enclose full business and financial plan as well as the CV of the entrepreneur.  Click the link Request access that you will see on the business page. A message will be sent to the entrepreneur with your request. Plans you have requested access to will be listed in the section Contacted businesses in your dashboard
            </div>
-           <div class="pull-right"><div><a href="#dashboard/investor/businesses-contacted">Go to contacted businesses</a> </div></div>
+           <div class="pull-right"><div><a class="btn" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-BusinessesContacted">Go to contacted businesses</a> </div></div>
         </div>
     <!-- 6. Contact your group moderator    -->
         <div class="span6">
@@ -71,7 +71,7 @@
             <div>
               For any additional questions over this group, functionalities, problems or suggestions, please contact your group moderator. He or she will be delighted to help you. If you encounter a problem with the platform, the group moderator will forward it to the bidX technical support.
            </div>
-           <div class="pull-right"><div><a href="/mail#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a> </div></div>
+           <div class="pull-right"><div><a class="btn" href="/mail#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a> </div></div>
         </div>
 
     </div>
