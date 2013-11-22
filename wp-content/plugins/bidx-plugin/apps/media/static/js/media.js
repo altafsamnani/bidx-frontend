@@ -187,7 +187,7 @@
         ,   add: function( e, data )
             {
                 bidx.utils.log( "[fileupload] Add", e, data );
-
+                debugger;
                 var file            = {}
                 ,   originalFiles   = bidx.utils.getValue( data, "originalFiles", true )
                 ;
@@ -535,7 +535,12 @@
             $container.find( ".documentImage"   ).attr( "src",      imageSrc );
             $container.find( ".documentLink"    ).attr( "href",     file.document );
 
-            $container.find( ".btnEdit"         ).attr( "href",     "#media/edit/" + file.bidxMeta.bidxUploadId );
+            // #msp Temporary fix: file.bidxMeta.bidxUploadId was not available in initial upload. Symptom fix
+            //
+            if ( file.bidxMeta && file.bidxMeta.bidxUploadId )
+            {
+                $container.find( ".btnEdit"         ).attr( "href",     "#media/edit/" + file.bidxMeta.bidxUploadId );
+            }
         }
     }
 
