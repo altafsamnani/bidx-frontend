@@ -2041,115 +2041,48 @@ function alter_site_menu ()
 
             /* Dashboard GroupAdmin/GroupOwner Menus */
             if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles)) {
-                add_menu_page ('Invite', 'Invite members', 'edit_theme_options', 'invite', 'bidx_dashboard_invite');
-                add_menu_page ('Monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
-                add_menu_page ('Getting Started', 'Getting Started', 'edit_theme_options', 'gettingstarted', 'bidx_getting_started');
-                add_menu_page ('Support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
-                add_menu_page ('Group Settings', 'Group Settings', 'edit_theme_options', 'groupsettings', 'bidx_group_settings');
+                add_menu_page ('invite-members', 'Invite members', 'edit_theme_options', 'invite-members', 'bidx_dashboard_invite');
+                add_menu_page ('monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
+                add_menu_page ('getting-started', 'Getting Started', 'edit_theme_options', 'getting-started', 'bidx_getting_started');
+                //add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
+               // add_menu_page ('Group Settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
             }
         }
     }
     add_filter ('admin_footer_text', 'remove_footer_admin');
 }
 
-/* Load Group Owner/Admin Dashboard Widget Css Scripts
- * @author Altaf Samnani
- * @version 1.0
- *
- */
-add_action ('admin_enqueue_scripts', 'bidx_dashboard_header');
 
-function bidx_dashboard_header ()
-{
-    $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
-    $currentUser = wp_get_current_user ();
 
-    if (in_array (WP_ADMIN_ROLE, $currentUser->roles) || in_array (WP_OWNER_ROLE, $currentUser->roles) ) {
-        roots_scripts ();
-        $menu = 'dashboard';
-
-        switch ($menuTitle) {
-
-            case 'monitoring':
-                /* Style */
-                wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
-                wp_enqueue_style ('mail');
-
-                /* Script */
-                $mailDepArr = array ('bidx-form', 'bidx-tagsinput','bootstrap-paginator', 'bidx-delaykeyup','bidx-common', 'bidx-i18n', 'jquery-validation',
-                  'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
-                wp_register_script ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/dashboard.js', $mailDepArr, '20130715', TRUE);
-                wp_enqueue_script ('group-admin');
-                break;
-
-            case 'invite':
-                /* Style */
-                wp_register_style ('group-admin', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/dashboard.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
-                wp_enqueue_style ('group-admin');
-                break;
-
-            case 'support':
-                /* Style */
-                wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
-                wp_enqueue_style ('mail');
-
-                /* Script */
-                $mailDepArr = array ('bidx-form', 'bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-                  'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
-                wp_register_script ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/js/mail.js', $mailDepArr, '20130715', TRUE);
-                wp_enqueue_script ('mail');
-                break;
-
-            case 'groupsettings' :
-                /* Style */
-                wp_register_style ('group', '/wp-content/plugins/bidx-plugin/apps/group/static/css/group.css', array (), '20130501', 'all');
-                wp_enqueue_style ('group');
-
-                /* Script */
-                $groupDepArr = array ('jquery', 'bootstrap', 'bidx-location', 'bidx-utils', 'bidx-form', 'bidx-api-core');
-                wp_register_script ('group', '/wp-content/plugins/bidx-plugin/apps/group/static/js/group.js', $groupDepArr, '20130501', TRUE);
-                wp_enqueue_script ('group');
-
-                $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                  'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-location');
-                wp_register_script ('company', '/wp-content/plugins/bidx-plugin/apps/company/static/js/company.js', $companyDepArr, '20130501', TRUE);
-                wp_enqueue_script ('company');
-
-                break;
-        }
-    }
-    wp_enqueue_style ('bidx-admin-theme', get_bloginfo ('template_url') . '/wp-admin.css');
-}
-
-add_action ('admin_footer', 'bidx_dashboard_footer');
-
-function bidx_dashboard_footer ()
-{
-
-    $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
-
-    $bidxCommonObj = new BidxCommon();
-    $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ('dashboard'), $static = false, $i18nGlobal = false);
-    // 1. I18n  & Global Data
-    wp_localize_script ('bidx-data', '__bidxI18nPreload', $appTranslationsArr['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
-    switch ($menuTitle) {
-
-        case 'monitoring':
-            wp_print_scripts ('group-admin');
-            break;
-        case 'support':
-            wp_print_scripts ('mail');
-            break;
-        case 'groupsettings':
-            wp_print_scripts ('group');
-            break;
-    }
-}
+//add_action ('admin_footer', 'bidx_dashboard_footer');
+//
+//function bidx_dashboard_footer ()
+//{
+//
+//    $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
+//
+//    $bidxCommonObj = new BidxCommon();
+//    $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ('dashboard'), $static = false, $i18nGlobal = false);
+//    // 1. I18n  & Global Data
+//    wp_localize_script ('bidx-data', '__bidxI18nPreload', $appTranslationsArr['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+//    switch ($menuTitle) {
+//
+//        case 'monitoring':
+//            wp_print_scripts ('group-admin');
+//            break;
+//        case 'support':
+//            wp_print_scripts ('mail');
+//            break;
+//        case 'groupsettings':
+//            wp_print_scripts ('group');
+//            break;
+//    }
+//}
 
 function bidx_dashboard_invite ()
 {
 
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='invite']");
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='invite-members']");
 }
 
 /* Create the function to output the contents of our Dashboard Widget.
@@ -2173,7 +2106,7 @@ function bidx_dashboard_monitoring ()
 function bidx_getting_started ()
 {
     //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='gettingstarted']");
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='getting-started']");
 }
 
 /* Create the function to output the contents of our Dashboard Widget.
@@ -2197,7 +2130,7 @@ function bidx_dashboard_support ()
 function bidx_group_settings ()
 {
     //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='groupsettings']");
+    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='group-settings']");
 }
 
 add_action ('wp_ajax_nopriv_bidx_set_option', 'bidx_set_option');

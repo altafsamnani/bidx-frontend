@@ -35,6 +35,7 @@ class BidxShortcode
         add_action ('init', array (&$this, 'register_script'));
         add_action ('admin_init', array (&$this, 'register_script'));
         add_action ('wp_footer', array (&$this, 'print_script'));
+        add_action ('admin_footer', array (&$this, 'bidx_dashboard_footer'));
         Logger :: getLogger ('shortcode')->trace ('Ready constructing bidx shortcode instance');
     }
 
@@ -216,6 +217,23 @@ class BidxShortcode
                 wp_print_scripts ($scriptVal);
             }
         }
+    }
+
+    function bidx_dashboard_footer ()
+    {
+
+        $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
+        $dashboardPages =  array ( 'monitoring', 'support', 'group-settings' );
+
+        $bidxCommonObj = new BidxCommon();
+        $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ('dashboard'), $static = false, $i18nGlobal = false);
+        // 1. I18n  & Global Data
+        wp_localize_script ('bidx-data', '__bidxI18nPreload', $appTranslationsArr['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+
+        if(in_array($menuTitle, $dashboardPages)) {
+            wp_print_scripts ($menuTitle);
+        }
+
     }
 
 }
