@@ -1,89 +1,92 @@
 <div id="entrepreneur-dashboard">
-<?php //echo $this->createLeftMenu('span2 menu', array('#dashboard/entrepreneur' => 'Dashboard' ,'#dashboard/help' => 'Help')); ?>
+    <div>
+        <h1 class="pagetitle">My entrepreneur dashboard</h1>
+        <div class="row-fluid dashboard">
 
-<div>
-    <h1 class="pagetitle">My entrepreneur dashboard</h1>
-    <div class="row-fluid dashboard">
-        <div class="accordion" id="entrepreneurDashboardAccordion">
-            <!-- Help -->
-             <div class="accordion-group <?php echo ($this->startingPage) ? 'accordion-open': '';?>">
-                <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Help"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
-                </div>
-                <div id="entrepreneurDashboardAccordion-Help" class="accordion-body collapse <?php echo ($this->startingPage) ? 'in': '';?>">
-                    <div class="accordion-inner">
-                       <?php $this->render('entrepreneur/help.phtml'); ?>
-                    </div>
-               </div>
-            </div>
-         </div>
-        <div class="view viewLoad"><?php _e ('Loading businesses ...', 'bidxplugin') ?></div>
-        <div class="view viewError">
+            <div class="view viewError">
                 <h1><?php _e('Error','bidxplugin')?></h1>
                 <span class="errorMsg"></span>
-        </div>
-        <div class="view viewBusiness">
-            <div class="row-fluid ">
+            </div>
 
-                <div class="span12 well">
-                    <h2>Business</h2>
-                    <p>Here you can see the businesses you have created some details about them.</p>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Industry</th>
-                                <th class="hidden-phone">Location</th>
-                                <th class="hidden-phone">Finance needed</th>
-                                <th class="hidden-phone">Year sales started</th>
-                                <th>Status</th>
-                                <th class="hidden-phone">Last update</th>
-                            </tr>
-                        </thead>
-                        <tbody class="business entrepreneur-business">
-                        <div class="pull-left">
-                            <?php //_e ('Loading...', 'bidxplugin') ?>
+            <div class="accordion" id="entrepreneurDashboardAccordion">
+                <!-- Help -->
+                 <div class="accordion-group <?php echo ($this->startingPage) ? 'accordion-open': '';?>">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Help"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
+                    </div>
+                    <div id="entrepreneurDashboardAccordion-Help" class="accordion-body collapse <?php echo ($this->startingPage) ? 'in': '';?>">
+                        <div class="accordion-inner">
+                           <?php $this->render('entrepreneur/help.phtml'); ?>
                         </div>
-                        </tbody>
-                    </table>
+                   </div>
+                </div>
+
+                <div class="view viewLoad"><?php _e ('Loading businesses ...', 'bidxplugin') ?></div>
+
+                <div class="accordion-group accordion-open view viewBusiness">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Business"><span class="fui-arrow-right accordion-state-icon"></span> Business</a>
+                    </div>
+                    <div id="entrepreneurDashboardAccordion-Business" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <p>Here you can see the businesses you have created some details about them.</p>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Industry</th>
+                                        <th class="hidden-phone">Location</th>
+                                        <th class="hidden-phone">Finance needed</th>
+                                        <th class="hidden-phone">Year sales started</th>
+                                        <th>Status</th>
+                                        <th class="hidden-phone">Last update</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="business entrepreneur-business">
+                                    <div class="pull-left">
+                                        <?php //_e ('Loading...', 'bidxplugin') ?>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view viewLoadinvestors"><?php _e ('Loading investors ...', 'bidxplugin') ?></div>
+
+                <div class="accordion-group view viewInvestors">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Investors"><span class="fui-arrow-right accordion-state-icon"></span> Interested investors</a>
+                    </div>
+                    <div id="entrepreneurDashboardAccordion-Investors" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <p></p>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Send a message</th>
+                                        <th>Investor</th>
+                                        <th>Interested in</th>
+                                        <th class="hidden-phone">Location</th>
+                                        <th class="hidden-phone">Type of Investor</th>
+                                        <th class="hidden-phone">Type of Investment</th>
+                                        <th class="hidden-phone">Request status</th>
+                                        <th class="hidden-phone">Last time viewed plan</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="investors entrepreneur-investors">
+                                    <div class="pull-left">
+                                        <?php// _e ('Loading...', 'bidxplugin') ?>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="view viewLoadinvestors"><?php _e ('Loading investors ...', 'bidxplugin') ?></div>
-        <div class="view viewInvestors">
-            <div class="row-fluid">
-
-                <div class="span12 well">
-                    <h2>Interested investors</h2>
-                    <p></p>
-                    <table class="table table-striped table-hover">
-                        <thead>
-
-                            <tr>
-                                <th>Send a message</th>
-                                <th>Investor</th>
-                                <th>Interested in</th>
-                                <th class="hidden-phone">Location</th>
-                                <th class="hidden-phone">Type of Investor</th>
-                                <th class="hidden-phone">Type of Investment</th>
-                                <th class="hidden-phone">Request status</th>
-                                <th class="hidden-phone">Last time viewed plan</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="investors entrepreneur-investors">
-                        <div class="pull-left">
-                            <?php// _e ('Loading...', 'bidxplugin') ?>
-                        </div>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
-  </div>
-</div>
+    </div>
 </div>
 
 <script type="text/html" id="entrepreneur-investorsitem">
