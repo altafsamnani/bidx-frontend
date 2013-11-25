@@ -15,6 +15,7 @@
     ,   state
     ,   snippets        = {}
     ,   memberOffset    = 0
+
     ,   $unreadCount    = $navbar.find( ".iconbar-unread" )
     ;
 
@@ -82,41 +83,59 @@
                     extraUrlParameters:
                     [
                         {
-                            label:      "sort",
-                            value:      "created"
+                            label:      "sort"
+                        ,   value:      "lastname"
                         }
                     ,   {
-                            label:      "order",
-                            value:      "desc"
+                            label:      "order"
+                        ,   value:      "desc"
                         }
                     ,   {
-                            label:      "limit",
-                            value:      MEMBERPAGESIZE
+                            label:      "limit"
+                        ,   value:      MEMBERPAGESIZE
                         }
                     ,   {
-                            label:      "offset",
-                            value:      memberOffset
+                            label:      "offset"
+                        ,   value:      memberOffset
                         }
                     ]
                 ,   groupDomain:              bidx.common.groupDomain
 
                 ,   success: function( response )
                     {
-
+                        var items = [];
                         bidx.utils.log("[members] retrieved members ", response );
                         if ( response )
                         {
-                            $.each( response, function( idx, item )
+                            $.each( response, function( idx, member )
                             {
-                                var $item = snippets.$member.clone();
-                                $memberList.append( $item );
+                                var $item;
+
+                                if ( member.personalDetails )
+                                {
+                                    // create clone of snippet
+                                    //
+                                    $item = snippets.$member.clone();
+
+
+                                    //
+                                    $item.find( "date-role='memberLink" ).text( bidx.utils.getValue( member, "personalDetails.firstname" ) );
+
+
+                                    items.push( $item );
+                                }
+
                             } );
+                            // add snippets to DOM list
+                            //
+                            $memberList.append( items );
                         }
 
                         // execute cb function
                         //
                         if( $.isFunction( cb ) )
                         {
+
                             cb();
                         }
 
@@ -165,7 +184,7 @@
                 // hide the carousel
                 //
                 $carousel.hide();
-
+                _showView( "load" );
                 // load members
                 //
                 _loadMembers( function()
@@ -182,13 +201,13 @@
                 $carousel.show();
 
                 _showView( "home" );
-            break;
         }
     }
 
     function reset()
     {
-
+        debugger;
+        navigate({});
         state = null;
     }
 
@@ -197,6 +216,7 @@
     var group =
     {
         navigate:               navigate
+    ,   reset:                  reset
     ,   $element:               $element
     };
 
@@ -210,9 +230,11 @@
 
     oneTimeSetup();
 
-    /*if ( window.location.hash === "" )
+    // if hash is empty and there is not path in the uri, load #home
+    //
+    if ( window.location.hash === "" && window.location.pathname === "/" )
     {
-        window.location.hash = "home";
-    }*/
+      //  window.location.hash = "home";
+    }
 
 } ( jQuery ));

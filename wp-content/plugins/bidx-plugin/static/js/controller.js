@@ -326,7 +326,7 @@
         {
             bidx.utils.log( "AppRouter::group Home loaded", section );
 
-            mainState   = "show";
+            mainState   = "groupHome";
 
             _navigateToApp
             (
@@ -718,7 +718,7 @@
                     app.reset();
                 }
 
-                if ( $element )
+                if ( $element && !$element.hasClass( "mainStateShow" ) )
                 {
                     $element.hide();
                 }
