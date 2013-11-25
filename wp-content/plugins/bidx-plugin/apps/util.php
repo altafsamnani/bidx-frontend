@@ -119,10 +119,10 @@ $logAppenders = array();
 //
 if (WP_DEBUG) {
 	$log_file_name = BIDX_PLUGIN_DIR . '/plugin_debug.log';
-	$level = 'ERROR';
+	$level = 'TRACE';
 } else {
 	$log_file_name = BIDX_PLUGIN_DIR . '/var/log/bidx/plugin_debug.log';
-	$level = 'TRACE';
+	$level = 'ERROR';
 }
 
 $logAppenders[ 'file' ] = array(
