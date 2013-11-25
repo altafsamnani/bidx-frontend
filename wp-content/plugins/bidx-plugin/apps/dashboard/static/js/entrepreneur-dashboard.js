@@ -244,7 +244,7 @@
               if( item.hasOwnProperty(clsKey)) {
                      bidx.data.getItem(item[clsKey], clsVal, function(err, label)
                         {
-                           textVal = ($.isArray(item[clsKey])) ?  label.join(',&nbsp;'): label;
+                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;
 
                         });
 
