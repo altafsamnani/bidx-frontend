@@ -145,7 +145,7 @@ if ($investorDetails &&
                 __('URL of Company website','bidxplugin')    => 'companyWebsite'
             );
 
-            echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered' );
+            echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered', '', array('investmentType' => 'hidden-phone', 'companyWebsite' => 'hidden-phone') );
 
             echo $this->getAttachmentsDisplay ('', '', array ('Documents' => $this->exst ($investorDetails->attachment)));
     ?>
@@ -192,7 +192,7 @@ if ($investorDetails &&
 
             $merge['name'] = array ('firstName', 'lastName');
 
-            echo $this->addTableRows($header, $this->exst( $investorDetails->references ), 'table table-bordered', $merge );
+            echo $this->addTableRows($header, $this->exst( $investorDetails->references ), 'table table-bordered', $merge, array('linkedIn' => 'hidden-phone', 'emailAddress' => 'hidden-phone') );
 
     ?>
         </div><!-- // details-block of investor -->
