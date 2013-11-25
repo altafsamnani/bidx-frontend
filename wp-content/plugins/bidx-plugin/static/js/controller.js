@@ -326,7 +326,7 @@
         {
             bidx.utils.log( "AppRouter::group Home loaded", section );
 
-            mainState   = "groupHome";
+            mainState   = "show";
 
             _navigateToApp
             (

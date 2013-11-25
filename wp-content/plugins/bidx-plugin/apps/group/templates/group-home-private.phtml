@@ -1,4 +1,4 @@
-<div id="groupHome" class="outer-content-container mainState mainStateGroupHome">
+<div id="groupHome" class="outer-content-container mainState mainStateShow">
     <div class="container">
 <?php
         echo bidx_get_status_msgs();
@@ -18,7 +18,10 @@
             <div class="span8 contentBlock">
 
                 <section class="views">
-                    <article class="view viewHome">
+
+                    <article class="view viewLoad"><?php _e('Loading...','bidxplugin')?></article>
+
+                    <article class="view viewHome viewInitial">
                         <!-- NEWS BLOCK -->
                         <div class="feature-block spacer">
 
@@ -112,17 +115,17 @@
         <div class="snippet" data-key="member">
             <div class="span12 clearfix well">
                 <a href="/member/1441">
-                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">
+                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" class="img-circle">
                 </a>
                 <div>
                     <div>
-                        <a href="/member/%memberId%">%firstName% %lastName%</a>
+                        <a href="/member/%memberId%" class="firstname lastname">%firstName% %lastName%</a>
                     </div>
                     <div>%country%</div>
                     <div>
-                        %roles%
+                        %it:roles%
                         <span class="label bidx-label-%value%">%value%</span>
-                        %/roles%
+                        %it:roles%
                     </div>
                     <div><a href="/mail/#mail/contacts/action=connect&id=%memberId%">Connect</a></div>
                 </div>
