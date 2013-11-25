@@ -9,7 +9,7 @@
 class dashboard
 {
 
-    static $deps = array ('bidx-form', 'bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
+    static $deps = array ('bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
       'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
     /**
@@ -53,7 +53,7 @@ class dashboard
                 case 'monitoring':
                     roots_scripts();
 
-                    $mailDepArr = array ('bidx-form', 'bidx-tagsinput','bootstrap-paginator', 'bidx-delaykeyup','bidx-common', 'bidx-i18n', 'jquery-validation',
+                    $mailDepArr = array ('bidx-tagsinput','bootstrap-paginator', 'bidx-delaykeyup','bidx-common', 'bidx-i18n', 'jquery-validation',
                       'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
                     /* Style */
@@ -84,7 +84,7 @@ class dashboard
 
                 //Will be working on this
                 case 'support':
-                    $mailDepArr = array ('bidx-form', 'bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
+                    $mailDepArr = array ('bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
                       'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
                     /* Style */
@@ -98,9 +98,9 @@ class dashboard
                     break;
 
                 case 'group-settings' :
-                    $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                    $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
                       'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-location');
-                    $groupDepArr = array ('jquery', 'bootstrap', 'bidx-location', 'bidx-utils', 'bidx-form', 'bidx-api-core','company');
+                    $groupDepArr = array ('jquery', 'bootstrap', 'bidx-location', 'bidx-utils', 'bidx-api-core','company');
 
                     /* Style */
                     wp_register_style ('group', '/wp-content/plugins/bidx-plugin/apps/group/static/css/group.css', array (), '20130501', 'all');

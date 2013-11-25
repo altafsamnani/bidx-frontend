@@ -1,6 +1,3 @@
-<?php
-	wp_enqueue_script( 'bidx-form' );
-?>
 <div class="block-odd">
 	<div class="container">
 

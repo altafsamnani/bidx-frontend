@@ -16,7 +16,7 @@
  */
 class search {
 	// dependencies : should be centralized!
-	static $deps = array('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-form', 'bidx-utils', 'bidx-api-core');
+	static $deps = array('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core');
 
 	/**
 	 * Constructor
@@ -50,26 +50,26 @@ class search {
 		// 2. Server side rendering anonymous
 		require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
 		$service = new SearchService( );
-		
+
 		if ( key_exists( 'q', $atts ) ) {
 			$view -> query = $service -> cookQuery( $atts );
 		} else if ( $_REQUEST['q'] != null ) {
 			$view -> query = $service -> cookQuery( );
 		}
 		$view -> results = $service -> getSearchResults( $view -> query );
-		
-		
+
+
 		// 3. Parse data for preparsing for presentations
 		if ( !property_exists( $view -> results, 'data' ) ) {
 			$data = array( 'numFound' => 0, 'error' => 'Communication failure' );
 			$view -> results -> data = $data;
 		}
-		
+
 		$rows = 10;
 		if ( key_exists( 'rows', $view -> query ) ) {
 			$rows = $view -> rows;
 		}
-		
+
 		// 4. navigation previous
 		if ( key_exists( 'start', $view -> query ) ) {
 			if ( $view -> query['start'] > 0 ) {
@@ -91,7 +91,7 @@ class search {
 			$view -> nextLink = BidxCommon:: buildHTTPQuery( $nextParam );
 			Logger :: getLogger( 'search' ) -> trace( 'nextLink : ' . $view -> nextLink );
 		}
-		
+
 		// 6. Determine the view needed
 		if ( key_exists( 'view', $atts ) ) {
 			$command = $atts['view'];
@@ -99,8 +99,8 @@ class search {
 			$command = 'listView';
 		}
 
-		return $view->render( $command.'.phtml' );	
+		return $view->render( $command.'.phtml' );
 	}
-	
+
 }
 ?>

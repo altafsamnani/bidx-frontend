@@ -15,7 +15,7 @@ class login {
      * Also registers the scripts for login.
      */
 
-    static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-form', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+    static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
                         'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
 
@@ -48,7 +48,7 @@ class login {
         $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/login/templates/' );
         // 2. Determine the view needed
 
-        
+
 
         $render    = array_key_exists( 'view', $atts ) ? $atts['view'] : "login";
         $view->showLink = (isset($atts['link'])) ? $atts['link'] : "true";
