@@ -336,15 +336,10 @@ class BidxCommon
 
                     $businessSummaryId = ( $hostAddress[2] )
                         ? $hostAddress[2]
-                        : ( isset( $jsSessionData->data->wp->entities->bidxBusinessSummary ) ? $jsSessionData->data->wp->entities->bidxBusinessSummary : NULL );
+                        : null;
 
                     if ($businessSummaryId) {
-                        $data->businessSummaryId = $businessSummaryId;
-                        $data->bidxGroupDomain = (!empty ($jsSessionData->bidxGroupDomain)) ? $jsSessionData->bidxGroupDomain : NULL;
-                        $this::$bidxSession[$subDomain]->businessSummaryId = $businessSummaryId;
-                    } else {
-                        $redirect = 'auth'; //To redirect /member and not loggedin page to /login
-                        $statusMsgId = 1;
+                        $this::$bidxSession[$subDomain]->requestedBusinessSummaryId = $businessSummaryId;
                     }
 
                     break;

@@ -46,8 +46,8 @@ class businesssummary
         $businessSummaryId = null;
         if (isset ($atts) && isset ($atts['id'])) {
             $businessSummaryId = $atts['id'];
-        } else if (isset ($sessionData->businessSummaryId)) {
-            $businessSummaryId = $sessionData->businessSummaryId;
+        } else if (isset ($sessionData->requestedBusinessSummaryId)) {
+            $businessSummaryId = $sessionData->requestedBusinessSummaryId;
         }
 
         if ( !is_null( $businessSummaryId )) {
