@@ -1,14 +1,17 @@
-
 <?php
-    $images = get_children(
-        array(
-        'post_parent' => $post->ID,
-        'post_status' => 'inherit',
-        'post_type' => 'attachment',
-        'post_mime_type' => 'image',
-        'order' => 'ASC',
-        'orderby' => 'menu_order' )
-    );
+    $images = array();
+
+    if ( isset( $post )) {
+        $images = get_children(
+            array(
+            'post_parent' => $post->ID,
+            'post_status' => 'inherit',
+            'post_type' => 'attachment',
+            'post_mime_type' => 'image',
+            'order' => 'ASC',
+            'orderby' => 'menu_order' )
+        );
+    }
 
     if ( count( $images ) > 0 ) {
 ?>
