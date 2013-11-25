@@ -1,10 +1,11 @@
-<!-- include head tag -->
-<?php get_template_part('templates/head'); ?>
 
-<!-- debug class -->
-<?php include_once("lib/dBug.php")?>
 <?php
+    // include head tag
+    get_template_part('templates/head');
+?>
 
+
+<?php
     // $bidCommonObj = new BidxCommon();
     $session = BidxCommon::$staticSession;
 
