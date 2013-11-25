@@ -4,7 +4,7 @@
     <posttype>bidx</posttype>
     <description>List of page resources that are hidden for the end-user to manage</description>
     <version>1.0</version>
-    
+
 	<!--
 		WP Page preloader:
 		Use <content> only with escaped html
@@ -125,9 +125,10 @@
             <post_id>18</post_id>
             <name>businesssummary</name>
             <title>Business Summary</title>
-            <mapping>^businesssummary/([^/]*)/?</mapping>
+            <mapping>^businesssummary</mapping>
             <content>[bidx app="businesssummary"]</content>
         </post>
+
         <post>
             <post_id>19</post_id>
             <name>login</name>
