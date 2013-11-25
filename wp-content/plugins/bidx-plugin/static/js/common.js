@@ -2,6 +2,8 @@
 //
 ( function( $ )
 {
+    "use strict";
+
     var bidx            = window.bidx || {}
     ,   bidxConfig      = window.bidxConfig || {}
 
