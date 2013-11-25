@@ -29,12 +29,11 @@
                         if ( has_post_thumbnail() ) {
                             $size = array(100,100);
                             $atts = array('data-src' => 'holder.js/50x50/social/auto/text:News',
-                                          'class' => 'media-object img-circle',
-                                          'align' => 'left');
+                                          'class' => 'media-object img-circle pull-left');
                             the_post_thumbnail($size, $atts);
                         } else {
 ?>
-                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" align="left" class="img-circle">
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" class="img-circle pull-left">
 <?php
                         }
 ?>

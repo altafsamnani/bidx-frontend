@@ -20,9 +20,9 @@
                     <a href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
 <?php
     				  	if ( empty( $member -> profilePicture ) ) {
-    						echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" align="left" class="img-circle">';
+    						echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" class="img-circle pull-left">';
                         } else {
-    						echo '<img src="' . $member -> profilePicture . '" alt="" align="left" class="img-circle" style="height:95px;">';
+    						echo '<img src="' . $member -> profilePicture . '" alt="" class="img-circle pull-left" style="height:95px;">';
                         }
 ?>
                     </a>
