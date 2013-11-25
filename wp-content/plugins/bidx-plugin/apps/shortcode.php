@@ -29,13 +29,17 @@ class BidxShortcode
      */
     function __construct ()
     {
-
         Logger :: getLogger ('shortcode')->trace ('Constructing bidx shortcode instance for ' . get_bloginfo ());
         add_shortcode ('bidx', array (&$this, 'handle_bidx_shortcode'));
         add_action ('init', array (&$this, 'register_script'));
         add_action ('admin_init', array (&$this, 'register_script'));
         add_action ('wp_footer', array (&$this, 'print_script'));
         add_action ('admin_footer', array (&$this, 'bidx_dashboard_footer'));
+
+        // Style
+        //
+        add_action ('init', array (&$this, 'load_style'));
+
         Logger :: getLogger ('shortcode')->trace ('Ready constructing bidx shortcode instance');
     }
 
@@ -114,6 +118,22 @@ class BidxShortcode
         } else {
             Logger :: getLogger ('shortcode')->trace ("bidX app '" . $appname . "' does not exist.");
             return "Bidx app '" . $appname . "' does not exist.";
+        }
+    }
+
+    /**
+     * Load a css
+     */
+    function load_style()
+    {
+        $bidxCssDir = sprintf( '%s/../static/css', BIDX_PLUGIN_URI );
+
+        if (BidxCommon :: isWPInternalFunction ()) {
+            Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
+        } else {
+
+            wp_register_style( 'bidx-plugin', $bidxCssDir . '/plugin.css', array(), '20131125', 'all' );
+            wp_enqueue_style( 'bidx-plugin' );
         }
     }
 
