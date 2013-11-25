@@ -149,7 +149,7 @@
         //
         $personalDetailsNationality.bidx_chosen(
         {
-            dataKey:            "country"
+            dataKey:            "nationality"
         ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
