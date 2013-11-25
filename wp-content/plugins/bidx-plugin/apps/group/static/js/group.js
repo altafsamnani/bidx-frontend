@@ -1,3 +1,4 @@
+/* global bidx */
 ;( function( $ )
 {
     "use strict";
