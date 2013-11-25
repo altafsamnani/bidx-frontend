@@ -1,6 +1,7 @@
-/* global bidx */
 ;( function( $ )
 {
+    "use strict";
+
     var $element                        = $( "#media" )
     ,   $views                          = $element.find( ".view" )
     ,   $snippets                       = $element.find( ".snippets" )
@@ -506,9 +507,6 @@
         {
             $uploading.hide();
             $done.show();
-            // #msp Fix option 2: move _updateFile to this location
-            //
-            //_updateFile( $file, file );
         }
 
         _updateFile( $file, file );
@@ -538,7 +536,7 @@
             $container.find( ".documentImage"   ).attr( "src",      imageSrc );
             $container.find( ".documentLink"    ).attr( "href",     file.document );
 
-            // #msp Temporary fix (version 1): file.bidxMeta.bidxUploadId was not available in initial upload. Symptom fix
+            // Only when there is a bidxUploadId, not available during upload
             //
             if ( file.bidxMeta && file.bidxMeta.bidxUploadId )
             {
