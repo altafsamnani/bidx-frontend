@@ -3,7 +3,7 @@
     Single page application that is setup
 -->
 
-<div id="group-dashboard">
+<div id="monitoring">
     <div class="row-fluid">
         <div class="span8">
             <h2>Group growth</h2>
@@ -99,15 +99,15 @@
 
             </article>
             <div class="row-fluid">
-                <div class="span12 pagercontainer-list">
-                    <div class="pager-list"></div>
+                    <div class="span12 pagercontainer-list">
+                        <div class="pager-list"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="row-fluid">
-                <div class="span3 offset9">
-                    <a class="btn btn-primary compose-list" href="#dashboard/dashboardCompose" data-href="#dashboard/dashboardCompose">Compose welcome message</a>
+                <div class="row-fluid">
+                    <div class="span3 offset9">
+                        <a class="btn btn-primary compose-list" href="#monitoring/compose" data-href="#monitoring/compose">Compose welcome message</a>
+                    </div>
                 </div>
-            </div>
 
             <!-- All Members  -->
             <div class="row-fluid">
@@ -169,19 +169,19 @@
                 </div>
             </article>
             <div class="row-fluid">
-                <div class="span12 pagercontainer-all">
-                    <div class="pager-all"></div>
+                    <div class="span12 pagercontainer-all">
+                        <div class="pager-all"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="row-fluid">
-                <div class="span3 offset9">
-                    <a class="btn btn-primary compose-all" href="#dashboard/dashboardComposeAll" data-href="#dashboard/dashboardComposeAll">Compose message</a>
+                <div class="row-fluid">
+                    <div class="span3 offset9">
+                        <a class="btn btn-primary compose-all" href="#monitoring/composeAll" data-href="#monitoring/composeAll">Compose message</a>
+                    </div>
                 </div>
-            </div>
 
-            <article class="modalView modalDashboardCompose">
+            <article class="modalView modalCompose">
                 <form action="">
-                    <div  id="dashboard" class="mainState mainStateDashboard">                <!-- Modal -->
+                    <div  id="dashboard" class="mainState mainStateMonitoring">                <!-- Modal -->
                         <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -191,31 +191,24 @@
                                 <form action="">
                                     <div class="row-fluid">
                                         <div class="control-group">
-                                            <div class="input-prepend">
-
-                                                <span class="add-on">Recipients</span>
-                                                <div class="controls">
-                                                    <div class="bidx-tagsinput-container">
-                                                        <input type="text" autocomplete="off" name="contacts" class="bidx-tagsinput enclosed defer"  data-bidxdatakey="members" placeholder="<?php _e ('Add Recipient') ?>">
-                                                    </div>
-
-                                                </div>
+                                            <label class="control-label"><?php _e('Recipient','bidxplugin'); ?></label>
+                                            <div class="controls">
+                                                <select name="contacts" multiple class="hide" data-placeholder="<?php _e( 'Select a recipient' ); ?>"></select>
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="row-fluid">
                                         <div class="control-group">
-                                            <div class="input-prepend">
-
-                                                <span class="add-on">Subject</span>
+                                            <label class="control-label"><?php _e('Subject','bidxplugin'); ?></label>
                                                 <div class="controls">
                                                     <input type="text" name="subject" placeholder="<?php _e ('Your subject goes here', 'bidxplugin') ?>" >
                                                 </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="row-fluid">
                                         <div class="control-group">
+                                            <label class="control-label"><?php _e('Message','bidxplugin'); ?></label>
                                             <div class="controls">
                                                 <textarea name="content" placeholder="<?php _e ('Please type your message here', 'bidxplugin') ?>" value=""></textarea>
                                             </div>
@@ -228,9 +221,8 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <a href="#" data-href="#dashboard/discardConfirm" class="btn compose-cancel"><?php _e ('Discard message') ?></a>
+                                <a href="#" data-href="#monitoring/discardConfirm" class="btn compose-cancel"><?php _e ('Discard message') ?></a>
                                 <button type="submit" class="btn btn-primary compose-submit"><?php _e ('Send message', 'bidxplugin') ?></button>
-
                             </div>
                         </div>
                     </div>
@@ -250,7 +242,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <a class="btn" href="#" data-href="#dashboard/dashboardCompose"><?php _e ('Cancel') ?></a>
+                        <a class="btn" href="#" data-href="#monitoring/compose"><?php _e ('Cancel') ?></a>
                         <a class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><?php _e ('Discard message') ?></a>
                     </div>
 

@@ -127,6 +127,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
     $sendDomain = 'bidx.net';
     $cookieArr = array ();
+    $headers    = array();
 
 
     //error_log (sprintf ("	: %s, body: %s", $urlservice, var_export ($body, true)));
@@ -2044,7 +2045,7 @@ function alter_site_menu ()
                 add_menu_page ('invite-members', 'Invite members', 'edit_theme_options', 'invite-members', 'bidx_dashboard_invite');
                 add_menu_page ('monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
                 add_menu_page ('getting-started', 'Getting Started', 'edit_theme_options', 'getting-started', 'bidx_getting_started');
-                //add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
+                add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
                // add_menu_page ('Group Settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
             }
         }

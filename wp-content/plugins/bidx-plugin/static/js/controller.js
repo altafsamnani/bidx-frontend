@@ -314,8 +314,8 @@
 
         ,   'media(/:appState)(/:id)':                          'media'
 
-        ,   'dashboard(/:state)(*splat)':                       'dashboard'
-
+        ,   'monitoring(/:state)(*splat)':                      'monitoring'
+        ,   'support(/:state)(*splat)':                         'support'
         ,   'home(/:section)':                                  'groupHome'
         ,   'cancel(/*splat)':                                  'showCancel'
         ,   '*path':                                            'show'
@@ -541,15 +541,31 @@
                 }
             );
         }
-     ,  dashboard:               function( state, splat )
+     ,  monitoring:               function( state, splat )
         {
-            bidx.utils.log( "AppRouter::dashboard State: ", state );
+            bidx.utils.log( "AppRouter::monitoring State: ", state );
 
-            mainState = "dashboard";
+            mainState = "monitoring";
 
             _navigateToApp
             (
-                "dashboard"
+                "monitoring"
+            ,   {
+                    state:    state
+                ,   params:   _deparamSplat( splat )
+                }
+            );
+        }
+
+    ,  support:               function( state, splat )
+        {
+            bidx.utils.log( "AppRouter::support State: ", state );
+
+            mainState = "support";
+
+            _navigateToApp
+            (
+                "support"
             ,   {
                     state:    state
                 ,   params:   _deparamSplat( splat )

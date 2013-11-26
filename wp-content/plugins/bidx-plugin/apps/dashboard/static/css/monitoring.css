@@ -12,7 +12,7 @@ ul.listheader  {
     list-style: none !important;
 }
 
-#group-dashboard .checkbox {
+#monitoring .checkbox {
     background-color: rgba(0, 0, 0, 0);
 }
 

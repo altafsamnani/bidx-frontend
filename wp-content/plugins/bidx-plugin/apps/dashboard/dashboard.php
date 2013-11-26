@@ -30,8 +30,8 @@ class dashboard
     function register_dashboard_bidx_ui_libs ()
     {
         //Adding js in Load function as we need it different for investor/entrpreneur/groupadmin(wordpress)
-        wp_register_style ('dashboard', plugins_url ('static/css/dashboard.css', __FILE__), array (), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
-        wp_enqueue_style ('dashboard');
+        //wp_register_style ('dashboard', plugins_url ('static/css/dashboard.css', __FILE__), array (), '20130715', 'all'); /* should load mail css, not all other css files from other apps */
+        //wp_enqueue_style ('dashboard');
 
     }
 
@@ -53,8 +53,10 @@ class dashboard
                 case 'monitoring':
                     roots_scripts();
 
-                    $mailDepArr = array ('bidx-tagsinput','bootstrap-paginator', 'bidx-delaykeyup','bidx-common', 'bidx-i18n', 'jquery-validation',
-                      'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+
+                    $mailDepArr = array ('bootstrap-paginator', 'bidx-delaykeyup','bidx-common', 'bidx-i18n', 'jquery-validation',
+                      'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-chosen');
+
 
                     /* Style */
                     wp_register_style ('monitoring', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/monitoring.css', array (), '20130715', TRUE);
@@ -81,22 +83,22 @@ class dashboard
 
                     break;
 
-
                 //Will be working on this
                 case 'support':
+                    roots_scripts();
                     $mailDepArr = array ('bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
                       'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
                     /* Style */
-                    wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
-                    wp_register_style ('support', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/support.css', array ('mail'), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
+                    //wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
+                    wp_register_style ('support', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/support.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
                     wp_enqueue_style ('support');
 
                     /* Script */
-                    wp_register_script ('support', '/wp-content/plugins/bidx-plugin/apps/mail/static/js/mail.js', $mailDepArr, '20130715', TRUE);
+                    wp_register_script ('support', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/support.js', $mailDepArr, '20130715', TRUE);
 
                     break;
-
+                //Will be working on this
                 case 'group-settings' :
                     $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
                       'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-location');

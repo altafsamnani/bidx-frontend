@@ -1,6 +1,6 @@
 ;(function( $ )
 {
-    var $element                    = $("#group-dashboard")
+    var $element                    = $("#monitoring")
     ,   $elementHelp                = $(".startpage")
     ,   $views                      = $element.find(".view")
     ,   $modals                     = $element.find(".modalView")
@@ -8,15 +8,17 @@
     ,   $frmCompose                 = $modals.find("form")
     ,   $btnComposeSubmit           = $frmCompose.find(".compose-submit")
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
+    ,   $contactsDropdown
     ,   $currentView
     ,   bidx                        = window.bidx
-    ,   appName                     = "dashboard"
+    ,   appName                     = "monitoring"
     ,   currentGroupId              = bidx.common.getCurrentGroupId()
     ,   message                     = {}
     ,   listItems                   = {}
     ,   listItemsAll                = {}
     ,   $list                       = $(".dlist")
     ,   listMembers                 = []
+    ,   listMembersAll              = []
     ;
 
 
@@ -131,6 +133,7 @@
             ,   {
                     label: "fq",
                     value: "type:bidxMemberProfile+AND+groupIds:" + currentGroupId + searchName
+                    //value: "type:bidxMemberProfile+AND+groupIds:" + '2' + searchName
                 }
             ,   {
                     label: "rows",
@@ -186,12 +189,22 @@
 
                         $.each(response.docs, function( idx, item )
                         {
-
-                            listMembers.push(
+                            if(options.view === 'list')
                             {
-                                value: item.userId
-                            ,   label: item.user
-                            });
+                                listMembers.push(
+                                {
+                                    value: item.userId
+                                ,   label: item.user
+                                });
+                            }
+                            else
+                            {
+                                listMembersAll.push(
+                                {
+                                    value: item.userId
+                                ,   label: item.user
+                                });
+                            }
 
                             item.location = item.countrylabel_s;
                             item.membersince = bidx.utils.parseISODateTime(item.created, "date");
@@ -436,7 +449,7 @@
                     bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", 'mail' ) );
 
                     listItems = {};
-                    bidx.controller.updateHash("#dashboard/list", true, false);
+                    bidx.controller.updateHash("#monitoring/list", true, false);
                 }
             ,   error: function( jqXhr, textStatus )
                 {
@@ -478,32 +491,24 @@
         */
         message = {}; // clear message because it can still hold the reply content
 
-        $currentView = $element.find(".modalDashboardCompose");
+        $currentView = $element.find(".modalCompose");
 
-        var to = [];
-        var recipients = $currentView.find("[ name=contacts ]").tagsinput('getValues');
-
-        $.each(recipients, function(index, item)
-        {
-            to.push(item.value);
-        });
-
-        bidx.utils.setValue(message, "userIds", to);
-        bidx.utils.setValue(message, "subject", $currentView.find("[name=subject]").val());
-        bidx.utils.setValue(message, "content", $currentView.find("[name=content]").val());
+        bidx.utils.setValue( message, "userIds", $contactsDropdown.val() );
+        bidx.utils.setValue( message, "subject", $currentView.find( "[name=subject]" ).val() );
+        bidx.utils.setValue( message, "content", $currentView.find( "[name=content]" ).val() );
 
 
     };
 
     // Setup compose form by resetting all values and binding the submit handler with validation
     //
-    var _initComposeForm = function(listCompose, listType)
+    var _initComposeForm = function(listType)
     {
 
         //  reset formfield values
         //
         //Add Default Tag values to the compose form dropdown values
-        bidx.data.setItem('members', listMembers);
+        /*bidx.data.setItem('members', listMembers);
         $element.find("input.bidx-tagsinput.defer").tagsinput();
 
         $frmCompose.find(":input").val("");
@@ -519,21 +524,95 @@
         $.each(listCompose, function(idx, item)
         {
             bidx.utils.setElementValue($input, idx);
-        } );
+        } );*/
 
-        if (listType === 'list') {
-            var keySubject = "welcomesubject";
+
+        var listSelectedMembers  = []
+        ,   listDropdownMembers = []
+        ,   listArrItems = []
+        ,   list
+        ,   option
+        ,   $options
+        ,   $input = $frmCompose.find("[name='contacts']")
+        ,   keySubject
+        ,   keyBody
+        ;
+
+        $frmCompose.find(":input").val(""); // Clear the msg from Compose/Subject
+
+
+        if (listType === 'list')
+        {
+            listSelectedMembers = listItems;
+            listDropdownMembers = listMembers;
+
+
+            //Set Subject & Body for Recently Joined Members
+            keySubject = "welcomesubject";
             bidx.i18n.getItem(keySubject, 'templates', function(err, labelSubject) {
                 $frmCompose.find("[name='subject']").val(labelSubject);
             });
 
-
-            var keyBody = "welcomebody";
+            keyBody = "welcomebody";
             bidx.i18n.getItem(keyBody, 'templates', function(err, labelBody) {
                 $frmCompose.find("[name='content']").val(labelBody);
             });
-
         }
+        else
+        {
+            listSelectedMembers = listItemsAll;
+            listDropdownMembers = listMembersAll;
+        }
+
+
+
+        $contactsDropdown = $frmCompose.find( "[name=contacts]" );
+
+        /*******
+        Add Dropdown Options for Recipients , Prepare dropdown
+        *******/
+        $options = $contactsDropdown.find( "option" );
+
+        bidx.utils.log('altaf',$options.length);
+        if ( $options.length )
+        {
+            $options.empty();
+        }
+
+        // sort the array, if not empty
+        if ( listDropdownMembers.length )
+        {
+            listDropdownMembers = listDropdownMembers.sort();
+        }
+        bidx.utils.log('altaf',listDropdownMembers);
+        $.each( listDropdownMembers, function( idx, listMembersValue )
+        {
+            option = $( "<option/>",
+            {
+                value: listMembersValue.value
+            } );
+            option.text( listMembersValue.label );
+
+            listArrItems.push( option );
+        } );
+
+        // add the options to the select
+        $contactsDropdown.append( listArrItems );
+
+        // init bidx_chosen plugin
+        $contactsDropdown.bidx_chosen();
+
+        /*******
+        Add Dropdown Selected Options from checkbox
+        *******/
+
+        $.each(listSelectedMembers, function(idx, item)
+        {
+            bidx.utils.setElementValue($input, idx);
+        } );
+
+        $contactsDropdown.trigger( "chosen:updated" );
+
     };
 
     //  ################################## MODAL #####################################  \\
@@ -698,40 +777,40 @@
                 } );
                 break;
 
-            case "dashboardCompose":
+            case "compose":
 
                 _closeModal(
                 {
                     unbindHide: true
                 } );
 
-                _initComposeForm(listItems, 'list');
+                _initComposeForm('list');
                 _showModal(
                 {
-                    view: "dashboardCompose"
-                ,   state:      state
-                ,   onHide: function()
+                    view:    "compose"
+                ,   state:   state
+                ,   onHide:  function()
                     {
-                        window.bidx.controller.updateHash("#dashboard/list", false, false);
+                        window.bidx.controller.updateHash("#monitoring/list", false, false);
                     }
                 } );
 
                 break;
-            case "dashboardComposeAll":
+            case "composeAll":
 
                 _closeModal(
                 {
                     unbindHide: true
                 } );
 
-                _initComposeForm(listItemsAll, 'all');
+                _initComposeForm('all');
                 _showModal(
                 {
-                    view: "dashboardCompose"
-                ,   state:      state
-                ,   onHide: function()
+                    view:    "compose"
+                ,   state:    state
+                ,   onHide:   function()
                     {
-                        window.bidx.controller.updateHash("#dashboard/list", false, false);
+                        window.bidx.controller.updateHash("#monitoring/list", false, false);
                     }
                 } );
 
@@ -750,7 +829,7 @@
                 ,   state: state
                 ,   onHide: function()
                     {
-                        window.bidx.controller.updateHash("#dashboard/list", false, false);
+                        window.bidx.controller.updateHash("#monitoring/list", false, false);
                     }
                 } );
 
@@ -765,7 +844,7 @@
     };
 
     //expose
-    var dashboard =
+    var monitoring =
     {
         navigate:     navigate
     ,   $element:     $element
@@ -778,7 +857,7 @@
         window.bidx = { };
     }
 
-    window.bidx.dashboard = dashboard;
+    window.bidx.monitoring = monitoring;
 
     // Initialize handlers
     _oneTimeSetup();
@@ -786,7 +865,7 @@
     if ($("body.wp-admin").length && !bidx.utils.getValue(window, "location.hash").length)
     {
 
-        document.location.hash = "#dashboard/list";
+        document.location.hash = "#monitoring/list";
     }
 
 

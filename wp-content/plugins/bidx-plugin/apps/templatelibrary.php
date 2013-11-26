@@ -893,7 +893,7 @@ class TemplateLibrary
 
                 if (isset (BidxCommon::$staticSession->data->currentGroup)) {
                     $currentGroupId = BidxCommon::$staticSession->data->currentGroup;
-                    $tokenVal = BidxCommon::$staticSession->data->groups->$currentGroupId->name;
+                    $tokenVal = (isset(BidxCommon::$staticSession->data->groups->$currentGroupId->name) )? BidxCommon::$staticSession->data->groups->$currentGroupId->name: 'Name not available';
                 }
 
                 break;
