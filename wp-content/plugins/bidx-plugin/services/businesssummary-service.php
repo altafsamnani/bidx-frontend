@@ -28,13 +28,9 @@ class BusinessSummaryService extends APIbridge
      *
      * @return object company details
      */
-    function getSummaryDetails ()
+    function getSummaryDetails ( $businessSummaryId )
     {
         //Call entity API
-        $sessionData = BidxCommon::$staticSession;
-
-        $businessSummaryId = $sessionData->businessSummaryId;
-
         $result = $this->callBidxAPI ($this->apiUrl . $businessSummaryId, array (), 'GET');
 
         return $result;

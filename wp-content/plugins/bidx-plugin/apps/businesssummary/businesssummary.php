@@ -56,7 +56,7 @@ class businesssummary
             $businessSummaryObj = new BusinessSummaryService( );
 
             /* 3. Render Services for Initial View Display */
-            $businessSummaryData = $businessSummaryObj->getSummaryDetails( );
+            $businessSummaryData = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
 
             $view->data = $businessSummaryData->data;
         }
