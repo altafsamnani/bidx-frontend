@@ -1,7 +1,8 @@
 <?php
 
     $data                       = $this->data;
-    $authenticated              = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+    $memberId                   = isset( $this->data->member->bidxMeta->bidxMemberId ) ? $this->data->member->bidxMeta->bidxMemberId : null ;
+    $authenticated              = isset( $this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
     $personalDetails            = isset( $data->bidxMemberProfile->personalDetails ) ? $data->bidxMemberProfile->personalDetails : NULL;
     $isEntrepreneur             = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile : NULL ;
     $isInvestor                 = isset( $data->bidxInvestorProfile ) ? $data->bidxInvestorProfile : NULL;
@@ -104,6 +105,12 @@
                                 <?php if ( !$isEntrepreneur || !$isInvestor ) { ?>
                                     &nbsp;<span class="label bidx-label-member"><?php _e('Member', 'bidxplugin') ?></span>
                                 <?php } ?>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <!-- NOTE #msp 26/11/2013: Connect link will have to be displayed based on current relationship status between logged in member and this member. Currently not supported in API -->
+                                <a href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
                             </div>
                         </div>
                         <div class="row-fluid">
