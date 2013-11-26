@@ -24,7 +24,7 @@
     //
     var CONTACTSPAGESIZE            = 3
     ,   ACTIVECONTACTSLIMIT         = 999
-    ,   MAILPAGESIZE                = 5
+    ,   MAILPAGESIZE                = 3
     ;
 
 

@@ -53,10 +53,8 @@ class dashboard
                 case 'monitoring':
                     roots_scripts();
 
-
                     $mailDepArr = array ('bootstrap-paginator', 'bidx-delaykeyup','bidx-common', 'bidx-i18n', 'jquery-validation',
                       'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-chosen');
-
 
                     /* Style */
                     wp_register_style ('monitoring', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/monitoring.css', array (), '20130715', TRUE);
@@ -260,6 +258,8 @@ class dashboard
                 $template = 'my-dashboard.phtml';
                 break;
         }
+
+        //echo $template;
         $view->render ($template);
     }
 
