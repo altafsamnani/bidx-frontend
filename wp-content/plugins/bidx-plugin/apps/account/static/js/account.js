@@ -3,6 +3,7 @@
     "use strict";
 
     var $element                    = $( "#account" )
+    ,   $body                       = $( "body" )
     ,   $views                      = $element.find( ".view" )
     ,   $frmCredentials             = $element.find( "#frmCredentials" )
     ,   $btnUpdateCredentials       = $frmCredentials.find( ":submit" )
@@ -80,6 +81,8 @@
     function _showView( view, state )
     {
         var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
+        $body.scrollTop( 0 );
+
         //  show title of the view if available
         if( state )
         {
@@ -119,6 +122,7 @@
                     bidx.utils.log( "member.save::success::response", response );
 
                     $btnUpdateCredentials.removeClass( "disabled" );
+
                     _showView( "credentialsChanged" );
 
 
