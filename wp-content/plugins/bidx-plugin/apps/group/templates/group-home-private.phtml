@@ -82,6 +82,11 @@
                         <div class="memberList">
 
                         </div>
+                        <div class="row-fluid">
+                            <div class="span12 pagerContainer">
+                                <div class="pager"></div>
+                            </div>
+                        </div>
                     </article>
                 </section>
 
@@ -110,22 +115,25 @@
     </div>
 
     <div class="snippets hide">
+        <!--
+            I use %value% for explanatory reasons within the markup body and as placeholders within href links
+        -->
 
         <!-- member Snippit -->
         <div class="snippet" data-key="member">
             <div class="span12 clearfix well">
-                <a href="/member/1441">
-                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" class="img-circle">
+                <a href="/member/%memberId%" data-role="memberImage">
+                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" class="img-circle pull-left">
                 </a>
                 <div>
                     <div>
-                        <a href="/member/" data-role="memberLink"></a>
+                        <a href="/member/%memberId%" data-role="memberLink">%firstname% %lastname%</a>
                     </div>
                     <div data-role="country"></div>
                     <div data-role="roles">
                         <span class="label" data-role="value"></span>
                     </div>
-                    <div><a href="/mail/#mail/contacts/action=connect&amp;id=" data-role="memberId">Connect</a></div>
+                    <div><a href="/mail/#mail/contacts/action=connect&amp;id=%memberId%" data-role="memberId">Connect</a></div>
                 </div>
             </div>
         </div>

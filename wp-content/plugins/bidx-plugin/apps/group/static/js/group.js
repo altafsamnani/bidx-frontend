@@ -12,16 +12,35 @@
     ,   $views          = $element.find( ".views > .view" )
     ,   $snippets       = $element.find( ".snippets .snippet" )
     ,   $memberList     = $element.find( ".memberList" )
+    ,   $memberPager    = $views.filter( ".viewMembers" ).find( ".pagerContainer .pager" )
     ,   state
     ,   snippets        = {}
-    ,   memberOffset    = 0
 
     ,   $unreadCount    = $navbar.find( ".iconbar-unread" )
+    ,   paging          =
+        {
+            members:
+            {
+                offset:    0
+            ,   totalPages:     null
+            }
+        ,   businesssummaries:
+            {
+                offset:    0
+            ,   totalPages:     null
+            }
+        }
     ;
 
     // Constants
     //
-    var MEMBERPAGESIZE              = 10
+    var CONSTANTS =
+        {
+            MEMBER_LIMIT:                       10
+        ,   BUSINESSSUMMARIES_LIMIT:            10
+        ,   NUMBER_OF_PAGES_IN_PAGINATOR:       5
+        }
+
     ;
 
     // Whenever we get a new mailbox state, update the value of the unread count to reflect this
@@ -74,101 +93,186 @@
 
     // get all members from API, paged and display by adding snippet per member
     //
-    function _loadMembers( cb )
+    function _getMembers( cb )
     {
 
-            bidx.api.call(
-                "member.fetch"
-            ,   {
-                    extraUrlParameters:
-                    [
-                        {
-                            label:      "sort"
-                        ,   value:      "lastname"
-                        }
-                    ,   {
-                            label:      "order"
-                        ,   value:      "desc"
-                        }
-                    ,   {
-                            label:      "limit"
-                        ,   value:      MEMBERPAGESIZE
-                        }
-                    ,   {
-                            label:      "offset"
-                        ,   value:      memberOffset
-                        }
-                    ]
-                ,   groupDomain:              bidx.common.groupDomain
-
-                ,   success: function( response )
+        bidx.api.call(
+            "member.fetch"
+        ,   {
+                extraUrlParameters:
+                [
                     {
-                        var items = [];
-                        bidx.utils.log("[members] retrieved members ", response );
-                        if ( response )
-                        {
-                            $.each( response, function( idx, member )
-                            {
-                                var $item;
-
-                                if ( member.personalDetails )
-                                {
-                                    // create clone of snippet
-                                    //
-                                    $item = snippets.$member.clone();
-
-                                    bidx.utils.log("MEMBER", member);
-
-                                    //
-                                    $item.find( "[data-role='memberLink']" ).text( bidx.utils.getValue( member, "personalDetails.firstName" ) );
-
-
-                                    items.push( $item );
-                                }
-                                return false;
-
-                            } );
-                            // add snippets to DOM list
-                            //
-                            $memberList.append( items );
-                        }
-
-                        // execute cb function
-                        //
-                        if( $.isFunction( cb ) )
-                        {
-
-                            cb();
-                        }
-
-
+                        label:      "sort"
+                    ,   value:      "lastname"
                     }
+                ,   {
+                        label:      "order"
+                    ,   value:      "desc"
+                    }
+                ,   {
+                        label:      "limit"
+                    ,   value:      CONSTANTS.MEMBER_LIMIT
+                    }
+                ,   {
+                        label:      "offset"
+                    ,   value:      paging.members.offset
+                    }
+                ]
+            ,   groupDomain:              bidx.common.groupDomain
 
-                ,   error: function( jqXhr, textStatus )
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[members] retrieved members ", response );
+
+                    _doInitMemberListing(
                     {
-
-                        var response = $.parseJSON( jqXhr.responseText);
-
-                        // 400 errors are Client errors
-                        //
-                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                        {
-                            bidx.utils.error( "Client  error occured", response );
-                            _showError( "Something went wrong while retrieving the members relationships: " + response.text );
-                        }
-                        // 500 erors are Server errors
-                        //
-                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                        {
-                            bidx.utils.error( "Internal Server error occured", response );
-                            _showError( "Something went wrong while retrieving the members relationships: " + response.text );
-                        }
-
-                    }
+                        response:   response
+                    ,   cb:         cb
+                    } );
                 }
-            );
+
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while retrieving the members relationships: " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while retrieving the members relationships: " + response.text );
+                    }
+
+                }
+            }
+        );
     }
 
+    function _doInitMemberListing( data )
+    {
+        var items           = []
+        ,   pagerOptions    = {}
+        ,   fullName
+        ,   nextPageStart
+        ;
+
+
+        if ( data.response && data.response.length )
+        {
+
+            // if ( response.totalMembers > currentPage size  --> show paging)
+            //
+            pagerOptions  =
+            {
+                currentPage:            ( paging.members.offset + 1 ) // correct for api value which starts with 0
+            ,   totalPages:             10 // temporary value, to be filled
+            ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
+            ,   itemContainerClass:     function ( type, page, current )
+                {
+                    return ( page === current ) ? "active" : "pointer-cursor";
+                }
+            ,   useBootstrapTooltip:    true
+            ,   onPageClicked:          function( e, originalEvent, type, page )
+                {
+                    //nextPageStart = ( (page - 1) * CONSTANTS.NUMBEROFPAGES ) + 1;
+                    bidx.utils.log("Page Clicked", page);
+
+                    _getMembers( function()
+                    {
+                        paging.members.offset = page -1;
+                        _showView( "members" );
+                    } );
+                }
+            };
+
+            $memberPager.bootstrapPaginator( pagerOptions );
+
+            // create member listitems
+            //
+            $.each( data.response, function( idx, member )
+            {
+                var $item
+                ,   dataRoles
+                ;
+
+                if ( member.personalDetails )
+                {
+                    // create clone of snippet
+                    //
+                    $item = snippets.$member.clone();
+                    $item.removeClass( "snippet" );
+                    dataRoles = $item.find("[data-role]");
+
+                    $.each( dataRoles, function( idx, el )
+                    {
+                        var $el = $( el );
+
+                        switch( $el.data( "role" ) )
+                        {
+                            case "memberImage":
+                                $el.attr( "href", function( i, href )
+                                    {
+                                        return href.replace( "%memberId%", bidx.utils.getValue( member, "bidxMeta.bidxEntityId" ) );
+                                    } )
+                                ;
+                                break;
+
+                            case "memberLink":
+                                $el.text( bidx.utils.getValue( member, "personalDetails.firstName" ) + " " + bidx.utils.getValue( member, "personalDetails.lastName" ) )
+                                    .attr( "href", function( i, href )
+                                    {
+                                        return href.replace( "%memberId%", bidx.utils.getValue( member, "bidxMeta.bidxEntityId" ) );
+                                    } )
+                                ;
+                                break;
+
+                            case "country":
+                                $el.text( bidx.utils.getValue( member.personalDetails.address[0], "country" ) );
+                                break;
+
+                            case "roles":
+                                // waiting for BIDX-1546 so it can be implemented
+                                break;
+
+                            case "memberId":
+                                $el.attr( "href", function( i, href )
+                                    {
+                                        return href.replace( "%memberId%", bidx.utils.getValue( member, "bidxMeta.bidxEntityId" ) );
+                                    } )
+                                ;
+                                break;
+                        }
+                    } );
+
+                    items.push( $item );
+                }
+
+
+            } );
+
+            // finally add snippets to DOM element
+            //
+            $memberList
+                .empty()
+                .append( items )
+            ;
+        }
+
+        // execute cb function
+        //
+        if( $.isFunction( data.cb ) )
+        {
+            data.cb();
+        }
+    }
 
 
     // ROUTER
@@ -189,7 +293,7 @@
                 _showView( "load" );
                 // load members
                 //
-                _loadMembers( function()
+                _getMembers( function()
                 {
                     _showView( "members" );
                 } );
@@ -208,7 +312,12 @@
 
     function reset()
     {
+        // call navigate function so it will default to home view
+        //
         navigate({});
+
+        //maybe clear paging variables too, here?
+
         state = null;
     }
 
