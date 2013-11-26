@@ -359,7 +359,7 @@
                                                             ,   callback: function()
                                                                 {
                                                                     _showMainView(options.list, options.load);
-                                                                                                                                                    }
+                                                                }
                                                             } );
                                                        }
                             };
