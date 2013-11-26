@@ -215,6 +215,7 @@ class TemplateLibrary
             case 'motherlanguage':
                 $values = ($values) ? 'My mother language is  ' . $this->getStaticVal ('language', $values) : '';
                 break;
+
             case 'language':
                 $values = ($values) ? 'I speak ' . $this->getStaticVal ('language', $values) : '';
                 break;
@@ -463,7 +464,9 @@ class TemplateLibrary
             //Build Header
             $htmlHeader.= "<tr>";
             foreach ($header as $headerKey => $headerValue) {
-                $htmlHeader.= "<th>" . $this->escapeHtml ($headerKey) . "</th>";
+                $cellClass = isset( $cellClasses[ $headerValue ] ) ?  $cellClasses[ $headerValue ] : '';
+                $htmlHeader .= sprintf( '<th class="%s">', $cellClass );
+                $htmlHeader .= $this->escapeHtml ($headerKey) . "</th>";
             }
             $htmlHeader.= "</tr>";
             foreach ($rowsArr as $rowValue) {
