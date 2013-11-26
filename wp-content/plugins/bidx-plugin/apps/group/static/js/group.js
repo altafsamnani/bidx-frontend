@@ -117,13 +117,15 @@
                                     //
                                     $item = snippets.$member.clone();
 
+                                    bidx.utils.log("MEMBER", member);
 
                                     //
-                                    $item.find( "date-role='memberLink" ).text( bidx.utils.getValue( member, "personalDetails.firstname" ) );
+                                    $item.find( "[data-role='memberLink']" ).text( bidx.utils.getValue( member, "personalDetails.firstName" ) );
 
 
                                     items.push( $item );
                                 }
+                                return false;
 
                             } );
                             // add snippets to DOM list
@@ -206,7 +208,6 @@
 
     function reset()
     {
-        debugger;
         navigate({});
         state = null;
     }
