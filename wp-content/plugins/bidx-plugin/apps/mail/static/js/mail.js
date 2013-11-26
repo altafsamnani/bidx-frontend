@@ -11,7 +11,7 @@
     ,   $btnComposeSubmit           = $frmCompose.find(".compose-submit")
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
     ,   $mailFolderNavigation       = $element.find(".bidx-mailFolders")
-    ,   $contactsDropdown
+    ,   $contactsDropdown           = $frmCompose.find( "[name=contacts]" )
     ,   bidx                        = window.bidx
     ,   currentGroupId              = bidx.common.getCurrentGroupId( "currentGroup" )
     ,   appName                     = "mail"
@@ -147,7 +147,6 @@
                 ,   $options
                 ;
 
-                $contactsDropdown = $frmCompose.find( "[name=contacts]" );
                 $options = $contactsDropdown.find( "option" );
 
                 if ( $options.length )
@@ -1269,10 +1268,11 @@
                             recipients.push( message.sender.id.toString() );
                         }
 
+bidx.utils.log("recipients", recipients);
 
 
-
-                        $frmCompose.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
+                        $contactsDropdown.val( recipients );
+                        $contactsDropdown.bidx_chosen();
 
                         subject = bidx.i18n.i( "Re", appName );
                         $frmCompose.find( "[name=subject]" ).val( subject + ": " + message.subject );
