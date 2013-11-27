@@ -1693,7 +1693,7 @@ form .row-fluid .input-prepend {
           filter:                                   progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
           -webkit-backface-visibility:              hidden;
         }
-        .chosen-container-single.chosen-container-active .chosen-single:after {
+        .chosen-container-single.chosen-with-drop .chosen-single:after {
           -webkit-transform:                        rotate(270deg);
           -moz-transform:                           rotate(270deg);
           -ms-transform:                            rotate(270deg);
