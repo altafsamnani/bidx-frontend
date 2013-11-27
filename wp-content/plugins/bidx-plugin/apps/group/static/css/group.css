@@ -34,3 +34,8 @@ position: absolute;
 right: 31%;
 top: 20px;
 }
+
+#groupHome .memberList.loading {
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}

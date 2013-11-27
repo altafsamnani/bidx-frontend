@@ -328,6 +328,11 @@
 
             mainState   = "groupHome";
 
+            if ( section )
+            {
+                $pageHeadings.hide().filter( "." + section ).show();
+            }
+
             _navigateToApp
             (
                 "group"

@@ -156,6 +156,11 @@
         );
     }
 
+    function _setMemberListLoading()
+    {
+        $memberList.toggleClass( "loading" );
+    }
+
     function _doInitMemberListing( data )
     {
         var items           = []
@@ -185,12 +190,14 @@
                     //nextPageStart = ( (page - 1) * CONSTANTS.NUMBEROFPAGES ) + 1;
                     bidx.utils.log("Page Clicked", page);
 
-                    _showView( "load" );
+                    //_showView( "load" );
                     paging.members.offset = page -1;
-
+                    _setMemberListLoading();
                     _getMembers( function()
                     {
+                        _setMemberListLoading();
                         _showView( "members" );
+
                     } );
                 }
             };
