@@ -1998,6 +1998,7 @@
                                 $.each( response.data.mail, function( index, item )
                                 {
                                     newListItem = listItem;
+                                    senderReceiverName = "";
 
                                     // create a list of recipients ( for mbx-send only )
                                     //
@@ -2007,7 +2008,7 @@
                                         {
                                             recipients.push( recipient.displayName );
                                         } );
-                                        senderReceiverName = recipients.toString();
+                                        senderReceiverName = recipients.toString().replace( /,/g, ", " );
                                     }
                                     // else if there is a sender ( for other boxes )
                                     else if ( item.sender )
