@@ -199,7 +199,7 @@ class dashboard
                             $service = new SearchService( );
                             $groupId = $view->sessionData->data->currentGroup;
 
-                            /* Bidx Member Query */
+                            /* Bidx Member Query
                             $searchParams['q'] = '*:*';
                             $searchParams['fq'] = 'type:bidxMemberProfile AND groupIds:' . $groupId;
                             $searchParams['sort'] = 'created desc';
@@ -210,13 +210,13 @@ class dashboard
 
 
 
-                            /* Bidx Entrepreneur Query */
+                            // Bidx Entrepreneur Query
                             $searchParams['fq'] = 'type:bidxEntrepreneurProfile AND groupIds:' . $groupId;
                             $entrepreneurProfileQuery = $service->cookQuery ($searchParams);
                             $entrepreneurResults = $service->getSearchResults ($entrepreneurProfileQuery);
                             $results->entrepreneurCount = $entrepreneurResults->data->numFound;
 
-                            /* Bidx Investor Query */
+                            // Bidx Investor Query
                             $searchParams['fq'] = 'type:BidxInvestorProfile AND groupIds:' . $groupId;
                             $investorProfileQuery = $service->cookQuery ($searchParams);
                             $investorResults = $service->getSearchResults ($investorProfileQuery);
@@ -228,6 +228,7 @@ class dashboard
                             require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
                             $groupSvc = new GroupService( );
                             $view->members = $groupSvc->getLatestMembers ();
+                            */
                             $template = 'groupowner/monitoring.phtml';
                             break;
 

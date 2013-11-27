@@ -19,6 +19,7 @@
     ,   $list                       = $(".dlist")
     ,   listMembers                 = []
     ,   listMembersAll              = []
+    ,   getGrowthCount              = []
     ;
 
 
@@ -107,12 +108,90 @@
         ,  1000 );
     }
 
+    var getGrowthCount = function(options)
+    {
+        var $viewGrowth     = $element.find(".list-growth")
+        ,   $list           = $viewGrowth.find("." + options.list)
+        ,   searchType      = options.searchType
+        ,   $d = $.Deferred();
+        ;
+
+
+        var extraUrlParameters =
+            [
+                {
+                    label: "q"
+                ,   value: "*:*"
+                }
+            ,   {
+                    label: "fq"
+                ,   value: "type:" + searchType + "+AND+groupIds:" + currentGroupId
+                    //value: "type:bidxMemberProfile+AND+groupIds:" + '2' + searchName
+                }
+            ,   {
+                    label: "sort"
+                ,   value: "created desc"
+                }
+            ,   {
+                    label: "rows"
+                ,   value: "0"
+                }
+            ];
+
+        bidx.api.call(
+            "groupMembers.fetch"
+        ,   {
+                groupId: currentGroupId
+            ,   groupDomain: bidx.common.groupDomain
+            ,   extraUrlParameters: extraUrlParameters
+            ,   success: function(response)
+                {
+                    var item
+                    ,   element
+                    ,   cls
+                    ,   listAppend = '-'
+                    ;
+
+                    //clear listing
+                    $list.empty();
+
+                    if(response.numFound) {
+                        listAppend = response.numFound;
+                    }
+
+                    $list.append(response.numFound);
+
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback();
+                    }
+
+                    $d.resolve( response.data );
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    _showError("Something went wrong while retrieving growthlist of the member: " + status);
+
+                     $d.reject( new Error( jqXhr ) );
+                }
+            }
+        );
+
+        return $d.promise();
+
+    };
+
+
     var getMembers = function(options)
     {
         var $listItem       = $($("#dashboard-listitem").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $listEmpty      = $($("#dashboard-empty").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list           = $("." + options.list)
         ,   $view           = $views.filter(bidx.utils.getViewName(options.view))
+        ,   $d              = $.Deferred()
         ,   messages
         ,   viewName        = options.view
         ,   searchName      = ""
@@ -170,6 +249,7 @@
                     ,   element
                     ,   cls
                     ,   textValue
+                    ,   listLength
                     ,   nextPageStart
                     ,   pagerOptions
                     ,   numberOfPages  =   5
@@ -186,6 +266,16 @@
                     {
 
                         var $input = $frmCompose.find("[name='contacts']");
+
+                        if(options.view === 'list')
+                        {
+                            listMembers.length = 0;
+                            //listItems.length = 0;
+                        } else
+                        {
+                            listMembersAll.length = 0;
+                            //listItemsAll.length = 0;
+                        }
 
                         $.each(response.docs, function( idx, item )
                         {
@@ -390,12 +480,18 @@
                     {
                         options.callback();
                     }
+
+                    $d.resolve( response.data );
                 }
             ,   error: function(jqXhr, textStatus)
                 {
                     var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
                     _showError("Something went wrong while retrieving contactlist of the member: " + status);
+
+                    // reject the promise
+                            //
+                    $d.reject( new Error( jqXhr ) );
                 }
             }
         );
@@ -748,6 +844,30 @@
                 $( '.compose-all' ).toggleClass( 'btn-primary' );
                 // _updateMenu();
 
+                /****** Growth Count on Monitoring *******/
+
+                getGrowthCount(
+                {
+                    list:        'members'
+                ,   searchType:  'bidxMemberProfile'
+                } );
+
+                getGrowthCount(
+                {
+                    list:       'entrpreneurs'
+                ,   searchType:  'bidxEntrepreneurProfile'
+                } );
+
+                getGrowthCount(
+                {
+                    list:        'investors'
+                ,   searchType:  'BidxInvestorProfile'
+
+                } );
+
+
+
+                /* Get Members on Monitoring */
                 getMembers(
                 {
                     list: "list"
@@ -757,24 +877,21 @@
                     {
                         _showMainView("list", "loadlist");
                         $( '.compose-list' ).toggleClass( 'btn-primary' );
-                        //bidx.data.setItem('members',listMembers);
-                        // $element.find( "input.bidx-tagsinput.defer" ).tagsinput();
+
                     }
                 } );
-
-
 
                 getMembers(
-                {
-                    list: "all"
-                ,   view: "all"
-                ,   load: "loadall"
-                ,   callback: function()
-                    {
-                        _showMainView("all", "loadall");
-                        $( '.compose-all' ).toggleClass( 'btn-primary' );
-                    }
-                } );
+                        {
+                            list: "all"
+                        ,   view: "all"
+                        ,   load: "loadall"
+                        ,   callback: function()
+                            {
+                                _showMainView("all", "loadall");
+                                $( '.compose-all' ).toggleClass( 'btn-primary' );
+                            }
+                        } );
                 break;
 
             case "compose":

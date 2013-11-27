@@ -24,8 +24,8 @@ ul.listheader  {
     height:310px;
 }
 
-.viewLoadlist, .viewLoadall {
-    background: url(/wp-content/themes/bidx/assets/img/ajax-loader.gif) no-repeat 12% 0%;
+.viewLoadlist, .viewLoadall, .loading {
+    background: url(/wp-content/themes/bidx/assets/img/ajax-loader.gif) no-repeat 25% 0%;
 }
 
 .pagercontainer-list, .pagercontainer-all {
