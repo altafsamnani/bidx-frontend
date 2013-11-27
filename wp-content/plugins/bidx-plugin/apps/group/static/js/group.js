@@ -185,9 +185,11 @@
                     //nextPageStart = ( (page - 1) * CONSTANTS.NUMBEROFPAGES ) + 1;
                     bidx.utils.log("Page Clicked", page);
 
+                    _showView( "load" );
+                    paging.members.offset = page -1;
+
                     _getMembers( function()
                     {
-                        paging.members.offset = page -1;
                         _showView( "members" );
                     } );
                 }
