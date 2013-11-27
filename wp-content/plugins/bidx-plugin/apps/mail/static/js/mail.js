@@ -1980,7 +1980,7 @@
                             ,   cls
                             ,   textValue
                             ,   $checkboxes
-                            ,   recipients          = []
+                            ,   recipients
                             ,   $elements           = []
                             ,   senderReceiverName
                             ;
@@ -1998,7 +1998,7 @@
                                 $.each( response.data.mail, function( index, item )
                                 {
                                     newListItem = listItem;
-                                    senderReceiverName = "";
+                                    recipients = [];
 
                                     // create a list of recipients ( for mbx-send only )
                                     //
