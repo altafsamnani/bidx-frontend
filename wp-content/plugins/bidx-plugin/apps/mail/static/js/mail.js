@@ -33,7 +33,7 @@
     //
     var CONTACTSPAGESIZE            = 3
     ,   ACTIVECONTACTSLIMIT         = 999
-    ,   MAILPAGESIZE                = 5
+    ,   MAILPAGESIZE                = 10
     ;
 
 
@@ -1185,11 +1185,12 @@
                        buttons.splice( $.inArray( ".bidx-btn-mail-next" , buttons ), 1 );
                     }
 
-                    // API doesnt allow delete so remove button
+                    // API doesnt allow certain actions for sent box, so remove those buttons
                     //
                     if ( currentState === "sent" )
                     {
-                        buttons.splice( $.inArray( ".bidx-btn-delete", buttons ), 1 );
+                        buttons.splice( $.inArray( ".bidx-btn-mark-unread", buttons ), 1 );
+                        buttons.splice( $.inArray( ".bidx-btn-mark-read", buttons ), 1 );
                         buttons.splice( $.inArray( ".bidx-btn-move-to-folder", buttons ), 1 );
                     }
 
@@ -1216,7 +1217,8 @@
             //  reset formfield values
             //
             $frmCompose.find( ":input" ).val("");
-            $frmCompose.find( ".bidx-tagsinput" ).tagsinput( "reset" );
+            $contactsDropdown.val();
+            $contactsDropdown.bidx_chosen();
             $btnComposeSubmit.removeClass( "disabled" );
             $btnComposeCancel.removeClass( "disabled" );
 
@@ -1268,7 +1270,6 @@
                             recipients.push( message.sender.id.toString() );
                         }
 
-bidx.utils.log("recipients", recipients);
 
 
                         $contactsDropdown.val( recipients );
@@ -1979,6 +1980,9 @@ bidx.utils.log("recipients", recipients);
                             ,   cls
                             ,   textValue
                             ,   $checkboxes
+                            ,   recipients          = []
+                            ,   $elements           = []
+                            ,   senderReceiverName
                             ;
 
                             // clear listing
@@ -1995,25 +1999,48 @@ bidx.utils.log("recipients", recipients);
                                 {
                                     newListItem = listItem;
 
+                                    // create a list of recipients ( for mbx-send only )
+                                    //
+                                    if( item.recipients && item.recipients.length )
+                                    {
+                                        $.each( item.recipients, function( idx, recipient )
+                                        {
+                                            recipients.push( recipient.displayName );
+                                        } );
+                                        senderReceiverName = recipients.toString();
+                                    }
+                                    // else if there is a sender ( for other boxes )
+                                    else if ( item.sender )
+                                    {
+                                        senderReceiverName = item.sender.displayName;
+                                    }
+
                                     // replace placeholders
                                     //
                                     newListItem = newListItem
                                             .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.id )
-                                            .replace( /%emailRead%/g, !item.read ? "email-new" : "" )
-                                            .replace( /%sendername%/g, item.sender.displayName )
+                                            // mailbox sent does not show unread state
+                                            //
+                                            .replace( /%emailRead%/g, ( !item.read && state !== "mbx-sent" ) ? "email-new" : "" )
+                                            .replace( /%senderReceiverName%/g, senderReceiverName )
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
                                             .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
                                             .replace( /%subject%/g, item.subject )
                                     ;
+
                                     $element = $( newListItem );
 
                                     $element.find( ":checkbox" ).attr( "data-id", item.id );
 
-                                    // add mail element to list
+                                    // add mail element to elements collection
                                     //
-                                    $list.append( $element );
+                                    $elements.push( $element );
+
                                 });
 
+                                // add mail elements to list
+                                //
+                                $list.append( $elements );
                                 // load checkbox plugin on element
                                 //
                                 $checkboxes = $list.find( '[data-toggle="checkbox"]' );
@@ -2535,7 +2562,11 @@ bidx.utils.log("recipients", recipients);
                 else if(action === "compose" && recipientIds )
                 {
                     var recipients = recipientIds.split('|');
-                    $frmCompose.find("input.bidx-tagsinput").tagsinput( "setValues", recipients );
+                    // select recipients and update chosen plugin
+                    //
+                    $contactsDropdown.val( recipientIds );
+                    $contactsDropdown.bidx_chosen();
+                    ;
                 }
 
                 _showView( "compose", action );
