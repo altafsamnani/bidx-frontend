@@ -8,24 +8,18 @@
     ,   bidx                        = window.bidx
     ,   currentGroupId              = bidx.common.getCurrentGroupId( "currentGroup" )
     ,   appName                     = "support"
-    ,   contactStatuses             = [ 'active', 'pending', 'ignored', 'incoming' ]
     ,   mailboxes                   = {}
-    ,   message                     = {}
     ,   itemList                    = {} // will contain key/value pairs where key=mailId and value always 1
-    ,   contactsOffset              = {} // will contain key/value pairs for each contact status (category)
-    ,   mailOffset                  = 0
-    ,   $mailboxToolbar
-    ,   $mailboxToolbarButtons
     ,   state
     ,   section
     ;
 
     // Constants
     //
-    var CONTACTSPAGESIZE            = 3
-    ,   ACTIVECONTACTSLIMIT         = 999
-    ,   MAILPAGESIZE                = 3
+    var ITEMPERPAGE                 = 5
+    ,   NUMBEROFPAGES               = 3
     ;
+
 
 
 
@@ -63,21 +57,17 @@
     }
 
 
-
-
-
-
-
-
-
     //  ################################## INIT #####################################  \\
 
         // initialize the mailbox by loading the content and in the end displaying its view
-        function _initMailBox()
+        function _initMailBox(options)
         {
             var buttons
             ,   currentState
+            ,   startOffset
             ;
+
+            startOffset = (options.startOffset) ? options.startOffset : 0 ;
             // remove the mbx-prefix so we can use the state as a key to match the mailbox
             //
             if( state.search( /(^mbx-)/ ) === 0 )
@@ -88,116 +78,62 @@
 
             _getEmails(
             {
-                startOffset:            mailOffset
-            ,   maxResults:             MAILPAGESIZE
+                startOffset:            startOffset
             ,   mailboxId:              mailboxes[ currentState ].id
             ,   view:                   "list"
 
             ,   callback: function( response )
                 {
+                    var nextPageStart
+                    ,   pagerOptions
+                    ,   numberFound    = response.data.total
+                    ,   totalPages     = Math.round(numberFound / ITEMPERPAGE);
 
+                    // show the listing
+                    //
                     _showView( "list" );
+
+                    if( totalPages >= 0 )
+                    {
+                        pagerOptions  =
+                        {
+                            currentPage:            1
+                        ,   totalPages:             totalPages
+                        ,   numberOfPages:          NUMBEROFPAGES
+                        ,   itemContainerClass:     function ( type, page, current )
+                                                    {
+                                                        return (page === current) ? "active" : "pointer-cursor";
+                                                    }
+                        ,   useBootstrapTooltip:    true
+                        ,   onPageClicked:          function( e, originalEvent, type, page )
+                                                    {
+                                                        nextPageStart = ( (page - 1) * ITEMPERPAGE ) ;
+                                                        bidx.utils.log("Page item clicked, type: "+type+" page: "+nextPageStart);
+                                                        //_showMainView(options.load, options.list);
+                                                        //_showView( "list" );
+                                                        _initMailBox(
+                                                        {
+                                                            startOffset:    nextPageStart
+                                                        ,   callback:       function()
+                                                            {
+                                                               // _showMainView(options.list, options.load);
+                                                                _showView( "list" );
+                                                            }
+                                                        } );
+                                                   }
+                        };
+                    }
+
+                    $( '.pager-support' ).bootstrapPaginator( pagerOptions );
+
                 }
             } );
 
         }
 
-        // set message data in view. Function expects message object in API format
-        //
-        function _initEmail( action, message )
-        {
-            var mailBody
-            ,   $htmlParser
-            ;
-            $currentView = $views.filter( bidx.utils.getViewName( action ) );
-
-
-            // filter HTML  before we can insert into the mailbody
-            //
-            $htmlParser = $( "<div/>" );
-            $htmlParser.html( message.content );
-            mailBody = $htmlParser.text().replace( /\n/g, "<br/>" );
-
-            // insert mail body in to placeholder of the view
-            //
-            $currentView.find( ".mail-subject").html( message.subject );
-
-            // insert mail body in to placeholder of the view
-            //
-            $currentView.find( ".mail-message").html( mailBody );
-        }
-
 
     //  ################################## GETTERS #####################################  \\
 
-
-        //  get selected email
-        //
-        function _getEmail( id )
-        {
-            bidx.utils.log( "[support] fetching mail content for message ", id );
-
-            // create a promise object
-            //
-            var $d = $.Deferred();
-
-            bidx.api.call(
-                 "mailboxMail.fetch"
-            ,   {
-                    mailId:                   id
-                ,   groupDomain:              bidx.common.groupDomain
-
-                ,   success: function( response )
-                    {
-                        bidx.utils.log("[support] get email", response);
-                        if( response.data )
-                        {
-
-                            // resolve the promise
-                            //
-                            $d.resolve( response.data );
-                        }
-                        else
-                        {
-                            // reject the promise
-                            //
-                            $d.reject( new Error( "Get EMail: no data received from API" ) );
-                        }
-
-
-                    }
-
-                ,   error: function( jqXhr, textStatus )
-                    {
-
-                        var response = $.parseJSON( jqXhr.responseText);
-
-                        // 400 errors are Client errors
-                        //
-                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                        {
-                            bidx.utils.error( "Client  error occured", response );
-                            _showError( "Something went wrong while fetching the email: " + response.text );
-                        }
-                        // 500 erors are Server errors
-                        //
-                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                        {
-                            bidx.utils.error( "Internal Server error occured", response );
-                            _showError( "Something went wrong while fetching the email: " + response.text );
-                        }
-
-                        // reject the promise
-                        //
-                        $d.reject( new Error( response ) );
-                    }
-                }
-            );
-
-            // return a promise which will be resolved when the async call is finished
-            //
-            return $d.promise();
-        }
 
         // get mailboxes from API, create mailbox navigation and execute callback if available
         //
@@ -313,11 +249,11 @@
                     [
                         {
                             label:      "startOffset",
-                            value:      mailOffset
+                            value:      options.startOffset
                         }
                     ,   {
                             label:      "maxResults",
-                            value:      MAILPAGESIZE
+                            value:      ITEMPERPAGE
                         }
 
                     ]
@@ -535,7 +471,7 @@
                 //
 
                 itemList = {};
-                mailOffset = 0;
+
 
 
                 _showView( "load" );
@@ -553,12 +489,7 @@
                     // NOTE: #matts; REFACTOR TO PROMISE CONSTRUCTION. Too much hidden CallBacks in these functions
                     _getMailBoxes( _initMailBox );
                 }
-                else
-                {
-                    // NOTE: #matts; REFACTOR TO PROMISE CONSTRUCTION. The much hidden CallBacks in these functions
-                    bidx.utils.log('in else');
-                    _initMailBox();
-                }
+
 
             break;
 

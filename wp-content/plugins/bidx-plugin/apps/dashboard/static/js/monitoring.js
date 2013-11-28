@@ -22,6 +22,9 @@
     ,   getGrowthCount              = []
     ;
 
+    var ITEMPERPAGE                 = 10
+    ,   NUMBEROFPAGES               = 5
+    ;
 
     //public functions
      var _oneTimeSetup = function()
@@ -216,7 +219,7 @@
                 }
             ,   {
                     label: "rows",
-                    value: "5"
+                    value: ITEMPERPAGE
                 }
             ];
         if (options.start)
@@ -252,9 +255,8 @@
                     ,   listLength
                     ,   nextPageStart
                     ,   pagerOptions
-                    ,   numberOfPages  =   5
                     ,   numberFound    = response.numFound
-                    ,   totalPages     =   Math.round(response.numFound / numberOfPages)
+                    ,   totalPages     =   Math.round(numberFound / ITEMPERPAGE)
                     ;
 
                     //clear listing
@@ -433,14 +435,14 @@
 
                         } );
 
-                        if( numberFound >= 5 )
+                        if( totalPages >= 0 )
                         {
-                            numberOfPages = ( totalPages <= 5 ) ? totalPages : numberOfPages;
+
                             pagerOptions  =
                             {
                                 currentPage:            1
                             ,   totalPages:             totalPages
-                            ,   numberOfPages:          numberOfPages
+                            ,   numberOfPages:          NUMBEROFPAGES
                             ,   itemContainerClass:     function ( type, page, current )
                                                         {
                                                             return (page === current) ? "active" : "pointer-cursor";
@@ -448,7 +450,7 @@
                             ,   useBootstrapTooltip:    true
                             ,   onPageClicked:          function( e, originalEvent, type, page )
                                                         {
-                                                            nextPageStart = ( (page - 1) * 5 ) + 1;
+                                                            nextPageStart = ( (page - 1) * ITEMPERPAGE ) ;
                                                             bidx.utils.log("Page item clicked, type: "+type+" page: "+nextPageStart);
                                                             bidx.utils.log("Options List: "+options.list+" Options Load: "+options.load);
                                                             _showMainView(options.load, options.list);

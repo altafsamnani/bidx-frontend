@@ -164,7 +164,7 @@ class BidxShortcode
             wp_register_script ('jquery-validation-jqueryui-datepicker', $bidxJsDir . '/vendor/jquery.ui.datepicker.validation.js', array ('jquery-validation'), '1.0.1', true);
             wp_register_script ('jquery-validation-additional-methods', $bidxJsDir . '/vendor/additional-methods.js', array ('jquery-validation'), '1.1.11', true);
             wp_register_script ('jquery-validation-bidx-additional-methods', $bidxJsDir . '/additional-methods.js', array ('jquery-validation'), '20130812', true);
-            wp_register_script ('bootstrap-paginator', $bidxJsDir . '/vendor/bootstrap-paginator.js', array ('bootstrap', 'jquery-ui'), '20131103', TRUE);
+            wp_register_script ('bootstrap-paginator', $bidxJsDir . '/vendor/bootstrap-paginator.js', array ('bootstrap', 'jquery'), '20131103', TRUE);
             wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
 
             // fileupload

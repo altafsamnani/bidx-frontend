@@ -82,9 +82,12 @@ class dashboard
                     break;
 
                 //Will be working on this
+
                 case 'support':
                     roots_scripts();
-                    $mailDepArr = array ('bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
+
+
+                    $mailDepArr = array ('bootstrap-paginator', 'bidx-common', 'bidx-i18n', 'jquery-validation',
                       'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
                     /* Style */
