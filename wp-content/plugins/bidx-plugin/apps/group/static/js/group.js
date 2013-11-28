@@ -3,31 +3,42 @@
 {
     "use strict";
 
-    var $navbar         = $( ".bidx-navbar" )
-    ,   $bidx           = $( bidx )
-    ,   $element        = $( "#groupHome")
-    ,   $carousel       = $element.find( "#groupCarousel" )
-    ,   $contentBlock   = $element.find( ".contentBlock" )
-    ,   $sideBar        = $element.find( ".sideBar" )
-    ,   $views          = $element.find( ".views > .view" )
-    ,   $snippets       = $element.find( ".snippets .snippet" )
-    ,   $memberList     = $element.find( ".memberList" )
-    ,   $memberPager    = $views.filter( ".viewMembers" ).find( ".pagerContainer .pager" )
-    ,   state
-    ,   snippets        = {}
+    var $navbar                 = $( ".bidx-navbar" )
+    ,   $bidx                   = $( bidx )
+    ,   $element                = $( "#groupHome")
+    ,   $carousel               = $element.find( "#groupCarousel" )
+    ,   $contentBlock           = $element.find( ".contentBlock" )
+    ,   $sideBar                = $element.find( ".sideBar" )
+    ,   $views                  = $element.find( ".views > .view" )
+    ,   $snippets               = $element.find( ".snippets .snippet" )
+    ,   $memberList             = $element.find( ".memberList" )
+    ,   $newsList               = $element.find( ".newsList" )
+    ,   $businesssummariesList  = $element.find( ".businesssummariesList" )
 
-    ,   $unreadCount    = $navbar.find( ".iconbar-unread" )
-    ,   paging          =
+    ,   $memberPager            = $views.filter( ".viewMembers" ).find( ".pagerContainer .pager" )
+    ,   $newsPager              = $views.filter( ".viewNews" ).find( ".pagerContainer .pager" )
+    ,   snippets                = {}
+    ,   state
+
+    ,   $unreadCount            = $navbar.find( ".iconbar-unread" )
+    ,   paging                  =
         {
             members:
             {
-                offset:    0
+                offset:         0
             ,   totalPages:     null
             }
         ,   businesssummaries:
             {
-                offset:    0
+                offset:         0
             ,   totalPages:     null
+            }
+        ,   news:
+            {
+                offset:         1 // WordPress starts counting from 1
+            ,   totalPages:     null
+            ,   order:          "desc"
+            ,   sort:           "date"
             }
         }
     ;
@@ -38,6 +49,7 @@
         {
             MEMBER_LIMIT:                       10
         ,   BUSINESSSUMMARIES_LIMIT:            10
+        ,   NEWS_LIMIT:                         10
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       5
         }
 
@@ -90,6 +102,15 @@
     {
         var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
     }
+
+    // display generic error view with msg provided
+    //
+    function _showError( msg )
+    {
+        $views.filter( bidx.utils.getViewName( "error" ) ).find( ".errorMsg" ).text( msg );
+        _showView( "error" );
+    }
+
 
     // get all members from API, paged and display by adding snippet per member
     //
@@ -156,9 +177,12 @@
         );
     }
 
-    function _setMemberListLoading()
+    function _toggleListLoading( list)
     {
-        $memberList.toggleClass( "loading" );
+        if( list )
+        {
+            list.toggleClass( "loading" );
+        }
     }
 
     function _doInitMemberListing( data )
@@ -170,7 +194,7 @@
         ;
 
 
-        if ( data.response && data.response.length )
+        if ( data.response && data.response.members && data.response.members.length )
         {
 
             // if ( response.totalMembers > currentPage size  --> show paging)
@@ -178,7 +202,7 @@
             pagerOptions  =
             {
                 currentPage:            ( paging.members.offset + 1 ) // correct for api value which starts with 0
-            ,   totalPages:             10 // temporary value, to be filled
+            ,   totalPages:             Math.ceil( data.response.totalMembers / CONSTANTS.MEMBER_LIMIT )
             ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
             ,   itemContainerClass:     function ( type, page, current )
                 {
@@ -190,12 +214,17 @@
                     //nextPageStart = ( (page - 1) * CONSTANTS.NUMBEROFPAGES ) + 1;
                     bidx.utils.log("Page Clicked", page);
 
-                    //_showView( "load" );
+                    // update internal page counter for members
+                    //
                     paging.members.offset = page -1;
-                    _setMemberListLoading();
+
+                    _toggleListLoading( $memberList );
+
+                    // load next page of members
+                    //
                     _getMembers( function()
                     {
-                        _setMemberListLoading();
+                        _toggleListLoading( $memberList );
                         _showView( "members" );
 
                     } );
@@ -206,7 +235,7 @@
 
             // create member listitems
             //
-            $.each( data.response, function( idx, member )
+            $.each( data.response.members, function( idx, member )
             {
                 var $item
                 ,   dataRoles
@@ -252,6 +281,7 @@
                                 break;
 
                             case "memberId":
+                            case "memberView":
                                 $el.attr( "href", function( i, href )
                                     {
                                         return href.replace( "%memberId%", bidx.utils.getValue( member, "bidxMeta.bidxEntityId" ) );
@@ -283,6 +313,216 @@
         }
     }
 
+    function _getBusinessSummaries( cb )
+    {
+        bidx.api.call(
+            "groupsBusinesssummaries.fetch"
+        ,   {
+                extraUrlParameters:
+                [
+                    {
+                        label:      "sort"
+                    ,   value:      "lastname"
+                    }
+                ,   {
+                        label:      "order"
+                    ,   value:      "desc"
+                    }
+                ,   {
+                        label:      "limit"
+                    ,   value:      CONSTANTS.BUSINESSSUMMARIES_LIMIT
+                    }
+                ,   {
+                        label:      "offset"
+                    ,   value:      paging.businesssummaries.offset
+                    }
+                ]
+            ,   groupDomain:              bidx.common.groupDomain
+
+            ,   success: function( response )
+                {
+                    bidx.utils.log("[businesssummaries] retrieved summaries ", response );
+
+
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var response = $.parseJSON( jqXhr.responseText)
+                    ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                    ;
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                    }
+
+                }
+            }
+        );
+    }
+
+    function _getNews( cb)
+    {
+
+            $.ajax(
+            {
+                url:        "wp-admin/admin-ajax.php?action=bidx_news"
+            ,   type:       "get"
+            ,   data:
+                {
+                    limit:      CONSTANTS.NEWS_LIMIT
+                ,   offset:     paging.news.offset
+                ,   order:      paging.news.order
+                ,   sort:       paging.news.sort
+                }
+            ,   dataType:   "json"
+            } )
+                .done( function( response )
+                {
+                    bidx.utils.log("[news] retrieved news ", response );
+
+                    _doInitNewsListing(
+                    {
+                        response:   response.data
+                    ,   cb:         cb
+                    } );
+                } )
+                .fail( function ( jqXhr, textStatus )
+                {
+                    var response = $.parseJSON( jqXhr.responseText)
+                    ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                    ;
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while retrieving the news: " + responseText );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                    }
+                } );
+
+    }
+
+    function _doInitNewsListing( data )
+    {
+        var items           = []
+        ,   pagerOptions    = {}
+        ,   nextPageStart
+        ;
+
+
+        if ( data.response && data.response.news && data.response.news.length )
+        {
+
+            // if ( response.totalMembers > currentPage size  --> show paging)
+            //
+            pagerOptions  =
+            {
+                currentPage:            ( paging.news.offset ) // correct for api value which starts with 0
+            ,   totalPages:             Math.ceil( data.response.totalNews / CONSTANTS.NEWS_LIMIT )
+            ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
+            ,   itemContainerClass:     function ( type, page, current )
+                {
+                    return ( page === current ) ? "active" : "pointer-cursor";
+                }
+            ,   useBootstrapTooltip:    true
+            ,   onPageClicked:          function( e, originalEvent, type, page )
+                {
+                    //nextPageStart = ( (page - 1) * CONSTANTS.NUMBEROFPAGES ) + 1;
+                    bidx.utils.log("Page Clicked", page);
+
+                    // update internal page counter for members
+                    //
+                    paging.news.offset = page;
+
+                    _toggleListLoading( $newsList );
+                    // load next page of members
+                    //
+                    _getNews( function()
+                    {
+                        _toggleListLoading( $newsList );
+                        _showView( "news" );
+
+                    } );
+                }
+            };
+
+            $newsPager.bootstrapPaginator( pagerOptions );
+
+            // create member listitems
+            //
+            $.each( data.response.news, function( idx, news )
+            {
+                var $item
+                ,   dataRoles
+                ;
+
+                // create clone of snippet
+                //
+                $item = snippets.$news.clone();
+                $item.removeClass( "snippet" );
+                dataRoles = $item.find("[data-role]");
+
+                $.each( dataRoles, function( idx, el )
+                {
+                    var $el = $( el )
+                    ,   title
+                    ;
+
+                    switch( $el.data( "role" ) )
+                    {
+                        case "title":
+                            title = $el.find( "[data-role='date']" ).text( bidx.utils.getValue( news, "date" ) );
+                            $el.html( title );
+                            $el.prepend( bidx.utils.getValue( news, "title" ) );
+                            break;
+                        case "content":
+                            $el.text( unescape( bidx.utils.getValue( news, "content" ) ) );
+                            break;
+                    }
+                } );
+
+                items.push( $item );
+
+
+
+            } );
+
+            // finally add snippets to DOM element
+            //
+            $newsList
+                .empty()
+                .append( items )
+            ;
+        }
+
+        // execute cb function
+        //
+        if( $.isFunction( data.cb ) )
+        {
+            data.cb();
+        }
+    }
+
 
     // ROUTER
     function navigate( options )
@@ -292,19 +532,49 @@
         switch ( options.section )
         {
             case "businesssummaries":
-                _showView( "businesssummaries" );
-            break;
-
-            case "members":
                 // hide the carousel
                 //
                 $carousel.hide();
+
+                // load businesssummaries
+                //
+                _getBusinessSummaries( function()
+                {
+                    _showView( "businesssummaries" );
+                } );
+
+            break;
+
+            case "members":
+
+                // hide the carousel
+                //
+                $carousel.hide();
+
                 _showView( "load" );
                 // load members
                 //
                 _getMembers( function()
                 {
                     _showView( "members" );
+                } );
+
+
+            break;
+
+            case "news":
+
+                // hide the carousel
+                //
+                $carousel.hide();
+
+                _showView( "load" );
+
+                // load news
+                //
+                _getNews( function()
+                {
+                    _showView( "news" );
                 } );
 
 

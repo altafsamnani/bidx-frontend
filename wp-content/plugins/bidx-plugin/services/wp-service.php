@@ -342,6 +342,7 @@ function clear_bidx_cookies ()
 
 add_action ('wp_ajax_bidx_translation', 'get_string_translation');
 add_action ('wp_ajax_nopriv_bidx_translation', 'get_string_translation');
+add_action ('wp_ajax_bidx_news', 'get_wp_news');
 
 function get_string_translation ()
 {
@@ -413,6 +414,76 @@ function get_string_translation ()
         echo json_encode ($translatedArr);
     }
 
+    exit;
+}
+
+
+// Author: msp
+// Date: 26-11-2013
+// Get news in a json representation
+//
+function get_wp_news ()
+{
+    // setting default query arguments
+    // check "http://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters" for defaults on sorting
+    //
+    $limit      = ( isset ( $_GET[ 'limit'] ) )     ? $_GET[ 'limit' ]  : 5;
+    $offset     = ( isset ( $_GET[ 'offset'] ) )    ? $_GET[ 'offset']  : 1;
+    $order      = ( isset ( $_GET[ 'order'] ) )     ? $_GET[ 'order' ]  : "desc";
+    $orderby    = ( isset ( $_GET[ 'sort'] ) )      ? $_GET[ 'sort' ]   : "date";
+
+    // prepare the result array
+    //
+    $result     = array(
+        "status"          => "OK"
+    ,   "languageCode"    => "en"
+    ,   "data"            => Array()
+    );
+
+    // set the query arguments
+    //
+    $args = array(
+        'post_type'       => 'post'
+    ,   'post_status'     => 'publish'
+    ,   'posts_per_page'  => $limit
+    ,   'order'           => $order
+    ,   'paged'           => $offset
+    );
+
+    $my_query = null;
+    $my_query = new WP_Query($args);
+
+    // set return values
+    //
+    $result[ "data" ][ "totalNews" ] = intval( $my_query -> found_posts );
+    $result[ "data" ][ "news"] = array();
+
+    if( $my_query -> have_posts() ) {
+
+        // iterate the posts
+        //
+        foreach (  $my_query -> posts as  $post ) {
+
+            $content =  urlencode( $post -> post_content );
+
+            // add post data to result
+            //
+            $result[ "data" ][ "news"][] = array(
+                "postId"    => $post -> ID
+            ,   "date"      => $post -> post_date
+            ,   "title"     => $post -> post_title
+            ,   "content"   => $content
+            );
+        }
+
+    }
+
+    wp_reset_query();
+    // echo converted result into json
+    //
+    echo json_encode ( $result );
+
+    // do not remove exit, it will add output which i do not want
     exit;
 }
 

@@ -26,14 +26,19 @@
 
                     <article class="view viewLoad"><?php _e('Loading...','bidxplugin')?></article>
 
+                    <article class="view viewError">
+                        <h1><?php _e('Error','bidxplugin')?></h1>
+                        <span class="errorMsg"></span>
+                    </article>
+
+                    <!-- Home VIEW -->
                     <article class="view viewHome viewInitial">
                         <!-- NEWS BLOCK -->
                         <div class="feature-block spacer">
 
-
                             <div class="feature-block-header bidx-theme-colour-one">
                                 <?php _e('News and Events','bidxtheme')?>
-                                <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
+                                <span class="pull-right"><a href="#home/news"><?php _e('view all','bidxtheme')?></a></span>
                             </div>
                             <div class="feature-block-items">
                                 <div class="bidx-latest clearfix">
@@ -49,7 +54,7 @@
                         <div class="feature-block spacer">
                             <div class="feature-block-header bidx-theme-colour-one">
                                 <?php _e('New Business Summaries','bidxtheme')?>
-                                <span class="pull-right"><a href=""><?php _e('view all','bidxtheme')?></a></span>
+                                <span class="pull-right"><a href="#home/businesssummaries"><?php _e('view all','bidxtheme')?></a></span>
                             </div>
                             <div class="feature-block-items">
                                 <div class="bidx-latest clearfix">
@@ -75,14 +80,33 @@
                         </div>
                     </article>
 
+                    <!-- BusinessSummaries VIEW -->
                     <article class="view viewBusinessummaries">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, necessitatibus, sed, obcaecati, incidunt deleniti a unde officia quos debitis deserunt voluptatem culpa quidem totam illum voluptates aspernatur explicabo corrupti ipsam.
-                        </p>
+                        <div class="businesssummariesList clearfix">
+
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12 pagerContainer">
+                                <div class="pager"></div>
+                            </div>
+                        </div>
                     </article>
 
+                    <!-- Members VIEW -->
                     <article class="view viewMembers">
                         <div class="memberList clearfix">
+
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12 pagerContainer">
+                                <div class="pager"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- news VIEW -->
+                    <article class="view viewNews">
+                        <div class="newsList clearfix">
 
                         </div>
                         <div class="row-fluid">
@@ -136,8 +160,17 @@
                     <div data-role="roles">
                         <span class="label" data-role="value"></span>
                     </div>
-                    <div><a href="/mail/#mail/contacts/action=connect&amp;id=%memberId%" data-role="memberId">Connect</a></div>
+                    <div><a href="/mail/#mail/contacts/action=connect&amp;id=%memberId%" data-role="memberId"><?php _e('Connect','bidxtheme')?></a></div>
+                    <div class="pull-right"><a href="/member/%memberId%" data-role="memberView"><?php _e('View profile','bidxtheme')?></a></div>
                 </div>
+            </div>
+        </div>
+
+        <!-- member Snippit -->
+        <div class="snippet" data-key="news">
+            <div class="span12 clearfix well">
+                <h2 data-role="title"><span class="header-meta pull-right" data-role="date">%date%</span></h2>
+                <div data-role="content"></div>
             </div>
         </div>
 

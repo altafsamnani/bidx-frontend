@@ -39,3 +39,7 @@ top: 20px;
 	opacity: 0.5;
 	filter: alpha(opacity=50);
 }
+
+#groupHome .newsList h2 .header-meta {
+	font-size: 10px;
+}
