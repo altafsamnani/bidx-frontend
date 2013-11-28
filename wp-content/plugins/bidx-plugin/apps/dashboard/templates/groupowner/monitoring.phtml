@@ -264,21 +264,30 @@
     <div class="row-fluid">
     <div class="span1 pull-left check">
     <label class="checkbox">
-    <input type="checkbox" data-toggle="checkbox"  value="" data-id="">
+    <input type="checkbox" data-toggle="checkbox"  value="" data-id="%userId%">
     </label>
     </div>
     <div class="span11 media-body">
     <div class="row-fluid">
-    <div class="span4"><h6 class="media-heading"><span class="placeholder user"><?php _e ('SENDER UNKNOWN IN API', 'bidxplugin') ?></span></h6></div>
-    <div class="span2"><span class="placeholder location"/></div>
-    <div class="span2"><span class="placeholder membersince"/></div>
-    <div class="span2"><span class="placeholder role"/></div>
-    <div class="span2"><span class="placeholder lastlogin"/></div>
+    <div class="span4">
+        <h6 class="media-heading">
+            <span class="placeholder user"><a target="_blank" href="/member/%userId%">%user%</a></span>
+        </h6>
     </div>
-    <div class="subject">
-    <span class="placeholder subject"/>
+    <div class="span2">
+        <span class="placeholder location"/>%location%</span>
+    </div>
+    <div class="span2">
+        <span class="placeholder membersince"/>%membersince%</span>
+    </div>
+    <div class="span2">
+        <span class="placeholder role"/>%role%</span>
+    </div>
+    <div class="span2">
+        <span class="placeholder lastlogin"/>%lastlogin%</span>
     </div>
     </div>
+   </div>
     </li>
     -->
 </script>

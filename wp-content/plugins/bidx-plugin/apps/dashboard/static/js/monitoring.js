@@ -190,7 +190,7 @@
 
     var getMembers = function(options)
     {
-        var $listItem       = $($("#dashboard-listitem").html().replace(/(<!--)*(-->)*/g, ""))
+        var snippit       = $("#dashboard-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $($("#dashboard-empty").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list           = $("." + options.list)
         ,   $view           = $views.filter(bidx.utils.getViewName(options.view))
@@ -249,12 +249,12 @@
             ,   success: function(response)
                 {
                     var item
-                    ,   element
                     ,   cls
                     ,   textValue
                     ,   listLength
                     ,   nextPageStart
                     ,   pagerOptions
+                    ,   emptyVal = '-'
                     ,   numberFound    = response.numFound
                     ,   totalPages     =   Math.round(numberFound / ITEMPERPAGE)
                     ;
@@ -318,36 +318,20 @@
                             // $input.tagsManager( "addtag", item.user );
 
                             // Member Display
-                            element = $listItem.clone();
+
                             //search for placeholders in snippit
-                            element.find(".placeholder").each(function(i, el)
-                            {
+                            listItem = snippit
+                                .replace( /%userId%/g,      item.userId   ? item.userId     : emptyVal )
+                                .replace( /%user%/g,      item.user   ? item.user     : emptyVal )
+                                .replace( /%location%/g,      item.location   ? item.location     : emptyVal )
+                                .replace( /%membersince%/g,      item.membersince   ? item.membersince     : emptyVal )
+                                .replace( /%role%/g,      item.role   ? item.role     : emptyVal )
+                                .replace( /%lastlogin%/g,      item.lastlogin   ? item.lastlogin     : emptyVal )
+                                .replace( /%subject%/g,      item.subject   ? item.subject     : emptyVal )
+                                ;
 
-                                //isolate placeholder key
-                                cls = $(el).attr("class").replace("placeholder ", "");
-
-                                //if key if available in item response
-                                if ( item[cls] )
-                                {
-
-                                    textValue = item[cls];
-                                    //add hyperlink on sendername for now (to read email)
-                                    if ( cls === "user" )
-                                    {
-                                        textValue = "<a href=\"" + document.location.hash + "/" + item.userId + "\" >" + textValue + "</a>";
-                                    }
-                                    if ( cls === "location" )
-                                    {
-                                        textValue = item.location;
-                                    }
-                                    element.find( "span." + cls ).replaceWith(textValue);
-
-                                }
-                            });
-
-                            element.find(":checkbox").data("id", item.userId);
                             //  add mail element to list
-                            $list.append(element);
+                            $list.append(listItem);
 
                             //  load checkbox plugin on element
                             var $checkboxes = $list.find('[data-toggle="checkbox"]');
