@@ -5,3 +5,12 @@
 .viewInitial {
     display: block;
 }
+
+
+/* Pagination plugin */
+
+.pagination .pointer-cursor {
+    cursor: hand;
+    cursor: pointer;
+}
+/* \ Pagination plugin */

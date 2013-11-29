@@ -447,7 +447,6 @@
             ,   useBootstrapTooltip:    true
             ,   onPageClicked:          function( e, originalEvent, type, page )
                 {
-                    //nextPageStart = ( (page - 1) * CONSTANTS.NUMBEROFPAGES ) + 1;
                     bidx.utils.log("Page Clicked", page);
 
                     // update internal page counter for members
@@ -455,6 +454,7 @@
                     paging.news.offset = page;
 
                     _toggleListLoading( $newsList );
+
                     // load next page of members
                     //
                     _getNews( function()
