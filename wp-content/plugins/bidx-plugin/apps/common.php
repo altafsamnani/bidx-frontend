@@ -631,6 +631,8 @@ class BidxCommon
             $transientI18nData[$appName] = array ();
             foreach ($items as $xmlObj) {
 
+                $transientI18nData[$appName][$count] = new stdClass();
+
                 $arr = $xmlObj->attributes ();
                 $xmlLabel = $xmlObj->__toString ();
 
