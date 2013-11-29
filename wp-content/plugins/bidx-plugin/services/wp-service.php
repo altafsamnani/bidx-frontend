@@ -455,16 +455,17 @@ function get_wp_news ()
 
     // set return values
     //
-    $result[ "data" ][ "totalNews" ] = intval( $my_query -> found_posts );
-    $result[ "data" ][ "news"] = array();
+    $result[ "data" ][ "totalNews" ]    = intval( $my_query -> found_posts );
+    $result[ "data" ][ "news"]          = array();
 
     if( $my_query -> have_posts() ) {
 
         // iterate the posts
         //
         foreach (  $my_query -> posts as  $post ) {
-
-            $content =  urlencode( $post -> post_content );
+            // decide not to encode the content because I think json_encode will take care of this
+            //
+            $content =   $post -> post_content ;
 
             // add post data to result
             //
@@ -477,13 +478,16 @@ function get_wp_news ()
         }
 
     }
-
+    // clear wp query
+    //
     wp_reset_query();
+
     // echo converted result into json
     //
     echo json_encode ( $result );
 
-    // do not remove exit, it will add output which i do not want
+    // do not remove exit, it will add unwanted output after the json value
+    //
     exit;
 }
 

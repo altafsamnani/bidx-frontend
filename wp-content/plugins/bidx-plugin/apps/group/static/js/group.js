@@ -491,13 +491,23 @@
                     switch( $el.data( "role" ) )
                     {
                         case "title":
+
+                            // add the date to the span in the h2
+                            //
                             title = $el.find( "[data-role='date']" ).text( bidx.utils.getValue( news, "date" ) );
                             $el.html( title );
+
+                            // add the text before the date span
+                            //
                             $el.prepend( bidx.utils.getValue( news, "title" ) );
-                            break;
+
+                        break;
+
                         case "content":
-                            $el.text( unescape( bidx.utils.getValue( news, "content" ) ) );
-                            break;
+
+                            $el.html( bidx.utils.getValue( news, "content" ) );
+
+                        break;
                     }
                 } );
 
