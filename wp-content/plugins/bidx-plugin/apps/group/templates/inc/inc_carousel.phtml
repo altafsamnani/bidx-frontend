@@ -1,17 +1,11 @@
 <?php
     $images = array();
 
-    if ( isset( $post )) {
-        $images = get_children(
-            array(
-            'post_parent' => $post->ID,
-            'post_status' => 'inherit',
-            'post_type' => 'attachment',
-            'post_mime_type' => 'image',
-            'order' => 'ASC',
-            'orderby' => 'menu_order' )
-        );
-    }
+    // get images associated with this post
+    //
+    $images = get_attached_media( 'image', get_the_ID() );
+
+
 
     if ( count( $images ) > 0 ) {
 ?>
@@ -74,6 +68,13 @@
             </div>
 <?php
         } // foreach
+?>
+        </div>
+
+
+    </div>
+    <!-- // IMAGE Carousel -->
+<?php
 
     }  else {
 ?>
