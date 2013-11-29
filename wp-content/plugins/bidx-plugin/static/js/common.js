@@ -1050,23 +1050,38 @@
     // Usefull for setting icons / colors etc
     //
     $( ".accordion-body.collapse" )
-        .on( "show", function()
+        .on( "show", function( e )
         {
-            var $accordionBody = $( this );
+            var $accordionBody;
 
-            $accordionBody.closest( ".accordion-group" ).first().addClass( "accordion-open" );
-        } )
-        .on( "hide", function(e)
-        {
-            var $accordionBody = $( this );
-            $accordionBody.closest( ".accordion-group" ).first().removeClass( "accordion-open" );
-            $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).first().css({ overflow: 'hidden' });
-        } )
-        .on( "shown", function ()
-        {
-            var $accordionBody = $( this );
+            if ( e.target === e.currentTarget )
+            {
+                $accordionBody = $( this );
 
-            $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).first().css({ overflow: 'visible' });
+                $accordionBody.closest( ".accordion-group" ).first().addClass( "accordion-open" );
+            }
+        } )
+        .on( "hide", function( e )
+        {
+            var $accordionBody;
+
+            if ( e.target === e.currentTarget )
+            {
+                $accordionBody = $( this );
+
+                $accordionBody.closest( ".accordion-group" ).first().removeClass( "accordion-open" );
+                $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).first().css({ overflow: 'hidden' });
+            }
+        } )
+        .on( "shown", function( e )
+        {
+            var $accordionBody;
+
+            if ( e.target === e.currentTarget )
+            {
+                $accordionBody = $( this );
+                $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).first().css({ overflow: 'visible' });
+            }
         } );
 
 

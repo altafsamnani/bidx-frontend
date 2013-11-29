@@ -515,12 +515,12 @@
 //
 // This is causing bubbling issues when used in a bootstrap accordion. Not in use right now, so just kill it.
 
-      // hide popovers on focus and keypress events
-      // obj.on('focus keypress', function (e) {
-      //   if ($(this).popover) {
-      //     $(this).popover('hide');
-      //   }
-      // });
+//      hide popovers on focus and keypress events
+      obj.on('focus keypress', function (e) {
+        if ($(this).popover) {
+          $(this).popover('hide');
+        }
+      });
 
 // end BIDX
 
