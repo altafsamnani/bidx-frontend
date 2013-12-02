@@ -32,7 +32,7 @@
             		<div class="copyright">&copy; <?php echo date("Y") ?>. bidX.net. <?php _e('All rights reserved','bidxtheme')?></div>
                     <div class="inline-list footer-menu">
             			<div><a href="/sitemap"><?php _e('Sitemap','bidxtheme')?></a></div>
-            			<div><a href="/termsandconditions"><?php _e('Terms and conditions','bidxtheme')?></a></div>
+            			<div><a href="/wp-content/themes/bidx-group-template/assets/docs/terms/BidX_Terms_and_Conditions_October_2013_en.pdf" target="_blank"><?php _e('Terms and service','bidxtheme')?></a></div>
             			<div><a href="/privacy"><?php _e('Privacy','bidxtheme')?></a></div>
             		</div>
             	</div>
