@@ -472,6 +472,7 @@ class BidxCommon
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
         if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) ||
             //$hostAddress[1]   == 'registration'                   ||
+            strstr ($hostAddress[2], 'admin-ajax.php')              ||
             strstr ($hostAddress[1], 'wp-login.php')              ||
             is_super_admin()
             ) { //Allow Groupadmin for wp-admin dashboard
@@ -492,7 +493,7 @@ class BidxCommon
     {
         $currentUser = wp_get_current_user ();
         $serverUri = $_SERVER["REQUEST_URI"];
-        $iswpInternalVar = ((is_super_admin()) || preg_match ('/wp-login/i', $serverUri));
+        $iswpInternalVar = ((is_super_admin()) || preg_match ('/wp-login/i', $serverUri) || preg_match ('/admin-ajax/i', $serverUri) );
         return $iswpInternalVar;
     }
 
