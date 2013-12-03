@@ -342,7 +342,6 @@ function clear_bidx_cookies ()
 
 add_action ('wp_ajax_bidx_translation', 'get_string_translation');
 add_action ('wp_ajax_nopriv_bidx_translation', 'get_string_translation');
-add_action ('wp_ajax_bidx_news', 'get_wp_news');
 
 function get_string_translation ()
 {
@@ -422,6 +421,8 @@ function get_string_translation ()
 // Date: 26-11-2013
 // Get news in a json representation
 //
+add_action ('wp_ajax_bidx_news', 'get_wp_news');
+
 function get_wp_news ()
 {
     // setting default query arguments
@@ -1751,18 +1752,18 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
         $bodyProfile = bidx_wordpress_pre_action ('entityprofile');
         $paramsProfile = $bodyProfile['params'];
 
-        $resultEntityMember = call_bidx_service ('entity/' . $paramsProfile['creatorProfileId'], $paramsProfile, 'PUT');
-        $requestEntityMember = bidx_wordpress_post_action ('groupmembers', $resultEntityMember, $bodyProfile);
+       //  $resultEntityMember = call_bidx_service ('entity/' . $paramsProfile['creatorProfileId'], $paramsProfile, 'PUT');
+       // $requestEntityMember = bidx_wordpress_post_action ('groupmembers', $resultEntityMember, $bodyProfile);
 
 
         //2 Edit Group Entity
-        $bodyGroup = bidx_wordpress_pre_action ('entitygroup');
-        $paramsGroup = $bodyGroup['params'];
+       // $bodyGroup = bidx_wordpress_pre_action ('entitygroup');
+       // $paramsGroup = $bodyGroup['params'];
 
         //$resultEntityGroup = call_bidx_service('entity/' . $paramsGroup['groupProfileId'], $paramsGroup, 'PUT');
         //$requestEntityGroup = bidx_wordpress_post_action('groupmembers', $resultEntityGroup, $bodyGroup);
         //3 Edit Group Data
-        $bodyGrpData = bidx_wordpress_pre_action ();
+        $bodyGrpData = bidx_wordpress_pre_action ( "groups" );
         $paramsGrpData = $bodyGrpData['params'];
         $resultGrpData = call_bidx_service ('groups/' . $paramsGrpData['id'], $paramsGrpData, 'PUT');
         $requestGrpData = bidx_wordpress_post_action ('groupmembers', $resultGrpData, $bodyGrpData);
@@ -1776,6 +1777,28 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
 
         die (); // stop executing script
     }
+
+
+    // Author: msp
+    // Date: 01-12-2013
+    // create wordpress site call
+    //http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_createsite #POST
+    //
+    add_action ('wp_ajax_nopriv_bidx_createsite', 'ajax_create_wordpress_site');
+
+    function ajax_create_wordpress_site ()
+    {
+        // adding origin header to allow cross domain ajax call from admin site
+        //
+        header('Access-Control-Allow-Origin: http://admin.'. $_SERVER['HTTP_HOST'] );
+
+        $bodyGrpData = bidx_wordpress_pre_action ( "groups" );
+        $jsonData = json_encode ($bodyGrpData);
+        echo $jsonData;
+
+        die (); // stop executing script
+    }
+
 
     /* Assign theme/pages/metadata when site is created
      * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages

@@ -247,7 +247,7 @@
                     //
                     $item = snippets.$member.clone();
                     $item.removeClass( "snippet" );
-                    dataRoles = $item.find("[data-role]");
+                    dataRoles = $item.find( "[data-role]" );
 
                     $.each( dataRoles, function( idx, el )
                     {
