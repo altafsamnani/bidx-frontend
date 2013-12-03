@@ -384,7 +384,6 @@ filter: alpha(opacity=100);
 <script type='text/javascript' src='/wp-content/themes/bidx-group-template/assets/js/vendor/jquery-ui-1.10.3.custom.js?ver=1.10.3-20130610'></script>
 <script type='text/javascript' src='//maps.googleapis.com/maps/api/js?v=3&#038;sensor=false&#038;libraries=places&#038;ver=20130501'></script>
 <script type='text/javascript' src='/wp-content/plugins/bidx-plugin/apps/../static/js/bidx-location.js?ver=20130904'></script>
-<script type='text/javascript' src='/wp-content/plugins/bidx-plugin/apps/../static/js/form.js?ver=20130501'></script>
 <script type='text/javascript' src='/wp-content/plugins/bidx-plugin/apps/../static/js/bidxAPI/api-core.js?ver=20130501'></script>
 <script type='text/javascript' src='/wp-content/plugins/bidx-plugin/apps/group/static/js/group.js?ver=20130501'></script>
 <script type='text/javascript' src='/wp-content/themes/bidx-group-template/assets/js/vendor/underscore.js?ver=1.4.4'></script>

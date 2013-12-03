@@ -173,7 +173,6 @@ class BidxShortcode
 
             //bidX scripts
             wp_register_script ('bidx-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery'), '20130501', TRUE);
-            wp_register_script ('bidx-form', $bidxJsDir . '/form.js', array ('jquery', 'jquery-ui'), '20130501', TRUE);
             wp_register_script ('bidx-utils', $bidxJsDir . '/utils.js', array ('jquery'), '20130501', TRUE);
 
 
