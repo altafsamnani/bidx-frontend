@@ -17,155 +17,150 @@
         <form id="frmeditEntrepreneur">
 
             <div class="span12">
-            <div class="accordion" id="accordionEntrepreneurEdit">
-                <div class="accordion-group accordion-open">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionEntrepreneurEdit" href="#accordionEntrepreneurDetails">
+
+                <div class="accordion" id="accordionEntrepreneurEdit">
+                    <div class="accordion-group accordion-open">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionEntrepreneurEdit" href="#accordionEntrepreneurDetails">
                             <span class="fui-arrow-right accordion-state-icon"></span>
-                            <?php _e('Entrepreneur profile','bidxplugin');?>
-                        </a>
-                    </div>
-                <div id="accordionEntrepreneurDetails" class="accordion-body collapse in" style="overflow: visible;">
-                    <div class="accordion-inner">
-
-                        <div class="alert alert-info">
-                            <?php _e('Complete this short form with information about you as entrepreneur. Be aware that investors and other members potentially interested in your business will be very interested to know more about you, your motivation and what makes you thrive as an entrepreneur. Treat this form as your first contact with, and pitch to potential investors and business partners.', 'bidxplugin')?>
+                                <?php _e('Entrepreneur profile','bidxplugin');?>
+                            </a>
                         </div>
-
-                        <div class="row-fluid">
-                            <div class="span11">
-
-                                <div class="control-group">
-                                    <label class="control-label"><?php _e('Summary','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <textarea name="summary" placeholder="<?php _e('Please describe yourself as an entrepreneur (max. 900 characters)','bidxplugin'); ?>" ></textarea>
-                                    </div>
+                        <div id="accordionEntrepreneurDetails" class="accordion-body collapse in" style="overflow: visible;">
+                            <div class="accordion-inner">
+                                <div class="alert alert-info">
+                                <?php _e('Complete this short form with information about you as entrepreneur. Be aware that investors and other members potentially interested in your business will be very interested to know more about you, your motivation and what makes you thrive as an entrepreneur. Treat this form as your first contact with, and pitch to potential investors and business partners.', 'bidxplugin')?>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="row-fluid">
+                                    <div class="span11">
 
-                        <div class="row-fluid">
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label"><?php _e('Focus industry','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <select name="focusIndustry" multiple></select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row-fluid">
-                            <div class="span6">
-
-                                <div class="control-group">
-                                    <label class="control-label"><?php _e('Have you ever owned a business before?','bidxplugin'); ?></label>
-                                    <div class="controls">
-                                        <label class="radio"><input type="radio" value="true" name="prevRunBusiness" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
-                                        <label class="radio"><input type="radio" value="false" name="prevRunBusiness" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="toggle togglePrevRunBusiness intermediate-row">
-                            <h6><?php _e('Previous businesses','bidxplugin'); ?></h6>
-                            <a href="#addPreviousBusiness" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
-                        </div>
-
-                        <div class="toggle togglePrevRunBusiness previousBusinessContainer"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionEntrepreneurEdit" href="#accordionEntrepreneurCV">
-                            <span class="fui-arrow-right accordion-state-icon"></span>
-                            <?php _e('CV','bidxplugin');?>
-                        </a>
-                    </div>
-                    <div id="accordionEntrepreneurCV" class="accordion-body collapse cvControl">
-                        <div class="accordion-inner">
-                            <div class="row-fluid cvContainer">
-                                <div class="span4">
-
-                                    <div class="control-group">
-                                        <div class="hasCV">
-                                            <h3 class="documentName"></h3>
-                                            <p class="uploadedDateTime"></p>
-
-                                            <a href="#" class="documentLink"><?php _e('Download CV','bidxplugin'); ?></a>
-                                        </div>
-
-                                        <div class="noCV">
-                                            <i><?php _e('No CV uploaded yet','bidxplugin'); ?></i>
+                                        <div class="control-group">
+                                            <label class="control-label"><?php _e('Summary','bidxplugin'); ?></label>
+                                            <div class="controls">
+                                                <textarea name="summary" placeholder="<?php _e('Please describe yourself as an entrepreneur (max. 900 characters)','bidxplugin'); ?>" ></textarea>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="span8">
-                                    <a href="#changeCv" data-toggle="modal" class="btn btn-primary"><span class="hasCV"><?php _e('Or select a different document'); ?></span><span class="noCV"><?php _e('Select a document','bidxplugin'); ?></span></a>
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <div class="control-group">
+                                            <label class="control-label"><?php _e('Focus industry','bidxplugin'); ?></label>
+                                            <div class="controls">
+                                                <select name="focusIndustry" multiple></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                    <div class="changeCvModal modal hide fade">
-                                      <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h3><?php _e('Check the file you want to use as your CV', 'bidxplugin' ); ?></h3>
-                                      </div>
-                                        <div class="modal-body">
-                    <?php
+                                <div class="row-fluid">
+                                    <div class="span6">
+
+                                        <div class="control-group">
+                                            <label class="control-label"><?php _e('Have you ever owned a business before?','bidxplugin'); ?></label>
+                                            <div class="controls">
+                                                <label class="radio"><input type="radio" value="true" name="prevRunBusiness" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
+                                                <label class="radio"><input type="radio" value="false" name="prevRunBusiness" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="toggle togglePrevRunBusiness intermediate-row">
+                                    <h6><?php _e('Previous businesses','bidxplugin'); ?></h6>
+                                    <a href="#addPreviousBusiness" class="btn btn-primary">
+                                        <span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?>
+                                    </a>
+                                </div>
+                                <div class="toggle togglePrevRunBusiness previousBusinessContainer"></div>
+                            </div><!-- end accordion inner -->
+                        </div><!-- end accordion body -->
+                    </div><!-- end accordion group -->
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionEntrepreneurEdit" href="#accordionEntrepreneurCV">
+                                <span class="fui-arrow-right accordion-state-icon"></span>
+                                <?php _e('CV','bidxplugin');?>
+                            </a>
+                        </div>
+                        <div id="accordionEntrepreneurCV" class="accordion-body collapse cvControl">
+                            <div class="accordion-inner">
+                                <div class="row-fluid cvContainer">
+                                    <div class="span12">
+                                        <div class="control-group">
+                                            <div class="hasCV">
+                                                <h3 class="documentName"></h3>
+                                                <p class="uploadedDateTime"></p>
+                                                <a href="#" class="documentLink"><?php _e('Download CV','bidxplugin'); ?></a>
+                                            </div>
+                                            <div class="noCV">
+                                                <i><?php _e('No CV uploaded yet','bidxplugin'); ?></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <a href="#changeCv" data-toggle="modal" class="btn btn-primary">
+                                            <span class="hasCV"><?php _e('Or select a different document'); ?></span>
+                                            <span class="noCV"><?php _e('Select a document','bidxplugin'); ?></span>
+                                        </a>
+                                        <div class="changeCvModal modal hide fade">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h3><?php _e('Check the file you want to use as your CV', 'bidxplugin' ); ?></h3>
+                                            </div>
+                                            <div class="modal-body">
+    <?php
                                             // Media app will only be inserted once, this is by design!
                                             //
                                             echo do_shortcode( '[bidx app="media"]' );
-                    ?>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                            <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+    ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                                <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+                        </div><!-- end accordion body -->
+                    </div><!-- end accordion group -->
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionEntrepreneurEdit" href="#accordionEntrepreneurDocs">
+                                <span class="fui-arrow-right accordion-state-icon"></span>
+                                <?php _e('Other documents','bidxplugin');?>
+                            </a>
                         </div>
-                    </div>
-                </div>
-
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionEntrepreneurEdit" href="#accordionEntrepreneurDocs">
-                            <span class="fui-arrow-right accordion-state-icon"></span>
-                            <?php _e('Other documents','bidxplugin');?>
-                        </a>
-                    </div>
-                    <div id="accordionEntrepreneurDocs" class="accordion-body collapse attachmentsControl">
-                        <div class="accordion-inner">
-
-                        <div class="attachmentsContainer"></div>
-
-                        <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
-
-                        <div class="addAttachmentsModal modal hide fade">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h3><?php _e('Check the files you want to attach to your member profile', 'bidxplugin' ); ?></h3>
-                          </div>
-                            <div class="modal-body">
-        <?php
-                                // Media app will only be inserted once, this is by design!
-                                //
-                                echo do_shortcode( '[bidx app="media"]' );
-        ?>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <div id="accordionEntrepreneurDocs" class="accordion-body collapse attachmentsControl">
+                            <div class="accordion-inner">
+                                <div class="attachmentsContainer"></div>
+                                <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
+                                <div class="addAttachmentsModal modal hide fade">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h3><?php _e('Check the files you want to attach to your member profile', 'bidxplugin' ); ?></h3>
+                                    </div>
+                                    <div class="modal-body">
+    <?php
+                                        // Media app will only be inserted once, this is by design!
+                                        //
+                                        echo do_shortcode( '[bidx app="media"]' );
+    ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                        <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                    </div>
+                                </div>
+                            </div><!-- end accordion inner -->
+                        </div><!-- end accordion body -->
+                    </div><!-- end accordion group -->
+                </div><!-- end accordion  -->
             </div>
 
         </form>
@@ -212,7 +207,6 @@
             </div>
             <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove from profile','bidxplugin'); ?></a>
         </div>
-
     </div>
 
 </div><!-- // row -->
