@@ -42,10 +42,10 @@
                             </div>
                             <div class="feature-block-items">
                                 <div class="bidx-latest clearfix">
-
                                     <!-- Grab news -->
-                                    <?php echo do_shortcode( '[bidx app="group" view="latest-news"]' ); ?>
-
+<?php
+                                    echo do_shortcode( '[bidx app="group" view="latest-news"]' );
+?>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,9 @@
                             <div class="feature-block-items">
                                 <div class="bidx-latest clearfix">
                                 <!-- Grab latests members -->
-                                    <?php echo do_shortcode( '[bidx app="group" view="latest-business-summaries"]' ); ?>
+<?php
+                                    echo do_shortcode( '[bidx app="group" view="latest-business-summaries"]' );
+?>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +75,11 @@
                             <div class="feature-block-items">
                                 <div class="bidx-latest clearfix">
                                 <!-- Grab latests members -->
-                                <?php echo do_shortcode( '[bidx app="group" view="last-members" authenticated="true"]' ); ?>
+<?php
+                                    $joinedGroup = $this->joinedGroup ? "true" : "false";
+                                    echo do_shortcode( '[bidx app="group" view="last-members" authenticated="true" joinedgroup="' . $joinedGroup . '"]' );
+
+?>
                                 </div>
 
                             </div>

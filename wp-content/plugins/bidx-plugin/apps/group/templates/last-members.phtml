@@ -1,4 +1,5 @@
 <?php
+
         // check if span is empty, then revert to default 6
         //
         $span = !empty($this->span) ? $this->span : 6;
@@ -6,6 +7,7 @@
         // check if user is logged in
         //
         $authenticated = isset( $this -> authenticated ) && $this -> authenticated ==  'true';
+        $joinedGroup = isset( $this -> joinedGroup ) && $this -> joinedGroup ==  'true';
 
         if ( is_array( $this -> members ) && count( $this -> members ) ) {
             $index = 0;
@@ -33,53 +35,58 @@
                         }
 ?>
                     </a>
-                    <div>
+                <div>
 
-                        <div><a href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>"><strong>
+                <div>
+                    <a href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
+                        <strong>
 <?php
                             echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName );
 ?>
-                        </strong></a></div>
-
-<?php
-                        if ( $this -> exst( $member -> professionalTitle) ) {
-                            echo '<div>' . $this -> escapeHtml( $member -> professionalTitle ) . '</div>';
-                        }
-
-                        if ( $this -> exst( $member -> country) ) {
-                            echo '<div>' . $member -> country . '</div>';
-                        }
-
-                        if ( $this -> exst( $member -> roles ) ) {
-                            echo '<div>';
-                            foreach ($member -> roles as $role) {
-                                if ( $role === 'entrepreneur' ) {
-?>
-                                <span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>&nbsp;
-<?php
-                                }
-                                if ( $role === 'investor' ) {
-?>
-                                <span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>&nbsp;
-<?php
-                                }
-                            }
-                            echo '</div>';
-                        } else {
-                            echo '<div><span class="label bidx-label-member">Member</span></div>';
-                        }
-?>
-<?php
-                        // only show connect link when authenticated
-                        //
-                        if ( $authenticated ) {
-?>
-                            <div><a href="/mail/#mail/contacts/action=connect&id=<?php echo $member -> bidxMeta -> bidxMemberId ?>"><?php _e('Connect', 'bidxplugin')?></a></div>
-<?php
-                        }
-?>
-                    </div>
+                        </strong>
+                    </a>
                 </div>
+<?php
+                if ( $this -> exst( $member -> professionalTitle) ) {
+                    echo '<div>' . $this -> escapeHtml( $member -> professionalTitle ) . '</div>';
+                }
+
+                if ( $this -> exst( $member -> country) ) {
+                    echo '<div>' . $member -> country . '</div>';
+                }
+
+                if ( $this -> exst( $member -> roles ) ) {
+                    echo '<div>';
+                    foreach ($member -> roles as $role) {
+                        if ( $role === 'entrepreneur' ) {
+?>
+                        <span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>&nbsp;
+<?php
+                        }
+                        if ( $role === 'investor' ) {
+?>
+                        <span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>&nbsp;
+<?php
+                        }
+                    }
+                    echo '</div>';
+                } else {
+                    echo '<div><span class="label bidx-label-member">Member</span></div>';
+                }
+?>
+<?php
+                // only show connect link when authenticated and member has joined the group
+                //
+                if ( $authenticated && $joinedGroup ) {
+?>
+                    <div>
+                        <a href="/mail/#mail/contacts/action=connect&id=<?php echo $member -> bidxMeta -> bidxMemberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
+                    </div>
+<?php
+                }
+?>
+            </div>
+        </div>
 <?php
 
 
