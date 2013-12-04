@@ -237,6 +237,8 @@
         var snippit       = $("#investor-preferenceitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   emptySnippet  = $("#investor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   $list         = $("." + options.list)
+        ,   listItem
+        ,   i18nItem
         ,   emptyVal      = '-'
         ;
 

@@ -88,7 +88,7 @@
                                 .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
                                 .replace( /%displayName%/g,      item.investor.displayName   ? item.investor.displayName : emptyVal )
                                 .replace( /%investorId%/g,      investorId   ? investorId    : emptyVal )
-                                .replace( /%document%/g,      !$.isEmptyObject( item.businessSummary.company )    ? item.businessSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                                .replace( /%document%/g,      (!$.isEmptyObject( item.businessSummary.company ) && !$.isEmptyObject( item.businessSummary.company.logo ) && !$.isEmptyObject( item.businessSummary.company.logo.document ) ) ? item.businessSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                 ;
 
                             //  add mail element to list
@@ -333,7 +333,7 @@
                                     .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
                                     .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
                                     .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
-                                    .replace( /%document%/g,      !$.isEmptyObject( item.company )    ? item.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                                    .replace( /%document%/g,      (!$.isEmptyObject( item.company ) &&  !$.isEmptyObject( item.company.logo ) && !$.isEmptyObject( item.company.logo.document) )   ? item.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                     ;
 
 
