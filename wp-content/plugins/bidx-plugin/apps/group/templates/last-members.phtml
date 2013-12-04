@@ -2,15 +2,22 @@
         // check if span is empty, then revert to default 6
         //
         $span = !empty($this->span) ? $this->span : 6;
+
         // check if user is logged in
         //
-        $authenticated = isset($this->authenticated ) && $this->authenticated ==  'true';
+        $authenticated = isset( $this -> authenticated ) && $this -> authenticated ==  'true';
 
-        if (is_array($this -> members)) {
+        if ( is_array( $this -> members ) && count( $this -> members ) ) {
             $index = 0;
+
+            $maxMemberItems = $authenticated ? 4 : 3;
+
+            // iterate through the members
         	foreach ($this -> members as $member) {
-                $memitems = $authenticated ? 4 : 3;
-                if ( $index === $memitems) {
+
+                // if maxmembers has been reached, stop the itaration
+                //
+                if ( $index === $maxMemberItems) {
                     break;
                 }
 		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
@@ -79,7 +86,14 @@
             $index++;
             }
             // end foreach
+        } else {
+ ?>
+            <div class="span12">
+                <?php _e( "There are currently no new members", 'bidxplugin' ); ?>
+            </div>
+<?php
         }
 ?>
+
 
 
