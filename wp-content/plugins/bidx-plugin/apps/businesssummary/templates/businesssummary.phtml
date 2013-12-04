@@ -899,7 +899,18 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="alert alert-info">
                                 <?php _e('Upload your full plans or other supporting documents or images here','bidxplugin');?>
                             </div>
+                            <div>
+                                <h2>Templates to download</h2>
+                                <div>
+                                    <?php _e('Download the templates on the link below to complete your full business and financial plan. Once you fill them in you can upload them to your business proposal.', 'bidxplugin')?>
+                                </div>
+                                <p>
+                                    <a href="/Download%20business%20plan%20templates/" target="_blank">
+                                        <?php _e('Open templates page', 'bidxplugin' ); ?>
+                                    </a>
+                                </p>
 
+                            </div>
                             <a href="#addFiles" data-toggle="modal" class="btn btn-primary"><?php _e('Add files', 'bidxplugin')?></a>
 
                             <div class="addFiles modal hide fade">

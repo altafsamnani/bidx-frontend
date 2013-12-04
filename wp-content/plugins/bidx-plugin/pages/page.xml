@@ -95,10 +95,10 @@
 		</post>
 		<post>
 			<post_id>8</post_id>
-			<name>Download financial templates</name>
-			<title>Download financial templates</title>
+			<name>Download business plan templates</name>
+			<title>Download business plan templates</title>
 			<update>true</update>
-			<htmlTemplate>financial-details-templates</htmlTemplate>
+			<htmlTemplate>business-plan-templates</htmlTemplate>
 			<content></content>
 		</post>
 		<post>
