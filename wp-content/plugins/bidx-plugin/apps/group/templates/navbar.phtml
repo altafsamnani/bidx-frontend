@@ -140,12 +140,16 @@
                     }
                 }
 
-                if( !$currentGroupAdmin && $hasGroups ) {
-?>
-				    <li><a href="#messageOwner"><?php _e('Ask your question','bidxplugin')?></a></li>
+                if( !$currentGroupAdmin && $hasGroups ) {?>
+
                     <li><a href="#messageOwner"><?php _e('Help','bidxplugin')?></a></li>
 <?php
                 }
+
+                if ($currentGroupAdmin)  { ?>
+
+                     <li><a href="/support"><?php _e('Ask your question','bidxplugin')?></a></li>
+<?php           }
                 if( $showLogout ) {
 ?>
                      <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e('Logout', 'bidxplugin')?></a>
