@@ -1,0 +1,19 @@
+/********************************************
+Author:                 Altaf S
+Company:                bidX;
+Group Admin Dashboard:  Support
+********************************************/
+
+.pagercontainer-support
+{
+    text-align:center;
+}
+
+#zendesk-login
+{
+    /*margin-left:185px;*/
+}
+
+.zendesk-tickets-bottom {
+    display:none;
+}
