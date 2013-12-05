@@ -468,13 +468,16 @@ class BidxCommon
         $isCheck = true;
         $hostAddress = explode ('/', $_SERVER ["REQUEST_URI"]);
         $params = $_GET;
+        $currentUser = wp_get_current_user ();
+        $currentRoles = $currentUser->roles;
 
         //Dont check it as its having redirect param q= , it was already checked else it will be indefinite loop
-        if (( $hostAddress[1] == 'auth' && isset ($params['q']) ) ||
+        if (( $hostAddress[1] == 'auth' && isset ($params['q']) )
             //$hostAddress[1]   == 'registration'                   ||
-            strstr ($hostAddress[2], 'admin-ajax.php')              ||
-            strstr ($hostAddress[1], 'wp-login.php')              ||
-            is_super_admin()
+            || (isset($hostAddress[2]) && strstr ($hostAddress[2], 'admin-ajax.php'))
+            || strstr ($hostAddress[1], 'wp-login.php')
+            || is_super_admin()
+            || in_array('administrator', $currentRoles)
             ) { //Allow Groupadmin for wp-admin dashboard
             $isCheck = false;
             //$session_id = (isset ($_COOKIE['session_id'])) ? $_COOKIE['session_id'] : NULL;
@@ -491,9 +494,13 @@ class BidxCommon
      */
     static public function isWPInternalFunction ()
     {
-        $currentUser = wp_get_current_user ();
         $serverUri = $_SERVER["REQUEST_URI"];
-        $iswpInternalVar = ((is_super_admin()) || preg_match ('/wp-login/i', $serverUri) || preg_match ('/admin-ajax/i', $serverUri) );
+        $currentUser = wp_get_current_user ();
+        $currentRoles = $currentUser->roles;
+        $iswpInternalVar = ((is_super_admin())
+                            || preg_match ('/wp-login/i', $serverUri)
+                            || preg_match ('/admin-ajax/i', $serverUri)
+                            || in_array('administrator', $currentRoles) );
         return $iswpInternalVar;
     }
 
