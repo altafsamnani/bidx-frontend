@@ -157,6 +157,10 @@
             $documentType.append( $noValue );
 
             bidx.utils.populateDropdown( $documentType, documentTypes );
+
+            //initiate chosen plugin
+            //
+            $documentType.bidx_chosen();
         } );
 
         // Instantiate the file upload component (be careful! the 'old' plugin was fileUpload with a capital U)
