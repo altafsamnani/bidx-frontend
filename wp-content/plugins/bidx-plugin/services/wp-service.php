@@ -2216,8 +2216,12 @@ function bidx_getting_started ()
 
 function bidx_dashboard_support ()
 {
+    //global $zendesk_support;
     //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='support']");
+    echo do_shortcode ("[bidx app='support' view='support']");
+    echo do_shortcode ("[bidx app='support' view='view-zendesk-tickets']");
+
+
 }
 
 /* Create the function to output the contents of our Dashboard Widget.

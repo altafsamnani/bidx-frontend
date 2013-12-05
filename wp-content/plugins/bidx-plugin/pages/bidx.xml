@@ -171,6 +171,14 @@
             <mapping>^app/sso/auth</mapping>
             <content>[bidx app="login" link="false" ssoauth="true"]</content>
         </post>
+        <post>
+            <post_id>25</post_id>
+            <name>Support</name>
+            <title>Support</title>
+            <mapping>^support</mapping>
+            <content>[bidx app="support" view="create-zendesk-tickets"]</content>
+        </post>
+
     </posts>
 
     <widgets>

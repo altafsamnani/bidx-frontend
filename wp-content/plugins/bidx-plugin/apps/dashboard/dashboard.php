@@ -80,25 +80,7 @@ class dashboard
                     wp_enqueue_style ('getting-started');
 
                     break;
-
-                //Will be working on this
-
-                case 'support':
-                    roots_scripts();
-
-
-                    $mailDepArr = array ('bootstrap-paginator', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-                      'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
-
-                    /* Style */
-                    //wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
-                    wp_register_style ('support', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/css/support.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
-                    wp_enqueue_style ('support');
-
-                    /* Script */
-                    wp_register_script ('support', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/support.js', $mailDepArr, '20130715', TRUE);
-
-                    break;
+            
                 //Will be working on this
                 case 'group-settings' :
                     $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
@@ -145,10 +127,7 @@ class dashboard
         // 3. Determine the view needed
         $command = $atts['view'];
 
-        switch ($command) {
-            case 'my-dashboard':
-                $template = 'my-dashboard.phtml';
-                break;
+        switch ($command) {           
             case 'investor-dashboard':
                 wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 $sessionSvc = new SessionService( );
@@ -197,55 +176,18 @@ class dashboard
                             require_once( BIDX_PLUGIN_DIR . '/../services/mail-service.php' );
                             $msgSvc = new MailService( );
                             $view->compose = $msgSvc->getMessageTemplate ('welcome');
-
-                            require_once( BIDX_PLUGIN_DIR . '/../services/search-service.php' );
-                            $service = new SearchService( );
-                            $groupId = $view->sessionData->data->currentGroup;
-
-                            /* Bidx Member Query
-                            $searchParams['q'] = '*:*';
-                            $searchParams['fq'] = 'type:bidxMemberProfile AND groupIds:' . $groupId;
-                            $searchParams['sort'] = 'created desc';
-                            $searchParams['rows'] = '0';
-                            $memberProfileQuery = $service->cookQuery ($searchParams);
-                            $memberProfileResults = $service->getSearchResults ($memberProfileQuery);
-                            $results->memberProfileCount = $memberProfileResults->data->numFound;
-
-
-
-                            // Bidx Entrepreneur Query
-                            $searchParams['fq'] = 'type:bidxEntrepreneurProfile AND groupIds:' . $groupId;
-                            $entrepreneurProfileQuery = $service->cookQuery ($searchParams);
-                            $entrepreneurResults = $service->getSearchResults ($entrepreneurProfileQuery);
-                            $results->entrepreneurCount = $entrepreneurResults->data->numFound;
-
-                            // Bidx Investor Query
-                            $searchParams['fq'] = 'type:BidxInvestorProfile AND groupIds:' . $groupId;
-                            $investorProfileQuery = $service->cookQuery ($searchParams);
-                            $investorResults = $service->getSearchResults ($investorProfileQuery);
-                            $results->investorCount = $investorResults->data->numFound;
-
-                            $view->data = $results;
-
-
-                            require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
-                            $groupSvc = new GroupService( );
-                            $view->members = $groupSvc->getLatestMembers ();
-                            */
                             $template = 'groupowner/monitoring.phtml';
                             break;
 
                         case 'invite-members' :
                             $template = 'groupowner/invite-members.phtml';
                             break;
+
                         case 'getting-started' :
                             $template = 'groupowner/getting-started.phtml';
                             break;
-                        case 'support' :
-                            $template = 'groupowner/support.phtml';
-                            break;
-                        case 'group-settings' :
 
+                        case 'group-settings' :
                             require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
                             $groupSvc = new GroupService( );
                             $view->group = $groupSvc->getGroupDetails ();
@@ -264,7 +206,7 @@ class dashboard
         }
 
         //echo $template;
-        $view->render ($template);
+        (isset($template)) ? $view->render ($template): '';
     }
 
 }

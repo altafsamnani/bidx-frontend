@@ -19,7 +19,6 @@
     ,   $list                       = $(".dlist")
     ,   listMembers                 = []
     ,   listMembersAll              = []
-    ,   getGrowthCount              = []
     ;
 
     var ITEMPERPAGE                 = 10
@@ -109,14 +108,14 @@
             }
         }
         ,  1000 );
-    }
+    };
 
     var getGrowthCount = function(options)
     {
         var $viewGrowth     = $element.find(".list-growth")
         ,   $list           = $viewGrowth.find("." + options.list)
         ,   searchType      = options.searchType
-        ,   $d = $.Deferred();
+        ,   $d = $.Deferred()
         ;
 
 
@@ -254,11 +253,12 @@
                     ,   listLength
                     ,   nextPageStart
                     ,   pagerOptions
+                    ,   listItem
                     ,   emptyVal = '-'
                     ,   numberFound    = response.numFound
                     ,   totalPages     =   Math.round(numberFound / ITEMPERPAGE)
                     ;
-
+                    bidx.utils.log(totalPages);
                     //clear listing
                     $list.empty();
 
@@ -419,7 +419,7 @@
 
                         } );
 
-                        if( totalPages >= 0 )
+                        if( totalPages > 0 )
                         {
 
                             pagerOptions  =

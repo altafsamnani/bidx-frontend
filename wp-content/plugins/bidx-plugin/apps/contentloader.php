@@ -438,16 +438,20 @@ class ContentLoader
     {
 
         /*         * ********* Add Bidx Group Owner Group Admin Roles *************** */
-        $blog_id = get_current_blog_id();
-        $editorRole = get_role ('editor');
-        $editorCaps = $editorRole->capabilities;
+        $blog_id                          = get_current_blog_id();
+        $editorRole                       = get_role ('editor');
+        $editorCaps                       = $editorRole->capabilities;
         $editorCaps['edit_theme_options'] = true;
+        $editorCaps['editor']             = true; // Adding it for Zendesk access to act capability as a role because zendesk supports particular roles and Group Admin and Group Owner doesnt fall into that.
+        $editorCaps['subscriber']         = true;
+        //(!get_role(WP_ADMIN_ROLE)) ? add_role (WP_ADMIN_ROLE, 'Group Admin', $editorCaps): '';
+        add_role (WP_ADMIN_ROLE, 'Group Admin', $editorCaps);
 
-        (!get_role(WP_ADMIN_ROLE)) ? add_role (WP_ADMIN_ROLE, 'Group Admin', $editorCaps): '';
+        //(!get_role(WP_OWNER_ROLE)) ? add_role (WP_OWNER_ROLE, 'Group Owner', $editorCaps): '';
+        add_role (WP_OWNER_ROLE, 'Group Owner', $editorCaps);
 
-        (!get_role(WP_OWNER_ROLE)) ? add_role (WP_OWNER_ROLE, 'Group Owner', $editorCaps): '';
+        $new_user_caps_member = array ('read' => true );
 
-        $new_user_caps_member = array ('read' => true);
         (!get_role(WP_MEMBER_ROLE)) ? add_role (WP_MEMBER_ROLE, 'Group Member', $new_user_caps_member): '';
 
         $new_user_caps_anonymous = array ('read' => true);
