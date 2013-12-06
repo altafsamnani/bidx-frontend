@@ -2200,7 +2200,7 @@ function alter_site_menu ()
                 add_menu_page ('monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
                 add_menu_page ('getting-started', 'Getting Started', 'edit_theme_options', 'getting-started', 'bidx_getting_started');
                 add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
-               // add_menu_page ('Group Settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
+                add_menu_page ('group-settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
             }
         }
     }

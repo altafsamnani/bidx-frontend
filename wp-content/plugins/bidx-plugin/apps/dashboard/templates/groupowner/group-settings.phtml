@@ -13,7 +13,7 @@ if (!$picSrc) {
 <div class="well groupsettings details-block">
 
     <div class="btn-group controls">
-        <?php if ($this->exst ($groupProfile->bidxMeta->bidxCanEdit)) { ?>
+        <?php if ($this->exst ($groupProfile->bidxMeta->bidxCanEdit) && false) { ?>
             <a class="btn btn-primary" href="#editGroup/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><?php _e ('Edit', 'bidxplugin'); ?></a>
         <?php } ?>
     </div>
@@ -135,7 +135,7 @@ if (!$picSrc) {
       $currentAddressMap.bidx_location(
         'setLocationData'
       , {'coordinates': '<?php echo $groupProfile->address->coordinates;?>'})
-      
+
     });
 
 </script>

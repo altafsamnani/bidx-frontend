@@ -80,11 +80,13 @@ class dashboard
                     wp_enqueue_style ('getting-started');
 
                     break;
-            
+
                 //Will be working on this
                 case 'group-settings' :
-                    $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                      'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-location');
+                    roots_scripts();
+                    $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                              'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
+
                     $groupDepArr = array ('jquery', 'bootstrap', 'bidx-location', 'bidx-utils', 'bidx-api-core','company');
 
                     /* Style */
@@ -127,7 +129,7 @@ class dashboard
         // 3. Determine the view needed
         $command = $atts['view'];
 
-        switch ($command) {           
+        switch ($command) {
             case 'investor-dashboard':
                 wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 $sessionSvc = new SessionService( );
