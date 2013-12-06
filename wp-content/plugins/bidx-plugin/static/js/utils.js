@@ -159,6 +159,12 @@
     //
     var setElementValue = function( $el, value )
     {
+        if ( !$el.length )
+        {
+            bidx.utils.warn( "bidx.utils.setElementValue, $el doesn't match elements!", $el, value );
+            return;
+        }
+
         var elType      = $el.attr( 'type' ) || $el[0].nodeName.toLowerCase()
         ,   dataType    = $el.attr( 'data-type' )
         ,   valueType   = $.type( value )
