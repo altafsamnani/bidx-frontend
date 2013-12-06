@@ -100,7 +100,7 @@
                                             .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
                                             .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
                                             .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
-                                            .replace( /%document%/g,      !$.isEmptyObject( item.businessSummary.company )    ? item.businessSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                                            .replace( /%document%/g,      ( !$.isEmptyObject( item.businessSummary.company ) && !$.isEmptyObject( item.businessSummary.company.logo ) && !$.isEmptyObject( item.businessSummary.company.logo.document ) )   ? item.businessSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                             ;
 
 
