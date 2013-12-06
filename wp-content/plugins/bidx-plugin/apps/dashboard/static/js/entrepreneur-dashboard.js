@@ -23,6 +23,7 @@
         ,   accessParams
         ,   listItem
         ,   i18nItem
+        ,   investorType
         ,   emptyVal      = "-"
         ;
 
@@ -41,13 +42,15 @@
 
                     if( response && response.data && response.data.received )
                     {
-                        dataArr =   {       'industry'         : 'industry'
-                                        ,   'countryOperation' : 'country'
-                                        ,   'stageBusiness'    : 'stageBusiness'
-                                        ,   'productService'   : 'productService'
-                                        ,   'envImpact'        : 'envImpact'
-                                        ,   'consumerType'     : 'consumerType'
-                                        ,   'investmentType'   : 'investmentType'
+                        dataArr =   {       'industry'             : 'industry'
+                                        ,   'countryOperation'     : 'country'
+                                        ,   'stageBusiness'        : 'stageBusiness'
+                                        ,   'productService'       : 'productService'
+                                        ,   'envImpact'            : 'envImpact'
+                                        ,   'consumerType'         : 'consumerType'
+                                        ,   'investmentType'       : 'investmentType'
+                                        ,   'investorType'         : 'investorType'
+                                        ,   'summaryRequestStatus' : 'summaryRequestStatus'
                                     };
 
                         $.each(response.data.received, function(id, item)
@@ -55,6 +58,11 @@
 
                             entityId    =   item.businessSummary.bidxMeta.bidxEntityId;
                             investorId  =   item.investor.id;
+
+                            /* Setting data to get the final values */
+                            item.businessSummary.investorType = item.investor.investorType;
+                            item.businessSummary.summaryRequestStatus = item.status;
+
                             getStaticDataVal(
                             {
                                 dataArr    : dataArr
@@ -64,13 +72,16 @@
                                              }
                             });
 
+
+
+
                             //search for placeholders in snippit
                             listItem = snippit
                                 .replace( /%accordion-id%/g,      entityId   ? entityId     : emptyVal )
                                 .replace( /%bidxEntityId%/g,      entityId  ? entityId     : emptyVal )
                                 .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
                                 .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : emptyVal )
-                                .replace( /%status%/g,       item.status    ? item.status.charAt(0).toUpperCase() + item.status.slice(1)     : emptyVal )
+                                .replace( /%status%/g,       i18nItem.summaryRequestStatus    ? i18nItem.summaryRequestStatus   : emptyVal )
                                 .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
                                 .replace( /%bidxLastUpdateDateTime%/g, item.businessSummary.bidxMeta.bidxLastUpdateDateTime    ? bidx.utils.parseTimestampToDateStr(item.businessSummary.bidxMeta.bidxLastUpdateDateTime) : emptyVal )
                                 .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : emptyVal )

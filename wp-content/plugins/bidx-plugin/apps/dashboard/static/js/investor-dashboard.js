@@ -29,14 +29,14 @@
                         });
                item[clsKey] = textVal;
               }
-       })
+       });
        //If callback set use it
        if (options && options.callback)
        {
         options.callback(item);
        }
 
-    }
+    };
 
     var getContact = function(options)
     {
@@ -73,8 +73,11 @@
                                                   ,    'stageBusiness'    : 'stageBusiness'
                                                   ,    'productService'   : 'productService'
                                                   ,    'envImpact'        : 'envImpact'
+                                                  ,   'summaryRequestStatus' : 'summaryRequestStatus'
                                                   };
 
+                                       /* Setting data to get the final values */
+                                      item.businessSummary.summaryRequestStatus = item.status;
                                        getStaticDataVal(
                                         {
                                             dataArr    : dataArr
@@ -91,7 +94,7 @@
                                             .replace( /%bidxEntityId%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : emptyVal )
                                             .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
                                             .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : emptyVal )
-                                            .replace( /%status%/g,       item.status    ? item.status      : emptyVal )
+                                            .replace( /%status%/g,       i18nItem.summaryRequestStatus    ? i18nItem.summaryRequestStatus      : emptyVal )
                                             .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
                                             .replace( /%bidxCreationDateTime%/g, item.businessSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(item.businessSummary.bidxCreationDateTime, "date") : emptyVal )
                                             .replace( /%bidxOwnerId%/g, i18nItem.bidxOwnerId    ? i18nItem.bidxOwnerId      : emptyVal )

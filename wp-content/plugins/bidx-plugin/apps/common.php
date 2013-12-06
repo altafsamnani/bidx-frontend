@@ -606,7 +606,7 @@ class BidxCommon
             $transientStaticData = get_transient ($transientKey);
 
             /* If no value then set the site local transient */
-            if ($transientStaticData === false) {
+            if ($transientStaticData == false) {
                 $resultStaticData = $staticDataObj->getStaticData (NULL);
                 $staticDataVars = $resultStaticData->data;
                 $transientStaticData = $staticDataObj->getMultilingualStaticData ($staticDataVars);
