@@ -2178,8 +2178,6 @@ function alter_site_menu ()
     if ((current_user_can ('install_themes'))) {
         $restricted = array ();
         add_submenu_page( 'zendesk-support', __( 'Zendesk Bidx Settings', 'zendesk' ), __( 'Bidx Settings', 'zendesk' ), 'manage_options', 'bidx_zendesk_settings', 'bidx_zendesk_settings' );
-
-
     } // check if admin and hide nothing
     else { // for all other users
         $current_user = wp_get_current_user ();
@@ -2251,7 +2249,10 @@ function bidx_dashboard_support ()
     //global $zendesk_support;
     //wp_enqueue_style( 'dashboard' );
     echo do_shortcode ("[bidx app='support' view='support']");
-    echo do_shortcode ("[bidx app='support' view='view-zendesk-tickets']");
+
+    if(is_plugin_active('zendesk/zendesk-support.php')) {
+     echo do_shortcode ("[bidx app='support' view='view-zendesk-tickets']");
+    }
 
 
 }

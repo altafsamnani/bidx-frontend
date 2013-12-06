@@ -1,4 +1,5 @@
 <?php
+    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
     $sessionSvc = new SessionService( );
 
     // define the profiles we currently want to display
@@ -146,7 +147,8 @@
 <?php
                 }
 
-                if ($currentGroupAdmin)  { ?>
+
+                if ($currentGroupAdmin && is_plugin_active('zendesk/zendesk-support.php'))  { ?>
 
                      <li><a href="/support"><?php _e('Ask your question','bidxplugin')?></a></li>
 <?php           }
