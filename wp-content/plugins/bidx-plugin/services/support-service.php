@@ -37,6 +37,8 @@ class SupportService extends Zendesk_Support
     {
       global $zendesk_support;
 
+
+
       if( isset($_REQUEST['type']) && $_REQUEST['type'] == 'bidx-support' )
       {
         add_action( 'wp_enqueue_scripts', array( &$this, '_admin_print_styles' ) );

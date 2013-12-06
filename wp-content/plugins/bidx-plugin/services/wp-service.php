@@ -2105,6 +2105,61 @@ function annointed_admin_bar_remove ()
     $wp_admin_bar->add_menu ($custom_menu_logout);
 }
 
+
+/**
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ * Bidx Zendesk Settings
+ *
+ */
+
+function bidx_zendesk_settings() {
+
+    require_once(BIDX_PLUGIN_DIR . '/support/support.php');
+
+
+    //1. Form Post Handling
+    if( isset($_POST['bidx-zendesk-data'] ) ) {
+        $form_data = $_POST['bidx-zendesk-data'];
+
+        if ( ! $form_data['email'] || !$form_data['password'] ) {
+              $html = "<div id='message' class='error'>
+                        <p>".__( 'All fields are required. Please try again.', 'zendesk' )."
+                        </p>
+                    </div>";
+
+        } else {
+
+            //1.1 Add Zendesk email/password for autologin
+            update_site_option ('bidx-zendesk-email', $form_data['email']);
+            update_site_option ('bidx-zendesk-password', base64_encode($form_data['password'] ));
+
+            //1.2 Flush User meta for groupowner if exists
+            $blogUrl   = strtolower (get_site_url());
+            $blogTitle = BidxCommon::get_bidx_subdomain(false,$blogUrl);
+            $group_owner_login = $blogTitle . WP_OWNER_ROLE;
+            $userOwner = get_user_by('login', $group_owner_login);
+            delete_user_meta( $userOwner->ID, 'zendesk_user_options' );
+
+
+            $html = "<div class='updated'>
+                        <p>".__( 'Your options are updated succesfully.', 'support' )."
+                        </p>
+                    </div>";
+        }
+
+        echo $html;
+    }
+
+    //2. Bidx Zendesk View Settings
+    $atts = array('app' =>'support', 'view' => 'settings');
+    $support = new support();
+    $support->load($atts);
+
+
+}
+
 //add_action ('login_enqueue_scripts', 'bidx_admin_theme_style');
 /* Alter Admin menus to get Bidx branding
  * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
@@ -2114,7 +2169,7 @@ function annointed_admin_bar_remove ()
  *
  * @param bool $echo
  */
-add_action ('admin_menu', 'alter_site_menu');
+add_action ('admin_menu', 'alter_site_menu',11);
 
 function alter_site_menu ()
 {
@@ -2122,6 +2177,9 @@ function alter_site_menu ()
 
     if ((current_user_can ('install_themes'))) {
         $restricted = array ();
+        add_submenu_page( 'zendesk-support', __( 'Zendesk Bidx Settings', 'zendesk' ), __( 'Bidx Settings', 'zendesk' ), 'manage_options', 'bidx_zendesk_settings', 'bidx_zendesk_settings' );
+
+
     } // check if admin and hide nothing
     else { // for all other users
         $current_user = wp_get_current_user ();
@@ -2151,32 +2209,6 @@ function alter_site_menu ()
     add_filter ('admin_footer_text', 'remove_footer_admin');
 }
 
-
-
-//add_action ('admin_footer', 'bidx_dashboard_footer');
-//
-//function bidx_dashboard_footer ()
-//{
-//
-//    $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
-//
-//    $bidxCommonObj = new BidxCommon();
-//    $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ('dashboard'), $static = false, $i18nGlobal = false);
-//    // 1. I18n  & Global Data
-//    wp_localize_script ('bidx-data', '__bidxI18nPreload', $appTranslationsArr['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
-//    switch ($menuTitle) {
-//
-//        case 'monitoring':
-//            wp_print_scripts ('group-admin');
-//            break;
-//        case 'support':
-//            wp_print_scripts ('mail');
-//            break;
-//        case 'groupsettings':
-//            wp_print_scripts ('group');
-//            break;
-//    }
-//}
 
 function bidx_dashboard_invite ()
 {

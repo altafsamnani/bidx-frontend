@@ -1,0 +1,44 @@
+<form method='post'  id='frmLogin' novalidate='novalidate'>
+    <h1>Zendesk current group credentials</h1>
+
+    <div class='row-fluid'>
+        <div class='span8'>
+            <div class='control-group'>
+                <label class='control-label'>Email address</label>
+
+                <div class='controls'>
+                    <input type='email' placeholder='Enter your email address' name="bidx-zendesk-data[email]" value="<?php echo $this->zendeskEmail;?>">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='row-fluid'>
+        <div class='span8'>
+            <div class='control-group'>
+                <label class='control-label'>Password</label>
+
+                <div class='controls'>
+                    <input type='password' placeholder='Enter your password' name="bidx-zendesk-data[password]" value="<?php echo $this->zendeskPassword;?>">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='error-separate'></div>
+    <div class='row-fluid'>
+        <div class='span4'>
+            <div class='buttonwrapper'>
+                <button class='btn btn-primary btn-block bidx-theme-colour-one' type='submit'>Save</button>
+            </div>
+        </div>
+    </div>
+    <div class='row-fluid'>
+        <div class='span4 error'>
+            <strong>
+                Note: In Zendesk->Settings within Dashboard widget visibility section, Set Editors-->Show the Tickets widget and Subscribers-->Show a Contact Form
+            </strong>
+
+        </div>
+    </div>
+
+
+</form>
