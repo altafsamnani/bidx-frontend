@@ -23,14 +23,14 @@ if ($investorDetails &&
         <div class="panel-body">
 
 
-        <div class="profile-block details-block">
+        <div class="profile-block">
 
-            <div class="btn-group control-buttons">
+            <div class="btn-group show hide-overflow">
     <?php
                 if ($investorDetailsBidxMeta->bidxCanEdit) {
                     $href = "#editInvestor/" . $this -> exst( $investorDetailsBidxMeta->bidxOwnerId );
     ?>
-                    <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
+                    <a class="btn btn-primary pull-right" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
 
     <?php
                         if ($investorDetailsBidxMeta->bidxEntityStatus == 'DRAFT') {

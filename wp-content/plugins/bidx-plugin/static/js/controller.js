@@ -331,7 +331,7 @@
 
             if ( section )
             {
-                $pageHeadings.hide().filter( "." + section ).show();
+                $pageHeadings.addClass( "hide" ).filter( "." + section ).removeClass( "hide" );
             }
 
             _navigateToApp
@@ -349,7 +349,7 @@
 
             bidx.utils.log( "AppRouter::editMember", id, section );
 
-            $pageHeadings.hide().filter( ".editMember" ).show();
+            $pageHeadings.addClass( "hide" ).filter( ".editMember" ).removeClass( "hide" );
 
             mainState   = "editMember";
 
@@ -370,7 +370,7 @@
 
             mainState       = "editEntrepreneur";
 
-            $pageHeadings.hide().filter( ".editEntrepreneur" ).show();
+            $pageHeadings.addClass( "hide" ).filter( ".editEntrepreneur" ).removeClass( "hide" );
 
             _navigateToApp
             (
@@ -388,7 +388,7 @@
 
             mainState       = "editEntrepreneur";
 
-            $pageHeadings.hide().filter( ".createEntrepreneur" ).show();
+            $pageHeadings.addClass( "hide" ).filter( ".createEntrepreneur" ).removeClass( "hide" );
 
              _navigateToApp
             (
@@ -405,7 +405,7 @@
 
             mainState       = "editInvestor";
 
-            $pageHeadings.hide().filter( ".editInvestor" ).show();
+            $pageHeadings.addClass( "hide" ).filter( ".editInvestor" ).removeClass( "hide" );
 
             _navigateToApp
             (
@@ -424,7 +424,7 @@
 
             mainState       = "editInvestor";
 
-            $pageHeadings.hide().filter( ".createInvestor" ).show();
+            $pageHeadings.addClass( "hide" ).filter( ".createInvestor" ).removeClass( "hide" );
 
              _navigateToApp
             (
@@ -441,7 +441,7 @@
 
             mainState       = "editMentor";
 
-            $pageHeadings.hide().filter( ".editMentor" ).show();
+            $pageHeadings.addClass( "hide" ).filter( ".editMentor" ).removeClass( "hide" );
 
             _navigateToApp
             (
@@ -460,7 +460,7 @@
 
             mainState       = "editMentor";
 
-            $pageHeadings.hide().filter( ".createMentor" ).show();
+            $pageHeadings.addClass( "hide" ).filter( ".createMentor" ).removeClass( "hide" );
 
              _navigateToApp
             (
@@ -760,7 +760,7 @@
                     $element.hide();
                 }
 
-                $pageHeadings.hide().filter( ".default" ).show();
+                $pageHeadings.addClass( "hide" ).filter( ".default" ).removeClass( "hide" );
 
                 mainState       = "show";
                 app         = null;
