@@ -2,6 +2,7 @@
 
     $data                       = $this->data;
     $memberId                   = isset( $this->data->member->bidxMeta->bidxMemberId ) ? $this->data->member->bidxMeta->bidxMemberId : null ;
+    $loggedInMemberId           = isset( $this -> sessionData -> data -> id ) ? $this -> sessionData -> data -> id : null;
     $authenticated              = isset( $this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
     $groupIds                   = array_keys ( (array)$this -> sessionData -> data -> groups );
     $inGroup                    = in_array( $this -> sessionData -> data -> currentGroup, $groupIds);
@@ -112,7 +113,7 @@
                         <div class="row-fluid">
                             <div class="span12">
                             <?php
-                                if ( $authenticated && $inGroup ) {
+                                if ( $memberId != $loggedInMemberId && $authenticated && $inGroup ) {
                              ?>
                                 <a href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
                             <?php
