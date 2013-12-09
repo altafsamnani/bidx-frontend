@@ -67,10 +67,8 @@
                 </div>
 <?php
             }
-        }
          $index++;
-    }
-    wp_reset_query();
+        } //while
 ?>
             </ul>
 <?php
@@ -79,4 +77,12 @@
         </div>
 <?php
             }
+?>
+<?php
+        } else {
+?>
+            <p><?php _e( "There are currently no news or events", 'bidxplugin' ); ?></p>
+<?php
+        }
+    wp_reset_query();
 ?>

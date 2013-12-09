@@ -97,9 +97,7 @@
 
             }
                 $index++;
-            }
-            // end foreach
-        }
+            } // end foreach
 ?>
         </ul>
 <?php
@@ -108,6 +106,11 @@
         </div>
 <?php
             }
+        } else {
+?>
+            <p><?php _e( "There are currently no new business summaries", 'bidxplugin' ); ?></p>
+<?php
+        }
 ?>
 
 

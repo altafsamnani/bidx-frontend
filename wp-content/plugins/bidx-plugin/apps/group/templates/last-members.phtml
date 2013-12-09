@@ -111,15 +111,7 @@
             }
 
             $index++;
-            }
-            // end foreach
-        } else {
- ?>
-            <div class="col-sm-12">
-                <?php _e( "There are currently no new members", 'bidxplugin' ); ?>
-            </div>
-<?php
-        }
+            } // end foreach
 ?>
                 </ul>
 <?php
@@ -128,4 +120,9 @@
         </div>
 <?php
             }
+        } else {
+?>
+            <p><?php _e( "There are currently no new members", 'bidxplugin' ); ?></p>
+<?php
+        }
 ?>
