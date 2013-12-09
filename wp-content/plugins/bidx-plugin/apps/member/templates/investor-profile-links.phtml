@@ -6,18 +6,20 @@
     //
     if ( !isset( $entities->bidxInvestorProfile )) {
 ?>
-    <div class="call-to-action clearfix">
-        <div class="pull-left">
-            <div><strong><?php _e('Become an investor', 'bidxtheme')?></strong></div>
-            <em><?php _e('Create your resources', 'bidxtheme')?></em>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong><?php _e('Become an investor', 'bidxtheme')?></strong>
         </div>
-        <a href="/member/#createInvestor" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Invest','bidxtheme')?></a>
+        <div class="panel-body">
+            <em><?php _e('Create your resources', 'bidxtheme')?></em>
+            <a href="/member/#createInvestor" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Invest','bidxtheme')?></a>
+        </div>
     </div>
 <?php
     } else {
 ?>
-    <div class="call-to-action clearfix">
-        <div class="pull-left">
+    <div class="panel panel-default">
+        <div class="panel-body">
 <?php
         printf( __( 'View your %sinvestor profile%s', 'bidxtheme' ), '<a href="/member/#investor-profile">', '</a>' );
 ?>

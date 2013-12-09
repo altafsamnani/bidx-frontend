@@ -6,9 +6,9 @@
 */
 class businesssummary
 {
-    static $deps = array( 'jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2',
+    static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
         'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
-        'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
+        'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
         'bidx-location', 'bidx-chosen'
     );
 
@@ -26,8 +26,6 @@ class businesssummary
     function register_businesssummary_bidx_ui_libs()
     {
         wp_register_script('businesssummary', plugins_url('static/js/businesssummary.js', __FILE__), self :: $deps, '20130501', TRUE);
-        wp_register_style('businesssummary', plugins_url('static/css/businesssummary.css', __FILE__), array(), '20130501', 'all');
-        wp_enqueue_style('businesssummary');
     }
 
     /**

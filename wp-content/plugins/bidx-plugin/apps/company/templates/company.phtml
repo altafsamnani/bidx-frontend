@@ -4,40 +4,32 @@ $companyBidxMeta = isset( $this->company->bidxMeta )
     : $this->company;
 
 ?>
-<div class="block-odd">
 <?php
     if(!$this->noheader) {
 ?>
     <div class="pageHeader clearfix">
-        <div class="container clearfix">
-            <h1 class="pull-left"><?php echo ucwords( $this->company->name); ?></h1>
-            <div class="editControls btn-group pull-right"></div>
-        </div>
+        <h1 class="pull-left"><?php echo ucwords( $this->company->name); ?></h1>
+        <div class="editControls btn-group pull-right"></div>
     </div>
 <?php
     }
 ?>
-    <div class="row-fluid mainState mainStateShow">
-        <div class="span12">
-
-            <div class="well profile-block">
-
-                <div class="btn-group controls">
+<div class="mainState mainStateShow">
+    <div class="panel panel-default">
+        <div class="profile-block">
+            <div class="btn-group controls">
 <?php
-    if ($companyBidxMeta->bidxCanEdit) {
+                if ($companyBidxMeta->bidxCanEdit) {
 ?>
-                    <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>">Edit</a>
+                <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>">Edit</a>
 <?php
-    }
+                }
 ?>
-                </div>
-
-                <?php $this->render('view-company.phtml'); ?>
-
-            </div><!-- well -->
+            </div>
+            <?php $this->render('view-company.phtml'); ?>
         </div>
     </div>
+</div>
 <?php
     $this->render('edit-company.phtml');
 ?>
-</div>

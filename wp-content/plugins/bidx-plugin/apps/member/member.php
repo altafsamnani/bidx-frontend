@@ -7,21 +7,19 @@
  */
 class member {
 
-	static $deps = array( 'jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2',
+	static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
 			'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
-			'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
-			'bidx-location','bidx-chosen'
+			'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
+			'bidx-location','bidx-chosen', 'typeahead'
 	);
 
-
  	/**
-   * Constructor
-   */
-  function __construct() {
-
-
-    add_action('wp_enqueue_scripts', array(&$this, 'register_member_bidx_ui_libs'));
-  }
+     * Constructor
+     */
+  	function __construct()
+  	{
+		add_action('wp_enqueue_scripts', array(&$this, 'register_member_bidx_ui_libs'));
+  	}
 
 	/**
 	 * Register scripts and styles
@@ -33,12 +31,9 @@ class member {
 		wp_register_script( 'memberprofile',		plugins_url( 'static/js/memberprofile.js', 			__FILE__ ), array(), '20130808', TRUE );
 		wp_register_script( 'mentorprofile',		plugins_url( 'static/js/mentorprofile.js', 			__FILE__ ), array(), '20131111', TRUE );
 
-
 		$deps = array_merge( self :: $deps, array( 'memberprofile', 'entrepreneurprofile', 'investorprofile', 'mentorprofile' ) );
 
 	  	wp_register_script( 'member', plugins_url( 'static/js/member.js', __FILE__ ), $deps, '20130501', TRUE );
-	  	wp_register_style( 'member', plugins_url( 'static/css/member.css', __FILE__ ), array(), '20130501', 'all' );
-	  	wp_enqueue_style( 'member' );
 	}
 
 	/**

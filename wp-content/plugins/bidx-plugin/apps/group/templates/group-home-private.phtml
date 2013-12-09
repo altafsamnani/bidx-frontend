@@ -17,16 +17,22 @@
                 <span class="businesssummaries hide">Busines Summaries</span>
             </h1>
         </div>
-        <div class="row-fluid">
+        <div class="row">
 
             <!-- CONTENT Block -->
-            <div class="span8 contentBlock">
+            <div class="col-sm-8">
 
                 <section class="views">
 
-                    <article class="view viewLoad"><?php _e('Loading...','bidxplugin')?></article>
+                    <div class="view viewLoad alert alert-info text-center">
+                        <div class="progress progress-striped active">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <?php _e('Loading...','bidxplugin')?>
+                            </div>
+                        </div>
+                    </div>
 
-                    <article class="view viewError">
+                    <article class="view viewError alert alert-warning">
                         <h1><?php _e('Error','bidxplugin')?></h1>
                         <span class="errorMsg"></span>
                     </article>
@@ -34,13 +40,14 @@
                     <!-- Home VIEW -->
                     <article class="view viewHome viewInitial">
                         <!-- NEWS BLOCK -->
-                        <div class="feature-block spacer">
-
-                            <div class="feature-block-header bidx-theme-colour-one">
-                                <?php _e('News and Events','bidxtheme')?>
-                                <span class="pull-right"><a href="#home/news"><?php _e('view all','bidxtheme')?></a></span>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h2>
+                                    <?php _e('News and Events','bidxtheme')?>
+                                    <a href="#home/news" class="pull-right btn btn-info"><?php _e('view all','bidxtheme')?></a>
+                                </h2>
                             </div>
-                            <div class="feature-block-items">
+                            <div class="panel-body">
                                 <div class="bidx-latest clearfix">
                                     <!-- Grab news -->
 <?php
@@ -51,12 +58,14 @@
                         </div>
 
                         <!-- BUSINESS BLOCK -->
-                        <div class="feature-block spacer">
-                            <div class="feature-block-header bidx-theme-colour-one">
-                                <?php _e('New Business Summaries','bidxtheme')?>
-                                <span class="pull-right"><a href="#home/businesssummaries"><?php _e('view all','bidxtheme')?></a></span>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h2>
+                                    <?php _e('New Business Summaries','bidxtheme')?>
+                                    <a href="#home/businesssummaries" class="pull-right btn btn-info"><?php _e('view all','bidxtheme')?></a>
+                                </h2>
                             </div>
-                            <div class="feature-block-items">
+                            <div class="panel-body">
                                 <div class="bidx-latest clearfix">
                                 <!-- Grab latests members -->
 <?php
@@ -67,12 +76,14 @@
                         </div>
 
                         <!-- MEMBERS BLOCK -->
-                        <div class="feature-block spacer">
-                            <div class="feature-block-header bidx-theme-colour-one">
-                                <?php _e('New members in the group','bidxtheme')?>
-                                <span class="pull-right"><a href="#home/members"><?php _e('view all','bidxtheme')?></a></span>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h2>
+                                    <?php _e('New members in the group','bidxtheme')?>
+                                    <a href="#home/members" class="pull-right btn btn-info"><?php _e('view all','bidxtheme')?></a>
+                                </h2>
                             </div>
-                            <div class="feature-block-items">
+                            <div class="panel-body">
                                 <div class="bidx-latest clearfix">
                                 <!-- Grab latests members -->
 <?php
@@ -91,10 +102,8 @@
                         <div class="businesssummariesList clearfix">
 
                         </div>
-                        <div class="row-fluid">
-                            <div class="span12 pagerContainer">
-                                <div class="pager"></div>
-                            </div>
+                        <div class="pagerContainer">
+                            <ul class="pager"></ul>
                         </div>
                     </article>
 
@@ -103,10 +112,8 @@
                         <div class="memberList clearfix">
 
                         </div>
-                        <div class="row-fluid">
-                            <div class="span12 pagerContainer">
-                                <div class="pager"></div>
-                            </div>
+                        <div class="pagerContainer">
+                            <ul class="pager"></ul>
                         </div>
                     </article>
 
@@ -115,10 +122,8 @@
                         <div class="newsList clearfix">
 
                         </div>
-                        <div class="row-fluid">
-                            <div class="span12 pagerContainer">
-                                <div class="pager"></div>
-                            </div>
+                        <div class="pagerContainer">
+                            <ul class="pager"></ul>
                         </div>
                     </article>
                 </section>
@@ -127,18 +132,13 @@
 
 
             <!-- SIDE BAR -->
-            <div class="span4 side-bar well sideBar">
-                <div class="row-fluid">
-                    <div class="span12">
-
-                        <h2><?php _e('Create and grow', 'bidxtheme')?></h2>
+            <div class="col-sm-4">
+                <div class="side-bar well sideBar">
+                <h2><?php _e('Create and grow', 'bidxtheme')?></h2>
 <?php
-                            echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
-                            echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
+                    echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
+                    echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
 ?>
-
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -154,7 +154,7 @@
 
         <!-- member Snippit -->
         <div class="snippet" data-key="member">
-            <div class="span12 clearfix well">
+            <div class="col-sm-12 clearfix well">
                 <a href="/member/%memberId%" data-role="memberImage">
                     <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" class="img-circle pull-left">
                 </a>
@@ -174,7 +174,7 @@
 
         <!-- member Snippit -->
         <div class="snippet" data-key="news">
-            <div class="span12 clearfix well">
+            <div class="col-sm-12 clearfix well">
                 <h2 data-role="title"><span class="header-meta pull-right" data-role="date">%date%</span></h2>
                 <div data-role="content"></div>
             </div>

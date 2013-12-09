@@ -15,8 +15,8 @@ class auth {
 	 * Also registers the scripts for auth.
 	 */
 
-    static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                        'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-location','chosen','bidx-tagsinput','bidx-chosen');
+    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                        'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-location','chosen','bidx-tagsinput','bidx-chosen');
 
 
 	function __construct() {
@@ -31,13 +31,9 @@ class auth {
 
         wp_register_script( 'registration',  plugins_url( 'static/js/group-registration.js',    __FILE__ ), array(), '20130501', TRUE );
 
-
         $deps = array_merge( self :: $deps, array( 'registration' ) );
 
 		wp_register_script( 'auth', plugins_url( 'static/js/auth.js', __FILE__ ), $deps, '20130501', TRUE );
-		wp_register_style( 'auth', plugins_url( 'static/css/auth.css', __FILE__ ), array(), '20130501', 'all' );
-
-        wp_enqueue_style( 'auth' );
 	}
 
 	/**

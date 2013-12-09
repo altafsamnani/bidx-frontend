@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 
+<!--
 	Check if # contains a query like q=name&qf= and merge them back.
 
  -->
@@ -12,10 +12,9 @@
     <meta charset="utf-8">
 
 	<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/css/bootstrap.css">
-	<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/css/bootstrap-responsive.css">
 	<link rel="stylesheet" href="/wp-content/themes/bidx-group/assets/FlatUI/css/flat-ui.css">
     <link rel="stylesheet" href="/wp-content/themes/bidx-group/style.css">
-    
+
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
     <style>
@@ -36,13 +35,13 @@
 
 #map-canvas label { width: auto; display:inline; }
 #map-canvas img { max-width: none; }
-  
+
     </style>
 </head>
  <body>
 <div class="container">
 
-	<div class="row-fluid">
+	<div class="row">
 		<h4>Search results ()</h4>
 		<div class="pull-right">
 			<div class="btn-toolbar">
@@ -53,12 +52,12 @@
                   <a class="btn btn-primary" href="#fakelink"><i class="fui-list-small-thumbnails"></i></a>
                   <a class="btn btn-primary" href="#fakelink"><i class="fui-image"></i></a>
                 </div>
-			</div> 
+			</div>
          </div>
 	</div>
 
-<!--  
-	<div class="row-fluid">
+<!--
+	<div class="row">
 		<div class="search alert">
 			 <button type="button" class="close" data-dismiss="alert">&times;</button>
 			 <p>
@@ -71,24 +70,24 @@
 				 </ul>
 			 </p>
 		</div>
-	</div>	
-
-	<div class="row-fluid">
-		<div class="span12"><h4>Search results (<?php echo $this -> results -> data -> numFound ?>)</h4></div>
 	</div>
--->	
-	<div class="row-fluid">
-		<div class="search-result-container span8">
-					
+
+	<div class="row">
+		<div class="col-sm-12"><h4>Search results (<?php echo $this -> results -> data -> numFound ?>)</h4></div>
+	</div>
+-->
+	<div class="row">
+		<div class="search-result-container col-sm-8">
+
 
 			<a href="?<?php echo $this -> previousLink ?>" class="btn">Previous</a>
-		
-			<a href="?<?php echo $this -> nextLink ?>" class="btn">Next</a>				
+
+			<a href="?<?php echo $this -> nextLink ?>" class="btn">Next</a>
 		</div>
-	
-		<div class="sidebar span4">
+
+		<div class="sidebar col-sm-4">
 			<div>
-			
+
 			</div>
 			<div>
 			<ul class="nav nav-list">
@@ -128,7 +127,7 @@
 	                Groups
 	                <!--  <span class="nav-counter">11</span> -->
 	              </a>
-	            </li>	            	            
+	            </li>
 	            <li class="divider"></li>
 	            <li class="nav-header">Filters</li>
 	            <li>
@@ -159,13 +158,13 @@
           					<div class="tagsinput-add"></div>
           					<input id="tags_industry_tag small" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
           				</div>
-          			</div>	                
-	            </li>            
+          			</div>
+	            </li>
 	          </ul>
 		</div>
 	</div>
-</div>  
-  
+</div>
+
 	<div id="map-canvas"></div>
 </div>
 
@@ -196,10 +195,10 @@
 		var q = $("input:first").val();
 		//search near location ordered in distance
 		$.get('/api/v1/search/?q='+q, handleSearch(response), "json");
-  		
+
 		return false;
 	});
-			
+
 	</script>
   </body>
 </html>

@@ -331,9 +331,6 @@ Company: bidX;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         box-shadow: none;
-
-        height:                     41px;
-        width:                      100%;
         border:                     2px solid #bdc3c7;
     }
 
@@ -500,7 +497,7 @@ Company: bidX;
     /* iconbar (topmenu) */
 
         header.navbar .navbar-inner .container,
-        header.navbar .navbar-inner .container .row-fluid {
+        header.navbar .navbar-inner .container .row {
             height:                     100%;
         }
         header.navbar .navbar-inner .iconbar {
@@ -690,28 +687,6 @@ Company: bidX;
 
 
     /************************  Template styles *******************************/
-    .carousel {
-        width: 940px;
-        margin: 0 auto 20px;
-    }
-    .carousel.no-images {
-        height:                     373px;
-    }
-
-        .carousel .no-carousel-images,
-        .carousel .carousel-inner {
-            height:                 100%;
-
-        }
-            .no-carousel-images > .container {
-                background-color:   #fff;
-                padding:            30px;
-                -webkit-box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                box-sizing: border-box;
-                border: 3px dashed red;
-            }
-
 
     .bidx-well {
         padding:                    40px;
@@ -722,16 +697,16 @@ Company: bidX;
         border-radius:              10px;
     }
 
-    .bidx .side-bar {
+    .bidx .side-bar {/*
         background-color:           #e6e3de;
         padding:                    20px;
-    }
+    */}
 
-    .bidx .side-bar h2 {
+    .bidx .side-bar h2 {/*
         margin:                     0 0 10px 0;
-    }
+    */}
 
-    .bidx .side-bar .call-to-action {
+    .bidx .side-bar .call-to-action {/*
         background-color:           #fff;
         padding:                    20px 14px;
         line-height:                16px;
@@ -741,18 +716,18 @@ Company: bidX;
         border-radius:              4px;
 
         margin-bottom:              10px;
-    }
+    */}
 
 
-    .bidx .side-bar hr {
+    .bidx .side-bar hr {/*
         border: 1px solid #dcd7d0;
-    }
+    */}
 
-    .bidx .side-bar .call-to-action.transparent {
+    .bidx .side-bar .call-to-action.transparent {/*
          background-color:          transparent;
          border:                    none;
          padding:                   0;
-    }
+    */}
 
     /* This might need to change for smaller screen breakpoints  */
     .pageHeader {
@@ -820,29 +795,32 @@ Company: bidX;
         background-image:                   url( assets/img/icons/icon-entrepreneur.png );
     }
 
-    .bidx.home .testimonial-container p {
+    .bidx.home .bidx-testimonial p {
         font-size:                          15px;
         line-height:                        24px;
     }
-    .bidx.home .testimonial-container .bidx-testimonial {
+    .bidx.home .bidx-testimonial {
         background-color:                   #d2b48c;
-        width:                              282px;
-        min-height:                         240px;
+        min-height:                         200px;
         color:                              #34495e;
         font-size:                          18px;
         position:                           relative;
         margin-bottom:                      25px;
     }
-    .bidx.home .testimonial-container .bidx-testimonial .fillspace {
-        display:                            block;
-        height:                             25px;
-        width:                              257px;
-        background-color:                   #d2b48c;
-        position:                           absolute;
-        bottom:                             -25px;
-        left:                               0;
+    .bidx.home .bidx-testimonial:after {
+       height:                              0;
+       width:                               100%;
+       content:                             "";
+       position:                            absolute;
+       border-top:                          25px solid #d2b48c;
+       border-right:                        25px solid transparent;
+       margin:                              33px 0 0 0;
+       -webkit-box-sizing:                  border-box;
+       -moz-box-sizing:                     border-box;
+       box-sizing:                          border-box;
+       bottom:                              -25px;
     }
-    .bidx.home .testimonial-container .bidx-testimonial .triange {
+    .bidx.home .bidx-testimonial .triange {
         width:                              0;
         height:                             0;
         border-style:                       solid;
@@ -851,8 +829,9 @@ Company: bidX;
         position:                           absolute;
         bottom:                             -25px;
         right:                              0;
+        z-index:                            1;
     }
-    .bidx.home .testimonial-container .bidx-testimonial div:before {
+    .bidx.home .bidx-testimonial div:before {
         content:                            " ” ";
         color:                              #ebdecc;
         position:                           absolute;
@@ -862,8 +841,8 @@ Company: bidX;
         line-height:                        1;
         font-family:                        Arial, Verdana;
     }
-    .bidx.home .testimonial-container .bidx-testimonial > div {
-        padding:                            50px 20px;
+    .bidx.home .bidx-testimonial > div {
+        padding:                            50px 20px 20px;
         line-height:                        24px;
     }
 
@@ -910,26 +889,26 @@ Company: bidX;
     margin-bottom:              10px;
 }
 
-.accordion-heading {
+.panel-heading {
     background-color:           #f5f5f5;
 }
 
-.accordion-heading.heading-error {
+.panel-heading.heading-error {
     background-color:           #F2DEDE;
 }
 
-.accordion-toggle {
+.panel-toggle {
     position:                   relative;
 }
 
-.accordion-toggle .control-buttons {
+.panel-toggle .control-buttons {
     font-size:                  28px;
     position:                   absolute;
     right:                      20px;
     top:                        18px;
 }
 
-.accordion-open .accordion-state-icon {
+.panel-open .accordion-state-icon {
     -webkit-transform:          rotate(90deg);
     -moz-transform:             rotate(90deg);
     -ms-transform:              rotate(90deg);
@@ -944,7 +923,7 @@ Company: bidX;
     -webkit-backface-visibility: hidden;
 }
 
-.accordion-heading .heading-error-count {
+.panel-heading .heading-error-count {
     color:                      #FFF;
     background-color:           #B94A48;
     font-weight:                700;
@@ -984,19 +963,6 @@ Company: bidX;
     position:                   absolute;
     right:                      20px;
     bottom:                     10px;
-}
-
-span.scrollPositionMarker {
-    position:                   absolute;
-    top:                        -60px;
-}
-
-body.bidx-edit span.scrollPositionMarker {
-    top:                        -250px;
-}
-
-body.bidx-business span.scrollPositionMarker {
-    top:                        -300px;
 }
 
 .well-white {
@@ -1110,7 +1076,7 @@ footer .page-footer .footer-bar {
 ********************************************************************************************/
 
 
-body.home .carousel-inner img {
+.carousel-inner img {
     width:              100%;
 }
 
@@ -1162,9 +1128,9 @@ body.home .carousel-inner img {
     visibility: hidden !important;
 }
 
-.progress {
+.progress {/*
     height: 24px;
-}
+*/}
 
 .progress .bar {
     background-color: #1ABC9C;
@@ -1218,7 +1184,7 @@ body.home .carousel-inner img {
 *
 ********************************************************************************************/
 
-/* .row-fluid input, .row-fluid textarea {
+/* .row input, .row textarea {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -1246,21 +1212,17 @@ select {
 
 
 /* 'fix' for having the input prepends take up the whole width */
-form .row-fluid .input-prepend {
+form .row .input-prepend {
     display:                    block;
 }
     /* changed to .add-on because we are targetting a specific child class of input-prepend. Using span was affecting tags-input labels */
-    form .row-fluid .input-prepend .add-on {
+    form .row .input-prepend .add-on {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         width:                      10%;
         height:                     41px;
         display:                    inline-block;
-    }
-
-    form .row-fluid .input-prepend input {
-        width:                      90.2%;
     }
 
 	form label.bidx-radio {
@@ -1319,7 +1281,7 @@ form .row-fluid .input-prepend {
 
 
     select.error, input.error, textarea.error {
-        display: inline-block;
+        /*display: inline-block;*/
     }
 
 
@@ -1533,20 +1495,15 @@ form .row-fluid .input-prepend {
             padding:                                40px 20px 0 20px;
         }
 
-        .bidx.home .feature-block-items .bidx-latest .span6,
-        .bidx.home .feature-block-items .bidx-latest .span6 {
+        .bidx.home .feature-block-items .bidx-latest .col-sm-6,
+        .bidx.home .feature-block-items .bidx-latest .col-sm-6 {/*
             margin-bottom:                          30px;
             min-height:                             110px;
-        }
-        .bidx.home .feature-block-items .bidx-latest .span6:nth-child(odd),
-        .bidx.home .feature-block-items .bidx-latest .span6:nth-child(odd) {
+        */}
+        .bidx.home .feature-block-items .bidx-latest .col-sm-6:nth-child(odd),
+        .bidx.home .feature-block-items .bidx-latest .col-sm-6:nth-child(odd) {/*
             margin-left:                            0;
-        }
-        .bidx.home.not-auth .feature-col-items .bidx-latest .span12,
-        .bidx.home.not-auth .feature-col-items .bidx-latest .span12 {
-            margin-left:                            0;
-            margin-bottom:                          40px;
-        }
+        */}
         .bidx.home .feature-block img {
             border:                                 1px solid #d7d7d7;
             margin-right:                           20px;
@@ -1594,7 +1551,7 @@ form .row-fluid .input-prepend {
           display:                                  block;
           overflow:                                 hidden;
           padding:                                  7px 0 7px 8px;
-          height:                                   23px;
+          height:                                   40px;
           border:                                   2px solid #bdc3c7;
           border-radius:                            5px;
           background-color:                         #fff;
@@ -1661,7 +1618,7 @@ form .row-fluid .input-prepend {
           padding:                                  4px 20px 4px 5px;
           width:                                    100%;
           height:                                   auto;
-          border:                                   2px solid #bdc3c7;
+          border:                                   1px solid #bdc3c7;
           font-size:                                1em;
           font-family:                              sans-serif;
           line-height:                              normal;
@@ -1992,7 +1949,7 @@ form .row-fluid .input-prepend {
 		padding-right:0;
 	}
 
-	.lt-ie8 .span8 {
+	.lt-ie8 .col-sm-8 {
 		width:55%;
 	}
 */
@@ -2187,225 +2144,41 @@ form .row-fluid .input-prepend {
 
     /* end iconbar styles*/
 
-            /* Datepicker */
+            /* open group page*/
+            .bidx.home .feature-container {
+                padding-top:                         20px;
+            }
+            .bidx.home .feature-container .feature-col,
+            .bidx.home .feature-container .feature-col h2 {
+                color:                                  #fff;
+            }
+            .bidx.home .feature-container .feature-col img {/*
+                margin-right:                           20px;
+            */}
 
-            .ui-datepicker {
-              width: 264px;
-              background-color: #ffffff;
-              display: none;
-              margin: 10px 0 0 -35px;
-              border: 7px solid #1abc9c;
-              -webkit-box-shadow: -14px 14px 0 rgba(52, 73, 94, 0.06);
-              -moz-box-shadow: -14px 14px 0 rgba(52, 73, 94, 0.06);
-              box-shadow: -14px 14px 0 rgba(52, 73, 94, 0.06);
-              -webkit-border-radius: 6px;
-              -moz-border-radius: 6px;
-              border-radius: 6px;
+            .bidx.home .join-our-group-block .btn {
+                margin-right: 20px;
             }
-            .ui-datepicker .ui-datepicker-header {
-              background-color: #1abc9c;
-              color: #ffffff;
-              cursor: default;
-              margin: -7px -7px 2px;
-              position: relative;
-              -webkit-border-radius: 6px 6px 0 0;
-              -moz-border-radius: 6px 6px 0 0;
-              border-radius: 6px 6px 0 0;
-            }
-            .ui-datepicker .ui-datepicker-prev,
-            .ui-datepicker .ui-datepicker-next {
-              position: absolute;
-              top: 0;
-              width: 52px;
-              height: 44px;
-              color: #ffffff;
-              text-align: center;
-              cursor: pointer;
-            }
-            .ui-datepicker .ui-datepicker-prev:hover,
-            .ui-datepicker .ui-datepicker-next:hover {
-              background-color: #48c9b0;
-            }
-            .ui-datepicker .ui-datepicker-prev:active,
-            .ui-datepicker .ui-datepicker-next:active {
-              background-color: #16a085;
-            }
-            .ui-datepicker .ui-datepicker-prev.ui-state-disabled,
-            .ui-datepicker .ui-datepicker-next.ui-state-disabled {
-              background-color: transparent;
-              color: rgba(255, 255, 255, 0.75);
-              cursor: default;
-              opacity: 0.7;
-              filter: alpha(opacity=70);
-            }
-            .ui-datepicker .ui-datepicker-prev {
-              left: 0;
-              border-right: 2px solid #5fd0ba;
-              -webkit-border-radius: 6px 0 0 0;
-              -moz-border-radius: 6px 0 0 0;
-              border-radius: 6px 0 0 0;
-            }
-            .ui-datepicker .ui-datepicker-next {
-              right: 0;
-              border-left: 2px solid #5fd0ba;
-              -webkit-border-radius: 0 6px 0 0;
-              -moz-border-radius: 0 6px 0 0;
-              border-radius: 0 6px 0 0;
-            }
-            .ui-datepicker .ui-datepicker-title {
-              margin: 0 52px;
-              line-height: 44px;
-              text-align: center;
-              font-size: 14.994px;
-            }
-            .ui-datepicker .ui-datepicker-prev span,
-            .ui-datepicker .ui-datepicker-next span {
-              display: block;
-              position: absolute;
-              left: 50%;
-              margin-left: -5px;
-              top: 50%;
-              margin-top: -6px;
-              text-indent: -9999px;
-              width: 0;
-              height: 0;
-              content: "";
-            }
-            .ui-datepicker .ui-icon-circle-triangle-w {
-              border: inset transparent;
-              border-width: 7px 12px 7px 0;
-              border-right-color: #ffffff;
-            }
-            .ui-datepicker .ui-icon-circle-triangle-e {
-              border: outset transparent;
-              border-width: 7px 0 7px 12px;
-              border-left-color: #ffffff;
-            }
-            .ui-datepicker table {
-              border-left: 3px solid #ffffff;
-              border-right: 3px solid #ffffff;
-              font-size: 14px;
-              margin: 0 0 3px;
-              width: 100%;
-            }
-            .ui-datepicker th {
-              min-width: 34px;
-              height: 30px;
-              text-align: center;
-              font-weight: bold;
-              border: 0;
-              padding: 1px;
-              vertical-align: middle;
-            }
-            .ui-datepicker td {
-              border: 0;
-              padding: 1px;
-              text-align: center;
-              vertical-align: middle;
-            }
-            .ui-datepicker td span,
-            .ui-datepicker td a {
-              display: block;
-              text-decoration: none;
-              color: #34495e;
-              height: 30px;
-              line-height: 30px;
-              min-width: 34px;
-            }
-            .ui-datepicker td a {
-              -webkit-border-radius: 6px;
-              -moz-border-radius: 6px;
-              border-radius: 6px;
-            }
-            .ui-datepicker td a:hover {
-              background-color: #d7dbdd;
-              color: #34495e;
-            }
-            .ui-datepicker .ui-state-active {
-              background-color: #1abc9c;
-              color: #ffffff;
-            }
-            .ui-datepicker .ui-datepicker-other-month a {
-              color: #c2c8cf;
-            }
-            .ui-datepicker select {
-              font-size: 1em;
-              margin: 1px 0;
-            }
-            .ui-datepicker select.ui-datepicker-month-year {
-              width: 100%;
-            }
-            .ui-datepicker select.ui-datepicker-month,
-            .ui-datepicker select.ui-datepicker-year {
-              width: 49%;
-            }
-            .ui-datepicker .ui-datepicker-buttonpane {
-              background-image: none;
-              margin: .7em 0 0 0;
-              padding: 0 .2em;
-              border-left: 0;
-              border-right: 0;
-              border-bottom: 0;
-            }
-            .ui-datepicker .ui-datepicker-buttonpane button {
-              float: right;
-              margin: .5em .2em .4em;
-              cursor: pointer;
-              padding: .2em .6em .3em .6em;
-              width: auto;
-              overflow: visible;
-            }
-            .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
-              float: left;
-            }
-            .ui-datepicker:before {
-              content: "";
-              border-color: transparent transparent #1abc9c;
-              border-style: solid;
-              border-width: 0 6px 6px;
-              height: 0;
-              margin-top: 0;
-              opacity: 1;
-              position: absolute;
-              left: 12px;
-              top: -13px;
-              width: 0;
-              z-index: 10;
-            }
-            .ui-datepicker.ui-datepicker-multi {
-              width: auto;
-            }
-            .ui-datepicker-multi .ui-datepicker-group {
-              float: left;
-            }
-            .ui-datepicker-multi .ui-datepicker-group table {
-              width: 95%;
-              margin: 0 auto .4em;
-            }
-            .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,
-            .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {
-              border-left-width: 0;
-            }
-            .ui-datepicker-multi .ui-datepicker-buttonpane {
-              clear: left;
-            }
-            .ui-datepicker-multi-2 .ui-datepicker-group {
-              width: 50%;
-            }
-            .ui-datepicker-multi-3 .ui-datepicker-group {
-              width: 33.3%;
-            }
-            .ui-datepicker-multi-4 .ui-datepicker-group {
-              width: 25%;
-            }
-            .ui-datepicker-row-break {
-              clear: both;
-              width: 100%;
-              font-size: 0;
-            }
+            /* end open group page*/
+
+            /* closed group page*/
 
 
-            /* end Datepicker */
+
+            /* end closed group page */
+
+            /* space for validation icons */
+            .bidx.auth .accordion-inner .control-group.col-sm-11 {
+                margin-left:                            0;
+            }
+            .bidx.auth .well .control-group.col-sm-11 {
+                margin-left:                            0;
+            }
+            .bidx.auth .well .btn.btn-danger.btn-block {
+                overflow:                               hidden;
+            }
+            /* end space for validation icons*/
+
 
 /*******************************************************************************************
 *
@@ -2416,10 +2189,6 @@ form .row-fluid .input-prepend {
 
     /* Large desktop */
     @media (min-width: 1200px) {
-
-        .carousel {
-            width: 1170px;
-        }
 
     }
 
@@ -2575,71 +2344,6 @@ form .row-fluid .input-prepend {
 
         /* content */
 
-        .bidx.home .carousel .outer-carousel-control-container,
-        .bidx.home .carousel .carousel-inner .outer-carousel-control-container  {
-            position:                               absolute;
-            height:                                 100%;
-            width:                                  100%;
-            top:                                    0;
-            left:                                   0;
-        }
-        .bidx.home .carousel  .container {
-            position:                               relative;
-            height:                                 100%;
-        }
-        .bidx.home .carousel .carousel-control {
-            z-index:                                999;
-            line-height:                            26px;
-        }
-
-        .bidx.home .carousel .carousel-caption {
-            padding:                                0;
-            background:                             #121d29;
-            width:                                  300px;
-
-            opacity:                                0.7;
-            padding:                                15px;
-            color:                                  #fff;
-            line-height:                            18px;
-            position:                               relative;
-            top:                                    30%;
-            left:                                   100px;
-        }
-
-            /* open group page*/
-            .bidx.home .feature-container {
-                padding-top:                         20px;
-            }
-            .bidx.home .feature-container .feature-col,
-            .bidx.home .feature-container .feature-col h2 {
-                color:                                  #fff;
-            }
-            .bidx.home .feature-container .feature-col img {
-                margin-right:                           20px;
-            }
-
-            .bidx.home .join-our-group-block .btn {
-                margin-right: 20px;
-            }
-            /* end open group page*/
-
-            /* closed group page*/
-
-
-
-            /* end closed group page */
-
-            /* space for validation icons */
-            .bidx.auth .accordion-inner .control-group.span11 {
-                margin-left:                            0;
-            }
-            .bidx.auth .well .control-group.span11 {
-                margin-left:                            0;
-            }
-            .bidx.auth .well .btn.btn-danger.btn-block {
-                overflow:                               hidden;
-            }
-            /* end space for validation icons*/
 
         /* end content */
 
@@ -2654,11 +2358,6 @@ form .row-fluid .input-prepend {
             body {
                 padding-left: 0;
                 padding-right: 0;
-            }
-
-            .carousel {
-                width: 94%;
-                margin: 0 3% 20px;
             }
 
 

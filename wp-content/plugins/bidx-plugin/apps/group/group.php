@@ -28,8 +28,6 @@ class group {
 	 */
 	public function register_search_bidx_ui_libs() {
 		wp_register_script( 'group', plugins_url( 'static/js/group.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
-		wp_register_style( 'group', plugins_url( 'static/css/group.css', __FILE__ ), array(), '20130501', 'all' );
-		wp_enqueue_style( 'group' );
 	}
 
 	/**
@@ -51,27 +49,23 @@ class group {
 
 		switch ( $command ) {
 			case "latest-business-summaries" :
-				$view->span = isset($atts["span"]) ? $atts["span"] : "";
 				$view->summaries = $groupSvc->getLatestBusinessSummaries();
 				return $view->render( 'latest-business-summaries.phtml' );
 				break;
 			case "last-members":
-				$view->span 			= isset( $atts[ "span" ] ) ? $atts[ "span" ] : "";
 				$view->authenticated 	= isset( $atts[ "authenticated" ] ) ? $atts[ "authenticated" ] : "";
-				$view->joinedGroup 		= isset( $atts[ "joinedgroup" ] ) ? $atts[ "joinedgroup" ] : false;
 				$view->members 			= $groupSvc->getLatestMembers(  );
 				return $view->render( 'last-members.phtml' );
 				break;
 			case "latest-news" :
-				$view->span = isset($atts["span"]) ? $atts["span"] : "";
 				return $view->render( 'latest-news.phtml' );
 				break;
 			case "list-groups" :
-				$view->groups = $groupSvc->getGroupDetails();
+				$view->groups = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-list.phtml' );
 				break;
 			case "group-intro" :
-				$view->group = $groupSvc->getGroupDetails();
+				$view->group = $groupSvc->getGroupDetails(  );
 				return $view->render( 'group-intro.phtml' );
 				break;
 			case "join-group":
@@ -92,19 +86,12 @@ class group {
 
 				$sessionData    = BidxCommon::$staticSession;
     			$entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
-
-    			$authenticated 	= false;
-    			if ( $sessionData -> authenticated == 'true' ) {
-        			$authenticated = true;
+    			$authenticated=false;
+    			if ( $sessionData->authenticated == 'true' ) {
+        			$authenticated=true;
     			}
 
     			if ( $authenticated ) {
-
-    				// convert groups class to array so that we can do a simple array check if the member has joined the currentGroup
-    				//
-	    			$groupIds = array_keys ( (array) $sessionData -> data -> groups );
-	    			$view -> joinedGroup 	= in_array( $sessionData -> data -> currentGroup, $groupIds);
-
 					return $view->render( 'group-home-private.phtml' );
     			} else {
 					return $view->render( 'group-home-public.phtml' );
@@ -112,8 +99,8 @@ class group {
     			break;
 
 			default :
-				$view -> groups 		= $groupSvc->getGroupDetails(  );
-				return $view -> render( 'group-list.phtml' );
+				$view->groups = $groupSvc->getGroupDetails(  );
+				return $view->render( 'group-list.phtml' );
 		}
 	}
 

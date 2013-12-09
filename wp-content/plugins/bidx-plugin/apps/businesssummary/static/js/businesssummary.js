@@ -20,7 +20,7 @@
     ,   $btnSave
     ,   $btnCancel
     ,   $btnFullAccessRequest       = $editControls.find( ".bidxRequestFullAccess")
-    ,   $bidxAccessRequestPending    = $editControls.find( ".bidxAccessRequestPending")
+    ,   $bidxAccessRequestPending   = $editControls.find( ".bidxAccessRequestPending")
 
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )

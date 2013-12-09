@@ -650,21 +650,20 @@
 
     ,   errorPlacement:     function( $error, $element )
         {
+            //bidx.utils.log("errorPlacement", $element);
             var inserted            = false
             ,   $controls
-            ,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
+            //,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
             ;
 
             // When handling any field, the error needs to be inserted after the control tag
             //
-            $controls = $element.closest( ".controls" );
+            $controls = $element.closest( ".form-group" );
 
 
             if ( $controls.length && !$element.hasClass( "noValidationErrorMessage" ))
             {
-                // add the error after the control tag
-                //
-                $controls.after( $error );
+                $controls.append( $error );
             }
 
             // Forms can be configured to have no validation icon behind the elements
@@ -673,11 +672,6 @@
             {
                 if ( $controls.length )
                 {
-                    if( !$controls.find( ".validation-icon" ).length )
-                    {
-                        $controls.append( $errorIcon );
-                    }
-
                     inserted = true;
                 }
 
@@ -694,6 +688,8 @@
                 }
             }
         }
+
+    ,   errorElement: "div"
 
     ,   highlight: function( element, errorClass, validClass)
         {
@@ -721,7 +717,8 @@
             //
             errorClass = "control-" + errorClass;
             validClass = "control-" + validClass;
-            $element.closest( ".controls" ).addClass( errorClass ).removeClass( validClass );
+            //$element.closest( ".controls" ).addClass( errorClass ).removeClass( validClass );
+            $element.closest('.form-group').addClass('has-error');
 
             // update error count in accordion heading (if exists)
             //
@@ -738,7 +735,7 @@
 
             // if element is currently on pending list, step out of this function
             //
-            if( this.pending[ element.name ] )
+            if ( this.pending[ element.name ] )
             {
                 return;
             }
@@ -773,7 +770,8 @@
             //
             errorClass = "control-" + errorClass;
             validClass = "control-" + validClass;
-            $element.closest( ".controls" ).removeClass( errorClass ).addClass( validClass );
+            //$element.closest( ".controls" ).removeClass( errorClass ).addClass( validClass );
+            $element.closest('.form-group').removeClass('has-error');
 
             // update error count in accordion heading (if exists)
             //
@@ -803,9 +801,9 @@
 
     function updateAccordionHeadingErrors( element, action )
     {
-        var accordionHeadingSelector    = ".accordion-heading"
+        var accordionHeadingSelector    = ".panel-heading"
         ,   $element                    = $( element )
-        ,   $accordionGroup             = $element.closest( ".accordion-group" )
+        ,   $accordionGroup             = $element.closest( ".panel-group" )
         ,   $accordionHeading
         ,   $errorCount
         ,   errorCount
@@ -949,6 +947,10 @@
     //
     // end validator extentions
 
+    // Set the bootstrap version to 3 by default so we don't have to change it in every app
+    //
+    $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
+
 
     // Expose
     //
@@ -1033,7 +1035,7 @@
     //
     $( "input[data-type=date]" ).datepicker(
     {
-        dateFormat:             "d MM yy"
+        format:                 "d M yyyy"
     ,   changeYear:             true
     ,   changeMonth:            true
     ,   yearRange:              "-100:+3"
@@ -1049,39 +1051,28 @@
     // Administer the toggle state of an accordion by putting a .accordion-open class on the group when the accordion group is open
     // Usefull for setting icons / colors etc
     //
-    $( ".accordion-body.collapse" )
-        .on( "show", function( e )
+    $( ".panel-collapse" )
+        .on( "show.bs.collapse", function()
         {
-            var $accordionBody;
+            var $accordionBody = $( this );
 
-            if ( e.target === e.currentTarget )
-            {
-                $accordionBody = $( this );
-
-                $accordionBody.closest( ".accordion-group" ).first().addClass( "accordion-open" );
-            }
+            $accordionBody.closest( ".panel" ).first().addClass( "panel-open" );
         } )
-        .on( "hide", function( e )
+        .on( "hide.bs.collapse", function(e)
         {
-            var $accordionBody;
-
-            if ( e.target === e.currentTarget )
-            {
-                $accordionBody = $( this );
-
-                $accordionBody.closest( ".accordion-group" ).first().removeClass( "accordion-open" );
-                $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).first().css({ overflow: 'hidden' });
-            }
+            var $accordionBody = $( this );
+            $accordionBody.closest( ".panel" ).first().removeClass( "panel-open" );
+            $accordionBody.closest( ".panel" )
+                .css( { overflow: 'hidden' } )
+                .find( ".panel-body" ).first().css({ overflow: 'hidden' });
         } )
-        .on( "shown", function( e )
+        .on( "shown.bs.collapse", function ()
         {
-            var $accordionBody;
+            var $accordionBody = $( this );
 
-            if ( e.target === e.currentTarget )
-            {
-                $accordionBody = $( this );
-                $accordionBody.closest( ".accordion-group" ).find( ".accordion-body" ).first().css({ overflow: 'visible' });
-            }
+            $accordionBody.closest( ".panel" )
+                .css( { overflow: 'visible' } )
+                .find( ".panel-body" ).first().css({ overflow: 'visible' });
         } );
 
 

@@ -1,5 +1,7 @@
 (function( $ )
 {
+    "use strict";
+
     var months = [ "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
     // Normalize some input into the best possible / guessable form of a linkedin profile url
@@ -8,15 +10,18 @@
     {
         var result = input;
 
-        // Did we only get a username?
-        //
-        if ( /^[a-z0-9]{5,30}$/i.test( input ) )
+        if ( input )
         {
-            result = "https://www.linkedin.com/in/" + input;
-        }
-        else if ( !/^http(s?):\/\//i.test( input ))
-        {
-            result = "https://" + input;
+            // Did we only get a username?
+            //
+            if ( /^[a-z0-9]{5,30}$/i.test( input ) )
+            {
+                result = "https://www.linkedin.com/in/" + input;
+            }
+            else if ( !/^http(s?):\/\//i.test( input ))
+            {
+                result = "https://" + input;
+            }
         }
 
         return result;
@@ -169,6 +174,7 @@
         ,   dataType    = $el.attr( 'data-type' )
         ,   valueType   = $.type( value )
         ,   dateObj
+        ,   date
         ;
 
         // Type coerce to string since all DOM control values are strings and we will later do a type strict comparison
@@ -185,9 +191,9 @@
             if ( value )
             {
                 dateObj = parseISODate( value );
+                date    = new Date( dateObj.y, dateObj.m - 1, dateObj.d );
 
-                value = dateObj.d + " " + months[ dateObj.m - 1 ] + " " + dateObj.y;
-                $el.val( value );
+                $el.datepicker( "setUTCDate", date );
             }
         }
         else if ( dataType === "tagsinput" )
@@ -330,7 +336,7 @@
             // We need to get to ISO8601 => yyyy-mm-dd
             //
             case 'date':
-                date    = $input.datepicker( "getDate" );
+                date    = $input.datepicker( "getUTCDate" );
 
                 if ( date )
                 {

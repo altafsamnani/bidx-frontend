@@ -4,35 +4,33 @@ $entities       = $this->sessionData->data->wp->entities;
 ?>
 <div class="block-odd member">
     <div class="pageHeader clearfix">
-        <div class="container clearfix">
-            <h1 class="pull-left bidx-page-heading">
-                <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></span>
+        <h1 class="pull-left bidx-page-heading">
+            <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></span>
 
-                <span class="editMember hide"><?php _e('Edit my member profile', 'bidxplugin')?></span>
+            <span class="editMember hide"><?php _e('Edit my member profile', 'bidxplugin')?></span>
 
-                <span class="editInvestor hide"><?php _e('Edit my investor profile', 'bidxplugin')?></span>
-                <span class="createInvestor hide"><?php _e('Create my investor profile', 'bidxplugin')?></span>
+            <span class="editInvestor hide"><?php _e('Edit my investor profile', 'bidxplugin')?></span>
+            <span class="createInvestor hide"><?php _e('Create my investor profile', 'bidxplugin')?></span>
 
-                <span class="editEntrepreneur hide"><?php _e('Edit my entrepreneur profile', 'bidxplugin')?></span>
-                <span class="createEntrepreneur hide"><?php _e('Create my entrepreneur profile', 'bidxplugin')?></span>
+            <span class="editEntrepreneur hide"><?php _e('Edit my entrepreneur profile', 'bidxplugin')?></span>
+            <span class="createEntrepreneur hide"><?php _e('Create my entrepreneur profile', 'bidxplugin')?></span>
 
-                <span class="editMentor hide"><?php _e('Edit my mentor profile', 'bidxplugin')?></span>
-                <span class="createMentor hide"><?php _e('Create my mentor profile', 'bidxplugin')?></span>
+            <span class="editMentor hide"><?php _e('Edit my mentor profile', 'bidxplugin')?></span>
+            <span class="createMentor hide"><?php _e('Create my mentor profile', 'bidxplugin')?></span>
 
-            </h1>
-            <div class="editControls btn-group pull-right"></div>
-        </div>
+        </h1>
+        <div class="editControls btn-group pull-right"></div>
     </div>
 
-    <div class="row-fluid mainState mainStateShow">
-        <div class="span8">
-            <div class="accordion" id="accordionProfile">
+    <div class="row mainState mainStateShow">
+        <div class="col-sm-8">
+            <div class="panel-group" id="accordionProfile">
                 <?php $this->render('view-member.phtml');  ?>
                 <?php $this->render('view-entrepreneur.phtml'); ?>
                 <?php $this->render('view-investor.phtml'); ?>
             </div>
         </div>
-        <div class="span4 side-bar well">
+        <div class="col-sm-4 side-bar well">
 <?php
     if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
 ?>
@@ -42,30 +40,34 @@ $entities       = $this->sessionData->data->wp->entities;
         //
         if ( !isset( $entities->bidxEntrepreneurProfile ) ) {
 ?>
-            <div class="call-to-action clearfix">
-                <div class="pull-left">
-                    <div><strong><?php _e('Become an entrepreneur', 'bidxplugin')?></strong></div>
-                   <em><?php _e('Create your business', 'bidxplugin')?></em>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong><?php _e('Become an entrepreneur', 'bidxplugin')?></strong>
                 </div>
-                <a href="/member/#createEntrepreneur" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxplugin')?></a>
+                <div class="panel-body">
+                    <em><?php _e('Create your business', 'bidxplugin')?></em>
+                    <a href="/member/#createEntrepreneur" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxplugin')?></a>
+                </div>
             </div>
 <?php
         } else {
 ?>
-            <div class="call-to-action clearfix">
-                <div class="pull-left">
+            <div class="panel panel-default">
+                <div class="panel-body">
 <?php
                     printf( __( 'Go to %sEntrepreneur dashboard%s', 'bidxtheme' ), '<a href="/entrepreneur-dashboard">', '</a>' );
 ?>
                 </div>
             </div>
 
-            <div class="call-to-action clearfix">
-                <div class="pull-left">
-                    <div><strong><?php _e('Create a business summary', 'bidxplugin')?></strong></div>
-                   <em><?php _e('Create your business', 'bidxplugin')?></em>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong><?php _e('Create a business summary', 'bidxplugin')?></strong>
                 </div>
-                <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxplugin')?></a>
+                <div class="panel-body">
+                    <em><?php _e('Create your business', 'bidxplugin')?></em>
+                    <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary bidx-theme-colour-one pull-right"><i class="bidx-plus"></i><?php _e('Create','bidxplugin')?></a>
+                </div>
             </div>
 <?php
         }
@@ -74,8 +76,8 @@ $entities       = $this->sessionData->data->wp->entities;
         //
         if ( !isset( $entities->bidxInvestorProfile )) {
 ?>
-            <div class="call-to-action clearfix">
-                <div class="pull-left">
+            <div class="panel panel-default">
+                <div class="panel-body">
                     <div><strong><?php _e('Become an investor', 'bidxplugin')?></strong></div>
                     <em><?php _e('Create your resources', 'bidxtheme')?></em>
                 </div>
@@ -84,8 +86,8 @@ $entities       = $this->sessionData->data->wp->entities;
 <?php
         } else {
 ?>
-            <div class="call-to-action clearfix">
-                <div class="pull-left">
+            <div class="panel panel-default">
+                <div class="panel-body">
 <?php
                     printf( __( 'Go to %sInvestor dashboard%s', 'bidxtheme' ), '<a href="/investor-dashboard">', '</a>' );
 ?>

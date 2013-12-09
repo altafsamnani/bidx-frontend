@@ -10,8 +10,8 @@ class company
 
     public $scriptInject;
 
-    static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                              'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
+    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                              'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
 
     /**
      * Constructor
@@ -27,8 +27,6 @@ class company
     public function register_company_bidx_ui_libs ()
     {
         wp_register_script ('company', plugins_url ('static/js/company.js', __FILE__), self::$deps, '20130501', TRUE);
-        wp_register_style ('company', plugins_url ('static/css/company.css', __FILE__), array (), '20130501', 'all');
-        wp_enqueue_style ('company');
     }
 
     /**

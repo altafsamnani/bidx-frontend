@@ -97,7 +97,7 @@ class TemplateLibrary
     public function addAdjacentRows ($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div')
     {
 
-        $rowHtml = "<div class='row-fluid'>";
+        $rowHtml = "<div class='row'>";
 
 
         foreach ($rowValues as $label => $values) {
@@ -148,8 +148,8 @@ class TemplateLibrary
     public function addMultipleRows ($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div')
     {
         $rowHtml = "";
-        if ( $gridColumnVal === 'span12' ) {
-            $rowHtml = "<div class='row-fluid'>";
+        if ( $gridColumnVal === 'col-sm-12' ) {
+            $rowHtml = "<div class='row'>";
         }
         $rowHtml .= "<div class='" . $gridColumnVal . "'>";
         $className = ($className) ? " class = '" . $className . "' " : '';
@@ -180,7 +180,7 @@ class TemplateLibrary
 
         $rowHtml .= "</div>";
 
-        if ( $gridColumnVal === 'span12' ) {
+        if ( $gridColumnVal === 'col-sm-12' ) {
             $rowHtml .= "</div>";
         }
 
@@ -321,13 +321,13 @@ class TemplateLibrary
         $pairs = array_chunk($items, 2, true);
         $pairRow = '';
         foreach ($pairs as $pair) {
-            $pairRow .= "<div class='row-fluid'>";
+            $pairRow .= "<div class='row'>";
             foreach ($pair as $label => $col) {
                 if ($col && $col != 'null') {
                     if ( is_array( $col ) ) {
                         $col = implode(', ', $col);
                     }
-                    $pairRow .= "<div class='span6'>";
+                    $pairRow .= "<div class='col-sm-6'>";
                     $pairRow .= "<$tagLabel>" . $label . " </$tagLabel>";
                     $pairRow .= "<$tagValue>" . $col . " </$tagValue>";
                     $pairRow .= "</div>";
@@ -363,7 +363,7 @@ class TemplateLibrary
 
         $rowHtml = '';
         foreach ($rowValues as $label => $value) {
-        $rowHtml .= "<div class='row-fluid'>";
+        $rowHtml .= "<div class='row'>";
             if ($value && $value != 'null') {
                 //Display Label
                 $rowHtml .= "<div class='" . $gridLabel . "'>";
@@ -394,8 +394,8 @@ class TemplateLibrary
      */
     public function addRowsWithLabelBelow ($gridLabel, $gridValue, $rowValues, $properties = array ())
     {
-        /** Class placed on the outer rows, defaults to the row-fluid from bootstrap * */
-        $classRow = (isset ($properties['class_row']) ? $properties['class_row'] : 'row-fluid');
+        /** Class placed on the outer rows, defaults to the row from bootstrap * */
+        $classRow = (isset ($properties['class_row']) ? $properties['class_row'] : 'row');
 
         /** Class * */
         $classLabel = (isset ($properties['class_label']) && $properties['class_label']) ? " class = '" . $properties['class_label'] . "' " : '';
@@ -554,7 +554,7 @@ class TemplateLibrary
             foreach ($rowValues as $label => $rowValue) {
                 if ($rowValue && $rowValue != 'null') {
                     //Display Label
-                    $rowHtml .= "<div class='row-fluid'>";
+                    $rowHtml .= "<div class='row'>";
                     $rowHtml .= "<div class='" . $gridLabel . "'>";
                     $rowHtml .= "<h5 " . $classLabel . " > " . $this->escapeHtml ($label) . " </h5>";
                     $rowHtml .= "</div>";
@@ -563,7 +563,7 @@ class TemplateLibrary
                     if (is_array ($rowValue)) {
                         foreach ($rowValue as $value) {
                             if ($this->exst ($value->document)) {
-                                $rowHtml .= "<div class='row-fluid'>";
+                                $rowHtml .= "<div class='row'>";
                                 $rowHtml .= "<div class='" . $gridValue . "'>";
                                 $rowHtml .= "<a href= '" . $value->document . "' " . $classValue . " > " . $this->exst ($value->documentName) . " </a>";
                                 $rowHtml .= "</div>";
@@ -793,7 +793,7 @@ class TemplateLibrary
         $tagLabel = (isset ($properties['tag_label']) && $properties['tag_label']) ? $properties['tag_label'] : 'div';
         $tagValue = (isset ($properties['tag_value']) && $properties['tag_value']) ? $properties['tag_value'] : 'div';
 
-        $rowHtml = "<div class='row-fluid'>";
+        $rowHtml = "<div class='row'>";
         $displayFlag = true;
         foreach ($rowValues as $value) {
 
@@ -839,11 +839,11 @@ class TemplateLibrary
                     $date = date ('d F, Y', $attachment->uploadedDateTime);
                     $documentImage = preg_match ("/^image/i", $attachment->mimeType) ? $attachment->document : '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
 
-                    $html .= '<div class="row-fluid attachment"><div class="span3">';
+                    $html .= '<div class="row attachment"><div class="col-sm-3">';
                     $html .= "<a href='{$attachment->document}' class='documentLink'><img class='img-rounded documentImage' src='{$documentImage}'></a>";
                     $html .= '</div>';
 
-                    $html .= '<div class="span9">';
+                    $html .= '<div class="col-sm-9">';
                     $html .= "<h5 class='documentName'>" . $this->escapeHtml ($attachment->documentName) . "</h5>";
                     $html .= "<p>{$date} </p>";
 

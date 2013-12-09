@@ -6,55 +6,38 @@
         <article class="view viewLoad"><?php _e('Loading...','bidxplugin')?>
         </article>
 
-        <article class="view viewError">
+        <article class="view viewError alert alert-warning">
             <h1><?php _e('Error','bidxplugin')?></h1>
             <div class="errorMsg"></div>
             <p>
-                <a href="/account">Try agian</a>
+                <a href="/account">Try again</a>
             </p>
         </article>
 
         <article class="view viewCredentials">
 
-            <div class="row-fluid">
-                <div class="span6 offset3 bidx-well bidx-theme-colour-panel-one">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 well bidx-theme-colour-panel-one">
                     <form id="frmCredentials" action="/">
                         <h1><?php _e('Account settings','bidxplugin');?></h1>
                         <h3><?php _e('Change your password', 'bidxplugin')?></h3>
                         <p>
                             <?php _e('Here you can change your log in credentials. Please note that if you change your email address, all notifications from the bidX platform or from groups that you are a member of will be forwarded to the new email address.', 'bidxplugin')?>
                         </p>
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <div class="control-group">
-                                    <label class="control-label"><?php _e('Current password','bidxplugin');?></label>
-                                    <div class="controls">
-                                        <input type="password" name="currentPassword" placeholder="<?php _e('Enter your current password','bidxplugin');?>" />
-                                    </div>
-                                </div>
-                            </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Current password','bidxplugin');?></label>
+                            <input type="password" class="form-control" name="currentPassword" placeholder="<?php _e('Enter your current password','bidxplugin');?>" />
                         </div>
 
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <div class="control-group">
-                                    <label class="control-label"><?php _e('New password','bidxplugin');?></label>
-                                    <div class="controls">
-                                        <input type="password" name="newPassword" placeholder="<?php _e('Enter your new password','bidxplugin');?>" />
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label><?php _e('New password','bidxplugin');?></label>
+                            <input type="password" class="form-control" name="newPassword" placeholder="<?php _e('Enter your new password','bidxplugin');?>" />
                         </div>
 
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <div class="control-group">
-                                    <label class="control-label"><?php _e('Repeat new password','bidxplugin');?></label>
-                                    <div class="controls">
-                                        <input type="password" name="newPasswordRepeat" placeholder="<?php _e('Repeat your new password','bidxplugin');?>" />
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label><?php _e('Repeat new password','bidxplugin');?></label>
+                            <input type="password" class="form-control" name="newPasswordRepeat" placeholder="<?php _e('Repeat your new password','bidxplugin');?>" />
                         </div>
 
                         <div class="buttonwrapper">
@@ -74,8 +57,8 @@
 
         <article class="view viewCredentialsChanged">
 
-            <div class="row-fluid">
-                <div class="span6 offset3 bidx-well bidx-theme-colour-panel-one">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 well bidx-theme-colour-panel-one">
 
                     <h1><?php _e('Account settings','bidxplugin');?></h1>
 

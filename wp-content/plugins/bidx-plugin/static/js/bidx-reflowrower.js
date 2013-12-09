@@ -28,7 +28,7 @@
 
         ,   txtAreYouSure:      "Are you sure?"
 
-        ,   extraRowClasses:    "row-fluid"
+        ,   extraRowClasses:    "row"
 
         ,   removeItemOverride: null
 

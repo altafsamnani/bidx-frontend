@@ -724,7 +724,7 @@
                 }
             ,   "dateCompanyEstab":
                 {
-                    dpDate:                     true
+                    // TODO: datepicker validation
                 }
             ,   "numPermFemaleEmpl":
                 {

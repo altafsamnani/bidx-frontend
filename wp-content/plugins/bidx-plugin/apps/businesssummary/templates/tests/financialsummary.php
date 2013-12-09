@@ -67,7 +67,6 @@ $view->data = $businessSummary;
 <link rel="stylesheet" href="/wp-content/plugins/bidx-plugin/apps/media/static/css/media.css?ver=20130901">
 <link rel="stylesheet" href="/wp-content/plugins/bidx-plugin/apps/member/static/css/member.css?ver=20130501">
 <link rel="stylesheet" href="/wp-content/themes/bidx-group-template/assets/css/bootstrap.css">
-<link rel="stylesheet" href="/wp-content/themes/bidx-group-template/assets/css/bootstrap-responsive.css">
 <link rel="stylesheet" href="/wp-content/themes/bidx-group-template/style.css">
 <script type='text/javascript' src='/wp-includes/js/comment-reply.min.js?ver=3.6'></script>
 <script type='text/javascript' src='/wp-includes/js/json2.min.js?ver=2011-02-23'></script>
@@ -183,7 +182,7 @@ filter: alpha(opacity=100);
 <header class="banner navbar navbar-fixed-top" role="banner">
     <div class="navbar-inner bidx-theme-colour-header">
         <div class="container">
-            <div class="row-fluid">
+            <div class="row">
                 <div class="iconbar-wrapper">
                     <div class="iconbar iconbar-horizontal bidx-default-bar">
     <ul>
@@ -244,13 +243,13 @@ filter: alpha(opacity=100);
       <div class="businessSummary" id="businessSummary">
 
     <div class="pageHeader container">
-        <div class="row-fluid">
-            <div class="span4">
+        <div class="row">
+            <div class="col-sm-4">
                 <h1>Business plan</h1>
                 <p>online solutions to grow your business</p>
             </div>
 
-            <div class="span4 completion">
+            <div class="col-sm-4 completion">
                 <h2>Business completion</h2>
                 <div class="progress">
                     <div style="width:%" class="bar">% completed</div>
@@ -258,7 +257,7 @@ filter: alpha(opacity=100);
             </div>
 
 
-            <div class="span4 editControlsContainer">
+            <div class="col-sm-4 editControlsContainer">
                 <div class="editControls btn-group">
 
                     <!-- SHOW -->
@@ -271,7 +270,7 @@ filter: alpha(opacity=100);
                     <div class="view viewEdit"></div>
 
                     <!-- ERROR -->
-                    <div class="view viewError"></div>
+                    <div class="view viewError alert alert-warning"></div>
 
                 </div>
             </div>
@@ -306,7 +305,7 @@ filter: alpha(opacity=100);
 
     <!-- SNIPPETS -->
     <div class="snippets hide">
-        <div class="managementTeamItem span6 well well-white">
+        <div class="managementTeamItem col-sm-6 well well-white">
 
             <!-- First Name -->
             <div class="control-group">

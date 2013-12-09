@@ -68,15 +68,15 @@
         }
     }
 ?>
-<div class="accordion-group accordion-open">
-    <div class="accordion-heading">
+<div class="panel panel-default panel-open">
+    <div class="panel-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionProfile" href="#accordionMember">
             <span class="fui-arrow-right accordion-state-icon"></span>
             <?php _e('Member profile','bidxplugin');?>
         </a>
     </div>
-    <div id="accordionMember" class="accordion-body collapse in">
-        <div class="accordion-inner">
+    <div id="accordionMember" class="panel-collapse collapse in">
+        <div class="panel-body">
 
 
             <div class="profile-block">
@@ -88,16 +88,16 @@
                 </div>
 
 
-                <div class="row-fluid">
-                    <div class="span3">
+                <div class="row">
+                    <div class="col-sm-3">
                         <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
                     </div>
-                    <div class="span9">
-                        <div class="row-fluid">
-                            <div class="span12"><h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4></div>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-12"><h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4></div>
                         </div>
-                        <div class="row-fluid">
-                            <div class="span12">
+                        <div class="row">
+                            <div class="col-sm-12">
                                 <?php echo $professionalTitle; ?>
                                 <?php if ( $isEntrepreneur ) { ?>
                                     &nbsp;<span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
@@ -110,8 +110,8 @@
                                 <?php } ?>
                             </div>
                         </div>
-                        <div class="row-fluid">
-                            <div class="span12">
+                        <div class="row">
+                            <div class="col-sm-12">
                             <?php
                                 if ( $memberId != $loggedInMemberId && $authenticated && $inGroup ) {
                              ?>
@@ -121,36 +121,36 @@
                              ?>
                             </div>
                         </div>
-                        <div class="row-fluid">
-                            <div class="span12"> <hr> </div>
+                        <div class="row">
+                            <div class="col-sm-12"> <hr> </div>
                         </div>
-                        <div class="row-fluid">
+                        <div class="row">
                             <?php
                                 // Fields for left column
                                 $leftCol = array ( $gender, $nationality, $motherlanguage );
-                                echo $this->addMultipleRows('span5', $leftCol);
+                                echo $this->addMultipleRows('col-sm-5', $leftCol);
 
                                 // Fields for right column
                                 $rightCol = array ( $dateofBirth, $highestEducation, $languageDetails, $address );
-                                echo $this->addMultipleRows('span7', $rightCol);
+                                echo $this->addMultipleRows('col-sm-7', $rightCol);
                             ?>
                         </div>
                         <br>
-                        <div class="row-fluid">
-                            <div class="span8">
+                        <div class="row">
+                            <div class="col-sm-8">
                                 <?php
                                     $rowValues = array (__('E-mail','bidxplugin') => $this->exst ($personalDetails->emailAddress));
-                                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                                    echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
                                     $rowValues = array (__('Mobile','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
-                                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                                    echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
                                     $rowValues = array (__('Fax','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
-                                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                                    echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
                                     $rowValues = array (__('Landline','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
-                                    echo $this->addRowsWithLabelAdjacent ('span3', 'span8 offset1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                                    echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
                                 ?>
                             </div>
 
-                                <div class="span4">
+                                <div class="col-sm-4">
                                     <?php
                                         $rowValues1 = array (
                                             __('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),

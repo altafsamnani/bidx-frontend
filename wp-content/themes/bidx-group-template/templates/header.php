@@ -4,7 +4,6 @@
 <header class="banner navbar navbar-fixed-top" role="banner">
   	<div class="navbar-inner bidx-theme-colour-header">
 		<div class="container">
-			<div class="row-fluid">
 <?php
 				if( $authenticated )
 				{
@@ -35,7 +34,7 @@
 				if( $authenticated )
 				{
 ?>
-				<div class="search">
+				<div class="search pull-right">
 			 		<?php get_template_part('templates/searchform'); ?>
 				</div>
 <?php
@@ -43,13 +42,13 @@
 				if( !$authenticated )
 				{
 ?>
-	 			<div class="pull-right span5 bidx-header-controls">
-					<div class="row-fluid">
-						<div class="span6">
-							<a href="/register-as-member/#register/firstLogin=getting-started-member" class="btn btn-primary btn-block bidx-theme-colour-two"><?php _e('Become a member','bidxtheme');?></a>
+	 			<div class="pull-right col-sm-5 bidx-header-controls">
+					<div class="row">
+						<div class="col-sm-6">
+							<a href="/register-as-member/#register/firstLogin=getting-started-member" class="btn btn-success btn-block"><?php _e('Become a member','bidxtheme');?></a>
 						</div>
-						<div class="span6">
-							<a href="/auth/#auth/login" class="btn btn-primary btn-block bidx-theme-colour-one"><i class="bidx-login"></i><?php _e('Login','bidxtheme');?></a>
+						<div class="col-sm-6">
+							<a href="/auth/#auth/login" class="btn btn-primary btn-block"><i class="bidx-login"></i><?php _e('Login','bidxtheme');?></a>
 						</div>
 					</div>
 				</div>
@@ -58,20 +57,20 @@
 			 	if( $authenticated )
 				{
 ?>
-				<nav class="nav-collapse collapse menu-main">
+				<nav class="nav-collapse menu-main pull-right">
 <?php
 					if (has_nav_menu('primary_navigation')) :
-						wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav'));
+						wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav nav-pills'));
 					endif;
 ?>
 				</nav>
 <?php
 				} else {
 ?>
-				<nav class="nav-collapse collapse menu-main">
+				<nav class="nav-collapse menu-main pull-right">
 <?php
 					if (has_nav_menu('primary_notloggedin_navigation')) :
-						wp_nav_menu(array('theme_location' => 'primary_notloggedin_navigation', 'menu_class' => 'nav'));
+						wp_nav_menu(array('theme_location' => 'primary_notloggedin_navigation', 'menu_class' => 'nav nav-pills'));
 					endif;
 ?>
 				</nav>
@@ -79,7 +78,6 @@
 				}
 ?>
 
- 			</div>
 		</div>
 	</div>
 	<div class="white-spacer"></div>

@@ -1,15 +1,32 @@
 <?php
+<<<<<<< .working
 
         // check if span is empty, then revert to default 6
         //
         $span = !empty($this->span) ? $this->span : 6;
+=======
+>>>>>>> .merge-right.r15357
 
         // check if user is logged in
         //
         $authenticated = isset( $this -> authenticated ) && $this -> authenticated ==  'true';
         $joinedGroup = isset( $this -> joinedGroup ) && $this -> joinedGroup ==  'true';
 
+<<<<<<< .working
         if ( is_array( $this -> members ) && count( $this -> members ) ) {
+=======
+
+        if (is_array($this -> members)) {
+>>>>>>> .merge-right.r15357
+
+            if ( $authenticated ) {
+?>
+                <div class="row">
+<?php
+            }
+?>
+                <ul class="media-list">
+<?php
             $index = 0;
 
             $maxMemberItems = $authenticated ? 4 : 3;
@@ -23,19 +40,29 @@
                     break;
                 }
 		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
- ?>
 
-                <div class="span<?php echo $span ?> clearfix">
-                    <a href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
+            if ( $authenticated ) {
+                $oddeven = ( $index % 2 == 0) ? 'odd' : 'even' ;
+?>
+                <div class="col-sm-6 <?php echo $oddeven; ?>">
+<?php
+            }
+?>
+                <li class="media">
+                    <a class="pull-left" href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
 <?php
     				  	if ( empty( $member -> profilePicture ) ) {
-    						echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" class="img-circle pull-left">';
+    						echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" class="media-object img-circle pull-left">';
                         } else {
-    						echo '<img src="' . $member -> profilePicture . '" alt="" class="img-circle pull-left" style="height:95px;">';
+    						echo '<img src="' . $member -> profilePicture . '" alt="" class="media-object img-circle pull-left" style="height:95px;">';
                         }
 ?>
                     </a>
+<<<<<<< .working
                 <div>
+=======
+                    <div class="media-body">
+>>>>>>> .merge-right.r15357
 
                 <div>
                     <a href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
@@ -85,10 +112,24 @@
 <?php
                 }
 ?>
+<<<<<<< .working
             </div>
         </div>
+=======
+                    </div>
+                </li>
+>>>>>>> .merge-right.r15357
 <?php
-
+            if ( $authenticated ) {
+?>
+            </div>
+<?php
+                if ($index % 2 != 0) {
+?>
+                <br>
+<?php
+                }
+            }
 
             $index++;
             }
@@ -101,6 +142,17 @@
 <?php
         }
 ?>
+                </ul>
+<?php
+            if ( $authenticated ) {
+?>
+        </div>
+<?php
+            }
+?>
+
+<<<<<<< .working
 
 
-
+=======
+>>>>>>> .merge-right.r15357

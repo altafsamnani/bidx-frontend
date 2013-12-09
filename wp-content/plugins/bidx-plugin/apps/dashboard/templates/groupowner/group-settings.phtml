@@ -19,96 +19,96 @@ if (!$picSrc) {
     </div>
 
 
-    <div class="row-fluid row-group">
-        <div class="span9">
-            <div class="row-fluid">
-                <div class="span12"><h4><?php _e ('About the Group', 'bidxplugin'); ?></h4></div>
+    <div class="row row-group">
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-12"><h4><?php _e ('About the Group', 'bidxplugin'); ?></h4></div>
                 <!-- Personal details 6/6 Start -->
 
                 <?php
                 /* 1 Group Name */
                 $rowValues = array (__ ('Name of the group', 'bidxplugin') => $this->exst ($groupProfile->name));
-                echo $this->addRowsWithLabelAdjacent ('span6', 'span6', $rowValues, array ('tag_label' => 'label'));
+                echo $this->addRowsWithLabelAdjacent ('col-sm-6', 'col-sm-6', $rowValues, array ('tag_label' => 'label'));
 
                 /* 2 Short Description */
                 $rowValues = array (__ ('Short description in 15 words (optional)', 'bidxplugin') => $this->exst ($groupProfile->description));
-                echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'label'));
+                echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'label'));
 
                 /* 3 Description */
                 $rowValues = array (__ ('Description', 'bidxplugin') => $this->exst ($groupProfile->description));
-                echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'label'));
+                echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'label'));
                 ?>
             </div>
         </div>
-        <div class="span3">
+        <div class="col-sm-3">
             <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
         </div>
     </div>
 
-    <div class="row-fluid row-focus">
+    <div class="row row-focus">
 
-        <div class="span12"> <h4><?php _e ('Focus of the group', 'bidxplugin'); ?></h4></div>
+        <div class="col-sm-12"> <h4><?php _e ('Focus of the group', 'bidxplugin'); ?></h4></div>
         <?php
         /* 3 Focus of the group */
         /* 3.1 Type of members */
         $rowValues = array (__ ('Bidx ownership type', 'bidxplugin') => $this->exst ($groupProfile->bidxMeta->bidxOwnershipType));
-        echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+        echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
         /* 3.2 Industry */
         $focusIndustry = $this->getMultiValues ($this->exst ($groupProfile->focusIndustry), ', ', 'industry');
         $rowValues = array (__ ('Industry', 'bidxplugin') => $focusIndustry);
-        echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+        echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
         /* 3.3 Environmental Impact */
         $envImpact = $this->getMultiValues ($this->exst ($groupProfile->focusEnvImpact), ', ', 'envImpact');
         $rowValues = array (__ ('Environmental impact', 'bidxplugin') => $envImpact);
-        echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+        echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
         /* 3.4 Social Impact */
         $socialImpact = $this->getMultiValues ($this->exst ($groupProfile->focusSocialImpact), ', ', 'socialImpact');
         $rowValues = array (__ ('Social impact', 'bidxplugin') => $socialImpact);
-        echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+        echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
         /* 3.5 Focus Country */
         // $country = $this->getMultiValues ($this->exst ($groupProfile->bidxGroupProfile->focusIndustry), ', ','industry');
         //$rowValues = array ( __('Industry','bidxplugin') => $focusIndustry);
-        //echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+        //echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
         ?>
     </div>
 
-    <div class="row-fluid row-company">
-        <div class="span9">
-            <div class="span12"><h4><?php _e ('Company and address', 'bidxplugin'); ?></h4></div>
+    <div class="row row-company">
+        <div class="col-sm-9">
+            <div class="col-sm-12"><h4><?php _e ('Company and address', 'bidxplugin'); ?></h4></div>
             <?php
             /* 4.1 Company name */
             $rowValues = array (__ ('Company name', 'bidxplugin') => $this->exst ($groupProfile->company));
-            echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
             $rowValues = array (__ ('Company website', 'bidxplugin') => $this->exst ($groupProfile->website));
-            echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
             $rowValues = array (__ ('Country', 'bidxplugin') => $this->exst ($groupProfile->address->country));
-            echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
             $rowValues = array (__ ('City/Town', 'bidxplugin') => $this->exst ($groupProfile->address->cityTown));
-            echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
             $rowValues = array (__ ('Street', 'bidxplugin') => $this->exst ($groupProfile->address->street));
-            echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
 
             $rowValues = array (__ ('Postal Code', 'bidxplugin') => $this->exst ($groupProfile->address->postalCode));
-            echo $this->addRowsWithLabelAdjacent ('span3', 'span9', $rowValues, array ('tag_label' => 'label'));
+            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-9', $rowValues, array ('tag_label' => 'label'));
             ?>
 
 
         </div>
-        <div class="span3">
+        <div class="col-sm-3">
           <div class="currentAddressMap"></div>
         </div>
     </div>
-    <div class="row-fluid row-status">
-        <div class="span12"><h4><?php _e ('Group status', 'bidxplugin'); ?></h4></div>
-        <div class="span12"> <?php _e ('Your group is currently published and open. Members can freely join and leave your group. If you would like to close your group, please contact the bidX Customer Support', 'bidxplugin'); ?></div>
+    <div class="row row-status">
+        <div class="col-sm-12"><h4><?php _e ('Group status', 'bidxplugin'); ?></h4></div>
+        <div class="col-sm-12"> <?php _e ('Your group is currently published and open. Members can freely join and leave your group. If you would like to close your group, please contact the bidX Customer Support', 'bidxplugin'); ?></div>
 
     </div>
 

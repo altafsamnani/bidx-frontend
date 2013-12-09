@@ -1,13 +1,15 @@
 /* global bidx */
 ;( function( $ )
 {
+    "use strict";
+
     var $element                    = $( "#editMember" )
     ,   $views                      = $element.find( ".view" )
     ,   $editForm                   = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                   = $element.find( ".snippets" )
 
     ,   $languageList               = $editForm.find( ".languageList" )
-    ,   $btnAddLanguage             = $editForm.find( ".btnAddLanguage" )
+    ,   $btnAddLanguage             = $editForm.find( ".js-btn-add-language" )
     ,   $inputAddLanguage           = $editForm.find( "input[name='addLanguage']" )
 
     ,   $personalDetailsNationality         = $editForm.find( "[name='personalDetails.nationality']" )
@@ -248,22 +250,10 @@
                 // Initialize the autocompletes
                 //
                 $inputAddLanguage.typeahead(
-                    {
-                        source:         function( query )
-                        {
-                            return _.map( languages, function( language ) { return language.label; } );
-                        }
-                    ,   matcher:        function( item )
-                        {
-                            if ( addedLanguages[ item ] )
-                            {
-                                return false;
-                            }
-
-                            return true;
-                        }
-                    }
-                ).removeClass( "disabled" ).removeAttr( "disabled" );
+                {
+                    name:       "languages"
+                ,   local:      _.map( languages, function( language ) { return language.label; } )
+                } ).removeClass( "disabled" ).removeAttr( "disabled" );
             } );
 
             // Figure out the key of the to be added language
@@ -278,7 +268,7 @@
 
                 value = _getLanguageValueByLabel( language );
 
-                if ( value )
+                if ( value && !addedLanguages[ language ] )
                 {
                     $inputAddLanguage.val( "" );
 
@@ -288,7 +278,9 @@
                 }
             } );
 
-            $btnAddLanguage.removeClass( "disabled" ).removeAttr( "disabled" );
+            $btnAddLanguage
+                .removeClass( "disabled" )
+                .removeAttr( "disabled" );
 
             // Remove the language from the list
             //
@@ -962,7 +954,7 @@
                 }
             ,   "personalDetails.dateOfBirth":
                 {
-                    dpDate:                     true
+                    // TODO: datepicker validation
                 }
             ,   "personalDetails.emailAddress":
                 {

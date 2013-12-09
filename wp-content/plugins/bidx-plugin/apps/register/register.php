@@ -15,8 +15,8 @@ class register {
      * Also registers the scripts for register.
      */
 
-    static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-checkbox', 'bidx-location', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                        'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
+    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-checkbox', 'bidx-location', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                        'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
 
 
     function __construct() {
@@ -27,14 +27,9 @@ class register {
     /**
      * Load the scripts and css belonging to this function
      */
-    function set_register_bidx_ui_libs() {
-
-        //$deps = array( 'bootstrap','memberprofile') ;
-        //$deps = $this->getWidgetJsDependency('register');
-        //$deps = array('bootstrap');
+    function set_register_bidx_ui_libs()
+    {
         wp_register_script( 'register', plugins_url( 'static/js/register.js', __FILE__ ), self::$deps, '20130501', TRUE );
-        /*wp_register_style( 'register', plugins_url( 'static/css/register.css', __FILE__ ), array(), '20130501', 'all' );*/
-        wp_enqueue_style( 'register' );
     }
 
     /**

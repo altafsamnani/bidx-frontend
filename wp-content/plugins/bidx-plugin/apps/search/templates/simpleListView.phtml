@@ -1,7 +1,7 @@
-<!-- 
+<!--
 	Original page, should be standard if logged in
  -->
- <?php 
+ <?php
  $numFound = 0;
  if ( property_exists( $this -> results, 'data' ) ) {
 	 $docs = $this -> results -> data -> docs;
@@ -9,9 +9,9 @@
  }
  ?>
 <div>
-	<?php 
+	<?php
 		if ( property_exists( $this -> error ) ) { ?>
-	<div class="row-fluid">
+	<div class="row">
 		<div class="search error">
 			 <button type="button" class="close" data-dismiss="alert">&times;</button>
 			 <h3>Error</h3>
@@ -21,20 +21,20 @@
 <?		}
 
 		if ( $numFound < 1 ) { ?>
-	<div class="row-fluid">
+	<div class="row">
 		<div class="search alert">
 			 <button type="button" class="close" data-dismiss="alert">&times;</button>
 			 <h3>No results</h3>
 			 <p>Your query did not have any results. Please retry with a more specific search term</p>
 		</div>
-	</div>	
-	<?php } else { ?>
-	<div class="row-fluid">
-		<div class="span12"><h4>Search results (<?php echo $this -> results -> data -> numFound ?>)</h4></div>
 	</div>
-	
-	<div class="row-fluid">
-		<div class="span8">
+	<?php } else { ?>
+	<div class="row">
+		<div class="col-sm-12"><h4>Search results (<?php echo $this -> results -> data -> numFound ?>)</h4></div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-8">
 		<table class="table table-striped">
 			<tbody>
 				<tr>
@@ -42,8 +42,8 @@
 					<th>Description</th>
 					<th></th>
 				</tr>
-	<?php foreach ( $docs as $doc )  { 
-		
+	<?php foreach ( $docs as $doc )  {
+
 		switch ($doc -> type) {
 
 			case 'bidxMemberProfile':
@@ -61,10 +61,10 @@
 				<td>
 					<a href="/member/<?php echo $doc -> userId ?>">view</a>
 				</td>
-			</tr>								
-<?php	
+			</tr>
+<?php
 			break;
-			
+
 			case 'bidxCompanyProfile':
 ?>
 			<tr>
@@ -72,13 +72,13 @@
 					<span class="label">Company</span>
 				</td>
 				<td>
-					<em><?php echo $doc -> id ?></em>		
+					<em><?php echo $doc -> id ?></em>
 				</td>
 				<td>
 					<a href="#">view</a>
 				</td>
 			</tr>
-<?php 				
+<?php
 			break;
 
 			case 'bidxInvestorProfile':
@@ -92,14 +92,14 @@
 					<em><?php echo $fullname ?></em><br />
 					<?php echo $doc -> summary_t ?><br />
 					<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />
-					
+
 				</td>
 				<td>
 					<a href="/investor/<?php echo $doc -> userId ?>">view</a>
 				</td>
 			</tr>
-<?php 				
-			break;			
+<?php
+			break;
 
 			case 'bidxEntrepreneurProfile':
 				$fullname = $doc -> firstname_s . ' ' . $doc -> lastname_s;
@@ -111,16 +111,16 @@
 				<td>
 					<em><?php echo $fullname ?></em><br />
 					<?php echo $doc -> professionaltitle_t ?><br />
-					<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />							
-					
+					<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />
+
 				</td>
 				<td>
 					<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">view</a>
 				</td>
 			</tr>
-<?php 				
+<?php
 			break;
-			
+
 			case 'bidxBusinessSummary':
 ?>
 			<tr>
@@ -136,8 +136,8 @@
 					<a href="/business/<?php echo $doc -> userId ?>">view</a>
 				</td>
 			</tr>
-<?php 				
-			break;	
+<?php
+			break;
 
 			case 'bidxBusinessGroup':
 				?>
@@ -154,16 +154,16 @@
 								<a href="http://<?php $doc -> domain_s ?>.bidx.net">view</a>
 							</td>
 						</tr>
-			<?php 				
-						break;			
-		} 
+			<?php
+						break;
+		}
 	} ?>
 		</tbody>
 	</table>
-	<div class="row-fluid">
-		<div class="span6">					
-<?php 
-	if ( isset( $this -> previousLink ) ) { 
+	<div class="row">
+		<div class="col-sm-6">
+<?php
+	if ( isset( $this -> previousLink ) ) {
 	?>
 		<a href="?<?php echo $this -> previousLink ?>" class="btn btn-block btn-primary fui-arrow-left">Previous
 			<i class="fui-arrow-left pull-left"></i>
@@ -171,36 +171,36 @@
 	<?php
 	} ?>
 		</div>
-		<div class="span6">	
-<?php if ( isset( $this -> nextLink ) ) { 
+		<div class="col-sm-6">
+<?php if ( isset( $this -> nextLink ) ) {
 	?>
 		<a href="?<?php echo $this -> nextLink ?>" class="btn btn-block btn-primary">Next
 			<i class="fui-arrow-right pull-right"></i>
 		</a>
-	<?php	
-	}	
-?>	
+	<?php
+	}
+?>
 		</div>
-	</div>	
-	<div class="row-fluid">
+	</div>
+	<div class="row">
 		&nbsp;
-	</div>				
+	</div>
 </div>
 
-	
-		<div class="sidebar span4">
+
+		<div class="sidebar col-sm-4">
 			<div>
 				<!-- Navbar items -->
 			</div>
 			<div>
-			<ul class="nav nav-list">			
-	            <!--  
+			<ul class="nav nav-list">
+	            <!--
 	            <li class="nav-header">Find by location</li>
 	            <li>
-	               	    Location position search here          
+	               	    Location position search here
 	            </li>
-	            -->	 	            
-				<li class="divider"></li>				
+	            -->
+				<li class="divider"></li>
 	            <li class="nav-header">Find By Type</li>
 	            <li class="active">
 	                All
@@ -220,7 +220,7 @@
 	            </li>
 	            <li>
 	                Groups
-	            </li>	            	            
+	            </li>
 	            <li class="divider"></li>
 	            <li class="nav-header">Filters</li>
 	            <li>
@@ -231,7 +231,7 @@
           					<div class="tagsinput-add"></div>
           					<input id="tags_industry_tag small" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
           				</div>
-          			</div>	                
+          			</div>
 	            </li>
 	            <li>
 	                <label>Industry</label>
@@ -241,21 +241,21 @@
           					<div class="tagsinput-add"></div>
           					<input id="tags_theme_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
           				</div>
-          			</div>	                
+          			</div>
 	            </li>
-	            <!--  
+	            <!--
 	            <li class="divider"></li>
 	            <li class="nav-header">Find in</li>
 	            <li>
-	               	    Radio control here            
+	               	    Radio control here
 	            </li>
-	            -->	            
+	            -->
 	          </ul>
 			</div>
 		</div>
 	</div>
-<?php } ?>	
+<?php } ?>
 </div>
-		
 
-	
+
+

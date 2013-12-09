@@ -1,12 +1,16 @@
-<div id="editCompany" class="row-fluid mainState mainStateEditCompany">
+<div id="editCompany" class="mainState mainStateEditCompany">
 
     <!-- LOAD -->
-    <div class="view viewLoad span12">
-        <span><?php _e('Retrieving company information...','bidxplugin'); ?></span>
+    <div class="view viewLoad alert alert-info text-center">
+        <div class="progress progress-striped active">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            <?php _e('Retrieving company information...','bidxplugin'); ?>
+          </div>
+        </div>
     </div>
 
     <!-- ERROR -->
-    <div class="view viewError span12">
+    <div class="view viewError alert alert-warning">
         <h2><?php _e('Error','bidxplugin'); ?></h2>
         <p class="errorMsg"></p>
     </div>
@@ -16,190 +20,160 @@
 
         <form id="frmeditCompany">
 
-            <fieldset class="well">
-                <span class="scrollPositionMarker" id="editCompany/companyDetail"></span>
-                <legend><?php _e('Company details','bidxplugin'); ?></legend>
-                <div class="alert alert-info">
-                    <?php _e('In this section you can link your business to an existing company. If you do not yet have a company, you can skip this step by answering \'No\' to the first question. If you already created a company in the past, you can select it from the list','bidxplugin')?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
                 </div>
-                <div class="row-fluid">
-                    <div class="span4">
+                <div class="panel-body">
+                    <div class="alert alert-info">
+                        <?php _e('In this section you can link your business to an existing company. If you do not yet have a company, you can skip this step by answering \'No\' to the first question. If you already created a company in the past, you can select it from the list','bidxplugin')?>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
 
-                        <h3><?php _e('Or create a new company','bidxplugin')?></h3>
-                        <div class="alert alert-info"><?php _e('Fill in below the details of the company under which you are running your business','bidxplugin')?></div>
+                            <h3><?php _e('Or create a new company','bidxplugin')?></h3>
+                            <div class="alert alert-info"><?php _e('Fill in below the details of the company under which you are running your business','bidxplugin')?></div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Company name','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="name" placeholder="<?php _e('Please enter your company name','bidxplugin'); ?>">
+                            <div class="form-group formfield">
+                                <label><?php _e('Company name','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="name" placeholder="<?php _e('Please enter your company name','bidxplugin'); ?>">
                             </div>
-                        </div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Company website','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="website" placeholder="<?php _e('Please fill in your website address','bidxplugin'); ?>">
+                            <div class="form-group formfield">
+                                <label><?php _e('Company website','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="website" placeholder="<?php _e('Please fill in your website address','bidxplugin'); ?>">
                             </div>
-                        </div>
 
-                        <input type="hidden" name="statutoryAddress.coordinates"    />
+                            <input type="hidden" name="statutoryAddress.coordinates"    />
 
-                        <h3>Company main address</h3>
-                        <div class="alert alert-info"><?php _e('Enter the physical address where your company is registered.','bidxplugin')?></div>
+                            <h3>Company main address</h3>
+                            <div class="alert alert-info"><?php _e('Enter the physical address where your company is registered.','bidxplugin')?></div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
-                            <div class="controls">
+                            <div class="form-group formfield">
+                                <label><?php _e('Country','bidxplugin'); ?></label>
                                 <select name="statutoryAddress.country"></select>
                             </div>
-                        </div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('City','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="statutoryAddress.cityTown" placeholder="<?php _e('Please enter your city','bidxplugin'); ?>" />
+                            <div class="form-group formfield">
+                                <label><?php _e('City','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="statutoryAddress.cityTown" placeholder="<?php _e('Please enter your city','bidxplugin'); ?>" />
                             </div>
-                        </div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Street','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="statutoryAddress.street" placeholder="<?php _e('Please enter your street name','bidxplugin'); ?>" />
+                            <div class="form-group formfield">
+                                <label><?php _e('Street','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="statutoryAddress.street" placeholder="<?php _e('Please enter your street name','bidxplugin'); ?>" />
                             </div>
-                        </div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Building number','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="statutoryAddress.streetNumber" placeholder="<?php _e('Please enter your building number','bidxplugin'); ?>" />
+                            <div class="form-group formfield">
+                                <label><?php _e('Building number','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="statutoryAddress.streetNumber" placeholder="<?php _e('Please enter your building number','bidxplugin'); ?>" />
                             </div>
-                        </div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Postal code','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="statutoryAddress.postalCode" placeholder="<?php _e('Please enter your postcode','bidxplugin'); ?>" />
+                            <div class="form-group formfield">
+                                <label><?php _e('Postal code','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="statutoryAddress.postalCode" placeholder="<?php _e('Please enter your postcode','bidxplugin'); ?>" />
                             </div>
-                        </div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Neighborhood','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="statutoryAddress.neighborhood" placeholder="<?php _e('Please enter your neighborhood','bidxplugin'); ?>" />
+                            <div class="form-group formfield">
+                                <label><?php _e('Neighborhood','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="statutoryAddress.neighborhood" placeholder="<?php _e('Please enter your neighborhood','bidxplugin'); ?>" />
                             </div>
-                        </div>
 
-                        <div class="currentAddressMap"></div>
+                            <div class="currentAddressMap"></div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Is your company registered?','bidxplugin'); ?></label>
-                            <div class="controls">
+                            <div class="form-group formfield">
+                                <label><?php _e('Is your company registered?','bidxplugin'); ?></label>
                                 <label class="radio"><input type="radio" value="true"  name="registered" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
                                 <label class="radio"><input type="radio" value="false" name="registered" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
                             </div>
-                        </div>
 
-                        <div class="control-group formfield toggle toggle-registered">
-                            <label class="control-label"><?php _e('Date of registration','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="dateCompanyEstab" data-type="date" placeholder="<?php _e('Please enter the date you registered your business','bidxplugin'); ?>">
+                            <div class="form-group formfield toggle toggle-registered">
+                                <label><?php _e('Date of registration','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="dateCompanyEstab" data-type="date" placeholder="<?php _e('Please enter the date you registered your business','bidxplugin'); ?>">
                             </div>
-                        </div>
 
-                        <div class="control-group formfield toggle toggle-registered">
-                            <label class="control-label"><?php _e('Legal form of business','bidxplugin'); ?></label>
-                            <div class="controls">
+                            <div class="form-group formfield toggle toggle-registered">
+                                <label><?php _e('Legal form of business','bidxplugin'); ?></label>
                                 <select name="legalFormBusiness"></select>
                             </div>
-                        </div>
 
-                        <div class="control-group formfield toggle toggle-registered">
-                            <label class="control-label"><?php _e('Fiscal number','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="fiscalNumber" placeholder="<?php _e('Please enter your fiscal number','bidxplugin'); ?>">
+                            <div class="form-group formfield toggle toggle-registered">
+                                <label><?php _e('Fiscal number','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="fiscalNumber" placeholder="<?php _e('Please enter your fiscal number','bidxplugin'); ?>">
                             </div>
-                        </div>
 
-                        <div class="control-group formfield toggle toggle-registered">
-                            <label class="control-label"><?php _e('Company registration number','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="registrationNumber" placeholder="<?php _e('Please enter your registration number','bidxplugin'); ?>">
+                            <div class="form-group formfield toggle toggle-registered">
+                                <label><?php _e('Company registration number','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="registrationNumber" placeholder="<?php _e('Please enter your registration number','bidxplugin'); ?>">
                             </div>
-                        </div>
 
-                        <div class="control-group formfield">
-                            <label class="control-label"><?php _e('Do you have employees?','bidxplugin'); ?></label>
-                            <div class="controls">
+                            <div class="form-group formfield">
+                                <label><?php _e('Do you have employees?','bidxplugin'); ?></label>
                                 <label class="radio"><input type="radio" value="true"  name="haveEmployees" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
                                 <label class="radio"><input type="radio" value="false" name="haveEmployees" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
                             </div>
-                        </div>
 
-                        <div class="control-group formfield toggle toggle-haveEmployees">
-                            <label class="control-label"><?php _e('Number of permanent female employees','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="numPermFemaleEmpl" placeholder="<?php _e('Please enter the number of permanent female employees employed by your business','bidxplugin'); ?>">
+                            <div class="form-group formfield toggle toggle-haveEmployees">
+                                <label><?php _e('Number of permanent female employees','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="numPermFemaleEmpl" placeholder="<?php _e('Please enter the number of permanent female employees employed by your business','bidxplugin'); ?>">
+                            </div>
+
+                            <div class="form-group formfield toggle toggle-haveEmployees">
+                                <label><?php _e('Number of permanent male employees','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="numPermMaleEmpl" placeholder="<?php _e('Please enter the number of permanent male employees employed by your business','bidxplugin'); ?>">
+                            </div>
+
+                            <div class="form-group formfield toggle toggle-haveEmployees">
+                                <label><?php _e('Number of temporary female employees','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="numTempFemaleEmpl" placeholder="<?php _e('Please enter the number of temporary female employees employed by your business','bidxplugin'); ?>">
+                            </div>
+
+                            <div class="form-group formfield toggle toggle-haveEmployees">
+                                <label><?php _e('Number of temporary male employees','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="numTempMaleEmpl" placeholder="<?php _e('Please enter the number of temporary male employees employed by your business','bidxplugin'); ?>">
                             </div>
                         </div>
 
-                        <div class="control-group formfield toggle toggle-haveEmployees">
-                            <label class="control-label"><?php _e('Number of permanent male employees','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="numPermMaleEmpl" placeholder="<?php _e('Please enter the number of permanent male employees employed by your business','bidxplugin'); ?>">
-                            </div>
-                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group logo-control">
+                                <label class="control-label"><?php _e('Logo','bidxplugin'); ?></label>
+                                <div class="controls">
+                                    <div class="logoContainer"></div>
+                                    <a href="#changeLogo" class="btn btn-default"><?php _e('Select logo','bidxplugin');?></a>
 
-                        <div class="control-group formfield toggle toggle-haveEmployees">
-                            <label class="control-label"><?php _e('Number of temporary female employees','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="numTempFemaleEmpl" placeholder="<?php _e('Please enter the number of temporary female employees employed by your business','bidxplugin'); ?>">
-                            </div>
-                        </div>
-
-                        <div class="control-group formfield toggle toggle-haveEmployees">
-                            <label class="control-label"><?php _e('Number of temporary male employees','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <input type="text" name="numTempMaleEmpl" placeholder="<?php _e('Please enter the number of temporary male employees employed by your business','bidxplugin'); ?>">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="span4">
-                        <div class="control-group logo-control">
-                            <label class="control-label"><?php _e('Logo','bidxplugin'); ?></label>
-                            <div class="controls">
-                                <div class="logoContainer"></div>
-                                <a href="#changeLogo" class="btn"><?php _e('Select logo','bidxplugin');?></a>
-
-                                <div class="changeLogoModal modal hide fade">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h3><?php _e('Select the file you want to use for a logo', 'bidxplugin' ); ?></h3>
-                                    </div>
-                                    <div class="modal-body">
-<?php
-                                        echo do_shortcode( '[bidx app="media"]' );
-?>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                        <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                    <div class="changeLogoModal modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    <h3><?php _e('Select the file you want to use for a logo', 'bidxplugin' ); ?></h3>
+                                                </div>
+                                                <div class="modal-body">
+    <?php
+                                                    echo do_shortcode( '[bidx app="media"]' );
+    ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                                    <a href="#" class="btn btn-default btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="span4 countryOperationSpecifics">
-                        <div class="alert alert-info">
-                            <?php _e( 'If you have offices in other locations, you can add them in the section below', 'bidxplugin' ); ?>
+                        <div class="col-sm-4 countryOperationSpecifics">
+                            <div class="alert alert-info">
+                                <?php _e( 'If you have offices in other locations, you can add them in the section below', 'bidxplugin' ); ?>
+                            </div>
+                            <div class="accordion" id="countryOperationSpecificsAccordion"></div>
+                            <a href="#addCountryOperationSpecifics" class="btn btn-large btn-block btn-primary"><?php _e('Add country specific operations','bidxplugin'); ?></a>
                         </div>
-                        <div class="accordion" id="countryOperationSpecificsAccordion"></div>
-                        <a href="#addCountryOperationSpecifics" class="btn btn-large btn-block btn-primary"><?php _e('Add country specific operations','bidxplugin'); ?></a>
                     </div>
                 </div>
-
-            </fieldset>
+            </div>
 
         </form>
     </div>
@@ -217,21 +191,21 @@
             </div><!-- accordion-heading -->
             <div class="accordion-body collapse" id="">
                 <div class="accordion-inner">
-                    <div class="control-group formfield">
+                    <div class="form-group formfield">
                         <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
                         <div class="controls">
                             <select name="country"></select>
                         </div>
                     </div>
 
-                    <div class="control-group formfield">
+                    <div class="form-group formfield">
                         <label class="control-label"><?php _e('Company trade name','bidxplugin'); ?></label>
                         <div class="controls">
                             <input type="text" name="companyTradeName" placeholder="<?php _e('Please enter your company’s trading name','bidxplugin'); ?>">
                         </div>
                     </div>
 
-                    <div class="control-group formfield">
+                    <div class="form-group formfield">
                         <label class="control-label"><?php _e('Permits and/or licenses','bidxplugin'); ?></label>
                         <div class="controls">
                             <select name="permitsLicencesObtained"></select>

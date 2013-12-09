@@ -2,73 +2,53 @@
     $groupOwnerIds = implode ("|", $this->groupOwnersIdsArr);
 ?>
 <div class="help details-block">
-    <div class="row-fluid">
-        <div class="span8">Welcome to your new bidX group! You can always come here to:</div>
-        <!-- <div class="span4"><input type="checkbox" class="startpage" <?php //echo isset($this->startingPage) ? 'checked':'';  ?> />&nbsp;Select as starting page</div> -->
+    <p>Welcome to your new bidX group! You can always come here to:</p>
+    <div class='alert alert-success'>
+        <a data-dismiss='alert' class='close fui-cross' type='button'></a>
+        <?php echo get_site_option ('entrepreneur-notification', 'Go and set the entrepreneur notification in Network Admin -> Settings -> Bidx !! Work Needed') ?>
     </div>
-    <div class="row-fluid">
-        <div class='alert alert-success span12'>
-            <button data-dismiss='alert' class='close fui-cross' type='button'></button>
-            <?php echo get_site_option ('entrepreneur-notification', 'Go and set the entrepreneur notification in Network Admin -> Settings -> Bidx !! Work Needed') ?>
-        </div>
-    </div>
-    <div class="row-fluid">
-        <div class="span12">On this page you will find a brief description of the tools and services we offer you and how you can use these services</div>
+        <p>On this page you will find a brief description of the tools and services we offer you and how you can use these services</p>
 
-    </div>
     <!-- 1. Preference -->
-    <div class="row-fluid">
-        <div class="span6">
+    <div class="row">
+        <div class="col-sm-6">
             <label> Your Entrepreneur profile </label>
-
-        <div>
-            Use your entrepreneur profile as your business card for other members of this group and platform. Investors and potential business partners will want to know what moves you to do what you do, and about your entrepreneurial background. Feel free to complete it and update it any time.
-        </div>
-          <div class="pull-right"><div><a class="btn" href="/member?redirect_to=entrepreneur-dashboard#editEntrepreneur/<?php echo $this->exst ($this->sessionData->data->id); ?>">Go to entrepreneur profile</a> </div></div>
+            <p>Use your entrepreneur profile as your business card for other members of this group and platform. Investors and potential business partners will want to know what moves you to do what you do, and about your entrepreneurial background. Feel free to complete it and update it any time.</p>
+            <a class="btn btn-default pull-right" href="/member?redirect_to=entrepreneur-dashboard#editEntrepreneur/<?php echo $this->exst ($this->sessionData->data->id); ?>">Go to entrepreneur profile</a>
       </div>
     <!-- 2. Keep up with new plans -->
-      <div class="span6">
+      <div class="col-sm-6">
         <label> Your business proposal </label>
-        <div>
-            Your business proposal contains the minimum information relevant to your business, enough for visitors to understand what your business is about, where it operates and who is in the entrepreneurial team.
-        </div>
-        <div class="pull-right"><div><a class="btn" href="/member#businesssummary">Go to business proposal</a> </div></div>
+        <p>Your business proposal contains the minimum information relevant to your business, enough for visitors to understand what your business is about, where it operates and who is in the entrepreneurial team.</p>
+        <a class="btn btn-default pull-right" href="/member#businesssummary">Go to business proposal</a>
       </div>
     </div>
 
     <!-- 3. Get alerts in your inbox -->
-    <div class="row-fluid">
-        <div class="span6">
+    <div class="row">
+        <div class="col-sm-6">
             <label>Your company profile</label>
-            <div>
-              You might want to wait with your business proposal, but your are ready to tell the other members about your company if you have one. If that is the case, you can create and publish details about your company without delay.
-           </div>
-           <div class="pull-right"><div><a class="btn" href="/member#company">Go to company profile</a> </div></div>
+            <p>You might want to wait with your business proposal, but your are ready to tell the other members about your company if you have one. If that is the case, you can create and publish details about your company without delay.</p>
+            <a class="btn btn-default pull-right" href="/member#company">Go to company profile</a>
         </div>
-        <div class="span6">
+        <div class="col-sm-6">
             <label>Grow your network</label>
-            <div>
-              One of the advantages of being a member of a bidX group is that you can get in contact with other people that work in the same industry, in the same city or who sell that product that you need. Add these members to your contact list. Make contact with those members to be able to communicate with them through the platform messaging system.
-           </div>
-           <div class="pull-right"><div><a class="btn" href="/member#company">Go to company contacts</a> </div></div>
+            <p>One of the advantages of being a member of a bidX group is that you can get in contact with other people that work in the same industry, in the same city or who sell that product that you need. Add these members to your contact list. Make contact with those members to be able to communicate with them through the platform messaging system.</p>
+            <a class="btn btn-default pull-right" href="/member#company">Go to company contacts</a>
         </div>
     </div>
 
     <!-- 5. Access to businesses full information   -->
-    <div class="row-fluid">
-        <div class="span6">
+    <div class="row">
+        <div class="col-sm-6">
             <label> Joining other groups  </label>
-            <div>
-              You might find other interesting groups in the bidX platform. You are free to join them without having to register or login (if you already are). It is worth being aware that your personal and business data will be visible to those group   members as soon as you join.
-            </div>
+            <p>You might find other interesting groups in the bidX platform. You are free to join them without having to register or login (if you already are). It is worth being aware that your personal and business data will be visible to those group members as soon as you join.</p>
         </div>
     <!-- 6. Contact your group moderator    -->
-        <div class="span6">
+        <div class="col-sm-6">
             <label> Support  </label>
-            <div>
-                If you have questions about the tools, or encounter any problem, the group moderator will be able to help you.
-            </div>
-            <div class="pull-right"><div><a class="btn" href="/mail#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a> </div></div>
+            <p>If you have questions about the tools, or encounter any problem, the group moderator will be able to help you.</p>
+            <a class="btn btn-default pull-right" href="/mail#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a>
         </div>
     </div>
 

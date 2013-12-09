@@ -16,7 +16,7 @@
  */
 class search {
 	// dependencies : should be centralized!
-	static $deps = array('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core');
+	static $deps = array('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core');
 
 	/**
 	 * Constructor
@@ -30,8 +30,6 @@ class search {
 	 */
 	public function register_search_bidx_ui_libs() {
 		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
-		wp_register_style( 'search', plugins_url( 'static/css/search.css', __FILE__ ), array('bootstrap','bootstrap-responsive'), '20130501', 'all' );
-		wp_enqueue_style( 'search' );
 	}
 
 	/**

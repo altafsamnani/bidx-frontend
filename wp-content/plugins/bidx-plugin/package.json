@@ -1,0 +1,15 @@
+{
+    "name": "bidx-plugin"
+  , "description": ""
+  , "version": "0.1.0"
+  , "keywords": ["bidx"]
+  , "homepage": "https://www.bidx.net"
+  , "author": ""
+  , "devDependencies": {
+      "grunt": "~0.4.1"
+    , "grunt-contrib-clean": "~0.5.0"
+    , "grunt-contrib-concat": "~0.3.0"
+    , "grunt-contrib-watch": "~0.5.3"
+    , "grunt-recess": "~0.4.0"
+  }
+}

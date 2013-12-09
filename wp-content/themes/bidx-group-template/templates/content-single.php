@@ -2,7 +2,7 @@
 <?php while (have_posts()) : the_post(); ?>
 
 <div class="container">
-  <div class="row-fluid">
+  <div class="row">
 
 <?php
 
@@ -14,10 +14,10 @@
       if ($countcat == 1 && $category->slug == 'uncategorized') {
       // If there is no category linked then wordpress links the post to uncategorized
       // in that case we don't show the sidebar's related posts as links
-        $spansize = 'span12';
+        $spansize = 'col-sm-12';
       } else {
       // We need the sidebar with the related posts links
-        $spansize = 'span8';
+        $spansize = 'col-sm-8';
       }
      } // end foreach
 ?>
@@ -50,10 +50,10 @@
     // Wordpress shifts the 'uncategorized' category to be the last object in this array
     if ( $categories[0]->slug != 'uncategorized' ) :
 ?>
-    <div class="span4 ">
+    <div class="col-sm-4">
       <br>
       <div class="well">
-        <ul class="nav nav-list">
+        <ul class="nav nav-pills">
         <li class="nav-header"><h3><?php echo $categories[0]->name; ?></h3></li>
 <?php
         $id = get_the_ID();

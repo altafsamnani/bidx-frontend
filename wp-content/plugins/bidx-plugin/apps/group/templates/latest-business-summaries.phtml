@@ -1,47 +1,43 @@
 <?php
-        // check if span is empty, then revert to default 6
-        //
-        $span = !empty( $this->span ) ? $this->span : 6;
         $authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
-        // if there are summaries for this group
-        //
 
-        if ( is_array( $this -> summaries ) && count( $this -> summaries ) ) {
+        if (is_array( $this -> summaries )) {
+            if ( $authenticated ) {
+?>
+                <div class="row">
+<?php
+            }
+?>
+                <ul class="media-list">
+<?php
 
             $index = 0;
-
-            // in authenticated view we show 4 items in the listing. In the non-authenticated view show only 3 items per row
-            //
-            $bsItems = $authenticated ? 4 : 3;
-
-            // iterate through summaries
-            //
             foreach ( $this -> summaries as $summary ) {
-
-
-
-                // if maximum amount of set items has been reached, stop iterating
-                //
-                if ( $index === $bsItems ) {
+                $bsitems = $authenticated ? 4 : 3;
+                if ( $index === $bsitems ) {
                     break;
                 }
-                // transfer the summary metadata to this variable
-                //
                 $summaryBidxMeta = isset( $summary->bidxMeta ) ? $summary->bidxMeta : $summary;
+                if ( $authenticated ) {
+                    $oddeven = ( $index % 2 == 0) ? 'odd' : 'even' ;
+ ?>
+                    <div class="col-sm-6 <?php echo $oddeven; ?>">
+ <?php
+                }
  ?>
 
-                <div class="span<?php echo $span ?> clearfix">
+                <li class="media">
 <?php
                     if ( $authenticated ) {
 ?>
-                        <a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>">
+                        <a class="pull-left" href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>">
 <?php
                     }
 
                     if ( empty( $summary -> profilePicture ) ) {
-                        echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" class="img-circle pull-left">';
+                        echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" class="media-object img-circle pull-left">';
                     } else {
-                        echo '<img src="' . $summary -> profilePicture . '" alt="" class="img-circle pull-left" style="height:95px;">';
+                        echo '<img src="' . $summary -> profilePicture . '" alt="" class="media-object img-circle pull-left" style="height:95px;">';
                     }
                         if ( $authenticated ) {
 ?>
@@ -49,8 +45,8 @@
 <?php
                         }
 ?>
-                    <div>
-                        <div>
+                    <div class="media-body">
+                        <div class="media-heading">
 <?php
                         if ( $authenticated ) {
 ?>
@@ -80,24 +76,38 @@
                             echo $countries;
 ?>
                         </div>
-                        <div>
 <?php
                             if ( $authenticated ) {
+?>
+                        <div>
+<?php
                                 echo date_i18n( 'd M Y', $summary -> bidxMeta -> bidxCreationDateTime );
-                            }
 ?>
                         </div>
-                    </div>
-                </div>
 <?php
+                            }
+?>
+                    </div>
+                </li>
+<?php
+            if ( $authenticated ) {
+?>
+            </div>
+<?php
+
+            }
                 $index++;
             }
             // end foreach
-        } else {
- ?>
-            <div class="span12">
-                <?php _e( "There are currently no new summaries", 'bidxplugin' ); ?>
-            </div>
-<?php
         }
 ?>
+        </ul>
+<?php
+            if ( $authenticated ) {
+?>
+        </div>
+<?php
+            }
+?>
+
+

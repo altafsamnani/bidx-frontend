@@ -8,15 +8,10 @@
  */
 class mail {
 
-
-
-
     static $deps = array( 'bidx-common','bidx-i18n', 'jquery-validation',
-            'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen'
+            'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen'
 
     );
-
-
 
     /**
      * Constructor
@@ -31,8 +26,6 @@ class mail {
     function register_mail_bidx_ui_libs()
     {
         wp_register_script( 'mail', plugins_url( 'static/js/mail.js', __FILE__ ), self::$deps, '20130715', TRUE );
-        wp_register_style( 'mail', plugins_url( 'static/css/mail.css', __FILE__ ),  array(), '20130715', TRUE );/*should load mail css, not all other css files from other apps*/
-        wp_enqueue_style('mail');
     }
 
     /**
@@ -40,7 +33,6 @@ class mail {
      * Dynamic action needs to be added here
      * @param $atts
      */
-
     function load($atts) {
         //return file_get_contents ( BIDX_PLUGIN_DIR . '/mail/static/templates/default.html' );
 
@@ -62,12 +54,7 @@ class mail {
                 break;
         }
         $view->render($template);
-
-
-
     }
-
-
 }
 
 ?>

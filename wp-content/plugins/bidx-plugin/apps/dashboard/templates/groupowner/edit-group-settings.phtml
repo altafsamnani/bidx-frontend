@@ -1,17 +1,17 @@
-<!-- 
+<!--
     Search startpage.
     Single page application that is setup
--->	
+-->
 
 <div id="group-dashboard">
-    <div class="row-fluid">
-        <div class="span8">
+    <div class="row">
+        <div class="col-sm-8">
             <h2>Group growth</h2>
         </div>
 
     </div>
-    <div class="row-fluid">
-        <div class="span6">
+    <div class="row">
+        <div class="col-sm-6">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -38,17 +38,17 @@
         </div>
     </div>
 
-    <div class="row-fluid">
-        <section class="span12 well dashboard">
+    <div class="row">
+        <section class="col-sm-12 well dashboard">
             <!-- ************************* utility views *********************************** -->
             <article class="view viewLoad"><?php _e ('Loading...', 'bidxplugin') ?></article>
 
             <article class="view viewList">
-                <div class="row-fluid">
-                     <div class="span6">
+                <div class="row">
+                     <div class="col-sm-6">
                         <h2>Members who recently joined</h2>
                     </div>
-                    <div class="span6">
+                    <div class="col-sm-6">
                             <form class="form-search" action="/search" method="GET">
                                 <div class="input-append">
                                     <input type="text" class="search-query search-query-rounded" name="q" placeholder="Search" value="<?php echo isset ($_REQUEST['q']) ? $_REQUEST['q'] : ''; ?>">
@@ -57,27 +57,27 @@
                             </form>
 
                     </div>
-                    <div class="span12">
+                    <div class="col-sm-12">
                         These members are new in your group. Select and send a welcome message.
                     </div>
 
                     <!-- Latest member data -->
-                    <div class="span12 latest-member">
+                    <div class="col-sm-12 latest-member">
                         <ul class="listheader ">
                             <li class="mediaheader" >
-                                <div class="row-fluid">
-                                    <div class="span2 pull-left check">
+                                <div class="row">
+                                    <div class="col-sm-2 pull-left check">
                                         <label class="checkbox">
                                             <input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
                                         </label>
                                     </div>
-                                    <div class="span10 headerbody">
-                                        <div class="row-fluid">
-                                            <div class="span4"><strong><span class="placeholder user"><?php _e ('First + Last name', 'bidxplugin') ?></span></strong></div>
-                                            <div class="span2"><strong><span class="placeholder userId"/><?php _e ('Location', 'bidxplugin') ?></span></strong></div>
-                                            <div class="span2"><strong><span class="placeholder membersince"/><?php _e ('Member since', 'bidxplugin') ?></span></strong></div>
-                                            <div class="span2"><strong><span class="placeholder role"/><?php _e ('Role', 'bidxplugin') ?></span></strong></div>
-                                            <div class="span2"><strong><span class="placeholder lastlogin"/><?php _e ('Last Login', 'bidxplugin') ?></span></strong></div>
+                                    <div class="col-sm-10 headerbody">
+                                        <div class="row">
+                                            <div class="col-sm-4"><strong><span class="placeholder user"><?php _e ('First + Last name', 'bidxplugin') ?></span></strong></div>
+                                            <div class="col-sm-2"><strong><span class="placeholder userId"/><?php _e ('Location', 'bidxplugin') ?></span></strong></div>
+                                            <div class="col-sm-2"><strong><span class="placeholder membersince"/><?php _e ('Member since', 'bidxplugin') ?></span></strong></div>
+                                            <div class="col-sm-2"><strong><span class="placeholder role"/><?php _e ('Role', 'bidxplugin') ?></span></strong></div>
+                                            <div class="col-sm-2"><strong><span class="placeholder lastlogin"/><?php _e ('Last Login', 'bidxplugin') ?></span></strong></div>
                                         </div>
                                     </div>
                                 </div>
@@ -93,11 +93,11 @@
                                 </div>
                             </li>
 
-                        </ul>                  
+                        </ul>
                     </div>
                 </div>
-                <div class="row-fluid">
-                    <div class="span4 offset8">
+                <div class="row">
+                    <div class="col-sm-4 offset8">
                         <a class="btn btn-primary" href="#dashboard/dashboardCompose">Compose welcome message</a>
                     </div>
                 </div>
@@ -105,33 +105,33 @@
 
             <article class="view viewGoat"><?php _e ('Loading...', 'bidxplugin') ?></article>
             <article class="view viewAll">
-                <div class="row-fluid">
-                    <div class="span6">
+                <div class="row">
+                    <div class="col-sm-6">
                         <h2>All the members</h2>
                     </div>
-                   
-                    <div class="span12">
+
+                    <div class="col-sm-12">
                         See here all the members in your group with their login data, location and role. Select those you want to  send a message to.
                     </div>
 
 
                     <!-- All member data -->
-                    <div class="span12 latest-member">
+                    <div class="col-sm-12 latest-member">
                         <ul class="listheader ">
                             <li class="mediaheader" >
-                                <div class="row-fluid">
-                                    <div class="span2 pull-left check">
+                                <div class="row">
+                                    <div class="col-sm-2 pull-left check">
                                         <label class="checkbox">
                                             <input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
                                         </label>
                                     </div>
-                                    <div class="span10 headerbody">
-                                        <div class="row-fluid">
-                                            <div class="span4"><strong><span class="placeholder user"><?php _e ('First + Last name', 'bidxplugin') ?></span></strong></div>
-                                            <div class="span2"><strong><span class="placeholder userId"/><?php _e ('Location', 'bidxplugin') ?></span></strong></div>
-                                            <div class="span2"><strong><span class="placeholder membersince"/><?php _e ('Member since', 'bidxplugin') ?></span></strong></div>
-                                            <div class="span2"><strong><span class="placeholder role"/><?php _e ('Role', 'bidxplugin') ?></span></strong></div>
-                                            <div class="span2"><strong><span class="placeholder lastlogin"/><?php _e ('Last Login', 'bidxplugin') ?></span></strong></div>
+                                    <div class="col-sm-10 headerbody">
+                                        <div class="row">
+                                            <div class="col-sm-4"><strong><span class="placeholder user"><?php _e ('First + Last name', 'bidxplugin') ?></span></strong></div>
+                                            <div class="col-sm-2"><strong><span class="placeholder userId"/><?php _e ('Location', 'bidxplugin') ?></span></strong></div>
+                                            <div class="col-sm-2"><strong><span class="placeholder membersince"/><?php _e ('Member since', 'bidxplugin') ?></span></strong></div>
+                                            <div class="col-sm-2"><strong><span class="placeholder role"/><?php _e ('Role', 'bidxplugin') ?></span></strong></div>
+                                            <div class="col-sm-2"><strong><span class="placeholder lastlogin"/><?php _e ('Last Login', 'bidxplugin') ?></span></strong></div>
                                         </div>
                                     </div>
                                 </div>
@@ -147,11 +147,11 @@
                                 </div>
                             </li>
 
-                        </ul>                  
+                        </ul>
                     </div>
                 </div>
-                <div class="row-fluid">
-                    <div class="span4 offset8">
+                <div class="row">
+                    <div class="col-sm-4 offset8">
                         <a class="btn btn-primary" href="#dashboard/dashboardComposeAll">Compose message</a>
                     </div>
                 </div>
@@ -167,7 +167,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="">
-                                    <div class="row-fluid">
+                                    <div class="row">
                                         <div class="control-group">
                                             <div class="input-prepend">
 
@@ -181,7 +181,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row-fluid">
+                                    <div class="row">
                                         <div class="control-group">
                                             <div class="input-prepend">
 
@@ -192,7 +192,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row-fluid">
+                                    <div class="row">
                                         <div class="control-group">
                                             <div class="controls">
                                                 <textarea name="content" placeholder="<?php _e ('Please type your message here', 'bidxplugin') ?>" value=""></textarea>
@@ -240,19 +240,19 @@
 <script type="text/html" id="dashboard-listitem">
     <!--
     <li class="media" >
-    <div class="row-fluid">
-    <div class="span2 pull-left check">
+    <div class="row">
+    <div class="col-sm-2 pull-left check">
     <label class="checkbox">
     <input type="checkbox" data-toggle="checkbox"  value="" data-id="">
     </label>
     </div>
-    <div class="span10 media-body">
-    <div class="row-fluid">
-    <div class="span4"><h6 class="media-heading"><span class="placeholder user"><?php _e ('SENDER UNKNOWN IN API', 'bidxplugin') ?></span></h6></div>
-    <div class="span2"><span class="placeholder location"/></div>
-    <div class="span2"><span class="placeholder membersince"/></div>
-    <div class="span2"><span class="placeholder role"/></div>
-    <div class="span2"><span class="placeholder lastlogin"/></div>
+    <div class="col-sm-10 media-body">
+    <div class="row">
+    <div class="col-sm-4"><h6 class="media-heading"><span class="placeholder user"><?php _e ('SENDER UNKNOWN IN API', 'bidxplugin') ?></span></h6></div>
+    <div class="col-sm-2"><span class="placeholder location"/></div>
+    <div class="col-sm-2"><span class="placeholder membersince"/></div>
+    <div class="col-sm-2"><span class="placeholder role"/></div>
+    <div class="col-sm-2"><span class="placeholder lastlogin"/></div>
     </div>
     <div class="subject">
     <span class="placeholder subject"/>

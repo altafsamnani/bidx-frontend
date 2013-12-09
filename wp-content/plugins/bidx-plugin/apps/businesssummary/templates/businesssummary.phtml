@@ -31,12 +31,12 @@ $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSumma
 
 
 $attachmentItem = <<<EOT
-    <div class="span4 well well-white">
-        <div class="row-fluid">
-            <div class="span4">
+    <div class="col-sm-4 well well-white">
+        <div class="row">
+            <div class="col-sm-4">
                 <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
             </div>
-            <div class="span7">
+            <div class="col-sm-7">
                 <h3 class="documentName">{{documentName}}</h3>
                 <p class="purpose">{{purpose}}</p>
                 <p class="documentType">{{documentType}}</p>
@@ -69,14 +69,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 <div class="businessSummary" id="businessSummary">
 
-    <div class="pageHeader container">
-        <div class="row-fluid">
-            <div class="span4">
+    <div class="pageHeader">
+        <div class="row">
+            <div class="col-sm-4">
                 <h1><?php _e('Business plan', 'bidxplugin')?></h1>
                 <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
             </div>
 
-            <div class="span4 completion">
+            <div class="col-sm-4 completion">
                 <h2><?php _e('Business completion', 'bidxplugin')?></h2>
                 <div class="progress">
                     <div style="width:<?php echo $progress ?>" class="bar"><?php echo $progress ?> <?php _e('completed', 'bidxplugin')?></div>
@@ -84,7 +84,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             </div>
 
 
-            <div class="span4 editControlsContainer">
+            <div class="col-sm-4 editControlsContainer">
                 <div class="editControls btn-group pull-right">
 
                     <!-- SHOW -->
@@ -138,7 +138,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
                         if ( $entityStatus == 'DRAFT' ) {
 ?>
-                            <a class="btn" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
+                            <a class="btn btn-default" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
 <?php
                         }
                     }
@@ -157,18 +157,17 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div>
     </div><!-- /pageHeader -->
 
-    <div class="container">
 
         <!-- Accordion -->
-        <div class="accordion" id="businessSummaryAccordion">
+        <div class="panel-group" id="businessSummaryAccordion">
 
             <!-- General Overview -->
-            <div class="accordion-group accordion-open">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-GeneralOverview"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
+            <div class="panel panel-default panel-open">
+                <div class="panel-heading">
+                    <a class="panel-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-GeneralOverview"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
                 </div>
-                <div id="businessSummaryAccordion-GeneralOverview" class="accordion-body collapse in" style="overflow: visible;">
-                    <div class="accordion-inner clearfix">
+                <div id="businessSummaryAccordion-GeneralOverview" class="panel-collapse collapse in">
+                    <div class="panel-body clearfix" style="overflow: visible;">
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -206,12 +205,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div>
 
                         <!-- LOAD -->
-                        <div class="view viewLoad">
-                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        <div class="view viewLoad alert alert-info text-center">
+                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
                         </div>
 
                         <!-- ERROR -->
-                        <div class="view viewError">
+                        <div class="view viewError alert alert-warning">
                             <p class="errorMsg"></p>
                         </div>
 
@@ -221,63 +220,55 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <?php _e('This section gives your the opportunity to describe your business. Think about what information you would like other people to know if you only had a few minutes to explain.','bidxplugin')?>
                             </div>
                             <form id="frmBusinessSummary-GeneralOverview">
-                                <div class="row-fluid">
+                                <div class="row">
                                     <!-- Name -->
-                                    <div class="control-group span5">
-                                        <label class="control-label"><?php _e('Business name','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <input type="text" name="name" placeholder="<?php _e('Business name','bidxplugin'); ?>">
-                                        </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Business name','bidxplugin'); ?></label>
+                                        <input type="text" class="form-control" name="name" placeholder="<?php _e('Business name','bidxplugin'); ?>">
                                     </div>
 
                                     <!-- Slogan -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Describe your business (max. 140 characters) optional','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <textarea type="text" name="slogan" placeholder="<?php _e('Please give a description of your business','bidxplugin'); ?>"></textarea>
-                                        </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Describe your business (max. 140 characters) optional','bidxplugin'); ?></label>
+                                        <textarea type="text" class="form-control" name="slogan" placeholder="<?php _e('Please give a description of your business','bidxplugin'); ?>"></textarea>
                                     </div>
                                 </div>
-                                <div class="row-fluid">
+                                <div class="row">
                                     <!-- Summary -->
-                                    <div class="control-group span5">
-                                        <label class="control-label"><?php _e('Summary of this business','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <textarea type="text" name="summary" placeholder="<?php _e('Summary','bidxplugin'); ?>"></textarea>
-                                        </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Summary of this business','bidxplugin'); ?></label>
+                                        <textarea type="text" class="form-control" name="summary" placeholder="<?php _e('Summary','bidxplugin'); ?>"></textarea>
                                     </div>
 
                                     <!-- Reason For Submission -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <select name="reasonForSubmission" data-forcearray="true"></select>
-                                        </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Reason for submission of business summary','bidxplugin'); ?></label>
+                                        <select name="reasonForSubmission" data-forcearray="true"></select>
                                     </div>
                                 </div>
-                                <div class="row-fluid">
+                                <div class="row">
                                 <!-- Equity Retained -->
-                                    <div class="control-group span5">
-                                        <label class="control-label"><?php _e('Percentage equity your currently retain','bidxplugin'); ?></label>
-                                        <div class="controls input-append">
-                                            <input type="text" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
-                                            <span class="add-on">%</span>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Percentage equity your currently retain','bidxplugin'); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
+                                            <span class="input-group-addon">%</span>
                                         </div>
                                     </div>
 
                                     <!-- Finance Needed -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Finance needed','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <input type="text" name="financingNeeded" placeholder="<?php _e('Please enter amount of finance needed','bidxplugin'); ?>">
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Finance needed','bidxplugin'); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="financingNeeded" placeholder="<?php _e('Please enter amount of finance needed','bidxplugin'); ?>">
+                                            <span class="input-group-addon">$</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row-fluid">
+                                <div class="row">
                                     <!-- Investment type -->
-                                    <div class="control-group span5">
-                                        <label class="control-label"><?php _e('Investment type','bidxplugin'); ?></label>
-                                        <div class="controls">
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Investment type','bidxplugin'); ?></label>
 <?php
                                             // Render the checkboxes based upon the items from the static data api for the 'investmentType' typeCode / groupCode / context
                                             //
@@ -287,34 +278,31 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                                 }
                                             }
 ?>
-                                        </div>
                                     </div>
 
                                     <!-- Summary Financing Needed -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Why does your business need financing? (max. 300 characters)','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <textarea name="summaryFinancingNeeded" placeholder="<?php _e('Please give the reason your business needs financing','bidxplugin'); ?>"></textarea>
-                                        </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Why does your business need financing? (max. 300 characters)','bidxplugin'); ?></label>
+                                        <textarea name="summaryFinancingNeeded" class="form-control" placeholder="<?php _e('Please give the reason your business needs financing','bidxplugin'); ?>"></textarea>
                                     </div>
                                 </div>
                             </form>
                         </div><!-- /EDIT -->
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn pull-right"><?php _e('About the business','bidxplugin')?> <span class="fui-arrow-right"></span></a>
+                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('About the business','bidxplugin')?> <span class="fui-arrow-right"></span></a>
                         </div>
 
-                    </div><!-- /Accordion-inner -->
+                    </div><!-- /panel-body -->
                 </div>
             </div><!-- /General Overview -->
 
             <!-- About the business -->
-            <div class="accordion-group">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutTheBusiness"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('About the business','bidxplugin'); ?></a>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a class="panel-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutTheBusiness"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('About the business','bidxplugin'); ?></a>
                 </div>
-                <div id="businessSummaryAccordion-AboutTheBusiness" class="accordion-body collapse">
-                    <div class="accordion-inner clearfix">
+                <div id="businessSummaryAccordion-AboutTheBusiness" class="panel-collapse collapse">
+                    <div class="panel-body clearfix">
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -356,12 +344,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div>
 
                         <!-- LOAD -->
-                        <div class="view viewLoad">
-                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        <div class="view viewLoad alert alert-info text-center">
+                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
                         </div>
 
                         <!-- ERROR -->
-                        <div class="view viewError">
+                        <div class="view viewError alert alert-warning">
                             <p class="errorMsg"></p>
                         </div>
 
@@ -372,70 +360,61 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             </div>
                             <form id="frmBusinessSummary-AboutYourBusiness">
 
-                                <div class="row-fluid">
+                                <div class="row">
                                     <!-- Industry -->
-                                    <div class="control-group span5">
-                                        <label class="control-label"><?php _e('Industry','bidxplugin'); ?></label>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Industry','bidxplugin'); ?></label>
                                         <select name="industry" multiple></select>
                                     </div>
 
                                     <!-- Suggested Industry -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Suggested industry','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <div class="bidx-tagsinput-container">
-                                                <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
-                                            </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Suggested industry','bidxplugin'); ?></label>
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row-fluid">
+                                <div class="row">
                                     <!-- Product Service -->
-                                    <div class="control-group span5">
-                                        <label class="control-label"><?php _e('Product / service','bidxplugin'); ?></label>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Product / service','bidxplugin'); ?></label>
                                         <select name="productService" multiple></select>
                                     </div>
 
                                     <!-- Suggested Product Service -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Suggested product / service','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <div class="bidx-tagsinput-container">
-                                                <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested product / service','bidxplugin'); ?>">
-                                            </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Suggested product / service','bidxplugin'); ?></label>
+                                        <div class="bidx-tagsinput-container">
+                                            <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested product / service','bidxplugin'); ?>">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row-fluid">
+                                <div class="row">
                                     <!-- Country operation -->
-                                    <div class="control-group span5">
-                                        <label class="control-label"><?php _e('Country of business','bidxplugin'); ?></label>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Country of business','bidxplugin'); ?></label>
                                         <select name="countryOperation" multiple></select>
                                     </div>
 
                                     <!-- Social impact -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Social impact','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <select name="socialImpact" multiple></select>
-                                        </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Social impact','bidxplugin'); ?></label>
+                                        <select name="socialImpact" multiple></select>
                                     </div>
                                 </div>
-                                <div class="row-fluid">
+                                <div class="row">
                                     <!-- Env impact -->
-                                    <div class="control-group span5">
-                                        <label class="control-label"><?php _e('Environmental impact','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <select name="envImpact" multiple></select>
-                                        </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Environmental impact','bidxplugin'); ?></label>
+                                        <select name="envImpact" multiple></select>
                                     </div>
 
                                     <!-- Stage Business is read only -->
 
                                     <!-- Consumer Type -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Type of customer you sell to','bidxplugin'); ?></label>
-                                        <div class="controls">
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Type of customer you sell to','bidxplugin'); ?></label>
 <?php
                                             // Render the checkboxes based upon the items from the static data api for the 'consumerType' typeCode / groupCode / context
                                             //
@@ -446,7 +425,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                                 }
                                             }
 ?>
-                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -454,21 +432,21 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('General Overview', 'bidxplugin')?></a>
-                            <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn pull-right"><?php _e('About you &amp; your team', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
+                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('General Overview', 'bidxplugin')?></a>
+                            <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('About you &amp; your team', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
                         </div>
 
-                    </div><!-- /accordion-inner -->
+                    </div><!-- /panel-body -->
                 </div>
             </div><!-- /About the business -->
 
             <!-- About you & your team -->
-            <div class="accordion-group">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutYouAndYourTeam"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('About you & your team','bidxplugin'); ?></a>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a class="panel-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutYouAndYourTeam"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('About you & your team','bidxplugin'); ?></a>
                 </div>
-                <div id="businessSummaryAccordion-AboutYouAndYourTeam" class="accordion-body collapse">
-                    <div class="accordion-inner clearfix">
+                <div id="businessSummaryAccordion-AboutYouAndYourTeam" class="panel-collapse collapse">
+                    <div class="panel-body clearfix">
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -507,17 +485,17 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 __('Supporting members of management team','bidxplugin') => $supportingMembersHtml
                             );
 
-                            echo $this->addRowsWithLabelBelow ('span12', 'span12', $rowValues, array ('tag_label' => 'h5'));
+                            echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
 ?>
                         </div>
 
                         <!-- LOAD -->
-                        <div class="view viewLoad">
-                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        <div class="view viewLoad alert alert-info text-center">
+                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
                         </div>
 
                         <!-- ERROR -->
-                        <div class="view viewError">
+                        <div class="view viewError alert alert-warning">
                             <p class="errorMsg"></p>
                         </div>
 
@@ -527,44 +505,45 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <?php _e('Your team is an essential part of the success of your business. Give more information here about you as part of this team, and about the other team members.', 'bidxplugin')?>
                             </div>
                             <form id="frmBusinessSummary-AboutYouAndYourTeam">
-                                <div class="row-fluid">
+                                <div class="row">
                                     <!-- Personal Role -->
-                                    <div class="control-group formfield span5">
-                                        <label class="control-label"><?php _e('Role of entrepreneur in this business (max. 30 characters)','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <input type="text" name="personalRole" placeholder="<?php _e('Please give role of entrepreneur in this business','bidxplugin'); ?>">
-                                        </div>
+                                    <div class="form-group formfield col-sm-6">
+                                        <label><?php _e('Role of entrepreneur in this business (max. 30 characters)','bidxplugin'); ?></label>
+                                        <input type="text" name="personalRole" class="form-control" placeholder="<?php _e('Please give role of entrepreneur in this business','bidxplugin'); ?>">
                                     </div>
 
                                     <!-- Personal Expertise -->
-                                    <div class="control-group span5 offset1">
-                                        <label class="control-label"><?php _e('Please describe your expertise in relation to this business (180 characters)','bidxplugin'); ?></label>
-                                        <div class="controls">
-                                            <textarea name="personalExpertise" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
-                                        </div>
+                                    <div class="form-group col-sm-6">
+                                        <label><?php _e('Please describe your expertise in relation to this business (180 characters)','bidxplugin'); ?></label>
+                                        <textarea name="personalExpertise" class="form-control" placeholder="<?php _e('The details of your expertise for this business','bidxplugin'); ?>"></textarea>
                                     </div>
                                 </div>
-
-                                <div class="control-group span11">
-                                    <label><?php _e('Here you can give information about other members in your team.','bidxplugin'); ?></label>
-                                    <a href="#addManagementTeam" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <label><?php _e('Here you can give information about other members in your team.','bidxplugin'); ?></label>
+                                        <a href="#addManagementTeam" class="btn btn-primary"><span class="fui-plus"></span><?php _e('Add','bidxplugin'); ?></a>
+                                    </div>
                                 </div>
 
                                 <div class="managementTeamContainer"></div>
 
-                                <div class="managementTeamProfilePictureModal modal hide fade">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3><?php _e('Check the file you want to use as the picture for this member', 'bidxplugin' ); ?></h3>
-                                  </div>
-                                    <div class="modal-body">
+                                <div class="managementTeamProfilePictureModal modal fade">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h3><?php _e('Check the file you want to use as the picture for this member', 'bidxplugin' ); ?></h3>
+                                          </div>
+                                            <div class="modal-body">
     <?php
-                                        echo do_shortcode( '[bidx app="media"]' );
+                                                echo do_shortcode( '[bidx app="media"]' );
     ?>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                        <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                                <a href="#" class="btn btn-default btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -572,8 +551,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div><!-- /EDIT -->
 
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('About the business', 'bidxplugin')?></a>
-                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn pull-right"><?php _e('Financial Details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
+                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('About the business', 'bidxplugin')?></a>
+                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Financial Details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
                         </div>
 
                     </div><!-- /Accordion inner -->
@@ -581,35 +560,34 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             </div><!-- /About you & your team -->
 
             <!-- Financial details -->
-            <div class="accordion-group">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a class="panel-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
                 </div>
-                <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse">
-                    <div class="accordion-inner clearfix">
+                <div id="businessSummaryAccordion-FinancialDetails" class="panel-collapse collapse">
+                    <div class="panel-body clearfix">
 
                         <form id="frmBusinessSummary-FinancialDetails">
 
                             <!-- SHOW -->
                             <div class="view viewShow">
 <?php
-                $rowValues = array (
-                    __('Business sales started in','bidxplugin') => $this->exst($businessSummary->yearSalesStarted)
-                );
-                echo $this->pairRows( $rowValues );
+                                $rowValues = array (
+                                    __('Business sales started in','bidxplugin') => $this->exst($businessSummary->yearSalesStarted)
+                                );
+                                echo $this->pairRows( $rowValues );
 ?>
                             </div>
 
                             <!-- LOAD -->
-                            <div class="view viewLoad">
-                                <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                            <div class="view viewLoad alert alert-info text-center">
+                                <?php _e('Retrieving business summary information...','bidxplugin'); ?>
                             </div>
 
                             <!-- EDIT -->
                             <div class="view viewEdit">
                                 <div class="alert alert-info">
-                                <?php _e('Here you should provide a very general overview of your finances, the financing you need, the number of employees you have currently and how you think your business has, and will continue to grow over time','bidxplugin')?>
-
+                                    <?php _e('Here you should provide a very general overview of your finances, the financing you need, the number of employees you have currently and how you think your business has, and will continue to grow over time','bidxplugin')?>
                                 </div>
                                 <!-- numYear-->
 
@@ -629,9 +607,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 
                                 <hr>
-                                <div class="row-fluid">
-                                    <div class="control-group formfield span5">
-                                        <label class="control-label"><?php _e('When did your business\'s sales start?','bidxplugin'); ?></label>
+                                <div class="row">
+                                    <div class="form-group formfield col-sm-6">
+                                        <label><?php _e('When did your business\'s sales start?','bidxplugin'); ?></label>
                                         <div class="controls">
                                             <select name="yearSalesStarted">
                                                 <option value=""><?php _e('Select year', 'bidxplugin');?></option>
@@ -653,31 +631,31 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <!-- VIEW and EDIT -->
                             <div class="view viewShow viewEdit">
 <?php
-    $this->render('financialsummary.phtml');
+                                $this->render('financialsummary.phtml');
 ?>
                             </div><!-- /VIEW and EDIT -->
 
                             <!-- ERROR -->
-                            <div class="view viewError">
+                            <div class="view viewError alert alert-warning">
                                 <p class="errorMsg"></p>
                             </div>
 
                             <div class="accordion-controls-bottom">
-                                <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('About you &amp; your team', 'bidxplugin')?></a>
-                                <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn pull-right"><?php _e('Company details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
+                                <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('About you &amp; your team', 'bidxplugin')?></a>
+                                <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Company details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
                             </div>
                         </form>
-                    </div><!-- /Accordion-inner -->
+                    </div><!-- /panel-body -->
                 </div>
             </div><!-- /Financial details -->
 
             <!-- Company details -->
-            <div class="accordion-group">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-CompanyDetails"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Company Details', 'bidxplugin')?></a>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a class="panel-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-CompanyDetails"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Company Details', 'bidxplugin')?></a>
                 </div>
-                <div id="businessSummaryAccordion-CompanyDetails" class="accordion-body collapse">
-                    <div class="accordion-inner clearfix">
+                <div id="businessSummaryAccordion-CompanyDetails" class="panel-collapse collapse">
+                    <div class="panel-body clearfix">
 
 
                         <!-- SHOW -->
@@ -758,12 +736,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div>
 
                         <!-- LOAD -->
-                        <div class="view viewLoad">
-                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        <div class="view viewLoad alert alert-info text-center">
+                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
                         </div>
 
                         <!-- ERROR -->
-                        <div class="view viewError">
+                        <div class="view viewError alert alert-warning">
                             <p class="errorMsg"></p>
                         </div>
 
@@ -776,8 +754,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <form id="frmBusinessSummary-CompanyDetails">
 
                                 <!-- Has Company? -->
-                                <div class="control-group">
-                                    <label class="control-label"><?php _e('Does this business summary have a company?','bidxplugin'); ?></label>
+                                <div class="form-group">
+                                    <label><?php _e('Does this business summary have a company?','bidxplugin'); ?></label>
                                     <div class="controls">
                                         <label class="radio"><input type="radio" value="true"  name="hasCompany" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
                                         <label class="radio"><input type="radio" value="false" name="hasCompany" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
@@ -802,7 +780,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                         </tbody>
                                     </table>
 
-                                    <a href="#addNewCompany" class="btn"><?php _e('Or add a new company', 'bidxplugin')?></a>
+                                    <a href="#addNewCompany" class="btn btn-default"><?php _e('Or add a new company', 'bidxplugin')?></a>
                                 </div>
                             </form>
 
@@ -811,12 +789,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 echo do_shortcode( '[bidx app="company" noheader="true"]' );
 ?>
                                 <a href="#addCompany" class="btn btn-primary"><?php _e('Save to list', 'bidxplugin')?></a>
-                                <a href="#cancelAddCompany" class="btn"><?php _e('Cancel', 'bidxplugin')?></a>
+                                <a href="#cancelAddCompany" class="btn btn-default"><?php _e('Cancel', 'bidxplugin')?></a>
                             </div>
                         </div><!-- /Edit -->
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
-                            <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn pull-right"><?php _e('Documents', 'bidxplugin')?> <span class="fui-arrow-right"></span> </a>
+                            <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
+                            <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Documents', 'bidxplugin')?> <span class="fui-arrow-right"></span> </a>
                         </div>
 
                     </div><!-- /Accordion inner -->
@@ -824,12 +802,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             </div><!-- /Company details -->
 
             <!-- Documents -->
-            <div class="accordion-group">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-Documents"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Documents', 'bidxplugin')?></a>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a class="panel-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-Documents"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Documents', 'bidxplugin')?></a>
                 </div>
-                <div id="businessSummaryAccordion-Documents" class="accordion-body collapse">
-                    <div class="accordion-inner clearfix">
+                <div id="businessSummaryAccordion-Documents" class="panel-collapse collapse">
+                    <div class="panel-body clearfix">
 
                         <!-- SHOW -->
                         <div class="view viewShow">
@@ -847,7 +825,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 echo "</div>";
                             }
 
-                            echo '<div class="row-fluid reflow-row">';
+                            echo '<div class="row reflow-row">';
                         }
 
                         // Echo the attachment item with the values from the API
@@ -882,12 +860,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div>
 
                         <!-- LOAD -->
-                        <div class="view viewLoad">
-                            <span><?php _e('Retrieving business summary information...','bidxplugin'); ?></span>
+                        <div class="view viewLoad alert alert-info text-center">
+                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
                         </div>
 
                         <!-- ERROR -->
-                        <div class="view viewError">
+                        <div class="view viewError alert alert-warning">
                             <p class="errorMsg"></p>
                         </div>
 
@@ -913,35 +891,37 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             </div>
                             <a href="#addFiles" data-toggle="modal" class="btn btn-primary"><?php _e('Add files', 'bidxplugin')?></a>
 
-                            <div class="addFiles modal hide fade">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3><?php _e('Check the files you want to attach to your business plan', 'bidxplugin' ); ?></h3>
-                              </div>
-                                <div class="modal-body">
+                            <div class="addFiles modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h3><?php _e('Check the files you want to attach to your business plan', 'bidxplugin' ); ?></h3>
+                                        </div>
+                                        <div class="modal-body">
 <?php
-                                    echo do_shortcode( '[bidx app="media"]' );
+                                            echo do_shortcode( '[bidx app="media"]' );
 ?>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                    <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                            <a href="#" class="btn btn-default btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn"><span class="fui-arrow-left"></span> <?php _e('Company Details', 'bidxplugin')?></a>
-                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn pull-right"><?php _e('General Overview', 'bidxplugin')?> <span class="fui-arrow-right"></span> </a>
+                            <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('Company Details', 'bidxplugin')?></a>
+                            <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('General Overview', 'bidxplugin')?> <span class="fui-arrow-right"></span> </a>
                         </div>
 
-                    </div><!-- /Accordion-inner -->
+                    </div><!-- /panel-body -->
                 </div>
 
             </div><!-- /Documents -->
 
         </div><!-- /#businessSummaryAccordion -->
-
-    </div><!-- /business summary content container -->
 
     <!-- SNIPPETS -->
     <div class="snippets hide">
@@ -962,12 +942,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </table>
 
         <!-- Attachment -->
-        <div class="attachmentItem span4 well well-white">
-            <div class="row-fluid">
-                <div class="span4">
+        <div class="attachmentItem col-sm-4 well well-white">
+            <div class="row">
+                <div class="col-sm-4">
                     <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
                 </div>
-                <div class="span7">
+                <div class="col-sm-7">
                     <h3 class="documentName"></h3>
                     <p class="createdDateTime"></p>
                     <p class="purpose"></p>
@@ -978,55 +958,43 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div>
 
         <!-- Management Team Item -->
-        <div class="managementTeamItem span6 well well-white">
+        <div class="managementTeamItem col-sm-6 well well-white">
 
             <!-- First Name -->
-            <div class="control-group span11">
-                <label class="control-label"><?php _e('First name','bidxplugin'); ?></label>
-                <div class="controls">
-                    <input type="text" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
-                </div>
+            <div class="form-group col-sm-12">
+                <label><?php _e('First name','bidxplugin'); ?></label>
+                <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
             </div>
 
             <!-- Last Name -->
-            <div class="control-group span11">
-                <label class="control-label"><?php _e('Last name','bidxplugin'); ?></label>
-                <div class="controls">
-                    <input type="text" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
-                </div>
+            <div class="form-group col-sm-12">
+                <label><?php _e('Last name','bidxplugin'); ?></label>
+                <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
             </div>
 
             <!-- Role -->
-            <div class="control-group span11">
-                <label class="control-label"><?php _e('Role of partner in this business','bidxplugin'); ?></label>
-                <div class="controls">
-                    <input type="text" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
-                </div>
+            <div class="form-group col-sm-12">
+                <label><?php _e('Role of partner in this business','bidxplugin'); ?></label>
+                <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
             </div>
 
             <!-- Expertise -->
-            <div class="control-group span11">
-                <label class="control-label"><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
-                <div class="controls">
-                    <textarea type="text" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
-                </div>
+            <div class="form-group col-sm-12">
+                <label><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
+                <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
             </div>
 
             <!-- LinkedIn -->
-            <div class="control-group span11">
-                <label class="control-label"><?php _e('LinkedIn profile','bidxplugin'); ?></label>
-                <div class="controls">
-                    <input type="text" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
-                </div>
+            <div class="form-group col-sm-12">
+                <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
+                <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
             </div>
 
             <!-- Profile picture -->
-            <div class="profilePictureControl control-group span11">
-                <label class="control-label"><?php _e('Picture','bidxplugin'); ?></label>
-                <div class="controls">
-                    <div class="profilePictureContainer"></div>
-                    <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Change profile picture', 'bidxplugin')?></a>
-                </div>
+            <div class="profilePictureControl form-group col-sm-12">
+                <label><?php _e('Picture','bidxplugin'); ?></label>
+                <div class="profilePictureContainer"></div>
+                <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Change profile picture', 'bidxplugin')?></a>
             </div>
 
             <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this partner','bidxplugin'); ?></a>

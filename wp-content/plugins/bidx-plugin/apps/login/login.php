@@ -15,8 +15,8 @@ class login {
      * Also registers the scripts for login.
      */
 
-    static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                        'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                        'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
 
     function __construct() {
@@ -27,14 +27,9 @@ class login {
     /**
      * Load the scripts and css belonging to this function
      */
-    function set_login_bidx_ui_libs() {
-
-        //$deps = array( 'bootstrap','memberprofile') ;
-        //$deps = $this->getWidgetJsDependency('login');
-        //$deps = array('bootstrap');
+    function set_login_bidx_ui_libs()
+    {
         wp_register_script( 'login', plugins_url( 'static/js/login.js', __FILE__ ), self::$deps, '20130501', TRUE );
-//      wp_register_style( 'login', plugins_url( 'static/css/login.css', __FILE__ ), array(), '20130501', 'all' );
-//        wp_enqueue_style( 'login' );
     }
 
     /**

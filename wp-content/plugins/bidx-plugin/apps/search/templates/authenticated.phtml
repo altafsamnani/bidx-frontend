@@ -1,40 +1,40 @@
-<!-- 
+<!--
 	Search startpage.
 	Single page application that is setup
- -->	
+ -->
  <br /><br />
 <div>
 
-	<div class="row-fluid">
+	<div class="row">
 		<div class="search alert">
 			 <button type="button" class="close" data-dismiss="alert">&times;</button>
 			 <h3>No results</h3>
 			 <p>Your query did not have any results. Please retry with a more specific search term</p>
 		</div>
-	</div>	
-	
-	<div class="row-fluid">
-		<div class="span12"><h4>Search results (<?php echo $this -> results -> data -> numFound ?>)</h4></div>
 	</div>
-	
-	<div class="row-fluid">
-		<div class="search-result-container span8">
+
+	<div class="row">
+		<div class="col-sm-12"><h4>Search results (<?php echo $this -> results -> data -> numFound ?>)</h4></div>
+	</div>
+
+	<div class="row">
+		<div class="search-result-container col-sm-8">
 
 			<div class="search-result-item well">
-				<div class="row-fluid">
-					<div class="span2">
+				<div class="row">
+					<div class="col-sm-2">
 						<div>
 							<a href="/member/<?php echo $doc -> userId ?>">
 						<?php if (property_exists( $doc , 'profilepicturedoc_url' ) ) {
 							?>
-								<img src="<?php echo $doc -> profilepicturedoc_url ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+								<img src="<?php echo $doc -> profilepicturedoc_url ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
 						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
 						<?php  }?>
 							</a>
 						</div>
 					</div>
-					<div class="span8">
+					<div class="col-sm-8">
 						<div>
 							<em><?php echo $fullname ?></em>
 							<p><?php echo $doc -> professionaltitle_t ?></p>
@@ -44,20 +44,20 @@
 							<span class="label">Member</span>
 						</div>
 					</div>
-					<div class="span2">
+					<div class="col-sm-2">
 						<a href="/member/<?php echo $doc -> userId ?>">view</a>
 					</div>
 				</div>
-			</div>								
+			</div>
 
 			<div class="search-result-item well">
-				<div class="row-fluid">
-					<div class="span2">
+				<div class="row">
+					<div class="col-sm-2">
 						<div>
-							<img data-src="holder.js/75x75/social/text:company" class="logo img-rounded" alt=""/>							
+							<img data-src="holder.js/75x75/social/text:company" class="logo img-rounded" alt=""/>
 						</div>
 					</div>
-					<div class="span8">
+					<div class="col-sm-8">
 						<div>
 							<em><?php echo $doc -> id ?></em>
 						</div>
@@ -65,78 +65,78 @@
 							<span class="label">Company</span>
 						</div>
 					</div>
-					<div class="span2">
+					<div class="col-sm-2">
 						<a href="#">view</a>
 					</div>
 				</div>
 			</div>
 
 			<div class="search-result-item well">
-				<div class="row-fluid">
-					<div class="span2">
+				<div class="row">
+					<div class="col-sm-2">
 						<div>
-							<img data-src="holder.js/75x75/social/text:investor" class="logo img-rounded" alt=""/>							
+							<img data-src="holder.js/75x75/social/text:investor" class="logo img-rounded" alt=""/>
 						</div>
 					</div>
-					<div class="span8">
+					<div class="col-sm-8">
 						<em><?php echo $fullname ?></em><br />
 						<?php echo $doc -> summary_t ?><br />
 						<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />
 						<span class="label">Investor</span>
 					</div>
-					<div class="span2">
+					<div class="col-sm-2">
 						<a href="#">view</a>
 					</div>
 				</div>
 			</div>
 
 			<div class="search-result-item well">
-				<div class="row-fluid">
-					<div class="span2">
+				<div class="row">
+					<div class="col-sm-2">
 						<div>
  							<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">
 						<?php if (property_exists( $doc , 'profilePicturedoc_url' ) ) {
 								$items = explode( '/', $doc -> profilePicturedoc_url );
 								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
 							?>
-								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
 						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
 						<?php  }?>
 							</a>
 						</div>
 					</div>
-					<div class="span8">
+					<div class="col-sm-8">
 						<div>
 							<em><?php echo $fullname ?></em><br />
 							<?php echo $doc -> professionaltitle_t ?><br />
-							<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />							
+							<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />
 							<span class="label">Entrepreneur</span>
 						</div>
 					</div>
-					<div class="span2">
+					<div class="col-sm-2">
 						<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">view</a>
 					</div>
 				</div>
 			</div>
 
 			<div class="search-result-item well">
-				<div class="row-fluid">
-					<div class="span2">
+				<div class="row">
+					<div class="col-sm-2">
 						<div>
 							<a href="/business/<?php echo $doc -> userId ?>">
 						<?php if (property_exists( $doc , 'picturedoc_url' ) ) {
 								$items = explode( '/', $doc -> 	picturedoc_url );
 								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
 							?>
-								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
 						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:business" class="logo img-rounded" alt="<?php echo $fullname ?>"/>							
+								<img data-src="holder.js/75x75/social/text:business" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
 						<?php  }?>
-							</a>						
+							</a>
 						</div>
 					</div>
-					<div class="span8">
+					<div class="col-sm-8">
 						<div>
 							<em><?php echo $doc -> name_s ?></em><br />
 							<?php echo $doc -> slogan_s ?><br/>
@@ -144,25 +144,25 @@
 							<span class="label">Business</span>
 						</div>
 					</div>
-					<div class="span2">
+					<div class="col-sm-2">
 						<a href="/business/<?php echo $doc -> userId ?>">view</a>
 					</div>
 				</div>
 			</div>
 
-			<div>					
+			<div>
 
 	<a href="?<?php echo $this -> previousLink ?>" class="btn">Previous</a>
-	
+
 	<a href="?<?php echo $this -> nextLink ?>" class="btn">Next</a>
-	
-			</div>					
+
+			</div>
 		</div>
 
-	
-		<div class="sidebar span4">
+
+		<div class="sidebar col-sm-4">
 			<div>
-			
+
 			</div>
 			<div>
 			<ul class="nav nav-list">
@@ -202,7 +202,7 @@
 	                Groups
 	                <span class="nav-counter">11</span>
 	              </a>
-	            </li>	            	            
+	            </li>
 	            <li class="divider"></li>
 	            <li class="nav-header">Filters</li>
 	            <li>
@@ -213,7 +213,7 @@
           					<div class="tagsinput-add"></div>
           					<input id="tags_industry_tag small" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
           				</div>
-          			</div>	                
+          			</div>
 	            </li>
 	            <li>
 	                <label>Theme</label>
@@ -223,9 +223,9 @@
           					<div class="tagsinput-add"></div>
           					<input id="tags_theme_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
           				</div>
-          			</div>	                
+          			</div>
 	            </li>;
-	            
+
 		</div>
 	</div>
 </div>

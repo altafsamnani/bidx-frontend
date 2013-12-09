@@ -7,12 +7,11 @@
         $useDataSrc = true;
     }
 ?>
-
+<div class="panel-heading">
+    <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
+</div>
+<div class="panel-body">
 <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
-<h4><?php _e('Company details','bidxplugin'); ?></h4>
-
-<div class="row-fluid">
-    <div class="span12">
 <?php
 
     $rowValues = array(
@@ -59,5 +58,4 @@
         echo $this->pairRows( $rowValues );
     }
 ?>
-    </div>
-</div><!-- row -->
+</div>

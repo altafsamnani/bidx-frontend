@@ -562,7 +562,6 @@
                 }
             );
         }
-
      ,  monitoring:               function( state, splat )
         {
             bidx.utils.log( "AppRouter::monitoring State: ", state );

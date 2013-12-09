@@ -5,20 +5,17 @@
     //
     $images = get_attached_media( 'image', get_the_ID() );
 
-
-
     if ( count( $images ) > 0 ) {
 ?>
     <!-- IMAGE Carousel -->
-    <div id="groupCarousel" class="carousel slide">
+    <div class="container">
+        <div id="groupCarousel" class="carousel slide">
 <?php
-        // If there is only 1 image in the array don't show the nav arrows and the indicator
-        // TODO: Don't load the carousel plugin and the extra markup
-        if ( count($images) != 1 ) {
+            // If there is only 1 image in the array don't show the nav arrows and the indicator
+            // TODO: Don't load the carousel plugin and the extra markup
+            if ( count($images) != 1 ) {
 ?>
-            <div class="outer-carousel-control-container">
-                <div class="container">
-                    <ol class="carousel-indicators">
+                <ol class="carousel-indicators">
 <?php
                     $count = 0;
                     foreach ( $images as $id => $image ) {
@@ -27,68 +24,53 @@
 <?php
                     }
 ?>
-                    </ol>
+                </ol>
 
-                    <!-- Carousel nav -->
-                    <a class="carousel-control left" href="#groupCarousel" data-slide="prev">&lsaquo;</a>
-                    <a class="carousel-control right" href="#groupCarousel" data-slide="next">&rsaquo;</a>
 
-                </div>
-            </div>
 <?php
-        }
+            }
 ?>
-        <!-- Carousel items -->
-        <div class="carousel-inner">
+            <!-- Carousel items -->
+            <div class="carousel-inner">
 <?php
-        $count = 0;
-        foreach ( $images as $id => $image ) {
-            $img = wp_get_attachment_image_src( $image->ID, 400 );
-            //parse URL to ensure having only relative links
-            $img_url = parse_url($img[0]);
+            $count = 0;
+            foreach ( $images as $id => $image ) {
+                $img = wp_get_attachment_image_src( $image->ID, 400 );
+                //parse URL to ensure having only relative links
+                $img_url = parse_url($img[0]);
 ?>
-            <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
-                <img class="img" src="<?php echo $img_url['path'] ?>" />
+                <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
+                    <img class="img" src="<?php echo $img_url['path'] ?>" />
 <?php
-                if ( !empty( $image -> post_content ) ) {
- ?>
-                <div class="outer-carousel-control-container">
+                    if ( !empty( $image -> post_content ) ) {
+?>
                     <div class="container">
-                        <div class="carousel-caption img-rounded ">
-
-                            <?php echo $image -> post_content ?>
-
-
-                        </div>
+                        <div class="carousel-caption img-rounded "><?php echo $image -> post_content ?></div>
                     </div>
+<?php
+                    } // !empty( $image  -> post_content )
+?>
                 </div>
 <?php
-                } // !empty( $image  -> post_content )
+            } // foreach
 ?>
             </div>
-<?php
-        } // foreach
-?>
+
+            <!-- Carousel nav -->
+            <a class="left carousel-control" href="#groupCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a class="right carousel-control" href="#groupCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
         </div>
-
-
     </div>
     <!-- // IMAGE Carousel -->
 <?php
 
     }  else {
 ?>
-    <!-- IMAGE Carousel -->
-    <div id="groupCarousel" class="carousel slide no-images">
-        <div class="outer-carousel-control-container">
-            <div class="carousel-inner">
-                <div class="no-carousel-images">
-                    <div class="container"><?php _e('Please add images using the mediamanager for this page in the Wordpress Admin', 'bidxtheme') ?></div>
-                </div>
-            </div>
-        </div>
+<div class="container">
+    <div class="alert alert-danger">
+        <?php _e('Please add images using the mediamanager for this page in the Wordpress Admin', 'bidxtheme') ?>
     </div>
-    <!-- // IMAGE Carousel -->
+</div>
 <?php
     }
 ?>

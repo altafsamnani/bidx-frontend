@@ -15,8 +15,8 @@ class account {
      * Also registers the scripts for register.
      */
 
-    static $deps = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder','bidx-location', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                        'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder','bidx-location', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                        'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
 
     function __construct() {

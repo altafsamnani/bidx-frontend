@@ -1,78 +1,82 @@
 <?php
 
-    // check if span is empty, then revert to default 6
-    //
-    $span = !empty( $this->span ) ? $this -> span : 6;
-
     // check if user is logged in
     //
     $authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
-    $maxNewsItems = $authenticated ? 4 : 3;
+    $newsitems = $authenticated ? 4 : 3;
 
-    $args = array(
-      'post_type'       => 'post'
-    , 'post_status'     => 'publish'
-    , 'posts_per_page'  => $maxNewsItems
-    );
+    $args=array(
+      'post_type' => 'post',
+      'post_status' => 'publish',
+      'posts_per_page' => $newsitems
+      );
     $my_query = null;
-    $my_query = new WP_Query( $args );
+    $my_query = new WP_Query($args);
 
-
-    if ( $my_query -> have_posts() ) {
-
+    if( $my_query->have_posts() ) {
+            if ( $authenticated ) {
+?>
+                <div class="row">
+<?php
+            }
+?>
+            <ul class="media-list">
+<?php
         $index = 0;
-
-        // interate through post
-        //
-        while ( $my_query -> have_posts() ) {
-
-            // if max newsitems has been reached, break the iteration
-            //
-            if ( $index == $maxNewsItems ) {
+        while ( $my_query->have_posts() ) {
+            if ( $index == $newsitems) {
                 break;
             }
-            // transfer the postmetadata to this variable
-            //
-            $my_query -> the_post();
+            $my_query->the_post();
+            $oddeven = ( $index % 2 == 0) ? 'odd' : 'even' ;
+            if ( $authenticated ) {
 ?>
-            <div class="span<?php echo $span ?> clearfix">
-                <a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+                <div class="col-sm-6 <?php echo $oddeven; ?>">
 <?php
-                if ( has_post_thumbnail() ) {
-                    $size = array( 100, 100 );
-                    $atts = array(
-                        'data-src'  => 'holder.js/50x50/social/auto/text:News'
-                    ,   'class'     => 'media-object img-circle pull-left'
-                    );
-                    the_post_thumbnail( $size, $atts );
-                } else {
+            }
 ?>
-                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" class="img-circle pull-left">
+                    <li class="media">
+                        <a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
 <?php
-                }
+                        if ( has_post_thumbnail() ) {
+                            $size = array(100,100);
+                            $atts = array('data-src' => 'holder.js/50x50/social/auto/text:News',
+                                          'class' => 'media-object img-circle pull-left');
+                            the_post_thumbnail($size, $atts);
+                        } else {
 ?>
-                </a>
+                            <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-news.png" alt="" class="img-circle pull-left">
+<?php
+                        }
+?>
+                        </a>
 
-                <div>
-                    <div><a href="<?php the_permalink() ?>"><strong><?php the_title(); ?></strong></a></div>
-                    <div><?php the_date( 'd M Y' ) ?></div>
+                        <div class="media-body">
+                            <div><a href="<?php the_permalink() ?>"><strong><?php the_title(); ?></strong></a></div>
+                            <div><?php the_date( 'd M Y' ) ?></div>
 <?php
-                    if ( $authenticated ) {
-                        echo ucfirst( strtolower( substr( get_the_excerpt(),0,65 ) ) ) . '...';
-                    }
+                            if ( $authenticated ) {
+                                echo ucfirst( strtolower( substr( get_the_excerpt(),0,65 ) ) ) . '...';
+                            }
+?>
+                        </div>
+                    </li>
+<?php
+            if ( $authenticated ) {
 ?>
                 </div>
-            </div>
 <?php
+            }
         }
-        $index++;
-
-    } else {
-?>
-        <div class="span12">
-            <?php _e( "There is currently no news & events", 'bidxplugin' ); ?>
-        </div>
-<?php
+         $index++;
     }
     wp_reset_query();
+?>
+            </ul>
+<?php
+            if ( $authenticated ) {
+?>
+        </div>
+<?php
+            }
 ?>
