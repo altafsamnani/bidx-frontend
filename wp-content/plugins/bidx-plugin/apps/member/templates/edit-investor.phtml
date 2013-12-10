@@ -33,7 +33,7 @@
             <div class="panel-group" id="investerAccordion">
 
                 <!-- generalInformation -->
-                <div class="panel panel-default">
+                <div class="panel panel-default panel-open">
 
                     <div class="panel-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#investerAccordion" href="#generalInformation">
@@ -370,20 +370,27 @@
                             <div class="referencesContainer"></div>
 
                         </div>
-
-                        <div class="well attachmentsControl">
-                            <h4><?php _e('Documents','bidxplugin'); ?></h4>
-
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#investerAccordion" href="#documents">
+                           <span class="fui-arrow-right accordion-state-icon"></span>
+                           <?php _e('Documents','bidxplugin'); ?>
+                        </a>
+                    </div>
+                    <div id="documents" class="panel-collapse collapse">
+                        <div class="panel-body">
                             <div class="attachmentsContainer"></div>
 
-                            <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
+                            <button data-toggle="modal" data-target="#addDocs" class="btn btn-primary"><?php _e('Add documents','bidxplugin');?></button>
 
-                            <div class="addAttachmentsModal modal hide fade">
+                            <div class="addAttachmentsModal modal fade" id="addDocs" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h3><?php _e('Check the files you want to attach to your member profile', 'bidxplugin' ); ?></h3>
+                                            <h3><?php _e('Check the files you want to attach to your investor profile', 'bidxplugin' ); ?></h3>
                                         </div>
                                         <div class="modal-body">
 <?php
@@ -393,15 +400,19 @@
 ?>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                            <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                            <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file', 'bidxplugin' ); ?></button>
+                                            <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- \\ accordion body -->
+
+
+
+
                         </div>
                     </div>
+
                 </div>
 
                 <!-- \\ accordion -->

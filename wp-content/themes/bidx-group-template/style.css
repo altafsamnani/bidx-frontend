@@ -1330,7 +1330,7 @@ form .row .input-prepend {
 
 
 
-    .bidx-tagsinput-container {
+    .bidx-tagsinput-container {/*
         border:                     2px solid #bdc3c7;
         color:                      #34495e;
         background-color:           #fff;
@@ -1365,7 +1365,7 @@ form .row .input-prepend {
         -o-transition: border .25s linear, color .25s linear;
         transition: border .25s linear, color .25s linear;
         -webkit-backface-visibility: hidden;
-    }
+    */}
     .input-prepend .bidx-tagsinput-container {
         -webkit-border-radius: 0 6px 6px 0;
         -moz-border-radius: 0 6px 6px 0;

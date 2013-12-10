@@ -942,62 +942,65 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </table>
 
         <!-- Attachment -->
-        <div class="attachmentItem col-sm-4 well well-white">
-            <div class="row">
-                <div class="col-sm-4">
-                    <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
+        <div class="attachmentItem col-sm-4">
+            <div class="well">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
+                    </div>
+                    <div class="col-sm-7">
+                        <h3 class="documentName"></h3>
+                        <p class="createdDateTime"></p>
+                        <p class="purpose"></p>
+                        <p class="documentType"></p>
+                    </div>
+                    <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e( 'Remove document from this business summary', 'bidxplugin' ); ?></a>
                 </div>
-                <div class="col-sm-7">
-                    <h3 class="documentName"></h3>
-                    <p class="createdDateTime"></p>
-                    <p class="purpose"></p>
-                    <p class="documentType"></p>
-                </div>
-                <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e( 'Remove document from this business summary', 'bidxplugin' ); ?></a>
             </div>
         </div>
 
         <!-- Management Team Item -->
-        <div class="managementTeamItem col-sm-6 well well-white">
+        <div class="managementTeamItem col-sm-6">
+            <div class="well">
+                <!-- First Name -->
+                <div class="form-group col-sm-12">
+                    <label><?php _e('First name','bidxplugin'); ?></label>
+                    <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
+                </div>
 
-            <!-- First Name -->
-            <div class="form-group col-sm-12">
-                <label><?php _e('First name','bidxplugin'); ?></label>
-                <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
+                <!-- Last Name -->
+                <div class="form-group col-sm-12">
+                    <label><?php _e('Last name','bidxplugin'); ?></label>
+                    <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
+                </div>
+
+                <!-- Role -->
+                <div class="form-group col-sm-12">
+                    <label><?php _e('Role of partner in this business','bidxplugin'); ?></label>
+                    <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
+                </div>
+
+                <!-- Expertise -->
+                <div class="form-group col-sm-12">
+                    <label><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
+                    <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
+                </div>
+
+                <!-- LinkedIn -->
+                <div class="form-group col-sm-12">
+                    <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
+                    <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                </div>
+
+                <!-- Profile picture -->
+                <div class="profilePictureControl form-group col-sm-12">
+                    <label><?php _e('Picture','bidxplugin'); ?></label>
+                    <div class="profilePictureContainer"></div>
+                    <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Change profile picture', 'bidxplugin')?></a>
+                </div>
+
+                <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this partner','bidxplugin'); ?></a>
             </div>
-
-            <!-- Last Name -->
-            <div class="form-group col-sm-12">
-                <label><?php _e('Last name','bidxplugin'); ?></label>
-                <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
-            </div>
-
-            <!-- Role -->
-            <div class="form-group col-sm-12">
-                <label><?php _e('Role of partner in this business','bidxplugin'); ?></label>
-                <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
-            </div>
-
-            <!-- Expertise -->
-            <div class="form-group col-sm-12">
-                <label><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
-                <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
-            </div>
-
-            <!-- LinkedIn -->
-            <div class="form-group col-sm-12">
-                <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
-                <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
-            </div>
-
-            <!-- Profile picture -->
-            <div class="profilePictureControl form-group col-sm-12">
-                <label><?php _e('Picture','bidxplugin'); ?></label>
-                <div class="profilePictureContainer"></div>
-                <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Change profile picture', 'bidxplugin')?></a>
-            </div>
-
-            <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e('Remove this partner','bidxplugin'); ?></a>
         </div>
     </div>
 
