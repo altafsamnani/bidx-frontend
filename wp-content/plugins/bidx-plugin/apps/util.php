@@ -50,7 +50,7 @@ if ( !defined('BIDX_VERSION_NUM') ) {
 }
 /** OpenId Bidx URL **/
 if ( !defined('BIDX_OPENID_URL') ) {
-	define( 'BIDX_OPENID_URL', 'http://test.bidx.net/api/v1/openid/sso' );
+	define( 'BIDX_OPENID_URL', '/api/v1/openid/sso' );
     //define('BIDX_OPENID_URL','http://bas.bidx.net:8080/app/api/v1/openid/sso');
 }
 
