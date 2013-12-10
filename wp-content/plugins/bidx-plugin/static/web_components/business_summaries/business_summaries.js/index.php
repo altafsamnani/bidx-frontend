@@ -113,7 +113,7 @@ bidx.widgets = {
                         // Add the result to the string
                         companyName = getValue( entity, 'company.name' );
                         displayCompany = (companyName ) ? companyName + '-' : "";
-                        result  += '<option value="'+ getValue( entity, 'links.view' ) +'">'+ displayCompany + getValue( entity, 'name' ) +'</option>';
+                        result  += '<option value="'+ getValue( entity, 'bidxMeta.bidxEntityId' ) +'">'+ displayCompany + getValue( entity, 'name' ) +'</option>';
                     }
                 } // for loop
 
