@@ -77,11 +77,14 @@ bidx.widgets = {
         // Response
         summaryResponse: function( response )
         {
-            var data = response.data || {};
-            var hasSummaries;
-            var result;
-            var entity;
-            var i, iLen;
+            var data = response.data || {}
+            ,   hasSummaries
+            ,   result
+            ,   entity
+            ,   i
+            ,   iLen
+            ,   companyName
+            ,   displayCompany;
 
             // If there are entities available go ahead
             if ( data.entities )
@@ -108,7 +111,9 @@ bidx.widgets = {
                         hasSummaries = true;
 
                         // Add the result to the string
-                        result  += '<option value="'+ getValue( entity, 'links.view' ) +'">'+ getValue( entity, 'company.name' ) +' - '+ getValue( entity, 'name' ) +'</option>';
+                        companyName = getValue( entity, 'company.name' );
+                        displayCompany = (companyName ) ? companyName + '-' : "";
+                        result  += '<option value="'+ getValue( entity, 'links.view' ) +'">'+ displayCompany + getValue( entity, 'name' ) +'</option>';
                     }
                 } // for loop
 
