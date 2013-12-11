@@ -242,7 +242,7 @@
         ,   progress: function (e, data)
             {
                 var progress    = parseInt(data.loaded / data.total * 100, 10)
-                ,   $progress   = data.context.find( ".progress .bar" )
+                ,   $progress   = data.context.find( ".progress-bar" )
                 ;
 
                 $progress.css( "width", progress + "%" );

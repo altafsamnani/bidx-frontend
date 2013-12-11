@@ -31,10 +31,16 @@
                 <input type="file" class="fileUpload" name="fileContent" />
             </span>
         </div>
-
-        <table class="fileList table table-striped">
-            <tbody class="files"></tbody>
-        </table>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong class="panel-title"><?php _e( 'Media list', 'bidxplugin' ); ?></strong>
+            </div>
+            <div class="panel-body table-responsive">
+                <table class="fileList table table-striped">
+                    <tbody class="files"></tbody>
+                </table>
+            </div>
+        </div>
 
     </div>
 
@@ -44,8 +50,8 @@
         <form id="frmeditMedia">
 
             <div class="col-sm-8">
-                <fieldset class="well">
-                    <legend><?php _e( 'Document', 'bidxplugin' ); ?></legend>
+                <div class="well">
+                    <h4><?php _e( 'Document', 'bidxplugin' ); ?></h4>
 
                     <div class="form-group">
                         <label><?php _e('Purpose','bidxplugin'); ?></label>
@@ -60,12 +66,12 @@
                     <a href="#" class="btn btn-primary btnSave"></a>
                     <a href="#media/list" class="btn btn-link btnCancel"></a>
 
-                </fieldset>
+                </div>
             </div>
 
             <div class="col-sm-4">
-                <fieldset class="well fileDetails">
-                    <legend><?php _e( 'Details', 'bidxplugin' ); ?></legend>
+                <div class="well fileDetails">
+                    <h4><?php _e( 'Details', 'bidxplugin' ); ?></h4>
 
                     <dl>
                         <dt><?php _e( 'Created on', 'bidxplugin' ); ?></dt>
@@ -80,7 +86,7 @@
 
                     <a href="#" target="_blank" class="btn btn-link btnDownload"><?php _e( 'Download', 'bidxplugin' ); ?></a>
                     <a href="#" class="btn btn-danger btnDelete"><?php _e( 'Delete permanently', 'bidxplugin' ); ?></a>
-                </fieldset>
+                </div>
             </div>
         </form>
     </div>
@@ -108,7 +114,7 @@
 
                     <div class="uploading">
                         <div class="progress progress-striped active">
-                            <div class="bar" style="width: 0%;"></div>
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                         </div>
                     </div>
                 </td>
@@ -121,7 +127,7 @@
                 </td>
                 <td>
                     <div class="done">
-                        <a class="btn btn-warning btnEdit" href="#">
+                        <a class="btn btn-info btnEdit pull-right" href="#">
                             <i class="fui-new"></i>
                             <span><?php _e( 'Edit', 'bidxplugin' ); ?></span>
                         </a>
