@@ -2,7 +2,7 @@
 
 $businessSummary    = $this->data;
 
-$progress           = trim ($this->exst($businessSummary->rating->Completeness)) . '%';
+$progress           = trim ($this->exst($businessSummary->rating->Completeness)) . '100%';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     ? $businessSummary->bidxMeta
@@ -36,7 +36,7 @@ $attachmentItem = <<<EOT
             <div class="col-sm-4">
                 <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-8">
                 <h3 class="documentName">{{documentName}}</h3>
                 <p class="purpose">{{purpose}}</p>
                 <p class="documentType">{{documentType}}</p>
@@ -78,14 +78,16 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             <div class="col-sm-4 completion">
                 <h2><?php _e('Business completion', 'bidxplugin')?></h2>
-                <div class="progress">
-                    <div style="width:<?php echo $progress ?>" class="bar"><?php echo $progress ?> <?php _e('completed', 'bidxplugin')?></div>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-success text-center" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $progress ?>">
+                        <?php echo $progress ?> <?php _e('completed', 'bidxplugin')?>
+                    </div>
                 </div>
             </div>
 
 
             <div class="col-sm-4 editControlsContainer">
-                <div class="editControls btn-group pull-right">
+                <div class="editControls pull-right">
 
                     <!-- SHOW -->
                     <div class="view viewShow">
@@ -125,7 +127,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
                         <a class="btn btn-primary disabled bidxAccessRequestPending <?php echo $accessRequestProgress; ?>" href="#"><?php echo _e( 'Access request pending', 'bidxplugin' ); ?></a>
                         <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
-                        <a class="btn btn-primary disabled <?php echo $accessGranted; ?>" style="background-color: #468847;" href="#"><?php echo _e( 'Full Access granted', 'bidxplugin' ); ?></a>
+                        <a class="btn btn-primary disabled <?php echo $accessGranted; ?>" href="#"><?php echo _e( 'Full Access granted', 'bidxplugin' ); ?></a>
 
 <?php
                     }
@@ -146,7 +148,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     </div>
 
                     <!-- EDIT, conditionally filled by the app -->
-                    <div class="view viewEdit"></div>
+                    <div class="view viewEdit btn-group"></div>
 
                     <!-- ERROR, used as a placeholder for showing errors -->
                     <div class="view viewError"></div>
@@ -159,7 +161,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 
         <!-- Accordion -->
-        <div class="panel-group" id="businessSummaryAccordion">
+        <div id="businessSummaryAccordion">
 
             <!-- General Overview -->
             <div class="panel panel-default panel-open">
@@ -206,8 +208,13 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                         <!-- LOAD -->
                         <div class="view viewLoad alert alert-info text-center">
-                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                                </div>
+                            </div>
                         </div>
+
 
                         <!-- ERROR -->
                         <div class="view viewError alert alert-warning">
@@ -288,11 +295,15 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 </div>
                             </form>
                         </div><!-- /EDIT -->
-                        <div class="accordion-controls-bottom">
-                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('About the business','bidxplugin')?> <span class="fui-arrow-right"></span></a>
-                        </div>
 
                     </div><!-- /panel-body -->
+                    <div class="panel-footer">
+                        <div class="accordion-controls-bottom">
+                            <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span><?php _e('Documents', 'bidxplugin')?></a>
+
+                            <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('About the business','bidxplugin')?> <span class="fui-arrow-right"></span></a>
+                        </div>
+                    </div>
                 </div>
             </div><!-- /General Overview -->
 
@@ -345,7 +356,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                         <!-- LOAD -->
                         <div class="view viewLoad alert alert-info text-center">
-                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- ERROR -->
@@ -431,12 +446,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div><!-- /EDIT -->
 
 
+
+                    </div><!-- /panel-body -->
+                    <div class="panel-footer">
                         <div class="accordion-controls-bottom">
                             <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('General Overview', 'bidxplugin')?></a>
                             <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('About you &amp; your team', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
                         </div>
-
-                    </div><!-- /panel-body -->
+                    </div>
                 </div>
             </div><!-- /About the business -->
 
@@ -491,7 +508,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                         <!-- LOAD -->
                         <div class="view viewLoad alert alert-info text-center">
-                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- ERROR -->
@@ -550,12 +571,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             </form>
                         </div><!-- /EDIT -->
 
+
+                    </div><!-- /Accordion inner -->
+                    <div class="panel-footer">
                         <div class="accordion-controls-bottom">
                             <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('About the business', 'bidxplugin')?></a>
                             <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Financial Details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
                         </div>
-
-                    </div><!-- /Accordion inner -->
+                    </div>
                 </div>
             </div><!-- /About you & your team -->
 
@@ -581,7 +604,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                             <!-- LOAD -->
                             <div class="view viewLoad alert alert-info text-center">
-                                <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- EDIT -->
@@ -640,12 +667,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <p class="errorMsg"></p>
                             </div>
 
-                            <div class="accordion-controls-bottom">
-                                <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('About you &amp; your team', 'bidxplugin')?></a>
-                                <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Company details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
-                            </div>
                         </form>
                     </div><!-- /panel-body -->
+                    <div class="panel-footer">
+                        <div class="accordion-controls-bottom">
+                            <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('About you &amp; your team', 'bidxplugin')?></a>
+                            <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Company details', 'bidxplugin')?> <span class="fui-arrow-right"></span></a>
+                        </div>
+                    </div>
                 </div>
             </div><!-- /Financial details -->
 
@@ -737,7 +766,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                         <!-- LOAD -->
                         <div class="view viewLoad alert alert-info text-center">
-                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- ERROR -->
@@ -780,7 +813,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                         </tbody>
                                     </table>
 
-                                    <a href="#addNewCompany" class="btn btn-default"><?php _e('Or add a new company', 'bidxplugin')?></a>
+                                    <a href="#addNewCompany" class="btn btn-primary"><?php _e('Or add a new company', 'bidxplugin')?></a>
                                 </div>
                             </form>
 
@@ -792,12 +825,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <a href="#cancelAddCompany" class="btn btn-default"><?php _e('Cancel', 'bidxplugin')?></a>
                             </div>
                         </div><!-- /Edit -->
+
+                    </div><!-- /Accordion inner -->
+                    <div class="panel-footer">
                         <div class="accordion-controls-bottom">
                             <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
                             <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Documents', 'bidxplugin')?> <span class="fui-arrow-right"></span> </a>
                         </div>
-
-                    </div><!-- /Accordion inner -->
+                    </div>
                 </div>
             </div><!-- /Company details -->
 
@@ -861,7 +896,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                         <!-- LOAD -->
                         <div class="view viewLoad alert alert-info text-center">
-                            <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <?php _e('Retrieving business summary information...','bidxplugin'); ?>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- ERROR -->
@@ -872,18 +911,18 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         <!-- EDIT -->
                         <div class="view viewEdit">
 
-                            <div class="attachmentContainer"></div>
-
                             <div class="alert alert-info">
                                 <?php _e('Upload your full plans or other supporting documents or images here','bidxplugin');?>
                             </div>
+
+                            <div class="attachmentContainer"></div>
                             <div>
                                 <h2>Templates to download</h2>
                                 <div>
                                     <?php _e('Download the templates on the link below to complete your full business and financial plan. Once you fill them in you can upload them to your business proposal.', 'bidxplugin')?>
                                 </div>
                                 <p>
-                                    <a href="/Download%20business%20plan%20templates/" target="_blank">
+                                    <a href="/download-financial-templates/">
                                         <?php _e('Open templates page', 'bidxplugin' ); ?>
                                     </a>
                                 </p>
@@ -911,12 +950,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 </div>
                             </div>
                         </div>
+
+                    </div><!-- /panel-body -->
+                    <div class="panel-footer">
                         <div class="accordion-controls-bottom">
                             <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fui-arrow-left"></span> <?php _e('Company Details', 'bidxplugin')?></a>
                             <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('General Overview', 'bidxplugin')?> <span class="fui-arrow-right"></span> </a>
                         </div>
-
-                    </div><!-- /panel-body -->
+                    </div>
                 </div>
 
             </div><!-- /Documents -->
@@ -948,13 +989,15 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <div class="col-sm-4">
                         <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-8">
                         <h3 class="documentName"></h3>
                         <p class="createdDateTime"></p>
                         <p class="purpose"></p>
                         <p class="documentType"></p>
                     </div>
-                    <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e( 'Remove document from this business summary', 'bidxplugin' ); ?></a>
+                    <div class="col-sm-12">
+                        <a href="#removeItem" class="btn btn-danger btn-mini btn-block"><?php _e( 'Remove document from this business summary', 'bidxplugin' ); ?></a>
+                    </div>
                 </div>
             </div>
         </div>
