@@ -80,7 +80,7 @@ if ($entrepreneurDetails &&
                         __('Outcome of business','bidxplugin') => 'businessOutcome',
                         __('Company website','bidxplugin') => 'webSite'
                     );
-                    $previousBusinessHtml = $this->addTableRows ($header, $previousBusiness, 'table table-bordered', '', array('webSite' => 'hidden-phone'), array( 'businessOutcome' ));
+                    $previousBusinessHtml = $this->addTableRows ($header, $previousBusiness, 'table table-bordered', '', array('webSite' => 'hidden-xs'), array( 'businessOutcome' ));
                     $rowValues = array ( __('Previous Business(es)','bidxplugin') => $previousBusinessHtml);
                     echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
                     ?>

@@ -61,8 +61,8 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Entrepreneur</th>
-                                    <th class="hidden-phone">Country</th>
-                                    <th class="hidden-phone">Industry</th>
+                                    <th class="hidden-xs">Country</th>
+                                    <th class="hidden-xs">Industry</th>
                                 </tr>
                             </thead>
                             <tbody class="match investor-match">
@@ -89,11 +89,11 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Entrepreneur</th>
-                                    <th class="hidden-phone">Location</th>
-                                    <th class="hidden-phone">Industry</th>
-                                    <th class="hidden-phone">Your last visit</th>
-                                    <th class="hidden-phone">Request status</th>
-                                    <th class="hidden-phone">Changes since last visit?</th>
+                                    <th class="hidden-xs">Location</th>
+                                    <th class="hidden-xs">Industry</th>
+                                    <th class="hidden-xs">Your last visit</th>
+                                    <th class="hidden-xs">Request status</th>
+                                    <th class="hidden-xs">Changes since last visit?</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -116,20 +116,17 @@
                 </div>
                 <div id="investorDashboardAccordion-InvestmentPreferences" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <div class="btn-group control-buttons">
+                        <div class="hide-overflow">
+                            <div class="btn-group control-buttons pull-right">
 <?php
-                            // #msp: is it possible not to have an ID in the page?? what would the url be then..
-                            $id = $this->exst ( $this -> sessionData -> data -> id );
-                            $href = "/member#editInvestor/" . $id . "/" . http_build_query( array( "success"=> "/investor-dashboard/#dashboard/investor", "cancel"=> "/investor-dashboard/#dashboard/investor" ) );
+                                // #msp: is it possible not to have an ID in the page?? what would the url be then..
+                                $id = $this->exst ( $this -> sessionData -> data -> id );
+                                $href = "/member#editInvestor/" . $id . "/" . http_build_query( array( "success"=> "/investor-dashboard/#dashboard/investor", "cancel"=> "/investor-dashboard/#dashboard/investor" ) );
 ?>
-                            <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
-                        </div>
-                        <p></p>
-                        <div class="preference investor-preference ">
-                            <div class="pull-left">
-                                <?php //_e ('Loading...', 'bidxplugin') ?>
+                                <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
                             </div>
                         </div>
+                        <div class="preference investor-preference"></div>
                     </div>
                 </div>
             </div>
@@ -150,21 +147,21 @@
     <td>
         <span class="placeholder name">%name%</span>
     </td>
-    <td class="hidden-phone">
+    <td class="hidden-xs">
         <span class="placeholder countryOperation">%countryOperation%</span>
     </td>
-    <td class="hidden-phone">
+    <td class="hidden-xs">
         <span class="placeholder industry">%industry%</span>
     </td>
-    <td class="hidden-phone">
+    <td class="hidden-xs">
         <span class="placeholder bidxCreationDateTime">%bidxCreationDateTime%</span>
     </td>
-    <td class="hidden-phone">
+    <td class="hidden-xs">
         <a  data-toggle="collapse" data-target="#status-%accordion-id%" class="btn-block">
         <span class="placeholder status">%status%</span>
         </a>
     </td>
-    <td class="hidden-phone">
+    <td class="hidden-xs">
         <span class="placeholder bidxCreationDateTime">%bidxCreationDateTime%</span>
     </td>
     <td>
@@ -334,10 +331,10 @@
    <td>
       <span class="placeholder creator"><a target = "_blank" href="/member/%creatorId%" >%creator%</a></span>
    </td>
-   <td class="hidden-phone">
+   <td class="hidden-xs">
       <span class="placeholder countrylabel_ss">%countrylabel_ss%</span>
    </td>
-   <td class="hidden-phone">
+   <td class="hidden-xs">
       <span class="placeholder industrylabel_ss">%industrylabel_ss%</span>
    </td>
 </tr>
