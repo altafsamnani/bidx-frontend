@@ -5,14 +5,14 @@
         <div class="col-sm-2 side-menu">
             <div class="well">
                 <div>
-                    <a class="btn btn-large btn-block btn-info bidx-theme-colour-one" href="#mail/compose"><?php _e('Compose','bidxplugin')?></a>
+                    <a class="btn btn-large btn-block btn-success" href="#mail/compose"><?php _e('Compose','bidxplugin')?></a>
                 </div>
                 <div class="bidx-menuitems">
                     <div class="bidx-mailFolders">
                         <!-- menu items will be created by app -->
                     </div>
                     <div class="bidx-contacts">
-                        <a class="btn btn-large btn-block" href="#mail/contacts">Contacts</a>
+                        <a class="btn btn-large btn-block btn-info" href="#mail/contacts">Contacts</a>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,6 @@
 
         <!-- mail stage: this is the ajax target -->
         <section class="col-sm-10 mail">
-            <div class="well clearfix">
                 <!-- ************************* utility views *********************************** -->
                 <div class="view viewLoad alert alert-info text-center">
                     <div class="progress progress-striped active">
@@ -53,7 +52,15 @@
                         </div>
                     </div> -->
 
-                    <div class="">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <strong class="title titleInbox"><?php _e('Inbox','bidxplugin')?></strong>
+                                <strong class="title titleSent"><?php _e('Sent','bidxplugin')?></strong>
+                                <strong class="title titleTrash"><?php _e('Trash','bidxplugin')?></strong>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
 
                         <!-- TOOLBAR -->
                         <nav class="mail-toolbar bidx-theme-colour-one">
@@ -98,87 +105,123 @@
 
                         </ul>
                         </form>
+                        </div>
                     </div>
                 </article>
 
                 <!-- read view -->
                 <article class="view viewRead">
-                      <!-- TOOLBAR -->
-                    <nav class="mail-toolbar bidx-theme-colour-one">
-                        <div class="btn-group">
-                            <a class="btn btn-small btn-primary btn-reply" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
-                            <a class="btn btn-small btn-primary btn-forward" href="#" data-href="/mail/#mail/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
-                            <a class="btn btn-small btn-primary bidx-btn-delete" href="#"><?php _e('Delete','bidxplugin')?></a>
-                            <div class="btn-group btngroup-move-to-folder">
-                                <a class="btn btn-small btn-primary btn-move-to-folder dropdown-toggle bidx-btn-move-to-folder" data-toggle="dropdown" href="#">
-                                    <?php _e('Move message to folder','bidxplugin')?>
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <!-- dropdown menu links -->
-                                </ul>
-                          </div>
-                        </div>
-                    </nav>
 
-                    <div class="mail-subject"></div>
-                    <div class="mail-message">
-                        <div class="alert alert-info text-center">
-                        <?php _e('Loading...','bidxplugin')?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title mail-subject">
+
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <!-- TOOLBAR -->
+                            <nav class="mail-toolbar bidx-theme-colour-one">
+                                <div class="btn-group">
+                                    <a class="btn btn-small btn-primary btn-reply" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
+                                    <a class="btn btn-small btn-primary btn-forward" href="#" data-href="/mail/#mail/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
+                                    <a class="btn btn-small btn-primary bidx-btn-delete" href="#"><?php _e('Delete','bidxplugin')?></a>
+                                    <div class="btn-group btngroup-move-to-folder">
+                                        <a class="btn btn-small btn-primary btn-move-to-folder dropdown-toggle bidx-btn-move-to-folder" data-toggle="dropdown" href="#">
+                                            <?php _e('Move message to folder','bidxplugin')?>
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <!-- dropdown menu links -->
+                                        </ul>
+                                  </div>
+                                </div>
+                            </nav>
+                            <div class="mail-message">
+                                <div class="alert alert-info text-center">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <?php _e('Loading...','bidxplugin')?>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-
-
                 </article>
 
                 <!-- Compose view -->
                 <article class="view viewCompose">
                     <form action="">
-
-                        <h2>
-                            <span class="title titleCompose"><?php _e('Create a new e-mail','bidxplugin')?></span>
-                            <span class="title titleReply"><?php _e('Reply to message','bidxplugin')?></span>
-                            <span class="title titleForward"><?php _e('Forward message','bidxplugin')?></span>
-                        </h2>
-
-                        <div class="form-group">
-                            <label><?php _e('Recipient','bidxplugin'); ?></label>
-                            <select name="contacts" multiple class="hide" data-placeholder="<?php _e( 'Select a recipient' ); ?>"></select>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <strong class="title titleCompose"><?php _e('Create a new e-mail','bidxplugin')?></strong>
+                                <strong class="title titleReply"><?php _e('Reply to message','bidxplugin')?></strong>
+                                <strong class="title titleForward"><?php _e('Forward message','bidxplugin')?></strong>
+                            </h3>
                         </div>
-                        <div class="form-group">
-                            <label><?php _e('Subject','bidxplugin'); ?></label>
-                            <input type="text" class="form-control" name="subject" placeholder="<?php _e('Your subject goes here','bidxplugin')?>">
-                        </div>
-                        <div class="form-group">
-                            <label><?php _e('Message','bidxplugin'); ?></label>
-                            <textarea name="content" class="form-control" placeholder="<?php _e('Please type your message here','bidxplugin')?>"></textarea>
-                        </div>
+                        <div class="panel-body">
 
-                        <div class="pull-left">
-                            <button type="submit" class="btn bidx-default-button compose-submit"><?php _e('Send message','bidxplugin')?></button>
+                            <div class="form-group">
+                                <label><?php _e('Recipient','bidxplugin'); ?></label>
+                                <select name="contacts" multiple class="hide" data-placeholder="<?php _e( 'Select a recipient' ); ?>"></select>
+                            </div>
+                            <div class="form-group">
+                                <label><?php _e('Subject','bidxplugin'); ?></label>
+                                <input type="text" class="form-control" name="subject" placeholder="<?php _e('Your subject goes here','bidxplugin')?>">
+                            </div>
+                            <div class="form-group">
+                                <label><?php _e('Message','bidxplugin'); ?></label>
+                                <textarea name="content" class="form-control" placeholder="<?php _e('Please type your message here','bidxplugin')?>"></textarea>
+                            </div>
+
+                            <div class="pull-left">
+                                <button type="submit" class="btn bidx-default-button compose-submit"><?php _e('Send message','bidxplugin')?></button>
+
+                            </div>
+                            <div class="pull-right">
+                                <a href="/mail/#mail/discardConfirm" class="btn bidx-default-button compose-cancel">
+                                    <?php _e('Discard message')?>
+                                </a>
+
+                            </div>
 
                         </div>
-                        <div class="pull-right">
-                            <a href="/mail/#mail/discardConfirm" class="btn bidx-default-button compose-cancel">
-                                <?php _e('Discard message')?>
-                            </a>
-
-                        </div>
-
+                    </div>
                     </form>
                 </article>
 
                   <!-- contacts view -->
                 <article class="view viewContacts">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><?php _e('Contacts','bidxplugin')?></h3>
+                        </div>
+                        <div class="panel-body">
 
                     <div class="toast-wrapper"></div>
-
-                    <h3>Contacts </h3>
                     <!-- Accordion -->
-                    <div class="panel-group" id="contacts">
+                    <div id="contacts">
+                        <!-- ACTIVE REQUESTS -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <a class="accordion-toggle trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
+                                <a class="btn-block trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
+                                    <span class="fui-arrow-right accordion-state-icon"></span>
+                                    <?php _e('Active contact requests (0)')?>
+                                </a>
+                            </div>
+                            <div id="activeRequests" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <ul class="contact-request-list list-unstyled clearfix">
+                                    </ul>
+                                    <div class="text-center clearfix">
+                                        <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=active"><?php _e('Show more', 'bidxplugin')?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a class="btn-block trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
                                     <span class="fui-arrow-right accordion-state-icon"></span>
                                     <?php _e('Incoming contact requests (0)')?>
                                 </a>
@@ -187,7 +230,7 @@
                             <!-- RECEIVED CONTACT REQUESTS -->
                             <div id="incomingRequests" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <ul class="contact-request-list col-sm-6 list-unstyled clearfix">
+                                    <ul class="contact-request-list list-unstyled clearfix">
                                     </ul>
                                     <div class="text-center clearfix">
                                         <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=incoming"><?php _e('Show more', 'bidxplugin')?></a>
@@ -199,14 +242,14 @@
                         <!-- SEND REQUESTS -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <a class="accordion-toggle trigger-pending-contacts" data-toggle="collapse" data-parent="#contacts" href="#pendingRequests">
+                                <a class="btn-block trigger-pending-contacts" data-toggle="collapse" data-parent="#contacts" href="#pendingRequests">
                                     <span class="fui-arrow-right accordion-state-icon"></span>
                                     <?php _e('Pending contact requests (0)')?>
                                 </a>
                             </div>
                             <div id="pendingRequests" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <ul class="contact-request-list col-sm-6 list-unstyled clearfix">
+                                    <ul class="contact-request-list list-unstyled clearfix">
                                     </ul>
                                     <div class="text-center clearfix">
                                         <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=pending"><?php _e('Show more', 'bidxplugin')?></a>
@@ -215,36 +258,18 @@
                             </div>
                         </div>
 
-                        <!-- ACTIVE REQUESTS -->
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a class="accordion-toggle trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
-                                    <span class="fui-arrow-right accordion-state-icon"></span>
-                                    <?php _e('Active contact requests (0)')?>
-                                </a>
-                            </div>
-                            <div id="activeRequests" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <ul class="contact-request-list list-unstyled col-sm-4 clearfix">
-                                    </ul>
-                                    <div class="text-center clearfix">
-                                        <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=active"><?php _e('Show more', 'bidxplugin')?></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- IGNORED REQUESTS -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <a class="accordion-toggle trigger-ignored-contacts" data-toggle="collapse" data-parent="#contacts" href="#ignoredRequests">
+                                <a class="btn-block trigger-ignored-contacts" data-toggle="collapse" data-parent="#contacts" href="#ignoredRequests">
                                     <span class="fui-arrow-right accordion-state-icon"></span>
                                     <?php _e('Ignored contact requests (0)')?>
                                 </a>
                             </div>
                             <div id="ignoredRequests" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <ul class="contact-request-list col-sm-4 list-unstyled clearfix">
+                                    <ul class="contact-request-list list-unstyled clearfix">
                                     </ul>
                                     <div class="text-center clearfix">
                                         <a class="btn bidx-default-button bidx-btn-showMore" href="showMore=ignored"><?php _e('Show more', 'bidxplugin')?></a>
@@ -253,6 +278,8 @@
                             </div>
                         </div>
                     </div> <!-- \\ END Accordion  -->
+                    </div>
+                    </div>
                 </article>
 
                 <!--  ************************** MODAL VIEWS ****************************************** -->
@@ -326,7 +353,6 @@
                         </div>
                     </div>
                 </article>
-            </div>
         </section>
 
     </div>

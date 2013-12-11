@@ -198,7 +198,7 @@
                     //
                     var button = $( "<a/>",
                     {
-                        "class":      "btn btn-large btn-block bidx-default-button"
+                        "class":      "btn btn-large btn-block btn-default"
                     ,   "href":       "#mail/mbx-" + el.name.toLowerCase()
                     } );
 
@@ -1200,12 +1200,27 @@
 
                     _showToolbarButtons( "list", buttons );
 
+                    //bidx.utils.log("state [", currentState,"]");
+                    _showState( currentState );
+
                     // show the listing
                     //
                     _showView( "list" );
                 }
             } );
 
+        }
+
+        // Show the current state's title ( Inbox | Sent | Trash )
+        //
+        function _showState ( state )
+        {
+            var $viewList = $element.find( ".viewList" );
+
+            if( state )
+            {
+                $viewList.find( ".title").hide().filter( bidx.utils.getViewName( state, "title" ) ).show();
+            }
         }
 
 
@@ -2567,7 +2582,6 @@
                     //
                     $contactsDropdown.val( recipientIds );
                     $contactsDropdown.bidx_chosen();
-                    ;
                 }
 
                 _showView( "compose", action );
