@@ -78,18 +78,20 @@
     <div id="accordionMember" class="panel-collapse collapse in">
         <div class="panel-body">
 
-            <?php if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) ) { ?>
-                <a class="btn btn-primary pull-right" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><?php _e('Edit','bidxplugin'); ?></a>
-            <?php } ?>
 
 
             <div class="row">
                 <div class="col-sm-3">
-                    <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+                    <img <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-sm-12"><h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4></div>
+                        <div class="col-sm-12">
+                            <?php if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) ) { ?>
+                                <a class="btn btn-primary pull-right" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><?php _e('Edit','bidxplugin'); ?></a>
+                            <?php } ?>
+                            <h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
