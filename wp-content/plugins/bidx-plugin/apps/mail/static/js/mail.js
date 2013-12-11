@@ -1369,7 +1369,7 @@
                 ,   addShowMoreButton:      showMore
                 ,   view:                   "Contacts"
                 ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
-                ,   cb:                     _getContactsCallback( key)
+                ,   cb:                     _getContactsCallback( key )
                 } );
             } );
         }
@@ -1521,7 +1521,7 @@
 
         }
 
-        // this function updates the count of contacts for a catergory (of contacts)
+        // this function updates the count of contacts for a category (of contacts)
         // category [incoming] and [pending] are treated differently with singular and plural forms
         //
         function _setContactsCount( view, category, count )
@@ -1549,7 +1549,7 @@
             //{
                 // replace placeholder in trigger element (hyperlink)
                 //
-                $trigger.i18nText( category + "Contact", appName ).append( " ( " + count + ") " );
+                $trigger.i18nText( category + "Contact", appName ).append( " <span class='badge pull-right'> " + count + " </span> " );
             //}
 
         }
