@@ -9,7 +9,7 @@
         </div>
 
 
-        <div class="panel-group" id="investorDashboardAccordion">
+        <div id="investorDashboardAccordion">
             <!-- Help -->
             <div class="view viewLoad alert alert-info text-center">
                 <div class="progress progress-striped active">
@@ -35,7 +35,7 @@
 
             <div class="panel panel-default <?php echo ($this->startingPage) ? 'panel-open': '';?>">
                 <div class="panel-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-Help"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
+                    <a class="btn-block" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-Help"><span class="fui-arrow-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
                 </div>
                 <div id="investorDashboardAccordion-Help" class="panel-collapse collapse <?php echo ($this->startingPage) ? 'in': '';?>">
                     <div class="panel-body">
@@ -51,7 +51,7 @@
 
             <div class="panel panel-default panel-open view viewMatch">
                 <div class="panel-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-RecommendedBusiness"><span class="fui-arrow-right accordion-state-icon"></span> Recommended business</a>
+                    <a class="btn-block" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-RecommendedBusiness"><span class="fui-arrow-right accordion-state-icon"></span> Recommended business</a>
                 </div>
                 <div id="investorDashboardAccordion-RecommendedBusiness" class="panel-collapse collapse in">
                     <div class="panel-body">
@@ -79,7 +79,7 @@
 
             <div class="panel panel-default view viewContact">
                 <div class="panel-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-BusinessesContacted"><span class="fui-arrow-right accordion-state-icon"></span> Businesses contacted</a>
+                    <a class="btn-block" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-BusinessesContacted"><span class="fui-arrow-right accordion-state-icon"></span> Businesses contacted</a>
                 </div>
                 <div id="investorDashboardAccordion-BusinessesContacted" class="panel-collapse collapse">
                     <div class="panel-body">
@@ -112,7 +112,7 @@
 
             <div class="panel panel-default view viewPreference">
                 <div class="panel-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-InvestmentPreferences"><span class="fui-arrow-right accordion-state-icon"></span> My investment preferences</a>
+                    <a class="btn-block" data-toggle="collapse" data-parent="#investorDashboardAccordion" href="#investorDashboardAccordion-InvestmentPreferences"><span class="fui-arrow-right accordion-state-icon"></span> My investment preferences</a>
                 </div>
                 <div id="investorDashboardAccordion-InvestmentPreferences" class="panel-collapse collapse">
                     <div class="panel-body">
@@ -143,7 +143,7 @@
 <!--
 <tr>
     <td>
-      <a data-toggle="collapse" data-target="#%accordion-id%" class="accordion-toggle">
+      <a data-toggle="collapse" data-target="#%accordion-id%" class="btn-block">
       <span class="placeholder name">%name%</span>
       </a>
    </td>
@@ -160,7 +160,7 @@
         <span class="placeholder bidxCreationDateTime">%bidxCreationDateTime%</span>
     </td>
     <td class="hidden-phone">
-        <a  data-toggle="collapse" data-target="#status-%accordion-id%" class="accordion-toggle">
+        <a  data-toggle="collapse" data-target="#status-%accordion-id%" class="btn-block">
         <span class="placeholder status">%status%</span>
         </a>
     </td>
@@ -327,7 +327,7 @@
     <!--
     <tr>
    <td>
-      <a data-toggle="collapse" data-target="#%accordion-id%" class="accordion-toggle">
+      <a data-toggle="collapse" data-target="#%accordion-id%" class="btn-block">
       <span class="placeholder name_s">%name_s%</span>
       </a>
    </td>
