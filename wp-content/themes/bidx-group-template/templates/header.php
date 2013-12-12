@@ -34,7 +34,7 @@
 				if( $authenticated )
 				{
 ?>
-				<div class="search pull-right">
+				<div class="search pull-right col-sm-3">
 			 		<?php get_template_part('templates/searchform'); ?>
 				</div>
 <?php
