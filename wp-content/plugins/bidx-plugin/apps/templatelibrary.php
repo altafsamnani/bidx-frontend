@@ -696,7 +696,7 @@ class TemplateLibrary
                     break;
                 case 'linkedin':
                     $scriptContent = '<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-<script type="IN/MemberProfile" data-id="' . $username . '" data-format="click" data-related="true"></script>';
+<script type="IN/MemberProfile" data-id="' . $username . '" data-format="click" data-related="true"></script><i class="fa fa-linkedin-square"></i>';
                     break;
 
                 case 'skype' :
@@ -709,6 +709,7 @@ class TemplateLibrary
                                     "participants": ["' . $username . '"]
                                   });
                                 </script>
+                                <i class="fa fa-skype"></i>
                               </div>';
                     break;
 
@@ -719,13 +720,13 @@ class TemplateLibrary
                     $fbUrl = 'http://www.facebook.com/' . $username;
 
 
-                    $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $fbUrl . '">Facebook</a>';
+                    $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $fbUrl . '"><i class="fa fa-facebook-square"></i></a>';
                     break;
 
                 case 'twitterprofile' :
                     $twitterUserName = str_replace ("#", "", $username);
                     $twitterUrl = 'https://twitter.com/' . $twitterUserName;
-                    $scriptContent = '<a title="View my Twitter Profile" target="_blank" class="bid-social twitter" href="' . $twitterUrl . '">Twitter</a>';
+                    $scriptContent = '<a title="View my Twitter Profile" target="_blank" class="bid-social twitter" href="' . $twitterUrl . '"><i class="fa fa-twitter-square"></i></a>';
                     break;
             }
         }

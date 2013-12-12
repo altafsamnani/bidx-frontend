@@ -123,7 +123,7 @@
                                 $id = $this->exst ( $this -> sessionData -> data -> id );
                                 $href = "/member#editInvestor/" . $id . "/" . http_build_query( array( "success"=> "/investor-dashboard/#dashboard/investor", "cancel"=> "/investor-dashboard/#dashboard/investor" ) );
 ?>
-                                <a class="btn btn-primary" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
+                                <a class="btn btn-primary" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                             </div>
                         </div>
                         <div class="preference investor-preference"></div>

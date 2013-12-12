@@ -546,9 +546,9 @@ Company: bidX;
             text-decoration:        none;
         }
         .iconbar > ul > li > a:hover,
-        .iconbar > ul > li > a:focus {
+        .iconbar > ul > li > a:focus {/*
             color:                  #1abc9c;
-        }
+        */}
 
         .iconbar-horizontal .iconbar-unread {
             right: 8px;
@@ -1058,11 +1058,11 @@ footer .page-footer .footer-bar {
 }
 
 .bid-social.twitter {
-    background: url("assets/img/flat-icons.png") no-repeat scroll -18px -16px transparent;
+    /*background: url("assets/img/flat-icons.png") no-repeat scroll -18px -16px transparent;*/
 }
 
 .bid-social.facebook {
-    background: url("assets/img/flat-icons.png") no-repeat scroll -112px -16px transparent;
+    /*background: url("assets/img/flat-icons.png") no-repeat scroll -112px -16px transparent;*/
 }
 
 .bid-social {
@@ -1070,7 +1070,7 @@ footer .page-footer .footer-bar {
     float: left;
     height: 32px;
     margin-right: 8px;
-    text-indent: -3333px;
+    /*text-indent: -3333px;*/
     width: 32px;
 }
 
@@ -1081,7 +1081,7 @@ footer .page-footer .footer-bar {
 }
 
 .bid-social.linkedin {
-    background: url("assets/img/flat-icons.png") no-repeat scroll -18px -62px transparent !important;
+    /*background: url("assets/img/flat-icons.png") no-repeat scroll -18px -62px transparent !important;*/
     height: 32px !important;
     width: 32px !important;
     text-indent: 0;
@@ -1092,7 +1092,7 @@ footer .page-footer .footer-bar {
 }
 
 .skypeclass p a {
-    background: url("assets/img/flat-icons.png") no-repeat scroll -158px -62px transparent !important;
+    /*background: url("assets/img/flat-icons.png") no-repeat scroll -158px -62px transparent !important;*/
     margin: 0;
     display: block !important;
     height: 32px !important;

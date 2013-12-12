@@ -32,7 +32,7 @@ if ($entrepreneurDetails &&
 
                 <div class="btn-group pull-right">
                     <?php if ($entrepreneurBidxMeta->bidxCanEdit) { ?>
-                        <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurBidxMeta->bidxOwnerId); ?>"><?php _e('Edit','bidxplugin'); ?></a>
+                        <a class="btn btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurBidxMeta->bidxOwnerId); ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 
                             <?php
                                 if ($entrepreneurBidxMeta->bidxEntityStatus == 'DRAFT') {
@@ -179,7 +179,7 @@ if ($entrepreneurDetails &&
         ?>
             <div class="add-company-container clearfix">
                 <div class="pull-right">
-                    <a href="/company/#createCompany" class="btn btn-primary"><?php _e('Add a company','bidxplugin'); ?></a>
+                    <a href="/company/#createCompany" class="btn btn-primary"><i class="fa fa-plus"></i> <?php _e('Add a company','bidxplugin'); ?></a>
                 </div>
             </div>
         <?php }
@@ -221,7 +221,7 @@ if ($entrepreneurDetails &&
                             <div class="accordion-inner">
                                 <div class="btn-group control-buttons">
                                 <?php if ($companyBidxMeta->bidxCanEdit) { ?>
-                                    <a class="btn btn-primary" href="/company/<?php echo $companyBidxMeta->bidxOwnerId; ?>/#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>">Edit</a>
+                                    <a class="btn btn-primary" href="/company/<?php echo $companyBidxMeta->bidxOwnerId; ?>/#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                                 <?php } ?>
                                 </div>
 

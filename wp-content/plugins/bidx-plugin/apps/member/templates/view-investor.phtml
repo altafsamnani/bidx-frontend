@@ -29,7 +29,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
                 if ($investorDetailsBidxMeta->bidxCanEdit) {
                     $href = "#editInvestor/" . $this -> exst( $investorDetailsBidxMeta->bidxOwnerId );
     ?>
-                    <a class="btn btn-primary pull-right" href="<?php echo $href; ?>"><?php _e('Edit','bidxplugin'); ?></a>
+                    <a class="btn btn-primary pull-right" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 
     <?php
                         if ($investorDetailsBidxMeta->bidxEntityStatus == 'DRAFT') {
