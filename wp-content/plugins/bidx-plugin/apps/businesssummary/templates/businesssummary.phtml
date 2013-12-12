@@ -258,8 +258,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <div class="form-group col-sm-6">
                                         <label><?php _e('Percentage equity your currently retain','bidxplugin'); ?></label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
                                             <span class="input-group-addon">%</span>
+                                            <input type="text" class="form-control" name="equityRetained" placeholder="<?php _e('Percentage','bidxplugin'); ?>">
                                         </div>
                                     </div>
 
@@ -267,8 +267,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <div class="form-group col-sm-6">
                                         <label><?php _e('Finance needed','bidxplugin'); ?></label>
                                         <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
                                             <input type="text" class="form-control" name="financingNeeded" placeholder="<?php _e('Please enter amount of finance needed','bidxplugin'); ?>">
-                                            <span class="input-group-addon">$</span>
                                         </div>
                                     </div>
                                 </div>
@@ -525,7 +525,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <!-- Personal Role -->
                                     <div class="form-group formfield col-sm-6">
                                         <label><?php _e('Role of entrepreneur in this business (max. 30 characters)','bidxplugin'); ?></label>
-                                        <input type="text" name="personalRole" class="form-control" placeholder="<?php _e('Please give role of entrepreneur in this business','bidxplugin'); ?>">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                            <input type="text" name="personalRole" class="form-control" placeholder="<?php _e('Please give role of entrepreneur in this business','bidxplugin'); ?>">
+                                        </div>
                                     </div>
 
                                     <!-- Personal Expertise -->
@@ -905,14 +908,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             </div>
 
                             <div class="attachmentContainer"></div>
-                            <div>
+                            <div class="alert alert-info">
                                 <h2>Templates to download</h2>
                                 <div>
                                     <?php _e('Download the templates on the link below to complete your full business and financial plan. Once you fill them in you can upload them to your business proposal.', 'bidxplugin')?>
                                 </div>
                                 <p>
-                                    <a href="/download-financial-templates/">
-                                        <?php _e('Open templates page', 'bidxplugin' ); ?>
+                                    <a class="btn btn-warning" href="/download-financial-templates/">
+                                        <?php _e('Go to templates page', 'bidxplugin' ); ?>
                                     </a>
                                 </p>
 
@@ -1007,7 +1010,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <!-- Role -->
                 <div class="form-group col-sm-12">
                     <label><?php _e('Role of partner in this business','bidxplugin'); ?></label>
-                    <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                        <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
+                    </div>
                 </div>
 
                 <!-- Expertise -->
@@ -1019,7 +1025,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <!-- LinkedIn -->
                 <div class="form-group col-sm-12">
                     <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
-                    <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
+                        <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                    </div>
                 </div>
 
                 <!-- Profile picture -->
