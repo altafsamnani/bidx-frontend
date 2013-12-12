@@ -17,25 +17,27 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
         }
 ?>
 <hr />
-<div class="sidebar-block">
-    <div class="row sidebar-block-heading">
-        <div class="col-sm-4"><img width="100" height="100" <?php echo $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded"></div>
-        <div class="col-sm-8 sidebar-block-intro">
+<ul class="media-list">
+    <li class="media">
+        <div class="pull-left"><img width="100" height="100" <?php echo $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded media-object"></div>
+        <div class="media-body">
             <h4 class="sidebar-block-title"><?php echo $groupInfo->groupName ?></h4>
             <p><?php echo $groupInfo->slogan ?></p>
         </div>
-    </div>
+    </li>
 
     <!-- Description -->
+    <br>
     <p class="sidebar-block-content"><?php echo $groupInfo->description;?></p>
-</div>
+</ul>
 <?php
     }
 
     if( $showGroup ) {
 ?>
 <hr />
-<div class="sidebar-block">
+
+<ul class="media-list">
     <!-- Joined Group -->
     <h2><?php _e('Joined groups','bidxplugin'); ?></h3>
 
@@ -50,21 +52,25 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
                 $groupDataSrc = true;
             }
 ?>
-    <div class="clearfix">
-        <div class="row sidebar-block-heading">
-            <div class="col-sm-4"><img width="100" height="100" <?php echo $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded"></div>
-            <div class="col-sm-8 sidebar-block-intro">
-                <h4 class="sidebar-block-title"><?php echo $groupValue->name?></h4>
-                <p><?php echo $groupValue->slogan?></p>
-            </div>
-
+    <li class="media">
+        <div class="pull-left"><img width="100" height="100" <?php echo $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded media-object"></div>
+        <div class="media-body">
+            <h4 class="sidebar-block-title"><?php echo $groupValue->name?></h4>
+            <p><?php echo $groupValue->slogan?></p>
         </div>
-        <div class="pull-right"><?php echo $joinLink ?></div>
-    </div>
+<?php
+        if ( !empty($joinLink) ) {
+?>
+        <div class="pull-right"><?php echo $joinLink ?> Join</div>
 <?php
         }
 ?>
-</div>
+    </li>
+<?php
+        }
+?>
+</ul>
+
 <?php
     }
 ?>
