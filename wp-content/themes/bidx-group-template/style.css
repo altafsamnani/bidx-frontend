@@ -574,29 +574,6 @@ Company: bidX;
             -webkit-font-smoothing: auto;
         }
 
-        .bidx-user {
-            background: url( assets/img/icons/icon-member.png ) no-repeat center center transparent;
-            height:                     17px;
-            width:                      34px;
-
-        }
-        .bidx-mail {
-            background: url( assets/img/icons/icon-mail.png ) no-repeat center center transparent;
-            height:                     17px;
-            width:                      34px;
-
-        }
-        .bidx-gear {
-            background: url( assets/img/icons/icon-gear.png ) no-repeat center center transparent;
-            height:                     17px;
-            width:                      34px;
-        }
-
-        .bidx-cmd {
-            background: url( assets/img/icons/icon-dashboard.png ) no-repeat center center transparent;
-            height:                     17px;
-            width:                      34px;
-        }
 /*
         .bidx-checkbox-unchecked {
             width: 20px;

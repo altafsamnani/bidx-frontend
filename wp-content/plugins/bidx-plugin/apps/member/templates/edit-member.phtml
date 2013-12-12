@@ -97,7 +97,11 @@
 
                                 <div class="form-group">
                                     <label><?php _e('Date of birth','bidxplugin'); ?></label>
-                                    <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('Please type your date of birth'); ?>">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" class="form-control" name="personalDetails.dateOfBirth" data-type="date" placeholder="<?php _e('Please type your date of birth'); ?>">
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -128,7 +132,7 @@
                                 <div class="form-group ">
                                     <label><?php _e('Email address','bidxplugin'); ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">E-mail icon</span>
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                         <input type="email" class="form-control" name="personalDetails.emailAddress" placeholder="<?php _e('Please enter your email address','bidxplugin'); ?>" />
                                     </div>
                                 </div>
@@ -139,7 +143,7 @@
                                 <div class="form-group" >
                                     <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">LinkedIn icon</span>
+                                        <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
                                         <input type="text" class="form-control" name="personalDetails.linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
                                     </div>
                                 </div>
@@ -152,7 +156,7 @@
                                 <div class="form-group">
                                     <label><?php _e('Skype','bidxplugin'); ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">Skype icon</span>
+                                        <span class="input-group-addon"><i class="fa fa-skype"></i></span>
                                         <input type="text" class="form-control" name="personalDetails.skype" placeholder="<?php _e('Please enter your Skype username','bidxplugin'); ?>" />
                                     </div>
                                 </div>
@@ -163,7 +167,7 @@
                                 <div class="form-group">
                                     <label><?php _e('Facebook profile','bidxplugin'); ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">Facebook icon</span>
+                                        <span class="input-group-addon"><i class="fa fa-facebook-square"></i></span>
                                         <input type="text" class="form-control" name="personalDetails.facebook" placeholder="<?php _e('Please enter you Facebook profile name','bidxplugin'); ?>" />
                                     </div>
                                 </div>
@@ -177,7 +181,7 @@
                                 <div class="form-group">
                                     <label><?php _e('Twitter','bidxplugin'); ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">@</span>
+                                        <span class="input-group-addon"><i class="fa fa-twitter-square"></i></span>
                                         <input type="text" class="form-control" name="personalDetails.twitter" placeholder="<?php _e('Please enter your Twitter name','bidxplugin'); ?>" />
                                     </div>
                                 </div>
@@ -299,7 +303,7 @@
                                 <div class="form-group">
                                     <label><?php _e('Landline','bidxplugin'); ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">Old telephone icon</span>
+                                        <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
                                         <input type="text" class="form-control" name="personalDetails.contactDetail[0].landLine" placeholder="<?php _e('Please enter your landline number','bidxplugin'); ?>" />
                                     </div>
                                 </div>
@@ -307,7 +311,7 @@
                                 <div class="form-group">
                                     <label><?php _e('Mobile','bidxplugin'); ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">Mobile icon</span>
+                                        <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
                                         <input type="text" class="form-control" name="personalDetails.contactDetail[0].mobile" placeholder="<?php _e('Please enter your mobile number','bidxplugin'); ?>" />
                                     </div>
                                 </div>
@@ -315,7 +319,7 @@
                                 <div class="form-group">
                                     <label><?php _e('Fax','bidxplugin'); ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">Fax icon</span>
+                                        <span class="input-group-addon"><i class="fa fa-file-text"></i></span>
                                         <input type="text" class="form-control" name="personalDetails.contactDetail[0].fax" placeholder="<?php _e('Please enter your fax number','bidxplugin'); ?>" />
                                     </div>
                                 </div>
