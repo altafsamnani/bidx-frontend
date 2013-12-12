@@ -162,13 +162,13 @@ Company: bidX;
         top:                        0;
         right:                      0;
     }
-    .btn .bidx-plus {
+    .btn .bidx-plus {/*
         background: url( assets/img/icons/icon-plus.png ) no-repeat top left transparent;
         height:                     19px;
         width:                      18px;
         top:                        2px;
         right:                      0;
-    }
+    */}
 
     .btn .bidx-plus-white-transparent {
         background: url( assets/img/icons/icon-plus-white-transparent.png ) no-repeat top left transparent;
