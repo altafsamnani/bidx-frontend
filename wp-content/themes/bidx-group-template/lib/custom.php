@@ -84,7 +84,7 @@ function bidx_get_status_msgs( ) {
         (!empty($_GET['eparam'])) ? $replaceString = base64_decode($_GET['eparam']) :'';
         $statusMsg = bidx_status_text ( $textId, $replaceString );
         $statusMessages = "<div class='container'><div class='alert alert-error'>
-                      <button data-dismiss='alert' class='close fui-cross' type='button'></button>
+                      <button data-dismiss='alert' class='close fa fa-times' type='button'></button>
                       {$statusMsg}
                     </div></div>";
        // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
@@ -97,7 +97,7 @@ function bidx_get_status_msgs( ) {
         (!empty($_GET['sparam'])) ? $replaceString = base64_decode($_GET['sparam']) :'';
         $statusMsg = bidx_status_text ( $textId, $replaceString );
         $statusMessages = "<div class='container'><div class='alert alert-success'>
-                      <button data-dismiss='alert' class='close fui-cross' type='button'></button>
+                      <button data-dismiss='alert' class='close fa fa-times' type='button'></button>
                       {$statusMsg}
                     </div></div>";
         // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
@@ -107,7 +107,7 @@ function bidx_get_status_msgs( ) {
     if (isset ($_GET['edmsg'])) {
 
         $statusMessages = "<div class='container'><div class='alert alert-error'>
-                      <button data-dismiss='alert' class='close fui-cross' type='button'></button>
+                      <button data-dismiss='alert' class='close fa fa-times' type='button'></button>
                       ".base64_decode($_GET['edmsg']).
                       "</div></div>";
 

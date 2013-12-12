@@ -214,7 +214,7 @@ filter: alpha(opacity=100);
                     <form class="form-search" action="/search" method="GET">
     <div class="input-append">
         <input type="text" class="search-query search-query-rounded" name="q" placeholder="Search" value="">
-        <button type="submit" class="btn"><span class="fui-search"></span></button>
+        <button type="submit" class="btn"><span class="fa fa-search"></span></button>
     </div>
 </form>
                 </div>
@@ -286,7 +286,7 @@ filter: alpha(opacity=100);
             <!-- Financial details -->
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fui-arrow-right accordion-state-icon"></span> Financial Details</a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> Financial Details</a>
                 </div>
                 <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse in">
                     <div class="accordion-inner">

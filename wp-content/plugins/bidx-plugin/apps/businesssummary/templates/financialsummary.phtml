@@ -7,7 +7,7 @@ $financialSummariesItem = <<<EOT
         <div class="fs-cell fs-header">
 
             <div class="fs-header-controls-left">
-                <a href="#prev" class="btnPrev"><span class="fui-arrow-left"></span></a>
+                <a href="#prev" class="btnPrev"><span class="fa fa-chevron-left"></span></a>
                 <a href="#addPreviousYear" class="btnAddPrev"><i class="fa fa-plus-circle"></i></a>
             </div>
 
@@ -16,12 +16,12 @@ $financialSummariesItem = <<<EOT
                 <p class="yearLabel">{{year_label}}</p>
 
                 <div class="view viewEdit">
-                    <a href="#deleteYear" class="btnDelete"><i class="fui-cross-inverted"></i> {{lblDeleteYear}}</a>
+                    <a href="#deleteYear" class="btnDelete"><i class="fa fa-times-circle"></i> {{lblDeleteYear}}</a>
                 </div>
             </div>
 
             <div class="fs-header-controls-right">
-                <a href="#next" class="btnNext"><span class="fui-arrow-right"></span></a>
+                <a href="#next" class="btnNext"><span class="fa fa-chevron-right"></span></a>
                 <a href="#addNextYear" class="btnAddNext"><i class="fa fa-plus-circle"></i></a>
             </div>
         </div>
@@ -173,7 +173,7 @@ if ( $hasYears == false ) {
     <div class="fs-col-labels">
         <div class="fs-cell fs-header">
             <div class="pull-right fs-controls">
-                <a href="#prev" class="btnPrev <?php echo ( $hasPrevYear ? '' : 'disabled' ); ?>"><span class="fui-arrow-left"></span></a>
+                <a href="#prev" class="btnPrev <?php echo ( $hasPrevYear ? '' : 'disabled' ); ?>"><span class="fa fa-chevron-left"></span></a>
             </div>
             <div class="fs-content"><strong><?php _e( 'Currency in: US Dollars', 'bidxplugin' ); ?></strong></div>
         </div>
@@ -310,7 +310,7 @@ if ( $hasYears == false ) {
 
     <div class="fs-col-right">
         <div class="fs-controls">
-            <a href="#next" class="btnNext <?php echo ( $hasNextYear ? '' : 'disabled' ); ?>"><span class="fui-arrow-right"></span></a>
+            <a href="#next" class="btnNext <?php echo ( $hasNextYear ? '' : 'disabled' ); ?>"><span class="fa fa-chevron-right"></span></a>
         </div>
     </div>
 

@@ -3,7 +3,7 @@
 	<div class="row">&nbsp;</div>
 	<div class="row">
 		<div class="alert alert-error col-sm-8 col-sm-offset-2">
-			<button type="button" class="close fui-cross" data-dismiss="alert"></button>
+			<button type="button" class="close fa fa-times" data-dismiss="alert"></button>
 			<h3>Error</h3>
 	        <p><?php _e('Sorry, but the page you were trying to view does not exist.', 'roots'); ?></p>
 	        <p><?php _e('It looks like this was the result of either:', 'roots'); ?></p>
