@@ -16,18 +16,7 @@ $companyBidxMeta = isset( $this->company->bidxMeta )
 ?>
 <div class="mainState mainStateShow">
     <div class="panel panel-default">
-        <div class="profile-block">
-            <div class="btn-group controls">
-<?php
-                if ($companyBidxMeta->bidxCanEdit) {
-?>
-                <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-<?php
-                }
-?>
-            </div>
-            <?php $this->render('view-company.phtml'); ?>
-        </div>
+        <?php $this->render('view-company.phtml'); ?>
     </div>
 </div>
 <?php

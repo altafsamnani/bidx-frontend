@@ -8,18 +8,18 @@
     ,   $snippets       = $element.find( ".snippets" )
 
     ,   $toggles                            = $element.find( ".toggle" ).hide()
-    ,   $toggleRegistered                   = $element.find( "[name='registered']"      )
-    ,   $toggleHaveEmployees                = $element.find( "[name='haveEmployees']"   )
+    ,   $toggleRegistered                   = $element.find( "[name='registered']"                          )
+    ,   $toggleHaveEmployees                = $element.find( "[name='haveEmployees']"                       )
 
     ,   $btnSave
     ,   $btnCancel
 
         // Profile picture
         //
-    ,   $logoControl                        = $editForm.find( ".logo-control" )
-    ,   $logoContainer                      = $logoControl.find( ".logoContainer" )
-    ,   $btnChangeLogo                      = $logoControl.find( "a[href$='changeLogo']" )
-    ,   $changeLogoModal                    = $logoControl.find( ".changeLogoModal" )
+    ,   $logoControl                        = $editForm.find( ".logo-control"                               )
+    ,   $logoContainer                      = $logoControl.find( ".logoContainer"                           )
+    ,   $btnChangeLogo                      = $logoControl.find( "a[href$='changeLogo']"                    )
+    ,   $changeLogoModal                    = $logoControl.find( ".changeLogoModal"                         )
 
     ,   $currentAddressMap                  = $editForm.find( ".currentAddressMap"                          )
     ,   $currentAddressCountry              = $editForm.find( "[name='statutoryAddress.country']"           )
@@ -28,9 +28,10 @@
     ,   $currentAddressStreet               = $editForm.find( "[name='statutoryAddress.street']"            )
     ,   $currentAddressStreetNumber         = $editForm.find( "[name='statutoryAddress.streetNumber']"      )
     ,   $currentAddressCoordinates          = $editForm.find( "[name='statutoryAddress.coordinates']"       )
+    ,   $legalFormBusiness                  = $editForm.find( "[name='legalFormBusiness']"                  )
 
     ,   $btnAddCountryOperationSpecifics    = $editForm.find( "[href$='#addCountryOperationSpecifics']"     )
-    ,   $countryOperationSpecificsAccordion = $editForm.find( ".countryOperationSpecifics > .accordion"    )
+    ,   $countryOperationSpecificsAccordion = $editForm.find( ".countryOperationSpecifics > .accordion"     )
 
         // Main object for holding the company
         //
@@ -111,17 +112,6 @@
         }
     } );
 
-    $currentAddressCountry.bidx_chosen(
-    {
-        dataKey:            "country"
-    ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
-    });
-
-    snippets.$countryOperationSpecifics.find( "[name='country']" ).bidx_chosen(
-    {
-        dataKey:            "country"
-    ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
-    });
 
 
     bidx.data.getContext( "permitsObtained", function( err, permitsOptained )
@@ -139,16 +129,29 @@
 
     bidx.data.getContext( "legalForm", function( err, legalForms )
     {
-        var $legalFormBusiness  = $editForm.find( "[name='legalFormBusiness']" )
-        ,   $noValue            = $( "<option value='' />" )
-        ;
+        var $noValue            = $( "<option value='' />" );
 
         $noValue.i18nText( "selectLegalFormBusiness", appName );
         $legalFormBusiness.append( $noValue );
-
-        bidx.utils.populateDropdown( $legalFormBusiness, legalForms );
     } );
 
+    $currentAddressCountry.bidx_chosen(
+    {
+        dataKey:            "country"
+    ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
+    });
+
+    $legalFormBusiness.bidx_chosen(
+    {
+        dataKey:            "legalForm"
+    ,   emptyValue:         bidx.i18n.i( "legalForm", appName )
+    });
+
+    snippets.$countryOperationSpecifics.find( "[name='country']" ).bidx_chosen(
+    {
+        dataKey:            "country"
+    ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
+    });
 
     // Disable disabled links
     //
@@ -597,6 +600,7 @@
         }
 
         $currentAddressCountry.trigger( "chosen:updated" );
+        $legalFormBusiness.trigger( "chosen:updated" );
     };
 
 

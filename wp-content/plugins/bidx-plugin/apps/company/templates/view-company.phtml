@@ -1,4 +1,9 @@
 <?php
+    $companyBidxMeta = isset( $this->company->bidxMeta )
+        ? $this->company->bidxMeta
+        : $this->company;
+
+
     $useDataSrc = false;
     $picSrc     = $this->exst($this->company->logo->document);
 
@@ -11,7 +16,19 @@
     <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
 </div>
 <div class="panel-body">
-<img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+<?php
+        if ($companyBidxMeta->bidxCanEdit) {
+?>
+            <div class="hide-overflow">
+                <div class="btn-group controls pull-right">
+                    <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                </div>
+            </div>
+<?php
+        }
+?>
+
+    <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
 <?php
 
     $rowValues = array(
