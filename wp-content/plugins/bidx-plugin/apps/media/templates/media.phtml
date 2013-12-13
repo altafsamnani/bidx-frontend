@@ -33,7 +33,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong class="panel-title"><?php _e( 'Media list', 'bidxplugin' ); ?></strong>
+                <h3 class="panel-title"><?php _e( 'Media list', 'bidxplugin' ); ?></h3>
             </div>
             <div class="panel-body table-responsive">
                 <table class="fileList table table-striped">
@@ -50,42 +50,45 @@
         <form id="frmeditMedia">
 
             <div class="col-sm-8">
-                <div class="well">
-                    <h4><?php _e( 'Document', 'bidxplugin' ); ?></h4>
-
-                    <div class="form-group">
-                        <label><?php _e('Purpose','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="purpose" placeholder="<?php _e('Please describe the attachment','bidxplugin'); ?>">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><?php _e( 'Document', 'bidxplugin' ); ?></h3>
                     </div>
-
-                    <div class="form-group">
-                        <label><?php _e('Document type','bidxplugin'); ?></label>
-                        <select name="documentType"></select>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label><?php _e('Purpose','bidxplugin'); ?></label>
+                            <input type="text" class="form-control" name="purpose" placeholder="<?php _e('Please describe the attachment','bidxplugin'); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label><?php _e('Document type','bidxplugin'); ?></label>
+                            <select name="documentType"></select>
+                        </div>
+                        <a href="#" class="btn btn-primary btnSave"></a>
+                        <a href="#media/list" class="btn btn-default btnCancel"></a>
                     </div>
-
-                    <a href="#" class="btn btn-primary btnSave"></a>
-                    <a href="#media/list" class="btn btn-link btnCancel"></a>
-
                 </div>
             </div>
 
             <div class="col-sm-4">
-                <div class="well fileDetails">
-                    <h4><?php _e( 'Details', 'bidxplugin' ); ?></h4>
+                <div class="panel panel-default fileDetails">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><?php _e( 'Details', 'bidxplugin' ); ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <dl>
+                            <dt><?php _e( 'Created on', 'bidxplugin' ); ?></dt>
+                            <dd class="created"></dd>
+                            <dt><?php _e( 'Filename', 'bidxplugin' ); ?></dt>
+                            <dd class="filename"></dd>
+                            <dt><?php _e( 'Filetype', 'bidxplugin' ); ?></dt>
+                            <dd class="contentType"></dd>
+                            <dt><?php _e( 'Size', 'bidxplugin' ); ?></dt>
+                            <dd class="size"></dd>
+                        </dl>
 
-                    <dl>
-                        <dt><?php _e( 'Created on', 'bidxplugin' ); ?></dt>
-                        <dd class="created"></dd>
-                        <dt><?php _e( 'Filename', 'bidxplugin' ); ?></dt>
-                        <dd class="filename"></dd>
-                        <dt><?php _e( 'Filetype', 'bidxplugin' ); ?></dt>
-                        <dd class="contentType"></dd>
-                        <dt><?php _e( 'Size', 'bidxplugin' ); ?></dt>
-                        <dd class="size"></dd>
-                    </dl>
-
-                    <a href="#" target="_blank" class="btn btn-link btnDownload"><?php _e( 'Download', 'bidxplugin' ); ?></a>
-                    <a href="#" class="btn btn-danger btnDelete"><?php _e( 'Delete permanently', 'bidxplugin' ); ?></a>
+                        <a href="#" target="_blank" class="btn btn-warning btnDownload"><i class="fa fa-download"></i> <?php _e( 'Download', 'bidxplugin' ); ?></a>
+                        <a href="#" class="btn btn-danger btnDelete"><i class="fa fa-ban"></i> <?php _e( 'Delete permanently', 'bidxplugin' ); ?></a>
+                    </div>
                 </div>
             </div>
         </form>
