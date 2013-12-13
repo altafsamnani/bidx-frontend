@@ -26,6 +26,7 @@
                 }
  ?>
 
+
                 <li class="media">
 <?php
                     if ( $authenticated ) {
@@ -35,7 +36,7 @@
                     }
 
                     if ( empty( $summary -> profilePicture ) ) {
-                        echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" class="media-object img-circle pull-left">';
+                        echo '<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
                     } else {
                         echo '<img src="' . $summary -> profilePicture . '" alt="" class="media-object img-circle pull-left" style="height:95px;">';
                     }

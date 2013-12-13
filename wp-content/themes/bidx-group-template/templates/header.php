@@ -45,10 +45,10 @@
 	 			<div class="pull-right col-sm-5 bidx-header-controls">
 					<div class="row">
 						<div class="col-sm-6">
-							<a href="/register-as-member/#register/firstLogin=getting-started-member" class="btn btn-success btn-block"><?php _e('Become a member','bidxtheme');?></a>
+							<a href="/register-as-member/#register/firstLogin=getting-started-member" class="btn btn-success btn-block"><i class="fa fa-user"></i> <?php _e('Become a member','bidxtheme');?></a>
 						</div>
 						<div class="col-sm-6">
-							<a href="/auth/#auth/login" class="btn btn-primary btn-block"><i class="bidx-login"></i><?php _e('Login','bidxtheme');?></a>
+							<a href="/auth/#auth/login" class="btn btn-primary btn-block"><i class="fa fa-lock"></i> <?php _e('Login','bidxtheme');?></a>
 						</div>
 					</div>
 				</div>
@@ -80,7 +80,7 @@
 
 		</div>
 	</div>
-	<div class="white-spacer"></div>
+	<div class="divider"></div>
 
 </header>
 

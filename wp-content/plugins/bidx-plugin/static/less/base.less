@@ -1,3 +1,58 @@
+// Import
+// -------------------------
+@import "mixins.less";
+
+// Color alterations
+// -------------------------
+.bg-primary-dark {
+    background: desaturate(darken(@brand-primary, 25%), 25%);
+}
+.text-primary-dark {
+    color: darken(@brand-primary, 25%);
+}
+.bg-primary-light {
+    background: lighten(@brand-primary, 25%);
+}
+.text-primary-light {
+    color: lighten(@brand-primary, 25%);
+}
+
+
+
+// Icons manipulation
+// -------------------------
+.icons-circle {
+    padding: ceil(@font-size-base * 0.7);
+    background-color: lighten(@brand-primary, 40%);
+    font-size: floor(@font-size-base * 3.9);
+    width: floor(@font-size-base * 6.45);
+    height: floor(@font-size-base * 6.45);
+    display: table;
+    text-align: center;
+    .round;
+    .fa {
+        .text-primary-dark;
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+// Elements
+// -------------------------
+.divider {
+    background-color: lighten(@brand-primary, 25%);
+    height: 5px;
+}
+
+// Carousel
+// -------------------------
+.carousel-caption {
+    .rgba;
+}
+
+
+
+
 .view {
     display: none;
 }
@@ -14,6 +69,7 @@
 }
 
 /* \ Pagination plugin */
+
 
 
 

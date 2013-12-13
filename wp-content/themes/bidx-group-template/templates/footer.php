@@ -4,7 +4,7 @@
 ?>
 
 <footer>
-    <div class="page-footer bidx-theme-colour-footer">
+    <div class="page-footer bg-primary-dark">
         <div class="container">
                 <?php echo get_theme_mod( 'footer' ); ?>
         </div>
@@ -16,7 +16,7 @@
 ?>
 
 <footer>
-    <div class="page-footer bidx-theme-colour-footer">
+    <div class="page-footer bg-primary-dark">
         <div class="container">
             <div class="footer-bar row">
             	<div class="pull-left left-block col-sm-6">

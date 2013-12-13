@@ -31,7 +31,7 @@
             }
 ?>
             <!-- Carousel items -->
-            <div class="carousel-inner">
+            <div class="carousel-inner img-rounded">
 <?php
             $count = 0;
             foreach ( $images as $id => $image ) {
@@ -45,7 +45,7 @@
                     if ( !empty( $image -> post_content ) ) {
 ?>
                     <div class="container">
-                        <div class="carousel-caption img-rounded "><?php echo $image -> post_content ?></div>
+                        <div class="carousel-caption img-rounded"><?php echo $image -> post_content ?></div>
                     </div>
 <?php
                     } // !empty( $image  -> post_content )
@@ -57,8 +57,8 @@
             </div>
 
             <!-- Carousel nav -->
-            <a class="left carousel-control" href="#groupCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-            <a class="right carousel-control" href="#groupCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="left carousel-control img-rounded" href="#groupCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a class="right carousel-control img-rounded" href="#groupCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
         </div>
     </div>
     <!-- // IMAGE Carousel -->

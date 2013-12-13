@@ -40,7 +40,7 @@
                     <a class="pull-left" href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
 <?php
     				  	if ( empty( $member -> profilePicture ) ) {
-    						echo '<img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-members.png" alt="" class="media-object img-circle pull-left">';
+    						echo '<div class="icons-circle pull-left"><i class="fa fa-user text-primary-light"></i></div>';
                         } else {
     						echo '<img src="' . $member -> profilePicture . '" alt="" class="media-object img-circle pull-left" style="height:95px;">';
                         }
