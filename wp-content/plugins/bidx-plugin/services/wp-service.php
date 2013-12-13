@@ -127,7 +127,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
     $sendDomain = 'bidx.net';
     $cookieArr = array ();
-    $headers    = array();
+    $headers = array ();
 
 
     //error_log (sprintf ("	: %s, body: %s", $urlservice, var_export ($body, true)));
@@ -145,7 +145,6 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     /*     * *********2. Set Headers ******************************** */
     //For Authentication
     //$headers['Authorization'] = 'Basic ' . base64_encode ("$authUsername:$authPassword");
-
     // 2.1 Set the group domain header
     if (isset ($body['domain'])) {
         //Talk with arjan for domain on first page registration it will be blank when it goes live
@@ -178,7 +177,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 
     $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
 
-    $logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $bidxMethod, var_export($body,true), var_export ($headers, true), var_export ($cookieArr, true)));
+    $logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $bidxMethod, var_export ($body, true), var_export ($headers, true), var_export ($cookieArr, true)));
 
 
     $request = new WP_Http;
@@ -289,13 +288,17 @@ function ajax_submit_signin ()
  *
  * @param String $username
  * @param String $password
+ * @url http://sampoerna.local.bidx.net/wp-admin/admin-ajax.php?action=bidx_signout&provider=skipso
  *
  * @return Loggedin User
  */
 add_action ('wp_logout', 'bidx_signout');
+add_action ('wp_ajax_bidx_signout', 'bidx_signout');
+add_action ('wp_ajax_nopriv_bidx_signout', 'bidx_signout');
 
 function bidx_signout ()
 {
+    $provider = (isset ($_GET['provider'])) ? $_GET['provider'] : NULL;
     //Logout Bidx Session too
 
     clear_bidx_cookies ();
@@ -304,6 +307,24 @@ function bidx_signout ()
     call_bidx_service ('session', $params, 'DELETE');
     wp_clear_auth_cookie ();
     clear_wp_bidx_session ();
+
+    if ($provider) {
+        $url = "http://gacctest.skipsolabs.com/en/logout";
+        callProviderLogoutURL ($url);        
+    }
+}
+
+function callProviderLogoutURL ($url)
+{
+
+     echo '
+        <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
+        <script type="text/javascript">
+            jQuery(function() { jQuery("#myiframe").load(function(){ window.location.replace("'.home_url().'"); }); });
+        </script>';
+     echo '<iframe id="myiframe" src="'.$url.'" width="0" height="0"></iframe>';
+     exit;
+
 }
 
 function clear_bidx_cookies ()
@@ -416,7 +437,6 @@ function get_string_translation ()
     exit;
 }
 
-
 // Author: msp
 // Date: 26-11-2013
 // Get news in a json representation
@@ -428,64 +448,63 @@ function get_wp_news ()
     // setting default query arguments
     // check "http://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters" for defaults on sorting
     //
-    $limit      = ( isset ( $_GET[ 'limit'] ) )     ? $_GET[ 'limit' ]  : 5;
-    $offset     = ( isset ( $_GET[ 'offset'] ) )    ? $_GET[ 'offset']  : 1;
-    $order      = ( isset ( $_GET[ 'order'] ) )     ? $_GET[ 'order' ]  : "desc";
-    $orderby    = ( isset ( $_GET[ 'sort'] ) )      ? $_GET[ 'sort' ]   : "date";
+    $limit = ( isset ($_GET['limit']) ) ? $_GET['limit'] : 5;
+    $offset = ( isset ($_GET['offset']) ) ? $_GET['offset'] : 1;
+    $order = ( isset ($_GET['order']) ) ? $_GET['order'] : "desc";
+    $orderby = ( isset ($_GET['sort']) ) ? $_GET['sort'] : "date";
 
     // prepare the result array
     //
-    $result     = array(
-        "status"          => "OK"
-    ,   "languageCode"    => "en"
-    ,   "data"            => Array()
+    $result = array (
+      "status" => "OK"
+      , "languageCode" => "en"
+      , "data" => Array ()
     );
 
     // set the query arguments
     //
-    $args = array(
-        'post_type'       => 'post'
-    ,   'post_status'     => 'publish'
-    ,   'posts_per_page'  => $limit
-    ,   'order'           => $order
-    ,   'paged'           => $offset
+    $args = array (
+      'post_type' => 'post'
+      , 'post_status' => 'publish'
+      , 'posts_per_page' => $limit
+      , 'order' => $order
+      , 'paged' => $offset
     );
 
     $my_query = null;
-    $my_query = new WP_Query($args);
+    $my_query = new WP_Query ($args);
 
     // set return values
     //
-    $result[ "data" ][ "totalNews" ]    = intval( $my_query -> found_posts );
-    $result[ "data" ][ "news"]          = array();
+    $result["data"]["totalNews"] = intval ($my_query->found_posts);
+    $result["data"]["news"] = array ();
 
-    if( $my_query -> have_posts() ) {
+    if ($my_query->have_posts ()) {
 
         // iterate the posts
         //
-        foreach (  $my_query -> posts as  $post ) {
+        foreach ($my_query->posts as $post) {
             // decide not to encode the content because I think json_encode will take care of this
             //
-            $content =   $post -> post_content ;
+            $content = $post->post_content;
 
             // add post data to result
             //
-            $result[ "data" ][ "news"][] = array(
-                "postId"    => $post -> ID
-            ,   "date"      => $post -> post_date
-            ,   "title"     => $post -> post_title
-            ,   "content"   => $content
+            $result["data"]["news"][] = array (
+              "postId" => $post->ID
+              , "date" => $post->post_date
+              , "title" => $post->post_title
+              , "content" => $content
             );
         }
-
     }
     // clear wp query
     //
-    wp_reset_query();
+    wp_reset_query ();
 
     // echo converted result into json
     //
-    echo json_encode ( $result );
+    echo json_encode ($result);
 
     // do not remove exit, it will add unwanted output after the json value
     //
@@ -973,7 +992,7 @@ function bidx_wordpress_post_action ($url, $result, $body)
 
                     if (!empty ($displayData->roles)) {
                         $roleArray = $displayData->roles;
-                        $bidxLoginPriority = explode('|',BIDX_LOGIN_PRIORITY);
+                        $bidxLoginPriority = explode ('|', BIDX_LOGIN_PRIORITY);
                         if (in_array ("SysAdmin", $roleArray)) {
                             //$username = 'admin';
                             $username = 'admin';
@@ -1168,7 +1187,7 @@ function bidx_delete_wp_pages ()
     } else {
         ?><div class="error"><p><?php echo 'Failed to mass deactivate: error selecting blogs'; ?></p></div><?php
         }
- }
+    }
 
     function delete_bidx_plugin ($pageTitle)
     {
@@ -1208,8 +1227,8 @@ function bidx_delete_wp_pages ()
 
             $roleArr = array ('', WP_ADMIN_ROLE, WP_OWNER_ROLE, WP_MEMBER_ROLE, WP_ANONYMOUS_ROLE);
 
-            $blogUrl   = strtolower (get_site_url());
-            $blog_title = BidxCommon::get_bidx_subdomain(false,$blogUrl);
+            $blogUrl = strtolower (get_site_url ());
+            $blog_title = BidxCommon::get_bidx_subdomain (false, $blogUrl);
 
             //Delete the Sites and users if exist
             foreach ($groupDomainArr as $groupName) {
@@ -1752,18 +1771,15 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
         $bodyProfile = bidx_wordpress_pre_action ('entityprofile');
         $paramsProfile = $bodyProfile['params'];
 
-       //  $resultEntityMember = call_bidx_service ('entity/' . $paramsProfile['creatorProfileId'], $paramsProfile, 'PUT');
-       // $requestEntityMember = bidx_wordpress_post_action ('groupmembers', $resultEntityMember, $bodyProfile);
-
-
+        //  $resultEntityMember = call_bidx_service ('entity/' . $paramsProfile['creatorProfileId'], $paramsProfile, 'PUT');
+        // $requestEntityMember = bidx_wordpress_post_action ('groupmembers', $resultEntityMember, $bodyProfile);
         //2 Edit Group Entity
-       // $bodyGroup = bidx_wordpress_pre_action ('entitygroup');
-       // $paramsGroup = $bodyGroup['params'];
-
+        // $bodyGroup = bidx_wordpress_pre_action ('entitygroup');
+        // $paramsGroup = $bodyGroup['params'];
         //$resultEntityGroup = call_bidx_service('entity/' . $paramsGroup['groupProfileId'], $paramsGroup, 'PUT');
         //$requestEntityGroup = bidx_wordpress_post_action('groupmembers', $resultEntityGroup, $bodyGroup);
         //3 Edit Group Data
-        $bodyGrpData = bidx_wordpress_pre_action ( "groups" );
+        $bodyGrpData = bidx_wordpress_pre_action ("groups");
         $paramsGrpData = $bodyGrpData['params'];
         $resultGrpData = call_bidx_service ('groups/' . $paramsGrpData['id'], $paramsGrpData, 'PUT');
         $requestGrpData = bidx_wordpress_post_action ('groupmembers', $resultGrpData, $bodyGrpData);
@@ -1778,7 +1794,6 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
         die (); // stop executing script
     }
 
-
     // Author: msp
     // Date: 01-12-2013
     // create wordpress site call
@@ -1790,15 +1805,14 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
     {
         // adding origin header to allow cross domain ajax call from admin site
         //
-        header('Access-Control-Allow-Origin: http://admin.'. $_SERVER['HTTP_HOST'] );
+        header ('Access-Control-Allow-Origin: http://admin.' . $_SERVER['HTTP_HOST']);
 
-        $bodyGrpData = bidx_wordpress_pre_action ( "groups" );
+        $bodyGrpData = bidx_wordpress_pre_action ("groups");
         $jsonData = json_encode ($bodyGrpData);
         echo $jsonData;
 
         die (); // stop executing script
     }
-
 
     /* Assign theme/pages/metadata when site is created
      * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
@@ -1814,7 +1828,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
      * @param bool $echo
      */
 
-    add_action ('wpmu_new_blog', 'assign_bidxgroup_theme_page','1');
+    add_action ('wpmu_new_blog', 'assign_bidxgroup_theme_page', '1');
 
     function assign_bidxgroup_theme_page ($blog_id)
     {
@@ -1829,8 +1843,6 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
 
         restore_current_blog ();
     }
-
-
 
     /* Start Add Custom Page attribute whether you want to add page in Group site creation
      * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
@@ -1859,104 +1871,104 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
         <option <?php echo ($selected == '1') ? 'selected' : '' ?> value='1'><?php _e ('Yes'); ?></option>
         <option <?php echo ($selected == '0') ? 'selected' : '' ?> value='0'><?php _e ('No'); ?></option>
     </select>
-    <?php
-}
+                <?php
+            }
 
-add_action ('save_post', 'page_group_save');
+            add_action ('save_post', 'page_group_save');
 
-function page_group_save ($post_id)
-{
-    // Bail if we're doing an auto save
-    if (defined ('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-        return;
+            function page_group_save ($post_id)
+            {
+                // Bail if we're doing an auto save
+                if (defined ('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+                    return;
 
-    // Probably a good idea to make sure your data is set
+                // Probably a good idea to make sure your data is set
 
-    if (isset ($_POST['page_group']))
-        update_post_meta ($post_id, 'page_group', $_POST['page_group']);
-}
+                if (isset ($_POST['page_group']))
+                    update_post_meta ($post_id, 'page_group', $_POST['page_group']);
+            }
 
-/* Alter Network Admin menus to get Bidx branding
- * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
- * @author Altaf Samnani
- * @version 1.0
- *
- *
- * @param bool $echo
- */
+            /* Alter Network Admin menus to get Bidx branding
+             * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             *
+             * @param bool $echo
+             */
 
-function alter_network_menu ()
-{
+            function alter_network_menu ()
+            {
 
-    add_submenu_page ('settings.php', __ ('Static PO Generator'), __ ('Bidx'), 'manage_network_options', 'static-po', 'bidx_options');
-}
+                add_submenu_page ('settings.php', __ ('Static PO Generator'), __ ('Bidx'), 'manage_network_options', 'static-po', 'bidx_options');
+            }
 
-add_action ('network_admin_menu', 'alter_network_menu');
+            add_action ('network_admin_menu', 'alter_network_menu');
 
-function bidx_options ()
-{
-    /* 1 Create Bidx Static PO */
-    if (current_user_can ('manage_options')) {
+            function bidx_options ()
+            {
+                /* 1 Create Bidx Static PO */
+                if (current_user_can ('manage_options')) {
 
-        $pluginDir = WP_PLUGIN_DIR . '/bidx-plugin/apps';
-        echo "<h2>Bidx Pot File Generator </h2>";
-        /* 1. Bidx Static Pot Generator */
-        echo "<b>Bidx Static Api Pot Generator (Text domain static)</b><br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static'>here</a> to create static PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=es'>here</a> to create static Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=fr'>here</a> to create static Demo Fr PO <br/><br/>";
+                    $pluginDir = WP_PLUGIN_DIR . '/bidx-plugin/apps';
+                    echo "<h2>Bidx Pot File Generator </h2>";
+                    /* 1. Bidx Static Pot Generator */
+                    echo "<b>Bidx Static Api Pot Generator (Text domain static)</b><br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static'>here</a> to create static PO <br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=es'>here</a> to create static Demo Es PO <br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=static&lang=fr'>here</a> to create static Demo Fr PO <br/><br/>";
 
-        /* 1.2 Bidx Apps Pot Generator */
-        echo "<b>Bidx Wp Plugin I18n.xml Pot Generator (Text domain i18n) </b><br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Fr PO <br/><br/>";
+                    /* 1.2 Bidx Apps Pot Generator */
+                    echo "<b>Bidx Wp Plugin I18n.xml Pot Generator (Text domain i18n) </b><br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps PO <br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Es PO <br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=module&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin" . "&app=apps'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
-        /* 1.3. Bidx Apps Pot Generator */
-        echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin) (Text domain bidxplugin)</b><br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Fr PO <br/><br/>";
+                    /* 1.3. Bidx Apps Pot Generator */
+                    echo "<b>Bidx Wp Plugin Pot Generator (bidx-plugin) (Text domain bidxplugin)</b><br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps PO <br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=es&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Es PO <br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
-        /* 1.4. Bidx Theme Pot Generator */
-        echo "<b>Bidx Wp Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
+                    /* 1.4. Bidx Theme Pot Generator */
+                    echo "<b>Bidx Wp Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
+                    echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
 
 
-        /* 2 Bidx Push Notification */
-        $entrepreneurNotification = get_site_option ('entrepreneur-notification');
-        $htmlEntrNotification = "<br/><br/><b>Bidx Entrepreneur Notification</b><br/>";
-        $htmlEntrNotification .= "<textarea name='entrepreneur-notification'>" . $entrepreneurNotification . "</textarea>";
-        $htmlEntrNotification .= "<div class='buttonwrapper'>
+                    /* 2 Bidx Push Notification */
+                    $entrepreneurNotification = get_site_option ('entrepreneur-notification');
+                    $htmlEntrNotification = "<br/><br/><b>Bidx Entrepreneur Notification</b><br/>";
+                    $htmlEntrNotification .= "<textarea name='entrepreneur-notification'>" . $entrepreneurNotification . "</textarea>";
+                    $htmlEntrNotification .= "<div class='buttonwrapper'>
                     <input type='hidden' value='entrepreneur-notification' name='notification'/>
                     <input type='submit' name = 'action' value='Save'>
                     <input type='submit' name = 'action' value='Reset' >
                 </div>";
-        echo get_site_option ('entrepreneur-notification');
-        if (isset ($_POST['action'])) {
-            $action = $_POST['action'];
-            $notificationType = $_POST['notification'];
-            $notificationVal = $_POST[$notificationType];
-            if ($action == 'Save') {
-                update_site_option ($notificationType, $notificationVal);
-            } else {
+                    echo get_site_option ('entrepreneur-notification');
+                    if (isset ($_POST['action'])) {
+                        $action = $_POST['action'];
+                        $notificationType = $_POST['notification'];
+                        $notificationVal = $_POST[$notificationType];
+                        if ($action == 'Save') {
+                            update_site_option ($notificationType, $notificationVal);
+                        } else {
 
-            }
-        }
-        /* 3 Bidx Push Notification */
-        $investorNotification = get_site_option ('investor-notification');
-        $htmlInvestorNotification = "<br/><br/><b>Bidx Investor Notification</b><br/>";
-        $htmlInvestorNotification .= "<textarea name='investor-notification'>" . $investorNotification . "</textarea>";
-        $htmlInvestorNotification .= "<div class='buttonwrapper'>
+                        }
+                    }
+                    /* 3 Bidx Push Notification */
+                    $investorNotification = get_site_option ('investor-notification');
+                    $htmlInvestorNotification = "<br/><br/><b>Bidx Investor Notification</b><br/>";
+                    $htmlInvestorNotification .= "<textarea name='investor-notification'>" . $investorNotification . "</textarea>";
+                    $htmlInvestorNotification .= "<div class='buttonwrapper'>
                     <input type='hidden' value='investor-notification' name='notification'/>
                     <input type='submit' name = 'action' value='Save'>
                     <input type='submit' name = 'action' value='Reset' >
                 </div>";
 
 
-        echo "<h2>Global Custom Options</h2>
+                    echo "<h2>Global Custom Options</h2>
                 <form method='post' action='settings.php?page=static-po'>
                     {$htmlEntrNotification}
                 </form>
@@ -1964,326 +1976,319 @@ function bidx_options ()
                     {$htmlInvestorNotification}
                 </form>
                     ";
-    } else {
-        //wp_die (__ ('You do not have sufficient permissions to access this page.'));
-    }
-}
+                } else {
+                    //wp_die (__ ('You do not have sufficient permissions to access this page.'));
+                }
+            }
 
-/* Force Wordpress Login
- * @author Altaf Samnani
- * @version 1.0
- *
- *
- * @param String $$username
- */
+            /* Force Wordpress Login
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             *
+             * @param String $$username
+             */
 
-function force_wordpress_login ($username)
-{
+            function force_wordpress_login ($username)
+            {
 
-    if ($user_id == username_exists ($username)) {   //just do an update
-        // userdata will contain all information about the user
-        $userdata = get_userdata ($user_id);
-        $user = wp_set_current_user ($user_id, $username);
-        // this will actually make the user authenticated as soon as the cookie is in the browser
-        wp_set_auth_cookie ($user_id);
+                if ($user_id == username_exists ($username)) {   //just do an update
+                    // userdata will contain all information about the user
+                    $userdata = get_userdata ($user_id);
+                    $user = wp_set_current_user ($user_id, $username);
+                    // this will actually make the user authenticated as soon as the cookie is in the browser
+                    wp_set_auth_cookie ($user_id);
 
-        // the wp_login action is used by a lot of plugins, just decide if you need it
-        do_action ('wp_login', $userdata->ID);
-        // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
-    }
-    return;
-}
+                    // the wp_login action is used by a lot of plugins, just decide if you need it
+                    do_action ('wp_login', $userdata->ID);
+                    // you can redirect the authenticated user to the "logged-in-page", define('MY_PROFILE_PAGE',1); f.e. first
+                }
+                return;
+            }
 
-/* Send frontpage Group createion request Staff Email
- * @author Altaf Samnani
- * @version 1.0
- * @url http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_staffmail
- *
- */
+            /* Send frontpage Group createion request Staff Email
+             * @author Altaf Samnani
+             * @version 1.0
+             * @url http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_staffmail
+             *
+             */
 
-add_action ('wp_ajax_bidx_staffmail', 'bidx_staffmail');
-add_action ('wp_ajax_nopriv_bidx_staffmail', 'bidx_staffmail'); // ajax for logged in users
+            add_action ('wp_ajax_bidx_staffmail', 'bidx_staffmail');
+            add_action ('wp_ajax_nopriv_bidx_staffmail', 'bidx_staffmail'); // ajax for logged in users
 
-function bidx_staffmail ()
-{
+            function bidx_staffmail ()
+            {
 
-    $data = bidx_wordpress_pre_action ('staff_email');
-    $params = $data['params'];
-    $fromName = "From: '" . $params['groupName'] . "' <info@bidx.net>";
+                $data = bidx_wordpress_pre_action ('staff_email');
+                $params = $data['params'];
+                $fromName = "From: '" . $params['groupName'] . "' <info@bidx.net>";
 
-    add_filter ('wp_mail_content_type', create_function ('', 'return "text/html"; '));
-    $mailSent = wp_mail ('info@bidx.net', $params['subject'], $params['body'], $fromName);
-    if ($mailSent) {
-        $requestData->status = 'OK';
-        $requestData->text = 'Our staff will contact you shortly, thank you for your patience';
-    } else {
-        $requestData->status = 'Mail is not configured, ERROR';
-    }
+                add_filter ('wp_mail_content_type', create_function ('', 'return "text/html"; '));
+                $mailSent = wp_mail ('info@bidx.net', $params['subject'], $params['body'], $fromName);
+                if ($mailSent) {
+                    $requestData->status = 'OK';
+                    $requestData->text = 'Our staff will contact you shortly, thank you for your patience';
+                } else {
+                    $requestData->status = 'Mail is not configured, ERROR';
+                }
 
-    //Test
+                //Test
 
-    $jsonData = json_encode ($requestData);
-    echo $jsonData;
-    die ();
-}
+                $jsonData = json_encode ($requestData);
+                echo $jsonData;
+                die ();
+            }
 
-/* * ************************* Bidx Dashboard Widget Start **************************************** */
+            /*             * ************************* Bidx Dashboard Widget Start **************************************** */
 
-/* Add a widget to the dashboard.
- * @author Altaf Samnani
- * @version 1.0
- *
- */
+            /* Add a widget to the dashboard.
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             */
 
-function bidx_add_dashboard_widgets ()
-{
+            function bidx_add_dashboard_widgets ()
+            {
 
-    $currentUser = wp_get_current_user ();
-    if (in_array (WP_OWNER_ROLE, $currentUser->roles) || in_array (WP_ADMIN_ROLE, $currentUser->roles)) {
-        bidx_remove_core_widgets (); // Remove core Wp widgets for Group admin role
+                $currentUser = wp_get_current_user ();
+                if (in_array (WP_OWNER_ROLE, $currentUser->roles) || in_array (WP_ADMIN_ROLE, $currentUser->roles)) {
+                    bidx_remove_core_widgets (); // Remove core Wp widgets for Group admin role
 //        wp_add_dashboard_widget (
 //            'bidx_dashboard_widget', // Widget slug.
 //            'Bidx', // Title.
 //            'bidx_dashboard_widget_function' // Display function.
 //        );
-    }
-}
+                }
+            }
 
-add_action ('wp_dashboard_setup', 'bidx_add_dashboard_widgets');
+            add_action ('wp_dashboard_setup', 'bidx_add_dashboard_widgets');
 
-/* Remove Core Wp widgets on Dashboard.
- * @author Altaf Samnani
- * @version 1.0
- *
- */
+            /* Remove Core Wp widgets on Dashboard.
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             */
 
-function bidx_remove_core_widgets ()
-{
-    global $wp_meta_boxes;
+            function bidx_remove_core_widgets ()
+            {
+                global $wp_meta_boxes;
 
-    unset ($wp_meta_boxes['dashboard']['normal']['core']);
-    unset ($wp_meta_boxes['dashboard']['side']['core']);
-}
+                unset ($wp_meta_boxes['dashboard']['normal']['core']);
+                unset ($wp_meta_boxes['dashboard']['side']['core']);
+            }
 
 //add_action ('admin_enqueue_scripts', 'roots_scripts', 100);
 
 
-/* * ************************* Bidx Dashboard Widget End **************************************** */
+            /*             * ************************* Bidx Dashboard Widget End **************************************** */
 
-/* * **************** Bidx Admin Theme ************************************************ */
+            /*             * **************** Bidx Admin Theme ************************************************ */
 
 
 
-function wpc_remove_admin_elements ()
-{
-    echo '<style type="text/css">
+            function wpc_remove_admin_elements ()
+            {
+                echo '<style type="text/css">
            .versions #wp-version-message {display:none !important;}
     </style>';
-}
+            }
 
-function remove_footer_admin ()
-{
-    echo '<span id="footer-thankyou">' . __ ('Thank you for creating with <a href="http://wordpress.org/">Bidx</a>.') . '</span>';
-}
+            function remove_footer_admin ()
+            {
+                echo '<span id="footer-thankyou">' . __ ('Thank you for creating with <a href="http://wordpress.org/">Bidx</a>.') . '</span>';
+            }
 
-function annointed_admin_bar_remove ()
-{
-    global $wp_admin_bar;
+            function annointed_admin_bar_remove ()
+            {
+                global $wp_admin_bar;
 
-    $current_user = wp_get_current_user ();
-    $displayName = (isset (BidxCommon::$staticSession)) ? BidxCommon::$staticSession->data->displayName . ' (' . $current_user->roles[0] . ')' : $current_user->user_login;
+                $current_user = wp_get_current_user ();
+                $displayName = (isset (BidxCommon::$staticSession)) ? BidxCommon::$staticSession->data->displayName . ' (' . $current_user->roles[0] . ')' : $current_user->user_login;
 
-    /* Remove their stuff */
-    $wp_admin_bar->remove_menu ('wp-logo');
-    $wp_admin_bar->remove_menu ('comments');
-    $wp_admin_bar->remove_menu ('my-sites');
-    $wp_admin_bar->remove_menu ('my-account');
+                /* Remove their stuff */
+                $wp_admin_bar->remove_menu ('wp-logo');
+                $wp_admin_bar->remove_menu ('comments');
+                $wp_admin_bar->remove_menu ('my-sites');
+                $wp_admin_bar->remove_menu ('my-account');
 
-    $custom_menu = array ('id' => 'bidx-name', 'title' => $displayName, 'parent' => 'top-secondary', 'href' => '/member');
-    $wp_admin_bar->add_menu ($custom_menu);
-    $custom_menu_logout = array ('id' => 'bidx-logout', 'title' => 'Logout', 'parent' => 'bidx-name', 'href' => wp_logout_url ('/'));
-    $wp_admin_bar->add_menu ($custom_menu_logout);
-}
+                $custom_menu = array ('id' => 'bidx-name', 'title' => $displayName, 'parent' => 'top-secondary', 'href' => '/member');
+                $wp_admin_bar->add_menu ($custom_menu);
+                $custom_menu_logout = array ('id' => 'bidx-logout', 'title' => 'Logout', 'parent' => 'bidx-name', 'href' => wp_logout_url ('/'));
+                $wp_admin_bar->add_menu ($custom_menu_logout);
+            }
+
+            /**
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             * Bidx Zendesk Settings
+             *
+             */
+            function bidx_zendesk_settings ()
+            {
+
+                require_once(BIDX_PLUGIN_DIR . '/support/support.php');
 
 
-/**
- * @author Altaf Samnani
- * @version 1.0
- *
- * Bidx Zendesk Settings
- *
- */
+                //1. Form Post Handling
+                if (isset ($_POST['bidx-zendesk-data'])) {
+                    $form_data = $_POST['bidx-zendesk-data'];
 
-function bidx_zendesk_settings() {
-
-    require_once(BIDX_PLUGIN_DIR . '/support/support.php');
-
-
-    //1. Form Post Handling
-    if( isset($_POST['bidx-zendesk-data'] ) ) {
-        $form_data = $_POST['bidx-zendesk-data'];
-
-        if ( ! $form_data['email'] || !$form_data['password'] ) {
-              $html = "<div id='message' class='error'>
-                        <p>".__( 'All fields are required. Please try again.', 'zendesk' )."
+                    if (!$form_data['email'] || !$form_data['password']) {
+                        $html = "<div id='message' class='error'>
+                        <p>" . __ ('All fields are required. Please try again.', 'zendesk') . "
                         </p>
                     </div>";
+                    } else {
 
-        } else {
+                        //1.1 Add Zendesk email/password for autologin
+                        update_site_option ('bidx-zendesk-email', $form_data['email']);
+                        update_site_option ('bidx-zendesk-password', base64_encode ($form_data['password']));
 
-            //1.1 Add Zendesk email/password for autologin
-            update_site_option ('bidx-zendesk-email', $form_data['email']);
-            update_site_option ('bidx-zendesk-password', base64_encode($form_data['password'] ));
-
-            //1.2 Flush User meta for groupowner if exists
-            $blogUrl   = strtolower (get_site_url());
-            $blogTitle = BidxCommon::get_bidx_subdomain(false,$blogUrl);
-            $group_owner_login = $blogTitle . WP_OWNER_ROLE;
-            $userOwner = get_user_by('login', $group_owner_login);
-            delete_user_meta( $userOwner->ID, 'zendesk_user_options' );
+                        //1.2 Flush User meta for groupowner if exists
+                        $blogUrl = strtolower (get_site_url ());
+                        $blogTitle = BidxCommon::get_bidx_subdomain (false, $blogUrl);
+                        $group_owner_login = $blogTitle . WP_OWNER_ROLE;
+                        $userOwner = get_user_by ('login', $group_owner_login);
+                        delete_user_meta ($userOwner->ID, 'zendesk_user_options');
 
 
-            $html = "<div class='updated'>
-                        <p>".__( 'Your options are updated succesfully.', 'support' )."
+                        $html = "<div class='updated'>
+                        <p>" . __ ('Your options are updated succesfully.', 'support') . "
                         </p>
                     </div>";
-        }
+                    }
 
-        echo $html;
-    }
+                    echo $html;
+                }
 
-    //2. Bidx Zendesk View Settings
-    $atts = array('app' =>'support', 'view' => 'settings');
-    $support = new support();
-    $support->load($atts);
-
-
-}
+                //2. Bidx Zendesk View Settings
+                $atts = array ('app' => 'support', 'view' => 'settings');
+                $support = new support();
+                $support->load ($atts);
+            }
 
 //add_action ('login_enqueue_scripts', 'bidx_admin_theme_style');
-/* Alter Admin menus to get Bidx branding
- * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
- * @author Altaf Samnani
- * @version 1.0
- *
- *
- * @param bool $echo
- */
-add_action ('admin_menu', 'alter_site_menu',11);
+            /* Alter Admin menus to get Bidx branding
+             * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             *
+             * @param bool $echo
+             */
+            add_action ('admin_menu', 'alter_site_menu', 11);
 
-function alter_site_menu ()
-{
-    global $menu;
+            function alter_site_menu ()
+            {
+                global $menu;
 
-    if ((current_user_can ('install_themes'))) {
-        $restricted = array ();
-        add_submenu_page( 'zendesk-support', __( 'Zendesk Bidx Settings', 'zendesk' ), __( 'Bidx Settings', 'zendesk' ), 'manage_options', 'bidx_zendesk_settings', 'bidx_zendesk_settings' );
-    } // check if admin and hide nothing
-    else { // for all other users
-        $current_user = wp_get_current_user ();
+                if ((current_user_can ('install_themes'))) {
+                    $restricted = array ();
+                    add_submenu_page ('zendesk-support', __ ('Zendesk Bidx Settings', 'zendesk'), __ ('Bidx Settings', 'zendesk'), 'manage_options', 'bidx_zendesk_settings', 'bidx_zendesk_settings');
+                } // check if admin and hide nothing
+                else { // for all other users
+                    $current_user = wp_get_current_user ();
 
-        if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles) || in_array (WP_MEMBER_ROLE, $current_user->roles)) {
-            /* Removal of Wp Core Menus */
-            remove_menu_page ('profile.php');
-            remove_menu_page ('tools.php');
-            remove_menu_page ('edit-comments.php');
-            remove_menu_page ('index.php');
-            remove_submenu_page ('index.php', 'my-sites.php');
-            remove_submenu_page ('themes.php','themes.php');
-            remove_submenu_page ('themes.php','customize.php');
-            add_action ('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
-            add_action ('admin_head', 'wpc_remove_admin_elements');
+                    if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles) || in_array (WP_MEMBER_ROLE, $current_user->roles)) {
+                        /* Removal of Wp Core Menus */
+                        remove_menu_page ('profile.php');
+                        remove_menu_page ('tools.php');
+                        remove_menu_page ('edit-comments.php');
+                        remove_menu_page ('index.php');
+                        remove_submenu_page ('index.php', 'my-sites.php');
+                        remove_submenu_page ('themes.php', 'themes.php');
+                        remove_submenu_page ('themes.php', 'customize.php');
+                        add_action ('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+                        add_action ('admin_head', 'wpc_remove_admin_elements');
 
-            /* Dashboard GroupAdmin/GroupOwner Menus */
-            if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles)) {
-                add_menu_page ('invite-members', 'Invite members', 'edit_theme_options', 'invite-members', 'bidx_dashboard_invite');
-                add_menu_page ('monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
-                add_menu_page ('getting-started', 'Getting Started', 'edit_theme_options', 'getting-started', 'bidx_getting_started');
-                add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
-                add_menu_page ('group-settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
+                        /* Dashboard GroupAdmin/GroupOwner Menus */
+                        if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles)) {
+                            add_menu_page ('invite-members', 'Invite members', 'edit_theme_options', 'invite-members', 'bidx_dashboard_invite');
+                            add_menu_page ('monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
+                            add_menu_page ('getting-started', 'Getting Started', 'edit_theme_options', 'getting-started', 'bidx_getting_started');
+                            add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
+                            add_menu_page ('group-settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
+                        }
+                    }
+                }
+                add_filter ('admin_footer_text', 'remove_footer_admin');
             }
-        }
-    }
-    add_filter ('admin_footer_text', 'remove_footer_admin');
-}
 
+            function bidx_dashboard_invite ()
+            {
 
-function bidx_dashboard_invite ()
-{
+                echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='invite-members']");
+            }
 
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='invite-members']");
-}
+            /* Create the function to output the contents of our Dashboard Widget.
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             */
 
-/* Create the function to output the contents of our Dashboard Widget.
- * @author Altaf Samnani
- * @version 1.0
- *
- */
+            function bidx_dashboard_monitoring ()
+            {
+                //wp_enqueue_style( 'dashboard' );
+                echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='monitoring']");
+            }
 
-function bidx_dashboard_monitoring ()
-{
-    //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='monitoring']");
-}
+            /* Create the function to output the contents of our Dashboard Widget.
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             */
 
-/* Create the function to output the contents of our Dashboard Widget.
- * @author Altaf Samnani
- * @version 1.0
- *
- */
+            function bidx_getting_started ()
+            {
+                //wp_enqueue_style( 'dashboard' );
+                echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='getting-started']");
+            }
 
-function bidx_getting_started ()
-{
-    //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='getting-started']");
-}
+            /* Create the function to output the contents of our Dashboard Widget.
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             */
 
-/* Create the function to output the contents of our Dashboard Widget.
- * @author Altaf Samnani
- * @version 1.0
- *
- */
+            function bidx_dashboard_support ()
+            {
+                //global $zendesk_support;
+                //wp_enqueue_style( 'dashboard' );
+                echo do_shortcode ("[bidx app='support' view='support']");
 
-function bidx_dashboard_support ()
-{
-    //global $zendesk_support;
-    //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='support' view='support']");
+                if (is_plugin_active ('zendesk/zendesk-support.php')) {
+                    echo do_shortcode ("[bidx app='support' view='view-zendesk-tickets']");
+                }
+            }
 
-    if(is_plugin_active('zendesk/zendesk-support.php')) {
-     echo do_shortcode ("[bidx app='support' view='view-zendesk-tickets']");
-    }
+            /* Create the function to output the contents of our Dashboard Widget.
+             * @author Altaf Samnani
+             * @version 1.0
+             *
+             */
 
+            function bidx_group_settings ()
+            {
+                //wp_enqueue_style( 'dashboard' );
+                echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='group-settings']");
+            }
 
-}
+            add_action ('wp_ajax_nopriv_bidx_set_option', 'bidx_set_option');
+            add_action ('wp_ajax_bidx_set_option', 'bidx_set_option');
 
-/* Create the function to output the contents of our Dashboard Widget.
- * @author Altaf Samnani
- * @version 1.0
- *
- */
+            function bidx_set_option ()
+            {
 
-function bidx_group_settings ()
-{
-    //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='group-settings']");
-}
+                $type = (isset ($_GET['type'])) ? $_GET['type'] : NULL;
+                $value = (isset ($_GET['value'])) ? $_GET['value'] : NULL;
+                $data['response'] = 'error';
 
-add_action ('wp_ajax_nopriv_bidx_set_option', 'bidx_set_option');
-add_action ('wp_ajax_bidx_set_option', 'bidx_set_option');
-
-function bidx_set_option ()
-{
-
-    $type = (isset ($_GET['type'])) ? $_GET['type'] : NULL;
-    $value = (isset ($_GET['value'])) ? $_GET['value'] : NULL;
-    $data['response'] = 'error';
-
-    if ($type) {
-        update_option ($type, $value);
-        $data['response'] = 'ok';
-    }
-    echo json_encode ($data);
-    exit;
-}
+                if ($type) {
+                    update_option ($type, $value);
+                    $data['response'] = 'ok';
+                }
+                echo json_encode ($data);
+                exit;
+            }
 
