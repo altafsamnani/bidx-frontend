@@ -133,13 +133,13 @@ class BidxShortcode
             Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
         } else {
 
-            wp_register_style( 'bidx-plugin', $bidxCssDir . '/bidx-plugin.css', array(), '20131125', 'all' );
-            wp_enqueue_style( 'bidx-plugin' );
+            // wp_register_style( 'bidx-plugin', $bidxCssDir . '/bidx-plugin.css', array(), '20131125', 'all' );
+            // wp_enqueue_style( 'bidx-plugin' );
 
             // Temporary, probably needs to be moved into a bidx less file
             //
-            wp_register_style( 'bootstrap-datepicker', $bidxStaticDir . '/vendor/bootstrap-datepicker-1.3.0-rc.2/css/datepicker3.css', array(), '1.3.0-rc.2', 'all' );
-            wp_enqueue_style( 'bootstrap-datepicker' );
+            // wp_register_style( 'bootstrap-datepicker', $bidxStaticDir . '/vendor/bootstrap-datepicker-1.3.0-rc.2/css/datepicker3.css', array(), '1.3.0-rc.2', 'all' );
+            // wp_enqueue_style( 'bootstrap-datepicker' );
         }
     }
 
