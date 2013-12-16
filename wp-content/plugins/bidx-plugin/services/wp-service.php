@@ -309,8 +309,9 @@ function bidx_signout ()
     clear_wp_bidx_session ();
 
     if ($provider) {
-        $url = "http://gacctest.skipsolabs.com/en/logout";
-        callProviderLogoutURL ($url);        
+        //http://gacctest.skipsolabs.com/en/logout
+        $skipsoUrl = get_site_option ('skipso-url');
+        callProviderLogoutURL ($skipsoUrl);
     }
 }
 
@@ -319,8 +320,13 @@ function callProviderLogoutURL ($url)
 
      echo '
         <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/jquery.noty.js?ver=2.0.3"></script>
         <script type="text/javascript">
-            jQuery(function() { jQuery("#myiframe").load(function(){ window.location.replace("'.home_url().'"); }); });
+            jQuery(function() {
+              noty({ type: "success",text:"Please wait while we log you out"} );
+              jQuery("#myiframe").load(function(){
+               window.location.replace("'.home_url().'"); });
+            });
         </script>';
      echo '<iframe id="myiframe" src="'.$url.'" width="0" height="0"></iframe>';
      exit;
@@ -1967,6 +1973,18 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     <input type='submit' name = 'action' value='Reset' >
                 </div>";
 
+                    /* 4 Skipso */
+                    $skipsoUrl = get_site_option ('skipso-url');
+                    $htmlSkipsoUrl = "<br/><br/><b>Skipso URL</b><br/>";
+                    $htmlSkipsoUrl .= "<input type='text' name='skipso-url' value='".$skipsoUrl."'>" ;
+                    $htmlSkipsoUrl .= "<div class='buttonwrapper'>
+                    <input type='hidden' value='skipso-url' name='notification'/>
+                    <input type='submit' name = 'action' value='Save'>
+                    <input type='submit' name = 'action' value='Reset' >
+                </div>";
+
+
+
 
                     echo "<h2>Global Custom Options</h2>
                 <form method='post' action='settings.php?page=static-po'>
@@ -1975,7 +1993,14 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                 <form method='post' action='settings.php?page=static-po'>
                     {$htmlInvestorNotification}
                 </form>
+                <form method='post' action='settings.php?page=static-po'>
+                    {$htmlSkipsoUrl}
+                </form>
                     ";
+
+
+
+
                 } else {
                     //wp_die (__ ('You do not have sufficient permissions to access this page.'));
                 }
