@@ -203,7 +203,7 @@
             //
             pagerOptions  =
             {
-                currentPage:            ( paging.members.offset + 1 ) // correct for api value which starts with 0
+                currentPage:            ( paging.members.offset  / CONSTANTS.MEMBER_LIMIT  + 1 ) // correct for api value which starts with 0
             ,   totalPages:             Math.ceil( data.response.totalMembers / CONSTANTS.MEMBER_LIMIT )
             ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
             ,   itemContainerClass:     function ( type, page, current )
@@ -217,7 +217,7 @@
 
                     // update internal page counter for members
                     //
-                    paging.members.offset = page -1;
+                    paging.members.offset = (page - 1) * CONSTANTS.BUSINESSSUMMARIES_LIMIT;
 
                     _toggleListLoading( $memberList );
 
@@ -239,6 +239,9 @@
             $.each( data.response.members, function( idx, member )
             {
                 var $item
+                ,   $memberRole
+                ,   $roleSnippet
+                ,   roles           = []
                 ,   dataRoles
                 ;
 
@@ -273,11 +276,27 @@
                             break;
 
                         case "country":
+
                             //$el.text( bidx.utils.getValue( member.personalDetails.address[0], "country" ) );
                             break;
 
                         case "roles":
-                            // waiting for BIDX-1546 so it can be implemented
+                            // find the memberRole snippet
+                            //
+                            $roleSnippet = $el.find( ".label" );
+
+                            // iterate through the roles of the member, creating a role label
+                            //
+                            $.each( bidx.utils.getValue( member, "roles" ), function( mId, memberRole )
+                            {
+                                $memberRole = $roleSnippet.clone();
+                                $memberRole.addClass( "bidx-label-" + memberRole ).text( memberRole );
+                                roles.push( $memberRole );
+                            } );
+                            // add the roles to the DOM
+                            //
+                            $el.empty().append( roles );
+                           
                             break;
 
                         case "memberId":
@@ -432,9 +451,10 @@
             {
                 var $item
                 ,   dataRoles
+
                 ;
 
-          
+          bidx.utils.log("Summary", businessSummary);
                 // create clone of snippet
                 //
                 $item = snippets.$businessSummary.find( "li" ).clone();
@@ -456,6 +476,8 @@
                             break;
 
                         case "businessSummaryLink":
+                            // set the name and add the summary Id to the link
+                            //
                             $el.text( bidx.utils.getValue( businessSummary, "name" ) )
                                 .attr( "href", function( i, href )
                                 {
@@ -465,7 +487,17 @@
                             break;
 
                         case "country":
-                            //$el.text( bidx.utils.getValue( businessSummary.personalDetails.address[0], "country" ) );
+                            $el.text( bidx.utils.getValue( businessSummary, "countryOperation" ) );
+                            break;
+
+                        case "summary":
+
+                            $el.text( bidx.utils.getValue( businessSummary, "summary" ) );
+                            break;
+
+                        case "slogan":
+
+                            $el.text( bidx.utils.getValue( businessSummary, "slogan" ) );
                             break;
 
                         case "roles":
