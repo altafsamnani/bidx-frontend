@@ -321,9 +321,12 @@ function callProviderLogoutURL ($url)
      echo '
         <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
         <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/jquery.noty.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/top.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/center.js?ver=2.0.3"></script>
+        <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/themes/default.js?ver=2.0.3"></script>
         <script type="text/javascript">
             jQuery(function() {
-              noty({ type: "success",text:"Please wait while we log you out"} );
+              var n = noty({ type: "success",text:"Please wait while we log you out"} );
               jQuery("#myiframe").load(function(){
                window.location.replace("'.home_url().'"); });
             });
