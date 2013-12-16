@@ -11,11 +11,12 @@
     ,   $sideBar                = $element.find( ".sideBar" )
     ,   $views                  = $element.find( ".views > .view" )
     ,   $snippets               = $element.find( ".snippets .snippet" )
-    ,   $memberList             = $element.find( ".memberList" )
+    ,   $memberList             = $element.find( ".js-member-list" )
     ,   $newsList               = $element.find( ".newsList" )
-    ,   $businesssummariesList  = $element.find( ".businesssummariesList" )
+    ,   $businessSummaryList     = $element.find( ".js-businessSummaries-list" )
 
     ,   $memberPager            = $views.filter( ".viewMembers" ).find( ".pagerContainer .pager" )
+    ,   $businesssummariesPager = $views.filter( ".viewBusinessSummaries" ).find( ".pagerContainer .pager" )
     ,   $newsPager              = $views.filter( ".viewNews" ).find( ".pagerContainer .pager" )
     ,   snippets                = {}
     ,   state
@@ -28,7 +29,7 @@
                 offset:         0
             ,   totalPages:     null
             }
-        ,   businesssummaries:
+        ,   businessSummaries:
             {
                 offset:         0
             ,   totalPages:     null
@@ -118,13 +119,13 @@
     {
 
         bidx.api.call(
-            "member.fetch"
+            "groupMembers.fetch"
         ,   {
                 extraUrlParameters:
                 [
                     {
                         label:      "sort"
-                    ,   value:      "lastname"
+                    ,   value:      "created"
                     }
                 ,   {
                         label:      "order"
@@ -139,6 +140,7 @@
                     ,   value:      paging.members.offset
                     }
                 ]
+            ,   id:                       bidxConfig.session.currentGroup
             ,   groupDomain:              bidx.common.groupDomain
 
             ,   success: function( response )
@@ -181,7 +183,7 @@
     {
         if( list )
         {
-            list.toggleClass( "loading" );
+            list.toggleClass( "pager-loading" );
         }
     }
 
@@ -211,7 +213,6 @@
             ,   useBootstrapTooltip:    true
             ,   onPageClicked:          function( e, originalEvent, type, page )
                 {
-                    //nextPageStart = ( (page - 1) * CONSTANTS.NUMBEROFPAGES ) + 1;
                     bidx.utils.log("Page Clicked", page);
 
                     // update internal page counter for members
@@ -241,58 +242,57 @@
                 ,   dataRoles
                 ;
 
-                if ( member.personalDetails )
+          
+                // create clone of snippet
+                //
+                $item = snippets.$member.find( "li" ).clone();
+               
+                dataRoles = $item.find( "[data-role]" );
+
+                $.each( dataRoles, function( idx, el )
                 {
-                    // create clone of snippet
-                    //
-                    $item = snippets.$member.clone();
-                    $item.removeClass( "snippet" );
-                    dataRoles = $item.find( "[data-role]" );
+                    var $el = $( el );
 
-                    $.each( dataRoles, function( idx, el )
+                    switch( $el.data( "role" ) )
                     {
-                        var $el = $( el );
+                        case "memberImage":
+                            $el.attr( "href", function( i, href )
+                                {
+                                    return href.replace( "%memberId%", bidx.utils.getValue( member, "id" ) );
+                                } )
+                            ;
+                            break;
 
-                        switch( $el.data( "role" ) )
-                        {
-                            case "memberImage":
-                                $el.attr( "href", function( i, href )
-                                    {
-                                        return href.replace( "%memberId%", bidx.utils.getValue( member, "bidxMeta.bidxEntityId" ) );
-                                    } )
-                                ;
-                                break;
+                        case "memberLink":
+                            $el.text( bidx.utils.getValue( member, "name" ) )
+                                .attr( "href", function( i, href )
+                                {
+                                    return href.replace( "%memberId%", bidx.utils.getValue( member, "id" ) );
+                                } )
+                            ;
+                            break;
 
-                            case "memberLink":
-                                $el.text( bidx.utils.getValue( member, "personalDetails.firstName" ) + " " + bidx.utils.getValue( member, "personalDetails.lastName" ) )
-                                    .attr( "href", function( i, href )
-                                    {
-                                        return href.replace( "%memberId%", bidx.utils.getValue( member, "bidxMeta.bidxEntityId" ) );
-                                    } )
-                                ;
-                                break;
+                        case "country":
+                            //$el.text( bidx.utils.getValue( member.personalDetails.address[0], "country" ) );
+                            break;
 
-                            case "country":
-                                $el.text( bidx.utils.getValue( member.personalDetails.address[0], "country" ) );
-                                break;
+                        case "roles":
+                            // waiting for BIDX-1546 so it can be implemented
+                            break;
 
-                            case "roles":
-                                // waiting for BIDX-1546 so it can be implemented
-                                break;
+                        case "memberId":
+                        case "memberView":
+                            $el.attr( "href", function( i, href )
+                                {
+                                    return href.replace( "%memberId%", bidx.utils.getValue( member, "id" ) );
+                                } )
+                            ;
+                            break;
+                    }
+                } );
 
-                            case "memberId":
-                            case "memberView":
-                                $el.attr( "href", function( i, href )
-                                    {
-                                        return href.replace( "%memberId%", bidx.utils.getValue( member, "bidxMeta.bidxEntityId" ) );
-                                    } )
-                                ;
-                                break;
-                        }
-                    } );
-
-                    items.push( $item );
-                }
+                items.push( $item );
+               
 
 
             } );
@@ -316,13 +316,13 @@
     function _getBusinessSummaries( cb )
     {
         bidx.api.call(
-            "groupsBusinesssummaries.fetch"
+            "groupsBusinessSummaries.fetch"
         ,   {
                 extraUrlParameters:
                 [
                     {
                         label:      "sort"
-                    ,   value:      "lastname"
+                    ,   value:      "created"
                     }
                 ,   {
                         label:      "order"
@@ -334,15 +334,19 @@
                     }
                 ,   {
                         label:      "offset"
-                    ,   value:      paging.businesssummaries.offset
+                    ,   value:      paging.businessSummaries.offset
                     }
                 ]
             ,   groupDomain:              bidx.common.groupDomain
 
             ,   success: function( response )
                 {
-                    bidx.utils.log("[businesssummaries] retrieved summaries ", response );
-
+                    bidx.utils.log("[businessSummaries] retrieved summaries ", response );
+                    _doInitBusinessSummariesListing(
+                    {
+                        response:   response
+                    ,   cb:         cb
+                    } );
 
                 }
 
@@ -371,6 +375,134 @@
                 }
             }
         );
+    }
+
+    function _doInitBusinessSummariesListing( data )
+    {
+        var items           = []
+        ,   pagerOptions    = {}
+        ,   fullName
+        ,   nextPageStart
+        ;
+
+
+        if ( data.response && data.response.businessSummaries && data.response.businessSummaries.length )
+        {
+
+            // if ( response.totalMembers > currentPage size  --> show paging)
+            //
+            pagerOptions  =
+            {
+                currentPage:            ( paging.businessSummaries.offset / CONSTANTS.BUSINESSSUMMARIES_LIMIT  + 1 ) // correct for api value which starts with 0
+            ,   totalPages:             Math.ceil( data.response.totalBusinessSummaries / CONSTANTS.BUSINESSSUMMARIES_LIMIT )
+            ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
+            ,   useBootstrapTooltip:    true
+
+            ,   itemContainerClass:     function ( type, page, current )
+                {
+                    return ( page === current ) ? "active" : "pointer-cursor";
+                }
+
+            ,   onPageClicked:          function( e, originalEvent, type, page )
+                {
+                    bidx.utils.log("Page Clicked", page);
+
+                    // update internal page counter for businessSummaries
+                    //
+                    paging.businessSummaries.offset = ( page - 1 ) * CONSTANTS.BUSINESSSUMMARIES_LIMIT;
+
+                    _toggleListLoading( $businessSummaryList );
+
+                    // load next page of businessSummaries
+                    //
+                    _getBusinessSummaries( function()
+                    {
+                        _toggleListLoading( $businessSummaryList );
+                        _showView( "businessSummaries" );
+
+                    } );
+                }
+            };
+
+            $businesssummariesPager.bootstrapPaginator( pagerOptions );
+
+            // create member listitems
+            //
+            $.each( data.response.businessSummaries, function( idx, businessSummary )
+            {
+                var $item
+                ,   dataRoles
+                ;
+
+          
+                // create clone of snippet
+                //
+                $item = snippets.$businessSummary.find( "li" ).clone();
+               
+                dataRoles = $item.find( "[data-role]" );
+
+                $.each( dataRoles, function( idx, el )
+                {
+                    var $el = $( el );
+
+                    switch( $el.data( "role" ) )
+                    {
+                        case "businessSummaryImage":
+                            $el.attr( "href", function( i, href )
+                                {
+                                    return href.replace( "%businessSummaryId%", bidx.utils.getValue( businessSummary, "id" ) );
+                                } )
+                            ;
+                            break;
+
+                        case "businessSummaryLink":
+                            $el.text( bidx.utils.getValue( businessSummary, "name" ) )
+                                .attr( "href", function( i, href )
+                                {
+                                    return href.replace( "%businessSummaryId%", bidx.utils.getValue( businessSummary, "id" ) );
+                                } )
+                            ;
+                            break;
+
+                        case "country":
+                            //$el.text( bidx.utils.getValue( businessSummary.personalDetails.address[0], "country" ) );
+                            break;
+
+                        case "roles":
+                            // waiting for BIDX-1546 so it can be implemented
+                            break;
+
+                        case "businessSummaryId":
+                        case "businessSummaryView":
+                            $el.attr( "href", function( i, href )
+                                {
+                                    return href.replace( "%businessSummaryId%", bidx.utils.getValue( businessSummary, "id" ) );
+                                } )
+                            ;
+                            break;
+                    }
+                } );
+
+                items.push( $item );
+               
+
+
+            } );
+
+            // finally add snippets to DOM element
+            //
+            $businessSummaryList
+                .empty()
+                .append( items )
+            ;
+        }
+
+        // execute cb function
+        //
+        if( $.isFunction( data.cb ) )
+        {
+            data.cb();
+        }
     }
 
     function _getNews( cb)
@@ -541,16 +673,16 @@
 
         switch ( options.section )
         {
-            case "businesssummaries":
+            case "businessSummaries":
                 // hide the carousel
                 //
                 $carousel.hide();
 
-                // load businesssummaries
+                // load businessSummaries
                 //
                 _getBusinessSummaries( function()
                 {
-                    _showView( "businesssummaries" );
+                    _showView( "businessSummaries" );
                 } );
 
             break;

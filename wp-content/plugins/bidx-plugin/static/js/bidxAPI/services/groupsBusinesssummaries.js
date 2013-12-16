@@ -6,12 +6,12 @@
 {
     var bidx    = window.bidx
     ,   api     = bidx.api
-    ,   groupsBusinesssummaries  = {}
+    ,   groupsBusinessSummaries  = {}
     ,   baseUrl = "/api/v1/groups/businesssummaries/"
     ,   params  = []
     ;
 
-    groupsBusinesssummaries.fetch = function( params )
+    groupsBusinessSummaries.fetch = function( params )
     {
         var method = "GET";
 
@@ -38,5 +38,5 @@
         } );
     };
 
-    api.groupsBusinesssummaries = groupsBusinesssummaries;
+    api.groupsBusinessSummaries = groupsBusinessSummaries;
 } )( jQuery );

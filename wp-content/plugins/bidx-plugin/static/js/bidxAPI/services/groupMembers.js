@@ -7,16 +7,16 @@
     var bidx            = window.bidx
     ,   api             = bidx.api
     ,   groupMembers    = {}
-//    ,   baseUrl         = "/api/v1/groups/%groupId%/member"
-    ,   baseUrl         = "/api/v1/search"
+    ,   baseUrl         = "/api/v1/groups/%groupId%/members"
     ,   params          = []
     ;
 
     groupMembers.fetch = function( params )
     {
         var method = "GET"
-        ,   url     = baseUrl
+        ,   url     = baseUrl.replace( "%groupId%", params.id )
         ;
+
 
         api._call(
         {
