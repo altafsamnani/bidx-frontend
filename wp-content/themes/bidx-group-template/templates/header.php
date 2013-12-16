@@ -8,7 +8,7 @@
 				if( $authenticated )
 				{
 ?>
-				<div class="iconbar-wrapper">
+				<div class="pull-right">
 					<?php echo do_shortcode( '[bidx app="group" view="navbar"]' );?>
 				</div>
 <?php

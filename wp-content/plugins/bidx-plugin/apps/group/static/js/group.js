@@ -3,7 +3,7 @@
 {
     "use strict";
 
-    var $navbar                 = $( ".bidx-navbar" )
+    var $navbar                 = $( ".iconbar" )
     ,   $bidx                   = $( bidx )
     ,   $element                = $( "#groupHome")
     ,   $carousel               = $element.find( "#groupCarousel" )

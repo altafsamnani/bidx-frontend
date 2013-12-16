@@ -147,7 +147,7 @@
                             ?>
                         </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 member-social">
                                 <?php
                                     $rowValues1 = array (
                                         __('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
@@ -160,7 +160,7 @@
                                         );
                                     }
                                     $rowValues = ( isset( $rowValues2 ) ) ? array_merge( $rowValues1, $rowValues2 ) : $rowValues1;
-                                    echo $this->addAdjacentRows ('pull-left', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'bid-social linkedin' ));
+                                    echo $this->addAdjacentRows ('pull-left', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'linkedin', 'Facebook' => 'facebook', 'Twitter' => 'twitter' ));
                                 ?>
                             </div>
 

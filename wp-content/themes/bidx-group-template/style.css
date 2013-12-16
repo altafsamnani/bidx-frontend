@@ -159,7 +159,6 @@ Company: bidX;
     /************************ Typografic styles ***************************/
 
     h1, h2, h3, label {
-        font-family:                'Lato', sans-serif;
         font-weight:                700;
         color:                      #34495e;
 
@@ -192,13 +191,6 @@ Company: bidX;
         }
 
 
-    p, div, span, input, button, select, textarea, a {
-        font-family:                'Lato', sans-serif;
-        font-weight:                400;
-    }
-
-
-
 
 
 
@@ -207,59 +199,6 @@ Company: bidX;
 
 
 
-    /************************  Form input styles *******************************/
-
-    select,
-    textarea,
-    input[type="text"],
-    input[type="password"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="date"],
-    input[type="month"],
-    input[type="time"],
-    input[type="week"],
-    input[type="number"],
-    input[type="email"],
-    input[type="url"],
-    input[type="search"],
-    input[type="tel"],
-    input[type="color"],
-    .uneditable-input {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-        border:                     2px solid #bdc3c7;
-    }
-
-    /* reset bootstrap border coloring */
-    select:focus,
-    textarea:focus,
-    input[type="text"]:focus,
-    input[type="password"]:focus,
-    input[type="datetime"]:focus,
-    input[type="datetime-local"]:focus,
-    input[type="date"]:focus,
-    input[type="month"]:focus,
-    input[type="time"]:focus,
-    input[type="week"]:focus,
-    input[type="number"]:focus,
-    input[type="email"]:focus,
-    input[type="url"]:focus,
-    input[type="search"]:focus,
-    input[type="tel"]:focus,
-    input[type="color"]:focus,
-    .uneditable-input:focus,
-    .form-control:focus {
-        border-color:               #bdc3c7;
-        outline:                    none;
-        -webkit-box-shadow:         none;
-        -moz-box-shadow:            none;
-        box-shadow:                 none;
-    }
 
     textarea {
         resize:                     vertical;
@@ -271,30 +210,6 @@ Company: bidX;
 
     form .controls {
         position:                   relative;
-    }
-
-    form .controls.control-error .validation-icon {
-        background: url( assets/img/icons/icon-error.png ) no-repeat top left transparent;
-    }
-/*     form .controls.control-valid .validation-icon {
-    background: url( assets/img/icons/icon-valid.png ) no-repeat top left transparent;
-} */
-    form .controls .validation-icon {
-
-        width:                      25px;
-        height:                     25px;
-
-        display:                    block;
-        margin-right:               -32px;
-        margin-top:                 7px;
-
-        position:                   absolute;
-        right:                      0;
-        top:                        0;
-    }
-
-    form .controls.input-append .validation-icon {
-        margin-right:               -80px;
     }
 
     form .controls input.error,
@@ -401,12 +316,6 @@ Company: bidX;
         header.navbar .navbar-inner .container .row {
             height:                     100%;
         }
-        header.navbar .navbar-inner .iconbar {
-            margin: 0;
-            padding:                    0;
-            height:                     42px
-
-        }
 
         header.navbar .navbar-inner .iconbar > ul {
             height:                     inherit;
@@ -415,15 +324,6 @@ Company: bidX;
             margin:                     0;
          }
 
-        .iconbar-horizontal > ul > li {
-            float:                      left;
-            height:                     inherit;
-        }
-
-        .iconbar-horizontal > ul > li > a {
-             padding: 0 12px;
-             height: inherit;
-        }
         .iconbar > ul > li > a > i {
             height: inherit;
             width: 34px;
@@ -446,18 +346,6 @@ Company: bidX;
             position:               relative;
             text-decoration:        none;
         }
-        .iconbar > ul > li > a:hover,
-        .iconbar > ul > li > a:focus {/*
-            color:                  #1abc9c;
-        */}
-
-        .iconbar-horizontal .iconbar-unread {
-            right: 8px;
-            top: 3px;
-        }
-        .iconbar-info .iconbar-unread {
-            background-color: #226491;
-        }
         .iconbar-unread {
             background-color: #2a7aaf;
             border-radius: 50%;
@@ -469,9 +357,9 @@ Company: bidX;
             min-width: 14px;
             padding: 0 2px;
             position: absolute;
-            right: 20px;
             text-align: center;
-            top: -2px;
+            right: 8px;
+            top: 3px;
             -webkit-font-smoothing: auto;
         }
 
@@ -924,19 +812,6 @@ footer .page-footer .footer-bar {
         }
 
 
-.twitter {
-    background-position: 0 -150px;
-}
-
-
-.facebook {
-    background-position: -38px -150px;
-}
-
-.linkedin {
-    background-position: -75px -150px;
-}
-
 /* end footer styles */
 
 /*******************************************************************************************
@@ -949,58 +824,6 @@ footer .page-footer .footer-bar {
 .carousel-inner img {
     width:              100%;
 }
-
-.bid-social.twitter {
-    /*background: url("assets/img/flat-icons.png") no-repeat scroll -18px -16px transparent;*/
-}
-
-.bid-social.facebook {
-    /*background: url("assets/img/flat-icons.png") no-repeat scroll -112px -16px transparent;*/
-}
-
-.bid-social {
-    display: block;
-    float: left;
-    height: 32px;
-    margin-right: 8px;
-    /*text-indent: -3333px;*/
-    width: 32px;
-}
-
-.linkedin .li-connect-widget .li-connect-mark {
-    background: none !important;
-    height: 32px !important;
-    width: 32px !important;
-}
-
-.bid-social.linkedin {
-    /*background: url("assets/img/flat-icons.png") no-repeat scroll -18px -62px transparent !important;*/
-    height: 32px !important;
-    width: 32px !important;
-    text-indent: 0;
-}
-
-.skypeclass p {
-    margin: 0;
-}
-
-.skypeclass p a {
-    /*background: url("assets/img/flat-icons.png") no-repeat scroll -158px -62px transparent !important;*/
-    margin: 0;
-    display: block !important;
-    height: 32px !important;
-    width: 32px !important;
-}
-
-.skypeclass p img {
-    margin: 0 !important;
-    vertical-align: baseline !important;
-    visibility: hidden !important;
-}
-
-.progress {/*
-    height: 24px;
-*/}
 
 .progress .bar {
     background-color: #1ABC9C;

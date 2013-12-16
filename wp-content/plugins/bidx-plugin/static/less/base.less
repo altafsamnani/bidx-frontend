@@ -16,8 +16,9 @@
 .text-primary-light {
     color: lighten(@brand-primary, 25%);
 }
-
-
+.text-white {
+    color: #FFF;
+}
 
 // Icons manipulation
 // -------------------------
@@ -37,20 +38,87 @@
     }
 }
 
+.iconbar {
+    .fa {
+        font-size: ceil(@font-size-base * 1.4);
+    }
+    a[type="button"] {
+        padding: floor(@padding-base-vertical) @padding-base-horizontal;
+        display: block;
+    }
+}
+
+.footer-bar {
+    .fa {
+        font-size: ceil(@font-size-base * 1.4);
+        margin-right: @padding-base-horizontal;
+    }
+    .col-sm-6 {
+        margin-top: ceil(@font-size-base * 1.05);
+    }
+}
+
+.member-social {
+    .pull-left {
+        position: relative;
+        height: 32px !important;
+        width: 32px !important;
+        margin-right: 8px;
+    }
+    .fa {
+        font-size: ceil(@font-size-base * 2.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        color: @brand-primary;
+    }
+
+    .linkedin  {
+        .IN-widget {
+            position: absolute;
+            top: 0;
+            z-index: 1;
+        }
+        .li-connect-mark {
+            background: none !important;
+            height: 32px !important;
+            width: 32px !important;
+        }
+    }
+
+    .skypeclass p {
+        margin: 0;
+    }
+
+    .skypeclass p a {
+        margin: 0;
+        display: block !important;
+        height: 32px !important;
+        width: 32px !important;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+    }
+
+    .skypeclass p img {
+        margin: 0 !important;
+        vertical-align: baseline !important;
+        visibility: hidden !important;
+    }
+
+}
+
+
+
+
+
 // Elements
 // -------------------------
 .divider {
     background-color: lighten(@brand-primary, 25%);
     height: 5px;
 }
-
-// Carousel
-// -------------------------
-.carousel-caption {
-    .rgba;
-}
-
-
 
 
 .view {
@@ -75,11 +143,127 @@
 
 
 
+// --------------------------------------------------
+// Bootstrap Overides
+// --------------------------------------------------
 
-/* Custom Helpers */
+// alerts.less
+// -------------------------
 
+// badges.less
+// -------------------------
+
+// breadcrumbs.less
+// -------------------------
+
+// button-groups.less
+// -------------------------
+
+// buttons.less
+// -------------------------
+
+// carousel.less
+// -------------------------
+.carousel-caption {
+    .rgba;
+}
+
+// close.less
+// -------------------------
+
+// code.less
+// -------------------------
+
+// component-animations.less
+// -------------------------
+
+// dropdowns.less
+// -------------------------
+
+// forms.less
+// -------------------------
+
+.form-control {
+    height: @input-height-base;
+    color: @input-color;
+    background-color: @input-bg;
+    border: 2px solid @input-border;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+// glyphicons.less
+// -------------------------
+
+// grid.less
+// -------------------------
+
+// input-groups.less
+// -------------------------
+.input-group-addon {
+    padding: floor(@padding-base-vertical * 0.5) @padding-base-horizontal;
+    font-size: ceil(@font-size-base * 1.5); // ~21px
+    border: 2px solid @input-group-addon-border-color;
+    color: darken(@brand-primary, 25%);
+    background-color: @input-group-addon-bg;
+}
+// jumbotron.less
+// -------------------------
+
+// labels.less
+// -------------------------
+
+// list-group.less
+// -------------------------
+
+// media.less
+// -------------------------
+
+// modals.less
+// -------------------------
+
+// navbar.less
+// -------------------------
+
+// navs.less
+// -------------------------
+
+// pager.less
+// -------------------------
+
+// pagination.less
+// -------------------------
+
+// panels.less
+// -------------------------
+
+// popovers.less
+// -------------------------
+
+// progress-bars.less
+// -------------------------
+
+// tables.less
+// -------------------------
+
+// thumbnails.less
+// -------------------------
+
+// tooltip.less
+// -------------------------
+
+// type.less
+// -------------------------
+
+// utilities.less
+// -------------------------
 .hide-overflow {
     overflow: hidden !important;
 }
 
-/* \ Custom Helpers */
+// wells.less
+// -------------------------
+
+

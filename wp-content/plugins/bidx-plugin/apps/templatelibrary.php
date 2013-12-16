@@ -695,22 +695,22 @@ class TemplateLibrary
                             style="width:300px; height:20px;"></iframe>';
                     break;
                 case 'linkedin':
-                    $scriptContent = '<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-<script type="IN/MemberProfile" data-id="' . $username . '" data-format="click" data-related="true"></script><i class="fa fa-linkedin-square"></i>';
+                    $scriptContent = '<i class="fa fa-linkedin-square"></i><script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+<script type="IN/MemberProfile" data-id="' . $username . '" data-format="click" data-related="true"></script>';
                     break;
 
                 case 'skype' :
-                    $scriptContent = '<script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
-                              <div id="SkypeButton_Chat_' . $username . '_1">
-                                <script type="text/javascript">
-                                  Skype.ui({
-                                    "name": "chat",
-                                    "element": "SkypeButton_Chat_' . $username . '_1",
-                                    "participants": ["' . $username . '"]
-                                  });
-                                </script>
-                                <i class="fa fa-skype"></i>
-                              </div>';
+                    $scriptContent = '<i class="fa fa-skype"></i>
+                                <script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
+                                <div id="SkypeButton_Chat_' . $username . '_1">
+                                    <script type="text/javascript">
+                                      Skype.ui({
+                                        "name": "chat",
+                                        "element": "SkypeButton_Chat_' . $username . '_1",
+                                        "participants": ["' . $username . '"]
+                                      });
+                                    </script>
+                                </div>';
                     break;
 
                 case 'facebookprofile' :
@@ -720,13 +720,13 @@ class TemplateLibrary
                     $fbUrl = 'http://www.facebook.com/' . $username;
 
 
-                    $scriptContent = '<a title="View my Facebook Profile" target="_blank" class="bid-social facebook" href="' . $fbUrl . '"><i class="fa fa-facebook-square"></i></a>';
+                    $scriptContent = '<a title="View my Facebook Profile" target="_blank" href="' . $fbUrl . '"><i class="fa fa-facebook-square"></i></a>';
                     break;
 
                 case 'twitterprofile' :
                     $twitterUserName = str_replace ("#", "", $username);
                     $twitterUrl = 'https://twitter.com/' . $twitterUserName;
-                    $scriptContent = '<a title="View my Twitter Profile" target="_blank" class="bid-social twitter" href="' . $twitterUrl . '"><i class="fa fa-twitter-square"></i></a>';
+                    $scriptContent = '<a title="View my Twitter Profile" target="_blank" href="' . $twitterUrl . '"><i class="fa fa-twitter-square"></i></a>';
                     break;
             }
         }

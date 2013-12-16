@@ -19,16 +19,16 @@
     <div class="page-footer bg-primary-dark">
         <div class="container">
             <div class="footer-bar row">
-            	<div class="pull-left left-block col-sm-6">
+            	<div class="pull-left col-sm-6">
             		<div class="follow-us pull-left">Follow us</div>
-            	 	<ul class="nav nav-pills">
-                        <li><a target="_blank" href="https://twitter.com/bid_x"><i class="fa fa-twitter-square"></i></a></li>
-                        <li><a target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook-square"></i></a></li>
-                        <li><a target="_blank" href="http://www.linkedin.com/company/bidx"><i class="fa fa-linkedin-square"></i></a></li>
-                    </ul>
+            	 	<div class="btn-group">
+                        <a target="_blank" href="https://twitter.com/bid_x"><i class="fa fa-twitter-square"></i></a>
+                        <a target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook-square"></i></a>
+                        <a target="_blank" href="http://www.linkedin.com/company/bidx"><i class="fa fa-linkedin-square"></i></a>
+                    </div>
             	</div>
 
-            	<div class="pull-right right-block col-sm-6 text-right">
+            	<div class="pull-right col-sm-6 text-right">
             		<div class="copyright">&copy; <?php echo date("Y") ?>. bidX.net. <?php _e('All rights reserved','bidxtheme')?></div>
                     <div class="inline-list footer-menu">
             			<div><a href="/sitemap"><?php _e('Sitemap','bidxtheme')?></a></div>
