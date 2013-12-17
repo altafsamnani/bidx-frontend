@@ -173,3 +173,38 @@
   background-color: transparent\9;
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@{ieAlphaColour}, endColorstr=@{ieAlphaColour})"; // IE 8+
 }
+
+// Triangle
+//
+// https://github.com/stijnj/less-triangle/blob/master/less-triangle.less
+//
+.triangle-base() {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+}
+.triangle(@direction, @size, @color) when (@direction = up) {
+    .triangle-base();
+    border-left: @size solid transparent;
+    border-right: @size solid transparent;
+    border-bottom: @size solid @color;
+}
+.triangle(@direction, @size, @color) when (@direction = down) {
+    .triangle-base();
+    border-left: @size solid transparent;
+    border-right: @size solid transparent;
+    border-top: @size solid @color;
+}
+.triangle(@direction, @size, @color) when (@direction = left) {
+    .triangle-base();
+    border-top: @size solid transparent;
+    border-bottom: @size solid transparent;
+    border-right: @size solid @color;
+}
+.triangle(@direction, @size, @color) when (@direction = right) {
+    .triangle-base();
+    border-top: @size solid transparent;
+    border-bottom: @size solid transparent;
+    border-left: @size solid @color;
+}

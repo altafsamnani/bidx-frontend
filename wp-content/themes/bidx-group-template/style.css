@@ -1724,45 +1724,11 @@ form .row .input-prepend {
     }
 
 
-   /* cancel out bootstrap dropdown-menu */
-    header.navbar .nav .dropdown-menu,
-    header.navbar .iconbar ul.dropdown-menu
-    {
-        border:                                 0;
-        -webkit-box-shadow:                     none;
-        -moz-box-shadow:                        none;
-        box-shadow:                             none;
-        padding:                                0;
-    }
-
-    header.navbar .nav > li > .dropdown-menu:before
-     {
-        content: "";
-        border-style: solid;
-        border-width: 0 9px 9px 9px;
-        border-color: transparent transparent #34495e transparent;
-        height: 0;
-        position: absolute;
-        left: 15px;
-        top: 5px;
-        width: 0;
-        -webkit-transform: rotate(360deg);
-    }
-
-    header.navbar .nav > li >.dropdown-menu:after {
-        border-bottom: 6px solid #34495e;
-        content: '';
-    }
 
 
     header.navbar .nav ul li:first-child,
     header.navbar .iconbar ul.dropdown-menu li:first-child {
-        border-radius:                          6px 6px 0 0;
         padding-top:                            3px;
-    }
-    header.navbar .nav ul li:last-child,
-    header.navbar .iconbar ul.dropdown-menu li:last-child {
-        border-radius:                          0 0 6px 6px;
     }
 
     header.navbar .nav ul li:only-child,
@@ -1771,13 +1737,8 @@ form .row .input-prepend {
     }
 
     header.navbar .nav ul li {
-        background-color:                       #34495e;
         padding:                                0 3px 3px;
         position:                               relative;
-    }
-
-    header.navbar .dropdown-menu > li > a {
-        color:                                  #fff;
     }
 
     /* iconbar styles */
@@ -1795,18 +1756,6 @@ form .row .input-prepend {
     header.navbar .iconbar ul.dropdown-menu li {
         padding: 0 3px 3px;
         position: relative;
-    }
-
-    header.navbar .iconbar > ul > li .dropdown-menu:after {
-        /* create little transparent arrow in iconbar */
-        position: absolute;
-        top: -6px;
-        right: 22px;
-        display: inline-block;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid #fff;
-        border-left: 6px solid transparent;
-        content: '';
     }
 
     /* end iconbar styles*/
@@ -1926,61 +1875,6 @@ form .row .input-prepend {
         /* end header controls */
 
 
-        /* navigation styles*/
-        header.navbar ul.nav li.dropdown:hover > ul.dropdown-menu {
-            /* results in onhover show of submenu */
-            display:                    block;
-        }
-
-
-        header.navbar .menu-main {
-            margin: 10px 0 0 0;
-            /*float: right;*/
-            position:                   absolute;
-            bottom:                     0;
-            right:                      0;
-        }
-
-        header.navbar .menu-main .nav {
-            margin-right:               0;
-        }
-
-        header.navbar .nav > li {
-            margin-right:               5px;
-            padding-bottom:             10px;
-
-        }
-
-        header.navbar .nav > li.active {
-            background:                             url(assets/img/nav-active-menu-selector.png) no-repeat 50% 30px;
-        }
-
-        header.navbar .nav > li:last-child {
-            margin-right:               0;
-        }
-
-
-        header.navbar .nav > li > a {
-            padding:                                5px 40px;
-            font-size:                              20px;
-            -webkit-border-radius:                  5px;
-            -moz-border-radius:                     5px;
-            border-radius:                          5px;
-        }
-
-
-
-
-
-        header.navbar .nav > li > a .caret {
-        margin-top:             10px;
-        }
-
-        header.navbar .nav > li > ul {
-        margin-top:             -4px;
-        }
-
-
         /* cancel bootstrap styles */
         header.navbar .nav > li.active > a, header.navbar .nav > li.active > a:hover, header.navbar .nav > li.active > a:focus {
             color:                                  #444;
@@ -1988,24 +1882,8 @@ form .row .input-prepend {
             -webkit-box-shadow:                     none;
             -moz-box-shadow:                        none;
             box-shadow:                             none;
-
-
         }
 
-
-        header.navbar .nav > li.active > a,
-        header.navbar .nav > li.active > a:hover,
-        header.navbar .nav > li.active > a:focus {
-            font-weight:                bold;
-        }
-
-
-        header.navbar .nav > li > a:hover,
-            header .navbar .nav > li > a:focus,
-            header .navbar .nav li.dropdown.open > .dropdown-toggle {
-            background-color: #EBEDEF;
-                color: #32495E;
-            }
 
         /* end header */
 

@@ -46,6 +46,20 @@
         padding: floor(@padding-base-vertical) @padding-base-horizontal;
         display: block;
     }
+    .btn-group {
+        &.open:after {
+            .triangle(up, 6px, lighten( @brand-primary, 40%) );
+            position: absolute;
+            bottom: 0;
+            right: 16px;
+        }
+        a {
+        color: @white;
+            :hover {
+                color: lighten( @brand-primary, 40%);
+            }
+        }
+    }
 }
 
 .footer-bar {
@@ -109,7 +123,53 @@
 
 }
 
-
+// Main Menu
+// -------------------------
+header .menu-main {
+    margin: 10px 0 0 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    .nav {
+        margin-right: 0;
+        > li {
+            margin-right: 5px;
+            padding-bottom: 10px;
+            &.active:after {
+                .triangle(up, 10px, lighten( @brand-primary, 25%) );
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                margin-left: -10px;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+            &.dropdown:hover > ul.dropdown-menu {
+                display: block;
+            }
+            .dropdown-menu {
+                margin-top: -4px;
+                &:before {
+                    .triangle(up, 9px, desaturate( darken(@brand-primary, 25%), 25%) );
+                    position: absolute;
+                    left: 15px;
+                    top: -9px;
+                }
+            }
+            > a {
+                .rounded(5px);
+                padding: @padding-small-vertical ( @padding-large-vertical * 4);
+                font-size: floor(@font-size-base * 1.45);
+            }
+        }
+    }
+}
+.dropdown-menu {
+    .box-shadow(none);
+    border: 0;
+    padding: 0;
+}
 
 
 
@@ -158,7 +218,9 @@
 
 // button-groups.less
 // -------------------------
-
+.btn-group.open .dropdown-toggle {
+    .box-shadow(none);
+}
 // buttons.less
 // -------------------------
 
