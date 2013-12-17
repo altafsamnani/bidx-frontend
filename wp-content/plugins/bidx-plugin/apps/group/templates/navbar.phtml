@@ -139,9 +139,8 @@
 <?php
                 }
 
-                if (!empty( $this -> sessionData -> data ) ){
 
-                    if ( !empty( $currentGroup ) && !empty( $groups ) && !isset( $groups->$currentGroup )) {
+                    if ( !$inGroup) {
 ?>
                         <li><a href="#joinGroup"><?php _e('Join this group', 'bidxplugin')?></a></li>
 <?php
@@ -150,7 +149,7 @@
                         <li><a href="#leaveGroup"><?php _e('Leave this group', 'bidxplugin')?></a></li>
 <?php
                     }
-                }
+
 
                 if( !$currentGroupAdmin && $hasGroups ) {?>
 
