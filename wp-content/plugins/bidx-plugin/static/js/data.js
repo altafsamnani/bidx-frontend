@@ -40,12 +40,12 @@
 
             $.each( key, function( idx, k )
             {
-                result[ idx ] = items[ context ].byKey[ key ].label;
+                result[ idx ] = ( items[ context ].byKey[ k ] || {} ).label;
             } );
         }
         else
         {
-            result = items[ context ].byKey[ key ].label;
+            result = ( items[ context ].byKey[ key ] || {} ).label;
         }
 
         return result;

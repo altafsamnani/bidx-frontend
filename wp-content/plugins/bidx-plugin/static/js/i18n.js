@@ -45,12 +45,14 @@
 
             $.each( key, function( idx, k )
             {
-                result[ idx ] = items[ context ].byKey[ key ].label;
+                //result[ idx ] = bidx.utils.getValue( items, context + ".byKey." + k  + ".label" );
+                result[ idx ] = ( items[ context ].byKey[ k ] || {} ).label;
             } );
         }
         else
         {
-            result = items[ context ].byKey[ key ].label;
+            //result = bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
+            result = ( items[ context ].byKey[ key ] || {} ).label;
         }
 
         return result;
