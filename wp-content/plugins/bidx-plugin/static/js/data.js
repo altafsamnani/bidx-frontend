@@ -25,7 +25,9 @@
     //
     function i( key, context )
     {
-        var result;
+        var result
+        ,   byKey
+        ;
 
         if ( !items[ context ] )
         {
@@ -38,12 +40,12 @@
 
             $.each( key, function( idx, k )
             {
-                result[ idx ] = bidx.utils.getValue( items, context + ".byKey." + k  + ".label" );
+                result[ idx ] = items[ context ].byKey[ key ].label;
             } );
         }
         else
         {
-            result = bidx.utils.getValue( items, context + ".byKey." + key  + ".label" );
+            result = items[ context ].byKey[ key ].label;
         }
 
         return result;
@@ -86,6 +88,7 @@
         //
         if ( items[ context ] && items[ context ].mtime > oldestAllowedMTime )
         {
+
             cb( null, items[ context ].data );
             return;
         }
