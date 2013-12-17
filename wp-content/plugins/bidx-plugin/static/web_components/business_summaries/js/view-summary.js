@@ -246,8 +246,13 @@ bidx.widgets = {
                                             <%valuetag%>%summaryFinancingNeeded%</%valuetag%>\
                                         </div>\
                                         <div class='col-sm-6'>\
-                                            <%labeltag%>Investment type</%labeltag%>\
-                                            <%valuetag%><a target='_blank' href='%hostUrl%/%bidxEntityId%/'>View more</%valuetag%>\
+                                            <%labeltag%>Personal Expertise</%labeltag%>\
+                                            <%valuetag%>%personalExpertise%</%valuetag%>\
+                                        </div>\
+                                    </div>\
+                                     <div class='row'>\
+                                        <div class='col-sm-6'>\
+                                            <%valuetag%><a target='_blank' href='%hostUrl%/%bidxEntityId%/'>View more</a></%valuetag%>\
                                         </div>\
                                     </div>\
                                 </div>";
@@ -288,6 +293,7 @@ bidx.widgets = {
                             .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
                             .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
                             .replace( /%productService%/g, i18nItem.productService    ? i18nItem.productService      : emptyVal )
+                            .replace( /%personalExpertise%/g, i18nItem.personalExpertise    ? i18nItem.personalExpertise      : emptyVal )
                             ;
 
                             // Else add the findings to the element and remove the disabled class and attribute
