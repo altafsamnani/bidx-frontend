@@ -803,7 +803,7 @@
     {
         var accordionHeadingSelector    = ".panel-heading"
         ,   $element                    = $( element )
-        ,   $accordionGroup             = $element.closest( ".panel-group" )
+        ,   $accordionGroup             = $element.closest( ".panel" )
         ,   $accordionHeading
         ,   $errorCount
         ,   errorCount
@@ -880,7 +880,7 @@
         //
         function _showErrorCount()
         {
-            var $errorCount = $accordionHeading.find( ".badge-important" );
+            var $errorCount = $accordionHeading.find( ".js-error-count" );
 
             // if error count does not yet exist
             //
@@ -888,10 +888,10 @@
             {
                 $errorCount = $( "<span/>",
                 {
-                    class:      "pull-right badge badge-important"
+                    class:      "pull-right badge js-error-count"
                 } );
 
-                $accordionHeading.find( ".accordion-toggle" ).append( $errorCount );
+                $accordionHeading.prepend( $errorCount );
             }
 
             if ( errorCount > 0 )
