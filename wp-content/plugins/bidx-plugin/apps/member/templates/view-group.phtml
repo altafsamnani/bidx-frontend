@@ -19,7 +19,9 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
 <hr />
 <ul class="media-list">
     <li class="media">
-        <div class="pull-left"><img width="100" height="100" <?php echo $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded media-object"></div>
+        <div class="pull-left">
+            <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
+        </div>
         <div class="media-body">
             <h4 class="sidebar-block-title"><?php echo $groupInfo->groupName ?></h4>
             <p><?php echo $groupInfo->slogan ?></p>
@@ -53,7 +55,9 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
             }
 ?>
     <li class="media">
-        <div class="pull-left"><img width="100" height="100" <?php echo $groupDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded media-object"></div>
+        <div class="pull-left">
+            <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
+        </div>
         <div class="media-body">
             <h4 class="sidebar-block-title"><?php echo $groupValue->name?></h4>
             <p><?php echo $groupValue->slogan?></p>

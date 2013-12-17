@@ -5811,17 +5811,17 @@ a.list-group-item.active:focus .list-group-item-text {
 }
 
 .panel-primary {
-  border-color: #3498db;
+  border-color: #284e68;
 }
 
 .panel-primary > .panel-heading {
   color: #ffffff;
-  background-color: #3498db;
-  border-color: #3498db;
+  background-color: #284e68;
+  border-color: #284e68;
 }
 
 .panel-primary > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #3498db;
+  border-top-color: #284e68;
 }
 
 .panel-primary > .panel-heading > .dropdown .caret {
@@ -5829,7 +5829,7 @@ a.list-group-item.active:focus .list-group-item-text {
 }
 
 .panel-primary > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #3498db;
+  border-bottom-color: #284e68;
 }
 
 .panel-success {
