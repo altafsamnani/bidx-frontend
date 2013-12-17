@@ -34,7 +34,7 @@
         //
     ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
     ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
-    ,   $btnAddAttachments                  = $attachmentsControl.find( "a[href$='#addAttachments']")
+    ,   $btnAddAttachments                  = $attachmentsControl.find( ".js-btn-add-attachments")
     ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
 
         // Since the data is coming from the member API, let's call the variable 'member'
@@ -226,7 +226,7 @@
             $btnAddAttachments.click( function( e )
             {
                 e.preventDefault();
-
+debugger;
                 // Make sure the media app is within our modal
                 //
                 $( "#media" ).appendTo( $addAttachmentsModal.find( ".modal-body" ) );
