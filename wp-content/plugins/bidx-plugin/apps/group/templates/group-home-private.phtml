@@ -63,7 +63,7 @@
                                 <h4 class="pull-left">
                                     <?php _e('New Business Summaries','bidxtheme')?>
                                 </h4>
-                                <a href="#home/businesssummaries" class="pull-right btn btn-info"><?php _e('view all','bidxtheme')?></a>
+                                <a href="#home/businessSummaries" class="pull-right btn btn-info"><?php _e('view all','bidxtheme')?></a>
                             </div>
                             <div class="panel-body">
                                 <div class="bidx-latest clearfix">
@@ -134,8 +134,10 @@
                 <div class="side-bar well sideBar">
                 <h2><?php _e('Create and grow', 'bidxtheme')?></h2>
 <?php
+                    echo do_shortcode( '[bidx app="group" view="join-group"]' );
                     echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
                     echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
+
 ?>
                 </div>
             </div>
@@ -193,7 +195,7 @@
                     <div data-role="slogan"></div>
                     <div data-role="industry"></div>
                     <div data-role="country"></div>
-                   
+
                     <div class="pull-right">
                         <a href="/businessSummary/%businessSummaryId%" data-role="businessSummaryView"><?php _e('View Business Summary','bidxtheme')?></a>
                     </div>

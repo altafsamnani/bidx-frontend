@@ -30,11 +30,20 @@
     //
     $groups = $sessionSvc->getGroups();
 
+
+
     // set boolean to display the profile menu
     //
-    $hasProfiles = count( $profiles) !== 0;
-    $hasGroups = count( $groups) > 1;
-	$isAdmin = $sessionSvc->isAdmin();
+    $hasProfiles    = count( $profiles) !== 0;
+    $hasGroups      = count( $groups) > 1;
+	$isAdmin        = $sessionSvc->isAdmin();
+
+    // check if the curent user is has joined this group
+    //
+    $currentGroup   = $this -> sessionData -> data -> currentGroup;
+    $groupIds       = array_keys ( (array)$this -> sessionData -> data -> groups );
+    $inGroup        = in_array( $currentGroup, $groupIds);
+    $showLogout     = true;
 ?>
 
 <div class="iconbar bg-primary-dark">
@@ -42,7 +51,7 @@
 <?php
         // only when a member has profiles, show the profile dropdown
         //
-        if ( $hasProfiles || $isAdmin ) {
+        if ( $isAdmin || ( $inGroup && $hasProfiles ) ) {
  ?>
             <div class="btn-group profiles">
                 <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Dashboards', 'bidxplugin')?>">
@@ -118,18 +127,19 @@
                 <i class="fa fa-cog"></i>
             </a>
             <ul class="dropdown-menu bg-primary-dark">
-                <li><a href="/member"><?php _e('Profile','bidxplugin')?></a></li>
-                <li><a href="/account/#account"><?php _e('Account settings','bidxplugin')?></a></li>
-                <li><a href="/media"><?php _e('All my documents','bidxplugin')?></a></li>
-
+<?php
+                // the following menu-items only to be displayed when user has joined the group
+                //
+                if ( $inGroup ) {
+?>
+                    <li><a href="/member"><?php _e('Profile','bidxplugin')?></a></li>
+                    <li><a href="/account/#account"><?php _e('Account settings','bidxplugin')?></a></li>
+                    <li><a href="/media"><?php _e('All my documents','bidxplugin')?></a></li>
 
 <?php
+                }
 
                 if (!empty( $this -> sessionData -> data ) ){
-
-                    $currentGroup   = $this->exst( $this->sessionData->data->currentGroup );
-                    $groups         = $this->exst( $this->sessionData->data->groups );
-                    $showLogout     = true;
 
                     if ( !empty( $currentGroup ) && !empty( $groups ) && !isset( $groups->$currentGroup )) {
 ?>
