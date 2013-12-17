@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>demogroup : Find Business Summaries</title>
+    <link rel="stylesheet" href="http://cleancookstoves.test.bidx.net/wp-content/themes/bidx-group-template/style.css">
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Business summary selector webcomponent</h1>
+<p>This component is a Javascript file hosted at bidx that allows for external lookup of BusinessSummaries that are owned by the user.<br />
+It automatically fills a html select fields with options.
+</p>
+<h3>How does it work?</h3>
+<ul>
+    <li>Add a select item to you html and add two specific attributes on the element
+        <ul>
+            <li>class="bidx-viewBusinessSummary"</li>
+            <li>data-bidxgroupid="8868" data-bidxgroupname="cleancookstoves"</li>
+            <li>Example &lt;div class="bidx-viewBusinessSummary" data-bidxgroupid="8868" data-bidxgroupname="cleancookstoves" data-labeltag="label" data-valuetag="div" /&gt;
+ </li>
+        </ul>
+    </li>
+    <li>Load the script below the footer in the page.
+<pre>
+&lt;script type="text/javascript"
+           src="http://cleancookstoves.test.bidx.net/wp-content/plugins/bidx-plugin/static/web_components/business_summaries/view-summary.js?ver=20131121"&gt;&lt;/script&gt;
+    </pre>
+        The domain name can be <i>test.bidx.net</i> for development purposes.
+    </li>
+</ul>
+<hr />
+
+<h1>Sample</h1>
+<p>Ensure that you are logged in on a bidx system</p>
+
+<div class="containerSummary">
+    <div class="bidx-viewBusinessSummary" data-bidxgroupid="8868" data-bidxgroupname="cleancookstoves" data-labeltag="label" data-valuetag="div">
+        <img src='/wp-content/themes/bidx/assets/img/ajax-loader.gif'>
+    </div>
+</div>
+
+<!-- Original Js  8868 -->
+<!--<script type="text/javascript" src="/wp-content/plugins/bidx-plugin/static/web_components/business_summaries/js/view-summary.js?ver=20131121"></script>-->
+
+<!-- Proxy Js -->
+<script type="text/javascript" src="/wp-content/plugins/bidx-plugin/static/web_components/business_summaries/view-summary.js?ver=20131121"></script>
+
+
+
+</body>
