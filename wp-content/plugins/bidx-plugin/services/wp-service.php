@@ -440,7 +440,14 @@ function get_string_translation ()
         echo "</pre>";
         exit;
     } else {
-        echo json_encode ($translatedArr);
+        $callback        = (isset ($_GET['callback'])) ? $_GET['callback'] : NULL;
+        $jsonStart       = ($callback) ? $callback.'( ' : NULL;
+
+        $jsonDecodedData = json_encode ($translatedArr);
+
+        $jsonEnd         = ($callback) ? ' );' : NULL;
+
+        echo $jsonStart.$jsonDecodedData.$jsonEnd;
     }
 
     exit;
