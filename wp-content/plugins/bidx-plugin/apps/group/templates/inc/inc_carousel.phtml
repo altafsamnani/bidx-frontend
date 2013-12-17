@@ -25,8 +25,6 @@
                     }
 ?>
                 </ol>
-
-
 <?php
             }
 ?>
@@ -55,10 +53,18 @@
             } // foreach
 ?>
             </div>
+<?php
+            // If there is only 1 image in the array don't show the nav arrows and the indicator
+            // TODO: Don't load the carousel plugin and the extra markup
+            if ( count($images) != 1 ) {
+?>
 
             <!-- Carousel nav -->
             <a class="left carousel-control img-rounded" href="#groupCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
             <a class="right carousel-control img-rounded" href="#groupCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+<?php
+            }
+?>
         </div>
     </div>
     <!-- // IMAGE Carousel -->
