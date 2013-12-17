@@ -1,9 +1,16 @@
-/* global bidx */
 ;( function( $ )
 {
+    "use strict";
+
     var $element        = $( "#editCompany" )
     ,   $controls       = $( ".editControls" )
     ,   $views          = $element.find( ".view" )
+
+        // Select all the elements in this app scope that have class names containing js-mode-
+        // this will be used for toggling UI elements between the standalone and slave state
+        //
+    ,   $appModeItems   = $element.find( "[class*=js-mode-]" )
+
     ,   $editForm       = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets       = $element.find( ".snippets" )
 
@@ -986,6 +993,13 @@
         if ( typeof options.slaveApp !== "undefined" )
         {
             slaveApp = options.slaveApp;
+
+            // Toggle the app mode item elements into the requested state
+            //
+            $appModeItems
+                .hide()
+                .filter( ".js-mode-" + ( slaveApp ? "slave" : "standalone" ) ).show()
+            ;
         }
 
         // Register callbacks
@@ -1089,6 +1103,13 @@
         slaveApp    = null;
         callbacks   = null;
 
+        // Revert the app mode items back into their initial state of standalone
+        //
+        $appModeItems
+            .hide()
+            .filter( ".js-mode-standalone" ).show()
+        ;
+
         bidx.common.removeAppWithPendingChanges( appName );
     };
 
@@ -1112,6 +1133,10 @@
     {
         window.bidx = {};
     }
+
+    // Make sure we are in a clean state the first time we run
+    //
+    reset();
 
     window.bidx.company = exports;
 } ( jQuery ));

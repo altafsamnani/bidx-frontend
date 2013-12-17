@@ -25,14 +25,16 @@
                     <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
                 </div>
                 <div class="panel-body">
-                    <div class="alert alert-info">
-                        <?php _e('In this section you can link your business to an existing company. If you do not yet have a company, you can skip this step by answering \'No\' to the first question. If you already created a company in the past, you can select it from the list','bidxplugin')?>
+                    <div class="alert alert-info js-mode-standalone">
+                        <?php _e('In this section you can create a company.','bidxplugin')?>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
 
-                            <h3><?php _e('Or create a new company','bidxplugin')?></h3>
-                            <div class="alert alert-info"><?php _e('Fill in below the details of the company under which you are running your business','bidxplugin')?></div>
+                            <h3>
+                                <span class="js-mode-slave"><?php _e('Or create a new company','bidxplugin')?></span>
+                                <span class="js-mode-standalone"><?php _e('Create a new company','bidxplugin')?></span>
+                            </h3>
 
                             <div class="form-group formfield">
                                 <label><?php _e('Company name','bidxplugin'); ?></label>
