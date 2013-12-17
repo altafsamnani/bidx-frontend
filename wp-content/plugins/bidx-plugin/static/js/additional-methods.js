@@ -160,8 +160,8 @@
             this.settings.messages[ element.name ]          = {};
         }
 
-        previous.originalMessage                            = this.settings.messages[ element.name ].remoteApi;
-        this.settings.messages[ element.name ].remoteApi    = previous.message; //this is default the 'remote' message
+        previous.originalMessage                            = this.settings.messages[ element.name ].remoteBidxApi;
+        this.settings.messages[ element.name ].remoteBidxApi    = previous.message; //this is default the 'remote' message
 
         // check if new value is the same as the previous value. In that case nothing changed so return valid
         //
@@ -198,7 +198,7 @@
                     if ( response )
                     {
                         bidx.utils.log("<RESPONSE>", response);
-                        validator.settings.messages[element.name].remoteApi = previous.originalMessage;
+                        validator.settings.messages[element.name].remoteBidxApi = previous.originalMessage;
 
                         if( response.status === "OK" )
                         {
@@ -228,7 +228,7 @@
                             // following code is based on fail handler of validator's remote call
                             //
                             errors = {};
-                            message = response.code || validator.defaultMessage( element, "remoteApi" );
+                            message = response.code || validator.defaultMessage( element, "remoteBidxApi" );
 
                             bidx.i18n.getItem( message, function( err, label )
                             {
@@ -279,7 +279,7 @@
                         // following code is based on fail handler of validator's remote call
                         //
                         errors = {};
-                        message = response.code || validator.defaultMessage( element, "remoteApi" );
+                        message = response.code || validator.defaultMessage( element, "remoteBidxApi" );
 
                         bidx.i18n.getItem( message, function( err, label )
                         {
@@ -323,7 +323,7 @@
 
         return "pending";
 
-    }, "Default message remoteApi" );
+    }, "Default message remoteBidxApi" );
 
 
     // Since bidx-location is special input control we cannot simply say "required"
