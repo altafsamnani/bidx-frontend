@@ -1,6 +1,8 @@
 /* global bidx */
 ;( function( $ )
 {
+    "use strict";
+
     var $element                    = $( "#businessSummary" )
     ,   $snippets                   = $element.find( ".snippets" )
 
@@ -247,6 +249,8 @@
         {
             dataKey:            "socialImpact"
         });
+
+        forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
 
         // Collect snippets from the DOM
         //
