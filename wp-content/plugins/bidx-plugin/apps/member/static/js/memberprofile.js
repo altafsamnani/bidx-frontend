@@ -219,7 +219,7 @@
                         bidx.utils.log( "[profile picture] selected profile picture", file );
 
                         $profilePictureContainer.data( "bidxData", file );
-                        $profilePictureContainer.html( $( "<img />", { "src": file.document  } ));
+                        $profilePictureContainer.html( $( "<img />", { "src": file.document, "class": "img-thumbnail" } ));
 
                         $changeProfilePictureModal.modal( "hide" );
                     }
