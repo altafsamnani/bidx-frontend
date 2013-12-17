@@ -95,6 +95,15 @@
             } );
 
         }
+
+        bidx.data.load( [ "industry" ] )
+            .done( function( response )
+            {
+                // Static data object "industry" loaded
+                //
+                bidx.utils.log( "Static Data Api: Industry loaded" );
+            } )
+        ;
     }
 
     // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
@@ -245,11 +254,11 @@
                 ,   dataRoles
                 ;
 
-          
+
                 // create clone of snippet
                 //
                 $item = snippets.$member.find( "li" ).clone();
-               
+
                 dataRoles = $item.find( "[data-role]" );
 
                 $.each( dataRoles, function( idx, el )
@@ -296,7 +305,7 @@
                             // add the roles to the DOM
                             //
                             $el.empty().append( roles );
-                           
+
                             break;
 
                         case "memberId":
@@ -311,7 +320,7 @@
                 } );
 
                 items.push( $item );
-               
+
 
 
             } );
@@ -454,11 +463,11 @@
 
                 ;
 
-          bidx.utils.log("Summary", businessSummary);
+                bidx.utils.log("Summary", businessSummary);
                 // create clone of snippet
                 //
                 $item = snippets.$businessSummary.find( "li" ).clone();
-               
+
                 dataRoles = $item.find( "[data-role]" );
 
                 $.each( dataRoles, function( idx, el )
@@ -500,6 +509,11 @@
                             $el.text( bidx.utils.getValue( businessSummary, "slogan" ) );
                             break;
 
+                        case "industry":
+
+                            $el.text( bidx.data.i( bidx.utils.getValue( businessSummary, "industry" )[0], "industry" ) );
+                            break;
+
                         case "roles":
                             // waiting for BIDX-1546 so it can be implemented
                             break;
@@ -516,7 +530,7 @@
                 } );
 
                 items.push( $item );
-               
+
 
 
             } );
@@ -709,6 +723,8 @@
                 // hide the carousel
                 //
                 $carousel.hide();
+
+                _showView( "load" );
 
                 // load businessSummaries
                 //
