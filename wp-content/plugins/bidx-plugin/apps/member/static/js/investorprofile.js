@@ -1,6 +1,7 @@
-/* global bidx */
 ;( function( $ )
 {
+    "use strict";
+
     var $element                        = $( "#editInvestor" )
     ,   $views                          = $element.find( ".view" )
     ,   $editForm                       = $views.filter( ".viewEdit" ).find( "form" )
@@ -30,7 +31,7 @@
         //
     ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
     ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
-    ,   $btnAddAttachments                  = $attachmentsControl.find( "a[href$='#addAttachments']")
+    ,   $btnAddAttachments                  = $attachmentsControl.find( ".js-btn-add-attachments")
     ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
 
     ,   $toggles                        = $element.find( ".toggle" ).hide()

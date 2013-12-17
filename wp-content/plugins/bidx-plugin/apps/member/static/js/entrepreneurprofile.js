@@ -226,7 +226,7 @@
             $btnAddAttachments.click( function( e )
             {
                 e.preventDefault();
-debugger;
+
                 // Make sure the media app is within our modal
                 //
                 $( "#media" ).appendTo( $addAttachmentsModal.find( ".modal-body" ) );
