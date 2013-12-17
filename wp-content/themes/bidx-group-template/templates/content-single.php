@@ -53,7 +53,7 @@
     <div class="col-sm-4">
       <br>
       <div class="well">
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills nav-stacked">
         <li class="nav-header"><h3><?php echo $categories[0]->name; ?></h3></li>
 <?php
         $id = get_the_ID();
