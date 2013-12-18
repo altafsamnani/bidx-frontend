@@ -130,7 +130,7 @@
 
     function _loadActiveMembers()
     {
-          // get recipient list and initiate recipient compose combobox (chosen)
+        // get recipient list and initiate recipient compose combobox (chosen)
         //
         _getMembers(
         {
@@ -139,47 +139,53 @@
         ,   offset:     0
         ,   callback:   function( data )
             {
-                // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
-                // which holds the contact info (unordered)
-                //
-                var listItems       = []
-                ,   option
-                ,   $options
-                ;
 
-                $options = $contactsDropdown.find( "option" );
-
-                if ( $options.length )
+                if ( data && data.sortIndex )
                 {
-                    $options.empty();
-                }
 
 
-                // sort the array, if not empty
-                //
-                if ( data.sortIndex.length )
-                {
-                    data.sortIndex = data.sortIndex.sort();
-                }
+                    // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
+                    // which holds the contact info (unordered)
+                    //
+                    var listItems       = []
+                    ,   option
+                    ,   $options
+                    ;
 
-                $.each( data.sortIndex, function( idx, key )
-                {
-                    option = $( "<option/>",
+                    $options = $contactsDropdown.find( "option" );
+
+                    if ( $options.length )
                     {
-                        value: data.contacts[ key ].value
+                        $options.empty();
+                    }
+
+
+                    // sort the array, if not empty
+                    //
+                    if ( data.sortIndex.length )
+                    {
+                        data.sortIndex = data.sortIndex.sort();
+                    }
+
+                    $.each( data.sortIndex, function( idx, key )
+                    {
+                        option = $( "<option/>",
+                        {
+                            value: data.contacts[ key ].value
+                        } );
+                        option.text( data.contacts[ key ].label );
+
+                        listItems.push( option );
                     } );
-                    option.text( data.contacts[ key ].label );
 
-                    listItems.push( option );
-                } );
+                    // add the options to the select
+                    //
+                    $contactsDropdown.append( listItems );
 
-                // add the options to the select
-                //
-                $contactsDropdown.append( listItems );
-
-                // init bidx_chosen plugin
-                //
-                $contactsDropdown.bidx_chosen();
+                    // init bidx_chosen plugin
+                    //
+                    $contactsDropdown.bidx_chosen();
+                }
             }
         } );
     }
