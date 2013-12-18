@@ -650,21 +650,6 @@ Company: bidX;
     top:                        18px;
 }
 
-.panel-open .accordion-state-icon {
-    -webkit-transform:          rotate(90deg);
-    -moz-transform:             rotate(90deg);
-    -ms-transform:              rotate(90deg);
-    -o-transform:               rotate(90deg);
-    transform:                  rotate(90deg);
-    filter:                     progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-
-    -webkit-transition:         -webkit-transform 0.3s;
-    -moz-transition:            -moz-transform 0.3s;
-    -o-transition:              -o-transform 0.3s;
-    transition:                 transform 0.3s;
-    -webkit-backface-visibility: hidden;
-}
-
 .panel-heading .heading-error-count {
     color:                      #FFF;
     background-color:           #B94A48;
