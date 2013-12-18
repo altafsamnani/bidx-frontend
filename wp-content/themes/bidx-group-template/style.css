@@ -82,16 +82,8 @@ Company: bidX;
         text-decoration:            none;
     }
 
-    .sprite {
-        background:                 url( assets/img/sprite.png ) no-repeat;
-    }
-
     .spacer {
         margin-bottom:              40px;
-    }
-
-    .jqHidden {
-        display:                    none; /* ditch this style asap, currently used for map plugin (its hidden by default with this class */
     }
 
     /************************ bidX default colours ***************************/
@@ -122,9 +114,6 @@ Company: bidX;
             background-color:       #FFF;
         }
 
-        .bidx-theme-colour-footer {
-            background-color:       #34495E;
-        }
         .bidx .btn.disabled,
         .bidx .btn.disabled:hover,
         .bdix .bnt.disabled:focus {
@@ -158,15 +147,6 @@ Company: bidX;
 
     /************************ Typografic styles ***************************/
 
-    h1, h2, h3 {
-        font-weight:                700;
-        color:                      #34495e;
-
-    }
-    h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-        line-height: 1.2em;
-    }
-
     h1,
     .h1 {
         font-size: 28px;
@@ -183,29 +163,11 @@ Company: bidX;
 
     }
 
-        h1 span {
-            display:                block;
-            font-size:              inherit;
-            font-weight:            700;
-            margin-top:             0;
-        }
-
-
-
-
-
     /************************  End Typografic styles ***************************/
-
-
-
 
 
     textarea {
         resize:                     vertical;
-    }
-
-    .bidx-edit form {
-        margin:                     0;
     }
 
     form .controls {
@@ -217,13 +179,6 @@ Company: bidX;
     form .controls.control-error .bidx-tagsinput-container {
         border-color:               #E83E3E;
     }
-
-    /* no green color on border when valid according to style guide */
-   /*  form .controls input.valid,
-   form .controls textarea.valid,
-   form .controls.control-valid .bidx-tagsinput-container {
-       border-color:               #2dcd6d;
-   } */
 
     form .control-group .error {
         color:                      #be2025;
@@ -273,41 +228,12 @@ Company: bidX;
         padding-top:                    0;
     }
 
-    .input-append .add-on, .input-prepend .add-on {
-        min-width:                      32px;
-        padding:                        9px 5px;
-        font-size:                      17.99px;
-        line-height:                    18px;
-        height:                         19px;
-        background-color:               #bdc3c7;
-        border:                         2px solid #bdc3c7;
-        color:                          #ffffff;
-        text-shadow:                    none;
-        text-indent:                    2px;
-        -webkit-transition:             border .25s linear, color .25s linear, background-color .25s linear;
-        -moz-transition:                border .25s linear, color .25s linear, background-color .25s linear;
-        -o-transition:                  border .25s linear, color .25s linear, background-color .25s linear;
-        transition:                     border .25s linear, color .25s linear, background-color .25s linear;
-        -webkit-backface-visibility:    hidden;
-    }
 
 
     /************************  End input styles ********************************/
 
 
     /************************  Generic Header styles ***********************************/
-
-        /* Bootstrap reset */
-
-        .navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner {
-            -webkit-box-shadow:     none;
-            -moz-box-shadow:        none;
-            box-shadow:             none;
-            background-image:       none;
-            border:                 none;
-        }
-
-        /* End Bootstrap reset */
 
 
     /* iconbar (topmenu) */
@@ -317,91 +243,10 @@ Company: bidX;
             height:                     100%;
         }
 
-        header.navbar .navbar-inner .iconbar > ul {
-            height:                     inherit;
-            display:                    block;
-            list-style-type:            none;
-            margin:                     0;
-         }
-
-        .iconbar > ul > li > a > i {
-            height: inherit;
-            width: 34px;
-            display: block;
-        }
-
-
-        .iconbar > ul > li {
-            margin:                 0;
-            padding:                0;
-        }
-        .iconbar > ul > li.active > a {
-            color:                  #1abc9c;
-        }
-        .iconbar > ul > li > a {
-            color:                  #ffffff;
-            display:                block;
-            font-size:              23.996px;
-
-            position:               relative;
-            text-decoration:        none;
-        }
-
-/*
-        .bidx-checkbox-unchecked {
-            width: 20px;
-            height: 20px;
-            background-color: #bdc3c7;
-            display: block;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-        }
-        .bidx-checkbox-checked {
-            width: 20px;
-            height: 20px;
-
-            background: url( assets/img/icons/icon-check.png ) no-repeat center center transparent;
-            background-color: #16a085;
-            display: block;
-
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-        } */
-
-    /* end Icon bar */
-
     /* searchbox */
 
         header.navbar .form-search {
             margin:                     0;
-        }
-
-        header.navbar .form-search .input-append .btn {
-            border-width: 2px;
-            border-style: solid;
-            border-color: #bdc3c7;
-            background-color: #fff;
-            color: #bdc3c7;
-
-            height: 32px;
-            padding: 0 6px 0 0;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none;
-            -webkit-border-radius: 0 5px 5px 0;
-            -moz-border-radius: 0 5px 5px 0;
-            border-radius: 0 5px 5px 0;
-            padding-left: 4px;
-            border-left-width: 0;
-
-
-            /* transition timing to match input field (standard bootstrap value) */
-            -webkit-transition: border linear .2s,box-shadow linear .2s;
-            -moz-transition: border linear .2s,box-shadow linear .2s;
-            -o-transition: border linear .2s,box-shadow linear .2s;
-            transition: border linear .2s,box-shadow linear .2s;
         }
 
          header.navbar .form-search .input-append .btn .bidx-search {
@@ -417,10 +262,6 @@ Company: bidX;
             border-radius: 5px 0 0 5px ;
         }
 
-        header.navbar .form-search:hover .search-query, header.navbar .form-search:hover .input-append .btn {
-
-        }
-
     /* end searchbox */
 
 
@@ -432,46 +273,6 @@ Company: bidX;
 
     /************************  Template styles *******************************/
 
-    .bidx-well {
-        padding:                    40px;
-        background-color:           #f5f5f5;
-
-        -webkit-border-radius:      10px ;
-        -moz-border-radius:         10px;
-        border-radius:              10px;
-    }
-
-    .bidx .side-bar {/*
-        background-color:           #e6e3de;
-        padding:                    20px;
-    */}
-
-    .bidx .side-bar h2 {/*
-        margin:                     0 0 10px 0;
-    */}
-
-    .bidx .side-bar .call-to-action {/*
-        background-color:           #fff;
-        padding:                    20px 14px;
-        line-height:                16px;
-
-        -webkit-border-radius:      4px;
-        -moz-border-radius:         4px;
-        border-radius:              4px;
-
-        margin-bottom:              10px;
-    */}
-
-
-    .bidx .side-bar hr {/*
-        border: 1px solid #dcd7d0;
-    */}
-
-    .bidx .side-bar .call-to-action.transparent {/*
-         background-color:          transparent;
-         border:                    none;
-         padding:                   0;
-    */}
 
     /* This might need to change for smaller screen breakpoints  */
     .pageHeader {
@@ -660,15 +461,6 @@ Company: bidX;
     display:                    none;
 }
 
-.details-block label {
-    font-weight:                bold;
-}
-
-.nav-edit {
-    top:                    250px;
-    position:               fixed;
-}
-
 
 /* End Global styles */
 
@@ -743,62 +535,6 @@ footer .page-footer .footer-bar {
 
 /* end footer styles */
 
-/*******************************************************************************************
-*
-*	Intro styles
-*
-********************************************************************************************/
-
-
-.carousel-inner img {
-    width:              100%;
-}
-
-.progress .bar {
-    background-color: #1ABC9C;
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-    line-height:24px;
-    font-weight:bold;
-}
-.scrollcontent {
-    z-index:-100;
-}
-.prevPageBtn{
-    margin-top:40px;
-    margin-bottom:10px;
-    float:left;
-    width:auto;
-}
-.nextPageBtn{
-    margin-top:40px;
-    margin-bottom:10px;
-    float:right;
-    width:auto;
-}
-.top-margin {
-    margin-top:47px;
-}
-.adjacentval{
-    margin-top:18px;
-    margin-bottom:18px;
-}
-
-/* Currently not used */
-/* .alert-error {
-    text-align:center;
-    margin-top:37px;
-} */
-/*.logo {
-    height:88px;
-    width:116px;
-}
-*/
-
-
-/* end intro styles */
-
-
-
 
 /*******************************************************************************************
 *
@@ -870,42 +606,9 @@ form .row .input-prepend {
 	}
 
 
-	.formfield .ajaxloader, .formfield-error .ajaxloader {
-		background   : url("assets/img/ajax-loader.gif") no-repeat top right transparent;
-		height       : 24px;
-		margin-top   : -12px; /*margin-top should always be half the height of the ajaxloader */
-		margin-right : 10px;
-		position     : absolute;
-		top          : 50%;
-		display      : block;
-		right        : 0;
-		width        : 100%;
-	}
-	.formfield .ajaxwrapper, .formfield-error .ajaxwrapper {
-		position:relative;
-	}
-
 	.buttonwrapper {
 		margin:20px 0;
 	}
-
-    /* candidate for removal*/
-	.formfield-error {
-		margin-bottom: 0;
-	}
-	.formfield-error input {
-		-webkit-border-radius : 4px 4px 0 0;
-		-moz-border-radius    : 4px 4px 0 0;
-		border-radius         : 4px 4px 0 0;
-
-		margin-bottom         : 0;
-	}
-
-
-    select.error, input.error, textarea.error {
-        /*display: inline-block;*/
-    }
-
 
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@ currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
@@ -913,20 +616,6 @@ form .row .input-prepend {
 
 
 
-/*     .error-icon {
-
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    display: block;
-    margin-right: -26px;
-    margin-top: 11px;
-
-    position: absolute;
-    right: 0;
-    top: 0;
-
-} */
 
     /* bidX tagsinput, uses bootstrap-tagmanager */
     input[type='text'].bidx-tagsinput {
@@ -942,6 +631,7 @@ form .row .input-prepend {
         background-color:               transparent;
         height:                         25px;
         margin-bottom:                  5px;
+        outline: none;
     }
     .input-prepend {
         /* background-color: #bdc3c7; */ /* $mattijs: I dont know why I had to add a background here, so for now I commented it until I know why it is there */
@@ -952,7 +642,7 @@ form .row .input-prepend {
 
 
 
-    .bidx-tagsinput-container {/*
+    .bidx-tagsinput-container {
         border:                     2px solid #bdc3c7;
         color:                      #34495e;
         background-color:           #fff;
@@ -987,7 +677,7 @@ form .row .input-prepend {
         -o-transition: border .25s linear, color .25s linear;
         transition: border .25s linear, color .25s linear;
         -webkit-backface-visibility: hidden;
-    */}
+    }
     .input-prepend .bidx-tagsinput-container {
         -webkit-border-radius: 0 6px 6px 0;
         -moz-border-radius: 0 6px 6px 0;
@@ -1066,28 +756,6 @@ form .row .input-prepend {
             opacity:                        1;
             display:                        block;
         }
-
-        .vertical-middle {
-            position: relative;
-            height: 100%;
-        }
-        .vertical-middle a {
-             left: 0;
-            margin-top: -10px;
-            position: absolute;
-            top: 50%;
-            width: 100%;
-        }
-
-        .well .block-title {
-            font-family: 'weblysleek_uisemibold',sans-serif,Arial;
-            font-size: 20px;
-            display: inline-block;
-            zoom: 1;
-            *display: block;
-            margin-bottom: 20px;
-        }
-
 
         .input-append, .input-prepend {
             margin-bottom: 0;
@@ -1654,38 +1322,6 @@ form .row .input-prepend {
 
 
 
-
-    header.navbar .nav ul li:first-child,
-    header.navbar .iconbar ul.dropdown-menu li:first-child {
-        padding-top:                            3px;
-    }
-
-    header.navbar .nav ul li:only-child,
-    header.navbar .iconbar ul.dropdown-menu li:only-child {
-        border-radius:                          6px;
-    }
-
-    header.navbar .nav ul li {
-        padding:                                0 3px 3px;
-        position:                               relative;
-    }
-
-    /* iconbar styles */
-
-    header.navbar .navbar-inner .iconbar {
-        border-radius:              0 0 4px 4px;
-    }
-
-    header.navbar .iconbar ul.dropdown-menu {
-        /* positioning of submenu */
-        right:                      0;
-        left:                       auto;
-    }
-
-    header.navbar .iconbar ul.dropdown-menu li {
-        padding: 0 3px 3px;
-        position: relative;
-    }
 
     /* end iconbar styles*/
 

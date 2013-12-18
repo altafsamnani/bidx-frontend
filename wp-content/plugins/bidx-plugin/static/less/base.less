@@ -161,7 +161,6 @@ header .menu-main {
     bottom: 0;
     right: 0;
     .nav {
-        margin-right: 0;
         > li {
             margin-right: 5px;
             padding-bottom: 10px;
@@ -203,6 +202,29 @@ header .menu-main {
     border: 0;
     padding: 0;
 }
+
+// Iconbar
+// -------------------------
+
+header.navbar {
+    .iconbar {
+        .border-radius(0, 4px, 4px, 0);
+        .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+    }
+    .dropdown-menu {
+        li {
+            padding: 0 3px 3px;
+            position: relative;
+            &:first-child {
+                padding-top: 3px;
+            }
+        }
+    }
+}
+
 
 // Modals
 // -------------------------
@@ -282,6 +304,15 @@ header .menu-main {
 
 // carousel.less
 // -------------------------
+
+.carousel-inner {
+  > .item {
+    > img,
+    > a > img {
+        width: 100%;
+    }
+  }
+}
 .carousel-caption {
     .rgba;
 }
