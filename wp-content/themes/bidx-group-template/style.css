@@ -158,7 +158,7 @@ Company: bidX;
 
     /************************ Typografic styles ***************************/
 
-    h1, h2, h3, label {
+    h1, h2, h3 {
         font-weight:                700;
         color:                      #34495e;
 
@@ -607,26 +607,6 @@ Company: bidX;
 *
 ********************************************************************************************/
 
-.sidebar-block-title {
-	margin-top:					0;
-}
-
-.sidebar-block-intro {
-	padding-left:				6px;
-}
-
-.sidebar-block-heading {
-    margin-bottom:				12px;
-}
-
-.sidebar-block-content {
-	padding-bottom:				12px;
-}
-
-.after-well {
-	margin-bottom: 				20px;
-}
-
 .intermediate-row {
     margin-bottom:              10px;
 }
@@ -678,26 +658,6 @@ Company: bidX;
 
 .collapsed .bidx-collapse {
     display:                    none;
-}
-
-.accordion-inner .control-buttons {
-    position:                   absolute;
-    right:                      20px;
-    top:                        10px;
-}
-
-.accordion-inner .bottom-controls {
-    position:                   absolute;
-    right:                      20px;
-    bottom:                     10px;
-}
-
-.well-white {
-    background-color:           #fff;
-}
-
-.content-row {
-    padding-bottom:             20px;
 }
 
 .details-block label {

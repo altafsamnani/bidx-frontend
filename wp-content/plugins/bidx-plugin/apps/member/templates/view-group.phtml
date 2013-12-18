@@ -23,14 +23,14 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
             <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
         </div>
         <div class="media-body">
-            <h4 class="sidebar-block-title"><?php echo $groupInfo->groupName ?></h4>
+            <h4><?php echo $groupInfo->groupName ?></h4>
             <p><?php echo $groupInfo->slogan ?></p>
         </div>
     </li>
 
     <!-- Description -->
     <br>
-    <p class="sidebar-block-content"><?php echo $groupInfo->description;?></p>
+    <p><?php echo $groupInfo->description;?></p>
 </ul>
 <?php
     }
@@ -59,7 +59,7 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
             <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
         </div>
         <div class="media-body">
-            <h4 class="sidebar-block-title"><?php echo $groupValue->name?></h4>
+            <h4><?php echo $groupValue->name?></h4>
             <p><?php echo $groupValue->slogan?></p>
         </div>
 <?php

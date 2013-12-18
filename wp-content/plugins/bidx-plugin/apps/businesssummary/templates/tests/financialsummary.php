@@ -291,7 +291,7 @@ filter: alpha(opacity=100);
                 <div id="businessSummaryAccordion-FinancialDetails" class="accordion-body collapse in">
                     <div class="accordion-inner">
 
-<?php $view->render( '../financialsummary.phtml' ); ?>
+<?php //$view->render( '../financialsummary.phtml' ); ?>
 
                     </div><!-- /Accordion-inner -->
                 </div>
