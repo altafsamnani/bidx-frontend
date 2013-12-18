@@ -1106,8 +1106,7 @@
         // Update the member object
         //
         _getFormValues();
-//bidx.utils.log(">>>>>>>>>>>>>>",member.bidxMemberProfile);
-//return;
+
         bidx.common.notifySave();
 
         bidx.api.call(
