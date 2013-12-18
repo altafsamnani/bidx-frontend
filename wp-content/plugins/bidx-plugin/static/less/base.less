@@ -2,6 +2,9 @@
 // -------------------------
 @import "mixins.less";
 
+@brand-secondary:       #1abc9c;
+@white:                 #FFF;
+
 // Color alterations
 // -------------------------
 .bg-primary-dark {
@@ -230,14 +233,27 @@ header .menu-main {
 }
 
 /* Pagination plugin */
+.panel-open .accordion-state-icon {
+    .rotation(90deg);
+    filter:                     progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+
+.accordion-state-icon {
+    .rotation(0deg);
+    .transition(0.3s);
+    .backface();
+    font-size: ceil(@font-size-base * 0.8);
+    filter:                     progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+
+/* Pagination plugin */
 
 .pagination .pointer-cursor {
     cursor: hand;
     cursor: pointer;
 }
 .pager-loading {
-    opacity: 0.5;
-    filter: alpha(opacity=50);
+    .opacity;
 }
 /* \ Pagination plugin */
 
