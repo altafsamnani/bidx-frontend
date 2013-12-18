@@ -346,22 +346,6 @@ Company: bidX;
             position:               relative;
             text-decoration:        none;
         }
-        .iconbar-unread {
-            background-color: #2a7aaf;
-            border-radius: 50%;
-            color: #ffffff;
-            font-family: "Lato", sans-serif;
-            font-size: 11.998px;
-            font-weight: 500;
-            line-height: 18.998px;
-            min-width: 14px;
-            padding: 0 2px;
-            position: absolute;
-            text-align: center;
-            right: 8px;
-            top: 3px;
-            -webkit-font-smoothing: auto;
-        }
 
 /*
         .bidx-checkbox-unchecked {
