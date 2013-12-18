@@ -807,8 +807,10 @@
     //
     function _getFormValues()
     {
+
         $.each( fields.personalDetails, function( i, f )
         {
+
             var $input  = $editForm.find( "[name='personalDetails." + f + "']" )
             ,   value   = bidx.utils.getElementValue( $input )
             ;
@@ -1104,7 +1106,8 @@
         // Update the member object
         //
         _getFormValues();
-
+//bidx.utils.log(">>>>>>>>>>>>>>",member.bidxMemberProfile);
+//return;
         bidx.common.notifySave();
 
         bidx.api.call(

@@ -338,10 +338,17 @@
             case 'date':
                 date    = $input.datepicker( "getUTCDate" );
 
-                if ( date )
+                // BIDX-1620: datepicker returns Invalid date value when nothing is selected, this value will be converted to NaN value by the getIsoDate function
+                //
+                if ( date instanceof Date && isFinite( date ) )
                 {
                     value   = getISODate( date );
                 }
+                else
+                {
+                    value = "";
+                }
+
             break;
 
             case 'tagsinput':
