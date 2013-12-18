@@ -302,43 +302,6 @@ Company: bidX;
 ********************************************************************************************/
 
     /* open group page*/
-    .bidx.home .bidx-register-c2a {
-        -webkit-border-radius:              10px;
-        -moz-border-radius:                 10px;
-        border-radius:                      10px;
-        height:                             117px;
-
-        background-repeat:                  no-repeat;
-        background-position:                9% 50%;
-
-    }
-    .bidx.home .bidx-register-c2a a {
-        display:                            block;
-        height:                             inherit;
-    }
-    .bidx.home .bidx-register-c2a .c2a-label {
-        line-height:                        30px;
-        font-size:                          24px;
-        padding-top:                        25px;
-        margin:                             0 0 0 25%;
-        color:                              white;
-        font-weight:                        bold;
-    }
-
-    .bidx.home .bidx-register-c2a .bidx-arrow-right {
-        background-image:                   url( assets/img/icons/icon-arrow-right.png );
-        background-repeat:                  no-repeat;
-        background-position:                95% 50%;
-        height:                             inherit;
-    }
-
-    .bidx.home .bidx-register-c2a.investor {
-        background-image:                   url( assets/img/icons/icon-investor.png );
-    }
-
-    .bidx.home .bidx-register-c2a.entrepreneur {
-        background-image:                   url( assets/img/icons/icon-entrepreneur.png );
-    }
 
     .bidx.home .bidx-testimonial p {
         font-size:                          15px;
@@ -1341,24 +1304,6 @@ form .row .input-prepend {
                 margin-right: 20px;
             }
             /* end open group page*/
-
-            /* closed group page*/
-
-
-
-            /* end closed group page */
-
-            /* space for validation icons */
-            .bidx.auth .accordion-inner .control-group.col-sm-11 {
-                margin-left:                            0;
-            }
-            .bidx.auth .well .control-group.col-sm-11 {
-                margin-left:                            0;
-            }
-            .bidx.auth .well .btn.btn-danger.btn-block {
-                overflow:                               hidden;
-            }
-            /* end space for validation icons*/
 
 
 /*******************************************************************************************

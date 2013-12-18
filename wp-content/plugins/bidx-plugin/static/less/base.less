@@ -203,8 +203,8 @@ header .menu-main {
     padding: 0;
 }
 
-// Iconbar
-// -------------------------
+// Iconbar and header's dropdown menu
+// --------------------------------------------------
 
 header.navbar {
     .iconbar {
@@ -234,6 +234,44 @@ header.navbar {
     .hide-in-modal {
         display: none;
         visibility: hidden;
+    }
+}
+
+// Home Register Blocks
+// -------------------------
+
+.bidx.home .bidx-register-block {
+    .rounded(10px);
+    background: desaturate(darken(@brand-primary, 25%), 25%);
+    height: 117px;
+    a {
+        display: block;
+        height: inherit;
+    }
+    .action-call-text {
+        line-height:                        30px;
+        font-size:                          24px;
+        padding-top:                        25px;
+        margin:                             0 0 0 25%;
+        color:                              white;
+        font-weight:                        bold;
+    }
+    .icon {
+        color: @gray-lighter;
+        font-size: floor(@font-size-base * 6);
+        position: absolute;
+        left: 55px;
+        top: 19px;
+    }
+    .arrow {
+        color: @white;
+        font-size: floor(@font-size-base * 3.9);
+        position: absolute;
+        right: 60px;
+        top: 32px;
+    }
+    &:hover .arrow {
+        color: lighten(@brand-primary, 25%);
     }
 }
 
