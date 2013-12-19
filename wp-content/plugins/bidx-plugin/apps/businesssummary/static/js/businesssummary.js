@@ -1023,6 +1023,33 @@
         //
         function _documents()
         {
+            $( window.bidx ).bind( "updated.media", function( e, data )
+            {
+                bidx.utils.log( "[updated.media]", data );
+
+                var uploadId = bidx.utils.getValue( data, "bidxMeta.bidxUploadId" );
+
+                if ( !uploadId )
+                {
+                    bidx.utils.error( "No uploadId found on upated media event!", data );
+                    return;
+                }
+
+                $attachmentContainer.find( "[data-uploadId='" + uploadId + "']" ).each( function()
+                {
+                    var $attachment     = $( this )
+                    ,   attachment      = $attachment.data( "bidxData" )
+                    ;
+
+                    $.each( [ "purpose", "documentType" ], function( i, prop )
+                    {
+                        attachment[ prop ] = data[ prop ];
+                    } );
+
+                    _updateAttachment( $attachment, attachment );
+                } );
+            } );
+
             // Clicking the add files button will load the media library
             //
             $btnAddFiles.click( function( e )
@@ -1243,8 +1270,16 @@
             return;
         }
 
-        var $attachment         = snippets.$attachment.clone()
-        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
+        var $attachment         = snippets.$attachment.clone();
+
+        _updateAttachment( $attachment, attachment );
+
+        $attachmentContainer.reflowrower( "addItem", $attachment );
+    }
+
+    function _updateAttachment( $attachment, attachment )
+    {
+        var createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
         ,   imageSrc
         ;
 
@@ -1268,7 +1303,6 @@
         $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
         $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
 
-        $attachmentContainer.reflowrower( "addItem", $attachment );
     }
 
     // Add a company row to the table of existing companies
