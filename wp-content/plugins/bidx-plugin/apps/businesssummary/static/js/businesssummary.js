@@ -1025,8 +1025,6 @@
         {
             $( window.bidx ).bind( "updated.media", function( e, data )
             {
-                bidx.utils.log( "[updated.media]", data );
-
                 var uploadId = bidx.utils.getValue( data, "bidxMeta.bidxUploadId" );
 
                 if ( !uploadId )

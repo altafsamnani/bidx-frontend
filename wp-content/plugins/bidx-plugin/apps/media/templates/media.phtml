@@ -18,7 +18,7 @@
     <!-- LIST -->
     <div class="view viewList">
 
-        <div class="newFile well dropzone text-center">
+        <div class="js-new-file newFile well dropzone text-center">
             <p><?php _e( 'Drop file here to upload', 'bidxplugin' ); ?></p>
             <p><?php _e( 'or', 'bidxplugin' ); ?></p>
 
@@ -30,6 +30,23 @@
                 <!-- The file input field used as target for the file upload widget -->
                 <input type="file" class="fileUpload" name="fileContent" />
             </span>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label><?php _e('Purpose','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="purpose" placeholder="<?php _e('Please describe the attachment','bidxplugin'); ?>">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label><?php _e('Document type','bidxplugin'); ?></label>
+                        <select name="documentType"></select>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="panel panel-default">
             <div class="panel-heading hide-in-modal">

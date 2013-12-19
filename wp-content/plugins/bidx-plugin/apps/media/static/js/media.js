@@ -9,6 +9,10 @@
     ,   $viewEdit                       = $views.filter( ".viewEdit" )
     ,   $editForm                       = $viewEdit.find( "form" )
 
+    ,   $newFile                        = $element.find( ".js-new-file" )
+    ,   $newFilePurpose                 = $newFile.find( "[name=purpose]" )
+    ,   $newFileDocumentType            = $newFile.find( "[name=documentType]" )
+
     ,   $dropzone                       = $element.find( ".dropzone" )
     ,   $fileList                       = $element.find( "table.fileList tbody.files" )
     ,   $fileUpload                     = $element.find( "input.fileUpload" )
@@ -145,17 +149,19 @@
 
         // Populate dropdown using the static data
         //
-        bidx.data.getContext( "documentType", function( err, documentTypes )
+        $editForm.find( "select[name='documentType']" ).bidx_chosen(
         {
-            var $documentType   = $editForm.find( "select[name='documentType']" )
-            ;
+            "dataKey":      "documentType"
+        });
 
-            bidx.utils.populateDropdown( $documentType, documentTypes );
+        $newFileDocumentType.bidx_chosen(
+        {
+            "dataKey":      "documentType"
+        });
 
-            //initiate chosen plugin
-            //
-            $documentType.bidx_chosen();
-        } );
+        $newFileDocumentType.val( "other" );
+        $newFileDocumentType.trigger( "chosen:updated" );
+
 
         // Instantiate the file upload component (be careful! the 'old' plugin was fileUpload with a capital U)
         //
@@ -168,11 +174,11 @@
                 [
                     {
                         "name":         "purpose"
-                    ,   "value":        ""
+                    ,   "value":        $newFilePurpose.val()
                     }
                 ,   {
                         "name":         "documentType"
-                    ,   "value":        "other"
+                    ,   "value":        $newFileDocumentType.val() || "other"
                     }
                 ];
 
@@ -201,6 +207,13 @@
                 // Start the upload
                 //
                 data.submit();
+
+                // Reset the form fields so we do not suggest you can use it to edit
+                //
+                $newFileDocumentType.val( "other" );
+                $newFileDocumentType.trigger( "chosen:updated" );
+
+                $newFilePurpose.val( "" );
             }
 
         ,   done: function( e, data )
@@ -617,11 +630,6 @@
         //
         _getFormValues();
 
-        if ( !slaveApp && !settings.onlyEdit )
-        {
-            bidx.common.notifySave();
-        }
-
         bidx.api.call(
             "upload.save"
         ,   {
@@ -647,8 +655,6 @@
 
                     if ( !slaveApp )
                     {
-                        bidx.common.notifyRedirect();
-
                         bidx.controller.updateHash( "#media/list", true );
                     }
                 }
