@@ -162,6 +162,14 @@
 
                      <li><a href="/support"><?php _e('Ask your question','bidxplugin')?></a></li>
 <?php           }
+
+                /* Temporary Link to demo judge dashboard */
+                 if ($currentGroupAdmin && in_array( 'GroupAdmin', $roles ))  {
+                      $skipsoJudgeUrl = get_site_option ('skipso-judge');
+                    ?>
+                     <li><a href="<?php echo $skipsoJudgeUrl;?>"><?php _e('Judge Dashboard','bidxplugin')?></a></li>
+<?php           }
+
                 if( $showLogout ) {
 ?>
                      <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e('Logout', 'bidxplugin')?></a>

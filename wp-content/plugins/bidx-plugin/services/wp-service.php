@@ -1984,11 +1984,31 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                 </div>";
 
                     /* 4 Skipso */
-                    $skipsoUrl = get_site_option ('skipso-url');
-                    $htmlSkipsoUrl = "<br/><br/><b>Skipso URL</b><br/>";
-                    $htmlSkipsoUrl .= "<input type='text' name='skipso-url' value='".$skipsoUrl."'>" ;
+                    $skipsoUrl = get_site_option ('skipso-logout');
+                    $htmlSkipsoUrl = "<br/><br/><b>Skipso Frontend URL</b><br/>";
+                    $htmlSkipsoUrl .= "<input style='width:350px;' type='text' name='skipso-logout' value='".$skipsoUrl."'>" ;
                     $htmlSkipsoUrl .= "<div class='buttonwrapper'>
-                    <input type='hidden' value='skipso-url' name='notification'/>
+                    <input type='hidden' value='skipso-logout' name='notification'/>
+                    <input type='submit' name = 'action' value='Save'>
+                    <input type='submit' name = 'action' value='Reset' >
+                </div>";
+
+                /* 4 Skipso Backend*/
+                    $skipsoBackendUrl = get_site_option ('skipso-backend');
+                    $htmlSkipsoBackendUrl = "<br/><br/><b>Skipso Backend URL</b><br/>";
+                    $htmlSkipsoBackendUrl .= "<input style='width:350px;' type='text' name='skipso-backend' value='".$skipsoBackendUrl."'>" ;
+                    $htmlSkipsoBackendUrl .= "<div class='buttonwrapper'>
+                    <input type='hidden' value='skipso-backend' name='notification'/>
+                    <input type='submit' name = 'action' value='Save'>
+                    <input type='submit' name = 'action' value='Reset' >
+                </div>";
+
+                /* 4 Skipso Judge Dashboard*/
+                    $skipsoJudgeUrl = get_site_option ('skipso-judge');
+                    $htmlSkipsoJudgeUrl = "<br/><br/><b>Skipso Judge Dashboard URL</b><br/>";
+                    $htmlSkipsoJudgeUrl .= "<input style='width:350px;' type='text' name='skipso-judge' value='".$skipsoJudgeUrl."'>" ;
+                    $htmlSkipsoJudgeUrl .= "<div class='buttonwrapper'>
+                    <input type='hidden' value='skipso-judge' name='notification'/>
                     <input type='submit' name = 'action' value='Save'>
                     <input type='submit' name = 'action' value='Reset' >
                 </div>";
@@ -2005,6 +2025,12 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                 </form>
                 <form method='post' action='settings.php?page=static-po'>
                     {$htmlSkipsoUrl}
+                </form>
+                <form method='post' action='settings.php?page=static-po'>
+                    {$htmlSkipsoBackendUrl}
+                </form>
+                <form method='post' action='settings.php?page=static-po'>
+                    {$htmlSkipsoJudgeUrl}
                 </form>
                     ";
 
@@ -2244,10 +2270,20 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                             add_menu_page ('getting-started', 'Getting Started', 'edit_theme_options', 'getting-started', 'bidx_getting_started');
                             add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
                             add_menu_page ('group-settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
+                            add_menu_page ('competitions', 'Competitions', 'edit_theme_options', 'competitions', 'bidx_dashboard_competition');
+
+
                         }
                     }
                 }
                 add_filter ('admin_footer_text', 'remove_footer_admin');
+            }
+
+            function bidx_dashboard_competition() {
+
+                    $skipsoBackendUrl = get_site_option ('skipso-backend');
+                    wp_redirect( $skipsoBackendUrl );
+
             }
 
             function bidx_dashboard_invite ()

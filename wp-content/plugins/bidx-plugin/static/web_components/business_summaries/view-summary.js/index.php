@@ -192,6 +192,9 @@ bidx.widgets = {
                 var el       = bidx.widgets.viewBusinessSummary.el
                 ,   labelTag = el.getAttribute( 'data-labeltag' )
                 ,   valueTag = el.getAttribute( 'data-valuetag' )
+                ,   rowClass = el.getAttribute( 'data-rowclass' )
+                ,   mainClass = el.getAttribute( 'data-mainclass')
+                ,   adjClass = el.getAttribute( 'data-adjclass')
                 ;
 
                     if ( data.bidxMeta.bidxEntityId )
@@ -204,60 +207,60 @@ bidx.widgets = {
 
 
                         // Create an <option> tag object to prepend to our findings
-                        snippit  = "<div class='groupContainer'>\
-                                    <div class='grouptitle'>%name%</div>\
-                                    <div class='row'>\
-                                        <div class='col-sm-6'>\
+                        snippit  = "<div class='bidxContainer'>\
+                                    <div class='bidxTitle'>%name%</div>\
+                                    <div class=%rowclass%>\
+                                        <div class=%mainclass%>\
                                             <%labeltag%>Business name </%labeltag%>\
                                             <%valuetag%>%name%</%valuetag%>\
                                         </div>\
-                                        <div class='col-sm-6'>\
+                                        <div class=%adjclass%>\
                                             <%labeltag%>Describe your business</%labeltag%>\
                                             <%valuetag%>%slogan%</%valuetag%>\
                                         </div>\
                                     </div>\
-                                    <div class='row'>\
-                                        <div class='col-sm-6'>\
+                                    <div class=%rowclass%>\
+                                        <div class=%mainclass%>\
                                             <%labeltag%>Summary of this business</%labeltag%>\
                                             <%valuetag%>%summary%</%valuetag%>\
                                         </div>\
-                                        <div class='col-sm-6'>\
+                                        <div class=%adjclass%>\
                                             <%labeltag%>Reason for submission of business summary</%labeltag%>\
                                             <%valuetag%>%reasonForSubmission%</%valuetag%>\
                                         </div>\
                                     </div>\
-                                    <div class='row'>\
-                                        <div class='col-sm-6'>\
+                                    <div class=%rowclass%>\
+                                        <div class=%mainclass%>\
                                             <%labeltag%>Percentage equity you currently retain</%labeltag%>\
                                             <%valuetag%>%equityRetained%</%valuetag%>\
                                         </div>\
-                                        <div class='col-sm-6'>\
+                                        <div class=%adjclass%>\
                                             <%labeltag%>Investment type</%labeltag%>\
                                             <%valuetag%>%investmentType%</%valuetag%>\
                                         </div>\
                                     </div>\
-                                    <div class='row'>\
-                                        <div class='col-sm-6'>\
+                                    <div class=%rowclass%>\
+                                        <div class=%mainclass%>\
                                             <%labeltag%>Product Service</%labeltag%>\
                                             <%valuetag%>%productService%</%valuetag%>\
                                         </div>\
-                                        <div class='col-sm-6'>\
+                                        <div class=%adjclass%>\
                                             <%labeltag%>Country Operation</%labeltag%>\
                                             <%valuetag%>%countryOperation%</%valuetag%>\
                                         </div>\
                                     </div>\
-                                    <div class='row'>\
-                                        <div class='col-sm-6'>\
+                                    <div class=%rowclass%>\
+                                        <div class=%mainclass%>\
                                             <%labeltag%>Reason for financing</%labeltag%>\
                                             <%valuetag%>%summaryFinancingNeeded%</%valuetag%>\
                                         </div>\
-                                        <div class='col-sm-6'>\
+                                        <div class=%adjclass%>\
                                             <%labeltag%>Personal Expertise</%labeltag%>\
                                             <%valuetag%>%personalExpertise%</%valuetag%>\
                                         </div>\
                                     </div>\
-                                     <div class='row'>\
-                                        <div class='col-sm-6'>\
+                                     <div class=%rowclass%>\
+                                        <div class=%mainclass%>\
                                             <%valuetag%><a target='_blank' href='%hostUrl%/%bidxEntityId%/'>View more</a></%valuetag%>\
                                         </div>\
                                     </div>\
@@ -284,10 +287,16 @@ bidx.widgets = {
                                         }
                         });
 
+                        snippit = snippit
+                                .replace(/%labeltag%/g, labelTag ? labelTag : 'label')
+                                .replace(/%valuetag%/g, valueTag ? valueTag : 'div')
+                                .replace(/%rowclass%/g, rowClass ? rowClass : 'row')
+                                .replace(/%mainclass%/g, mainClass ? mainClass : 'main')
+                                .replace(/%adjclass%/g, adjClass ? adjClass : 'adj')
+                                ;
+
                         //search for placeholders in snippit
                         result = snippit
-                            .replace(/%labeltag%/g, labelTag ? labelTag : 'label')
-                            .replace(/%valuetag%/g, valueTag ? valueTag : 'div')
                             .replace( /%hostUrl%/g,      url   ? url : emptyVal )
                             .replace( /%bidxEntityId%/g,      data.bidxMeta.bidxEntityId   ? data.bidxMeta.bidxEntityId : emptyVal )
                             .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
