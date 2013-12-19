@@ -329,7 +329,7 @@ class TemplateLibrary
                     }
                     $pairRow .= "<div class='col-sm-6'>";
                     $pairRow .= "<$tagLabel>" . $label . " </$tagLabel>";
-                    $pairRow .= "<$tagValue>" . $col . " </$tagValue>";
+                    $pairRow .= "<$tagValue>" . html_entity_decode( $col ) . " </$tagValue>";
                     $pairRow .= "</div>";
                 }
             }

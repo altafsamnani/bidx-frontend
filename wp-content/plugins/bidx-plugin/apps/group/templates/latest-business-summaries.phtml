@@ -55,7 +55,7 @@
 <?php
                         }
 
-                        echo $this -> exst( $summary -> name );
+                        echo html_entity_decode( $this -> exst( $summary -> name ) );
 
                         if ( $authenticated ) {
 ?>
