@@ -7,6 +7,10 @@
     var bidx            = window.bidx || {}
     ,   bidxConfig      = window.bidxConfig || {}
 
+        // $bidx will be used to trigger events from
+        //
+    ,   $bidx           = $( bidx )
+
     ,   $body           = $( "body" )
 
     ,   groupDomain     = bidx.utils.getValue( bidxConfig, "context.bidxGroupDomain" ) || bidx.utils.getGroupDomain()
@@ -492,6 +496,14 @@
                 }
             }
         );
+    }
+
+    // Trigger an internal event on the $( window.bidx ) object
+    //
+    function trigger( event, data )
+    {
+        bidx.utils.log( "[bidx event]", event, data );
+        $bidx.trigger( event, data );
     }
 
     // Notify the user, for now it's just a wrapper over noty... but if we replace this
@@ -1005,6 +1017,8 @@
         {
             return changesQueue.slice();
         }
+
+    ,   trigger:                        trigger
 
         // DEV API - do not use these in code!
     ,   _notify:                        _notify

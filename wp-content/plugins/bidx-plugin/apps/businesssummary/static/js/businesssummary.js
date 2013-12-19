@@ -84,6 +84,10 @@
     ,   $addFiles                           = $documents.find( ".addFiles" )
     ,   $attachmentContainer                = $documents.find( ".attachmentContainer" )
 
+        // Edit document modal
+        //
+    ,   $editDocument                       = $element.find( ".js-edit-document" )
+
     ,   businessSummary
     ,   businessSummaryId
 
@@ -485,6 +489,7 @@
 
                 // Navigate the media app into list mode for selecting files
                 //
+                bidx.media.reset();
                 bidx.media.navigate(
                 {
                     requestedState:         "list"
@@ -1033,6 +1038,7 @@
 
                 // Navigate the media app into list mode for selecting files
                 //
+                bidx.media.reset();
                 bidx.media.navigate(
                 {
                     requestedState:         "list"
@@ -1090,6 +1096,20 @@
                 $addFiles.modal();
             } );
 
+            // Setup an 'edit' button per document
+            //
+            $attachmentContainer.delegate( "a[href$=#editDocument]", "click", function( e )
+            {
+                e.preventDefault();
+
+                var $btn        = $( this )
+                ,   $item       = $btn.closest( ".attachmentItem" )
+                ,   doc         = $item.data( "bidxData" )
+                ;
+
+                _editDocument( doc );
+            } );
+
             // Initiate the reflowrower for the attachment list
             //
             $attachmentContainer.reflowrower(
@@ -1097,6 +1117,7 @@
                 itemsPerRow:        3
             ,   itemClass:          "attachmentItem"
             } );
+
         }
 
         // bind Full Accesss Request button
@@ -1111,8 +1132,6 @@
                 } );
         }
     }
-
-
 
     // Do a full access request for this businessSummar
     //
@@ -1158,11 +1177,61 @@
                 }
             }
         );
-
-
     }
 
+    // Open the media library in edit mode for a specific file
+    //
+    function _editDocument( doc )
+    {
+        var $modal = $editDocument;
 
+        // Make sure the media app is within our modal
+        //
+        $( "#media" ).appendTo( $modal.find( ".modal-body" ) );
+
+        // Navigate the media app into list mode for selecting files
+        //
+        bidx.media.reset();
+        bidx.media.navigate(
+        {
+            requestedState:         "edit"
+        ,   onlyEdit:               true
+        ,   slaveApp:               true
+        ,   selectFile:             true
+        ,   multiSelect:            true
+        ,   showEditBtn:            false
+        ,   showDeleteBtn:          false
+        ,   showDownloadBtn:        false
+
+        ,   id:                     doc.bidxMeta.bidxUploadId
+
+        ,   callbacks:
+            {
+                ready:                  function( state )
+                {
+                    bidx.utils.log( "[documents] ready in state", state );
+                }
+
+            ,   cancel:                 function()
+                {
+                    // Stop selecting files, back to previous stage
+                    //
+                    $modal.modal('hide');
+                }
+
+            ,   success:                function( file )
+                {
+                    bidx.utils.log( "[documents] updated", file );
+
+
+
+                    $modal.modal('hide');
+                }
+            }
+        } );
+
+        $modal.modal();
+    }
 
     // Add an attachment to the screen
     //
@@ -1182,6 +1251,10 @@
         // Store the data so we can later use it to merge the updated data in
         //
         $attachment.data( "bidxData", attachment );
+
+        // Set the upload ID on the DOM so we can find this later when we get an update from the media library
+        //
+        $attachment.attr( "data-uploadId", bidx.utils.getValue( attachment, "bidxMeta.bidxUploadId" ));
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
         $attachment.find( ".createdDateTime"    ).text( createdDateTime );

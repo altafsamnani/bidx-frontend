@@ -3,6 +3,7 @@
     "use strict";
 
     var $element                        = $( "#media" )
+
     ,   $views                          = $element.find( ".view" )
     ,   $snippets                       = $element.find( ".snippets" )
     ,   $viewEdit                       = $views.filter( ".viewEdit" )
@@ -17,6 +18,7 @@
     ,   $btnSave                        = $editForm.find( ".btnSave" )
     ,   $btnCancel                      = $editForm.find( ".btnCancel" )
     ,   $btnDelete                      = $editForm.find( ".btnDelete" )
+    ,   $btnDownload                    = $editForm.find( ".btnDownload" )
 
     ,   state
     ,   currentView
@@ -29,9 +31,6 @@
 
     ,   settings                        =
         {
-            selectFile:                     false
-        ,   multiSelect:                    false
-        ,   showEditBtn:                    true
         }
 
         // Object containing the upload details
@@ -149,12 +148,7 @@
         bidx.data.getContext( "documentType", function( err, documentTypes )
         {
             var $documentType   = $editForm.find( "select[name='documentType']" )
-            ,   $noValue        = $( "<option value='' />" )
             ;
-
-            $noValue.i18nText( "selectDocumentType" );
-
-            $documentType.append( $noValue );
 
             bidx.utils.populateDropdown( $documentType, documentTypes );
 
@@ -262,7 +256,13 @@
         //
         $btnCancel.click( function( e )
         {
-            if ( slaveApp )
+            if ( settings.onlyEdit )
+            {
+                e.preventDefault();
+
+                _cancelSelect();
+            }
+            else if ( slaveApp )
             {
                 e.preventDefault();
 
@@ -580,7 +580,12 @@
         $details.find( ".size"          ).text( upload.size );
         $details.find( ".contentType"   ).text( upload.mimeType );
 
-        $details.find( ".btnDownload"   ).attr( "href", upload.document );
+        $btnDownload.attr( "href", upload.document );
+
+        $btnDownload[ settings.showDownloadBtn ? "show" : "hide" ]();
+        $btnDelete[   settings.showDeletedBtn  ? "show" : "hide" ]();
+
+        $documentType.trigger( "chosen:updated" );
     }
 
     // Merge the form back into the data object
@@ -612,7 +617,7 @@
         //
         _getFormValues();
 
-        if ( !slaveApp )
+        if ( !slaveApp && !settings.onlyEdit )
         {
             bidx.common.notifySave();
         }
@@ -626,6 +631,10 @@
             ,   success:        function( response )
                 {
                     bidx.utils.log( "[media] upload.save::success::response", response );
+
+                    // Inform the rest of the world we got an updated file
+                    //
+                    bidx.common.trigger( "update.media", response.data );
 
                     // Regardless if the app runs as slave app, now the data is saved it can be removed from the pending list
                     //
@@ -803,6 +812,22 @@
             settings.showEditBtn = options.showEditBtn;
         }
 
+        if ( typeof options.showDownloadBtn !== "undefined" )
+        {
+            settings.showDownloadBtn = options.showDownloadBtn;
+        }
+
+        if ( typeof options.showDeleteBtn !== "undefined" )
+        {
+            settings.showDeleteBtn = options.showDeleteBtn;
+        }
+
+        if ( typeof options.onlyEdit !== "undefined" )
+        {
+            settings.onlyEdit = options.onlyEdit;
+        }
+
+
         // Register callbacks
         //
         if ( options.callbacks )
@@ -874,8 +899,12 @@
         slaveApp    = null;
         callbacks   = null;
 
-        settings.selectFile     = false;
-        settings.multiSelect    = false;
+        settings.selectFile         = false;
+        settings.multiSelect        = false;
+        settings.showEditBtn        = true;
+        settings.showDeleteBtn      = true;
+        settings.showDownloadBtn    = true;
+        settings.onlyEdit           = false;
 
         bidx.common.removeAppWithPendingChanges( appName );
     }
@@ -883,6 +912,8 @@
     // Engage!
     //
     _oneTimeSetup();
+
+    reset();
 
     // Expose
     //
@@ -904,6 +935,8 @@
     }
 
     window.bidx.media = app;
+
+    $media = ( window.bidx.media );
 
     // Only update the hash when user is authenticating and when there is no hash defined
     //

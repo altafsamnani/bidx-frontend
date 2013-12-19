@@ -1,7 +1,8 @@
 ;( function ( $ )
 {
+    "use strict";
+
     var $element                    = $( "#login" )
-    //,   $views                      = $element.find( ".view" )
     ,   $frmLogin                   = $element.find( "#frmLogin" )
     ,   $btnLogin                   = $frmLogin.find( ":submit" )
     ,   $loginErrorMessage          = $frmLogin.find( ".error-separate" )
@@ -11,14 +12,10 @@
     ,   submitBtnLabel
     ;
 
-
-
     // private functions
-
-    var _initHandlers = function()
+    //
+    function _initHandlers()
     {
-
-
         // set validation and submitHandler
         //
         $frmLogin.validate(
@@ -44,8 +41,6 @@
             }
         ,   submitHandler:  function()
             {
-
-
                 if ( $btnLogin.hasClass( "disabled" ) )
                 {
                     return;
@@ -65,49 +60,29 @@
                         $btnLogin.removeClass( "disabled" )
                             .text( submitBtnLabel )
                         ;
-
                     }
                 } );
-
             }
         } );
-
-
-
-    };
-
-
-
-    // this is the callback the is passed to the validator. I have borrowed heavily from the remote method in handling of the success/error response
-    //
-/*    var _validateUsernameApi = function( value, element, param )
-    {
-        bidx.utils.log("I am called");
-    };*/
+    }
 
     // handle the login proces, fired by the validator when form is validated
     //
-    var _doLogin = function( params )
+    function _doLogin( params )
     {
-
-
         bidx.api.call(
             "auth.login"
         ,   {
-
                 data:       $frmLogin.find(":input:not(.ignore)").serialize()
-
 
             ,   success: function( response, textStatus, jqXHR )
                 {
-
                     if ( response )
                     {
                         if ( response.status === 'OK' )
                         {
                             if (response.redirect)
                             {
-
                                 if ( window.noty )
                                 {
                                     var redirectText;
@@ -152,31 +127,19 @@
                 }
             }
         );
-    };
-
-
-    // generic view function. Hides all views and then shows the requested view
-    //
-/*    var _showView = function( view )
-    {
-        var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
-
-    };*/
+    }
 
     // ROUTER
-
+    //
     var state;
 
-    var navigate = function( options )
+    function navigate( options )
     {
         bidx.utils.log("routing options", options );
+    }
 
-        //_showView( "login" );
-
-
-    };
-
-    //expose
+    // Expose
+    //
     var app =
     {
         navigate:               navigate
@@ -188,10 +151,10 @@
         window.bidx = {};
     }
 
-
     window.bidx.login = app;
 
     // Initialize handlers
+    //
     _initHandlers();
 
     // Only update the hash when user is authenticating and when there is no hash defined
@@ -207,7 +170,5 @@
     {
         document.location.hash = window.__bidxHash;
     }
-
-
 
 } ( jQuery ));
