@@ -1,9 +1,18 @@
 <div id="groupHome" class="outer-content-container mainState mainStateShow mainStateGroupHome">
-    <div class="container">
+
+<?php
+    if ( bidx_get_status_msgs() != NULL ) {
+?>
+    <div class="row">
+        <div class="col-sm-12">
 <?php
         echo bidx_get_status_msgs();
 ?>
+        </div>
     </div>
+<?php
+    }
+?>
 
 <?php
     // include the carousel ( id=groupCarousel )
