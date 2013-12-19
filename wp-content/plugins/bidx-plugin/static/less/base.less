@@ -2,11 +2,24 @@
 // -------------------------
 @import "mixins.less";
 
-@brand-secondary:       #1abc9c;
-@white:                 #FFF;
-
-// Color alterations
+// Color Variables
 // -------------------------
+    @brand-secondary: #1abc9c;
+    @text-copy: #34495E;
+    @white: #FFF;
+    // Testimonial
+    @testimonial-bg: #D2B48C;
+    @triagle-size: 25px;
+
+// Color alterations in Variables
+// ---------------------------------
+    @bg-primary-dark: desaturate(darken(@brand-primary, 25%), 25%);
+    @text-primary-dark: darken(@brand-primary, 25%);
+    @bg-primary-light: lighten(@brand-primary, 25%);
+    @text-primary-light: lighten(@brand-primary, 25%);
+
+// Color alterations in Classes
+// ---------------------------------
 .bg-primary-dark {
     background: desaturate(darken(@brand-primary, 25%), 25%);
 }
@@ -225,7 +238,6 @@ header.navbar {
     }
 }
 
-
 // Modals
 // -------------------------
 .modal-body {
@@ -275,6 +287,64 @@ header.navbar {
     }
 }
 
+// Testimonial
+// ----------------------
+
+.bidx-testimonial {
+    background-color: @testimonial-bg;
+    color: @text-copy;
+    font-size: ceil(@font-size-base * 1.25);
+    margin-bottom: @triagle-size;
+    min-height: 200px;
+    position: relative;
+    &:after {
+        .box-sizing;
+       height: 0;
+       width: 100%;
+       content: "";
+       position: absolute;
+       border-top: @triagle-size solid @testimonial-bg;
+       border-right: @triagle-size solid transparent;
+       margin: 33px 0 0 0;
+       bottom: -@triagle-size;
+    }
+    .testimonial-quote{
+        color: desaturate(lighten( @testimonial-bg, 15%), 5%);
+        position: absolute;
+        top: 7px;
+        right: 8px;
+        font-size: ceil(@font-size-base * 3.2);
+        line-height: 1;
+    }
+    > div {
+        padding: 50px 20px 20px;
+        line-height: ceil(@font-size-base * 2);
+    }
+    p {
+        font-size: 15px;
+        line-height: ceil(@font-size-base * 2);
+    }
+    .triange {
+        .triangle(upleft, @triagle-size, desaturate(darken( @testimonial-bg, 15%), 15%) );
+        position: absolute;
+        bottom: -@triagle-size;
+        right: 0;
+        z-index: 1;
+    }
+}
+
+
+// Apps Header
+// -------------------------
+.pageHeader {
+    background-color: @white;
+    .editControls {
+        margin: 20px 0 0;
+        a {
+            margin-left: 4px;
+        }
+    }
+}
 
 // Elements
 // -------------------------

@@ -208,6 +208,13 @@
     border-bottom: @size solid transparent;
     border-left: @size solid @color;
 }
+.triangle(@direction, @size, @color) when (@direction = upleft) {
+    .triangle-base();
+    border-left: 0 solid transparent;
+    border-bottom: 0 solid transparent;
+    border-right: @size solid transparent;
+    border-top: @size solid @color;
+}
 
 .backface(@visibility: hidden) {
   backface-visibility:         @visibility;
