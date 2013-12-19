@@ -154,11 +154,19 @@
     ,   emptyValue:         bidx.i18n.i( "legalForm", appName )
     });
 
-    snippets.$countryOperationSpecifics.find( "[name='country']" ).bidx_chosen(
+    // populate the selectbox but do not convert to Chosen already because this breaks the rendering of the chosen plugin
+    //
+    bidx.data.getContext( "country", function( err, items )
     {
-        dataKey:            "country"
-    ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
-    });
+        if ( err )
+        {
+            bidx.utils.error( "Prepopulating the countryOperationSpecific selectbox in the snippet triggered an error" );
+        }
+        // populate country select box
+        //
+        bidx.utils.populateDropdown( snippets.$countryOperationSpecifics.find( "[name='country']" ), items );
+    } );
+
 
     // Disable disabled links
     //
@@ -278,12 +286,22 @@
             //
             switch ( baseName )
             {
-                case "country":
+
                 case "permitsLicencesObtained":
                     $input.rules( "add",
                     {
                         required:               true
                     } );
+                break;
+                case "country":
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    } );
+
+                    // enable the Chosen plugin
+                    //
+                    $input.bidx_chosen();
                 break;
 
                 default:
