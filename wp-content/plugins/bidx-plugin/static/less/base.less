@@ -7,6 +7,11 @@
     @brand-secondary: #1abc9c;
     @text-copy: #34495E;
     @white: #FFF;
+
+    @investor: #2c3e50;
+    @member: #bdc3c7;
+    @entrepreneur: #f39c11;
+
     // Testimonial
     @testimonial-bg: #D2B48C;
     @triagle-size: 25px;
@@ -241,7 +246,7 @@ header.navbar {
 // Modals
 // -------------------------
 .modal-body {
-    max-height: 300px;
+    max-height: 500px;
     overflow-y: scroll;
     .hide-in-modal {
         display: none;
@@ -363,6 +368,19 @@ header.navbar {
 
 .viewInitial {
     display: block;
+}
+
+
+.label {
+    &.bidx-label-investor {
+        background-color: @investor;
+    }
+    &.bidx-label-member {
+        background-color: @member;
+    }
+    &.bidx-label-entrepreneur {
+        background-color: @entrepreneur;
+    }
 }
 
 
