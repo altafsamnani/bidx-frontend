@@ -634,7 +634,7 @@
 
                     // Inform the rest of the world we got an updated file
                     //
-                    bidx.common.trigger( "update.media", response.data );
+                    bidx.common.trigger( "updated.media", response.data );
 
                     // Regardless if the app runs as slave app, now the data is saved it can be removed from the pending list
                     //
@@ -935,8 +935,6 @@
     }
 
     window.bidx.media = app;
-
-    $media = ( window.bidx.media );
 
     // Only update the hash when user is authenticating and when there is no hash defined
     //
