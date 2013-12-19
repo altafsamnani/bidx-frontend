@@ -287,6 +287,13 @@ header.navbar {
     }
 }
 
+// Feature Block
+// ---------------
+.feature-container {
+    color: @white;
+    padding: 20px 0;
+}
+
 // Testimonial
 // ----------------------
 
@@ -350,7 +357,6 @@ header.navbar {
     height: 5px;
 }
 
-
 .view {
     display: none;
 }
@@ -359,10 +365,18 @@ header.navbar {
     display: block;
 }
 
-/* Pagination plugin */
+
+// Forms
+// -------------------------
+textarea {
+    resize: vertical;
+}
+
+
+/* Panels Icon Rotation */
 .panel-open .accordion-state-icon {
     .rotation(90deg);
-    filter:                     progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 }
 
 .accordion-state-icon {
@@ -370,19 +384,18 @@ header.navbar {
     .transition(0.3s);
     .backface();
     font-size: ceil(@font-size-base * 0.8);
-    filter:                     progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 }
 
 /* Pagination plugin */
-
 .pagination .pointer-cursor {
     cursor: hand;
     cursor: pointer;
 }
+
 .pager-loading {
     .opacity;
 }
-/* \ Pagination plugin */
 
 
 
