@@ -288,7 +288,10 @@ function ajax_submit_signin ()
  *
  * @param String $username
  * @param String $password
- * @url http://sampoerna.local.bidx.net/wp-admin/admin-ajax.php?action=bidx_signout&provider=skipso
+ *
+ * @url Frontend http://sampoerna.local.bidx.net/wp-admin/admin-ajax.php?action=bidx_signout&provider=skipso&app=skMain
+        Backend  http://sampoerna.local.bidx.net/wp-admin/admin-ajax.php?action=bidx_signout&provider=skipso&app=skAdmin
+        Judge    http://sampoerna.local.bidx.net/wp-admin/admin-ajax.php?action=bidx_signout&provider=skipso&app=skDashboard
  *
  * @return Loggedin User
  */
@@ -299,26 +302,47 @@ add_action ('wp_ajax_nopriv_bidx_signout', 'bidx_signout');
 function bidx_signout ()
 {
     $provider = (isset ($_GET['provider'])) ? $_GET['provider'] : NULL;
+    $app      = (isset ($_GET['app'])) ? $_GET['app'] : NULL;
     //Logout Bidx Session too
+    $sessionData = BidxCommon::$staticSession;
+    $skipsoUrl   = NULL;
+
+    $current_user = wp_get_current_user ();
+    if (in_array (WP_OWNER_ROLE, $currentUser->roles) || in_array (WP_ADMIN_ROLE, $currentUser->roles)) {
+        $skipsoUrl = 'skipso-backend-logout';
+    }
 
     clear_bidx_cookies ();
-
     $params['domain'] = get_bidx_subdomain ();
     call_bidx_service ('session', $params, 'DELETE');
     wp_clear_auth_cookie ();
     clear_wp_bidx_session ();
-
     if ($provider) {
-        //http://gacctest.skipsolabs.com/en/logout
-        $skipsoUrl = get_site_option ('skipso-url');
-        callProviderLogoutURL ($skipsoUrl);
+
+        callProviderLogoutURL ( $app );
     }
 }
 
-function callProviderLogoutURL ($url)
+function callProviderLogoutURL ($app )
 {
+    switch( $app ) {
 
-     echo '
+        case 'skMain':
+         $logoutSiteOption = 'skipso-logout';
+        break;
+
+        case'skAdmin':
+        $logoutSiteOption = 'skipso-backend-logout';
+        break;
+
+        case 'skDashboard':
+        $logoutSiteOption = 'skipso-judge-logout';
+        break;
+    }
+
+    $url = get_site_option ($logoutSiteOption);
+
+    echo '
         <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
         <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/jquery.noty.js?ver=2.0.3"></script>
         <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/top.js?ver=2.0.3"></script>
@@ -328,10 +352,11 @@ function callProviderLogoutURL ($url)
             jQuery(function() {
               var n = noty({ type: "success",text:"Please wait while we log you out"} );
               jQuery("#myiframe").load(function(){
-               window.location.replace("'.home_url().'"); });
+                 window.location.replace("'.home_url().'"); });
             });
         </script>';
      echo '<iframe id="myiframe" src="'.$url.'" width="0" height="0"></iframe>';
+
      exit;
 
 }
@@ -1985,15 +2010,35 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
 
                     /* 4 Skipso */
                     $skipsoUrl = get_site_option ('skipso-logout');
-                    $htmlSkipsoUrl = "<br/><br/><b>Skipso Frontend URL</b><br/>";
-                    $htmlSkipsoUrl .= "<input style='width:350px;' type='text' name='skipso-logout' value='".$skipsoUrl."'>" ;
-                    $htmlSkipsoUrl .= "<div class='buttonwrapper'>
+                    $htmlFrontendLogout = "<br/><br/><b>Skipso Frontend Logout URL</b><br/>";
+                    $htmlFrontendLogout .= "<input style='width:350px;' type='text' name='skipso-logout' value='".$skipsoUrl."'>" ;
+                    $htmlFrontendLogout .= "<div class='buttonwrapper'>
                     <input type='hidden' value='skipso-logout' name='notification'/>
                     <input type='submit' name = 'action' value='Save'>
                     <input type='submit' name = 'action' value='Reset' >
                 </div>";
 
-                /* 4 Skipso Backend*/
+                    /* 5 Skipso BAckend Logout */
+                    $skipsoBackendLogoutUrl = get_site_option ('skipso-backend-logout');
+                    $htmlBackendLogout = "<br/><br/><b>Skipso Backend Logout URL</b><br/>";
+                    $htmlBackendLogout .= "<input style='width:350px;' type='text' name='skipso-backend-logout' value='".$skipsoBackendLogoutUrl."'>" ;
+                    $htmlBackendLogout .= "<div class='buttonwrapper'>
+                    <input type='hidden' value='skipso-backend-logout' name='notification'/>
+                    <input type='submit' name = 'action' value='Save'>
+                    <input type='submit' name = 'action' value='Reset' >
+                </div>";
+
+                    /* 6 Skipso Judge Logout*/
+                    $skipsoJudgeLogoutUrl = get_site_option ('skipso-judge-logout');
+                    $htmlJudgeLogout = "<br/><br/><b>Skipso Judge Logout URL</b><br/>";
+                    $htmlJudgeLogout .= "<input style='width:350px;' type='text' name='skipso-judge-logout' value='".$skipsoJudgeLogoutUrl."'>" ;
+                    $htmlJudgeLogout .= "<div class='buttonwrapper'>
+                    <input type='hidden' value='skipso-judge-logout' name='notification'/>
+                    <input type='submit' name = 'action' value='Save'>
+                    <input type='submit' name = 'action' value='Reset' >
+                </div>";
+
+                    /* 7 Skipso Backend */
                     $skipsoBackendUrl = get_site_option ('skipso-backend');
                     $htmlSkipsoBackendUrl = "<br/><br/><b>Skipso Backend URL</b><br/>";
                     $htmlSkipsoBackendUrl .= "<input style='width:350px;' type='text' name='skipso-backend' value='".$skipsoBackendUrl."'>" ;
@@ -2003,7 +2048,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     <input type='submit' name = 'action' value='Reset' >
                 </div>";
 
-                /* 4 Skipso Judge Dashboard*/
+                    /* 8 Skipso Judge Dashboard*/
                     $skipsoJudgeUrl = get_site_option ('skipso-judge');
                     $htmlSkipsoJudgeUrl = "<br/><br/><b>Skipso Judge Dashboard URL</b><br/>";
                     $htmlSkipsoJudgeUrl .= "<input style='width:350px;' type='text' name='skipso-judge' value='".$skipsoJudgeUrl."'>" ;
@@ -2024,14 +2069,22 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     {$htmlInvestorNotification}
                 </form>
                 <form method='post' action='settings.php?page=static-po'>
-                    {$htmlSkipsoUrl}
+                    {$htmlFrontendLogout}
                 </form>
+                <form method='post' action='settings.php?page=static-po'>
+                    {$htmlBackendLogout}
+                </form>
+                <form method='post' action='settings.php?page=static-po'>
+                    {$htmlJudgeLogout}
+                </form>
+
                 <form method='post' action='settings.php?page=static-po'>
                     {$htmlSkipsoBackendUrl}
                 </form>
                 <form method='post' action='settings.php?page=static-po'>
                     {$htmlSkipsoJudgeUrl}
                 </form>
+
                     ";
 
 
