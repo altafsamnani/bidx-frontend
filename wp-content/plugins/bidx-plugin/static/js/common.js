@@ -1082,12 +1082,17 @@
         } )
         .on( "shown.bs.collapse", function ()
         {
-            var $accordionBody = $( this );
-
+            var $accordionBody = $( this )
+            ,   panelHeight = $accordionBody.height()
+            ,   offSet = 165
+            ,   targetOffset = $accordionBody.offset().top - offSet
+            ;
             $accordionBody.closest( ".panel" )
                 .css( { overflow: 'visible' } )
                 .find( ".panel-body" ).first().css({ overflow: 'visible' });
-        } );
 
+            $('html,body').delay(300).animate({scrollTop:targetOffset}, 200);
+
+        } );
 
 } ( jQuery ));

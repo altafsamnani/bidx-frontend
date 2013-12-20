@@ -72,12 +72,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <div class="businessSummary" id="businessSummary">
 
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <h1><?php _e('Business Summary', 'bidxplugin')?></h1>
             <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
         </div>
 
-        <div class="col-sm-4 completion">
+        <div class="col-sm-3 completion">
             <h2><?php _e('Business completion', 'bidxplugin')?></h2>
             <div class="progress progress-striped">
                 <div class="progress-bar progress-bar-success text-center" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $progress ?>">
@@ -87,7 +87,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div>
 
 
-        <div class="col-sm-4 editControlsContainer">
+        <div class="col-sm-3 editControlsContainer">
             <div class="editControls pull-right">
 
                 <!-- SHOW -->
@@ -159,14 +159,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 
     <!-- Accordion -->
-    <div id="businessSummaryAccordion">
+    <div id="businessSummaryCollapse">
 
         <!-- General Overview -->
         <div class="panel panel-default panel-open">
             <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-GeneralOverview"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
+                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-GeneralOverview"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
             </div>
-            <div id="businessSummaryAccordion-GeneralOverview" class="panel-collapse collapse in">
+            <div id="businessSummaryCollapse-GeneralOverview" class="panel-collapse collapse in">
                 <div class="panel-body clearfix" style="overflow: visible;">
 
                     <!-- SHOW -->
@@ -296,8 +296,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                 </div><!-- /panel-body -->
                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Documents', 'bidxplugin')?></a>
-                    <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('About the business','bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
+                    <a href="#businessSummaryCollapse-Documents" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Documents', 'bidxplugin')?></a>
+                    <a href="#businessSummaryCollapse-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('About the business','bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
                 </div>
             </div>
         </div><!-- /General Overview -->
@@ -305,9 +305,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <!-- About the business -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutTheBusiness"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('About the business','bidxplugin'); ?></a>
+                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-AboutTheBusiness"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('About the business','bidxplugin'); ?></a>
             </div>
-            <div id="businessSummaryAccordion-AboutTheBusiness" class="panel-collapse collapse">
+            <div id="businessSummaryCollapse-AboutTheBusiness" class="panel-collapse collapse">
                 <div class="panel-body clearfix">
 
                     <!-- SHOW -->
@@ -444,8 +444,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                 </div><!-- /panel-body -->
                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('General Overview', 'bidxplugin')?></a>
-                    <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('About you &amp; your team', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
+                    <a href="#businessSummaryCollapse-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('General Overview', 'bidxplugin')?></a>
+                    <a href="#businessSummaryCollapse-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('About you &amp; your team', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
                 </div>
             </div>
         </div><!-- /About the business -->
@@ -453,9 +453,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <!-- About you & your team -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-AboutYouAndYourTeam"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('About you & your team','bidxplugin'); ?></a>
+                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-AboutYouAndYourTeam"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('About you & your team','bidxplugin'); ?></a>
             </div>
-            <div id="businessSummaryAccordion-AboutYouAndYourTeam" class="panel-collapse collapse">
+            <div id="businessSummaryCollapse-AboutYouAndYourTeam" class="panel-collapse collapse">
                 <div class="panel-body clearfix">
 
                     <!-- SHOW -->
@@ -571,8 +571,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                 </div><!-- /Accordion inner -->
                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryAccordion-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('About the business', 'bidxplugin')?></a>
-                    <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Financial Details', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
+                    <a href="#businessSummaryCollapse-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('About the business', 'bidxplugin')?></a>
+                    <a href="#businessSummaryCollapse-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('Financial Details', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
                 </div>
             </div>
         </div><!-- /About you & your team -->
@@ -580,9 +580,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <!-- Financial details -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-FinancialDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
+                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-FinancialDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
             </div>
-            <div id="businessSummaryAccordion-FinancialDetails" class="panel-collapse collapse">
+            <div id="businessSummaryCollapse-FinancialDetails" class="panel-collapse collapse">
                 <div class="panel-body clearfix">
 
                     <form id="frmBusinessSummary-FinancialDetails">
@@ -617,7 +617,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 
                             <!-- If there is no financial plan uploaded -->
-                            <a class="btn btn-primary" href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" ><?php _e('Upload your financial plan', 'bidxplugin'); ?></a>
+                            <a class="btn btn-primary" href="#businessSummaryCollapse-Documents" data-toggle="collapse" data-parent="#businessSummaryCollapse" ><?php _e('Upload your financial plan', 'bidxplugin'); ?></a>
 
 <?php
                             if ( $dlurl !== false) :
@@ -664,8 +664,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     </form>
                 </div><!-- /panel-body -->
                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryAccordion-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('About you &amp; your team', 'bidxplugin')?></a>
-                    <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Company details', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
+                    <a href="#businessSummaryCollapse-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('About you &amp; your team', 'bidxplugin')?></a>
+                    <a href="#businessSummaryCollapse-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('Company details', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
                 </div>
             </div>
         </div><!-- /Financial details -->
@@ -673,9 +673,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <!-- Company details -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-CompanyDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Company Details', 'bidxplugin')?></a>
+                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-CompanyDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Company Details', 'bidxplugin')?></a>
             </div>
-            <div id="businessSummaryAccordion-CompanyDetails" class="panel-collapse collapse">
+            <div id="businessSummaryCollapse-CompanyDetails" class="panel-collapse collapse">
                 <div class="panel-body clearfix">
 
 
@@ -820,8 +820,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                 </div><!-- /Accordion inner -->
                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryAccordion-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
-                    <a href="#businessSummaryAccordion-Documents" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('Documents', 'bidxplugin')?> <span class="fa fa-chevron-right"></span> </a>
+                    <a href="#businessSummaryCollapse-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
+                    <a href="#businessSummaryCollapse-Documents" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('Documents', 'bidxplugin')?> <span class="fa fa-chevron-right"></span> </a>
                 </div>
             </div>
         </div><!-- /Company details -->
@@ -829,9 +829,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <!-- Documents -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryAccordion" href="#businessSummaryAccordion-Documents"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Documents', 'bidxplugin')?></a>
+                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-Documents"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Documents', 'bidxplugin')?></a>
             </div>
-            <div id="businessSummaryAccordion-Documents" class="panel-collapse collapse">
+            <div id="businessSummaryCollapse-Documents" class="panel-collapse collapse">
                 <div class="panel-body clearfix">
 
                     <!-- SHOW -->
@@ -943,14 +943,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                 </div><!-- /panel-body -->
                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryAccordion-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Company Details', 'bidxplugin')?></a>
-                    <a href="#businessSummaryAccordion-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryAccordion" class="btn btn-default pull-right"><?php _e('General Overview', 'bidxplugin')?> <span class="fa fa-chevron-right"></span> </a>
+                    <a href="#businessSummaryCollapse-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Company Details', 'bidxplugin')?></a>
+                    <a href="#businessSummaryCollapse-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('General Overview', 'bidxplugin')?> <span class="fa fa-chevron-right"></span> </a>
                 </div>
             </div>
 
         </div><!-- /Documents -->
 
-    </div><!-- /#businessSummaryAccordion -->
+    </div><!-- /#businessSummaryCollapse -->
 
     <!-- EDIT DOCUMENT MODAL -->
     <div class="js-edit-document modal fade">
