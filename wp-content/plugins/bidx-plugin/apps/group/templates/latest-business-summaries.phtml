@@ -73,10 +73,10 @@
                         </div>
                         <div>
 <?php
+
                             $countries = implode( ", ", $this -> exst( $summary -> countryOperation ));
-                            //$addressArr         = array ( $countries );
-                            //$countries          = $this->createRowValue ($addressArr, ', ');
-                            echo $countries;
+
+                            echo $this->getStaticVal( 'country',$countries );
 ?>
                         </div>
 <?php

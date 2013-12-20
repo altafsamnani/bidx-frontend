@@ -63,7 +63,7 @@
                 }
 
                 if ( $this -> exst( $member -> country) ) {
-                    echo '<div>' . $member -> country . '</div>';
+                    echo '<div>' . $this->getStaticVal( 'country', $member -> country ) . '</div>';
                 }
 
                 if ( $this -> exst( $member -> roles ) ) {
