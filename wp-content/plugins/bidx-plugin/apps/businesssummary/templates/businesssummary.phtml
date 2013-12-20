@@ -2,7 +2,7 @@
 
 $businessSummary    = $this->data;
 
-$progress           = trim ($this->exst($businessSummary->rating->Completeness)) . '100%';
+$progress           = $this -> completenessScore . '%';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     ? $businessSummary->bidxMeta

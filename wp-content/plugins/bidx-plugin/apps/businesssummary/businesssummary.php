@@ -57,6 +57,7 @@ class businesssummary
             $businessSummaryData = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
 
             $view->data = $businessSummaryData->data;
+            $view->completenessScore = isset( $businessSummaryData -> data -> bidxMeta -> completenessScore ) ? $businessSummaryData -> data -> bidxMeta -> completenessScore : 0;
         }
 
         $view->render('businesssummary.phtml');
