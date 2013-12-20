@@ -1173,8 +1173,8 @@
                     {
                         // show Pending button and hide Send button
                         //
-                        $bidxAccessRequestPending.show();
-                        $btnFullAccessRequest.hide();
+                        $bidxAccessRequestPending.toggleClass( "hide" );
+                        $btnFullAccessRequest.toggleClass( "hide" );
                     }
 
                 }

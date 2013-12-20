@@ -339,6 +339,7 @@ class BidxCommon
                         : null;
 
                     if ($businessSummaryId) {
+                        $data->businessSummaryId = $businessSummaryId;
                         $this::$bidxSession[$subDomain]->requestedBusinessSummaryId = $businessSummaryId;
                     }
 
