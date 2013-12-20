@@ -9,140 +9,9 @@ Company: bidX;
 @import url('assets/css/Flat-UI.css'); /* we use flatUI only for the fui-icons until we create our own vector font */
 
 
-/*******************************************************************************************
-*
-*   Global styles
-*
-********************************************************************************************/
 
-
-    html, body {
-        margin:                     0;
-        padding:                    0;
-
-
-        color:                      #34495e;
-        height:                     100%;
-
-
-    }
-
-    /* top paddings */
-
-        .home #wrap .inner-wrap {
-            padding-top:                114px;
-        }
-
-        #wrap .inner-wrap {
-            padding-top:                114px;
-        }
-
-    /* end top paddings */
-
-
-        .inner-wrap > .container {
-            margin-bottom:              40px;
-            margin-top:                 20px;
-        }
-
-
-
-    /* sticky footer   */
-    #wrap {
-        height:                     auto;
-        margin:                     0 auto -50px;
-        min-height:                 100%;
-    }
-
-    #push, footer {
-        height:                     50px;
-    }
-
-    /* end sticky footer */
-
-
-    ::-webkit-input-placeholder {
-       color:                       #333333;
-    }
-
-    :-moz-placeholder { /* Firefox 18- */
-       color:                       #333333;
-    }
-
-    ::-moz-placeholder {  /* Firefox 19+ */
-       color:                       #333333;
-       opacity:                     0.5;
-    }
-
-    :-ms-input-placeholder {
-       color:                       #333333;
-    }
-
-    a, a:hover, a:visited, a:link {
-        text-decoration:            none;
-    }
-
-    .spacer {
-        margin-bottom:              40px;
-    }
-
-    /************************ bidX default colours ***************************/
-
-        /* most of these colours will be overwriten in the specific group style */
-
-        .bidx-default-bar {
-            background-color:       #455560;
-        }
-
-        .bidx-default-button {
-            background-color:       #bdc3c8;
-        }
-
-        .bidx-theme-colour-one {
-            background-color:       #34495E
-        }
-
-        .bidx-theme-colour-two {
-            background-color:       #1ABC9C;
-        }
-
-        .bidx-theme-colour-three {
-            background-color:       #34495E;
-        }
-
-        .bidx-theme-colour-header {
-            background-color:       #FFF;
-        }
 
     /************************ End bidX default colours ***************************/
-
-
-    /************************ Button styles ***************************/
-
-
-
-    /************************ End Button styles ***************************/
-
-
-    /************************ Typografic styles ***************************/
-
-    h1,
-    .h1 {
-        font-size: 28px;
-        margin:                     20px 0;
-    }
-    h2,
-    .h2 {
-        font-size: 23px;
-        margin:                     20px 0;
-    }
-    h3,
-    .h3 {
-        font-size: 20px;
-
-    }
-
-    /************************  End Typografic styles ***************************/
 
 
 
@@ -220,10 +89,6 @@ Company: bidX;
         }
 
     /* searchbox */
-
-        header.navbar .form-search {
-            margin:                     0;
-        }
 
          header.navbar .form-search .input-append .btn .bidx-search {
             top: 2px;

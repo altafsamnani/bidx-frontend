@@ -588,8 +588,8 @@
         //
         var $details        = $viewEdit.find( ".fileDetails" );
 
+        $viewEdit.find( ".filename"     ).text( upload.documentName );
         $details.find( ".created"       ).text( created );
-        $details.find( ".filename"      ).text( upload.documentName );
         $details.find( ".size"          ).text( upload.size );
         $details.find( ".contentType"   ).text( upload.mimeType );
 

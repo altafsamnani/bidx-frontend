@@ -2,7 +2,7 @@
 
 ?>
 <header class="banner navbar navbar-fixed-top" role="banner">
-  	<div class="navbar-inner bidx-theme-colour-header">
+  	<div class="navbar-inner">
 		<div class="container">
 <?php
 				if( $authenticated )

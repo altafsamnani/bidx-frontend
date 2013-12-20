@@ -3,7 +3,7 @@ $member         = isset($this->data->member->displayName) ?  $this->data->member
 $entities       = $this->sessionData->data->wp->entities;
 ?>
 <div class="block-odd member">
-    <div class="pageHeader clearfix">
+    <div class="clearfix">
         <h1 class="pull-left bidx-page-heading">
             <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></span>
 
@@ -77,11 +77,13 @@ $entities       = $this->sessionData->data->wp->entities;
         if ( !isset( $entities->bidxInvestorProfile )) {
 ?>
             <div class="panel panel-default">
-                <div class="panel-body">
-                    <div><strong><?php _e('Become an investor', 'bidxplugin')?></strong></div>
-                    <em><?php _e('Create your resources', 'bidxtheme')?></em>
+                <div class="panel-heading">
+                    <strong><?php _e('Become an investor', 'bidxtheme')?></strong>
                 </div>
-                <a href="/member/#createInvestor" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Invest','bidxplugin')?></a>
+                <div class="panel-body">
+                    <em><?php _e('Create your resources', 'bidxtheme')?></em>
+                    <a href="/member/#createInvestor" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Invest','bidxplugin')?></a>
+                </div>
             </div>
 <?php
         } else {

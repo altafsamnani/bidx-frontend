@@ -71,95 +71,91 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 <div class="businessSummary" id="businessSummary">
 
-    <div class="pageHeader">
-        <div class="row">
-            <div class="col-sm-4">
-                <h1><?php _e('Business Summary', 'bidxplugin')?></h1>
-                <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
-            </div>
-
-            <div class="col-sm-4 completion">
-                <h2><?php _e('Business completion', 'bidxplugin')?></h2>
-                <div class="progress progress-striped">
-                    <div class="progress-bar progress-bar-success text-center" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $progress ?>">
-                        <?php echo $progress ?> <?php _e('completed', 'bidxplugin')?>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-sm-4 editControlsContainer">
-                <div class="editControls pull-right">
-
-                    <!-- SHOW -->
-                    <div class="view viewShow">
-<?php
-                    // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
-                    //
-                    if ( $canRequestAccess && !$canEdit )
-                    {
-                        $accessRequestControl = "";
-
-                        switch ( $requestStatus ) {
-                            case 'pending':
-                                $accessRequestProgress = '';
-                                $accessRequestSend = 'hide';
-                                $accessGranted = 'hide';
-                                break;
-                            case 'refused':
-                                $accessRequestProgress = '';
-                                $accessRequestSend = 'hide';
-                                $accessGranted = 'hide';
-                                break;
-                            case 'granted':
-                                $accessRequestProgress = 'hide';
-                                $accessRequestSend = 'hide';
-                                $accessGranted = '';
-                                break;
-                            case 'None':
-                                $accessRequestProgress = 'hide';
-                                $accessRequestSend = '';
-                                $accessGranted = 'hide';
-                                break;
-                            default:
-                                $accessRequestProgress = 'hide';
-                                $accessRequestSend = 'hide';
-                                $accessGranted = 'hide';
-                        }
-?>
-                        <a class="btn btn-primary disabled bidxAccessRequestPending <?php echo $accessRequestProgress; ?>" href="#"><?php echo _e( 'Access request pending', 'bidxplugin' ); ?></a>
-                        <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
-                        <a class="btn btn-primary disabled <?php echo $accessGranted; ?>" href="#"><?php echo _e( 'Full Access granted', 'bidxplugin' ); ?></a>
-
-<?php
-                    }
-
-                    // does a user have rights to edit ( is the owner )
-                    //
-                    if ( $canEdit ) {
-?>
-                        <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-<?php
-                        if ( $entityStatus == 'DRAFT' ) {
-?>
-                            <a class="btn btn-default" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
-<?php
-                        }
-                    }
-?>
-                    </div>
-
-                    <!-- EDIT, conditionally filled by the app -->
-                    <div class="view viewEdit btn-group"></div>
-
-                    <!-- ERROR, used as a placeholder for showing errors -->
-                    <div class="view viewError"></div>
-
-                </div>
-            </div>
-
+    <div class="row">
+        <div class="col-sm-4">
+            <h1><?php _e('Business Summary', 'bidxplugin')?></h1>
+            <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
         </div>
-    </div><!-- /pageHeader -->
+
+        <div class="col-sm-4 completion">
+            <h2><?php _e('Business completion', 'bidxplugin')?></h2>
+            <div class="progress progress-striped">
+                <div class="progress-bar progress-bar-success text-center" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $progress ?>">
+                    <?php echo $progress ?> <?php _e('completed', 'bidxplugin')?>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-4 editControlsContainer">
+            <div class="editControls pull-right">
+
+                <!-- SHOW -->
+                <div class="view viewShow">
+<?php
+                // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
+                //
+                if ( $canRequestAccess && !$canEdit )
+                {
+                    $accessRequestControl = "";
+
+                    switch ( $requestStatus ) {
+                        case 'pending':
+                            $accessRequestProgress = '';
+                            $accessRequestSend = 'hide';
+                            $accessGranted = 'hide';
+                            break;
+                        case 'refused':
+                            $accessRequestProgress = '';
+                            $accessRequestSend = 'hide';
+                            $accessGranted = 'hide';
+                            break;
+                        case 'granted':
+                            $accessRequestProgress = 'hide';
+                            $accessRequestSend = 'hide';
+                            $accessGranted = '';
+                            break;
+                        case 'None':
+                            $accessRequestProgress = 'hide';
+                            $accessRequestSend = '';
+                            $accessGranted = 'hide';
+                            break;
+                        default:
+                            $accessRequestProgress = 'hide';
+                            $accessRequestSend = 'hide';
+                            $accessGranted = 'hide';
+                    }
+?>
+                    <a class="btn btn-primary disabled bidxAccessRequestPending <?php echo $accessRequestProgress; ?>" href="#"><?php echo _e( 'Access request pending', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary disabled <?php echo $accessGranted; ?>" href="#"><?php echo _e( 'Full Access granted', 'bidxplugin' ); ?></a>
+
+<?php
+                }
+
+                // does a user have rights to edit ( is the owner )
+                //
+                if ( $canEdit ) {
+?>
+                    <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+                    if ( $entityStatus == 'DRAFT' ) {
+?>
+                        <a class="btn btn-default" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
+<?php
+                    }
+                }
+?>
+                </div>
+
+                <!-- EDIT, conditionally filled by the app -->
+                <div class="view viewEdit btn-group"></div>
+
+                <!-- ERROR, used as a placeholder for showing errors -->
+                <div class="view viewError"></div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Accordion -->
@@ -916,7 +912,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <?php _e('Download the templates on the link below to complete your full business and financial plan. Once you fill them in you can upload them to your business proposal.', 'bidxplugin')?>
                             </div>
                             <p>
-                                <a class="btn btn-warning" href="/download-financial-templates/">
+                                <a class="btn btn-warning" href="/download-business-plan-templates/">
                                     <?php _e('Go to templates page', 'bidxplugin' ); ?>
                                 </a>
                             </p>

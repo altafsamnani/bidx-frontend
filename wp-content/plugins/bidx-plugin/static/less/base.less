@@ -8,9 +8,13 @@
     @text-copy: #34495E;
     @white: #FFF;
 
+    @stickyheight: 50px;
+
     @investor: #2c3e50;
     @member: #bdc3c7;
     @entrepreneur: #f39c11;
+
+    @navbar-inner: #FFF;
 
     // Testimonial
     @testimonial-bg: #D2B48C;
@@ -40,6 +44,61 @@
 .text-white {
     color: #FFF;
 }
+
+// Base
+// -------------------------
+html, body {
+    .body-bg();
+    .reset;
+    color: @text-copy;
+    height: 100%;
+}
+
+#wrap {
+    height: auto;
+    margin: 0 auto -@stickyheight;
+    min-height: 100%;
+    .inner-wrap {
+        padding-top: 114px;
+        > .container {
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+    }
+}
+
+// Sticky Footer
+// -------------------------
+#push, footer {
+    height: @stickyheight;
+}
+
+::-webkit-input-placeholder {
+   color: #333333;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #333333;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #333333;
+   opacity: 0.5;
+}
+
+:-ms-input-placeholder {
+   color: #333333;
+}
+
+a, a:hover, a:visited, a:link {
+    text-decoration: none;
+}
+
+.spacer {
+    margin-bottom: 40px;
+}
+
+
 
 // Icons manipulation
 // -------------------------
@@ -241,6 +300,9 @@ header.navbar {
             }
         }
     }
+    .navbar-inner {
+        background-color: @navbar-inner;
+    }
 }
 
 // Modals
@@ -437,10 +499,23 @@ textarea {
 }
 // buttons.less
 // -------------------------
+.btn {
+    &:focus {
+        outline: 0;
+    }
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        cursor: not-allowed;
+        pointer-events: none; // Future-proof disabling of clicks
+    .opacity(.65);
+        .box-shadow(none);
+    }
+}
 
 // carousel.less
 // -------------------------
-
 .carousel-inner {
   > .item {
     > img,
@@ -452,26 +527,24 @@ textarea {
 .carousel-caption {
     .rgba;
 }
+
 // Left/right controls for nav
-// ---------------------------
-
 .carousel-control {
-  // Toggles
-  .fa-chevron-left,
-  .fa-chevron-right {
-    position: absolute;
-    top: 48%;
-    z-index: 5;
-    display: inline-block;
-    font-size: floor(@font-size-base * 3);
-  }
-  .fa-chevron-left {
-    left: 50%;
-  }
-  .fa-chevron-right {
-    right: 50%;
-  }
-
+    // Toggles
+    .fa-chevron-left,
+    .fa-chevron-right {
+        position: absolute;
+        top: 48%;
+        z-index: 5;
+        display: inline-block;
+        font-size: floor(@font-size-base * 3);
+    }
+    .fa-chevron-left {
+        left: 50%;
+    }
+    .fa-chevron-right {
+        right: 50%;
+    }
 }
 
 
