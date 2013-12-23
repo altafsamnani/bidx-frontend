@@ -31,18 +31,17 @@ function bidx_mailer ()
     $pre_data = bidx_wordpress_pre_action ('mailer');
     $params = $pre_data['params'];
 
+    $result = call_bidx_service ($params['type'], $params['data'], $params['protocol']);
+
+    echo "Write  your code here";
     echo "<pre>";
-    print_r($pre_data);
+    print_r($result);
     echo "</pre>";
     exit;
 
-    $result = call_bidx_service ($params['type'], $params['data'], $params['protocol']);
-
-    
-
     $requestData = bidx_wordpress_post_action ('mailer', $result, $params['data']);
 
-    echo 'with session';
+
 
     return;
 }
