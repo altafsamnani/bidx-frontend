@@ -1651,7 +1651,7 @@
                 //
                 var params =
                 {
-                    requesterId:     message.recipients.id
+                    requesterId:     message.sender.id
                 ,   requesteeId:     bidx.common.getCurrentUserId( "id" )
                 ,   type:            "contact"
                 ,   action:          "accept"
