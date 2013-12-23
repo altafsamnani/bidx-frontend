@@ -19,23 +19,26 @@ if (!function_exists ('htmlspecialchars_decode')) {
  *
  * @param String $username
  * @param String $password
+ * @url http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_mailer&protocol=get&type=session&groupDomain=sampoerna&activate=334343
  *
  * @return Loggedin User
  */
 
-function bidx_process_mail ()
-{
-
-
-    //$is_session = bidx_check_session();
-    // if($is_session) {
-    //   echo 'session milaaa';exit;
-    //}
-
+add_action ('wp_ajax_bidx_mailer', 'bidx_mailer');
+add_action ('wp_ajax_nopriv_bidx_mailer', 'bidx_mailer');
+function bidx_mailer ()
+{    
     $pre_data = bidx_wordpress_pre_action ('mailer');
     $params = $pre_data['params'];
 
-    $result = call_bidx_service ($params['action'], $params['data'], $params['protocol']);
+    echo "<pre>";
+    print_r($pre_data);
+    echo "</pre>";
+    exit;
+
+    $result = call_bidx_service ($params['type'], $params['data'], $params['protocol']);
+
+    
 
     $requestData = bidx_wordpress_post_action ('mailer', $result, $params['data']);
 
@@ -352,7 +355,8 @@ function callProviderLogoutURL ($app )
             jQuery(function() {
               var n = noty({ type: "success",text:"Please wait while we log you out"} );
               jQuery("#myiframe").load(function(){
-                 window.location.replace("'.home_url().'"); });
+                 window.location.replace("'.home_url().'");
+              });
             });
         </script>';
      echo '<iframe id="myiframe" src="'.$url.'" width="0" height="0"></iframe>';
@@ -1479,11 +1483,12 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
             case 'mailer' :
                 $get_data = $_GET;
                 $params['protocol'] = $get_data['protocol'];
-                $params['action'] = $get_data['action'];
+                $params['type'] = $get_data['type'];
                 $get_data['domain'] = $get_data['groupDomain'];
                 unset ($get_data['protocol']);
-                unset ($get_data['action']);
+                unset ($get_data['type']);
                 unset ($get_data['groupDomain']);
+                unset ($get_data['action']);
                 $params['data'] = $get_data;
                 break;
 
