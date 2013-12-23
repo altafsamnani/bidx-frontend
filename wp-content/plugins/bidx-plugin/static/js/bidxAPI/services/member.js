@@ -7,20 +7,31 @@
     var bidx    = window.bidx
     ,   api     = bidx.api
     ,   member  = {}
-    ,   baseUrl = "/api/v1/members"
+    ,   baseUrl = "/api/v1/members/%id%"
     ,   params  = []
     ;
 
     member.fetch = function( params )
     {
-        var method = "GET";
+        var method = "GET"
+        ,   url    = baseUrl
+        ;
+
+        if ( params.requesteeId )
+        {
+            url    = baseUrl.replace( "%id%", params.requesteeId );
+        }
+        else
+        {
+            url    = baseUrl.replace( "/%id%", "" );
+        }
 
         api._call(
         {
             method:         method
         ,   id:             params.memberId
         ,   groupDomain:    params.groupDomain
-        ,   baseUrl:        baseUrl
+        ,   baseUrl:        url
         ,   extraUrlParameters:     params.extraUrlParameters
         ,   success:        function( response, textStatus, jqXhr )
             {
@@ -40,14 +51,16 @@
 
     member.destroy = function( params )
     {
-        var method = "DELETE";
+        var method = "DELETE"
+        ,   url    = baseUrl.replace( "/%id%", "" )
+        ;
 
         api._call(
         {
             method:         method
         ,   id:             params.memberId
         ,   groupDomain:    params.groupDomain
-        ,   baseUrl:        baseUrl
+        ,   baseUrl:        url
         ,   success:        function( data, textStatus, jqXhr )
             {
                 params.success( data, textStatus, jqXhr );
@@ -61,9 +74,9 @@
 
     member.save = function( params )
     {
-        var method = params.memberId ? "PUT" : "POST";
-
-        var url = baseUrl;
+        var method = params.memberId ? "PUT" : "POST"
+        ,   url    = baseUrl.replace( "/%id%", "" )
+        ;
 
         api._call(
         {

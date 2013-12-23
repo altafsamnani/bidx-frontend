@@ -830,14 +830,77 @@
                     //
                     if ( jqXhr.status >= 500 && jqXhr.status < 600)
                     {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while creating a relationship: " + response.text );
+                        if( response.code === "relationshipPendingBetweenUsers" )
+                        {
+
+                            // show the user that there is already a pending relationship between these two users
+                            //
+                            _showPendingRelationship( options.requesteeId );
+
+
+
+                        }
+                        else
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while creating a relationship: " + response.text );
+                        }
+
                     }
 
 
                 }
             }
         );
+    }
+
+    function _showPendingRelationship( requesteeId )
+    {
+        bidx.api.call(
+            "member.fetch"
+        ,   {
+                requesteeId:              requesteeId
+            ,   groupDomain:              bidx.common.groupDomain
+
+            ,   success: function( response )
+                {
+                    var $contactPending         = $views.filter( ".viewContactPending" )
+                    ,   $relationshipUser       = $contactPending.find( ".js-pending-relationship-with-user" )
+                    ;
+
+
+                    if ( response && response && response.member && response.member.displayName )
+                    {
+                        $relationshipUser.text( response.member.displayName );
+
+                    }
+                    _showView( "ContactPending" );
+                }
+
+            ,   error: function( jqXhr, textStatus )
+                {
+
+                    var response = $.parseJSON( jqXhr.responseText);
+
+                    // 400 errors are Client errors
+                    //
+                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    {
+                        bidx.utils.error( "Client  error occured", response );
+                        _showError( "Something went wrong while retrieving the members relationships: " + response.text );
+                    }
+                    // 500 erors are Server errors
+                    //
+                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                    {
+                        bidx.utils.error( "Internal Server error occured", response );
+                        _showError( "Something went wrong while retrieving the members relationships: " + response.text );
+                    }
+
+                }
+            }
+        );
+
     }
 
     // handler for deleting multiple items
