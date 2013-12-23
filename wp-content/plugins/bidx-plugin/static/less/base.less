@@ -417,6 +417,15 @@ header.navbar {
     }
 }
 
+// Group's Latest
+// -------------------------
+.auth .bidx-latest .col-sm-6 {
+    margin-bottom: (@grid-gutter-width / 2);
+    &:nth-last-child(-n+2) {
+        margin-bottom: 0;
+    }
+}
+
 // Elements
 // -------------------------
 .divider {
@@ -432,7 +441,6 @@ header.navbar {
     display: block;
 }
 
-
 .label {
     &.bidx-label-investor {
         background-color: @investor;
@@ -444,7 +452,6 @@ header.navbar {
         background-color: @entrepreneur;
     }
 }
-
 
 // Forms
 // -------------------------

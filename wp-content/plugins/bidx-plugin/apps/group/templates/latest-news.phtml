@@ -28,10 +28,9 @@
                 break;
             }
             $my_query->the_post();
-            $oddeven = ( $index % 2 == 0) ? 'odd' : 'even' ;
             if ( $authenticated ) {
 ?>
-                <div class="col-sm-6 <?php echo $oddeven; ?>">
+                <div class="col-sm-6">
 <?php
             }
 ?>

@@ -30,9 +30,8 @@
 		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
 
             if ( $authenticated ) {
-                $oddeven = ( $index % 2 == 0) ? 'odd' : 'even' ;
 ?>
-                <div class="col-sm-6 <?php echo $oddeven; ?>">
+                <div class="col-sm-6">
 <?php
             }
 ?>
@@ -103,11 +102,6 @@
 ?>
             </div>
 <?php
-                if ($index % 2 != 0) {
-?>
-                <br>
-<?php
-                }
             }
 
             $index++;
