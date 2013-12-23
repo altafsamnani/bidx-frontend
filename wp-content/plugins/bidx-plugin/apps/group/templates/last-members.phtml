@@ -41,7 +41,7 @@
     				  	if ( empty( $member -> profilePicture ) ) {
     						echo '<div class="icons-circle pull-left"><i class="fa fa-user text-primary-light"></i></div>';
                         } else {
-    						echo '<img src="' . $member -> profilePicture . '" alt="" class="media-object img-circle pull-left" style="height:95px;">';
+    						echo '<img src="' . $member -> profilePicture . '" alt="" class="media-object img-circle pull-left" style="height:90px;">';
                         }
 ?>
                     </a>
@@ -65,8 +65,9 @@
                     echo '<div>' . $this->getStaticVal( 'country', $member -> country ) . '</div>';
                 }
 
+                echo '<div><span class="label bidx-label-member">Member</span>';
                 if ( $this -> exst( $member -> roles ) ) {
-                    echo '<div>';
+
                     foreach ($member -> roles as $role) {
                         if ( $role === 'entrepreneur' ) {
 ?>
@@ -79,10 +80,9 @@
 <?php
                         }
                     }
-                    echo '</div>';
-                } else {
-                    echo '<div><span class="label bidx-label-member">Member</span></div>';
+
                 }
+                echo '</div>';
 ?>
 <?php
                 // only show connect link when authenticated and member has joined the group
