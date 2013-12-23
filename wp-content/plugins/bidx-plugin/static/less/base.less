@@ -431,6 +431,72 @@ header.navbar {
     }
 }
 
+// Panels
+// -------------------------
+
+.panel-heading {
+    &.heading-error {
+        background-color: lighten(@brand-danger, 35%);;
+    }
+    .js-error-count {
+        background-color: @brand-danger;
+    }
+}
+
+.bidx-collapse {
+    display:                    inline-block;
+}
+
+.bidx-expand {
+    display:                    none;
+}
+
+.collapsed {
+    .bidx-expand {
+        display:                    inline-block;
+    }
+    .bidx-collapse {
+        display:                    none;
+    }
+}
+
+// Footer
+// -------------------------
+
+.page-footer {
+    color: @white;
+    font-size: ceil(@font-size-base * 0.9);
+    border-top: 1px solid darken(@bg-primary-dark, 8%);
+    border-bottom: 1px solid darken(@bg-primary-dark, 8%);
+    .footer-bar {
+        height: 48px;
+    }
+    .left-block {
+        margin-top: 5px;
+    }
+    .right-block {
+        margin-top: 15px;
+    }
+    .footer-menu {
+        display: inline-block;
+        > div {
+            display: inline;
+            margin-right: 10px;
+        }
+    }
+    .copyright {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    .follow-us {
+        margin-right: 20px;
+    }
+    a {
+        text-decoration: underline;
+        color: #fff;
+    }
+}
+
 // Elements
 // -------------------------
 .divider {
@@ -458,10 +524,16 @@ header.navbar {
     }
 }
 
+.buttonwrapper {
+    margin: 20px 0;
+}
+
+
 // Forms
 // -------------------------
 textarea {
     resize: vertical;
+    min-height: 100px;
 }
 
 
