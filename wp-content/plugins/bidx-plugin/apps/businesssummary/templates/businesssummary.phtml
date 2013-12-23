@@ -538,7 +538,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <div class="row">
                                 <div class="form-group col-sm-12">
                                     <label><?php _e('Here you can give information about other members in your team.','bidxplugin'); ?></label>
-                                    <a href="#addManagementTeam" class="btn btn-primary"><span class="fa fa-plus"></span><?php _e('Add','bidxplugin'); ?></a>
+                                    <a href="#addManagementTeam" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e('Add','bidxplugin'); ?></a>
                                 </div>
                             </div>
 
@@ -617,7 +617,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 
                             <!-- If there is no financial plan uploaded -->
-                            <a class="btn btn-primary" href="#businessSummaryCollapse-Documents" data-toggle="collapse" data-parent="#businessSummaryCollapse" ><?php _e('Upload your financial plan', 'bidxplugin'); ?></a>
+                            <a class="btn btn-primary" href="#businessSummaryCollapse-Documents" data-toggle="collapse" data-parent="#businessSummaryCollapse" ><span class="fa fa-upload"></span> <?php _e('Upload your financial plan', 'bidxplugin'); ?></a>
 
 <?php
                             if ( $dlurl !== false) :
@@ -918,7 +918,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             </p>
 
                         </div>
-                        <a href="#addFiles" data-toggle="modal" class="btn btn-primary"><?php _e('Add files', 'bidxplugin')?></a>
+                        <a href="#addFiles" data-toggle="modal" class="btn btn-primary"><span class="fa fa-plus"></span> <?php _e('Add files', 'bidxplugin')?></a>
 
                         <div class="addFiles modal fade">
                             <div class="modal-dialog">

@@ -75,43 +75,6 @@ Company: bidX;
 
 
 
-    /************************  End input styles ********************************/
-
-
-    /************************  Generic Header styles ***********************************/
-
-
-    /* iconbar (topmenu) */
-
-        header.navbar .navbar-inner .container,
-        header.navbar .navbar-inner .container .row {
-            height:                     100%;
-        }
-
-    /* searchbox */
-
-         header.navbar .form-search .input-append .btn .bidx-search {
-            top: 2px;
-         }
-
-
-        header.navbar .form-search .search-query {
-            border-right-width: 0;
-            height: 32px;
-            -webkit-border-radius: 5px 0 0 5px ;
-            -moz-border-radius: 5px 0 0 5px ;
-            border-radius: 5px 0 0 5px ;
-        }
-
-    /* end searchbox */
-
-
-
-
-
-    /************************  End Header styles *******************************/
-
-
     /************************  Template styles *******************************/
 
 
@@ -121,10 +84,6 @@ Company: bidX;
 *	Global styles
 *
 ********************************************************************************************/
-
-.intermediate-row {
-    margin-bottom:              10px;
-}
 
 .panel-heading {
     background-color:           #f5f5f5;
