@@ -1482,6 +1482,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
 
             case 'mailer' :
                 $get_data = $_GET;
+                $response['status'] = 'ok';
                 $params['protocol'] = $get_data['protocol'];
                 $params['type'] = $get_data['type'];
                 $get_data['domain'] = $get_data['groupDomain'];
