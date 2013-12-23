@@ -1628,24 +1628,71 @@
         function _initEmail( action, message )
         {
             var mailBody
+            ,   $mailBody
             ,   $htmlParser
+            ,   subject
+            ,   snippet         = $( "#contactRequest-email-snippet" ).html().replace( /(<!--)*(-->)*/g, "" )
             ;
             $currentView = $views.filter( bidx.utils.getViewName( action ) );
 
-
-            // filter HTML  before we can insert into the mailbody
+            // contact request receive a different email body
             //
-            $htmlParser = $( "<div/>" );
-            $htmlParser.html( message.content );
-            mailBody = $htmlParser.text().replace( /\n/g, "<br/>" );
+            if ( message.type === "MAIL_CONTACT_REQUEST" )
+            {
+                // replace contact requesters name in the snippet
+                //
+                snippet  = snippet.replace( "%contactName%", message.sender.displayName );
+
+                // convert snippet to DOM object so we can use jQuery selectors
+                //
+                $mailBody = $( snippet );
+
+                // create params so we can store it in the href attribute
+                //
+                var params =
+                {
+                    requesterId:     message.recipients.id
+                ,   requesteeId:     bidx.common.getCurrentUserId( "id" )
+                ,   type:            "contact"
+                ,   action:          "accept"
+                };
+
+                // update the buttons with the new href
+                //
+                $mailBody.find( ".btn-bidx-accept ")
+                    .attr( "href", "/" + $.param( params ) )
+                    .click( _doMutateContactRequest )
+                ;
+
+                // change action to ignore amd set ignore href
+                //
+                params.action = "ignore";
+
+                // update the buttons with the new href
+                //
+                $mailBody.find( ".btn-bidx-ignore ")
+                    .attr( "href", "/" +$.param( params ) )
+                    .click( _doMutateContactRequest )
+                ;
+            }
+            else
+            {
+                $htmlParser = $( "<div/>" );
+                // filter HTML before we can insert into the mailbody, by adding it into a DOM element
+                //
+                $htmlParser.html( message.content );
+                mailBody = $htmlParser.text().replace( /\n/g, "<br/>" );
+                $mailBody = $( mailBody );
+            }
 
             // insert mail body in to placeholder of the view
             //
-            $currentView.find( ".mail-subject").html( message.subject );
+            subject = ( message.type === "MAIL_CONTACT_REQUEST" )  ?  bidx.i18n.i( "contactRequest", appName )  : message.subject;
+            $currentView.find( ".mail-subject").html( subject );
 
             // insert mail body in to placeholder of the view
             //
-            $currentView.find( ".mail-message").html( mailBody );
+            $currentView.find( ".mail-message").html( $mailBody );
         }
 
         // populate the folder dropdown in the toolbar. Required view name and current emailId or a comma separated list of emailIds
@@ -2081,6 +2128,8 @@
                                 //
                                 $.each( response.data.mail, function( index, item )
                                 {
+                                    var    subject;
+
                                     newListItem = listItem;
                                     recipients = [];
 
@@ -2095,6 +2144,7 @@
                                         senderReceiverName = recipients.toString().replace( /,/g, ", " );
                                     }
                                     // else if there is a sender ( for other boxes )
+                                    //
                                     else if ( item.sender )
                                     {
                                         senderReceiverName = item.sender.displayName;
@@ -2102,6 +2152,8 @@
 
                                     // replace placeholders
                                     //
+                                    subject = ( item.type === "MAIL_CONTACT_REQUEST" )  ?  bidx.i18n.i( "contactRequest", appName )  : item.subject;
+
                                     newListItem = newListItem
                                             .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.id )
                                             // mailbox sent does not show unread state
@@ -2110,7 +2162,7 @@
                                             .replace( /%senderReceiverName%/g, senderReceiverName )
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
                                             .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
-                                            .replace( /%subject%/g, item.subject )
+                                            .replace( /%subject%/g, subject )
                                     ;
 
                                     $element = $( newListItem );
@@ -2151,7 +2203,7 @@
                                     {
                                         if( itemList[ $this.data( "id" ) ] )
                                         {
-                                        delete itemList[ $this.data( "id" ) ];
+                                            delete itemList[ $this.data( "id" ) ];
                                         }
                                     }
 
@@ -2545,15 +2597,35 @@
 
                         // enable specific set of toolbar buttons
                         //
-                        buttons = [
+                        buttons =
+                        [
                             ".btn-reply"
                         ,   ".btn-forward"
                         ];
-                        if ( state !== "mbx-sent")
+
+                        if ( state !== "mbx-sent" )
                         {
-                            buttons.push( ".bidx-btn-delete" );
-                            buttons.push( ".btn-move-to-folder" );
+                            // if message is not a contact request
+                            //
+                            if ( message.type !== "MAIL_CONTACT_REQUEST" )
+                            {
+                                buttons.push( ".bidx-btn-delete" );
+                                buttons.push( ".btn-move-to-folder" );
+                            }
+                            else
+                            {
+                                // contact request only has delete button
+                                //
+                                buttons =
+                                [
+                                    ".bidx-btn-delete"
+                                ];
+                            }
+
+
+
                         }
+
 
                         _showToolbarButtons( action, buttons );
 

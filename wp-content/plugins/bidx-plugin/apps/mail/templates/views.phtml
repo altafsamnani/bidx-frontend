@@ -433,8 +433,12 @@
                 </div>
             </div>
             <div class="row contact-request-buttons">
-                <a href="#" class="col-sm-6 btn btn-success btn-bidx-accept"><?php _e('Accept','bidxplugin')?></a>
-                <a href="#" class="col-sm-6 btn btn-danger btn-bidx-ignore"><?php _e('Ignore','bidxplugin')?></a>
+                    <div class="col-sm-6">
+                        <a href="#" class="btn btn-block btn-success btn-bidx-accept"><?php _e('Accept','bidxplugin')?></a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#" class="btn btn-block btn-danger btn-bidx-ignore"><?php _e('Ignore','bidxplugin')?></a>
+                    </div>
             </div>
         </div>
     </li>
@@ -537,3 +541,28 @@
     </div>
 -->
 </script>
+
+<script type="text/html" id="contactRequest-email-snippet">
+<!--
+    <div class="row">
+        <div class="col-sm-6">
+            <div>
+                <p>
+                    <a href="/member/%contactId%">%contactName% </a><?php _e( 'wants to add you as connection', 'bidxplugin' ); ?>
+                </p>
+            </div>
+            <div class="well">
+                <div class="row contact-request-buttons">
+                    <div class="col-sm-6">
+                        <a href="#" class="btn btn-block btn-success btn-bidx-accept"><?php _e('Accept','bidxplugin')?></a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#" class="btn btn-block btn-danger btn-bidx-ignore"><?php _e('Ignore','bidxplugin')?></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+</script>
+

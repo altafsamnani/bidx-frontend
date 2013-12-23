@@ -14,6 +14,7 @@
     <Item value="contactRequestSendTo">New contact request has been send to</Item>
     <Item value="activeContact">Active contacts</Item>
     <Item value="ignoredContact">Ignored contacts</Item>
+    <Item value="contactRequest">New contact request</Item>
 
 
 </I18N>
