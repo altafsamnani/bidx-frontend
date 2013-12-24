@@ -169,7 +169,7 @@
             <name>Sso Authentication</name>
             <title>Sso Authentication</title>
             <mapping>^app/sso/auth</mapping>
-            <content>[bidx app="login" link="false" ssoauth="true"]</content>
+            <content>[bidx app="login" link="true" ssoauth="true"]</content>
         </post>
         <post>
             <post_id>25</post_id>
