@@ -178,6 +178,13 @@
             <mapping>^support</mapping>
             <content>[bidx app="support" view="create-zendesk-tickets"]</content>
         </post>
+        <post>
+            <post_id>26</post_id>
+            <name>activate</name>
+            <title>activate</title>
+            <mapping>^activate</mapping>
+            <content>[bidx app="auth" view="activate"]</content>
+        </post>
 
     </posts>
 

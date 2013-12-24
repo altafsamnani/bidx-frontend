@@ -135,5 +135,11 @@ class SessionService extends APIBridge {
 
         return $groupOwnerIdArr;
     }
+
+    function getActivationSession( ) {
+        d(" create a session by passing the validation code, then redirect to password set page");
+
+    //        $result = $this->callBidxAPI( 'groups/' . $this -> getBidxSubdomain(), array(), 'GET' );
+    }
 }
 ?>

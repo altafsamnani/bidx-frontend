@@ -54,8 +54,32 @@ class auth {
         $view->showLoginLink = true;
         $render = $command;
 
-        $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
-		$view -> render( $render . '.phtml' );
+
+        if ( $command === "activate" ) {
+
+            // check if code has been provided
+            //
+            $activationCode = isset( $_GET[ "code" ] ) ? $_GET["code"]  : "";
+
+            if ( $activationCode !== "" ) {
+
+                require_once( BIDX_PLUGIN_DIR .'/../services/session-service.php' );
+                $sessionObj = new SessionService( );
+                $sessionObj -> getActivationSession();
+            }
+
+            // get password set session from API
+            //
+
+            // redirect to password set
+            //
+
+        } else {
+            $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
+            $view -> render( $render . '.phtml' );
+        }
+
+
 
 	}
 }
