@@ -27,7 +27,7 @@ if (!function_exists ('htmlspecialchars_decode')) {
 add_action ('wp_ajax_bidx_mailer', 'bidx_mailer');
 add_action ('wp_ajax_nopriv_bidx_mailer', 'bidx_mailer');
 function bidx_mailer ()
-{    
+{
     $pre_data = bidx_wordpress_pre_action ('mailer');
     $params = $pre_data['params'];
 
@@ -538,7 +538,9 @@ function get_wp_news ()
               "postId" => $post->ID
               , "date" => $post->post_date
               , "title" => $post->post_title
-              , "content" => $content
+              , "content" => wp_trim_words( $content, $num_words = 100, $more = null )
+              , "url" => get_permalink( $post->ID )
+              , "featuredImage" => wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) )
             );
         }
     }
