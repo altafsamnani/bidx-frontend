@@ -232,6 +232,18 @@ a, a:hover, a:visited, a:link {
 
 }
 
+// Search
+// -------------------------
+.navbar .search .input-group {
+    margin-top: 8px;
+    .form-control {
+        height: 32px;
+    }
+    .btn {
+        padding: 5px 8px;
+    }
+}
+
 // Main Menu
 // -------------------------
 header .menu-main {
@@ -515,12 +527,15 @@ header.navbar {
 .label {
     &.bidx-label-investor {
         background-color: @investor;
+        margin-right: 0.5em;
     }
     &.bidx-label-member {
         background-color: @member;
+        margin-right: 0.5em;
     }
     &.bidx-label-entrepreneur {
         background-color: @entrepreneur;
+        margin-right: 0.5em;
     }
 }
 
@@ -534,6 +549,55 @@ header.navbar {
 textarea {
     resize: vertical;
     min-height: 100px;
+}
+
+/* ==========================================================================
+   2. CHECKBOXES
+   ========================================================================== */
+
+.modern-browser {
+    input[type="checkbox"] {
+        display:none;
+        + label span {
+            display:inline-block;
+            width:19px;
+            height:19px;
+            margin:-12px 5px 0 0;
+            vertical-align:middle;
+            cursor:pointer;
+            color: #99a1a7;
+            &:before {
+                content: '\f0c8';
+                font-family: FontAwesome;
+                font-size: floor(@font-size-base * 1.45);
+            }
+        }
+        &:checked + label span:before {
+            color: @brand-secondary;
+            content: '\f14a';
+        }
+    }
+    input[type="radio"] {
+        display:none;
+        + label span {
+            display:inline-block;
+            width:19px;
+            height:19px;
+            margin:-12px 5px 0 0;
+            vertical-align:middle;
+            cursor:pointer;
+            color: #99a1a7;
+            &:before {
+                content: '\f10c';
+                font-family: FontAwesome;
+                font-size: floor(@font-size-base * 1.45);
+            }
+        }
+        &:checked + label span:before {
+            color: @brand-secondary;
+            content: '\f192';
+        }
+    }
 }
 
 
@@ -656,6 +720,11 @@ textarea {
     box-sizing: border-box;
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+
+.radio,
+.checkbox {
+  padding-left: 0;
 }
 
 // glyphicons.less

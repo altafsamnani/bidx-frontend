@@ -61,8 +61,16 @@
 
                                 <div class="form-group">
                                     <label><?php _e('Have you ever owned a business before?','bidxplugin'); ?></label>
-                                    <label class="radio"><input type="radio" value="true" name="prevRunBusiness" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
-                                    <label class="radio"><input type="radio" value="false" name="prevRunBusiness" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
+
+                                    <div class="radio">
+                                        <input type="radio" value="true" id="radio-prevRunBusinessYes" name="prevRunBusiness" />
+                                        <label for="radio-prevRunBusinessYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                    </div>
+                                    <div class="radio">
+                                        <input type="radio" value="false" id="radio-prevRunBusinessNo" name="prevRunBusiness" />
+                                        <label for="radio-prevRunBusinessNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

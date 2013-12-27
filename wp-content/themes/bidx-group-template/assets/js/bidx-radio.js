@@ -105,9 +105,9 @@
     });
   }
 
-  $.fn.radio.defaults = {
-    template: '<span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span>'
-  }
+  // $.fn.radio.defaults = {
+  //   template: '<span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span>'
+  // }
 
 
  /* RADIO NO CONFLICT

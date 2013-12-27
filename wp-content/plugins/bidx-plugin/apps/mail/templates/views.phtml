@@ -64,10 +64,14 @@
 
                         <!-- TOOLBAR -->
                         <nav class="mail-toolbar bg-primary-dark">
-                            <div class="check">
-                                <label class="checkbox">
-                                    <input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
-                                </label>
+                            <div class="check pull-left">
+                                <div class="checkbox">
+                                    <input type="checkbox" value="" id="checkbox-messagesCheckall" class="messagesCheckall" name="messagesCheckall" data-toggle="checkbox" />
+                                    <label for="checkbox-messagesCheckall"><span></span></label>
+                                </div>
+
+
+
                             </div>
                             <div class="btn-group">
                                     <!-- generic folder buttons -->
@@ -385,9 +389,10 @@
 <!--
 <li class="media" >
     <div class="pull-left check">
-        <label class="checkbox">
-            <input type="checkbox" data-toggle="checkbox"  value="" data-id="">
-        </label>
+        <div class="checkbox">
+            <input type="checkbox" value="" id="checkbox-mailboxItem" class="mailboxItem" name="mailboxItem" data-toggle="checkbox" data-id="" />
+            <label for="checkbox-mailboxItem"><span></span></label>
+        </div>
     </div>
     <div class="media-body">
         <div class="row">

@@ -88,8 +88,17 @@
 
                                 <div class="form-group">
                                     <label><?php _e('Gender','bidxplugin'); ?></label>
-                                    <label class="radio"><input type="radio" value="m" name="personalDetails.gender" data-toggle="radio"/> <?php _e('Male'); ?></label>
-                                    <label class="radio"><input type="radio" value="f" name="personalDetails.gender" data-toggle="radio"/> <?php _e('Female'); ?></label>
+
+                                    <div class="radio">
+                                        <input type="radio" value="m" id="radio-personalDetailsM" name="hasCompany" />
+                                        <label for="radio-personalDetailsM"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                    </div>
+
+                                    <div class="radio">
+                                        <input type="radio" value="f" id="radio-personalDetailsF" name="hasCompany" />
+                                        <label for="radio-personalDetailsF"><span></span><?php _e('Female','bidxplugin'); ?></label>
+                                    </div>
+
                                 </div>
 
                             </div>

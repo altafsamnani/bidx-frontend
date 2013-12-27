@@ -6,7 +6,7 @@ Company: bidX;
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ New styles (work in progress) @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
-@import url('assets/css/Flat-UI.css'); /* we use flatUI only for the fui-icons until we create our own vector font */
+/*@import url('assets/css/Flat-UI.css');*/ /* we use flatUI only for the fui-icons until we create our own vector font */
 
 
 
@@ -49,30 +49,6 @@ Company: bidX;
         border-color: #E83E3E;
     }
 
-    /* bidx checbkox (based on flatui checkbox */
-    .checkbox,
-    .radio {
-        margin-bottom:                  12px;
-        padding-left:                   32px;
-        position:                       relative;
-        -webkit-transition:             color 0.25s linear;
-        -moz-transition:                color 0.25s linear;
-        -o-transition:                  color 0.25s linear;
-        transition:                     color 0.25s linear;
-        -webkit-backface-visibility:    hidden;
-    }
-
-    /* radio's and checkboxes with error should remain none-displayed since they have a proxy component */
-    .checkbox input.error,
-    .radio input.error {
-        display:                        none;
-    }
-
-    .controls>.radio:first-child,
-    .controls>.checkbox:first-child {
-        padding-top:                    0;
-    }
-
 
 
     /************************  Template styles *******************************/
@@ -90,16 +66,6 @@ select {
     height:                     41px;
     margin-bottom:              0;
 }
-
-#frmRegister label.checkbox {
-    display:                    inline-block;
-    zoom:                       1;
-    *display:                   inline;
-}
-
-	form label.bidx-radio {
-		font-weight: normal;
-	}
 
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@ currently used @@@@@@@@@@@@@@@@@@@@@@@@@@@ \ */
@@ -210,15 +176,15 @@ select {
 
         .bidx-tag .tm-tag-remove:before {
             color:                          #ffffff;
-            content:                        "\e00b";
-            font-family:                    "Flat-UI-Icons";
+            content:                        "\f00d";
+            font-family:                    FontAwesome;
             cursor:                         pointer;
         }
 
         .cross:before {
             color:                          #000;
-            content:                        "\e00b";
-            font-family:                    "Flat-UI-Icons";
+            content:                        "\f00d";
+            font-family:                    FontAwesome;
             cursor:                         pointer;
         }
 

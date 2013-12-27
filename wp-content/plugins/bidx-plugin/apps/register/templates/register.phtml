@@ -40,17 +40,14 @@
             <input type="text" class="form-control" name="personalDetails.address.cityTown" placeholder="<?php _e('Enter your city','bidxplugin');?>" />
         </div>
 
-        <div class="form-group">
-            <label class="checkbox">
-                <input type="checkbox" value="" name="acceptTerms" data-toggle="checkbox" /><?php _e( 'I accept the bidX', 'bidxplugin' )?>
-            </label>
-            <?php printf( __( '<a href="%s">Terms & Conditions </a>', 'bidxplugin'), "/termsandconditions" ); ?>
+        <div class="form-group checkbox">
+            <input type="checkbox" value="" id="checkbox-acceptTerms" name="acceptTerms" />
+            <label for="checkbox-acceptTerms"><span></span><?php _e( 'I accept the bidX', 'bidxplugin' )?><?php printf( __( '<a href="%s"> Terms & Conditions </a>', 'bidxplugin'), "/termsandconditions" ); ?></label>
         </div>
 
-        <div class="form-group">
-            <label class="checkbox">
-                <input type="checkbox" value="" name="preventSpam" data-toggle="checkbox" /><?php _e( 'Please check this to help us prevent spam', 'bidxplugin' )?>
-            </label>
+        <div class="form-group checkbox">
+            <input type="checkbox" value="" id="checkbox-preventSpam" name="preventSpam" />
+            <label for="checkbox-preventSpam"><span></span><?php _e( 'Please check this to help us prevent spam', 'bidxplugin' )?></label>
         </div>
         <button type="submit" class="btn btn-primary"><?php _e('Register','bidxplugin');?></button>
 

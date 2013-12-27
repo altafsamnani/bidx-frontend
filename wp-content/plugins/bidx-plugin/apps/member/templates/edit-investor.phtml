@@ -67,8 +67,16 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label><?php _e('Do you invest on behalf of an institution?','bidxplugin'); ?></label>
-                                        <label class="radio"><input type="radio" value="true"  name="investsForInst" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
-                                        <label class="radio"><input type="radio" value="false" name="investsForInst" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
+
+                                        <div class="radio">
+                                            <input type="radio" value="true" id="radio-investsForInstYes" name="investsForInst" data-toggle="radio" />
+                                            <label for="radio-investsForInstYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="false" id="radio-investsForInstNo" name="investsForInst" data-toggle="radio" />
+                                            <label for="radio-investsForInstNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -194,31 +202,27 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label><?php _e('Stage of business','bidxplugin'); ?></label>
-
-                                        <label class="checkbox" for="cbFocusStageBusinessStartup">
-                                            <input type="checkbox" name="focusStageBusiness" value="startup" id="cbFocusStageBusinessStartup" data-toggle="checkbox">
-                                            <?php _e('Startup','bidxplugin'); ?>
-                                        </label>
-
-                                        <label class="checkbox" for="cbFocusStageBusinessEstablished">
-                                            <input type="checkbox" name="focusStageBusiness" value="established" id="cbFocusStageBusinessEstablished" data-toggle="checkbox">
-                                            <?php _e('Established','bidxplugin'); ?>
-                                        </label>
+                                        <div class="checkbox">
+                                            <input type="checkbox" value="advisory" id="checkbox-cbFocusStageBusinessStartup" name="focusStageBusiness" />
+                                            <label for="checkbox-cbFocusStageBusinessStartup"><span></span><?php _e('Startup','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <input type="checkbox" value="handsOn" id="checkbox-cbFocusStageBusinessEstablished" name="focusStageBusiness" />
+                                            <label for="checkbox-cbFocusStageBusinessEstablished"><span></span><?php _e('Established','bidxplugin'); ?></label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label><?php _e('Gender','bidxplugin');?></label>
-
-                                        <label class="checkbox" for="cbFocusGenderMale">
-                                            <input type="checkbox" name="focusGender" value="m" id="cbFocusGenderMale" data-toggle="checkbox">
-                                            <?php _e('Male','bidxplugin'); ?>
-                                        </label>
-
-                                        <label class="checkbox" for="cbFocusGenderFemale">
-                                            <input type="checkbox" name="focusGender" value="f" id="cbFocusGenderFemale" data-toggle="checkbox">
-                                            <?php _e('Female','bidxplugin'); ?>
-                                        </label>
+                                        <div class="checkbox">
+                                            <input type="checkbox" value="m" id="checkbox-cbFocusGenderMale" name="focusStageBusiness" />
+                                            <label for="checkbox-cbFocusGenderMale"><span></span><?php _e('Male','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <input type="checkbox" value="f" id="checkbox-cbFocusGenderFemale" name="focusStageBusiness" />
+                                            <label for="checkbox-cbFocusGenderFemale"><span></span><?php _e('Female','bidxplugin'); ?></label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -226,9 +230,21 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label><?php _e('Location','bidxplugin'); ?></label>
-                                    <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="country"><?php _e('Country / Countries','bidxplugin'); ?></label>
-                                    <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="city"><?php _e('City / Cities','bidxplugin'); ?></label>
-                                    <label class="radio"><input type="radio" data-toggle="radio" name="focusLocationType" value="reach"><?php _e('Region','bidxplugin'); ?></label>
+
+                                    <div class="radio">
+                                        <input type="radio" value="country" id="radio-focusLocationTypeCountry" name="focusLocationType" />
+                                        <label for="radio-focusLocationTypeCountry"><span></span><?php _e('Country / Countries','bidxplugin'); ?></label>
+                                    </div>
+                                    <div class="radio">
+                                        <input type="radio" value="city" id="radio-focusLocationTypeCity" name="focusLocationType" />
+                                        <label for="radio-focusLocationTypeCity"><span></span><?php _e('City / Cities','bidxplugin'); ?></label>
+                                    </div>
+                                    <div class="radio">
+                                        <input type="radio" value="reach" id="radio-focusLocationTypeReach" name="focusLocationType" />
+                                        <label for="radio-focusLocationTypeReach"><span></span><?php _e('Region','bidxplugin'); ?></label>
+                                    </div>
+
+
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-country">
@@ -337,8 +353,15 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label><?php _e('Typical involvement','bidxplugin'); ?></label>
-                                        <label class="radio"><input type="radio" data-toggle="radio" name="" value="advisory"><?php _e('Advisory','bidxplugin'); ?></label>
-                                        <label class="radio"><input type="radio" data-toggle="radio" name="" value="handsOn"><?php _e('Hands-On','bidxplugin'); ?></label>
+                                        <div class="radio">
+                                            <input type="radio" value="advisory" id="radio-typicalInvolvementAdvisory" name="typicalInvolvement" />
+                                            <label for="radio-typicalInvolvementAdvisory"><span></span><?php _e('Advisory','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="handsOn" id="radio-typicalInvolvementHandsOn" name="typicalInvolvement" />
+                                            <label for="radio-typicalInvolvementHandsOn"><span></span><?php _e('Hands-On','bidxplugin'); ?></label>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

@@ -85,8 +85,14 @@
 
                             <div class="form-group formfield">
                                 <label><?php _e('Is your company registered?','bidxplugin'); ?></label>
-                                <label class="radio"><input type="radio" value="true"  name="registered" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
-                                <label class="radio"><input type="radio" value="false" name="registered" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
+                                <div class="radio">
+                                    <input type="radio" value="true" id="radio-registeredYes" name="registered" data-toggle="radio" />
+                                    <label for="radio-registeredYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" value="false" id="radio-registeredNo" name="registered" data-toggle="radio" />
+                                    <label for="radio-registeredNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                </div>
                             </div>
 
                             <div class="form-group formfield toggle toggle-registered">
@@ -120,8 +126,14 @@
 
                             <div class="form-group formfield">
                                 <label><?php _e('Do you have employees?','bidxplugin'); ?></label>
-                                <label class="radio"><input type="radio" value="true"  name="haveEmployees" data-toggle="radio"/> <?php _e('Yes','bidxplugin'); ?></label>
-                                <label class="radio"><input type="radio" value="false" name="haveEmployees" data-toggle="radio"/> <?php _e('No','bidxplugin'); ?></label>
+                                <div class="radio">
+                                    <input type="radio" value="true" id="radio-haveEmployeesYes" name="haveEmployees" data-toggle="radio" />
+                                    <label for="radio-haveEmployeesYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" value="false" id="radio-haveEmployeesNo" name="haveEmployees" data-toggle="radio" />
+                                    <label for="radio-haveEmployeesNo"><span></span><?php _e('No','bidxplugin'); ?></label>
+                                </div>
                             </div>
 
                             <div class="form-group formfield toggle toggle-haveEmployees">
