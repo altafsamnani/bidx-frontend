@@ -252,6 +252,7 @@
                 ,   $roleSnippet
                 ,   roles           = []
                 ,   dataRoles
+                ,   image
                 ;
 
 
@@ -268,11 +269,16 @@
                     switch( $el.data( "role" ) )
                     {
                         case "memberImage":
+
+                            image = bidx.utils.getValue( member, "profilePicture" );
                             $el.attr( "href", function( i, href )
                                 {
                                     return href.replace( "%memberId%", bidx.utils.getValue( member, "id" ) );
                                 } )
                             ;
+                            if (image) {
+                                $el.html( '<img src="' + image + '" class="media-object img-circle pull-left" style="width: 90px; height: 90px;" alt="" />' );
+                            }
                             break;
 
                         case "memberLink":
@@ -460,7 +466,7 @@
             {
                 var $item
                 ,   dataRoles
-
+                ,   url =  businessSummary.bidxMeta.bidxEntityId
                 ;
 
                 bidx.utils.log("Summary", businessSummary);
@@ -479,18 +485,28 @@
                         case "businessSummaryImage":
                             $el.attr( "href", function( i, href )
                                 {
-                                    return href.replace( "%businessSummaryId%", bidx.utils.getValue( businessSummary, "id" ) );
+                                    return href.replace( "%businessSummaryLink%", url );
                                 } )
                             ;
                             break;
 
                         case "businessSummaryLink":
+
+                            $el.attr( "href", function( i, href )
+                                {
+                                    return href.replace( "%businessSummaryLink%", url );
+                                } )
+                            ;
+                            break;
+
+                        case "businessSummaryName":
+
                             // set the name and add the summary Id to the link
                             //
                             $el.text( bidx.utils.getValue( businessSummary, "name" ) )
                                 .attr( "href", function( i, href )
                                 {
-                                    return href.replace( "%businessSummaryId%", bidx.utils.getValue( businessSummary, "id" ) );
+                                    return href.replace( "%businessSummaryLink%", url );
                                 } )
                             ;
                             break;
@@ -520,9 +536,10 @@
 
                         case "businessSummaryId":
                         case "businessSummaryView":
+
                             $el.attr( "href", function( i, href )
                                 {
-                                    return href.replace( "%businessSummaryId%", bidx.utils.getValue( businessSummary, "id" ) );
+                                    return href.replace( "%businessSummaryLink%", url );
                                 } )
                             ;
                             break;
@@ -664,6 +681,8 @@
                 {
                     var $el = $( el )
                     ,   title
+                    ,   image
+                    ,   url
                     ;
 
                     switch( $el.data( "role" ) )
@@ -686,7 +705,28 @@
                             $el.html( bidx.utils.getValue( news, "content" ) );
 
                         break;
+
+                        case "newsView":
+
+                            url = bidx.utils.getValue( news, "url" );
+                            $el.attr('href', url);
+
+                        break;
+
+                        case "newsImage":
+
+                            // there isn't always an image
+                            //
+                            if ( bidx.utils.getValue( news, "featuredImage" ) !== false )
+                            {
+                                image = bidx.utils.getValue( news, "featuredImage" );
+                                $el.removeClass('icons-circle');
+                                $el.html( '<img src="' + image + '" class="media-object img-circle pull-left" style="width: 90px; height: 90px;" alt="" />' );
+                            }
+
+                        break;
                     }
+
                 } );
 
                 items.push( $item );
