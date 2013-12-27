@@ -126,9 +126,9 @@
 
                     <!-- news VIEW -->
                     <article class="view viewNews">
-                        <div class="newsList clearfix">
+                        <ul class="newsList media-list">
 
-                        </div>
+                        </ul>
                         <div class="pagerContainer">
                             <ul class="pager"></ul>
                         </div>
@@ -172,13 +172,13 @@
                 <div class="media-body">
                     <h4 class="media-heading">
                         <a href="/member/%memberId%" data-role="memberLink">%firstname% %lastname%</a>
+                        <a href="/mail/#mail/contacts/action=connect&amp;id=%memberId%" class="btn btn-xs btn-warning pull-right" data-role="memberId"><?php _e('Connect','bidxtheme')?></a>
                     </h4>
                     <div data-role="country"></div>
                     <div data-role="roles">
                         <span class="label" data-role="value">test</span>
                     </div>
                     <div>
-                        <a href="/mail/#mail/contacts/action=connect&amp;id=%memberId%" data-role="memberId"><?php _e('Connect','bidxtheme')?></a>
                     </div>
                     <div class="pull-right">
                         <a href="/member/%memberId%" data-role="memberView"><?php _e('View profile','bidxtheme')?></a>
@@ -193,12 +193,12 @@
 
 
             <li class="media well">
-                <a class="pull-left" href="/businessSummary/%businessSummaryId%" data-role="businessSummaryImage">
-                    <img src="/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" alt="" class="media-object img-circle">
+                <a class="pull-left" href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryImage">
+                    <div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a href="/businessSummary/%businessSummaryId%" data-role="businessSummaryLink">%name%</a>
+                        <a href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryName">%name%</a>
                     </h4>
                     <div data-role="summary"></div>
                     <div data-role="slogan"></div>
@@ -206,7 +206,7 @@
                     <div data-role="country"></div>
 
                     <div class="pull-right">
-                        <a href="/businessSummary/%businessSummaryId%" data-role="businessSummaryView"><?php _e('View Business Summary','bidxtheme')?></a>
+                        <a href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryLink"><?php _e('View Business Summary','bidxtheme')?></a>
                     </div>
                 </div>
             </li>
@@ -215,10 +215,21 @@
 
         <!-- news Snippet -->
         <div class="snippet" data-key="news">
-            <div class="col-sm-12 clearfix well">
-                <h2 data-role="title"><span class="header-meta pull-right" data-role="date">%date%</span></h2>
-                <div data-role="content"></div>
-            </div>
+
+            <li class="media well">
+                <a class="pull-left" href="#" data-role="newsView">
+                    <div data-role="newsImage" class="icons-circle pull-left"><i class="fa fa-bullhorn text-primary-light"></i></div>
+                </a>
+                <div class="media-body">
+                    <h2 class="media-heading" data-role="title"><span class="header-meta pull-right" data-role="date">%date%</span></h2>
+                    <div data-role="content"></div>
+
+                    <div class="pull-right">
+                        <a href="#" data-role="newsView"><?php _e('View more','bidxtheme')?></a>
+                    </div>
+                </div>
+            </li>
+
         </div>
 
     </div>
