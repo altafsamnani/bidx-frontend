@@ -72,7 +72,11 @@
                                              }
                             });
 
-
+                            // Add Default image if there is no image attached to the bs
+                            var addDefaultImage = function( el )
+                            {
+                                $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
+                            };
 
 
                             //search for placeholders in snippit
@@ -99,8 +103,12 @@
                                 .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
                                 .replace( /%displayName%/g,      item.investor.displayName   ? item.investor.displayName : emptyVal )
                                 .replace( /%investorId%/g,      investorId   ? investorId    : emptyVal )
-                                .replace( /%document%/g,      (!$.isEmptyObject( item.businessSummary.company ) && !$.isEmptyObject( item.businessSummary.company.logo ) && !$.isEmptyObject( item.businessSummary.company.logo.document ) ) ? item.businessSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                                .replace( /%document%/g,      (!$.isEmptyObject( item.businessSummary.company ) && !$.isEmptyObject( item.businessSummary.company.logo ) && !$.isEmptyObject( item.businessSummary.company.logo.document ) ) ? item.businessSummary.company.logo.document     :  addDefaultImage('js-document') )
                                 ;
+
+
+                            // Remove the js selector
+                            $element.find('.js-document').first().removeClass('js-document');
 
                             //  add mail element to list
                             $list.append( listItem );

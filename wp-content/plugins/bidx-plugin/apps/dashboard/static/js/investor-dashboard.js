@@ -173,6 +173,8 @@
                 //clear listing
                 $list.empty();
 
+                // Register var
+                var listItem;
 
 
                 // now format it into array of objects with value and label
@@ -180,9 +182,14 @@
                 if (response && response.docs)
                 {
 
+                    // Add Default image if there is no image attached to the bs
+                    var addDefaultImage = function( el )
+                    {
+                        $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
+                    };
+
                     $.each(response.docs, function(idx, i18nItem)
                     {
-
 
                                 //search for placeholders in snippit
                                 listItem = snippit
@@ -197,15 +204,16 @@
                                     .replace( /%stagebusinesslabel_s%/g,       i18nItem.stagebusinesslabel_s    ? i18nItem.stagebusinesslabel_s      : emptyVal )
                                     .replace( /%envimpactlabel_ss%/g,       i18nItem.envimpactlabel_ss    ? i18nItem.envimpactlabel_ss      : emptyVal )
                                     .replace( /%productservicelabel_ss%/g,       i18nItem.productservicelabel_ss    ? i18nItem.productservicelabel_ss      : emptyVal)
-                                    .replace( /%companylogodoc_url%/g,      i18nItem.companylogodoc_url   ? i18nItem.companylogodoc_url     : "/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png" )
+                                    .replace( /%companylogodoc_url%/g,      i18nItem.companylogodoc_url   ? i18nItem.companylogodoc_url     : addDefaultImage('js-companylogo') )
                                     .replace( /%entityid_l%/g,       i18nItem.entityid_l    ? i18nItem.entityid_l      : emptyVal )
                                     ;
 
-
-
+                        // Remove the js selector
+                        $element.find('.js-companylogo').first().removeClass('js-companylogo');
 
                         //  add mail element to list
                         $list.append( listItem );
+
 
                     });
 
