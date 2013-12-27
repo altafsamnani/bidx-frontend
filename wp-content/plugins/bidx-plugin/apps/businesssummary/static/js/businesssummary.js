@@ -65,7 +65,7 @@
 
         // Company Details
         //
-    ,   $companyDetails                     = $element.find( "#businessSummaryAccordion-CompanyDetails" )
+    ,   $companyDetails                     = $element.find( "#businessSummaryCollapse-CompanyDetails" )
     ,   $hasCompany                         = forms.companyDetails.$el.find( "input[name='hasCompany']" )
     ,   $doesHaveCompany                    = forms.companyDetails.$el.find( ".doesHaveCompany" )
     ,   $companiesTable                     = $doesHaveCompany.find( "table" )
@@ -79,7 +79,7 @@
 
         // Documents component
         //
-    ,   $documents                          = $element.find( "#businessSummaryAccordion-Documents" )
+    ,   $documents                          = $element.find( "#businessSummaryCollapse-Documents" )
     ,   $btnAddFiles                        = $documents.find( "a[href$='addFiles']" )
     ,   $addFiles                           = $documents.find( ".addFiles" )
     ,   $attachmentContainer                = $documents.find( ".attachmentContainer" )
