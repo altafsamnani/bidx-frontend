@@ -327,22 +327,27 @@ function bidx_signout ()
 
 function callProviderLogoutURL ($app )
 {
+    $app = 'skMain';
     switch( $app ) {
 
         case 'skMain':
-         $logoutSiteOption = 'skipso-logout';
+         $logoutSiteOption    = 'skipso-logout';
+         $logoutBackendOption = 'skipso-backend-logout';
+         $logoutPrivateOption = 'skipso-judge-logout';
         break;
 
-        case'skAdmin':
-        $logoutSiteOption = 'skipso-backend-logout';
-        break;
-
-        case 'skDashboard':
-        $logoutSiteOption = 'skipso-judge-logout';
-        break;
+//        case'skAdmin':
+//        $logoutBackendOption = 'skipso-backend-logout';
+//        break;
+//
+//        case 'skDashboard':
+//        $logoutPrivateOption = 'skipso-judge-logout';
+//        break;
     }
 
-    $url = get_site_option ($logoutSiteOption);
+    $frontendLogout = get_site_option ($logoutSiteOption);
+    $backendLogout  = get_site_option ($logoutBackendOption);
+    $privateLogout  = get_site_option ($logoutPrivateOption);
 
     echo '
         <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
@@ -351,14 +356,31 @@ function callProviderLogoutURL ($app )
         <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/center.js?ver=2.0.3"></script>
         <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/themes/default.js?ver=2.0.3"></script>
         <script type="text/javascript">
+            var loadCounter = 0;
             jQuery(function() {
               var n = noty({ type: "success",text:"Please wait while we log you out"} );
-              jQuery("#myiframe").load(function(){
-                 window.location.replace("'.home_url().'");
-              });
+              var loadIFrame = function(skipsoType) {
+                loadCounter = loadCounter + 1;
+                /* Redirect once all three logout iframes are loaded */
+                console.log(skipsoType + loadCounter);
+                if(loadCounter == 3) {
+                  window.location.replace("'.home_url().'");
+                }
+              }
+              jQuery("#frontendLogout").load(function(){
+                 loadIFrame("front");
+              })
+              jQuery("#backendLogout").load(function(){
+                 loadIFrame("backend");
+              })
+              jQuery("#privateLogout").load(function(){
+                 loadIFrame("private");
+              })
             });
         </script>';
-     echo '<iframe id="myiframe" src="'.$url.'" width="0" height="0"></iframe>';
+     echo '<iframe id="frontendLogout" src="'.$frontendLogout.'" width="0" height="0"></iframe>';
+     echo '<iframe id="backendLogout" src="'.$backendLogout.'" width="0" height="0"></iframe>';
+     echo '<iframe id="privateLogout" src="'.$privateLogout.'" width="0" height="0"></iframe>';
 
      exit;
 
