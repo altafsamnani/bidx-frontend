@@ -89,38 +89,42 @@
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <?php if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) ) { ?>
-                                <a class="btn btn-primary pull-right" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-                            <?php } ?>
+                        <div class="col-sm-9">
                             <h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4>
+                        </div>
+                        <div class="col-sm-3">
+<?php
+                            if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) )
+                            {
+?>
+                                <a class="btn btn-primary pull-right" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+                            }
+
+                            if ( $memberId != $loggedInMemberId && $authenticated && $inGroup )
+                            {
+?>
+                                <a class="btn btn-xs btn-warning pull-right" href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
+<?php
+                            }
+?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <?php echo $professionalTitle; ?>
                             <?php if ( $isEntrepreneur ) { ?>
-                                &nbsp;<span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
+                                <span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
                             <?php } ?>
                             <?php if ( $isInvestor ) { ?>
-                                &nbsp;<span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>
+                                <span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>
                             <?php } ?>
                             <?php if ( !$isEntrepreneur || !$isInvestor ) { ?>
-                                &nbsp;<span class="label bidx-label-member"><?php _e('Member', 'bidxplugin') ?></span>
+                                <span class="label bidx-label-member"><?php _e('Member', 'bidxplugin') ?></span>
                             <?php } ?>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                        <?php
-                            if ( $memberId != $loggedInMemberId && $authenticated && $inGroup ) {
-                         ?>
-                            <a href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
-                        <?php
-                            }
-                         ?>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-sm-12"> <hr> </div>
                     </div>
