@@ -226,9 +226,7 @@
                 }
             } );
 
-            $changeProfilePictureModal.modal({
-                backdrop: false
-            });
+            $changeProfilePictureModal.modal();
         } );
 
         // PUll snippets from the DOM
