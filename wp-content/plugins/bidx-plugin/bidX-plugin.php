@@ -48,7 +48,9 @@ if (!BidxCommon :: isWPInternalFunction ()) {
       'search',
       'login',
       'register',
-      'resetpassword'
+      'resetpassword',
+      'setpassword'
+
     );
     $shortcode = new BidxShortCode();
     $shortcode->addMappingArray ($ruleitems);

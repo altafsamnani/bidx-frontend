@@ -812,7 +812,8 @@
     };
 
 
-    //  return view name. Expects v(iew) and optionally a c(lass)
+    //  return view name. Expects v(iew) and optionally a c(lassname) which will be used to search for the view
+    //
     var getViewName = function ( v, c )
     {
         return ( c ? ( "." + c ) : ".view" ) + v.charAt( 0 ).toUpperCase() + v.substr( 1 );

@@ -308,9 +308,9 @@
         ,   'register(/*splat)':                                'register'
         ,   'account(/*splat)':                                 'account'
         ,   'resetpassword':                                    'resetpassword'
+        ,   'setpassword(/:state)':                             'setpassword'
 
         ,   'mail(/:state)(*splat)':                            'mail'
-        //,   'mail(/:section)(/:part1)(/:part2)':                'mail'
 
         ,   'media(/:appState)(/:id)':                          'media'
 
@@ -658,12 +658,26 @@
         {
             bidx.utils.log( "AppRouter::resetpassword" );
 
-            mainState = "resetpassword";
+            mainState = "loading";
 
             _navigateToApp
             (
                 "resetpassword"
             ,   {}
+            );
+        }
+    ,   setpassword:             function( state )
+        {
+            bidx.utils.log( "AppRouter::setpassword" , state );
+
+            mainState = "feedback";
+
+            _navigateToApp
+            (
+                "setpassword"
+            ,   {
+                    state:  state
+                }
             );
         }
 

@@ -54,25 +54,58 @@ class auth {
         $view->showLoginLink = true;
         $render = $command;
 
-
+        // we need to activate a new account and check the token provided
+        //
         if ( $command === "activate" ) {
 
             // check if code has been provided
             //
             $activationCode = isset( $_GET[ "code" ] ) ? $_GET["code"]  : "";
 
+
             if ( $activationCode !== "" ) {
 
+                // do the session call
+                //
                 require_once( BIDX_PLUGIN_DIR .'/../services/session-service.php' );
                 $sessionObj = new SessionService( );
-                $sessionObj -> getActivationSession();
+
+                $result = $sessionObj -> getActivationSession( $activationCode );
+
+                $http = (is_ssl ()) ? 'https://' : 'http://';
+                $groupDomain = $result -> bidxGroupDomain;
+
+
+                // if sessionState is pending, redirect to setpassword
+                //
+                if ( isset ( $result -> data -> SessionState ) && ( $result -> data -> SessionState === "PendingInitialPasswordSet" || $result -> data -> SessionState === "PendingPasswordReset"  ) ) {
+
+                    $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/setpassword';
+
+                } elseif ( isset ( $result -> code ) && $result -> code === "activationTokenExpired" ) {
+
+                    $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/setpassword/#setpassword/expired';
+
+                } else {
+                    // THIS NEEDS TO GET SOME DECENT ERROR HANDLING
+                    //
+                    echo "<H1>Ooops, something went wrong</H1>";
+                    echo $result -> text;
+                    die();
+                }
+                // do the redirect
+                //
+                header ("Location: $redirect_url");
+
+            } else {
+                // catchall kinda page...
+                //
+                echo "<H1>Ooops, something went wrong</H1>";
+                echo "No activation token received.";
+                die();
             }
 
-            // get password set session from API
-            //
 
-            // redirect to password set
-            //
 
         } else {
             $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';

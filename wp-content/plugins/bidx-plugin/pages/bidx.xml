@@ -185,7 +185,13 @@
             <mapping>^activate</mapping>
             <content>[bidx app="auth" view="activate"]</content>
         </post>
-
+        <post>
+            <post_id>27</post_id>
+            <name>setpassword</name>
+            <title>setpassword</title>
+            <mapping>^setpassword</mapping>
+            <content>[bidx app="setpassword"]</content>
+        </post>
     </posts>
 
     <widgets>
