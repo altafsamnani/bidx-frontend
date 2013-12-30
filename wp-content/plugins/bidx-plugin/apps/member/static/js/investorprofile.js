@@ -201,7 +201,6 @@
         $focusCountry.bidx_chosen(
         {
             dataKey:            "country"
-        ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
         $investorType.bidx_chosen(
