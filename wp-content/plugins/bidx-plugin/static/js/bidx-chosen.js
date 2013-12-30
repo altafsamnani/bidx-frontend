@@ -80,12 +80,12 @@
             }
 
 
-            // Make sure the validator plugin picks up the selected value for validation
+            // Make sure the validator plugin picks up the selected value for validation || Causes the dropdown to open again
             //
-            plugin.$element.on( "change", function()
-            {
-                plugin.$element.trigger( "click" );
-            } );
+            // plugin.$element.on( "change", function()
+            // {
+            //     plugin.$element.trigger( "click" );
+            // } );
         }
 
         // Convert the list of retrieved items into options
