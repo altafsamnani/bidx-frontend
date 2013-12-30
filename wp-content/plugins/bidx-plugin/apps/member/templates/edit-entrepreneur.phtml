@@ -31,9 +31,9 @@
                 <div id="accordionEntrepreneurDetails" class="panel-collapse collapse in" style="overflow: visible;">
                     <div class="panel-body">
 
-                        <div class="alert alert-info">
+                        <blockquote class="alert-info">
                             <?php _e('Complete this short form with information about you as entrepreneur. Be aware that investors and other members potentially interested in your business will be very interested to know more about you, your motivation and what makes you thrive as an entrepreneur. Treat this form as your first contact with, and pitch to potential investors and business partners.', 'bidxplugin')?>
-                        </div>
+                        </blockquote>
 
                         <div class="row">
                             <div class="col-sm-12">
@@ -96,23 +96,23 @@
                     <div id="accordionEntrepreneurCV" class="panel-collapse collapse cvControl">
                         <div class="panel-body">
                             <div class="row cvContainer">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
 
                                     <div class="form-group">
-                                        <div class="hasCV">
+                                        <blockquote class="hasCV alert-info">
                                             <h3 class="documentName"></h3>
                                             <p class="uploadedDateTime"></p>
 
-                                            <a href="#" class="documentLink"><?php _e('Download CV','bidxplugin'); ?></a>
-                                        </div>
+                                            <a href="#" class="documentLink btn btn-sm btn-warning"><i class="fa fa-download"></i> <?php _e('Download CV','bidxplugin'); ?></a>
+                                        </blockquote>
 
-                                        <div class="noCV alert alert-warning">
+                                        <blockquote class="noCV alert-warning">
                                             <?php _e('No CV uploaded yet','bidxplugin'); ?>
-                                        </div>
+                                        </blockquote>
                                     </div>
 
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-6">
                                     <a href="#changeCv" data-toggle="modal" class="btn btn-primary"><span class="hasCV"><?php _e('Or select a different document'); ?></span><span class="noCV"><?php _e('Select a document','bidxplugin'); ?></span></a>
 
                                     <div class="changeCvModal modal fade">
@@ -130,8 +130,9 @@
                         ?>
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                                <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                                <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                                <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+
                                             </div>
                                             </div>
                                         </div>
@@ -171,8 +172,9 @@
 ?>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                            <a href="#" class="btn btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                            <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></button>
+                                            <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+
                                         </div>
                                     </div>
                                 </div>
