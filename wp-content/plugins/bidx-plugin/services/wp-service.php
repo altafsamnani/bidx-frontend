@@ -2371,7 +2371,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     if (isset ($_POST['action'])) {
                         $action            = $_POST['action'];
                         $skipsoJudge       = $_POST['skipso-judge'];
-                        $skipsoCompetition = $_POST['skipso-competition'];
+                        $skipsoCompetition = (isset($_POST['skipso-competition'])) ? $_POST['skipso-competition']:0;
                         $html = '';
                    
                         if ($action == 'Save') {

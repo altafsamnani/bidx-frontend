@@ -178,7 +178,6 @@ class dashboard
                 $view->isCompetition = get_option ('skipso-competition');
                 $view->skipsoJudge   = str_replace(",","\n",get_option ('skipso-judge'));
 
-            
                 $template = 'groupowner/competition-settings.phtml';
                 break;
 

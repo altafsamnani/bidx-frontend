@@ -9,7 +9,7 @@
                     <div class=''>
                         <div class='label'>
                             <label class='selectit'>
-                                <input <?php echo (isset($this->isCompetition)) ? 'checked':'';?> value='1' type='checkbox' name='skipso-competition' id='skipso-competition'>
+                                <input <?php echo (isset($this->isCompetition) && $this->isCompetition) ? 'checked':'';?> value='1' type='checkbox' name='skipso-competition' id='skipso-competition'>
                                 Is competition running on Skipso?
                             </label>
                         </div>
