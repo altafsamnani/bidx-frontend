@@ -109,8 +109,8 @@ class support
                     break;
 
                 case 'settings' :
-                    $view->zendeskEmail    = get_site_option ('bidx-zendesk-email');
-                    $view->zendeskPassword = base64_decode( get_site_option ('bidx-zendesk-password') );
+                    $view->zendeskEmail    = get_option ('bidx-zendesk-email');
+                    $view->zendeskPassword = base64_decode( get_option ('bidx-zendesk-password') );
                     $template = 'settings.phtml';
                     break;
 

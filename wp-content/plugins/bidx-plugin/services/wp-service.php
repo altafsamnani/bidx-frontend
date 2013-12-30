@@ -2285,8 +2285,8 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     } else {
 
                         //1.1 Add Zendesk email/password for autologin
-                        update_site_option ('bidx-zendesk-email', $form_data['email']);
-                        update_site_option ('bidx-zendesk-password', base64_encode ($form_data['password']));
+                        update_option ('bidx-zendesk-email', $form_data['email']);
+                        update_option ('bidx-zendesk-password', base64_encode ($form_data['password']));
 
                         //1.2 Flush User meta for groupowner if exists
                         $blogUrl = strtolower (get_site_url ());
@@ -2328,6 +2328,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
 
                 if ((current_user_can ('install_themes'))) {
                     $restricted = array ();
+                    add_menu_page ('skipso', 'Skipso settings', 'edit_theme_options', 'skipso', 'bidx_skipso_settings');
                     add_submenu_page ('zendesk-support', __ ('Zendesk Bidx Settings', 'zendesk'), __ ('Bidx Settings', 'zendesk'), 'manage_options', 'bidx_zendesk_settings', 'bidx_zendesk_settings');
                 } // check if admin and hide nothing
                 else { // for all other users
@@ -2359,6 +2360,60 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     }
                 }
                 add_filter ('admin_footer_text', 'remove_footer_admin');
+            }
+
+            function bidx_skipso_settings() {
+
+                require_once(BIDX_PLUGIN_DIR . '/dashboard/dashboard.php');
+                /* 2 Bidx Push Notification */
+                    $entrepreneurNotification = get_site_option ('entrepreneur-notification');
+                   
+                    if (isset ($_POST['action'])) {
+                        $action            = $_POST['action'];
+                        $skipsoJudge       = $_POST['skipso-judge'];
+                        $skipsoCompetition = $_POST['skipso-competition'];
+                        $html = '';
+                   
+                        if ($action == 'Save') {
+                            $code = preg_replace('/\n$/','',preg_replace('/^\n/','',preg_replace('/[\r\n]+/',"\n",$skipsoJudge)));
+                            $skipsoJudgeArr = explode("\n", $code);
+                          
+                            $skipsoUniqueArr = array_unique($skipsoJudgeArr);
+                            $errorEmail = array();
+                           
+                            foreach( $skipsoUniqueArr as $valueUnique) {
+                                if( filter_var($valueUnique, FILTER_VALIDATE_EMAIL) ) {
+                                    $validEmail[$valueUnique] = $valueUnique;
+                                } else {
+                                    $errorEmail[$valueUnique] = $valueUnique;
+                                }
+                            }
+                      
+                            $validEmailComma = implode(',',$validEmail);
+
+                            update_option ('skipso-judge', trim($validEmailComma));
+                            update_option ('skipso-competition', $skipsoCompetition);
+
+                            if(!empty($errorEmail) ) {
+                                $invalidEmail = implode(',',$errorEmail);
+                                $html .= "<div id='message' class='error'>
+                                        <p>" . __ ('Email addresses ignored', 'competition') . ' '.$invalidEmail."
+                                        </p>
+                                    </div>";
+                            }
+
+                            $html .= "<div class='updated'>
+                        <p>" . __ ('Your competitions options are updated succesfully.', 'competition') . "
+                        </p>
+                    </div>";
+                            echo $html;
+                        } 
+                    }
+                 //2. Bidx Zendesk View Settings
+                $atts = array ('app' => 'dashboard', 'view' => 'competition-settings');
+                $dashboard = new dashboard();
+                $dashboard->load ($atts);
+
             }
 
             function bidx_dashboard_competition() {

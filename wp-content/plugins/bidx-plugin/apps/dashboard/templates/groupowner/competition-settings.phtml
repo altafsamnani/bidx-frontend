@@ -1,0 +1,43 @@
+<div id='icon-edit' class='icon32 icon32-posts-post'><br></div>
+<h2>Bidx Skipso Integration</h2>
+<form method='post'>
+    <div class='metabox-holder'>
+        <div id='categorydiv' class='postbox'>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>Competition</span></h3>
+            <div class='inside'>
+                <div id='taxonomy-category' class='categorydiv'>
+                    <div class=''>
+                        <div class='label'>
+                            <label class='selectit'>
+                                <input <?php echo (isset($this->isCompetition)) ? 'checked':'';?> value='1' type='checkbox' name='skipso-competition' id='skipso-competition'>
+                                Is competition running on Skipso?
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id='judgediv' class='postbox'>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>Judge</span></h3>
+            <div class='inside'>
+                <div id='taxonomy-judge' class='judgediv'>
+                    <div class=''>
+                        <div class='label'>
+                            <div class=''><label class='selectit'>Judge emails (New line)</label></div>
+                            <div class=''>
+                                <textarea rows='10' cols='50' name='skipso-judge' id='skipso-judge'><?php echo (isset($this->skipsoJudge)) ? $this->skipsoJudge : '';?></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class='buttonwrapper'>            
+            <input type='submit' name = 'action' value='Save'>
+            <input type='submit' name = 'action' value='Reset' >
+        </div>
+    </div>
+</form>

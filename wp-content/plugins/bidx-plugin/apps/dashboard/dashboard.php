@@ -10,7 +10,7 @@ class dashboard
 {
 
     static $deps = array ('bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-       'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
     /**
      * Constructor
@@ -19,9 +19,8 @@ class dashboard
     {
         add_action ('wp_enqueue_scripts', array (&$this, 'register_dashboard_bidx_ui_libs'));
 
-        /* Wordpress Control Panel Scripts*/
+        /* Wordpress Control Panel Scripts */
         add_action ('admin_enqueue_scripts', array (&$this, 'register_wp_dashboard_bidx_ui_libs'));
-
     }
 
     /**
@@ -29,28 +28,30 @@ class dashboard
      */
     function register_dashboard_bidx_ui_libs ()
     {
+
     }
 
     /* Load Group Owner/Admin Dashboard Widget Css Scripts
-    * @author Altaf Samnani
-    * @version 1.0
-    *
-    */
+     * @author Altaf Samnani
+     * @version 1.0
+     *
+     */
+
     function register_wp_dashboard_bidx_ui_libs ()
     {
-        $menuTitle       = strtolower (str_replace (" ", "", get_admin_page_title ()));
-        $currentUser     = wp_get_current_user ();
+        $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
+        $currentUser = wp_get_current_user ();
         $isBidxAdminPage = false;
 
-        if (in_array (WP_ADMIN_ROLE, $currentUser->roles) || in_array (WP_OWNER_ROLE, $currentUser->roles) ) {
+        if (in_array (WP_ADMIN_ROLE, $currentUser->roles) || in_array (WP_OWNER_ROLE, $currentUser->roles)) {
 
             switch ($menuTitle) {
 
                 case 'monitoring':
-                    roots_scripts();
+                    roots_scripts ();
 
-                    $mailDepArr = array ('bootstrap-paginator', 'bidx-delaykeyup','bidx-common', 'bidx-i18n', 'jquery-validation',
-                       'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-chosen');
+                    $mailDepArr = array ('bootstrap-paginator', 'bidx-delaykeyup', 'bidx-common', 'bidx-i18n', 'jquery-validation',
+                      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
 
                     /* Script */
                     wp_register_script ('monitoring', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/monitoring.js', $mailDepArr, '20130715', TRUE);
@@ -61,17 +62,17 @@ class dashboard
 
                     break;
 
-                 case 'getting-started':
+                case 'getting-started':
 
                     break;
 
                 //Will be working on this
                 case 'group-settings' :
-                    roots_scripts();
-                    $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                              'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
+                    roots_scripts ();
+                    $companyDepArr = array ('jquery', 'jquery-ui', 'bootstrap', 'underscore', 'backbone', 'json2', 'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                      'jquery-validation', 'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
 
-                    $groupDepArr = array ('jquery', 'bootstrap', 'bidx-location', 'bidx-utils', 'bidx-api-core','company');
+                    $groupDepArr = array ('jquery', 'bootstrap', 'bidx-location', 'bidx-utils', 'bidx-api-core', 'company');
 
                     /* Script */
                     wp_register_script ('company', '/wp-content/plugins/bidx-plugin/apps/company/static/js/company.js', $companyDepArr, '20130501', TRUE);
@@ -79,12 +80,8 @@ class dashboard
 
                     break;
             }
-
         }
-
     }
-
-
 
     /**
      * Load the content.
@@ -112,8 +109,8 @@ class dashboard
             case 'investor-dashboard':
                 wp_register_script ('dashboard', plugins_url ('static/js/investor-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 $sessionSvc = new SessionService( );
-                $investorProfile = $sessionSvc->isHavingProfile( 'bidxInvestorProfile' );
-                $view->groupOwnersIdsArr     = $sessionSvc->getGroupOwnerIds( );
+                $investorProfile = $sessionSvc->isHavingProfile ('bidxInvestorProfile');
+                $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
 
                 if ($investorProfile) {
 
@@ -121,7 +118,6 @@ class dashboard
                     $view->startingPage = 0;
                     if ($investorDashboard) {
                         ($investorDashboard != 2 ) ? update_option ('investor-startingpage', 0) : $view->startingPage = $investorDashboard;
-
                     }
 
                     $template = 'investor/dashboard.phtml';
@@ -132,8 +128,8 @@ class dashboard
             case 'entrepreneur-dashboard':
                 wp_register_script ('dashboard', plugins_url ('static/js/entrepreneur-dashboard.js', __FILE__), self::$deps, '20130715', TRUE);
                 $sessionSvc = new SessionService( );
-                $entrepreneurProfile = $sessionSvc->isHavingProfile( 'bidxEntrepreneurProfile' );
-                $view->groupOwnersIdsArr     = $sessionSvc->getGroupOwnerIds( );
+                $entrepreneurProfile = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
+                $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
 
                 if ($entrepreneurProfile) {
 
@@ -177,9 +173,15 @@ class dashboard
                             break;
                     }
                 }
-
-
                 break;
+            case 'competition-settings' :
+                $view->isCompetition = get_option ('skipso-competition');
+                $view->skipsoJudge   = str_replace(",","\n",get_option ('skipso-judge'));
+
+            
+                $template = 'groupowner/competition-settings.phtml';
+                break;
+
             default:
 
                 $template = 'my-dashboard.phtml';
@@ -187,7 +189,7 @@ class dashboard
         }
 
         //echo $template;
-        (isset($template)) ? $view->render ($template): '';
+        (isset ($template)) ? $view->render ($template) : '';
     }
 
 }
