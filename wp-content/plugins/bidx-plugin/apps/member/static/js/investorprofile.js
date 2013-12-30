@@ -1288,7 +1288,7 @@
                 {
                     required:               true
                 }
-            ,   "socialImpact":
+            ,   "focusSocialImpact":
                 {
                     required:               true
                 }
@@ -1299,6 +1299,10 @@
             ,   "totalInvestment":
                 {
                     monetaryAmount:         true
+                }
+            ,   "focusLocationType":
+                {
+                    required:               true
                 }
 
             }
