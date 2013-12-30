@@ -83,7 +83,7 @@ function bidx_get_status_msgs( ) {
         $textId = $_GET['emsg'];
         (!empty($_GET['eparam'])) ? $replaceString = base64_decode($_GET['eparam']) :'';
         $statusMsg = bidx_status_text ( $textId, $replaceString );
-        $statusMessages = "<div class='container'><div class='alert alert-error'>
+        $statusMessages = "<div class='container'><div class='alert alert-danger'>
                       <button data-dismiss='alert' class='close fa fa-times' type='button'></button>
                       {$statusMsg}
                     </div></div>";
@@ -106,7 +106,7 @@ function bidx_get_status_msgs( ) {
     /* Message comes directly when we want to show error msg directly */
     if (isset ($_GET['edmsg'])) {
 
-        $statusMessages = "<div class='container'><div class='alert alert-error'>
+        $statusMessages = "<div class='container'><div class='alert alert-danger'>
                       <button data-dismiss='alert' class='close fa fa-times' type='button'></button>
                       ".base64_decode($_GET['edmsg']).
                       "</div></div>";
