@@ -42,6 +42,7 @@ class auth {
 	 * @param $atts
 	 */
 	function load($atts) {
+
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/auth/templates/' );
