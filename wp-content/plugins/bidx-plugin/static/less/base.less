@@ -689,9 +689,13 @@ form .error-separate
 }
 
 /* Chosen element validation error only */
-.has-error .chosen-container-multi .chosen-choices
+.has-error
 {
-    border-color: #E83E3E;
+    .chosen-container-multi .chosen-choices,
+    .chosen-container-single .chosen-single
+    {
+        border-color: @state-danger-text;
+    }
 }
 
 
@@ -968,6 +972,10 @@ form .error-separate
 .checkbox
 {
   padding-left: 0;
+}
+
+.has-error > div.error {
+    color: @state-danger-text;
 }
 
 // glyphicons.less
