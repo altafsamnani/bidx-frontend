@@ -2362,6 +2362,38 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                 add_filter ('admin_footer_text', 'remove_footer_admin');
             }
 
+            function bidx_skipso_metadata($skipsoEmails,$type) {
+                $html = '';
+                $validEmail = array();
+                $code = preg_replace('/\n$/','',preg_replace('/^\n/','',preg_replace('/[\r\n]+/',"\n",$skipsoEmails)));
+                $skipsoEmailsArr = explode("\n", $code);
+                $skipsoUniqueArr = array_unique($skipsoEmailsArr);
+                $errorEmail = array();
+
+                foreach( $skipsoUniqueArr as $valueUnique) {
+                    if( filter_var($valueUnique, FILTER_VALIDATE_EMAIL) ) {
+                        $validEmail[$valueUnique] = $valueUnique;
+                    } else {
+                        $errorEmail[$valueUnique] = $valueUnique;
+                    }
+                }
+
+                if(!empty($validEmail)) {
+                    $validEmailComma = implode(',',$validEmail);
+                    update_option ($type, trim($validEmailComma));
+                }
+
+                if(!empty($errorEmail) ) {
+                    $invalidEmail = implode(',',$errorEmail);
+                    $html .= "<div id='message' class='error'>
+                            <p>" . __ ('Email addresses ignored', 'competition') . ' '.$invalidEmail."
+                            </p>
+                        </div>";
+                }
+
+                return $html;
+            }
+
             function bidx_skipso_settings() {
 
                 require_once(BIDX_PLUGIN_DIR . '/dashboard/dashboard.php');
@@ -2371,36 +2403,16 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                     if (isset ($_POST['action'])) {
                         $action            = $_POST['action'];
                         $skipsoJudge       = $_POST['skipso-judge'];
+                        $skipsoBackend       = $_POST['skipso-backend'];
                         $skipsoCompetition = (isset($_POST['skipso-competition'])) ? $_POST['skipso-competition']:0;
                         $html = '';
                    
                         if ($action == 'Save') {
-                            $code = preg_replace('/\n$/','',preg_replace('/^\n/','',preg_replace('/[\r\n]+/',"\n",$skipsoJudge)));
-                            $skipsoJudgeArr = explode("\n", $code);
-                          
-                            $skipsoUniqueArr = array_unique($skipsoJudgeArr);
-                            $errorEmail = array();
-                           
-                            foreach( $skipsoUniqueArr as $valueUnique) {
-                                if( filter_var($valueUnique, FILTER_VALIDATE_EMAIL) ) {
-                                    $validEmail[$valueUnique] = $valueUnique;
-                                } else {
-                                    $errorEmail[$valueUnique] = $valueUnique;
-                                }
-                            }
-                      
-                            $validEmailComma = implode(',',$validEmail);
-
-                            update_option ('skipso-judge', trim($validEmailComma));
+                            $html .= bidx_skipso_metadata($skipsoJudge,'skipso-judge');
+                            $html .= bidx_skipso_metadata($skipsoBackend,'skipso-backend');
                             update_option ('skipso-competition', $skipsoCompetition);
 
-                            if(!empty($errorEmail) ) {
-                                $invalidEmail = implode(',',$errorEmail);
-                                $html .= "<div id='message' class='error'>
-                                        <p>" . __ ('Email addresses ignored', 'competition') . ' '.$invalidEmail."
-                                        </p>
-                                    </div>";
-                            }
+                            
 
                             $html .= "<div class='updated'>
                         <p>" . __ ('Your competitions options are updated succesfully.', 'competition') . "
