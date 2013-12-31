@@ -201,16 +201,46 @@
             $mailFolderNavigation.empty();
             $.each( mailboxes, function( idx, el )
             {
+                    var $button
+                    ,   $icon
+                    ,   iconClass
+                    ;
+
                     // create, translate and append button to navigation container
                     //
-                    var button = $( "<a/>",
+                    $button = $( "<a/>",
                     {
                         "class":      "btn btn-large btn-block btn-default"
                     ,   "href":       "#mail/mbx-" + el.name.toLowerCase()
                     } );
 
-                    button.i18nText( el.name, appName );
-                    $mailFolderNavigation.append( button );
+                    // switch case for different mailbox classes
+
+                    switch (el.name)
+                    {
+                        case "Inbox":
+                            iconClass = "fa-inbox";
+                        break;
+
+                        case "Sent":
+                            iconClass = "fa-mail-forward";
+                        break;
+
+                        case "Trash":
+                            iconClass = "fa-trash-o";
+                        break;
+                    }
+
+                    $icon = $( "<i/>",
+                    {
+                        "class":    "fa " + iconClass
+                    } );
+                    $button.i18nText( el.name, appName );
+
+                    // Temp solution to add a space between text and icon
+                    $button.prepend( " " );
+                    $button.prepend( $icon );
+                    $mailFolderNavigation.append( $button );
             } );
         }
         else
