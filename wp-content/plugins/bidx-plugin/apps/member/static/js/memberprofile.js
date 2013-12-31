@@ -636,7 +636,7 @@
 
         // Profile picture is 'special'
         //
-        var profilePicture = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture" )
+        var profilePicture = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.document" )
         ;
 
         if ( profilePicture )
@@ -904,7 +904,8 @@
         // ProfilePicture
         //
         var profilePicture = $profilePictureContainer.data( "bidxData" );
-        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture", profilePicture );
+        //debugger;
+        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture", [profilePicture] );
     }
 
     // This is the startpoint
