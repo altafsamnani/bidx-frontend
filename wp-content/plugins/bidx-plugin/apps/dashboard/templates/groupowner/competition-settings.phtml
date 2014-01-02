@@ -18,19 +18,57 @@
                 </div>
             </div>
         </div>
+        <div id='frontenddiv' class='postbox'>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>Frontend</span></h3>
+            <div class='inside'>
+                <div id='taxonomy-frontend' class='frontenddiv'>
+                    <div class=''>
+                        <div class='label'>
+                            <div class=''><label class='selectit'>Frontend URL</label></div>
+                            <div class=''>
+                                <input style='width:350px;' type='text' name='skipso-frontend-url' value="<?php echo (isset($this->skipsoFrontendUrl)) ? $this->skipsoFrontendUrl : '';?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class=''>
+                        <div class='label'>
+                            <div class=''><label class='selectit'>Frontend Logout URL</label></div>
+                            <div class=''>
+                                <input style='width:350px;' type='text' name='skipso-frontend-logout' value="<?php echo (isset($this->skipsoFrontendLogoutUrl)) ? $this->skipsoFrontendLogoutUrl : '';?>">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id='backenddiv' class='postbox'>
             <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>Backend</span></h3>
             <div class='inside'>
                 <div id='taxonomy-backend' class='backenddiv'>
                     <div class=''>
                         <div class='label'>
-                            <div class=''><label class='selectit'>Backend emails (Separated by new line)</label></div>
+                            <div class=''><label class='selectit'>Backend URL</label></div>
                             <div class=''>
-                                <textarea rows='10' cols='50' name='skipso-backend' id='skipso-backend'><?php echo (isset($this->skipsoBackend)) ? $this->skipsoBackend : '';?></textarea>
+                                <input style='width:350px;' type='text' name='skipso-backend-url' value="<?php echo (isset($this->skipsoBackendUrl)) ? $this->skipsoBackendUrl : '';?>">
                             </div>
                         </div>
                     </div>
-
+                    <div class=''>
+                        <div class='label'>
+                            <div class=''><label class='selectit'>Backend Logout URL</label></div>
+                            <div class=''>
+                                <input style='width:350px;' type='text' name='skipso-backend-logout' value="<?php echo (isset($this->skipsoBackendLogoutUrl)) ? $this->skipsoBackendLogoutUrl : '';?>">
+                            </div>
+                        </div>
+                    </div>
+                     <div class=''>
+                        <div class='label'>
+                            <div class=''><label class='selectit'>Backend emails (Separated by new line)</label></div>
+                            <div class=''>
+                                <textarea rows='10' cols='50' name='skipso-backend-emails' id='skipso-backend'><?php echo (isset($this->skipsoBackendEmails)) ? $this->skipsoBackendEmails : '';?></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,14 +78,29 @@
                 <div id='taxonomy-judge' class='judgediv'>
                     <div class=''>
                         <div class='label'>
-                            <div class=''><label class='selectit'>Judge emails (Separated by new line)</label></div>
+                            <div class=''><label class='selectit'>Judge URL</label></div>
                             <div class=''>
-                                <textarea rows='10' cols='50' name='skipso-judge' id='skipso-judge'><?php echo (isset($this->skipsoJudge)) ? $this->skipsoJudge : '';?></textarea>
+                                <input style='width:350px;' type='text' name='skipso-judge-url' value="<?php echo (isset($this->skipsoJudgeUrl)) ? $this->skipsoJudgeUrl : '';?>">
                             </div>
                         </div>
                     </div>
-
-                </div>
+                    <div class=''>
+                        <div class='label'>
+                            <div class=''><label class='selectit'>Judge Logout URL</label></div>
+                            <div class=''>
+                                <input style='width:350px;' type='text' name='skipso-judge-logout' value="<?php echo (isset($this->skipsoJudgeLogoutUrl)) ? $this->skipsoJudgeLogoutUrl : '';?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class=''>
+                        <div class='label'>
+                            <div class=''><label class='selectit'>Judge emails (Separated by new line)</label></div>
+                            <div class=''>
+                                <textarea rows='10' cols='50' name='skipso-judge-emails' id='skipso-judge'><?php echo (isset($this->skipsoJudgeEmails)) ? $this->skipsoJudgeEmails : '';?></textarea>
+                            </div>
+                        </div>
+                    </div>
+               </div>
             </div>
         </div>
         <div class='buttonwrapper'>            

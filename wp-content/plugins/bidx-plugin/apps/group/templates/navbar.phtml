@@ -43,10 +43,10 @@
     $currentGroup   = $this -> sessionData -> data -> currentGroup;
     $groupIds       = array_keys ( (array)$this -> sessionData -> data -> groups );
     $inGroup        = in_array( $currentGroup, $groupIds);
-    $isCompetition  = get_option ('skipso-competition');
-    $judgeEmails    = explode(",", get_option ('skipso-judge'));
-    $skipsoJudgeUrl = get_site_option ('skipso-judge');
+    $isCompetition  = get_option ('skipso-competition');    
+    $skipsoJudgeUrl = get_option ('skipso-judge-url');
     $userName       = $this -> sessionData -> data -> username;
+    $judgeEmails    = explode(",", get_option ('skipso-judge-emails'));
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
     $showLogout     = true;
 ?>

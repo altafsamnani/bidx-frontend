@@ -171,13 +171,24 @@ class dashboard
 
                             $template = 'groupowner/group-settings.phtml';
                             break;
+                        case 'competition' :
+                            $template = 'groupowner/competition.phtml';
+
                     }
                 }
                 break;
             case 'competition-settings' :
                 $view->isCompetition = get_option ('skipso-competition');
-                $view->skipsoJudge   = str_replace(",","\n",get_option ('skipso-judge'));
-                $view->skipsoBackend   = str_replace(",","\n",get_option ('skipso-backend'));
+                $view->skipsoJudgeEmails = str_replace (",", "\n", get_option ('skipso-judge-emails'));
+                $view->skipsoBackendEmails = str_replace (",", "\n", get_option ('skipso-backend-emails'));
+
+                $view->skipsoFrontendUrl = get_option ('skipso-frontend-url');
+                $view->skipsoBackendUrl = get_option ('skipso-backend-url');
+                $view->skipsoJudgeUrl = get_option ('skipso-judge-url');
+
+                $view->skipsoFrontendLogoutUrl = get_option ('skipso-frontend-logout');
+                $view->skipsoBackendLogoutUrl = get_option ('skipso-backend-logout');
+                $view->skipsoJudgeLogoutUrl = get_option ('skipso-judge-logout');
 
                 $template = 'groupowner/competition-settings.phtml';
                 break;
