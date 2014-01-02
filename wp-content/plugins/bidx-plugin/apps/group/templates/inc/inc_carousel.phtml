@@ -8,8 +8,8 @@
     if ( count( $images ) > 0 ) {
 ?>
     <!-- IMAGE Carousel -->
-    <div class="container">
-        <div id="groupCarousel" class="carousel slide">
+
+        <div id="groupCarousel" class="carousel slide spacer">
 <?php
             // If there is only 1 image in the array don't show the nav arrows and the indicator
             // TODO: Don't load the carousel plugin and the extra markup
@@ -66,17 +66,17 @@
             }
 ?>
         </div>
-    </div>
+
     <!-- // IMAGE Carousel -->
 <?php
 
     }  else {
 ?>
-<div class="container">
+
     <div class="alert alert-danger">
         <?php _e('Please add images using the mediamanager for this page in the Wordpress Admin', 'bidxtheme') ?>
     </div>
-</div>
+
 <?php
     }
 ?>
