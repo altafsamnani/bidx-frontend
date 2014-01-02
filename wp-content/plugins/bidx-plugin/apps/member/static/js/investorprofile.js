@@ -133,7 +133,7 @@
         ]
     };
 
-        // Setup function for doing work that should only be done once
+    // Setup function for doing work that should only be done once
     //
     function _oneTimeSetup()
     {
@@ -1242,7 +1242,7 @@
         var $validator = $editForm.validate(
         {
             debug: false
-        ,   ignore:                         ""
+        ,   ignore: ".chosen-search input"
         ,   rules:
             {
                 "summary":

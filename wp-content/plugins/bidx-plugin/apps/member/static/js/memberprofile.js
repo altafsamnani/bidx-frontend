@@ -642,7 +642,7 @@
         if ( profilePicture )
         {
             $profilePictureContainer.data( "bidxData", profilePicture );
-            $profilePictureContainer.append( $( "<img />", { "src": profilePicture } ));
+            $profilePictureContainer.append( $( "<img />", { "src": profilePicture, "class": "thumbnail" } ));
         }
 
         // Setup the hidden fields used in the file upload
@@ -808,7 +808,6 @@
 
         $.each( fields.personalDetails, function( i, f )
         {
-
             var $input  = $editForm.find( "[name='personalDetails." + f + "']" )
             ,   value   = bidx.utils.getElementValue( $input )
             ;
@@ -904,7 +903,7 @@
         // ProfilePicture
         //
         var profilePicture = $profilePictureContainer.data( "bidxData" );
-        //debugger;
+
         bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture", [profilePicture] );
     }
 
@@ -944,7 +943,7 @@
 
         var $validator = $editForm.validate(
         {
-            ignore: ""
+            ignore: ".chosen-search input"
         ,   rules:
             {
                 "personalDetails.firstName":
@@ -1208,7 +1207,7 @@
                         {
                             _init();
 
-                            bidx.i18n.i( "someLBale")
+                            bidx.i18n.i( "someLBale");
                         } );
                 }
 
