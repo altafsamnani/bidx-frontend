@@ -46,9 +46,9 @@
                         <div class="panel-body">
                             <!-- accordion body -->
 
-                            <div class="alert alert-info">
+                            <blockquote class="alert-info">
                                 <?php _e('Tell visitors and members of the group how you see yourself as an investor. Give a brief description of your investment interests.', 'bidxplugin')?>
-                            </div>
+                            </blockquote>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -152,9 +152,9 @@
                     <div id="investmentPreferences" class="panel-collapse collapse">
                         <div class="panel-body">
                             <!-- accordion body -->
-                            <div class="alert alert-info">
+                            <blockquote class="alert-info">
                                 <?php _e('Use this section to define your investment preferences, such as countries, products or industries that you would like to invest in. This information will be used to match your profileto businesses that fit these criteria.', 'bidxplugin')?>
-                            </div>
+                            </blockquote>
 
                             <div class="row">
                                 <div class="col-sm-6">
@@ -229,19 +229,21 @@
 
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label><?php _e('Location','bidxplugin'); ?></label>
+                                    <div class="form-group">
+                                        <label><?php _e('Location','bidxplugin'); ?></label>
 
-                                    <div class="radio">
-                                        <input type="radio" value="country" id="radio-focusLocationTypeCountry" name="focusLocationType" />
-                                        <label for="radio-focusLocationTypeCountry"><span></span><?php _e('Country / Countries','bidxplugin'); ?></label>
-                                    </div>
-                                    <div class="radio">
-                                        <input type="radio" value="city" id="radio-focusLocationTypeCity" name="focusLocationType" />
-                                        <label for="radio-focusLocationTypeCity"><span></span><?php _e('City / Cities','bidxplugin'); ?></label>
-                                    </div>
-                                    <div class="radio">
-                                        <input type="radio" value="reach" id="radio-focusLocationTypeReach" name="focusLocationType" />
-                                        <label for="radio-focusLocationTypeReach"><span></span><?php _e('Region','bidxplugin'); ?></label>
+                                        <div class="radio">
+                                            <input type="radio" value="country" id="radio-focusLocationTypeCountry" name="focusLocationType" />
+                                            <label for="radio-focusLocationTypeCountry"><span></span><?php _e('Country / Countries','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="city" id="radio-focusLocationTypeCity" name="focusLocationType" />
+                                            <label for="radio-focusLocationTypeCity"><span></span><?php _e('City / Cities','bidxplugin'); ?></label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="reach" id="radio-focusLocationTypeReach" name="focusLocationType" />
+                                            <label for="radio-focusLocationTypeReach"><span></span><?php _e('Region','bidxplugin'); ?></label>
+                                        </div>
                                     </div>
 
 
@@ -255,7 +257,7 @@
                                     <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-city">
                                         <label><?php _e('City','bidxplugin'); ?></label>
                                         <div class="bidx-tagsinput-container">
-                                            <input type="text" class="form-control" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed" placeholder="<?php _e('City','bidxplugin'); ?>">
+                                            <input type="text" class="bidx-tagsinput enclosed" autocomplete="off" name="focusCity" class="bidx-tagsinput enclosed" placeholder="<?php _e('City','bidxplugin'); ?>">
                                         </div>
                                     </div>
 
@@ -326,9 +328,9 @@
                     <div id="investmentHistory" class="panel-collapse collapse">
                         <div class="panel-body">
                             <!-- accordion body -->
-                            <div class="alert alert-info">
+                            <blockquote class="alert-info">
                                 <?php _e('Entrepreneurs are interested in the investments you have made in the past. Give a few details about investments made in the last 12 months or earlier (if  any).', 'bidxplugin')?>
-                            </div>
+                            </blockquote>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -388,9 +390,9 @@
                     <div id="references" class="panel-collapse collapse">
                         <div class="panel-body">
                             <!-- accordion body -->
-                            <div class="alert alert-info">
+                            <blockquote class="alert-info">
                                 <?php _e('References from other entrepreneurs or investment partners are important when getting in touch with another member of the platform. Fill in details of those you have worked with  and are willing recommend you.', 'bidxplugin')?>
-                            </div>
+                            </blockquote>
                             <h4><?php _e('Entrepreneurs References','bidxplugin'); ?>
                                 <a href="#addReference" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e('Add','bidxplugin'); ?></a>
                             </h4>
@@ -412,7 +414,7 @@
                         <div class="panel-body">
                             <div class="attachmentsContainer"></div>
 
-                            <button data-toggle="modal" class="btn btn-primary js-btn-add-attachments"><span class="fa fa-plus"></span> <?php _e('Add documents','bidxplugin');?></button>
+                            <button data-toggle="modal" data-target="#addDocs" class="btn btn-primary js-btn-add-attachments"><span class="fa fa-plus"></span> <?php _e('Add documents','bidxplugin');?></button>
 
                             <div class="addAttachmentsModal modal fade" id="addDocs" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -435,9 +437,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
 
                         </div>
                     </div>
