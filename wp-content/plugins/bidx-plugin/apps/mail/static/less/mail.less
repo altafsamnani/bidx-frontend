@@ -53,14 +53,10 @@
         padding:                            5px 0 5px 3px;
         margin:                             0px;
         background-color:                   #F5F5F5;
-        border-bottom:                      2px solid #E0E0E0;
-        border-top:                         2px solid #E0E0E0;
+        border-bottom:                      1px solid #E0E0E0;
 
     }
 
-    #mail .mail .media-list.list > li:first-child {
-        border-top:                         0px;
-    }
     #mail .mail .media-list.list > li:last-child {
         border-bottom:                      0px;
     }
@@ -71,8 +67,11 @@
             color:                          #34495E;
             font-size:                      22px;
         }
-        #mail .mail .media-list.list > li .email-new {
-            color:                          red;
+        #mail .mail .media-list.list > li.email-new {
+            background-color: #FFF;
+        }
+        #mail .mail .media-list.list > li small {
+            color: #D9534F;
         }
         #mail .mail .media-list.list > li .media-heading {
             margin:                         7px 0 5px;

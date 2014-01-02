@@ -210,7 +210,6 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <a class="btn-block trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
-                                            <span class="fa fa-chevron-right accordion-state-icon"></span>
                                             <?php _e('Active contact requests (0)')?>
                                         </a>
                                     </div>
@@ -227,7 +226,6 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <a class="btn-block trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
-                                            <span class="fa fa-chevron-right accordion-state-icon"></span>
                                             <?php _e('Incoming contact requests (0)')?>
                                         </a>
                                     </div>
@@ -248,7 +246,6 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <a class="btn-block trigger-pending-contacts" data-toggle="collapse" data-parent="#contacts" href="#pendingRequests">
-                                            <span class="fa fa-chevron-right accordion-state-icon"></span>
                                             <?php _e('Pending contact requests (0)')?>
                                         </a>
                                     </div>
@@ -268,7 +265,6 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <a class="btn-block trigger-ignored-contacts" data-toggle="collapse" data-parent="#contacts" href="#ignoredRequests">
-                                            <span class="fa fa-chevron-right accordion-state-icon"></span>
                                             <?php _e('Ignored contact requests (0)')?>
                                         </a>
                                     </div>
@@ -387,7 +383,7 @@
 
 <script type="text/html" id="mailbox-listitem">
 <!--
-<li class="media" >
+<li class="media %emailRead%" >
     <div class="pull-left check">
         <div class="checkbox">
             <input type="checkbox" value="" id="checkbox-mailboxItem" class="mailboxItem" name="mailboxItem" data-toggle="checkbox" data-id="" />
@@ -396,7 +392,7 @@
     </div>
     <div class="media-body">
         <div class="row">
-            <div class="col-sm-9"><h6 class="media-heading"><a href="%readEmailHref%" class="%emailRead%">%senderReceiverName%</a></h6></div>
+            <div class="col-sm-9"><h6 class="media-heading"><a href="%readEmailHref%" class="">%senderReceiverName% %emailNew%</a></h6></div>
             <div class="col-sm-3">
                 %dateSent%
                 <br>
