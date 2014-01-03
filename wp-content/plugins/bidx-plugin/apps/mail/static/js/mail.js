@@ -2190,7 +2190,7 @@
                                             // mailbox sent does not show unread state
                                             //
                                             .replace( /%emailRead%/g, ( !item.read && state !== "mbx-sent" ) ? "email-new" : "" )
-                                            .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? " <small>New</small>" : "" )
+                                            .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? " <small>" + bidx.i18n.i( "emailNew", appName ) + "</small>" : "" )
                                             .replace( /%senderReceiverName%/g, senderReceiverName )
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
                                             .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )

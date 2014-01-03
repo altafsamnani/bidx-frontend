@@ -15,6 +15,6 @@
     <Item value="activeContact">Active contacts</Item>
     <Item value="ignoredContact">Ignored contacts</Item>
     <Item value="contactRequest">New contact request</Item>
-
+    <Item value="emailNew">new</Item>
 
 </I18N>
