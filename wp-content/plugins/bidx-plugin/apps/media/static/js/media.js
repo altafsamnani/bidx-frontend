@@ -537,9 +537,8 @@
     //
     function _updateFile( $container, file )
     {
-        var imageSrc = ( file && file.mimeType && file.mimeType.match( /^image/ ) )
-            ? file.document
-            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png"
+        var $documentImage      = $container.find( ".documentImage" )
+        ,   $documentLink       = $container.find( ".documentLink" )
         ;
 
         $container.data( "bidxData", file );
@@ -550,7 +549,6 @@
             $container.find( ".purpose"         ).text( file.purpose );
             $container.find( ".documentType"    ).text( file.documentType ? bidx.data.i( file.documentType, "documentType" ) : "" );
 
-            $container.find( ".documentImage"   ).attr( "src",      imageSrc );
             $container.find( ".documentLink"    ).attr( "href",     file.document );
 
             // Only when there is a bidxUploadId, not available during upload
@@ -558,6 +556,16 @@
             if ( file.bidxMeta && file.bidxMeta.bidxUploadId )
             {
                 $container.find( ".btnEdit"         ).attr( "href",     "#media/edit/" + file.bidxMeta.bidxUploadId );
+            }
+
+            if ( file && file.mimeType && file.mimeType.match( /^image/ ) )
+            {
+                $documentImage.attr( "src", file.document );
+            }
+            else
+            {
+                $documentImage.remove();
+                $documentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
             }
         }
     }
