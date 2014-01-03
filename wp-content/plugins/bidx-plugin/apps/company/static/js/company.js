@@ -729,7 +729,8 @@
         //
         var $validator = $editForm.validate(
         {
-            rules:
+            ignore: ".chosen-search input"
+        ,   rules:
             {
                 "name":
                 {
