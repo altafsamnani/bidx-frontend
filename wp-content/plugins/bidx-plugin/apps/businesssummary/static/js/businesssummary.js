@@ -1029,7 +1029,7 @@
 
                 if ( !uploadId )
                 {
-                    bidx.utils.error( "No uploadId found on upated media event!", data );
+                    bidx.utils.error( "No uploadId found on updated media event!", data );
                     return;
                 }
 
@@ -1278,7 +1278,8 @@
     function _updateAttachment( $attachment, attachment )
     {
         var createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
-        ,   imageSrc
+        ,   $documentImage      = $attachment.find( ".documentImage" )
+        ,   $documentLink       = $attachment.find( ".documentLink" )
         ;
 
         // Store the data so we can later use it to merge the updated data in
@@ -1294,12 +1295,17 @@
         $attachment.find( ".purpose"            ).text( attachment.purpose );
         $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
-        imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
-            ? attachment.document
-            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
+        if ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
+        {
+            $documentImage.attr( "src", attachment.document );
+        }
+        else
+        {
+            $documentImage.remove();
+            $documentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+        }
 
-        $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
-        $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
+        $documentLink.attr( "href", attachment.document );
 
     }
 
@@ -1476,7 +1482,7 @@
     //
     function _populateScreen()
     {
-        // Repoulate the companies table, this data is not coming from the business summary but from a seperate API call
+        // Repopulate the companies table, this data is not coming from the business summary but from a seperate API call
         //
         $companiesTable.find( "tbody" ).empty();
 
@@ -1488,7 +1494,7 @@
             } );
         }
 
-        // Go itteratively over all the forms and there fields
+        // Go iteratively over all the forms and there fields
         //
         $.each( fields, function( form, formFields )
         {
@@ -1591,7 +1597,7 @@
     //
     function _getFormValues()
     {
-        // Itterate over the form fields, not all fields are using forms. Financial Summary
+        // Iterate over the form fields, not all fields are using forms. Financial Summary
         // is a repeating list, but not a
         //
         $.each( fields, function( form, formFields )
@@ -2121,8 +2127,8 @@
         bidx.api.call(
             "businesssummary.save"
         ,   {
-                                        // Undefined when creating the business summary
-                                        //
+                // Undefined when creating the business summary
+                //
                 businessSummaryId:      businessSummaryId
             ,   groupDomain:            bidx.common.groupDomain
             ,   data:                   businessSummary
