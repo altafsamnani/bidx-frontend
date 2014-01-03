@@ -83,10 +83,10 @@ function bidx_get_status_msgs( ) {
         $textId = $_GET['emsg'];
         (!empty($_GET['eparam'])) ? $replaceString = base64_decode($_GET['eparam']) :'';
         $statusMsg = bidx_status_text ( $textId, $replaceString );
-        $statusMessages = "<div class='container'><div class='alert alert-danger'>
+        $statusMessages = "<div class='alert alert-danger'>
                       <button data-dismiss='alert' class='close fa fa-times' type='button'></button>
                       {$statusMsg}
-                    </div></div>";
+                    </div>";
        // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
     }
 
@@ -96,20 +96,20 @@ function bidx_get_status_msgs( ) {
         $textId = $_GET['smsg'];
         (!empty($_GET['sparam'])) ? $replaceString = base64_decode($_GET['sparam']) :'';
         $statusMsg = bidx_status_text ( $textId, $replaceString );
-        $statusMessages = "<div class='container'><div class='alert alert-success'>
+        $statusMessages = "<div class='alert alert-success'>
                       <button data-dismiss='alert' class='close fa fa-times' type='button'></button>
                       {$statusMsg}
-                    </div></div>";
+                    </div>";
         // $content = str_replace ('<!-- Msg -->', $statusMsgDiv, $content);
     }
 
     /* Message comes directly when we want to show error msg directly */
     if (isset ($_GET['edmsg'])) {
 
-        $statusMessages = "<div class='container'><div class='alert alert-danger'>
+        $statusMessages = "<div class='alert alert-danger'>
                       <button data-dismiss='alert' class='close fa fa-times' type='button'></button>
                       ".base64_decode($_GET['edmsg']).
-                      "</div></div>";
+                      "</div>";
 
     }
 
