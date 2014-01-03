@@ -39,7 +39,6 @@
 
     if ( !$personalDetails->profilePicture->document )
     {
-        $picSrc                 = 'holder.js/100x100/industrial/auto/text:No Image';
         $useDataSrc             = true;
     }
 
@@ -81,11 +80,22 @@
     <div id="accordionMember" class="panel-collapse collapse in">
         <div class="panel-body">
 
-
-
             <div class="row">
                 <div class="col-sm-3">
+<?php
+                if ($picSrc)
+                {
+?>
                     <img <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+<?php
+                }
+                else
+                {
+?>
+                    <div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>
+<?php
+                }
+?>
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
