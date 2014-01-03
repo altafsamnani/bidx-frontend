@@ -200,6 +200,15 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 
                 setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
                 $_COOKIE[$bidxAuthCookie->name] = $bidxAuthCookie->value;
+
+                $competitionCookieVals = array('expires'  => $bidxAuthCookie->expires,
+                                               'path'     => $bidxAuthCookie->path,
+                                               'domain'   => $sendDomain,
+                                               'httpOnly' => $bidxAuthCookie->httponly);
+            }
+            
+            if($urlservice == 'session' && $bidxMethod == 'POST') {
+                bidx_skipso_competition ( $competitionCookieVals );
             }
         }
     } else { // Wp Request timeout
@@ -210,6 +219,27 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     }
 
     return $result;
+}
+
+/**
+ * Check is there competition and if exists then set cookie so we can call logout for skipso
+ *
+ * @param Array $entities bidx response as array
+ * @return String Injects js variables
+ */
+function bidx_skipso_competition ( $competitionCookieVals )
+{    
+    if (!isset ($_COOKIE['bidx-skipso-competition'])) {
+        $isCompetition = get_option ('skipso-competition');
+        $cookieName    = 'bidx-skipso-competition';
+        $cookieVal     = 1;
+        if ($isCompetition) {
+            setcookie ($cookieName, $cookieVal, $competitionCookieVals['expires'], $competitionCookieVals['path'], $competitionCookieVals['domain'], FALSE, $competitionCookieVals['httpOnly']);
+            $_COOKIE[$cookieName] = $cookieVal;
+        }
+    }
+   
+    return;
 }
 
 /*
@@ -320,25 +350,25 @@ function bidx_signout ()
     call_bidx_service ('session', $params, 'DELETE');
     wp_clear_auth_cookie ();
     clear_wp_bidx_session ();
-    
-    if ($provider || isset($_COOKIE['bidx-skipso-competition'])) {
+
+    if ($provider || isset ($_COOKIE['bidx-skipso-competition'])) {
         callProviderLogoutURL ();
     }
 }
 
 function callProviderLogoutURL ()
 {
-    $logoutSiteOption    = 'skipso-frontend-logout';
+    $logoutSiteOption = 'skipso-frontend-logout';
     $logoutBackendOption = 'skipso-backend-logout';
     $logoutPrivateOption = 'skipso-judge-logout';
 
     $frontendLogout = get_option ($logoutSiteOption);
-    $backendLogout  = get_option ($logoutBackendOption);
-    $privateLogout  = get_option ($logoutPrivateOption);
+    $backendLogout = get_option ($logoutBackendOption);
+    $privateLogout = get_option ($logoutPrivateOption);
 
-    $frontendLogout = (!$frontendLogout) ? get_site_option ($logoutSiteOption): $frontendLogout;
-    $backendLogout  = (!$backendLogout) ? get_site_option ($logoutBackendOption): $backendLogout;
-    $privateLogout  = (!$privateLogout) ? get_site_option ($logoutPrivateOption): $privateLogout;
+    $frontendLogout = (!$frontendLogout) ? get_site_option ($logoutSiteOption) : $frontendLogout;
+    $backendLogout = (!$backendLogout) ? get_site_option ($logoutBackendOption) : $backendLogout;
+    $privateLogout = (!$privateLogout) ? get_site_option ($logoutPrivateOption) : $privateLogout;
 
     echo '
         <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
@@ -2405,11 +2435,11 @@ function bidx_skipso_settings ()
 function bidx_dashboard_competition ()
 {
     $sessionData = BidxCommon::$staticSession;
-    $isCompetition  = get_option ('skipso-competition');
-    $userName         = $sessionData -> data -> username;
-    $backendEmails    = explode(",", get_option ('skipso-backend-emails'));
-    $isBackendUser    = ($isCompetition && in_array( $userName, $backendEmails )) ? true : false;
-    if( $isBackendUser ) {
+    $isCompetition = get_option ('skipso-competition');
+    $userName = $sessionData->data->username;
+    $backendEmails = explode (",", get_option ('skipso-backend-emails'));
+    $isBackendUser = ($isCompetition && in_array ($userName, $backendEmails)) ? true : false;
+    if ($isBackendUser) {
         $skipsoBackendUrl = get_option ('skipso-backend-url');
         wp_redirect ($skipsoBackendUrl);
     } else {

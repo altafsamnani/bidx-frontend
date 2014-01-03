@@ -81,8 +81,6 @@ class BidxCommon
                     $this->forceWordpressLogin ($subDomain, $sessionVars);
                 }
 
-                //Check Is competition running then set cookie
-                $this->isCompetitionRunning();
                 //Set static variables to access through pages
                 $sessionVars = isset ($sessionVars) ? $sessionVars : NULL;
                 $this->setStaticVariables ($subDomain, $sessionVars);
@@ -173,21 +171,7 @@ class BidxCommon
         }
     }
 
-    /**
-     * Check is there competition and if exists then set cookie so we can call logout for skipso
-     *
-     * @param Array $entities bidx response as array
-     * @return String Injects js variables
-     */
-    public function isCompetitionRunning ( )
-    {
-        $isCompetition  = get_option ('skipso-competition');
-        
-        if ($isCompetition && !isset($_COOKIE['bidx-skipso-competition'])) {
-            setcookie('bidx-skipso-competition', 1, time()+3600*24*100, COOKIEPATH, COOKIE_DOMAIN, false);
-        }
-        return;
-    }
+    
 
     /**
      * Process Entities and store it in session variable
@@ -203,9 +187,7 @@ class BidxCommon
         }
 
         $this::$bidxSession[$subDomain] = $sessionVars;
-        $this::$staticSession = $sessionVars;
-
-        $isCompetitionRunning = get_option ('skipso-competition');
+        $this::$staticSession = $sessionVars;       
 
 
     }
