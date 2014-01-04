@@ -1057,15 +1057,6 @@
                         $btnCancel.removeClass( "disabled" );
 
                         _showView( "edit" );
-
-                        // This is a hack, for whatever unclear reason the first time the map is shown it doesn't
-                        // center correctly. Probably because of some reflow / layout issue.
-                        // @TODO: proper fix
-                        //
-                        setTimeout( function()
-                        {
-                            _updateCurrentAddressMap();
-                        }, 500 );
                     }
                 }
             ,   error:          function( jqXhr, textStatus )

@@ -1091,6 +1091,13 @@
                 .css( { overflow: 'visible' } )
                 .find( ".panel-body" ).first().css({ overflow: 'visible' });
 
+            // Fix for "Your current address" in member profile
+            // Trigger the _updateCurrentAddressMap function when the panel is shown
+            if ($accordionBody.hasClass( 'addressItem' ))
+            {
+                bidx.member._updateCurrentAddressMap();
+            }
+
             $('html,body').delay(300).animate({scrollTop:targetOffset}, 200);
 
         } );
