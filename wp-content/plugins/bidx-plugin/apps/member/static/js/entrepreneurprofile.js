@@ -428,6 +428,8 @@
 
         var $attachment         = snippets.$attachment.clone()
         ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
+        ,   $attachmentImage    = $attachment.find( ".documentImage" )
+        ,   $attachmentLink     = $attachment.find( ".documentLink" )
         ,   imageSrc
         ;
 
@@ -441,12 +443,17 @@
         $attachment.find( ".purpose"            ).text( attachment.purpose );
         $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
-        imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
-            ? attachment.document
-            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
+        $attachmentLink.attr( "href", attachment.document );
 
-        $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
-        $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
+        if ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
+        {
+            $attachmentImage.attr( "src", attachment.document );
+        }
+        else
+        {
+            $attachmentImage.remove();
+            $attachmentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+        }
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
     }
