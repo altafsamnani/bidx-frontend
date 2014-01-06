@@ -309,7 +309,7 @@
                     $btn.text( orgText );
                     $btn.data( "confirm", false );
 
-                    $btn.removeClass( "btn-large" );
+                    $btn.removeClass( "btn-lg" );
 
                 }, 5000 );
             }
@@ -344,7 +344,7 @@
 
                 $btnDelete.data( "confirm", true );
 
-                $btnDelete.addClass( "btn-large" );
+                $btnDelete.addClass( "btn-lg" );
                 $btnDelete.i18nText( "btnConfirm" );
 
                 startConfirmTimer( $btnDelete, orgText );

@@ -83,8 +83,8 @@
                         $btn.text( orgText );
                         $btn.data( "confirm", false );
 
-                        $btn.removeClass( "btn-large" );
-                        $btn.addClass( "btn-mini" );
+                        $btn.removeClass( "btn-lg" );
+                        $btn.addClass( "btn-sm" );
 
                     }, 5000 );
                 }
@@ -100,8 +100,8 @@
                     $btn.text( options.txtAreYouSure );
                     $btn.data( "confirm", true );
 
-                    $btn.removeClass( "btn-mini" );
-                    $btn.addClass( "btn-large" );
+                    $btn.removeClass( "btn-sm" );
+                    $btn.addClass( "btn-lg" );
 
                     startConfirmTimer( $btn, orgText );
                 }

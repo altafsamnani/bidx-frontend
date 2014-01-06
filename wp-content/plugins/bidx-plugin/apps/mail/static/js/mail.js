@@ -210,7 +210,7 @@
                     //
                     $button = $( "<a/>",
                     {
-                        "class":      "btn btn-large btn-block btn-default"
+                        "class":      "btn btn-block btn-default"
                     ,   "href":       "#mail/mbx-" + el.name.toLowerCase()
                     } );
 
