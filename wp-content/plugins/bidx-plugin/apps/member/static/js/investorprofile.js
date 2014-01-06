@@ -1242,7 +1242,7 @@
         var $validator = $editForm.validate(
         {
             debug: false
-        ,   ignore: ".chosen-search input"
+        ,   ignore: ".chosen-search input, .search-field input"
         ,   rules:
             {
                 "summary":

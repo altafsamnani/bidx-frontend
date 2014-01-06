@@ -482,7 +482,7 @@
         var $validator = $editForm.validate(
         {
             debug: true
-        ,   ignore: ".chosen-search input"
+        ,   ignore: ".chosen-search input, .search-field input"
         ,   rules:
             {
                 "mentorProfileSummary":
