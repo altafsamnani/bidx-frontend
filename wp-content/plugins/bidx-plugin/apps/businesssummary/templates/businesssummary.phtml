@@ -789,11 +789,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <label><?php _e('Does this business summary have a company?','bidxplugin'); ?></label>
                                 <div class="controls">
                                     <div class="radio">
-                                        <input type="radio" value="true" id="radio-CompanyYes" name="hasCompany" />
+                                        <input type="radio" value="true" id="radio-CompanyYes" name="hasCompany" data-toggle="radio" />
                                         <label for="radio-CompanyYes"><span></span><?php _e('Yes','bidxplugin'); ?></label>
                                     </div>
                                     <div class="radio">
-                                        <input type="radio" value="false" id="radio-CompanyNo" name="hasCompany" />
+                                        <input type="radio" value="false" id="radio-CompanyNo" name="hasCompany" data-toggle="radio" />
                                         <label for="radio-CompanyNo"><span></span><?php _e('No','bidxplugin'); ?></label>
                                     </div>
                                 </div>
@@ -990,7 +990,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <td>
                     <div class="controls">
                         <div class="radio" >
-                            <input type="radio" value="" id="radio-Company" name="companyList" />
+                            <input type="radio" value="" id="radio-Company" name="companyList" data-toggle="radio" />
                             <label for="radio-Company"><span></span></label>
                         </div>
                     </div>
