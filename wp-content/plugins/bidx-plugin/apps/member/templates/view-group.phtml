@@ -45,7 +45,7 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
 
 <?php
         foreach( $groupDetails as $groupValue) {
-            $joinLink = ($this->exst($groupValue->join)) ? "<a href='#joinGroup/".$groupValue->bidxGroupId."'>" . __('Join') . "</a>":'';
+            $joinLink = ($this->exst($groupValue->join)) ? "<a class='btn btn-xs btn-warning pull-right' href='#joinGroup/".$groupValue->bidxGroupId."'>" . __('Join') . "</a>":'';
             $groupDataSrc = false;
             $picSrc     = $this->exst($groupValue->logo);
 
@@ -61,14 +61,14 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
         <div class="media-body">
             <h4><?php echo $groupValue->name?></h4>
             <p><?php echo $groupValue->slogan?></p>
-        </div>
 <?php
         if ( !empty($joinLink) ) {
 ?>
-        <div class="pull-right"><?php echo $joinLink ?> Join</div>
+        <?php echo $joinLink ?>
 <?php
         }
 ?>
+        </div>
     </li>
 <?php
         }
