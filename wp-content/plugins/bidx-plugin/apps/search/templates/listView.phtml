@@ -55,9 +55,9 @@
 					<a href="/member/<?php echo $doc -> userId ?>">
 				<?php if (property_exists( $doc , 'profilepicturedoc_url' ) ) {
 							?>
-						<img src="<?php echo $doc -> profilepicturedoc_url ?>" height="75" width="75" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
+						<img src="<?php echo $doc -> profilepicturedoc_url ?>" height="90" width="90" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
 				<?php  } else { ?>
-						<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
+				<div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>
 				<?php  }?>
 					</a>
 				</td>
@@ -85,7 +85,7 @@
 							?>
 						<img src="<?php echo $doc -> doc_url ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
 				<?php  } else { ?>
-						<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
+						<div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>
 				<?php  }?>
 					</a>
 				</td>
