@@ -30,7 +30,9 @@ $entities       = $this->sessionData->data->wp->entities;
                 <?php $this->render('view-investor.phtml'); ?>
             </div>
         </div>
-        <div class="col-sm-4 side-bar well">
+        <div class="col-sm-4">
+            <div class="side-bar well">
+
 <?php
     if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
 ?>
@@ -112,9 +114,10 @@ $entities       = $this->sessionData->data->wp->entities;
             </div>
 <?php
           //  }
-        $this->render('view-group.phtml');
+            $this->render('view-group.phtml');
 ?>
 
+            </div>
         </div>
     </div>
     <?php $this->render('edit-member.phtml'); ?>
