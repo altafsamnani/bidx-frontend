@@ -64,8 +64,8 @@ body
 }
 body.bidx
 {
-    // .body-bg();
-    .body-bg('p4/p4.png');
+    .body-bg();
+    // .body-bg('p4/p4.png');
 }
 
 #wrap
@@ -75,7 +75,7 @@ body.bidx
     min-height: 100%;
     .inner-wrap
     {
-        padding-top: 114px;
+        padding-top: 115px;
         > .container
         {
             margin-bottom: 40px;
@@ -305,58 +305,6 @@ a:link
 
 // Main Menu
 // -------------------------
-header .menu-main
-{
-    margin: 10px 0 0 0;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    .nav
-    {
-        > li
-        {
-            margin-right: 5px;
-            padding-bottom: 10px;
-            &.active:after
-            {
-                .triangle(up, 10px, lighten( @brand-primary, 25%) );
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                margin-left: -10px;
-            }
-            &:last-child
-            {
-                margin-right: 0;
-            }
-            &.dropdown:hover > ul.dropdown-menu
-            {
-                display: block;
-            }
-            .dropdown-menu
-            {
-                margin-top: -4px;
-                &:before
-                {
-                    .triangle(up, 9px, desaturate( darken(@brand-primary, 25%), 25%) );
-                    position: absolute;
-                    left: 15px;
-                    top: -9px;
-                }
-            }
-            > a
-            {
-                .rounded(5px);
-                padding: @padding-small-vertical ( @padding-large-vertical * 4);
-                font-size: floor(@font-size-base * 1.45);
-                &:hover
-                {
-                    background-color: lighten( @brand-primary, 40%);
-                }
-            }
-        }
-    }
-}
 .dropdown-menu
 {
     .box-shadow(none);
@@ -557,23 +505,25 @@ header.navbar
 
 .bidx-collapse
 {
-    display:                    inline-block;
+    display: inline-block;
+    line-height: 1;
 }
 
 .bidx-expand
 {
-    display:                    none;
+    line-height: 1;
+    display: none;
 }
 
 .collapsed
 {
     .bidx-expand
     {
-        display:                    inline-block;
+        display: inline-block;
     }
     .bidx-collapse
     {
-        display:                    none;
+        display: none;
     }
 }
 
@@ -1078,204 +1028,144 @@ form .error-separate
 ********************************************************************************************/
 
 
-    /* Large desktop */
-    @media (min-width: 1200px)
-    {
+/* Large desktop */
+@media (min-width: 1200px)
+{
 
+}
+
+/* styles shared by portrait tablet and above */
+@media (min-width: 992px )
+{
+
+    .menu-main
+    {
+        margin: 10px 0 0 0;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        .nav
+        {
+            > li
+            {
+                margin-right: 5px;
+                padding-bottom: 10px;
+                &.active:after
+                {
+                    .triangle(up, 10px, lighten( @brand-primary, 25%) );
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    margin-left: -10px;
+                }
+                &:last-child
+                {
+                    margin-right: 0;
+                }
+                &.dropdown:hover > ul.dropdown-menu
+                {
+                    display: block;
+                }
+                .dropdown-menu
+                {
+                    margin-top: -4px;
+                    &:before
+                    {
+                        .triangle(up, 9px, desaturate( darken(@brand-primary, 25%), 25%) );
+                        position: absolute;
+                        left: 15px;
+                        top: -9px;
+                    }
+                }
+                > a
+                {
+                    .rounded(5px);
+                    padding: @padding-small-vertical ( @padding-large-vertical * 4);
+                    font-size: floor(@font-size-base * 1.45);
+                    &:hover
+                    {
+                        background-color: lighten( @brand-primary, 40%);
+                    }
+                }
+            }
+        }
     }
 
-    /* styles shared by portrait tablet and above */
-    @media (min-width: 980px )
+    .navbar
     {
-
-        /* header */
-        header .navbar-inner
+        .navbar-inner
         {
-            height: 109px;
+            height: 110px;
+            > .container
+            {
+                position: relative;
+            }
         }
-
-        header.navbar .navbar-inner > .container
-        {
-            position: relative;
-        }
-
-        header.navbar .header-logo
+        .header-logo
         {
             height: 100%;
             overflow: hidden;
             min-width: 200px;
             float: left;
-            min-height: 40px; /* min-height forces nav menu to float right */
+            min-height: 40px;
+            img
+            {
+                margin-top: 15px;
+            }
+            .site-title
+            {
+                margin-top: 11px;
+                display: inline-block;
+                font-size: 24px;
+            }
         }
-        header.navbar .header-logo img
-        {
-            margin-top: 15px;
-        }
-
-        header.navbar .header-logo .site-title
-        {
-            margin-top: 11px;
-            display: inline-block;
-            font-size: 24px;
-        }
-
-        header.navbar .iconbar-wrapper
+        .iconbar-wrapper
         {
             float: right;
         }
-
-        /* header controls */
-
-        header.navbar .bidx-header-controls
+        .nav > li.active > a,
+        .nav > li.active > a:hover,
+        .nav > li.active > a:focus
         {
-            margin-top: 10px;
-        }
-
-        header.navbar .bidx-header-controls .btn
-        {
-            margin-top:                 0;
-            width:                      95%; /* made buttons a bit smaller to create more space between them */
-            float:                      right;
-        }
-        /* end header controls */
-
-
-        /* cancel bootstrap styles */
-        header.navbar .nav > li.active > a,
-        header.navbar .nav > li.active > a:hover,
-        header.navbar .nav > li.active > a:focus
-        {
-            color:                                  #444;
+            color:                                  @text-copy;
             background-color:                       transparent;
             -webkit-box-shadow:                     none;
             -moz-box-shadow:                        none;
             box-shadow:                             none;
         }
+    }
+}
 
-
-        /* end header */
-
-        /* content */
-
-
-        /* end content */
-
-
+/* Landscape phones and down */
+@media  (max-width: 979px)
+{
+    .header-logo
+    {
+        height: 100%;
+        overflow: hidden;
+        width: 100%;
+        text-align: center;
+        margin: 20px 0;
     }
 
-    /* Landscape phones and down */
-    @media  (max-width: 979px)
+    .iconbar-wrapper
     {
-
-        /************************  General styles *******************************/
-        body
-        {
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        /************************  End general styles *******************************/
-
-        /************************  Header / Footer styles *******************************/
-
-        /* header styles */
-
-        .navbar-fixed-top
-        {
-            margin-bottom: 0;
-        }
-
-        .nav-collapse,
-        .nav-collapse.collapse
-        {
-            height: auto;
-            display: inline;
-        }
-        .nav-collapse,
-        .nav-collapse.collapse ul
-        {
-            text-align: center;
-        }
-        .nav-collapse,
-        .nav-collapse.collapse ul li
-        {
-            display: inline-block;
-        }
-
-        header.navbar
-        {
-            margin-left: -20px;
-            margin-right: -20px;
-        }
-        header.navbar .navbar-inner
-        {
-            padding: 0;
-        }
-        header.navbar .header-logo
-        {
-            height: 100%;
-            overflow: hidden;
-            width: 100%;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        header.navbar .iconbar-wrapper
-        {
-            text-align: center;
-            margin: 0 3%;
-        }
-
-        header.navbar .iconbar-wrapper .iconbar > ul
+        text-align: center;
+        margin: 0 1% @font-size-base;
+        width: 98%;
+        .iconbar > ul
         {
             display: inline-block;
             margin: 0 auto;
         }
-
-        header.navbar .search
-        {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .bidx-header-controls
-        {
-            padding: 0 3% 20px;
-        }
-
-        /* End header styles */
-
-        /* footer */
-
-        footer .page-footer
-        {
-            margin-left: 0;
-            margin-right: 0;
-        }
-        /* end footer */
-
-        /************************  End Header / Footer styles *******************************/
-
-        /************************  Template styles *******************************/
-
-        .container
-        {
-            width: 94%;
-            margin: 0 3% 20px;
-        }
-        header .container
-        {
-            width: 100%;
-            margin: 0;
-        }
-
-        .bidx > .container,
-        .bidx header
-        {
-            margin: 0;
-        }
-        /************************  End Template styles *******************************/
     }
+
+    .navbar .search
+    {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
 
 
 @media  (max-width: 767px) {
@@ -1290,19 +1180,24 @@ form .error-separate
         right: auto;
     }
 
-    .bidx-header-controls {
-        padding: 0 3% 20px;
-    }
-
     /* Footer */
-    .footer-bar .pull-left,
-    .footer-bar .pull-right {
-        float: none;
-        text-align: center;
-    }
-    footer .page-footer .footer-bar {
-        height: auto;
-        padding: 10px 0 20px;
+    .page-footer
+    {
+        .footer-bar
+        {
+            height: auto;
+            padding: 10px 0 20px;
+            .pull-left,
+            .pull-right
+            {
+                float: none !important;
+                text-align: center;
+            }
+        }
+        .follow-us
+        {
+            margin-right: 0;
+        }
     }
 
     .modal-body {

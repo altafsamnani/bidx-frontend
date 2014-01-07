@@ -8,7 +8,7 @@
 				if( $authenticated )
 				{
 ?>
-				<div class="pull-right">
+				<div class="iconbar-wrapper pull-right">
 					<?php echo do_shortcode( '[bidx app="group" view="navbar"]' );?>
 				</div>
 <?php
@@ -57,7 +57,7 @@
 			 	if( $authenticated )
 				{
 ?>
-				<nav class="nav-collapse menu-main pull-right">
+				<nav class="nav-collapse menu-main">
 <?php
 					if (has_nav_menu('primary_navigation')) :
 						wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav nav-pills'));
@@ -67,7 +67,7 @@
 <?php
 				} else {
 ?>
-				<nav class="nav-collapse menu-main pull-right">
+				<nav class="nav-collapse menu-main">
 <?php
 					if (has_nav_menu('primary_notloggedin_navigation')) :
 						wp_nav_menu(array('theme_location' => 'primary_notloggedin_navigation', 'menu_class' => 'nav nav-pills'));
