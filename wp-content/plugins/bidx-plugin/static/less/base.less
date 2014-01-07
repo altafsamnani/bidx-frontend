@@ -4,6 +4,7 @@
 
 // Color Variables
 // -------------------------
+    @brand-primary: #3498db;
     @brand-secondary: #1abc9c;
     @text-copy: #34495E;
     @white: #FFF;
@@ -63,7 +64,8 @@ body
 }
 body.bidx
 {
-    .body-bg();
+    // .body-bg();
+    .body-bg('p4/p4.png');
 }
 
 #wrap
@@ -641,20 +643,22 @@ header.navbar
 
 .label
 {
-    &.bidx-label-investor
+    &.bidx-label
+    {
+        margin-right: 0.5em;
+    }
+    &.bidx-investor
     {
         background-color: @investor;
-        margin-right: 0.5em;
     }
-    &.bidx-label-member
+    &.bidx-member
     {
         background-color: @member;
-        margin-right: 0.5em;
+        color: @text-copy;
     }
-    &.bidx-label-entrepreneur
+    &.bidx-entrepreneur
     {
         background-color: @entrepreneur;
-        margin-right: 0.5em;
     }
 }
 
@@ -1075,53 +1079,60 @@ form .error-separate
 
 
     /* Large desktop */
-    @media (min-width: 1200px) {
+    @media (min-width: 1200px)
+    {
 
     }
 
     /* styles shared by portrait tablet and above */
-    @media (min-width: 980px ) {
+    @media (min-width: 980px )
+    {
 
         /* header */
-        header .navbar-inner {
-            height:                     109px;
+        header .navbar-inner
+        {
+            height: 109px;
         }
 
-
-
-        header.navbar .navbar-inner > .container {
-            position:                   relative;
+        header.navbar .navbar-inner > .container
+        {
+            position: relative;
         }
 
-        header.navbar .header-logo {
-
-            height:                     100%;
-            overflow:                   hidden;
-            min-width:                  200px;
-            float:                      left;
-            min-height:                 40px; /* min-height forces nav menu to float right */
+        header.navbar .header-logo
+        {
+            height: 100%;
+            overflow: hidden;
+            min-width: 200px;
+            float: left;
+            min-height: 40px; /* min-height forces nav menu to float right */
         }
-            header.navbar .header-logo img {
-                margin-top:                 15px;
-            }
+        header.navbar .header-logo img
+        {
+            margin-top: 15px;
+        }
 
-            header.navbar .header-logo .site-title {
-                margin-top:                 11px;
-                display: inline-block;
-                font-size: 24px;
-            }
+        header.navbar .header-logo .site-title
+        {
+            margin-top: 11px;
+            display: inline-block;
+            font-size: 24px;
+        }
 
-        header.navbar .iconbar-wrapper {
-            float:                      right;
+        header.navbar .iconbar-wrapper
+        {
+            float: right;
         }
 
         /* header controls */
 
-        header.navbar .bidx-header-controls {
-            margin-top:                 10px;
+        header.navbar .bidx-header-controls
+        {
+            margin-top: 10px;
         }
 
-        header.navbar .bidx-header-controls .btn {
+        header.navbar .bidx-header-controls .btn
+        {
             margin-top:                 0;
             width:                      95%; /* made buttons a bit smaller to create more space between them */
             float:                      right;
@@ -1130,7 +1141,10 @@ form .error-separate
 
 
         /* cancel bootstrap styles */
-        header.navbar .nav > li.active > a, header.navbar .nav > li.active > a:hover, header.navbar .nav > li.active > a:focus {
+        header.navbar .nav > li.active > a,
+        header.navbar .nav > li.active > a:hover,
+        header.navbar .nav > li.active > a:focus
+        {
             color:                                  #444;
             background-color:                       transparent;
             -webkit-box-shadow:                     none;
@@ -1150,15 +1164,15 @@ form .error-separate
     }
 
     /* Landscape phones and down */
-    @media  (max-width: 979px) {
+    @media  (max-width: 979px)
+    {
 
         /************************  General styles *******************************/
-
-            body {
-                padding-left: 0;
-                padding-right: 0;
-            }
-
+        body
+        {
+            padding-left: 0;
+            padding-right: 0;
+        }
 
         /************************  End general styles *******************************/
 
@@ -1166,94 +1180,101 @@ form .error-separate
 
         /* header styles */
 
-            .navbar-fixed-top {
-                margin-bottom: 0;
-            }
+        .navbar-fixed-top
+        {
+            margin-bottom: 0;
+        }
 
-            .nav-collapse, .nav-collapse.collapse {
-                height: auto;
-                display: inline;
-            }
-            .nav-collapse, .nav-collapse.collapse ul {
-                text-align: center;
-            }
-            .nav-collapse, .nav-collapse.collapse ul li {
-                display: inline-block;
-            }
+        .nav-collapse,
+        .nav-collapse.collapse
+        {
+            height: auto;
+            display: inline;
+        }
+        .nav-collapse,
+        .nav-collapse.collapse ul
+        {
+            text-align: center;
+        }
+        .nav-collapse,
+        .nav-collapse.collapse ul li
+        {
+            display: inline-block;
+        }
 
+        header.navbar
+        {
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+        header.navbar .navbar-inner
+        {
+            padding: 0;
+        }
+        header.navbar .header-logo
+        {
+            height: 100%;
+            overflow: hidden;
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+        }
 
-            header.navbar {
-                margin-left:                -20px;
-                margin-right:               -20px;
-            }
-            header.navbar .navbar-inner {
-                padding:                    0;
-            }
-            header.navbar .header-logo {
-                height:                     100%;
-                overflow:                   hidden;
-                width:                      100%;
-                text-align:                 center;
-                margin:                     20px 0;
-            }
+        header.navbar .iconbar-wrapper
+        {
+            text-align: center;
+            margin: 0 3%;
+        }
 
-            header.navbar .iconbar-wrapper {
-                text-align:                 center;
-                margin:                     0 3%;
-            }
+        header.navbar .iconbar-wrapper .iconbar > ul
+        {
+            display: inline-block;
+            margin: 0 auto;
+        }
 
-            header.navbar .iconbar-wrapper .iconbar > ul {
-                display:                    inline-block;
-                margin:                     0 auto;
-            }
+        header.navbar .search
+        {
+            text-align: center;
+            margin-bottom: 10px;
+        }
 
-            header.navbar .search {
-                text-align:                 center;
-                margin-bottom:              10px;
-            }
-
-            .bidx-header-controls {
-                padding:            0 3% 20px;
-            }
-
+        .bidx-header-controls
+        {
+            padding: 0 3% 20px;
+        }
 
         /* End header styles */
 
         /* footer */
 
-            footer .page-footer {
-                margin-left:                0;
-                margin-right:               0;
-            }
+        footer .page-footer
+        {
+            margin-left: 0;
+            margin-right: 0;
+        }
         /* end footer */
 
         /************************  End Header / Footer styles *******************************/
 
-        /* general override to ditch caret from menu's*/
-/*        li a .caret {
-            display: none;
-        }*/
-        /* end contact page */
-
-
         /************************  Template styles *******************************/
 
-            .container {
-                width:94%;
-                margin: 0 3% 20px;
-            }
-            header .container {
-                width: 100%;
-                margin: 0;
-            }
+        .container
+        {
+            width: 94%;
+            margin: 0 3% 20px;
+        }
+        header .container
+        {
+            width: 100%;
+            margin: 0;
+        }
 
-            .bidx > .container,
-            .bidx header {
-                margin:                     0;
-            }
-
+        .bidx > .container,
+        .bidx header
+        {
+            margin: 0;
+        }
         /************************  End Template styles *******************************/
-
     }
 
 
@@ -1261,27 +1282,27 @@ form .error-separate
 
     /* Header */
     header.navbar .iconbar .profiles ul.dropdown-menu {
-        right:              auto;
+        right: auto;
     }
 
     header.navbar .iconbar .profiles ul.dropdown-menu:after {
-        left:               22px;
-        right:              auto;
+        left: 22px;
+        right: auto;
     }
 
     .bidx-header-controls {
-        padding:            0 3% 20px;
+        padding: 0 3% 20px;
     }
 
     /* Footer */
     .footer-bar .pull-left,
     .footer-bar .pull-right {
-        float:              none;
-        text-align:         center;
+        float: none;
+        text-align: center;
     }
     footer .page-footer .footer-bar {
         height: auto;
-        padding:            10px 0 20px;
+        padding: 10px 0 20px;
     }
 
     .modal-body {

@@ -65,18 +65,18 @@
                     echo '<div>' . $this->getStaticVal( 'country', $member -> country ) . '</div>';
                 }
 
-                echo '<div><span class="label bidx-label-member">Member</span>';
+                echo '<div><span class="label bidx-label bidx-member">Member</span>';
                 if ( $this -> exst( $member -> roles ) ) {
 
                     foreach ($member -> roles as $role) {
                         if ( $role === 'entrepreneur' ) {
 ?>
-                        <span class="label bidx-label-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
+                        <span class="label bidx-label bidx-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
 <?php
                         }
                         if ( $role === 'investor' ) {
 ?>
-                        <span class="label bidx-label-investor"><?php _e('Investor', 'bidxplugin') ?></span>
+                        <span class="label bidx-label bidx-investor"><?php _e('Investor', 'bidxplugin') ?></span>
 <?php
                         }
                     }
