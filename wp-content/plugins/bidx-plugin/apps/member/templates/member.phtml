@@ -100,17 +100,19 @@ $entities       = $this->sessionData->data->wp->entities;
 
     }
 
-        $this->render('view-group.phtml');
 
     //    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
 ?>
-            <div class="add-company-container clearfix">
-                <div class="pull-right">
-                    <a href="/company/#createCompany" class="btn btn-primary"><i class="fa fa-plus"></i> <?php _e('Add a company','bidxplugin'); ?></a>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="pull-right">
+                        <a href="/company/#createCompany" class="btn btn-primary"><i class="fa fa-plus"></i> <?php _e('Add a company','bidxplugin'); ?></a>
+                    </div>
                 </div>
             </div>
 <?php
           //  }
+        $this->render('view-group.phtml');
 ?>
 
         </div>
