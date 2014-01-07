@@ -40,14 +40,14 @@
 		style: function() {
 
 			this.$bar.css({
-				overflow: 'hidden',
-				background: "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAoCAYAAAAPOoFWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAPZJREFUeNq81tsOgjAMANB2ov7/7ypaN7IlIwi9rGuT8QSc9EIDAsAznxvY4pXPKr05RUE5MEVB+TyWfCEl9LZApYopCmo9C4FKSMtYoI8Bwv79aQJU4l6hXXCZrQbokJEksxHo9KMOgc6w1atHXM8K9DVC7FQnJ0i8iK3QooGgbnyKgMDygBWyYFZoqx4qS27KqLZJjA1D0jK6QJcYEQEiWv9PGkTsbqxQ8oT+ZtZB6AkdsJnQDnMoHXHLGKOgDYuCWmYhEERCI5gaamW0bnHdA3k2ltlIN+2qKRyCND0bhqSYCyTB3CAOc4WusBEIpkeBuPgJMAAX8Hs1NfqHRgAAAABJRU5ErkJggg==') repeat-x scroll left top #fff"
+				overflow: 'hidden'//,
+				// background: "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAoCAYAAAAPOoFWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAPZJREFUeNq81tsOgjAMANB2ov7/7ypaN7IlIwi9rGuT8QSc9EIDAsAznxvY4pXPKr05RUE5MEVB+TyWfCEl9LZApYopCmo9C4FKSMtYoI8Bwv79aQJU4l6hXXCZrQbokJEksxHo9KMOgc6w1atHXM8K9DVC7FQnJ0i8iK3QooGgbnyKgMDygBWyYFZoqx4qS27KqLZJjA1D0jK6QJcYEQEiWv9PGkTsbqxQ8oT+ZtZB6AkdsJnQDnMoHXHLGKOgDYuCWmYhEERCI5gaamW0bnHdA3k2ltlIN+2qKRyCND0bhqSYCyTB3CAOc4WusBEIpkeBuPgJMAAX8Hs1NfqHRgAAAABJRU5ErkJggg==') repeat-x scroll left top #fff"
 			});
 
 			this.$message.css({
-				fontSize: '13px',
-				lineHeight: '16px',
-				textAlign: 'center',
+				// fontSize: '13px',
+				// lineHeight: '16px',
+				// textAlign: 'center',
 				padding: '8px 10px 9px',
 				width: 'auto',
 				position: 'relative'
@@ -63,10 +63,10 @@
 			});
 
 			this.$buttons.css({
-				padding: 5,
-				textAlign: 'right',
-				borderTop: '1px solid #ccc',
-				backgroundColor: '#fff'
+				padding: 5 //,
+				// textAlign: 'right',
+				// borderTop: '1px solid #ccc',
+				// backgroundColor: '#fff'
 			});
 
 			this.$buttons.find('button').css({
@@ -98,7 +98,8 @@
 						border: '1px solid #eee',
 						boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
 					});
-					this.$message.css({fontSize: '13px', textAlign: 'center'});
+					this.$message.css({});
+					// this.$message.css({fontSize: '13px', textAlign: 'center'});
 				break;
 				case 'topLeft': case 'topRight':
 				case 'bottomLeft': case 'bottomRight':
@@ -144,7 +145,8 @@
 					this.$bar.css({backgroundColor: 'lightgreen', borderColor: '#50C24E', color: 'darkgreen'});
 					this.$buttons.css({borderTop: '1px solid #50C24E'});break;
 				default:
-					this.$bar.css({backgroundColor: '#FFF', borderColor: '#CCC', color: '#444'}); break;
+					// this.$bar.css({backgroundColor: '#FFF', borderColor: '#CCC', color: '#444'}); break;
+					this.$bar.css({backgroundColor: '#FFF', padding: '20px'}); break;
 			}
 		},
 		callback: {

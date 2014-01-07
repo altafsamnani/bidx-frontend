@@ -93,7 +93,7 @@
                 [
                     {
                         addClass:       "btn btn-primary"
-                    ,   text:           "Ok"
+                    ,   text:           "Yes, lose changes"
                     ,   onClick: function( $noty )
                         {
                             // Clear the queue, because the user confirmed it
@@ -107,7 +107,7 @@
                     }
                 ,   {
                         addClass:       "btn btn-danger"
-                    ,   text:           "Cancel"
+                    ,   text:           "No, go back"
                     ,   onClick: function( $noty )
                         {
                             cb( false );
