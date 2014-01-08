@@ -655,7 +655,7 @@
         *******/
         $options = $contactsDropdown.find( "option" );
 
-        bidx.utils.log('altaf',$options.length);
+  
         if ( $options.length )
         {
             $options.empty();
@@ -666,7 +666,7 @@
         {
             listDropdownMembers = listDropdownMembers.sort();
         }
-        bidx.utils.log('altaf',listDropdownMembers);
+
         $.each( listDropdownMembers, function( idx, listMembersValue )
         {
             option = $( "<option/>",
