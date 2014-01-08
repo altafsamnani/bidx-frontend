@@ -20,6 +20,7 @@
             method:         method
         ,   groupDomain:    params.groupDomain
         ,   baseUrl:        baseUrl
+        ,   extraUrlParameters:         params.extraUrlParameters
         ,   success:        function( response, textStatus, jqXhr )
             {
                 if ( response && response.data )

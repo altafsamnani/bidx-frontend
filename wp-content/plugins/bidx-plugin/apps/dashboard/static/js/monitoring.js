@@ -85,7 +85,7 @@
                 ,   loadType          =    'load' + listType
                 ,   composeBtn        =    '.compose-' + listType
                 ,   pagerContainer    =    '.pagercontainer-' + listType
-                ,   pagerHtml         =    "<div class='pager-" +  listType + "' ></div>"
+                ,   pagerHtml         =    "<ul class='pager-" +  listType + "' ></ul>"
                 ;
 
                 $( composeBtn ).toggleClass( 'btn-primary' );
@@ -141,9 +141,9 @@
             ];
 
         bidx.api.call(
-            "groupMembers.fetch"
+            "search.fetch"
         ,   {
-                groupId: currentGroupId
+                id:          bidxConfig.session.currentGroup
             ,   groupDomain: bidx.common.groupDomain
             ,   extraUrlParameters: extraUrlParameters
             ,   success: function(response)
@@ -240,9 +240,9 @@
         }
 
         bidx.api.call(
-            "groupMembers.fetch"
+            "search.fetch"
         ,   {
-                groupId: currentGroupId
+                id:          bidxConfig.session.currentGroup
             ,   groupDomain: bidx.common.groupDomain
             ,   extraUrlParameters: extraUrlParameters
             ,   success: function(response)

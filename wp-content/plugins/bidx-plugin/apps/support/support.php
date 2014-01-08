@@ -45,8 +45,8 @@ class support
                 roots_scripts ()
 ;
 
-                $mailDepArr = array ('bootstrap-paginator', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-                  'jquery-validation-jqueryui-datepicker', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+                $mailDepArr = array ('bootstrap-paginator', 'bidx-common', 'bidx-i18n', 'jquery-validation'
+                  , 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
                 /* Style */
                 //wp_register_style ('mail', '/wp-content/plugins/bidx-plugin/apps/mail/static/css/mail.css', array (), '20130715', TRUE); /* should load mail css, not all other css files from other apps */
