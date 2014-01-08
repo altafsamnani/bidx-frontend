@@ -84,8 +84,8 @@ class support
        // if (isset ($view->sessionData->data) && isset ($view->sessionData->data->currentGroup)) {
             $menu = $atts['view'];
 
-            $zendeskEmail    = get_site_option ('bidx-zendesk-email');
-            $zendeskPassword = base64_decode( get_site_option ('bidx-zendesk-password') );
+            $zendeskEmail    = get_option ('bidx-zendesk-email');
+            $zendeskPassword = base64_decode( get_option ('bidx-zendesk-password') );
 
             switch ($menu) {
                 case 'support' :

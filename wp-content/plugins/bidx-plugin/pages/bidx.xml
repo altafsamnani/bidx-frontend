@@ -192,6 +192,14 @@
             <mapping>^setpassword</mapping>
             <content>[bidx app="setpassword"]</content>
         </post>
+        <post>
+            <post_id>28</post_id>
+            <name>logout</name>
+            <title>logout</title>
+            <mapping>^logout</mapping>
+            <content>[bidx  app="login" view="logout"]</content>
+        </post>
+
     </posts>
 
     <widgets>

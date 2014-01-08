@@ -333,7 +333,7 @@ add_action ('wp_ajax_bidx_signout', 'bidx_signout');
 add_action ('wp_ajax_nopriv_bidx_signout', 'bidx_signout');
 
 function bidx_signout ()
-{
+{    
     $provider = (isset ($_GET['provider'])) ? $_GET['provider'] : NULL;
 
     //Logout Bidx Session too
@@ -358,17 +358,17 @@ function bidx_signout ()
 
 function callProviderLogoutURL ()
 {
-    $logoutSiteOption = 'skipso-frontend-logout';
+    $logoutSiteOption    = 'skipso-frontend-logout';
     $logoutBackendOption = 'skipso-backend-logout';
     $logoutPrivateOption = 'skipso-judge-logout';
 
     $frontendLogout = get_option ($logoutSiteOption);
-    $backendLogout = get_option ($logoutBackendOption);
-    $privateLogout = get_option ($logoutPrivateOption);
+    $backendLogout  = get_option ($logoutBackendOption);
+    $privateLogout  = get_option ($logoutPrivateOption);
 
     $frontendLogout = (!$frontendLogout) ? get_site_option ($logoutSiteOption) : $frontendLogout;
-    $backendLogout = (!$backendLogout) ? get_site_option ($logoutBackendOption) : $backendLogout;
-    $privateLogout = (!$privateLogout) ? get_site_option ($logoutPrivateOption) : $privateLogout;
+    $backendLogout  = (!$backendLogout) ? get_site_option ($logoutBackendOption) : $backendLogout;
+    $privateLogout  = (!$privateLogout) ? get_site_option ($logoutPrivateOption) : $privateLogout;
 
     echo '
         <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js?ver=1.10.2"></script>
@@ -376,13 +376,17 @@ function callProviderLogoutURL ()
         <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/top.js?ver=2.0.3"></script>
         <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/layouts/center.js?ver=2.0.3"></script>
         <script type="text/javascript" src="/wp-content/themes/bidx-group-template/assets/noty/themes/default.js?ver=2.0.3"></script>
-        <script type="text/javascript">
+        ';
+    echo '<iframe id="frontendLogout" src="' . $frontendLogout . '" width="0" height="0"></iframe>';
+    echo '<iframe id="backendLogout" src="' . $backendLogout . '" width="0" height="0"></iframe>';
+    echo '<iframe id="privateLogout" src="' . $privateLogout . '" width="0" height="0"></iframe>';
+    echo '<script type="text/javascript">
             var loadCounter = 0;
             jQuery(function() {
               var n = noty({ type: "success",text:"Please wait while we log you out"} );
               var loadIFrame = function(skipsoType) {
                 loadCounter = loadCounter + 1;
-                /* Redirect once all three logout iframes are loaded */    
+                /* Redirect once all three logout iframes are loaded */
                 if(loadCounter == 3) {
                   window.location.replace("' . home_url () . '");
                 }
@@ -398,10 +402,6 @@ function callProviderLogoutURL ()
               })
             });
         </script>';
-    echo '<iframe id="frontendLogout" src="' . $frontendLogout . '" width="0" height="0"></iframe>';
-    echo '<iframe id="backendLogout" src="' . $backendLogout . '" width="0" height="0"></iframe>';
-    echo '<iframe id="privateLogout" src="' . $privateLogout . '" width="0" height="0"></iframe>';
-
     exit;
 }
 
