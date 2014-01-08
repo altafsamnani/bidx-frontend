@@ -10,6 +10,9 @@
         $title = 'Become a member';
     }
 
+        $groupNotification = (isset($this->groupNotification) && $this->groupNotification) ? $this->groupNotification : NULL;
+    
+
  ?>
 <div id="register" class="block-odd mainState mainStateRegister">
     <form id="frmRegister" action="/">
@@ -51,13 +54,13 @@
         </div>
         <button type="submit" class="btn btn-primary"><?php _e('Register','bidxplugin');?></button>
 
-        <?php if($this->showLoginLink) { ?>
+        <?php if( isset($this->showLoginLink) && $this->showLoginLink) { ?>
         <p>
             <?php _e('Forgot your password? Click <a href="#auth/resetpassword">here</a> to recover.','bidxplugin');?><br/>
             <?php _e('Login? Click <a href="/auth/#auth/login">here</a> to go to login.','bidxplugin');?>
         </p>
         <?php } ?>
-        <input type="hidden" name="urlparam" value="<?php  echo base64_encode('groupname='.$this->groupNotification);?>">
+        <input type="hidden" name="urlparam" value="<?php  echo base64_encode('groupname='.$groupNotification);?>">
     </form>
 
     <div class="registerSuccess hide">

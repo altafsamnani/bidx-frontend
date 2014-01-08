@@ -90,7 +90,7 @@
                                 <div class="bidx-latest clearfix">
                                 <!-- Grab latests members -->
 <?php
-                                    $joinedGroup = $this->joinedGroup ? "true" : "false";
+                                    $joinedGroup = (isset($this->joinedGroup) && $this->joinedGroup) ? "true" : "false";
                                     echo do_shortcode( '[bidx app="group" view="last-members" authenticated="true" joinedgroup="' . $joinedGroup . '"]' );
 
 ?>
