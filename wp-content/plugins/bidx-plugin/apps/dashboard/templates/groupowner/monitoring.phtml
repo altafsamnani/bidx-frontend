@@ -3,7 +3,7 @@
     Single page application that is setup
 -->
 
-<div id="monitoring">
+<div id="monitoring" class="modern-browser">
     <div class="row">
         <div class="col-sm-8">
             <h2>Group growth</h2>
@@ -188,47 +188,51 @@
             <article class="modalView modalCompose">
                 <form action="">
                     <div  id="dashboard" class="mainState mainStateMonitoring">                <!-- Modal -->
-                        <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3 id="myModalLabel"><?php _e ('Compose message', 'bidxplugin') ?></h3>
-                            </div>
-                            <div class="modal-body">
-                                <form action="">
-                                    <div class="row">
-                                        <div class="control-group">
-                                            <label class="control-label"><?php _e('Recipient','bidxplugin'); ?></label>
-                                            <div class="controls">
-                                                <select name="contacts" multiple class="hide" data-placeholder="<?php _e( 'Select a recipient' ); ?>"></select>
-                                            </div>
-
-                                        </div>
+                        <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h3 id="myModalLabel"><?php _e ('Compose message', 'bidxplugin') ?></h3>
                                     </div>
-                                    <div class="row">
-                                        <div class="control-group">
-                                            <label class="control-label"><?php _e('Subject','bidxplugin'); ?></label>
-                                                <div class="controls">
-                                                    <input type="text" name="subject" placeholder="<?php _e ('Your subject goes here', 'bidxplugin') ?>" >
+                                    <div class="modal-body">
+                                        <form action="">
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <label class="control-label"><?php _e('Recipient','bidxplugin'); ?></label>
+                                                    <div class="controls">
+                                                        <select name="contacts" multiple class="hide" data-placeholder="<?php _e( 'Select a recipient' ); ?>"></select>
+                                                    </div>
+
                                                 </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="control-group">
-                                            <label class="control-label"><?php _e('Message','bidxplugin'); ?></label>
-                                            <div class="controls">
-                                                <textarea name="content" placeholder="<?php _e ('Please type your message here', 'bidxplugin') ?>" value=""></textarea>
                                             </div>
-                                        </div>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <label class="control-label"><?php _e('Subject','bidxplugin'); ?></label>
+                                                        <div class="controls">
+                                                            <input type="text" name="subject" placeholder="<?php _e ('Your subject goes here', 'bidxplugin') ?>" >
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <label class="control-label"><?php _e('Message','bidxplugin'); ?></label>
+                                                    <div class="controls">
+                                                        <textarea name="content" placeholder="<?php _e ('Please type your message here', 'bidxplugin') ?>" value=""></textarea>
+                                                    </div>
+                                                </div>
 
-                                    </div>
-                                    <div class="pull-left">
+                                            </div>
+                                            <div class="pull-left">
 
+                                            </div>
+                                        </form>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#" data-href="#monitoring/discardConfirm" class="btn compose-cancel"><?php _e ('Discard message') ?></a>
-                                <button type="submit" class="btn btn-primary compose-submit"><?php _e ('Send message', 'bidxplugin') ?></button>
+                                    <div class="modal-footer">
+                                        <a href="#" data-href="#monitoring/discardConfirm" class="btn compose-cancel"><?php _e ('Discard message') ?></a>
+                                        <button type="submit" class="btn btn-primary compose-submit"><?php _e ('Send message', 'bidxplugin') ?></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -236,22 +240,25 @@
             </article>
             <article class="modalView modalDiscardConfirm">
                 <!-- Modal -->
-                <div class="modal hide fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel"><?php _e ('Discard message') ?></h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            <?php _e ('You are about to discard this message. Are you sure?') ?>
-                        </p>
-                    </div>
+                <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3 id="myModalLabel"><?php _e ('Discard message') ?></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <?php _e ('You are about to discard this message. Are you sure?') ?>
+                                </p>
+                            </div>
 
-                    <div class="modal-footer">
-                        <a class="btn" href="#" data-href="#monitoring/compose"><?php _e ('Cancel') ?></a>
-                        <a class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><?php _e ('Discard message') ?></a>
+                            <div class="modal-footer">
+                                <a class="btn" href="#" data-href="#monitoring/compose"><?php _e ('Cancel') ?></a>
+                                <a class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><?php _e ('Discard message') ?></a>
+                            </div>
+                         </div>
                     </div>
-
                 </div>
             </article>
         </section>
@@ -263,9 +270,10 @@
     <li class="media" >
     <div class="row">
     <div class="col-sm-1 pull-left check">
-    <label class="checkbox">
-    <input type="checkbox" data-toggle="checkbox"  value="" data-id="%userId%">
-    </label>
+        <div class="checkbox">
+                <input type="checkbox" value="" id="checkbox-mailboxItem" class="mailboxItem" name="mailboxItem" data-toggle="checkbox" data-id="%userId%" />
+                <label for="checkbox-mailboxItem"><span></span></label>
+        </div>
     </div>
     <div class="col-sm-11 media-body">
     <div class="row">

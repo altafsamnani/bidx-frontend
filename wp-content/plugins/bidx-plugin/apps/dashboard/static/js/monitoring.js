@@ -505,7 +505,7 @@
             ];
 
         var key = "sendingMessage";
-        bidx.i18n.getItem(key, function(err, label)
+       /* bidx.i18n.getItem(key, function(err, label)
         {
             if (err)
             {
@@ -513,7 +513,7 @@
                 label = key;
                 _showError(label);
             }
-        });
+        }); */
 
         bidx.common.notifyCustom(key);
 
@@ -528,7 +528,8 @@
 
                     bidx.utils.log( "[mail] mail send", response );
                     //var key = "messageSent";
-                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", 'mail' ) );
+                    /*bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", 'mail' ) ); */
+                    bidx.common.notifyCustomSuccess( "messageSent"  );
 
                     listItems = {};
                     bidx.controller.updateHash("#monitoring/list", true, false);
@@ -619,7 +620,7 @@
         ,   keySubject
         ,   keyBody
         ;
-
+     
         $frmCompose.find(":input").val(""); // Clear the msg from Compose/Subject
 
 
@@ -703,7 +704,7 @@
     function _showModal( options )
     {
         var href;
-
+        console.log(options);
         if( options.id )
         {
             var id = options.id;

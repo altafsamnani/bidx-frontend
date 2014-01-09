@@ -2461,7 +2461,7 @@ function bidx_dashboard_invite ()
 
 function bidx_dashboard_monitoring ()
 {
-    //wp_enqueue_style( 'dashboard' );
+    wp_enqueue_style( 'dashboard' );
     echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='monitoring']");
 }
 
