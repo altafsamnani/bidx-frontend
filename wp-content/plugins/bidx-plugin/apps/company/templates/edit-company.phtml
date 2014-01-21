@@ -25,9 +25,9 @@
                     <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
                 </div>
                 <div class="panel-body">
-                    <div class="alert alert-info js-mode-standalone">
+                    <blockquote class="alert-info js-mode-standalone">
                         <?php _e('In this section you can create a company.','bidxplugin')?>
-                    </div>
+                    </blockquote>
                     <div class="row">
                         <div class="col-sm-4">
 
@@ -204,7 +204,7 @@
                                 <?php _e( 'If you have offices in other locations, you can add them in the section below', 'bidxplugin' ); ?>
                             </div>
                             <div class="accordion" id="countryOperationSpecificsAccordion"></div>
-                            <a href="#addCountryOperationSpecifics" class="btn btn-lg btn-block btn-primary"><?php _e('Add country specific operations','bidxplugin'); ?></a>
+                            <a href="#addCountryOperationSpecifics" class="btn btn-block btn-primary"><i class="fa fa-plus"></i> <?php _e('Add country specific operations','bidxplugin'); ?></a>
                         </div>
                     </div>
                 </div>
@@ -219,8 +219,8 @@
                 <a class="accordion-toggle" data-toggle="collapse" data-target="" data-parent="#countryOperationSpecificsAccordion" href="#">
                     <h4 class="accordion-title">&nbsp;</h4>
                     <div class="control-buttons">
-                        <span class="bidx-expand"><span class="fa fa-plus-square"></span></span>
-                        <span class="bidx-collapse"><span class="fa fa-minus-square"></span></span>
+                        <span class="bidx-expand"><i class="fa fa-plus-square"></i></span>
+                        <span class="bidx-collapse"><i class="fa fa-minus-square"></i></span>
                     </div>
                 </a>
             </div><!-- accordion-heading -->
@@ -232,12 +232,9 @@
                             <select name="country"></select>
                         </div>
                     </div>
-
                     <div class="form-group formfield">
-                        <label class="control-label"><?php _e('Company trade name','bidxplugin'); ?></label>
-                        <div class="controls">
-                            <input type="text" name="companyTradeName" placeholder="<?php _e('Please enter your company’s trading name','bidxplugin'); ?>">
-                        </div>
+                        <label><?php _e('Company trade name','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="companyTradeName" placeholder="<?php _e('Please enter your company’s trading name','bidxplugin'); ?>" />
                     </div>
 
                     <div class="form-group formfield">
