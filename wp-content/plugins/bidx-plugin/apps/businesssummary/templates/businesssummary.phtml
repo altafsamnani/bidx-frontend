@@ -35,7 +35,7 @@ $attachmentItem = <<<EOT
         <div class="well">
             <div class="row">
                 <div class="col-sm-4">
-                    <a href="#" class="documentLink" target="_blank"><img class="img-rounded documentImage"></a>
+                    {{documentImage}}
                 </div>
                 <div class="col-sm-8">
                     <h3 class="documentName">{{documentName}}</h3>
@@ -855,6 +855,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         echo '<div class="row reflow-row">';
                     }
 
+                    $imageOrIcon = ( $this->exst( $a->documentType ) == 'image' )
+                                 ? '<img src="'. $this->exst( $a->document ) .'" class="img-rounded documentImage">'
+                                 : '<i class="fa fa-file-text-o document-icon"></i>';
+
                     // Echo the attachment item with the values from the API
                     //
                     echo $this->replaceMessageTokens(
@@ -864,7 +868,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             array(
                                 '{{documentName}}'          => $this->exst( $a->documentName ),
                                 '{{purpose}}'               => $this->exst( $a->purpose ),
-                                '{{documentType}}'          => $this->getStaticVal( 'documenType', $this->exst( $a->dcoumentType ))
+                                '{{documentType}}'          => $this->getStaticVal( 'documenType', $this->exst( $a->documentType )),
+                                '{{documentImage}}'         => $imageOrIcon
                             )
                         )
                     );
