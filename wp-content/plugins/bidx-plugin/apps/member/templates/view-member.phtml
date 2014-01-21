@@ -107,7 +107,7 @@
                             if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) )
                             {
 ?>
-                                <a class="btn btn-primary pull-right" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                                <a class="btn btn-sm btn-primary pull-right" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
                             }
 
@@ -188,7 +188,7 @@
             <?php
                 // Attachments
                 //
-                echo $this->displayAttachments ($header = '<h4>' . __('Documents','bidxplugin') . '<h4>', $this->exst ($personalDetails->attachment));
+                echo $this->displayAttachments ($header = '<h4>' . __('Documents','bidxplugin') . '</h4>', $this->exst ($personalDetails->attachment));
             ?>
 
         </div>
