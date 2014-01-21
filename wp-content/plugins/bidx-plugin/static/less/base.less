@@ -1,11 +1,10 @@
 // Import
 // -------------------------
 @import "mixins.less";
+@import "variables.less";
 
 // Color Variables
 // -------------------------
-    @brand-primary: #3498db;
-    @brand-secondary: #1abc9c;
     @text-copy: #34495E;
     @white: #FFF;
 
@@ -15,7 +14,7 @@
     @member: #bdc3c7;
     @entrepreneur: #f39c11;
 
-    @navbar-inner: #FFF;
+    @navbar-inner: @white;
 
     @lato: "Lato", sans-serif;
 
@@ -507,12 +506,16 @@ header.navbar
 {
     display: inline-block;
     line-height: 1;
+    font-size: floor(@font-size-base * 1.4);
+    margin-top: floor(@font-size-base * 0.5);
 }
 
 .bidx-expand
 {
     line-height: 1;
     display: none;
+    font-size: floor(@font-size-base * 1.4);
+    margin-top: floor(@font-size-base * 0.5);
 }
 
 .collapsed
@@ -1008,6 +1011,10 @@ form .error-separate
 {
     overflow: hidden !important;
 }
+.ds-block
+{
+    display: block;
+}
 
 // wells.less
 // -------------------------
@@ -1127,13 +1134,18 @@ form .error-separate
         .nav > li.active > a:hover,
         .nav > li.active > a:focus
         {
-            color:                                  @text-copy;
-            background-color:                       transparent;
-            -webkit-box-shadow:                     none;
-            -moz-box-shadow:                        none;
-            box-shadow:                             none;
+            color: @text-copy;
+            background-color: transparent;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
         }
     }
+    .bidx-header-controls
+    {
+        margin-top: 10px;
+    }
+
 }
 
 /* Landscape phones and down */

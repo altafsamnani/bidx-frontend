@@ -1,6 +1,6 @@
 /*!
  * Bootstrap v3.0.2 by @fat and @mdo
- * Copyright 2013 Twitter, Inc.
+ * Copyright 2014 Twitter, Inc.
  * Licensed under http://www.apache.org/licenses/LICENSE-2.0
  *
  * Designed and built with all the love in the world by @mdo and @fat.
@@ -1106,7 +1106,7 @@ pre code {
 
 @media (min-width: 768px) {
   .container {
-    width: 750px;
+    width: 100%;
   }
   .col-sm-1,
   .col-sm-2,
@@ -3519,9 +3519,9 @@ input[type="button"].btn-block {
 
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
-  color: #e6e6e6;
+  color: #ffffff;
   text-decoration: none;
-  background-color: #2f5c7a;
+  background-color: #3498db;
 }
 
 .dropdown-menu > .active > a,

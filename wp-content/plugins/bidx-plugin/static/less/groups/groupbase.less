@@ -2,6 +2,1892 @@
 // except this one. Use it to define the base group style and import all things into this file so you only have to import this one
 // file into the group specific file
 //
-@import "../mixins.less";
 
-@color: #4D926F;
+// The commented
+
+@import "../mixins.less";
+@import "../variables.less";
+
+// Color Variables
+// -------------------------
+
+@text-copy: #34495E;
+
+@stickyheight: 50px;
+
+@investor: #2c3e50;
+@member: #bdc3c7;
+@entrepreneur: #f39c11;
+
+@navbar-inner: @white;
+
+@lato: "Lato", sans-serif;
+
+// Testimonial
+@testimonial-bg: #D2B48C;
+@triagle-size: 25px;
+
+
+//
+// Alerts
+// --------------------------------------------------
+.alert-success
+{
+	.alert-variant(@alert-success-bg; @alert-success-border; @alert-success-text);
+}
+.alert-info
+{
+	.alert-variant(@alert-info-bg; @alert-info-border; @alert-info-text);
+}
+.alert-warning
+{
+	.alert-variant(@alert-warning-bg; @alert-warning-border; @alert-warning-text);
+}
+.alert-danger
+{
+	.alert-variant(@alert-danger-bg; @alert-danger-border; @alert-danger-text);
+}
+// --------------------------------------------------
+// Alerts
+//
+
+//
+// Badges
+// --------------------------------------------------
+.badge
+{
+	color: @badge-color;
+	background-color: @badge-bg;
+}
+
+a.badge
+{
+	&:hover,
+	&:focus
+	{
+		color: @badge-link-hover-color;
+	}
+}
+
+// Account for counters in navs
+a.list-group-item.active > .badge,
+.nav-pills > .active > a > .badge
+{
+	color: @badge-active-color;
+	background-color: @badge-active-bg;
+}
+
+// --------------------------------------------------
+// Badges
+//
+
+//
+// Breadcrumbs
+// --------------------------------------------------
+.breadcrumb
+{
+	background-color: @breadcrumb-bg;
+	> li
+	{
+		+ li:before
+		{
+			color: @breadcrumb-color;
+		}
+	}
+	> .active
+	{
+		color: @breadcrumb-active-color;
+	}
+}
+// --------------------------------------------------
+// Breadcrumbs
+//
+
+//
+// Buttons
+// --------------------------------------------------
+.btn
+{
+	&:hover,
+	&:focus
+	{
+		color: @btn-default-color;
+	}
+}
+
+.btn-default
+{
+	.button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+}
+.btn-primary
+{
+	.button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+}
+// Warning appears as orange
+.btn-warning
+{
+	.button-variant(@btn-warning-color; @btn-warning-bg; @btn-warning-border);
+}
+// Danger and error appear as red
+.btn-danger
+{
+	.button-variant(@btn-danger-color; @btn-danger-bg; @btn-danger-border);
+}
+// Success appears as green
+.btn-success
+{
+	.button-variant(@btn-success-color; @btn-success-bg; @btn-success-border);
+}
+// Info appears as blue-green
+.btn-info
+{
+	.button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
+}
+
+.btn-link
+{
+	color: @link-color;
+	&,
+	&:active,
+	&[disabled],
+	fieldset[disabled] &
+	{
+		background-color: transparent;
+	}
+	&:hover,
+	&:focus
+	{
+		color: @link-hover-color;
+	}
+	&[disabled],
+	fieldset[disabled] &
+	{
+		&:hover,
+		&:focus
+		{
+			color: @btn-link-disabled-color;
+		}
+	}
+}
+// --------------------------------------------------
+// Buttons
+//
+
+
+
+//
+// Carousel
+// --------------------------------------------------
+.carousel-control
+{
+	color: @carousel-control-color;
+	&.left
+	{
+		#gradient > .horizontal(@start-color: rgba(0,0,0,.5); @end-color: rgba(0,0,0,.0001));
+	}
+	&.right
+	{
+		#gradient > .horizontal(@start-color: rgba(0,0,0,.0001); @end-color: rgba(0,0,0,.5));
+	}
+
+	&:hover,
+	&:focus
+	{
+	color: @carousel-control-color;
+	}
+}
+
+.carousel-indicators
+{
+	li
+	{
+		border: 1px solid @carousel-indicator-border-color;
+	}
+	.active
+	{
+		background-color: @carousel-indicator-active-bg;
+	}
+}
+
+.carousel-caption
+{
+	color: @carousel-caption-color;
+}
+// --------------------------------------------------
+// Carousel
+//
+
+
+
+
+
+//
+// Code (inline and block)
+// --------------------------------------------------
+code
+{
+	color: @code-color;
+	background-color: @code-bg;
+}
+
+pre
+{
+	color: @pre-color;
+	background-color: @pre-bg;
+	border: 1px solid @pre-border-color;
+}
+// --------------------------------------------------
+// Code (inline and block)
+//
+
+
+
+
+//
+// Dropdown menus
+// --------------------------------------------------
+.caret
+{
+	border-top:   @caret-width-base solid @dropdown-caret-color;
+	border-right: @caret-width-base solid transparent;
+	border-left:  @caret-width-base solid transparent;
+}
+
+.dropdown-menu
+{
+	background-color: @dropdown-bg;
+	border: 1px solid @dropdown-border;
+
+	.divider
+	{
+		.nav-divider(@dropdown-divider-bg);
+	}
+
+	> li > a
+	{
+		color: @dropdown-link-color;
+	}
+}
+
+.dropdown-menu > li > a
+{
+	&:hover,
+	&:focus
+	{
+		color: @dropdown-link-hover-color;
+		background-color: @dropdown-link-hover-bg;
+	}
+}
+
+// Active state
+.dropdown-menu > .active > a
+{
+	&,
+	&:hover,
+	&:focus
+	{
+		color: @dropdown-link-active-color;
+		background-color: @dropdown-link-active-bg;
+	}
+}
+
+.dropdown-menu > .disabled > a
+{
+	&,
+	&:hover,
+	&:focus
+	{
+		color: @dropdown-link-disabled-color;
+	}
+}
+
+.dropdown-header
+{
+	color: @dropdown-header-color;
+}
+// --------------------------------------------------
+// Dropdown menus
+//
+
+
+
+//
+// Forms
+// --------------------------------------------------
+legend
+{
+	color: @legend-color;
+	border-bottom: 1px solid @legend-border-color;
+}
+
+output
+{
+	color: @input-color;
+}
+
+.form-control
+{
+	color: @input-color;
+	background-color: @input-bg;
+	border: 1px solid @input-border;
+	&[disabled],
+	&[readonly],
+	fieldset[disabled] &
+	{
+		background-color: @input-bg-disabled;
+	}
+}
+
+.has-warning
+{
+	.form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg);
+}
+.has-error
+{
+	.form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);
+}
+.has-success
+{
+	.form-control-validation(@state-success-text; @state-success-text; @state-success-bg);
+}
+
+.help-block
+{
+  color: lighten(@text-color, 25%); // lighten the text some for contrast
+}
+// --------------------------------------------------
+// Forms
+//
+
+
+
+
+//
+// Input groups
+// --------------------------------------------------
+.input-group-addon
+{
+	color: @input-color;
+	background-color: @input-group-addon-bg;
+	border: 1px solid @input-group-addon-border-color;
+}
+// --------------------------------------------------
+// Input groups
+//
+
+
+
+
+
+
+//
+// Labels
+// --------------------------------------------------
+
+.label
+{
+	color: @label-color;
+	&[href]
+	{
+		&:hover,
+		&:focus
+		{
+			color: @label-link-hover-color;
+		}
+	}
+}
+
+.label-default
+{
+	.label-variant(@label-default-bg);
+}
+
+.label-primary
+{
+	.label-variant(@label-primary-bg);
+}
+
+.label-success
+{
+	.label-variant(@label-success-bg);
+}
+
+.label-info
+{
+	.label-variant(@label-info-bg);
+}
+
+.label-warning
+{
+	.label-variant(@label-warning-bg);
+}
+
+.label-danger
+{
+	.label-variant(@label-danger-bg);
+}
+
+// --------------------------------------------------
+// Labels
+//
+
+
+
+
+
+//
+// List groups
+// --------------------------------------------------
+.list-group-item
+{
+	background-color: @list-group-bg;
+	border: 1px solid @list-group-border;
+}
+
+a.list-group-item
+{
+	color: @list-group-link-color;
+	.list-group-item-heading
+	{
+		color: @list-group-link-heading-color;
+	}
+	&:hover,
+	&:focus
+	{
+		background-color: @list-group-hover-bg;
+	}
+	&.active,
+	&.active:hover,
+	&.active:focus
+	{
+		color: @list-group-active-color;
+		background-color: @list-group-active-bg;
+		border-color: @list-group-active-border;
+		.list-group-item-heading
+		{
+			color: inherit;
+		}
+		.list-group-item-text
+		{
+			color: lighten(@list-group-active-bg, 40%);
+		}
+	}
+}
+// --------------------------------------------------
+// List groups
+//
+
+
+
+
+//
+// Modals
+// --------------------------------------------------
+.modal-content
+{
+	background-color: @modal-content-bg;
+  border: 1px solid @modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
+  border: 1px solid @modal-content-border-color;
+}
+
+.modal-backdrop
+{
+	background-color: @modal-backdrop-bg;
+}
+
+.modal-footer
+{
+	border-top: 1px solid @modal-footer-border-color;
+}
+// --------------------------------------------------
+// Modals
+//
+
+
+
+
+
+//
+// Navbars
+// --------------------------------------------------
+.navbar-default
+{
+	background-color: @navbar-default-bg;
+	border-color: @navbar-default-border;
+
+	.navbar-brand
+	{
+		color: @navbar-default-brand-color;
+		&:hover,
+		&:focus
+		{
+			color: @navbar-default-brand-hover-color;
+			background-color: @navbar-default-brand-hover-bg;
+		}
+	}
+
+	.navbar-text
+	{
+		color: @navbar-default-color;
+	}
+
+	.navbar-nav
+	{
+		> li > a
+		{
+			color: @navbar-default-link-color;
+
+			&:hover,
+			&:focus
+			{
+				color: @navbar-default-link-hover-color;
+				background-color: @navbar-default-link-hover-bg;
+			}
+		}
+		> .active > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				color: @navbar-default-link-active-color;
+				background-color: @navbar-default-link-active-bg;
+			}
+		}
+		> .disabled > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				color: @navbar-default-link-disabled-color;
+				background-color: @navbar-default-link-disabled-bg;
+			}
+		}
+	}
+
+	.navbar-toggle
+	{
+		border-color: @navbar-default-toggle-border-color;
+		&:hover,
+		&:focus
+		{
+			background-color: @navbar-default-toggle-hover-bg;
+		}
+		.icon-bar
+		{
+			background-color: @navbar-default-toggle-icon-bar-bg;
+		}
+	}
+
+	.navbar-collapse,
+	.navbar-form
+	{
+		border-color: @navbar-default-border;
+	}
+
+	.navbar-nav
+	{
+		> .dropdown > a:hover .caret,
+		> .dropdown > a:focus .caret
+		{
+			border-top-color: @navbar-default-link-hover-color;
+			border-bottom-color: @navbar-default-link-hover-color;
+		}
+		> .open > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				background-color: @navbar-default-link-active-bg;
+				color: @navbar-default-link-active-color;
+				.caret
+				{
+					border-top-color: @navbar-default-link-active-color;
+					border-bottom-color: @navbar-default-link-active-color;
+				}
+			}
+		}
+		> .dropdown > a .caret
+		{
+			border-top-color: @navbar-default-link-color;
+			border-bottom-color: @navbar-default-link-color;
+		}
+		@media (max-width: @screen-xs-max)
+		{
+			.open .dropdown-menu
+			{
+				> li > a
+				{
+					color: @navbar-default-link-color;
+					&:hover,
+					&:focus
+					{
+						color: @navbar-default-link-hover-color;
+						background-color: @navbar-default-link-hover-bg;
+					}
+				}
+				> .active > a
+				{
+					&,
+					&:hover,
+					&:focus
+					{
+						color: @navbar-default-link-active-color;
+						background-color: @navbar-default-link-active-bg;
+					}
+				}
+				> .disabled > a
+				{
+					&,
+					&:hover,
+					&:focus
+					{
+						color: @navbar-default-link-disabled-color;
+						background-color: @navbar-default-link-disabled-bg;
+					}
+				}
+			}
+		}
+	}
+	.navbar-link
+	{
+		color: @navbar-default-link-color;
+		&:hover
+		{
+			color: @navbar-default-link-hover-color;
+		}
+	}
+
+}
+
+.navbar-inverse
+{
+	background-color: @navbar-inverse-bg;
+	border-color: @navbar-inverse-border;
+
+	.navbar-brand
+	{
+		color: @navbar-inverse-brand-color;
+		&:hover,
+		&:focus
+		{
+			color: @navbar-inverse-brand-hover-color;
+			background-color: @navbar-inverse-brand-hover-bg;
+		}
+	}
+
+	.navbar-text
+	{
+		color: @navbar-inverse-color;
+	}
+
+	.navbar-nav
+	{
+		> li > a
+		{
+			color: @navbar-inverse-link-color;
+
+			&:hover,
+			&:focus
+			{
+				color: @navbar-inverse-link-hover-color;
+				background-color: @navbar-inverse-link-hover-bg;
+			}
+		}
+		> .active > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				color: @navbar-inverse-link-active-color;
+				background-color: @navbar-inverse-link-active-bg;
+			}
+		}
+		> .disabled > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				color: @navbar-inverse-link-disabled-color;
+				background-color: @navbar-inverse-link-disabled-bg;
+			}
+		}
+	}
+
+	.navbar-toggle
+	{
+		border-color: @navbar-inverse-toggle-border-color;
+		&:hover,
+		&:focus
+		{
+			background-color: @navbar-inverse-toggle-hover-bg;
+		}
+		.icon-bar
+		{
+			background-color: @navbar-inverse-toggle-icon-bar-bg;
+		}
+	}
+
+	.navbar-collapse,
+	.navbar-form
+	{
+		border-color: darken(@navbar-inverse-bg, 7%);
+	}
+
+	.navbar-nav
+	{
+		> .open > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				background-color: @navbar-inverse-link-active-bg;
+				color: @navbar-inverse-link-active-color;
+			}
+		}
+		> .dropdown > a:hover .caret
+		{
+			border-top-color: @navbar-inverse-link-hover-color;
+			border-bottom-color: @navbar-inverse-link-hover-color;
+		}
+		> .dropdown > a .caret
+		{
+			border-top-color: @navbar-inverse-link-color;
+			border-bottom-color: @navbar-inverse-link-color;
+		}
+		> .open > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				.caret
+				{
+					border-top-color: @navbar-inverse-link-active-color;
+					border-bottom-color: @navbar-inverse-link-active-color;
+				}
+			}
+		}
+
+		@media (max-width: @screen-xs-max)
+		{
+			.open .dropdown-menu
+			{
+				> .dropdown-header
+				{
+					border-color: @navbar-inverse-border;
+				}
+				> li > a
+				{
+					color: @navbar-inverse-link-color;
+					&:hover,
+					&:focus
+					{
+						color: @navbar-inverse-link-hover-color;
+						background-color: @navbar-inverse-link-hover-bg;
+					}
+				}
+				> .active > a
+				{
+					&,
+					&:hover,
+					&:focus
+					{
+						color: @navbar-inverse-link-active-color;
+						background-color: @navbar-inverse-link-active-bg;
+					}
+				}
+				> .disabled > a
+				{
+					&,
+					&:hover,
+					&:focus
+					{
+						color: @navbar-inverse-link-disabled-color;
+						background-color: @navbar-inverse-link-disabled-bg;
+					}
+				}
+			}
+		}
+	}
+
+	.navbar-link
+	{
+		color: @navbar-inverse-link-color;
+		&:hover
+		{
+			color: @navbar-inverse-link-hover-color;
+		}
+	}
+}
+// --------------------------------------------------
+// Navbars
+//
+
+
+
+
+
+
+//
+// Navs
+// --------------------------------------------------
+.nav
+{
+	> li
+	{
+		> a
+		{
+			&:hover,
+			&:focus
+			{
+				background-color: @nav-link-hover-bg;
+			}
+		}
+
+		&.disabled > a
+		{
+			color: @nav-disabled-link-color;
+			&:hover,
+			&:focus
+			{
+				color: @nav-disabled-link-hover-color;
+				background-color: transparent;
+			}
+		}
+	}
+
+	.open > a
+	{
+		&,
+		&:hover,
+		&:focus
+		{
+			background-color: @nav-link-hover-bg;
+			border-color: @link-color;
+
+			.caret
+			{
+				border-top-color: @link-hover-color;
+				border-bottom-color: @link-hover-color;
+			}
+		}
+	}
+}
+
+// Give the tabs something to sit on
+.nav-tabs
+{
+	border-bottom: 1px solid @nav-tabs-border-color;
+	> li
+	{
+		> a
+		{
+			&:hover
+			{
+				border-color: @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color @nav-tabs-border-color;
+			}
+		}
+		&.active > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				color: @nav-tabs-active-link-hover-color;
+				background-color: @nav-tabs-active-link-hover-bg;
+				border: 1px solid @nav-tabs-active-link-hover-border-color;
+			}
+		}
+	}
+}
+
+.nav-pills
+{
+	> li
+	{
+		&.active > a
+		{
+			&,
+			&:hover,
+			&:focus
+			{
+				color: @nav-pills-active-link-hover-color;
+				background-color: @nav-pills-active-link-hover-bg;
+				.caret
+				{
+					border-top-color: @nav-pills-active-link-hover-color;
+					border-bottom-color: @nav-pills-active-link-hover-color;
+				}
+			}
+		}
+	}
+}
+
+.nav-tabs-justified
+{
+	> .active > a,
+	> .active > a:hover,
+	> .active > a:focus
+	{
+		border: 1px solid @nav-tabs-justified-link-border-color;
+	}
+	@media (min-width: @screen-sm-min)
+	{
+		> li > a
+		{
+			border-bottom: 1px solid @nav-tabs-justified-link-border-color;
+		}
+		> .active > a,
+		> .active > a:hover,
+		> .active > a:focus
+		{
+			border-bottom-color: @nav-tabs-justified-active-link-border-color;
+		}
+	}
+}
+
+.nav .caret
+{
+	border-top-color: @link-color;
+	border-bottom-color: @link-color;
+}
+.nav a:hover .caret
+{
+	border-top-color: @link-hover-color;
+	border-bottom-color: @link-hover-color;
+}
+// --------------------------------------------------
+// Navs
+//
+
+
+
+
+
+
+
+//
+// Pager pagination
+// --------------------------------------------------
+.pager
+{
+	li
+	{
+		> a,
+		> span
+		{
+			background-color: @pagination-bg;
+			border: 1px solid @pagination-border;
+		}
+		> a:hover,
+		> a:focus
+		{
+			background-color: @pagination-hover-bg;
+		}
+	}
+	.disabled
+	{
+		> a,
+		> a:hover,
+		> a:focus,
+		> span
+		{
+			color: @pager-disabled-color;
+			background-color: @pagination-bg;
+		}
+	}
+}
+// --------------------------------------------------
+// Pager pagination
+//
+
+
+
+
+
+
+
+
+//
+// Panels
+// --------------------------------------------------
+.panel
+{
+	background-color: @panel-bg;
+}
+
+.panel
+{
+	> .panel-body + .table,
+	> .panel-body + .table-responsive
+	{
+		border-top: 1px solid @table-border-color;
+	}
+}
+
+.panel-footer
+{
+	background-color: @panel-footer-bg;
+	border-top: 1px solid @panel-inner-border;
+}
+
+.panel-group
+{
+	.panel-heading
+	{
+		+ .panel-collapse .panel-body
+		{
+			border-top: 1px solid @panel-inner-border;
+		}
+	}
+	.panel-footer
+	{
+		+ .panel-collapse .panel-body
+		{
+			border-bottom: 1px solid @panel-inner-border;
+		}
+	}
+}
+
+.panel-default
+{
+	.panel-variant(@panel-default-border; @panel-default-text; @panel-default-heading-bg; @panel-default-border);
+}
+.panel-primary
+{
+	.panel-variant(@panel-primary-border; @panel-primary-text; @panel-primary-heading-bg; @panel-primary-border);
+}
+.panel-success
+{
+	.panel-variant(@panel-success-border; @panel-success-text; @panel-success-heading-bg; @panel-success-border);
+}
+.panel-warning
+{
+	.panel-variant(@panel-warning-border; @panel-warning-text; @panel-warning-heading-bg; @panel-warning-border);
+}
+.panel-danger
+{
+	.panel-variant(@panel-danger-border; @panel-danger-text; @panel-danger-heading-bg; @panel-danger-border);
+}
+.panel-info
+{
+	.panel-variant(@panel-info-border; @panel-info-text; @panel-info-heading-bg; @panel-info-border);
+}
+// --------------------------------------------------
+// Panels
+//
+
+
+
+
+//
+// Popovers
+// --------------------------------------------------
+.popover
+{
+	background-color: @popover-bg;
+	border: 1px solid @popover-fallback-border-color;
+	border: 1px solid @popover-border-color;
+}
+
+.popover-title
+{
+	background-color: @popover-title-bg;
+	border-bottom: 1px solid darken(@popover-title-bg, 5%);
+}
+
+.popover
+{
+	&.top .arrow
+	{
+	border-top-color: @popover-arrow-outer-fallback-color; // IE8 fallback
+	border-top-color: @popover-arrow-outer-color;
+	&:after
+	{
+		border-top-color: @popover-arrow-color;
+	}
+}
+&.right .arrow
+{
+	border-right-color: @popover-arrow-outer-fallback-color; // IE8 fallback
+	border-right-color: @popover-arrow-outer-color;
+	&:after
+	{
+		border-right-color: @popover-arrow-color;
+	}
+}
+&.bottom .arrow
+{
+	border-bottom-color: @popover-arrow-outer-fallback-color; // IE8 fallback
+	border-bottom-color: @popover-arrow-outer-color;
+	&:after
+	{
+		border-bottom-color: @popover-arrow-color;
+	}
+}
+
+&.left .arrow
+{
+	border-left-color: @popover-arrow-outer-fallback-color; // IE8 fallback
+	border-left-color: @popover-arrow-outer-color;
+	&:after
+	{
+		bottom: -@popover-arrow-width;
+	}
+}
+}
+// --------------------------------------------------
+// Popovers
+//
+
+
+
+
+//
+// Progress bars
+// --------------------------------------------------
+.progress
+{
+	background-color: @progress-bg;
+}
+
+// Bar of progress
+.progress-bar
+{
+	color: @progress-bar-color;
+	background-color: @progress-bar-bg;
+}
+
+.progress-bar-success
+{
+	.progress-bar-variant(@progress-bar-success-bg);
+}
+
+.progress-bar-info
+{
+	.progress-bar-variant(@progress-bar-info-bg);
+}
+
+.progress-bar-warning
+{
+	.progress-bar-variant(@progress-bar-warning-bg);
+}
+
+.progress-bar-danger
+{
+	.progress-bar-variant(@progress-bar-danger-bg);
+}
+// --------------------------------------------------
+// Progress bars
+//
+
+
+
+
+//
+// Scaffolding
+// --------------------------------------------------
+body
+{
+	color: @text-color;
+	background-color: @body-bg;
+}
+
+a
+{
+	color: @link-color;
+	&:hover,
+	&:focus
+	{
+		color: @link-hover-color;
+	}
+}
+
+.img-thumbnail
+{
+	background-color: @thumbnail-bg;
+	border: 1px solid @thumbnail-border;
+}
+
+hr
+{
+	border-top: 1px solid @hr-border;
+}
+// -----------------------------------
+// Scaffolding
+//
+
+
+
+
+//
+// Tables
+// --------------------------------------------------
+table
+{
+	background-color: @table-bg;
+}
+.table
+{
+	> thead,
+	> tbody,
+	> tfoot
+	{
+		> tr
+		{
+			> th,
+			> td
+			{
+				border-top: 1px solid @table-border-color;
+			}
+		}
+	}
+	> thead > tr > th
+	{
+		border-bottom: 2px solid @table-border-color;
+	}
+	> tbody + tbody
+	{
+		border-top: 2px solid @table-border-color;
+	}
+	.table
+	{
+		background-color: @body-bg;
+	}
+}
+
+.table-bordered
+{
+	border: 1px solid @table-border-color;
+	> thead,
+	> tbody,
+	> tfoot
+	{
+		> tr
+		{
+			> th,
+			> td
+			{
+				border: 1px solid @table-border-color;
+			}
+		}
+	}
+}
+
+.table-striped > tbody > tr:nth-child(odd)
+{
+	> td,
+	> th
+	{
+		background-color: @table-bg-accent;
+	}
+}
+.table-hover > tbody > tr:hover
+{
+	> td,
+	> th
+	{
+		background-color: @table-bg-hover;
+	}
+}
+
+.table > thead > tr,
+.table > tbody > tr,
+.table > tfoot > tr
+{
+	> td.active,
+	> th.active,
+	&.active > td,
+	&.active > th
+	{
+		background-color: @table-bg-active;
+	}
+}
+
+// Generate the contextual variants
+.table-row-variant(success; @state-success-bg; @state-success-border);
+.table-row-variant(danger; @state-danger-bg; @state-danger-border);
+.table-row-variant(warning; @state-warning-bg; @state-warning-border);
+// --------------------------------------------------
+// Tables
+//
+
+
+
+
+
+//
+// Thumbnails
+// --------------------------------------------------
+.thumbnail
+{
+	a&:hover,
+	a&:focus,
+	a&.active
+	{
+		border-color: @link-color;
+	}
+	.caption
+	{
+		color: @thumbnail-caption-color;
+	}
+}
+// --------------------------------------------------
+// Thumbnails
+//
+
+
+
+
+
+//
+// Tooltips
+// --------------------------------------------------
+.tooltip-inner
+{
+	color: @tooltip-color;
+	background-color: @tooltip-bg;
+}
+
+.tooltip
+{
+	&.top .tooltip-arrow
+	{
+		border-top-color: @tooltip-arrow-color;
+	}
+	&.top-left .tooltip-arrow
+	{
+		border-top-color: @tooltip-arrow-color;
+	}
+	&.top-right .tooltip-arrow
+	{
+		border-top-color: @tooltip-arrow-color;
+	}
+	&.right .tooltip-arrow
+	{
+		border-right-color: @tooltip-arrow-color;
+	}
+	&.left .tooltip-arrow
+	{
+		border-left-color: @tooltip-arrow-color;
+	}
+	&.bottom .tooltip-arrow
+	{
+		border-bottom-color: @tooltip-arrow-color;
+	}
+	&.bottom-left .tooltip-arrow
+	{
+		border-bottom-color: @tooltip-arrow-color;
+	}
+	&.bottom-right .tooltip-arrow
+	{
+		border-bottom-color: @tooltip-arrow-color;
+	}
+}
+// --------------------------------------------------
+// Tooltips
+//
+
+
+
+
+//
+// Typography
+// --------------------------------------------------
+
+// Contextual emphasis
+.text-muted
+{
+	color: @text-muted;
+}
+.text-primary
+{
+	color: @brand-primary;
+	&:hover
+	{
+		color: darken(@brand-primary, 10%);
+	}
+}
+.text-warning
+{
+	color: @state-warning-text;
+	&:hover
+	{
+		color: darken(@state-warning-text, 10%);
+	}
+}
+.text-danger
+{
+	color: @state-danger-text;
+	&:hover
+	{
+		color: darken(@state-danger-text, 10%);
+	}
+}
+.text-success
+{
+	color: @state-success-text;
+	&:hover
+	{
+		color: darken(@state-success-text, 10%);
+	}
+}
+.text-info
+{
+	color: @state-info-text;
+	&:hover
+	{
+		color: darken(@state-info-text, 10%);
+	}
+}
+
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6
+{
+	color: @headings-color;
+	small,
+	.small
+	{
+		color: @headings-small-color;
+	}
+}
+
+.page-header
+{
+	border-bottom: 1px solid @page-header-border-color;
+}
+
+abbr[title],
+abbr[data-original-title]
+{
+	border-bottom: 1px dotted @abbr-border-color;
+}
+
+// Blockquotes
+blockquote
+{
+	border-left: 5px solid @blockquote-border-color;
+	small
+	{
+		color: @blockquote-small-color;
+	}
+
+	// Float right with text-align: right
+	&.pull-right
+	{
+		border-right: 5px solid @blockquote-border-color;
+	}
+}
+// --------------------------------------------------
+// Typography
+//
+
+
+
+
+
+//
+// Wells
+// --------------------------------------------------
+.well
+{
+	background-color: @well-bg;
+	border: 1px solid darken(@well-bg, 7%);
+}
+// --------------------------------------------------
+// Wells
+//
+
+
+
+
+//
+// BidX
+// --------------------------------------------------
+
+@bg-primary-dark: desaturate(darken(@brand-primary, 25%), 25%);
+@text-primary-dark: darken(@brand-primary, 25%);
+@bg-primary-light: lighten(@brand-primary, 25%);
+@text-primary-light: lighten(@brand-primary, 25%);
+
+// Color alterations in Classes
+// ---------------------------------
+.bg-primary-dark
+{
+    background: desaturate(darken(@brand-primary, 25%), 25%);
+}
+.text-primary-dark
+{
+    color: darken(@brand-primary, 25%);
+}
+.bg-primary-light
+{
+    background: lighten(@brand-primary, 25%);
+}
+.text-primary-light
+{
+    color: lighten(@brand-primary, 25%);
+}
+.text-white
+{
+    color: #FFF;
+}
+
+// Base
+// -------------------------
+body.bidx
+{
+    color: @text-copy;
+    .body-bg();
+    // .body-bg('p4/p4.png');
+}
+
+#wrap
+{
+    margin: 0 auto -@stickyheight;
+    .inner-wrap
+    {
+        padding-top: 115px;
+    }
+}
+
+// Sticky Footer
+// -------------------------
+#push,
+footer
+{
+    height: @stickyheight;
+}
+
+
+// Icons manipulation
+// -------------------------
+.icons-circle
+{
+    background-color: lighten(@brand-primary, 40%);
+    .round;
+    .fa
+    {
+        .text-primary-dark;
+    }
+}
+.icons-rounded
+{
+    background-color: lighten(@brand-primary, 40%);
+    .rounded;
+    .fa
+    {
+        .text-primary-dark;
+    }
+}
+
+.iconbar
+{
+    .btn-group
+    {
+        &.open:after
+        {
+            .triangle(up, 6px, lighten( @brand-primary, 40%) );
+        }
+        a
+        {
+        color: @white;
+            :hover
+            {
+                color: lighten( @brand-primary, 40%);
+            }
+        }
+    }
+    .iconbar-unread
+    {
+        .rgba(@brand-primary,  0.7);
+    }
+}
+
+.document-icon {
+    color: @text-copy;
+}
+
+// Iconbar and header's dropdown menu
+// --------------------------------------------------
+
+header.navbar
+{
+    .navbar-inner
+    {
+        background-color: @navbar-inner;
+    }
+}
+
+// Home Register Blocks
+// -------------------------
+
+.bidx.home .bidx-register-block
+{
+    background: desaturate(darken(@brand-primary, 25%), 25%);
+    .action-call-text
+    {
+        color:                              @white;
+    }
+    .icon
+    {
+        color: @gray-lighter;
+    }
+    .arrow
+    {
+        color: @white;
+    }
+    &:hover .arrow
+    {
+        color: lighten(@brand-primary, 25%);
+    }
+}
+
+// Feature Block
+// ---------------
+.feature-container
+{
+    color: @white;
+}
+
+// Testimonial
+// ----------------------
+
+.bidx-testimonial
+{
+    background-color: @testimonial-bg;
+    color: @text-copy;
+    .testimonial-quote
+    {
+        color: desaturate(lighten( @testimonial-bg, 15%), 5%);
+    }
+    .triange
+    {
+        .triangle(upleft, @triagle-size, desaturate(darken( @testimonial-bg, 15%), 15%) );
+    }
+}
+
+
+// Apps Header
+// -------------------------
+.pageHeader
+{
+    background-color: @white;
+}
+
+// Panels
+// -------------------------
+
+.panel-heading
+{
+    &.heading-error
+    {
+        background-color: lighten(@brand-danger, 35%);;
+    }
+    .js-error-count
+    {
+        background-color: @brand-danger;
+    }
+}
+
+// Footer
+// -------------------------
+
+.page-footer
+{
+    color: @white;
+    border-top: 1px solid darken(@bg-primary-dark, 8%);
+    border-bottom: 1px solid darken(@bg-primary-dark, 8%);
+    a
+    {
+        text-decoration: underline;
+        color: @white;
+    }
+}
+
+// Elements
+// -------------------------
+.divider
+{
+    background-color: lighten(@brand-primary, 25%);
+}
+
+.label
+{
+    &.bidx-investor
+    {
+        background-color: @investor;
+    }
+    &.bidx-member
+    {
+        background-color: @member;
+        color: @text-copy;
+    }
+    &.bidx-entrepreneur
+    {
+        background-color: @entrepreneur;
+    }
+}
+
+
+// Forms
+// -------------------------
+
+
+
+form .error-separate
+{
+    background-color:           #DBD9D9;
+    color:                      #E83E3E;
+    border:                     1px solid #FFA8A8;
+
+    padding:                    4px 10px;
+    margin:                     5px 0;
+
+    -webkit-border-radius:      4px;
+    -moz-border-radius:         4px;
+    border-radius:              4px;
+
+    display:                    none;
+}
+
+/* Chosen element validation error only */
+.has-error
+{
+    .chosen-container-multi .chosen-choices,
+    .chosen-container-single .chosen-single
+    {
+        border-color: @state-danger-text;
+    }
+}
+
+
+/* ==========================================================================
+   2. CHECKBOXES
+   ========================================================================== */
+
+.modern-browser
+{
+    input[type="checkbox"]
+    {
+        + label span
+        {
+            color: #99a1a7;
+        }
+        &:checked + label span:before
+        {
+            color: @brand-secondary;
+        }
+    }
+    input[type="radio"]
+    {
+        + label span
+        {
+            color: #99a1a7;
+        }
+        &:checked + label span:before
+        {
+            color: @brand-secondary;
+        }
+    }
+}
+
+// bidX tagsinput, uses bootstrap-tagmanager
+// -----------------------------------------
+
+.bidx-tagsinput-container
+{
+    .box-sizing;
+    .rounded(4px);
+    border: 2px solid #bdc3c7;
+    color: @text-copy;
+    background-color: @white;
+    .bidx-tag
+    {
+        .rounded(4px);
+        background-color: @brand-secondary;
+        color: @white;
+        .tm-tag-remove
+        {
+            color: @white;
+        }
+    }
+    .cross:before
+    {
+        color:                          #000;
+    }
+}
+
+.form-control
+{
+    color: @input-color;
+    background-color: @input-bg;
+    border: 2px solid @input-border;
+}
+
+.has-error > div.error {
+    color: @state-danger-text;
+}
+
+.input-group-addon
+{
+    border: 2px solid @input-group-addon-border-color;
+    color: darken(@brand-primary, 25%);
+    background-color: @input-group-addon-bg;
+}
+
+
+/* styles shared by portrait tablet and above */
+@media (min-width: 992px )
+{
+
+    .menu-main
+    {
+        .nav
+        {
+            > li
+            {
+                &.active:after
+                {
+                    .triangle(up, 10px, lighten( @brand-primary, 25%) );
+                }
+                .dropdown-menu
+                {
+                    &:before
+                    {
+                        .triangle(up, 9px, desaturate( darken(@brand-primary, 25%), 25%) );
+                    }
+                }
+                > a
+                {
+                    .rounded(5px);
+                    &:hover
+                    {
+                        background-color: lighten( @brand-primary, 40%);
+                    }
+                }
+            }
+        }
+    }
+
+    .navbar
+    {
+        .nav > li.active > a,
+        .nav > li.active > a:hover,
+        .nav > li.active > a:focus
+        {
+            color: @text-copy;
+        }
+    }
+}
+
+// --------------------------------------------------
+// BidX
+//
