@@ -578,7 +578,7 @@
             );
         }
 
-    ,  support:               function( state, splat )
+    ,   support:               function( state, splat )
         {
             bidx.utils.log( "AppRouter::support State: ", state );
 
