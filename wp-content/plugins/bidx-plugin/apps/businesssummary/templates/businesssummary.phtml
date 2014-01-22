@@ -544,25 +544,25 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                             <div class="managementTeamContainer"></div>
 
-                        <div class="managementTeamProfilePictureModal modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3><?php _e('Check the file you want to use as the picture for this member', 'bidxplugin' ); ?></h3>
-                                  </div>
-                                    <div class="modal-body">
+                            <div class="managementTeamProfilePictureModal modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h3><?php _e('Check the file you want to use as the picture for this member', 'bidxplugin' ); ?></h3>
+                                      </div>
+                                        <div class="modal-body">
 <?php
-                                        echo do_shortcode( '[bidx app="media"]' );
+                                            echo do_shortcode( '[bidx app="media"]' );
 ?>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                        <a href="#" class="btn btn-default btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                            <a href="#" class="btn btn-default btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         </form>
 
 
@@ -1060,7 +1060,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <!-- Profile picture -->
                 <div class="profilePictureControl form-group col-sm-12">
                     <label><?php _e('Picture','bidxplugin'); ?></label>
-                    <div class="profilePictureContainer"></div>
+                    <div class="profilePictureWrapper">
+                        <div class="profilePictureContainer"></div>
+                    </div>
                     <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Change profile picture', 'bidxplugin')?></a>
                 </div>
 

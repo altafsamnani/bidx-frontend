@@ -475,8 +475,8 @@
                 e.preventDefault();
 
                 var $btn                        = $( this )
-                ,   $profilePictureContainer    = $btn.closest( ".controls" ).find( ".profilePictureContainer")
                 ,   $managementTeamItem         = $btn.closest( ".managementTeamItem" )
+                ,   $profilePictureContainer    = $managementTeamItem.find( ".profilePictureContainer")
                 ;
 
                 // Make sure the media app is within our modal
