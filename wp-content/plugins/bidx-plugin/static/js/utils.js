@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    var months = [ "January", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
     // Normalize some input into the best possible / guessable form of a linkedin profile url
     //
