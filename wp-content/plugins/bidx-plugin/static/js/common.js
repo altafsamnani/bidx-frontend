@@ -1053,6 +1053,8 @@
     ,   changeYear:             true
     ,   changeMonth:            true
     ,   yearRange:              "-100:+3"
+    ,   todayHighlight:         true
+    ,   weekStart:              1
     } );
 
     // Disable disabled links
