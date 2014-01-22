@@ -47,7 +47,7 @@ $entities       = $this->sessionData->data->wp->entities;
                     <strong><?php _e('Become an entrepreneur', 'bidxplugin')?></strong>
                 </div>
                 <div class="panel-body">
-                    <em><?php _e('Create your business', 'bidxplugin')?></em>
+                    <em><?php _e('Create your entrepreneur profile', 'bidxplugin')?></em>
                     <a href="/member/#createEntrepreneur" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
                 </div>
             </div>
@@ -62,15 +62,6 @@ $entities       = $this->sessionData->data->wp->entities;
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong><?php _e('Create a business summary', 'bidxplugin')?></strong>
-                </div>
-                <div class="panel-body">
-                    <em><?php _e('Create your business', 'bidxplugin')?></em>
-                    <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
-                </div>
-            </div>
 <?php
         }
 
@@ -102,9 +93,21 @@ $entities       = $this->sessionData->data->wp->entities;
 
     }
 
-
-    //    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
+        if ( isset( $entities->bidxEntrepreneurProfile ) ) {
 ?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong><?php _e('Create a business summary', 'bidxplugin')?></strong>
+                </div>
+                <div class="panel-body">
+                    <em><?php _e('Create your business', 'bidxplugin')?></em>
+                    <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
+                </div>
+            </div>
+<?php
+        }
+?>
+
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="pull-right">
