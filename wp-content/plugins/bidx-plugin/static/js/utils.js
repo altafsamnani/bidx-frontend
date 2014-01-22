@@ -16,11 +16,11 @@
             //
             if ( /^[a-z0-9]{5,30}$/i.test( input ) )
             {
-                result = "https://www.linkedin.com/in/" + input;
+                result = "www.linkedin.com/in/" + input;
             }
             else if ( !/^http(s?):\/\//i.test( input ))
             {
-                result = "https://" + input;
+                result = "http://" + input;
             }
         }
 
