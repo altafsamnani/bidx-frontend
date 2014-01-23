@@ -173,7 +173,7 @@ if ( $hasYears == false ) {
     <div class="fs-col-labels">
         <div class="fs-cell fs-header">
             <div class="pull-right fs-controls">
-                <a href="#prev" class="btnPrev <?php echo ( $hasPrevYear ? '' : 'disabled' ); ?>"><span class="fa fa-chevron-left"></span></a>
+                <a href="#prev" class="btn btnPrev <?php echo ( $hasPrevYear ? '' : 'disabled' ); ?>"><span class="fa fa-chevron-left"></span></a>
             </div>
             <div class="fs-content"><strong><?php _e( 'Currency in: US Dollars', 'bidxplugin' ); ?></strong></div>
         </div>
@@ -217,7 +217,7 @@ if ( $hasYears == false ) {
 
     <div class="fs-col-years clearfix">
 
-        <div class="financialSummariesItem addItem <?php echo ( $hasPrevYear ? 'hide' : '' ); ?>">
+        <div class="financialSummariesItem addItem <?php echo ( $hasPrevYear ? 'ds-none' : '' ); ?>">
 
             <!-- EDIT -->
             <div class="view viewEdit">
@@ -247,7 +247,7 @@ if ( $hasYears == false ) {
 
             if ( ( $yearDiff > 1 ) || ( $yearDiff < -1 ) )
             {
-                $extraItemClasses[] = "hide";
+                $extraItemClasses[] = "ds-none";
             }
 
             if ( $year < $curYear ) {
@@ -292,7 +292,7 @@ if ( $hasYears == false ) {
         }
     }
 ?>
-        <div class="financialSummariesItem addItem <?php echo ( $hasNextYear ? 'hide' : '' ); ?>">
+        <div class="financialSummariesItem addItem <?php echo ( $hasNextYear ? 'ds-none' : '' ); ?>">
 
             <!-- EDIT -->
             <div class="view viewEdit">
@@ -310,7 +310,7 @@ if ( $hasYears == false ) {
 
     <div class="fs-col-right">
         <div class="fs-controls">
-            <a href="#next" class="btnNext <?php echo ( $hasNextYear ? '' : 'disabled' ); ?>"><span class="fa fa-chevron-right"></span></a>
+            <a href="#next" class="btn btnNext <?php echo ( $hasNextYear ? '' : 'disabled' ); ?>"><span class="fa fa-chevron-right"></span></a>
         </div>
     </div>
 
