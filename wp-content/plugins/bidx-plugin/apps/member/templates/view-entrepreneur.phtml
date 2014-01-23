@@ -86,7 +86,7 @@ if ($entrepreneurDetails &&
                     ?>
                     <br/>
                     <?php
-                    echo $this->getAttachmentsDisplay ('12', '12', array ( __('Documents','bidxplugin') => $this->exst ($entrepreneurDetails->attachment)));
+                    echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('Documents','bidxplugin') => $this->exst ($entrepreneurDetails->attachment)));
                     ?>
         <?php
         // Business Summary listing
@@ -225,7 +225,7 @@ if ($entrepreneurDetails &&
                                 <div class="row">
                                     <div class="col-sm-2">
                                         <?php if ( $picSrc ) { ?>
-                                            <img <?php //echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+                                            <img <?php //echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded documentImage">
                                         <?php } else { ?>
                                             <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
                                         <?php } ?>
