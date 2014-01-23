@@ -38,6 +38,20 @@ $entities       = $this->sessionData->data->wp->entities;
 ?>
             <h2><?php _e('Create and grow', 'bidxplugin')?></h2>
 <?php
+        if ( isset( $entities->bidxEntrepreneurProfile ) ) {
+?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong><?php _e('Create a business summary', 'bidxplugin')?></strong>
+                </div>
+                <div class="panel-body">
+                    <em><?php _e('Create your business', 'bidxplugin')?></em>
+                    <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
+                </div>
+            </div>
+<?php
+        }
+
         // Create entrepreneur
         //
         if ( !isset( $entities->bidxEntrepreneurProfile ) ) {
@@ -92,20 +106,6 @@ $entities       = $this->sessionData->data->wp->entities;
         }
 
     }
-
-        if ( isset( $entities->bidxEntrepreneurProfile ) ) {
-?>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong><?php _e('Create a business summary', 'bidxplugin')?></strong>
-                </div>
-                <div class="panel-body">
-                    <em><?php _e('Create your business', 'bidxplugin')?></em>
-                    <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
-                </div>
-            </div>
-<?php
-        }
 ?>
 
             <div class="panel panel-default">
