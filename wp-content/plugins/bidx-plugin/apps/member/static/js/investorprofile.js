@@ -1184,10 +1184,12 @@
 
         $attachmentsContainer.find( ".attachmentItem" ).each( function()
         {
-            var $item       = $( this )
-            ,   bidxData    = $item.data( "bidxData" )
+            var $item           = $( this )
+            ,   bidxData        = $item.data( "bidxData" )
+            ,   fileUpload      = bidxData.bidxMeta.bidxUploadId
             ;
 
+            bidxData.fileUpload = fileUpload;
             attachments.push( bidxData );
         } );
 

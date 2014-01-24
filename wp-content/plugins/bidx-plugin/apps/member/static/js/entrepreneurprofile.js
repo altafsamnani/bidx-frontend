@@ -607,10 +607,12 @@
 
         $attachmentsContainer.find( ".attachmentItem" ).each( function()
         {
-            var $item       = $( this )
-            ,   bidxData    = $item.data( "bidxData" )
+            var $item           = $( this )
+            ,   bidxData        = $item.data( "bidxData" )
+            ,   fileUpload      = bidxData.bidxMeta.bidxUploadId
             ;
 
+            bidxData.fileUpload = fileUpload;
             attachments.push( bidxData );
         } );
 
@@ -618,9 +620,12 @@
 
         // CV
         //
-        var cv = $cvContainer.data( "bidxData" );
-        bidx.utils.setValue( member, "bidxEntrepreneurProfile.cv", cv );
+        var cv              = $cvContainer.data( "bidxData" )
+        ,   fileUpload      = cv.bidxMeta.bidxUploadId
+        ;
 
+        bidx.utils.setValue( member, "bidxEntrepreneurProfile.cv", cv );
+        bidx.utils.setValue( member, "bidxEntrepreneurProfile.cv.fileUpload", fileUpload );
     }
 
     // This is the startpoint
