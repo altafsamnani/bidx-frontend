@@ -843,6 +843,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 $count = 0;
 
                 foreach ( $attachment as $a ) {
+                    $isimage = false;
 
                     // 3 attachments items per row, are we full? Add a new row
                     //
@@ -855,7 +856,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         echo '<div class="row reflow-row">';
                     }
 
-                    $imageOrIcon = ( $this->exst( $a->documentType ) == 'image' )
+                    if ( preg_match( '/image\//', $a->mimeType ) ) {
+                        $isimage = true;
+                    }
+
+                    $imageOrIcon = ( $isimage )
                                  ? '<img src="'. $this->exst( $a->document ) .'" class="img-rounded documentImage">'
                                  : '<i class="fa fa-file-text-o document-icon"></i>';
 
