@@ -1562,9 +1562,27 @@
 
         if ( attachment )
         {
+            var attached            = $attachmentContainer.find(".attachmentItem")
+            ,   attachmentExists    = []
+            ;
+
+            // Prevent documents to be added again by checking the bidxUploadId
+            //
+            if ( attached.length ) {
+                $.each( attached, function( idx, a )
+                {
+                    var bidxUploadId = $(this).context.dataset.uploadid;
+                    if ( $.inArray( bidxUploadId, attachmentExists ) === -1 ) {
+                        attachmentExists.push( bidxUploadId );
+                    }
+                } );
+            }
+
             $.each( attachment, function( idx, a )
             {
-                _addAttachment( a );
+                if ( $.inArray( a.fileUpload, attachmentExists ) === -1 ) {
+                    _addAttachment( a );
+                }
             } );
         }
 
