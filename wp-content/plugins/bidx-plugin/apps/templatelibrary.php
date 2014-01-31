@@ -838,10 +838,12 @@ class TemplateLibrary
             foreach ($attachmentArr as $attachment) {
                 if (!empty ($attachment->document)) {
                     $date = date ('d F, Y', $attachment->uploadedDateTime);
-                    $documentImage = preg_match ("/^image/i", $attachment->mimeType) ? $attachment->document : '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
+                    $documentImage = preg_match ("/^image/i", $attachment->mimeType)
+                                    ? '<img class="img-rounded documentImage" src="'.$attachment->document.'">'
+                                    : '<i class="fa fa-file-text-o document-icon"></i>';
 
                     $html .= '<div class="row attachment"><div class="col-sm-3">';
-                    $html .= "<a href='{$attachment->document}' class='documentLink'><img class='img-rounded documentImage' src='{$documentImage}'></a>";
+                    $html .= "{$documentImage}";
                     $html .= '</div>';
 
                     $html .= '<div class="col-sm-9">';
