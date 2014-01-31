@@ -49,6 +49,17 @@ $entities       = $this->sessionData->data->wp->entities;
                     <a href="/businesssummary/#createBusinessSummary" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
                 </div>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong><?php _e('Do you own or participate in a company?', 'bidxplugin')?></strong>
+                </div>
+                <div class="panel-body">
+                    <em><?php _e('Add a company', 'bidxplugin')?></em>
+                    <a href="/company/#createCompany" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Add','bidxplugin'); ?></a>
+                </div>
+            </div>
+
 <?php
         }
 
@@ -106,16 +117,6 @@ $entities       = $this->sessionData->data->wp->entities;
         }
 
     }
-?>
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="pull-right">
-                        <a href="/company/#createCompany" class="btn btn-primary"><i class="fa fa-plus"></i> <?php _e('Add a company','bidxplugin'); ?></a>
-                    </div>
-                </div>
-            </div>
-<?php
           //  }
             $this->render('view-group.phtml');
 ?>
