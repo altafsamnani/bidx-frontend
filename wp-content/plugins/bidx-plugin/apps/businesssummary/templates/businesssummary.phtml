@@ -856,7 +856,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         echo '<div class="row reflow-row">';
                     }
 
-                    if ( preg_match( '/image\//', $a->mimeType ) ) {
+                    if ( preg_match( "/^image/i", $a->mimeType ) ) {
                         $isimage = true;
                     }
 
