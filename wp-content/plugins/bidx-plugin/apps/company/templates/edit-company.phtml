@@ -29,7 +29,7 @@
                         <?php _e('In this section you can create a company.','bidxplugin')?>
                     </blockquote>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
 
                             <h3>
                                 <span class="js-mode-slave"><?php _e('Or create a new company','bidxplugin')?></span>
@@ -49,7 +49,7 @@
                             <input type="hidden" name="statutoryAddress.coordinates"    />
 
                             <h3>Company main address</h3>
-                            <div class="alert alert-info"><?php _e('Enter the physical address where your company is registered.','bidxplugin')?></div>
+                            <blockquote class="alert-info"><?php _e('Enter the physical address where your company is registered.','bidxplugin')?></blockquote>
 
                             <div class="form-group formfield">
                                 <label><?php _e('Country','bidxplugin'); ?></label>
@@ -169,7 +169,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <div class="form-group logo-control">
                                 <label class="control-label"><?php _e('Logo','bidxplugin'); ?></label>
                                 <div class="controls">
@@ -197,15 +197,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="countryOperationSpecifics">
+                                <blockquote class="alert-info">
+                                    <?php _e( 'If you have offices in other locations, you can add them in the section below', 'bidxplugin' ); ?>
+                                </blockquote>
+                                <div class="accordion" id="countryOperationSpecificsAccordion"></div>
+                                <a href="#addCountryOperationSpecifics" class="btn btn-block btn-primary"><i class="fa fa-plus"></i> <?php _e('Add country specific operations','bidxplugin'); ?></a>
+                            </div>
                         </div>
 
-                        <div class="col-sm-4 countryOperationSpecifics">
-                            <div class="alert alert-info">
-                                <?php _e( 'If you have offices in other locations, you can add them in the section below', 'bidxplugin' ); ?>
-                            </div>
-                            <div class="accordion" id="countryOperationSpecificsAccordion"></div>
-                            <a href="#addCountryOperationSpecifics" class="btn btn-block btn-primary"><i class="fa fa-plus"></i> <?php _e('Add country specific operations','bidxplugin'); ?></a>
-                        </div>
                     </div>
                 </div>
             </div>
