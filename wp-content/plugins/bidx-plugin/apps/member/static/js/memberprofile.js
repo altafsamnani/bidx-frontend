@@ -743,7 +743,6 @@
         ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
         ,   $attachmentImage    = $attachment.find( ".documentImage" )
         ,   $attachmentLink     = $attachment.find( ".documentLink" )
-        ,   imageSrc
         ;
 
         // Store the data so we can later use it to merge the updated data in
@@ -910,11 +909,9 @@
         // ProfilePicture
         //
         var profilePicture      = $profilePictureContainer.data( "bidxData" )
-        ,   fileUpload          = profilePicture.bidxMeta.bidxUploadId
         ;
 
         bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture", profilePicture );
-        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload", fileUpload );
     }
 
     // This is the startpoint

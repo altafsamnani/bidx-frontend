@@ -201,7 +201,6 @@
                 {
                     file.documentName = originalFiles[ 0 ].name;
                 }
-
                 data.context = _addFile( file, true );
 
                 // Start the upload
@@ -556,6 +555,10 @@
             if ( file.bidxMeta && file.bidxMeta.bidxUploadId )
             {
                 $container.find( ".btnEdit"         ).attr( "href",     "#media/edit/" + file.bidxMeta.bidxUploadId );
+
+                // Set the fileUpload value
+                //
+                file.fileUpload = file.bidxMeta.bidxUploadId;
             }
 
             if ( file && file.mimeType && file.mimeType.match( /^image/ ) )
@@ -604,7 +607,7 @@
         $btnDownload.attr( "href", upload.document );
 
         $btnDownload[ settings.showDownloadBtn ? "show" : "hide" ]();
-        $btnDelete[   settings.showDeletedBtn  ? "show" : "hide" ]();
+        //$btnDelete[   settings.showDeletedBtn  ? "show" : "hide" ]();
 
         $documentType.trigger( "chosen:updated" );
     }

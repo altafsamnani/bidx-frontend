@@ -1815,12 +1815,10 @@
 
         $attachmentContainer.find( ".attachmentItem" ).each( function()
         {
-            var $item           = $( this )
-            ,   bidxData        = $item.data( "bidxData" )
-            ,   fileUpload      = bidxData.bidxMeta.bidxUploadId
+            var $item       = $( this )
+            ,   bidxData    = $item.data( "bidxData" )
             ;
 
-            bidxData.fileUpload = fileUpload;
             attachments.push( bidxData );
         } );
 

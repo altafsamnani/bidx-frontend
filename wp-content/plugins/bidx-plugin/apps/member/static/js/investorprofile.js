@@ -643,7 +643,8 @@
 
         var $attachment         = snippets.$attachment.clone()
         ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
-        ,   imageSrc
+        ,   $attachmentImage    = $attachment.find( ".documentImage" )
+        ,   $attachmentLink     = $attachment.find( ".documentLink" )
         ;
 
         // Store the data so we can later use it to merge the updated data in
@@ -656,12 +657,17 @@
         $attachment.find( ".purpose"            ).text( attachment.purpose );
         $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
-        imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
-            ? attachment.document
-            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
+        $attachmentLink.attr( "href", attachment.document );
 
-        $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
-        $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
+        if ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
+        {
+            $attachmentImage.attr( "src", attachment.document );
+        }
+        else
+        {
+            $attachmentImage.remove();
+            $attachmentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+        }
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
     }
@@ -1186,10 +1192,8 @@
         {
             var $item           = $( this )
             ,   bidxData        = $item.data( "bidxData" )
-            ,   fileUpload      = bidxData.bidxMeta.bidxUploadId
             ;
 
-            bidxData.fileUpload = fileUpload;
             attachments.push( bidxData );
         } );
 
@@ -1415,7 +1419,7 @@
                             //
                             investorProfileId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
 
-                            bidx.utils.log( "bidx::invvestor", member );
+                            bidx.utils.log( "bidx::investor", member );
 
                             _populateScreen();
 
