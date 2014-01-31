@@ -598,7 +598,7 @@
                             //
                             mentorProfileId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
 
-                            bidx.utils.log( "bidx::invvestor", member );
+                            bidx.utils.log( "bidx::investor", member );
 
                             _populateScreen();
 
