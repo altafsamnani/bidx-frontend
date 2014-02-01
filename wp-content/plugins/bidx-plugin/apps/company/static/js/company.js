@@ -193,14 +193,14 @@
 
     $toggleRegistered.change( function( e )
     {
-        var value   = $toggleRegistered.filter( "[checked]" ).val();
+        var value   = $toggleRegistered.filter( ":checked" ).val();
 
         _handleToggleChange( value === "true", "registered" );
     } );
 
     $toggleHaveEmployees.change( function()
     {
-        var value   = $toggleHaveEmployees.filter( "[checked]" ).val();
+        var value   = $toggleHaveEmployees.filter( ":checked" ).val();
 
         _handleToggleChange( value === "true", "haveEmployees" );
     } );
