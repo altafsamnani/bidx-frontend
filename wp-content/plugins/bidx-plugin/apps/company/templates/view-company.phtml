@@ -3,14 +3,8 @@
         ? $this->company->bidxMeta
         : $this->company;
 
+    $comLogo = $this->exst($this->company->logo->document);
 
-    $useDataSrc = false;
-    $picSrc     = $this->exst($this->company->logo->document);
-
-    if (!$picSrc) {
-        $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image';
-        $useDataSrc = true;
-    }
 ?>
 <div class="panel-heading">
     <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
@@ -19,16 +13,21 @@
 <?php
         if ($companyBidxMeta->bidxCanEdit) {
 ?>
-            <div class="hide-overflow">
                 <div class="btn-group controls pull-right">
                     <a class="btn btn-primary" href="#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                 </div>
-            </div>
 <?php
         }
-?>
 
-    <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+        if (!$comLogo){
+            echo '<div class="icons-rounded"><i class="fa fa-tasks text-primary-light"></i></div>';
+        }
+        else
+        {
+            echo '<img src="'.$comLogo.'"';
+        }
+?>
+<hr>
 <?php
 
     $rowValues = array(
@@ -52,7 +51,7 @@
 
         $rowValues = array(
             __('Date of registration','bidxplugin') =>  date( 'j F Y', strtotime( $this->company->dateCompanyEstab )),
-            __('Legal form of business','bidxplugin') => $this->exst($this->company->legalFormBusiness),
+            __('Legal form of business','bidxplugin') => $this->addExtraValuesToRows( 'legalForm', $this->exst($this->company->legalFormBusiness )),
             __('Statutory address','bidxplugin') => implode( ' ', $arStatutoryAddress ),
             __('Statutory city, country','bidxplugin') => implode( ' ', $arStatutoryCityCountry ),
             __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber),
