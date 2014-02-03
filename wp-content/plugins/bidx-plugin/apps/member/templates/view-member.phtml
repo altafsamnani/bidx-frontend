@@ -27,9 +27,7 @@
                                     ? '<a href="' . $entrepreneurDetails->cv->document . '" target="_blank" > ' . $entrepreneurDetails->cv->documentName . '</a>'
                                     : NULL;
 
-    // Nationality - NOT LOOKING GOOD
-    $nationality                = $this->exst( $personalDetails->nationality );
-    $nationality                = $this->addExtraValuesToRows( 'nationality', $nationality );
+    $nationality                = $this->addExtraValuesToRows( 'nationality', $this->exst( $personalDetails->nationality ) );
 
     // Language Details
     $languageData               = $this->exst( $personalDetails->languageDetail );
