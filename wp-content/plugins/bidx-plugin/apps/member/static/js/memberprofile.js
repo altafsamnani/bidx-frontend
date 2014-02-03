@@ -621,13 +621,6 @@
             ,   value   = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails." + f )
             ;
 
-            // Sometimes the data coming back from the API is in lowercase, and since it's a lookup concept we need to have it uppercase
-            //
-            if ( value && f === "nationality" )
-            {
-                value = value.toUpperCase();
-            }
-
             $input.each( function()
             {
                 bidx.utils.setElementValue( $( this ), value );
