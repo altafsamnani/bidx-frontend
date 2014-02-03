@@ -31,10 +31,7 @@
                     <div class="row">
                         <div class="col-sm-6">
 
-                            <h3>
-                                <span class="js-mode-slave"><?php _e('Or create a new company','bidxplugin')?></span>
-                                <span class="js-mode-standalone"><?php _e('Create a new company','bidxplugin')?></span>
-                            </h3>
+                            <h3 class="js-mode-standalone"><?php _e('Create a new company','bidxplugin')?></h3>
 
                             <div class="form-group formfield">
                                 <label><?php _e('Company name','bidxplugin'); ?></label>
@@ -82,6 +79,36 @@
                             </div>
 
                             <div class="currentAddressMap"></div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group logo-control">
+                                <label class="control-label"><?php _e('Logo','bidxplugin'); ?></label>
+                                <div class="controls">
+                                    <div class="logoContainer"></div>
+                                    <a href="#changeLogo" class="btn btn-default"><?php _e('Select logo','bidxplugin');?></a>
+
+                                    <div class="changeLogoModal modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    <h3><?php _e('Select the file you want to use for a logo', 'bidxplugin' ); ?></h3>
+                                                </div>
+                                                <div class="modal-body">
+    <?php
+                                                    echo do_shortcode( '[bidx app="media"]' );
+    ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
+                                                    <a href="#" class="btn btn-default btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group formfield">
                                 <label><?php _e('Is your company registered?','bidxplugin'); ?></label>
@@ -167,36 +194,7 @@
                                     <input type="text" class="form-control" name="numTempMaleEmpl" placeholder="<?php _e('Please enter the number of temporary male employees employed by your business','bidxplugin'); ?>">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-sm-6">
-                            <div class="form-group logo-control">
-                                <label class="control-label"><?php _e('Logo','bidxplugin'); ?></label>
-                                <div class="controls">
-                                    <div class="logoContainer"></div>
-                                    <a href="#changeLogo" class="btn btn-default"><?php _e('Select logo','bidxplugin');?></a>
-
-                                    <div class="changeLogoModal modal fade">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                    <h3><?php _e('Select the file you want to use for a logo', 'bidxplugin' ); ?></h3>
-                                                </div>
-                                                <div class="modal-body">
-    <?php
-                                                    echo do_shortcode( '[bidx app="media"]' );
-    ?>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="#" class="btn btn-primary btnSelectFile"><?php _e( 'Select file(s)', 'bidxplugin' ); ?></a>
-                                                    <a href="#" class="btn btn-default btnCancelSelectFile"><?php _e( 'Cancel', 'bidxplugin' ); ?></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="countryOperationSpecifics">
                                 <blockquote class="alert-info">
                                     <?php _e( 'If you have offices in other locations, you can add them in the section below', 'bidxplugin' ); ?>
