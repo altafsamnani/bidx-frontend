@@ -639,6 +639,10 @@
             ,   value   = $input.is( ":visible" ) || $input.is( "[type='radio']" ) ? bidx.utils.getElementValue( $input ) : ""
             ;
 
+            if ( f === "legalFormBusiness" ) {
+                value  = bidx.utils.getElementValue( $input );
+            }
+
             bidx.utils.setValue( company, f, value );
         } );
 
