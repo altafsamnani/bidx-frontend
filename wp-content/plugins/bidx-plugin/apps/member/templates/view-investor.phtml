@@ -146,11 +146,11 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
 
             echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered', '', array('investmentType' => 'hidden-xs', 'companyWebsite' => 'hidden-xs') );
 
-            echo $this->getAttachmentsDisplay ('', '', array ('Documents' => $this->exst ($investorDetails->attachment)));
+            echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ('Documents' => $this->exst ($investorDetails->attachment)));
     ?>
 
     <?php
-
+            $references = $this->exst( $investorDetails->references );
 
             // A set of properties is only applicable to any other type than Angel or private
             //
@@ -178,20 +178,23 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
                 // TODO: list references (personaldetails)
             // Previous investments
             //
-            echo '<h5>' . __('References','bidxplugin') . '</h5>';
 
-            $header = array(
-                __('Name','bidxplugin')                     => 'name',
-                __('Professional title','bidxplugin')       => 'professionalTitle',
-                __('LinkedIn profile','bidxplugin')         => 'linkedIn',
-                __('Email address','bidxplugin')            => 'emailAddress'
-                // __('Landline','bidxplugin')                 => 'contactDetail[0].landLine',
-                // __('Mobile','bidxplugin')                   => 'contactDetail[0].mobile'
-            );
+            if ( $references ) {
+                echo '<h5>' . __('References','bidxplugin') . '</h5>';
 
-            $merge['name'] = array ('firstName', 'lastName');
+                $header = array(
+                    __('Name','bidxplugin')                     => 'name',
+                    __('Professional title','bidxplugin')       => 'professionalTitle',
+                    __('LinkedIn profile','bidxplugin')         => 'linkedIn',
+                    __('Email address','bidxplugin')            => 'emailAddress'
+                    // __('Landline','bidxplugin')                 => 'contactDetail[0].landLine',
+                    // __('Mobile','bidxplugin')                   => 'contactDetail[0].mobile'
+                );
 
-            echo $this->addTableRows($header, $this->exst( $investorDetails->references ), 'table table-bordered', $merge, array('linkedIn' => 'hidden-xs', 'emailAddress' => 'hidden-xs') );
+                $merge['name'] = array ('firstName', 'lastName');
+
+                echo $this->addTableRows($header, $this->exst( $investorDetails->references ), 'table table-bordered', $merge, array('linkedIn' => 'hidden-xs', 'emailAddress' => 'hidden-xs') );
+            }
 
     ?>
         </div><!-- // details-block of investor -->
