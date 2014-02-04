@@ -568,7 +568,7 @@
             }
             else
             {
-                var $input  = $reference.find( "[name='" + prefix + "." + field + "']" )
+                var $input  = $reference.find( "[name='" + field + "']" )
                 ,   value   = bidx.utils.getValue( data, field )
                 ;
 
