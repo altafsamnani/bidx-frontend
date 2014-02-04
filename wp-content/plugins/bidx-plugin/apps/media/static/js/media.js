@@ -559,16 +559,18 @@
                 // Set the fileUpload value
                 //
                 file.fileUpload = file.bidxMeta.bidxUploadId;
-            }
 
-            if ( file && file.mimeType && file.mimeType.match( /^image/ ) )
-            {
-                $documentImage.attr( "src", file.document );
-            }
-            else
-            {
-                $documentImage.remove();
-                $documentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+                if ( file && file.mimeType && file.mimeType.match( /^image/ ) )
+                {
+                    $documentImage.attr( "src", file.document );
+                }
+                else
+                {
+                    $documentImage.remove();
+                    if ( $documentLink.find( ".fa" ).length === 0 ) {
+                        $documentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+                    }
+                }
             }
         }
     }
