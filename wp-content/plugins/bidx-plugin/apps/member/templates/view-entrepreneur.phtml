@@ -88,26 +88,23 @@ if ($entrepreneurDetails &&
                     <?php
                     echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('Documents','bidxplugin') => $this->exst ($entrepreneurDetails->attachment)));
                     ?>
-        <?php
+<?php
         // Business Summary listing
         //
         if ($businessSummary) {
             $labelBusiness = ($this->data->isMyProfile) ? __('My business','bidxplugin') : __('This person has a business','bidxplugin');
-            ?>
+?>
             <div class="well profile-block">
                 <h4 id="businesssummary">Business Summary</h4>
                 <div class="accordion" id="businesses">
-            <?php
+<?php
                     foreach ($businessSummary as $index => $business) {
 
                         $businessBidxMeta = isset( $business->bidxMeta ) ? $business->bidxMeta : $business;
 
                         $collapseId = sprintf ('businessAccordion-%s', $businessBidxMeta->bidxEntityId);
 
-                        // $picSrc = 'holder.js/90x90/industrial/auto/text:No Image';
-                        // $useDataSrc = true;
-
-                        ?>
+?>
                         <div class="accordion-group">
                             <div class="accordion-heading">
                                 <a class="accordion-toggle hide-overflow ds-block <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#businesses" href="#<?php echo $collapseId ?>">
@@ -156,37 +153,29 @@ if ($entrepreneurDetails &&
                                     </div>
 
                                     <div class="bottom-controls">
-                    <?php
+<?php
 
                         //$redirect = http_build_query( array( "cancel"=> $_SERVER[ "REQUEST_URI" ] ) ); // @msp: currently useless because the view state doesnt have a hash and is not routed through Backbone
                         $viewMoreLink = "<a href='/businesssummary/" . $businessBidxMeta->bidxEntityId ."'>". __('view more','bidxplugin') ."</a>";
                         echo $viewMoreLink;
-                    ?>
+?>
                                     </div>
                                 </div>
                             </div><!-- accordion-body -->
                         </div><!-- accordion-group -->
-                    <?php
+<?php
                 }
-                ?>
+?>
                 </div><!-- accordion #companies -->
             </div>
-        <?php
+<?php
             }
 
-            if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
-        ?>
-            <!-- <div class="add-company-container clearfix">
-                <div class="pull-right">
-                    <a href="/company/#createCompany" class="btn btn-primary"><i class="fa fa-plus"></i> <?php _e('Add a company','bidxplugin'); ?></a>
-                </div>
-            </div> -->
-        <?php }
         // Companies listing
         //
         if ($companies) {
             $labelCompany = ($this->data->isMyProfile) ? __('My Company','bidxplugin') : __('This person has a company','bidxplugin');
-            ?>
+?>
             <div class="well profile-block">
 
                 <h4 id="company"><?php _e( 'Company', 'bidxplugin' ); ?></h4>
@@ -198,13 +187,8 @@ if ($entrepreneurDetails &&
                     $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
                     $collapseId = sprintf ('companyAccordion-%s', $companyBidxMeta->bidxEntityId);
 
-                    // $useDataSrc = false;
                     $picSrc = $this->exst ($company->logo->document);
 
-                    // if (!$picSrc) {
-                    //     $picSrc = 'holder.js/90x90/industrial/auto/text:No Image';
-                    //     $useDataSrc = true;
-                    // }
                     ?>
                     <div class="accordion-group">
                         <div class="accordion-heading">
