@@ -683,9 +683,13 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         // Is there a company object?
                         //
                         if ( !$this->exst( $company )) {
-
-                            _e( 'This business summary doesn\'t have a company', 'bidxplugin' );
-
+?>
+                            <blockquote class="alert-info">
+<?php
+                                _e( 'This business summary doesn\'t have a company', 'bidxplugin' );
+?>
+                            </blockquote>
+<?php
                         } else {
 
                             $companyWebsite = null;
