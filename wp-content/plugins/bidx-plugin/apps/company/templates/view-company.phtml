@@ -24,15 +24,16 @@
         }
         else
         {
-            echo '<img src="'.$comLogo.'"';
+            echo '<img src="'.$comLogo.'"/>';
         }
 ?>
 <hr>
 <?php
 
+    $companySite = $this->exst( $this->company->website ) ? sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst( $this->company->website )) : NULL;
     $rowValues = array(
-        __('Company name','bidxplugin') => $this->exst($this->company->name ),
-        __('Company website','bidxplugin') => sprintf( '<a href="%1$s" target="_blank">%1$s</a>', $this->exst($this->company->website ))
+        __('Company name','bidxplugin') => $this->exst( $this->company->name ),
+        __('Company website','bidxplugin') => $companySite
     );
     echo $this->pairRows( $rowValues );
 
