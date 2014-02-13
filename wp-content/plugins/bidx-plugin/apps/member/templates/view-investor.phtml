@@ -82,7 +82,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             $rowValues = array(
                 __('Investor profile summary','bidxplugin')   =>  $this->exst ($investorDetails->summary),
                 __('Investor type','bidxplugin')              =>  $this->getStaticVal('investorType', $this->exst ($investorDetails->investorType)),
-                __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', '),
+                __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $investorDetails->investmentType ), ', ','investmentType'),
                 __('Institution details','bidxplugin')        =>  $this->exst($investorDetails->institutionName),
                 __('Institution website','bidxplugin')        =>  $this->exst($investorDetails->institutionWebsite),
                 __('Address','bidxplugin')                    =>  $address,

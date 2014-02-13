@@ -235,6 +235,10 @@ class TemplateLibrary
             case 'legalForm':
                 $values = $this->getStaticVal ('legalForm', $values);
                 break;
+
+            case 'investmentType':
+                $values = $this->getStaticVal ('investmentType', $values);
+                break;
         }
 
         return $values;
