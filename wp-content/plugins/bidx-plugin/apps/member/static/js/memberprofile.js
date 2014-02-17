@@ -638,6 +638,13 @@
             $profilePictureContainer.append( $( "<img />", { "src": profilePicture, "class": "thumbnail" } ));
         }
 
+        if ( !member.bidxMemberProfile.personalDetails.profilePicture.bidxMeta.bidxUploadId )
+        {
+            $profilePictureContainer.append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+            $profilePictureContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
+
+        }
+
         // Setup the hidden fields used in the file upload
         //
         $editForm.find( "[name='domain']"           ).val( bidx.common.groupDomain );
@@ -728,15 +735,22 @@
     {
         if ( attachment === null )
         {
-            bidx.util.warn( "memberprofile::_addAttachment: attachment is null!" );
+            bidx.utils.warn( "memberprofile::_addAttachment: attachment is null!" );
             return;
         }
 
         var $attachment         = snippets.$attachment.clone()
-        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
+        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
         ,   $attachmentImage    = $attachment.find( ".documentImage" )
         ,   $attachmentLink     = $attachment.find( ".documentLink" )
+        ,   deletedDoc          = false
         ;
+
+        if ( !attachment.bidxMeta.bidxUploadId )
+        {
+            bidx.utils.warn( "memberprofile::_addAttachment: attachment has been deleted!" );
+            deletedDoc = true;
+        }
 
         // Store the data so we can later use it to merge the updated data in
         //
@@ -757,7 +771,19 @@
         else
         {
             $attachmentImage.remove();
-            $attachmentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+
+            // Check if the file has been removed
+            //
+            if ( deletedDoc )
+            {
+                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) );
+                $attachmentLink.parent().append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+                $attachmentLink.remove();
+            }
+            else
+            {
+                $attachmentLink.append( $( "<i />", { "class": "fa fa-file-text-o document-icon" } ) );
+            }
         }
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );

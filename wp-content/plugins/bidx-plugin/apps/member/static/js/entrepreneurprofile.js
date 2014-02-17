@@ -387,28 +387,45 @@
     {
         var $hasCV              = $cvControl.find( ".hasCV" )
         ,   $noCV               = $cvControl.find( ".noCV" )
+        ,   $deletedCV          = $cvControl.find( ".deletedCV" )
+        ,   deletedDoc          = false
         ,   createdDateTime
-        ,   imageSrc
         ;
+
+        // Check if the file has been removed
+        //
+        if ( !attachment.bidxMeta.bidxUploadId )
+        {
+            bidx.utils.warn( "entrepreneurprofile::_addCv: CV has been deleted!" );
+            deletedDoc = true;
+        }
 
         $cvContainer.data( "bidxData", attachment );
 
         if ( !attachment )
         {
+            $deletedCV.hide();
             $hasCV.hide();
             $noCV.show();
         }
         else
         {
-            createdDateTime    = bidx.utils.parseTimestampToDateStr( attachment.created );
+            if ( deletedDoc )
+            {
+                $deletedCV.show();
+            }
+            else
+            {
+                createdDateTime = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime );
 
-            $hasCV.find( ".documentName"       ).text( attachment.documentName );
-            $hasCV.find( ".createdDateTime"    ).text( createdDateTime );
+                $hasCV.find( ".documentName" ).text( attachment.documentName );
+                $hasCV.find( ".createdDateTime" ).text( createdDateTime );
+                $hasCV.find( ".downloadLink" ).attr( "href", attachment.document );
 
-            $hasCV.find( ".documentLink" ).attr( "href", attachment.document );
-
-            $hasCV.show();
-            $noCV.hide();
+                $deletedCV.hide();
+                $noCV.hide();
+                $hasCV.show();
+            }
 
             // Hide the error message (if any)
             //
@@ -422,16 +439,22 @@
     {
         if ( attachment === null )
         {
-            bidx.util.warn( "memberprofile::_addAttachment: attachment is null!" );
+            bidx.util.warn( "entrepreneurprofile::_addAttachment: attachment is null!" );
             return;
         }
 
         var $attachment         = snippets.$attachment.clone()
-        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
+        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
         ,   $attachmentImage    = $attachment.find( ".documentImage" )
         ,   $attachmentLink     = $attachment.find( ".documentLink" )
-        ,   imageSrc
+        ,   deletedDoc          = false
         ;
+
+        if ( !attachment.bidxMeta.bidxUploadId )
+        {
+            bidx.utils.warn( "entrepreneurprofile::_addAttachment: attachment has been deleted!" );
+            deletedDoc = true;
+        }
 
         // Store the data so we can later use it to merge the updated data in
         //
@@ -452,7 +475,19 @@
         else
         {
             $attachmentImage.remove();
-            $attachmentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+
+            // Check if the file has been removed
+            //
+            if ( deletedDoc )
+            {
+                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) );
+                $attachmentLink.parent().append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+                $attachmentLink.remove();
+            }
+            else
+            {
+                $attachmentLink.append( $( "<i />", { "class": "fa fa-file-text-o document-icon" } ) );
+            }
         }
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );

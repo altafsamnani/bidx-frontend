@@ -101,9 +101,19 @@
                                     <div class="form-group">
                                         <blockquote class="hasCV alert-info">
                                             <h3 class="documentName"></h3>
-                                            <p class="uploadedDateTime"></p>
+                                            <p class="createdDateTime"></p>
+                                            <a href="#" class="downloadLink btn btn-sm btn-warning"><i class="fa fa-download"></i> <?php _e('Download CV','bidxplugin'); ?></a>
+                                        </blockquote>
 
-                                            <a href="#" class="documentLink btn btn-sm btn-warning"><i class="fa fa-download"></i> <?php _e('Download CV','bidxplugin'); ?></a>
+                                        <blockquote class="deletedCV alert-warning">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <i class="fa fa-question-circle document-icon"></i>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <?php _e('Your CV has been removed from the media library.','bidxplugin'); ?>
+                                                </div>
+                                            </div>
                                         </blockquote>
 
                                         <blockquote class="noCV alert-warning">
@@ -113,7 +123,11 @@
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <a href="#changeCv" data-toggle="modal" class="btn btn-primary"><span class="hasCV"><?php _e('Or select a different document'); ?></span><span class="noCV"><?php _e('Select a document','bidxplugin'); ?></span></a>
+                                    <a href="#changeCv" data-toggle="modal" class="btn btn-primary">
+                                        <span class="hasCV"><?php _e('Select a different document'); ?></span>
+                                        <span class="noCV"><?php _e('Select a document','bidxplugin'); ?></span>
+                                        <span class="deletedCV"><?php _e('Replace missing document','bidxplugin'); ?></span>
+                                    </a>
 
                                     <div class="changeCvModal modal fade">
                                         <div class="modal-dialog">

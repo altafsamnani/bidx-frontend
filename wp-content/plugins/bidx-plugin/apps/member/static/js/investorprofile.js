@@ -642,10 +642,17 @@
         }
 
         var $attachment         = snippets.$attachment.clone()
-        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
+        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
         ,   $attachmentImage    = $attachment.find( ".documentImage" )
         ,   $attachmentLink     = $attachment.find( ".documentLink" )
+        ,   deletedDoc          = false
         ;
+
+        if ( !attachment.bidxMeta.bidxUploadId )
+        {
+            bidx.utils.warn( "investorprofile::_addAttachment: attachment has been deleted!" );
+            deletedDoc = true;
+        }
 
         // Store the data so we can later use it to merge the updated data in
         //
@@ -666,7 +673,19 @@
         else
         {
             $attachmentImage.remove();
-            $attachmentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+
+            // Check if the file has been removed
+            //
+            if ( deletedDoc )
+            {
+                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) );
+                $attachmentLink.parent().append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+                $attachmentLink.remove();
+            }
+            else
+            {
+                $attachmentLink.append( $( "<i />", { "class": "fa fa-file-text-o document-icon" } ) );
+            }
         }
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
