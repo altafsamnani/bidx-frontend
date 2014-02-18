@@ -20,8 +20,9 @@ include ('apps/util.php' );
 
 require ABSPATH . 'wp-content/plugins/bidx-plugin/plugin-updates/plugin-update-checker.php';
 
+//http://local.bidx.net/wp-content/metadata.json'
 $MyUpdateChecker = new PluginUpdateChecker(
-        'http://local.bidx.net/wp-content/metadata.json'
+        'https://s3-eu-west-1.amazonaws.com/bidx-builds/acceptance/metadata.json'
     ,   __FILE__
     ,   'bidx-plugin'
 );
