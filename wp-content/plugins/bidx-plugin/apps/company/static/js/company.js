@@ -558,7 +558,12 @@
         if ( logo && logo.length && logo[ 0 ].document )
         {
             $logoContainer.data( "bidxData", logo[ 0 ] );
-            $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document  } ));
+            $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document, "class": "img-thumbnail" } ) );
+        }
+        else
+        {
+            $logoContainer.append(  $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+            $logoContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
         }
 
         // Now the nested objects, NOT ARRAY's
