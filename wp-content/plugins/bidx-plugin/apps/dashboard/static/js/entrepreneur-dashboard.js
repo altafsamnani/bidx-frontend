@@ -352,7 +352,9 @@
                                     .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
                                     .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
                                     .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
-                                    .replace( /%document%/g,      (!$.isEmptyObject( item.company ) &&  !$.isEmptyObject( item.company.logo ) && !$.isEmptyObject( item.company.logo.document) )   ? item.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                                    .replace( /%documentIcon%/g,      (!$.isEmptyObject( item.company ) &&  !$.isEmptyObject( item.company.logo ) && !$.isEmptyObject( item.company.logo.document) )
+                                        ? '<img src="' + item.company.logo.document + '"/>'
+                                        : '<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>' )
                                     ;
 
 
