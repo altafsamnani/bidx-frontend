@@ -1277,10 +1277,17 @@
 
     function _updateAttachment( $attachment, attachment )
     {
-        var createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
+        var createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
         ,   $documentImage      = $attachment.find( ".documentImage" )
         ,   $documentLink       = $attachment.find( ".documentLink" )
+        ,   deletedDoc          = false
         ;
+
+        if ( !attachment.bidxMeta.bidxUploadId )
+        {
+            bidx.utils.warn( "businesssummary::_updateAttachment: attachment has been deleted!" );
+            deletedDoc = true;
+        }
 
         // Store the data so we can later use it to merge the updated data in
         //
@@ -1288,7 +1295,7 @@
 
         // Set the upload ID on the DOM so we can find this later when we get an update from the media library
         //
-        $attachment.attr( "data-uploadId", bidx.utils.getValue( attachment, "bidxMeta.bidxUploadId" ));
+        $attachment.attr( "data-uploadId", bidx.utils.getValue( attachment, "fileUpload" ));
 
         $attachment.find( ".documentName"       ).text( attachment.documentName );
         $attachment.find( ".createdDateTime"    ).text( createdDateTime );
@@ -1302,7 +1309,21 @@
         else
         {
             $documentImage.remove();
-            $documentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+
+            // Check if the file has been removed
+            //
+            if ( deletedDoc )
+            {
+                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) );
+                $attachment.find( ".editDocumentProp" ).hide();
+                $documentLink.parent().append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+                $documentLink.remove();
+            }
+            else
+            {
+                $documentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+            }
+
         }
 
         $documentLink.attr( "href", attachment.document );
@@ -1562,17 +1583,19 @@
 
         if ( attachment )
         {
-            var attached            = $attachmentContainer.find(".attachmentItem")
+            var attached            = $attachmentContainer.find( ".attachmentItem" )
             ,   attachmentExists    = []
             ;
 
-            // Prevent documents to be added again by checking the bidxUploadId
+            // Prevent documents to be added again by checking the previously added data attribute "data-uploadid"
             //
             if ( attached.length ) {
                 $.each( attached, function( idx, a )
                 {
                     var bidxUploadId = $(this).context.dataset.uploadid;
-                    if ( $.inArray( bidxUploadId, attachmentExists ) === -1 ) {
+
+                    if ( $.inArray( bidxUploadId, attachmentExists ) === -1 )
+                    {
                         attachmentExists.push( bidxUploadId );
                     }
                 } );
@@ -1580,7 +1603,8 @@
 
             $.each( attachment, function( idx, a )
             {
-                if ( $.inArray( a.fileUpload, attachmentExists ) === -1 ) {
+                if ( $.inArray( a.fileUpload.toString(), attachmentExists ) === -1 )
+                {
                     _addAttachment( a );
                 }
             } );

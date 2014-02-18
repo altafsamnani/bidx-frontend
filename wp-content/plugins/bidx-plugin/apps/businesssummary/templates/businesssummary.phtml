@@ -32,7 +32,7 @@ $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSumma
 
 $attachmentItem = <<<EOT
     <div class="col-sm-4">
-        <div class="well">
+        <div class="well attachmentItem">
             <div class="row">
                 <div class="col-sm-4">
                     {{documentImage}}
@@ -847,43 +847,45 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 $count = 0;
 
                 foreach ( $attachment as $a ) {
-                    $isimage = false;
+                    if ( $a->bidxMeta->bidxUploadId != NULL ) {
+                        $isimage = false;
 
-                    // 3 attachments items per row, are we full? Add a new row
-                    //
-                    if ( $count % 3 == 0  ) {
+                        // 3 attachments items per row, are we full? Add a new row
+                        //
+                        if ( $count % 3 == 0  ) {
 
-                        if ( $count != 0 ) {
-                            echo "</div>";
+                            if ( $count != 0 ) {
+                                echo "</div>";
+                            }
+
+                            echo '<div class="row reflow-row">';
                         }
 
-                        echo '<div class="row reflow-row">';
-                    }
+                        if ( preg_match( "/^image/i", $a->mimeType ) ) {
+                            $isimage = true;
+                        }
 
-                    if ( preg_match( "/^image/i", $a->mimeType ) ) {
-                        $isimage = true;
-                    }
+                        $imageOrIcon = ( $isimage )
+                                     ? '<img src="'. $this->exst( $a->document ) .'" class="img-rounded documentImage">'
+                                     : '<i class="fa fa-file-text-o document-icon"></i>';
 
-                    $imageOrIcon = ( $isimage )
-                                 ? '<img src="'. $this->exst( $a->document ) .'" class="img-rounded documentImage">'
-                                 : '<i class="fa fa-file-text-o document-icon"></i>';
-
-                    // Echo the attachment item with the values from the API
-                    //
-                    echo $this->replaceMessageTokens(
-                        $attachmentItem,
-                        array_merge(
-                            $attachmentItemTranslations,
-                            array(
-                                '{{documentName}}'          => $this->exst( $a->documentName ),
-                                '{{purpose}}'               => $this->exst( $a->purpose ),
-                                '{{documentType}}'          => $this->getStaticVal( 'documenType', $this->exst( $a->documentType )),
-                                '{{documentImage}}'         => $imageOrIcon
+                        // Echo the attachment item with the values from the API
+                        //
+                        echo $this->replaceMessageTokens(
+                            $attachmentItem,
+                            array_merge(
+                                $attachmentItemTranslations,
+                                array(
+                                    '{{documentName}}'          => $this->exst( $a->documentName ),
+                                    '{{purpose}}'               => $this->exst( $a->purpose ),
+                                    '{{documentType}}'          => $this->getStaticVal( 'documenType', $this->exst( $a->documentType )),
+                                    '{{documentImage}}'         => $imageOrIcon
+                                )
                             )
-                        )
-                    );
+                        );
 
-                    $count++;
+                        $count++;
+                    }
                 }
 
                 // Closing the last row, this will always be the case since we wouldn't be here unless there was at least
@@ -1021,7 +1023,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <div class="row">
                     <div class="col-sm-12">
                         <a href="#removeItem"   class="btn btn-danger btn-sm btn-block"><?php _e( 'Remove document from this business summary', 'bidxplugin' ); ?></a>
-                        <a href="#editDocument" class="btn btn-block"><?php _e( 'Edit document properties', 'bidxplugin' ); ?></a>
+                        <a href="#editDocument" class="btn btn-block editDocumentProp"><?php _e( 'Edit document properties', 'bidxplugin' ); ?></a>
                     </div>
                 </div>
             </div>
