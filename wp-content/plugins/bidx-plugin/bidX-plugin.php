@@ -18,6 +18,13 @@
 
 include ('apps/util.php' );
 
+require ABSPATH . 'wp-content/plugins/bidx-plugin/plugin-updates/plugin-update-checker.php';
+
+$MyUpdateChecker = new PluginUpdateChecker(
+        'http://local.bidx.net/wp-content/metadata.json'
+    ,   __FILE__
+    ,   'bidx-plugin'
+);
 
 // Activation of frontend apps
 //
