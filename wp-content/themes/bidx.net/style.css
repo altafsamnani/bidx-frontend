@@ -1,0 +1,216 @@
+@charset "utf-8";
+/*
+Theme Name: bidx.net
+Theme URI: https://bidx.net/
+Author: Bidx development theme
+Author URI: http://dev.bidx.net/
+Description: bidx main website theme.
+Version: 0.0.1
+*/
+
+body {
+	
+}
+
+#main {
+
+}
+
+header {
+	
+}
+	nav {
+		
+	}
+	nav.primary {
+		
+	}
+	nav.footer {
+		
+	}
+	#widget-header {
+		
+	}
+	#widget-alert {
+		
+	}
+
+#content {
+	
+}
+	article {
+		
+	}
+		.featured-thumbnail {
+			
+		}
+		.post-content {
+			
+		}
+			.pagination {
+				
+			}
+	.post-meta {
+		
+	}
+	.post-navigation {
+		
+	}
+
+#comments {
+	
+}
+	li.comment {
+		
+	}
+		.odd {
+			
+		}
+		.even {
+			
+		}
+		.author-comment {
+			
+		}
+		.comment-text {
+			
+		}
+		.comment-meta {
+			
+		}
+			p.gravatar {
+				
+			}
+		.waiting-for-approval {
+			
+		}
+	#trackbacks {
+		
+	}
+		li.trackback {
+			
+		}
+	p#no-comments {
+		
+	}
+	#comments-form {
+		
+	}
+		#respond {
+			
+		}
+		.cancel-comment-reply {
+			
+		}
+
+.page {
+	
+}
+	#page-content {
+		
+	}
+	#page-meta {
+		
+	}
+
+.post {
+	
+}
+	.postContent {
+		
+	}
+	.post-excerpt {
+		
+	}
+
+nav.oldernewer {
+	
+}
+	.older {
+		
+	}
+	.newer {
+		
+	}
+
+.search {
+	
+}
+
+.author {
+	
+}
+#recent-author-posts {
+	
+}
+#recent-author-comments {
+	
+}
+
+#error404 {
+	
+}
+
+#sidebar {
+	
+}
+	#widget-sidebar {
+		
+	}
+		#sidebar-search {
+			
+		}
+		#sidebar-nav {
+			
+		}
+		#sidebar-archives {
+			
+		}
+		#sidebar-meta {
+			
+		}
+		.widget {
+			
+		}
+
+#footer {
+	
+}
+	#widget-footer {
+		
+	}
+	#footer-nav {
+		
+	}
+	
+.no-results {
+	
+}
+
+.widget-area {
+	
+}
+
+.none { /* this class is used to hid the skip to content link at the beginning of the document for accessibility */
+	display: none;
+}
+.clear {
+	clear: both;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.aligncenter {
+	text-align: center;
+}
+.alignleft {
+	text-align: left;
+}
+.alignright {
+	text-align: right;
+}
+
+/* Always remember to compress your live stylesheet and keep an uncompressed backup */
