@@ -1,12 +1,4 @@
 
-<?php
-    $host = $_SERVER['HTTP_HOST'];
-    $http = ( $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://' ;
-    $url = $http.$host;
-    Header("content-type: application/javascript");
-    ob_start();
- ?>
-
 {
     "name" : "bidx-plugin",
     "slug" : "bidx-plugin",
@@ -17,9 +9,3 @@
         "description" : "Wordpress plugin for adding bidX functionality to a website."
     }
 }
-
-<?php
-    $result = ob_get_clean();
-    // Compess the result before to echoing it
-    echo $result;
-?>
