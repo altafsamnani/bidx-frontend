@@ -22,7 +22,7 @@ require ABSPATH . 'wp-content/plugins/bidx-plugin/plugin-updates/plugin-update-c
 
 //http://local.bidx.net/wp-content/metadata.json'
 $MyUpdateChecker = new PluginUpdateChecker(
-        'https://s3-eu-west-1.amazonaws.com/bidx-builds/acceptance/bidx-plugin/metadata.json'
+    BIDX_PLUGIN_METADATA_PATH
     ,   __FILE__
     ,   'bidx-plugin'
 );
