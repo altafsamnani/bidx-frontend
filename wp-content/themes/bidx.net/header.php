@@ -117,4 +117,3 @@
 			</div><!--.container-->
 		</nav>
 	</header>
-	<div class="container">
