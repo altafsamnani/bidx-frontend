@@ -1,4 +1,13 @@
-@import "compass/css3";
+/*
+Theme Name: bidx.net
+Author: bidx
+Company: bidX
+Version: 1.2
+*/
+
+
+@import "compass";
+@import "recipes";
 //@import "base";
 
 //add the following variables to your _base.scss:
@@ -23,6 +32,15 @@ $color_16: #fff0f0;
 $color_17: #1a242f;
 $color_18: #7f8c8d;
 $darkgreen: #0c753b;
+
+// Hans colors
+$hc1_green:         #008a2d;
+$hc2_yellow:        #f9b822;
+$hc3_blue:          #38a9db;
+$hc4_black:         #1a171b;
+$hc5_gray:          #6f7072;
+$hc6_lightgray:     #b1b2b4;
+
 //--------------------------
 
 // Fonts
@@ -1235,7 +1253,7 @@ a {
         }
     }
 }
-.widget-list {
+.widget-sidebar ul {
     padding-left: 0;
     list-style: none;
     margin-bottom: 0;
@@ -1677,10 +1695,6 @@ a {
 }
 .post-thumb {
     position: relative;
-    img:hover {
-        @include opacity(0.8);
-        @include filter(alpha(opacity=80));
-    }
 }
 .post-details {
     padding: 10px 15px 0 0;
@@ -2189,9 +2203,6 @@ blockquote small {
         }
     }
 }
-
-
-
 
 @media (min-width: 992px) {
     .layout-2 .main {

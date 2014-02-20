@@ -1,86 +1,120 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
-	<title><?php if ( is_category() ) {
-		echo 'Category Archive for &quot;'; single_cat_title(); echo '&quot; | '; bloginfo( 'name' );
-	} elseif ( is_tag() ) {
-		echo 'Tag Archive for &quot;'; single_tag_title(); echo '&quot; | '; bloginfo( 'name' );
-	} elseif ( is_archive() ) {
-		wp_title(''); echo ' Archive | '; bloginfo( 'name' );
-	} elseif ( is_search() ) {
-		echo 'Search for &quot;'.wp_specialchars($s).'&quot; | '; bloginfo( 'name' );
-	} elseif ( is_home() ) {
-		bloginfo( 'name' ); echo ' | '; bloginfo( 'description' );
-	}  elseif ( is_404() ) {
-		echo 'Error 404 Not Found | '; bloginfo( 'name' );
-	} elseif ( is_single() ) {
-		wp_title('');
-	} else {
-		echo wp_title(''); echo ' | '; bloginfo( 'name' );
-	} ?></title>
+	<title>
+		<?php if ( is_category() ) {
+			echo 'Category Archive for &quot;'; single_cat_title(); echo '&quot; | '; bloginfo( 'name' );
+		} elseif ( is_tag() ) {
+			echo 'Tag Archive for &quot;'; single_tag_title(); echo '&quot; | '; bloginfo( 'name' );
+		} elseif ( is_archive() ) {
+			wp_title(''); echo ' Archive | '; bloginfo( 'name' );
+		} elseif ( is_search() ) {
+			echo 'Search for &quot;'.wp_specialchars($s).'&quot; | '; bloginfo( 'name' );
+		} elseif ( is_home() ) {
+			bloginfo( 'name' ); echo ' | '; bloginfo( 'description' );
+		}  elseif ( is_404() ) {
+			echo 'Error 404 Not Found | '; bloginfo( 'name' );
+		} elseif ( is_single() ) {
+			wp_title('');
+		} else {
+			echo wp_title(''); echo ' | '; bloginfo( 'name' );
+		} ?>
+	</title>
+
 	<meta name="description" content="<?php wp_title(''); echo ' | '; bloginfo( 'description' ); ?>" />
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
-	<link rel="profile" href="http://gmpg.org/xfn/11" />
-	<meta name="viewport" content="width=device-width; initial-scale=1"/><?php /* Add "maximum-scale=1" to fix the Mobile Safari auto-zoom bug on orientation changes, but keep in mind that it will disable user-zooming completely. Bad for accessibility. */ ?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/><?php /* Add "maximum-scale=1" to fix the Mobile Safari auto-zoom bug on orientation changes, but keep in mind that it will disable user-zooming completely. Bad for accessibility. */ ?>
 	<link rel="icon" href="<?php bloginfo('template_url'); ?>/assets/ico/favicon.ico" type="image/x-icon" />
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	<link rel="alternate" type="application/rss+xml" title="<?php bloginfo( 'name' ); ?>" href="<?php bloginfo( 'rss2_url' ); ?>" />
 	<link rel="alternate" type="application/atom+xml" title="<?php bloginfo( 'name' ); ?>" href="<?php bloginfo( 'atom_url' ); ?>" />
+    <link href="<?php bloginfo( 'template_url' ); ?>/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Plugins CSS -->
+    <link href="<?php bloginfo( 'template_url' ); ?>/assets/UItoTop/css/ui.totop.css" rel="stylesheet">
+    <link href="<?php bloginfo( 'template_url' ); ?>/assets/prettyPhoto/css/prettyPhoto.css" rel="stylesheet">
+    <!-- REVOLUTION BANNER CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="<?php bloginfo( 'template_url' ); ?>/assets/rs-plugin/css/settings.css" media="screen" />
+    <!-- Font Awesome  -->
+    <link href="<?php bloginfo( 'template_url' ); ?>/assets/font-awesome-4.0.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Custom Stylesheet For This Template -->
+    <link href="<?php bloginfo( 'template_url' ); ?>/assets/sass/stylesheets/screen.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Alegreya:400italic,700italic,900italic,400,700,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Exo+2:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
+
 	<?php wp_enqueue_script("jquery"); /* Loads jQuery if it hasn't been loaded already */ ?>
+
 	<?php /* The HTML5 Shim is required for older browsers, mainly older versions IE */ ?>
-	<!--[if lt IE 9]>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+	    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
+
 	<?php wp_head(); ?> <?php /* this is used by many Wordpress features and for plugins to work proporly */ ?>
-	<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'template_url' ); ?>/theme.css" />
-	<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
+
+	<!-- <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'template_url' ); ?>/theme.css" /> -->
+	<!-- <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" /> -->
 </head>
 
 <body <?php body_class(); ?>>
-<div class="none">
+<!-- <div class="none">
 	<p><a href="#content"><?php _e('Skip to Content'); ?></a></p><?php /* used for accessibility, particularly for screen reader applications */ ?>
-</div><!--.none-->
-<div id="main"><!-- this encompasses the entire Web site -->
-	<div id="header"><header>
-		<div class="container">
-			<div id="title">
-				<?php if( is_front_page() || is_home() || is_404() ) { ?>
-					<h1 id="logo"><a href="<?php bloginfo('url'); ?>/" title="<?php bloginfo('description'); ?>"><?php bloginfo('name'); ?></a></h1>
-					<h2 id="tagline"><?php bloginfo('description'); ?></h2>
-				<?php } else { ?>
-					<h2 id="logo"><a href="<?php bloginfo('url'); ?>/" title="<?php bloginfo('description'); ?>"><?php bloginfo('name'); ?></a></h2>
-					<h3 id="tagline"><?php bloginfo('description'); ?></h3>
-				<?php } ?>
-			</div><!--#title-->
-			<?php
-				// Check to see if the header image has been removed
-				$header_image = get_header_image();
-				if ( ! empty( $header_image ) ) :
-			?>
-				<?php
-					// The header image
-					// Check if this is a post or page, if it has a thumbnail, and if it's a big one
-					if ( is_singular() &&
-							has_post_thumbnail( $post->ID ) &&
-							( /* $src, $width, $height */ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), array( HEADER_IMAGE_WIDTH, HEADER_IMAGE_WIDTH ) ) ) &&
-							$image[1] >= HEADER_IMAGE_WIDTH ) :
-						// Houston, we have a new header image!
-						echo get_the_post_thumbnail( $post->ID, 'post-thumbnail' );
-					else : ?>
-					<div id="header-image" class="container">
-						<img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="<?php bloginfo('name'); ?>" />
-					</div><!--#header-image-->
-				<?php endif; // end check for featured image or standard header ?>
-			<?php endif; // end check for removed header image ?>
-			<div id="nav-primary" class="nav"><nav>
-				<?php if ( is_user_logged_in() ) {
-				     wp_nav_menu( array( 'theme_location' => 'logged-in-menu' ) ); /* if the visitor is logged in, this primary navigation will be displayed */
-				} else {
-				     wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); /* if the visitor is NOT logged in, this primary navigation will be displayed. if a single menu should be displayed for both conditions, set the same menues to be displayed under both conditions through the Wordpress backend */
-				} ?>
-			</nav></div><!--#nav-primary-->
-			<?php if ( ! dynamic_sidebar( 'Header' ) ) : ?><!-- Wigitized Header --><?php endif ?>
-			<div class="clear"></div>
-		</div><!--.container-->
-	</header></div><!--#header-->
+</div> --><!--.none-->
+<div id="utter-wrapper" class="top-border thick">
+	<header id="header" class="header" >
+		<nav class="navbar" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">
+						<img src="<?php bloginfo( 'template_url' ); ?>/assets/img/logo.svg" alt="logo">
+					</a>
+				</div>
+
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <a href="#" class="btn btn-flat flat-link navbar-btn pull-right">Login</a>
+                    <a href="#" class="btn btn-flat flat-warning navbar-btn pull-right">Get started</a>
+
+					<?php
+						$args = array(
+							'theme_location'  => '',
+							'menu'            => '',
+							'container'       => 'ul',
+							'container_class' => '',
+							'container_id'    => '',
+							'menu_class'      => 'nav navbar-nav',
+							'menu_id'         => '',
+							'echo'            => true,
+							'fallback_cb'     => 'wp_page_menu',
+							'before'          => '',
+							'after'           => '',
+							'link_before'     => '',
+							'link_after'      => '',
+							'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+							'depth'           => 0,
+							'walker'          => ''
+						);
+
+
+						wp_nav_menu( $args );
+					?>
+
+				</div><!--#nav-primary-->
+
+				<?php if ( ! dynamic_sidebar( 'Header' ) ) : ?><!-- Wigitized Header --><?php endif ?>
+
+				<div class="clear"></div>
+			</div><!--.container-->
+		</nav>
+	</header>
 	<div class="container">
