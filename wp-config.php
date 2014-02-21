@@ -132,6 +132,7 @@ define('BLOG_ID_CURRENT_SITE', 1);
 
 define('WP_DEVELOPMENT', true);
 define('NOBLOGREDIRECT', 'http://' . DOMAIN_CURRENT_SITE);
+define('BIDX_PLUGIN_METADATA_PATH', 'http://bidx-builds.s3-website-eu-west-1.amazonaws.com/acceptance/bidx-plugin/metadata.json');
 
 /* That's all, stop editing! Happy blogging. */
 
