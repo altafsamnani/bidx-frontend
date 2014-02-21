@@ -9,7 +9,7 @@
 
 							<?php if ( has_post_thumbnail() ) {
 								/* loades the post's featured thumbnail, requires Wordpress 3.0+ */
-								echo '<div class="post-thumb">'; the_post_thumbnail('large', array('class' => 'img-responsive')); echo '</div>';
+								echo '<div class="post-thumb">'; the_post_thumbnail('bidx_large', array('class' => 'img-responsive')); echo '</div>';
 							} ?>
 
 							<?php edit_post_link('<small>Edit this entry</small>','',''); ?>

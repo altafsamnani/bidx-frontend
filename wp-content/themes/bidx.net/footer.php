@@ -27,24 +27,37 @@
                         <h5>Recent Articles</h5>
                     </div>
                     <ul class="recent-posts">
+<?php
+					// WP_Query arguments
+					$args = array (
+						'post_type'			=> 'post',
+						'post_status'		=> 'publish',
+						'posts_per_page' 		=> 3,
+					);
+
+					// The Query
+					$recent_posts = new WP_Query( $args );
+
+					// The Loop
+					if ( $recent_posts->have_posts() ) {
+						while ( $recent_posts->have_posts() ) {
+							$recent_posts->the_post();
+?>
                         <li>
-                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/small-1.jpg" alt="Post Image">
+                            <?php echo the_post_thumbnail('bidx_thumb'); ?>
                             <h5>
-                                <a href="post-1.html">Finding business plans</a>
+                                <a href="<?php echo the_permalink(); ?>"><?php echo the_title(); ?></a>
                             </h5>
                         </li>
-                        <li>
-                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/small-2.jpg" alt="Post Image">
-                            <h5>
-                                <a href="post-1.html">Professional mentoring</a>
-                            </h5>
-                        </li>
-                        <li>
-                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/small-3.jpg" alt="Post Image">
-                            <h5>
-                                <a href="post-1.html">How to make your business grow fast</a>
-                            </h5>
-                        </li>
+<?php
+						}
+					} else {
+						// no posts found
+					}
+
+					// Restore original Post Data
+					wp_reset_postdata();
+?>
                     </ul>
                 </div>
                 <!-- /.popular-posts -->
@@ -130,7 +143,6 @@
 </div><!--#main-->
 <?php // wp_footer(); /* this is used by many Wordpress features and plugins to work properly */ ?>
 
-	<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/jquery-2.0.3.min.js"></script>
 	<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="<?php bloginfo( 'template_url' ); ?>/assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="<?php bloginfo( 'template_url' ); ?>/assets/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>

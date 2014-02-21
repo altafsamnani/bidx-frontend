@@ -160,6 +160,7 @@
 		create_post_type('group');
 		create_post_type('competition');
 		create_post_type('testimonial');
+		create_post_type('team');
 	}
 
 	function create_post_type($post_type = 'staff') {
@@ -180,6 +181,19 @@
 		register_post_type ($post_type, $args);
 
 	}
+
+
+	//post thumbnail support
+	add_action( 'after_setup_theme', 'theme_setup' );
+
+	function theme_setup() {
+	      if ( function_exists( 'add_theme_support' ) ) {
+	        add_image_size( 'bidx_thumb', 64, 64, true );
+	        add_image_size( 'bidx_medium', 310, 195, true );
+	        add_image_size( 'bidx_large', 735, 300, true );
+	    }
+	}
+
 
 ?>
 
