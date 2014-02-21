@@ -105,7 +105,7 @@ add_filter ('excerpt_more', 'custom_excerpt_more');
 // no more jumping for read more link
 function no_more_jumping ($post)
 {
-    return '<a href="' . get_permalink ($post->ID) . '" class="read-more">' . '&nbsp; Continue Reading &raquo;' . '</a>';
+    return '<p><p/><a href="' . get_permalink ($post->ID) . '" class="btn btn-flat flat-color btn-rounded btn-sm">' . '&nbsp; Continue Reading ' . '<i class="fa fa-long-arrow-right"></i></a>';
 }
 
 add_filter ('excerpt_more', 'no_more_jumping');

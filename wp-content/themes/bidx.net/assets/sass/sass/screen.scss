@@ -1691,7 +1691,6 @@ a {
 }
 .post {
     overflow: hidden;
-    @include border-radius(3px);
 }
 .post-thumb {
     position: relative;
