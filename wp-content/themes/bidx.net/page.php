@@ -1,4 +1,10 @@
 <?php get_header(); ?>
+
+
+
+
+
+
 <div class="container">
 	<div id="content">
 		<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
@@ -20,8 +26,6 @@
 					<p><?php _e('Posted on '); the_time('F j, Y'); _e(' at '); the_time() ?></p>
 				</div><!--#pageMeta-->
 			</div><!--#post-# .post-->
-
-			<?php comments_template( '', true ); ?>
 
 		<?php endwhile; ?>
 	</div><!--#content-->
