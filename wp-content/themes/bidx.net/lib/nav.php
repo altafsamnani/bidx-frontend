@@ -43,11 +43,46 @@ class Bidx_Nav_Walker extends Walker_Nav_Menu
 
         $output .= $item_html;
     }
+    function start2_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
+
+//    $item_html = '';
+//      echo "<pre>";
+//      print_r($item);
+//      echo $depth;
+//
+//      exit();
+    parent::start_el($item_html, $item, $depth, $args);
+
+
+    //top navigation receives styling with dropdown menu's
+  
+     
+      if ($item->current_item_parent && ($depth === 0)) {
+        $item_html = str_replace('<a', '<a class="dropdown-toggle" href="'. $item->url .'"data-toggle="dropdown" data-target="#"', $item_html);
+        $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
+      }
+      elseif (stristr($item_html, 'li class="divider')) {
+        $item_html = preg_replace('/<a[^>]*>.*?<\/a>/iU', '', $item_html);
+      }
+      elseif (stristr($item_html, 'li class="nav-header')) {
+        $item_html = preg_replace('/<a[^>]*>(.*)<\/a>/iU', '$1', $item_html);
+      }
+      else {
+        // START BIDX, add btn btn-primary to all anchors
+        $item_html = str_replace('<a', '<a class=""', $item_html );
+        // END BIDX
+      }
+    
+    
+
+    $output .= $item_html;
+  }
 
     function display_element ($element, &$children_elements, $max_depth, $depth = 0, $args, &$output)
     {
+          
         $element->is_dropdown = ((!empty ($children_elements[$element->ID]) && (($depth + 1) < $max_depth)));
-
+    
         if ($element->is_dropdown) {
             if ($depth === 0) {
                 $element->classes[] = 'dropdown';
