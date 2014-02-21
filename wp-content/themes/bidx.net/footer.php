@@ -73,36 +73,42 @@
                         </div>
                     </div>
                     <div id="caroufredsel-testimonials-container">
+<?php
+                    // WP_Query arguments
+                    $args = array (
+                        'post_type'         => 'testimonial',
+                        'post_status'       => 'publish',
+                        'posts_per_page'        => 3,
+                    );
+
+                    // The Query
+                    $testimonials = new WP_Query( $args );
+
+                    // The Loop
+                    if ( $testimonials->have_posts() ) {
+                        while ( $testimonials->have_posts() ) {
+                            $testimonials->the_post();
+?>
                         <div class="testimonial">
                             <div class="testimonial-content">
-                                <p>In est unum referrentur, pro at soluta epicurei, mei ea expetendis adipiscing delicatissimi. Rebum mucius inciderint ei quo. His autem philosophia te, pri cu deserunt convenire.</p>
+                                <p><?php echo $testimonials->post->post_content ?></p>
                             </div>
                             <div class="testimonial-author">
-                                <img class="user-thumb" src="<?php bloginfo( 'template_url' ); ?>/assets/img/users/photo (1).jpg" alt="User Thumb">
-                                <span class="user">Arnoob Mondal</span>
-                                <span class="user-info">Burundi Business Incubator</span>
+                                <?php echo the_post_thumbnail('bidx_thumb', array('class' => 'user-thumb')); ?>
+                                <span class="user"><?php echo the_title(); ?></span>
+                                <span class="user-info"><?php echo the_excerpt(); ?></span>
                             </div>
                         </div>
-                        <div class="testimonial">
-                            <div class="testimonial-content">
-                                <p>In est unum referrentur, pro at soluta epicurei, mei ea expetendis adipiscing delicatissimi. Rebum mucius inciderint ei quo. His autem philosophia te.</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img class="user-thumb" src="<?php bloginfo( 'template_url' ); ?>/assets/img/users/photo (2).jpg" alt="User Thumb">
-                                <span class="user">Bushra Karim</span>
-                                <span class="user-info">JCI Rwanda group</span>
-                            </div>
-                        </div>
-                        <div class="testimonial">
-                            <div class="testimonial-content">
-                                <p>In est unum referrentur, pro at soluta epicurei, mei ea expetendis adipiscing delicatissimi. Rebum mucius inciderint ei quo. His autem philosophia te, pri cu deserunt convenire.</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img class="user-thumb" src="<?php bloginfo( 'template_url' ); ?>/assets/img/users/photo (3).jpg" alt="User Thumb">
-                                <span class="user">Shubro Dev Mondal</span>
-                                <span class="user-info">Birzeit University</span>
-                            </div>
-                        </div>
+
+<?php
+                        }
+                    } else {
+                        // no posts found
+                    }
+
+                    // Restore original Post Data
+                    wp_reset_postdata();
+?>
                     </div>
                 </div>
             <!-- /.col-md-6 -->
