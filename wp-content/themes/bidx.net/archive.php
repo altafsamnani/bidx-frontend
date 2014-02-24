@@ -18,14 +18,15 @@
 
 
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-					<div class="post">
+					<div class="post pad-bottom-50">
+
 						<?php if ( has_post_thumbnail() ) {
 							/* loades the post's featured thumbnail, requires Wordpress 3.0+ */
-							echo '<div class="post-thumb">'; the_post_thumbnail('large', array('class' => 'img-responsive')); echo '</div>';
+							echo '<div class="post-thumb">'; the_post_thumbnail('bidx_large', array('class' => 'img-responsive')); echo '</div>';
 						} ?>
 
+						<?php edit_post_link('<small>Edit this entry</small>','',''); ?>
 						<h2><a href="<?php the_permalink() ?>" title="<?php the_title(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-
 
 			            <div class="post-meta">
 			                <ul class="meta-list">
@@ -44,12 +45,9 @@
 			                </ul>
 			            </div>
 			            <!-- /.post-meta -->
+						<?php echo the_excerpt(); ?>
 
-						<?php the_excerpt(); /* the excerpt is loaded to help avoid duplicate content issues */ ?>
-
-					</div><!--.post-->
-
-
+					</div><!-- #post-## -->
 				<?php endwhile; else: ?>
 					<div class="no-results">
 						<p><strong><?php _e('There has been an error.'); ?></strong></p>
