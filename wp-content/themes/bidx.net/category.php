@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
         	<div class="col-md-9 main">
-				<h1><?php printf( __( 'Category Archives: %s' ), '<span>' . single_cat_title( '', false ) . '</span>' ); ?></h1>
+				<h1><?php printf( __( 'Category: %s' ), '<span>' . single_cat_title( '', false ) . '</span>' ); ?></h1>
 				<?php echo category_description(); /* displays the category's description from the Wordpress admin */ ?>
 
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>

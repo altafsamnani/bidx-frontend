@@ -61,9 +61,6 @@
 </head>
 
 <body <?php body_class(); ?>>
-<!-- <div class="none">
-	<p><a href="#content"><?php _e('Skip to Content'); ?></a></p><?php /* used for accessibility, particularly for screen reader applications */ ?>
-</div> --><!--.none-->
 <div id="utter-wrapper" class="top-border thick">
 	<header id="header" class="header" >
 		<nav class="navbar" role="navigation">
@@ -82,7 +79,7 @@
 				</div>
 
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <a href="#" class="btn btn-flat flat-link navbar-btn pull-right">Login</a>
+                    <a href="#" class="btn btn-flat flat-link navbar-btn pull-right">English</a>
                     <a href="#" class="btn btn-flat flat-warning navbar-btn pull-right">Get started</a>
 
 					<?php

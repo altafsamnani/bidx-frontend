@@ -19,11 +19,7 @@
 				                <ul class="meta-list">
 				                    <li>
 				                        <span><?php _e('Posted on '); ?></span>
-				                        <a href="#"><?php the_time('F j, Y'); _e(' at '); the_time() ?></a>
-				                    </li>
-				                    <li>
-				                        <span><?php _e('By ');?></span>
-				                        <a href="#"><?php the_author_posts_link() ?></a>
+				                        <a href="#"><?php the_time('F j, Y'); ?></a>
 				                    </li>
 				                    <li>
 				                        <span><?php _e('In ');?></span>
