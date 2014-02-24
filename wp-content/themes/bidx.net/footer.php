@@ -12,11 +12,11 @@
                         <h5>Stay Connected</h5>
                     </div>
                     <ul class="social-links">
-                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a class="google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a class="pinterest" href="#"><i class="fa fa-pinterest"></i></a></li>
-                        <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a target="_blank" class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a target="_blank" class="google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a target="_blank" class="twitter" href="//twitter.com/bid_x"><i class="fa fa-twitter"></i></a></li>
+                        <li><a target="_blank" class="pinterest" href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a target="_blank" class="rss" href="#"><i class="fa fa-rss"></i></a></li>
                     </ul>
                 </div>
             </div>

@@ -17,7 +17,7 @@
 		} elseif ( is_single() ) {
 			wp_title('');
 		} else {
-			echo wp_title(''); echo ' | '; bloginfo( 'name' );
+			bloginfo( 'name' ); echo ' | '; bloginfo( 'description' );
 		} ?>
 	</title>
 

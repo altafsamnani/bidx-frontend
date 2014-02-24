@@ -26,7 +26,7 @@
                         <address>
                             Phone: (123) 456-7890<br>
                             Fax: (123) 456-7890<br>
-                            <a href="mailto:#">contact@example.com</a>
+                            <a href="mailto:info@bidx.net">info@bidx.net</a>
                         </address>
                     </div>
                 </div>
