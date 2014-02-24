@@ -163,6 +163,7 @@ body {
 }
 h1 {
     @extend %extend_1;
+    font-size: 50px;
 }
 h2 {
     @extend %extend_1;
@@ -969,24 +970,24 @@ a {
     }
 }
 .flat-color {
-    border: 2px solid $lightgreen;
-    background-color: $lightgreen;
+    border: 2px solid $hc1_green;
+    background-color: $hc1_green;
     color: $white;
     &:hover {
-        border: 2px solid $lightgreen;
+        border: 2px solid $hc1_green;
         background-color: transparent !important;
-        color: $lightgreen;
+        color: $hc1_green;
     }
     &:active {
-        border: 2px solid $lightgreen;
+        border: 2px solid $hc1_green;
     }
     &.btn-bordered {
         &:hover {
-            background-color: $lightgreen;
+            background-color: $hc1_green;
             color: $white;
         }
         background-color: transparent !important;
-        color: $lightgreen;
+        color: $hc1_green;
     }
 }
 .flat-link {
@@ -1006,7 +1007,7 @@ a {
         position: relative;
         margin: 0;
         font-weight: 800;
-        color: $lightgreen;
+        color: $hc1_green;
         overflow: hidden;
         font-size: 30px;
         line-height: 25px;
@@ -1049,7 +1050,7 @@ a {
         }
     }
     .subpage-title h5 {
-        color: $darkgreen;
+        color: $hc1_green;
         font-size: 14px;
         &:before {
             background-color: $color_6;
@@ -1366,7 +1367,7 @@ a {
 }
 .top-border {
     &.thick {
-        border-top: 5px solid $darkgreen;
+        border-top: 5px solid $hc1_green;
     }
     &.thin {
         border-top: 1px solid $color_6;
@@ -1607,7 +1608,7 @@ a {
         h2 {
             font-family: $exo;
             font-weight: 800;
-            font-size: 60px;
+            font-size: 30px;
             color: $white;
             display: inline-block;
             margin: 0;
@@ -1616,7 +1617,7 @@ a {
             font-size: 24px;
             display: inline-block;
             vertical-align: top;
-            margin-top: 5px;
+            margin-top: 0;
         }
         .per {
             font-size: 14px;
@@ -1642,14 +1643,17 @@ a {
         padding: 20px;
         border: 1px solid $color_12;
     }
-    &.premium .title {
+    &.groups .title {
         background-color: $color_2;
     }
-    &.professional .title {
+    &.competition .title {
         background-color: $color_1;
     }
-    &.ultimate .title {
-        background-color: $black;
+    &.hotline .title {
+        background-color: $color_10;
+    }
+    &.ecosystem .title {
+        background-color: $hc1_green;
     }
 }
 .error404 {
