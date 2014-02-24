@@ -16,6 +16,7 @@ class Bidx_Nav_Walker extends Walker_Nav_Menu
 
     function check_current ($classes)
     {
+        echo 'malik';exit;
         return preg_match ('/(current[-_])|active|dropdown/', $classes);
     }
 
@@ -34,7 +35,7 @@ class Bidx_Nav_Walker extends Walker_Nav_Menu
         if ($item->is_dropdown && ($depth === 0)) {
             //$item_html = str_replace('<a', '<a class=""', $item_html ); //dropdown-toggle" data-toggle="dropdown" data-target="#"', $item_html);
             $item_html = str_replace ('<a href="#">', '<a class="dropdown-toggle" href="' . $item->url . '" data-toggle="dropdown" data-target="#">', $item_html);
-            $item_html = str_replace ('</a>', ' <span class="fa fa-caret-down"></span></a>', $item_html);
+            //$item_html = str_replace ('</a>', ' <span class="fa fa-caret-down"></span></a>', $item_html);
         } elseif (stristr ($item_html, 'li class="divider')) {
             $item_html = preg_replace ('/<a[^>]*>.*?<\/a>/iU', '', $item_html);
         } elseif (stristr ($item_html, 'li class="nav-header')) {
@@ -43,40 +44,7 @@ class Bidx_Nav_Walker extends Walker_Nav_Menu
 
         $output .= $item_html;
     }
-    function start2_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
-
-//    $item_html = '';
-//      echo "<pre>";
-//      print_r($item);
-//      echo $depth;
-//
-//      exit();
-    parent::start_el($item_html, $item, $depth, $args);
-
-
-    //top navigation receives styling with dropdown menu's
-  
-     
-      if ($item->current_item_parent && ($depth === 0)) {
-        $item_html = str_replace('<a', '<a class="dropdown-toggle" href="'. $item->url .'"data-toggle="dropdown" data-target="#"', $item_html);
-        $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
-      }
-      elseif (stristr($item_html, 'li class="divider')) {
-        $item_html = preg_replace('/<a[^>]*>.*?<\/a>/iU', '', $item_html);
-      }
-      elseif (stristr($item_html, 'li class="nav-header')) {
-        $item_html = preg_replace('/<a[^>]*>(.*)<\/a>/iU', '$1', $item_html);
-      }
-      else {
-        // START BIDX, add btn btn-primary to all anchors
-        $item_html = str_replace('<a', '<a class=""', $item_html );
-        // END BIDX
-      }
-    
-    
-
-    $output .= $item_html;
-  }
+ 
 
     function display_element ($element, &$children_elements, $max_depth, $depth = 0, $args, &$output)
     {
@@ -102,14 +70,14 @@ class Bidx_Nav_Walker extends Walker_Nav_Menu
  */
 function bidx_nav_menu_css_class ($classes, $item)
 {
-    $slug = sanitize_title ($item->title);
+    $slug = sanitize_title ($item->title);  
     $classes = preg_replace ('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
     $classes = preg_replace ('/^((menu|page)[-_\w+]+)+/', '', $classes);
 
     $classes[] = 'menu-' . $slug;
 
     $classes = array_unique ($classes);
-
+  
     return array_filter ($classes, 'is_element_empty');
 }
 
@@ -137,7 +105,7 @@ function bidx_nav_menu_args ($args = '')
     if (!$args['walker']) {
         $bidx_nav_menu_args['walker'] = new Bidx_Nav_Walker();
     }
-
+  
     return array_merge ($args, $bidx_nav_menu_args);
 }
 
