@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Custom functions
  */
@@ -33,4 +34,28 @@ function create_post_type ($post_type = 'staff')
       'supports' => array ('title', 'editor', 'thumbnail', 'excerpt')
     );
     register_post_type ($post_type, $args);
+}
+
+function bidx_language_selector ()
+{//btn btn-flat flat-link navbar-btn pull-right
+    echo '
+   
+    <ul id="" class="btn btn-flat nav navbar-text pull-right">
+     <li class="dropdown menu-item">
+      <a href="#" class="dropdown-toggle flat-link" data-toggle="dropdown">' . strtoupper (ICL_LANGUAGE_NAME) . '</a>
+       <ul class="dropdown-menu">';
+
+    $languages = icl_get_languages ('skip_missing=0&orderby=code');
+    if (!empty ($languages)) {    
+        foreach ($languages as $l) {
+            echo ($l['active'] == 0 ? "<li><a href='" . $l['url'] . "'>" . 
+                strtoupper ($l['native_name']) .
+                "</a></li>" : NULL);
+        }
+    }
+    echo '
+       </ul>
+     </li>
+    </ul>    
+    ';
 }

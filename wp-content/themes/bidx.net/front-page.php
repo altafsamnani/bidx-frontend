@@ -13,35 +13,35 @@
                     data-y="65"
                     data-speed="500"
                     data-start="1000"
-                    data-easing="easeOutExpo" style="font-size: 25px;">Entrepreneurial Ecosystem Online</div>
+                    data-easing="easeOutExpo" style="font-size: 25px;"><?php _e('Entrepreneurial Ecosystem Online','bidxtheme');?></div>
                 <div class="tp-caption very_large_black_text lft ltt"
                     data-x="105"
                     data-y="100"
                     data-speed="500"
                     data-start="1200"
-                    data-easing="easeOutExpo" style="font-size: 50px;">CREATE BUSINESS</div>
+                    data-easing="easeOutExpo" style="font-size: 50px;"><?php _e('CREATE BUSINESS','bidxtheme');?></div>
                 <div class="tp-caption theme_caption3 sfl stl"
                     data-x="105"
                     data-y="180"
                     data-speed="500"
                     data-start="1400"
                     data-easing="easeOutExpo" style="font-family: 'Montserrat', sans-serif; color: #34495e;">
-                    Unite entrepreneurs, mentors and<br>
+                    <?php _e('Unite entrepreneurs, mentors and<br>
                     investors in emerging markets<br>
-                    connect them globally.
+                    connect them globally.','bidxtheme');?>
                 </div>
                 <a href="#" class="caption btn btn-flat flat-inverse btn-bordered sfb stb"
                     data-x="105"
                     data-y="275"
                     data-speed="500"
                     data-start="1600"
-                    data-easing="easeOutExpo">Learn More</a>
+                    data-easing="easeOutExpo"><?php _e('Learn More','bidxtheme');?></a>
                 <a href="#" class="caption btn btn-flat flat-warning sfb stb"
                     data-x="220"
                     data-y="275"
                     data-speed="500"
                     data-start="1800"
-                    data-easing="easeOutExpo">Get Started</a>
+                    data-easing="easeOutExpo"><?php _e('Get Started','bidxtheme');?></a>
                 <div class="caption lfr ltr"
                     data-x="635"
                     data-y="70"
@@ -62,8 +62,8 @@
                 <div class="service">
                     <div class="handicon handicon-19"></div>
                     <div class="">
-                        <h1>Entrepreneur</h1>
-                        <p>Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.</p>
+                        <h1><?php _e('Entrepreneur','bidxtheme');?></h1>
+                        <p><?php _e('Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.','bidxtheme');?></p>
                     </div>
                 </div>
             </div>
@@ -72,8 +72,8 @@
                 <div class="service">
                     <div class="handicon handicon-24"></div>
                     <div class="">
-                        <h1>Mentor</h1>
-                        <p>Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.</p>
+                        <h1><?php _e('Mentor','bidxtheme');?></h1>
+                        <p><?php _e('Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.','bidxtheme');?></p>
                     </div>
                 </div>
             </div>
@@ -82,8 +82,8 @@
                 <div class="service">
                     <div class="handicon handicon-5"></div>
                     <div class="">
-                        <h1>Investor</h1>
-                        <p>Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.</p>
+                        <h1><?php _e('Investor','bidxtheme');?></h1>
+                        <p><?php _e('Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.','bidxtheme');?></p>
                     </div>
                 </div>
             </div>
@@ -103,9 +103,9 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-9 action-box">
-                <h1>Ideal solutions</h1>
-                <p>For entrepreneurs, investors, incubators, chambers of commerce, banks, investment funds ...and more.</p>
-                <a href="#" class="btn btn-flat flat-warning">Get Started</a>
+                <h1><?php _e('Ideal solutions','bidxtheme');?></h1>
+                <p><?php _e('For entrepreneurs, investors, incubators, chambers of commerce, banks, investment funds ...and more.','bidxtheme');?></p>
+                <a href="#" class="btn btn-flat flat-warning"><?php _e('Get Started','bidxtheme');?></a>
             </div>
         <!-- /.action-box -->
     </div>
@@ -115,7 +115,7 @@
 <section id="blog-posts" class="pad-25 pad-top-50">
     <div class="container">
         <div class="subpage-title">
-            <h5>Latest Groups</h5>
+            <h5><?php _e('Latest Groups','bidxtheme');?></h5>
             <!-- Controls -->
             <div class="controls">
                 <span id="blog-posts-prev" class="prev"><i class="fa fa-angle-left"></i></span>
@@ -204,9 +204,10 @@
             </div>
             <!-- /.col-sm-12 -->
             <div class="col-xs-12 col-sm-9">
-                <h1>It’s all about growing businesses and creating jobs</h1>
+                <?php _e('<h1>It’s all about growing businesses and creating jobs</h1>
                 <p>If your goal is to grow, start or finance businesses in emerging markets, then bidX offers you an online solution to improve your results and impact.     bidX is powered by BiD Network. 60,000 online members from 90 countries, 1500 mentors, 200 investors, 822 businesses started and grown, 130 businesses financed with over $17 million. 6500 jobs created.</p>
                 <p>Use bidX to create your own online community, using your own brand, identity and language. Decide on your Group’s focus: a city, country, sector or industry. Invite entrepreneurs to submit or create their business plans. Connect them with mentors, investors, and advisors. If your businesses are seeking export opportunities or international finance and advice, through bidX they can connect to our global network of online groups.</p>
+','bidxtheme');?>
             </div>
             <!-- /.col-sm-12 -->
         </div>
@@ -220,7 +221,7 @@
 <section id="recent-works" class="pad-top-50 top-border thin">
     <div class="container">
         <div class="subpage-title">
-            <h5>Our Sponsors</h5>
+            <h5><?php _e('Our Sponsors','bidxtheme');?></h5>
             <!-- Controls -->
             <div class="controls">
                 <span id="client-prev" class="prev"><i class="fa fa-angle-left"></i></span>

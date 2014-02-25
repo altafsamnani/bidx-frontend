@@ -79,7 +79,8 @@
 				</div>
 
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <a href="#" class="btn btn-flat flat-link navbar-btn pull-right">English</a>
+                   
+                    <?php bidx_language_selector(); ?>
                     <a href="#" class="btn btn-flat flat-warning navbar-btn pull-right">Get started</a>
 
 					<?php

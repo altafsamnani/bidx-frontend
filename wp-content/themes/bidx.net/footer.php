@@ -3,13 +3,13 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="widget about-us">
-                    <div class="footer-brand"><span>bidx</span>.net</div>
-                    <p>Grow your local businesses and create new jobs. Your economy depends on it!</p>
+                    <div class="footer-brand"><?php _e('<span>bidx</span>.net','bidxtheme');?></div>
+                    <p><?php _e('Grow your local businesses and create new jobs. Your economy depends on it!','bidxtheme');?></p>
                 </div>
                 <!-- /.about-us -->
                 <div class="widget stay-connedted">
                     <div class="subpage-title">
-                        <h5>Stay Connected</h5>
+                        <h5><?php _e('Stay Connected','bidxtheme');?></h5>
                     </div>
                     <ul class="social-links">
                         <li><a target="_blank" class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
@@ -24,7 +24,7 @@
             <div class="col-md-3">
                 <div class="widget popular-posts">
                     <div class="subpage-title">
-                        <h5>Recent Articles</h5>
+                        <h5><?php _e('Recent Articles','bidxtheme');?></h5>
                     </div>
                     <ul class="recent-posts">
 <?php
@@ -65,7 +65,7 @@
             <!-- /.col-md-3 -->
                 <div class="col-md-6 widget">
                     <div class="subpage-title">
-                        <h5>Testimonials</h5>
+                        <h5><?php _e('Testimonials','bidxtheme');?></h5>
                         <!-- Controls -->
                         <div class="controls">
                             <span id="testimonials-prev" class="prev"><i class="fa fa-angle-left"></i></span>
@@ -126,14 +126,14 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 footer-info-wrapper">
-                <span>bidx.net © 2014. All Rights Reserved.</span>
+                <span><?php _e('bidx.net © 2014. All Rights Reserved.','bidxtheme');?></span>
             </div>
             <!-- /.footer-info-wrapper -->
             <div class="col-xs-12 col-sm-6 footer-links-wrapper">
                 <ul class="list-inline">
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms Of Service</a></li>
-                    <li><a href="#">Sitemap</a></li>
+                    <li><a href="#"><?php _e('Privacy Policy','bidxtheme');?></a></li>
+                    <li><a href="#"><?php _e('Terms Of Service','bidxtheme');?></a></li>
+                    <li><a href="#"><?php _e('Sitemap','bidxtheme');?></a></li>
                 </ul>
             </div>
             <!-- /.footer-links-wrapper -->
