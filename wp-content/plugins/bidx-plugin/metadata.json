@@ -2,8 +2,8 @@
 {
     "name" : "bidx-plugin",
     "slug" : "bidx-plugin",
-    "download_url" : "http://bidx-builds.s3-website-eu-west-1.amazonaws.com/acceptance/bidx-plugin/bidx-plugin_25.zip",
-    "version" : "0.1.3",
+    "download_url" : "%downloadurl%",
+    "version" : "%version%",
     "author" : "bidX development team",
     "sections" : {
         "description" : "Wordpress plugin for adding bidX functionality to a website."
