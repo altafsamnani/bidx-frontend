@@ -124,7 +124,7 @@ $exo: 'Exo 2', sans-serif;
     @include filter(alpha(opacity=50));
 }
 %extend_7 {
-    width: 45px;
+    width: 100px;
     height: 45px;
     text-align: center;
     background-color: $color_1;
@@ -1104,8 +1104,10 @@ a {
 }
 .portfolio-item {
     overflow: hidden;
+    @include single-box-shadow(rgba(80,80,80,0.35), 0, 0, 5px, 0);
     @include transition(all 0.2s ease);
     @include border-radius(3px);
+    margin-top: 5px;
     .portfolio-thumb {
         position: relative;
         overflow: hidden;
@@ -1129,6 +1131,8 @@ a {
             left: 0;
             margin-left: -45px;
             @include transition(all 0.2s ease);
+            font-family: $exo;
+            font-weight: 300;
             &:hover {
                 background-color: $lightgreen;
                 color: $white;
@@ -1168,7 +1172,7 @@ a {
             }
         }
         p {
-            margin-top: 20px;
+            margin-top: 0;
             margin-bottom: 0;
         }
     }

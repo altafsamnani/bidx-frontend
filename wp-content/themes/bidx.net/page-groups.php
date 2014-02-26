@@ -42,11 +42,13 @@ get_header();
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper artwork creative">
                                     <div class="portfolio-item">
                                         <div class="portfolio-thumb">
-                                            <img src="assets/img/blog/logo1.png" class="img-responsive" alt="1st Portfolio Thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo10.png" class="img-responsive" alt="1st Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://bscmonrovia.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <h5>1st Group name</h5>
-                                            <p>Group Function.</p>
+                                            <!-- <h5>1st Group name</h5> -->
+                                            <p>BSC Monrovia</p>
                                         </div>
                                     </div>
                                 </div>
@@ -54,11 +56,13 @@ get_header();
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper nature outside">
                                     <div class="portfolio-item">
                                         <div class="portfolio-thumb">
-                                            <img src="assets/img/blog/logo2.png" class="img-responsive" alt="2nd Portfolio Thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo9.png" class="img-responsive" alt="2nd Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://bsckosovo.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <h5>2nd Group name</h5>
-                                            <p>Group Function.</p>
+                                            <!-- <h5>2nd Group name</h5> -->
+                                            <p>BSC Kosovo.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -66,11 +70,13 @@ get_header();
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper photography artwork">
                                     <div class="portfolio-item">
                                         <div class="portfolio-thumb">
-                                            <img src="assets/img/blog/logo3.png" class="img-responsive" alt="3rd Portfolio Thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo8.png" class="img-responsive" alt="3rd Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://jcirwanda.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <h5>3rd Group name</h5>
-                                            <p>Group Function.</p>
+                                            <!-- <h5>3rd Group name</h5> -->
+                                            <p>JCI Rwanda</p>
                                         </div>
                                     </div>
                                 </div>
@@ -78,11 +84,13 @@ get_header();
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper creative nature">
                                     <div class="portfolio-item">
                                         <div class="portfolio-thumb">
-                                            <img src="assets/img/blog/logo4.png" class="img-responsive" alt="4th Portfolio Thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo2.png" class="img-responsive" alt="4th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://bbinburundi.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <h5>4th Group name</h5>
-                                            <p>Group Function.</p>
+                                            <!-- <h5>4th Group name</h5> -->
+                                            <p>BBIN Burundi</p>
                                         </div>
                                     </div>
                                 </div>
@@ -90,11 +98,13 @@ get_header();
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper nature">
                                     <div class="portfolio-item">
                                         <div class="portfolio-thumb">
-                                            <img src="assets/img/blog/logo5.png" class="img-responsive" alt="5th Portfolio Thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo1.png" class="img-responsive" alt="5th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://poslovnicentarzvecan.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <h5>5th Group name</h5>
-                                            <p>Group Function.</p>
+                                            <!-- <h5>5th Group name</h5> -->
+                                            <p>Birzeit</p>
                                         </div>
                                     </div>
                                 </div>
@@ -102,11 +112,13 @@ get_header();
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper artwork creative">
                                     <div class="portfolio-item">
                                         <div class="portfolio-thumb">
-                                            <img src="assets/img/blog/logo6.png" class="img-responsive" alt="6th Portfolio Thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo7.png" class="img-responsive" alt="6th Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://cleancookstoves.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <h5>6th Group name</h5>
-                                            <p>Group Function.</p>
+                                            <!-- <h5>6th Group name</h5> -->
+                                            <p>Clean Cookstoves</p>
                                         </div>
                                     </div>
                                 </div>

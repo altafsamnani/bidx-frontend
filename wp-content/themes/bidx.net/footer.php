@@ -131,9 +131,7 @@
             <!-- /.footer-info-wrapper -->
             <div class="col-xs-12 col-sm-6 footer-links-wrapper">
                 <ul class="list-inline">
-                    <li><a href="#"><?php _e('Privacy Policy','bidxtheme');?></a></li>
                     <li><a href="#"><?php _e('Terms Of Service','bidxtheme');?></a></li>
-                    <li><a href="#"><?php _e('Sitemap','bidxtheme');?></a></li>
                 </ul>
             </div>
             <!-- /.footer-links-wrapper -->

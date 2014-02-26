@@ -192,7 +192,7 @@
 
             $(this).parent().addClass('active');
         } );
-    } );
+    });
 
     // on resize
     //
