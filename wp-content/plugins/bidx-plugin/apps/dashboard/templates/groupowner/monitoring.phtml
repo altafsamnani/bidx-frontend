@@ -50,18 +50,17 @@
                 <div class="col-sm-6">
                         <h2>Members who recently joined</h2>
                 </div>
-                <div class="col-sm-12">
-                        These members are new in your group. Select and send a welcome message.
+                <div class="col-sm-offset-3 col-sm-3">
+                    <div class="input-append">
+                        <input type="text" class="search-query search-query-rounded searchname" placeholder="Search" data-maxlength="1" data-searchtype="list">
+                        <!-- <button type="submit" class="btn"><span class="fa fa-search"></span></button> -->
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-offset-9 col-sm-3">
-
-                                <div class="input-append">
-                                    <input type="text" class="search-query search-query-rounded searchname" placeholder="Search" data-maxlength="1" data-searchtype="list">
-                                    <!-- <button type="submit" class="btn"><span class="fa fa-search"></span></button> -->
-                                </div>
-                    </div>
+                <div class="col-sm-12">
+                        These members are new in your group. Select and send a welcome message.
+                </div>
             </div>
             <!-- ************************* utility views *********************************** -->
             <article class="view viewLoadlist"><?php _e ('Loading...', 'bidxplugin') ?></article>
@@ -114,18 +113,14 @@
                     <a class="btn btn-primary compose-list" href="#monitoring/compose" data-href="#monitoring/compose">Compose welcome message</a>
                 </div>
             </div>
-
+            <br/><br/>
             <!-- All Members  -->
             <div class="row">
                 <div class="col-sm-6">
                         <h2>All the members</h2>
                 </div>
-                <div class="col-sm-12">
-                        See here all the members in your group with their login data, location and role. Select those you want to  send a message to.
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-offset-9 col-sm-3">
+
+                <div class="col-sm-offset-3 col-sm-3">
 
                                 <div class="input-append">
                                     <input type="text" class="search-query search-query-rounded searchname"  placeholder="Search" data-maxlength="1" data-searchtype="all">
@@ -133,7 +128,12 @@
                                 </div>
 
 
-                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                        See here all the members in your group with their login data, location and role. Select those you want to  send a message to.
+                </div>
             </div>
             <article class="view viewLoadall"><?php _e ('Loading...', 'bidxplugin') ?></article>
             <article class="view viewAll">
