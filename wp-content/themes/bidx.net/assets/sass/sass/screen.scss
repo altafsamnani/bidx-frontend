@@ -2102,6 +2102,18 @@ blockquote small {
 
 
 @media (max-width: 767px) {
+    .front-mobile {
+        width: 100%;
+        background: transparent url('../../../assets/img/slides/slide (3).jpg') center top;
+        .center-video {
+            padding: 20px 0 10px;
+            margin: 0 auto;
+            width: 270px;
+        }
+        h3, h5 {
+            font-family: $exo;
+        }
+    }
     #header {
         .navbar-collapse {
             border-top: 0;

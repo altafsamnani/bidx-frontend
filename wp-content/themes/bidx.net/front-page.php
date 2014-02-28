@@ -2,7 +2,7 @@
 
 
 
-<section id="fullwidthbanner-container" class="fullwidthbanner-container">
+<section id="fullwidthbanner-container" class="fullwidthbanner-container hidden-xs">
     <div class="fullwidthbanner">
         <ul>
             <!-- THE 3RD SLIDE -->
@@ -30,17 +30,11 @@
                     investors in emerging markets<br>
                     connect them globally.','bidxtheme');?>
                 </div>
-                <a href="#" class="caption btn btn-flat flat-inverse btn-bordered sfb stb"
+                <a href="/get-started" class="caption btn btn-flat flat-warning sfb stb"
                     data-x="105"
                     data-y="275"
                     data-speed="500"
                     data-start="1600"
-                    data-easing="easeOutExpo"><?php _e('Learn More','bidxtheme');?></a>
-                <a href="/get-started" class="caption btn btn-flat flat-warning sfb stb"
-                    data-x="220"
-                    data-y="275"
-                    data-speed="500"
-                    data-start="1800"
                     data-easing="easeOutExpo"><?php _e('Get Started','bidxtheme');?></a>
                 <div class="caption lfr ltr"
                     data-x="635"
@@ -53,6 +47,16 @@
         <div class="tp-bannertimer tp-bottom"></div>
     </div>
     <!-- /.fullwidthbanner -->
+</section>
+<section class="visible-xs">
+    <div class="front-mobile">
+        <div class="center-video">
+            <h5 class="text-center"><?php _e('Entrepreneurial Ecosystem Online','bidxtheme');?></h5>
+            <iframe src="http://player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="270" height="152"></iframe>
+            <h3 class="text-center"><?php _e('CREATE BUSINESS','bidxtheme');?></h3>
+            <a href="/get-started" class="btn btn-flat btn-block flat-warning navbar-btn"><?php _e('Get started','bidxtheme');?></a>
+        </div>
+    </div>
 </section>
 
 <section id="our-services" class="pad-top-50">
