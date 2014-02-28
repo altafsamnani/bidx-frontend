@@ -7,7 +7,7 @@
 </section>
 
             <div id="pricing-tables" class="main-wrapper">
-                <section id="pricing-tables" class="pad-25 pattern-1">
+                <section id="pricing-tables" class="pad-25 pattern-7">
                     <div class="container">
                         <div class="pad-0">
                             <div class="row flush">
