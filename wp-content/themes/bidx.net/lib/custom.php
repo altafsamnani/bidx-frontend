@@ -38,24 +38,29 @@ function create_post_type ($post_type = 'staff')
 
 function bidx_language_selector ()
 {//btn btn-flat flat-link navbar-btn pull-right
-    echo '
+    $test = apply_filters ('active_plugins', get_option ('active_plugins'));
+
+    $plugin_var = 'sitepress-multilingual-cms/sitepress.php';
+    if (in_array ($plugin_var, apply_filters ('active_plugins', get_option ('active_plugins')))) {
+        echo '
    
     <ul id="" class="btn btn-flat nav navbar-text pull-right">
      <li class="dropdown menu-item">
       <a href="#" class="dropdown-toggle flat-link" data-toggle="dropdown">' . strtoupper (ICL_LANGUAGE_NAME) . '</a>
        <ul class="dropdown-menu">';
 
-    $languages = icl_get_languages ('skip_missing=0&orderby=code');
-    if (!empty ($languages)) {    
-        foreach ($languages as $l) {
-            echo ($l['active'] == 0 ? "<li><a href='" . $l['url'] . "'>" . 
-                strtoupper ($l['native_name']) .
-                "</a></li>" : NULL);
+        $languages = icl_get_languages ('skip_missing=0&orderby=code');
+        if (!empty ($languages)) {
+            foreach ($languages as $l) {
+                echo ($l['active'] == 0 ? "<li><a href='" . $l['url'] . "'>" .
+                    strtoupper ($l['native_name']) .
+                    "</a></li>" : NULL);
+            }
         }
-    }
-    echo '
+        echo '
        </ul>
      </li>
     </ul>    
     ';
+    }
 }
