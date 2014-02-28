@@ -2524,3 +2524,17 @@ function bidx_set_option ()
     exit;
 }
 
+/* Remove "Wordpress update available" message.
+ * @author Altaf Samnani
+ * @issue #BIDX-1780
+ *
+ */
+add_action ('admin_menu', 'wphidenag');
+
+function wphidenag ()
+{
+
+    remove_action ('admin_notices', 'update_nag', 3);
+}
+
+
