@@ -2537,6 +2537,11 @@ function wphidenag ()
     remove_action ('admin_notices', 'update_nag', 3);
 }
 
+/* Add favicons support
+ * @author Altaf Samnani
+ * @issue #BIDX-1775
+ *
+ */
 function bidx_group_favicon() {
 
  $img_url = get_template_directory_uri().'/assets/img/favicon_bidx.ico'; //make relative
