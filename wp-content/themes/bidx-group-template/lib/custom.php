@@ -298,6 +298,33 @@ function theme_customizer_front_content( $wp_customize ) {
 }
 add_action( 'customize_register', 'theme_customizer_front_content' );
 
+/**
+ * Add favicon section with upload control to theme customizer
+ *
+ * @author Altaf
+ * @since Feb 28 2014
+ *
+ * @param $wp_customize class
+ * @return void
+ * @access public
+   */
+function theme_customizer_favicon( $wp_customize ) {
+
+    $wp_customize->add_section( 'favicon_image' , array(
+        'title'       => __( 'Favicon', 'bidxtheme' ),
+        'description' => 'Upload a favicon',
+    ) );
+
+    $wp_customize->add_setting( 'favicon_image' );
+
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'favicon_image', array(
+        'label'    => __( 'Favicon', 'bidxtheme' ),
+        'section'  => 'favicon_image',
+        'settings' => 'favicon_image',
+    ) ) );
+}
+add_action('customize_register', 'theme_customizer_favicon');
+
 
 /**
  * Function get_custom_field_value() - retrieves the custom

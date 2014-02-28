@@ -2537,4 +2537,20 @@ function wphidenag ()
     remove_action ('admin_notices', 'update_nag', 3);
 }
 
+function bidx_group_favicon() {
+
+ $img_url = get_template_directory_uri().'/assets/img/favicon_bidx.ico'; //make relative
+ if ( get_theme_mod( 'favicon_image' ) ) {
+    $img = parse_url( get_theme_mod( 'favicon_image' ) );
+    $img_url = $img['path']; //make relative
+
+ }
+ echo '<link rel="Shortcut Icon" type="image/x-icon" href="' . $img_url . '" />';
+
+}
+add_action( 'admin_head', 'bidx_group_favicon' );
+add_action( 'login_head', 'bidx_group_favicon' );
+add_action( 'wp_head', 'bidx_group_favicon' );
+
+
 
