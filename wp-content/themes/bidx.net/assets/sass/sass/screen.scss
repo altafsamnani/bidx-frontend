@@ -596,6 +596,7 @@ a {
     max-height: 400px !important;
     overflow: hidden !important;
     padding: 0 !important;
+    background: transparent url('../../../assets/img/slides/slide (3).jpg') center top;
     &:hover {
         .tp-leftarrow.default {
             @include opacity(1);

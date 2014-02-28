@@ -6,8 +6,8 @@
     <div class="fullwidthbanner">
         <ul>
             <!-- THE 3RD SLIDE -->
-            <li data-transition="slideright" data-masterspeed="500">
-                <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/slides/slide (3).jpg" alt="Slide Image">
+            <li data-transition="boxfade" data-masterspeed="500">
+                <img src="" alt="Slide Image">
                 <div class="tp-caption large_black_text sft stt"
                     data-x="105"
                     data-y="65"
