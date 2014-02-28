@@ -2,7 +2,7 @@
 
 <div id="main-and-sidebar">
 		<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-			<section id="page-title-wrapper" class="page-title-wrapper pattern-7 service">
+			<section id="page-title-wrapper" class="page-title-wrapper pattern-9 service">
 			    <div class="container">
 					<?php edit_post_link('<small>Edit Blog page</small>','',''); ?>
 			        <h1><?php the_title(); ?></h1>
@@ -40,11 +40,7 @@
 				                <ul class="meta-list">
 				                    <li>
 				                        <span><?php _e('Posted on '); ?></span>
-				                        <a href="#"><?php the_time('F j, Y'); _e(' at '); the_time() ?></a>
-				                    </li>
-				                    <li>
-				                        <span><?php _e('By ');?></span>
-				                        <a href="#"><?php the_author_posts_link() ?></a>
+				                        <?php the_time('F j, Y');?>
 				                    </li>
 				                    <li>
 				                        <span><?php _e('In ');?></span>

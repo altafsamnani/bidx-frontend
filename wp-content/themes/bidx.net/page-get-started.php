@@ -5,7 +5,7 @@
 
 get_header(); ?>
 
-<section id="page-title-wrapper" class="page-title-wrapper pattern-1 service">
+<section id="page-title-wrapper" class="page-title-wrapper pattern-3 service">
     <div class="container">
         <?php edit_post_link('<small>Edit Our Team page</small>','',''); ?>
         <h1><?php the_title(); ?></h1>

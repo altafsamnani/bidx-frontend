@@ -1,5 +1,11 @@
 <?php get_header(); ?>
 <div id="main-and-sidebar">
+		<section id="page-title-wrapper" class="page-title-wrapper pattern-9 service">
+		    <div class="container">
+				<?php edit_post_link('<small>Edit Post</small>','',''); ?>
+		        <h1><?php the_title(); ?></h1>
+		    </div>
+		</section>
     <div class="container">
         <div class="row">
         	<div class="col-md-9 main">
@@ -19,7 +25,7 @@
 				                <ul class="meta-list">
 				                    <li>
 				                        <span><?php _e('Posted on '); ?></span>
-				                        <a href="#"><?php the_time('F j, Y'); ?></a>
+				                        <?php the_time('F j, Y'); ?>
 				                    </li>
 				                    <li>
 				                        <span><?php _e('In ');?></span>

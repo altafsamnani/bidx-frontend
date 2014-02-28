@@ -36,7 +36,7 @@
                     data-speed="500"
                     data-start="1600"
                     data-easing="easeOutExpo"><?php _e('Learn More','bidxtheme');?></a>
-                <a href="#" class="caption btn btn-flat flat-warning sfb stb"
+                <a href="/get-started" class="caption btn btn-flat flat-warning sfb stb"
                     data-x="220"
                     data-y="275"
                     data-speed="500"
@@ -105,7 +105,7 @@
             <div class="col-xs-12 col-sm-9 action-box">
                 <h1><?php _e('Ideal solutions','bidxtheme');?></h1>
                 <p><?php _e('For entrepreneurs, investors, incubators, chambers of commerce, banks, investment funds ...and more.','bidxtheme');?></p>
-                <a href="#" class="btn btn-flat flat-warning"><?php _e('Get Started','bidxtheme');?></a>
+                <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('Get Started','bidxtheme');?></a>
             </div>
         <!-- /.action-box -->
     </div>

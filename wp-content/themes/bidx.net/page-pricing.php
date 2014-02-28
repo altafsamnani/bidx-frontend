@@ -121,8 +121,11 @@
                 <section>
                     <div class="container service pad-25">
                         <div class="col-sm-12">
-                            <h2>Want to create a Group with bidX?<br>Contact us to get started</h2>
-                             <button type="button" class="btn btn-flat flat-warning btn-lg btn-bordered">Contact Us</button>
+                            <h2>
+                                <?php echo _e('Want to create a Group with bidX?', 'bidxtheme'); ?><br>
+                                <?php echo _e('Contact us to get started', 'bidxtheme'); ?>
+                            </h2>
+                             <a href="/contact" type="button" class="btn btn-flat flat-warning btn-lg btn-bordered"><?php echo _e('Contact Us', 'bidxtheme'); ?></a>
                         </div>
                     </div>
                 </section>
