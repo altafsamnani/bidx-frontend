@@ -1,24 +1,28 @@
 <?php get_header(); ?>
 
 <div id="main-and-sidebar">
+	<section id="page-title-wrapper" class="page-title-wrapper pattern-9 service ">
+	    <div class="container">
+			<h1>
+				<?php if ( is_day() ) : /* if the daily archive is loaded */ ?>
+					<?php printf( __( 'Daily: <span>%s</span>' ), get_the_date() ); ?>
+				<?php elseif ( is_month() ) : /* if the montly archive is loaded */ ?>
+					<?php printf( __( 'Monthly: <span>%s</span>' ), get_the_date('F Y') ); ?>
+				<?php elseif ( is_year() ) : /* if the yearly archive is loaded */ ?>
+					<?php printf( __( 'Yearly: <span>%s</span>' ), get_the_date('Y') ); ?>
+				<?php else : /* if anything else is loaded, ex. if the tags or categories template is missing this page will load */ ?>
+					Blog Archives
+				<?php endif; ?>
+			</h1>
+	    </div>
+	</section>
     <div class="container">
         <div class="row">
         	<div class="col-md-9 main">
-				<h1>
-					<?php if ( is_day() ) : /* if the daily archive is loaded */ ?>
-						<?php printf( __( 'Daily: <span>%s</span>' ), get_the_date() ); ?>
-					<?php elseif ( is_month() ) : /* if the montly archive is loaded */ ?>
-						<?php printf( __( 'Monthly: <span>%s</span>' ), get_the_date('F Y') ); ?>
-					<?php elseif ( is_year() ) : /* if the yearly archive is loaded */ ?>
-						<?php printf( __( 'Yearly: <span>%s</span>' ), get_the_date('Y') ); ?>
-					<?php else : /* if anything else is loaded, ex. if the tags or categories template is missing this page will load */ ?>
-						Blog Archives
-					<?php endif; ?>
-				</h1>
 
 
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-					<div class="post pad-bottom-50">
+					<div class="post pad-bottom-50 pad-top-25">
 
 						<?php if ( has_post_thumbnail() ) {
 							/* loades the post's featured thumbnail, requires Wordpress 3.0+ */
@@ -32,11 +36,7 @@
 			                <ul class="meta-list">
 			                    <li>
 			                        <span><?php _e('Posted on '); ?></span>
-			                        <a href="#"><?php the_time('F j, Y'); _e(' at '); the_time() ?></a>
-			                    </li>
-			                    <li>
-			                        <span><?php _e('By ');?></span>
-			                        <a href="#"><?php the_author_posts_link() ?></a>
+			                        <?php the_time('F j, Y'); ?>
 			                    </li>
 			                    <li>
 			                        <span><?php _e('In ');?></span>

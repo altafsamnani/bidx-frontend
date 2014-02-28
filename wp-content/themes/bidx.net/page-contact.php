@@ -1,8 +1,11 @@
 <?php get_header(); ?>
 
 <div id="contact" class="main-wrapper">
-    <section id="google-map" class="section google-map pad-top-0">
+    <section id="google-map" class="section google-map pad-top-0 hidden-xs">
         <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=el&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=De+Ruijterkade+bidx&amp;sll=52.381467,4.896212&amp;sspn=0.038979,0.090809&amp;ie=UTF8&amp;hq=&amp;hnear=&amp;ll=52.377863,4.905407&amp;spn=0.006295,0.006295&amp;t=m&amp;iwloc=A&amp;output=embed"></iframe>
+    </section>
+    <section id="google-map" class="section google-map pad-top-0 visible-xs">
+        <iframe width="100%" height="180" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=el&amp;geocode=&amp;q=Bidx+B.V.,+De+Ruijterkade,+Amsterdam,+Nederland&amp;aq=0&amp;oq=De+Ruijterkade+bidx&amp;sll=52.381467,4.896212&amp;sspn=0.038979,0.090809&amp;ie=UTF8&amp;hq=&amp;hnear=&amp;ll=52.377863,4.905407&amp;spn=0.006295,0.006295&amp;t=m&amp;iwloc=A&amp;output=embed"></iframe>
     </section>
 
     <section id="contact-us" class="pad-25">

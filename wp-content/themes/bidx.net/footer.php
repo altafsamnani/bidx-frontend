@@ -63,7 +63,7 @@
                 <!-- /.popular-posts -->
             </div>
             <!-- /.col-md-3 -->
-                <div class="col-md-6 widget">
+                <div class="col-md-6">
                     <div class="subpage-title">
                         <h5><?php _e('Testimonials','bidxtheme');?></h5>
                         <!-- Controls -->

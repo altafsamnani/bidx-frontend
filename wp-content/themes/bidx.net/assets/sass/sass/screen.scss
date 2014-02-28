@@ -507,6 +507,10 @@ a {
     .navbar-toggle {
         @include border-radius(0);
         margin-top: 33px;
+        background-color: $hc2_yellow;
+        .icon-bar {
+            background-color: $white;
+        }
         &:hover {
             background-color: $lightgreen;
             border-color: $lightgreen;
@@ -1418,7 +1422,7 @@ a {
 
 .pattern-1 {
     @include pattern('az_subtle.png');
-    @include box-shadow(inset 0 -40px 100px rgba(50, 50, 50, 0.17));
+    //@include box-shadow(inset 0 -40px 100px rgba(50, 50, 50, 0.17));
 }
 .pattern-2 {
     @include pattern('batthern.png');
@@ -1657,17 +1661,37 @@ a {
         padding: 20px;
         border: 1px solid $color_12;
     }
-    &.groups .title {
-        background-color: $color_2;
+    &.groups {
+        .price {
+            background-color: lighten( darken($hc2_yellow, 40%), 10% );
+        }
+        .title {
+            background-color: darken($hc2_yellow, 40%);
+        }
     }
-    &.competition .title {
-        background-color: $color_1;
+    &.competition {
+        .price {
+            background-color: lighten( darken($hc2_yellow, 20%), 10% );
+        }
+        .title {
+            background-color: darken($hc2_yellow, 20%);
+        }
     }
-    &.hotline .title {
-        background-color: $color_10;
+    &.hotline {
+        .price {
+            background-color: lighten( darken($hc2_yellow, 10%), 10% );
+        }
+        .title {
+            background-color: darken($hc2_yellow, 10%);
+        }
     }
-    &.ecosystem .title {
-        background-color: $hc1_green;
+    &.ecosystem {
+        .price {
+            background-color: lighten( darken($hc2_yellow, 30%), 10% );
+        }
+        .title {
+            background-color: darken($hc2_yellow, 30%);
+        }
     }
 }
 .error404 {
@@ -2089,17 +2113,19 @@ blockquote small {
             margin: 0 -15px;
             padding-top: 15px;
             padding-bottom: 15px;
-            background-color: $color_2;
+            background-color: lighten($hc2_yellow, 1%);
             > {
                 li > {
                     a {
-                        color: $color_6;
-                        font-size: 13px;
+                        color: $black;
+                        font-size: 35px;
                         &:hover {
-                            color: $white;
+                            color: $black;
+                            background-color: darken($hc2_yellow, 15%);
                         }
                         &:focus {
-                            color: $white;
+                            color: $black;
+                            background-color: darken($hc2_yellow, 15%);
                         }
                     }
                 }
@@ -2107,30 +2133,30 @@ blockquote small {
                     a {
                         z-index: 0;
                         color: $color_12;
-                        background-color: $color_1;
+                        background-color: darken($hc2_yellow, 25%);
                         &:hover {
                             z-index: 0;
                             color: $color_12;
-                            background-color: $color_1;
+                            background-color: darken($hc2_yellow, 25%);
                         }
                         &:focus {
                             z-index: 0;
                             color: $color_12;
-                            background-color: $color_1;
+                            background-color: darken($hc2_yellow, 25%);
                         }
                     }
                 }
                 .active > {
                     a {
-                        color: $color_12;
-                        background-color: $color_1;
+                            background-color: lighten($hc2_yellow, 25%);
+                            color: $black;
                         &:hover {
-                            color: $color_12;
-                            background-color: $color_1;
+                            background-color: lighten($hc2_yellow, 25%);
+                            color: $black;
                         }
                         &:focus {
-                            color: $color_12;
-                            background-color: $color_1;
+                            background-color: lighten($hc2_yellow, 25%);
+                            color: $black;
                         }
                     }
                 }
@@ -2139,26 +2165,28 @@ blockquote small {
                 > {
                     li > {
                         a {
-                            color: $color_6;
+                            font-size: 20px;
+                            color: $black;
                             &:hover {
-                                color: $color_12;
+                                background-color: lighten($hc2_yellow, 25%);
+                                color: $black;
                             }
                             &:focus {
-                                color: $color_12;
+                                background-color: lighten($hc2_yellow, 25%);
+                                color: $black;
                             }
                         }
                     }
                     .active > {
                         a {
-                            color: $color_12;
-                            background-color: $color_1;
+                            background-color: lighten($hc2_yellow, 25%);
                             &:hover {
-                                color: $color_12;
-                                background-color: $color_1;
+                                background-color: lighten($hc2_yellow, 25%);
+                                color: $black;
                             }
                             &:focus {
-                                color: $color_12;
-                                background-color: $color_1;
+                                background-color: lighten($hc2_yellow, 25%);
+                                color: $black;
                             }
                         }
                     }
@@ -2170,10 +2198,10 @@ blockquote small {
                 &:before {
                     content: "+";
                     position: absolute;
-                    top: 5px;
+                    top: -17px;
                     right: 15px;
-                    color: $color_6;
-                    font-size: 18px;
+                    color: $black;
+                    font-size: 50px;
                     z-index: 9999;
                 }
                 &.open:before {

@@ -1,12 +1,15 @@
 <?php get_header(); ?>
+<section id="page-title-wrapper" class="page-title-wrapper pattern-1 service">
+    <div class="container">
+        <?php edit_post_link('<small>Edit Our Team page</small>','',''); ?>
+        <h1><?php the_title(); ?></h1>
+    </div>
+</section>
 
             <div id="pricing-tables" class="main-wrapper">
                 <section id="pricing-tables" class="pad-25 pattern-1">
                     <div class="container">
                         <div class="pad-0">
-                            <div class="subpage-title">
-                                <h5>Pricing & Plans</h5>
-                            </div>
                             <div class="row flush">
                                 <div class="col-md-3">
                                     <div class="pricing groups">
