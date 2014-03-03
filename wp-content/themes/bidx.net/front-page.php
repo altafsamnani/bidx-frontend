@@ -7,7 +7,7 @@
         <ul>
             <!-- THE 3RD SLIDE -->
             <li data-transition="boxfade" data-masterspeed="500">
-                <img src="" alt="Slide Image">
+                <img src="" alt="">
                 <div class="tp-caption large_black_text sft stt"
                     data-x="105"
                     data-y="65"
