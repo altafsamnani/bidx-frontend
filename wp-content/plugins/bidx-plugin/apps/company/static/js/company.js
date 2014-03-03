@@ -516,7 +516,7 @@
                     bidx.utils.log( "[company] selected profile picture", file );
 
                     $logoContainer.data( "bidxData", file );
-                    $logoContainer.html( $( "<img />", { "src": file.document  } ));
+                    $logoContainer.html( $( "<img />", { "src": file.document, "class": "img-thumbnail"  } ) );
 
                     $changeLogoModal.modal( "hide" );
                 }
