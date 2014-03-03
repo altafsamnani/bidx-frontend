@@ -555,17 +555,27 @@
         //
         var logo = bidx.utils.getValue( company, "logo", true );
 
-        if ( logo && logo.length && logo[ 0 ].document )
+        if ( state === "create" )
         {
-            $logoContainer.data( "bidxData", logo[ 0 ] );
-            $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document, "class": "img-thumbnail" } ) );
+            $logoContainer
+                .append( $( "<div />", { "class": "icons-rounded" } ) )
+                .find(".icons-rounded")
+                .append( $( "<i />", { "class": "fa fa-tasks text-primary-light" } ) )
+                ;
         }
         else
         {
-            $logoContainer.append(  $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
-            $logoContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
+            if ( logo && logo.length && logo[ 0 ].document )
+            {
+                $logoContainer.data( "bidxData", logo[ 0 ] );
+                $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document, "class": "img-thumbnail" } ) );
+            }
+            else
+            {
+                $logoContainer.append(  $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+                $logoContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
+            }
         }
-
         // Now the nested objects, NOT ARRAY's
         //
         $.each( [ "statutoryAddress" ], function()
