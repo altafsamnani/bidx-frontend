@@ -79,9 +79,10 @@
 				</div>
 
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
-
-                    <?php do_action('icl_language_selector'); ?>
-                    <a href="/get-started" class="btn btn-flat flat-warning navbar-btn pull-right hidden-xs"><?php _e('Get started','bidxtheme');?></a>
+                   
+                    <?php bidx_language_selector();
+                    ?>
+                    <a href="#" class="btn btn-flat flat-warning navbar-btn pull-right">Get started</a>
 
 					<?php
 						$args = array(
