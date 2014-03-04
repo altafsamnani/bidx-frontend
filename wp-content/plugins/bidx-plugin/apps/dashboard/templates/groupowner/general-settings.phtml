@@ -1,0 +1,30 @@
+<div id='icon-edit' class='icon32 icon32-posts-post'><br></div>
+<h2>bidX General Settings</h2>
+
+<form method='post'>
+    <div class='metabox-holder'>
+        <div id='categorydiv' class='postbox'>
+            <div class='handlediv' title='Click to toggle'><br></div><h3 class='hndle'><span>News and Events</span></h3>
+            <div class='inside'>
+                <div id='taxonomy-category' class='categorydiv'>
+                    <div class=''>
+                        <div class='label'>
+                            <label class='selectit'>
+                                <input <?php echo (isset($this->groupNews) && $this->groupNews) ? 'checked':'';?> value='1' type='checkbox' name='group-news' id='group-news'>
+                                Do you want to activate News and Events for this group ?
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>       
+       <div class="updated inline below-h2">
+            <p><strong>Important:</strong> Refresh the page after saving the option to see the News & Events category in Left menu.</p>
+       </div><br/>
+        <div class='buttonwrapper'>            
+            <input type='submit' name = 'action' value='Save' class='button button-primary'>
+         
+        </div>
+    </div>
+</form>

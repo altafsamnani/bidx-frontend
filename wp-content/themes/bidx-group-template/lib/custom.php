@@ -1,4 +1,37 @@
 <?php
+/**
+ * Add custom post types
+ */
+add_action ('init', 'bidxgroup_create_post_types');
+
+function bidxgroup_create_post_types ()
+{
+    $groupNews = get_option ('group-news'); // If Group news is set through SuperAdmin Dashboard->Settings->bidX Settings then only display it
+    if($groupNews) {
+        creategroup_post_type (array('post_type' => 'news', 'label' => 'News and Events'));
+    }
+}
+
+function creategroup_post_type ($post_arr)
+{
+    $post_type  = $post_arr[ 'post_type' ];
+    $post_label = $post_arr[ 'label' ];
+    $args = array (
+      'label' => ucwords($post_label),
+      'public' => true,
+      'exclude_from_search' => false,
+      'show_ui' => true,
+      'show_in_menu' => true,
+      'query_var' => true,
+      'rewrite' => false,
+      'capability_type' => 'post',
+      '_builtin' => false,
+      'has_archive' => false,
+      'hierarchical' => false,
+      'supports' => array ('title', 'editor', 'thumbnail', 'excerpt')
+    );
+    register_post_type ($post_type, $args);
+}
 
 /**
  * Custom functions for Bidx

@@ -193,6 +193,12 @@ class dashboard
                 $template = 'groupowner/competition-settings.phtml';
                 break;
 
+            case 'general-settings' :
+        
+                $view->groupNews = get_option ('group-news');
+                $template = 'groupowner/general-settings.phtml';
+                break;
+
             default:
 
                 $template = 'my-dashboard.phtml';

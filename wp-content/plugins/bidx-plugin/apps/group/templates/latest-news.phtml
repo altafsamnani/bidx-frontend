@@ -4,12 +4,14 @@
     //
     $authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
     $newsitems = $authenticated ? 4 : 3;
-
+    $post_type = (get_option ('group-news')) ? 'news' : 'post';
+    
     $args=array(
-      'post_type' => 'post',
+      'post_type' => $post_type,
       'post_status' => 'publish',
       'posts_per_page' => $newsitems
-      );
+    );
+    
     $my_query = null;
     $my_query = new WP_Query($args);
 

@@ -21,6 +21,7 @@ function create_post_type ($post_type = 'staff')
 {
 
     $args = array (
+      'label' => ucwords($post_type),
       'public' => true,
       'exclude_from_search' => false,
       'show_ui' => true,

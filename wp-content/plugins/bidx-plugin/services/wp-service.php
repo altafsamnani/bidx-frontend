@@ -1933,49 +1933,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                 restore_current_blog ();
             }
 
-            /* Start Add Custom Page attribute whether you want to add page in Group site creation
-             * Reference http://stackoverflow.com/questions/6890617/how-to-add-a-meta-box-to-wordpress-pages
-             * @author Altaf Samnani
-             * @version 1.0
-             *
-             * Add Custom Page attributes
-             *
-             * @param bool $echo
-             */
-
-            add_action ('add_meta_boxes', 'add_page_group_metabox');
-
-            function add_page_group_metabox ()
-            {
-                add_meta_box ('page-group-id', 'Group Page', 'group_callback', 'page', 'side', 'core');
-            }
-
-            function group_callback ($post)
-            {
-                $values = get_post_custom ($post->ID);
-                $selected = isset ($values['page_group']) ? $values['page_group'][0] : '';
-                ?>
-    <label class="screen-reader-text" for="page_group"><?php _e ('Group page') ?></label>
-    <select name="page_group" id="page_group">
-        <option <?php echo ($selected == '1') ? 'selected' : '' ?> value='1'><?php _e ('Yes'); ?></option>
-        <option <?php echo ($selected == '0') ? 'selected' : '' ?> value='0'><?php _e ('No'); ?></option>
-    </select>
-    <?php
-}
-
-add_action ('save_post', 'page_group_save');
-
-function page_group_save ($post_id)
-{
-    // Bail if we're doing an auto save
-    if (defined ('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-        return;
-
-    // Probably a good idea to make sure your data is set
-
-    if (isset ($_POST['page_group']))
-        update_post_meta ($post_id, 'page_group', $_POST['page_group']);
-}
+         
 
 /* Alter Network Admin menus to get Bidx branding
  * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
@@ -2317,7 +2275,8 @@ function alter_site_menu ()
     if ((current_user_can ('install_themes'))) {
         $restricted = array ();
         add_menu_page ('skipso', 'Skipso settings', 'edit_theme_options', 'skipso', 'bidx_skipso_settings');
-        add_submenu_page ('zendesk-support', __ ('Zendesk Bidx Settings', 'zendesk'), __ ('Bidx Settings', 'zendesk'), 'manage_options', 'bidx_zendesk_settings', 'bidx_zendesk_settings');
+        add_options_page( 'bidX Settings', 'bidX Settings', 'manage_options', 'settings', 'bidx_general_settings');
+        add_submenu_page ('zendesk-support', __ ('Zendesk Bidx Settings', 'zendesk'), __ ('Account Settings', 'zendesk'), 'manage_options', 'bidx_zendesk_settings', 'bidx_zendesk_settings');
     } // check if admin and hide nothing
     else { // for all other users
         $current_user = wp_get_current_user ();
@@ -2380,14 +2339,38 @@ function bidx_skipso_metadata ($skipsoEmails, $type)
 
     return $html;
 }
-
-function bidx_skipso_settings ()
-{
+function bidx_general_settings() {
 
     require_once(BIDX_PLUGIN_DIR . '/dashboard/dashboard.php');
-    /* 2 Bidx Push Notification */
-    $entrepreneurNotification = get_site_option ('entrepreneur-notification');
 
+    if (isset ($_POST['action'])) {
+        $action = $_POST['action'];
+        $html = '';
+
+        if ($action == 'Save') {
+            //Is Competition and Email Settings
+            $groupNews = (isset ($_POST['group-news'])) ? $_POST['group-news'] : 0;
+
+            update_option ('group-news', $groupNews);
+
+            $html .= "<div class='updated'>
+                        <p>" . __ ('bidX options are updated succesfully.', 'bidxplugin') . "
+                        </p>
+                    </div>";
+            
+            echo $html;
+        }
+    }
+    //2. Bidx Zendesk View Settings
+    $atts = array ('app' => 'dashboard', 'view' => 'general-settings');
+    $dashboard = new dashboard();
+    $dashboard->load ($atts);
+
+}
+function bidx_skipso_settings ()
+{
+    require_once(BIDX_PLUGIN_DIR . '/dashboard/dashboard.php');
+    
     if (isset ($_POST['action'])) {
         $action = $_POST['action'];
         $html = '';
@@ -2529,9 +2512,9 @@ function bidx_set_option ()
  * @issue #BIDX-1780
  *
  */
-add_action ('admin_menu', 'wphidenag');
+add_action ('admin_menu', 'wp_hide_nag');
 
-function wphidenag ()
+function wp_hide_nag ()
 {
 
     remove_action ('admin_notices', 'update_nag', 3);
