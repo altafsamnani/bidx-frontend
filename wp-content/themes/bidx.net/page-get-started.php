@@ -37,7 +37,7 @@ get_header(); ?>
                 <?php echo _e('Want to create a Group with bidX?', 'bidxtheme'); ?><br>
                 <?php echo _e('Contact us to get started', 'bidxtheme'); ?>
             </h2>
-             <a href="/contact" type="button" class="btn btn-flat flat-warning btn-lg btn-bordered"><?php echo _e('Contact Us', 'bidxtheme'); ?></a>
+             <a href="/contact" type="button" class="btn btn-flat flat-warning btn-lg"><?php echo _e('Contact Us', 'bidxtheme'); ?></a>
         </div>
     </div>
 </section>

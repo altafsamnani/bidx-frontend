@@ -912,24 +912,24 @@ a {
     }
 }
 .flat-warning {
-    border: 2px solid rgb(241, 196, 15);
-    background-color: rgb(241, 196, 15);
-    color: $white;
+    border: 2px solid $hc2_yellow;
+    background-color: $hc2_yellow;
+    color: $color_1;
     &:hover {
-        border: 2px solid rgb(241, 196, 15);
-        background-color: transparent;
-        color: rgb(241, 196, 15);
+        border: 2px solid $hc2_yellow;
+        background-color: $black;
+        color: $hc2_yellow;
     }
     &:active {
-        border: 2px solid rgb(241, 196, 15);
+        border: 2px solid $hc2_yellow;
     }
     &.btn-bordered {
         &:hover {
-            background-color: rgb(241, 196, 15);
+            background-color: $hc2_yellow;
             color: $white;
         }
         background-color: transparent;
-        color: rgb(241, 196, 15);
+        color: $hc2_yellow;
     }
 }
 .flat-danger {
@@ -2236,6 +2236,15 @@ blockquote small {
                     content: "-";
                     margin-right: 5px;
                     margin-left: -10px;
+                }
+            }
+        }
+        .language-selector .nav {
+            padding-right: 0;
+            padding-left: 0;
+            > li.dropdown {
+                &:before {
+                    display: none;
                 }
             }
         }

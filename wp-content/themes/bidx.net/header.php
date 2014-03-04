@@ -73,16 +73,17 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/">
-						<img src="<?php bloginfo( 'template_url' ); ?>/assets/img/logo.svg" alt="logo">
-					</a>
-				</div>
+                    <span class="visible-xs language-selector"><?php bidx_language_selector();?></span>
+                    <a class="navbar-brand" href="/">
+                        <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/logo.svg" alt="logo">
+                    </a>
+                </div>
 
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-                   
-                    <?php bidx_language_selector();
-                    ?>
-                    <a href="#" class="btn btn-flat flat-warning navbar-btn pull-right">Get started</a>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                    <span class="hidden-xs"><?php bidx_language_selector();?></span>
+
+                    <a href="/get-started" class="btn btn-flat flat-warning navbar-btn pull-right hidden-xs">Get started</a>
 
 					<?php
 						$args = array(
