@@ -1,0 +1,204 @@
+<?php
+
+$mentorDetails = isset($this->data->bidxmentorProfile) ? $this->data->bidxmentorProfile : NULL;
+$mentorDetailsBidxMeta = isset( $mentorDetails->bidxMeta )
+    ? $mentorDetails->bidxMeta
+    : $mentorDetails;
+
+
+if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED' || $mentorDetailsBidxMeta->bidxCanEdit  ) ) {
+
+    //$mentorType = $this->exst ($mentorDetails->investorType);
+?>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a class="btn-block" data-toggle="collapse" data-parent="#accordionProfile" href="#accordionMentor">
+            <span class="fa fa-chevron-right accordion-state-icon"></span>
+            <?php _e('Mentor profile','bidxplugin');?>
+        </a>
+    </div>
+    <div id="accordionMentor" class="panel-collapse collapse">
+        <div class="panel-body">
+
+
+        <div class="profile-block">
+
+            <div class="btn-group show hide-overflow">
+    <?php
+                if ($mentorDetailsBidxMeta->bidxCanEdit) {
+                    $href = "#editMentor/" . $this -> exst( $mentorDetailsBidxMeta->bidxOwnerId );
+    ?>
+                    <a class="btn btn-sm btn-primary pull-right" href="<?php echo $href; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+
+    <?php
+                        if ($mentorDetailsBidxMeta->bidxEntityStatus == 'DRAFT') {
+
+                            // Encode the missing fields into an attribute so we can provide a nice
+                            // UI feedback in the implementation of the publish button
+                            //
+                            // TODO: this is of couse only for the fields we know are going to be
+                            // missed and fail. This is not helping for the actual publishing which
+                            // might pop up with all kinds of errors. That should be handled in the
+                            // front-end when actually doing the publishing
+                            //
+                            $missingFields = array();
+
+                            $missingFieldsAttribute = count($missingFields)
+                                ? sprintf( 'data-missingfields=\'%s\'', json_encode($missingFields) )
+                                : ''
+                            ;
+    ?>
+                            <a class="btn btn-primary" href="#publish/<?php echo $this->exst ($mentorDetailsBidxMeta->bidxEntityId); ?>" <?php echo $missingFieldsAttribute; ?>>Publish</a>
+    <?php
+                        }
+                    }
+    ?>
+            </div>
+
+    <?php
+            // Institution address
+            //
+            $address = '';
+            if ($this->exst ($mentorDetails->institutionAddress )) {
+
+                $institutionAddress = $mentorDetails->institutionAddress;
+
+                $addressArr = array (
+                    $this->exst ($institutionAddress->street,'') . ' ' . $this->exst ($institutionAddress->streetNumber,''),
+                    $this->exst ($institutionAddress->cityTown,''),
+                    __('country') => $this->exst ($institutionAddress->country,''),
+                    $this->exst ($institutionAddress->postalCode)
+                );
+
+                $address = $this->createRowValue ($addressArr, ', ');
+            }
+
+            $investmentSize = array(
+                $this->exst( $mentorDetails->minInvestment, '' ),
+                $this->exst( $mentorDetails->maxInvestment, '' )
+            );
+
+            $rowValues = array(
+                __('Mentor profile summary','bidxplugin')   =>  $this->exst ($mentorDetails->summary),
+                __('Mentor type','bidxplugin')              =>  $this->getStaticVal('mentorType', $this->exst ($mentorDetails->investorType)),
+                __('Investment types','bidxplugin')           =>  $this->getMultiValues($this->exst( $mentorDetails->investmentType ), ', ','investmentType'),
+                __('Institution details','bidxplugin')        =>  $this->exst($mentorDetails->institutionName),
+                __('Institution website','bidxplugin')        =>  $this->exst($mentorDetails->institutionWebsite),
+                __('Address','bidxplugin')                    =>  $address,
+                __('Industry','bidxplugin')                   =>  $this->getMultiValues($this->exst ($mentorDetails->focusIndustry), ', ','industry'),
+                __('Social impact','bidxplugin')              =>  $this->getMultiValues($this->exst ($mentorDetails->focusSocialImpact), ', ','socialImpact'),
+                __('Environmental impact','bidxplugin')       =>  $this->getMultiValues($this->exst ($mentorDetails->focusEnvImpact), ', ','envImpact'),
+                __('Consumer type','bidxplugin')              =>  $this->getMultiValues($this->exst ($mentorDetails->focusConsumerType), ', ','consumerType'),
+                __('Languages','bidxplugin')                  =>  $this->getMultiValues($this->exst ($mentorDetails->focusLanguage), ', ','language'),
+                __('Stage of business','bidxplugin')          =>  $this->getMultiValues($this->exst ($mentorDetails->focusStageBusiness), ', ','stageBusiness'),
+                __('Gender','bidxplugin')                     =>  $this->getMultiValues($this->exst ($mentorDetails->focusGender), ', ','gender'),
+                __('Investment size','bidxplugin')            =>  implode( $investmentSize, ' - ' )
+            );
+            echo $this->pairRows( $rowValues );
+    ?>
+            <h4>Reach</h4>
+    <?php
+
+            $focusReach = $this->exst($mentorDetails->focusReach);
+            if ( $this->exst($focusReach->coordinates) && $this->exst($focusReach->coordinates) ) {
+    ?>
+                <div class="row">
+                    <div class="col-sm-6">
+    <?php
+                $mapParams = array(
+                    'center'        => $focusReach->coordinates,
+                    'size'          => '300x300',
+                    'zoom'          => 6,
+                    'sensor'        => 'false'
+                );
+
+                printf(
+                    '<img src="%s?%s" />',
+                    'https://maps.googleapis.com/maps/api/staticmap',
+                    http_build_query( $mapParams )
+                );
+    ?>
+                    </div>
+                </div>
+    <?php
+            }
+
+            $rowValues = array (
+                __('Focus countries','bidxplugin') => $this->getMultiValues ($this->exst ($mentorDetails->focusCountry), ', ','country'),
+                __('Focus cities','bidxplugin') => $this->getMultiValues($this->exst ($mentorDetails->focusCity), ',', null, 'cityTown'),
+                _x('Other preferences','test','bidxplugin') => $this->exst ($mentorDetails->additionalPreferences),
+                __('Number of investments in the last 12 months','bidxplugin') => $this->exst( $mentorDetails->numberInvestments ),
+                __('Total investments made in the last 12 months','bidxplugin') => $this->exst( $mentorDetails->totalInvestment )
+            );
+            echo $this->pairRows( $rowValues );
+
+            // Previous investments
+            //
+            echo '<h5>' . __('Previous investments','bidxplugin') . '</h5>';
+
+            $header = array(
+                __('Name of Company','bidxplugin')           => 'companyName',
+                __('Amount invested','bidxplugin')           => 'investment',
+                __('Investment type','bidxplugin')           => 'investmentType',
+                __('URL of Company website','bidxplugin')    => 'companyWebsite'
+            );
+
+            echo $this->addTableRows($header, $this->exst( $mentorDetails->previousInvestments ), 'table table-bordered', '', array('investmentType' => 'hidden-xs', 'companyWebsite' => 'hidden-xs') );
+
+            echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ('Documents' => $this->exst ($mentorDetails->attachment)));
+    ?>
+
+    <?php
+            $references = $this->exst( $mentorDetails->references );
+
+            // A set of properties is only applicable to any other type than Angel or private
+            //
+            //if ( $investorType && $investorType != 'AngelInvPrivIndiv' ) {
+
+                // Institution name
+                //
+                // $rowValues = array (__('Institution details','bidxplugin') => $this->exst($mentorDetails->institutionName));
+                // echo $this->addRowsWithLabelAdjacent ('col-sm-4', 'col-sm-8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+
+                // Institution website
+                //
+                // $rowValues = array (__('Institution website','bidxplugin') => $this->exst($mentorDetails->institutionWebsite));
+                // echo $this->addRowsWithLabelAdjacent ('col-sm-4', 'col-sm-8', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
+
+            //}
+
+                // Reach
+                //
+                // - business says "there are one of three ways to specify reach"
+                // - api says "there are three ways of specifying reach"
+                //
+                // So we have to figure out which type this investor has picked.
+
+                // TODO: list references (personaldetails)
+            // Previous investments
+            //
+
+            if ( $references ) {
+                echo '<h5>' . __('References','bidxplugin') . '</h5>';
+
+                $header = array(
+                    __('Name','bidxplugin')                     => 'name',
+                    __('Professional title','bidxplugin')       => 'professionalTitle',
+                    __('LinkedIn profile','bidxplugin')         => 'linkedIn',
+                    __('Email address','bidxplugin')            => 'emailAddress'
+                    // __('Landline','bidxplugin')                 => 'contactDetail[0].landLine',
+                    // __('Mobile','bidxplugin')                   => 'contactDetail[0].mobile'
+                );
+
+                $merge['name'] = array ('firstName', 'lastName');
+
+                echo $this->addTableRows($header, $this->exst( $mentorDetails->references ), 'table table-bordered', $merge, array('linkedIn' => 'hidden-xs', 'emailAddress' => 'hidden-xs') );
+            }
+
+    ?>
+        </div><!-- // details-block of investor -->
+        </div>
+    </div>
+</div>
+<?php } ?>
