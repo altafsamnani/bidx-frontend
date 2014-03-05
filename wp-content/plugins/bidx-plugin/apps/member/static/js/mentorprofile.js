@@ -62,6 +62,7 @@
         _root:
         [
             'summary'
+        ,   'mentorsForInst'
         ,   'focusIndustry'
         ,   'focusExpertise'
         ,   'focusSocialImpact'
