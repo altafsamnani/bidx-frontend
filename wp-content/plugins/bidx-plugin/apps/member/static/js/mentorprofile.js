@@ -1,20 +1,27 @@
-/* global bidx */
 ;( function( $ )
 {
+    "use strict";
+
     var $element                        = $( "#editMentor" )
     ,   $views                          = $element.find( ".view" )
     ,   $editForm                       = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                       = $element.find( ".snippets" )
 
+    ,   $focusLanguage                  = $editForm.find( "[name='focusLanguage']" )
+    ,   $focusSocialImpact              = $editForm.find( "[name='focusSocialImpact']" )
+    ,   $focusEnvImpact                 = $editForm.find( "[name='focusEnvImpact']" )
+    ,   $focusIndustry                  = $editForm.find( "[name='focusIndustry']" )
+    ,   $focusCountry                   = $editForm.find( "[name='focusCountry']" )
+
         // Attachnents
         //
-    ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
-    ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
-    ,   $btnAddAttachments                  = $attachmentsControl.find( "a[href$='#addAttachments']")
-    ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
+    ,   $attachmentsControl             = $editForm.find( ".attachmentsControl" )
+    ,   $attachmentsContainer           = $attachmentsControl.find( ".attachmentsContainer" )
+    ,   $btnAddAttachments              = $attachmentsControl.find( ".js-btn-add-attachments")
+    ,   $addAttachmentsModal            = $attachmentsControl.find( ".addAttachmentsModal" )
 
     ,   $toggles                        = $element.find( ".toggle" ).hide()
-    ,   $toggleInvestsForInst           = $element.find( "[name='investsForInst']"      )
+    ,   $toggleMentorsForInst           = $element.find( "[name='mentorsForInst']"      )
     ,   $toggleFocusLocationType        = $element.find( "[name='focusLocationType']"      )
 
     ,   member
@@ -34,11 +41,38 @@
 
     var fields =
     {
+            // bidxMeta
+            // summary
+            // mentorsForInst
+            // institutionName
+            // institutionWebsite
+            // preferedCommunication
+            // focusLocation
+            // focusLanguage
+            // focusExpertise
+            // focusIndustry
+            // focusGender
+            // focusStageBusiness
+            // focusSocialImpact
+            // focusEnvImpact
+            // attachment
+            // attach
+            // detac
+
         _root:
         [
-            'mentorProfileSummary'
+            'summary'
         ,   'focusIndustry'
+        ,   'focusExpertise'
+        ,   'focusSocialImpact'
+        ,   'focusEnvImpact'
         ,   'focusCountry'
+        ,   'focusGender'
+        ,   'focusStageBusiness'
+        ,   'focusLanguage'
+        ,   'institutionName'
+        ,   'institutionWebsite'
+        ,   'linkedIn'
         ]
 
     ,   focusCity:
@@ -78,6 +112,33 @@
         {
             e.preventDefault();
         } );
+
+        // Populate the selects
+        //
+        $focusIndustry.bidx_chosen(
+        {
+            dataKey:            "industry"
+        });
+
+        $focusCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        });
+
+        $focusLanguage.bidx_chosen(
+        {
+            dataKey:            "language"
+        });
+
+        $focusSocialImpact.bidx_chosen(
+        {
+            dataKey:            "socialImpact"
+        });
+
+        $focusEnvImpact.bidx_chosen(
+        {
+            dataKey:            "envImpact"
+        });
 
         // Grab the snippets from the DOM
         //
@@ -178,6 +239,26 @@
 
         $toggles.filter( ".toggle-" + group )[ fn ]();
     };
+    
+    // Conditional validation for booleans
+    //
+    // var _checkIfVisible = function( element )
+    // {
+    //     bidx.utils.log('Element:::::', element);
+    //     bidx.utils.log('Return:::::', !$( element ).is(':hidden') );
+    //     return !$( element ).is(':hidden');
+    // };
+
+    // Update the UI to show the input / previous run business'
+    //
+    $toggleMentorsForInst.change( function()
+    {
+        var value   = $toggleMentorsForInst.filter( "[checked]" ).val();
+
+        _handleToggleChange( value === "true", "mentorsForInst" );
+        // _checkIfVisible( ".toggle-mentorsForInst" );
+    } );
+
 
     $toggleFocusLocationType.change( function()
     {
@@ -368,6 +449,16 @@
                 }
             );
         }
+
+        // Update the chosen components with our set values
+        //
+        $focusIndustry.trigger( "chosen:updated" );
+        $focusLanguage.trigger( "chosen:updated" );
+        $focusCountry.trigger( "chosen:updated" );
+        $focusSocialImpact.trigger( "chosen:updated" );
+        $focusEnvImpact.trigger( "chosen:updated" );
+
+
     }
 
     // Convert the form values back into the member object
@@ -485,13 +576,55 @@
         ,   ignore: ".chosen-search input, .search-field input"
         ,   rules:
             {
-                "mentorProfileSummary":
+                "summary":
                 {
                     required:               true
                 }
             ,   "focusIndustry":
                 {
+                    required:      true
+                }
+            ,   "focusSocialImpact":
+                {
+                    required:      true
+                }
+            ,   "focusEnvImpact":
+                {
+                    required:      true
+                }
+            ,   "focusLanguage":
+                {
+                    required:      true
+                }
+            ,   "focusGender":
+                {
+                    required:      true
+                }
+            ,   "focusStageBusiness":
+                {
+                    required:      true
+                }
+            ,   "focusExpertise":
+                {
                     tagsinputRequired:      true
+                }
+            ,   "mentorsForInst":
+                {
+                    required:               true
+                }
+            ,   "linkedIn":
+                {
+                    required:               true
+            ,       linkedInUsername:       true
+                }
+            ,   "institutionName":
+                {
+                    required:               { depends: function () { return !$( ".toggle-mentorsForInst" ).is(':hidden'); } }
+                }
+            ,   "institutionWebsite":
+                {
+                    required:               { depends: function () { return !$( ".toggle-mentorsForInst" ).is(':hidden'); } }
+            // ,       urlOptionalProtocol:    true
                 }
             }
         ,   messages:
@@ -685,7 +818,7 @@
             }
         };
 
-        // Creating an entrepreneur is not possible via the member API, therefore the
+        // Creating an mentor is not possible via the member API, therefore the
         // raw Entity API is used for the creation of the entrepreneur
         //
         if ( state === "create" )

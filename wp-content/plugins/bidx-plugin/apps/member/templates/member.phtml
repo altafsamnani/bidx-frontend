@@ -28,6 +28,7 @@ $entities       = $this->sessionData->data->wp->entities;
                 <?php $this->render('view-member.phtml');  ?>
                 <?php $this->render('view-entrepreneur.phtml'); ?>
                 <?php $this->render('view-investor.phtml'); ?>
+                <?php $this->render('view-mentor.phtml'); ?>
             </div>
         </div>
         <div class="col-sm-4">
@@ -110,6 +111,32 @@ $entities       = $this->sessionData->data->wp->entities;
                 <div class="panel-body">
 <?php
                     printf( __( 'Go to %sInvestor dashboard%s', 'bidxtheme' ), '<a href="/investor-dashboard">', '</a>' );
+?>
+                </div>
+            </div>
+<?php
+        }
+
+        // Create mentor
+        //
+        if ( !isset( $entities->bidxMentorProfile )) {
+?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong><?php _e('Become a mentor', 'bidxtheme')?></strong>
+                </div>
+                <div class="panel-body">
+                    <em><?php _e('Create your mentor profile', 'bidxtheme')?></em>
+                    <a href="/member/#createMentor" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
+                </div>
+            </div>
+<?php
+        } else {
+?>
+            <div class="panel panel-default">
+                <div class="panel-body">
+<?php
+                    printf( __( 'Go to %Mentor dashboard%s', 'bidxtheme' ), '<a href="/mentor-dashboard">', '</a>' );
 ?>
                 </div>
             </div>
