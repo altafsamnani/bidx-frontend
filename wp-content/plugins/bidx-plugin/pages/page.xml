@@ -109,6 +109,23 @@
 			<htmlTemplate>getting-started-member</htmlTemplate>
 			<content></content>
 		</post>
+		<post>
+			<post_id>10</post_id>
+			<name>Getting started mentor</name>
+			<title>Getting started mentor</title>
+			<update>true</update>
+			<htmlTemplate>getting-started-mentor</htmlTemplate>
+			<content></content>
+		</post>
+		<post>
+			<post_id>11</post_id>
+			<name>Register as mentor</name>
+			<title>Register as mentor</title>
+			<update>true</update>
+			<htmlTemplate>register-as-mentor</htmlTemplate>
+			<content></content>
+		</post>
+
 	</posts>
 
 </data>
