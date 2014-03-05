@@ -256,7 +256,6 @@
         var value   = $toggleMentorsForInst.filter( "[checked]" ).val();
 
         _handleToggleChange( value === "true", "mentorsForInst" );
-        // _checkIfVisible( ".toggle-mentorsForInst" );
     } );
 
 
@@ -624,7 +623,7 @@
             ,   "institutionWebsite":
                 {
                     required:               { depends: function () { return !$( ".toggle-mentorsForInst" ).is(':hidden'); } }
-            // ,       urlOptionalProtocol:    true
+            ,       urlOptionalProtocol:    true
                 }
             }
         ,   messages:
