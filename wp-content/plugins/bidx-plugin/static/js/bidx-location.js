@@ -143,7 +143,7 @@
             } ).hide();
 
 
-            $el.parents( ".control-group").append( state.$map );
+            $el.parents( ".form-group").append( state.$map );
 
             state.map           = new google.maps.Map( state.$map[0], options.mapOptions );
             state.autoComplete  = new google.maps.places.Autocomplete( $el[0], options.autoCompleteOptions );
@@ -323,6 +323,11 @@
             function fn( x )
             {
                 var result;
+
+                if ( x === undefined )
+                {
+                    x = 14;
+                }
 
                 if ( x <= 15 )
                 {
