@@ -267,7 +267,8 @@
     $preferredCommunicationCheckBoxes.change( function()
     {
         var $el     = $(this)
-        ,   value   = $el[0].name
+        ,   name    = $el[0].name
+        ,   value   = name.split('.')[1]
         ,   ck      = $el.prop('checked')
         ;
 
@@ -366,7 +367,7 @@
         $.each( fields.preferredCommunication, function( i, f )
         {
             var $input     = $editForm.find( "[type='text'][name='" + f + "']" )
-            ,   $checkbox  = $editForm.find( "[type='checkbox'][name='" + f + "']" )
+            ,   $checkbox  = $editForm.find( "[type='checkbox'][name='check." + f + "']" )
             ,   value      = bidx.utils.getValue( member, "bidxMentorProfile.preferredCommunication." + f )
             ;
 
@@ -624,27 +625,27 @@
                 }
             ,   "focusIndustry":
                 {
-                    required:      true
+                    required:               true
                 }
             ,   "focusSocialImpact":
                 {
-                    required:      true
+                    required:               true
                 }
             ,   "focusEnvImpact":
                 {
-                    required:      true
+                    required:               true
                 }
             ,   "focusLanguage":
                 {
-                    required:      true
+                    required:               true
                 }
             ,   "focusGender":
                 {
-                    required:      true
+                    required:               true
                 }
             ,   "focusStageBusiness":
                 {
-                    required:      true
+                    required:               true
                 }
             ,   "focusExpertise":
                 {
@@ -668,11 +669,53 @@
                     required:               { depends: function () { return !$( ".toggle-mentorsForInst" ).is(':hidden'); } }
             ,       urlOptionalProtocol:    true
                 }
+            ,   "focusPreferences":
+                {
+                    maxlength:              400
+                }
+            ,   "skype":
+                {
+                    required:               { depends: function() { return !$( "[type='text'][name='skype']" ).is(':hidden'); } }
+                }
+            ,   "hangout":
+                {
+                    required:               { depends: function() { return !$( "[type='text'][name='hangout']" ).is(':hidden'); } }
+                }
+            ,   "aim":
+                {
+                    required:               { depends: function() { return !$( "[type='text'][name='aim']" ).is(':hidden'); } }
+                }
+            ,   "icq":
+                {
+                    required:               { depends: function() { return !$( "[type='text'][name='icq']" ).is(':hidden'); } }
+                }
+            ,   "preferredCommunicationAll":
+                {
+                    required:               { depends: function(e)
+                                                {
+                                                    var hasCheckedCheckbox = true;
+                                                    $.each( $preferredCommunicationCheckBoxes, function( i, c ) {
+                                                         if ( c.checked )
+                                                         {
+                                                            hasCheckedCheckbox = false;
+                                                            $( "#preferredCommunicationAll" )
+                                                                .attr( "checked" , true)
+                                                                .removeClass('error')
+                                                                .parent()
+                                                                .removeClass('has-error');
+                                                            return;
+                                                         }
+                                                    });
+                                                    return hasCheckedCheckbox;
+                                                }
+                                            }
+                }
             }
         ,   messages:
             {
                 // Anything that is app specific, the general validations should have been set
                 // in common.js already
+                "preferredCommunicationAll": "Please check one of the above"
             }
         ,   submitHandler: function( e )
             {

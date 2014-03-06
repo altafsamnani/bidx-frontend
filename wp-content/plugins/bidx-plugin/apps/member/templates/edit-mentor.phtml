@@ -96,28 +96,47 @@
                                 </div>
                                 <div class="row ">
                                     <div class="col-sm-6">
-                                        <div class="form-group js-PreferredCommunication toggleInput">
+                                        <div class="js-PreferredCommunication toggleInput">
                                             <label><?php _e('Preferred mentorship communication service','bidxplugin'); ?></label>
-                                            <div class="checkbox">
-                                                <input type="checkbox" value="" id="checkbox-mtrSkype" name="skype" />
-                                                <label for="checkbox-mtrSkype"><span></span><?php _e('Skype','bidxplugin'); ?></label>
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" value="" id="checkbox-mtrSkype" name="check.skype" />
+                                                    <label for="checkbox-mtrSkype"><span></span><?php _e('Skype','bidxplugin'); ?></label>
+                                                </div>
                                             </div>
-                                            <input type="text" class="form-control" name="skype" placeholder="<?php _e('Please enter your Skype username','bidxplugin'); ?>" />
-                                            <div class="checkbox">
-                                                <input type="checkbox" value="" id="checkbox-mtrGoogle" name="hangout" />
-                                                <label for="checkbox-mtrGoogle"><span></span><?php _e('Google hangout','bidxplugin'); ?></label>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="skype" placeholder="<?php _e('Please enter your Skype username','bidxplugin'); ?>" />
                                             </div>
-                                            <input type="text" class="form-control" name="hangout" placeholder="<?php _e('Please enter your Google hangout username','bidxplugin'); ?>" />
-                                            <div class="checkbox">
-                                                <input type="checkbox" value="" id="checkbox-mtrAim" name="aim" />
-                                                <label for="checkbox-mtrAim"><span></span><?php _e('AIM','bidxplugin'); ?></label>
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" value="" id="checkbox-mtrGoogle" name="check.hangout" />
+                                                    <label for="checkbox-mtrGoogle"><span></span><?php _e('Google hangout','bidxplugin'); ?></label>
+                                                </div>
                                             </div>
-                                            <input type="text" class="form-control" name="aim" placeholder="<?php _e('Please enter your AIM username','bidxplugin'); ?>" />
-                                            <div class="checkbox">
-                                                <input type="checkbox" value="" id="checkbox-mtrIcq" name="icq" />
-                                                <label for="checkbox-mtrIcq"><span></span><?php _e('ICQ','bidxplugin'); ?></label>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="hangout" placeholder="<?php _e('Please enter your Google hangout username','bidxplugin'); ?>" />
                                             </div>
-                                            <input type="text" class="form-control" name="icq" placeholder="<?php _e('Please enter your ICQ username','bidxplugin'); ?>" />
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" value="" id="checkbox-mtrAim" name="check.aim" />
+                                                    <label for="checkbox-mtrAim"><span></span><?php _e('AIM','bidxplugin'); ?></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="aim" placeholder="<?php _e('Please enter your AIM username','bidxplugin'); ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" value="" id="checkbox-mtrIcq" name="check.icq" />
+                                                    <label for="checkbox-mtrIcq"><span></span><?php _e('ICQ','bidxplugin'); ?></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="icq" placeholder="<?php _e('Please enter your ICQ username','bidxplugin'); ?>" />
+                                            </div>                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="checkbox" value="" id="preferredCommunicationAll" name="preferredCommunicationAll" class="hide"/>
                                         </div>
                                     </div>
                                 </div>
@@ -253,7 +272,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label><?php _e('Other preferences (max. 60 words)','bidxplugin'); ?></label>
+                                            <label><?php _e('Other preferences (max. 400 characters)','bidxplugin'); ?></label>
                                             <textarea name="focusPreferences" class="form-control" placeholder="<?php _e('Please enter any additional preferences','bidxplugin'); ?>"></textarea>
                                         </div>
                                     </div>
