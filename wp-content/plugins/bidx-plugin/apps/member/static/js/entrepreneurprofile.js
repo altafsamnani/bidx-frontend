@@ -394,7 +394,9 @@
 
         // Check if the file has been removed
         //
-        if ( state !== "create" && !attachment.bidxMeta.bidxUploadId )
+        var profileUploadId = bidx.utils.getValue( attachment, "bidxMeta.bidxUploadId" )
+       
+        if ( state !== "create" && !profileUploadId )
         {
             bidx.utils.warn( "entrepreneurprofile::_addCv: CV has been deleted!" );
             deletedDoc = true;
