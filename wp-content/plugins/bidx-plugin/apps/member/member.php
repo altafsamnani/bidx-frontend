@@ -59,6 +59,10 @@ class member {
 				$view->render('investor-profile-links.phtml');
 			break;
 
+			case 'mentor-profile-links':
+				$view->render('mentor-profile-links.phtml');
+			break;
+
 			default:
 			    /* 2. Service MemberProfile*/
 			    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
