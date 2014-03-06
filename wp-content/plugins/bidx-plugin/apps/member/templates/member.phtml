@@ -121,7 +121,7 @@ $entities       = $this->sessionData->data->wp->entities;
         //
         if ( !isset( $entities->bidxMentorProfile )) {
 ?>
-            <div class="panel panel-default">
+            <div class="panel panel-default hide">
                 <div class="panel-heading">
                     <strong><?php _e('Become a mentor', 'bidxtheme')?></strong>
                 </div>
@@ -133,7 +133,7 @@ $entities       = $this->sessionData->data->wp->entities;
 <?php
         } else {
 ?>
-            <div class="panel panel-default">
+            <div class="panel panel-default hide">
                 <div class="panel-body">
 <?php
                     printf( __( 'Go to %sMentor dashboard%s', 'bidxtheme' ), '<a href="/mentor-dashboard">', '</a>' );
