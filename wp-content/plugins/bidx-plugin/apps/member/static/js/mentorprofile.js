@@ -2,27 +2,31 @@
 {
     "use strict";
 
-    var $element                        = $( "#editMentor" )
-    ,   $views                          = $element.find( ".view" )
-    ,   $editForm                       = $views.filter( ".viewEdit" ).find( "form" )
-    ,   $snippets                       = $element.find( ".snippets" )
+    var $element                            = $( "#editMentor" )
+    ,   $views                              = $element.find( ".view" )
+    ,   $editForm                           = $views.filter( ".viewEdit" ).find( "form" )
+    ,   $snippets                           = $element.find( ".snippets" )
 
-    ,   $focusLanguage                  = $editForm.find( "[name='focusLanguage']" )
-    ,   $focusSocialImpact              = $editForm.find( "[name='focusSocialImpact']" )
-    ,   $focusEnvImpact                 = $editForm.find( "[name='focusEnvImpact']" )
-    ,   $focusIndustry                  = $editForm.find( "[name='focusIndustry']" )
-    ,   $focusCountry                   = $editForm.find( "[name='focusCountry']" )
+    ,   $focusLanguage                      = $editForm.find( "[name='focusLanguage']" )
+    ,   $focusSocialImpact                  = $editForm.find( "[name='focusSocialImpact']" )
+    ,   $focusEnvImpact                     = $editForm.find( "[name='focusEnvImpact']" )
+    ,   $focusIndustry                      = $editForm.find( "[name='focusIndustry']" )
+    ,   $focusCountry                       = $editForm.find( "[name='focusCountry']" )
 
         // Attachnents
         //
-    ,   $attachmentsControl             = $editForm.find( ".attachmentsControl" )
-    ,   $attachmentsContainer           = $attachmentsControl.find( ".attachmentsContainer" )
-    ,   $btnAddAttachments              = $attachmentsControl.find( ".js-btn-add-attachments")
-    ,   $addAttachmentsModal            = $attachmentsControl.find( ".addAttachmentsModal" )
+    ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
+    ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
+    ,   $btnAddAttachments                  = $attachmentsControl.find( ".js-btn-add-attachments")
+    ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
 
-    ,   $toggles                        = $element.find( ".toggle" ).hide()
-    ,   $toggleMentorsForInst           = $element.find( "[name='mentorsForInst']"      )
-    ,   $toggleFocusLocationType        = $element.find( "[name='focusLocationType']"      )
+    ,   $toggles                            = $element.find( ".toggle" ).hide()
+    ,   $toggleMentorsForInst               = $element.find( "[name='mentorsForInst']" )
+    ,   $toggleFocusLocationType            = $element.find( "[name='focusLocationType']" )
+
+    ,   $toggleInput                        = $element.find( ".toggleInput" )
+    ,   $preferredCommunication             = $element.find( ".js-PreferredCommunication" )
+    ,   $preferredCommunicationCheckBoxes   = $preferredCommunication.find( "[type='checkbox']" )
 
     ,   member
     ,   memberId
@@ -59,6 +63,14 @@
         ,   'focusEnvImpact'
         ,   'focusPreferences'
         ,   'linkedIn'
+        ]
+
+    ,   preferredCommunication:
+        [
+            'skype'
+        ,   'google'
+        ,   'aim'
+        ,   'icq'
         ]
 
     ,   focusCity:
@@ -226,6 +238,15 @@
         $toggles.filter( ".toggle-" + group )[ fn ]();
     };
     
+    // The names of the browser's checkbox and the text input must be the same
+    //
+    var _handleCheckboxChange = function( show, checkbox )
+    {
+        var fn = show ? "fadeIn" : "hide";
+
+        $toggleInput.find( "input[type='text'][name='" + checkbox + "']" )[ fn ]();
+    };
+    
     // Conditional validation for booleans
     //
     // var _checkIfVisible = function( element )
@@ -242,6 +263,16 @@
         var value   = $toggleMentorsForInst.filter( "[checked]" ).val();
 
         _handleToggleChange( value === "true", "mentorsForInst" );
+    } );
+    
+    $preferredCommunicationCheckBoxes.change( function()
+    {
+        var $el     = $(this)
+        ,   value   = $el[0].name
+        ,   ck      = $el.prop('checked')
+        ;
+
+        _handleCheckboxChange( ck, value );
     } );
 
 
@@ -532,7 +563,7 @@
         // Reset any state
         //
         $attachmentsContainer.reflowrower( "empty" );
-
+        $preferredCommunication.find( "input[type='text']" ).hide();
         // Inject the save and button into the controls
         //
         var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
