@@ -41,38 +41,23 @@
 
     var fields =
     {
-            // bidxMeta
-            // summary
-            // mentorsForInst
-            // institutionName
-            // institutionWebsite
-            // preferedCommunication
-            // focusLocation
-            // focusLanguage
-            // focusExpertise
-            // focusIndustry
-            // focusGender
-            // focusStageBusiness
-            // focusSocialImpact
-            // focusEnvImpact
-            // attachment
-            // attach
-            // detac
 
         _root:
         [
             'summary'
         ,   'mentorsForInst'
-        ,   'focusIndustry'
-        ,   'focusExpertise'
-        ,   'focusSocialImpact'
-        ,   'focusEnvImpact'
-        ,   'focusCountry'
-        ,   'focusGender'
-        ,   'focusStageBusiness'
-        ,   'focusLanguage'
         ,   'institutionName'
         ,   'institutionWebsite'
+        ,   'preferredCommunication'
+        ,   'focusCountry'
+        ,   'focusLanguage'
+        ,   'focusExpertise'
+        ,   'focusIndustry'
+        ,   'focusGender'
+        ,   'focusStageBusiness'
+        ,   'focusSocialImpact'
+        ,   'focusEnvImpact'
+        ,   'focusPreferences'
         ,   'linkedIn'
         ]
 
@@ -385,7 +370,7 @@
             } );
         }
 
-        // Now that everything is processed, let's decide whicch of the focusLocation radio buttons must
+        // Now that everything is processed, let's decide which of the focusLocation radio buttons must
         // be selected
         //
         // Since there is no explicit 'focusLocation' property in the API we need to 'elect' the best option
