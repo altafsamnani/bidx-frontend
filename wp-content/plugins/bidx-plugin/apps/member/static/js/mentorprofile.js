@@ -52,7 +52,6 @@
         ,   'mentorsForInst'
         ,   'institutionName'
         ,   'institutionWebsite'
-        ,   'preferredCommunication'
         ,   'focusCountry'
         ,   'focusLanguage'
         ,   'focusExpertise'
@@ -68,7 +67,7 @@
     ,   preferredCommunication:
         [
             'skype'
-        ,   'google'
+        ,   'hangout'
         ,   'aim'
         ,   'icq'
         ]
@@ -364,6 +363,24 @@
             } );
         } );
 
+        $.each( fields.preferredCommunication, function( i, f )
+        {
+            var $input     = $editForm.find( "[type='text'][name='" + f + "']" )
+            ,   $checkbox  = $editForm.find( "[type='checkbox'][name='" + f + "']" )
+            ,   value      = bidx.utils.getValue( member, "bidxMentorProfile.preferredCommunication." + f )
+            ;
+
+            $input.each( function()
+            {
+                bidx.utils.setElementValue( $( this ), value );
+            } );
+
+            if ( $input.val() !== "" )
+            {
+                $checkbox.attr( "checked" , true);
+                $input.fadeIn();
+            }
+        } );
 
         // Focuscity, special field because it's a single UI control but a complex structure in the API
         //
@@ -488,6 +505,15 @@
             ;
 
             bidx.utils.setValue( member, "bidxMentorProfile." + f, value );
+        } );
+
+        $.each( fields.preferredCommunication, function( i, f )
+        {
+            var $input  = $editForm.find( "[type='text'][name='" + f + "']" )
+            ,   value   = bidx.utils.getElementValue( $input )
+            ;
+
+            bidx.utils.setValue( member, "bidxMentorProfile.preferredCommunication." + f, value );
         } );
 
         // Focus City is a pretty special field. Its a tagsinput in the UI but a array of objects
@@ -747,7 +773,7 @@
                             //
                             mentorProfileId = bidx.utils.getValue( bidxMeta, "bidxEntityId" );
 
-                            bidx.utils.log( "bidx::investor", member );
+                            bidx.utils.log( "bidx::mentor", member );
 
                             _populateScreen();
 
