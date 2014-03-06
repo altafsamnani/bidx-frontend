@@ -30,20 +30,20 @@
         <form id="frmeditMentor">
 
 
-                <div id="mentorAccordion">
+                <div id="mentorProfileEdit">
 
 
-                    <!-- mentorAbout -->
+                    <!-- mentorProfileAbout -->
                     <div class="panel panel-default panel-open">
 
                         <div class="panel-heading">
-                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorAccordion" href="#mentorAbout">
+                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorProfileEdit" href="#mentorProfileAbout">
                                 <span class="fa fa-chevron-right accordion-state-icon"></span>
                                 <?php _e('About you','bidxplugin'); ?>
                             </a>
                         </div>
 
-                        <div id="mentorAbout" class="panel-collapse collapse in" style="overflow: visible;">
+                        <div id="mentorProfileAbout" class="panel-collapse collapse in" style="overflow: visible;">
                             <div class="panel-body">
                                 <blockquote class="alert-info">
                                     <?php _e('Tell visitors and members of the group how you see yourself as a mentor. Give a brief description of your mentor interests.', 'bidxplugin')?>
@@ -127,17 +127,17 @@
                     </div>
 
 
-                    <!-- mentorPreferences -->
+                    <!-- mentorProfilePreferences -->
                     <div class="panel panel-default">
 
                         <div class="panel-heading">
-                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorAccordion" href="#mentorPreferences">
+                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorProfileEdit" href="#mentorProfilePreferences">
                                 <span class="fa fa-chevron-right accordion-state-icon"></span>
                                 <?php _e('Mentoring preferences','bidxplugin'); ?>
                             </a>
                         </div>
 
-                        <div id="mentorPreferences" class="panel-collapse collapse" >
+                        <div id="mentorProfilePreferences" class="panel-collapse collapse addressItem" >
                             <div class="panel-body">
                                 <blockquote class="alert-info">
                                     <?php _e('Use this section to define your mentor preferences')?>
@@ -254,7 +254,7 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label><?php _e('Other preferences (max. 60 words)','bidxplugin'); ?></label>
-                                            <textarea name="additionalPreferences" class="form-control" placeholder="<?php _e('Please enter any additional preferences','bidxplugin'); ?>"></textarea>
+                                            <textarea name="focusPreferences" class="form-control" placeholder="<?php _e('Please enter any additional preferences','bidxplugin'); ?>"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -264,17 +264,17 @@
                     </div>
 
 
-                    <!-- mentorReferences -->
+                    <!-- mentorProfileReferences -->
                     <div class="panel panel-default">
 
                         <div class="panel-heading">
-                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorAccordion" href="#mentorReferences">
+                            <a class="btn-block" data-toggle="collapse" data-parent="#mentorProfileEdit" href="#mentorProfileReferences">
                                 <span class="fa fa-chevron-right accordion-state-icon"></span>
                                 <?php _e('References and other documents','bidxplugin'); ?>
                             </a>
                         </div>
 
-                        <div id="mentorReferences" class="panel-collapse collapse" >
+                        <div id="mentorProfileReferences" class="panel-collapse collapse" >
                             <div class="panel-body">
                                 <blockquote class="alert-info">
                                     <?php _e('Please provide your LinkedIn profile or upload your CV.', 'bidxplugin')?>
