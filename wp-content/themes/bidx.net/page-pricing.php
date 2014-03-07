@@ -24,14 +24,14 @@
                                             </div>
                                         </div>
                                         <ul class="details">
-                                            <li><strong>Max Users</strong><br> Unlimited</li>
-                                            <li><strong>Discounts</strong><br> >10 Groups 30% less</li>
-                                            <li><strong>Customization</strong><br> $1000 per day</li>
-                                            <li><strong>Delivery time</strong><br> Max 4 weeks</li>
-                                            <li><strong>Customer support response time</strong><br> 2 working days, max</li>
+                                            <li>Max Users<br><strong>Unlimited</strong></li>
+                                            <li>Discounts<br><strong>>10 Groups 30% less</strong></li>
+                                            <li>Customization<br><strong>$1000 per day</strong></li>
+                                            <li>Delivery time<br><strong>Max 4 weeks</strong></li>
+                                            <li>Customer support response time<br><strong>2 days, max</strong></li>
                                         </ul>
                                         <div class="p-footer">
-                                            <a href="#" class="btn btn-flat flat-primary">Purchase Now</a>
+                                            <a href="#" class="btn btn-flat flat-warning">Get Started</a>
                                         </div>
                                     </div>
                                     <!-- /.pricing -->
@@ -50,14 +50,14 @@
                                             </div>
                                         </div>
                                         <ul class="details">
-                                            <li><strong>Max Users</strong><br> Unlimited</li>
-                                            <li><strong>Discounts</strong><br> $2000 after the 1st time</li>
-                                            <li><strong>Customization</strong><br> $1000 per day</li>
-                                            <li><strong>Delivery time</strong><br> Max 2 weeks</li>
-                                            <li><strong>Customer support response time</strong><br> 2 working days, max</li>
+                                            <li>Max Users<br><strong>Unlimited</strong></li>
+                                            <li>Discounts<br><strong> $2000 after the 1st time</strong></li>
+                                            <li>Customization<br><strong>$1000 per day</strong></li>
+                                            <li>Delivery time<br><strong>Max 2 weeks</strong></li>
+                                            <li>Customer support response time<br><strong>2 days, max</strong></li>
                                         </ul>
                                         <div class="p-footer">
-                                            <a href="#" class="btn btn-flat flat-primary">Purchase Now</a>
+                                            <a href="#" class="btn btn-flat flat-warning">Get Started</a>
                                         </div>
                                     </div>
                                     <!-- /.pricing -->
@@ -76,14 +76,14 @@
                                             </div>
                                         </div>
                                         <ul class="details">
-                                            <li><strong>Max Users</strong><br> Unlimited</li>
-                                            <li><strong>Discounts</strong><br> No discounts applicable</li>
-                                            <li><strong>Customization</strong><br> $1000 per day</li>
-                                            <li><strong>Delivery time</strong><br> Max 4 weeks</li>
-                                            <li><strong>Customer support response time</strong><br> 2 working days, max</li>
+                                            <li>Max Users<br><strong>Unlimited</strong></li>
+                                            <li>Discounts<br><strong> No discounts applicable</strong></li>
+                                            <li>Customization<br><strong>$1000 per day</strong></strong></li>
+                                            <li>Delivery time<br><strong> Max 4 weeks</strong></li>
+                                            <li>Customer support response time<br><strong> 2 days, max</strong></li>
                                         </ul>
                                         <div class="p-footer">
-                                            <a href="#" class="btn btn-flat flat-primary">Purchase Now</a>
+                                            <a href="#" class="btn btn-flat flat-warning">Get Started</a>
                                         </div>
                                     </div>
                                     <!-- /.pricing -->
@@ -101,14 +101,14 @@
                                             </div>
                                         </div>
                                         <ul class="details">
-                                            <li><strong>Max Users</strong><br> Unlimited</li>
-                                            <li><strong>Discounts</strong><br> Negotiable for small populations</li>
-                                            <li><strong>Customization</strong><br> All in</li>
-                                            <li><strong>Delivery time</strong><br> 2 year project</li>
-                                            <li><strong>Customer support response time</strong><br> 2 working days, max</li>
+                                            <li>Max Users<br><strong>Unlimited</strong></li>
+                                            <li>Discounts</strong><br><strong> Negotiable for small populations</strong></li>
+                                            <li>Customization<br><strong>All in</strong></li>
+                                            <li>Delivery time</strong><br><strong> 2 year project</strong></li>
+                                            <li>Customer support response time<br><strong> 2 days, max</strong></li>
                                         </ul>
                                         <div class="p-footer">
-                                            <a href="#" class="btn btn-flat flat-primary">Purchase Now</a>
+                                            <a href="#" class="btn btn-flat flat-warning">Get Started</a>
                                         </div>
                                     </div>
                                     <!-- /.pricing -->

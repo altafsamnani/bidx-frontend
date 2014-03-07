@@ -13,26 +13,26 @@
                     data-y="65"
                     data-speed="500"
                     data-start="1000"
-                    data-easing="easeOutExpo" style="font-size: 25px;"><?php _e('Entrepreneurial Ecosystem Online','bidxtheme');?></div>
+                    data-easing="easeOutExpo" style="font-size: 25px;"><?php _e('Entrepreneurial Ecosystems Online','bidxtheme');?></div>
                 <div class="tp-caption very_large_black_text lft ltt"
                     data-x="105"
-                    data-y="100"
+                    data-y="115"
                     data-speed="500"
                     data-start="1200"
-                    data-easing="easeOutExpo" style="font-size: 50px;"><?php _e('CREATE BUSINESS','bidxtheme');?></div>
+                    data-easing="easeOutExpo" style="font-size: 50px;"><?php _e('CREATE YOUR<br>NETWORK','bidxtheme');?></div>
                 <div class="tp-caption theme_caption3 sfl stl"
                     data-x="105"
-                    data-y="180"
+                    data-y="225"
                     data-speed="500"
                     data-start="1400"
                     data-easing="easeOutExpo" style="font-family: 'Montserrat', sans-serif; color: #34495e;">
-                    <?php _e('Unite entrepreneurs, mentors and<br>
-                    investors in emerging markets<br>
-                    connect them globally.','bidxtheme');?>
+                    <?php _e('Start, grow and finance your entrepreneurs.<br>
+                    Connect them with investors, mentors<br>
+                    and business partners.','bidxtheme');?>
                 </div>
                 <a href="/get-started" class="caption btn btn-flat flat-warning sfb stb"
                     data-x="105"
-                    data-y="275"
+                    data-y="320"
                     data-speed="500"
                     data-start="1600"
                     data-easing="easeOutExpo"><?php _e('Get Started','bidxtheme');?></a>
@@ -51,44 +51,36 @@
 <section class="visible-xs">
     <div class="front-mobile">
         <div class="center-video">
-            <h5 class="text-center"><?php _e('Entrepreneurial Ecosystem Online','bidxtheme');?></h5>
+            <h5 class="text-center"><?php _e('Entrepreneurial Ecosystems Online','bidxtheme');?></h5>
             <iframe src="//player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="270" height="152"></iframe>
-            <h3 class="text-center"><?php _e('CREATE BUSINESS','bidxtheme');?></h3>
+            <h3 class="text-center"><?php _e('CREATE YOUR NETWORK','bidxtheme');?></h3>
             <a href="/get-started" class="btn btn-flat btn-block flat-warning navbar-btn"><?php _e('Get started','bidxtheme');?></a>
         </div>
     </div>
 </section>
 
-<section id="our-services" class="pad-top-50">
+<section id="our-services" class="pad-25">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-3 pad-top-50">
                 <div class="service">
-                    <div class="handicon handicon-19"></div>
-                    <div class="">
-                        <h1><?php _e('Entrepreneur','bidxtheme');?></h1>
-                        <p><?php _e('Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.','bidxtheme');?></p>
-                    </div>
+                    <h1><?php _e('Groups','bidxtheme');?></h1>
+                    <p><?php _e('Grow your online entrepreneurial network','bidxtheme');?></p>
+                    <br>
+                    <a href="/groups" class="btn btn-flat flat-warning"><?php _e('Learn More','bidxtheme');?></a>
                 </div>
             </div>
             <!-- /.col-sm-6 -->
-            <div class="col-xs-12 col-sm-4">
-                <div class="service">
-                    <div class="handicon handicon-24"></div>
-                    <div class="">
-                        <h1><?php _e('Mentor','bidxtheme');?></h1>
-                        <p><?php _e('Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.','bidxtheme');?></p>
-                    </div>
-                </div>
+            <div class="col-xs-12 col-sm-5">
+                <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/bidxgroupicon.png" class="img-responsive" alt="bidx Groups">
             </div>
             <!-- /.col-sm-4 -->
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 pad-top-50">
                 <div class="service">
-                    <div class="handicon handicon-5"></div>
-                    <div class="">
-                        <h1><?php _e('Investor','bidxtheme');?></h1>
-                        <p><?php _e('Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.','bidxtheme');?></p>
-                    </div>
+                    <h1><?php _e('Competitions','bidxtheme');?></h1>
+                    <p><?php _e('Launch your business plan competition online.','bidxtheme');?></p>
+                    <br>
+                    <a href="/competitions" class="btn btn-flat flat-warning"><?php _e('Learn More','bidxtheme');?></a>
                 </div>
             </div>
             <!-- /.col-sm-4 -->
@@ -101,14 +93,14 @@
 <section id="action-box" class="pad-25">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-3">
+            <div class="col-xs-12 col-sm-3 pad-top-50">
                 <div class="service">
                     <div class="handicon handicon-10"></div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-9 action-box">
-                <h1><?php _e('Ideal solutions','bidxtheme');?></h1>
-                <p><?php _e('For entrepreneurs, investors, incubators, chambers of commerce, banks, investment funds ...and more.','bidxtheme');?></p>
+                <h1><?php _e('More impact per dollar','bidxtheme');?></h1>
+                <p><?php _e('bidx has grown and started over 100 businesses ever year, creating over 500 direct jobs. USD 18 million has come from our investors. We have done this at a cost of USD 2000 per direct new job.','bidxtheme');?></p>
                 <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('Get Started','bidxtheme');?></a>
             </div>
         <!-- /.action-box -->
@@ -196,24 +188,86 @@
     <!-- /.container -->
 </section>
 
-<section id="quote" class="pad-25 pattern-7">
+<section id="quote" class="pad-25 pattern-10">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-3">
                 <div class="service">
-                    <br>
-                    <br>
                     <div class="handicon handicon-7"></div>
                 </div>
             </div>
             <!-- /.col-sm-12 -->
-            <div class="col-xs-12 col-sm-9">
-                <?php _e('<h1>It’s all about growing businesses and creating jobs</h1>
-                <p>If your goal is to grow, start or finance businesses in emerging markets, then bidX offers you an online solution to improve your results and impact.     bidX is powered by BiD Network. 60,000 online members from 90 countries, 1500 mentors, 200 investors, 822 businesses started and grown, 130 businesses financed with over $17 million. 6500 jobs created.</p>
-                <p>Use bidX to create your own online community, using your own brand, identity and language. Decide on your Group’s focus: a city, country, sector or industry. Invite entrepreneurs to submit or create their business plans. Connect them with mentors, investors, and advisors. If your businesses are seeking export opportunities or international finance and advice, through bidX they can connect to our global network of online groups.</p>
-','bidxtheme');?>
+            <div class="col-xs-12 col-sm-9 pad-top-25">
+                <h2><?php _e('Do your entrepreneurs grow 5x faster than the national economy? At bidx they do. Take your businesses to the next level.','bidxtheme');?></h2>
             </div>
             <!-- /.col-sm-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</section>
+
+<section id="quote" class="pad-25">
+    <div class="container">
+        <h1 class="service"><?php _e('Our tools have been built for you','bidxtheme');?></h1>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <a href="#" class="btn btn-block flat flat-clients">
+                    <div class="service">
+                        <div class="handicon handicon-8"></div>
+                        <p><?php _e('Banks, Funds & Angels','bidxtheme');?></p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <a href="#" class="btn btn-block flat flat-clients">
+                    <div class="service">
+                        <div class="handicon handicon-24"></div>
+                        <p><?php _e('Cities & Governments','bidxtheme');?></p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <a href="#" class="btn btn-block flat flat-clients">
+                    <div class="service">
+                        <div class="handicon handicon-23"></div>
+                        <p><?php _e('Development organazations & Donors','bidxtheme');?></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</section>
+
+<section id="quote" class="pad-bottom-25">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <a href="#" class="btn btn-block flat flat-clients">
+                    <div class="service">
+                        <div class="handicon handicon-19"></div>
+                        <p><?php _e('Incubators & Chambers of Commerce','bidxtheme');?></p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <a href="#" class="btn btn-block flat flat-clients">
+                    <div class="service">
+                        <div class="handicon handicon-12"></div>
+                        <p><?php _e('Telcos & Corporations','bidxtheme');?></p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <a href="#" class="btn btn-block flat flat-clients">
+                    <div class="service">
+                        <div class="handicon handicon-25"></div>
+                        <p><?php _e('Accountants, Lawyers & Consulants','bidxtheme');?></p>
+                    </div>
+                </a>
+            </div>
         </div>
         <!-- /.row -->
     </div>
@@ -225,7 +279,7 @@
 <section id="recent-works" class="pad-top-50 top-border thin">
     <div class="container">
         <div class="subpage-title">
-            <h5><?php _e('Our Sponsors','bidxtheme');?></h5>
+            <h5><?php _e('Our Founders','bidxtheme');?></h5>
             <!-- Controls -->
             <div class="controls">
                 <span id="client-prev" class="prev"><i class="fa fa-angle-left"></i></span>
@@ -243,15 +297,15 @@
                 </div>
                 <!-- /.client-wrapper -->
                 <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">
+                    <a href="#"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/npl.jpg" alt="Client Image"></a>
+                </div>
+                <!-- /.client-wrapper -->
+                <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">
                     <a href="#"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/usaid.jpg" alt="Client Image"></a>
                 </div>
                 <!-- /.client-wrapper -->
                 <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">
                     <a href="#"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/did.jpg" alt="Client Image"></a>
-                </div>
-                <!-- /.client-wrapper -->
-                <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">
-                    <a href="#"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/npl.jpg" alt="Client Image"></a>
                 </div>
                 <!-- /.client-wrapper -->
             </div>

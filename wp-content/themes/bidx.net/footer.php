@@ -4,7 +4,7 @@
             <div class="col-md-3">
                 <div class="widget about-us">
                     <div class="footer-brand"><?php _e('<span>bidx</span>.net','bidxtheme');?></div>
-                    <p><?php _e('Grow your local businesses and create new jobs. Your economy depends on it!','bidxtheme');?></p>
+                    <p><?php _e('Grow your local business network and create new jobs. Your economy depends on it!','bidxtheme');?></p>
                 </div>
                 <!-- /.about-us -->
                 <div class="widget stay-connedted">
@@ -12,11 +12,10 @@
                         <h5><?php _e('Stay Connected','bidxtheme');?></h5>
                     </div>
                     <ul class="social-links">
-                        <li><a target="_blank" class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a target="_blank" class="google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a target="_blank" class="facebook" href="//www.facebook.com/bidx"><i class="fa fa-facebook"></i></a></li>
+                        <!-- <li><a target="_blank" class="google-plus" href="#"><i class="fa fa-google-plus"></i></a></li> -->
                         <li><a target="_blank" class="twitter" href="//twitter.com/bid_x"><i class="fa fa-twitter"></i></a></li>
-                        <li><a target="_blank" class="pinterest" href="#"><i class="fa fa-pinterest"></i></a></li>
-                        <li><a target="_blank" class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a target="_blank" class="linkedin" href="//www.linkedin.com/company/2999232"><i class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -64,51 +63,53 @@
             </div>
             <!-- /.col-md-3 -->
                 <div class="col-md-6">
-                    <div class="subpage-title">
-                        <h5><?php _e('Testimonials','bidxtheme');?></h5>
-                        <!-- Controls -->
-                        <div class="controls">
-                            <span id="testimonials-prev" class="prev"><i class="fa fa-angle-left"></i></span>
-                            <span id="testimonials-next" class="next"><i class="fa fa-angle-right"></i></span>
+                    <div class="widget">
+                        <div class="subpage-title">
+                            <h5><?php _e('Testimonials','bidxtheme');?></h5>
+                            <!-- Controls -->
+                            <div class="controls">
+                                <span id="testimonials-prev" class="prev"><i class="fa fa-angle-left"></i></span>
+                                <span id="testimonials-next" class="next"><i class="fa fa-angle-right"></i></span>
+                            </div>
                         </div>
-                    </div>
-                    <div id="caroufredsel-testimonials-container">
+                        <div id="caroufredsel-testimonials-container">
 <?php
-                    // WP_Query arguments
-                    $args = array (
-                        'post_type'         => 'testimonial',
-                        'post_status'       => 'publish',
-                        'posts_per_page'        => 3,
-                    );
+                        // WP_Query arguments
+                        $args = array (
+                            'post_type'         => 'testimonial',
+                            'post_status'       => 'publish',
+                            'posts_per_page'        => 3,
+                        );
 
-                    // The Query
-                    $testimonials = new WP_Query( $args );
+                        // The Query
+                        $testimonials = new WP_Query( $args );
 
-                    // The Loop
-                    if ( $testimonials->have_posts() ) {
-                        while ( $testimonials->have_posts() ) {
-                            $testimonials->the_post();
+                        // The Loop
+                        if ( $testimonials->have_posts() ) {
+                            while ( $testimonials->have_posts() ) {
+                                $testimonials->the_post();
 ?>
-                        <div class="testimonial">
-                            <div class="testimonial-content">
-                                <p><?php echo $testimonials->post->post_content ?></p>
+                            <div class="testimonial">
+                                <div class="testimonial-content">
+                                    <p><?php echo $testimonials->post->post_content ?></p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <?php echo the_post_thumbnail('bidx_thumb', array('class' => 'user-thumb')); ?>
+                                    <span class="user"><?php echo the_title(); ?></span>
+                                    <span class="user-info"><?php echo the_excerpt(); ?></span>
+                                </div>
                             </div>
-                            <div class="testimonial-author">
-                                <?php echo the_post_thumbnail('bidx_thumb', array('class' => 'user-thumb')); ?>
-                                <span class="user"><?php echo the_title(); ?></span>
-                                <span class="user-info"><?php echo the_excerpt(); ?></span>
-                            </div>
-                        </div>
 
 <?php
+                            }
+                        } else {
+                            // no posts found
                         }
-                    } else {
-                        // no posts found
-                    }
 
-                    // Restore original Post Data
-                    wp_reset_postdata();
+                        // Restore original Post Data
+                        wp_reset_postdata();
 ?>
+                        </div>
                     </div>
                 </div>
             <!-- /.col-md-6 -->
@@ -131,7 +132,7 @@
             <!-- /.footer-info-wrapper -->
             <div class="col-xs-12 col-sm-6 footer-links-wrapper">
                 <ul class="list-inline">
-                    <li><a href="#"><?php _e('Terms Of Service','bidxtheme');?></a></li>
+                    <li><a href="/terms-and-conditions"><?php _e('Terms and Conditions','bidxtheme');?></a></li>
                 </ul>
             </div>
             <!-- /.footer-links-wrapper -->

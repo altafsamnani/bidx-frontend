@@ -81,7 +81,7 @@
 
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-                    <span class="hidden-xs"><?php bidx_language_selector();?></span>
+                    <span class="hidden-xs"><?php // bidx_language_selector();?></span>
 
                     <a href="/get-started" class="btn btn-flat flat-warning navbar-btn pull-right hidden-xs">Get started</a>
 
