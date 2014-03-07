@@ -41,7 +41,7 @@
                     data-y="70"
                     data-speed="1000"
                     data-start="2000"
-                    data-easing="easeOutExpo"><iframe src="http://player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="460" height="259"></iframe></div>
+                    data-easing="easeOutExpo"><iframe src="//player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="460" height="259"></iframe></div>
             </li>
         </ul>
         <div class="tp-bannertimer tp-bottom"></div>
@@ -52,7 +52,7 @@
     <div class="front-mobile">
         <div class="center-video">
             <h5 class="text-center"><?php _e('Entrepreneurial Ecosystem Online','bidxtheme');?></h5>
-            <iframe src="http://player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="270" height="152"></iframe>
+            <iframe src="//player.vimeo.com/video/83490916?title=0&amp;byline=0&amp;portrait=0" width="270" height="152"></iframe>
             <h3 class="text-center"><?php _e('CREATE BUSINESS','bidxtheme');?></h3>
             <a href="/get-started" class="btn btn-flat btn-block flat-warning navbar-btn"><?php _e('Get started','bidxtheme');?></a>
         </div>
