@@ -146,7 +146,7 @@
 
 </div><!--#main-->
 <?php // wp_footer(); /* this is used by many Wordpress features and plugins to work properly */ ?>
-
+    <script src="<?php bloginfo( 'template_url' ); ?>/assets/js/froogaloop2.min.js"></script>
 	<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="<?php bloginfo( 'template_url' ); ?>/assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="<?php bloginfo( 'template_url' ); ?>/assets/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
