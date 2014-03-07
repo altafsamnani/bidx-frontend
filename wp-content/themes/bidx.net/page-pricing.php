@@ -27,8 +27,10 @@
                                             <li>Max Users<br><strong>Unlimited</strong></li>
                                             <li>Discounts<br><strong>>10 Groups 30% less</strong></li>
                                             <li>Customization<br><strong>$1000 per day</strong></li>
-                                            <li>Delivery time<br><strong>Max 4 weeks</strong></li>
+                                            <li>Delivery time<br><strong>4 weeks, max</strong></li>
                                             <li>Customer support response time<br><strong>2 days, max</strong></li>
+                                            <li>Branding<br><strong>Your brand</strong></li>
+                                            <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
                                         </ul>
                                         <div class="p-footer">
                                             <a href="#" class="btn btn-flat flat-warning">Get Started</a>
@@ -51,10 +53,12 @@
                                         </div>
                                         <ul class="details">
                                             <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <li>Discounts<br><strong> $2000 after the 1st time</strong></li>
+                                            <li>Discounts<br><strong>$2000 after the 1st time</strong></li>
                                             <li>Customization<br><strong>$1000 per day</strong></li>
-                                            <li>Delivery time<br><strong>Max 2 weeks</strong></li>
+                                            <li>Delivery time<br><strong>2 weeks, max</strong></li>
                                             <li>Customer support response time<br><strong>2 days, max</strong></li>
+                                            <li>Branding<br><strong>Your brand</strong></li>
+                                            <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
                                         </ul>
                                         <div class="p-footer">
                                             <a href="#" class="btn btn-flat flat-warning">Get Started</a>
@@ -77,10 +81,12 @@
                                         </div>
                                         <ul class="details">
                                             <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <li>Discounts<br><strong> No discounts applicable</strong></li>
+                                            <li>Discounts<br><strong>No discounts applicable</strong></li>
                                             <li>Customization<br><strong>$1000 per day</strong></strong></li>
-                                            <li>Delivery time<br><strong> Max 4 weeks</strong></li>
-                                            <li>Customer support response time<br><strong> 2 days, max</strong></li>
+                                            <li>Delivery time<br><strong>4 weeks, max</strong></li>
+                                            <li>Customer support response time<br><strong>2 days, max</strong></li>
+                                            <li>Branding<br><strong>Your brand</strong></li>
+                                            <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
                                         </ul>
                                         <div class="p-footer">
                                             <a href="#" class="btn btn-flat flat-warning">Get Started</a>
@@ -102,10 +108,12 @@
                                         </div>
                                         <ul class="details">
                                             <li>Max Users<br><strong>Unlimited</strong></li>
-                                            <li>Discounts</strong><br><strong> Negotiable for small populations</strong></li>
+                                            <li>Discounts</strong><br><strong>Negotiable for small populations</strong></li>
                                             <li>Customization<br><strong>All in</strong></li>
-                                            <li>Delivery time</strong><br><strong> 2 year project</strong></li>
-                                            <li>Customer support response time<br><strong> 2 days, max</strong></li>
+                                            <li>Delivery time</strong><br><strong>2 year project</strong></li>
+                                            <li>Customer support response time<br><strong>2 days, max</strong></li>
+                                            <li>Branding<br><strong>Your brand</strong></li>
+                                            <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
                                         </ul>
                                         <div class="p-footer">
                                             <a href="#" class="btn btn-flat flat-warning">Get Started</a>

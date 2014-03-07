@@ -2059,32 +2059,33 @@ h1.service {
   -webkit-box-shadow: 0 0 5px 0 rgba(80, 80, 80, 0.35);
   -moz-box-shadow: 0 0 5px 0 rgba(80, 80, 80, 0.35);
   box-shadow: 0 0 5px 0 rgba(80, 80, 80, 0.35);
+  background-color: white;
 }
 
-/* line 1642, ../sass/screen.scss */
+/* line 1643, ../sass/screen.scss */
 .pricing {
   text-align: center;
   margin-bottom: 0;
   background-color: white;
 }
-/* line 1646, ../sass/screen.scss */
+/* line 1647, ../sass/screen.scss */
 .pricing .title {
   background-color: #16a085;
   text-align: center;
   padding: 5px;
 }
-/* line 1650, ../sass/screen.scss */
+/* line 1651, ../sass/screen.scss */
 .pricing .title h4 {
   color: white;
 }
-/* line 1654, ../sass/screen.scss */
+/* line 1655, ../sass/screen.scss */
 .pricing .price {
   background-color: #79a540;
   color: white;
   padding: 20px;
   font-family: "Exo 2", sans-serif;
 }
-/* line 1659, ../sass/screen.scss */
+/* line 1660, ../sass/screen.scss */
 .pricing .price h2 {
   font-family: "Exo 2", sans-serif;
   font-weight: 800;
@@ -2093,40 +2094,39 @@ h1.service {
   display: inline-block;
   margin: 0;
 }
-/* line 1667, ../sass/screen.scss */
+/* line 1668, ../sass/screen.scss */
 .pricing .price .dollar {
   font-size: 24px;
   display: inline-block;
   vertical-align: top;
   margin-top: 0;
 }
-/* line 1673, ../sass/screen.scss */
+/* line 1674, ../sass/screen.scss */
 .pricing .price .per {
   font-size: 14px;
   display: inline-block;
 }
-/* line 1678, ../sass/screen.scss */
+/* line 1679, ../sass/screen.scss */
 .pricing .details {
   padding-left: 0;
   list-style: none;
   padding: 0 20px;
-  border: 1px solid #ecf1ee;
   border-width: 0 1px;
   margin-bottom: 0;
+  font-size: 16px;
 }
-/* line 1685, ../sass/screen.scss */
+/* line 1686, ../sass/screen.scss */
 .pricing .details li {
   padding: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
-/* line 1688, ../sass/screen.scss */
+/* line 1689, ../sass/screen.scss */
 .pricing .details li:last-child {
   border-bottom: 0;
 }
-/* line 1693, ../sass/screen.scss */
+/* line 1694, ../sass/screen.scss */
 .pricing .p-footer {
   padding: 20px;
-  border: 1px solid #ecf1ee;
 }
 /* line 1698, ../sass/screen.scss */
 .pricing.groups .price {
