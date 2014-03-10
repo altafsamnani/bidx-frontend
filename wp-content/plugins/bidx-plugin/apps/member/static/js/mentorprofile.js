@@ -144,6 +144,7 @@
             snippets.$attachment            = $snippets.children( ".attachmentItem"          ).remove();
         }
 
+
         // Initialize attachments
         //
         function _attachments()
@@ -227,8 +228,7 @@
                 itemsPerRow:        3
             ,   itemClass:          "attachmentItem"
             } );
-        }
-    }
+        }    }
 
     var _handleToggleChange = function( show, group )
     {
@@ -246,15 +246,6 @@
         $toggleInput.find( "input[type='text'][name='" + checkbox + "']" )[ fn ]();
     };
     
-    // Conditional validation for booleans
-    //
-    // var _checkIfVisible = function( element )
-    // {
-    //     bidx.utils.log('Element:::::', element);
-    //     bidx.utils.log('Return:::::', !$( element ).is(':hidden') );
-    //     return !$( element ).is(':hidden');
-    // };
-
     // Update the UI to show the input / previous run business'
     //
     $toggleMentorsForInst.change( function()
@@ -655,11 +646,6 @@
                 {
                     required:               true
                 }
-            ,   "linkedIn":
-                {
-                    required:               true
-            ,       linkedInUsername:       true
-                }
             ,   "institutionName":
                 {
                     required:               { depends: function () { return !$( ".toggle-mentorsForInst" ).is(':hidden'); } }
@@ -691,7 +677,7 @@
                 }
             ,   "preferredCommunicationAll":
                 {
-                    required:               { depends: function(e)
+                    required:               { depends: function()
                                                 {
                                                     var hasCheckedCheckbox = true;
                                                     $.each( $preferredCommunicationCheckBoxes, function( i, c ) {
@@ -710,12 +696,34 @@
                                                 }
                                             }
                 }
+            ,   "referencesAll":
+                {
+                    required:               { depends: function()
+                                                {
+                                                    var hasReference = true;
+                                                    if ( $( "#mentorProfileReferences [name='linkedIn']" ).val() )
+                                                    {
+                                                        hasReference = false;
+                                                    }
+                                                    if ( $( ".attachmentItem" ).length )
+                                                    {
+                                                        hasReference = false;
+                                                    }
+                                                    return hasReference;
+                                                }
+                                            }
+                }
+            ,   "linkedIn":
+                {
+                    linkedInUsername:       true
+                }
             }
         ,   messages:
             {
                 // Anything that is app specific, the general validations should have been set
                 // in common.js already
                 "preferredCommunicationAll": "Please check one of the above"
+            ,   "referencesAll": "Please fill your LinkedIn profile url or upload at least one document"
             }
         ,   submitHandler: function( e )
             {
