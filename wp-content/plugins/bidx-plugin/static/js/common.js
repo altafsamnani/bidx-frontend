@@ -1104,4 +1104,18 @@
 
         } );
 
+        // Open the panel if there is a hash in the url
+        //
+        if ( window.location.hash )
+        {
+            var windowHash  = window.location.hash.split('/')
+            ,   panelHash   = windowHash[windowHash.length-1]
+            ;
+            
+            if ( panelHash.match( /^#/ ) )
+            {
+                $( 'a[href='+ panelHash +']' ).click();
+            }
+        }
+
 } ( jQuery ));
