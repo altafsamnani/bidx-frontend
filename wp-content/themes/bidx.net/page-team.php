@@ -14,10 +14,10 @@
 
 		<section id="team-3-columns" class="pad-top-50 ">
 		    <div class="container">
-		        <div class="subpage-title">
+<!-- 		        <div class="subpage-title">
 		            <h5>Custom Tag</h5>
 		        </div>
-				<div class="row">
+ -->				<div class="row">
 <?php
 					// WP_Query arguments
 					$args = array (

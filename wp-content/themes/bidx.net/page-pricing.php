@@ -33,7 +33,7 @@
                                             <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
                                         </ul>
                                         <div class="p-footer">
-                                            <a href="#" class="btn btn-flat flat-warning">Get Started</a>
+                                            <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
                                         </div>
                                     </div>
                                     <!-- /.pricing -->
@@ -61,7 +61,7 @@
                                             <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
                                         </ul>
                                         <div class="p-footer">
-                                            <a href="#" class="btn btn-flat flat-warning">Get Started</a>
+                                            <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
                                         </div>
                                     </div>
                                     <!-- /.pricing -->
@@ -89,7 +89,7 @@
                                             <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
                                         </ul>
                                         <div class="p-footer">
-                                            <a href="#" class="btn btn-flat flat-warning">Get Started</a>
+                                            <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
                                         </div>
                                     </div>
                                     <!-- /.pricing -->
@@ -116,7 +116,7 @@
                                             <li>Languages<br><strong>English, Spanish, French (June 2014)</strong></li>
                                         </ul>
                                         <div class="p-footer">
-                                            <a href="#" class="btn btn-flat flat-warning">Get Started</a>
+                                            <a href="/get-started" class="btn btn-flat flat-warning">Get Started</a>
                                         </div>
                                     </div>
                                     <!-- /.pricing -->

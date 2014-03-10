@@ -33,6 +33,9 @@ get_header();
             <div id="portfolio" class="main-wrapper">
                 <section id="portfolio-3" class="pad-25 pattern-7">
                     <div class="container">
+                        <div class="subpage-title">
+                            <h5>Online Groups</h5>
+                        </div>
 <!--                         <ul class="portfolio-filter nav nav-pills">
                             <li class="active"><a href="#" data-filter="*">All</a></li>
                             <li><a href="#" data-filter=".artwork">Africa</a></li>
