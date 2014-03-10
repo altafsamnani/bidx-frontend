@@ -17,7 +17,7 @@
                             <h5><i class="fa fa-compass"></i> Visit Us</h5>
                         </div>
                         <address>
-                            <strong>bidX BV</strong><br>
+                            <strong>bidx BV</strong><br>
                             De Ruijterkade, 107<br>
                             Amsterdam, 1011 AB<br>
                         </address>
@@ -27,8 +27,7 @@
                             <h5><i class="fa fa-phone"></i> Contact</h5>
                         </div>
                         <address>
-                            Phone: (123) 456-7890<br>
-                            Fax: (123) 456-7890<br>
+                            Phone: (020) 218-1060<br>
                             <a href="mailto:info@bidx.net">info@bidx.net</a>
                         </address>
                     </div>
