@@ -212,7 +212,7 @@
         <h1 class="service"><?php _e('Our tools have been built for you','bidxtheme');?></h1>
         <div class="row">
             <div class="col-xs-12 col-sm-4">
-                <a href="#" class="btn btn-block flat flat-clients">
+                <a href="/banks-funds-angels" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-8"></div>
                         <p><?php _e('Banks, Funds & Angels','bidxtheme');?></p>
@@ -220,7 +220,7 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <a href="#" class="btn btn-block flat flat-clients">
+                <a href="/cities-and-governments" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-24"></div>
                         <p><?php _e('Cities & Governments','bidxtheme');?></p>
@@ -228,7 +228,7 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <a href="#" class="btn btn-block flat flat-clients">
+                <a href="/development-organisations-donors" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-23"></div>
                         <p><?php _e('Development organazations & Donors','bidxtheme');?></p>
@@ -245,7 +245,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-4">
-                <a href="#" class="btn btn-block flat flat-clients">
+                <a href="/incubators-chambers-of-commerce" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-19"></div>
                         <p><?php _e('Incubators & Chambers of Commerce','bidxtheme');?></p>
@@ -253,7 +253,7 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <a href="#" class="btn btn-block flat flat-clients">
+                <a href="/telcos-corporations" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-12"></div>
                         <p><?php _e('Telcos & Corporations','bidxtheme');?></p>
@@ -261,10 +261,10 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <a href="#" class="btn btn-block flat flat-clients">
+                <a href="/consultants-accountants" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-25"></div>
-                        <p><?php _e('Accountants, Lawyers & Consulants','bidxtheme');?></p>
+                        <p><?php _e('Accountants & Consultants','bidxtheme');?></p>
                     </div>
                 </a>
             </div>
