@@ -1104,18 +1104,37 @@
 
         } );
 
-        // Open the panel if there is a hash in the url
-        //
-        if ( window.location.hash )
+    // Open the panel if there is a hash in the url
+    //
+    if ( window.location.hash )
+    {
+        var windowHash  = window.location.hash.split('/')
+        ,   panelHash   = windowHash[windowHash.length-1]
+        ;
+        
+        if ( panelHash.match( /^#/ ) )
         {
-            var windowHash  = window.location.hash.split('/')
-            ,   panelHash   = windowHash[windowHash.length-1]
-            ;
-            
-            if ( panelHash.match( /^#/ ) )
-            {
-                $( 'a[href='+ panelHash +']' ).click();
-            }
+            $( 'a[href='+ panelHash +']' ).click();
         }
+    }
+
+    // On Window Scroll
+    $(window).scroll( function(e)
+    {
+        var scrollPosition = $(window).scrollTop()
+        ,   $innerWrap          = $( ".inner-wrap" )
+        ,   $headerControls     = $( ".bidx-header-controls a" )
+        ;
+        if ( scrollPosition >= 120 )
+        {
+            $innerWrap.addClass( "smaller" );
+            $headerControls.addClass( "btn-sm" );
+        }
+        if ( scrollPosition <= 30 )
+        {
+            $innerWrap.removeClass( "smaller" );
+            $headerControls.removeClass( "btn-sm" );
+        }
+    });
 
 } ( jQuery ));
