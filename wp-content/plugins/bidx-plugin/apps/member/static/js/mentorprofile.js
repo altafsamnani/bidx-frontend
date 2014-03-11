@@ -306,14 +306,22 @@
     {
         if ( attachment === null )
         {
-            bidx.util.warn( "mentorprofile::_addAttachment: attachment is null!" );
+            bidx.util.warn( "investorprofile::_addAttachment: attachment is null!" );
             return;
         }
 
         var $attachment         = snippets.$attachment.clone()
-        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.created )
-        ,   imageSrc
+        ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
+        ,   $attachmentImage    = $attachment.find( ".documentImage" )
+        ,   $attachmentLink     = $attachment.find( ".documentLink" )
+        ,   deletedDoc          = false
         ;
+
+        if ( !attachment.bidxMeta.bidxUploadId )
+        {
+            bidx.utils.warn( "investorprofile::_addAttachment: attachment has been deleted!" );
+            deletedDoc = true;
+        }
 
         // Store the data so we can later use it to merge the updated data in
         //
@@ -325,16 +333,32 @@
         $attachment.find( ".purpose"            ).text( attachment.purpose );
         $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
-        imageSrc = ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
-            ? attachment.document
-            : "/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png";
+        $attachmentLink.attr( "href", attachment.document );
 
-        $attachment.find( ".documentImage"  ).attr( "src", imageSrc );
-        $attachment.find( ".documentLink"   ).attr( "href", attachment.document );
+        if ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
+        {
+            $attachmentImage.attr( "src", attachment.document );
+        }
+        else
+        {
+            $attachmentImage.remove();
+
+            // Check if the file has been removed
+            //
+            if ( deletedDoc )
+            {
+                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) );
+                $attachmentLink.parent().append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+                $attachmentLink.remove();
+            }
+            else
+            {
+                $attachmentLink.append( $( "<i />", { "class": "fa fa-file-text-o document-icon" } ) );
+            }
+        }
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
     }
-
 
 
     // Use the retrieved member object to populate the form and other screen elements
