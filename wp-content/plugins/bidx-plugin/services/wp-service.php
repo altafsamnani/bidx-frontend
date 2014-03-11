@@ -306,7 +306,7 @@ function ajax_submit_signin ()
                 } else {
 
                     $text = ($requestData->redirect) ? wp_redirect ($requestData->redirect) : 'Something wrong happened';
-                    $error = "<strong>ERROR:</STRONG> 122" . $text;
+                    $error = "<strong>ERROR:</STRONG>" . $text;
                 }
             }
         }
@@ -1053,7 +1053,7 @@ function bidx_wordpress_post_action ($url, $result, $body)
         $requestData->text .= $error;
         //$this->clear_wp_bidx_session ();
     } else {
-        $requestData->status = 'ERROR';
+        $requestData->status = 'ERROR';        
     }
 
     //Write logic what If error and what if its ok (ex Redirect)
@@ -1119,6 +1119,9 @@ function bidx_wordpress_post_action ($url, $result, $body)
                 }
 
                 $requestData = get_redirect ($url, $requestData, $groupName);
+            }
+            else if($requestData->status == 'ERROR' && !$requestData->text) {
+                $requestData->text = 'Something went wrong while logging you in, please try again';
             }
 
             break;
