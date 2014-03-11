@@ -1867,15 +1867,17 @@
 
                                     // test the active contactid against a group owner id
                                     //
-                                    $.map( response.relationshipType.contact.types.groupOwner, function( groupAdmin, index )
+                                    if ( response.relationshipType.contact.types.groupOwner )
                                     {
-                                        if ( groupAdmin.contactId === item.contactId )
+                                        $.map( response.relationshipType.contact.types.groupOwner, function( groupAdmin, index )
                                         {
-                                            exists = true;
-                                            return false;
-                                        }
-                                    } );
-
+                                            if ( groupAdmin.contactId === item.contactId )
+                                            {
+                                                exists = true;
+                                                return false;
+                                            }
+                                        } );
+                                    }
                                     // if contactId is unique, add it to the contacts list
                                     //
                                     if ( !exists )
@@ -1894,6 +1896,8 @@
                                     sortIndex:  sortIndex
                                 ,   contacts:   contacts
                                 };
+
+                                bidx.utils.log("[altaf]",result);
 
                             }
                             else
