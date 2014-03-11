@@ -204,6 +204,7 @@
                     var $button
                     ,   $icon
                     ,   iconClass
+                    ,   folderName
                     ;
 
                     // create, translate and append button to navigation container
@@ -220,14 +221,17 @@
                     {
                         case "Inbox":
                             iconClass = "fa-inbox";
+                            folderName = 'Inbox';
                         break;
 
                         case "Sent":
                             iconClass = "fa-mail-forward";
+                            folderName = 'Sent';
                         break;
 
                         case "Trash":
                             iconClass = "fa-trash-o";
+                            folderName = 'Deleted';
                         break;
                     }
 
@@ -235,7 +239,7 @@
                     {
                         "class":    "fa " + iconClass
                     } );
-                    $button.i18nText( el.name, appName );
+                    $button.i18nText( folderName, appName );
 
                     // Temp solution to add a space between text and icon
                     $button.prepend( " " );
