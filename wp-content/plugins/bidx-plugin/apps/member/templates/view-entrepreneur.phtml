@@ -64,8 +64,14 @@ if ($entrepreneurDetails &&
                     ?>
                     <br/>
                     <?php
-                    echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('Documents','bidxplugin') => $this->exst ($entrepreneurDetails->attachment)));
+                    /* Cv Display */
+                    $cvDetails[] = $this->exst( $entrepreneurDetails->cv );
+                    echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('CV','bidxplugin') => $cvDetails));
+
+                    /* Document Display */
+                    echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('Documents','bidxplugin') => $this->exst ($entrepreneurDetails->attachment)));                                  
                     ?>
+
 <?php
         // Business Summary listing
         //

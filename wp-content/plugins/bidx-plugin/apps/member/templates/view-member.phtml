@@ -23,9 +23,7 @@
     $landLine                   = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine');
     $useDataSrc                 = false;
     $picSrc                     = $this->exst ( $personalDetails->profilePicture->document );
-    $cvDetails                  = ( $this->exst( $entrepreneurDetails->cv ) )
-                                    ? '<a href="' . $entrepreneurDetails->cv->document . '" target="_blank" > ' . $entrepreneurDetails->cv->documentName . '</a>'
-                                    : NULL;
+    
 
     $nationality                = $this->addExtraValuesToRows( 'nationality', $this->exst( $personalDetails->nationality ) );
 
