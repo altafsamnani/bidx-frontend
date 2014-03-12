@@ -139,7 +139,8 @@ class ContentLoader
                     //
                     try {
                     	$stream = fopen( BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml' , "r" );
-                    	$content = stream_get_contents( $stream );
+                    	$fileContent = stream_get_contents( $stream );
+                        $content = $this->replacePlaceHolders($fileContent);
                     	fclose( $stream );
                     } catch (Exception $e) {
                     	$this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . ' FAILED' );
@@ -544,6 +545,31 @@ class ContentLoader
         //wp_insert_user( $user );
 
         return $user_id_owner;
+    }
+
+    /* Replace Place holders for templates
+     * @author Altaf Samnani
+     * @version 1.0
+     * @description  Replace placeholders for templates
+     *
+     *
+     * @param string $replacedContent
+     */
+    function replacePlaceHolders($content) {
+
+        /* 1 Group Name*/
+        $blogUrl         = strtolower (get_site_url());
+        $blogTitle       = BidxCommon::get_bidx_subdomain(false,$blogUrl);
+
+        $placeHolder[]   = '%group_name%';
+        $replaceString[] = $blogTitle;
+
+
+
+        $replacedContent = str_replace($placeHolder, $replaceString, $content );
+        return $replacedContent;
+
+
     }
 
 }
