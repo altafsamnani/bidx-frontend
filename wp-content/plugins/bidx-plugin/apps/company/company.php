@@ -11,7 +11,7 @@ class company
     public $scriptInject;
 
     static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                              'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
+                              'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen', 'bidx-reflowrower');
 
     /**
      * Constructor
