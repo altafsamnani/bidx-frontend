@@ -9,6 +9,8 @@
 */
 ;(function( $ )
 {
+    "use strict";
+
         // mapping between bidx => google
         //
     var addressMappings =
@@ -418,7 +420,7 @@
             //
             widget._deleteOverlays();
             widget._updateLocationData();
-            $el.removeClass();
+            $el.removeClass().addClass( "form-control" );
 
             if ( !place.geometry || !place.address_components)
             {
