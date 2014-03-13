@@ -38,7 +38,7 @@
     ,   $legalFormBusiness                  = $editForm.find( "[name='legalFormBusiness']"                  )
 
     ,   $btnAddCountryOperationSpecifics    = $editForm.find( "[href$='#addCountryOperationSpecifics']"     )
-    ,   $countryOperationSpecificsAccordion = $editForm.find( ".countryOperationSpecifics > .accordion"     )
+    ,   $countryOperationSpecificsContainer = $editForm.find( ".countryOperationSpecificsContainer"         )
 
         // Main object for holding the company
         //
@@ -104,133 +104,126 @@
         ]   // TODO: companyAddress
     };
 
-    // Grab the snippets from the DOM
+    // Setup function for doing work that should only be done once
     //
-    snippets.$countryOperationSpecifics  = $snippets.children( ".countryOperationSpecificsItem"   ).remove();
-
-    // On any changes, how little doesn't matter, notify that we have a pending change
-    // But no need to track the changes when doing a member data load
-    //
-    $editForm.bind( "change", function()
+    function _oneTimeSetup()
     {
-        if ( currentView === "edit" )
-        {
-            bidx.common.addAppWithPendingChanges( appName );
-        }
-    } );
+        _snippets();
+        _countryOperationSpecifics();
 
 
-
-    bidx.data.getContext( "permitsObtained", function( err, permitsOptained )
-    {
-        var $countryOperationSpecificsPermitsLicencesObtained   = snippets.$countryOperationSpecifics.find( "[name='permitsLicencesObtained']" )
-        ,   $noValue                                            = $( "<option value='' />" )
-        ;
-
-        $noValue.i18nText( "selectPermitsObtained", appName );
-
-        $countryOperationSpecificsPermitsLicencesObtained.append( $noValue );
-
-        bidx.utils.populateDropdown( $countryOperationSpecificsPermitsLicencesObtained, permitsOptained );
-    } );
-
-    bidx.data.getContext( "legalForm", function( err, legalForms )
-    {
-        var $noValue            = $( "<option value='' />" );
-
-        $noValue.i18nText( "selectLegalFormBusiness", appName );
-        $legalFormBusiness.append( $noValue );
-    } );
-
-    $currentAddressCountry.bidx_chosen(
-    {
-        dataKey:            "country"
-    ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
-    });
-
-    $legalFormBusiness.bidx_chosen(
-    {
-        dataKey:            "legalForm"
-    ,   emptyValue:         bidx.i18n.i( "legalForm", appName )
-    });
-
-    // populate the selectbox but do not convert to Chosen already because this breaks the rendering of the chosen plugin
-    //
-    bidx.data.getContext( "country", function( err, items )
-    {
-        if ( err )
-        {
-            bidx.utils.error( "Prepopulating the countryOperationSpecific selectbox in the snippet triggered an error" );
-        }
-        // populate country select box
+        // On any changes, how little doesn't matter, notify that we have a pending change
+        // But no need to track the changes when doing a member data load
         //
-        bidx.utils.populateDropdown( snippets.$countryOperationSpecifics.find( "[name='country']" ), items );
-    } );
+        $editForm.bind( "change", function()
+        {
+            if ( currentView === "edit" )
+            {
+                bidx.common.addAppWithPendingChanges( appName );
+            }
+        } );
+
+        // Disable disabled links
+        //
+        $element.delegate( "a.disabled", "click", function( e )
+        {
+            e.preventDefault();
+        } );
+
+        $currentAddressCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "selectCountry", appName )
+        });
+
+        $legalFormBusiness.bidx_chosen(
+        {
+            dataKey:            "legalForm"
+        ,   emptyValue:         bidx.i18n.i( "legalForm", appName )
+        });
+
+        bidx.data.getContext( "legalForm", function( err, legalForms )
+        {
+            var $noValue            = $( "<option value='' />" );
+
+            $noValue.i18nText( "selectLegalFormBusiness", appName );
+            $legalFormBusiness.append( $noValue );
+        } );
+
+        bidx.data.getContext( "permitsObtained", function( err, permitsOptained )
+        {
+            var $countryOperationSpecificsPermitsLicencesObtained   = snippets.$countryOperationSpecifics.find( "[name='permitsLicencesObtained']" )
+            ,   $noValue                                            = $( "<option value='' />" )
+            ;
+
+            $noValue.i18nText( "selectPermitsObtained", appName );
+
+            $countryOperationSpecificsPermitsLicencesObtained.append( $noValue );
+
+            bidx.utils.populateDropdown( $countryOperationSpecificsPermitsLicencesObtained, permitsOptained );
+        } );
 
 
-    // Disable disabled links
-    //
-    $element.delegate( "a.disabled", "click", function( e )
-    {
-        e.preventDefault();
-    } );
+        // populate the selectbox but do not convert to Chosen already because this breaks the rendering of the chosen plugin
+        //
+        bidx.data.getContext( "country", function( err, items )
+        {
+            if ( err )
+            {
+                bidx.utils.error( "Prepopulating the countryOperationSpecific selectbox in the snippet triggered an error" );
+            }
+            // populate country select box
+            //
+            bidx.utils.populateDropdown( snippets.$countryOperationSpecifics.find( "[name='country']" ), items );
+        } );
 
-    // Fix for the symbol (+ or -) to the accordion header by adding the class .collapsed to the siblings of the element that was clicked
-    //
-    $element.delegate( "a.accordion-toggle", "click", function( e )
-    {
-        $( this ).parents( ".countryOperationSpecificsItem" ).siblings().find( ".accordion-toggle:not(.collapsed)" ).addClass( "collapsed" );
-    } );
 
-    // Handle toggle states of showing/hiding complete toggle blocks
-    //
-    var _handleToggleChange = function( show, group )
-    {
-        var fn = show ? "fadeIn" : "hide";
+        // Grab the snippets from the DOM
+        //
+        function _snippets()
+        {
+            snippets.$countryOperationSpecifics  = $snippets.children( ".countryOperationSpecificsItem"   ).remove();
+        }
 
-        $toggles.filter( ".toggle-" + group )[ fn ]();
-    };
+        // Initialize Country Operation Specifics
+        //
+        function _countryOperationSpecifics()
+        {
+            // Instantiate reflowrower on the countryOperationSpecifics container
+            //
+            $countryOperationSpecificsContainer.reflowrower();
+            
+            // Add an empty previous business block
+            //
+            $btnAddCountryOperationSpecifics.click( function( e )
+            {
+                e.preventDefault();
 
-    $toggleRegistered.change( function( e )
-    {
-        var value   = $toggleRegistered.filter( ":checked" ).val();
+                _addCountryOperationSpecifics();
+            } );
 
-        _handleToggleChange( value === "true", "registered" );
-    } );
+        }
+    }
 
-    $toggleHaveEmployees.change( function()
-    {
-        var value   = $toggleHaveEmployees.filter( ":checked" ).val();
-
-        _handleToggleChange( value === "true", "haveEmployees" );
-    } );
-
-    // Add the snippet for another run business
+    // Add the snippet for another run Country Operation Specifics
     //
     var _addCountryOperationSpecifics = function( index, countryOperationSpecifics )
     {
         if ( !index )
         {
-            index = $countryOperationSpecificsAccordion.find( ".countryOperationSpecificsItem" ).length;
+            index = $countryOperationSpecificsContainer.find( ".countryOperationSpecificsItem" ).length;
         }
 
         var $countryOperationSpecifics  = snippets.$countryOperationSpecifics.clone()
         ,   inputNamePrefix             = "countryOperationSpecifics[" + index + "]"
-        ,   myId                        = bidx.utils.generateId()
         ;
 
-        // Set accordion / toggle controls
-        //
-        $countryOperationSpecifics.find( ".accordion-toggle" )
-            .attr( "href", "#" + myId );
-
-        $countryOperationSpecifics.find( ".accordion-body"   ).attr( "id", myId );
 
         if ( countryOperationSpecifics )
         {
             $.each( fields.countryOperationSpecifics, function( j, f )
             {
-                var $input  = $countryOperationSpecifics.find( "[name='" + inputNamePrefix + "." + f + "']" )
+                var $input  = $countryOperationSpecifics.find( "[name='" + f + "']" )
                 ,   value   = bidx.utils.getValue( countryOperationSpecifics, f )
                 ;
 
@@ -245,29 +238,19 @@
                 {
                     bidx.utils.setElementValue( $( this ), value  );
                 } );
+
+                $countryOperationSpecifics.find( "[name='country']" ).trigger( "chosen:updated" );
+                $countryOperationSpecifics.find( "[name='permitsLicencesObtained']" ).trigger( "chosen:updated" );
             } );
         }
 
-        // Fix headers of the existing collapse controls by explicitly removing the collapsed clas
-        // This is an issue with the bootstrap plugin!
+        // Store the whole object in the DOM so we can later merge it with the changed values
         //
-        $countryOperationSpecificsAccordion.find( ".accordion-group" ).each( function()
-        {
-            var $group      = $( this )
-            ,   $toggle     = $group.find( "[data-toggle=collapse]" )
-            ;
+        $countryOperationSpecifics.data( "bidxData", countryOperationSpecifics );
 
-            $toggle.addClass( "collapsed" );
-        } );
-
-        // Add to the DOM
+        // Add it to the DOM
         //
-        $countryOperationSpecificsAccordion.append( $countryOperationSpecifics );
-
-        $countryOperationSpecifics.find( ".accordion-body" ).collapse(
-        {
-            parent:             "#countryOperationSpecificsAccordion"
-        } );
+        $countryOperationSpecificsContainer.reflowrower( "addItem", $countryOperationSpecifics );
 
         // Update all the input elements and prefix the names with the right index
         // So <input name="bla" /> from the snippet becomes <input name="foo[2].bla" />
@@ -282,7 +265,6 @@
             $input.prop( "name", newName );
 
             // Notify the form validator of the new elements
-            // Use 'orgName' since that is consistent over each itteration
             //
             switch ( baseName )
             {
@@ -311,15 +293,28 @@
         } );
     };
 
-    // Add an empty previous business block
+    // Handle toggle states of showing/hiding complete toggle blocks
     //
-    $btnAddCountryOperationSpecifics.click( function( e )
+    var _handleToggleChange = function( show, group )
     {
-        e.preventDefault();
+        var fn = show ? "fadeIn" : "hide";
 
-        _addCountryOperationSpecifics();
+        $toggles.filter( ".toggle-" + group )[ fn ]();
+    };
+
+    $toggleRegistered.change( function( e )
+    {
+        var value   = $toggleRegistered.filter( ":checked" ).val();
+
+        _handleToggleChange( value === "true", "registered" );
     } );
 
+    $toggleHaveEmployees.change( function()
+    {
+        var value   = $toggleHaveEmployees.filter( ":checked" ).val();
+
+        _handleToggleChange( value === "true", "haveEmployees" );
+    } );
 
     // Build up the gmaps for the current address
     //
@@ -625,6 +620,20 @@
             $toggleHaveEmployees.filter( "[value='true']" ).prop( "checked", true );
         }
 
+        // Now the nested objects
+        //
+        var countryOperationSpecifics = bidx.utils.getValue( company, "countryOperationSpecifics", true );
+
+        if ( countryOperationSpecifics )
+        {
+            $.each( countryOperationSpecifics, function( i, item )
+            {
+                _addCountryOperationSpecifics( i, item );
+            } );
+        }
+
+
+
         // Fire of the toggle controls so the UI get's updated to it's current values
         //
         $toggleRegistered.trigger( "change" );
@@ -685,10 +694,37 @@
             }
 
             bidx.utils.setValue( company, companyPath, item );
-
             bidx.utils.setNestedStructure( item, count, nest, $editForm, fields[ nest ]  );
 
-            // TODO: implement deletion of items
+            // Now collect the removed items, clear the properties and push them to the list so the API will delete them
+            //
+            if ( nest === "countryOperationSpecifics" )
+            {
+                var removedItems = $countryOperationSpecificsContainer.reflowrower( "getRemovedItems" );
+
+                $.each( removedItems, function( idx, removedItem )
+                {
+                    var $removedItem    = $( removedItem )
+                    ,   bidxData        = $removedItem.data( "bidxData" )
+                    ;
+
+                    if ( bidxData )
+                    {
+                        // Iterate over the properties and set all, but bidxMeta, to null
+                        //
+                        $.each( bidxData, function( prop )
+                        {
+                            if ( prop !== "bidxMeta" )
+                            {
+                                bidxData[ prop ] = null;
+                            }
+                        } );
+
+                        item.push( bidxData );
+                    }
+                } );
+            }
+
         } );
 
         // Fix the URL fields so they will be prefixed with http:// in case something valid was provided, but not having a protocol
@@ -710,13 +746,14 @@
     {
         // Reset any state
         //
+        $countryOperationSpecificsContainer.reflowrower( "empty" );
         $logoContainer.empty();
 
         // This is a bit of a hack so not to refactor the whole bunch
         // currently only when not running as a slave app these button are actually put inside the dom.
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "/member"  });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "/company/" + companyId  });
 
         // Inject the save and button into the controls
         //
@@ -737,12 +774,7 @@
             } );
 
             $controls.append( $btnSave );
-
-            // NOTE: Currently we assume that the cancel always navigates back to the member page
-            //if ( state === "edit" )
-            //{
-                $controls.append( $btnCancel );
-            //}
+            $controls.append( $btnCancel );
         }
 
         // Setup form
@@ -1151,6 +1183,10 @@
 
         bidx.common.removeAppWithPendingChanges( appName );
     };
+
+    // Engage!
+    //
+    _oneTimeSetup();
 
     // Expose
     //

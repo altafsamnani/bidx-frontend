@@ -195,17 +195,19 @@
                                     <input type="text" class="form-control" name="numTempMaleEmpl" placeholder="<?php _e('Please enter the number of temporary male employees employed by your business','bidxplugin'); ?>">
                                 </div>
                             </div>
-
-                            <div class="countryOperationSpecifics">
-                                <blockquote class="alert-info">
-                                    <?php _e( 'If you have offices in other locations, you can add them in the section below', 'bidxplugin' ); ?>
-                                </blockquote>
-                                <div class="accordion" id="countryOperationSpecificsAccordion"></div>
-                                <a href="#addCountryOperationSpecifics" class="btn btn-block btn-primary"><i class="fa fa-plus"></i> <?php _e('Add country specific operations','bidxplugin'); ?></a>
-                            </div>
                         </div>
-
                     </div>
+                    <hr>
+                    <div class="countryOperationSpecifics">
+                        <blockquote class="alert-info">
+                            <?php _e( 'If you have offices in other locations, you can add them in the section below', 'bidxplugin' ); ?>
+                        </blockquote>
+                        <h4><?php _e('Country Operation Specifics','bidxplugin'); ?>
+                            <a href="#addCountryOperationSpecifics" class="btn btn-xs btn-primary"><span class="fa fa-plus"></span> <?php _e('Add','bidxplugin'); ?></a>
+                        </h4>
+                    </div>
+
+                    <div class="countryOperationSpecificsContainer"></div>
                 </div>
             </div>
 
@@ -213,37 +215,26 @@
     </div>
 
     <div class="snippets hide">
-        <div class="countryOperationSpecificsItem accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-target="" data-parent="#countryOperationSpecificsAccordion" href="#">
-                    <h4 class="accordion-title">&nbsp;</h4>
-                    <div class="control-buttons">
-                        <span class="bidx-expand"><i class="fa fa-plus-square"></i></span>
-                        <span class="bidx-collapse"><i class="fa fa-minus-square"></i></span>
+        <div class="countryOperationSpecificsItem col-sm-4">
+            <div class="well">
+                <div class="form-group formfield">
+                    <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
+                    <div class="controls">
+                        <select name="country"></select>
                     </div>
-                </a>
-            </div><!-- accordion-heading -->
-            <div class="accordion-body collapse" id="">
-                <div class="accordion-inner">
-                    <div class="form-group formfield">
-                        <label class="control-label"><?php _e('Country','bidxplugin'); ?></label>
-                        <div class="controls">
-                            <select name="country"></select>
-                        </div>
-                    </div>
-                    <div class="form-group formfield">
-                        <label><?php _e('Company trade name','bidxplugin'); ?></label>
-                        <input type="text" class="form-control" name="companyTradeName" placeholder="<?php _e('Please enter your company’s trading name','bidxplugin'); ?>" />
-                    </div>
-
-                    <div class="form-group formfield">
-                        <label class="control-label"><?php _e('Permits and/or licenses','bidxplugin'); ?></label>
-                        <div class="controls">
-                            <select name="permitsLicencesObtained"></select>
-                        </div>
-                    </div>
-
                 </div>
+                <div class="form-group formfield">
+                    <label><?php _e('Company trade name','bidxplugin'); ?></label>
+                    <input type="text" class="form-control" name="companyTradeName" placeholder="<?php _e('Please enter your company’s trading name','bidxplugin'); ?>" />
+                </div>
+                <div class="form-group formfield">
+                    <label class="control-label"><?php _e('Permits and/or licenses','bidxplugin'); ?></label>
+                    <div class="controls">
+                        <select name="permitsLicencesObtained"></select>
+                    </div>
+                </div>
+
+                <a href="#removeItem" class="btn btn-danger btn-sm btn-block"><?php _e('Remove this office','bidxplugin'); ?></a>
             </div>
         </div>
     </div>
