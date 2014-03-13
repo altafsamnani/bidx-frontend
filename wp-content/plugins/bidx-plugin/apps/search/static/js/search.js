@@ -1,6 +1,8 @@
-$( document ).ready( function()
+;( function ( $ )
 {
-	// Exports
+    "use strict";
+
+    // Exports
     //
     if ( !window.bidx )
     {
@@ -9,6 +11,8 @@ $( document ).ready( function()
 
     window.bidx.search =
     {
-        
+
     };
-});
+
+
+} ( jQuery ) );
