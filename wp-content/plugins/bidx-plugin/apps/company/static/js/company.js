@@ -292,6 +292,7 @@
                     {
                         required:               true
                     } );
+                    $input.bidx_chosen();
                 break;
                 case "country":
                     $input.rules( "add",
