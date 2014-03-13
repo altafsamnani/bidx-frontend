@@ -1,0 +1,319 @@
+@import "../mixins.less";
+@import "groupbase.less";
+// Define the group colors
+// Bootstrap Variables
+// ---------------------
+
+
+@brand-primary:                          #114476;
+@brand-secondary:                        #007BC7;
+@brand-success:                          #007BC7;
+@brand-warning:                          #f0ad4e;
+@brand-danger:                           #d9534f;
+@brand-info:                             #5bc0de;
+
+@gray:                                   #888;
+
+
+@bg-primary-dark: @brand-primary;
+@text-primary-dark: darken(@brand-primary, 25%);
+@bg-primary-light: lighten(@brand-primary, 25%);
+@text-primary-light: lighten(@brand-primary, 25%);
+
+@panel-primary-border:        @brand-success;
+@panel-primary-heading-bg:    @brand-success;
+
+// RijksOverheidSans Font
+@font-face
+{
+    font-family: RijksNormal;
+    src: url(http://www.rvo.nl/sites/all/themes/custom/agnl_theme/font/rijksoverheidsansheading-regular_2_0.woff);
+    font-weight: normal;
+}
+
+@font-face
+{
+    font-family: RijksNormal;
+    src: url(http://www.rvo.nl/sites/all/themes/custom/agnl_theme/font/rijksoverheidsansheading-bold_2_0.woff);
+    font-weight: bold;
+}
+
+@RijksNormal: "RijksNormal", Arial, Verdana, sans-serif;
+
+@headings-font-family: @RijksNormal;
+
+body
+{
+    font-family: @RijksNormal;
+}
+
+// Color alterations in Classes
+// ---------------------------------
+.bg-primary-dark
+{
+    background: @brand-primary;
+}
+.text-primary-dark
+{
+    color: darken(@brand-primary, 25%);
+}
+.bg-primary-light
+{
+    background: lighten(@brand-primary, 25%);
+}
+.text-primary-light
+{
+    color: lighten(@brand-primary, 25%);
+}
+
+.bidx.home .bidx-register-block
+{
+    background: @brand-success;
+    .action-call-text
+    {
+        color: @white;
+    }
+    .icon
+    {
+        color: @white;
+    }
+    .arrow
+    {
+        color: @white;
+    }
+    &:hover .arrow
+    {
+        color: lighten(@brand-secondary, 35%);
+    }
+}
+
+// Headings
+// -------------------------
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: @headings-font-family;
+  font-weight: @headings-font-weight;
+  line-height: @headings-line-height;
+  color: @headings-color;
+
+  small,
+  .small {
+    font-weight: normal;
+    line-height: 1;
+    color: @headings-small-color;
+  }
+}
+
+
+.modern-browser
+{
+    input[type="checkbox"]
+    {
+        + label span
+        {
+            color: #99a1a7;
+        }
+        &:checked + label span:before
+        {
+            color: @brand-primary;
+        }
+    }
+    input[type="radio"]
+    {
+        + label span
+        {
+            color: #99a1a7;
+        }
+        &:checked + label span:before
+        {
+            color: @brand-primary;
+        }
+    }
+}
+
+.btn,
+.bidx.home .bidx-register-block,
+.carousel-inner,
+.well,
+.panel,
+.panel-heading,
+.panel-body,
+.form-control,
+.input-group-addon,
+.chosen-container-single .chosen-single,
+.modal-content,
+#mail .mail-toolbar,
+.chosen-container-multi .chosen-choices,
+.chosen-container-multi .chosen-choices li.search-choice,
+.bidx-tagsinput-container,
+.bidx-tagsinput-container .bidx-tag
+{
+    .rounded(0);
+}
+
+.divider
+{
+    background-color: lighten(@brand-secondary, 35%);
+}
+
+.icons-circle
+{
+    .round(0);
+}
+.icons-rounded
+{
+    .rounded(0);
+}
+
+.chosen-container-multi .chosen-choices li.search-choice,
+.bidx-tagsinput-container .bidx-tag
+{
+    background-color: @brand-primary;
+}
+
+
+body
+{
+    background-color: #F2F8FC;
+    #wrap
+    {
+        .box-shadow(0 0 8px @gray);
+        margin: 0 auto -50px;
+        background-color: @white;
+        .inner-wrap
+        {
+            padding-top: 0;
+        }
+    }
+    .navbar-fixed-top,
+    .page-footer
+    {
+        margin: 0 auto;
+        position: static;
+    }
+}
+
+.menu-main
+{
+    position: static;
+    clear: both;
+    background-color: @brand-secondary;
+    margin: 0 -15px;
+    padding: 0 15px;
+    .nav
+    {
+        > li
+        {
+            padding-bottom: 0;
+            padding-top: 10px;
+            a
+            {
+                color: #FFF;
+                font-size: 16px;
+                &:hover
+                {
+                    .rounded(0);
+                    background-color: lighten(@brand-secondary, 35%);
+                    color: @brand-primary;
+                }
+            }
+            &.active
+            {
+                a
+                {
+                    .rounded(0);
+                    color: @brand-primary;
+                    background-color: lighten(@brand-secondary, 35%);
+                    &:hover
+                    {
+                        .rounded(0);
+                        background-color: lighten(@brand-secondary, 35%);
+                        color: @brand-primary;
+                    }
+                }
+                &:after
+                {
+                    display: none !important;
+                }
+                
+            }
+        }
+    }
+}
+
+.well
+{
+    background-color: #E5F1F9;
+}
+
+.twitter-typeahead .tt-query {
+    moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+@media  (max-width: 767px)
+{
+}
+
+@media  (max-width: 979px)
+{
+
+}
+
+@media (min-width: 980px )
+{
+    body
+    {
+        #wrap,
+        .page-footer,
+        .navbar-fixed-top
+        {
+            width: 970px;
+        }
+    }
+
+    .navbar
+    {
+        .navbar-inner
+        {
+            height: auto !important;
+        }
+        .iconbar-wrapper
+        {
+            position: absolute !important;
+            top: 0 !important;
+            right: 15px !important;
+        }
+    }
+    .search
+    {
+        position: absolute !important;
+        top: 0 !important;
+        right: 145px !important;
+    }
+    .header-logo
+    {
+        width: 500px;
+        margin: 0 auto;
+        float: none !important;
+    }
+    .bidx-header-controls
+    {
+        position: absolute !important;
+        top: 0 !important;
+    }
+}
+
+@media (min-width: 1200px)
+{
+    body
+    {
+        #wrap,
+        .page-footer,
+        .navbar-fixed-top
+        {
+            width: 1170px;
+        }
+    }
+}
