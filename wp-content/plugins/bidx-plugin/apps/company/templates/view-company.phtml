@@ -42,19 +42,19 @@
         $statutoryAddress = $this->exst($this->company->statutoryAddress);
 
         $arStatutoryAddress = array();
-        if ($this->exst($statutoryAddress->street))         { $arStatutoryAddress[] = $statutoryAddress->street; }
         if ($this->exst($statutoryAddress->streetNumber))   { $arStatutoryAddress[] = $statutoryAddress->streetNumber; }
+        if ($this->exst($statutoryAddress->street))         { $arStatutoryAddress[] = $statutoryAddress->street . ', '; }
         if ($this->exst($statutoryAddress->postalCode))     { $arStatutoryAddress[] = $statutoryAddress->postalCode; }
 
         $arStatutoryCityCountry = array();
         if ($this->exst($statutoryAddress->cityTown))       { $arStatutoryCityCountry[] = $statutoryAddress->cityTown; }
-        if ($this->exst($statutoryAddress->country))        { $arStatutoryCityCountry[] = $statutoryAddress->country; }
+        if ($this->exst($statutoryAddress->country))        { $arStatutoryCityCountry[] = $this->getStaticVal( 'country', $statutoryAddress->country ); }
 
         $rowValues = array(
             __('Date of registration','bidxplugin') =>  date( 'j F Y', strtotime( $this->company->dateCompanyEstab )),
             __('Legal form of business','bidxplugin') => $this->addExtraValuesToRows( 'legalForm', $this->exst($this->company->legalFormBusiness )),
             __('Statutory address','bidxplugin') => implode( ' ', $arStatutoryAddress ),
-            __('Statutory city, country','bidxplugin') => implode( ' ', $arStatutoryCityCountry ),
+            __('Statutory city, country','bidxplugin') => implode( ', ', $arStatutoryCityCountry ),
             __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber),
             __('Company registration number','bidxplugin') => $this->exst($this->company->registrationNumber)
         );
