@@ -1059,7 +1059,7 @@ form .error-separate
 }
 
 /* styles shared by portrait tablet and above */
-@media (min-width: 992px )
+@media (min-width: 980px )
 {
 
     .menu-main
@@ -1238,10 +1238,23 @@ form .error-separate
         text-align: center;
         margin-bottom: 10px;
     }
+
+    #wrap
+    {
+        .inner-wrap
+        {
+            padding-top: 0;
+        }
+    }
+    
+    .navbar-fixed-top {
+        position: inherit;
+    }
 }
 
 
-@media  (max-width: 767px) {
+@media  (max-width: 767px)
+{
 
     /* Header */
     header.navbar .iconbar .profiles ul.dropdown-menu {
