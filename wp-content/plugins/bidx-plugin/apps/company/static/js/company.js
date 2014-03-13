@@ -752,8 +752,10 @@
         // This is a bit of a hack so not to refactor the whole bunch
         // currently only when not running as a slave app these button are actually put inside the dom.
         //
+
+        var cancelHref = companyId ? "/company/" + companyId : "/member";
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "/company/" + companyId  });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: cancelHref  });
 
         // Inject the save and button into the controls
         //
