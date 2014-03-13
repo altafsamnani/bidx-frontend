@@ -71,9 +71,11 @@
                             $ix = 1;
                             // create a comma separated list of translated industries
                             //
-                            foreach ( $industries as $industry ) {
-                                echo $this->getStaticVal( 'industry',$industry ) ;
-                                if ( count( $industries ) != $ix ){
+                            foreach ( $industries as $industry )
+                            {
+                                echo $this->getStaticVal( 'industry', $industry ) ;
+                                if ( count( $industries ) != $ix )
+                                {
                                     echo ", ";
                                 }
                                 $ix++;
@@ -82,10 +84,20 @@
                         </div>
                         <div>
 <?php
+                            $countries =  $this -> exst( $summary -> countryOperation );
 
-                            $countries = implode( ", ", $this -> exst( $summary -> countryOperation ));
-
-                            echo $this->getStaticVal( 'country',$countries );
+                            $ix = 1;
+                            // create a comma separated list of translated industries
+                            //
+                            foreach ( $countries as $country )
+                            {
+                                echo $this->getStaticVal( 'country', $country ) ;
+                                if ( count( $countries ) != $ix )
+                                {
+                                    echo ", ";
+                                }
+                                $ix++;
+                            }
 ?>
                         </div>
 <?php
