@@ -21,10 +21,11 @@
 		} ?>
 	</title>
 
-	<meta name="description" content="<?php wp_title(''); echo ' | '; bloginfo( 'description' ); ?>" />
+	<meta name="description" content="Start, grow and finance your entrepreneurs. Connect them with investors, mentors and business partners." />
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/><?php /* Add "maximum-scale=1" to fix the Mobile Safari auto-zoom bug on orientation changes, but keep in mind that it will disable user-zooming completely. Bad for accessibility. */ ?>
-	<link rel="icon" href="<?php bloginfo('template_url'); ?>/assets/ico/favicon.ico" type="image/x-icon" />
+	<meta name="keywords" content="entrepreneurs, find investors, find mentors, business plan, grow local business, online entrepreneurial network, finance entrepreneurs, sme finance" />
+    <link rel="icon" href="<?php bloginfo('template_url'); ?>/assets/ico/favicon.ico" type="image/x-icon" />
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	<link rel="alternate" type="application/rss+xml" title="<?php bloginfo( 'name' ); ?>" href="<?php bloginfo( 'rss2_url' ); ?>" />
 	<link rel="alternate" type="application/atom+xml" title="<?php bloginfo( 'name' ); ?>" href="<?php bloginfo( 'atom_url' ); ?>" />
