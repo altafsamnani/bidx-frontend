@@ -4,7 +4,7 @@
         : $this->company;
 
     $comLogo = $this->exst($this->company->logo->document);
-
+    $countryOperationSpecifics = isset ($this->company->countryOperationSpecifics) ? $this->company->countryOperationSpecifics : NULL;
 ?>
 <div class="panel-heading">
     <h3 class="panel-title"><?php _e('Company details','bidxplugin'); ?></h3>
@@ -58,6 +58,7 @@
             __('Fiscal number','bidxplugin') => $this->exst($this->company->fiscalNumber),
             __('Company registration number','bidxplugin') => $this->exst($this->company->registrationNumber)
         );
+        echo '<hr>';
         echo $this->pairRows( $rowValues );
     }
 
@@ -67,12 +68,29 @@
          $this->exst($this->company->numTempMaleEmpl))
     {
         $rowValues = array(
-            __('Number of permanent female employees','bidxplugin') => $this->exst($this->company->numPermFemaleEmpl),
             __('Number of permanent male employees','bidxplugin') => $this->exst($this->company->numPermMaleEmpl),
-            __('Number of temporary female employees','bidxplugin') => $this->exst($this->company->numTempFemaleEmpl),
-            __('Number of temporary male employees','bidxplugin') => $this->exst($this->company->numTempMaleEmpl)
+            __('Number of permanent female employees','bidxplugin') => $this->exst($this->company->numPermFemaleEmpl),
+            __('Number of temporary male employees','bidxplugin') => $this->exst($this->company->numTempMaleEmpl),
+            __('Number of temporary female employees','bidxplugin') => $this->exst($this->company->numTempFemaleEmpl)
         );
+        echo '<hr>';
         echo $this->pairRows( $rowValues );
+    }
+
+    if ( $countryOperationSpecifics )
+    {
+        $header = array (
+            __('Country','bidxplugin') => 'country',
+            __('Company trade name','bidxplugin') => 'companyTradeName',
+            __('Permits and/or licenses','bidxplugin') => 'permitsLicencesObtained'
+        );
+
+        $countryOperationSpecificsHtml = $this->addTableRows( $header, $countryOperationSpecifics, 'table table-bordered', '', array('permitsLicencesObtained' => 'hidden-xs'), array( 'permitsObtained', 'country' ) );
+        
+        $rowValues = array ( __('Country Operation Specifics','bidxplugin') => $countryOperationSpecificsHtml);
+        
+        echo '<hr>';
+        echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
     }
 ?>
 </div>
