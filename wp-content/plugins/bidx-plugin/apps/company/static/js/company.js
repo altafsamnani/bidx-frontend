@@ -549,29 +549,56 @@
 
         // Logo is 'special'
         //
-        var logo = bidx.utils.getValue( company, "logo", true );
-
-        if ( state === "create" )
-        {
-            $logoContainer
-                .append( $( "<div />", { "class": "icons-rounded" } ) )
-                .find(".icons-rounded")
-                .append( $( "<i />", { "class": "fa fa-tasks text-primary-light" } ) )
-                ;
-        }
-        else
-        {
-            if ( logo && logo.length && logo[ 0 ].document )
+        var logo = bidx.utils.getValue( company, "logo", true )
+        ,   _noLogo = function()
             {
-                $logoContainer.data( "bidxData", logo[ 0 ] );
-                $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document, "class": "img-thumbnail" } ) );
+                $logoContainer
+                    .append( $( "<div />", { "class": "icons-rounded" } ) )
+                    .find(".icons-rounded")
+                    .append( $( "<i />", { "class": "fa fa-tasks text-primary-light" } ) )
+                    ;
             }
-            else
+        ,   _logoRemoved = function()
             {
                 $logoContainer.append(  $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
                 $logoContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
             }
+        ,   _logoIsSet = function()
+            {
+                $logoContainer.data( "bidxData", logo[ 0 ] );
+                $logoContainer.append( $( "<img />", { "src": logo[ 0 ].document, "class": "img-thumbnail" } ) );
+            }
+        ;
+
+        // Creating a new Company always has the default logo icon
+        //
+        if ( state === "create" )
+        {
+            _noLogo();
         }
+
+        // Editing an existing company has 3 different cases
+        // No Logo is placed, Logo is placed, Logo has beed removed
+        //
+        if ( state === "edit" )
+        {
+            if ( logo && logo.length )
+            {
+                if ( logo[ 0 ].document )
+                {
+                    _logoIsSet();
+                }
+                else
+                {
+                    _logoRemoved();
+                }
+            }
+            else
+            {
+                _noLogo();
+            }
+        }
+        
         // Now the nested objects, NOT ARRAY's
         //
         $.each( [ "statutoryAddress" ], function()
