@@ -638,7 +638,7 @@
             $profilePictureContainer.append( $( "<img />", { "src": profilePicture, "class": "thumbnail" } ));
         }
 
-        var profileUploadId = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.bidxMeta.bidxUploadId" )
+        var profileUploadId = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.bidxMeta.bidxUploadId" );
         if ( !profileUploadId )
         {
             $profilePictureContainer.append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
