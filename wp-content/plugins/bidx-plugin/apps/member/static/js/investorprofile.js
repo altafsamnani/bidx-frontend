@@ -366,8 +366,6 @@
         ,   inputNamePrefix = "previousInvestments[" + index + "]"
         ;
 
-        $previousInvestment.data( "bidxData", previousInvestment );
-
         // Are we adding an investment with data or just an empty item?
         //
         if ( previousInvestment )
@@ -1196,7 +1194,7 @@
             bidx.utils.setValue( member, "bidxInvestorProfile.focusCity", [] );
         }
 
-        if ( focusLocationType !== "reach" && !investorProfileId )
+        if ( focusLocationType !== "reach" )
         {
             bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.coordinates", null );
             bidx.utils.setValue( member, "bidxInvestorProfile.focusReach.reach", null );
@@ -1326,7 +1324,72 @@
                 }
             ,   "focusLocationType":
                 {
-                    required:               true
+                    required:               { depends: function ()
+                                                {
+                                                    var checked = false;
+                                                    if (
+                                                        $( ".toggle-focusLocationType-country" ).is(':hidden') &&
+                                                        $( ".toggle-focusLocationType-city" ).is(':hidden') &&
+                                                        $( ".toggle-focusLocationType-reach" ).is(':hidden')
+                                                       )
+                                                    {
+                                                        checked = true;
+                                                    }
+
+                                                    return checked;
+                                                }
+                                            }
+                }
+            ,   "focusCountry":
+                {
+                    required:               { depends: function ()
+                                                {
+                                                    var visibleAndHasVal = false;
+                                                    if (
+                                                        $( "#radio-focusLocationTypeCountry" ).is(':checked') &&
+                                                        !$( ".toggle-focusLocationType-country" ).val()
+                                                       )
+                                                    {
+                                                        visibleAndHasVal = true;
+                                                    }
+
+                                                    return visibleAndHasVal;
+                                                }
+                                            }
+                }
+            ,   "focusCity":
+                {
+                    required:               { depends: function ()
+                                                {
+                                                    var visibleAndHasVal = false;
+                                                    if (
+                                                        $( "#radio-focusLocationTypeCity" ).is(':checked') &&
+                                                        !$( ".toggle-focusLocationType-city" ).val()
+                                                       )
+                                                    {
+                                                        visibleAndHasVal = true;
+                                                    }
+
+                                                    return visibleAndHasVal;
+                                                }
+                                            }
+                }
+            ,   "focusReach":
+                {
+                    required:               { depends: function ()
+                                                {
+                                                    var visibleAndHasVal = false;
+                                                    if (
+                                                        $( "#radio-focusLocationTypeReach" ).is(':checked') &&
+                                                        !$( ".toggle-focusLocationType-reach" ).val()
+                                                       )
+                                                    {
+                                                        visibleAndHasVal = true;
+                                                    }
+
+                                                    return visibleAndHasVal;
+                                                }
+                                            }
                 }
 
             }
