@@ -88,14 +88,7 @@ class SessionService extends APIBridge {
         $sessionData = BidxCommon::$staticSession;
         $groups = $sessionData->data->groups;
         $result = array();
-	    $profiles = array(
-	        'bidxInvestorProfile'        => array(
-	            'Investor Dashboard' => '/investor-dashboard'
-	        ),
-	        'bidxEntrepreneurProfile'   => array(
-	            'Entrepreneur Dashboard' => '/entrepreneur-dashboard'
-	        )
-	    );
+	    
         foreach($groups as $key => $value) {
             if ( $value -> bidxMeta -> bidxGroupType === "Open" )
             {

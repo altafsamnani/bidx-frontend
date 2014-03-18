@@ -160,7 +160,7 @@
 
             // Perform a navigate request to the app, might come back with the
             // request for us to update the hash
-            //
+            //            
             var newHash = bidx[ toApp ].navigate( options );
 
             // Switch the UI to the app
@@ -318,9 +318,27 @@
         ,   'monitoring(/:state)(*splat)':                      'monitoring'
         ,   'support(/:state)(*splat)':                         'support'
         ,   'home(/:section)':                                  'groupHome'
+        ,   'editPreference' :                                  'editPreference'
         ,   'cancel(/*splat)':                                  'showCancel'
         ,   '*path':                                            'show'
 
+        }
+    ,   editPreference:             function(  )
+        {
+
+            bidx.utils.log( "AppRouter::editPreference");
+
+            $pageHeadings.addClass( "hide" ).filter( ".editPreference" ).removeClass( "hide" );
+
+            mainState   = "editPreference";
+
+            _navigateToApp
+            (
+                "content"
+            ,   {
+                    requestedState: "edit"                
+                }
+            );
         }
 
     ,   groupHome:                   function( section )

@@ -953,7 +953,7 @@ function get_redirect ($url, $requestData, $domain = NULL)
 {
     $redirectUrl = NULL;
     $redirect = NULL;
-    /*     * **** If have a particular Redirect in params *************** */
+    /****** If have a particular Redirect in params *************** */
     if (isset ($_POST['redirect_to'])) {
         $redirect_to = $_POST['redirect_to'];
         $redirect = base64_decode ($redirect_to);
@@ -962,19 +962,13 @@ function get_redirect ($url, $requestData, $domain = NULL)
     // check if a user specifc Redirect is set in the userPreference
     //
     if (isset ($requestData->data->bidxMemberProfile->userPreferences->firstLoginUrl) && isset ($requestData->data->bidxMemberProfile->userPreferences->firstLoginGroup)) {
-        $body['domain'] = $domain;
-        $groupName = $requestData->data->bidxMemberProfile->userPreferences->firstLoginGroup;
-        $firstLogin = $requestData->data->bidxMemberProfile->userPreferences->firstLoginUrl;
-        /* '{"bidxMeta": {"bidxEntityType":"bidxMemberProfile"} , "userPreferences": {"firstLogin": ""}}'; //get-it-started-investor */
-        $data = array ('bidxMeta' => array ('bidxEntityType' => 'bidxMemberProfile'),
-          'userPreferences' => array ('firstLoginUrl' => '',
-            'firstLoginGroup' => ''));
-        $body['data'] = json_encode ($data);
-        $memberId = $requestData->data->id;
-        $result = call_bidx_service ('members/' . $memberId, $body, 'PUT', 'json');
-        // to the redirect
-        //
+   
+        $groupName      = $requestData->data->bidxMemberProfile->userPreferences->firstLoginGroup;
+        $firstLogin     = $requestData->data->bidxMemberProfile->userPreferences->firstLoginUrl;
+        // added bidx_wp_content function to handle preferences
+        
         $redirect = '//' . $groupName . '.' . DOMAIN_CURRENT_SITE . '/' . $firstLogin;
+        
     }
 
     /*     * ***** Decide on Redirect/Submit Logic ********** */
@@ -2542,6 +2536,40 @@ function bidx_group_favicon() {
 add_action( 'admin_head', 'bidx_group_favicon' );
 add_action( 'login_head', 'bidx_group_favicon' );
 add_action( 'wp_head', 'bidx_group_favicon' );
+
+
+/* Add Static page wordpress js
+ * @author Altaf Samnani
+ * @issue #BIDX-1786
+ *
+ */
+function bidx_wp_content() {
+
+
+
+    $currentPostTitle = get_the_title();
+
+    switch($currentPostTitle) {
+        /* Getting started member */
+        case 'Getting started member':
+//            $bidxPreferencePath       = sprintf ('%s/../apps/member/static/js/memberpreference.js',    BIDX_PLUGIN_URI);
+//            $deps                     = $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
+//			'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
+//			'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
+//			'bidx-location','bidx-chosen', 'typeahead'
+//	);
+//            wp_enqueue_script( 'memberpreference',		$bidxPreferencePath , array(), '20130808', TRUE );
+            
+            echo do_shortcode ("[bidx app='content']");
+            break;
+
+    }
+
+}
+
+add_action( 'wp_head', 'bidx_wp_content');
+
+
 
 
 
