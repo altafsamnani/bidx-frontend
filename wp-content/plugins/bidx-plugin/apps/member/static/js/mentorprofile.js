@@ -360,6 +360,31 @@
         $attachmentsContainer.reflowrower( "addItem", $attachment );
     }
 
+    var geocoder = new google.maps.Geocoder();
+    var _getMapData = function( Lat, Lng, cb )
+    {
+        var location = new google.maps.LatLng( Lat, Lng );
+
+        geocoder.geocode(
+            {
+                "latLng":      location
+            }
+        ,   function( results, status )
+            {
+                bidx.utils.log( "_getMapData::geocode", results );
+
+                if ( status === google.maps.GeocoderStatus.OK )
+                {
+                    cb( null, { results: results[ 0 ] } );
+                }
+                else
+                {
+                    cb( new Error( "Unable to geocode " + status ));
+                }
+            }
+        );
+    };
+
 
     // Use the retrieved member object to populate the form and other screen elements
     //
@@ -490,13 +515,33 @@
 
         if ( focusLocation.reach )
         {
+            var focusReachReach         = bidx.utils.getValue( member, "bidxMentorProfile.focusReach.reach" )
+            ,   focusReachCoordinates   = bidx.utils.getValue( member, "bidxMentorProfile.focusReach.coordinates" )
+            ,   locData                 = focusReachCoordinates.split(",")
+            ;
+
             $focusReach.bidx_location(
                 "setLocationData"
             ,   {
-                    reach:          bidx.utils.getValue( member, "bidxMentorProfile.focusReach.reach" )
-                ,   coordinates:    bidx.utils.getValue( member, "bidxMentorProfile.focusReach.coordinates" )
+                    reach:          focusReachReach
+                ,   coordinates:    focusReachCoordinates
                 }
             );
+
+            _getMapData( locData[0], locData[1], function( err, response )
+            {
+                var formattedAddress = bidx.utils.getValue( response, "results.formatted_address" );
+                
+                if ( err )
+                {
+                    bidx.utils.log('_getMapData has an error::', err);
+                    $focusReach.val( "" );
+                }
+                else
+                {
+                    $focusReach.val( formattedAddress );
+                }
+            } );
         }
 
         // Update the chosen components with our set values
@@ -575,7 +620,7 @@
             bidx.utils.setValue( member, "bidxMentorProfile.focusCity", [] );
         }
 
-        if ( focusLocationType !== "reach" && !mentorProfileId )
+        if ( focusLocationType !== "reach" )
         {
             bidx.utils.setValue( member, "bidxMentorProfile.focusReach.coordinates", null );
             bidx.utils.setValue( member, "bidxMentorProfile.focusReach.reach", null );
@@ -740,6 +785,75 @@
             ,   "linkedIn":
                 {
                     linkedInUsername:       true
+                }
+            ,   "focusLocationType":
+                {
+                    required:               { depends: function ()
+                                                {
+                                                    var checked = false;
+                                                    if (
+                                                        $( ".toggle-focusLocationType-country" ).is(':hidden') &&
+                                                        $( ".toggle-focusLocationType-city" ).is(':hidden') &&
+                                                        $( ".toggle-focusLocationType-reach" ).is(':hidden')
+                                                       )
+                                                    {
+                                                        checked = true;
+                                                    }
+
+                                                    return checked;
+                                                }
+                                            }
+                }
+            ,   "focusCountry":
+                {
+                    required:               { depends: function ()
+                                                {
+                                                    var visibleAndHasVal = false;
+                                                    if (
+                                                        $( "#radio-mentorFocusLocationTypeCountry" ).is(':checked') &&
+                                                        !$( ".toggle-focusLocationType-country" ).val()
+                                                       )
+                                                    {
+                                                        visibleAndHasVal = true;
+                                                    }
+
+                                                    return visibleAndHasVal;
+                                                }
+                                            }
+                }
+            ,   "focusCity":
+                {
+                    required:               { depends: function ()
+                                                {
+                                                    var visibleAndHasVal = false;
+                                                    if (
+                                                        $( "#radio-mentorFocusLocationTypeCity" ).is(':checked') &&
+                                                        !$( ".toggle-focusLocationType-city" ).find( ".bidx-tag" ).length
+                                                       )
+                                                    {
+                                                        visibleAndHasVal = true;
+                                                    }
+
+                                                    return visibleAndHasVal;
+                                                }
+                                            }
+                }
+            ,   "focusReach":
+                {
+                    required:               { depends: function ()
+                                                {
+                                                    var visibleAndHasVal = false;
+                                                    if (
+                                                        $( "#radio-mentorFocusLocationTypeReach" ).is(':checked') &&
+                                                        !$( ".toggle-focusLocationType-reach" ).val()
+                                                       )
+                                                    {
+                                                        visibleAndHasVal = true;
+                                                    }
+
+                                                    return visibleAndHasVal;
+                                                }
+                                            }
                 }
             }
         ,   messages:

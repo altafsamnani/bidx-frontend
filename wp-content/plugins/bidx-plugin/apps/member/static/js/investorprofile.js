@@ -758,6 +758,30 @@
         );
     };
 
+    var _getMapData = function( Lat, Lng, cb )
+    {
+        var location = new google.maps.LatLng( Lat, Lng );
+
+        geocoder.geocode(
+            {
+                "latLng":      location
+            }
+        ,   function( results, status )
+            {
+                bidx.utils.log( "_getMapData::geocode", results );
+
+                if ( status === google.maps.GeocoderStatus.OK )
+                {
+                    cb( null, { results: results[ 0 ] } );
+                }
+                else
+                {
+                    cb( new Error( "Unable to geocode " + status ));
+                }
+            }
+        );
+    };
+
     // Update the address onto the map via geocodeing
     //
     var _updateInstitutionAddressMap = function()
@@ -1022,13 +1046,33 @@
 
         if ( focusLocation.reach )
         {
+            var focusReachReach         = bidx.utils.getValue( member, "bidxInvestorProfile.focusReach.reach" )
+            ,   focusReachCoordinates   = bidx.utils.getValue( member, "bidxInvestorProfile.focusReach.coordinates" )
+            ,   locData                 = focusReachCoordinates.split(",")
+            ;
+
             $focusReach.bidx_location(
                 "setLocationData"
             ,   {
-                    reach:          bidx.utils.getValue( member, "bidxInvestorProfile.focusReach.reach" )
-                ,   coordinates:    bidx.utils.getValue( member, "bidxInvestorProfile.focusReach.coordinates" )
+                    reach:          focusReachReach
+                ,   coordinates:    focusReachCoordinates
                 }
             );
+
+            _getMapData( locData[0], locData[1], function( err, response )
+            {
+                var formattedAddress = bidx.utils.getValue( response, "results.formatted_address" );
+
+                if ( err )
+                {
+                    bidx.utils.log('_getMapData has an error::', err);
+                    $focusReach.val( "" );
+                }
+                else
+                {
+                    $focusReach.val( formattedAddress );
+                }
+            } );
         }
 
         // Update the chosen components with our set values
@@ -1364,7 +1408,7 @@
                                                     var visibleAndHasVal = false;
                                                     if (
                                                         $( "#radio-focusLocationTypeCity" ).is(':checked') &&
-                                                        !$( ".toggle-focusLocationType-city" ).val()
+                                                        !$( ".toggle-focusLocationType-city" ).find( ".bidx-tag" ).length
                                                        )
                                                     {
                                                         visibleAndHasVal = true;
