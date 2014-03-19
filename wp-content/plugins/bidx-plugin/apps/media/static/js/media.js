@@ -548,7 +548,16 @@
             $container.find( ".purpose"         ).text( file.purpose );
             $container.find( ".documentType"    ).text( file.documentType ? bidx.data.i( file.documentType, "documentType" ) : "" );
 
-            $container.find( ".documentLink"    ).attr( "href",     file.document );
+            $documentLink.attr( "href",     file.document );
+
+            // Prevent clicking if in slave mode
+            //
+            if ( slaveApp )
+            {
+                $documentLink.click( function( e ) {
+                    e.preventDefault();
+                });
+            }
 
             // Only when there is a bidxUploadId, not available during upload
             //
