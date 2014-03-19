@@ -217,7 +217,7 @@
                                     </div>
                                     <div id="activeRequests" class="panel-collapse collapse in">
                                         <div class="panel-body">
-                                            <ul class="contact-request-list list-unstyled clearfix">
+                                            <ul class="contact-request-list list-unstyled clearfix row">
                                             </ul>
                                             <div class="text-center clearfix">
                                                 <a class="btn btn-warning bidx-btn-showMore" href="showMore=active"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
@@ -235,7 +235,7 @@
                                     <!-- RECEIVED CONTACT REQUESTS -->
                                     <div id="incomingRequests" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            <ul class="contact-request-list list-unstyled clearfix">
+                                            <ul class="contact-request-list list-unstyled clearfix row">
                                             </ul>
                                             <div class="text-center clearfix">
                                                 <a class="btn btn-warning bidx-btn-showMore" href="showMore=incoming"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
@@ -253,7 +253,7 @@
                                     </div>
                                     <div id="pendingRequests" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            <ul class="contact-request-list list-unstyled clearfix">
+                                            <ul class="contact-request-list list-unstyled clearfix row">
                                             </ul>
                                             <div class="text-center clearfix">
                                                 <a class="btn btn-warning bidx-btn-showMore" href="showMore=pending"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
@@ -272,7 +272,7 @@
                                     </div>
                                     <div id="ignoredRequests" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            <ul class="contact-request-list list-unstyled clearfix">
+                                            <ul class="contact-request-list list-unstyled clearfix row">
                                             </ul>
                                             <div class="text-center clearfix">
                                                 <a class="btn btn-warning bidx-btn-showMore" href="showMore=ignored"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
@@ -425,23 +425,21 @@
 <!--
     <li class="col-sm-6 ">
         <div class="well">
-            <div class="row">
-                <div class="col-sm-12">
-                    <a class="pull-left clearfix" href="#">
-                        <img class="media-object" data-src="holder.js/90x90" src="%pictureUrl%">
-                    </a>
-                    <div>
-                        <a href="/member/%contactId%">%contactName%</a>
-                    </div>
-                </div>
+            <div class="media">
+                <a class="pull-left" href="/member/%contactId%">
+                    %pictureUrl%
+                </a>
+                 <div class="media-body">
+                    <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
+                 </div>
             </div>
             <div class="row contact-request-buttons">
-                    <div class="col-sm-6">
-                        <a href="#" class="btn btn-block btn-success btn-bidx-accept"><?php _e('Accept','bidxplugin')?></a>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#" class="btn btn-block btn-danger btn-bidx-ignore"><?php _e('Ignore','bidxplugin')?></a>
-                    </div>
+                <div class="col-sm-6">
+                    <a href="#" class="btn btn-block btn-success btn-bidx-accept"><?php _e('Accept','bidxplugin')?></a>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#" class="btn btn-block btn-danger btn-bidx-ignore"><?php _e('Ignore','bidxplugin')?></a>
+                </div>
             </div>
         </div>
     </li>
@@ -453,15 +451,13 @@
 
     <li class="col-sm-6 ">
         <div class="well">
-            <div class="row">
-                <div class="col-sm-12">
-                    <a class="pull-left clearfix" href="/member/%contactId%">
-                        <img class="media-object" data-src="holder.js/90x90" src="%pictureUrl%">
-                    </a>
-                    <div>
-                        <span>Contact request sent to</span>
-                        <a href="/member/%contactId%"><strong>%contactName%</strong></a>
-                    </div>
+            <div class="media">
+                <a class="pull-left" href="/member/%contactId%">
+                    %pictureUrl%
+                </a>
+                <div class="media-body">
+                    <span><?php _e('Contact request sent to','bidxplugin')?></span>
+                    <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
                 </div>
             </div>
             <div class="alert alert-info contact-request-status">
@@ -477,23 +473,14 @@
 <!--
     <li class="col-sm-6">
         <div class="well">
-            <div class="outer-check">
-                <span class="fa fa-check"></span>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <a class="pull-left clearfix" href="/member/%contactId%">
-                        <img class="media-object" data-src="holder.js/90x90" src="%pictureUrl%">
-                    </a>
-                    <div>
-
-                        <span><a href="/member/%contactId%">%contactName%</a></span>
-                        <strong></strong>
-                    </div>
+            <div class="media">
+                <a class="pull-left" href="/member/%contactId%">
+                    %pictureUrl%
+                </a>
+                <div class="media-body">
+                    <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
                 </div>
             </div>
-
         </div>
     </li>
 -->
@@ -503,23 +490,14 @@
 <!--
     <li class="col-sm-6">
         <div class="well">
-            <div class="outer-check">
-                <span class="fa fa-check"></span>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <a class="pull-left clearfix" href="/member/%contactId%">
-                        <img class="media-object" data-src="holder.js/90x90" src="%pictureUrl%">
-                    </a>
-                    <div>
-
-                        <span><a href="/member/%contactId%">%contactName%</a></span>
-                        <strong></strong>
-                    </div>
+            <div class="media">
+                <a class="pull-left" href="/member/%contactId%">
+                    %pictureUrl%
+                </a>
+                <div class="media-body">
+                    <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
                 </div>
             </div>
-
         </div>
     </li>
 -->
@@ -528,7 +506,7 @@
 <script type="text/html" id="contacts-empty">
 <!--
 <li>
-    <div class="">
+    <div class="col-sm-12">
         <?php _e('No contacts available')?>
     </div>
 </li>

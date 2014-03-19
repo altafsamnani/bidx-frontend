@@ -53,7 +53,7 @@
         //
         $frmCompose.validate(
         {
-            ignore: ""
+            ignore: ".chosen-search input, .search-field input"
 
         ,   rules:
             {
@@ -1582,11 +1582,20 @@
             //
             $.each( options.items.members, function( idx, item )
             {
+                var contactPicture;
 
+                if ( item.pictureUrl )
+                {
+                    contactPicture = "<img class='media-object' src='" + item.pictureUrl + "'>";
+                }
+                else
+                {
+                    contactPicture = "<div class='icons-rounded pull-left'><i class='fa fa-user text-primary-light'></i></div>";
+                }
                 // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
                 //
                 listItem = snippet
-                    .replace( /%pictureUrl%/g,      item.pictureUrl   ? item.pictureUrl     : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAACqElEQVR4Xu3bvY8BQRzG8d9GiJda6ES0lEL8+yoK0YlatBQSide7m0nmgnDGWV93yaOyt7PzrM8+O7vNJYvF4sP0eblAIuiXG/sAQTPOgoacBS1oSgDK0RotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWq0oCEBKEaNFjQkAMWo0YKGBKAYNVrQkAAUo0YLGhKAYtRoQUMCUIwaLWhIAIp5S6Nns5lNp1P/E5MksV6vZ4VCwW9//TuejcdjOx6PfrvZbFq1Wr3L8Yo574Y+MACHDpDlctlarZaNRiNbr9fW6XQ8er/ft2Kx6LdP92Wz2Zs/6xVzPmAYNRSHDs2r1+vWaDQsbLvm7nY73/Rr+3K5nG96qVTyF2Eymdh8PveN/+m4n/bF3ClRihGD/gy0w3WY16ADvGv4crm0brdrw+Hwu/m3Ll7MnBFGqQzBocNtHprp8NzfHMp2u/UtvWx02N7v935pORwOZ2v7M3OmohgxCQ7tzun0weVa7ABrtdrdRrtjw4WpVCp+jQ+fZ+aMcHp6yFugT886do1262lornswbjabm28kj8z5tGDkBDj0tds85q0jk8nYYDDwy0a73fbNdt/dg3G1Wp09KNN4k4n0ix6GQ7szC28M7ns+n/dY4fXt1nt0OOZy/Q5LyG/mjFZKYeBboFM47383haChSyZoQUMCUIwaLWhIAIpRowUNCUAxarSgIQEoRo0WNCQAxajRgoYEoBg1WtCQABSjRgsaEoBi1GhBQwJQjBotaEgAilGjBQ0JQDFqtKAhAShGjRY0JADFqNGChgSgGDVa0JAAFKNGCxoSgGLUaEFDAlCMGi1oSACKUaMFDQlAMWo0BP0Jeyr5I6MnsB4AAAAASUVORK5CYII=" )
+                    .replace( /%pictureUrl%/g,      contactPicture )
                     .replace( /%contactId%/g,       item.contactId    ? item.contactId      : "%contactId%" )
                     .replace( /%contactName%/g,     item.contactName  ? item.contactName    : "%contactName%" )
                 ;
@@ -1717,7 +1726,7 @@
                 //
                 $htmlParser.html( message.content );
                 mailBody = $htmlParser.text().replace( /\n/g, "<br/>" );
-                $mailBody = $( mailBody );
+                $mailBody = mailBody;
             }
 
             // insert mail body in to placeholder of the view
