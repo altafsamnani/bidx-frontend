@@ -293,6 +293,8 @@ class BidxCommon
         $redirect = NULL;
         $data = new STDClass();
         $statusMsgId = NULL;
+        $this::$bidxSession[$subDomain]->companyId = NULL;
+        $this::$bidxSession[$subDomain]->requestedBusinessSummaryId = NULL;
         /**
          * Host Address
          * Param0 /member , /group, /profile
