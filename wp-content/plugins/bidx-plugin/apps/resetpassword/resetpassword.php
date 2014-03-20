@@ -15,7 +15,7 @@ class resetpassword {
      * Also resetpasswords the scripts for resetpassword.
      */
 
-    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
                         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
 
 
