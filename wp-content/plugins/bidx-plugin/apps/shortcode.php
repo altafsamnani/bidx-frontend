@@ -172,6 +172,8 @@ class BidxShortcode
             // fileupload
             wp_register_script ('jquery-iframe-transport', $bidxJsDir . '/vendor/jquery.iframe-transport.js', array ('jquery'), '1.7', true);
             wp_register_script ('jquery-fileupload', $bidxJsDir . '/vendor/jquery.fileupload.js', array ('jquery', 'jquery-iframe-transport'), '5.32.2', true);
+            
+            wp_register_script ('jcrop', '/wp-includes/js/jcrop/jquery.Jcrop.min.js', array ('jquery'), '0.9.10' , true) ;
 
             //bidX scripts
             wp_register_script ('bidx-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery'), '20130501', TRUE);
