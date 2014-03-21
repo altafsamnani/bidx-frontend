@@ -173,35 +173,52 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <div class="view viewShow">
 
 <?php
-            $rowValues = array (
-                __('Business name','bidxplugin')
-                    => $this->exst($businessSummary->name),
+                        $rowValues = array (
+                            __('Business name','bidxplugin')
+                                => $this->exst($businessSummary->name),
 
-                __('Describe your business (max. 140 characters) ','bidxplugin')
-                    => $this->exst($businessSummary->slogan),
+                            __('Describe your business (max. 140 characters) ','bidxplugin')
+                                => $this->exst($businessSummary->slogan),
 
-                __('Summary of this business','bidxplugin')
-                    => $this->exst($businessSummary->summary),
+                            __('Summary of this business','bidxplugin')
+                                => $this->exst($businessSummary->summary),
 
-                __('Reason for submission of business summary','bidxplugin')
-                    => $this->exst($businessSummary->reasonForSubmission),
+                            __('Reason for submission of business summary','bidxplugin')
+                                => $this->exst($businessSummary->reasonForSubmission),
 
-                __('Percentage equity you currently retain','bidxplugin')
-                    => $this->exst($businessSummary->equityRetained),
+                            __('Percentage equity you currently retain','bidxplugin')
+                                => $this->exst($businessSummary->equityRetained),
 
-                __('Finance needed','bidxplugin')
-                    => $this->exst($businessSummary->financingNeeded),
+                            __('Finance needed','bidxplugin')
+                                => $this->exst($businessSummary->financingNeeded),
 
-                __('Investment type','bidxplugin')
-                    => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' ),
+                            __('Investment type','bidxplugin')
+                                => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' ),
 
-                __('Reason for financing','bidxplugin')
-                    => $this->exst($businessSummary->summaryFinancingNeeded)
-            );
-            echo $this->pairRows( $rowValues );
-
-            // @TODO: video
+                            __('Reason for financing','bidxplugin')
+                                => $this->exst($businessSummary->summaryFinancingNeeded)
+                        );
+                        echo $this->pairRows( $rowValues );
 ?>
+                        <hr>
+<?php
+                        $videoUrl = $this->exst($businessSummary->externalVideoPitch);
+                        $parsedVideo = $this->parseVideos( $videoUrl );
+
+                        if ( $parsedVideo ) {
+                            $theVideo .= '<div class="video-wrapper">'.$parsedVideo[0]['videoplayer'].'</div>';
+                        }
+
+                        $rowValues = array (
+                            __('Video pitch','bidxplugin')
+                                => $theVideo,
+
+                            __('Audio pitch','bidxplugin')
+                                => $this->exst($businessSummary->externalAudioPitch)
+                        );
+                        echo $this->pairRows( $rowValues );
+?>                        
+
                     </div>
 
                     <!-- LOAD -->
@@ -290,6 +307,22 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Why does your business need financing? (max. 300 characters)','bidxplugin'); ?></label>
                                     <textarea name="summaryFinancingNeeded" class="form-control" placeholder="<?php _e('Please give the reason your business needs financing','bidxplugin'); ?>"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label><?php _e('Video pitch','bidxplugin'); ?></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-video-camera"></i></span>
+                                        <input type="text" class="form-control" name="externalVideoPitch" placeholder="<?php _e('Please enter a url link','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label><?php _e('Audio pitch','bidxplugin'); ?></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-music"></i></span>
+                                        <input type="text" class="form-control" name="externalAudioPitch" placeholder="<?php _e('Please enter a url link','bidxplugin'); ?>">
+                                    </div>
                                 </div>
                             </div>
                         </form>

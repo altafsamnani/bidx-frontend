@@ -84,6 +84,19 @@ body.bidx
     }
 }
 
+video
+{
+    max-width: 100%;
+    height: auto;
+}
+
+iframe,
+embed,
+object
+{
+    max-width: 100%;
+}
+
 // Sticky Footer
 // -------------------------
 #push,
@@ -213,6 +226,27 @@ a:link
     font-size: ceil(@font-size-base * 5.00);
     margin-bottom: 20px;
     color: @text-copy;
+}
+
+.img-square
+{
+    .rounded(4px);
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    margin: 10px;
+    position: relative;
+    img
+    {
+        position:absolute;
+        left: -100%;
+        right: -100%;
+        top: -100%;
+        bottom: -100%;
+        margin: auto;
+        min-height: 100%;
+        min-width: 100%;
+    }
 }
 
 .footer-bar

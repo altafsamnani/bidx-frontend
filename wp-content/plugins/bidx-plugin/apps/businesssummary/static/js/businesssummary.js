@@ -24,6 +24,7 @@
     ,   $btnFullAccessRequest       = $editControls.find( ".bidxRequestFullAccess")
     ,   $bidxAccessRequestPending   = $editControls.find( ".bidxAccessRequestPending")
 
+    ,   $videoWrapper               = $element.find( ".video-wrapper" )
 
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
@@ -130,6 +131,8 @@
             ,   "financingNeeded"
             ,   "investmentType"
             ,   "summaryFinancingNeeded"
+            ,   "externalVideoPitch"
+            ,   "externalAudioPitch"
             ]
         }
 
@@ -1155,6 +1158,11 @@
                     e.preventDefault();
                     _doAccessRequest();
                 } );
+        }
+
+        if ( $videoWrapper )
+        {
+            $videoWrapper.fitVids();
         }
     }
 
