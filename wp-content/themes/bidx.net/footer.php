@@ -12,7 +12,7 @@
                         <h5><?php _e('Stay Connected','bidxtheme');?></h5>
                     </div>
                     <ul class="social-links">
-                        <li><a target="_blank" class="facebook" href="//www.facebook.com/bidx"><i class="fa fa-facebook"></i></a></li>
+                        <li><a target="_blank" class="facebook" href="//www.facebook.com/bidxinfo"><i class="fa fa-facebook"></i></a></li>
                         <!-- <li><a target="_blank" class="google-plus" href="#"><i class="fa fa-google-plus"></i></a></li> -->
                         <li><a target="_blank" class="twitter" href="//twitter.com/bid_x"><i class="fa fa-twitter"></i></a></li>
                         <li><a target="_blank" class="linkedin" href="//www.linkedin.com/company/2999232"><i class="fa fa-linkedin"></i></a></li>
