@@ -2301,6 +2301,10 @@ blockquote small {
             border-bottom: 0;
         }
     }
+    .post-content img {
+        max-width: 100%;
+        height: auto;
+    }
 }
 
 @media (min-width: 992px) {

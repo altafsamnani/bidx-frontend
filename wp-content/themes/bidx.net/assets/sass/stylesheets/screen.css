@@ -2857,34 +2857,40 @@ blockquote small {
     float: none;
     border-bottom: 0;
   }
+
+  /* line 2304, ../sass/screen.scss */
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 @media (min-width: 992px) {
-  /* line 2307, ../sass/screen.scss */
+  /* line 2311, ../sass/screen.scss */
   .layout-2 .main {
     float: right;
   }
 }
 @media (min-width: 768px) {
-  /* line 2314, ../sass/screen.scss */
+  /* line 2318, ../sass/screen.scss */
   #header .navbar-nav {
     float: right;
     margin-right: 15px;
   }
-  /* line 2320, ../sass/screen.scss */
+  /* line 2324, ../sass/screen.scss */
   #header .navbar-nav > li > a {
     padding: 40px 18px;
     text-transform: uppercase;
     font-size: 16px;
   }
-  /* line 2324, ../sass/screen.scss */
+  /* line 2328, ../sass/screen.scss */
   #header .navbar-nav > li > a:hover {
     color: #79a540;
   }
-  /* line 2327, ../sass/screen.scss */
+  /* line 2331, ../sass/screen.scss */
   #header .navbar-nav > li > a:focus {
     color: #79a540;
   }
-  /* line 2331, ../sass/screen.scss */
+  /* line 2335, ../sass/screen.scss */
   #header .navbar-nav > li > .dropdown-menu {
     border: 0;
     border-top: 3px solid #79a540;
@@ -2896,26 +2902,26 @@ blockquote small {
     border-radius: 0;
     background-color: white;
   }
-  /* line 2340, ../sass/screen.scss */
+  /* line 2344, ../sass/screen.scss */
   #header .navbar-nav > li.active:last-child > a {
     padding-right: 18px;
   }
-  /* line 2346, ../sass/screen.scss */
+  /* line 2350, ../sass/screen.scss */
   #header .navbar-nav > .open > a {
     background-color: transparent;
     color: #79a540;
   }
-  /* line 2349, ../sass/screen.scss */
+  /* line 2353, ../sass/screen.scss */
   #header .navbar-nav > .open > a:hover {
     background-color: white;
     color: #79a540;
   }
-  /* line 2353, ../sass/screen.scss */
+  /* line 2357, ../sass/screen.scss */
   #header .navbar-nav > .open > a:focus {
     background-color: white;
     color: #79a540;
   }
-  /* line 2368, ../sass/screen.scss */
+  /* line 2372, ../sass/screen.scss */
   #header .navbar-nav > .active > a:after {
     position: absolute;
     display: block;
@@ -2931,81 +2937,81 @@ blockquote small {
     content: "";
     margin-left: -10px;
   }
-  /* line 2390, ../sass/screen.scss */
+  /* line 2394, ../sass/screen.scss */
   #header.affix .navbar-nav > li > a {
     padding: 25px 18px;
     text-transform: uppercase;
   }
-  /* line 2396, ../sass/screen.scss */
+  /* line 2400, ../sass/screen.scss */
   #header.affix .navbar-nav > .active > a {
     border-bottom: 2px solid #79a540;
     padding-bottom: 23px;
   }
-  /* line 2399, ../sass/screen.scss */
+  /* line 2403, ../sass/screen.scss */
   #header.affix .navbar-nav > .active > a:hover {
     border-bottom: 2px solid #79a540;
     padding-bottom: 23px;
   }
-  /* line 2403, ../sass/screen.scss */
+  /* line 2407, ../sass/screen.scss */
   #header.affix .navbar-nav > .active > a:focus {
     border-bottom: 2px solid #79a540;
     padding-bottom: 23px;
   }
-  /* line 2413, ../sass/screen.scss */
+  /* line 2417, ../sass/screen.scss */
   #header .dropdown-menu > li > a {
     padding: 10px 20px 10px 15px;
     border-left: 5px solid white;
     color: #79a540;
   }
-  /* line 2417, ../sass/screen.scss */
+  /* line 2421, ../sass/screen.scss */
   #header .dropdown-menu > li > a:hover {
     background-color: #ecf1ee;
     border-left: 5px solid #0c753b;
     color: black;
   }
-  /* line 2423, ../sass/screen.scss */
+  /* line 2427, ../sass/screen.scss */
   #header .dropdown-menu > li > a:focus {
     background-color: white;
   }
-  /* line 2429, ../sass/screen.scss */
+  /* line 2433, ../sass/screen.scss */
   #header .dropdown-menu > li:last-child > a {
     border-bottom: 0;
   }
-  /* line 2435, ../sass/screen.scss */
+  /* line 2439, ../sass/screen.scss */
   #header .dropdown-menu > .active > a {
     background-color: #0c753b;
     border-left: 5px solid #0c753b;
     color: white;
   }
-  /* line 2440, ../sass/screen.scss */
+  /* line 2444, ../sass/screen.scss */
   #header .dropdown-menu > .active > a:hover {
     background-color: #0c753b;
     border-left: 5px solid #0c753b;
     color: white;
   }
 
-  /* line 2449, ../sass/screen.scss */
+  /* line 2453, ../sass/screen.scss */
   .error404 {
     height: 300px;
   }
 
-  /* line 2452, ../sass/screen.scss */
+  /* line 2456, ../sass/screen.scss */
   .details404 {
     height: 300px;
   }
-  /* line 2454, ../sass/screen.scss */
+  /* line 2458, ../sass/screen.scss */
   .details404 .btn {
     position: absolute;
     left: 35px;
     bottom: 35px;
   }
 
-  /* line 2460, ../sass/screen.scss */
+  /* line 2464, ../sass/screen.scss */
   .action-box {
     text-align: left;
     padding-right: 200px;
   }
-  /* line 2463, ../sass/screen.scss */
+  /* line 2467, ../sass/screen.scss */
   .action-box a.btn {
     position: absolute;
     top: 50%;

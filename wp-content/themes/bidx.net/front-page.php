@@ -100,7 +100,7 @@
             </div>
             <div class="col-xs-12 col-sm-9 action-box">
                 <h1><?php _e('More impact per dollar','bidxtheme');?></h1>
-                <p><?php _e('bidx has grown and started over 100 businesses ever year, creating over 500 direct jobs. USD 18 million has come from our investors. We have done this at a cost of USD 2000 per direct new job.','bidxtheme');?></p>
+                <p><?php _e('bidx has grown and started over 100 businesses which create over 500 direct jobs every year. Our investors have financed for USD 18 million. All this at a cost of USD 2000 per direct new job.','bidxtheme');?></p>
                 <a href="/get-started" class="btn btn-flat flat-warning"><?php _e('Get Started','bidxtheme');?></a>
             </div>
         <!-- /.action-box -->
