@@ -264,7 +264,9 @@
 
                 $.each( dataRoles, function( idx, el )
                 {
-                    var $el = $( el );
+                    var $el = $( el )
+                    ,   memberId = bidx.utils.getValue( member, "id" )
+                    ;
 
                     switch( $el.data( "role" ) )
                     {
@@ -273,7 +275,7 @@
                             image = bidx.utils.getValue( member, "profilePicture" );
                             $el.attr( "href", function( i, href )
                                 {
-                                    return href.replace( "%memberId%", bidx.utils.getValue( member, "id" ) );
+                                    return href.replace( "%memberId%", memberId );
                                 } )
                             ;
                             if (image) {
@@ -285,7 +287,7 @@
                             $el.text( bidx.utils.getValue( member, "name" ) )
                                 .attr( "href", function( i, href )
                                 {
-                                    return href.replace( "%memberId%", bidx.utils.getValue( member, "id" ) );
+                                    return href.replace( "%memberId%", memberId );
                                 } )
                             ;
                             break;
@@ -305,7 +307,7 @@
                             $.each( bidx.utils.getValue( member, "roles" ), function( mId, memberRole )
                             {
                                 $memberRole = $roleSnippet.clone();
-                                $memberRole.addClass( "bidx-label-" + memberRole ).text( memberRole );
+                                $memberRole.addClass( "bidx-label bidx-" + memberRole ).text( memberRole );
                                 roles.push( $memberRole );
                             } );
                             // add the roles to the DOM
@@ -318,7 +320,7 @@
                         case "memberView":
                             $el.attr( "href", function( i, href )
                                 {
-                                    return href.replace( "%memberId%", bidx.utils.getValue( member, "id" ) );
+                                    return href.replace( "%memberId%", memberId );
                                 } )
                             ;
                             break;
@@ -344,6 +346,38 @@
         if( $.isFunction( data.cb ) )
         {
             data.cb();
+        }
+    }
+
+    function _addVideoThumb( url, element )
+    {
+        var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
+        ,   provider    = matches[3]
+        ,   id          = matches[6]
+        ,   $el         = element
+        ;
+
+        if ( provider === "vimeo.com" )
+        {
+            var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?";
+            $.getJSON( videoUrl, function(data)
+                {
+                    if ( data )
+                    {
+                        $el.find( ".icons-circle i" ).remove();
+                        $el.find( ".icons-circle" ).append( $( "<img />", { "src": data[0].thumbnail_small ,"class": "circle-thumb" } ) );
+                    }
+                }
+            );
+        }
+        else if ( provider === "youtube.com" )
+        {
+            $el.find( ".icons-circle i" ).remove();
+            $el.find( ".icons-circle" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/2.jpg" ,"class": "circle-thumb" } ) );
+        }
+        else
+        {
+            bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
         }
     }
 
@@ -422,7 +456,6 @@
 
         if ( data.response && data.response.businessSummaries && data.response.businessSummaries.length )
         {
-
             // if ( response.totalMembers > currentPage size  --> show paging)
             //
             pagerOptions  =
@@ -462,6 +495,7 @@
 
             // create member listitems
             //
+
             $.each( data.response.businessSummaries, function( idx, businessSummary )
             {
                 var $item
@@ -488,6 +522,12 @@
                                     return href.replace( "%businessSummaryLink%", url );
                                 } )
                             ;
+
+                            if ( businessSummary.externalVideoPitch )
+                            {
+                                _addVideoThumb( businessSummary.externalVideoPitch, $el );
+                            }
+
                             break;
 
                         case "businessSummaryLink":
@@ -512,7 +552,7 @@
                             break;
 
                         case "country":
-                            $el.text( bidx.utils.getValue( businessSummary, "countryOperation" ) );
+                            $el.text( bidx.data.i( bidx.utils.getValue( businessSummary, "countryOperation" ), "country" ) );
                             break;
 
                         case "summary":
@@ -527,12 +567,12 @@
 
                         case "industry":
 
-                            $el.text( bidx.data.i( bidx.utils.getValue( businessSummary, "industry" )[0], "industry" ) );
+                            $el.text( bidx.data.i( bidx.utils.getValue( businessSummary, "industry" ), "industry" ) );
                             break;
 
-                        case "roles":
+                        // case "roles":
                             // waiting for BIDX-1546 so it can be implemented
-                            break;
+                            // break;
 
                         case "businessSummaryId":
                         case "businessSummaryView":
@@ -750,7 +790,6 @@
             data.cb();
         }
     }
-
 
     // ROUTER
     function navigate( options )
