@@ -160,7 +160,7 @@
 
             // Perform a navigate request to the app, might come back with the
             // request for us to update the hash
-            //            
+            //
             var newHash = bidx[ toApp ].navigate( options );
 
             // Switch the UI to the app
@@ -210,7 +210,7 @@
     {
         var url     = decodeURIComponent( redirect )
         ,   hasRs   = bidx.utils.getQueryParameter( "rs", url )
-        ,   rs      = !addRs ? true : addRs
+        ,   rs      = addRs ? true : addRs
         ,   uriParts
         ;
 
@@ -218,6 +218,7 @@
         //
         if ( rs && !hasRs )
         {
+
             uriParts = url.split( "#");
             // if no hash is present in the ur
             //
@@ -233,7 +234,6 @@
                 url = uriParts[ 0 ] + "?rs=true/#" + uriParts[ 1 ];
             }
         }
-
         // check if redirect starts with a #, then use updateHash
         //
         if ( url.charAt( 0 ) === "#" )
@@ -336,7 +336,7 @@
             (
                 "content"
             ,   {
-                    requestedState: "edit"                
+                    requestedState: "edit"
                 }
             );
         }
