@@ -1,0 +1,92 @@
+@import "groupbase.less";
+
+// Define the group colors
+// Bootstrap Variables
+// ---------------------
+
+
+@brand-primary:                          #0099D8;
+@brand-secondary:                        #1abc9c;
+@brand-success:                          #54A88C;
+@brand-warning:                          #f0ad4e;
+@brand-danger:                           #d9534f;
+@brand-info:                             #5bc0de;
+
+
+@bg-primary-dark: @brand-primary;
+@text-primary-dark: darken(@brand-primary, 25%);
+@bg-primary-light: lighten(@brand-primary, 25%);
+@text-primary-light: lighten(@brand-primary, 25%);
+
+@panel-primary-border:        darken(@brand-primary, 25%);
+@panel-primary-heading-bg:    darken(@brand-primary, 25%);
+
+
+
+
+// Color alterations in Classes
+// ---------------------------------
+.bg-primary-dark
+{
+    background: @brand-primary;
+}
+.text-primary-dark
+{
+    color: darken(@brand-primary, 25%);
+}
+.bg-primary-light
+{
+    background: lighten(@brand-primary, 25%);
+}
+.text-primary-light
+{
+    color: lighten(@brand-primary, 25%);
+}
+
+.bidx.home .bidx-register-block
+{
+    background: @brand-primary;
+    .action-call-text
+    {
+        color:                              @white;
+    }
+    .icon
+    {
+        color: @gray-lighter;
+    }
+    .arrow
+    {
+        color: @white;
+    }
+    &:hover .arrow
+    {
+        color: lighten(@brand-primary, 25%);
+    }
+}
+
+
+.modern-browser
+{
+    input[type="checkbox"]
+    {
+        + label span
+        {
+            color: #99a1a7;
+        }
+        &:checked + label span:before
+        {
+            color: @brand-primary;
+        }
+    }
+    input[type="radio"]
+    {
+        + label span
+        {
+            color: #99a1a7;
+        }
+        &:checked + label span:before
+        {
+            color: @brand-primary;
+        }
+    }
+}
