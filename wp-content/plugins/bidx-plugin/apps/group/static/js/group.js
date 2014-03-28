@@ -66,19 +66,26 @@
     {
         var unread = parseInt( bidx.utils.getValue( mailboxState, "Inbox.unread" ), 10 );
 
-        if ( isNaN( unread ) )
+        if ( unread === 0 )
         {
-            unread = "?";
+            $unreadCount.addClass( "hide-it" );
         }
         else
         {
-            if ( unread > 99 )
+            if ( isNaN( unread ) )
             {
-                unread = "99+";
+                unread = "?";
             }
-        }
+            else
+            {
+                if ( unread > 99 )
+                {
+                    unread = "99+";
+                }
+            }
 
-        $unreadCount.text( unread );
+            $unreadCount.text( unread ).removeClass( "hide-it" );
+        }
     } );
 
     function oneTimeSetup()
@@ -328,6 +335,16 @@
                             break;
 
                         case "memberId":
+                            if ( member.relations.length === 0 )
+                            {
+                                // bidx.utils.log('member.relations', member);
+                                // bidx.utils.log('THE EL::::', $el);
+                            }
+                            else
+                            {
+                                $el.remove();
+                            }
+                            break;
                         case "memberView":
                             $el.attr( "href", function( i, href )
                                 {
