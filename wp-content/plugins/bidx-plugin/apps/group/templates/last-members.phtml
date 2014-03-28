@@ -18,9 +18,9 @@
             $index = 0;
 
             $maxMemberItems = $authenticated ? 4 : 3;
-
             // iterate through the members
-        	foreach ($this -> members as $member) {
+
+            foreach ($this -> members as $member) {
 
                 // if maxmembers has been reached, stop the itaration
                 //
@@ -41,7 +41,20 @@
     				  	if ( empty( $member -> profilePicture ) ) {
     						echo '<div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>';
                         } else {
-    						echo '<div class="img-cropper"><img src="' . $member -> profilePicture . '" alt="Profile Picture"></div>';
+
+                            $pisWidth = $member->width  ?       $member->width . 'px;' : "auto;";
+                            $pisLeft  = $member->left   ? '-' . $member->left  . 'px;' : "auto;";
+                            $pisTop   = $member->top    ? '-' . $member->top   . 'px;' : "auto;";
+
+                            $profileImage = '<img' . 
+                                            ' src="' . $member -> profilePicture . '"'.
+                                            ' style="'.
+                                                'width: ' . $pisWidth .
+                                                'left: ' . $pisLeft .
+                                                'top: ' . $pisTop .
+                                            '"' .' />';
+
+    						echo '<div class="img-cropper">' . $profileImage . '></div>';
                         }
 ?>
                     </a>
