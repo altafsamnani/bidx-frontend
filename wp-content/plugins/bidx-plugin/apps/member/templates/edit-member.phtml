@@ -53,28 +53,39 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div class="profilePictureControl">
-                                    <label><?php _e('Profile picture','bidxplugin'); ?></label>
-                                    <div class="profilePictureContainer"></div>
-                                    <a href="#changeProfilePicture" data-toggle="modal" data-target="#ProfilePictureModal" class="btn btn-default"><?php _e('Change profile picture','bidxplugin');?></a>
+                                <div class="row profilePictureControl">
+                                    <div class="col-sm-4">
+                                        <label class="btn-block"><?php _e('Options','bidxplugin'); ?></label>
+                                        <div class="btn-group-vertical js-scale hide">
+                                            <button type="button" class="btn btn-primary js-smaller"><i class="fa fa-minus-square"></i> <?php _e('Smaller','bidxplugin');?></button>
+                                            <button type="button" class="btn btn-primary js-reset"><i class="fa fa-refresh"></i> <?php _e('Reset','bidxplugin');?></button>
+                                            <button type="button" class="btn btn-primary js-bigger"><i class="fa fa-plus-square"></i> <?php _e('Bigger','bidxplugin');?></button>
+                                        </div>
 
-                                    <div class="changeProfilePictureModal modal fade" id="ProfilePictureModal" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                    <h3><?php _e('Select the file you want to use for a profile picture', 'bidxplugin' ); ?></h3>
-                                                </div>
-                                                <div class="modal-body">
-    <?php
-                                                    // Media app will only be inserted once, this is by design!
-                                                    //
-                                                    echo do_shortcode( '[bidx app="media"]' );
-    ?>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file', 'bidxplugin' ); ?></button>
-                                                    <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+                                        <a href="#changeProfilePicture" data-toggle="modal" data-target="#ProfilePictureModal" class="btn btn-default btn-block hide-overflow"><i class="fa fa-picture-o"></i> <?php _e('Change','bidxplugin');?></a>
+                                        
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label class="btn-block"><?php _e('Profile picture','bidxplugin'); ?></label>
+                                        <div class="profilePictureContainer"></div>
+                                        <div class="changeProfilePictureModal modal fade" id="ProfilePictureModal" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <h3><?php _e('Select the file you want to use for a profile picture', 'bidxplugin' ); ?></h3>
+                                                    </div>
+                                                    <div class="modal-body">
+<?php
+                                                        // Media app will only be inserted once, this is by design!
+                                                        //
+                                                        echo do_shortcode( '[bidx app="media"]' );
+?>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file', 'bidxplugin' ); ?></button>
+                                                        <button type="button" class="btn btn-link btnCancelSelectFile" data-dismiss="modal"><?php _e( 'Cancel', 'bidxplugin' ); ?></button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,6 +93,8 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <hr>
 
                         <div class="row">
                             <div class="col-sm-6">

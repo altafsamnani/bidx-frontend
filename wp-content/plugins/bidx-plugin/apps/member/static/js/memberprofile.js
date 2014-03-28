@@ -21,6 +21,7 @@
     ,   $profilePictureContainer            = $profilePictureControl.find( ".profilePictureContainer" )
     ,   $btnChangeProfilePicture            = $profilePictureControl.find( "a[href$='#changeProfilePicture']" )
     ,   $changeProfilePictureModal          = $profilePictureControl.find( ".changeProfilePictureModal" )
+    ,   $scaleBtns                          = $profilePictureControl.find( ".js-scale" )
 
         // Attachnents
         //
@@ -219,9 +220,10 @@
                         bidx.utils.log( "[profile picture] selected profile picture", file );
 
                         $profilePictureContainer.data( "bidxData", file );
-                        $profilePictureContainer.html( $( "<img />", { "src": file.document, "class": "img-thumbnail" } ));
+                        $profilePictureContainer.html( $( "<img />", { "src": file.document, "data-fileUploadId": file.fileUpload } ));
 
                         $changeProfilePictureModal.modal( "hide" );
+                        _enableCropping( file );
                     }
                 }
             } );
@@ -611,6 +613,89 @@
         return key;
     }
 
+    // Add cropping functionality
+    //
+    function _enableCropping( obj )
+    {
+        var $profileImg     = $profilePictureContainer.find( "img" )
+        ,   pictureWidth    = (obj.width === undefined ) ? false : obj.width
+        ,   pictureLeft     = (obj.left  === undefined ) ? 0     : obj.left
+        ,   pictureTop      = (obj.top   === undefined ) ? 0     : obj.top
+        ;
+
+        $( $profileImg ).load( function()
+        {
+            if ( $profileImg[0].width < 90 || $profileImg[0].height < 90 )
+            {
+                // NOOP : hide the scaling buttons
+                bidx.utils.log('Picture is less than 90px and therefore no need to be cropped');
+                $scaleBtns.addClass( "hide" );
+            }
+            else
+            {
+                var $cropper = $profilePictureContainer.append( $( "<div />", { "class": "js-cropper" } )).find( ".js-cropper" );
+
+                $cropper.udraggable(
+                {
+                    containment: 'parent'
+                });
+
+                if ( pictureWidth )
+                {
+                    $profileImg.css({ "width": pictureWidth });
+                }
+
+                // Update the cropper position
+                //
+                $cropper.css({ "left": pictureLeft, "top": pictureTop });
+
+                _addImageScaling( $profileImg );
+            }
+        });
+    }
+
+    // Add scaling functionality
+    // TODO: Prevent the image to scale below 90px width or height and disable the according btns
+    //
+    function _addImageScaling( element )
+    {
+        var $el             = element
+        ,   $cropper        = $el.next()
+        ,   originalWidth   = $el.width()
+        // ,   newWidth
+        // ,   newHeight
+        ;
+
+        $scaleBtns.delegate( ".btn", "click", function( e )
+        {
+            e.preventDefault();
+            $cropper.css({ "left": 0, "top": 0 });
+            // newWidth = $(this).parents( ".profilePictureControl" ).find( "img" )[0].width;
+            // newHeight = $(this).parents( ".profilePictureControl" ).find( "img" )[0].height;
+            // bidx.utils.log('newWidth:::', newWidth);
+            // bidx.utils.log('newHeight:::', newHeight);
+        });
+
+        $scaleBtns.delegate( ".js-smaller", "click", function()
+        {
+            $el.width( Math.floor( $el.width() * 0.8 ) );
+        });
+
+        $scaleBtns.delegate( ".js-bigger", "click", function()
+        {
+            $el.width( Math.floor( $el.width() * 1.2 ) );
+        });
+
+        $scaleBtns.delegate( ".js-reset", "click", function()
+        {
+            $el.width( originalWidth );
+        });
+
+        // Show the scaling buttons
+        //
+        $scaleBtns.removeClass( "hide" );
+    }
+    
     // Use the retrieved member object to populate the form and other screen elements
     //
     function _populateScreen()
@@ -629,13 +714,16 @@
 
         // Profile picture is 'special'
         //
-        var profilePicture = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.document" )
+        var profilePicture  = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.document" )
+        ,   profilePictureId    = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload" )
         ;
 
         if ( profilePicture )
         {
-            $profilePictureContainer.data( "bidxData", profilePicture );
-            $profilePictureContainer.append( $( "<img />", { "src": profilePicture, "class": "thumbnail" } ));
+            $profilePictureContainer.data( "bidxData", profilePictureId );
+            $profilePictureContainer.append( $( "<img />", { "src": profilePicture, "data-fileUploadId": profilePictureId } ));
+    
+            _enableCropping( bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture" ) );
         }
 
         var profileUploadId = bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture.bidxMeta.bidxUploadId" );
@@ -643,7 +731,6 @@
         {
             $profilePictureContainer.append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
             $profilePictureContainer.append( $( "<p />", { "html": bidx.i18n.i( "docDeleted" ) } ) );
-
         }
 
         // Setup the hidden fields used in the file upload
@@ -928,10 +1015,31 @@
 
         // ProfilePicture
         //
-        var profilePicture      = $profilePictureContainer.data( "bidxData" )
+        var profilePicture      = $profilePictureContainer.data( "bidxData" );
+
+        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload", profilePicture.fileUpload );
+
+        // Crop
+        //
+        var $profilePicture     = $profilePictureContainer.find( "img" )
+        ,   $cropper            = $profilePictureContainer.find( ".js-cropper" )
+        ,   profilePictureWidth = $profilePicture.width()
+        ,   cropPosition        = $cropper.position()
         ;
 
-        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture", profilePicture );
+        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.width", profilePictureWidth );
+
+        if ( profilePictureWidth > 90)
+        {
+            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.left", cropPosition.left );
+            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.top", cropPosition.top );
+        }
+        else
+        {
+            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.left", 0 );
+            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.top", 0 );
+        }
+
     }
 
     // This is the startpoint
