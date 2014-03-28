@@ -23,6 +23,7 @@
 					$args = array (
 						'post_type'			=> 'team',
 						'post_status'		=> 'publish',
+						'posts_per_page'         => '20',
 					);
 
 					// The Query
@@ -62,13 +63,12 @@
 
 	<section>
 		<div class="container service pad-25">
-		    <div class="col-sm-12">
-		        <h2>
-		            <?php echo _e('Want to create a Group with bidx?', 'bidxtheme'); ?><br>
-		            <?php echo _e('Contact us to get started', 'bidxtheme'); ?>
-		        </h2>
-		         <a href="/contact" type="button" class="btn btn-flat flat-warning btn-lg"><?php echo _e('Contact Us', 'bidxtheme'); ?></a>
-		    </div>
+	        <div class="col-sm-12">
+	            <h2>
+	                <?php echo _e('Contact us to get started', 'bidxtheme'); ?>
+	            </h2>
+	            <a href="/contact" type="button" class="btn btn-flat flat-warning btn-lg"><?php echo _e('Contact Us', 'bidxtheme'); ?></a>
+        </div>
 		</div>
 	</section>
 
