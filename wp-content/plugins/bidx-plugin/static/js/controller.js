@@ -15,7 +15,7 @@
     ,   currentHash
     ;
 
-    var INTERVAL_MAILBOX_STATE      = 5000     // check for mailbox state (unread count) every 5s
+    var INTERVAL_MAILBOX_STATE      = 60000     // check for mailbox state (unread count) every 1min
     ;
 
     var $mainStates     = $( "body .mainState" )
