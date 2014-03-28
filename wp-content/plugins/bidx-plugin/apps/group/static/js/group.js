@@ -21,6 +21,8 @@
     ,   snippets                = {}
     ,   state
 
+    ,   $fakecrop               = $views.find( ".js-fakecrop img" )
+
     ,   $unreadCount            = $navbar.find( ".iconbar-unread" )
     ,   paging                  =
         {
@@ -104,6 +106,8 @@
                 bidx.utils.log( "Static Data Api: Industry loaded" );
             } )
         ;
+
+        $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
     }
 
     // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
@@ -253,6 +257,9 @@
                 ,   roles           = []
                 ,   dataRoles
                 ,   image
+                ,   imageWidth
+                ,   imageLeft
+                ,   imageTop
                 ;
 
 
@@ -272,14 +279,18 @@
                     {
                         case "memberImage":
 
-                            image = bidx.utils.getValue( member, "profilePicture" );
+                            image       = bidx.utils.getValue( member, "profilePicture" );
+                            imageWidth  = bidx.utils.getValue( member, "width" );
+                            imageLeft   = bidx.utils.getValue( member, "left" );
+                            imageTop    = bidx.utils.getValue( member, "top" );
+
                             $el.attr( "href", function( i, href )
                                 {
                                     return href.replace( "%memberId%", memberId );
                                 } )
                             ;
                             if (image) {
-                                $el.html( '<img src="' + image + '" class="media-object img-circle pull-left" style="width: 90px; height: 90px;" alt="" />' );
+                                $el.html( '<div class="img-cropper"><img src="' + image + '" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" alt="" /></div>' );
                             }
                             break;
 
@@ -364,16 +375,18 @@
                 {
                     if ( data )
                     {
-                        $el.find( ".icons-circle i" ).remove();
-                        $el.find( ".icons-circle" ).append( $( "<img />", { "src": data[0].thumbnail_small ,"class": "circle-thumb" } ) );
+                        $el.find( ".icons-rounded" ).remove();
+                        $el.append( $( "<div />", { "class": "img-cropper" } ) );
+                        $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
                     }
                 }
             );
         }
         else if ( provider === "youtube.com" )
         {
-            $el.find( ".icons-circle i" ).remove();
-            $el.find( ".icons-circle" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/2.jpg" ,"class": "circle-thumb" } ) );
+            $el.find( ".icons-rounded" ).remove();
+            $el.append( $( "<div />", { "class": "img-cropper" } ) );
+            $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
         }
         else
         {
@@ -526,6 +539,7 @@
                             if ( businessSummary.externalVideoPitch )
                             {
                                 _addVideoThumb( businessSummary.externalVideoPitch, $el );
+                                $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
                             }
 
                             break;
@@ -703,7 +717,7 @@
 
             $newsPager.bootstrapPaginator( pagerOptions );
 
-            // create member listitems
+            // create news listitems
             //
             $.each( data.response.news, function( idx, news )
             {
@@ -760,8 +774,8 @@
                             if ( bidx.utils.getValue( news, "featuredImage" ) !== false )
                             {
                                 image = bidx.utils.getValue( news, "featuredImage" );
-                                $el.removeClass('icons-circle');
-                                $el.html( '<img src="' + image + '" class="media-object img-circle pull-left" style="width: 90px; height: 90px;" alt="" />' );
+                                $el.removeClass('icons-rounded');
+                                $el.html( '<div class="img-cropper"><img src="' + image + '" class="media-object pull-left" alt="" /></div>' );
                             }
 
                         break;

@@ -13,6 +13,7 @@
 
             $index = 0;
             foreach ( $this -> summaries as $summary ) {
+
                 $bsitems = $authenticated ? 4 : 3;
                 if ( $index === $bsitems ) {
                     break;
@@ -34,16 +35,21 @@
 <?php
                     }
 
-                    if ( empty( $summary -> profilePicture ) ) {
-                        echo '<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
+                    if ( empty( $summary -> externalVideoPitch ) ) {
+                        echo '<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
                     } else {
-                        echo '<img src="' . $summary -> profilePicture . '" alt="" class="media-object img-circle pull-left" style="height:95px;">';
+                        $videoUrl = $this->exst($summary -> externalVideoPitch);
+                        $parsedVideo = $this->parseVideos( $videoUrl );
+                        $videoThumb = $parsedVideo[0]['fullsize'];
+
+                        echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
                     }
-                        if ( $authenticated ) {
+                    
+                    if ( $authenticated ) {
 ?>
-                            </a>
+                        </a>
 <?php
-                        }
+                    }
 ?>
                     <div class="media-body">
                         <div class="media-heading">
@@ -134,7 +140,7 @@
 ?>
             <ul class="media-list">
                 <li class="media">
-                    <div class="icons-circle pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
+                    <div class="icons-rounded pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
                     <div class="media-body">
                         <p><?php _e( "There are currently no new business summaries", 'bidxplugin' ); ?></p>
                     </div>

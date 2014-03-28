@@ -75,7 +75,7 @@
                             // Add Default image if there is no image attached to the bs
                             var addDefaultImage = function( el )
                             {
-                                $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
+                                $element.find('.' + el).html('<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
                             };
 
 
@@ -246,6 +246,44 @@
         );
     };
 
+    function _addVideoThumb( url )
+    {
+        var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
+        ,   provider    = matches[3]
+        ,   id          = matches[6]
+        ,   $thumbImage = ""
+        ;
+
+        switch ( provider )
+        {
+            case "youtube.com" :
+
+                $thumbImage = '<img src="http://img.youtube.com/vi/'+ id +'/2.jpg" />';
+
+                break;
+
+            case "vimeo.com" :
+
+                var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?"
+                ,   thumbUrl
+                ;
+
+                $.getJSON( videoUrl, function(data)
+                    {
+                        if ( data )
+                        {
+                            thumbUrl = data[0].thumbnail_small;
+
+                            $thumbImage = '<img src="'+ thumbUrl +'" />';
+                        }
+                    }
+                );
+
+                break;
+        }
+
+        return $thumbImage;
+    }
 
 
     // function that retrieves group members returned in an array of key/value objects
@@ -352,9 +390,9 @@
                                     .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
                                     .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
                                     .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
-                                    .replace( /%documentIcon%/g,      (!$.isEmptyObject( item.company ) &&  !$.isEmptyObject( item.company.logo ) && !$.isEmptyObject( item.company.logo.document) )
-                                        ? '<img src="' + item.company.logo.document + '"/>'
-                                        : '<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>' )
+                                    .replace( /%documentIcon%/g,      ( !$.isEmptyObject( item.externalVideoPitch ) )
+                                        ? _addVideoThumb( item.externalVideoPitch )
+                                        : '<i class="fa fa-suitcase text-primary-light"></i>' )
                                     ;
 
 

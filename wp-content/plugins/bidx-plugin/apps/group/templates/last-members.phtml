@@ -39,9 +39,9 @@
                     <a class="pull-left" href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
 <?php
     				  	if ( empty( $member -> profilePicture ) ) {
-    						echo '<div class="icons-circle pull-left"><i class="fa fa-user text-primary-light"></i></div>';
+    						echo '<div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>';
                         } else {
-    						echo '<img src="' . $member -> profilePicture . '" alt="" class="media-object img-circle pull-left" style="height:90px;">';
+    						echo '<div class="img-cropper"><img src="' . $member -> profilePicture . '" alt="Profile Picture"></div>';
                         }
 ?>
                     </a>
@@ -118,7 +118,7 @@
 ?>
             <ul class="media-list">
                 <li class="media">
-                    <div class="icons-circle pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
+                    <div class="icons-rounded pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
                     <div class="media-body">
                         <p><?php _e( "There are currently no new members", 'bidxplugin' ); ?></p>
                     </div>

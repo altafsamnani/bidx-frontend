@@ -185,7 +185,7 @@
                     // Add Default image if there is no image attached to the bs
                     var addDefaultImage = function( el )
                     {
-                        $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
+                        $element.find('.' + el).html('<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
                     };
 
                     $.each(response.docs, function(idx, i18nItem)

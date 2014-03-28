@@ -40,13 +40,18 @@
                         <a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
 <?php
                         if ( has_post_thumbnail() ) {
-                            $size = array(90,90);
-                            $atts = array('data-src' => 'holder.js/50x50/social/auto/text:News',
-                                          'class' => 'media-object img-circle pull-left');
+                            $size = array(90);
+                            $atts = array( 'class' => '' );
+?>
+                        <div class="img-cropper">
+<?php                             
                             the_post_thumbnail($size, $atts);
+?>
+                        </div>
+<?php 
                         } else {
 ?>
-                            <div class="icons-circle pull-left"><i class="fa fa-bullhorn text-primary-light"></i></div>
+                            <div class="icons-rounded pull-left"><i class="fa fa-bullhorn text-primary-light"></i></div>
 <?php
                         }
 ?>
@@ -84,7 +89,7 @@
 ?>
             <ul class="media-list">
                 <li class="media">
-                    <div class="icons-circle pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
+                    <div class="icons-rounded pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
                     <div class="media-body">
                         <p><?php _e( "There are currently no news or events", 'bidxplugin' ); ?></p>
                     </div>

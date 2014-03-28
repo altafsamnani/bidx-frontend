@@ -69,8 +69,8 @@
                                 <a href="#home/businessSummaries" class="pull-right btn btn-info"><?php _e('view all','bidxtheme')?></a>
                             </div>
                             <div class="panel-body">
-                                <div class="bidx-latest clearfix">
-                                <!-- Grab latests members -->
+                                <div class="bidx-latest js-fakecrop clearfix">
+                                <!-- Grab latests business summaries -->
 <?php
                                     echo do_shortcode( '[bidx app="group" view="latest-business-summaries"]' );
 ?>
@@ -160,7 +160,7 @@
 
             <li class="media well">
                 <a class="pull-left" href="/member/%memberId%" data-role="memberImage">
-                    <div class="icons-circle pull-left"><i class="fa fa-user text-primary-light"></i></div>
+                    <div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">
@@ -185,9 +185,9 @@
         <div class="snippet" data-key="businessSummary">
 
 
-            <li class="media well">
+            <li class="media well js-fakecrop">
                 <a class="pull-left" href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryImage">
-                    <div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
+                    <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">
@@ -211,14 +211,14 @@
 
             <li class="media well">
                 <a class="pull-left" href="#" data-role="newsView">
-                    <div data-role="newsImage" class="icons-circle pull-left"><i class="fa fa-bullhorn text-primary-light"></i></div>
+                    <div data-role="newsImage" class="icons-rounded pull-left"><i class="fa fa-bullhorn text-primary-light"></i></div>
                 </a>
                 <div class="media-body">
                     <h2 class="media-heading" data-role="title"><span class="header-meta pull-right" data-role="date">%date%</span></h2>
                     <div data-role="content"></div>
 
                     <div class="pull-right">
-                        <a href="#" data-role="newsView"><?php _e('View more','bidxtheme')?></a>
+                        <a href="#" data-role="newsView"><?php _e('Read more','bidxtheme')?></a>
                     </div>
                 </div>
             </li>

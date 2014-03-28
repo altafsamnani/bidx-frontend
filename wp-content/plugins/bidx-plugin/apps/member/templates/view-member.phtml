@@ -81,8 +81,19 @@
 <?php
                 if ($picSrc)
                 {
+                    $pisWidth = $this->exst( $personalDetails->profilePicture->width ) ?       $personalDetails->profilePicture->width . 'px;' : "auto;";
+                    $pisLeft  = $this->exst( $personalDetails->profilePicture->left )  ? '-' . $personalDetails->profilePicture->left  . 'px;' : "auto;";
+                    $pisTop   = $this->exst( $personalDetails->profilePicture->top )   ? '-' . $personalDetails->profilePicture->top   . 'px;' : "auto;";
+
+                    $profileImage = '<img' . 
+                                    ' src="' . $picSrc . '"'.
+                                    ' style="'.
+                                        'width: ' . $pisWidth .
+                                        'left: ' . $pisLeft .
+                                        'top: ' . $pisTop .
+                                    '"' .' />';
 ?>
-                    <img <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+                    <div class="img-cropper"><?php echo $profileImage; ?></div>
 <?php
                 }
                 else
