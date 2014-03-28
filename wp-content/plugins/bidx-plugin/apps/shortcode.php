@@ -171,6 +171,7 @@ class BidxShortcode
             wp_register_script ('jquery-fitvids', $bidxJsDir . '/vendor/jquery.fitvids.js', array ('jquery'), '20140321', TRUE);
             wp_register_script ('jquery-event-ue', $bidxJsDir . '/vendor/jquery.event.ue.js', array ('jquery'), '20140325', TRUE);
             wp_register_script ('jquery-udraggable', $bidxJsDir . '/vendor/jquery.udraggable.js', array ('jquery'), '20140325', TRUE);
+            wp_register_script ('jquery-fakecrop', $bidxJsDir . '/vendor/jquery.fakecrop.js', array ('jquery'), '20140327', TRUE);
 
             // fileupload
             wp_register_script ('jquery-iframe-transport', $bidxJsDir . '/vendor/jquery.iframe-transport.js', array ('jquery'), '1.7', true);

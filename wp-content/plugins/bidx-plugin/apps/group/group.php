@@ -14,7 +14,7 @@
  */
 class group {
 
-	static $deps = array( 'jquery', 'bootstrap', 'bidx-data', 'bidx-location', 'bidx-utils', 'bidx-api-core', 'bootstrap-paginator');
+	static $deps = array( 'jquery', 'bootstrap', 'bidx-data', 'bidx-location', 'bidx-utils', 'bidx-api-core', 'bootstrap-paginator', 'jquery-fakecrop');
 
 	/**
 	 * Constructor
