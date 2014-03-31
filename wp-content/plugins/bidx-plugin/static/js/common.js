@@ -1119,22 +1119,22 @@
     }
 
     // On Window Scroll
-    $(window).scroll( function(e)
-    {
-        var scrollPosition = $(window).scrollTop()
-        ,   $innerWrap          = $( ".inner-wrap" )
-        ,   $headerControls     = $( ".bidx-header-controls a" )
-        ;
-        if ( scrollPosition >= 120 )
-        {
-            $innerWrap.addClass( "smaller" );
-            $headerControls.addClass( "btn-sm" );
-        }
-        if ( scrollPosition <= 30 )
-        {
-            $innerWrap.removeClass( "smaller" );
-            $headerControls.removeClass( "btn-sm" );
-        }
-    });
+    // $(window).scroll( function(e)
+    // {
+    //     var scrollPosition = $(window).scrollTop()
+    //     ,   $innerWrap          = $( ".inner-wrap" )
+    //     ,   $headerControls     = $( ".bidx-header-controls a" )
+    //     ;
+    //     if ( scrollPosition >= 120 )
+    //     {
+    //         $innerWrap.addClass( "smaller" );
+    //         $headerControls.addClass( "btn-sm" );
+    //     }
+    //     if ( scrollPosition <= 30 )
+    //     {
+    //         $innerWrap.removeClass( "smaller" );
+    //         $headerControls.removeClass( "btn-sm" );
+    //     }
+    // });
 
 } ( jQuery ));
