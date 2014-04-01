@@ -1990,7 +1990,10 @@ address {
         right: 50%;
     }
 }
-
+.wp-caption {
+    text-align: center;
+    margin: 0 auto 40px;
+}
 .alt-bg {
     background-color: $color_12;
     position: relative;
