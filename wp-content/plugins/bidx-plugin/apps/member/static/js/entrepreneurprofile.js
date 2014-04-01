@@ -26,7 +26,7 @@
         //
     ,   $cvControl                          = $editForm.find( ".cvControl" )
     ,   $cvContainer                        = $cvControl.find( ".cvContainer" )
-    ,   $cvControlGroup                     = $cvContainer.find( ".control-group" )
+    ,   $cvControlGroup                     = $cvContainer.find( ".form-group" )
     ,   $btnChangeCv                        = $cvControl.find( "a[href$='changeCv']" )
     ,   $changeCvModal                      = $cvControl.find( ".changeCvModal" )
 
@@ -394,7 +394,7 @@
 
         // Check if the file has been removed
         //
-        var profileUploadId = bidx.utils.getValue( attachment, "bidxMeta.bidxUploadId" )
+        var profileUploadId = bidx.utils.getValue( attachment, "bidxMeta.bidxUploadId" );
        
         if ( state !== "create" && !profileUploadId )
         {
@@ -431,7 +431,11 @@
 
             // Hide the error message (if any)
             //
-            $cvControlGroup.find( "label.error" ).hide();
+            $cvControlGroup.find( "div.error" ).hide();
+            $cvControlGroup.removeClass( "has-error" );
+            $cvControlGroup.find( ".noCV" ).removeClass( "alert-danger" );
+            $cvControl.prev().removeClass( "heading-error" );
+
         }
     }
 
@@ -712,17 +716,21 @@
             {
                 valid = false;
 
-                $cvErrorLabel = $cvControlGroup.find( "label.error" );
+                $cvErrorLabel = $cvControlGroup.find( "div.error" );
 
                 if ( !$cvErrorLabel.length )
                 {
-                    $cvErrorLabel = $( "<label />", { "class": "error" } );
+                    $cvErrorLabel = $( "<div />", { "class": "error" } );
                     $cvControlGroup.append( $cvErrorLabel );
                 }
 
                 $cvErrorLabel
                     .text( bidx.i18n.i( 'frmNoCv', appName ))
                     .show();
+
+                $cvControlGroup.addClass( "has-error" );
+                $cvControlGroup.find( ".noCV" ).addClass( "alert-danger" );
+                $cvControl.prev().addClass( "heading-error" );
             }
 
 
