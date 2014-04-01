@@ -229,6 +229,11 @@
                 data.context.find( ".uploading" ).hide();
 
                 data.context.find( ".selectFile .controls" ).fadeIn();
+
+                if ( slaveApp )
+                {
+                    _selectUploaded( data.context );
+                }
             }
 
         ,   fail: function( e, data )
@@ -360,6 +365,20 @@
                 bidx.common.addAppWithPendingChanges( appName );
             }
         } );
+    }
+
+    // Preselect the just uploaded file -> BIDX-1760
+    //
+    function _selectUploaded( file )
+    {
+        if ( settings.multiSelect )
+        {
+            file.find( "[name='uploadCheckbox']" ).prop( "checked", true );
+        }
+        else
+        {
+            file.find( "[name='uploadRadio']" ).prop( "checked", true );
+        }
     }
 
     function _cancelSelect()
