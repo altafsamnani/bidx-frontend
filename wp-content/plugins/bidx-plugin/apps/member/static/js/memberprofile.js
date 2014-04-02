@@ -1376,7 +1376,7 @@
 
         // START DEV API
         //
-    ,    _updateCurrentAddressMap:   _updateCurrentAddressMap
+    ,   _updateCurrentAddressMap:   _updateCurrentAddressMap
     ,   currentAddressMap:          currentAddressMap
         // END DEV API
     };
