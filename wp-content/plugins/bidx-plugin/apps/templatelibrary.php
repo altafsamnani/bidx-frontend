@@ -509,7 +509,7 @@ class TemplateLibrary
                                 $documentImage = $document->document;
                             }
 
-                            $html .= sprintf( '<a href="%s" target="_blank"><img src="%s" /></a>', $document->document, $documentImage );
+                            $html .= sprintf( '<div class="img-cropper pull-left"><img src="%s" /></div>', $document->document, $documentImage );
 
                         } else {
 

@@ -29,6 +29,8 @@
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
+    ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
+    
     ,   forms                       =
         {
             generalOverview:
@@ -1164,6 +1166,8 @@
         {
             $videoWrapper.fitVids();
         }
+
+        $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
     }
 
     // Do a full access request for this businessSummar

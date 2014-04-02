@@ -56,12 +56,12 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
             if ( $this->exst($focusReach->coordinates) && $this->exst($focusReach->coordinates) ) {
     ?>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 reach-map">
     <?php
                 $mapParams = array(
                     'center'        => $focusReach->coordinates,
-                    'size'          => '300x300',
-                    'zoom'          => 6,
+                    'size'          => '640x300',
+                    'zoom'          => 10,
                     'sensor'        => 'false'
                 );
 
