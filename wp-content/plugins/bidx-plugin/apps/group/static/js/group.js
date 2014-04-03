@@ -395,6 +395,7 @@
                         $el.find( ".icons-rounded" ).remove();
                         $el.append( $( "<div />", { "class": "img-cropper" } ) );
                         $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
+                        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
                     }
                 }
             );
@@ -404,11 +405,13 @@
             $el.find( ".icons-rounded" ).remove();
             $el.append( $( "<div />", { "class": "img-cropper" } ) );
             $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
+            $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
         }
         else
         {
             bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
         }
+
     }
 
     function _getBusinessSummaries( cb )
@@ -556,7 +559,6 @@
                             if ( businessSummary.externalVideoPitch )
                             {
                                 _addVideoThumb( businessSummary.externalVideoPitch, $el );
-                                $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
                             }
 
                             break;
