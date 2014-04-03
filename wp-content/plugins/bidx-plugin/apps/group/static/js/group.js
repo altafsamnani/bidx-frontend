@@ -795,6 +795,7 @@
                                 image = bidx.utils.getValue( news, "featuredImage" );
                                 $el.removeClass('icons-rounded');
                                 $el.html( '<div class="img-cropper"><img src="' + image + '" class="media-object pull-left" alt="" /></div>' );
+                                $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
                             }
 
                         break;
