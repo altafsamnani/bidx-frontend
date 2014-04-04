@@ -25,12 +25,13 @@ class mentor
 
         /* 1 Template Rendering */
         require_once(BIDX_PLUGIN_DIR . '/templatelibrary.php');
-        $view = new TemplateLibrary (BIDX_PLUGIN_DIR . '/dashboard/templates/');
+        $view = new TemplateLibrary (BIDX_PLUGIN_DIR . '/mentor/templates/');
 
         $sessionData = BidxCommon::$staticSession;
         $view->sessionData = $sessionData;
 
         $command = $atts['view'];
+
 
         switch ($command) {
 
@@ -94,6 +95,7 @@ class mentor
                     }
 
                     $template = 'mentor/dashboard.phtml';
+
                 } else {
                     $view->return_404 ();
                 }
@@ -103,7 +105,6 @@ class mentor
 
         }
 
-         //echo $template;
         (isset ($template)) ? $view->render ($template) : '';
 
     }
