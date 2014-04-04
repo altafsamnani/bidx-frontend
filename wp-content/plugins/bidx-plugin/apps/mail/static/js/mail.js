@@ -836,7 +836,7 @@
 
                         $toast.find( ".messageContent" )
                             .i18nText( "contactRequestSendTo", appName )
-                            .append( " " + response.data.requesteeName )
+                            .append( " " + response.data.id )
                         ;
 
                         // show the toast
@@ -1584,9 +1584,9 @@
             {
                 var contactPicture;
 
-                if ( item.pictureUrl )
+                if ( item.profilePicture )
                 {
-                    contactPicture = "<img class='media-object' src='" + item.pictureUrl + "'>";
+                    contactPicture = '<div class="img-cropper"><img class="media-object" style="width:'+ item.width +'px; left:-'+ item.left +'px; top:-'+ item.top +'px;" src="' + item.profilePicture + '"></div>';
                 }
                 else
                 {
@@ -1595,10 +1595,14 @@
                 // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
                 //
                 listItem = snippet
-                    .replace( /%pictureUrl%/g,      contactPicture )
-                    .replace( /%contactId%/g,       item.contactId    ? item.contactId      : "%contactId%" )
-                    .replace( /%contactName%/g,     item.contactName  ? item.contactName    : "%contactName%" )
+                    .replace( /%pictureUrl%/g,          contactPicture )
+                    .replace( /%contactId%/g,           item.id                 ? item.id                                                       : "%contactId%" )
+                    .replace( /%contactName%/g,         item.name               ? item.name                                                     : "%contactName%" )
+                    .replace( /%professionalTitle%/g,   item.professionalTitle  ? '<div>' + item.professionalTitle + '</div>'                   : "" )
+                    .replace( /%country%/g,             item.country            ? '<div>' + bidx.data.i( item.country, "country" ) + '</div>'   : "" )
+                    .replace( /%roles%/g,               item.roles.length       ? _placeRoles( item.roles )                                     : "" )
                 ;
+
                 $listItem = $( listItem );
 
                 // execute cb function
@@ -1629,6 +1633,17 @@
             else
             {
                 $view.find( "#" + options.category + "Requests .bidx-btn-showMore" ).hide();
+            }
+
+            function _placeRoles( roles )
+            {
+                var $roles = "";
+
+                $.each( roles, function( index, role ) {
+                    $roles += '<span class="label bidx-label bidx-'+ role +'">' + role + '</span>';
+                });
+
+                return $roles;
             }
 
 
@@ -1862,12 +1877,12 @@
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
-                                        contacts[ item.contactName.toLowerCase() ] =
+                                        contacts[ item.name.toLowerCase() ] =
                                         {
                                             value:      item.contactId
-                                        ,   label:      item.contactName + " (A)"
+                                        ,   label:      item.name + " (A)"
                                         };
-                                        sortIndex.push( item.contactName.toLowerCase() );
+                                        sortIndex.push( item.name.toLowerCase() );
                                     } );
                                 }
 
@@ -1910,7 +1925,7 @@
                                 ,   contacts:   contacts
                                 };
 
-                                bidx.utils.log("[altaf]",result);
+                                // bidx.utils.log("[altaf]",result);
 
                             }
                             else

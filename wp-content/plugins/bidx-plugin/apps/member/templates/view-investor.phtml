@@ -88,7 +88,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
                 $mapParams = array(
                     'center'        => $focusReach->coordinates,
                     'size'          => '640x300',
-                    'zoom'          => 10,
+                    'zoom'          => $this->setZoom($focusReach->reach),
                     'sensor'        => 'false'
                 );
 

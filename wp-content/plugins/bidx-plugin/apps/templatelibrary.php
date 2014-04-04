@@ -878,6 +878,68 @@ class TemplateLibrary
         return $videos;
     }
 
+    /**
+     * Set the zoom value of a map
+     * @param float $reach The circle reach
+     * @return float $zoom The zoom value 
+     */
+    function setZoom ( $reach )
+    {
+        $zoom;
+        $zoomRounded = round($reach);
+        
+        if ( $zoomRounded < 2)
+        {
+            $zoom = 12;
+        }
+        elseif ( $zoomRounded >= 2 && $zoomRounded <= 5 )
+        {
+            $zoom = 11;
+        }
+        elseif ( $zoomRounded >= 5 && $zoomRounded <= 20 )
+        {
+            $zoom = 10;
+        }
+        elseif ( $zoomRounded >= 20 && $zoomRounded <= 40 )
+        {
+            $zoom = 9;
+        }
+        elseif ( $zoomRounded >= 40 && $zoomRounded <= 80 )
+        {
+            $zoom = 8;
+        }
+        elseif ( $zoomRounded >= 80 && $zoomRounded <= 160 )
+        {
+            $zoom = 7;
+        }
+        elseif ( $zoomRounded >= 160 && $zoomRounded <= 320 )
+        {
+            $zoom = 6;
+        }
+        elseif ( $zoomRounded >= 320 && $zoomRounded <= 640 )
+        {
+            $zoom = 5;
+        }
+        elseif ( $zoomRounded >= 640 && $zoomRounded <= 1280 )
+        {
+            $zoom = 4;
+        }
+        elseif ( $zoomRounded >= 1280 && $zoomRounded <= 2560 )
+        {
+            $zoom = 3;
+        }
+        elseif ( $zoomRounded >= 2560 && $zoomRounded <= 5120 )
+        {
+            $zoom = 2;
+        }
+        else
+        {
+            $zoom = 1;
+        }
+
+        return $zoom;
+    }
+
 
     /**
      * Validation function for nested objects

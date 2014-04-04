@@ -310,9 +310,14 @@
                             ;
                             break;
 
+                        case "profession":
+
+                            $el.text(  member.professionalTitle );
+                            break;
+
                         case "country":
 
-                            //$el.text( bidx.utils.getValue( member.personalDetails.address[0], "country" ) );
+                            $el.text(  member.country );
                             break;
 
                         case "roles":
@@ -337,8 +342,11 @@
                         case "memberId":
                             if ( member.relations.length === 0 )
                             {
-                                // bidx.utils.log('member.relations', member);
-                                // bidx.utils.log('THE EL::::', $el);
+                                $el.attr( "href", function( i, href )
+                                    {
+                                        return href.replace( "%memberId%", memberId );
+                                    } )
+                                ;
                             }
                             else
                             {

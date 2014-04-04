@@ -4,7 +4,6 @@
         $authenticated = isset( $this -> authenticated ) && $this -> authenticated ==  'true';
         $joinedGroup = isset( $this -> joinedGroup ) && $this -> joinedGroup ==  'true';
 
-
         if (is_array($this -> members)) {
 
             if ( $authenticated ) {
@@ -90,6 +89,11 @@
                         if ( $role === 'investor' ) {
 ?>
                         <span class="label bidx-label bidx-investor"><?php _e('Investor', 'bidxplugin') ?></span>
+<?php
+                        }
+                        if ( $role === 'mentor' ) {
+?>
+                        <span class="label bidx-label bidx-mentor"><?php _e('Mentor', 'bidxplugin') ?></span>
 <?php
                         }
                     }
