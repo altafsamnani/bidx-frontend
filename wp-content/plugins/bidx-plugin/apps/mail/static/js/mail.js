@@ -1700,7 +1700,10 @@
             {
                 // replace contact requesters name in the snippet
                 //
-                snippet  = snippet.replace( "%contactName%", message.sender.displayName );
+                snippet  = snippet
+                                .replace( "%contactName%", message.sender.displayName )
+                                .replace( "%contactId%", message.sender.id )
+                                ;
 
                 // convert snippet to DOM object so we can use jQuery selectors
                 //
