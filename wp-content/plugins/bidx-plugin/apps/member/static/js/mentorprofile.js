@@ -7,15 +7,6 @@
     ,   $editForm                           = $views.filter( ".viewEdit" ).find( "form" )
     ,   $snippets                           = $element.find( ".snippets" )
 
-    ,   $elementEntrepreneur        = $( "#entrepreneur-profile" )
-    ,   $viewsEntrepreneur          = $elementEntrepreneur.find( ".view" )
-
-    ,   $modals                             = $(".modalView")
-    ,   $modal
-
-    ,   $elementMyprofile           = $(".member")
-    ,   $viewsMyprofile             = $elementMyprofile.find( ".view" )
-
     ,   $focusLanguage                      = $editForm.find( "[name='focusLanguage']" )
     ,   $focusSocialImpact                  = $editForm.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact                     = $editForm.find( "[name='focusEnvImpact']" )
@@ -48,79 +39,6 @@
     ,   appName                     = "member"
     ;
 
-    // this function mutates the relationship between two contacts. Possible mutations for relationship: action=[ignore / accept]
-    //
-    function _doCreateMentorRequest( options )
-    {
-
-        var uriStatus
-        ,   params  = options.params
-        ,   bpClass = '.bp-' + options.params.businessid
-        ;
-
-         //uriStatus = document.location.href.split( "#" ).shift() + "?smsg=8&sparam=" + window.btoa('action=sent') ;
-         //document.location.href = uriStatus;
-        //bidx.controller.updateHash(uriStatus, true, true);
-        //bidx.controller.doSuccess( uriStatus,true);
-
-        //return;
-
-        bidx.api.call(
-             "mentorRelationships.create"
-        ,   {
-                groupDomain:            bidx.common.groupDomain
-            ,   requesteeId:            params.id
-            ,   data:
-                {
-                    "type":             "mentor"
-                }
-
-            ,   success: function( response )
-                {
-                    bidx.utils.log("[mentor] created a mentor relationship",  response );
-                    if ( response && response.status === "OK" )
-                    {
-                        //  execute callback if provided
-                        //uriStatus = document.location.href.split( "#" ).shift() + "?smsg=8&sparam=" + window.btoa('action=sent') ;
-
-                        //bidx.controller.updateHash(uriStatus, true, true);
-                        //bidx.controller.doSuccess( uriStatus,true);
-
-                        if (options && options.callback)
-                        {
-                            options.callback();
-                        }
-
-                    }
-
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showMainError( bidx.i18n.i("errorRequest") + response.text);
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showMainError( bidx.i18n.i("errorRequest") + response.text);
-                    }
-
-                    $elementEntrepreneur.find( bpClass ).removeClass('disabled').i18nText('btnTryAgain');
-
-                }
-            }
-        );
-    }
 
     // Form fields
     //
@@ -1153,62 +1071,6 @@
         );
     }
 
-    //  ################################## MODAL #####################################  \\
-
-
-    //  show modal view with optionally and ID to be appended to the views buttons
-    function _showModal( options )
-    {
-        var href
-        ,   replacedModal
-        ,   type
-        ,   params = {};
-
-        if(options.params)
-        {
-            params = options.params;
-            type = options.params.type;
-        }
-
-        bidx.utils.log("[mail] show modal", options );
-
-        $modal        = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
-        replacedModal = $modal.html()
-                        .replace( /%type%/g, type );
-
-        $modal.html(  replacedModal );
-
-        $modal.find( ".btn-primary[href]" ).each( function()
-        {
-            var $this = $( this );
-
-            href = $this.attr( "data-href" ) + $.param( params ) ;
-
-            $this.attr( "href", href );
-        } );
-
-        $modal.modal( {} );
-
-        if( options.onHide )
-        {
-            //  to prevent duplicate attachments bind event only onces
-            $modal.on( 'hidden.bs.modal', options.onHide );
-        }
-    }
-
-
-    //  closing of modal view state
-    var _closeModal = function(options)
-    {
-        if ($modal)
-        {
-            if (options && options.unbindHide)
-            {
-                $modal.unbind('hide');
-            }
-            $modal.modal('hide');
-        }
-    };
 
     // Private functions
     //
@@ -1218,36 +1080,7 @@
         _showView( "error" );
     }
 
-    // Private functions
-    //
-    function _showMainError( msg, hideview )
-    {
-        if( hideview ) {
-            $viewsMyprofile.filter(bidx.utils.getViewName(hideview)).hide();
-        }
 
-        $viewsMyprofile.filter( ".viewMainerror" ).find( ".errorMsg" ).text( msg );
-        _showMainView( "mainerror" );
-    }
-
-    // Private functions
-    //
-    function _showMainSuccessMsg( msg , hideview )
-    {
-        if( hideview ) {
-            $viewsMyprofile.filter(bidx.utils.getViewName(hideview)).hide();
-        }
-
-        $viewsMyprofile.filter( ".viewMainsuccess" ).find( ".successMsg" ).text( msg );
-        _showMainView( "mainsuccess" );
-    }
-
-    function _showMainView( v )
-    {
-        currentView = v;
-
-        $viewsMyprofile.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
-    }
 
     function _showView( v )
     {
@@ -1347,65 +1180,6 @@
                             _init();
                         } );
                 }
-
-            break;
-
-
-            case "confirmRequest":
-
-                _closeModal(
-                {
-                    unbindHide: true
-                } );
-
-                if( options.params ) {
-                    _showModal(
-                    {
-                        view  : "confirmRequest"
-                    ,   params: options.params
-                    ,  /* onHide: function()
-                        {
-                          window.bidx.controller.updateHash("#cancel", false, true);
-                        }*/
-                    } );
-                }
-            break;
-
-            case "cancelRequest":
-
-                _closeModal(
-                {
-                    unbindHide: true
-                } );
-
-                window.bidx.controller.updateHash("#cancel", false, true);
-
-            break;
-
-            case "sendRequest":
-                var bpClass       = '.bp-' + options.params.businessid
-                ,   $mentorButton = $elementEntrepreneur.find( bpClass );
-
-                _closeModal(
-                {
-                    unbindHide: true
-                } );
-
-                //_showRequestView("loadrequest", true);
-               $mentorButton.addClass('disabled').i18nText("msgWaitForSave");
-
-
-                _doCreateMentorRequest(
-                {
-                    params: options.params
-                ,   callback: function()
-                    {
-
-                        $mentorButton.addClass('disabled').i18nText("btnRequestSent");
-                        _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
-
-                    }
-                } );
 
             break;
 

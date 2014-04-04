@@ -21,28 +21,7 @@ $entities       = $this->sessionData->data->wp->entities;
         </h1>
         <div class="editControls btn-group pull-right"></div>
     </div>
-    <div class="modalView modalConfirmRequest">
-                <!-- Modal -->
-        <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel"><?php _e ('Send request') ?></h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            <?php _e ('You are about to send the %type% request. Are you sure?') ?>
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn" href="#mentoringRequest/cancelRequest"><?php _e ('Cancel') ?></a>
-                        <a href="#" class="btn btn-primary" data-href="#mentoringRequest/sendRequest/" ><?php _e ('Send request') ?></a>
-                    </div>
-                 </div>
-            </div>
-        </div>
-    </div>
+
     <div class="row mainState mainStateShow">
         <div class="col-sm-12">
 
@@ -185,4 +164,5 @@ $entities       = $this->sessionData->data->wp->entities;
     <?php $this->render('edit-entrepreneur.phtml'); ?>
     <?php $this->render('edit-investor.phtml'); ?>
     <?php $this->render('edit-mentor.phtml'); ?>
+    <?php $this->render('mentoring-request.phtml'); ?>
 </div>

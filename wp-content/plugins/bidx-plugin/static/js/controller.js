@@ -403,15 +403,15 @@
         }
     ,   mentoringRequest:             function( id, splat )
         {
-            bidx.utils.log( "AppRouter::mentorprofile", id, splat );
+            bidx.utils.log( "AppRouter::mentoringrequest", id, splat );
 
             mainState       = "show";
 
-            $pageHeadings.addClass( "hide" ).filter( ".mentoringRequest" ).removeClass( "hide" );
+            $pageHeadings.addClass( "hide" ).filter( ".mentoringrequest" ).removeClass( "hide" );
 
             _navigateToApp
             (
-                "mentorprofile"
+                "mentoringrequest"
             ,   {
                     requestedState: id
                 ,   params:         _deparamSplat( splat )

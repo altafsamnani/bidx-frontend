@@ -30,8 +30,9 @@ class member {
 		wp_register_script( 'investorprofile', 		plugins_url( 'static/js/investorprofile.js', 		__FILE__ ), array(), '20130701', TRUE );
 		wp_register_script( 'memberprofile',		plugins_url( 'static/js/memberprofile.js', 			__FILE__ ), array(), '20130808', TRUE );
 		wp_register_script( 'mentorprofile',		plugins_url( 'static/js/mentorprofile.js', 			__FILE__ ), array(), '20131111', TRUE );
+		wp_register_script( 'mentoringrequest',		plugins_url( 'static/js/mentoringrequest.js', 		__FILE__ ), array(), '20140411', TRUE );
 
-		$deps = array_merge( self :: $deps, array( 'memberprofile', 'entrepreneurprofile', 'investorprofile', 'mentorprofile' ) );
+		$deps = array_merge( self :: $deps, array( 'memberprofile', 'entrepreneurprofile', 'investorprofile', 'mentorprofile','mentoringrequest' ) );
 
 	  	wp_register_script( 'member', plugins_url( 'static/js/member.js', __FILE__ ), $deps, '20130501', TRUE );
 	}

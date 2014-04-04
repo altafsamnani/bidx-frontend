@@ -88,7 +88,7 @@
                     $pisLeft  = $this->exst( $personalDetails->profilePicture->left )  ? '-' . $personalDetails->profilePicture->left  . 'px;' : "auto;";
                     $pisTop   = $this->exst( $personalDetails->profilePicture->top )   ? '-' . $personalDetails->profilePicture->top   . 'px;' : "auto;";
 
-                    $profileImage = '<img' . 
+                    $profileImage = '<img' .
                                     ' src="' . $picSrc . '"'.
                                     ' style="'.
                                         'width: ' . $pisWidth .
@@ -109,10 +109,10 @@
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-7">
                             <h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4>
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-5">
 <?php
                             if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) )
                             {
@@ -132,7 +132,7 @@
                             if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor)
                             {
 ?>
-                                <a class="btn btn-xs btn-danger pull-righ label bidx-labelt" href="#mentoringRequest/confirmRequest/type=mentoring&action=connect&id=<?php echo $memberId ?>"><?php _e('Request mentoring', 'bidxplugin')?></a>
+                                <a class="btn btn-xs btn-danger pull-righ label bidx-labelt" href="#mentoringRequest/confirmMentoringRequest/type=mentoring&action=connect&id=<?php echo $memberId ?>"><?php _e('Request mentoring', 'bidxplugin')?></a>
 <?php
                             }
 
