@@ -190,6 +190,10 @@ function bidx_status_text ( $textId, $replaceString ) {
     case '7':
         $text = 'Request refused!';
         break;
+    case '8':
+        $text = 'You have successfully %action% the request!';
+        break;
+
 
     default :
         $text = 'Add your notification message to custom.php with id ';
@@ -200,7 +204,7 @@ function bidx_status_text ( $textId, $replaceString ) {
          $keyValues = explode('|',$replaceString);
          foreach( $keyValues as $repValue) {
              $dispNote = explode("=", $repValue);
-             $dispKey = '<!--'.$dispNote[0].'-->';
+             $dispKey = '%'.$dispNote[0].'%';
              $dispVal = $dispNote[1];
              $text = str_replace($dispKey,$dispVal,$text);
          }

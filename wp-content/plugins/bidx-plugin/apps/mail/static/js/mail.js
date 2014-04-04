@@ -2508,7 +2508,7 @@
             if( options.onHide )
             {
                 //  to prevent duplicate attachments bind event only onces
-                $modal.one( 'hide', options.onHide );
+                $modal.one( 'hidden.bs.modal', options.onHide );
             }
         }
 

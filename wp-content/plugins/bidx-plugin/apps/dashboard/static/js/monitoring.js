@@ -620,7 +620,7 @@
         ,   keySubject
         ,   keyBody
         ;
-     
+
         $frmCompose.find(":input").val(""); // Clear the msg from Compose/Subject
 
 
@@ -656,7 +656,7 @@
         *******/
         $options = $contactsDropdown.find( "option" );
 
-  
+
         if ( $options.length )
         {
             $options.empty();
@@ -704,7 +704,6 @@
     function _showModal( options )
     {
         var href;
-        console.log(options);
         if( options.id )
         {
             var id = options.id;
@@ -721,6 +720,7 @@
             href = $this.attr( "data-href" )
                     .replace( "%state%", options.state )
                     .replace( "%id%", options.id );
+
             $this.attr( "href", href );
         } );
 
@@ -729,7 +729,7 @@
         if( options.onHide )
         {
             //  to prevent duplicate attachments bind event only onces
-            $modal.one( 'hide', options.onHide );
+            $modal.one( 'hidden.bs.modal', options.onHide );
         }
     }
 

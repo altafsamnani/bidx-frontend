@@ -4,11 +4,13 @@
     $memberId                   = isset( $this->data->member->bidxMeta->bidxMemberId ) ? $this->data->member->bidxMeta->bidxMemberId : null ;
     $loggedInMemberId           = isset( $this -> sessionData -> data -> id ) ? $this -> sessionData -> data -> id : null;
     $authenticated              = isset( $this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+    $isLoggedinMemberIsMentor   = isset( $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile : null;
     $groupIds                   = array_keys ( (array)$this -> sessionData -> data -> groups );
     $inGroup                    = in_array( $this -> sessionData -> data -> currentGroup, $groupIds);
     $personalDetails            = isset( $data->bidxMemberProfile->personalDetails ) ? $data->bidxMemberProfile->personalDetails : NULL;
     $isEntrepreneur             = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile : NULL ;
     $isInvestor                 = isset( $data->bidxInvestorProfile ) ? $data->bidxInvestorProfile : NULL;
+    $isMentor                   = isset( $data->bidxMentorProfile ) ? $data->bidxMentorProfile : NULL;
     $personalDetailsBidxMeta    = isset( $personalDetails->bidxMeta ) ? $personalDetails->bidxMeta : $personalDetails;
     $entrepreneurDetails        = isset( $data->bidxEntrepreneurProfile ) ? $data->bidxEntrepreneurProfile: NULL ;
     $firstName                  = $this->exst( $personalDetails->firstName );
@@ -23,7 +25,7 @@
     $landLine                   = $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine');
     $useDataSrc                 = false;
     $picSrc                     = $this->exst ( $personalDetails->profilePicture->document );
-    
+
 
     $nationality                = $this->addExtraValuesToRows( 'nationality', $this->exst( $personalDetails->nationality ) );
 
@@ -66,6 +68,7 @@
     }
 
 ?>
+
 <div class="panel panel-default panel-open">
     <div class="panel-heading">
         <a class="btn-block" data-toggle="collapse" data-parent="#myProfile" href="#member-profile">
@@ -106,10 +109,10 @@
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-sm-9">
+                        <div class="col-sm-5">
                             <h4><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h4>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-7">
 <?php
                             if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) )
                             {
@@ -124,6 +127,15 @@
                                 <a class="btn btn-xs btn-warning pull-right" href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
 <?php
                             }
+
+                            // If current profile is not loggedin user, is  mentor, loggedin is not mentor, in a group
+                            if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor)
+                            {
+?>
+                                <a class="btn btn-xs btn-danger pull-righ label bidx-labelt" href="#mentoringRequest/confirmRequest/type=mentoring&action=connect&id=<?php echo $memberId ?>"><?php _e('Request mentoring', 'bidxplugin')?></a>
+<?php
+                            }
+
 ?>
                         </div>
                     </div>

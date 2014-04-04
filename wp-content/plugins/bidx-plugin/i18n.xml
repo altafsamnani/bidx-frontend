@@ -27,6 +27,14 @@
     <Item value="btnAddAndView">Create &amp; view</Item>
     <Item value="btnConfirm">Are you sure?</Item>
     <Item value="btnPleaseWait">Please wait...</Item>
+    <Item value="btnTryAgain">Try again</Item>
+    <Item value="btnRequestSent">Request sent</Item>
+
+    <!-- Common Status Msgs -->
+    <Item value="statusRequest">You request has been sent successfully</Item>
+
+      <!-- Common Error Msgs -->
+    <Item value="errorRequest">Something went wrong while creating a relationship:</Item>
 
     <!--
         Form validations

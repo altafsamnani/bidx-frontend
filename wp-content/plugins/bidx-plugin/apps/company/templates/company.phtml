@@ -5,10 +5,10 @@ $companyBidxMeta = isset( $this->company->bidxMeta )
 
 ?>
 <?php
-    if(!$this->noheader) {
+    if($this->noheader != 'true') {
 ?>
     <div class="clearfix">
-        <h1 class="pull-left"><?php echo ucwords( $this->company->name); ?></h1>
+        <h1 class="pull-left"><?php echo ($this->companyTitle) ? ucwords( $this->company->name) :''; ?></h1>
         <div class="editControls btn-group pull-right"></div>
     </div>
 <?php

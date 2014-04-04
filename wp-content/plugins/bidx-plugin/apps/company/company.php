@@ -38,38 +38,45 @@ class company
 
         // 1. Template Rendering
         require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
-        $view = new TemplateLibrary (BIDX_PLUGIN_DIR . '/company/templates/');
-        $view->sessionData = BidxCommon::$staticSession;
+        require_once( BIDX_PLUGIN_DIR . '/../services/company-service.php' );
+
+        $view               = new TemplateLibrary (BIDX_PLUGIN_DIR . '/company/templates/');
+        $sessionData        = BidxCommon::$staticSession;
+        $view->sessionData  = $sessionData;
+        $companyId          = null;
+        $command            = null;
+        $view->companyTitle = false;
 
         //2. Service company
-        require_once( BIDX_PLUGIN_DIR . '/../services/company-service.php' );
         $companySvc = new CompanyService( );
+        
 
-        // 3. Determine the view needed
-        $command = null;
-        if (isset ($atts) && isset ($atts['view'])) {
+        //3. Determine the view needed        
+        if (isset ($atts) && isset ($atts['view'])){
             $command = $atts['view'];
-        }
-
-
-        $sessionData = BidxCommon::$staticSession;
-
-        $companyId = null;
-        if (isset ($atts) && isset ($atts['id'])) {
-            $companyId = $atts['id'];
+        }      
+        
+        if (isset ($atts) && isset ($atts['id']))   {
+            $companyId          = $atts['id'];            
         } else if (isset ($sessionData->companyId)) {
-            $companyId = $sessionData->companyId;
+            $companyId          = $sessionData->companyId;            
         }
-
+        
         switch ($command) {
             case 'list-companies' :
                 // TODO: Chris will lookup what API to use for listing the companies of a member
                 return $view->render ('company-list.phtml');
+                break;
+            
             default :
+          
                 if ($companyId) {
                     $view->company = $companySvc->getCompanyDetails ($companyId);
+                    $view->companyTitle = true;
                 }
+                
                 $view->noheader = $atts['noheader'];
+
                 return $view->render ('company.phtml');
         }
     }

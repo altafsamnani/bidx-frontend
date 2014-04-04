@@ -2,6 +2,13 @@
 
 $entrepreneurDetails = isset($this->data->bidxEntrepreneurProfile) ? $this->data->bidxEntrepreneurProfile : NULL ;
 $businessSummary = isset ($this->data->wp->entities->bidxBusinessSummary) ? $this->data->wp->entities->bidxBusinessSummary : NULL;
+$memberId                   = isset( $this->data->member->bidxMeta->bidxMemberId ) ? $this->data->member->bidxMeta->bidxMemberId : null ;
+$loggedInMemberId           = isset( $this -> sessionData -> data -> id ) ? $this -> sessionData -> data -> id : null;
+$authenticated              = isset( $this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+$groupIds                   = array_keys ( (array)$this -> sessionData -> data -> groups );
+$inGroup                    = in_array( $this -> sessionData -> data -> currentGroup, $groupIds);
+$isLoggedinMemberIsMentor   = isset( $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile : null;
+$isMentor                   = isset( $data->bidxMentorProfile ) ? $data->bidxMentorProfile : NULL;
 $companies = isset ($this->data->companies) ? $this->data->companies : NULL;
 
 $entrepreneurBidxMeta = isset( $entrepreneurDetails->bidxMeta )
@@ -69,7 +76,7 @@ if ($entrepreneurDetails &&
                     echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('CV','bidxplugin') => $cvDetails));
 
                     /* Document Display */
-                    echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('Documents','bidxplugin') => $this->exst ($entrepreneurDetails->attachment)));                                  
+                    echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('Documents','bidxplugin') => $this->exst ($entrepreneurDetails->attachment)));
                     ?>
 
 <?php
@@ -77,8 +84,14 @@ if ($entrepreneurDetails &&
         //
         if ($businessSummary) {
             $labelBusiness = ($this->data->isMyProfile) ? __('My business','bidxplugin') : __('This person has a business','bidxplugin');
-?>
-            <div class="well profile-block">
+?>          <div class="view viewLoadrequest alert alert-info text-center">
+                <div class="progress progress-striped active">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <?php _e ('Loading (Sending your request)...', 'bidxplugin') ?>
+                    </div>
+                </div>
+            </div>
+             <div class="well profile-block">
                 <h4 id="businesssummary">Business Summary</h4>
                 <div class="accordion" id="businesses">
 <?php
@@ -105,7 +118,7 @@ if ($entrepreneurDetails &&
 
                                             <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-8">
                                             <ul class="list-unstyled">
                                                 <?php
                                                 $businessSlogan = $this->exst ( $business->slogan );
@@ -133,6 +146,16 @@ if ($entrepreneurDetails &&
 
                                                 ?>
                                             </ul>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <?php
+                                            // If current profile is not loggedin user, not a mentor, in a group and Loggedin user is mentor
+                                            if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isLoggedinMemberIsMentor && !$isMentor)
+                                            {
+                                             ?>
+                                                <a class="btn btn-xs btn-danger pull-right label bidx-label bp-<?php echo $businessBidxMeta->bidxEntityId;?>" href="#mentoringRequest/confirmRequest/type=mentoring&action=connect&businessid=<?php echo $businessBidxMeta->bidxEntityId;?>&id=<?php echo $memberId ?>"><?php _e('Mentor this plan', 'bidxplugin')?></a>
+                                           <?php
+                                            } ?>
                                         </div>
                                     </div>
 

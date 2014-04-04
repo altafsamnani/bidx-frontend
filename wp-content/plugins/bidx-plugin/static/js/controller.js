@@ -289,6 +289,7 @@
 
         ,   'editEntrepreneur(/:id)(/:section)':                'editEntrepreneur'
         ,   'createEntrepreneur':                               'createEntrepreneur'
+        ,   'mentoringRequest(/:id)(/*splat)':                  'mentoringRequest'
 
         ,   'editInvestor(/:id)(*splat)':                       'editInvestor'
         ,   'createInvestor':                                   'createInvestor'
@@ -397,6 +398,24 @@
                     requestedState: "edit"
                 ,   section:        section
                 ,   id:             id
+                }
+            );
+        }
+    ,   mentoringRequest:             function( id, splat )
+        {
+            bidx.utils.log( "AppRouter::mentorprofile", id, splat );
+
+            mainState       = "show";
+
+            $pageHeadings.addClass( "hide" ).filter( ".mentoringRequest" ).removeClass( "hide" );
+
+            _navigateToApp
+            (
+                "mentorprofile"
+            ,   {
+                    requestedState: id
+                ,   params:         _deparamSplat( splat )
+
                 }
             );
         }

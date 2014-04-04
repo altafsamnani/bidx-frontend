@@ -58,7 +58,8 @@ if (!BidxCommon :: isWPInternalFunction ()) {
       'register',
       'resetpassword',
       'setpassword',
-      'content'
+      'content',
+      'mentor'
 
     );
     $shortcode = new BidxShortCode();

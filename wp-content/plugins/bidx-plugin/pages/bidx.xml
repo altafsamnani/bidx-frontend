@@ -199,7 +199,27 @@
             <mapping>^logout</mapping>
             <content>[bidx  app="login" view="logout"]</content>
         </post>
-
+        <post>
+            <post_id>29</post_id>
+            <name>Mentor dashboard</name>
+            <title>Mentor dashboard</title>
+            <mapping>^m-mentordashboard</mapping>
+            <content>[bidx app="mentor" view="mentor"]</content>
+        </post>
+        <post>
+            <post_id>30</post_id>
+            <name>Entrepreneur Mentor dashboard</name>
+            <title>Entrepreneur Mentor dashboard</title>
+            <mapping>^e-mentordashboard</mapping>
+            <content>[bidx app="mentor" view="entrepreneur"]</content>
+        </post>
+        <post>
+            <post_id>31</post_id>
+            <name>Groupowner Mentor dashboard</name>
+            <title>Groupowner Mentor dashboard</title>
+            <mapping>^go-mentordashboard</mapping>
+            <content>[bidx app="mentor" view="groupowner"]</content>
+        </post>
     </posts>
 
     <widgets>
