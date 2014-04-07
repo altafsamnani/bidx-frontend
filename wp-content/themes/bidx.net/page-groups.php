@@ -112,7 +112,7 @@ get_header();
                                         </div>
                                         <div class="portfolio-details">
                                             <!-- <h5>5th Group name</h5> -->
-                                            <p>Birzeit</p>
+                                            <p>BC Zvecan</p>
                                         </div>
                                     </div>
                                 </div>
