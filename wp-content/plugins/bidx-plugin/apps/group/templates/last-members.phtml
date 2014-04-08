@@ -77,7 +77,8 @@
                     echo '<div>' . $this->getStaticVal( 'country', $member -> country ) . '</div>';
                 }
 
-                echo '<div><span class="label bidx-label bidx-member">Member</span>';
+                echo '<div>';
+
                 if ( $this -> exst( $member -> roles ) ) {
 
                     foreach ($member -> roles as $role) {
