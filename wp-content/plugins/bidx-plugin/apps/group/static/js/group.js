@@ -22,6 +22,8 @@
     ,   state
 
     ,   $fakecrop               = $views.find( ".js-fakecrop img" )
+    ,   $sponsors               = $( ".sponsors" )
+    ,   $sponsorImg             = $sponsors.find( "img" )
 
     ,   $unreadCount            = $navbar.find( ".iconbar-unread" )
     ,   paging                  =
@@ -115,6 +117,22 @@
         ;
 
         $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+
+        // Set the height of sporsors carousel
+        //
+        if ( $sponsors )
+        {
+            var tallest = 0;
+            $.each( $sponsorImg, function(index, img) {
+                if ( img.height > tallest )
+                {
+                    tallest = img.height;
+                }
+
+                $sponsors.height(tallest);
+            });
+        }
+
     }
 
     // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
@@ -317,7 +335,7 @@
 
                         case "country":
 
-                            $el.text(  member.country );
+                            $el.text( bidx.data.i( member.country, "country" ) );
                             break;
 
                         case "roles":

@@ -147,8 +147,6 @@
         </div>
 
 
-
-
     <div class="snippets hide">
         <!--
             I use %value% for explanatory reasons within the markup body and as placeholders within href links
@@ -167,6 +165,7 @@
                         <a href="/member/%memberId%" data-role="memberLink">%firstname% %lastname%</a>
                         <a href="/mail/#mail/contacts/action=connect&amp;id=%memberId%" class="btn btn-xs btn-warning pull-right" data-role="memberId"><?php _e('Connect','bidxtheme')?></a>
                     </h4>
+                    <div data-role="profession"></div>
                     <div data-role="country"></div>
                     <div data-role="roles">
                         <span class="label" data-role="value">test</span>
@@ -226,4 +225,9 @@
         </div>
 
     </div>
+
 </div>
+
+<?php
+    require_once "inc/sponsors.phtml";
+?>

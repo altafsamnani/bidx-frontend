@@ -1,0 +1,128 @@
+
+<?php
+            // WP_Query arguments
+            $args = array (
+                'post_type'             => 'sponsors',
+                'post_status'           => 'publish',
+                'posts_per_page'        => '50',
+                'orderby'               => 'menu_order',
+            );
+
+            // The Query
+            $sponsors = new WP_Query( $args );
+
+            // The Loop
+            if ( $sponsors->have_posts() )
+            {
+?>
+            <div class="container sponsors">
+                <div class="row">
+<?php                
+                if ( $sponsors->post_count >= 5 ) {
+
+                    $sporsors_chunks = array_chunk($sponsors->posts, 3);
+                    $last = array_slice($sporsors_chunks, -1, 1);
+
+?>
+                    <div id="sponsorsCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="sponsors carousel-inner">
+<?php 
+                        foreach ($sporsors_chunks as $key => $chunk) {
+
+                        if ( count($last[0]) === 1 ) {
+                            $centered = 'col-sm-offset-4';
+                        }
+                        elseif ( count($last[0]) === 2 ) {
+                            $centered = 'col-sm-offset-2';
+                        }
+                        else {
+                            $centered = '';
+                        }
+
+?>
+                        <div class="item <?php if ($key === 0) { ?>active<?php }; ?>">
+<?php 
+                            foreach ($chunk as $key => $post) {
+
+                                if ( has_post_thumbnail( $post->ID ) ) {
+                                    $image = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'single-post-thumbnail' );
+                                }
+
+                                if ( $chunk === end($sporsors_chunks) && $key === 0 ) {
+?>
+                                <div class="col-sm-4 sponsor <?php echo $centered ?>">
+<?php
+                                } else {
+?>
+                                <div class="col-sm-4 sponsor">
+<?php                                     
+                                }
+?>                                    
+                                    <img src="<?php echo $image[0] ?>" alt="<?php echo $post->post_title; ?>">
+                                </div>
+<?php
+                            }
+?>
+                        </div>
+<?php 
+                        }
+?>                            
+                        </div>
+                    </div>
+<?php
+                }
+                else
+                {
+                    while ( $sponsors->have_posts() )
+                    {
+                        $sponsors->the_post();
+
+                        if ( $sponsors->post_count === 1 ) {
+?>
+                            <div class="col-sm-6 col-sm-offset-3 sponsor">
+                                <div class="sponsor-thumb">
+                                    <?php echo the_post_thumbnail(); ?>
+                                </div>
+                            </div>
+<?php
+                        }
+                        if ( $sponsors->post_count === 2 ) {
+?>
+                            <div class="col-sm-6 sponsor">
+                                <div class="sponsor-thumb">
+                                    <?php echo the_post_thumbnail(); ?>
+                                </div>
+                            </div>
+<?php
+                            
+                        }
+                        if ( $sponsors->post_count === 3 ) {
+?>
+                            <div class="col-sm-4 sponsor">
+                                <div class="sponsor-thumb">
+                                    <?php echo the_post_thumbnail(); ?>
+                                </div>
+                            </div>
+<?php
+                            
+                        }
+                        if ( $sponsors->post_count === 4 ) {
+?>
+                            <div class="col-sm-3 sponsor">
+                                <div class="sponsor-thumb">
+                                    <?php echo the_post_thumbnail(); ?>
+                                </div>
+                            </div>
+<?php
+                        }
+                    }
+                }
+?>
+                </div>
+            </div>
+<?php
+            }
+
+            // Restore original Post Data
+            wp_reset_postdata();
+?>
