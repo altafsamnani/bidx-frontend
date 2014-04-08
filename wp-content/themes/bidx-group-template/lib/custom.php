@@ -33,6 +33,34 @@ function creategroup_post_type ($post_arr)
     register_post_type ($post_type, $args);
 }
 
+add_action ('init', 'bidx_create_custom_page_types');
+
+function bidx_create_custom_page_types ()
+{
+    create_custom_page_type ();
+}
+
+function create_custom_page_type ($post_type = 'sponsors')
+{
+
+    $args = array (
+      'label' => ucwords($post_type),
+      'public' => true,
+      'exclude_from_search' => true,
+      'show_ui' => true,
+      'show_in_menu' => true,
+      'query_var' => true,
+      'rewrite' => false,
+      'capability_type' => 'page',
+      '_builtin' => false,
+      'has_archive' => false,
+      'hierarchical' => false,
+      'supports' => array ('title', 'editor', 'thumbnail', 'page-attributes')
+    );
+    register_post_type ($post_type, $args);
+}
+
+
 /**
  * Custom functions for Bidx
  *
