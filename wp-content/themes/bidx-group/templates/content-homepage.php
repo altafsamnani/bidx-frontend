@@ -1,15 +1,21 @@
 <!-- 
 	Grabs page content marked as homepage for logged-in or public.
 	The selector is defined in the lib/init.php file so the location can be set per page.
+	
+	TODO : NEEDS TO BE MOVED TO HOMEPAGE definition 
+	This needs to be a standard page
+	
+	
 -->
 <?php 
+
 $args = array(
 		'post_type'	 	 => 'page'
 	  , 'posts_per_page' => -1
  	  , 'meta_query' => array( 
         	array(
             	'key'   => '_wp_page_template', 
-            	'value' => 'my_template.php'
+            	'value' => 'template-homepage.php'
         	)	
     	)
 	  , 'orderby' => 'menu_order'
