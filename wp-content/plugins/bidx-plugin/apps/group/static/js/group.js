@@ -358,7 +358,7 @@
                             break;
 
                         case "memberId":
-                            if ( member.relations.length === 0 )
+                            if ( member.relations.length === 0 && bidxConfig.session.id !== memberId)
                             {
                                 $el.attr( "href", function( i, href )
                                     {
