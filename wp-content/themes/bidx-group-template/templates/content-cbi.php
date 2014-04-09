@@ -1,3 +1,9 @@
+<div class="container cbi-content">
+	<?php while (have_posts()) : the_post(); ?>
+		<?php the_content(); ?>
+	<?php endwhile; ?>
+</div>
+
 <?php
 	$base = "http://www.cbi.eu";
 	if ( isset($_REQUEST['URL']) ) {
@@ -32,18 +38,13 @@
 	//rewrite images that are relative
 	$data = str_replace("src=\"/", "src=\"/wp-content/themes/bidx-group-template/lib/cbi-proxy.php?URL=/", $data);
 	//rewrite images that are explicit
-	//$data = str_replace("src=\"/", "src=\"/wp-content/themes/bidx-group-template/lib/cbi-proxy.php?URL=/", $data);
-	
-	
+	$data = str_replace("src=\"".$base, "src=\"/wp-content/themes/bidx-group-template/lib/cbi-proxy.php?URL=", $data);	
 	//rewrite javascript linkup
 	$data = str_replace("http://' + window.location.host", $self_base ."?URL='", $data);
 	//rewrite direct links
 	$data = str_replace("href=\"/","href=\"" . $self_base ."?URL=/", $data);
-	//rewrite relative links : make them explicit and with self_base
-	//$data = str_replace("href=\"/","href=\"" . $self_base ."?URL=/", $data);
 
-	
-	
+
 	?>
 	<article>
 		<div id="cbi-container">
