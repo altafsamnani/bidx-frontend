@@ -1366,6 +1366,10 @@
                 {
                     monetaryAmount:         true
                 }
+            ,   "numberInvestments":
+                {
+                    monetaryAmount:         true
+                }
             ,   "focusLocationType":
                 {
                     required:               { depends: function ()
