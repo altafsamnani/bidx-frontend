@@ -7,6 +7,9 @@ function roots_scripts() {
     wp_enqueue_style('bootstrap-datepicker',        get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datepicker-1.3.0-rc.2/css/datepicker3.css', false, null);
     wp_enqueue_style('bidx-plugin',                 get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin.css', false, null);
 
+    if(is_page_template('page-cbi.php')) {
+        wp_enqueue_style('cbi',                     get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/cbi.css', false, null);
+    }
 
     if (is_single() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');

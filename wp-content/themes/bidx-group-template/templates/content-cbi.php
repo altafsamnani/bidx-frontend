@@ -46,8 +46,17 @@
 
 
 	?>
-	<article>
+	<div class="container cbi-content">
 		<div id="cbi-container">
-	<?php print_r( $data ); ?>
+			<?php print_r( $data ); ?>
 		</div>
-	</article>
+	</div>
+
+	<script type="text/javascript" src="<?php get_template_directory_uri(); ?>/../../wp-content/plugins/bidx-plugin/static/vendor/chosen_v1.0.0/chosen.jquery.js"></script>
+	<script type="text/javascript">
+		$( function() {
+    		$( "#sectorChangeSelect" ).chosen({
+    			disable_search: true
+    		});
+		});
+	</script>
