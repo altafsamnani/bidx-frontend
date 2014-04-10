@@ -36,15 +36,17 @@
                 $img = wp_get_attachment_image_src( $image->ID, 400 );
                 //parse URL to ensure having only relative links
                 $img_url = parse_url($img[0]);
+
+                if ( !empty( $image -> post_excerpt ) ) {
+                    echo $image -> post_excerpt;
+                }
 ?>
                 <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>">
                     <img class="img" src="<?php echo $img_url['path'] ?>" />
 <?php
                     if ( !empty( $image -> post_content ) ) {
 ?>
-                    <div class="container">
                         <div class="carousel-caption img-rounded"><?php echo $image -> post_content ?></div>
-                    </div>
 <?php
                     } // !empty( $image  -> post_content )
 ?>
