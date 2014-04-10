@@ -1136,5 +1136,10 @@
     //         $headerControls.removeClass( "btn-sm" );
     //     }
     // });
+    
+
+    // Temporary solution for public home page, find a better place for this
+    // 
+    $( ".js-fakecrop img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
 
 } ( jQuery ));
