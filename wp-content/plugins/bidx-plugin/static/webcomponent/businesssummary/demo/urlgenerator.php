@@ -86,7 +86,7 @@ $groupName = $settingClass->get_bidx_subdomain( false, $host );
 							<div class="btn-group pull-right">
                         		<a class="btn btn-sm btn-primary" target="_blank" href="<?php echo $host.'/wp-content/plugins/bidx-plugin/static/webcomponent/businesssummary/demo/view-summary.php';?>"><i class="fa fa-pencil"></i> View demo</a>
                 			</div>
-							<h5> BBusiness summary view url for skipso </h5>
+							<h5> Business summary view url for skipso </h5>
 							
 						</div>
 					</div>
