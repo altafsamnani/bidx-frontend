@@ -19,6 +19,8 @@
     ,   notifier
 
     ,   changesQueue    = [] // array holding app names that have pending changes
+
+    ,   $frmLoginModal  = $( "#frmLoginModal" )
     ;
 
     // Add something to the list of apps having a reason to ask the user for confirmation on page unload
@@ -594,7 +596,7 @@
         {
             text:           msg
         ,   type:           "success"
-        ,   timeout:        4000
+        ,   timeout:        500
         } );
     };
 
@@ -618,6 +620,61 @@
             ]
         } );
     };
+
+    // Perform an API call to re-login
+    //
+    function modalLogin( params )
+    {
+        if ( bidx.utils.getValue( bidxConfig, "authenticated" ))
+        {
+            bidx.utils.log( "already logged in" );
+            return;
+        }
+
+        bidx.api.call(
+            "auth.login"
+        ,   {
+                data:       $frmLoginModal.find(":input:not(.ignore)").serialize()
+
+            ,   success: function( response, textStatus, jqXHR )
+                {
+                    if ( response )
+                    {
+                        if ( response.status === 'OK' )
+                        {
+                            if (response.redirect)
+                            {
+
+                                document.location=response.redirect;
+                            }
+                        }
+                        else if ( response.status === "ERROR")
+                        {
+                            $frmLoginModal.find( ".error-separate" ).text( response.text).show();
+
+                            params.error( jqXHR );
+                        }
+                    }
+                     // response 0 means user is still logged into WP
+                    else
+                    {
+                        if ( response === 0 )
+                        {
+                            $frmLoginModal.find( ".error-separate" ).text( "Please log out of Wordpress administrator").show();
+                        }
+                        params.error( jqXHR );
+                    }
+                }
+
+            ,   error:  function( jqXhr )
+                {
+
+                    params.error( "Error", jqXhr );
+                }
+            }
+        );
+    }
+
 
     // Make sure the i18n translations for the general form validations are available so we
     // do not have to redefine them everywhere. Only app specific form validations are then
@@ -1022,6 +1079,8 @@
 
         // DEV API - do not use these in code!
     ,   _notify:                        _notify
+
+    ,   modalLogin:                     modalLogin
     };
 
     // Control Bootstraps' tab control from outside of the tab header

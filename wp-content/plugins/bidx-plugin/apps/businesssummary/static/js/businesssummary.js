@@ -30,6 +30,7 @@
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
+    ,   $loginModal                 = $element.find( ".loginModal" )
     
     ,   forms                       =
         {
@@ -2097,6 +2098,11 @@
         //
         var anyInvalid = false;
 
+        if ( bidxConfig.authenticated === false )
+        {
+            bidx.utils.log('Not logged in');
+        }
+
         $.each( forms, function( name, form )
         {
             if ( !form.$el.valid() )
@@ -2136,6 +2142,11 @@
                 {
                     bidx.utils.error( "problem parsing error response from businessSummary save" );
                 }
+
+                // if ( jqXhr.status === 401 )
+                // {
+                //     $loginModal.modal();  
+                // }
 
                 bidx.common.notifyError( "Something went wrong during save: " + response );
 
