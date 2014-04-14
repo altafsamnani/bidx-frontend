@@ -171,7 +171,7 @@ class BidxCommon
         }
     }
 
-    
+
 
     /**
      * Process Entities and store it in session variable
@@ -187,7 +187,7 @@ class BidxCommon
         }
 
         $this::$bidxSession[$subDomain] = $sessionVars;
-        $this::$staticSession = $sessionVars;       
+        $this::$staticSession = $sessionVars;
 
 
     }
@@ -202,6 +202,7 @@ class BidxCommon
     {
         if (!empty ($this::$bidxSession[$subDomain]->data)) {
             $entities = $this::$bidxSession[$subDomain]->data->entities;
+
             foreach ($entities as $key => $value) {
 
                 // New API has wrapped all it's data into a 'bidxMeta' block
@@ -211,7 +212,12 @@ class BidxCommon
 
                 $bidxEntityType = $meta->bidxEntityType;
                 $bidxEntityValue = $meta->bidxEntityId;
-                $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
+
+                if($bidxEntityType == 'bidxBusinessSummary') {
+                    $this::$bidxSession[$subDomain]->data->wp->entities->bidxBusinessSummary[$bidxEntityValue] = $bidxEntityValue;
+                } else {
+                    $this::$bidxSession[$subDomain]->data->wp->entities->$bidxEntityType = $bidxEntityValue;
+                }
             }
         }
         return;
