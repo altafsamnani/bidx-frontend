@@ -10,7 +10,7 @@ class mentor
 {
 
     static $deps = array ('bidx-tagsinput', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods');
+      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-chosen');
 
 
 
@@ -35,70 +35,30 @@ class mentor
 
         switch ($command) {
 
-            case 'entrepreneur' :
-                wp_register_script ('mentor', plugins_url ('static/js/entrepreneur-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);
+            case 'dashboard' :
+                
 
                 $sessionSvc = new SessionService( );
                 $mentorProfile = $sessionSvc->isHavingProfile ('bidxMentorProfile');
-                $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
+               
+                /*************** Mentor **********************/
+                if ($mentorProfile ) {
 
-                if ($mentorProfile || true) {
+                    wp_register_script ('mentor-mentordashboard', plugins_url ('static/js/mentor-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);                    
 
-                    $mentorDashboard = get_option ('mentor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
-                    $view->startingPage = 0;
-                    if ($mentorDashboard) {
-                        ($mentorDashboard != 2 ) ? update_option ('mentor-startingpage', 0) : $view->startingPage = $mentorDashboard;
-                    }
+                } 
 
-                    $template = 'mentor/dashboard.phtml';
-                } else {
-                    $view->return_404 ();
-                }
+                /*************** Entrpreneur *****************/
+                $mentorEntrpreneurProfile = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
+                
+                if ($mentorEntrpreneurProfile ) {
 
-                break;
+                    wp_register_script ('mentor-mentordashboard', plugins_url ('static/js/mentor-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);                    
+                    wp_register_script ('mentor', plugins_url ('static/js/entrepreneur-mentordashboard.js', __FILE__), array('mentor-mentordashboard'), '20140307', TRUE);                    
+                   
+                } 
 
-            case 'groupowner' :
-                wp_register_script ('mentor', plugins_url ('static/js/groupowner-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);
-
-                $sessionSvc = new SessionService( );
-                $mentorProfile = $sessionSvc->isHavingProfile ('bidxMentorProfile');
-                $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
-
-                if ($mentorProfile || true) {
-
-                    $mentorDashboard = get_option ('mentor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
-                    $view->startingPage = 0;
-                    if ($mentorDashboard) {
-                        ($mentorDashboard != 2 ) ? update_option ('mentor-startingpage', 0) : $view->startingPage = $mentorDashboard;
-                    }
-
-                    $template = 'mentor/dashboard.phtml';
-                } else {
-                    $view->return_404 ();
-                }
-
-                break;
-
-            case 'mentor' :
-                wp_register_script ('mentor', plugins_url ('static/js/mentor-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);
-
-                $sessionSvc = new SessionService( );
-                $mentorProfile = $sessionSvc->isHavingProfile ('bidxMentorProfile');
-                $view->groupOwnersIdsArr = $sessionSvc->getGroupOwnerIds ();
-
-                if ($mentorProfile || true) {
-
-                    $mentorDashboard = get_option ('mentor-startingpage', 1); // Getting investor dashboard option not show help page or not 0 - dashboard page 1 - help page default 2- select as starting page option
-                    $view->startingPage = 0;
-                    if ($mentorDashboard) {
-                        ($mentorDashboard != 2 ) ? update_option ('mentor-startingpage', 0) : $view->startingPage = $mentorDashboard;
-                    }
-
-                    $template = 'mentor/dashboard.phtml';
-
-                } else {
-                    $view->return_404 ();
-                }
+                $template = 'dashboard/dashboard.phtml' ;
 
                 break;
 

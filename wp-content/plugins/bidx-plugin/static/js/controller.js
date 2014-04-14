@@ -598,6 +598,19 @@
                 ,   params:   _deparamSplat( splat )
                 }
             );
+
+            if( state === 'mentor' )
+            {
+
+                _navigateToApp
+                (
+                    "ementordashboard"
+                ,   {
+                        state:    state
+                    ,   params:   _deparamSplat( splat )
+                    }
+                );
+            }
         }
      ,  monitoring:               function( state, splat )
         {

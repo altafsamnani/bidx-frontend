@@ -22,39 +22,61 @@
             </div>
         </div>
     </div>
-    <div class="modalView modalConfirmMentoringRequest">
+    <div class="modalView modalNobusinesssummary">
                 <!-- Modal -->
         <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                  <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel"><?php _e ('Send request') ?></h3>
+                        <h3 id="myModalLabel"><?php _e ('Create business summary') ?></h3>
                     </div>
                     <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label><?php _e('What advice do you need ?','bidxplugin'); ?></label>
-                                    <textarea name="summary" class="form-control" placeholder="<?php _e('Please tell mentor what advice do you need ? (min. 300 characters)','bidxplugin'); ?>" ></textarea>
+                        <p>
+                            <?php _e ('Currently there are no business summaries, please create one before you ask for mentoring') ?>
+                        </p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <a href="#" class="btn btn-primary" data-href="#mentoringRequest/cancelRequest" ><?php _e ('Ok') ?></a>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modalView modalConfirmMentoringRequest">
+                <!-- Modal -->
+        <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="btn btnRequestCancel pull-right" href="#mentoringRequest/cancelRequest">
+                            <button type="button" class="close">×</button>
+                        </a>
+                        <h3 id="myModalLabel"><?php _e ('Request mentoring') ?></h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="frmrequestMentor">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label><?php _e('What advice do you need ?','bidxplugin'); ?></label>
+                                        <textarea name="summary" class="form-control" placeholder="<?php _e('Please tell mentor what advice do you need ? (min. 300 characters)','bidxplugin'); ?>" ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><?php _e('Which expertise do you need?','bidxplugin'); ?></label>
+                                         <select class= "chosen-industry" name="mentoringIndustry" multiple></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><?php _e('For which of your businesses?','bidxplugin'); ?></label>
+                                         <select name="businessSummary"></select>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label><?php _e('Which expertise do you need?','bidxplugin'); ?></label>
-                                     <select class= "chosen-industry" name="mentoringIndustry" multiple></select>
-                                </div>
-                                <div class="form-group">
-                                    <label><?php _e('For which of your businesses?','bidxplugin'); ?></label>
-
-                                </div>
-
                             </div>
-                        </div>
-
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <a class="btn" href="#mentoringRequest/cancelRequest"><?php _e ('Cancel') ?></a>
-                        <a href="#" class="btn btn-primary" data-href="#mentoringRequest/sendRequest/" ><?php _e ('Send request') ?></a>
+                        <a class="btn btnRequestCancel" href="#mentoringRequest/cancelRequest"><?php _e ('Cancel') ?></a>
+                        <a class="btn btn-primary btnRequestSubmit"  ><?php _e ('Send request') ?></a> <!-- data-href="#mentoringRequest/sendRequest/" -->
                     </div>
                  </div>
             </div>

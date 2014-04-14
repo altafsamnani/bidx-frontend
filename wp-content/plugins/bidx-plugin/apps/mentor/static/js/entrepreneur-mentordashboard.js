@@ -1,260 +1,20 @@
 ;( function ( $ )
 {
     "use strict";
-    var $mainElement         = $("#mentor-dashboard")
-     ,  $mainViews           = $mainElement.find(".view")
-    ,   $mainModals          = $mainElement.find(".modalView")
+    var $mainElement      = $("#mentor-dashboard")
+     ,  $mainViews        = $mainElement.find(".view")
+    ,   $mainModals       = $mainElement.find(".modalView")
     ,   $mainModal
-    ,   $editForm            = $mainElement.find( ".frmsendFeedback" )
-    ,   $feedbackDropDown    = $mainElement.find( "[name='feedbackpurpose']" )
 
 
-    ,   $element             = $mainElement.find(".mentor-mentordashboard")
-    ,   $views               = $element.find(".view")
-    ,   bidx                 = window.bidx
-    ,   $modals              = $element.find(".modalView")
+    ,   $element          = $mainElement.find(".entrepreneur-mentordashboard")
+    ,   $views            = $element.find(".view")
+    ,   bidx              = window.bidx
+    ,   $modals           = $element.find(".modalView")
     ,   $modal
-    ,   currentGroupId       = bidx.common.getCurrentGroupId( "currentGroup ")
-    ,   currentUserId        = bidx.common.getCurrentUserId( "id" )
-    ,   appName              = 'mentor-mentordashboard'
-
-    
-    
-
-    ,   listDropdownFeedback =  {
-                                    "0":"General"
-                                ,   "1":"General overview section"
-                                ,   "2":"About the business section"
-                                ,   "4":"About the team section"
-                                ,   "5":"Financial section"
-                                ,   "6":"Company section"
-                                ,   "7":"Document section"
-                                }
+    ,   currentGroupId    = bidx.common.getCurrentGroupId( "currentGroup ")
+    ,   currentUserId     = bidx.common.getCurrentUserId( "id" )
     ;
-
-    function _oneTimeSetup()
-    {
-        var option
-        ,   listArrItems = []
-        ,   $options
-        ;
-
-        //  disabled links
-        //
-        $element.delegate( "a.disabled", "click", function( e )
-        {
-            e.preventDefault();
-        } );
-
-        // Populate the selects
-        //
-
-       /* $feedbackDropDown.bidx_chosen(
-        {
-            dataKey:            "feedback"
-        });
-
-        $feedbackDropDown.trigger( "chosen:updated" );*/
-
-       /*******
-        Add Dropdown Options for Recipients , Prepare dropdown
-        *******/
-        $options = $feedbackDropDown.find( "option" );
-
-        if(listDropdownFeedback) {
-        
-            $.each( listDropdownFeedback, function( idx, bpIdx )
-            {
-                option = $( "<option/>",
-                {
-                    value: bpIdx
-                } );
-                option.text( bpIdx );
-
-                listArrItems.push( option );
-            } );
-        }
-      
-        // add the options to the select
-        $feedbackDropDown.append( listArrItems );
-
-        // init bidx_chosen plugin
-        $feedbackDropDown.bidx_chosen();
-    }
-
-    function _initAddFeedback( options )
-    {
-        var $btnSave    = $mainElement.find('.btn-feedback-submit')
-        ,   $btnCancel  = $mainElement.find('.btn-feedback-cancel')
-        ;
-
-        // Wire the submit button which can be anywhere in the DOM
-        //
-        $btnSave.click( function( e )
-        {
-            e.preventDefault();
-
-            $editForm.submit();
-        } );
-
-        // Setup form
-        //
-        var $validator = $editForm.validate(
-        {
-            debug: true
-        ,   ignore: ".chosen-search input"
-        ,   rules:
-            {
-                "feedback":
-                {
-                    required:               true
-                }
-            }
-        ,   submitHandler: function( e )
-            {
-                if ( $btnSave.hasClass( "disabled" ) )
-                {
-                    return;
-                }
-
-                $btnSave.addClass( "disabled" );
-                $btnCancel.addClass( "disabled" );
-
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-               
-                _showMainModal(
-                {
-                    view  : "confirmFeedback"
-                ,   params: options.params
-                ,   onShow: function() // Changing hash on change because its onclick event so chagne feedback link will be pointing to current hash so need to change that
-                    {
-                        window.bidx.controller.updateHash("#dashboard/mentor", false, false);
-                    }
-                ,   onHide: function()
-                    {
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
-                    }
-                } );
-            }
-        } );
-    }
-
-    // this function prepares the message package for the API to accept
-    //
-    function _prepareFeedback( options )
-    {
-        /*
-            API expected format
-            {
-                "userIds": ["number"]
-            ,   "subject": "string"
-            ,   "content": "string"
-            }
-        */
-
-        var option
-        ,   contentFeedback
-        ,   params = options.params
-        ,   subject
-        ,   userArrItems = []
-        ,   message = {} // clear message because it can still hold the reply content
-        ;
-
-        subject         = 'Feedback on ' +  bidx.utils.getElementValue( $feedbackDropDown );
-        contentFeedback = bidx.utils.getElementValue( $editForm.find( "[name=feedback]" ) );
-        userArrItems.push( params.requesterId );
-
-       
-        bidx.utils.setValue( message, "userIds", userArrItems );
-        bidx.utils.setValue( message, "subject", subject );
-        bidx.utils.setValue( message, "content", contentFeedback);
-
-        return message;
-
-
-    }
-
-
-    // actual sending of message to API
-    //
-    function _doSendFeedback( options )
-    {
-        //var key = "sendingMessage";
-
-        
-       
-        var message = _prepareFeedback( options );
-
-        if ( !message )
-        {
-            return;
-        }
-
-        var extraUrlParameters =
-        [
-            {
-                label :     "mailType",
-                value :     "PLATFORM"
-            }
-        ];
-
-        bidx.api.call(
-            "mailboxMail.send"
-        ,   {
-                groupDomain:              bidx.common.groupDomain
-            ,   extraUrlParameters:       extraUrlParameters
-            ,   data:                     message
-
-            ,   success: function( response )
-                {
-
-                    bidx.utils.log( "[feedback] Feedback send", response );
-                    //var key = "messageSent";
-
-                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "feedbackSent", appName ) );
-
-                    if (options && options.callback)
-                    {
-                        options.callback();
-                    }
-
-                    bidx.controller.updateHash( "#dashboard/mentor", true, false );
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong while sending the feedback: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while sending the feedback: " + response.text );
-                    }
-
-                    if (options && options.callback)
-                    {
-                        options.callback();
-                    }
-
-                }
-            }
-        );
-
-    }
 
     // this function mutates the relationship between two contacts. Possible mutations for relationship: action=[ignore / accept]
     //
@@ -360,12 +120,6 @@
                 ,   action:          "stop"
                 };
 
-                /* 1 Add Feedback */
-
-                $listItem.find( ".btn-bidx-add-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/addFeedback/" +$.param( params ) )
-                ;
-
                 /* 3 Contact Entrepreneur */
                 $listItem.find( ".btn-bidx-contact")
                     .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
@@ -438,6 +192,7 @@
                 ;
 
             }
+
         ,   renew:   function(  $listItem, item )
             {
 
@@ -472,6 +227,7 @@
                 ;
 
             }
+
         ,   ended:   function(  $listItem, item )
             {
 
@@ -507,9 +263,9 @@
 
     function respondRequest( options )
     {
-        var snippit          = $("#mentor-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit          = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty       = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData       = $("#mentor-respond-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData       = $("#entrepreneur-respond-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response         = options.response
         ,   incomingResponse = response.relationshipType.mentor.types.incoming
         ,   $list            = $element.find("." + options.list)
@@ -566,9 +322,9 @@
 
     function waitingRequest( options )
     {
-        var snippit         = $("#mentor-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData      = $("#mentor-wait-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData      = $("#entrepreneur-wait-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   waitingResponse = response.relationshipType.mentor.types.pending
         ,   $list           = $element.find("." + options.list)
@@ -627,9 +383,9 @@
 
     function ongoingRequest( options )
     {
-        var snippit         = $("#mentor-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData      = $("#mentor-ongoing-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData      = $("#entrepreneur-ongoing-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   ongoingResponse = response.relationshipType.mentor.types.active
         ,   $list           = $element.find("." + options.list)
@@ -684,12 +440,12 @@
             $list.append($listEmpty);
         }
     }
-    
+
     function renewRequest( options )
     {
-        var snippit         = $("#mentor-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData      = $("#mentor-renew-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData      = $("#entrepreneur-renew-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   renewResponse   = response.relationshipType.mentor.types.active
         ,   $list           = $element.find("." + options.list)
@@ -747,9 +503,9 @@
 
     function endedRequest( options )
     {
-        var snippit         = $("#mentor-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData      = $("#mentor-ended-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData      = $("#entrepreneur-ended-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   endedResponse   = response.relationshipType.mentor.types.active
         ,   $list           = $element.find("." + options.list)
@@ -873,7 +629,6 @@
                             cb       : _getContactsCallback( 'ended' )
 
                         } );
-
                     }
 
                     //  execute callback if provided
@@ -893,9 +648,6 @@
             }
         );
     };
-
-
-    
 
     //  ################################## MODAL #####################################  \\    
 
@@ -935,12 +687,7 @@
         if( options.onHide )
         {
             //  to prevent duplicate attachments bind event only onces
-            $modal.on( 'hidden.bs.modal', options.onHide );
-        }
-        if( options.onShow )
-        {
-
-            $modal.on( 'show.bs.modal' ,options.onShow );
+            $modal.one( 'hidden.bs.modal', options.onHide );
         }
     }
 
@@ -1013,8 +760,12 @@
         bidx.utils.log("[dashboard] show modal", options );
 
         $mainModal        = $mainModals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
-    
-        $mainModal.find( ".btn-primary[href], .btn-cancel[href]" ).each( function()
+        replacedModal = $mainModal.html()
+                        .replace( /%action%/g, action );
+
+        $mainModal.html(  replacedModal );
+
+        $mainModal.find( ".btn-primary[href]" ).each( function()
         {
             var $this = $( this );
 
@@ -1023,21 +774,13 @@
             $this.attr( "href", href );
         } );
 
+        $mainModal.modal( {} );
 
         if( options.onHide )
         {
             //  to prevent duplicate attachments bind event only onces
-            $mainModal.on( 'hidden.bs.modal', options.onHide );
+            $mainModal.one( 'hidden.bs.modal', options.onHide );
         }
-
-        if( options.onShow )
-        {
-
-            $mainModal.on( 'show.bs.modal' ,options.onShow );
-        }
-
-        $mainModal.modal( {} );
-
     }
 
     //  closing of modal view state
@@ -1080,18 +823,6 @@
         _showMainView( "error" , true);
     }
 
-     // Private functions
-    //
-    function _showMainSuccessMsg( msg , hideview )
-    {
-        if( hideview ) {
-            $mainViews.filter(bidx.utils.getViewName(hideview)).hide();
-        }
-
-        $mainViews.filter( ".viewMainsuccess" ).find( ".successMsg" ).text( msg );
-        _showMainView( "mainsuccess" );
-    }
-
     // ROUTER
 
 
@@ -1124,10 +855,6 @@
                     unbindHide: true
                 } );
 
-                 _closeMainModal(
-                {
-                    unbindHide: true
-                } );
 
                 _menuActivateWithTitle(".Dashboard","My mentor dashboard");
                 _showView("loadrespond");
@@ -1147,6 +874,7 @@
                         _showHideView("ongoing", "loadongoing");
                         _showHideView("renew",   "loadrenew");
                         _showHideView("ended",   "loadended");
+
 
                     }
                 } );
@@ -1198,110 +926,13 @@
 
                     }
                 } );
-                break;
-
-            case "addFeedback" :
-                var $feedbackBtn = $mainElement.find( '.btn-feedback-submit' );
-               
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-
-                _initAddFeedback(
-                    {
-                        params: options.params
-                    /*,   success: function()
-                        {
-                            //$feedbackDropDownBtn.addClass('disabled').i18nText("btnRequestSent");
-                            _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
-                            window.bidx.controller.updateHash("#cancel");
-
-                            _closeModal(
-                            {
-                                unbindHide: true
-                            } );
-                        }
-                    ,   error: function()
-                        {
-                            $feedbackDropDownBtn.removeClass('disabled').i18nText('btnTryAgain');
-                            window.bidx.controller.updateHash("#cancel");
-                            _closeModal(
-                            {
-                                unbindHide: true
-                            } );
-                        }*/
-                    } );
-
-
-                _showMainModal(
-                {
-                    view  : "sendFeedback"
-                ,   params: options.params
-                /*,   onHide: function()
-                    {
-                        window.bidx.controller.updateHash("#dashboard/mentor", false, false);
-                    }*/
-                ,   onShow: function()
-                    {
-                       //_oneTimeSetup();
-
-
-                    }
-
-                } );
-
 
                 break;
-
-                case "sendFeedback" :
-
-                var $btnSave    = $mainElement.find('.btn-feedback-submit')
-                ,   $btnCancel  = $mainElement.find('.btn-feedback-cancel')
-                ;
-
-                
-                
-                _doSendFeedback(
-                {
-                    params: options.params
-                ,   callback: function()
-                    {
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
-                                            
-                    }
-                } );
-
-                break;
-
-                case 'confirmFeedback' :
-              
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-
-                _showMainModal(
-                {
-                    view  : "confirmFeedback"
-                ,   params: options.params
-                /*,   onHide: function()
-                    {
-                        window.bidx.controller.updateHash("#dashboard/mentor", false, false);
-                    }*/
-                } );    
-
-                break;
-
-
          }
     };
 
-    _oneTimeSetup();
-
     //expose
-    var dashboard =
+    var mentordashboard =
             {
                 navigate: navigate
               , $element: $element
@@ -1313,7 +944,7 @@
         window.bidx = {};
     }
 
-    window.bidx.dashboard = dashboard;
+    window.bidx.ementordashboard = mentordashboard;
 
     //Initialize Handlers
     //_initHandlers();

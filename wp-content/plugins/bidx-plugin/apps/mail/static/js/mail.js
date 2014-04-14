@@ -1944,9 +1944,7 @@
                                 {
                                     sortIndex:  sortIndex
                                 ,   contacts:   contacts
-                                };
-
-                                // bidx.utils.log("[altaf]",result);
+                                };                               
 
                             }
                             else

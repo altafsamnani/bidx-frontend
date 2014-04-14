@@ -1,0 +1,244 @@
+<!-- Help -->
+<div class="entrepreneur-mentordashboard">   
+    <div class="panel panel-default panel-open">
+        <div class="panel-heading">
+            <a class="btn-block" data-toggle="collapse" data-parent="#entrepreneurDashboardAccordion" href="#entrepreneurDashboardAccordion-Respond"><span class="fa fa-chevron-right accordion-state-icon"></span> Entrepreneur's mentoring activities</a>
+        </div>
+        <div id="entrepreneurDashboardAccordion-Respond" class="panel-collapse collapse in">
+            <div class="panel-body">  
+                <h3>Respond to a mentoring request</h3>
+                <!-- ********Mentoring Respond Request********* -->
+                <div class="view viewLoadrespond alert alert-info text-center">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <?php _e ('Loading mentoring respond requests...', 'bidxplugin') ?>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped view viewRespond">
+                    <thead>
+                        <tr>
+                            <th>Mentor</th>
+                            <th class="hidden-xs">Business</th>                            
+                            <th>Status</th>
+                            <th class="hidden-xs">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="respond mentor-respond">
+
+                    </tbody>
+                </table>  
+                <h3>Waiting a mentoring approval</h3>
+                <!-- ********Mentoring Waiting Request********* -->
+                <div class="view viewLoadwait alert alert-info text-center">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <?php _e ('Loading mentoring waiting requests...', 'bidxplugin') ?>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped view viewWait">
+                    <thead>
+                        <tr>                            
+                            <th>Mentor</th>
+                            <th class="hidden-xs">Business</th>
+                            <th>Status</th>
+                            <th class="hidden-xs">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="wait mentor-wait">
+
+                    </tbody>
+                </table>
+                <h3>Ongoing mentoring</h3>
+                 <!-- ********Mentoring Ongoing Request********* -->
+                <div class="view viewLoadongoing alert alert-info text-center">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <?php _e ('Loading mentoring ongoing requests...', 'bidxplugin') ?>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped view viewOngoing">
+                    <thead>
+                        <tr>                            
+                            <th>Mentor</th>
+                            <th class="hidden-xs">Business</th>
+                            <th>Status</th>
+                            <th class="hidden-xs">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="ongoing mentor-ongoing">
+
+                    </tbody>
+                </table>
+                <h3>Renew a mentoring</h3>
+                 <!-- ********Mentoring Renew Request********* -->
+                <div class="view viewLoadrenew alert alert-info text-center">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <?php _e ('Loading mentoring renew requests...', 'bidxplugin') ?>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped view viewRenew">
+                    <thead>
+                        <tr>                            
+                            <th>Mentor</th>
+                            <th class="hidden-xs">Business</th>
+                            <th>Status</th>
+                            <th class="hidden-xs">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="renew mentor-renew">
+
+                    </tbody>
+                </table>
+
+                 <h3>Display the ended mentoring sessions</h3>
+                 <!-- ********Mentoring Renew Request********* -->
+                <div class="view viewLoadended alert alert-info text-center">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <?php _e ('Loading the ended mentoring sessions...', 'bidxplugin') ?>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped view viewEnded">
+                    <thead>
+                        <tr>                            
+                            <th>Entrepreneur</th>
+                            <th class="hidden-xs">Business</th>
+                            <th>Status</th>
+                            <th class="hidden-xs">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="ended mentor-ended">
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="entrepreneur-activities">
+    <!--
+    <tr>
+   <td>
+      <a data-toggle="collapse" data-target="#%accordion-id%" class="btn-block">
+      <span class="placeholder name_s">%name_s%</span>
+      </a>
+   </td>
+   <td>
+      <span class="placeholder creator"><a target = "_blank" href="/member/%creatorId%" >%creator%</a></span>
+   </td>
+   <td class="hidden-xs">
+      <span class="placeholder status">%status%</span>
+   </td>
+   <td class="hidden-xs">
+      <span class="placeholder actions">%action%</span>
+   </td>
+</tr>
+<tr class="list detail-list" >
+   <td colspan="5" class="detailRow">
+      <div class="panel-collapse collapse" id="%accordion-id%">
+      <div class="row">
+            <div class="col-sm-3">
+                <span class="placeholder js-companylogo companylogodoc_url"><img src="%companylogodoc_url%"/></span>
+            </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Business proposal</label>
+                    <div class="placeholder name_s"><a target = "_blank" href="/businesssummary/%entityid_l%">%name_s%</a></div>
+                </div>
+                <div class="col-sm-6">
+                     <label>Entrepreneur</label>
+                     <div class="placeholder creator"><a target = "_blank" href="/member/%creatorId%">%creator%</a></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Industry</label>
+                    <div class="placeholder industrylabel_ss">%industrylabel_ss%</div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Product</label>
+                    <div class="placeholder productservicelabel_ss">%productservicelabel_ss%</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Country</label>
+                    <div class="placeholder countrylabel_ss">%countrylabel_ss%</div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Investment needed</label>
+                    <div class="placeholder financingneeded_d">%financingneeded_d%</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Business stage</label>
+                    <div class="placeholder stagebusinesslabel_s">%stagebusinesslabel_s%</div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Environmental Impact</label>
+                    <div class="placeholder envimpactlabel_ss">%envimpactlabel_ss%</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-6">
+                    <div class="pull-right">
+                        <span class="placeholder entityid_l"><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%entityid_l%">View Proposal</a> </span>
+                    </div>
+                </div>
+            </div>
+         </div>
+      </div>
+      </div>
+   </td>
+</tr>
+-->
+</script>
+
+<script type="text/html" id="entrepreneur-respond-action">
+<!--
+<a href="#" class="btn-bidx-accept">Accept</a>|
+<a href="#" class="btn-bidx-ignore">Ignore</a>|
+<a href="#" class="btn-bidx-contact">Contact mentor</a>
+-->
+</script>
+<script type="text/html" id="entrepreneur-wait-action">
+<!--
+<a href="#" class="btn-bidx-reminder">Send a reminder</a>|
+<a href="#" class="btn-bidx-contact">Contact mentor</a>|
+<a href="#" class="btn-bidx-cancel">Cancel request</a>
+-->
+</script>
+<script type="text/html" id="entrepreneur-ongoing-action">
+<!--
+<a href="#" class="btn-bidx-add-feedback">Add feedback</a>|
+<a href="#" class="btn-bidx-view-feedback">View feedback</a>|
+<a href="#" class="btn-bidx-contact">Contact mentor</a>|
+<a href="#" class="btn-bidx-stop">Stop mentoring</a>
+-->
+</script>
+<script type="text/html" id="entrepreneur-renew-action">
+<!--
+<a href="#" class="btn-bidx-view-feedback">View feedback</a>|
+<a href="#" class="btn-bidx-contact">Contact mentor</a>|
+<a href="#" class="btn-bidx-renew">Renew request</a>|
+<a href="#" class="btn-bidx-stop">Stop mentoring</a>
+-->
+</script>
+<script type="text/html" id="entrepreneur-ended-action">
+<!--
+<a href="#" class="btn-bidx-view-feedback">View feedback</a>|
+<a href="#" class="btn-bidx-contact">Contact entrepreneur</a>|
+<a href="#" class="btn-bidx-delete">Delete from dashboard</a>
+-->
+</script>
+    

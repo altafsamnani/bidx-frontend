@@ -6,13 +6,14 @@
     //
     $profiles = array(
         'bidxInvestorProfile'        => array(
-            'Investor Dashboard' => '/investor-dashboard'
+            'Investor Dashboard'     => '/investor-dashboard'
         ),
-        'bidxEntrepreneurProfile'   => array(
+        'bidxEntrepreneurProfile'    => array(
             'Entrepreneur Dashboard' => '/entrepreneur-dashboard'
+        ,   'Mentor Dashboard'       => '/mentordashboard'    
         ),
-        'bidxMentorProfile'   => array(
-            'Mentor Dashboard' => '/m-mentordashboard'
+        'bidxMentorProfile'          => array(
+            'Mentor Dashboard'       => '/mentordashboard'
         )
     );
 
@@ -20,13 +21,18 @@
 
     // check for each profile if it exists in the members entities
     //
-    foreach (  $profiles as $profilekey => $profilevalue ) {
+    foreach (  $profiles as $profilekey => $profilevalue ) 
+    {
 
         // check if current profile is existent, if not remove it from the array
         //
         if ( !$sessionSvc->isHavingProfile( $profilekey ) ) {
             unset( $profiles[ $profilekey ] );
         }
+
+        if( $sessionSvc->isHavingProfile( 'bidxEntrepreneurProfile' ) ) {
+            unset( $profiles[ 'bidxMentorProfile' ] );
+        }        
     }
 
     // get the groups for his user
@@ -69,13 +75,13 @@
                 <ul class="dropdown-menu bg-primary-dark">
 <?php
                     foreach ( $profiles as $profilekey => $profilevalue ) {
+                        foreach($profilevalue as $menuName => $menuLink) {
                         // fetch the key value for printing as text in the hyperlink
                         //
-                        $key = array_keys($profilevalue);
-                        $key = $key[0];
+                        
 ?>
-                        <li><a href="<?php echo $profilevalue[ $key ] ?>"><?php _e( $key, 'bidxplugin' ); ?></a></li>
-<?php
+                        <li><a href="<?php echo $menuLink ?>"><?php _e( $menuName, 'bidxplugin' ); ?></a></li>
+<?php                   }
                     }
                     if ( $isAdmin ) {
 ?>

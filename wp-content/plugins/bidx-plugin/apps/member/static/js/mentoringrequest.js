@@ -4,7 +4,7 @@
 
     var $element                            = $( "#mentoringRequest" )
     ,   $views                              = $element.find( ".view" )
-    ,   $editForm                           = $views.filter( ".viewEdit" ).find( "form" )
+    ,   $editForm                           = $element.find( ".frmrequestMentor" )
     ,   $snippets                           = $element.find( ".snippets" )
 
 
@@ -16,6 +16,9 @@
 
 
     ,   $focusIndustry                      = $element.find( "[name='mentoringIndustry']" )
+    ,   $businessSummary                    = $element.find( "[name='businessSummary']" )
+
+    ,   listDropdownBp                      = bidx.utils.getValue( bidxConfig, "session.wp.entities.bidxBusinessSummary" )
 
     ,   member
     ,   memberId
@@ -34,7 +37,6 @@
 
         var uriStatus
         ,   params  = options.params
-        ,   bpClass = '.bp-' + options.params.businessid
         ;
 
          //uriStatus = document.location.href.split( "#" ).shift() + "?smsg=8&sparam=" + window.btoa('action=sent') ;
@@ -93,8 +95,11 @@
                         bidx.utils.error( "Internal Server error occured", response );
                         _showMainError( bidx.i18n.i("errorRequest") + response.text);
                     }
-
-                    $elementMyprofile.find( bpClass ).removeClass('disabled').i18nText('btnTryAgain');
+                  
+                    if (options && options.error)
+                    {
+                        options.error();
+                    }
 
                 }
             }
@@ -115,9 +120,12 @@
     //
     function _oneTimeSetup()
     {
+        var option
+        ,   listArrItems = []
+        ,   $options
+        ;
 
-
-        // Disable disabled links
+        //  disabled links
         //
         $element.delegate( "a.disabled", "click", function( e )
         {
@@ -133,13 +141,33 @@
         });
 
         $focusIndustry.trigger( "chosen:updated" );
+
+       /*******
+        Add Dropdown Options for Recipients , Prepare dropdown
+        *******/
+        $options = $businessSummary.find( "option" );
+
+        if(listDropdownBp) {
+        
+            $.each( listDropdownBp, function( idx, bpIdx )
+            {
+                option = $( "<option/>",
+                {
+                    value: bpIdx
+                } );
+                option.text( bpIdx );
+
+                listArrItems.push( option );
+            } );
+        }
+        // add the options to the select
+        $businessSummary.append( listArrItems );
+
+        // init bidx_chosen plugin
+        $businessSummary.bidx_chosen();
     }
 
-
-
-
     // Use the retrieved member object to populate the form and other screen elements
-    //
     function _populateScreen()
     {
         $.each( fields._root, function( i, f )
@@ -182,16 +210,12 @@
 
     // This is the startpoint
     //
-    function _init()
+    function _initMentorRequest( options )
     {
-        var $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    })
-        ,   $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#cancel"  })
+        var $btnSave    = $element.find('.btnRequestSubmit')
+        ,   $btnCancel  = $element.find('.btnRequestCancel')
+        ,   btnHtml
         ;
-
-        $btnSave.i18nText( "btnSaveProfile" );
-        $btnCancel.i18nText( "btnCancel" );
-
-        bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 
         // Wire the submit button which can be anywhere in the DOM
         //
@@ -207,24 +231,21 @@
         var $validator = $editForm.validate(
         {
             debug: true
-        ,   ignore: ".chosen-search input, .search-field input"
+        ,   ignore: ".chosen-search input"
         ,   rules:
             {
                 "summary":
                 {
                     required:               true
                 }
-            ,   "focusIndustry":
+            ,   "businessSummary":
                 {
                     required:               true
                 }
             }
         ,   messages:
             {
-                // Anything that is app specific, the general validations should have been set
-                // in common.js already
-                "preferredCommunicationAll": "Please check one of the above"
-            ,   "referencesAll": "Please fill your LinkedIn profile url or upload at least one document"
+                "businessSummary": "Please choose one of the business summary"
             }
         ,   submitHandler: function( e )
             {
@@ -233,32 +254,39 @@
                     return;
                 }
 
-                $btnSave.addClass( "disabled" );
+                btnHtml = $btnSave.text();
+                $btnSave.addClass( "disabled" ).i18nText("msgWaitForSave");
                 $btnCancel.addClass( "disabled" );
 
-                _save(
+                _doCreateMentorRequest(
                 {
-                    error: function( jqXhr )
+                    params: options.params
+                ,   callback: function()
                     {
-                        var response;
-
-                        try
-                        {
-                            // Not really needed for now, but just have it on the screen, k thx bye
-                            //
-                            response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
-                        }
-                        catch ( e )
-                        {
-                            bidx.utils.error( "problem parsing error response from mentorProfile save" );
-                        }
-
-                        bidx.common.notifyError( "Something went wrong during save: " + response );
-
                         $btnSave.removeClass( "disabled" );
                         $btnCancel.removeClass( "disabled" );
+                        $btnSave.text(btnHtml);
+
+                        if (options && options.success)
+                        {
+                            options.success();
+                        }
+                        
+
+                    }
+                ,   error: function()
+                    {
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+                        $btnSave.text(btnHtml);
+
+                        if (options && options.error)
+                        {
+                            options.error();
+                        }
                     }
                 } );
+
             }
         } );
     }
@@ -378,10 +406,11 @@
         $modal.find( ".btn-primary[href]" ).each( function()
         {
             var $this = $( this );
+            if( $this.attr( "data-href") ){
+                href = $this.attr( "data-href" ) + $.param( params ) ;
 
-            href = $this.attr( "data-href" ) + $.param( params ) ;
-
-            $this.attr( "href", href );
+                $this.attr( "href", href );
+            }
         } );
 
 
@@ -523,6 +552,10 @@
                         _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
 
                     }
+                ,   error: function()
+                    {
+                        $elementMyprofile.find( bpClass ).removeClass('disabled').i18nText('btnTryAgain');
+                    }
                 } );
 
             break;  /***** Mentor this plan End functionlaity **/
@@ -530,13 +563,49 @@
 
 
            case "confirmMentoringRequest": /***** Request mentoring this plan Start functionlaity **/
+                var $requestMentoringBtn = $elementMyprofile.find( '.btn-mentoring' );
 
                 _closeModal(
                 {
                     unbindHide: true
                 } );
 
-                if( options.params ) {
+                if( !listDropdownBp ) 
+                {
+                    _showModal(
+                    {
+                        view  : "nobusinesssummary"
+                    
+                    } );
+
+                }
+                else if( options.params )
+                {
+                    _initMentorRequest(
+                    {
+                        params: options.params
+                    ,   success: function()
+                        {
+                            $requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
+                            _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
+                            window.bidx.controller.updateHash("#cancel");
+
+                            _closeModal(
+                            {
+                                unbindHide: true
+                            } );
+                        }
+                    ,   error: function()
+                        {
+                            $requestMentoringBtn.removeClass('disabled').i18nText('btnTryAgain');
+                            window.bidx.controller.updateHash("#cancel");
+                            _closeModal(
+                            {
+                                unbindHide: true
+                            } );
+                        }
+                    } );
+                    
                     _showModal(
                     {
                         view  : "confirmMentoringRequest"
@@ -545,9 +614,11 @@
                         {
                              _oneTimeSetup();
 
+
                         }
                     } );
                 }
+                
             break;
 
         }

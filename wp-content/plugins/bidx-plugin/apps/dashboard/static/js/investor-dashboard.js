@@ -86,8 +86,7 @@
                                                             i18nItem = label;
                                                          }
                                         });
-                                       bidx.utils.log(item.businessSummary);
-
+                                      
                                         //search for placeholders in snippit
                                         listItem = snippit
                                             .replace( /%accordion-id%/g,      item.businessSummary.bidxMeta.bidxEntityId   ? item.businessSummary.bidxMeta.bidxEntityId     : emptyVal )
