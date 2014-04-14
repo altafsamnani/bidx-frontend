@@ -1556,6 +1556,8 @@
                             $btnSave.removeClass( "disabled" );
                             $btnCancel.removeClass( "disabled" );
 
+                            bidx.common.removeValidationErrors();
+
                             _showView( "edit" );
 
                             // This is a hack, for whatever unclear reason the first time the map is shown it doesn't

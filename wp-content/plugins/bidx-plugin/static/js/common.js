@@ -623,7 +623,7 @@
 
     // Perform an API call to re-login
     //
-    function modalLogin( params )
+    var modalLogin = function ( params )
     {
         if ( bidx.utils.getValue( bidxConfig, "authenticated" ))
         {
@@ -673,7 +673,7 @@
                 }
             }
         );
-    }
+    };
 
 
     // Make sure the i18n translations for the general form validations are available so we
@@ -722,7 +722,6 @@
             //bidx.utils.log("errorPlacement", $element);
             var inserted            = false
             ,   $controls
-            //,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
             ;
 
             // When handling any field, the error needs to be inserted after the control tag
@@ -730,32 +729,11 @@
             $controls = $element.closest( ".form-group" );
 
 
-            if ( $controls.length && !$element.hasClass( "noValidationErrorMessage" ))
+            if ( $controls.length && !$element.hasClass( "noValidationErrorMessage" ) )
             {
                 $controls.append( $error );
             }
 
-            // Forms can be configured to have no validation icon behind the elements
-            //
-            if ( ( !this.settings || !this.settings.noValidationIcon ) && !$element.hasClass( "noValidationIcon" ) )
-            {
-                if ( $controls.length )
-                {
-                    inserted = true;
-                }
-
-                // Didn't find a way to have the icon inserted? We insert it behind the input in the DOM
-                //
-                if ( !inserted )
-                {
-
-                    $error.insertAfter( $element );
-
-                    // NOTE $msp: I deliberately choose not to insert the errorIcon if there is no control-group or control present, because I cannot guarantee the positioning of the element
-                    //
-                    bidx.utils.warn("No \'.controls\' wrapper found on element: ", $element);
-                }
-            }
         }
 
     ,   errorElement: "div"
@@ -763,11 +741,7 @@
     ,   highlight: function( element, errorClass, validClass)
         {
             //bidx.utils.log("highlight", element);
-            var $element             = $( element )
-            ,   controlErrorClass
-            ,   controlValidClass
-
-            ;
+            var $element             = $( element );
 
             // default highlight behaviour
             //
@@ -784,9 +758,6 @@
 
             // custom addition which adds errorClass to control wrapper
             //
-            errorClass = "control-" + errorClass;
-            validClass = "control-" + validClass;
-            //$element.closest( ".controls" ).addClass( errorClass ).removeClass( validClass );
             $element.closest('.form-group').addClass('has-error');
 
             // update error count in accordion heading (if exists)
@@ -797,10 +768,7 @@
     ,   unhighlight: function( element, errorClass, validClass)
         {
             //bidx.utils.log("Unhighlight", element);
-            var $element            = $( element )
-            ,   $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
-            ,   $container
-            ;
+            var $element            = $( element );
 
             // if element is currently on pending list, step out of this function
             //
@@ -822,24 +790,8 @@
             //
             // end default unhighlight behaviour
 
-            // Forms can be configured to have no validation icon behind the elements
+            // custom addition which removes errorClass from control wrapper
             //
-            if ( ( !this.settings || !this.settings.noValidationIcon ) && !$element.hasClass( "noValidationIcon" ) )
-            {
-                // add validation-icon to control group if it is not already available
-                //
-                $container = $element.closest( ".control-group" );
-                if ( $container.length && !$container.find( ".controls" ).find( ".validation-icon" ).length )
-                {
-                    $container.find( ".controls" ).append( $errorIcon );
-                }
-            }
-
-            // custom addition which adds errorClass to control wrapper
-            //
-            errorClass = "control-" + errorClass;
-            validClass = "control-" + validClass;
-            //$element.closest( ".controls" ).removeClass( errorClass ).addClass( validClass );
             $element.closest('.form-group').removeClass('has-error');
 
             // update error count in accordion heading (if exists)
@@ -847,24 +799,11 @@
             updateAccordionHeadingErrors( element, "unhighlight" );
         }
 
-        // when element receives focus and errorPlacement has not fired, add the validation-icon in the control wrapper
+        // when element receives focus
         //
     ,   onfocusin: function( element, event )
         {
 
-/*            var $errorIcon          = $( "<div>" ).addClass( "validation-icon" )
-            ,   $element            = $( element )
-            ,   $container
-            ;
-
-            $container = $element.closest( ".control-group" );
-
-            if ( $container.length && !$container.find( ".controls" ).find( ".validation-icon" ).length )
-            {
-                $container.find( ".controls" ).append( $errorIcon );
-
-            }
-*/
         }
     } );
 
@@ -903,7 +842,6 @@
                 return;
             }
 
-
             // set Element to be counted
             //
             $element.data( "data-bidx-counted", 1 );
@@ -926,8 +864,6 @@
                 //
                 errorCount++;
                 _showErrorCount();
-
-
             }
         }
 
@@ -968,6 +904,7 @@
                 // change the errorCount value
                 //
                 $errorCount.text( errorCount );
+                $accordionHeading.addClass( "heading-error" );
                 $accordionHeading.data( "data-bidx-errorCount", errorCount );
             }
             else
@@ -980,6 +917,21 @@
             }
         }
     }
+
+    // General function to remove validation errors, meant to be used before we show the forms in various edit states
+    // TODO: check for any remainings in the $accordionHeading.data( "data-bidx-errorCount" )
+    var removeValidationErrors = function ()
+    {
+        var $panels          = $( ".panel" )
+        ,   $formGroup       = $panels.find( ".form-group" )
+        ;
+        
+        $panels.find( ".heading-error" ).removeClass( "heading-error" );
+        $panels.find( ".js-error-count" ).remove();
+        $formGroup.removeClass( "has-error" );
+        $formGroup.find( ".form-control" ).removeClass( "error" );
+        $formGroup.find( "div.error" ).remove();
+    };
 
     //  Validator extentions
     //
@@ -1079,6 +1031,8 @@
 
         // DEV API - do not use these in code!
     ,   _notify:                        _notify
+
+    ,   removeValidationErrors:         removeValidationErrors
 
     ,   modalLogin:                     modalLogin
     };

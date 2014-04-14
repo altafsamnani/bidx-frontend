@@ -1191,6 +1191,8 @@
                         $btnSave.removeClass( "disabled" );
                         $btnCancel.removeClass( "disabled" );
 
+                        bidx.common.removeValidationErrors();
+
                         _showView( "edit" );
                     }
                 }
