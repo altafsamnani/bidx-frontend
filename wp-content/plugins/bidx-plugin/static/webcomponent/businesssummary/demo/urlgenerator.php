@@ -5,8 +5,9 @@ $settingClass = new settings();
 
 if(!empty($_POST)) {
 	$host = ($_POST['url']) ? $_POST['url'] : false;
-} else {
-	$host = ($settingClass->is_ssl ()) ? 'https://' : 'http://'.$_SERVER['HTTP_HOST'];
+} else {	
+	$ssl = ($settingClass->is_ssl ()) ? 'https://' : 'http://';
+	$host = $ssl.$_SERVER['HTTP_HOST'];
 }	
 
 $groupName = $settingClass->get_bidx_subdomain( false, $host );
@@ -45,9 +46,7 @@ $groupName = $settingClass->get_bidx_subdomain( false, $host );
 								<div class="col-sm-4"><input type="submit" value="Generate" class="btn btn-primary"/></div>
 							</form>
 						</div>
-					</div>
-					
-					
+					</div>		
 						
             		<div class="row"><div class="col-sm-12"><h3> <?php echo ucfirst($groupName). ' webcomponent urls';?> </h3></div></div>
 					

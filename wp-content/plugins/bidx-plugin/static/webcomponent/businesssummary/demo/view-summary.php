@@ -3,7 +3,8 @@
 require_once "settings.php"; 
 $settingClass = new settings();
 
-$host = ($settingClass->is_ssl ()) ? 'https://' : 'http://'.$_SERVER['HTTP_HOST'];
+$ssl = ($settingClass->is_ssl ()) ? 'https://' : 'http://';
+$host = $ssl.$_SERVER['HTTP_HOST'];
 $groupName = $settingClass->get_bidx_subdomain();   
 
 ?>
