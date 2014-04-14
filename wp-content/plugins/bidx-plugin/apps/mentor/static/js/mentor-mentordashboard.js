@@ -16,7 +16,7 @@
     ,   $modal
     ,   currentGroupId       = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId        = bidx.common.getCurrentUserId( "id" )
-    ,   appName              = 'mentor-mentordashboard'
+    ,   appName              = 'mentor'
 
     
     
@@ -356,8 +356,7 @@
                 {
                     requesterId:     item.id
                 ,   requesteeId:     currentUserId
-                ,   type:            'mentor'
-                ,   action:          "stop"
+              /*  ,   type:            'mentor'       */
                 };
 
                 /* 1 Add Feedback */
@@ -372,6 +371,7 @@
                 ;
 
                 /* 4 Stop Link */
+                params.action = "stop";
                 $listItem.find( ".btn-bidx-stop")
                     .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
@@ -894,7 +894,17 @@
         );
     };
 
+    function _resetFeedbackForm()
+        {
 
+            //  reset formfield values
+            //
+            $editForm.find( ":input" ).val("");
+            $feedbackDropDown.val();
+            $feedbackDropDown.bidx_chosen();
+            $editForm.validate().resetForm();
+
+        }
     
 
     //  ################################## MODAL #####################################  \\    
@@ -1256,11 +1266,19 @@
 
                 case "sendFeedback" :
 
-                var $btnSave    = $mainElement.find('.btn-feedback-submit')
-                ,   $btnCancel  = $mainElement.find('.btn-feedback-cancel')
+                var btnFeedbackText
+                ,   $btnSave                  = $mainElement.find('.btn-feedback-submit')
+                ,   $btnCancel                = $mainElement.find('.btn-feedback-cancel')
+                ,   $btnConfirmFeedbackSave   = $mainElement.find('.btn-send-feedback')
+                ,   $btnConfirmFeedbackCancel = $mainElement.find('.btn-cancel-feedback')
                 ;
 
+                btnFeedbackText = $btnConfirmFeedbackSave.text();
                 
+
+                $btnConfirmFeedbackSave.addClass( "disabled" ).i18nText("msgWaitForSave");
+                $btnConfirmFeedbackCancel.addClass( "disabled" );
+
                 
                 _doSendFeedback(
                 {
@@ -1269,6 +1287,10 @@
                     {
                         $btnSave.removeClass( "disabled" );
                         $btnCancel.removeClass( "disabled" );
+                        $btnConfirmFeedbackSave.removeClass( "disabled" ).text( btnFeedbackText );
+                        $btnConfirmFeedbackCancel.removeClass( "disabled" );
+                        _resetFeedbackForm();
+
                                             
                     }
                 } );
