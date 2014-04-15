@@ -148,6 +148,9 @@
                             <?php if ( $isInvestor ) { ?>
                                 <span class="label bidx-label bidx-investor"><?php _e('Investor', 'bidxplugin') ?></span>
                             <?php } ?>
+                            <?php if ( $isMentor ) { ?>
+                                <span class="label bidx-label bidx-mentor"><?php _e('Mentor', 'bidxplugin') ?></span>
+                            <?php } ?>
                             <?php if ( !$isEntrepreneur || !$isInvestor ) { ?>
                                 <span class="label bidx-label bidx-member"><?php _e('Member', 'bidxplugin') ?></span>
                             <?php } ?>
