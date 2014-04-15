@@ -31,7 +31,7 @@ class GroupService extends APIbridge {
    */
   public function getLatestMembers( $group_id = null ) {
 
-  	$result = $this -> getGroupDetails( $group_id );
+  	$result = $this -> getGroupDetails( $group_id, 'latest_groups', 120 );
 
   	if ( property_exists( $result, 'data' ) ) {
   		return $result -> data -> latestMembers;
@@ -51,7 +51,7 @@ class GroupService extends APIbridge {
    */
   public function getLatestBusinessSummaries( $group_id = null ) {
 
-    $result = $this -> getGroupDetails( $group_id );
+    $result = $this -> getGroupDetails( $group_id, 'latest_groups', 120 );
 
     if ( property_exists( $result, 'data' ) ) {
       return $result -> data -> latestBusinessSummaries;
@@ -69,13 +69,13 @@ class GroupService extends APIbridge {
    * @link http://bidx.net/api/v1/group
    * @return full result from the service in JSON form
    */
-  public function getGroupDetails( $group_id = null ) {
+  public function getGroupDetails( $group_id = null, $transient = 'localgroup', $cached = 3600 ) {
 
 	if ($group_id == null) {
-		if ( false === ( $result = get_transient( 'localgroup' ) ) ) { 		
+		if ( false === ( $result = get_transient( $transient ) ) ) { 		
 			// It wasn't there, so regenerate the data and save the transient
 			$result = $this->callBidxAPI( 'groups/' . $this -> getBidxSubdomain(), array(), 'GET' );
-			set_transient( 'localgroup', $result, 3600 ); //1 hour
+			set_transient( $transient, $result, $cached ); //1 hour default
 		} else {
 			$result = $result = get_transient( 'localgroup');
 		}
