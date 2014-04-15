@@ -116,9 +116,13 @@
                 {
                     requesterId:     item.id
                 ,   requesteeId:     currentUserId
-                ,   type:            'mentor'
-                ,   action:          "stop"
+             /*   ,   type:            'mentor'   */            
                 };
+                /* 1 Add Feedback */
+
+                $listItem.find( ".btn-bidx-add-feedback")
+                    .attr( "href", "/mentordashboard/#dashboard/addFeedback/" +$.param( params ) )
+                ;
 
                 /* 3 Contact Entrepreneur */
                 $listItem.find( ".btn-bidx-contact")
@@ -126,6 +130,7 @@
                 ;
 
                 /* 4 Stop Link */
+                params.action = "stop";
                 $listItem.find( ".btn-bidx-stop")
                     .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )

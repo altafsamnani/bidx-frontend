@@ -16,6 +16,9 @@
     ,   $modal
     ,   currentGroupId       = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId        = bidx.common.getCurrentUserId( "id" )
+    ,   mailOffset           = 0
+    ,   MAILPAGESIZE         = 10
+    ,   mailboxes            = {}
     ,   appName              = 'mentor'
 
     
@@ -256,6 +259,239 @@
 
     }
 
+    function _getMailBoxes( options )
+        {
+            bidx.utils.log( "[mail] fetch mailboxes from API" );
+
+            // create a promise object
+            //
+            var $d = $.Deferred();
+
+            // get all mailfolders for this user
+            //
+            bidx.api.call(
+                "mailbox.fetch"
+            ,   {
+                    groupDomain:              bidx.common.groupDomain
+                ,   success: function( response )
+                    {
+                        if ( response && response.data )
+                        {
+                            bidx.utils.log( "[mail] following mailboxes retrieved from API", response.data );
+                            // store mailbox folders in local variable mailboxes WITHOUT mbx- prefix
+                            //
+                            $.each( response.data, function( idx, el )
+                            {
+                                // #DRAFTS_TO_BE_IMPLEMENTED# currently drafts is not implemented
+                                //
+                                if ( el.name === "Drafts")
+                                {
+                                    return true;
+                                }
+                                mailboxes[ el.name.toLowerCase() ] = el;
+                            } );
+                            bidx.utils.log( "[mail] mailboxes loaded ", mailboxes );                                                        
+
+                            // execute callback if available
+                           
+                            if( options && options.callback )
+                            {
+                                options.callback( response);
+                            }
+                            // resolve the promise
+                            //
+                            $d.resolve( response.data );
+                        }
+                        else
+                        {
+                            bidx.utils.error( "No mailbox folders retrieved for this user ");
+                            // reject the promise
+                            //
+                            $d.reject( new Error( response ) );
+                        }
+
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while fetching the mailboxes: " + response.text );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while fetching the mailboxes: " + response.text );
+                        }
+
+                        // reject the promise
+                        //
+                        $d.reject( new Error( jqXhr ) );
+                    }
+                }
+            );
+
+            // return a promise which will be resolved when the async call is finished
+            //
+            return $d.promise();
+        }
+  
+    function _doViewFeedbackRequest( options )
+    {
+            bidx.utils.log("[mail] get emails ", options );
+
+            var $view                   = $mainModals.filter( bidx.utils.getViewName( options.view, "modal" ) )
+            ,   $list                   = $view.find( ".list" )
+            ,   listItem               =  $( "#feedback-listitem" ).html().replace( /(<!--)*(-->)*/g, "" )
+            ,   $listEmpty              = $( $( "#feedback-empty") .html().replace( /(<!--)*(-->)*/g, "" ) )
+            ,   messages
+            ,   newListItem
+            ;
+
+            bidx.api.call(
+                "mailbox.fetch"
+            ,   {
+                    extraUrlParameters:
+                    [
+                        {
+                            label:      "startOffset",
+                            value:      mailOffset
+                        }
+                    ,   {
+                            label:      "maxResults",
+                            value:      MAILPAGESIZE
+                        }
+
+                    ]
+                ,   mailboxId:                mailboxes[ 'inbox' ].id
+                ,   groupDomain:              bidx.common.groupDomain
+
+                ,   success: function( response )
+                    {
+                        if( response.data && response.data.mail )
+                        {
+                            bidx.utils.log("[feedback] following feedback received", response.data );
+                            var item
+                            ,   $element
+                            ,   cls
+                            ,   textValue
+                            ,   $checkboxes
+                            ,   recipients
+                            ,   $elements           = []
+                            ,   senderReceiverName
+                            ;
+
+                            // clear listing
+                            //
+                            $list.empty();
+
+                            // check if there are emails, otherwise show listEmpty
+                            //
+                            if( response.data.mail.length > 0 )
+                            {
+                                // loop through response
+                                //
+                                $.each( response.data.mail, function( index, item )
+                                {
+                                    var    subject;
+
+                                    newListItem = listItem;
+
+                                    // create a list of recipients ( for mbx-send only )
+                                    //
+                                    if( item.recipients && item.recipients.length )
+                                    {
+                                        $.each( item.recipients, function( idx, recipient )
+                                        {
+                                            recipients.push( recipient.displayName );
+                                        } );
+                                        senderReceiverName = recipients.toString().replace( /,/g, ", " );
+                                    }
+                                    // else if there is a sender ( for other boxes )
+                                    //
+                                    else if ( item.sender )
+                                    {
+                                        senderReceiverName = item.sender.displayName;
+                                    }
+                                    
+
+                                    // replace placeholders
+                                    //
+                                    subject = ( item.type === "MAIL_CONTACT_REQUEST" )  ?  bidx.i18n.i( "contactRequest", appName )  : item.subject;
+
+                                    newListItem = newListItem
+                                            .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.id )
+                                            .replace( /%accordion-id%/g, ( item.id ) ? item.id : "" )
+                                            .replace( /%emailRead%/g, ( !item.read ) ? "email-new" : "" )
+                                            .replace( /%emailNew%/g, ( !item.read ) ? " <small>" + bidx.i18n.i( "feedbackNew", appName ) + "</small>" : "" )
+                                            .replace( /%senderReceiverName%/g, senderReceiverName )
+                                            .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
+                                            .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
+                                            .replace( /%subject%/g, subject )
+                                    ;
+
+                                    $element = $( newListItem );
+
+                                    $element.find( ":checkbox" ).attr( "data-id", item.id );
+
+                                    // add mail element to elements collection
+                                    //
+                                    $elements.push( $element );
+
+                                });
+
+                                // add mail elements to list
+                                //
+                                $list.append( $elements );
+                              
+                            } // end of handling emails from response
+                            else
+                            {   
+                                bidx.utils.log('in Listtttttttttttttttttttttttttt',$listEmpty);
+                                $list.append( $listEmpty );
+                            }
+                            // execute callback if provided
+                            //
+                            if( options && options.callback )
+                            {
+                                options.callback( response);
+                            }
+                        }
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while retrieving the email(s): " + response.text );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while retrieving the email(s): " + response.text );
+                        }
+
+                    }
+                }
+            );
+        }
+
     // this function mutates the relationship between two contacts. Possible mutations for relationship: action=[ignore / accept]
     //
     function _doMutateContactRequest( options )
@@ -363,6 +599,12 @@
 
                 $listItem.find( ".btn-bidx-add-feedback")
                     .attr( "href", "/mentordashboard/#dashboard/addFeedback/" +$.param( params ) )
+                ;
+
+                /* 1 View Feedback */
+
+                $listItem.find( ".btn-bidx-view-feedback")
+                    .attr( "href", "/mentordashboard/#dashboard/viewFeedback/" +$.param( params ) )
                 ;
 
                 /* 3 Contact Entrepreneur */
@@ -1163,6 +1405,17 @@
 
                 break;
 
+            case "cancel":
+
+                _closeMainModal(
+                {
+                    unbindHide: true
+                } );
+
+                window.bidx.controller.updateHash("#cancel", false, true);
+
+            break;
+
             case "confirmRequest":
 
                 _closeMainModal(
@@ -1312,11 +1565,39 @@
                     {
                         window.bidx.controller.updateHash("#dashboard/mentor", false, false);
                     }*/
-                } );    
+                } );
 
                 break;
 
+                case 'viewFeedback' :
 
+                _closeMainModal(
+                {
+                    unbindHide: true
+                } );
+
+                _getMailBoxes(
+                {
+                    callback: function()
+                    {
+                        _doViewFeedbackRequest(
+                        {
+                            params: options.params
+                        ,    view: 'listFeedback'
+                        ,   callback: function()
+                            {
+                                _showMainModal(
+                                {
+                                    view  : "listFeedback"
+                                ,   params: options.params
+                                } );
+
+                            }
+                        } );
+                     }
+                } );
+
+                break;
          }
     };
 
