@@ -66,6 +66,8 @@ class GroupService extends APIbridge {
   /**
    * Retrieves the full group data
    * @param string $group_id optional a group id otherwise the current
+   * @param string $transient optionally the name of the transient storage value named localgroup
+   * @param string $cached amount of seconds cache
    * @link http://bidx.net/api/v1/group
    * @return full result from the service in JSON form
    */
