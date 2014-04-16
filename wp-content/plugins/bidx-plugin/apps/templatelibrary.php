@@ -539,6 +539,30 @@ class TemplateLibrary
         return $returnHtml;
     }
 
+    public function displayDocuments( $docs, $label )
+    {
+        $html = '<div class="row"><div class="col-sm-12">';
+        $html .= '<h5>' . $label . '</h5>';
+        $html .= '<table class="table table-bordered"> <tbody>';
+        $html .= '<tr>';
+        $html .= '<th>' . __('Name', 'bidxplugin') . '</th>';
+        $html .= '<th>' . __('Purpose', 'bidxplugin') . '</th>';
+        $html .= '<th>' . __('Type', 'bidxplugin') . '</th>';
+        $html .= '</tr>';
+        foreach ($docs as $doc) {
+            $purpose = $doc->purpose ? $doc->purpose : '-';
+            $html .= '<tr>';
+            $html .= '<td><a class="" href="'.$doc->document.'">'. $doc->documentName .'</a></td>';
+            $html .= '<td>'. $purpose .'</td>';
+            $html .= '<td>'. $this->getMultiReplacedValues( 'documentType', $doc->documentType ) .'</td>';
+            $html .= '</tr>';
+        }
+        $html .= '</tbody></table>';
+        $html .= '</div></div>';
+
+        return $html;
+    }
+
     /**
      * Get attachment to display
      * @param int $gridColumnVal length of spangrid

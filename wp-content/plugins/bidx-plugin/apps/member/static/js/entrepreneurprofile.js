@@ -16,6 +16,7 @@
     ,   $btnAddPreviousBusiness     = $editForm.find( "[href$='#addPreviousBusiness']" )
     ,   $previousBusinessContainer  = $editForm.find( ".previousBusinessContainer" )
 
+    ,   $fakecrop                   = $views.find( ".js-fakecrop img" )
 
     ,   $focusIndustry              = $element.find( "[name='focusIndustry']" )
 
@@ -300,6 +301,8 @@
                 itemsPerRow:        3
             ,   itemClass:          "attachmentItem"
             } );
+
+            $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
         }
     }
 

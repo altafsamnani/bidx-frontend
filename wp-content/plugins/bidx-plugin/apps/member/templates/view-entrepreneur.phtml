@@ -70,223 +70,203 @@ if ($entrepreneurDetails &&
                     echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
                     ?>
                     <br/>
-                    <?php
+<?php
                     /* Cv Display */
-                    $cvDetails[] = $this->exst( $entrepreneurDetails->cv );
-                    echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('CV','bidxplugin') => $cvDetails));
+                    if ( $this->exst( $entrepreneurDetails->cv->document ) ) {
+?>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h5><?php _e( 'CV', 'bidxplugin' ); ?></h5>
+                                <a class="btn btn-info" href="<?php echo $entrepreneurDetails->cv->document; ?>">
+                                    <?php echo $entrepreneurDetails->cv->documentName; ?>
+                                    <i class="fa fa-download"></i>
+                                </a>
+                            </div>
+                        </div>
+<?php
+                    }
 
                     /* Document Display */
-                    echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ( __('Documents','bidxplugin') => $this->exst ($entrepreneurDetails->attachment)));
-                    ?>
+                        if ( $this->exst ($entrepreneurDetails->attachment) ) {
+                            echo $this->displayDocuments ( $entrepreneurDetails->attachment, __('Documents','bidxplugin') );
+                        }
+?>
 
 <?php
         // Business Summary listing
         //
         if ($businessSummary) {
-            $labelBusiness = ($this->data->isMyProfile) ? __('My business','bidxplugin') : __('This person has a business','bidxplugin');
-?>          <div class="view viewLoadrequest alert alert-info text-center">
-                <div class="progress progress-striped active">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                        <?php _e ('Loading (Sending your request)...', 'bidxplugin') ?>
+            $labelBusiness = ( count( $businessSummary ) > 1 ) ? __('Businesses','bidxplugin') : __('Business','bidxplugin');
+?>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h5><?php echo $labelBusiness; ?></h5>
+
+
+                    <div class="list-group js-fakecrop">
+<?php
+                        foreach ($businessSummary as $index => $business) {
+?>
+                                    <div class="list-group-item">
+                                        <h4 class="list-group-item-heading"><a href="/businesssummary/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php echo $business->name; ?></a></h4>
+                                        <div class="list-group-item-text">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+<?php
+                                                    if ( empty( $business -> externalVideoPitch ) ) {
+                                                        echo '<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
+                                                    } else {
+                                                        $videoUrl = $this->exst($business -> externalVideoPitch);
+                                                        $parsedVideo = $this->parseVideos( $videoUrl );
+                                                        $videoThumb = $parsedVideo[0]['fullsize'];
+
+                                                        echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
+                                                    }
+?>                                                    
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <ul class="list-unstyled">
+<?php
+                                                        $businessSlogan = $this->exst ( $business->slogan );
+                                                        $businessSummary = $this->exst ( $business->summary );
+                                                        $businessCountry = $this->exst ( $business->countryOperation );
+                                                        $businessIndustry = $this->exst ( $business->industry );
+
+                                                        if ($businessSlogan) {
+                                                            printf ('<li>%s</li>', $businessSlogan);
+                                                        }
+
+                                                        if ($businessSummary) {
+                                                            printf ('<li>%s</li>', $businessSummary);
+                                                        }
+
+                                                        if ($businessIndustry) {
+                                                            printf ('<li>%s</li>', $this->getMultiValues ($businessIndustry, ', ', 'industry'));
+                                                        }
+
+                                                        if ($businessCountry) {
+                                                            printf ('<li>%s</li>', $this->getMultiValues ($businessCountry, ', ', 'country'));
+                                                        }
+
+?>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-2">
+<?php
+                                                    // If current profile is not loggedin user, not a mentor, in a group and Loggedin user is mentor
+                                                    if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isLoggedinMemberIsMentor && !$isMentor)
+                                                    {
+?>
+                                                        <a class="btn btn-sm btn-danger pull-right bp-<?php echo $businessBidxMeta->bidxEntityId;?>" href="#mentoringRequest/confirmRequest/type=mentoring&action=connect&businessid=<?php echo $businessBidxMeta->bidxEntityId;?>&id=<?php echo $memberId ?>"><?php _e('Mentor this plan', 'bidxplugin')?></a>
+<?php
+                                                    }
+?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+<?php
+                        }
+?>
                     </div>
                 </div>
             </div>
-             <div class="well profile-block">
-                <h4 id="businesssummary">Business Summary</h4>
-                <div class="accordion" id="businesses">
-<?php
-                    foreach ($businessSummary as $index => $business) {
-
-                        $businessBidxMeta = isset( $business->bidxMeta ) ? $business->bidxMeta : $business;
-
-                        $collapseId = sprintf ('businessAccordion-%s', $businessBidxMeta->bidxEntityId);
-
-?>
-                        <div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle hide-overflow ds-block <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#businesses" href="#<?php echo $collapseId ?>">
-                                    <span class="bidx-expand pull-left"><span class="fa fa-plus-square"></span></span>
-                                    <span class="bidx-collapse pull-left"><span class="fa fa-minus-square"></span></span>
-                                    <h5>&nbsp;<?php echo $business->name ?></h5>
-                                </a>
-                            </div><!-- accordion-heading -->
-                            <div id="<?php echo $collapseId ?>" class="accordion-body collapse <?php echo ( $index == 0 ) ? 'in' : ''; ?>">
-                                <div class="accordion-inner">
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
-
-                                            <img <?php echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <ul class="list-unstyled">
-                                                <?php
-                                                $businessSlogan = $this->exst ( $business->slogan );
-                                                $businessSummary = $this->exst ( $business->summary );
-                                                $businessCountry = $this->exst ( $business->countryOperation );
-                                                $businessIndustry = $this->exst ( $business->industry );
-
-                                                printf ('<li><h4>%s</h4></li>', $business->name);
-
-                                                if ($businessSlogan) {
-                                                    printf ('<li>%s</li>', $businessSlogan);
-                                                }
-
-                                                if ($businessSummary) {
-                                                    printf ('<li>%s</li>', $businessSummary);
-                                                }
-
-                                                if ($businessIndustry) {
-                                                    printf ('<li>%s</li>', $this->getMultiValues ($businessIndustry, ', ', 'industry'));
-                                                }
-
-                                                if ($businessCountry) {
-                                                    printf ('<li>%s</li>', $this->getMultiValues ($businessCountry, ', ', 'country'));
-                                                }
-
-                                                ?>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <?php
-                                            // If current profile is not loggedin user, not a mentor, in a group and Loggedin user is mentor
-                                            if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isLoggedinMemberIsMentor && !$isMentor)
-                                            {
-                                             ?>
-                                                <a class="btn btn-xs btn-danger pull-right label bidx-label bp-<?php echo $businessBidxMeta->bidxEntityId;?>" href="#mentoringRequest/confirmRequest/type=mentoring&action=connect&businessid=<?php echo $businessBidxMeta->bidxEntityId;?>&id=<?php echo $memberId ?>"><?php _e('Mentor this plan', 'bidxplugin')?></a>
-                                           <?php
-                                            } ?>
-                                        </div>
-                                    </div>
-
-                                    <div class="bottom-controls">
-<?php
-
-                        //$redirect = http_build_query( array( "cancel"=> $_SERVER[ "REQUEST_URI" ] ) ); // @msp: currently useless because the view state doesnt have a hash and is not routed through Backbone
-                        $viewMoreLink = "<a href='/businesssummary/" . $businessBidxMeta->bidxEntityId ."'>". __('view more','bidxplugin') ."</a>";
-                        echo $viewMoreLink;
-?>
-                                    </div>
-                                </div>
-                            </div><!-- accordion-body -->
-                        </div><!-- accordion-group -->
-<?php
-                }
-?>
-                </div><!-- accordion #companies -->
-            </div>
 <?php
             }
+
 
         // Companies listing
         //
         if ($companies) {
-            $labelCompany = ($this->data->isMyProfile) ? __('My Company','bidxplugin') : __('This person has a company','bidxplugin');
+            $labelCompany = ( count( $companies ) > 1 ) ? __('Companies','bidxplugin') : __('Company','bidxplugin');
 ?>
-            <div class="well profile-block">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h5><?php echo $labelCompany; ?></h5>
 
-                <h4 id="company"><?php _e( 'Company', 'bidxplugin' ); ?></h4>
 
-            <div class="accordion" id="companies">
-        <?php
-                foreach ($companies as $index => $company) {
-
-                    $companyBidxMeta = isset( $company->bidxMeta ) ? $company->bidxMeta : $company;
-                    $collapseId = sprintf ('companyAccordion-%s', $companyBidxMeta->bidxEntityId);
-
-                    $picSrc = $this->exst ($company->logo->document);
-
-                    ?>
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle hide-overflow ds-block <?php echo ( $index != 0 ) ? 'collapsed' : ''; ?>" data-toggle="collapse" data-parent="#companies" href="#<?php echo $collapseId ?>">
-                                <span class="bidx-expand pull-left"><span class="fa fa-plus-square"></span></span>
-                                <span class="bidx-collapse pull-left"><span class="fa fa-minus-square"></span></span>
-                                <h5>&nbsp;<?php echo $company->name ?></h5>
-                            </a>
-                        </div><!-- accordion-heading -->
-                        <div id="<?php echo $collapseId ?>" class="accordion-body collapse <?php echo ( $index == 0 ) ? 'in' : ''; ?>">
-                            <div class="accordion-inner">
-                            <?php if ($companyBidxMeta->bidxCanEdit) { ?>
-                                <div class="hide-overflow">
-                                    <a class="btn btn-sm btn-primary pull-right" href="/company/<?php echo $companyBidxMeta->bidxEntityId;; ?>/#editCompany/<?php echo $companyBidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-                                </div>
-                            <?php } ?>
-
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <?php if ( $picSrc ) { ?>
-                                            <img <?php //echo $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded documentImage">
-                                        <?php } else { ?>
-                                            <div class="icons-rounded pull-left"><i class="fa fa-tasks text-primary-light"></i></div>
-                                        <?php } ?>
-                                    </div>
-                                    <div class="col-sm-10">
-                                        <ul class="list-unstyled">
-                                            <?php
-                                            $companyWebsite = $this->exst ( $company->website );
-                                            $companyRegistered = $this->exst ( $company->registered );
-                                            printf ('<li>%s</li>', $company->name);
-
-                                            if ($companyWebsite) {
-                                                printf ('<li>%s</li>', $companyWebsite);
+                    <div class="list-group js-fakecrop">
+<?php
+                        foreach ($companies as $index => $company) {
+?>
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading"><a href="/company/<?php echo $company->bidxMeta->bidxEntityId ?>"><?php echo $company->name; ?></a></h4>
+                                <div class="list-group-item-text">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+<?php
+                                            if ( $company->logo && $company->logo->document) {
+                                                echo '<div class="img-cropper pull-left"><img src="' . $company->logo->document . '" alt=""></div>';
+                                            } else {
+                                                echo '<div class="icons-rounded pull-left"><i class="fa fa-tasks text-primary-light"></i></div>';
                                             }
+?>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <ul class="list-unstyled">
+                                                <?php
+                                                $companyWebsite = $this->exst ( $company->website );
+                                                $companyRegistered = $this->exst ( $company->registered );
+                                                printf ('<li>%s</li>', $company->name);
 
-
-                                            if ($companyRegistered) {
-                                                printf ('<li>%s</li>', date ('d-m-Y', strtotime ($this->exst ($company->dateCompanyEstab))));
-
-                                                $arStatutoryAddress = array ();
-
-                                                if (!empty($company->statutoryAddress->street)) {
-                                                    $arStatutoryAddress[] = $company->statutoryAddress->street;
-                                                }
-
-                                                if (!empty($company->statutoryAddress->streetNumber)) {
-                                                    $arStatutoryAddress[] = $company->statutoryAddress->streetNumber;
-                                                }
-
-                                                if (!empty($company->statutoryAddress->postalCode)) {
-                                                    $arStatutoryAddress[] = $company->statutoryAddress->postalCode;
+                                                if ($companyWebsite) {
+                                                    printf ('<li>%s</li>', $companyWebsite);
                                                 }
 
 
-                                                $arStatutoryCityCountry = array ();
+                                                if ($companyRegistered) {
+                                                    printf ('<li>%s</li>', date ('d-m-Y', strtotime ($this->exst ($company->dateCompanyEstab))));
 
-                                                if (!empty($company->statutoryAddress->cityTown)) {
-                                                    $arStatutoryCityCountry[] = $company->statutoryAddress->cityTown;
+                                                    $arStatutoryAddress = array ();
+
+                                                    if (!empty($company->statutoryAddress->street)) {
+                                                        $arStatutoryAddress[] = $company->statutoryAddress->street;
+                                                    }
+
+                                                    if (!empty($company->statutoryAddress->streetNumber)) {
+                                                        $arStatutoryAddress[] = $company->statutoryAddress->streetNumber;
+                                                    }
+
+                                                    if (!empty($company->statutoryAddress->postalCode)) {
+                                                        $arStatutoryAddress[] = $company->statutoryAddress->postalCode;
+                                                    }
+
+
+                                                    $arStatutoryCityCountry = array ();
+
+                                                    if (!empty($company->statutoryAddress->cityTown)) {
+                                                        $arStatutoryCityCountry[] = $company->statutoryAddress->cityTown;
+                                                    }
+
+                                                    if (!empty($company->statutoryAddress->country)) {
+                                                        $arStatutoryCityCountry[] = $company->statutoryAddress->country;
+                                                    }
+
+                                                    printf ('<li>%s</li>', implode (' ', $arStatutoryAddress));
+                                                    printf ('<li>%s</li>', implode (' ', $arStatutoryCityCountry));
                                                 }
-
-                                                if (!empty($company->statutoryAddress->country)) {
-                                                    $arStatutoryCityCountry[] = $company->statutoryAddress->country;
-                                                }
-
-                                                printf ('<li>%s</li>', implode (' ', $arStatutoryAddress));
-                                                printf ('<li>%s</li>', implode (' ', $arStatutoryCityCountry));
-                                            }
-                                            ?>
-                                        </ul>
+                                                ?>
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <?php if ($company->bidxMeta->bidxCanEdit) { ?>
+                                                <div class="hide-overflow">
+                                                    <a class="btn btn-sm btn-primary pull-right" href="/company/<?php echo $company->bidxMeta->bidxEntityId;; ?>/#editCompany/<?php echo $company->bidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="bottom-controls">
-                <?php
-                $viewMoreLink = "<a href='/company/" . $companyBidxMeta->bidxEntityId . "'>". __('view more','bidxplugin') ."</a>";
-                echo $viewMoreLink;
-                ?>
                                 </div>
                             </div>
-                        </div><!-- accordion-body -->
-                    </div><!-- accordion-group -->
-                <?php
-            }
-            ?>
-            </div><!-- accordion #companies -->
+<?php
+                        }
+?>
+                    </div>
+                </div>
             </div>
-        <?php
+<?php
             }
-
-        ?>
+?>
         </div>
     </div>
 </div>
