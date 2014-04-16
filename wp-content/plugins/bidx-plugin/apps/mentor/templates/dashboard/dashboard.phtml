@@ -135,8 +135,8 @@
                     </div>
                  </div>
             </div>           
-              <?php $this->render('dashboard/mentor-mentoring.phtml'); ?>
-              <?php $this->render('dashboard/entrepreneur-mentoring.phtml'); ?>
+              <?php ($this->isMentor) ? $this->render('dashboard/mentor-mentoring.phtml'):'' ?>
+              <?php ($this->isEntrpreneur)  ? $this->render('dashboard/entrepreneur-mentoring.phtml'): '' ?>
               <?php //$this->render('dashboard/ongoing-mentoring.phtml'); ?>           
         </div><!-- accordion -->
     </div>

@@ -179,7 +179,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 
 
     $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
-
+  
     $logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $bidxMethod, var_export ($body, true), var_export ($headers, true), var_export ($cookieArr, true)));
 
 

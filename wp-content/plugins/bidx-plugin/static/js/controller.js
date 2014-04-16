@@ -590,18 +590,27 @@
 
             mainState = "dashboard";
 
-            _navigateToApp
-            (
-                "dashboard"
-            ,   {
-                    state:    state
-                ,   params:   _deparamSplat( splat )
-                }
-            );
-
-            if( state === 'mentor' )
+            var isMentor = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxMentorProfile" );
+            bidx.utils.log(bidxConfig);
+            if ( isMentor )
             {
+                
+                _navigateToApp
+                (
+                    "dashboard"
+                ,   {
+                        state:    state
+                    ,   params:   _deparamSplat( splat )
+                    }
+                );
+            }
 
+            
+            var isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
+
+            if ( isEntrepreneur )
+            {
+                bidx.utils.log('inside entrepreneur dashboardddddddddddddddddddddd');
                 _navigateToApp
                 (
                     "ementordashboard"
@@ -611,6 +620,7 @@
                     }
                 );
             }
+            
         }
      ,  monitoring:               function( state, splat )
         {
