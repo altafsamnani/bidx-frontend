@@ -45,8 +45,8 @@ class mentor
                 if ($mentorProfile ) {
 
                     $view->isMentor = true;
-                    wp_register_script ('mentor-mentordashboard', plugins_url ('static/js/mentor-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);                    
-
+                    wp_register_script ('mentor', plugins_url ('static/js/mentor-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);                    
+           
                 } 
 
                 /*************** Entrpreneur *****************/
