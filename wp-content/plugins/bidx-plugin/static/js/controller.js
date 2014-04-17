@@ -341,7 +341,6 @@
                 }
             );
         }
-
     ,   groupHome:                   function( section )
         {
             bidx.utils.log( "AppRouter::group Home loaded", section );
@@ -382,7 +381,6 @@
                 }
             );
         }
-
     ,   editEntrepreneur:             function( id, section )
         {
             bidx.utils.log( "AppRouter::editEntrepreneur", id, section );
@@ -435,7 +433,6 @@
                 }
             );
         }
-
     ,   editInvestor:             function( id, splat )
         {
             bidx.utils.log( "AppRouter::editInvestor", id, splat );
@@ -471,7 +468,6 @@
                 }
             );
         }
-
     ,   editMentor:             function( id, section )
         {
             bidx.utils.log( "AppRouter::editMentor", id, section );
@@ -507,7 +503,6 @@
                 }
             );
         }
-
     ,   editCompany:             function( id, section )
         {
             bidx.utils.log( "AppRouter::editCompany", id, section );
@@ -538,7 +533,6 @@
                 }
             );
         }
-
     ,   editBusinessSummary:    function( id )
         {
             bidx.utils.log( "AppRouter::editBusinessSummary" );
@@ -568,7 +562,6 @@
                 }
             );
         }
-
     ,   mail:                   function( state, splat )
         {
             bidx.utils.log( "AppRouter::mailInbox State: ", state );
@@ -590,37 +583,61 @@
 
             mainState = "dashboard";
 
+            /* 1 Common Mentoring Activities Functions */
+            _navigateToApp
+            (
+                "commonmentordashboard"
+            ,   {
+                    state:    state
+                ,   params:   _deparamSplat( splat )
+                }
+            );
+
+
+            /* 2 Mentor Mentoring Activities Functions */
             var isMentor = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxMentorProfile" );
-            bidx.utils.log(bidxConfig);
+           
             if ( isMentor )
             {
-                
                 _navigateToApp
                 (
-                    "dashboard"
+                    "mentormentordashboard"
                 ,   {
                         state:    state
                     ,   params:   _deparamSplat( splat )
                     }
                 );
             }
-
             
+            /* 3 Entrpreneur Mentoring Activities Functions */
             var isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
 
             if ( isEntrepreneur )
             {
-                bidx.utils.log('inside entrepreneur dashboardddddddddddddddddddddd');
                 _navigateToApp
                 (
-                    "ementordashboard"
+                    "entrepreneurmentordashboard"
                 ,   {
                         state:    state
                     ,   params:   _deparamSplat( splat )
                     }
                 );
             }
-            
+
+            /* 4 Groupowner/admin Mentoring Activities Functions */
+            var roles = bidx.utils.getValue( bidxConfig.session, "roles" );
+
+            if ( $.inArray("GroupOwner", roles) !== -1 )
+            {
+                _navigateToApp
+                (
+                    "groupownermentordashboard"
+                ,   {
+                        state:    state
+                    ,   params:   _deparamSplat( splat )
+                    }
+                );
+            }
         }
      ,  monitoring:               function( state, splat )
         {
@@ -637,7 +654,6 @@
                 }
             );
         }
-
     ,   support:               function( state, splat )
         {
             bidx.utils.log( "AppRouter::support State: ", state );
@@ -653,8 +669,6 @@
                 }
             );
         }
-
-
     ,   media:             function( appState, id )
         {
             bidx.utils.log( "AppRouter::media", appState, id );
@@ -670,7 +684,6 @@
                 }
             );
         }
-
     ,   auth:                       function( state, splat )
         {
             bidx.utils.log( "AppRouter::auth State: ", state, splat );
@@ -740,30 +753,28 @@
                 }
             );
         }
-
     ,   account:                   function( params )
-    {
-        bidx.utils.log( "AppRouter::account params: ", params );
-
-
-        // remove leading forward slash from the splat
-        //
-        if( params )
         {
-            params = params.replace( /^[/]/, "" );
-            params = bidx.utils.bidxDeparam( params );
-        }
+            bidx.utils.log( "AppRouter::account params: ", params );
 
-        mainState = "account";
-
-        _navigateToApp
-        (
-            "account"
-        ,   {
-               params:   params
+            // remove leading forward slash from the splat
+            //
+            if( params )
+            {
+                params = params.replace( /^[/]/, "" );
+                params = bidx.utils.bidxDeparam( params );
             }
-        );
-    }
+
+            mainState = "account";
+
+            _navigateToApp
+            (
+                "account"
+            ,   {
+                   params:   params
+                }
+            );
+        }
     ,   showCancel:             function( splat )
         {
             // call the approuters show function with a "cancel" param

@@ -7,7 +7,7 @@
     ,   $mainModal
 
 
-    ,   $element          = $mainElement.find(".entrepreneur-mentordashboard")
+    ,   $element          = $mainElement.find(".groupowner-mentordashboard")
     ,   $views            = $element.find(".view")
     ,   bidx              = window.bidx
     ,   $modals           = $element.find(".modalView")
@@ -265,8 +265,7 @@
                 params.action = "renew";
                 $listItem.find( ".btn-bidx-delete")
                     .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
-                   // .click( _doMutateContactRequest )
-                ;               
+                ;
 
             }
 
@@ -277,9 +276,9 @@
 
     function respondRequest( options )
     {
-        var snippit          = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit          = $("#groupowner-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty       = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData       = $("#entrepreneur-respond-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData       = $("#groupowner-respond-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response         = options.response
         ,   incomingResponse = response.relationshipType.mentor.types.incoming
         ,   $list            = $element.find("." + options.list)
@@ -336,9 +335,9 @@
 
     function waitingRequest( options )
     {
-        var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit         = $("#groupowner-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData      = $("#entrepreneur-wait-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData      = $("#groupowner-wait-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   waitingResponse = response.relationshipType.mentor.types.pending
         ,   $list           = $element.find("." + options.list)
@@ -397,9 +396,9 @@
 
     function ongoingRequest( options )
     {
-        var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit         = $("#groupowner-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData      = $("#entrepreneur-ongoing-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData      = $("#groupowner-ongoing-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   ongoingResponse = response.relationshipType.mentor.types.active
         ,   $list           = $element.find("." + options.list)
@@ -457,9 +456,9 @@
 
     function renewRequest( options )
     {
-        var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit         = $("#groupowner-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData      = $("#entrepreneur-renew-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData      = $("#groupowner-renew-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   renewResponse   = response.relationshipType.mentor.types.active
         ,   $list           = $element.find("." + options.list)
@@ -517,9 +516,9 @@
 
     function endedRequest( options )
     {
-        var snippit         = $("#entrepreneur-activities").html().replace(/(<!--)*(-->)*/g, "")
+        var snippit         = $("#groupowner-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData      = $("#entrepreneur-ended-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData      = $("#groupowner-ended-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
         ,   endedResponse   = response.relationshipType.mentor.types.active
         ,   $list           = $element.find("." + options.list)
@@ -958,7 +957,11 @@
         window.bidx = {};
     }
 
-    window.bidx.entrepreneurmentordashboard = mentordashboard;
+    window.bidx.groupownermentordashboard = mentordashboard;
+
+    //Initialize Handlers
+    //_initHandlers();
+
 
 }(jQuery));
 

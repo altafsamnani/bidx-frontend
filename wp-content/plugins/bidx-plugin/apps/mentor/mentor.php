@@ -35,35 +35,58 @@ class mentor
 
         switch ($command) {
 
-            case 'dashboard' :
-                
+            case 'dashboard' :                
 
-                $sessionSvc = new SessionService( );
-                $mentorProfile = $sessionSvc->isHavingProfile ('bidxMentorProfile');
-               
-                /*************** Mentor **********************/
-                if ($mentorProfile ) {
-
-                    $view->isMentor = true;
-                    wp_register_script ('mentor', plugins_url ('static/js/mentor-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);                    
-           
-                } 
+                $sessionSvc = new SessionService( );              
 
                 /*************** Entrpreneur *****************/
-                $mentorEntrpreneurProfile = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
-                
-                if ($mentorEntrpreneurProfile ) {
-                    
-                    $view->isEntrpreneur = true;
-                    wp_register_script ('mentor-mentordashboard', plugins_url ('static/js/mentor-mentordashboard.js', __FILE__), self::$deps, '20140307', TRUE);                    
-                    wp_register_script ('mentor', plugins_url ('static/js/entrepreneur-mentordashboard.js', __FILE__), array('mentor-mentordashboard'), '20140307', TRUE);                    
-                   
-                } 
+                $isEntrpreneur = $sessionSvc->isHavingProfile ('bidxEntrepreneurProfile');
+                $isMentor      = $sessionSvc->isHavingProfile ('bidxMentorProfile');
+                $isGroupOwner  = $sessionSvc->isAdmin ( );
 
+                if ( $isEntrpreneur || $isMentor || $isGroupowner ) {  
+               
+                    $deps = self::$deps;
+
+                    if( $isEntrpreneur  ) {
+
+                        $view->isEntrpreneur = true;
+                        
+                        /* Entrpreneur mentoring functions & mentoring activities functions */
+                        wp_register_script ('entrepreneur-mentor', plugins_url ('static/js/entrepreneur-mentordashboard.js', __FILE__), array( ), '20140307', TRUE);
+
+                        $deps[] = 'entrepreneur-mentor';
+                    } 
+
+                    if( $isGroupOwner  ) {
+
+                        $view->isGroupOwner = true;
+                        
+                        /* Groupowner mentoring functions & mentoring activities functions */
+                        wp_register_script ('groupowner-mentor', plugins_url ('static/js/groupowner-mentordashboard.js', __FILE__), array( ), '20140307', TRUE);
+                        
+                        $deps[] = 'groupowner-mentor';
+                    }
+
+                    if( $isMentor ) {
+
+                        $view->isMentor = true;
+
+                        /* Mentor mentoring functions & mentoring activities functions */
+                        wp_register_script ('mentor-mentor', plugins_url ('static/js/mentor-mentordashboard.js', __FILE__), array( ), '20140307', TRUE);
+                        
+                        $deps[] = 'mentor-mentor';
+                        
+                    }
+
+                    /* Common mentoring functions & mentoring activities functions */
+                    wp_register_script ('mentor', plugins_url ('static/js/common-mentordashboard.js', __FILE__), $deps, '20140307', TRUE);
+
+                }             
+               
                 $template = 'dashboard/dashboard.phtml' ;
 
                 break;
-
 
         }
 

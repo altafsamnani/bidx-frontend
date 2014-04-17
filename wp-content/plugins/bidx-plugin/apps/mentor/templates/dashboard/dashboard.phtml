@@ -87,7 +87,7 @@
                 <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header">
-                            <a class="btn btnRequestCancel pull-right" href="#dashboard/mentor">
+                            <a class="btn btnRequestCancel pull-right" href="#dashboard/cancel">
                                 <button type="button" class="close">×</button>
                             </a>
                             <h3 id="myModalLabel"><?php _e ('Send feedback') ?></h3>
@@ -109,7 +109,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <a class="btn btn-feedback-cancel" href="#dashboard/mentor"><?php _e ('Cancel') ?></a>
+                            <a class="btn btn-feedback-cancel" href="#dashboard/cancel"><?php _e ('Cancel') ?></a>
                             <a class="btn btn-primary btn-feedback-submit"  ><?php _e ('Add feedback') ?></a> <!-- data-href="#mentoringRequest/sendRequest/" -->
                         </div>
                      </div>
@@ -135,9 +135,9 @@
                     </div>
                  </div>
             </div>           
-              <?php ($this->isMentor) ? $this->render('dashboard/mentor-mentoring.phtml'):'' ?>
-              <?php ($this->isEntrpreneur)  ? $this->render('dashboard/entrepreneur-mentoring.phtml'): '' ?>
-              <?php //$this->render('dashboard/ongoing-mentoring.phtml'); ?>           
+              <?php ($this->isMentor)       ? $this->render('dashboard/mentor-mentoring.phtml')       : '' ?>
+              <?php ($this->isEntrpreneur)  ? $this->render('dashboard/entrepreneur-mentoring.phtml') : '' ?>
+              <?php ($this->isGroupOwner)   ? $this->render('dashboard/groupowner-mentoring.phtml')   : '' ?>
         </div><!-- accordion -->
     </div>
 </div>
