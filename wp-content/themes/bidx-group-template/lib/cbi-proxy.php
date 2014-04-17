@@ -1,5 +1,4 @@
 <?php 
-
 require_once("../../../../wp-load.php");
 
 $base = "http://www.cbi.eu";
@@ -51,12 +50,12 @@ if ( isset($_REQUEST['URL']) ) {
 			
 			$type = wp_remote_retrieve_header( $get, 'content-type' );
 			header('Content-type: ' . $type);
-			$body = wp_remote_retrieve_body( $response );
-			echo $body;
+			echo file_get_contents ( $filename );
 		
 		} else {
-			print_r($response);
-			error_log("Cannot load ". $url . " using CBI Proxy");	
+			
+			error_log( print_r( $response,true ) );
+			error_log( "Cannot load ". $url . " using CBI Proxy" );	
 		}
 	}
 	

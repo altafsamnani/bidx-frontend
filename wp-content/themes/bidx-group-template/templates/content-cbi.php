@@ -7,13 +7,24 @@
 <?php
 	$base = "http://www.cbi.eu";
 	$cachetime = 300;
+	$uri = "/marketintel_platform/platform/177482/affiliate";
 	if ( isset($_REQUEST['URL']) ) {
-		$url = $base . $_REQUEST['URL'];
-	} else {
-		$url = $base . "/marketintel_platform/platform/177482/affiliate";
+		$uri = $_REQUEST['URL'];
+	} 
+	$url = $base . $uri;
+	
+	//store HTML in fragment on disk for more speed
+	$upload_dir = trailingslashit( WP_CONTENT_DIR ) . 'uploads/cbi/cache/';
+	if ( !file_exists( $upload_dir ) ) {
+		mkdir( $upload_dir, 0777, true );
 	}
 	
-	if( false === ($data = get_transient($transient_name) ) ) {
+	$filename = $upload_dir . str_replace( '/','__', $uri );
+	if( file_exists( $filename ) ) {
+		
+		$data = file_get_contents ( $filename );
+	
+	} else {
 
 		$args = array(
 				'timeout'     => 10,
@@ -37,7 +48,7 @@
 			$data = "<div id=\"well error\">Could not load the data referenced <br/><div style=\"color: red\">". $response->get_error_message() ."</div>";
 		
 		} else {
-		
+
 			$data = wp_remote_retrieve_body( $response );
 		
 			$self_base = get_permalink( $post->ID );
@@ -51,10 +62,10 @@
 			//rewrite direct links
 			$data = str_replace( "href=\"/","href=\"" . $self_base ."?URL=/", $data );
 			//remove script elements
-			//$data = preg_replace( "/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i", "", $data );
-			//$data = preg_replace( "/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/i", "", $data );
+			$data = preg_replace( "/@import url\(([^)]+)\);/", "", $data );
 			
-			set_transient( $url, $data, $cachetime);
+			//store locally
+			file_put_contents ( $filename , $data );
 		}		
 	} 
 	
