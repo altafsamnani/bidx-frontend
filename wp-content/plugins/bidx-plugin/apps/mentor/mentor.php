@@ -84,7 +84,7 @@ class mentor
 
                 }             
                
-                $template = 'dashboard/dashboard.phtml' ;
+                $template = 'dashboard/main.phtml' ;
 
                 break;
 
