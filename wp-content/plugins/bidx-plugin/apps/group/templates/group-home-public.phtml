@@ -74,6 +74,17 @@
                         echo $output;
                         add_post_meta( get_the_ID(), $meta_key, $output, true );
                     } ?>
+
+                    <?php
+                    $meta_key = 'box_shortcode_mainarea';
+                    if (get_post_meta( get_the_ID(), $meta_key, true )) {
+                        $shortcode_main = get_post_meta( get_the_ID(), $meta_key, true );
+                        echo do_shortcode( $shortcode_main );
+                    } else {
+                        $output = "";
+                        echo $output;
+                        add_post_meta( get_the_ID(), $meta_key, $output, true );
+                    } ?>
                 </div>
 
                 <div class="col-sm-4">
@@ -91,6 +102,17 @@
                         ?>
                         <span class="triange"></span>
                     </div>
+
+                    <?php
+                    $meta_key = 'box_shortcode_aside';
+                    if (get_post_meta( get_the_ID(), $meta_key, true )) {
+                        $shortcode_aside = get_post_meta( get_the_ID(), $meta_key, true );
+                        echo do_shortcode( $shortcode_aside );
+                    } else {
+                        $output = "";
+                        echo $output;
+                        add_post_meta( get_the_ID(), $meta_key, $output, true );
+                    } ?>
                 </div>
 
             </div>
