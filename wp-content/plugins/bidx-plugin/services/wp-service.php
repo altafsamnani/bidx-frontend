@@ -549,7 +549,7 @@ function get_wp_news ()
     // set the query arguments
     //
     $args = array (
-      'post_type' => 'post'
+      'post_type' => 'news'
       , 'post_status' => 'publish'
       , 'posts_per_page' => $limit
       , 'order' => $order

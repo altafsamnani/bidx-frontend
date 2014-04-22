@@ -2,6 +2,10 @@
 /**
  * Add custom post types
  */
+
+
+/****** News & Event Type Functionality for WP Start *******************/
+
 add_action ('init', 'bidxgroup_create_post_types');
 
 function bidxgroup_create_post_types ()
@@ -28,9 +32,30 @@ function creategroup_post_type ($post_arr)
       '_builtin' => false,
       'has_archive' => false,
       'hierarchical' => false,
-      'supports' => array ('title', 'editor', 'thumbnail', 'excerpt')
+      'supports' => array ('title', 'editor', 'thumbnail', 'excerpt'),
+      'taxonomies' => array() 
     );
-    register_post_type ($post_type, $args);
+    $newsPostResult = register_post_type ($post_type, $args);
+
+}
+
+/*add_action('publish_news', 'add_news_category_automatically');
+
+function add_news_category_automatically($post_ID) 
+{
+  global $wpdb;
+
+  if(!has_term('','category',$post_ID)) {
+    // An array of IDs of categories we to add to this post.
+    $cat_ids = array( );
+    $term = get_term_by('slug', 'news', 'category');
+    $cat_ids[] = $term->term_id;
+
+    if(!empty($cat_ids)) 
+    {
+      wp_set_object_terms($post_ID, 'news', 'category');
+    }
+  }
 }
 
 add_action ('init', 'bidx_create_custom_page_types');
@@ -39,6 +64,18 @@ function bidx_create_custom_page_types ()
 {
     create_custom_page_type ();
 }
+
+add_action('do_meta_boxes', 'news_remove_metaboxes');
+
+function news_remove_metaboxes() 
+{
+  remove_meta_box( 'categorydiv', 'news', 'side' );
+}*/
+
+
+/****** News & Event Type Functionality for WP End *******************/
+
+
 
 function create_custom_page_type ($post_type = 'sponsors')
 {
@@ -59,6 +96,8 @@ function create_custom_page_type ($post_type = 'sponsors')
     );
     register_post_type ($post_type, $args);
 }
+
+
 
 
 /**
