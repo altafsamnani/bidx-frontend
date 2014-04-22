@@ -7,40 +7,45 @@
 <?php
   
     // Add the proper class for the layout depending on if there is a category linked to the post
-    $spansize         = '';
-    $categories       = get_the_category();
-    $post_type        = get_post_type();    
+    $spansize         = '';   
     $spansize         = 'col-sm-12';
+    $post_type        = get_post_type();
     $current_post_id  = get_the_ID();
     $menu_filter      = array();
   
+    /* If its custom post then display those items in menu */
     if($post_type != 'post') 
     {
-       $spansize                 = 'col-sm-8';
-       $menu_filter['post_type'] = $post_type ;
+       $spansize                      = 'col-sm-8';       
+       $menu_filter['post_type']      = $post_type ;
        $menu_filter['posts_per_page'] = 10;
-       $menu_title = get_post_type_object( $post_type )->labels->name;
+       $menu_title                    = get_post_type_object( $post_type )->labels->name;
      
     } 
-    else if(!empty($categories)) 
+    else  /* If its category then display those items in menu */
     {
-      $menu_filter['category_name'] = $categories[0]->slug ;
-      $menu_filter['posts_per_page'] = -1;
-      $menu_title = $categories[0]->name;
+      $categories       = get_the_category();
 
-      foreach ($categories as $category) 
+      if(!empty($categories)) 
       {
-        $countcat = count($categories);
-        if ($countcat == 1 && $category->slug == 'uncategorized') {
-        // If there is no category linked then wordpress links the post to uncategorized
-        // in that case we don't show the sidebar's related posts as links
-          $spansize = 'col-sm-12';
-        } else {
-        // We need the sidebar with the related posts links
-          $spansize = 'col-sm-8';
-        }
-      } // end foreach
-    }
+        $menu_filter['category_name'] = $categories[0]->slug ;
+        $menu_filter['posts_per_page'] = -1;
+        $menu_title = $categories[0]->name;
+
+        foreach ($categories as $category) 
+        {
+          $countcat = count($categories);
+          if ($countcat == 1 && $category->slug == 'uncategorized') {
+          // If there is no category linked then wordpress links the post to uncategorized
+          // in that case we don't show the sidebar's related posts as links
+            $spansize = 'col-sm-12';
+          } else {
+          // We need the sidebar with the related posts links
+            $spansize = 'col-sm-8';
+          }
+        } // end foreach
+      }
+  }
    
 ?>
 
