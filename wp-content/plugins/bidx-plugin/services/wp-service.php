@@ -548,8 +548,10 @@ function get_wp_news ()
 
     // set the query arguments
     //
+    $postType = (get_option ('group-news')) ? 'news':'post';
+
     $args = array (
-      'post_type' => 'news'
+      'post_type' => $postType
       , 'post_status' => 'publish'
       , 'posts_per_page' => $limit
       , 'order' => $order
@@ -2272,7 +2274,7 @@ function alter_site_menu ()
     if ((current_user_can ('install_themes'))) {
         $restricted = array ();
         add_menu_page ('skipso', 'Skipso settings', 'edit_theme_options', 'skipso', 'bidx_skipso_settings');
-        add_options_page( 'bidX Settings', 'bidX Settings', 'manage_options', 'settings', 'bidx_general_settings');
+        add_options_page( 'bidX Group Settings', 'bidX Group Settings', 'manage_options', 'settings', 'bidx_general_settings');
         add_submenu_page ('zendesk-support', __ ('Zendesk Bidx Settings', 'zendesk'), __ ('Account Settings', 'zendesk'), 'manage_options', 'bidx_zendesk_settings', 'bidx_zendesk_settings');
     } // check if admin and hide nothing
     else { // for all other users
