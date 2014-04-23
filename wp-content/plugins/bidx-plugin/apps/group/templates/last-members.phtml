@@ -35,7 +35,7 @@
             }
 ?>
                 <li class="media">
-                    <a class="pull-left" href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
+                    <a class="pull-left" href="/member/<?php echo $member -> id ?>">
 <?php
     				  	if ( empty( $member -> profilePicture ) ) {
     						echo '<div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>';
@@ -60,7 +60,7 @@
                     <div class="media-body">
 
                 <div>
-                    <a href="/member/<?php echo $member -> bidxMeta -> bidxMemberId ?>">
+                    <a href="/member/<?php echo $member -> id ?>">
                         <strong>
 <?php
                             echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName );

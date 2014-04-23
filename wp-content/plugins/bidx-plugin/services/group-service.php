@@ -72,19 +72,25 @@ class GroupService extends APIbridge {
    * @return full result from the service in JSON form
    */
   public function getGroupDetails( $group_id = null, $transient = 'localgroup', $cached = 3600 ) {
-
+  
 	if ($group_id == null) {
+   
     $result = get_transient( $transient );
-		if ( empty($result)  ) { 		
+    
+		if ( empty($result) || $result === false) { 		
+    
 			// It wasn't there, so regenerate the data and save the transient
-			$result = $this->callBidxAPI( 'groups/' . $this -> getBidxSubdomain(), array(), 'GET' );
-			set_transient( $transient, $result, $cached ); //1 hour default
-		} else {
-			$result = $result = get_transient( 'localgroup');
-		}
+			$result = $this->callBidxAPI( 'groups/' . $this -> getBidxSubdomain(), array(), 'GET' ); 
+    
+			set_transient( $transient, $result, $cached ); //1 hour default    
+		} 
+
 	} else {
+    
 		$result = $this->callBidxAPI( 'groups/' . $group_id, array(), 'GET' );
+
 	}
+
 
 	return $result;
   }
