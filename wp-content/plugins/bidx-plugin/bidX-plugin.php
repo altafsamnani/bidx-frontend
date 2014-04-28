@@ -4,7 +4,7 @@
   Plugin Name: bidx-plugin
   Plugin URI: http://bidx.net/plugin/bidx-plugin
   Description: Wordpress plugin for adding bidX functionality to a website.
-  Version: 0.2.1
+  Version:0.2
   Author: bidX development team
   Author URI: http://bidx.net/plugin/bidx-plugin
   License: Commercial
