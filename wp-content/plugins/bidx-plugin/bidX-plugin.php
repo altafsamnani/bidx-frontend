@@ -25,7 +25,7 @@ $MyUpdateChecker = new PluginUpdateChecker(
     BIDX_PLUGIN_METADATA_PATH
     ,   __FILE__
     ,   'bidx-plugin'
-    ,   '2'
+    ,   1
 );
 
 // Activation of frontend apps
