@@ -1946,7 +1946,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
 function alter_network_menu ()
 {
 
-    add_submenu_page ('settings.php', __ ('Static PO Generator'), __ ('Bidx'), 'manage_network_options', 'static-po', 'bidx_options');
+    add_submenu_page ('settings.php', __ ('Static PO Generator'), __ ('Bidx global settings'), 'manage_network_options', 'static-po', 'bidx_options');
 }
 
 add_action ('network_admin_menu', 'alter_network_menu');

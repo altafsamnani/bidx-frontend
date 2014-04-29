@@ -9,17 +9,17 @@
     // Add the proper class for the layout depending on if there is a category linked to the post
     $spansize         = '';   
     $spansize         = 'col-sm-12';
-    $post_type        = get_post_type();
-    $current_post_id  = get_the_ID();
-    $menu_filter      = array();
+    $postType         = get_post_type();
+    $currentPostId    = get_the_ID();
+    $menuFilter       = array();
   
     /* If its custom post then display those items in menu */
-    if($post_type != 'post') 
+    if($postType != 'post') 
     {
        $spansize                      = 'col-sm-8';       
-       $menu_filter['post_type']      = $post_type ;
-       $menu_filter['posts_per_page'] = 10;
-       $menu_title                    = get_post_type_object( $post_type )->labels->name;
+       $menuFilter['post_type']       = $postType ;
+       $menuFilter['posts_per_page']  = 10;
+       $menuTitle                     = get_post_type_object( $postType )->labels->name;
      
     } 
     else  /* If its category then display those items in menu */
@@ -28,9 +28,9 @@
 
       if(!empty($categories)) 
       {
-        $menu_filter['category_name'] = $categories[0]->slug ;
-        $menu_filter['posts_per_page'] = -1;
-        $menu_title = $categories[0]->name;
+        $menuFilter['category_name'] = $categories[0]->slug ;
+        $menuFilter['posts_per_page'] = -1;
+        $menuTitle = $categories[0]->name;
 
         foreach ($categories as $category) 
         {
@@ -81,14 +81,14 @@
       <br>
       <div class="well">
         <ul class="nav nav-pills nav-stacked">
-        <li class="nav-header"><h3><?php echo $menu_title; ?></h3></li>
+        <li class="nav-header"><h3><?php echo $menuTitle; ?></h3></li>
 <?php
         $id = get_the_ID();
         // The Query
-        query_posts( $menu_filter );
+        query_posts( $menuFilter );
         // The Loop
         while ( have_posts() ) : the_post();
-        if ($current_post_id == $id) {
+        if ($currentPostId == $id) {
 ?>
           <li class="active"><a href="<?php the_permalink() ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></li>
 <?php
