@@ -21,7 +21,7 @@ include ('apps/util.php' );
 require ABSPATH . 'wp-content/plugins/bidx-plugin/plugin-updates/plugin-update-checker.php';
 
 //http://local.bidx.net/wp-content/metadata.json'
-$MyUpdateChecker = new PluginUpdateChecker(
+$MyUpdateChecker = PucFactory::buildUpdateChecker(
     BIDX_PLUGIN_METADATA_PATH
     ,   __FILE__
     ,   'bidx-plugin'
