@@ -342,6 +342,34 @@ function theme_customizer_groupstyle( $wp_customize ) {
 }
 add_action( 'customize_register', 'theme_customizer_groupstyle' );
 
+/**
+ * Add analytics section with textarea control theme customizer
+ *
+ * @author jaapgorjup
+ * @since Apr 29 2014
+ *
+ * @param $wp_customize class
+ * @return void
+ * @access public
+ */
+function theme_customizer_analytics_codes( $wp_customize ) {
+	$wp_customize->add_section( 'analytics_codes', array(
+			'title'    => __( 'Google Analytics codes' ),
+			'priority' => 20,
+	) );
+	$wp_customize->add_setting( 'analytics_codes', array(
+			'default'        => '',
+	) );
+
+
+	$wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'analytics_codes', array(
+			'label'   => 'Analytics codes comma separated',
+			'section' => 'analytics_codes',
+			'settings'   => 'analytics_codes',
+	) ) );
+}
+add_action( 'customize_register', 'theme_customizer_analytics_codes' );
+
 
 
 /**
