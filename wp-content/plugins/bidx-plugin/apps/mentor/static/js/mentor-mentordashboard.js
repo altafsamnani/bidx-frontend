@@ -731,7 +731,7 @@
                 {
                     unbindHide: true
                 } );
-
+                 bidx.utils.log('in mentorrrrrrr');
                 _menuActivateWithTitle(".Dashboard","My mentor dashboard");
                 _showView("loadrespond");
                 _showView("loadwait", true);
@@ -781,7 +781,7 @@
     if ($("body.bidx-mentor-dashboard").length && !bidx.utils.getValue(window, "location.hash").length)
     {
 
-        document.location.hash = "#dashboard/mentor";
+        document.location.hash = "#mentoring/mentor";
     }
 
 

@@ -316,9 +316,11 @@
         ,   'media(/:appState)(/:id)':                          'media'
 
         ,   'dashboard(/:state)(*splat)':                       'dashboard'
+        ,   'mentoring(/:state)(*splat)':                       'mentoring'
         ,   'monitoring(/:state)(*splat)':                      'monitoring'
         ,   'support(/:state)(*splat)':                         'support'
         ,   'home(/:section)':                                  'groupHome'
+        ,   'search(/:section)':                                'search'
         ,   'editPreference' :                                  'editPreference'
         ,   'cancel(/*splat)':                                  'showCancel'
         ,   '*path':                                            'show'
@@ -357,6 +359,27 @@
                 "group"
             ,   {
                     requestedState: "home"
+                ,   section:        section
+                }
+            );
+
+        }
+    ,   search:                   function( section )
+        {
+            bidx.utils.log( "AppRouter::search loaded", section );
+
+            mainState   = "search";
+
+            if ( section )
+            {
+                $pageHeadings.addClass( "hide" ).filter( "." + section ).removeClass( "hide" );
+            }
+
+            _navigateToApp
+            (
+                "search"
+            ,   {
+                    requestedState: "search"
                 ,   section:        section
                 }
             );
@@ -582,6 +605,22 @@
             bidx.utils.log( "AppRouter::dashboard State: ", state );
 
             mainState = "dashboard";
+
+            _navigateToApp
+            (
+                "dashboard"
+            ,   {
+                    state:    state
+                ,   params:   _deparamSplat( splat )
+                }
+            );
+        }
+
+     ,  mentoring:               function( state, splat )
+        {
+            bidx.utils.log( "AppRouter::dashboard State: ", state );
+
+            mainState = "mentoring";
 
             /* 1 Common Mentoring Activities Functions */
             _navigateToApp

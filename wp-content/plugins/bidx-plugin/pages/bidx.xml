@@ -203,7 +203,7 @@
             <post_id>29</post_id>
             <name>Mentor dashboard</name>
             <title>Mentor dashboard</title>
-            <mapping>^mentordashboard</mapping>
+            <mapping>^mentor-dashboard</mapping>
             <content>[bidx app="mentor" view="dashboard"]</content>
         </post>        
     </posts>

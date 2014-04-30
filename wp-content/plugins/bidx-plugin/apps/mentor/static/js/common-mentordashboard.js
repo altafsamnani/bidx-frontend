@@ -454,8 +454,7 @@
                               
                             } // end of handling emails from response
                             else
-                            {   
-                                bidx.utils.log('in Listtttttttttttttttttttttttttt',$listEmpty);
+                            {                                   
                                 $list.append( $listEmpty );
                             }
                             // execute callback if provided
@@ -915,7 +914,7 @@
     _oneTimeSetup();
 
     //expose
-    var dashboard =
+    var mentoring =
             {
                 navigate: navigate
               , $element: $element
@@ -927,7 +926,7 @@
         window.bidx = {};
     }
 
-    window.bidx.commonmentordashboard = dashboard;
+    window.bidx.commonmentordashboard = mentoring;
 
     //Initialize Handlers
     //_initHandlers();
@@ -936,7 +935,7 @@
     if ($("body.bidx-mentor-dashboard").length && !bidx.utils.getValue(window, "location.hash").length)
     {
 
-        document.location.hash = "#dashboard/mentor";
+        document.location.hash = "#mentoring/mentor";
     }
 
 
