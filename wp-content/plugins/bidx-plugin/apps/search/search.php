@@ -32,13 +32,27 @@ class search {
 		wp_register_script( 'search', plugins_url( 'static/js/search.js', __FILE__ ),  self :: $deps, '20130501', TRUE );
 	}
 
+
+	function load( $atts ) {
+		// 1. Template Rendering
+		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/search/templates/' );
+		$sessionData = BidxCommon::$staticSession;
+
+		$command = 'cardView';
+	
+		return $view->render( 'cardView.phtml' );
+
+	}
+
+
 	/**
 	 * Load the content.
 	 * The search is a static page where the content is loaded dynamically from the UI.
 	 * Dynamic action needs to be added here
 	 * @param $atts
 	 */
-	function load($atts) {
+	function load_old($atts) {
 
 		// 1. Template Rendering
 		require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );

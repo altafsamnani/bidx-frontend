@@ -1,14 +1,158 @@
-<!-- 
-	Search result snippet based on Map 
- -->
-<div class="well">
-	<div><h5>Title</h5></div>
-	<div class="map"></div>
+<div id="searchHome" class="container">
+    <div class="row">
+         <section class="views">
+            <div class="col-sm-8">
+               
+                    <div class="view viewLoad alert alert-info text-center" style="display: none;">
+                        <div class="progress progress-striped active">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                Loading...                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BusinessSummaries VIEW -->
+                    <article class="view viewSearchList">
+                         <ul class="media-list search-list">
+                        </ul>
+                        <div class="pagerContainer">
+                            <ul class="pager"></ul>
+                        </div>
+                    </article>
+            </div>
+            <div class="col-sm-4">
+                <div class="side-bar well sideBar">
+                    <article class="view viewFacet">
+                         <ul class="media-list js-facet-list">
+                        </ul>                      
+                    </article>
+                </div>
+            </div>
+        </section>
+    </div>
+            <!--
+            I use %value% for explanatory reasons within the markup body and as placeholders within href links
+        -->      
+        <!-- businessSummary Snippet -->
+        <script type="text/html" id="businesssummary-listitem">
+            <!--
+            <li class="media well js-fakecrop">
+                <a class="pull-left" href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryImage">
+                    <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryName">%name%</a>
+                    </h4>
+                    <div data-role="summary"></div>
+                    <div data-role="slogan"></div>
+                    <div data-role="industry"></div>
+                    <div data-role="country"></div>
+
+                    <div class="pull-right">
+                        <a href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryLink"><?php _e('View Business Summary','bidxtheme')?></a>
+                    </div>
+                </div>
+            </li>
+            -->
+        </script>  
+        <script type="text/html" id="member-profile-listitem">
+            <!--
+            <li class="media well">
+            <div class="row">
+                <div class="col-sm-3">
+                    <a class="pull-left" href="/member/%memberId%" data-role='memberImage'>
+                        <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
+                    </a>                    
+                </div>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <h4>%firstName% %lastName%</h4>
+                        </div>
+                        <div class="col-sm-5">
+                                <a href="/mail/#mail/contacts/action=connect&amp;id=%memberId%" class="btn btn-xs btn-warning pull-right"><?php _e('Connect','bidxtheme')?></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                         %professionalTitle%
+                             <span class="label bidx-label bidx-entrepreneur">%role_entrepreneur%</span>
+                             <span class="label bidx-label bidx-investor">%role_investor%</span>
+                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12"> <hr> </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div>%gender%</div>  
+                            <div>%motherLanguage%</div>                           
+                        </div>
+                        <div class="col-sm-7">
+                            <div> %dateOfBirth% </div>
+                            <div> %highestEducation% </div>
+                            <div> %language% </div>                          
+                        </div>                    
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="row view viewEmailAddress">
+                                <div class="col-sm-3">
+                                    <div class="label label-info btn-block text-center"> E-mail </div>
+                                </div>
+                                <div class="col-sm-8 col-sm-offset-1">
+                                    <div> %emailAddress% </div>
+                                </div>
+                            </div>
+                            <div class="row view viewMobile">
+                                <div class="col-sm-3">
+                                    <div class="label label-info btn-block text-center"> Mobile </div>
+                                </div>
+                                <div class="col-sm-8 col-sm-offset-1">
+                                    <div> %mobile% </div>
+                                </div>
+                            </div>                          
+                            <div class="row view viewLandline">
+                                <div class="col-sm-3">
+                                    <div class="label label-info btn-block text-center"> Landline </div>
+                                </div>
+                                <div class="col-sm-8 col-sm-offset-1">
+                                    <div> %landLine% </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 member-social">
+                            <div class="row">
+                                <div class="pull-left view viewFacebook">
+                                    <div class="facebook"> 
+                                        <a title="View my Facebook Profile" target="_blank" href="http://www.facebook.com/%facebook%"><i class="fa fa-facebook-square"></i></a> 
+                                    </div>
+                                </div>
+                                <div class="pull-left view viewTwitter">
+                                    <div class="twitter"> <a title="View my Twitter Profile" target="_blank" href="https://twitter.com/%twitter%"><i class="fa fa-twitter-square"></i></a> 
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </li>                
+            -->
+        </script>  
+        <script type="text/html" id="search-empty">
+            <!--
+            <li class="media">
+                <div class="pull-left check"></div>
+                <div class="">
+                    <?php _e('No messages available','bidxplugin')?>
+                </div>
+            </li>
+            -->
+        </script>  
+
+
+
 </div>
-<!--  needs to be externalized -->
-<script>
-//show map
-var $query = $this -> query;
-//call search api
-//parse result into map
-</script>
