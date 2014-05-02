@@ -594,6 +594,7 @@
 
                 _showAllView( "load" );
                 _showAllView( "searchList" );
+                _hideView( "pager" );
 
                 // load businessSummaries
                 //
@@ -602,6 +603,7 @@
                   cb:   function()
                         {
                            _hideView( "load" );
+                           _showAllView( "pager" );
                         }
                 });
 
