@@ -29,6 +29,7 @@
         {
             SEARCH_LIMIT:                       10
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       5
+        ,   LOAD_COUNTER:                       0
         }
     ;
 
@@ -46,6 +47,16 @@
     function _showView( view, state )
     {
         var $view = $views.hide().filter( bidx.utils.getViewName( view ) ).show();
+    }
+
+    function _showAllView( view )
+    {
+        var $view = $views.filter( bidx.utils.getViewName( view ) ).show();
+    }
+
+    function _hideView( view )
+    {
+        $views.filter( bidx.utils.getViewName( view ) ).hide();
     }
 
     // display generic error view with msg provided
@@ -302,6 +313,7 @@
                         {
                             response : response
                         ,   criteria : data.criteria
+                        ,   cb       : options.cb
                        // ,   cb       : _getContactsCallback( 'incoming' )
 
                         } );
@@ -348,7 +360,7 @@
 
                     break;
 
-                }
+                } 
                
             } );
 
@@ -361,108 +373,9 @@
 
         // execute cb function
         //
-        if( $.isFunction( options.cb ) )
-        {
-            options.cb();
-        }
+        
     }
-
-    function showBusinessSummary( options )
-    {
-        var snippit          = $("#businesssummary-listitem").html().replace(/(<!--)*(-->)*/g, "")
-        ,   response         = options.response
-        ,   $list           = $views.find( ".search-list" )
-        ,   emptyVal         = '-'
-        ,   $listItem
-        ,   i18nItem
-        ,   listItem
-
-        ;
-
-
-        bidx.api.call(
-            "entity.fetch"
-        ,   {
-                entityId:       response.entityId
-            ,   groupDomain:    bidx.common.groupDomain
-            ,   success:        function( item )
-                {
-                    // now format it into array of objects with value and label
-
-                    if ( !$.isEmptyObject(item) )
-                    {
-                        //if( item.bidxEntityType == 'bidxBusinessSummary') {
-                        var bidxMeta = bidx.utils.getValue( item, "bidxMeta" );
-
-                        if( bidxMeta && bidxMeta.bidxEntityType === 'bidxBusinessSummary' )
-                        {
-
-                            var dataArr = {  'industry'         : 'industry'
-                                           , 'countryOperation' : 'country'
-                                           , 'stageBusiness'    : 'stageBusiness'
-                                           , 'envImpact'        : 'envImpact'
-                                           , 'consumerType'     : 'consumerType'
-                                           , 'investmentType'   : 'investmentType'
-                                         };
-
-                           getStaticDataVal(
-                            {
-                                dataArr    : dataArr
-                              , item       : item
-                              , callback   : function (label) {
-                                                i18nItem = label;
-                                             }
-                            });
-
-                            //search for placeholders in snippit
-                            listItem = snippit
-                                .replace( /%memberId%/g,      bidxMeta.bidxOwnerId   ? bidxMeta.bidxEntityId     : emptyVal )
-                                .replace( /%bidxEntityId%/g,      bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
-                                .replace( /%name%/g,      i18nItem.name   ? i18nItem.name     : emptyVal )
-                                .replace( /%industry%/g,       i18nItem.industry    ? i18nItem.industry      : emptyVal )
-                                .replace( /%countryOperation%/g,     i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
-                                .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
-                                .replace( /%yearSalesStarted%/g,       i18nItem.yearSalesStarted    ? i18nItem.yearSalesStarted      : emptyVal )
-                                .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
-                                .replace( /%bidxLastUpdateDateTime%/g,     bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : emptyVal )
-                                .replace( /%slogan%/g,      i18nItem.slogan   ? i18nItem.slogan     : emptyVal )
-                                .replace( /%summary%/g,      i18nItem.summary   ? i18nItem.summary     : emptyVal )
-                                .replace( /%reasonForSubmission%/g,       i18nItem.reasonForSubmission    ? i18nItem.reasonForSubmission      : emptyVal )
-                                .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
-                                .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
-                                .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
-                                .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
-                                .replace( /%documentIcon%/g,      ( !$.isEmptyObject( item.externalVideoPitch ) )
-                                    ? _addVideoThumb( item.externalVideoPitch )
-                                    : '<i class="fa fa-suitcase text-primary-light"></i>' )
-                                ;
-
-
-                            $list.append( listItem );                           
-
-                        }                       
-
-                    }                   
-
-                    if( $.isFunction( options.cb ) )
-                    {
-                        // call Callback with current contact item as this scope and pass the current $listitem
-                        //
-                        options.cb.call( this, $listItem, item );
-                    }
-                }
-
-            ,   error: function(jqXhr, textStatus)
-                {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-                    _showError("Something went wrong while retrieving investorslist of the member: " + status);
-                }
-            }
-        );
-
-
-    }
+   
 
     // Convenience function for translating a language key to it's description
     //
@@ -505,7 +418,9 @@
         ,   gender
         ,   conditionalElementArr
         ;
-       
+
+
+        
         bidx.api.call(
             "entity.fetch"
         ,   {
@@ -620,7 +535,9 @@
                                                     ,   'twitter'       :'twitter'
                                                     }
                             ;
-                          
+                            
+                            CONSTANTS.LOAD_COUNTER ++;
+
                             showElements(
                             {
                                 elementArr:         conditionalElementArr
@@ -629,13 +546,20 @@
                             ,   callback:           function( listItem )
                                                     {
                                                         $list.append( listItem );
+                                                        if(CONSTANTS.LOAD_COUNTER == CONSTANTS.SEARCH_LIMIT)
+                                                        {
+                                                            if( $.isFunction( options.cb ) )
+                                                            {
+                                                                options.cb();
+                                                            }
+                                                        }
 
                                                     }
                             });
                             
                         }
 
-                    }
+                    } 
 
                     /*if( $.isFunction( options.cb ) )
                     {
@@ -668,7 +592,8 @@
             case "list":
                
 
-                _showView( "load" );
+                _showAllView( "load" );
+                _showAllView( "searchList" );
 
                 // load businessSummaries
                 //
@@ -676,7 +601,7 @@
                 {
                   cb:   function()
                         {
-                           _showView( "searchList" );
+                           _hideView( "load" );
                         }
                 });
 

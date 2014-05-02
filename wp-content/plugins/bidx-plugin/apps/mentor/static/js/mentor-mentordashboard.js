@@ -731,7 +731,7 @@
                 {
                     unbindHide: true
                 } );
-                 bidx.utils.log('in mentorrrrrrr');
+                
                 _menuActivateWithTitle(".Dashboard","My mentor dashboard");
                 _showView("loadrespond");
                 _showView("loadwait", true);
