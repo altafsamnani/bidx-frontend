@@ -66,5 +66,10 @@
     <Item value="usernameInvalid">This is not a valid email address</Item>
     <Item value="passwordIncorrect">The password is incorrect</Item>
 
+    <!-- Frequent used strings -->
+    <Item value="entrepreneur">Entrepreneur</Item>
+    <Item value="investor">Investor</Item>
+
+
 
 </I18N>
