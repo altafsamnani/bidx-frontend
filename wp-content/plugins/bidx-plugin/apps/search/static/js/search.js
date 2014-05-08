@@ -1107,7 +1107,7 @@
 
         var q
         ;
-
+        //See if its coming from the search page itself(if) or from the top(else)
         if ( !$.isEmptyObject( options.params ) )
         {
             if ( options.params.q )
@@ -1119,7 +1119,6 @@
         else
         {
             var url = document.location.href.split( "#" ).shift();
-
             q = bidx.utils.getQueryParameter( "q", url );
             $frmSearch.find( "[name='q']" ).val(q);
         }
