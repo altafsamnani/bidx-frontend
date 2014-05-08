@@ -485,12 +485,14 @@
         }
         else
         {
+            $list.empty();
             $list.append($listEmpty);
 
-             if( $.isFunction( options.cb ) )
+            if( $.isFunction( options.cb ) )
             {
                 options.cb();
             }
+            _hideView( "pager" );
         }
 
         // execute cb function
