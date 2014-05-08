@@ -5,15 +5,16 @@ $http = (is_ssl()) ? 'https://':'http://';
 <div id="searchHome" class="container">
     <div class="row searchcontrol">
         <div class="search col-sm-8 pull-left">
-            <div class="input-group">
-                <input type="text" class="form-control" name="q" placeholder="Search" value="">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
-
-            </div>
+            <form action="" class="searchform">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q" placeholder="Search" value="">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
         </div>
     </div>
 

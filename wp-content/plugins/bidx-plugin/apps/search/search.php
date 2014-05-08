@@ -16,7 +16,8 @@
  */
 class search {
 	// dependencies : should be centralized!
-	static $deps = array('jquery', 'bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core');
+	static $deps = array('jquery', 'bootstrap', 'jquery-validation',
+            'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core');
 
 	/**
 	 * Constructor
@@ -40,7 +41,7 @@ class search {
 		$sessionData = BidxCommon::$staticSession;
 
 		$command = 'cardView';
-	
+
 		return $view->render( 'cardView.phtml' );
 
 	}

@@ -6,6 +6,8 @@
     var $navbar                 = $( ".iconbar" )
     ,   $bidx                   = $( bidx )
     ,   $element                = $( "#searchHome")
+    ,   $frmSearch              = $element.find( ".searchform" )
+
     ,   $views                  = $element.find( ".view" )
     ,   $searchList             = $element.find( ".search-list" )
     ,   $errorListItem          = $element.find( "#error-listitem" )
@@ -41,6 +43,42 @@
         _languages();
 
         $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        bidx.utils.log($frmSearch);
+        $frmSearch.validate(
+        {
+            rules:
+            {
+                "q":
+                {
+                    required:      true
+                }
+            }
+        ,   messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+        ,   submitHandler:  function()
+            {
+
+                _showAllView( "load" );
+                _showAllView( "searchList" );
+                _toggleListLoading( $searchList );
+                _hideView( "pager" );
+
+                // load businessSummaries
+                //
+                _getSearchList(
+                {
+                  cb:   function()
+                        {
+                           _hideView( "load" );
+                           _toggleListLoading( $searchList );
+                           _showAllView( "pager" );
+                        }
+                });
+            }
+        } );
 
 
     }
@@ -199,15 +237,30 @@
 
     function _getSearchList( options )
     {
+        var q          = $frmSearch.find( "[name='q']" ).val()
+        ,   searchTerm
+        ;
+
+        searchTerm = (q) ? q : '*';
+
         var criteria        =
             {
-                "searchTerm": "text:*",
+                "searchTerm": "text:" + searchTerm,
                 "facetsVisible":true,
                 "maxResult":CONSTANTS.SEARCH_LIMIT,
                 "offset" : paging.search.offset,
                 "entityTypes": [
                   {
-                    "type": "bidxBusinessGroup"
+                    "type": "bidxMemberProfile"
+                  },
+                  {
+                    "type": "bidxInvestorProfile"
+                  },
+                  {
+                    "type": "bidxEntrepeneurProfile"
+                  },
+                  {
+                    "type": "bidxBusinessSummary"
                   }
                 ]
             };
@@ -1083,6 +1136,7 @@
     }
 
     _oneTimeSetup();
+
     //expose
     var search =
     {
