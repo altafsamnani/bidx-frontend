@@ -8,13 +8,14 @@
     ,   $element                = $( "#searchHome")
     ,   $views                  = $element.find( ".view" )
     ,   $searchList             = $element.find( ".search-list" )
+    ,   $errorListItem          = $element.find( "#error-listitem" )
 
     ,   $searchPager            = $views.filter( ".viewSearchList" ).find( ".pagerContainer .pager" )
     ,   state
     ,   $fakecrop               = $views.find( ".js-fakecrop img" )
     ,   languages
     ,   appName                 = "search"
-   
+
     ,   paging                  =
         {
             search:
@@ -38,9 +39,9 @@
     function _oneTimeSetup()
     {
         _languages();
-        
+
         $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
-       
+
 
     }
 
@@ -77,7 +78,7 @@
          var $mainView = $listViews.filter(bidx.utils.getViewName(view)).show();
     };
 
-    
+
 
     function _toggleListLoading( list)
     {
@@ -87,7 +88,7 @@
         }
     }
 
-    
+
 
     function _addVideoThumb( url, element )
     {
@@ -128,7 +129,7 @@
 
     function _languages()
     {
-        // Retrieve the list of languages from the data api        
+        // Retrieve the list of languages from the data api
         bidx.data.getContext( "language", function( err, data )
         {
             languages = data;
@@ -166,14 +167,14 @@
     };
 
     var showElements = function( options ) {
-         bidx.utils.log(options);
+
         var elementArr      = options.elementArr
         ,   item            = options.item
         ,   $listItem       = options.listItem
         ,   $listViews      = $listItem.find(".view")
         ,   itemRow
         ;
-        
+
         $.each(elementArr, function(clsKey, clsVal)
         {
             itemRow = bidx.utils.getValue( item, clsVal );
@@ -190,7 +191,11 @@
        }
 
     };
-    
+
+    /* Get the search list
+    Sample
+    bidxBusinessGroup - 8747 - Cleancookstoves
+    */
 
     function _getSearchList( options )
     {
@@ -202,7 +207,7 @@
                 "offset" : paging.search.offset,
                 "entityTypes": [
                   {
-                    "type": "bidxEntrepreneurProfile"
+                    "type": "bidxBusinessGroup"
                   }
                 ]
             };
@@ -286,6 +291,8 @@
             //
             $list.empty();
 
+            CONSTANTS.SEARCH_LIMIT = data.docs.length;
+
             pagerOptions  =
             {
                 currentPage:            ( paging.search.offset / CONSTANTS.SEARCH_LIMIT  + 1 ) // correct for api value which starts with 0
@@ -308,7 +315,7 @@
 
                     _toggleListLoading( $searchList );
                     _showAllView( "load" );
-                                     
+
                      _getSearchList(
                     {
                         cb: function()
@@ -354,7 +361,7 @@
                     break;
 
                     case 'bidxEntrepreneurProfile':
-                        response.entityType = 'bidxMemberProfile';
+                        //response.entityType = 'bidxMemberProfile';
 
                         showMemberProfile(
                         {
@@ -364,7 +371,19 @@
                         } );
 
                     break;
-                        
+
+                    case 'bidxMentorProfile':
+                        //response.entityType = 'bidxMemberProfile';
+
+                        showMemberProfile(
+                        {
+                            response : response
+                        ,   criteria : data.criteria
+                        ,   cb       : options.cb
+                        } );
+
+                    break;
+
                     case 'bidxBusinessSummary':
 
                         showEntity(
@@ -379,25 +398,25 @@
 
                     case 'bidxCompany':
 
-                       /* showBusinessSummary(
+                       showEntity(
                         {
                             response : response
-                        ,   criteria : data.criteria                        
-                      //  ,   cb       : _getContactsCallback( 'incoming' )
+                        ,   criteria : data.criteria
+                        ,   cb       : options.cb
 
-                        } );*/
+                        } );
 
                     break;
 
                     case 'bidxBusinessGroup':
 
-                       /* showBusinessSummary(
+                       showEntity(
                         {
                             response : response
-                        ,   criteria : data.criteria                        
-                      //  ,   cb       : _getContactsCallback( 'incoming' )
+                        ,   criteria : data.criteria
+                        ,   cb       : options.cb
 
-                        } );*/
+                        } );
 
                     break;
 
@@ -406,10 +425,10 @@
                     break;
 
                 }
-               
+
             } );
 
-            
+
         }
         else
         {
@@ -423,35 +442,102 @@
 
         // execute cb function
         //
-        
+
     }
 
-    function _replaceStringsCallback( entityType, i18nItem )
+    function replaceStringsCallback( entityType, i18nItem )
     {
         //if( item.bidxEntityType == 'bidxBusinessSummary') {
-        
-        
+
+
         var $listItem
         ,   listItem
         ,   conditionalElementArr
         ,   bidxMeta    = bidx.utils.getValue( i18nItem, "bidxMeta" )
         ,   replacedList
+        ,   externalVideoPitch
         ,   $entityElement
         ,   snippit
+        ,   emptyVal = ''
         ;
-         
+
         switch( entityType )
         {
-            case 'bidxBusinessSummary' :
+            case 'bidxCompany'  :
+                var statutoryCountry
+                ,   statutoryCity
+                ,   imageWidthStyle
+                ,   imageLeftStyle
+                ,   imageTopStyle
+                ;
+
+                $entityElement      = $("#company-listitem");
+                snippit             = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
+                statutoryCountry    = bidx.utils.getValue( i18nItem, "statutoryAddress.country");
+                statutoryCity       = bidx.utils.getValue( i18nItem, "statutoryAddress.cityTown");
+
+                if(statutoryCountry)
+                {
+
+                    bidx.data.getItem(statutoryCountry, 'country', function(err, labelCountry)
+                    {
+                        country    =   labelCountry;
+                    });
+                }
+
+
+                //search for placeholders in snippit
+                listItem = snippit
+                    .replace( /%entityId%/g,    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
+                    .replace( /%name%/g,        i18nItem.name           ? i18nItem.name     : emptyVal )
+                    .replace( /%website%/g,     i18nItem.website        ? i18nItem.website     : emptyVal )
+                    .replace( /%country%/g,     country )
+                    .replace( /%cityTown%/g,    statutoryCity           ? statutoryCity     : emptyVal )
+                    .replace( /%registered%/g,  i18nItem.registered     ? bidx.i18n.i( 'registered', appName )     : '' )
+                   ;
+
+                $listItem = $(listItem);
+
+                /* Company Image */
+                image       = bidx.utils.getValue( i18nItem, "logo" );
+
+                if (image)
+                {
+                    imageWidth      = bidx.utils.getValue( image, "width" );
+                    imageLeft       = bidx.utils.getValue( image, "left" );
+                    imageTop        = bidx.utils.getValue( image, "top" );
+
+                    imageWidthStyle = ( imageWidth ) ? 'width: ' + imageWidth + 'px' : '';
+                    imageLeftStyle  = ( imageLeft ) ? 'left: ' + imageLeft + 'px': '';
+                    imageTopStyle   = ( imageTop ) ? 'top: ' + imageTop + 'px': '';
+
+
+
+                    $listItem.find( "[data-role = 'companyImage']" ).html( '<div class="img-cropper"><img src="' + image.document + '" style=' + imageWidthStyle + imageLeftStyle + imageTopStyle + '" alt="" /></div>' );
+
+                }
+
+                conditionalElementArr =
+                {
+                    'website'       :'website'
+                ,   'country'       :'statutoryAddress.country'
+                ,   'cityTown'      :'statutoryAddress.cityTown'
+                }
+                ;
+
+            break;
+
+            case 'bidxBusinessSummary'  :
                 var countryOperation
                 ,   entrpreneurIndustry
                 ,   entrpreneurReason
+                ,   $el
                 ;
 
                 $entityElement   = $("#businesssummary-listitem");
                 snippit          = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
                 countryOperation  = bidx.utils.getValue( i18nItem, "countryOperation");
-        
+
                 if(countryOperation)
                 {
 
@@ -460,7 +546,7 @@
                         country    =   labelCountry;
                     });
                 }
-                
+
                 entrpreneurIndustry = bidx.utils.getValue( i18nItem, "industry");
 
                 if(entrpreneurIndustry)
@@ -481,6 +567,8 @@
                     });
                 }
 
+
+
                 //search for placeholders in snippit
                 listItem = snippit
                     .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
@@ -492,8 +580,15 @@
                     .replace( /%reasonForSubmission%/g,         reason )
                     .replace( /%financingNeeded%/g,             i18nItem.financingNeeded   ? i18nItem.financingNeeded     : emptyVal )
                     ;
-                
+
                 $listItem = $(listItem);
+
+                externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                if ( externalVideoPitch )
+                {
+                    $el         = $listItem.find("[data-role='businessImage']");
+                    _addVideoThumb( externalVideoPitch, $el );
+                }
 
                 conditionalElementArr =
                 {
@@ -505,15 +600,102 @@
                 ,   'summary'       :'summary'
                 }
                 ;
-                
+
             break;
 
-            case 'bidxMemberProfile' :
-            case 'bidxInvestorProfile':
-            case 'bidxEntrepreneurProfile':
+            case 'bidxBusinessGroup'  :
+                var focusCountry
+                ,   focusIndustry
+                ,   focusSocialImpact
+                ,   socialImpact
+                ,   focusEnvImpact
+                ,   envImpact
+                ;
+
+
+                $entityElement   = $("#group-listitem");
+                snippit          = $entityElement.html().replace(/(<!--)*(-->)*/g, "");
+
+
+                focusCountry  = bidx.utils.getValue( i18nItem, "focusCountry");
+
+                if(focusCountry)
+                {
+
+                    bidx.data.getItem(focusCountry, 'country', function(err, labelCountry)
+                    {
+                        country    =   labelCountry;
+                    });
+                }
+
+                focusIndustry = bidx.utils.getValue( i18nItem, "focusIndustry");
+
+                if(focusIndustry)
+                {
+                    bidx.data.getItem(focusIndustry, 'industry', function(err, labelIndustry)
+                    {
+                       industry = labelIndustry;
+                    });
+                }
+
+                focusSocialImpact = bidx.utils.getValue( i18nItem, "focusSocialImpact");
+
+                if(focusSocialImpact)
+                {
+                    bidx.data.getItem(focusSocialImpact, 'socialImpact', function(err, labelSocialImpact)
+                    {
+                       socialImpact = labelSocialImpact;
+                    });
+                }
+
+                focusEnvImpact = bidx.utils.getValue( i18nItem, "focusEnvImpact");
+
+                if(focusEnvImpact)
+                {
+                    bidx.data.getItem(focusEnvImpact, 'envImpact', function(err, labelEnvImpact)
+                    {
+                       envImpact = labelEnvImpact;
+                    });
+                }
+
+
+
+                //search for placeholders in snippit
+                listItem = snippit
+                    .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
+                    .replace( /%name%/g,                        i18nItem.name   ? i18nItem.name     : emptyVal )
+                    .replace( /%bidxWebsiteName%/g,             i18nItem.name   ? i18nItem.name.replace(/ /g,"").toLowerCase() : emptyVal )
+                    .replace( /%website%/g,                     i18nItem.website   ? i18nItem.website     : emptyVal )
+                    .replace( /%summary%/g,                     i18nItem.summary   ? i18nItem.summary     : emptyVal )
+                    .replace( /%bidxLastUpdateDateTime%/g,      bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : emptyVal )
+                    .replace( /%focusCountry%/g,                country )
+                    .replace( /%focusIndustry%/g,               industry )
+                    .replace( /%focusSocialImpact%/g,           socialImpact )
+                    .replace( /%focusEnvImpact%/g,              envImpact )
+                    ;
+
+                $listItem = $(listItem);
+
+                conditionalElementArr =
+                {
+                    'lastupdate'        :'bidxMeta.bidxLastUpdateDateTime'
+                ,   'focusCountry'      :'focusCountry'
+                ,   'focusIndustry'     :'focusIndustry'
+                ,   'focusSocialImpact' :'focusSocialImpact'
+                ,   'focusEnvImpact'    :'focusEnvImpact'
+                ,   'summary'           :'summary'
+                ,   'website'           :'website'
+                }
+                ;
+
+            break;
+
+            case 'bidxMemberProfile'        :
+            case 'bidxInvestorProfile'      :
+            case 'bidxEntrepreneurProfile'  :
+            case 'bidxMentorProfile'        :
 
                 var $elImage
-                ,   emptyVal         = ''
                 ,   allLanguages     = ''
                 ,   montherLanguage  = ''
                 ,   country          = ''
@@ -528,6 +710,7 @@
                 ,   gender
                 ,   isEntrepreneur
                 ,   isInvestor
+                ,   isMentor
                 ,   cityTown
                 ,   sepCountry
                 ,   memberCountry
@@ -540,10 +723,11 @@
                 bidxMeta         = bidx.utils.getValue( i18nItem, "bidxMemberProfile.bidxMeta" );
                 isEntrepreneur   = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile" );
                 isInvestor       = bidx.utils.getValue( i18nItem, "bidxInvestorProfile" );
+                isMentor         = bidx.utils.getValue( i18nItem, "bidxMentorProfile" );
                 personalDetails  = i18nItem.bidxMemberProfile.personalDetails;
                 cityTown         = bidx.utils.getValue( personalDetails, "address.0.cityTown");
                 memberCountry    = bidx.utils.getValue( personalDetails, "address.0.country");
-                
+
                 /* Member Role */
                 if(personalDetails.highestEducation)
                 {
@@ -572,7 +756,7 @@
                 // Language is handled specially
                 //
                 var languageDetail      = bidx.utils.getValue( personalDetails, "languageDetail", true );
-               
+
                 if ( languageDetail )
                 {
                     var     sep             = ''
@@ -581,7 +765,7 @@
                         ,   langLabel       = ''
                         ,   langCount       = 1
                         ;
-                  
+
                     $.each( languageDetail, function( i, langObj )
                     {
                         langCount++;
@@ -594,11 +778,11 @@
                             montherLanguage +=  sepMotherLang + langLabel;
                             sepMotherLang  = ', ';
                         }
-                           
+
                     } );
-                   
+
                 }
-                
+
                 entrpreneurFocusIndustry = bidx.utils.getValue( i18nItem, "bidxEntrepreneurProfile.focusIndustry");
                 if(entrpreneurFocusIndustry)
                 {
@@ -616,6 +800,7 @@
                     .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                     .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
+                    .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
                     .replace( /%gender%/g,              personalDetails.gender   ? gender    : emptyVal )
                     .replace( /%dateOfBirth%/g,         personalDetails.dateOfBirth   ? bidx.utils.parseISODateTime( personalDetails.dateOfBirth, 'date' )    : emptyVal )
                     .replace( /%highestEducation%/g,    personalDetails.highestEducation   ? highestEducation    : emptyVal )
@@ -624,14 +809,14 @@
                     .replace( /%city%/g,                ( cityTown ) ? cityTown : emptyVal )
                     .replace( /%country%/g,             ( country )  ? country : emptyVal )
                     .replace( /%interest%/g,             industry )
-                    
+
                     .replace( /%emailAddress%/g,        personalDetails.emailAddress   ? personalDetails.emailAddress  : emptyVal )
                     .replace( /%mobile%/g,              (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.mobile")    : emptyVal )
                     .replace( /%landLine%/g,            (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.landLine")     : emptyVal )
                     .replace( /%facebook%/g,            personalDetails.facebook   ? personalDetails.facebook    : emptyVal )
                     .replace( /%twitter%/g,             personalDetails.twitter   ? personalDetails.twitter    : emptyVal )
                     ;
-                
+
                 $listItem     = $(listItem);
 
                 /* Member Image */
@@ -643,7 +828,7 @@
                     imageLeft   = bidx.utils.getValue( image, "left" );
                     imageTop    = bidx.utils.getValue( image, "top" );
                     $listItem.find( "[data-role = 'memberImage']" ).html( '<div class="img-cropper"><img src="' + image.document + '" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" alt="" /></div>' );
-                    
+
                 }
 
                 conditionalElementArr =
@@ -672,11 +857,8 @@
         ;
 
         return replacedList;
-            
-    }
-   
 
-   
+    }
 
     function showEntity( options )
     {
@@ -687,7 +869,7 @@
         ,   response = options.response
         ,   conditionalElementArr
         ;
-         
+
         bidx.api.call(
             "entity.fetch"
         ,   {
@@ -696,7 +878,7 @@
             ,   success:        function( item )
                 {
                     // now format it into array of objects with value and label
-                     
+
                     if ( !$.isEmptyObject(item) )
                     {
 
@@ -708,11 +890,11 @@
                             CONSTANTS.LOAD_COUNTER ++;
 
                             //search for placeholders in snippit
-                            replacedList  = _replaceStringsCallback( response.entityType, item );
-                            
-                         /*Get the replaced snippit */
+                            replacedList  = replaceStringsCallback( response.entityType, item );
+
+                            /*Get the replaced snippit */
                             $listItem      = replacedList.listItem;
-                            //$listItem     = $(listItem);
+
 
                            /*Get the conditional elemenets to show*/
                             conditionalElementArr = replacedList.conditionalElementArr;
@@ -725,7 +907,7 @@
                                                     {
                                                         $searchList.append( listItem );
 
-                                                        if(CONSTANTS.LOAD_COUNTER === CONSTANTS.SEARCH_LIMIT)
+                                                        if(CONSTANTS.LOAD_COUNTER % CONSTANTS.SEARCH_LIMIT === 0)
                                                         {
                                                             if( $.isFunction( options.cb ) )
                                                             {
@@ -737,15 +919,27 @@
                             });
                         }
                     }
-                            
-                        
+
+
                 }
 
             ,   error: function(jqXhr, textStatus)
                 {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+                    var errorSnippit    = $errorListItem.html().replace(/(<!--)*(-->)*/g, "")
+                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus
+                    ;
 
-                    _showError("Something went wrong while retrieving investorslist of the member: " + status);
+                    $searchList.append( errorSnippit );
+
+                    CONSTANTS.LOAD_COUNTER ++;
+
+                    if(CONSTANTS.LOAD_COUNTER % CONSTANTS.SEARCH_LIMIT === 0)
+                    {
+                        if( $.isFunction( options.cb ) )
+                        {
+                            options.cb();
+                        }
+                    }
                 }
             }
         );
@@ -764,7 +958,7 @@
         ,   conditionalElementArr
         ,   personalDetails
         ;
-        
+
         bidx.api.call(
             "member.fetch"
         ,   {
@@ -774,12 +968,12 @@
             ,   success:        function( item )
                 {
                     // now format it into array of objects with value and label
-                     
+
                     if ( !$.isEmptyObject(item.bidxMemberProfile) )
                     {
                         //if( item.bidxEntityType == 'bidxBusinessSummary') {
                         bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile.bidxMeta" );
-                        bidx.utils.log(item);
+
                         if( bidxMeta  )
                         {
                             CONSTANTS.LOAD_COUNTER ++;
@@ -787,11 +981,10 @@
                             personalDetails = item.bidxMemberProfile.personalDetails;
 
                             //search for placeholders in snippit
-                            replacedList  = _replaceStringsCallback( response.entityType, item );
-                            
+                            replacedList  = replaceStringsCallback( response.entityType, item );
+
                             /*Get the replaced snippit */
                             $listItem      = replacedList.listItem;
-                            //$listItem     = $(listItem);
 
                            /*Get the conditional elemenets to show*/
                             conditionalElementArr = replacedList.conditionalElementArr;
@@ -804,9 +997,7 @@
                             ,   callback:           function( listItem )
                                                     {
                                                         $searchList.append( listItem );
-                                                        bidx.utils.log( 'paging',paging.search.offset );
-                                                        bidx.utils.log( 'CONSTANTS.LOAD_COUNTER',CONSTANTS.LOAD_COUNTER );
-                                                        bidx.utils.log( 'CONSTANTS.SEARCH_LIMIT',CONSTANTS.SEARCH_LIMIT );
+
                                                         if(CONSTANTS.LOAD_COUNTER % CONSTANTS.SEARCH_LIMIT === 0)
                                                         {
                                                             if( $.isFunction( options.cb ) )
@@ -817,7 +1008,7 @@
 
                                                     }
                             });
-                            
+
                         }
 
                     }
@@ -826,16 +1017,28 @@
 
             ,   error: function(jqXhr, textStatus)
                 {
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+                    var errorSnippit    = $errorListItem.html().replace(/(<!--)*(-->)*/g, "")
+                    ,   status          = bidx.utils.getValue(jqXhr, "status") || textStatus
+                    ;
 
-                    _showError("Something went wrong while retrieving investorslist of the member: " + status);
+                    $searchList.append( errorSnippit );
+
+                    CONSTANTS.LOAD_COUNTER ++;
+
+                    if(CONSTANTS.LOAD_COUNTER % CONSTANTS.SEARCH_LIMIT === 0)
+                    {
+                        if( $.isFunction( options.cb ) )
+                        {
+                            options.cb();
+                        }
+                    }
                 }
             }
         );
 
 
     }
-    
+
 
     // ROUTER
     function navigate( options )
@@ -845,7 +1048,7 @@
         switch ( options.section )
         {
             case "list":
-               
+
 
                 _showAllView( "load" );
                 _showAllView( "searchList" );
@@ -896,7 +1099,7 @@
 
     window.bidx.search = search;
 
-    
+
 
     // if hash is empty and there is not path in the uri, load #home
     //

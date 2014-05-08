@@ -10,10 +10,10 @@
         ),
         'bidxEntrepreneurProfile'    => array(
             'Entrepreneur Dashboard' => '/entrepreneur-dashboard'
-        ,   'Mentor Dashboard'       => '/mentordashboard'    
+        //,   'Mentor Dashboard'       => '/mentordashboard'
         ),
         'bidxMentorProfile'          => array(
-            'Mentor Dashboard'       => '/mentordashboard'
+        //    'Mentor Dashboard'       => '/mentordashboard'
         )
     );
 
@@ -21,7 +21,7 @@
 
     // check for each profile if it exists in the members entities
     //
-    foreach (  $profiles as $profilekey => $profilevalue ) 
+    foreach (  $profiles as $profilekey => $profilevalue )
     {
 
         // check if current profile is existent, if not remove it from the array
@@ -32,7 +32,7 @@
 
         if( $sessionSvc->isHavingProfile( 'bidxEntrepreneurProfile' ) ) {
             unset( $profiles[ 'bidxMentorProfile' ] );
-        }        
+        }
     }
 
     // get the groups for his user
@@ -78,7 +78,7 @@
                         foreach($profilevalue as $menuName => $menuLink) {
                         // fetch the key value for printing as text in the hyperlink
                         //
-                        
+
 ?>
                         <li><a href="<?php echo $menuLink ?>"><?php _e( $menuName, 'bidxplugin' ); ?></a></li>
 <?php                   }
