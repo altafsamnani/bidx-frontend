@@ -320,7 +320,7 @@
         ,   'monitoring(/:state)(*splat)':                      'monitoring'
         ,   'support(/:state)(*splat)':                         'support'
         ,   'home(/:section)':                                  'groupHome'
-        ,   'search(/:section)':                                'search'
+        ,   'search(/:state)(*splat)':                          'search'
         ,   'editPreference' :                                  'editPreference'
         ,   'cancel(/*splat)':                                  'showCancel'
         ,   '*path':                                            'show'
@@ -364,15 +364,15 @@
             );
 
         }
-    ,   search:                   function( section )
+    ,   search:                   function( state, splat )
         {
-            bidx.utils.log( "AppRouter::search loaded", section );
+            bidx.utils.log( "AppRouter::search loaded", state );
 
             mainState   = "search";
 
-            if ( section )
+            if ( state )
             {
-                $pageHeadings.addClass( "hide" ).filter( "." + section ).removeClass( "hide" );
+                $pageHeadings.addClass( "hide" ).filter( "." + state ).removeClass( "hide" );
             }
 
             _navigateToApp
@@ -380,7 +380,8 @@
                 "search"
             ,   {
                     requestedState: "search"
-                ,   section:        section
+                ,   state:        state
+                ,   params:      _deparamSplat( splat )
                 }
             );
 
@@ -635,7 +636,7 @@
 
             /* 2 Mentor Mentoring Activities Functions */
             var isMentor = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxMentorProfile" );
-           
+
             if ( isMentor )
             {
                 _navigateToApp
@@ -647,7 +648,7 @@
                     }
                 );
             }
-            
+
             /* 3 Entrpreneur Mentoring Activities Functions */
             var isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
 

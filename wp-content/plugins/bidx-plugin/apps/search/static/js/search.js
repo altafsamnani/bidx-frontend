@@ -43,7 +43,7 @@
         _languages();
 
         $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
-        bidx.utils.log($frmSearch);
+
         $frmSearch.validate(
         {
             rules:
@@ -68,9 +68,12 @@
 
                 // load businessSummaries
                 //
+
+                var q          = $frmSearch.find( "[name='q']" ).val();
+
                 _getSearchList(
-                {
-                  cb:   function()
+                {   q :   q
+                ,   cb:   function()
                         {
                            _hideView( "load" );
                            _toggleListLoading( $searchList );
@@ -237,8 +240,8 @@
 
     function _getSearchList( options )
     {
-        var q          = $frmSearch.find( "[name='q']" ).val()
-        ,   searchTerm
+        var searchTerm
+        ,   q = options.q
         ;
 
         searchTerm = (q) ? q : '*';
@@ -278,6 +281,7 @@
                     {
                         response:       response
                     ,   cb:             options.cb
+                    ,   q:              options.q
                     } );
                 }
 
@@ -371,7 +375,8 @@
 
                      _getSearchList(
                     {
-                        cb: function()
+                        q : options.q
+                    ,   cb: function()
                             {
                                 _toggleListLoading( $searchList );
                                 _hideView("load");
@@ -1100,7 +1105,26 @@
     {
         bidx.utils.log("[group] navigate", options );
 
-        switch ( options.section )
+        var q
+        ;
+
+        if ( !$.isEmptyObject( options.params ) )
+        {
+            if ( options.params.q )
+            {
+               q = options.params.q;
+            }
+
+        }
+        else
+        {
+            var url = document.location.href.split( "#" ).shift();
+
+            q = bidx.utils.getQueryParameter( "q", url );
+            $frmSearch.find( "[name='q']" ).val(q);
+        }
+
+        switch ( options.state )
         {
             case "list":
 
@@ -1114,7 +1138,8 @@
                 //
                 _getSearchList(
                 {
-                  cb:   function()
+                    q:    q
+                ,   cb:   function()
                         {
                            _hideView( "load" );
                            _toggleListLoading( $searchList );
