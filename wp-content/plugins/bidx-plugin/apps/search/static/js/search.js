@@ -12,7 +12,10 @@
     ,   $searchList             = $element.find( ".search-list" )
     ,   $errorListItem          = $element.find( "#error-listitem" )
 
-    ,   $searchPager            = $views.filter( ".viewSearchList" ).find( ".pagerContainer .pager" )
+    ,   $searchPagerContainer   = $views.filter( ".viewSearchList" ).find( ".pagerContainer")
+    ,   $searchPager            = $searchPagerContainer.find( ".pager" )
+
+    ,   $sortView               = $views.find('.viewSort')
     ,   state
     ,   $fakecrop               = $views.find( ".js-fakecrop img" )
     ,   languages
@@ -33,7 +36,7 @@
     var CONSTANTS =
         {
             SEARCH_LIMIT:                       10
-        ,   NUMBER_OF_PAGES_IN_PAGINATOR:       5
+        ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
         ,   LOAD_COUNTER:                       0
         }
     ;
@@ -63,8 +66,9 @@
 
                 _showAllView( "load" );
                 _showAllView( "searchList" );
-                _toggleListLoading( $searchList );
-                _hideView( "pager" );
+                _showAllView( "pager" );
+                _toggleListLoading( $element );
+                //_hideView( "pager" );
 
                 // load businessSummaries
                 //
@@ -76,8 +80,8 @@
                 ,   cb:   function()
                         {
                            _hideView( "load" );
-                           _toggleListLoading( $searchList );
-                           _showAllView( "pager" );
+                           _toggleListLoading( $element );
+                          //
                         }
                 });
             }
@@ -236,23 +240,55 @@
     /* Get the search list
     Sample
     bidxBusinessGroup - 8747 - Cleancookstoves
+    entityTypes": [
+                  {
+                    "type": "bidxMemberProfile"
+                  },
+                  {
+                    "type": "bidxInvestorProfile"
+                  },
+                  {
+                    "type": "bidxEntrepeneurProfile"
+                  },
+                  {
+                    "type": "bidxBusinessSummary"
+                  }
+                ]
     */
 
     function _getSearchList( options )
     {
         var searchTerm
-        ,   q = options.q
+        ,   sortQuery   = []
+        ,   q           = options.q
+        ,   sort        = options.sort
         ;
 
         searchTerm = (q) ? q : '*';
 
+        if( sort )
+        {
+
+            var $sortElement    =   $sortView.find("."+sort)
+            ,   $sortOrder      =   $sortElement.data('sort');
+                sortQuery       =   [
+                                        {
+                                            "field" : sort
+                                        ,   "order":  $sortOrder
+                                        }
+                                    ];
+        $sortElement.data('sort',($sortElement.data('sort') === 'asc' ? 'desc' : 'asc'));
+
+        }
+
         var criteria        =
             {
-                "searchTerm": "text:" + searchTerm,
-                "facetsVisible":true,
-                "maxResult":CONSTANTS.SEARCH_LIMIT,
-                "offset" : paging.search.offset,
-                "entityTypes": [
+                "searchTerm": "text:" + searchTerm
+            ,   "facetsVisible":true
+            ,   "maxResult":CONSTANTS.SEARCH_LIMIT
+            ,   "offset" : paging.search.offset
+            ,   "sort"   : sortQuery
+            ,   "entityTypes": [
                   {
                     "type": "bidxMemberProfile"
                   },
@@ -348,7 +384,7 @@
             //
             $list.empty();
 
-            CONSTANTS.SEARCH_LIMIT = data.docs.length;
+
 
             pagerOptions  =
             {
@@ -370,21 +406,31 @@
                     //
                     paging.search.offset = ( page - 1 ) * CONSTANTS.SEARCH_LIMIT;
 
-                    _toggleListLoading( $searchList );
+                    _toggleListLoading( $element );
                     _showAllView( "load" );
 
                      _getSearchList(
                     {
-                        q : options.q
-                    ,   cb: function()
-                            {
-                                _toggleListLoading( $searchList );
-                                _hideView("load");
-                                _showAllView("pager");
-                            }
+                        q       : options.q
+                    ,   sort    : options.sort
+                    ,   cb      : function()
+                                {
+                                    _toggleListLoading( $element );
+                                    _hideView( "load" );
+                                    _showAllView( "pager" );
+                                    _showAllView( "sort" );
+                                }
                     });
                 }
             };
+
+            CONSTANTS.SEARCH_LIMIT = data.docs.length;
+
+            bidx.utils.log("pagerOptions", pagerOptions);
+            if( data.numFound ) {
+
+                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + data.numFound + ' results:</h5>');
+            }
 
             $searchPager.bootstrapPaginator( pagerOptions );
 
@@ -505,7 +551,7 @@
 
     }
 
-    function replaceStringsCallback( entityType, i18nItem )
+    function replaceStringsCallback( response, i18nItem )
     {
         //if( item.bidxEntityType == 'bidxBusinessSummary') {
 
@@ -519,6 +565,7 @@
         ,   $entityElement
         ,   snippit
         ,   emptyVal = ''
+        ,   entityType = response.entityType
         ;
 
         switch( entityType )
@@ -724,7 +771,7 @@
                 listItem = snippit
                     .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
                     .replace( /%name%/g,                        i18nItem.name   ? i18nItem.name     : emptyVal )
-                    .replace( /%bidxWebsiteName%/g,             i18nItem.name   ? i18nItem.name.replace(/ /g,"").toLowerCase() : emptyVal )
+                    .replace( /%bidxWebsiteName%/g,             response.domains )
                     .replace( /%website%/g,                     i18nItem.website   ? i18nItem.website     : emptyVal )
                     .replace( /%summary%/g,                     i18nItem.summary   ? i18nItem.summary     : emptyVal )
                     .replace( /%bidxLastUpdateDateTime%/g,      bidxMeta.bidxLastUpdateDateTime  ? bidx.utils.parseTimestampToDateStr(bidxMeta.bidxLastUpdateDateTime) : emptyVal )
@@ -950,7 +997,7 @@
                             CONSTANTS.LOAD_COUNTER ++;
 
                             //search for placeholders in snippit
-                            replacedList  = replaceStringsCallback( response.entityType, item );
+                            replacedList  = replaceStringsCallback( response, item );
 
                             /*Get the replaced snippit */
                             $listItem      = replacedList.listItem;
@@ -1041,7 +1088,7 @@
                             personalDetails = item.bidxMemberProfile.personalDetails;
 
                             //search for placeholders in snippit
-                            replacedList  = replaceStringsCallback( response.entityType, item );
+                            replacedList  = replaceStringsCallback( response, item );
 
                             /*Get the replaced snippit */
                             $listItem      = replacedList.listItem;
@@ -1106,6 +1153,8 @@
         bidx.utils.log("[group] navigate", options );
 
         var q
+        ,   sort
+        ,   paramSort
         ;
         //See if its coming from the search page itself(if) or from the top(else)
         if ( !$.isEmptyObject( options.params ) )
@@ -1123,6 +1172,12 @@
             $frmSearch.find( "[name='q']" ).val(q);
         }
 
+        paramSort = bidx.utils.getValue('options','params.sort');
+        if(  paramSort )
+        {
+            sort = paramSort;
+        }
+
         switch ( options.state )
         {
             case "list":
@@ -1130,19 +1185,23 @@
 
                 _showAllView( "load" );
                 _showAllView( "searchList" );
-                _toggleListLoading( $searchList );
-                _hideView( "pager" );
+                _showAllView( "pager" );
+                _showAllView( "sort" );
+                _toggleListLoading( $element );
+
 
                 // load businessSummaries
                 //
                 _getSearchList(
                 {
                     q:    q
+                ,   sort: sort
                 ,   cb:   function()
                         {
                            _hideView( "load" );
-                           _toggleListLoading( $searchList );
-                           _showAllView( "pager" );
+                           _toggleListLoading( $element );
+                           //_showAllView( "pager" );
+
                         }
                 });
 
