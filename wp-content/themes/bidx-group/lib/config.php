@@ -11,8 +11,8 @@ add_theme_support('jquery-cdn');            // Enable to load jQuery from the Go
 /**
  * Configuration values
  */
-// UA-XXXXX-Y (Note: Universal Analytics only, not Classic Analytics) --> support multiple
-define('GOOGLE_ANALYTICS_ID', ''); 
+// UA-XXXXX-Y (Note: Universal Analytics only, not Classic Analytics)
+define('GOOGLE_ANALYTICS_ID', 'UA-48404092-2'); 
 // Length in words for excerpt_length filter (http://codex.wordpress.org/Plugin_API/Filter_Reference/excerpt_length)
 define('POST_EXCERPT_LENGTH', 40); 
 
