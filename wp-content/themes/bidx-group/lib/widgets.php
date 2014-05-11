@@ -3,9 +3,10 @@
  * Register sidebars and widgets
  */
 function bidx_widgets_init() {
-	// Sidebars : add css information for lef-right
+
+	//Public Homepage
 	register_sidebar(array(
-	'name'          => __('Public Homepage', 'bidx-textdomain'),
+	'name'          => __('Sidebar Public Homepage', 'bidx_group_theme'),
 	'id'            => 'sidebar-public-homepage',
 	'before_widget' => '<section class="widget %1$s %2$s">',
 	'after_widget'  => '</section>',
@@ -13,7 +14,25 @@ function bidx_widgets_init() {
 	'after_title'   => '</h3>',
 	));
 	register_sidebar(array(
-	'name'          => __('Logged-in Homepage', 'bidx-textdomain'),
+	'name'          => __('Public Homepage Full Header', 'bidx_group_theme'),
+	'id'            => 'header-public-homepage',
+	'before_widget' => '<section class="widget %1$s %2$s">',
+	'after_widget'  => '</section>',
+	'before_title'  => '<h3>',
+	'after_title'   => '</h3>',
+	));
+	register_sidebar(array(
+	'name'          => __('Public Homepage Body Content', 'bidx_group_theme'),
+	'id'            => 'public-homepage-body',
+	'before_widget' => '<section class="widget %1$s %2$s">',
+	'after_widget'  => '</section>',
+	'before_title'  => '<h3>',
+	'after_title'   => '</h3>',
+	));
+
+	//Logged-in Homepage
+	register_sidebar(array(
+	'name'          => __('Sidebar Logged-in Homepage', 'bidx_group_theme'),
 	'id'            => 'sidebar-loggedin-homepage',
 	'before_widget' => '<section class="widget %1$s %2$s">',
 	'after_widget'  => '</section>',
@@ -21,9 +40,63 @@ function bidx_widgets_init() {
 	'after_title'   => '</h3>',
 	));	
 	
-  	register_widget('Bidx_Widget');
+	
+	
+	
+	//Member page sidebar
+	register_sidebar(array(
+	'name'          => __('Public Memberpage Sidebar', 'bidx_group_theme'),
+	'id'            => 'sidebar-public-memberpage',
+	'before_widget' => '<section class="widget %1$s %2$s">',
+	'after_widget'  => '</section>',
+	'before_title'  => '<h3>',
+	'after_title'   => '</h3>',
+	));	
+	register_sidebar(array(
+	'name'          => __('Loggedin Memberpage Sidebar', 'bidx_group_theme'),
+	'id'            => 'sidebar-loggedin-memberpage',
+	'before_widget' => '<section class="widget %1$s %2$s">',
+	'after_widget'  => '</section>',
+	'before_title'  => '<h3>',
+	'after_title'   => '</h3>',
+	));	
+  	
+  	//Footer
+	register_sidebar(array(
+	'name'          => __('Footer', 'bidx_group_theme'),
+	'id'            => 'footer',
+	'before_widget' => '<section class="widget %1$s %2$s">',
+	'after_widget'  => '</section>',
+	'before_title'  => '<h3>',
+	'after_title'   => '</h3>',
+	));
+  	
+	register_widget('Bidx_Widget');
 }
 add_action('widgets_init', 'bidx_widgets_init');
+
+/**
+ * --------------------------
+ * bidx Widgets list
+ *  
+ * User Interface
+ * 1] Caroussel widget (stand-alone, select from media and optionally add call-to-action)
+ * 2] Endorsement widget (public endorsement information)
+ * 3] Big Quote widget (creates a big quote with name)
+ * 4] Post widget (select any post and add it)
+ * 5] Start Now or Join	
+ * 
+ * Information
+ * 1] bidx group changes (selector for members / businessplans / changes / all + view-type + amount 3-5)
+ * 2] active competitions (integrates with XML feed from Skipso)
+ * 3] bidx conversion widget (logged-in for access plan / profile + create new)
+ * 4] bidx search widget (quick access to search function)
+ * 5] bidx maps search widget (map view from a central location in a range)
+ * 
+ * --------------------------
+ */
+
+
 
 /**
  * Example vCard widget

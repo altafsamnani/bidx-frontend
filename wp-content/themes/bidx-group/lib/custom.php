@@ -8,6 +8,8 @@
  * 
  * Is done after plugins have been loaded.
  * 
+ * TODO : wp-less not loaded ?? fallback to less.js but ensure that a warning is shown
+ * 
  * --------------------
  */
 function set_page_attributes_for_less( )

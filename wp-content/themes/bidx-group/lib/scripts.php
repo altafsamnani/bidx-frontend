@@ -51,6 +51,11 @@ function roots_jquery_local_fallback($src, $handle = null) {
 }
 add_action('wp_head', 'roots_jquery_local_fallback');
 
+/**
+ * Adds the Google Analytics code
+ * 
+ * TODO configure this to add the customizer set UA fields
+ */
 function roots_google_analytics() { ?>
 <script>
   (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

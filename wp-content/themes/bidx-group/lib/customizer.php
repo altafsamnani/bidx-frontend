@@ -144,6 +144,10 @@ class Bidx_Group_Customizer {
 	 */
 	private static function bidx_fonts_customizer( $wp_customize ) {
 	   
+		require_once( get_template_directory() . '/vendor/lib/wp-google-font-picker-control/google-font.php' );
+		require_once( get_template_directory() . '/vendor/lib/wp-google-font-picker-control/google-font-collection.php' );
+		require_once( get_template_directory() . '/vendor/lib/wp-google-font-picker-control/control.php' );
+		
 		$wp_customize -> add_section(
 				'font_settings',
 				array(
@@ -152,15 +156,64 @@ class Bidx_Group_Customizer {
 						'priority' => 35,
 				)
 		);
-		$wp_customize->add_setting('head_font_type');
-		//head font (default Lato)
-		$wp_customize->add_setting('body_font_type');
-		//body font (default Lato)
-	
-		//extend default setting for font selection
-	
-		}
+
+		$wp_customize->add_setting('font_family');
 		
+		$customFontFamilies;
+
+		$fonts[] = array(
+					"title" => "Ubuntu Condensed",
+					"location" => "Ubuntu+Condensed",
+					"cssDeclaration" => "'Ubuntu Condensed', sans-serif",
+					"cssClass" => "ubuntuCondensed"
+			);
+		
+		$fonts[] = array (
+						"title" => "Lato",
+						"location" => "Lato",
+						"cssDeclaration" => "'Lato', sans-serif",
+						"cssClass" => "lato"		
+		);
+		$customFontFamilies = new Google_Font_Collection( $fonts );
+
+
+		$wp_customize->add_control( 
+				new Google_Font_Picker_Custom_Control( $wp_customize, 'font_family_control', array(
+				'label'             => __( 'Font Family', 'bidx_group_theme' ),
+				'section'           => 'font_settings',
+				'settings'          => 'font_family',
+				'choices'           => $customFontFamilies->getFontFamilyNameArray(),
+				'fonts'             => $customFontFamilies
+		) ) );
+	
+	}
+
+	/**
+	 * Returns a select list of Google fonts
+	 * Feel free to edit this, update the fallbacks, etc.
+	 */
+	function options_typography_get_google_fonts() {
+
+		return array(
+				'Arvo, serif' => 'Arvo',
+				'Copse, sans-serif' => 'Copse',
+				'Droid Sans, sans-serif' => 'Droid Sans',
+				'Droid Serif, serif' => 'Droid Serif',
+				'Lobster, cursive' => 'Lobster',
+				'Nobile, sans-serif' => 'Nobile',
+				'Open Sans, sans-serif' => 'Open Sans',
+				'Oswald, sans-serif' => 'Oswald',
+				'Pacifico, cursive' => 'Pacifico',
+				'Rokkitt, serif' => 'Rokkit',
+				'PT Sans, sans-serif' => 'PT Sans',
+				'Quattrocento, serif' => 'Quattrocento',
+				'Raleway, cursive' => 'Raleway',
+				'Ubuntu, sans-serif' => 'Ubuntu',
+				'Yanone Kaffeesatz, sans-serif' => 'Yanone Kaffeesatz'		
+		);
+	}
+	
+	
 	/**
 	 * Alignment settings
 	 * @param WP_Customize $wp_customize
