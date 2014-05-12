@@ -2,4 +2,23 @@
     <!-- <Item value=""></Item> -->
     <Item value="interestedIn">Interested in</Item>
     <Item value="registered">Registered</Item>
+
+    <!-- ##################Facet################# -->
+    <!-- Facet Title -->
+	<Item value="facet_industry">Industry</Item>
+    <Item value="facet_country">Country</Item>
+    <Item value="facet_language">Language</Item>
+    <Item value="facet_entityType">Type</Item>
+
+    <!-- Facet Entity types -->
+    <Item value="bidxMemberProfile">Member profile</Item>
+    <Item value="bidxBusinessSummary">Business summary</Item>
+    <Item value="bidxInvestorProfile">Investor</Item>
+    <Item value="bidxEntrepeneurProfile">Entrepeneur</Item>
+    <Item value="bidxBusinessGroup">Group</Item>
+    <Item value="bidxCompany">Company</Item>
+    <Item value="bidxMentorProfile">Mentor</Item>
+
+
+
 </I18N>

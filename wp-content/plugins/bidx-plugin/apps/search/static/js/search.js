@@ -39,6 +39,8 @@
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
         ,   LOAD_COUNTER:                       0
         }
+
+    ,   tempLimit = CONSTANTS.SEARCH_LIMIT
     ;
 
     function _oneTimeSetup()
@@ -81,6 +83,7 @@
                         {
                            _hideView( "load" );
                            _toggleListLoading( $element );
+                           tempLimit = CONSTANTS.SEARCH_LIMIT;
                           //
                         }
                 });
@@ -256,6 +259,109 @@
                 ]
     */
 
+    function _doFacetListing(options)
+    {
+        var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   subsnippit      = $("#facetsub-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $listEmpty      = $("#error-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   response        = options.response
+        ,   $list           = $element.find(".facet-list")
+        ,   $listFacets
+        ,   $div            = $('<div />')
+        ,   emptyVal        = ''
+        ,   $listItem
+        ,   $listFacetsItem
+        ,   listItem
+        ,   listFacetsItem
+        ,   facetValues
+        ,   facetLabel
+        ,   itemName
+        ,   industry
+        ;
+
+        $list.empty();
+
+
+        if ( response && response.facets )
+        {
+            // Add Default image if there is no image attached to the bs
+
+            $.each( response.facets , function ( idx, facetitems)
+            {
+
+                facetValues    = bidx.utils.getValue( facetitems, "facetValues" );
+                facetLabel     = bidx.i18n.i( facetitems.name, appName );
+                $listFacets    = $div.clone();
+
+                if(  facetValues )
+                {
+                    $.each( facetValues , function ( idf, item )
+                    {
+
+                        if( facetitems.name !== 'facet_entityType')
+                        {
+                            item.name    = bidx.data.i(item.name,facetLabel.toLowerCase() );  // ict.services in industry
+                        }
+                        else
+                        {
+                            item.name    = bidx.i18n.i( item.name, appName );
+                        }
+
+                        listFacetsItem = subsnippit
+                            .replace( /%facetValues_name%/g,       item.name    ? item.name      : emptyVal )
+                            .replace( /%facetValues_count%/g,       item.count    ? item.count      : emptyVal )
+                            ;
+
+                        // execute cb function
+                        //
+                        $listFacetsItem = $( listFacetsItem );
+
+
+                        //  add mail element to list
+                        $listFacets.append( $listFacetsItem );
+
+                    });
+                }
+
+
+
+
+
+                /*entrpreneurIndustry = bidx.utils.getValue( i18nItem, "industry");
+
+                if(entrpreneurIndustry)
+                {
+                    bidx.data.getItem(entrpreneurIndustry, 'industry', function(err, labelIndustry)
+                    {
+                       industry = labelIndustry;
+                    });
+                }*/
+
+                listItem = snippit
+                            .replace( /%facets_name%/g,             facetitems.name    ? bidx.i18n.i( facetitems.name, appName ) : emptyVal )
+                            .replace( /%facetValues_block%/g,       $listFacets        ? $listFacets.html()      : emptyVal )
+                ;
+
+                $listItem  = listItem;
+                $list.append($listItem);
+
+            });
+
+
+
+            /*if( $.isFunction( options.cb ) )
+            {
+                // call Callback with current contact item as this scope and pass the current $listitem
+                //
+                options.cb.call( this, $listItem, item );
+            }*/
+        }
+        else
+        {
+            $list.append($listEmpty);
+        }
+    }
+
     function _getSearchList( options )
     {
         var searchTerm
@@ -285,7 +391,7 @@
             {
                 "searchTerm": "text:" + searchTerm
             ,   "facetsVisible":true
-            ,   "maxResult":CONSTANTS.SEARCH_LIMIT
+            ,   "maxResult":tempLimit
             ,   "offset" : paging.search.offset
             ,   "sort"   : sortQuery
             ,   "entityTypes": [
@@ -313,12 +419,23 @@
             ,   success: function( response )
                 {
                     bidx.utils.log("[searchList] retrieved results ", response );
+
+                    _doFacetListing(
+                    {
+                        response:       response
+                    //,   cb      :       _getFacetCallback( 'ended' )
+                    ,   q:              options.q
+                    } );
+
+
                     _doSearchListing(
                     {
                         response:       response
                     ,   cb:             options.cb
                     ,   q:              options.q
                     } );
+
+
                 }
 
             ,   error: function( jqXhr, textStatus )
@@ -388,8 +505,8 @@
 
             pagerOptions  =
             {
-                currentPage:            ( paging.search.offset / CONSTANTS.SEARCH_LIMIT  + 1 ) // correct for api value which starts with 0
-            ,   totalPages:             Math.ceil( data.numFound / CONSTANTS.SEARCH_LIMIT )
+                currentPage:            ( paging.search.offset / tempLimit  + 1 ) // correct for api value which starts with 0
+            ,   totalPages:             Math.ceil( data.numFound / tempLimit )
             ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
             ,   useBootstrapTooltip:    true
 
@@ -404,7 +521,7 @@
 
                     // update internal page counter for businessSummaries
                     //
-                    paging.search.offset = ( page - 1 ) * CONSTANTS.SEARCH_LIMIT;
+                    paging.search.offset = ( page - 1 ) * tempLimit;
 
                     _toggleListLoading( $element );
                     _showAllView( "load" );
@@ -419,12 +536,13 @@
                                     _hideView( "load" );
                                     _showAllView( "pager" );
                                     _showAllView( "sort" );
+                                    tempLimit = CONSTANTS.SEARCH_LIMIT;
                                 }
                     });
                 }
             };
 
-            CONSTANTS.SEARCH_LIMIT = data.docs.length;
+            tempLimit = data.docs.length;
 
             bidx.utils.log("pagerOptions", pagerOptions);
             if( data.numFound ) {
@@ -1014,8 +1132,9 @@
                                                     {
                                                         $searchList.append( listItem );
 
-                                                        if(CONSTANTS.LOAD_COUNTER % CONSTANTS.SEARCH_LIMIT === 0)
+                                                        if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
                                                         {
+
                                                             if( $.isFunction( options.cb ) )
                                                             {
                                                                 options.cb();
@@ -1040,7 +1159,7 @@
 
                     CONSTANTS.LOAD_COUNTER ++;
 
-                    if(CONSTANTS.LOAD_COUNTER % CONSTANTS.SEARCH_LIMIT === 0)
+                    if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
                     {
                         if( $.isFunction( options.cb ) )
                         {
@@ -1105,7 +1224,7 @@
                                                     {
                                                         $searchList.append( listItem );
 
-                                                        if(CONSTANTS.LOAD_COUNTER % CONSTANTS.SEARCH_LIMIT === 0)
+                                                        if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
                                                         {
                                                             if( $.isFunction( options.cb ) )
                                                             {
@@ -1132,7 +1251,7 @@
 
                     CONSTANTS.LOAD_COUNTER ++;
 
-                    if(CONSTANTS.LOAD_COUNTER % CONSTANTS.SEARCH_LIMIT === 0)
+                    if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
                     {
                         if( $.isFunction( options.cb ) )
                         {
@@ -1157,20 +1276,19 @@
         ,   paramSort
         ;
         //See if its coming from the search page itself(if) or from the top(else)
-        if ( !$.isEmptyObject( options.params ) )
+        q = bidx.utils.getValue('options','params.q');
+        if ( q )
         {
-            if ( options.params.q )
-            {
-               q = options.params.q;
-            }
-
+            $frmSearch.find( "[name='q']" ).val(q);
         }
         else
         {
             var url = document.location.href.split( "#" ).shift();
             q = bidx.utils.getQueryParameter( "q", url );
             $frmSearch.find( "[name='q']" ).val(q);
+            bidx.utils.log('q paramsssss', url, q);
         }
+
 
         paramSort = bidx.utils.getValue('options','params.sort');
         if(  paramSort )
@@ -1200,6 +1318,7 @@
                         {
                            _hideView( "load" );
                            _toggleListLoading( $element );
+                           tempLimit = CONSTANTS.SEARCH_LIMIT;
                            //_showAllView( "pager" );
 
                         }
