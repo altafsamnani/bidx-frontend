@@ -293,7 +293,7 @@
                 facetLabel     = bidx.i18n.i( facetitems.name, appName );
                 $listFacets    = $div.clone();
 
-                if(  facetValues )
+                if ( !$.isEmptyObject(facetValues) )
                 {
                     $.each( facetValues , function ( idf, item )
                     {
@@ -321,29 +321,16 @@
                         $listFacets.append( $listFacetsItem );
 
                     });
+
+
+                    listItem = snippit
+                                .replace( /%facets_name%/g,             facetitems.name    ? bidx.i18n.i( facetitems.name, appName ) : emptyVal )
+                                .replace( /%facetValues_block%/g,       $listFacets        ? $listFacets.html()      : emptyVal )
+                    ;
+
+                    $listItem  = listItem;
+                    $list.append($listItem);
                 }
-
-
-
-
-
-                /*entrpreneurIndustry = bidx.utils.getValue( i18nItem, "industry");
-
-                if(entrpreneurIndustry)
-                {
-                    bidx.data.getItem(entrpreneurIndustry, 'industry', function(err, labelIndustry)
-                    {
-                       industry = labelIndustry;
-                    });
-                }*/
-
-                listItem = snippit
-                            .replace( /%facets_name%/g,             facetitems.name    ? bidx.i18n.i( facetitems.name, appName ) : emptyVal )
-                            .replace( /%facetValues_block%/g,       $listFacets        ? $listFacets.html()      : emptyVal )
-                ;
-
-                $listItem  = listItem;
-                $list.append($listItem);
 
             });
 
