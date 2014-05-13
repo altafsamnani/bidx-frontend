@@ -34,22 +34,20 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 ga('create', 'UA-48404092-2', 'auto');
+ga('send', 'pageview');
 <?php 
 	$analytics = explode( ',' , get_theme_mod( 'analytics_codes' ) );
-	if( !empty($analytics) ) {
-		foreach ( $analytics as $key ) {
-			//add check if not empty
-			$key = trim($key);
-			if ( !empty ( $key  ) ) { ?>
-				ga('create', '<?php echo trim( $key ) ?>' , 'auto');
-			<?php 
-			}
+	foreach ( $analytics as $key ) {
+		//add check if not empty
+		if ( !empty ( trim( $key ) ) ) {
+			$tracker = trim( $key );
+?>ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker ?>'});
+ga(<?php echo $tracker ?>'.send', 'pageview');
+<?php 
 		}
 	}
 ?>
-ga('send', 'pageview');
 </script>
-
 
 </head>
 
