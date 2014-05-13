@@ -20,9 +20,11 @@ function roots_head_cleanup() {
   global $wp_widget_factory;
   remove_action('wp_head', array($wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style'));
 
+  add_filter('use_default_gallery_style', '__return_null');
+
   if (!class_exists('WPSEO_Frontend')) {
     remove_action('wp_head', 'rel_canonical');
-    add_action('wp_head', 'roots_rel_canonical');
+   // add_action('wp_head', 'roots_rel_canonical');
   }
 }
 
@@ -50,20 +52,25 @@ add_filter('the_generator', '__return_false');
 /**
  * Clean up language_attributes() used in <html> tag
  *
+ * Change lang="en-US" to lang="en"
  * Remove dir="ltr"
  */
 function roots_language_attributes() {
   $attributes = array();
   $output = '';
 
-  if (is_rtl()) {
-    $attributes[] = 'dir="rtl"';
+  if (function_exists('is_rtl')) {
+    if (is_rtl() == 'rtl') {
+      $attributes[] = 'dir="rtl"';
+    }
   }
 
   $lang = get_bloginfo('language');
 
-  if ($lang) {
+  if ($lang && $lang !== 'en-US') {
     $attributes[] = "lang=\"$lang\"";
+  } else {
+    $attributes[] = 'lang="en"';
   }
 
   $output = implode(' ', $attributes);
@@ -74,26 +81,12 @@ function roots_language_attributes() {
 add_filter('language_attributes', 'roots_language_attributes');
 
 /**
- * Manage output of wp_title()
- */
-function roots_wp_title($title) {
-  if (is_feed()) {
-    return $title;
-  }
-
-  $title .= get_bloginfo('name');
-
-  return $title;
-}
-add_filter('wp_title', 'roots_wp_title', 10);
-
-/**
  * Clean up output of stylesheet <link> tags
  */
 function roots_clean_style_tag($input) {
   preg_match_all("!<link rel='stylesheet'\s?(id='[^']+')?\s+href='(.*)' type='text/css' media='(.*)' />!", $input, $matches);
-  // Only display media if it is meaningful
-  $media = $matches[3][0] !== '' && $matches[3][0] !== 'all' ? ' media="' . $matches[3][0] . '"' : '';
+  // Only display media if it's print
+  $media = $matches[3][0] === 'print' ? ' media="print"' : '';
   return '<link rel="stylesheet" href="' . $matches[2][0] . '"' . $media . '>' . "\n";
 }
 add_filter('style_loader_tag', 'roots_clean_style_tag');
@@ -129,6 +122,7 @@ function roots_embed_wrap($cache, $url, $attr = '', $post_ID = '') {
   return '<div class="entry-content-asset">' . $cache . '</div>';
 }
 add_filter('embed_oembed_html', 'roots_embed_wrap', 10, 4);
+add_filter('embed_googlevideo', 'roots_embed_wrap', 10, 2);
 
 /**
  * Add Bootstrap thumbnail styling to images with captions
@@ -158,7 +152,7 @@ function roots_caption($output, $attr, $content) {
   // Set up the attributes for the caption <figure>
   $attributes  = (!empty($attr['id']) ? ' id="' . esc_attr($attr['id']) . '"' : '' );
   $attributes .= ' class="thumbnail wp-caption ' . esc_attr($attr['align']) . '"';
-  $attributes .= ' style="width: ' . (esc_attr($attr['width']) + 10) . 'px"';
+  $attributes .= ' style="width: ' . esc_attr($attr['width']) . 'px"';
 
   $output  = '<figure' . $attributes .'>';
   $output .= do_shortcode($content);
@@ -168,6 +162,7 @@ function roots_caption($output, $attr, $content) {
   return $output;
 }
 add_filter('img_caption_shortcode', 'roots_caption', 10, 3);
+
 
 /**
  * Remove unnecessary dashboard widgets
@@ -215,6 +210,61 @@ function roots_remove_default_description($bloginfo) {
 add_filter('get_bloginfo_rss', 'roots_remove_default_description');
 
 /**
+ * Allow more tags in TinyMCE including <iframe> and <script>
+ */
+function roots_change_mce_options($options) {
+  $ext = 'pre[id|name|class|style],iframe[align|longdesc|name|width|height|frameborder|scrolling|marginheight|marginwidth|src],script[charset|defer|language|src|type]';
+
+  if (isset($initArray['extended_valid_elements'])) {
+    $options['extended_valid_elements'] .= ',' . $ext;
+  } else {
+    $options['extended_valid_elements'] = $ext;
+  }
+
+  return $options;
+}
+add_filter('tiny_mce_before_init', 'roots_change_mce_options');
+
+/**
+ * Add additional classes onto widgets
+ *
+ * @link http://wordpress.org/support/topic/how-to-first-and-last-css-classes-for-sidebar-widgets
+ */
+function roots_widget_first_last_classes($params) {
+  global $my_widget_num;
+
+  $this_id = $params[0]['id'];
+  $arr_registered_widgets = wp_get_sidebars_widgets();
+
+  if (!$my_widget_num) {
+    $my_widget_num = array();
+  }
+
+  if (!isset($arr_registered_widgets[$this_id]) || !is_array($arr_registered_widgets[$this_id])) {
+    return $params;
+  }
+
+  if (isset($my_widget_num[$this_id])) {
+    $my_widget_num[$this_id] ++;
+  } else {
+    $my_widget_num[$this_id] = 1;
+  }
+
+  $class = 'class="widget-' . $my_widget_num[$this_id] . ' ';
+
+  if ($my_widget_num[$this_id] == 1) {
+    $class .= 'widget-first ';
+  } elseif ($my_widget_num[$this_id] == count($arr_registered_widgets[$this_id])) {
+    $class .= 'widget-last ';
+  }
+
+  $params[0]['before_widget'] = preg_replace('/class=\"/', "$class", $params[0]['before_widget'], 1);
+
+  return $params;
+}
+add_filter('dynamic_sidebar_params', 'roots_widget_first_last_classes');
+
+/**
  * Redirects search results from /?s=query to /search/query/, converts %20 to +
  *
  * @link http://txfx.net/wordpress-plugins/nice-search/
@@ -242,7 +292,7 @@ if (current_theme_supports('nice-search')) {
  * @link http://core.trac.wordpress.org/ticket/11330
  */
 function roots_request_filter($query_vars) {
-  if (isset($_GET['s']) && empty($_GET['s']) && !is_admin()) {
+  if (isset($_GET['s']) && empty($_GET['s'])) {
     $query_vars['s'] = ' ';
   }
 
@@ -253,9 +303,9 @@ add_filter('request', 'roots_request_filter');
 /**
  * Tell WordPress to use searchform.php from the templates/ directory
  */
-function roots_get_search_form($form) {
-  $form = '';
-  locate_template('/templates/searchform.php', true, false);
-  return $form;
+function roots_get_search_form($argument) {
+  if ($argument === '') {
+    locate_template('/templates/searchform.php', true, false);
+  }
 }
 add_filter('get_search_form', 'roots_get_search_form');
