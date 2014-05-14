@@ -19,7 +19,7 @@ require_once locate_template('/lib/htaccess.php');        // HTML5 Boilerplate .
 require_once locate_template('/lib/relative-urls.php');   // Root relative URLs
 require_once locate_template('/lib/widgets.php');         // Sidebars and widgets
 require_once locate_template('/lib/scripts.php');         // Scripts and stylesheets
-require_once locate_template('/lib/customizer.php');                    // Customizer functions
+require_once locate_template('/lib/customizer.php');      // Customizer functions
 require_once locate_template('/lib/custom.php');          // Custom functions
 
 //BIDX-1352 : added menu for non-authenticated page menu on top

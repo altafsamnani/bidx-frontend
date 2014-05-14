@@ -363,6 +363,34 @@ class Bidx_Group_Customizer {
 						)
 				)
 		);
+		$wp_customize->add_setting('front_top_width');
+		$wp_customize->add_control(
+				new WP_Customize_Control(
+						$wp_customize,
+						'front_top_width',
+						array(
+								'label'          => __( 'Fixed Width Front Top', 'bidx_group_theme' ),
+								'section'        => 'alignment_settings',
+								'settings'       => 'front_top_width',
+								'type'           => 'checkbox',
+								'std'         	 => '1'
+							)
+				)
+		);
+		$wp_customize->add_setting('front_bottom_width');
+		$wp_customize->add_control(
+				new WP_Customize_Control(
+						$wp_customize,
+						'front_bottom_width',
+						array(
+								'label'          => __( 'Fixed Width Front Bottom', 'bidx_group_theme' ),
+								'section'        => 'alignment_settings',
+								'settings'       => 'front_bottom_width',
+								'type'           => 'checkbox',
+								'std'         	 => '1'
+							)
+				)
+		);
 			
 	}
 		
