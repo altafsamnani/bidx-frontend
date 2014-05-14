@@ -34,13 +34,11 @@ class StaticDataService extends APIbridge {
      * @return response of the search service
      * @link http://bidx.net/api/v1/staticdata	 *
      */
-    public function getMultilingualStaticData ($staticDataObj)
-    {
-
-        foreach ($staticDataObj as $staticObjKey => $staticObjValue) {
+    public function getMultilingualStaticData( $staticDataObj )  {
+    	
+        foreach ( $staticDataObj as $staticObjKey => $staticObjValue ) {
             $count = 0;
-            foreach ($staticObjValue as $staticDataKey => $staticDataValue) {
-
+            foreach ( $staticObjValue as $staticDataKey => $staticDataValue ) {
                 $resultStaticData[$staticObjKey][$count]->value = $staticDataValue->key;
                 $resultStaticData[$staticObjKey][$count]->label = _x ($staticDataValue->value, $staticDataValue->key, 'static');
                 $count++;
