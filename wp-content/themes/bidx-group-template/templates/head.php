@@ -39,11 +39,10 @@ ga('send', 'pageview');
 	$analytics = explode( ',' , get_theme_mod( 'analytics_codes' ) );
 	foreach ( $analytics as $key ) {
 		//add check if not empty
-		$analyticsKey = trim($key) ;
-		if ( !empty ( $analyticsKey ) ) {
-			$tracker = trim( $key );
+		$tracker = trim($key) ;
+		if ( !empty ( $tracker ) ) {
 ?>ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker ?>'});
-ga(<?php echo $tracker ?>'.send', 'pageview');
+ga('<?php echo $tracker ?>.send', 'pageview');
 <?php
 		}
 	}
