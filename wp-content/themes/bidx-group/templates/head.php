@@ -18,25 +18,25 @@
       <script src="/<?php echo THEME_PATH; ?>/assets/js/vendor/html5shiv.js"></script>
     <![endif]-->
 
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-48404092-2', 'auto');
-    <?php 
-        $analytics = explode( ',' , get_theme_mod( 'analytics_codes' ) );
-        foreach ( $analytics as $key ) {
-            //add check if not empty
-            if ( !empty ( trim( $key ) ) ) {
-    ?>ga('create', '<?php echo trim( $key ) ?>' , 'auto');
-    <?php 
-            }
-        }
-    ?>
-    ga('send', 'pageview');
-    </script>
-
+ <!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-48404092-2', 'auto');
+ga('send', 'pageview');
+<?php
+	$analytics = explode( ',' , get_theme_mod( 'analytics_codes' ) );
+	foreach ( $analytics as $key ) {
+		$tracker = trim($key) ;
+		if ( !empty ( $tracker ) ) {
+?>ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker ?>'});
+ga('<?php echo $tracker ?>.send', 'pageview');
+<?php
+		}
+	}
+?>
+</script>
 </head>
 
