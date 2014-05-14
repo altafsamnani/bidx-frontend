@@ -1,14 +1,18 @@
 <?php
 /**
- * Roots includes
+ * Theme includes
  */
+
+//load language files --> FIXME add localized list to own theme file
 load_theme_textdomain('bidxtheme',WP_CONTENT_DIR.'/languages/themes');
+
 require_once locate_template('/lib/utils.php');           // Utility functions
 require_once locate_template('/lib/init.php');            // Initial theme setup and constants
 require_once locate_template('/lib/wrapper.php');         // Theme wrapper class
 require_once locate_template('/lib/sidebar.php');         // Sidebar class
 require_once locate_template('/lib/config.php');          // Configuration
-require_once locate_template('/lib/activation.php');      // Theme activation
+//can be used for the getting started when a new group is created
+//require_once locate_template('/lib/activation.php');    // Theme activation
 require_once locate_template('/lib/titles.php');          // Page titles
 require_once locate_template('/lib/cleanup.php');         // Cleanup
 require_once locate_template('/lib/nav.php');             // Custom nav modifications
