@@ -4,19 +4,30 @@
   Plugin Name: bidx-cbi-plugin
   Plugin URI: http://bidx.net/plugin/bidx-cbi-plugin
   Description: Wordpress plugin for adding CBI site functions to a bidX website.
-  Version: 0.1.0
+  Version: 0.1.1
   Author: bidX development team
   Author URI: http://bidx.net/plugin/bidx-cbi-plugin
   License: Commercial
  */
 
+/**
+ * Proxy class for interaction with CBI website.
+ * Caches the data in the uploads directory
+ * 
+ * FIXME : Cache flush by enable disable
+ * FIXME : Consolidate remote get calls (code cleanup)
+ * FIXME : use relative references for plugin root uri reference to cbi-bin.php
+ * TODO : Dropdown view for shortcode for easy inclusion in a sidebar?
+ * TODO : Support cache expiration 
+ * 
+ * @author Jaap Gorjup
+ */
 class CBIShortCode {
 	
+	/** url base where to load the content from **/
 	private $base = "http://www.cbi.eu";
-	private $cachetime = 300;
-	private $uri = "/marketintel_platform/platform/177482/affiliate";	
+	/** query parameter for loading the references **/
 	private $URL_id = "CBIURL";
-	//private $cache_base = "/wp-content/uploads/cbi/cache";
 
 	/**
 	 * Loads the binary data using this proxy.
@@ -24,10 +35,10 @@ class CBIShortCode {
 	 */
 	public function loadBinary() {
 		
-		if ( isset($_REQUEST[$this -> URL_id]) ) {
+		if ( isset( $_REQUEST[$this -> URL_id] ) ) {
 			
 			$url =  $this -> base . str_replace ( ' ', '%20', $_REQUEST[$this -> URL_id] );
-			$lookup = str_replace( '/','__', $_REQUEST[$this -> URL_id]);
+			$lookup = str_replace( '/','__', $_REQUEST[$this -> URL_id] );
 			//check the file location : if exists load it
 			$upload_dir = trailingslashit( WP_CONTENT_DIR ) . 'uploads/cbi/cache/';
 			$filename = $upload_dir . $lookup;
@@ -38,7 +49,7 @@ class CBIShortCode {
 				if (strpos( $filename, '.js', $lastpart ) > 0 ) {
 					$type = 'application/javascript';
 				} else {
-					$finfo = finfo_open(FILEINFO_MIME_TYPE);
+					$finfo = finfo_open( FILEINFO_MIME_TYPE );
 					$type = finfo_file( $finfo, $filename );
 				}
 				header ( 'Content-type: ' . $type ) ;
@@ -67,7 +78,7 @@ class CBIShortCode {
 				if ( !is_wp_error( $response ) && 200 == $response['response']['code'] ) {
 						
 					$type = wp_remote_retrieve_header( $get, 'content-type' );
-					header('Content-type: ' . $type);
+					header( 'Content-type: ' . $type );
 					echo file_get_contents ( $filename );
 		
 				} else {
@@ -79,7 +90,7 @@ class CBIShortCode {
 		
 		} else {
 		
-			error_log("No URL defined using CBI Proxy");
+			error_log( "No URL defined using CBI Proxy" );
 		
 		}
 	}
@@ -92,7 +103,7 @@ class CBIShortCode {
 	public function loadPage( $atts, $content=null ) {
 		
 		$uri = "/marketintel_platform/platform/177482/affiliate";
-		if ( isset($_REQUEST[$this -> URL_id]) ) {
+		if ( isset( $_REQUEST[$this -> URL_id] ) ) {
 			$uri = $_REQUEST[$this -> URL_id];
 		}
 		$url = $this -> base . $uri;
@@ -125,7 +136,7 @@ class CBIShortCode {
 			);
 			$response = wp_remote_get( $url, $args );
 		
-			if (is_wp_error($response)) {
+			if ( is_wp_error( $response ) ) {
 		
 				$data = "<div id=\"well error\">Could not load the data referenced <br/><div style=\"color: red\">". $response->get_error_message() ."</div>";
 		
@@ -138,13 +149,9 @@ class CBIShortCode {
 				//rewrite images that are explicit
 				$data = str_replace( "src=\"".$this -> base, "src=\"/wp-content/plugins/bidx-cbi-plugin/cbi-bin.php?". $this -> URL_id ."=", $data );
 				//rewrite javascript linkup
-				//$data = str_replace( "http://' + window.location.host", $self_base ."?". $URL_id ."='" , $data );
-				$data = str_replace( "http://' + window.location.host", "?". $this -> URL_id ."='" , $data );
-				
+				$data = str_replace( "http://' + window.location.host", "?". $this -> URL_id ."='" , $data );				
 				//rewrite direct links
-				//$data = str_replace( "href=\"/","href=\"" . $self_base ."?". $URL_id ."=/", $data );
 				$data = str_replace( "href=\"/","href=\"" . "?". $this -> URL_id ."=/", $data );
-				
 				//remove script elements
 				$data = preg_replace( "/@import url\(([^)]+)\);/", "", $data );
 					
@@ -171,9 +178,30 @@ class CBIShortCode {
 			
 	}
 	
+	/**
+	 * Creates the upload directory if not exists during activation
+	 */
+	public function load() {
+		$upload_dir = trailingslashit( WP_CONTENT_DIR ) . 'uploads/cbi/cache/';
+		if ( !file_exists( $upload_dir ) ) {
+			mkdir( $upload_dir, 0777, true );
+		}
+	}
+	
+	/**
+	 * Remove the cached contents during unloading of the plugin
+	 */
+	public function unload() {
+		//check if directory exists
+		//remove contents
+	}
+	
 }
 
 $cbi = new CBIShortCode();
 add_shortcode( 'cbi', array ( $cbi, 'loadPage' ) );
+
+register_activation_hook ( __FILE__, array ( $cbi, 'load' ) );
+register_deactivation_hook ( __FILE__, array ( $cbi, 'unload' ) );
 
 	
