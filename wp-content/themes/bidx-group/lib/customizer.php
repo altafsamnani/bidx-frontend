@@ -8,7 +8,7 @@ require_once( ABSPATH . WPINC . '/class-wp-customize-control.php' );
  * 
  * TODO : add font selector
  * TODO : background color or background image selector
- * TODO : remove site tagline settings and frontpage settings
+ * TODO : hide site tagline settings and frontpage settings
  * TODO : add widget selector
  *
  * @link http://codex.wordpress.org/Theme_Customization_API
@@ -27,6 +27,13 @@ class Bidx_Group_Customizer {
 	 */
 	public static function register( $wp_customize ) {
 
+		//remove tagline
+		$wp_customize->remove_section( 'title_tagline');
+		$wp_customize->remove_section( 'static_front_page');
+		
+		//add widget customizer
+		add_theme_support( 'widget-customizer' );
+		
 		Bidx_Group_Customizer :: bidx_logo_customizer( $wp_customize );
 		Bidx_Group_Customizer :: bidx_color_customizer( $wp_customize );
 		Bidx_Group_Customizer :: bidx_fonts_customizer( $wp_customize );
@@ -47,10 +54,10 @@ class Bidx_Group_Customizer {
 				array(
 						'title' => __( 'Logo Settings', 'bidx_group_theme' ),
 						'description' => __( 'Configure logo images here.', 'bidx_group_theme' ),
-						'priority' => 35,
+						'priority' => 10,
 				)
 		);
-		$wp_customize->add_setting('main_logo_selector');
+		$wp_customize->add_setting( 'main_logo_selector' );
 		$wp_customize->add_control(
 				new WP_Customize_Image_Control(
 						$wp_customize,
@@ -63,7 +70,7 @@ class Bidx_Group_Customizer {
 						)
 				)
 		);
-		$wp_customize->add_setting('mobile_logo_selector');
+		$wp_customize->add_setting( 'mobile_logo_selector' );
 		$wp_customize->add_control(
 				new WP_Customize_Image_Control(
 						$wp_customize,
@@ -75,9 +82,21 @@ class Bidx_Group_Customizer {
 								'context'    => 'mobile_logo_settings'
 						)
 				)
-		);		
-		$wp_customize->add_setting('favicon_selector');
-	
+		);			
+		$wp_customize->add_setting( 'favicon_selector' );
+		$wp_customize->add_control(
+				new WP_Customize_Image_Control(
+						$wp_customize,
+						'favicon_selector',
+						array(
+								'label'      => __( 'Upload your favicon', 'bidx_group_theme' ),
+								'section'    => 'logo_settings',
+								'settings'   => 'favicon_selector',
+								'context'    => 'favicon_settings'
+						)
+				)
+		);
+		
 	}
 	
 	/**
@@ -91,41 +110,82 @@ class Bidx_Group_Customizer {
 				array(
 						'title' => __( 'Color Settings', 'bidx_group_theme' ),
 						'description' => __( 'Configure colors here.', 'bidx_group_theme' ),
-						'priority' => 35,
+						'priority' => 20,
 				)
 		);
-		$wp_customize->add_setting('main_color_selector');
+		$wp_customize->add_setting( 'brand-primary', array(
+		        'default'           => '#3498db', //
+		        'sanitize_callback' => 'sanitize_hex_color',
+		        'capability'        => 'edit_theme_options',
+		        'type'              => 'option', 
+		));
 		$wp_customize->add_control( new WP_Customize_Color_Control(
 				$wp_customize,
-				'main_color_selector',
+				'brand-primary',
 				array(
 						'label'      => __( 'Main Color', 'bidx_group_theme' ),
 						'section'    => 'color_settings',
-						'settings'   => 'main_color_selector',
+						'settings'   => 'brand-primary',
 				) )
 		);
-		$wp_customize->add_setting('secondary_color_selector');
+		$wp_customize->add_setting( 'brand-secondary', array(
+		        'default'           => '#1abc9c', //brand-secondary
+		        'sanitize_callback' => 'sanitize_hex_color',
+		        'capability'        => 'edit_theme_options',
+		        'type'              => 'option', 
+		));
 		$wp_customize->add_control( new WP_Customize_Color_Control(
 				$wp_customize,
 				'secondary_color_selector',
 				array(
 						'label'      => __( 'Secondary Color', 'bidx_group_theme' ),
 						'section'    => 'color_settings',
-						'settings'   => 'secondary_color_selector',
+						'settings'   => 'brand-secondary',
 				) )
 		);
-	
-		//background color or background image selector here : WP_Customize_Background_Image_Control()
-		
-		$wp_customize->add_setting('text_dark_or_light');
+		$wp_customize->add_setting( 'brand-background-color', array(
+		        'default'           => '000',
+		        'sanitize_callback' => 'sanitize_hex_color',
+		        'capability'        => 'edit_theme_options',
+		        'type'              => 'option', 
+		));
+		$wp_customize->add_control( new WP_Customize_Color_Control(
+				$wp_customize,
+				'brand-background-color',
+				array(
+						'label'      => __( 'Background Color', 'bidx_group_theme' ),
+						'section'    => 'color_settings',
+						'settings'   => 'brand-background-color',
+				) )
+		);	
+		$wp_customize->add_setting( 'brand-background-color-image', array(
+				        'default'     => '',
+						'capability'  => 'edit_theme_options',
+						'type'        => 'option',
+		));
+		$wp_customize->add_control( new WP_Customize_Image_Control(
+				$wp_customize,
+				'background_image_selector',
+				array(
+						'label'      => __( 'Background Image', 'bidx_group_theme' ),
+						'section'    => 'color_settings',
+						'settings'   => 'brand-background-color-image',
+						'context'    => 'brand-background-color-image'
+				) )
+		);				
+		$wp_customize->add_setting( 'brand-text-tone', array(
+				        'default'     => 'dark',
+						'capability'  => 'edit_theme_options',
+						'type'        => 'option',
+		));
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
-						'text_dark_or_light',
+						'brand-text-tone',
 						array(
-								'label'          => __( 'Dark or light theme version?', 'bidx_group_theme' ),
+								'label'          => __( 'Dark or light text', 'bidx_group_theme' ),
 								'section'        => 'color_settings',
-								'settings'       => 'text_dark_or_light',
+								'settings'       => 'brand-text-tone',
 								'type'           => 'radio',
 								'choices'        => array(
 										'dark'   => __( 'Dark' ),
@@ -140,6 +200,13 @@ class Bidx_Group_Customizer {
 		
 	/**
 	 * Font settings
+	 * 
+	 * FIXME custom and native fonts support instead of only Google
+	 * TODO language selector default setting not in dropdown
+	 * TODO optimize screen usage to make size and font selector cleaner
+	 * TODO Use local/native and external like https://edgewebfonts.adobe.com/
+	 * http://www.rvo.nl/sites/all/themes/custom/agnl_theme/font/rijksoverheidsansheading-regular_2_0.woff
+	 * 
 	 * @param WP_Customize $wp_customize
 	 */
 	private static function bidx_fonts_customizer( $wp_customize ) {
@@ -153,21 +220,46 @@ class Bidx_Group_Customizer {
 				array(
 						'title' => __( 'Font Settings', 'bidx_group_theme' ),
 						'description' => __( 'Configure fonts here.', 'bidx_group_theme' ),
-						'priority' => 35,
+						'priority' => 30,
+				)
+		);
+		
+		$wp_customize->add_setting( 'font_size',
+							array(
+						        'default'        => 'medium',
+								'capability'     => 'edit_theme_options',
+								'type'           => 'option',
+						    ));
+		$wp_customize->add_control(
+				new WP_Customize_Control(
+						$wp_customize,
+						'font_size',
+						array(
+								'label'          => __( 'Font Size', 'bidx_group_theme' ),
+								'section'        => 'font_settings',
+								'settings'       => 'font_size',
+								'type'           => 'radio',
+								'choices'        => array(
+										'large'  => __( 'Large' ),
+										'medium' => __( 'Medium' ),
+										'small'  => __( 'Small' )
+								)
+						)
 				)
 		);
 
-		$wp_customize->add_setting('font_family');
-		
-		$customFontFamilies;
-
+		$wp_customize->add_setting( 'font_family',
+									array(
+								        'default'      => 'Lato',
+								        'capability'   => 'edit_theme_options',
+        								'type'         => 'option',			
+								    ));		
 		$fonts[] = array(
 					"title" => "Ubuntu Condensed",
 					"location" => "Ubuntu+Condensed",
 					"cssDeclaration" => "'Ubuntu Condensed', sans-serif",
 					"cssClass" => "ubuntuCondensed"
-			);
-		
+			);		
 		$fonts[] = array (
 						"title" => "Lato",
 						"location" => "Lato",
@@ -175,8 +267,6 @@ class Bidx_Group_Customizer {
 						"cssClass" => "lato"		
 		);
 		$customFontFamilies = new Google_Font_Collection( $fonts );
-
-
 		$wp_customize->add_control( 
 				new Google_Font_Picker_Custom_Control( $wp_customize, 'font_family_control', array(
 				'label'             => __( 'Font Family', 'bidx_group_theme' ),
@@ -187,35 +277,13 @@ class Bidx_Group_Customizer {
 		) ) );
 	
 	}
-
-	/**
-	 * Returns a select list of Google fonts
-	 * Feel free to edit this, update the fallbacks, etc.
-	 */
-	function options_typography_get_google_fonts() {
-
-		return array(
-				'Arvo, serif' => 'Arvo',
-				'Copse, sans-serif' => 'Copse',
-				'Droid Sans, sans-serif' => 'Droid Sans',
-				'Droid Serif, serif' => 'Droid Serif',
-				'Lobster, cursive' => 'Lobster',
-				'Nobile, sans-serif' => 'Nobile',
-				'Open Sans, sans-serif' => 'Open Sans',
-				'Oswald, sans-serif' => 'Oswald',
-				'Pacifico, cursive' => 'Pacifico',
-				'Rokkitt, serif' => 'Rokkit',
-				'PT Sans, sans-serif' => 'PT Sans',
-				'Quattrocento, serif' => 'Quattrocento',
-				'Raleway, cursive' => 'Raleway',
-				'Ubuntu, sans-serif' => 'Ubuntu',
-				'Yanone Kaffeesatz, sans-serif' => 'Yanone Kaffeesatz'		
-		);
-	}
 	
 	
 	/**
 	 * Alignment settings
+	 * 
+	 * TODO defaulting ????
+	 * 
 	 * @param WP_Customize $wp_customize
 	 */	
 	private static function bidx_alignment_customizer( $wp_customize ) {
@@ -225,10 +293,37 @@ class Bidx_Group_Customizer {
 				array(
 						'title' => __( 'Alignment Settings', 'bidx_group_theme' ),
 						'description' => __( 'Alignment of your elements.', 'bidx_group_theme' ),
-						'priority' => 35,
+						'priority' => 40,
 				)
 		);
-		$wp_customize->add_setting('logo_alignment');
+		$wp_customize->add_setting( 'page_width_selector',
+				array(
+						'default'      => 'full'
+				));
+		$wp_customize->add_control(
+				new WP_Customize_Control(
+						$wp_customize,
+						'page_width_selector',
+						array(
+								'label'          => __( 'Page Width', 'bidx_group_theme' ),
+								'section'        => 'alignment_settings',
+								'settings'       => 'page_width_selector',
+								'type'           => 'select',
+								'choices'        => array(
+										'full'   => __( 'Full' ),
+										'1040'   => __( '1040px' ),
+										'940'    => __( '940px' )
+								)
+						)
+				)
+		);
+				
+		$wp_customize->add_setting( 'logo_alignment',
+									array(
+										'capability'   => 'edit_theme_options',
+								        'default'      => 'left',
+										'type'         => 'option',
+								    ));
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
@@ -246,7 +341,12 @@ class Bidx_Group_Customizer {
 						)
 				)
 		);
-		$wp_customize->add_setting('sidebar_alignment');
+		$wp_customize->add_setting( 'sidebar_alignment',
+									array(
+										'capability'   => 'edit_theme_options',
+								        'default'      => 'right',
+										'type'         => 'option',
+								    ));
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
@@ -258,13 +358,12 @@ class Bidx_Group_Customizer {
 								'type'           => 'radio',
 								'choices'        => array(
 										'left'   => __( 'Left' ),
-										'middle' => __( 'Middle' ),
 										'right'  => __( 'Right' )
 								)
 						)
 				)
 		);
-	
+			
 	}
 		
 	
@@ -279,10 +378,10 @@ class Bidx_Group_Customizer {
 				array(
 						'title' => __( 'Social Network', 'bidx_group_theme' ),
 						'description' => __( 'Configure your social networks', 'bidx_group_theme' ),
-						'priority' => 35,
+						'priority' => 50,
 				)
 		);
-		$wp_customize->add_setting('facebook_url');
+		$wp_customize->add_setting( 'facebook_url' );
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
@@ -295,7 +394,7 @@ class Bidx_Group_Customizer {
 						)
 				)
 		);
-		$wp_customize->add_setting('linkedin_url');
+		$wp_customize->add_setting( 'linkedin_url' );
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
@@ -308,7 +407,7 @@ class Bidx_Group_Customizer {
 						)
 				)
 		);
-		$wp_customize->add_setting('twitter_handle');
+		$wp_customize->add_setting( 'twitter_handle' );
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
@@ -338,10 +437,10 @@ class Bidx_Group_Customizer {
 				array(
 						'title' => __( 'Analytics Settings', 'bidx_group_theme' ),
 						'description' => __( 'Configure your online analytics here', 'bidx_group_theme' ),
-						'priority' => 35,
+						'priority' => 60,
 				)
 		);
-		$wp_customize->add_setting('google_analytics');
+		$wp_customize->add_setting( 'google_analytics' );
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
@@ -373,7 +472,11 @@ class Bidx_Group_Customizer {
 	public static function live_preview() {
 		
 		//SOLUTION HERE IS TO USE less.js AND NOT COMPILE LESS IN THIS CASE 
-		//
+		$WPLessPlugin = WPLessPlugin::getInstance( );
+		//disable the less compiler
+		
+		//add configuration js file to environment
+		//enqueue less.js javascript
 		
 // 		wp_enqueue_script(
 // 			'mytheme-themecustomizer', // Give the script a unique ID
@@ -392,6 +495,6 @@ class Bidx_Group_Customizer {
 add_action( 'customize_register', array( 'Bidx_Group_Customizer' , 'register' )  );
 
 // Enqueue live preview javascript in Theme Customizer admin screen
-add_action( 'customize_preview_init' , array( 'MBidx_Group_Customizer' , 'live_preview' ) );
+add_action( 'customize_preview_init' , array( 'Bidx_Group_Customizer' , 'live_preview' ) );
 
 ?>

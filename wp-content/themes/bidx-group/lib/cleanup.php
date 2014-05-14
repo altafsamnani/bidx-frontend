@@ -204,7 +204,7 @@ add_filter('post_thumbnail_html', 'roots_remove_self_closing_tags'); // <img />
  * Don't return the default description in the RSS feed if it hasn't been changed
  */
 function roots_remove_default_description($bloginfo) {
-  $default_tagline = 'Just another WordPress site';
+  $default_tagline = 'Just another bidx site';
   return ($bloginfo === $default_tagline) ? '' : $bloginfo;
 }
 add_filter('get_bloginfo_rss', 'roots_remove_default_description');

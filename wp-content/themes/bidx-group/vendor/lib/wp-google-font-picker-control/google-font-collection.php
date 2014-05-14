@@ -98,12 +98,13 @@ class Google_Font_Collection
 	 * printThemeCustomizerCssLocations
 	 * this function prints the links to the css files for the theme customizer
 	**/
-	function printThemeCustomizerCssLocations()
+	function printThemeCustomizerCssLocations( $location = '//fonts.googleapis.com/')
 	{
 		foreach ($this->fonts as $key => $value) 
 		{
+			//check if $value->__get("location") is filled else jump
 			?>
-			<link href="//fonts.googleapis.com/css?family=<?= $value->__get("location"); ?>" rel='stylesheet' type='text/css'>
+			<link href="<?= $location ?>css?family=<?= $value->__get("location"); ?>" rel='stylesheet' type='text/css'>
 			<?php
 		}
 	}
