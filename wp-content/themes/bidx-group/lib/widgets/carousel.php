@@ -95,7 +95,7 @@ class Carousel_Widget extends WP_Widget {
 
         // these are the widget options
         $images_id = $instance['select'];
-        $widget_id = $args{'widget_id'};
+        $widget_id = $args['widget_id'];
         echo $before_widget;
 
         if ( count( $images_id ) > 0 )

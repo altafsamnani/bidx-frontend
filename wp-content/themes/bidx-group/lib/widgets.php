@@ -129,3 +129,6 @@ add_action('widgets_init', 'bidx_widgets_init');
 
 // Load the Bidx Widgets
 require_once locate_template('lib/widgets/carousel.php');
+require_once locate_template('lib/widgets/sponsors.php');
+require_once locate_template('lib/widgets/promo.php');
+require_once locate_template('lib/widgets/button.php');
