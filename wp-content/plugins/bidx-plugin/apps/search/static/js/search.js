@@ -38,6 +38,20 @@
             SEARCH_LIMIT:                       10
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
         ,   LOAD_COUNTER:                       0
+        ,   ENTITY_TYPES:                       [
+                                                    {
+                                                        "type": "bidxMemberProfile"
+                                                    },
+                                                    {
+                                                        "type": "bidxInvestorProfile"
+                                                    },
+                                                    {
+                                                        "type": "bidxEntrepeneurProfile"
+                                                    },
+                                                    {
+                                                        "type": "bidxBusinessSummary"
+                                                    }
+                                                ]
         }
 
     ,   tempLimit = CONSTANTS.SEARCH_LIMIT
@@ -78,7 +92,10 @@
                 var q          = $frmSearch.find( "[name='q']" ).val();
 
                 _getSearchList(
-                {   q :   q
+                {
+                    params  :   {
+                                    q : q
+                                }
                 ,   cb:   function()
                         {
                            _hideView( "load" );
@@ -240,43 +257,96 @@
 
     };
 
+    function _doSorting( options )
+    {
+        var $this
+        ,   type
+        ,   sort
+        ,   sortOrder
+        ,   criteriaSort
+        ,   criteria = options.criteria
+
+        ,   $sortItems = $views.filter( bidx.utils.getViewName( 'sort') )        ;
+
+
+            $sortItems.find("[data-sort]").each( function()
+            {
+                $this = $( this );
+                // get the base href fron data-href and modify it for this message
+                //
+                if ( $this.attr( "data-type" ) )
+                {
+                    type = $this.attr( "data-type" );
+
+                    $this.on('click', function( e )
+                    {
+                        e.preventDefault();
+
+                        sort            =   $this.data('type');
+                        sortOrder       =   $this.data('sort');
+                        criteriaSort    =   {
+                                                    "field" : sort
+                                                ,   "order":  sortOrder
+                                            }
+                        ;
+
+                        $this.data('sort',($this.data('sort') === 'asc' ? 'desc' : 'asc'));
+
+                        bidx.utils.log('Original sort criteria=', criteria);
+                        //For search filtering add the current filter
+                        criteria.sort.push( criteriaSort );
+
+                        //Make offset 0 for filtering so start from begining
+                        paging.search.offset = 0;
+                        //set the max records limit to 10
+                        tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                        bidx.utils.log('Sort clicked on sort =', sort);
+                        bidx.utils.log('After sort criteria=', criteria);
+
+                        navigate(
+                        {
+                            state   :   'list'
+                        ,   params  :   {
+                                            q           :   options.q
+                                        ,   sort        :   criteria.sort
+                                        ,   filters     :   criteria.filters
+                                        }
+                        });
+
+                    });
+
+                }
+            });
+    }
+
     /* Get the search list
     Sample
     bidxBusinessGroup - 8747 - Cleancookstoves
-    entityTypes": [
-                  {
-                    "type": "bidxMemberProfile"
-                  },
-                  {
-                    "type": "bidxInvestorProfile"
-                  },
-                  {
-                    "type": "bidxEntrepeneurProfile"
-                  },
-                  {
-                    "type": "bidxBusinessSummary"
-                  }
-                ]
     */
+
 
     function _doFacetListing(options)
     {
         var snippit         = $("#facet-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   subsnippit      = $("#facetsub-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty      = $("#error-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   criteria        = options.criteria
         ,   response        = options.response
         ,   $list           = $element.find(".facet-list")
-        ,   $listFacets
-        ,   $div            = $('<div />')
         ,   emptyVal        = ''
         ,   $listItem
         ,   $listFacetsItem
+        ,   $listAnchor
+        ,   newname
         ,   listItem
         ,   listFacetsItem
         ,   facetValues
         ,   facetLabel
         ,   itemName
         ,   industry
+        ,   anchorFacet
+        ,   facetCriteria = {}
         ;
 
         $list.empty();
@@ -291,10 +361,18 @@
 
                 facetValues    = bidx.utils.getValue( facetitems, "facetValues" );
                 facetLabel     = bidx.i18n.i( facetitems.name, appName );
-                $listFacets    = $div.clone();
+
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
+
+                    listItem = snippit
+                                .replace( /%facets_name%/g,             facetitems.name    ? bidx.i18n.i( facetitems.name, appName ) : emptyVal );
+
+                    $listItem  = listItem;
+
+                    $list.append($listItem );
+
                     $.each( facetValues , function ( idf, item )
                     {
 
@@ -307,41 +385,64 @@
                             item.name    = bidx.i18n.i( item.name, appName );
                         }
 
-                        listFacetsItem = subsnippit
-                            .replace( /%facetValues_name%/g,       item.name    ? item.name      : emptyVal )
-                            .replace( /%facetValues_count%/g,       item.count    ? item.count      : emptyVal )
-                            ;
+                        if( item.name ) {
+                            newname = item.name.replace(/ /g, '');
 
-                        // execute cb function
-                        //
-                        $listFacetsItem = $( listFacetsItem );
+                            listFacetsItem = subsnippit
+                                .replace( /%facetValues_name%/g,       item.name    ? item.name      : emptyVal )
+                                .replace( /%facetValues_anchor%/g,       item.name    ? newname      : emptyVal )
+                                .replace( /%facetValues_count%/g,       item.count    ? item.count      : emptyVal )
+                                ;
+
+                            // execute cb function
+                            //
+                            $listFacetsItem = $( listFacetsItem );
+
+                            //facetCriteria [newname]  = item.filterQuery;
+
+                            $list.append($listFacetsItem);
+
+                            //bidx.utils.log( facetCriteria);
 
 
-                        //  add mail element to list
-                        $listFacets.append( $listFacetsItem );
+                            //bidx.utils.log($listAnchor);
+                            $listAnchor = $list.find('.'+ newname);
+
+                            $listAnchor.on('click', function( e )
+                            {
+                                e.preventDefault();
+
+                                bidx.utils.log('Original criteria=', criteria);
+                                //For search filtering add the current filter
+                                criteria.filters.push( item.filterQuery );
+                                //Make offset 0 for filtering so start from begining
+                                paging.search.offset = 0;
+                                //set the max records limit to 10
+                                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                                bidx.utils.log('Filter clicked with q=', options.q);
+                                bidx.utils.log('Filter sort=', options.sort);
+                                bidx.utils.log('Filter criteria=', criteria);
+
+                                navigate(
+                                {
+                                    state   :   'list'
+                                ,   params  :   {
+                                                    q           :   options.q
+                                                ,   sort        :   options.sort
+                                                ,   filters     :   criteria.filters
+                                                }
+                                });
+
+                            });
+
+                        }
 
                     });
-
-
-                    listItem = snippit
-                                .replace( /%facets_name%/g,             facetitems.name    ? bidx.i18n.i( facetitems.name, appName ) : emptyVal )
-                                .replace( /%facetValues_block%/g,       $listFacets        ? $listFacets.html()      : emptyVal )
-                    ;
-
-                    $listItem  = listItem;
-                    $list.append($listItem);
                 }
 
             });
 
-
-
-            /*if( $.isFunction( options.cb ) )
-            {
-                // call Callback with current contact item as this scope and pass the current $listitem
-                //
-                options.cb.call( this, $listItem, item );
-            }*/
         }
         else
         {
@@ -349,59 +450,95 @@
         }
     }
 
-    function _getSearchList( options )
-    {
-        var searchTerm
-        ,   sortQuery   = []
-        ,   q           = options.q
-        ,   sort        = options.sort
+    function _getSearchCriteria ( params ) {
+
+        var q
+        ,   sort
+        ,   filters
+        ,   criteria
+        ,   criteriaQ
+        ,   paramFilter
+        ,   search
+        ,   sortQuery       = []
+        ,   criteriaFilters = []
+        ,   criteriaSort    = []
         ;
 
-        searchTerm = (q) ? q : '*';
+        /**********************************
+        *********1. Search parameter*******
+        *****ex searchTerm:text:altaf******/
+
+        //See if its coming from the search page itself(if) or from the top(else)
+        q = bidx.utils.getValue( params, 'q' );
+
+        if ( !q )
+        {
+            var url = document.location.href.split( "#" ).shift();
+            q = bidx.utils.getQueryParameter( "q", url );
+
+        }
+
+        if ( q !== '*')
+        {
+            $frmSearch.find( "[name='q']" ).val(q);
+        }
+
+        criteriaQ = (q) ? q : '*';
+
+        /***************************************************
+        *********2. Sort criteria***************************
+        *****ex sort:["field":"entity", "order": asc ]******/
+
+        sort = bidx.utils.getValue( params, 'sort' );
 
         if( sort )
         {
 
-            var $sortElement    =   $sortView.find("."+sort)
-            ,   $sortOrder      =   $sortElement.data('sort');
-                sortQuery       =   [
-                                        {
-                                            "field" : sort
-                                        ,   "order":  $sortOrder
-                                        }
-                                    ];
-        $sortElement.data('sort',($sortElement.data('sort') === 'asc' ? 'desc' : 'asc'));
+            criteriaSort    =   sort ;
 
         }
 
-        var criteria        =
-            {
-                "searchTerm": "text:" + searchTerm
-            ,   "facetsVisible":true
-            ,   "maxResult":tempLimit
-            ,   "offset" : paging.search.offset
-            ,   "sort"   : sortQuery
-            ,   "entityTypes": [
-                  {
-                    "type": "bidxMemberProfile"
-                  },
-                  {
-                    "type": "bidxInvestorProfile"
-                  },
-                  {
-                    "type": "bidxEntrepeneurProfile"
-                  },
-                  {
-                    "type": "bidxBusinessSummary"
-                  }
-                ]
-            };
+        /***************************************************
+        *********3. Filter *********************************
+        *****ex filters:["0": "facet_language:fi" ]******/
+        filters = bidx.utils.getValue(params, 'filters' );
+
+        if(  filters )
+        {
+            criteriaFilters = filters;
+        }
+
+        search =    {
+                        q           :   criteriaQ
+                    ,   sort        :   criteriaSort
+                    ,   criteria    :   {
+                                            "searchTerm"    :   "text:" + criteriaQ
+                                        ,   "filters"       :   criteriaFilters
+                                        ,   "sort"          :   criteriaSort
+                                        ,   "maxResult"     :   tempLimit
+                                        ,   "offset"        :   paging.search.offset
+                                        ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
+                                        ,   "facetsVisible" :   true
+                                        }
+                    };
+
+
+
+        return search;
+
+    }
+    function _getSearchList( options )
+    {
+        var search
+        ;
+
+        search = _getSearchCriteria( options.params );
 
         bidx.api.call(
             "search.get"
         ,   {
                 groupDomain:          bidx.common.groupDomain
-            ,   data:                 criteria
+            ,   data:                 search.criteria
 
             ,   success: function( response )
                 {
@@ -409,17 +546,26 @@
 
                     _doFacetListing(
                     {
-                        response:       response
-                    //,   cb      :       _getFacetCallback( 'ended' )
-                    ,   q:              options.q
+                        response    :   response
+                    ,   q           :   search.q
+                    ,   sort        :   search.sort
+                    ,   criteria    :   search.criteria
                     } );
 
+                    _doSorting(
+                    {
+                        response    :   response
+                    ,   q           :   search.q
+                    ,   sort        :   search.sort
+                    ,   criteria    :   search.criteria
+                    } );
 
                     _doSearchListing(
                     {
                         response:       response
+                    ,   q:              search.q
+                    ,   sort:           search.sort
                     ,   cb:             options.cb
-                    ,   q:              options.q
                     } );
 
 
@@ -515,16 +661,18 @@
 
                      _getSearchList(
                     {
-                        q       : options.q
-                    ,   sort    : options.sort
-                    ,   cb      : function()
-                                {
-                                    _toggleListLoading( $element );
-                                    _hideView( "load" );
-                                    _showAllView( "pager" );
-                                    _showAllView( "sort" );
-                                    tempLimit = CONSTANTS.SEARCH_LIMIT;
-                                }
+                        params  :   {
+                                        q       : options.q
+                                    ,   sort    : options.sort
+                                    }
+                    ,   cb      :   function()
+                                    {
+                                        _toggleListLoading( $element );
+                                        _hideView( "load" );
+                                        _showAllView( "pager" );
+                                        _showAllView( "sort" );
+                                        tempLimit = CONSTANTS.SEARCH_LIMIT;
+                                    }
                     });
                 }
             };
@@ -642,6 +790,7 @@
         else
         {
             $list.empty();
+
             $list.append($listEmpty);
 
             if( $.isFunction( options.cb ) )
@@ -1258,30 +1407,7 @@
     {
         bidx.utils.log("[group] navigate", options );
 
-        var q
-        ,   sort
-        ,   paramSort
-        ;
-        //See if its coming from the search page itself(if) or from the top(else)
-        q = bidx.utils.getValue('options','params.q');
-        if ( q )
-        {
-            $frmSearch.find( "[name='q']" ).val(q);
-        }
-        else
-        {
-            var url = document.location.href.split( "#" ).shift();
-            q = bidx.utils.getQueryParameter( "q", url );
-            $frmSearch.find( "[name='q']" ).val(q);
-            bidx.utils.log('q paramsssss', url, q);
-        }
 
-
-        paramSort = bidx.utils.getValue('options','params.sort');
-        if(  paramSort )
-        {
-            sort = paramSort;
-        }
 
         switch ( options.state )
         {
@@ -1299,16 +1425,15 @@
                 //
                 _getSearchList(
                 {
-                    q:    q
-                ,   sort: sort
-                ,   cb:   function()
-                        {
-                           _hideView( "load" );
-                           _toggleListLoading( $element );
-                           tempLimit = CONSTANTS.SEARCH_LIMIT;
-                           //_showAllView( "pager" );
+                    params      : options.params
+                ,   cb          :   function()
+                                    {
+                                       _hideView( "load" );
+                                       _toggleListLoading( $element );
+                                       tempLimit = CONSTANTS.SEARCH_LIMIT;
+                                       //_showAllView( "pager" );
 
-                        }
+                                    }
                 });
 
             break;

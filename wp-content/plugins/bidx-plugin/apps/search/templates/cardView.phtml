@@ -39,16 +39,16 @@
                                 <h5><?php _e('Sort by:', 'bidxplugin');?></h5>
                             </div>
                             <div class="col-sm-2">
-                                <h6><a href="#search/list/sort=relevance" data-sort="asc" class="relevance"><?php _e('Relevance', 'bidxplugin');?></a></h6>
+                                <h6><a data-type="relevance" data-sort="asc" class="relevance"><?php _e('Relevance', 'bidxplugin');?></a></h6>
                             </div>
                             <div class="col-sm-2">
-                                <h6><a href="#search/list/sort=country" data-sort="asc" class="country"><?php _e('Country', 'bidxplugin');?></a></h6>
+                                <h6><a data-type="country"  data-sort="asc" class="country"><?php _e('Country', 'bidxplugin');?></a></h6>
                             </div>
                             <div class="col-sm-2">
-                                <h6><a href="#search/list/sort=industry" data-sort="asc" class="industry"><?php _e('Industry', 'bidxplugin');?></a></h6>
+                                <h6><a data-type="industry" data-sort="asc" class="industry"><?php _e('Industry', 'bidxplugin');?></a></h6>
                             </div>
                             <div class="col-sm-4">
-                                <h6><a href="#search/list/sort=entityId" data-sort="asc" class="entityId"><?php _e('Date', 'bidxplugin');?></a></h6>
+                                <h6><a data-type="entityId" data-sort="asc" class="entityId"><?php _e('Date', 'bidxplugin');?></a></h6>
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                 </div>
 
             </div>
-            <div class="col-sm-4 hide">
+            <div class="col-sm-4">
                 <div class="side-bar well sideBar">
                     <article class="viewFacet">
                          <div class="media-list facet-list">
@@ -96,17 +96,14 @@
 
         <!-- Html Templates for blocks -->
         <script type="text/html" id="facet-listitem">
-            <div class="row">
                 <div class="col-sm-12">
                     <span class="facetTitle"><h4>%facets_name%</h4></span>
                 </div>
-                <div class="col-sm-10 col-sm-offset-2">%facetValues_block%</div>
-            </div>
         </script>
         <!-- Html Templates for blocks -->
         <script type="text/html" id="facetsub-listitem">
-            <div class="facetSubTitle">
-                    <a href="%facetValues_criteria%">%facetValues_name%(%facetValues_count%)</a>
+            <div class="col-sm-12 col-sm-offset-2 facetSubTitle">
+                    <a href="#" class="%facetValues_anchor%">%facetValues_name%(%facetValues_count%)</a>
             </div>
         </script>
 
