@@ -18,7 +18,7 @@
  * 	--- Environment specific settings ---
  */
 
-/** what environment : local/test/acceptance or empty for production**/
+/** what environment : local/test/acceptance/demo or empty for production**/
 define('BIDX_ENV', 'local');
 
 //replace this by automatic value and connect to backend.test.bidnet.vc:8080
