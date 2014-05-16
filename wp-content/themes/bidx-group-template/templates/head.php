@@ -40,9 +40,10 @@ ga('send', 'pageview');
 	foreach ( $analytics as $key ) {
 		//add check if not empty
 		$tracker = trim($key) ;
+		$tracker_name = str_replace( "-", "", $tracker );
 		if ( !empty ( $tracker ) ) {
-?>ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker ?>'});
-ga('<?php echo $tracker ?>.send', 'pageview');
+?>ga('create', '<?php echo $tracker ?>' , 'auto', {'name': '<?php echo $tracker_name ?>'});
+ga('<?php echo $tracker_name ?>.send', 'pageview');
 <?php
 		}
 	}
