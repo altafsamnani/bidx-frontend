@@ -132,3 +132,8 @@ require_once locate_template('lib/widgets/carousel.php');
 require_once locate_template('lib/widgets/sponsors.php');
 require_once locate_template('lib/widgets/promo.php');
 require_once locate_template('lib/widgets/button.php');
+require_once locate_template('lib/widgets/latest_posts.php');
+require_once locate_template('lib/widgets/latest_businesses.php');
+require_once locate_template('lib/widgets/latest_members.php');
+require_once locate_template('lib/widgets/starthere.php');
+require_once locate_template('lib/widgets/video.php');
