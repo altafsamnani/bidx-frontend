@@ -76,6 +76,11 @@ if ( !defined('WP_ANONYMOUS_ROLE') ) {
 }
 
 /******** Bidx API Roles **************/
+/* Bidx Platform Admin */
+if ( !defined('BIDX_SUPERADMIN_ROLE') ) {
+    define( 'BIDX_SUPERADMIN_ROLE', 'SysAdmin' );
+}
+
 /* Bidx Group Owner Role */
 if ( !defined('BIDX_OWNER_ROLE') ) {
     define( 'BIDX_OWNER_ROLE', 'GroupOwner' );
@@ -93,8 +98,7 @@ if ( !defined('BIDX_MEMBER_ROLE') ) {
 
 /**** Bidx Login Priority who should login first ***/
 if ( !defined('BIDX_LOGIN_PRIORITY') ) {
-    //define( 'BIDX_LOGIN_PRIORITY', WP_OWNER_ROLE.'|'.WP_ADMIN_ROLE.'|'.WP_MEMBER_ROLE);
-    define( 'BIDX_LOGIN_PRIORITY', BIDX_OWNER_ROLE.'|'.BIDX_ADMIN_ROLE.'|'.BIDX_MEMBER_ROLE);
+    define( 'BIDX_LOGIN_PRIORITY', BIDX_SUPERADMIN_ROLE.'|'.BIDX_OWNER_ROLE.'|'.BIDX_ADMIN_ROLE.'|'.BIDX_MEMBER_ROLE);
 }
 
 //SLOW !!

@@ -81,14 +81,14 @@ function bidx_redirect_login ($groupDomain)
  * @return Loggedin User
  */
 
-function bidx_login_session ()
+/*function bidx_login_session ()
 {
 
     $body['domain'] = get_bidx_subdomain ();
 
     $get_redirect = ($_GET['q']) ? $_GET['q'] : NULL;
 
-    /*     * ** Assumed if redirect in Get means session is already checked and is asking for uname/pass and then redirect ** */
+    //Assumed if redirect in Get means session is already checked and is asking for uname/pass and then redirect
     if ($get_redirect == NULL) {
 
         $result = call_bidx_service ('session', $body, $method = 'GET');
@@ -105,7 +105,7 @@ function bidx_login_session ()
     }
 
     return;
-}
+}*/
 
 /*
  * @author Altaf Samnani
@@ -179,7 +179,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 
 
     $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
-  
+
     $logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $bidxMethod, var_export ($body, true), var_export ($headers, true), var_export ($cookieArr, true)));
 
 
@@ -206,7 +206,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
                                                'domain'   => $sendDomain,
                                                'httpOnly' => $bidxAuthCookie->httponly);
             }
-            
+
             if($urlservice == 'session' && $bidxMethod == 'POST') {
                 bidx_skipso_competition ( $competitionCookieVals );
             }
@@ -228,7 +228,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
  * @return String Injects js variables
  */
 function bidx_skipso_competition ( $competitionCookieVals )
-{    
+{
     if (!isset ($_COOKIE['bidx-skipso-competition'])) {
         $isCompetition = get_option ('skipso-competition');
         $cookieName    = 'bidx-skipso-competition';
@@ -238,7 +238,7 @@ function bidx_skipso_competition ( $competitionCookieVals )
             $_COOKIE[$cookieName] = $cookieVal;
         }
     }
-   
+
     return;
 }
 
@@ -333,7 +333,7 @@ add_action ('wp_ajax_bidx_signout', 'bidx_signout');
 add_action ('wp_ajax_nopriv_bidx_signout', 'bidx_signout');
 
 function bidx_signout ()
-{    
+{
     $provider = (isset ($_GET['provider'])) ? $_GET['provider'] : NULL;
 
     //Logout Bidx Session too
@@ -964,13 +964,13 @@ function get_redirect ($url, $requestData, $domain = NULL)
     // check if a user specifc Redirect is set in the userPreference
     //
     if (isset ($requestData->data->bidxMemberProfile->userPreferences->firstLoginUrl) && isset ($requestData->data->bidxMemberProfile->userPreferences->firstLoginGroup)) {
-   
+
         $groupName      = $requestData->data->bidxMemberProfile->userPreferences->firstLoginGroup;
         $firstLogin     = $requestData->data->bidxMemberProfile->userPreferences->firstLoginUrl;
         // added bidx_wp_content function to handle preferences
-        
+
         $redirect = '//' . $groupName . '.' . DOMAIN_CURRENT_SITE . '/' . $firstLogin;
-        
+
     }
 
     /*     * ***** Decide on Redirect/Submit Logic ********** */
@@ -1049,7 +1049,7 @@ function bidx_wordpress_post_action ($url, $result, $body)
         $requestData->text .= $error;
         //$this->clear_wp_bidx_session ();
     } else {
-        $requestData->status = 'ERROR';        
+        $requestData->status = 'ERROR';
     }
 
     //Write logic what If error and what if its ok (ex Redirect)
@@ -1076,17 +1076,13 @@ function bidx_wordpress_post_action ($url, $result, $body)
                     if (!empty ($displayData->roles)) {
                         $roleArray = $displayData->roles;
                         $bidxLoginPriority = explode ('|', BIDX_LOGIN_PRIORITY);
-                        if (in_array ("SysAdmin", $roleArray)) {
-                            //$username = 'admin';
+                        if (in_array ($bidxLoginPriority[0], $roleArray)) {
                             $username = 'admin';
-                        } else if (in_array ($bidxLoginPriority[0], $roleArray)) {
-
-                            $username = $groupName . WP_OWNER_ROLE;
                         } else if (in_array ($bidxLoginPriority[1], $roleArray)) {
-
-                            $username = $groupName . WP_ADMIN_ROLE;
+                            $username = $groupName . WP_OWNER_ROLE;
                         } else if (in_array ($bidxLoginPriority[2], $roleArray)) {
-
+                            $username = $groupName . WP_ADMIN_ROLE;
+                        } else if (in_array ($bidxLoginPriority[3], $roleArray)) {
                             $username = $groupName . WP_MEMBER_ROLE;
                         }
                     }
@@ -1932,7 +1928,7 @@ Name: %3$s'), $userName, get_site_url ($id), stripslashes ($groupName));
                 restore_current_blog ();
             }
 
-         
+
 
 /* Alter Network Admin menus to get Bidx branding
  * Reference http://wordpress.stackexchange.com/questions/7290/remove-custom-post-type-menu-for-none-administrator-users
@@ -2356,7 +2352,7 @@ function bidx_general_settings() {
                         <p>" . __ ('bidX options are updated succesfully.', 'bidxplugin') . "
                         </p>
                     </div>";
-            
+
             echo $html;
         }
     }
@@ -2369,7 +2365,7 @@ function bidx_general_settings() {
 function bidx_skipso_settings ()
 {
     require_once(BIDX_PLUGIN_DIR . '/dashboard/dashboard.php');
-    
+
     if (isset ($_POST['action'])) {
         $action = $_POST['action'];
         $html = '';
@@ -2561,7 +2557,7 @@ function bidx_wp_content() {
 //			'bidx-location','bidx-chosen', 'typeahead'
 //	);
 //            wp_enqueue_script( 'memberpreference',		$bidxPreferencePath , array(), '20130808', TRUE );
-            
+
             echo do_shortcode ("[bidx app='content']");
             break;
 

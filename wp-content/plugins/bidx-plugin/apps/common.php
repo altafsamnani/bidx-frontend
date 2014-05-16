@@ -24,6 +24,7 @@ class BidxCommon
     public function __construct ()
     {
         $this->subDomain = self::get_bidx_subdomain ();
+
     }
 
     public function getBidxSessionAndScript ()
@@ -58,6 +59,8 @@ class BidxCommon
         if (!$is_ajax) {
             // To check whther its login page or q= redirect already checked session.
             $checkSession = $this->checkSession ();
+
+
 
             if ($checkSession) {
 
@@ -371,13 +374,13 @@ class BidxCommon
         return;
     }
 
-    function redirectToLogin ()
+/*    function redirectToLogin ()
     {
         $http = (is_ssl ()) ? 'https://' : 'http://';
         $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/auth';
         header ("Location: " . $redirect_url);
         exit;
-    }
+    }*/
 
     /**
      * Bidx Logn redirect for Not Logged in users
@@ -489,7 +492,7 @@ class BidxCommon
             //$hostAddress[1]   == 'registration'                   ||
             || (isset($hostAddress[2]) && strstr ($hostAddress[2], 'admin-ajax.php'))
             || strstr ($hostAddress[1], 'wp-login.php')
-            || is_super_admin()
+            || (is_super_admin() && preg_match ('/wp-admin/i', $hostAddress[2]) )
             || in_array('administrator', $currentRoles)
             ) { //Allow Groupadmin for wp-admin dashboard
             $isCheck = false;
@@ -510,10 +513,11 @@ class BidxCommon
         $serverUri = $_SERVER["REQUEST_URI"];
         $currentUser = wp_get_current_user ();
         $currentRoles = $currentUser->roles;
-        $iswpInternalVar = ((is_super_admin())
-                            || preg_match ('/wp-login/i', $serverUri)
+        $iswpInternalVar = (   preg_match ('/wp-login/i', $serverUri)
                             || preg_match ('/admin-ajax/i', $serverUri)
-                            || in_array('administrator', $currentRoles) );
+                            || in_array('administrator', $currentRoles)
+                            || (is_super_admin() && preg_match ('/wp-admin/i', $serverUri))
+                            );
         return $iswpInternalVar;
     }
 
@@ -529,13 +533,20 @@ class BidxCommon
             $roles = $sessionData->data->roles;
             $currentUser = wp_get_current_user ();
             $bidxLoginPriority = explode('|',BIDX_LOGIN_PRIORITY);
+
             if (in_array ($bidxLoginPriority[0], $roles)) {
+                $userName = $groupName . BIDX_SUPERADMIN_ROLE;
+            }
+            else if (in_array ($bidxLoginPriority[1], $roles)) {
                 $userName = $groupName . WP_OWNER_ROLE;
-            }else if (in_array ($bidxLoginPriority[1], $roles)) {
+            }
+            else if (in_array ($bidxLoginPriority[2], $roles)) {
                 $userName = $groupName . WP_ADMIN_ROLE;
-            } else {
+            }
+            else {
                 $userName = $groupName . WP_MEMBER_ROLE;
             }
+
 
             //If currently Logged in dont do anything
             if ($currentUser && isset ($currentUser->user_login) && $userName == $currentUser->user_login) {

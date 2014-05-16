@@ -1,6 +1,7 @@
 <?php
 $member         = isset($this->data->member->displayName) ?  $this->data->member->displayName: NULL ;
 $entities       = $this->sessionData->data->wp->entities;
+$isSuperAdmin   = is_super_admin();
 ?>
 <div class="block-odd member">
     <div class="clearfix">
@@ -44,7 +45,21 @@ $entities       = $this->sessionData->data->wp->entities;
             <div class="side-bar well">
 
 <?php
-    if ( isset($this->data->isMyProfile) && $this->data->isMyProfile) {
+    if( $isSuperAdmin ) {
+?>
+    <h2><?php _e('Admin functionality', 'bidxplugin')?></h2>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong><?php _e('Wordpress dashboard', 'bidxplugin')?></strong>
+        </div>
+        <div class="panel-body">
+            <em><?php _e('Visit wordpress dashboard', 'bidxplugin')?></em>
+            <a href="/wp-admin" class="btn btn-primary pull-right"><i class="fa fa-eye"></i> <?php _e('Visit','bidxplugin')?></a>
+        </div>
+    </div>
+<?php
+    }
+    else if ( isset($this->data->isMyProfile) && $this->data->isMyProfile ) {
 ?>
             <h2><?php _e('Create and grow', 'bidxplugin')?></h2>
 <?php
