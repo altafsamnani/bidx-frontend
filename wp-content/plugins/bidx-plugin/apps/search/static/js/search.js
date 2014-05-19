@@ -259,65 +259,94 @@
 
     function _doSorting( options )
     {
-        var $this
-        ,   type
-        ,   sort
+        var snippit    = $("#sort-listitem").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $list           = $element.find(".sort-list")
+        ,   criteria        = options.criteria
+        ,   originalSort    = options.sort
+        ,   listSortItem
+        ,   sortValue
+        ,   $this
+        ,   $listSortItem
+        ,   $listAnchor
+        ,   $originalList
+        ,   sort            = { }
+        ,   sortField
         ,   sortOrder
+        ,   sortType
+        ,   newSortOrder
+        ,   origSortOrder
         ,   criteriaSort
-        ,   criteria = options.criteria
+        ,   sortEntityId
+        ,   sortCountry
+        ,   sortIndustry
+        ,   sortRelevance
+        ;
 
-        ,   $sortItems = $views.filter( bidx.utils.getViewName( 'sort') )        ;
+        $originalList = $list;
+
+        $list.empty();
+
+        /***********Adjusting Sort asc/desc values *************/
+
+        sortRelevance   =   bidx.utils.getValue( originalSort, 'relevance' );
+        sortIndustry    =   bidx.utils.getValue( originalSort, 'industry' );
+        sortCountry     =   bidx.utils.getValue( originalSort, 'country' );
+        sortEntityId    =   bidx.utils.getValue( originalSort, 'entityId' );
+
+        listSortItem    =   snippit
+                                .replace( /%relevance%/g,   ( sortRelevance && sortRelevance === 'asc')   ? 'desc'     : 'asc' )
+                                .replace( /%industry%/g,    ( sortIndustry  && sortIndustry === 'asc')    ? 'desc'     : 'asc' )
+                                .replace( /%country%/g,     ( sortCountry   && sortCountry === 'asc')     ? 'desc'     : 'asc' )
+                                .replace( /%entityId%/g,    ( sortEntityId  && sortEntityId === 'asc')    ? 'desc'     : 'asc' )
+                            ;
+
+        $listSortItem   = $( listSortItem );
+
+        $list.append( $listSortItem );
+
+        $listAnchor = $list.find('.sort');
+
+        $listAnchor.on('click', function( e )
+        {
+            e.preventDefault();
+
+            //origSortOrder   =   $originalList.find("[data-type = " + sortField + "]").data('sort');
+            //newSortOrder    =   (sortOrder === 'asc') ? 'desc' : 'asc';
+            $this = $( this );
+            sortField       =   $this.data('type');
+            sortOrder       =   $this.data('order');
 
 
-            $sortItems.find("[data-sort]").each( function()
+            bidx.utils.log('Sort clicked on sortField =', sortField);
+            bidx.utils.log('Sort Order', sortOrder);
+            bidx.utils.log('Original sort criteria=', criteria);
+
+            //For search filtering add the current filter
+            sort [ sortField ] = sortOrder;
+
+            //Make offset 0 for filtering so start from begining
+            paging.search.offset = 0;
+
+            //set the max records limit to 10
+            tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+            bidx.utils.log('After sort criteria=', sort);
+
+            navigate(
             {
-                $this = $( this );
-                // get the base href fron data-href and modify it for this message
-                //
-                if ( $this.attr( "data-type" ) )
-                {
-                    type = $this.attr( "data-type" );
-
-                    $this.on('click', function( e )
-                    {
-                        e.preventDefault();
-
-                        sort            =   $this.data('type');
-                        sortOrder       =   $this.data('sort');
-                        criteriaSort    =   {
-                                                    "field" : sort
-                                                ,   "order":  sortOrder
-                                            }
-                        ;
-
-                        $this.data('sort',($this.data('sort') === 'asc' ? 'desc' : 'asc'));
-
-                        bidx.utils.log('Original sort criteria=', criteria);
-                        //For search filtering add the current filter
-                        criteria.sort.push( criteriaSort );
-
-                        //Make offset 0 for filtering so start from begining
-                        paging.search.offset = 0;
-                        //set the max records limit to 10
-                        tempLimit = CONSTANTS.SEARCH_LIMIT;
-
-                        bidx.utils.log('Sort clicked on sort =', sort);
-                        bidx.utils.log('After sort criteria=', criteria);
-
-                        navigate(
-                        {
-                            state   :   'list'
-                        ,   params  :   {
-                                            q           :   options.q
-                                        ,   sort        :   criteria.sort
-                                        ,   filters     :   criteria.filters
-                                        }
-                        });
-
-                    });
-
-                }
+                state   :   'list'
+            ,   params  :   {
+                                q           :   options.q
+                            ,   sort        :   sort
+                            ,   filters     :   criteria.filters
+                            ,   type        :   'sort'
+                            }
             });
+
+        });
+
+
+
     }
 
     /* Get the search list
@@ -333,11 +362,15 @@
         ,   $listEmpty      = $("#error-listitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   criteria        = options.criteria
         ,   response        = options.response
+        ,   $mainFacet      = $element.find(".main-facet")
         ,   $list           = $element.find(".facet-list")
         ,   emptyVal        = ''
         ,   $listItem
         ,   $listFacetsItem
         ,   $listAnchor
+        ,   $listClose
+        ,   $viewFacetItem
+        ,   $this
         ,   newname
         ,   listItem
         ,   listFacetsItem
@@ -346,7 +379,9 @@
         ,   itemName
         ,   industry
         ,   anchorFacet
+        ,   isCriteriaSelected
         ,   facetCriteria = {}
+        ,   filterQuery
         ;
 
         $list.empty();
@@ -385,56 +420,34 @@
                             item.name    = bidx.i18n.i( item.name, appName );
                         }
 
-                        if( item.name ) {
+                        if( item.name )
+                        {
                             newname = item.name.replace(/ /g, '');
 
                             listFacetsItem = subsnippit
                                 .replace( /%facetValues_name%/g,       item.name    ? item.name      : emptyVal )
                                 .replace( /%facetValues_anchor%/g,       item.name    ? newname      : emptyVal )
                                 .replace( /%facetValues_count%/g,       item.count    ? item.count      : emptyVal )
+                                .replace( /%filterQuery%/g,       item.filterQuery    ? item.filterQuery      : emptyVal)
                                 ;
 
                             // execute cb function
                             //
                             $listFacetsItem = $( listFacetsItem );
 
-                            //facetCriteria [newname]  = item.filterQuery;
-
-                            $list.append($listFacetsItem);
-
                             //bidx.utils.log( facetCriteria);
 
 
-                            //bidx.utils.log($listAnchor);
-                            $listAnchor = $list.find('.'+ newname);
+                            /*******Display Close button for criteria********/
 
-                            $listAnchor.on('click', function( e )
+                            if($.inArray(item.filterQuery, criteria.filters) !== -1)
                             {
-                                e.preventDefault();
+                                $viewFacetItem = $listFacetsItem.find('.view');
+                                _showElement('close', $viewFacetItem);
 
-                                bidx.utils.log('Original criteria=', criteria);
-                                //For search filtering add the current filter
-                                criteria.filters.push( item.filterQuery );
-                                //Make offset 0 for filtering so start from begining
-                                paging.search.offset = 0;
-                                //set the max records limit to 10
-                                tempLimit = CONSTANTS.SEARCH_LIMIT;
+                            }
 
-                                bidx.utils.log('Filter clicked with q=', options.q);
-                                bidx.utils.log('Filter sort=', options.sort);
-                                bidx.utils.log('Filter criteria=', criteria);
-
-                                navigate(
-                                {
-                                    state   :   'list'
-                                ,   params  :   {
-                                                    q           :   options.q
-                                                ,   sort        :   options.sort
-                                                ,   filters     :   criteria.filters
-                                                }
-                                });
-
-                            });
+                            $list.append($listFacetsItem);
 
                         }
 
@@ -442,6 +455,93 @@
                 }
 
             });
+
+            /*************Face Label Click ****************/
+            $listAnchor = $mainFacet.find('.filter');
+
+            $listAnchor.on('click', function( e )
+            {
+                e.preventDefault();
+
+                bidx.utils.log('Criteria before filter click=', criteria);
+
+                $this           = $( this );
+                filterQuery     = $this.data('filter');
+
+                //For search filtering add the current filter
+                if( filterQuery === 'reset')
+                {
+                    criteria.filters = [];
+                }
+                else if($.inArray(filterQuery, criteria.filters) === -1)
+                {
+                    criteria.filters.push( filterQuery );
+                }
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('Filter clicked ', filterQuery);
+                bidx.utils.log('Filter clicked with q=', options.q);
+                bidx.utils.log('Filter sort=', options.sort);
+                bidx.utils.log('Filter criteria=', criteria.filters);
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   filters     :   criteria.filters
+                                }
+                });
+
+            });
+
+            /*************Face Close Click ****************/
+            $listClose = $mainFacet.find('.viewClose');
+
+            $listClose.on('click', function( e )
+            {
+                e.preventDefault();
+
+                bidx.utils.log('Criteria before close click =', criteria);
+
+                $this           = $( this );
+                filterQuery     = $this.data('filter');
+
+                //For search filtering add the current filter
+                if($.inArray(filterQuery, criteria.filters) !== -1)
+                {
+                    bidx.utils.log('criteria removed' , filterQuery, criteria.filters);
+                    criteria.filters = _.without(criteria.filters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
+                }
+
+                //Make offset 0 for filtering so start from begining
+                paging.search.offset = 0;
+                //set the max records limit to 10
+                tempLimit = CONSTANTS.SEARCH_LIMIT;
+
+                bidx.utils.log('Filter clicked ', filterQuery);
+                bidx.utils.log('Close Filter clicked with q=', options.q);
+                bidx.utils.log('Close Filter sort=', options.sort);
+                bidx.utils.log('Close Filter criteria=', criteria.filters);
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   filters     :   criteria.filters
+                                ,   type        :   'facet'
+                                }
+                });
+
+            });
+
 
         }
         else
@@ -494,7 +594,15 @@
         if( sort )
         {
 
-            criteriaSort    =   sort ;
+            $.each( sort, function( sortField, sortOrder )
+            {
+                criteriaSort.push( {
+                                            "field" : sortField
+                                        ,   "order":  sortOrder
+                                    });
+
+
+            } );
 
         }
 
@@ -510,7 +618,7 @@
 
         search =    {
                         q           :   criteriaQ
-                    ,   sort        :   criteriaSort
+                    ,   sort        :   sort
                     ,   criteria    :   {
                                             "searchTerm"    :   "text:" + criteriaQ
                                         ,   "filters"       :   criteriaFilters
