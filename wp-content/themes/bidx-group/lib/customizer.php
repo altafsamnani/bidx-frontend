@@ -114,10 +114,10 @@ class Bidx_Group_Customizer {
 				)
 		);
 		$wp_customize->add_setting( 'brand-primary', array(
-		        'default'           => '#3498db', //
+ 		        'default'           => '#3498db', //brand-primary
 		        'sanitize_callback' => 'sanitize_hex_color',
 		        'capability'        => 'edit_theme_options',
-		        'type'              => 'option', 
+ 		        'type'              => 'option', 
 		));
 		$wp_customize->add_control( new WP_Customize_Color_Control(
 				$wp_customize,
@@ -497,6 +497,43 @@ class Bidx_Group_Customizer {
 	 * @see add_action('customize_preview_init',$func)
 	 * @link http://www.simonthepiman.co.uk/using-less-on-a-wordpress-site-my-thoughts/
 	 */
+	
+	/**
+	 * --------------------
+	 * Configure WP-Less for using customizer data --> whenever theme panel data has changed.
+	 * Keep in mind that the customizer data is stored and when css file not available a recompile is needed
+	 * (Is this handled by WP_less)
+	 *
+	 * Is done after plugins have been loaded.
+	 *
+	 * TODO : wp-less not loaded ?? fallback to less.js but ensure that a warning is shown
+	 * For less fallback do ensure variables are set in JavaScript
+	 *
+	 * <script>
+	 less.modifyVars({
+	 '@buttonFace': '#5B83AD',
+	 '@buttonText': '#D9EEF2'
+	 });
+	
+	 less = {
+	 env: "development", //production caches in localstorage
+	 logLevel: 2,
+	 async: false,
+	 fileAsync: false,
+	 poll: 1000,
+	 functions: {},
+	 dumpLineNumbers: "comments",
+	 relativeUrls: false,
+	 globalVars: {
+	 var1: '"string value"',
+	 var2: 'regular value'
+	 },
+	 rootpath: ":/a.com/"
+	 };
+	
+	
+	 </script>
+	 **/
 	public static function live_preview() {
 		
 		//SOLUTION HERE IS TO USE less.js AND NOT COMPILE LESS IN THIS CASE 
@@ -516,13 +553,28 @@ class Bidx_Group_Customizer {
 		
 	}
 	
+	public static function set_page_attributes_for_less( )
+	{
+		$WPLessPlugin = WPLessPlugin::getInstance( );
+		$variables = array (
+			'brand-primary' => get_theme_mod( 'brand-primary' ),
+			'brand-secondary' => get_theme_mod( 'brand-secondary' ),
+			'brand-background-color' => get_theme_mod( 'brand-background-color' ),
+			'brand-background-image' => get_theme_mod( 'brand-background-image' ),
+		);
+		$WPLessPlugin -> setVariables( $variables );
+	}
+	
 	
 }
 
-//Register the bidx specific customizer items
+// Register the bidx specific customizer items
 add_action( 'customize_register', array( 'Bidx_Group_Customizer' , 'register' )  );
 
 // Enqueue live preview javascript in Theme Customizer admin screen
 add_action( 'customize_preview_init' , array( 'Bidx_Group_Customizer' , 'live_preview' ) );
+
+// Add the customizer values to the WP_less environment adding them as variables
+add_action( 'init', array( 'Bidx_Group_Customizer' , 'set_page_attributes_for_less' ) ); 
 
 ?>
