@@ -1288,6 +1288,7 @@
                     .replace( /%landLine%/g,            (!$.isEmptyObject(personalDetails.contactDetail))   ? bidx.utils.getValue( personalDetails, "contactDetail.0.landLine")     : emptyVal )
                     .replace( /%facebook%/g,            personalDetails.facebook   ? personalDetails.facebook    : emptyVal )
                     .replace( /%twitter%/g,             personalDetails.twitter   ? personalDetails.twitter    : emptyVal )
+                    .replace (/%fa-user%/g,             (entityType === 'bidxInvestorProfile') ? 'fa-money' : 'fa-user')
                     ;
 
                 $listItem     = $(listItem);
