@@ -619,6 +619,7 @@
         search =    {
                         q           :   criteriaQ
                     ,   sort        :   sort
+                    ,   filters     :   filters
                     ,   criteria    :   {
                                             "searchTerm"    :   "text:" + criteriaQ
                                         ,   "filters"       :   criteriaFilters
@@ -670,10 +671,11 @@
 
                     _doSearchListing(
                     {
-                        response:       response
-                    ,   q:              search.q
-                    ,   sort:           search.sort
-                    ,   cb:             options.cb
+                        response    :   response
+                    ,   q           :   search.q
+                    ,   sort        :   search.sort
+                    ,   criteria    :   search.criteria
+                    ,   cb          :   options.cb
                     } );
 
 
@@ -729,6 +731,7 @@
         ,   pagerOptions    = {}
         ,   fullName
         ,   nextPageStart
+        ,   criteria        = options.criteria
         ,   data            = options.response
         ,   $list           = $views.find( ".search-list" )
         ,   $listEmpty      = $("#search-empty").html().replace(/(<!--)*(-->)*/g, "")
@@ -770,8 +773,9 @@
                      _getSearchList(
                     {
                         params  :   {
-                                        q       : options.q
-                                    ,   sort    : options.sort
+                                        q           :   options.q
+                                    ,   sort        :   options.sort
+                                    ,   filters     :   criteria.filters
                                     }
                     ,   cb      :   function()
                                     {
@@ -807,7 +811,7 @@
                         showMemberProfile(
                         {
                             response : response
-                        ,   criteria : data.criteria
+                       // ,   criteria : data.criteria
                         ,   cb       : options.cb
                         } );
 
@@ -819,7 +823,7 @@
                         showMemberProfile(
                         {
                             response : response
-                        ,   criteria : data.criteria
+                        //,   criteria : data.criteria
                         ,   cb       : options.cb
                         } );
 
@@ -831,7 +835,7 @@
                         showMemberProfile(
                         {
                             response : response
-                        ,   criteria : data.criteria
+                        //,   criteria : data.criteria
                         ,   cb       : options.cb
                         } );
 
@@ -843,7 +847,7 @@
                         showMemberProfile(
                         {
                             response : response
-                        ,   criteria : data.criteria
+                       // ,   criteria : data.criteria
                         ,   cb       : options.cb
                         } );
 
@@ -854,7 +858,7 @@
                         showEntity(
                         {
                             response : response
-                        ,   criteria : data.criteria
+                       // ,   criteria : data.criteria
                         ,   cb       : options.cb
 
                         } );
@@ -866,7 +870,7 @@
                        showEntity(
                         {
                             response : response
-                        ,   criteria : data.criteria
+                        //,   criteria : data.criteria
                         ,   cb       : options.cb
 
                         } );
@@ -878,7 +882,7 @@
                        showEntity(
                         {
                             response : response
-                        ,   criteria : data.criteria
+                       // ,   criteria : data.criteria
                         ,   cb       : options.cb
 
                         } );
