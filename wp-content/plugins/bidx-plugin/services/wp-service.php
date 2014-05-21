@@ -121,29 +121,34 @@ function bidx_redirect_login ($groupDomain)
 
 function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = false)
 {
-    $logger = Logger::getLogger ("Bidx Service Login");
-    //$authUsername = ( API_AUTH_UNAME ) ? API_AUTH_UNAME : 'bidx'; // Bidx Auth login
-    //$authPassword = ( API_AUTH_PASS ) ? API_AUTH_PASS : 'gobidx'; // Bidx Auth password
-    $bidxMethod = strtoupper ($method);
+    $logger          = Logger::getLogger ("Bidx Service Login");
+    $bidxMethod      = strtoupper ($method);
     $bidx_get_params = "";
-    $cookie_string = "";
-    //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
-    $sendDomain = 'bidx.net';
-    $cookieArr = array ();
-    $headers = array ();
+    $cookie_string   = "";
+    $sendDomain      = 'bidx.net';
+    $cookieArr       = array ();
+    $headers         = array ();
+    $cookieHeader    = '';
+    $cookieInfo      = $_COOKIE;
 
+    /***********1. Retrieve Bidx Cookies and send back to api to check ******* */
 
-    //error_log (sprintf ("	: %s, body: %s", $urlservice, var_export ($body, true)));
+    foreach ($_COOKIE as $cookieKey => $cookieValue)
+    {
+        if (preg_match ("/^bidx/i", $cookieKey))
+        {
+            $sendDomain   = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
+            $cookieArr[]  = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
+           // $cookieHeader = $cookieKey . '=' . $cookieValue. '; ';
 
-
-    /*     * *********1. Retrieve Bidx Cookies and send back to api to check ******* */
-    $cookieInfo = $_COOKIE;
-    foreach ($_COOKIE as $cookieKey => $cookieValue) {
-        if (preg_match ("/^bidx/i", $cookieKey)) {
-            $sendDomain = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
-            $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
         }
     }
+
+//    if(!empty( $cookieHeader))
+//    {
+//        $cookies_header     = substr( $cookies_header, 0, -2 );
+//        $headers['cookie']  = $cookies_header;
+//    }
 
     /*     * *********2. Set Headers ******************************** */
     //For Authentication
@@ -198,8 +203,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
             foreach ($cookies as $bidxAuthCookie) {
                 //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : $bidxAuthCookie->domain;
 
-                setrawcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
-                $_COOKIE[$bidxAuthCookie->name] = $bidxAuthCookie->value;
+                setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
+                $_COOKIE[$bidxAuthCookie->name] = urlencode($bidxAuthCookie->value);
 
                 $competitionCookieVals = array('expires'  => $bidxAuthCookie->expires,
                                                'path'     => $bidxAuthCookie->path,
