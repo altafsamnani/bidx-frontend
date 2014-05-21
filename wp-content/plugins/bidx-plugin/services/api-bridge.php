@@ -99,7 +99,7 @@ abstract class APIbridge
                     if (!empty ($bidxAuthCookie->name) && $bidxAuthCookie->name) {
                         //$cookieDomain = $bidxAuthCookie->domain;
                         ob_start (); // To avoid error headers already sent in apibridge setcookie
-                        setcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
+                        setrawcookie ($bidxAuthCookie->name, $bidxAuthCookie->value, $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
                         ob_end_flush ();
                     }
                 }

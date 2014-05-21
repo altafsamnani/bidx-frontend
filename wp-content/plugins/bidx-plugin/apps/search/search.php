@@ -16,8 +16,8 @@
  */
 class search {
 	// dependencies : should be centralized!
-	static $deps = array('jquery', 'bootstrap', 'jquery-validation',
-            'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core');
+	static $deps = array('jquery', 'bootstrap', 'bidx-data','bidx-i18n', 'jquery-validation',
+            'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core','jquery-fakecrop','bootstrap-paginator');
 
 	/**
 	 * Constructor
