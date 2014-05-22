@@ -16,5 +16,6 @@
     <Item value="ignoredContact">Ignored contacts</Item>
     <Item value="contactRequest">New contact request</Item>
     <Item value="emailNew">new</Item>
+    <Item value="groupAdmin">Group admin</Item>
 
 </I18N>
