@@ -33,7 +33,7 @@
     // Constants
     //
     var CONTACTSPAGESIZE            = 3
-    ,   ACTIVECONTACTSLIMIT         = 50
+    ,   ACTIVECONTACTSLIMIT         = 20
     ,   MAILPAGESIZE                = 10
     ;
 
@@ -1885,6 +1885,7 @@
                         ,   contacts            = {}
                         ,   result              = {}
                         ,   exists
+                        ,   currentUserId       = bidx.utils.getValue( bidxConfig, "session.id" )
                         ;
 
                         bidx.utils.log("[members] retrieved following active contacts ", response );
@@ -1898,12 +1899,16 @@
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
-                                        contacts[ item.name.toLowerCase() ] =
+                                        //Current logged user is not groupadmin
+                                        if( item.id !== currentUserId)
                                         {
-                                            value:      item.contactId
-                                        ,   label:      item.name + " (A)"
-                                        };
-                                        sortIndex.push( item.name.toLowerCase() );
+                                            contacts[ item.name.toLowerCase() ] =
+                                            {
+                                                value:      item.id
+                                            ,   label:      item.name + " (" + bidx.i18n.i( "groupAdmin", appName ) + ")"
+                                            };
+                                            sortIndex.push( item.name.toLowerCase() );
+                                        }
                                     } );
                                 }
 
@@ -1920,7 +1925,7 @@
                                     {
                                         $.map( response.relationshipType.contact.types.groupOwner, function( groupAdmin, index )
                                         {
-                                            if ( groupAdmin.contactId === item.contactId )
+                                            if ( groupAdmin.id === item.id )
                                             {
                                                 exists = true;
                                                 return false;
@@ -1929,14 +1934,14 @@
                                     }
                                     // if contactId is unique, add it to the contacts list
                                     //
-                                    if ( !exists )
+                                    if ( !exists  )
                                     {
-                                        contacts[ item.contactName.toLowerCase() ] =
+                                        contacts[ item.name.toLowerCase() ] =
                                         {
-                                            value:      item.contactId
-                                        ,   label:      item.contactName
+                                            value:      item.id
+                                        ,   label:      item.name
                                         };
-                                        sortIndex.push( item.contactName.toLowerCase() );
+                                        sortIndex.push( item.name.toLowerCase() );
                                     }
                                 });
 
