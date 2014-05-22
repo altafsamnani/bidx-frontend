@@ -33,7 +33,7 @@
     // Constants
     //
     var CONTACTSPAGESIZE            = 3
-    ,   ACTIVECONTACTSLIMIT         = 999
+    ,   ACTIVECONTACTSLIMIT         = 50
     ,   MAILPAGESIZE                = 10
     ;
 
@@ -1944,7 +1944,7 @@
                                 {
                                     sortIndex:  sortIndex
                                 ,   contacts:   contacts
-                                };                               
+                                };
 
                             }
                             else
