@@ -212,6 +212,32 @@
 
     // Search for any join group button on the page, on click, perform an API call to join the group and reload the page on success
     //
+    $body.delegate( ".btn-search", "click", function( e )
+    {
+        e.preventDefault();
+
+        var $btn        = $( this )
+        ,   $mainSearch = $body.find('#search')
+        ,   search      = $mainSearch.find( "[name='qMain']" ).val()
+        ,   url         = $btn.data('href')
+        ;
+
+        $btn.addClass( "disabled" );
+
+        if ( search )
+        {
+            url = url + '/q=' + search;
+        }
+
+        document.location.href = url;
+
+        return;
+
+    } );
+
+
+    // Search for any join group button on the page, on click, perform an API call to join the group and reload the page on success
+    //
     $body.delegate( "a[href$=#joinGroup]", "click", function( e )
     {
         e.preventDefault();
@@ -925,7 +951,7 @@
         var $panels          = $( ".panel" )
         ,   $formGroup       = $panels.find( ".form-group" )
         ;
-        
+
         $panels.find( ".heading-error" ).removeClass( "heading-error" );
         $panels.find( ".js-error-count" ).remove();
         $formGroup.removeClass( "has-error" );
@@ -1124,7 +1150,7 @@
         var windowHash  = window.location.hash.split('/')
         ,   panelHash   = windowHash[windowHash.length-1]
         ;
-        
+
         if ( panelHash.match( /^#/ ) )
         {
             $( 'a[href='+ panelHash +']' ).click();
@@ -1149,13 +1175,13 @@
     //         $headerControls.removeClass( "btn-sm" );
     //     }
     // });
-    
+
 
     // Temporary solution for public home page, find a better place for this
-    // 
+    //
     if($(".js-fakecrop").length)
     {
         $( ".js-fakecrop img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
     }
-       
+
 } ( jQuery ));

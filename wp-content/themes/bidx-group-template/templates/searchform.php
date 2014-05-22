@@ -1,10 +1,8 @@
-<form class="form-inline" role="form" action="/search" method="GET">
+<div class="form-inline" id="search">
     <div class="input-group">
-        <input type="text" class="form-control" name="q" placeholder="Search" value="<?php echo isset( $_REQUEST[ 'q' ] ) ? $_REQUEST['q'] : ''; ?>">
+        <input type="text" class="form-control form-q" name="qMain" placeholder="Search">
         <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
+            <a class="btn btn-default btn-search" data-href="/search#search/list"><i class="fa fa-search"></i></a>
         </span>
     </div>
-</form>
+</div>

@@ -3,7 +3,8 @@
 {
     "use strict";
 
-    var $navbar                 = $( ".iconbar" )
+    var $body                   = $( "body" )
+    ,   $navbar                 = $( ".iconbar" )
     ,   $bidx                   = $( bidx )
     ,   $element                = $( "#searchHome")
     ,   $frmSearch              = $element.find( ".searchform" )
@@ -65,7 +66,7 @@
 
         $frmSearch.validate(
         {
-            rules:
+            /*rules:
             {
                 "q":
                 {
@@ -77,7 +78,8 @@
                 // Anything that is app specific, the general validations should have been set
                 // in common.js already
             }
-        ,   submitHandler:  function()
+        ,   */
+            submitHandler:  function()
             {
 
                 _showAllView( "load" );
@@ -472,6 +474,10 @@
                 if( filterQuery === 'reset')
                 {
                     criteria.filters = [];
+                    options.q        = '';
+                    options.sort     = [];
+                    bidx.controller.updateHash( "#search/list" );
+
                 }
                 else if($.inArray(filterQuery, criteria.filters) === -1)
                 {
@@ -580,7 +586,8 @@
 
         if ( q !== '*')
         {
-            $frmSearch.find( "[name='q']" ).val(q);
+            //$frmSearch.find( "[name='q']" ).val(q);
+            $body.find(".form-q").val(q);
         }
 
         criteriaQ = (q) ? q : '*';
