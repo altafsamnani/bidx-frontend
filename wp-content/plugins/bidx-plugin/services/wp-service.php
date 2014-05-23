@@ -2555,6 +2555,9 @@ function bidx_wp_content() {
     switch($currentPostTitle) {
         /* Getting started member */
         case 'Getting started member':
+        case 'Getting started mentor':
+        case 'Getting started entrepreneur':
+        case 'Getting started investor':
 //            $bidxPreferencePath       = sprintf ('%s/../apps/member/static/js/memberpreference.js',    BIDX_PLUGIN_URI);
 //            $deps                     = $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
 //			'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
