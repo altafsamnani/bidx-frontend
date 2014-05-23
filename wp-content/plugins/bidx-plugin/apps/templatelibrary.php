@@ -733,7 +733,7 @@ class TemplateLibrary
 
                 case 'skype' :
                     $scriptContent = '<i class="fa fa-skype"></i>
-                                <script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
+                                <script type="text/javascript" src="//www.skypeassets.com/i/scom/js/skype-uri.js"></script>
                                 <div id="SkypeButton_Chat_' . $username . '_1">
                                     <script type="text/javascript">
                                       Skype.ui({
@@ -817,7 +817,7 @@ class TemplateLibrary
      *
      * @author      Corey Ballou http://coreyballou.com
      * @copyright   (c) 2012 Skookum Digital Works http://skookum.com
-     * @license     
+     * @license
      */
     function parseVideos($videoString = null)
     {
@@ -905,13 +905,13 @@ class TemplateLibrary
     /**
      * Set the zoom value of a map
      * @param float $reach The circle reach
-     * @return float $zoom The zoom value 
+     * @return float $zoom The zoom value
      */
     function setZoom ( $reach )
     {
         $zoom;
         $zoomRounded = round($reach);
-        
+
         if ( $zoomRounded < 2)
         {
             $zoom = 12;
