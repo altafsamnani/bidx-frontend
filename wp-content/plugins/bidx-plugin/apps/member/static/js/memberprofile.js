@@ -695,7 +695,7 @@
         //
         $scaleBtns.removeClass( "hide" );
     }
-    
+
     // Use the retrieved member object to populate the form and other screen elements
     //
     function _populateScreen()
@@ -722,7 +722,7 @@
         {
             $profilePictureContainer.data( "bidxData", profilePictureId );
             $profilePictureContainer.append( $( "<img />", { "src": profilePicture, "data-fileUploadId": profilePictureId } ));
-    
+
             _enableCropping( bidx.utils.getValue( member, "bidxMemberProfile.personalDetails.profilePicture" ) );
         }
 
@@ -1015,10 +1015,13 @@
 
         // ProfilePicture
         //
-        var profilePicture      = $profilePictureContainer.data( "bidxData" );
+        var profilePicture      = $profilePictureContainer.data( "bidxData" )
+        ,   fileUpload          = bidx.utils.getValue( profilePicture, "fileUpload" );
 
-        bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload", profilePicture.fileUpload );
-
+        if( fileUpload )
+        {
+            bidx.utils.setValue( member, "bidxMemberProfile.personalDetails.profilePicture.fileUpload", fileUpload );
+        }
         // Crop
         //
         var $profilePicture     = $profilePictureContainer.find( "img" )
