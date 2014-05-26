@@ -1,0 +1,223 @@
+<?php
+    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+    $sessionSvc = new SessionService( );
+    // define the profiles we currently want to display
+    //
+    $profiles = array(
+        'bidxInvestorProfile'        => array(
+            'Investor Dashboard'     => '/investor-dashboard'
+        ),
+        'bidxEntrepreneurProfile'    => array(
+            'Entrepreneur Dashboard' => '/entrepreneur-dashboard'
+        //,   'Mentor Dashboard'       => '/mentordashboard'
+        ),
+        'bidxMentorProfile'          => array(
+        //    'Mentor Dashboard'       => '/mentordashboard'
+        )
+    );
+
+    // error_log(var_export($sessionSvc->getGroups(), true));
+
+    // check for each profile if it exists in the members entities
+    //
+    foreach (  $profiles as $profilekey => $profilevalue )
+    {
+
+        // check if current profile is existent, if not remove it from the array
+        //
+        if ( !$sessionSvc->isHavingProfile( $profilekey ) ) {
+            unset( $profiles[ $profilekey ] );
+        }
+
+        if( $sessionSvc->isHavingProfile( 'bidxEntrepreneurProfile' ) ) {
+            unset( $profiles[ 'bidxMentorProfile' ] );
+        }
+    }
+
+    // get the groups for his user
+    //
+    $groups = $sessionSvc->getGroups();
+
+
+
+    // set boolean to display the profile menu
+    //
+    $hasProfiles    = count( $profiles) !== 0;
+    $hasGroups      = count( $groups) > 1;
+    $isAdmin        = $sessionSvc->isAdmin();
+
+    // check if the curent user is has joined this group
+    //
+    $currentGroup   = $this -> sessionData -> data -> currentGroup;
+    $groupIds       = array_keys ( (array)$this -> sessionData -> data -> groups );
+    $inGroup        = in_array( $currentGroup, $groupIds);
+    $isCompetition  = get_option ('skipso-competition');
+    $skipsoJudgeUrl = get_option ('skipso-judge-url');
+    $userName       = $this -> sessionData -> data -> username;
+    $displayName    = $this -> sessionData -> data -> bidxMemberProfile -> firstName;
+    $judgeEmails    = explode(",", get_option ('skipso-judge-emails'));
+    $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
+    $showLogout     = true;
+
+    $session = BidxCommon::$staticSession;
+    $authenticated  = $session -> authenticated;
+?>
+
+<div class="iconbar pull-right">
+
+<?php
+    
+    if ( $authenticated === "true" ) {
+        // only when a member has profiles, show the profile dropdown
+        //
+
+        if ( $isAdmin || ( $inGroup && $hasProfiles ) ||  $isJudge) {
+ ?>
+            <div class="btn-group profiles">
+                <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Dashboards', 'bidxplugin')?>">
+                    <i class="fa fa-dashboard"></i>
+                    <span class="iconbar-text"><?php _e('Dashboards','bidxplugin')?></span>
+                </a>
+                <ul class="dropdown-menu bg-primary-darker">
+<?php
+                    foreach ( $profiles as $profilekey => $profilevalue ) {
+                        foreach($profilevalue as $menuName => $menuLink) {
+                        // fetch the key value for printing as text in the hyperlink
+                        //
+
+?>
+                        <li><a href="<?php echo $menuLink ?>"><?php _e( $menuName, 'bidxplugin' ); ?></a></li>
+<?php                   }
+                    }
+                    if ( $isAdmin ) {
+?>
+                        <li>
+                            <a href="/wp-admin/admin.php?page=getting-started"><?php _e( 'bidX Dashboard', 'bidxplugin' ); ?></a>
+                        </li>
+<?php
+                    }
+                    if( $isJudge ) {
+?>
+                        <li>
+                            <a href="<?php echo $skipsoJudgeUrl;?>"><?php _e('Judge Dashboard','bidxplugin')?></a>
+                        </li>
+<?php
+                    }
+?>
+                </ul>
+            </div>
+<?php
+        }
+ ?>
+
+ <?php
+        // only when a has grous, show the group dropdown
+        //
+        if ( $hasGroups ) {
+ ?>
+            <div class="btn-group groups">
+                <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Groups', 'bidxplugin')?>">
+                    <i class="fa fa-users"></i>
+                    <span class="iconbar-text"><?php _e('Groups','bidxplugin')?></span>
+                </a>
+                <ul class="dropdown-menu bg-primary-darker">
+<?php
+                    foreach ( $groups as $groupKey => $groupValue ) {
+?>
+                        <li><a href="<?php echo $groupValue[ "url" ] ?>"><?php echo $groupValue[ "name" ] ?></a></li>
+<?php
+                    }
+?>
+                </ul>
+            </div>
+<?php
+        }
+ ?>
+        <div class="btn-group">
+            <a href="/mail/#mail" type="button" class="bidx-mail text-white" title="<?php _e('Mail', 'bidxplugin')?>">
+                <!-- If messages are available -->
+                <i class="fa fa-envelope"></i>
+                <span class="iconbar-unread hide-it">?</span>
+                <span class="iconbar-text"><?php _e('Messages','bidxplugin')?></span>
+            </a>
+        </div>
+<?php
+        $roles = (!empty($this -> sessionData -> data -> roles)) ? $this -> sessionData -> data -> roles:NULL;
+        $currentGroupAdmin = false;
+        if ( !empty($this->sessionData) && !empty( $roles) ) {
+            if ( in_array( 'GroupAdmin', $roles ) ||
+                 in_array( 'GroupOwner', $roles ) ) {
+                $currentGroupAdmin = true;
+?>
+
+<?php
+    }
+}
+?>
+        <div class="btn-group settings">
+            <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Account settings')?>">
+                <i class="fa fa-cog"></i>
+                <span class="iconbar-text"><?php echo $displayName; ?></span>
+            </a>
+            <ul class="dropdown-menu bg-primary-darker">
+<?php
+                // the following menu-items only to be displayed when user has joined the group
+                //
+                if ( $inGroup ) {
+?>
+                    <li><a href="/member"><?php _e('Profile','bidxplugin')?></a></li>
+                    <li><a href="/account/#account"><?php _e('Account settings','bidxplugin')?></a></li>
+                    <li><a href="/media"><?php _e('All my documents','bidxplugin')?></a></li>
+
+<?php
+                }
+
+
+                    if ( !$inGroup) {
+?>
+                        <li><a href="#joinGroup"><?php _e('Join this group', 'bidxplugin')?></a></li>
+<?php
+                    } else if(!$currentGroupAdmin) {
+?>
+                        <li><a href="#leaveGroup"><?php _e('Leave this group', 'bidxplugin')?></a></li>
+<?php
+                    }
+
+
+                if( !$currentGroupAdmin && $hasGroups ) {?>
+
+                    <li><a href="/mail/#mail/compose"><?php _e('Help','bidxplugin')?></a></li>
+<?php
+                }
+
+
+                if ($currentGroupAdmin && is_plugin_active('zendesk/zendesk-support.php'))  { ?>
+
+                     <li><a href="/support"><?php _e('Ask your question','bidxplugin')?></a></li>
+<?php           }
+
+
+                if( $showLogout ) {
+?>
+                     <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e('Logout', 'bidxplugin')?></a>
+<?php
+                }
+?>
+            </ul>
+        </div>
+<?php
+    } else {
+?>
+
+            <div class="btn-group">
+                <a href="/auth/#auth/login" type="button" class="text-white" title="<?php _e('Login', 'bidxplugin')?>">
+                    <i class="fa fa-lock"></i>
+                    <span><?php _e('Login','bidxplugin')?></span>
+                </a>
+            </div>
+
+
+<?php 
+    }
+?>
+</div>
