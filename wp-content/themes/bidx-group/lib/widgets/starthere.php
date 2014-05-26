@@ -86,7 +86,7 @@ class Start_Here_Widget extends WP_Widget {
 
         echo $before_widget;
 ?>
-        <button class="btn btn-success btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></button>
+        <a href="/register-as-member/#register/firstLogin=getting-started-member#editPreference" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></a>
 <?php 
         echo $after_widget;
     }
