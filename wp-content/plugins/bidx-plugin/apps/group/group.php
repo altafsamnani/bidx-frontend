@@ -82,6 +82,9 @@ class group {
 			case "navbar" :
 				return $view->render( 'navbar.phtml' );
 				break;
+			case "navbarshort" :
+				return $view->render( 'navbarshort.phtml' );
+				break;
 			case "home" :
 
 				$sessionData    = BidxCommon::$staticSession;
