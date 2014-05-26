@@ -58,13 +58,6 @@ function add_news_category_automatically($post_ID)
   }
 }
 
-add_action ('init', 'bidx_create_custom_page_types');
-
-function bidx_create_custom_page_types ()
-{
-    create_custom_page_type ();
-}
-
 add_action('do_meta_boxes', 'news_remove_metaboxes');
 
 function news_remove_metaboxes() 
@@ -76,6 +69,13 @@ function news_remove_metaboxes()
 /****** News & Event Type Functionality for WP End *******************/
 
 
+
+add_action ('init', 'bidx_create_custom_page_types');
+
+function bidx_create_custom_page_types ()
+{
+    create_custom_page_type ();
+}
 
 function create_custom_page_type ($post_type = 'sponsors')
 {
