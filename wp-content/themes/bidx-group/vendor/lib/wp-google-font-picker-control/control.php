@@ -36,27 +36,45 @@ class Google_Font_Picker_Custom_Control extends WP_Customize_Control
 
 		//print css to display individual fonts
 		$this->fonts->printThemeCustomizerCssClasses();
+
+		echo '<hr>';
+
+		switch ($this->id) {
+			case 'text_font':
+				echo '<span class="customize-control-title">Text Font</span>';
+				break;
+			case 'headings_font':
+				echo '<span class="customize-control-title">Headings Font</span>';
+				break;
+			case 'menu_font':
+				echo '<span class="customize-control-title">Menu Font</span>';
+				break;
+			
+			default:
+				echo '<span class="customize-control-title">Choose a Font</span>';
+				break;
+		}
 		?>
 		<div class="fontPickerCustomControl">
 			<select <?php $this->link(); ?>>
 				<?php
 				foreach ( $this->choices as $value => $label )
-					echo '<option value="' . esc_attr( $label ) . '"' . selected( $this->value(), $value, false ) . '>' . $label . '</option>';
+					echo '<option style="font-family:'.$label.', sans serif;" value="' . esc_attr( $label ) . '"' . selected( $this->value(), $value, false ) . '>' . $label . '</option>';
 				?>
 			</select>
-			<div class="fancyDisplay">
-				<ul>
-					<?php
-					$cssClassArray = $this->fonts->getCssClassArray();
-					foreach ($cssClassArray as $key => $value)
-					{
-						?>
-						<li class="<?= $value; ?>"><?php echo $key ?></li>
-						<?php
-					}
-					?>
-				</ul>
-			</div>
+			<!-- <div class="fancyDisplay"> -->
+				<!-- <ul> -->
+<?php
+					// $cssClassArray = $this->fonts->getCssClassArray();
+					// foreach ($cssClassArray as $key => $value)
+					// {
+?>
+						<!-- <li class="<?= $value; ?>"><?php //echo $key ?></li> -->
+<?php
+					// }
+?>
+				<!-- </ul> -->
+			<!-- </div> -->
 		</div>
 		<?php
 	}
