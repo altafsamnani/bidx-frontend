@@ -83,15 +83,15 @@ class Bidx_Group_Customizer {
 						)
 				)
 		);			
-		$wp_customize->add_setting( 'favicon_selector' );
+		$wp_customize->add_setting( 'favicon_image' );
 		$wp_customize->add_control(
 				new WP_Customize_Image_Control(
 						$wp_customize,
-						'favicon_selector',
+						'favicon_image',
 						array(
 								'label'      => __( 'Upload your favicon', 'bidx_group_theme' ),
 								'section'    => 'logo_settings',
-								'settings'   => 'favicon_selector',
+								'settings'   => 'favicon_image',
 								'context'    => 'favicon_settings'
 						)
 				)
@@ -144,7 +144,7 @@ class Bidx_Group_Customizer {
 				) )
 		);
 		$wp_customize->add_setting( 'brand-background-color', array(
-		        'default'           => '000',
+		        'default'           => 'FFF',
 		        'sanitize_callback' => 'sanitize_hex_color',
 		        'capability'        => 'edit_theme_options',
 		        'type'              => 'option', 
@@ -194,7 +194,20 @@ class Bidx_Group_Customizer {
 						)
 				)
 		);
-	
+		$wp_customize->add_setting('main_menu_invert');
+		$wp_customize->add_control(
+				new WP_Customize_Control(
+						$wp_customize,
+						'main_menu_invert',
+						array(
+								'label'          => __( 'Invert Main Menu colors', 'bidx_group_theme' ),
+								'section'        => 'color_settings',
+								'settings'       => 'main_menu_invert',
+								'type'           => 'checkbox',
+								'std'         	 => '1'
+							)
+				)
+		);
 	}
 		
 		
@@ -248,30 +261,234 @@ class Bidx_Group_Customizer {
 				)
 		);
 
-		$wp_customize->add_setting( 'font_family',
+
+		// http://www.awwwards.com/20-best-web-fonts-from-google-web-fonts-and-font-face.html
+		// http://somadesign.ca/demos/better-google-fonts/
+		// Text
+		$wp_customize->add_setting( 'text_font',
 									array(
 								        'default'      => 'Lato',
 								        'capability'   => 'edit_theme_options',
         								'type'         => 'option',			
-								    ));		
+								    ));
+		$fonts = array();		
 		$fonts[] = array(
 					"title" => "Ubuntu Condensed",
 					"location" => "Ubuntu+Condensed",
 					"cssDeclaration" => "'Ubuntu Condensed', sans-serif",
 					"cssClass" => "ubuntuCondensed"
 			);		
-		$fonts[] = array (
+		$fonts[] = array(
 						"title" => "Lato",
 						"location" => "Lato",
 						"cssDeclaration" => "'Lato', sans-serif",
 						"cssClass" => "lato"		
 		);
+		$fonts[] = array(
+						"title" => "Source Sans Pro",
+						"location" => "Source+Sans+Pro",
+						"cssDeclaration" => "'Source Sans Pro', sans-serif",
+						"cssClass" => "source-sans-pro"		
+		);
+		$fonts[] = array(
+						"title" => "Open Sans",
+						"location" => "Open+Sans",
+						"cssDeclaration" => "'Open Sans', sans-serif",
+						"cssClass" => "open-sans"
+		);
+		$fonts[] = array(
+						"title" => "PT Sans",
+						"location" => "PT+Sans",
+						"cssDeclaration" => "'PT Sans', sans-serif",
+						"cssClass" => "pt-sans"
+		);
 		$customFontFamilies = new Google_Font_Collection( $fonts );
 		$wp_customize->add_control( 
-				new Google_Font_Picker_Custom_Control( $wp_customize, 'font_family_control', array(
+				new Google_Font_Picker_Custom_Control( $wp_customize, 'text_font', array(
 				'label'             => __( 'Font Family', 'bidx_group_theme' ),
 				'section'           => 'font_settings',
-				'settings'          => 'font_family',
+				'settings'          => 'text_font',
+				'choices'           => $customFontFamilies->getFontFamilyNameArray(),
+				'fonts'             => $customFontFamilies
+		) ) );
+
+		// Headings
+		$wp_customize->add_setting( 'headings_font',
+									array(
+								        'default'      => 'PT Sans',
+								        'capability'   => 'edit_theme_options',
+        								'type'         => 'option',
+								    ));
+		$fonts = array();		
+		$fonts[] = array(
+					"title" => "Ubuntu Condensed",
+					"location" => "Ubuntu+Condensed",
+					"cssDeclaration" => "'Ubuntu Condensed', sans-serif",
+					"cssClass" => "ubuntuCondensed"
+			);		
+		$fonts[] = array(
+						"title" => "Lato",
+						"location" => "Lato",
+						"cssDeclaration" => "'Lato', sans-serif",
+						"cssClass" => "lato"		
+		);
+		$fonts[] = array(
+						"title" => "Fjalla One",
+						"location" => "Fjalla+One",
+						"cssDeclaration" => "'Fjalla One', sans-serif",
+						"cssClass" => "fjalla"		
+		);
+		$fonts[] = array(
+						"title" => "Rufina",
+						"location" => "Rufina",
+						"cssDeclaration" => "'Rufina', sans-serif",
+						"cssClass" => "rufina"		
+		);
+		$fonts[] = array(
+						"title" => "Source Sans Pro",
+						"location" => "Source+Sans+Pro",
+						"cssDeclaration" => "'Source Sans Pro', sans-serif",
+						"cssClass" => "source-sans-pro"		
+		);
+		$fonts[] = array(
+						"title" => "Open Sans",
+						"location" => "Open+Sans",
+						"cssDeclaration" => "'Open Sans', sans-serif",
+						"cssClass" => "open-sans"
+		);
+		$fonts[] = array(
+						"title" => "Josefin Slab",
+						"location" => "Josefin+Slab",
+						"cssDeclaration" => "'Josefin Slab', sans-serif",
+						"cssClass" => "josefin-slab"
+		);
+		$fonts[] = array(
+						"title" => "Arvo",
+						"location" => "Arvo",
+						"cssDeclaration" => "'Arvo', sans-serif",
+						"cssClass" => "arvo"
+		);
+		$fonts[] = array(
+						"title" => "Vollkorn",
+						"location" => "Vollkorn",
+						"cssDeclaration" => "'Vollkorn', sans-serif",
+						"cssClass" => "vollkorn"
+		);
+		$fonts[] = array(
+						"title" => "Abril Fatface",
+						"location" => "Abril+Fatface",
+						"cssDeclaration" => "'Abril Fatface', sans-serif",
+						"cssClass" => "abril-fatface"
+		);
+		$fonts[] = array(
+						"title" => "PT Sans",
+						"location" => "PT+Sans",
+						"cssDeclaration" => "'PT Sans', sans-serif",
+						"cssClass" => "pt-sans"
+		);
+		$fonts[] = array(
+						"title" => "Old Standard TT",
+						"location" => "Old+Standard+TT",
+						"cssDeclaration" => "'Old Standard TT', serif",
+						"cssClass" => "old-standard-tt"
+		);
+		$customFontFamilies = new Google_Font_Collection( $fonts );
+		$wp_customize->add_control( 
+				new Google_Font_Picker_Custom_Control( $wp_customize, 'headings_font', array(
+				'label'             => __( 'Font Family', 'bidx_group_theme' ),
+				'section'           => 'font_settings',
+				'settings'          => 'headings_font',
+				'choices'           => $customFontFamilies->getFontFamilyNameArray(),
+				'fonts'             => $customFontFamilies
+		) ) );
+
+
+		// Menu
+		$wp_customize->add_setting( 'menu_font',
+									array(
+								        'default'      => 'Ubuntu Condensed',
+								        'capability'   => 'edit_theme_options',
+        								'type'         => 'option',			
+								    ));
+		$fonts = array();		
+		$fonts[] = array(
+					"title" => "Ubuntu Condensed",
+					"location" => "Ubuntu+Condensed",
+					"cssDeclaration" => "'Ubuntu Condensed', sans-serif",
+					"cssClass" => "ubuntuCondensed"
+			);		
+		$fonts[] = array(
+						"title" => "Lato",
+						"location" => "Lato",
+						"cssDeclaration" => "'Lato', sans-serif",
+						"cssClass" => "lato"		
+		);
+		$fonts[] = array(
+						"title" => "Fjalla One",
+						"location" => "Fjalla+One",
+						"cssDeclaration" => "'Fjalla One', sans-serif",
+						"cssClass" => "fjalla"		
+		);
+		$fonts[] = array(
+						"title" => "Rufina",
+						"location" => "Rufina",
+						"cssDeclaration" => "'Rufina', sans-serif",
+						"cssClass" => "rufina"		
+		);
+		$fonts[] = array(
+						"title" => "Source Sans Pro",
+						"location" => "Source+Sans+Pro",
+						"cssDeclaration" => "'Source Sans Pro', sans-serif",
+						"cssClass" => "source-sans-pro"		
+		);
+		$fonts[] = array(
+						"title" => "Open Sans",
+						"location" => "Open+Sans",
+						"cssDeclaration" => "'Open Sans', sans-serif",
+						"cssClass" => "open-sans"
+		);
+		$fonts[] = array(
+						"title" => "Josefin Slab",
+						"location" => "Josefin+Slab",
+						"cssDeclaration" => "'Josefin Slab', sans-serif",
+						"cssClass" => "josefin-slab"
+		);
+		$fonts[] = array(
+						"title" => "Arvo",
+						"location" => "Arvo",
+						"cssDeclaration" => "'Arvo', sans-serif",
+						"cssClass" => "arvo"
+		);
+		$fonts[] = array(
+						"title" => "Vollkorn",
+						"location" => "Vollkorn",
+						"cssDeclaration" => "'Vollkorn', sans-serif",
+						"cssClass" => "vollkorn"
+		);
+		$fonts[] = array(
+						"title" => "Abril Fatface",
+						"location" => "Abril+Fatface",
+						"cssDeclaration" => "'Abril Fatface', sans-serif",
+						"cssClass" => "abril-fatface"
+		);
+		$fonts[] = array(
+						"title" => "PT Sans",
+						"location" => "PT+Sans",
+						"cssDeclaration" => "'PT Sans', sans-serif",
+						"cssClass" => "pt-sans"
+		);
+		$fonts[] = array(
+						"title" => "Old Standard TT",
+						"location" => "Old+Standard+TT",
+						"cssDeclaration" => "'Old Standard TT', serif",
+						"cssClass" => "old-standard-tt"
+		);
+		$customFontFamilies = new Google_Font_Collection( $fonts );
+		$wp_customize->add_control( 
+				new Google_Font_Picker_Custom_Control( $wp_customize, 'menu_font', array(
+				'label'             => __( 'Font Family', 'bidx_group_theme' ),
+				'section'           => 'font_settings',
+				'settings'          => 'menu_font',
 				'choices'           => $customFontFamilies->getFontFamilyNameArray(),
 				'fonts'             => $customFontFamilies
 		) ) );
@@ -319,11 +536,12 @@ class Bidx_Group_Customizer {
 		);
 				
 		$wp_customize->add_setting( 'logo_alignment',
-									array(
-										'capability'   => 'edit_theme_options',
-								        'default'      => 'left',
-										'type'         => 'option',
-								    ));
+										array(
+											'capability'   => 'edit_theme_options',
+									        'default'      => 'left',
+											'type'         => 'option',
+									    )
+								    );
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
@@ -342,11 +560,12 @@ class Bidx_Group_Customizer {
 				)
 		);
 		$wp_customize->add_setting( 'sidebar_alignment',
-									array(
-										'capability'   => 'edit_theme_options',
-								        'default'      => 'right',
-										'type'         => 'option',
-								    ));
+										array(
+											'capability'   => 'edit_theme_options',
+									        'default'      => 'right',
+											'type'         => 'option',
+									    )
+								    );
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
@@ -509,30 +728,30 @@ class Bidx_Group_Customizer {
 	 * TODO : wp-less not loaded ?? fallback to less.js but ensure that a warning is shown
 	 * For less fallback do ensure variables are set in JavaScript
 	 *
-	 * <script>
-	 less.modifyVars({
-	 '@buttonFace': '#5B83AD',
-	 '@buttonText': '#D9EEF2'
-	 });
-	
-	 less = {
-	 env: "development", //production caches in localstorage
-	 logLevel: 2,
-	 async: false,
-	 fileAsync: false,
-	 poll: 1000,
-	 functions: {},
-	 dumpLineNumbers: "comments",
-	 relativeUrls: false,
-	 globalVars: {
-	 var1: '"string value"',
-	 var2: 'regular value'
-	 },
-	 rootpath: ":/a.com/"
-	 };
-	
-	
-	 </script>
+	 ** <script>
+	 *less.modifyVars({
+	 *'@buttonFace': '#5B83AD',
+	 *'@buttonText': '#D9EEF2'
+	 *});
+*	
+	 *less = {
+	 *env: "development", //production caches in localstorage
+	 *logLevel: 2,
+	 *async: false,
+	 *fileAsync: false,
+	 *poll: 1000,
+	 *functions: {},
+	 *dumpLineNumbers: "comments",
+	 *relativeUrls: false,
+	 *globalVars: {
+	 *var1: '"string value"',
+	 *var2: 'regular value'
+	 *},
+	 *rootpath: ":/a.com/"
+	 *};
+*	
+*	
+	 *</script>
 	 **/
 	public static function live_preview() {
 		
@@ -557,10 +776,12 @@ class Bidx_Group_Customizer {
 	{
 		$WPLessPlugin = WPLessPlugin::getInstance( );
 		$variables = array (
-			'brand-primary' => get_theme_mod( 'brand-primary' ),
-			'brand-secondary' => get_theme_mod( 'brand-secondary' ),
-			'brand-background-color' => get_theme_mod( 'brand-background-color' ),
-			'brand-background-image' => get_theme_mod( 'brand-background-image' ),
+			'color-main' => get_option( 'brand-primary' ),
+			'color-secondary' => get_option( 'brand-secondary' ),
+			'color-background' => get_option( 'brand-background-color' ),
+			'text-font' => get_option( 'text_font' ),
+			'headings-font' => get_option( 'headings_font' ),
+			'menu-font' => get_option( 'menu_font' ),
 		);
 		$WPLessPlugin -> setVariables( $variables );
 	}

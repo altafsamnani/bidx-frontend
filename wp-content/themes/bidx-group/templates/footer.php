@@ -6,7 +6,6 @@
     }
 ?>
 
-<div id="push"></div><!-- push element for sticky header  -->
 <footer>
     <div class="page-footer bg-primary-dark">
         <div class="container">
@@ -14,7 +13,7 @@
 <?php
             if ( $has_social ) :
 ?>                
-                <div class="pull-left col-sm-6">
+                <div class="pull-left col-sm-4">
                     <div class="follow-us pull-left">Follow us</div>
                     <div class="btn-group">
 <?php
@@ -46,10 +45,9 @@
             endif;
 ?>                
 
-                <div class="pull-right col-sm-6 text-right">
-                    <div class="copyright">&copy; <?php echo date("Y") ?>. bidX.net. <?php _e('All rights reserved','bidxtheme')?></div>
+                <div class="pull-right col-sm-8 text-right">
+                    <div class="copyright">&copy; <?php echo date("Y") ?> bidx.net. <?php _e('All rights reserved','bidxtheme')?></div>
                     <div class="inline-list footer-menu">
-                        <!-- <div><a href="/sitemap"><?php _e('Sitemap','bidxtheme')?></a></div> -->
                         <div><a href="/wp-content/themes/bidx-group-template/assets/docs/terms/BidX_Terms_and_Conditions_October_2013_en.pdf" target="_blank"><?php _e('Terms and service','bidxtheme')?></a></div>
                         <div><a href="/privacy"><?php _e('Privacy','bidxtheme')?></a></div>
                     </div>

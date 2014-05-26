@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-xs-6">
 <?php
-                    echo do_shortcode( '[bidx app="group" view="navbar"]' );
+                    echo do_shortcode( '[bidx app="group" view="navbarshort"]' );
 ?>
                 </div>
             </div>
@@ -31,108 +31,151 @@
 
     <header role="banner">
         <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
 <?php
-            // Default logo position
-            $logo_alignment = 'logo-left';
-            $mobile_logo = false;
-            if ( get_theme_mod( 'logo_alignment' ) === 'middle' ) { $logo_alignment = 'logo-centered'; }
-            if ( get_theme_mod( 'logo_alignment' ) === 'right' )  { $logo_alignment = 'logo-right';    }
+                    // Default logo position
+                    $logo_alignment = 'logo-left';
+                    $mobile_logo = false;
+                    if ( get_option( 'logo_alignment' ) === 'middle' ) { $logo_alignment = 'logo-centered'; }
+                    if ( get_option( 'logo_alignment' ) === 'right' )  { $logo_alignment = 'logo-right';    }
 
-            // Check for mobile logo
-            if ( get_theme_mod( 'mobile_logo_selector' ) ) { $mobile_logo = true; }
+                    // Check for mobile logo
+                    if ( get_theme_mod( 'mobile_logo_selector' ) ) { $mobile_logo = true; }
 ?>
-            <div class='header-logo <?php echo $logo_alignment; ?>'>
+                    <div class='header-logo <?php echo $logo_alignment; ?>'>
 <?php
-                // Main logo
-                if ( get_theme_mod( 'main_logo_selector' ) )
-                {
-                    $img = parse_url( get_theme_mod( 'main_logo_selector' ) );
-                    $img_url = $img['path']; //make relative
+                        // Main logo
+                        if ( get_theme_mod( 'main_logo_selector' ) )
+                        {
+                            $img = parse_url( get_theme_mod( 'main_logo_selector' ) );
+                            $img_url = $img['path']; //make relative
 ?>
-                    <a class='<?php if( $mobile_logo ) { echo 'hidden-xs'; } ?>' href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
-                        <img src='<?php echo $img_url; ?>' alt='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>'>
-                    </a>
+                            <a class='<?php if( $mobile_logo ) { echo 'hidden-xs'; } ?>' href='/' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
+                                <img src='<?php echo $img_url; ?>' alt='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>'>
+                            </a>
 
 <?php
-                }
-                else
-                {
+                        }
+                        else
+                        {
 ?>
-                    <span class='site-title'><a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></span>
+                            <span class='site-title'><a href='/' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></span>
 <?php
-                }
+                        }
 
-                // Mobile Logo
-                if ( get_theme_mod( 'mobile_logo_selector' ) )
-                {
-                    $img = parse_url( get_theme_mod( 'mobile_logo_selector' ) );
-                    $img_url = $img['path']; //make relative
+                        // Mobile Logo
+                        if ( get_theme_mod( 'mobile_logo_selector' ) )
+                        {
+                            $img = parse_url( get_theme_mod( 'mobile_logo_selector' ) );
+                            $img_url = $img['path']; //make relative
 ?>
-                    <a class='<?php if( $mobile_logo ) { echo 'visible-xs'; } ?>' href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
-                        <img src='<?php echo $img_url; ?>' alt='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>'>
-                    </a>
+                            <a class='<?php if( $mobile_logo ) { echo 'visible-xs'; } ?>' href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
+                                <img src='<?php echo $img_url; ?>' alt='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>'>
+                            </a>
 <?php
-                }
-                else
-                {
+                        }
+                        else
+                        {
 ?>
-                    <span class='site-title'><a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></span>
+                            <span class='site-title'><a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></span>
 <?php
-                }
+                        }
 
-                // Add slogan and start here button if logo alignment is left or right
-                if ( get_theme_mod( 'logo_alignment' ) === 'left' || get_theme_mod( 'logo_alignment' ) === 'right' )
-                {
-                    $kickoff_alignment = get_theme_mod( 'logo_alignment' ) === 'left' ? 'pull-right' : 'pull-left';
+                        // Add slogan and start here button if logo alignment is left or right
+                        if ( get_option( 'logo_alignment' ) === 'left' || get_option( 'logo_alignment' ) === 'right' )
+                        {
+                            $kickoff_alignment = get_option( 'logo_alignment' ) === 'left' ? 'pull-right' : 'pull-left';
 ?>
-                    <div class="kickoff <?php echo $kickoff_alignment; ?>">
-                        <button class="btn btn-success btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','bidxplugin'); ?></button>
-                        <div class="lead pull-right tagline">
+                            <div class="kickoff <?php echo $kickoff_alignment; ?>">
+<?php
+                            if( !$authenticated )
+                            {
+?>
+                                <a href="/register-as-member/#register/firstLogin=getting-started-member#editPreference" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','bidxplugin'); ?></a>
+<?php
+                            }
+?>
+                                <div class="lead pull-right tagline">
 <?php 
-                            echo get_bloginfo('description') ;
+                                    echo get_bloginfo('description') ;
 ?>
-                        </div>
+                                </div>
+                            </div>
+<?php 
+                        }
+?>
                     </div>
-<?php 
-                }
-?>
+                </div>
             </div>
         </div>
     </header>
 
 <?php
     if (has_nav_menu('primary_navigation')) :
+
+        // Check - Invert Main Menu colors 
+        $invertedMenu = '';
+        if ( get_theme_mod( 'main_menu_invert' ) ) :
+            $invertedMenu = ' inverted-menu';
+        endif;
+
+    get_template_part('templates/header-top-navbar'); 
+
+        if ( get_theme_mod( 'page_width_selector' ) !== 'full' ) :
 ?>
-        <nav class="nav-main" role="navigation">
             <div class="container">
 <?php
-                if( $authenticated )
-                {
+        endif;
 ?>
-                    <div class="nav-collapse menu-main">
+        <nav class="hidden-xs nav-main<?php echo $invertedMenu; ?>" role="navigation">
+<?php
+            if ( get_theme_mod( 'page_width_selector' ) === 'full' ) :
+?>
+                <div class="container">
+<?php
+            endif;
+?>
+<?php
+            if( $authenticated )
+            {
+?>
+                <div class="main-menu">
 <?php
                     if (has_nav_menu('primary_navigation')) :
-                    wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav nav-pills'));
+                        wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav'));
                     endif;
 ?>
-                    </div>
+                </div>
 <?php
-                }
-                else
-                {
+            }
+            else
+            {
 ?>
-                    <div class="nav-collapse menu-main">
+                <div class="main-menu">
 <?php
                     if (has_nav_menu('primary_notloggedin_navigation')) :
-                    wp_nav_menu(array('theme_location' => 'primary_notloggedin_navigation', 'menu_class' => 'nav nav-pills'));
+                        wp_nav_menu(array('theme_location' => 'primary_notloggedin_navigation', 'menu_class' => 'nav'));
                     endif;
 ?>
-                    </div>
+                </div>
 <?php
-                }
+            }
+
+            if ( get_theme_mod( 'page_width_selector' ) === 'full' ) :
 ?>
-            </div>
+                </div>
+<?php
+            endif;
+?>
+
         </nav>
 <?php
+        if ( get_theme_mod( 'page_width_selector' ) !== 'full' ) :
+?>
+            </div>
+<?php
+        endif;
+
     endif;
 ?>

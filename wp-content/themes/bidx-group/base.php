@@ -1,11 +1,4 @@
-
 <?php
-    // include head tag
-    get_template_part('templates/head');
-?>
-
-<?php
-    // $bidCommonObj = new BidxCommon();
     $session = BidxCommon::$staticSession;
 
     $authClass = "not-auth";
@@ -15,28 +8,55 @@
         $authenticated = true;
         $authClass = "auth";
     }
+
+    $pagewidth = '';
+    if ( get_theme_mod( 'page_width_selector' ) === '1040' )
+    {
+        $pagewidth = ' width-medium';
+    }
+    if ( get_theme_mod( 'page_width_selector' ) === '940' )
+    {
+        $pagewidth = ' width-small';
+    }
 ?>
-  <body <?php body_class( "bidx " . $authClass ); ?>>
 
-    <!--[if lt IE 8]>
-      <div class="alert alert-warning">
-        <?php _e('You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.', 'roots'); ?>
-      </div>
-    <![endif]-->
+<?php
+// include head tag
+    get_template_part('templates/head');
+?>
 
-    <?php get_template_part('templates/header'); ?>
+<body <?php body_class( "bidx " . $authClass . $pagewidth ); ?> >
 
-    <main class="main <?php // echo roots_main_class(); ?>" role="main">  
-      <?php include roots_template_path(); ?>
+<!--[if lt IE 8]>
+<div class="alert alert-warning">
+<?php _e('You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.', 'roots'); ?>
+</div>
+<![endif]-->
 
-      <?php if (roots_display_sidebar()) : ?>
-        <aside class="sidebar <?php echo roots_sidebar_class(); ?>" role="complementary">
-          <?php include roots_sidebar_path(); ?>
-        </aside><!-- /.sidebar -->
-      <?php endif; ?>
+<?php get_template_part('templates/header'); ?>
+
+<?php if ( is_front_page() ) { ?>
+    <?php include roots_template_path(); ?>
+<?php } else { ?>
+    <main class="main" role="main">
+        <div class="container">
+            <div class="row">
+                <div class="<?php echo roots_main_class(); ?>">
+                    <?php include roots_template_path(); ?>
+                </div>
+
+                <?php if (roots_display_sidebar()) : ?>
+                    <aside class="sidebar <?php echo roots_sidebar_class(); ?>" role="complementary">
+                        <?php include roots_sidebar_path(); ?>
+                    </aside><!-- /.sidebar -->
+                <?php endif; ?>
+            </div>
+        </div>
     </main><!-- /.main -->
 
-    <?php get_template_part('templates/footer'); ?>
+<?php } ?>
 
-  </body>
+<?php get_template_part('templates/footer'); ?>
+
+</body>
 </html>

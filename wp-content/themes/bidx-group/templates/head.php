@@ -7,11 +7,18 @@
 <head>
     <meta charset="utf-8">
     <title><?php bloginfo('name'); ?> : <?php wp_title(); ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <!-- include wordpress head  -->
     <?php wp_head(); ?>
-    <link href='//fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+<?php
+    // Get the fonts
+    $textfont = get_option( 'text_font' );
+    $headingsfont = get_option( 'headings_font' );
+    $menufont = get_option( 'menu_font' );
+?>
+    <link href='//fonts.googleapis.com/css?family=<?php echo $textfont; ?>:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=<?php echo $headingsfont; ?>:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=<?php echo $menufont; ?>:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
