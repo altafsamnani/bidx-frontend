@@ -40,7 +40,20 @@
 		                            <?php echo the_post_thumbnail('bidx_medium'); ?>
 		                        </div>
 						        <div class="member-details">
-						            <h4 class="member-name"><?php echo the_title(); ?></h4>
+						            <h4 class="member-name">
+<?php
+						            	echo the_title();
+
+									if ( $team_members->post->post_excerpt )
+									{
+?>
+										<a target="_blank" class="linkedin pull-right" href="<?php echo $team_members->post->post_excerpt; ?>"><i class="fa fa-linkedin"></i></a>
+<?php										
+									}
+
+
+?>
+						            </h4>
 						            <span class="position"><?php echo $team_members->post->post_content ?></span>
 						        </div>
 						    </div>
