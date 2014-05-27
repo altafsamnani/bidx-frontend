@@ -9,13 +9,10 @@
 abstract class APIbridge
 {
 
-    static $data_re_use = array ();
-    // Bidx Auth login
-    private $authUsername = 'bidx';
-    // Bidx Auth password
-    private $authPassword = 'gobidx';
     private $logger;
-    public $isRedirectCheck = true;
+
+
+    public  $isRedirectCheck = true;
 
     /**
      * Logger is instantiated in the constructor.
@@ -37,20 +34,21 @@ abstract class APIbridge
     public function callBidxAPI ($urlService, $body, $method = 'POST', $isFormUpload = false, $do_not_reuse = false)
     {
 
-        $bidxMethod = strtoupper ($method);
-        $bidx_get_params = "";
-        $cookie_string = "";
-        $sendDomain = 'bidx.net';
-        $cookieHeader    = '';
-        $cookieArr = array ();
-        $headers         = array ();
-        $bidxWPerror = NULL;
-        $groupDomain = $this->getBidxSubdomain ();
-        //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : 'bidx.net';
+        $bidxMethod     = strtoupper ($method);
+        $bidxGetParams  = "";
+        $sendDomain     = 'bidx.net';
+        $cookieHeader   = '';
+        $cookieArr      = array ();
+        $headers        = array ();
+        $bidxWPerror    = NULL;
+        $groupDomain    = $this->getBidxSubdomain ();
+
         // 1. Retrieve Bidx Cookies and send back to api to check
         $cookieInfo = $_COOKIE;
-        foreach ($_COOKIE as $cookieKey => $cookieValue) {
-            if (preg_match ("/^bidx/i", $cookieKey)) {
+        foreach ($_COOKIE as $cookieKey => $cookieValue)
+        {
+            if (preg_match ("/^bidx/i", $cookieKey))
+            {
                 $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
                 //$cookieHeader = $cookieKey . '=' . $cookieValue. '; ';
             }
@@ -62,29 +60,27 @@ abstract class APIbridge
 //            $headers['cookie']  = $cookies_header;
 //        }
         // 2. Set Headers
-        // 2.1 For Authentication
-        //$headers['Authorization'] = 'Basic ' . base64_encode ("$this->authUsername:$this->authPassword");
         // 2.1 Is Form Upload
-        if ($isFormUpload) {
+        if ($isFormUpload)
+        {
             $headers['Content-Type'] = 'multipart/form-data';
         }
 
         // 2.2 Set the group domain header
-        if ($groupDomain) {
-            //Talk with arjan for domain on first page registration it will be blank when it goes live
-            $noDomain = ( DOMAIN_CURRENT_SITE == 'bidx.net' ) ? 'www' : 'beta';
-            $headers['X-Bidx-Group-Domain'] = ( $urlService == 'groups' && $bidxMethod == 'POST' ) ? $noDomain : $groupDomain;
-            //$bidx_get_params.= '&bidxGroupDomain=' . $body['domain'];
+        if ($groupDomain)
+        {
+            $headers['X-Bidx-Group-Domain'] = $groupDomain;
         }
 
         // 3. Decide method to use
-        if ($bidxMethod == 'GET') {
-            $bidx_get_params = ($body) ? '?' . http_build_query ($body) : '';
+        if ($bidxMethod == 'GET')
+        {
+            $bidxGetParams = ($body) ? '?' . http_build_query ($body) : '';
             $body = NULL;
         }
 
         // 4. WP Http Request
-        $url = API_URL . $urlService . $bidx_get_params;
+        $url = API_URL . $urlService . $bidxGetParams;
 
         $this->logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $method, $body, var_export ($headers, true), var_export ($cookieArr, true)));
 
@@ -99,12 +95,15 @@ abstract class APIbridge
         $this->logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
 
         // 5. Set Cookies if Exist
-        if (is_array ($result)) {
-
-            if (isset ($result['cookies']) && count ($result['cookies'])) {
+        if (is_array ($result))
+        {
+            if (isset ($result['cookies']) && count ($result['cookies']))
+            {
                 $cookies = $result['cookies'];
-                foreach ($cookies as $bidxAuthCookie) {
-                    if (!empty ($bidxAuthCookie->name) && $bidxAuthCookie->name) {
+                foreach ($cookies as $bidxAuthCookie)
+                {
+                    if (!empty ($bidxAuthCookie->name) && $bidxAuthCookie->name)
+                    {
                         //$cookieDomain = $bidxAuthCookie->domain;
                         ob_start (); // To avoid error headers already sent in apibridge setcookie
                         setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
@@ -112,7 +111,8 @@ abstract class APIbridge
                     }
                 }
             }
-        } else { // Wp Request timeout
+        } else
+        { // Wp Request timeout
             $bidxWPerror = $result;
             $result = array ();
             $result['response']['code'] = 'timeout';
@@ -154,14 +154,19 @@ abstract class APIbridge
 
         // Check the Http response and decide the status of request whether its error or ok
 
-        if ($httpCode >= 200 && $httpCode < 300) {
+        if ($httpCode >= 200 && $httpCode < 300)
+        {
             //Keep the real status
             //$requestData->status = 'OK';
             $requestData->authenticated = 'true';
-        } else if ($httpCode >= 300 && $httpCode < 400) {
+        }
+        else if ($httpCode >= 300 && $httpCode < 400)
+        {
             $requestData->status = 'ERROR';
             $requestData->authenticated = 'true';
-        } else if ($httpCode == 401) {
+        }
+        else if ($httpCode == 401)
+        {
             $requestData->status = 'ERROR';
             $requestData->authenticated = 'false';
             //$this->bidxRedirectLogin($groupDomain);
@@ -176,7 +181,9 @@ abstract class APIbridge
 
                 $this->bidxRedirectLogin ($groupDomain, $statusText);
             }
-        } else if ($httpCode == 'timeout') {
+        }
+        else if ($httpCode == 'timeout')
+        {
             $requestData->status = 'ERROR';
             $errors = $bidxWPerror->get_error_messages ();
             $error = implode (', ', $errors);
@@ -189,17 +196,9 @@ abstract class APIbridge
     function clear_wp_bidx_session ()
     {
 
-        /* Clear the Session */
-        //if(isset($_COOKIE['session_id'])) {
-        //session_id($_COOKIE['session_id']);
         session_start ();
         session_destroy ();
-        //setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-        //setcookie('session_id', ' ', time () - YEAR_IN_SECONDS, ADMIN_COOKIE_PATH, COOKIE_DOMAIN);
-        //$sessionMsg = array ('status' => 'success','text' => 'Session Flused.');
-        //echo json_encode ($sessionMsg);
-        //exit;
-        //}
+
     }
 
     function clear_bidx_cookies ()
@@ -207,8 +206,10 @@ abstract class APIbridge
 
         /***********Retrieve Bidx Cookies and send back to api to check ******* */
         $cookieInfo = $_COOKIE;
-        foreach ($_COOKIE as $cookieKey => $cookieValue) {
-            if (preg_match ("/^bidx/i", $cookieKey)) {
+        foreach ($_COOKIE as $cookieKey => $cookieValue)
+        {
+            if (preg_match ("/^bidx/i", $cookieKey))
+            {
                 setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
             }
         }
@@ -227,23 +228,35 @@ abstract class APIbridge
 
         $bidxUrl = $_SERVER ["HTTP_HOST"];
 
-        if ($url) {
+        if ($url)
+        {
             $bidxUrl = str_replace (array ('http://', 'https://'), '', $url);
         }
 
         $hostAddress = explode ('.', $bidxUrl);
-        if (is_array ($hostAddress)) {
-            if (strcasecmp ("www", $hostAddress [0]) == 0) {
+
+        if (is_array ($hostAddress))
+        {
+            if (strcasecmp ("www", $hostAddress [0]) == 0)
+            {
                 $passBack = 1;
-            } else {
+            }
+            else
+            {
                 $passBack = 0;
             }
-            if ($echo == false) {
+
+            if ($echo == false)
+            {
                 return ( $hostAddress [$passBack] );
-            } else {
+            }
+            else
+            {
                 echo ( $hostAddress [$passBack] );
             }
-        } else {
+        }
+        else
+        {
             return ( false );
         }
     }
@@ -258,16 +271,17 @@ abstract class APIbridge
     function bidxRedirectLogin ($groupDomain,$statusText)
     {
         //wp_clear_auth_cookie();
-        $http = (is_ssl ()) ? 'https://' : 'http://';
-        $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $http           = (is_ssl ()) ? 'https://' : 'http://';
+        $current_url    = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         //If its illegal request like group is not backend that it sends back group missing with illegal request, so to know that error using edmsg
         //To genuine session expire using emsg=1
-        $statusText = ($statusText) ? '&edmsg='.base64_encode($statusText) : '&emsg=1';
+        $statusText     = ($statusText) ? '&edmsg='.base64_encode($statusText) : '&emsg=1';
 
-        $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) .$statusText ;
+        $redirect_url   = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) .$statusText ;
 
         header ("Location: " . $redirect_url);
+
         exit;
     }
 

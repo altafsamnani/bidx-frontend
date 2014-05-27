@@ -123,21 +123,18 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 {
     $logger          = Logger::getLogger ("Bidx Service Login");
     $bidxMethod      = strtoupper ($method);
-    $bidx_get_params = "";
-    $cookie_string   = "";
+    $bidxGetParams   = "";
     $sendDomain      = 'bidx.net';
     $cookieArr       = array ();
     $headers         = array ();
     $cookieHeader    = '';
     $cookieInfo      = $_COOKIE;
 
-    /***********1. Retrieve Bidx Cookies and send back to api to check ******* */
-
+    /*****1. Retrieve Bidx Cookies and send back to api to check ******/
     foreach ($_COOKIE as $cookieKey => $cookieValue)
     {
         if (preg_match ("/^bidx/i", $cookieKey))
         {
-            $sendDomain   = (BIDX_DEVELOPMENT) ? 'local.bidx.net' : 'bidx.net';
             $cookieArr[]  = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
            // $cookieHeader = $cookieKey . '=' . $cookieValue. '; ';
 
@@ -150,14 +147,10 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
 //        $headers['cookie']  = $cookies_header;
 //    }
 
-    /*     * *********2. Set Headers ******************************** */
-    //For Authentication
-    //$headers['Authorization'] = 'Basic ' . base64_encode ("$authUsername:$authPassword");
+    /***********2. Set Headers ********************/
     // 2.1 Set the group domain header
     if (isset ($body['domain'])) {
-        //Talk with arjan for domain on first page registration it will be blank when it goes live
-        $headers['X-Bidx-Group-Domain'] = ($urlservice == 'groups' && $bidxMethod == 'POST') ? 'beta' : $body['domain'];
-        //$bidx_get_params.= '&groupDomain=' . $body['domain'];
+        $headers['X-Bidx-Group-Domain'] = $body['domain'];
     }
 
     // 2.2 Is Form Upload
@@ -173,17 +166,15 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
             break;
     }
 
-    /*     * ********* 3. Decide method to use************** */
+    /*********** 3. Decide method to use************/
     if ($bidxMethod == 'GET') {
-        $bidx_get_params = ($body) ? '&' . http_build_query ($body) : '';
+        $bidxGetParams = ($body) ? '&' . http_build_query ($body) : '';
         $body = NULL;
     }
 
 
-    /*     * *********** 4. WP Http Request ******************************* */
-
-
-    $url = API_URL . $urlservice . '?csrf=false' . $bidx_get_params;
+    /************* 4. WP Http Request **************/
+    $url = API_URL . $urlservice . '?csrf=false' . $bidxGetParams;
 
     $logger->trace (sprintf ('Calling API URL: %s Method: %s Body: %s Headers: %s Cookies: %s', $url, $bidxMethod, var_export ($body, true), var_export ($headers, true), var_export ($cookieArr, true)));
 
@@ -196,12 +187,12 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
       'timeout' => apply_filters ('http_request_timeout', 60)
     ));
     $logger->trace (sprintf ('Response for API URL: %s Response: %s', $url, var_export ($result, true)));
-    /*     * *********** 5. Set Cookies if Exist ************************* */
+
+    /************* 5. Set Cookies if Exist **************************/
     if (is_array ($result)) {
         if (isset ($result['cookies']) && count ($result['cookies'])) {
             $cookies = $result['cookies'];
             foreach ($cookies as $bidxAuthCookie) {
-                //$cookieDomain = (DOMAIN_CURRENT_SITE == 'local.bidx.net') ? 'local.bidx.net' : $bidxAuthCookie->domain;
 
                 setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
                 $_COOKIE[$bidxAuthCookie->name] = urlencode($bidxAuthCookie->value);
@@ -258,7 +249,7 @@ function bidx_skipso_competition ( $competitionCookieVals )
  *
  * @return Loggedin User
  */
-add_action ('wp_authenticate', 'ajax_submit_signin');
+//add_action ('wp_authenticate', 'ajax_submit_signin');
 add_action ('wp_ajax_nopriv_bidx_signin', 'ajax_submit_signin');
 
 function ajax_submit_signin ()
@@ -286,7 +277,7 @@ function ajax_submit_signin ()
             //$url = 'http://test.bidx.net/api/v1/session?csrf=false&groupKey='.$groupName;
             //Flush Bidx Sessions/Cookies before login
             clear_bidx_cookies ();
-            wp_clear_auth_cookie ();
+            //wp_clear_auth_cookie ();
             clear_wp_bidx_session ();
 
             $result = call_bidx_service ($url, $body);
@@ -1106,7 +1097,7 @@ function bidx_wordpress_post_action ($url, $result, $body)
                         $userdata = get_userdata ($user_id);
                         $user = wp_set_current_user ($user_id, $username);
                         // this will actually make the user authenticated as soon as the cookie is in the browser
-                        wp_set_auth_cookie ($user_id);
+                        //wp_set_auth_cookie ($user_id);
 
                         // the wp_login action is used by a lot of plugins, just decide if you need it
                         do_action ('wp_login', $userdata->ID);

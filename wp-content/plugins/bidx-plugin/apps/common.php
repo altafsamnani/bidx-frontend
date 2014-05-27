@@ -443,7 +443,7 @@ class BidxCommon
                 }
                 break;
 
-            case 'wp-admin' :       // Group admin and wp-admin at that time only
+           /* case 'wp-admin' :       // Group admin and wp-admin at that time only
                 if ($authenticated == 'false') {
 
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
@@ -456,7 +456,7 @@ class BidxCommon
                     $this::$staticSession = NULL;
                     unset ($this::$bidxSession[$subDomain]);
                 }
-                break;
+                break;*/
 
 
             default:
@@ -492,7 +492,7 @@ class BidxCommon
             //$hostAddress[1]   == 'registration'                   ||
             || (isset($hostAddress[2]) && strstr ($hostAddress[2], 'admin-ajax.php'))
             || strstr ($hostAddress[1], 'wp-login.php')
-            || (is_super_admin() && preg_match ('/wp-admin/i', $hostAddress[2]) )
+            || (is_super_admin() && preg_match ('/wp-admin/i', $hostAddress[1]) )
             || in_array('administrator', $currentRoles)
             ) { //Allow Groupadmin for wp-admin dashboard
             $isCheck = false;
@@ -535,7 +535,7 @@ class BidxCommon
             $bidxLoginPriority = explode('|',BIDX_LOGIN_PRIORITY);
 
             if (in_array ($bidxLoginPriority[0], $roles)) {
-                $userName = $groupName . BIDX_SUPERADMIN_ROLE;
+                $userName = 'admin';
             }
             else if (in_array ($bidxLoginPriority[1], $roles)) {
                 $userName = $groupName . WP_OWNER_ROLE;
@@ -546,7 +546,6 @@ class BidxCommon
             else {
                 $userName = $groupName . WP_MEMBER_ROLE;
             }
-
 
             //If currently Logged in dont do anything
             if ($currentUser && isset ($currentUser->user_login) && $userName == $currentUser->user_login) {
