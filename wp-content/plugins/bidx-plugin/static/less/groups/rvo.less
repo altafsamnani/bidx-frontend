@@ -252,8 +252,33 @@ body
     border-radius: 0 !important;
 }
 
+a
+{
+    color: @text-primary-dark;
+    &:hover,
+    &:focus
+    {
+        color: @bg-primary-light;
+    }
+}
+
+.rvo-promo
+{
+    color: #fca203;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    text-shadow: 0 0 12px #000;
+}
+
 @media  (max-width: 767px)
 {
+
 }
 
 @media  (max-width: 979px)
@@ -303,6 +328,10 @@ body
         position: absolute !important;
         top: 0 !important;
     }
+    .rvo-promo
+    {
+        font-size: 45px;
+    }
 }
 
 @media (min-width: 1200px)
@@ -315,5 +344,10 @@ body
         {
             width: 1170px;
         }
+    }
+
+    .rvo-promo
+    {
+        font-size: 60px;
     }
 }
