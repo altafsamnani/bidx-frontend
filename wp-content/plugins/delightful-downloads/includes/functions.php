@@ -11,20 +11,6 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Download Link
- *
- * Generate download link based on provided id.
- *
- * @since  1.0
- */
-function dedo_download_link( $id ) {
-	 global $dedo_options;
-	 
-	 $output = esc_html( home_url( '?' . $dedo_options['download_url'] . '=' . $id ) );
-	 return apply_filters( 'dedo_download_link', $output );
-}
-
-/**
  * Shortcode Styles
  *
  * @since  1.0
@@ -111,8 +97,12 @@ function dedo_get_shortcode_lists() {
 	 		'format'			=> '<a href="%url%" title="%title% (Downloads: %count%)" rel="nofollow">%title% (Downloads: %count%)</a>'
 	 	),
 	 	'title_filesize'	=> array(
-	 		'name'				=> __( 'Title (Filesize)', 'delightful-downloads' ),
+	 		'name'				=> __( 'Title (File size)', 'delightful-downloads' ),
 	 		'format'			=> '<a href="%url%" title="%title% (%filesize%)" rel="nofollow">%title% (%filesize%)</a>'
+	 	),
+	 	'title_ext_filesize'=> array(
+	 		'name'				=> __( 'Title (Extension, File size)', 'delightful-downloads' ),
+	 		'format'			=> '<a href="%url%" title="%title% (%ext%, %filesize%)" rel="nofollow">%title% (%ext%, %filesize%)</a>'
 	 	)
 	);
 
@@ -151,18 +141,50 @@ function dedo_get_shortcode_lists() {
 
  	// filesize
  	if ( strpos( $string, '%filesize%' ) !== false ) {
- 		$value = dedo_format_filesize( get_post_meta( $id, '_dedo_file_size', true ) );
+ 		$value = size_format( get_post_meta( $id, '_dedo_file_size', true ), 1 );
  		$string = str_replace( '%filesize%', $value, $string );
  	}
 
  	// downloads
  	if ( strpos( $string, '%count%' ) !== false ) {
- 		$value = dedo_format_number( get_post_meta( $id, '_dedo_file_count', true ) );
+ 		$value = number_format_i18n( get_post_meta( $id, '_dedo_file_count', true ) );
  		$string = str_replace( '%count%', $value, $string );
+ 	}
+
+ 	// file name
+ 	if ( strpos( $string, '%filename%' ) !== false ) {
+ 		$value = dedo_get_file_name( get_post_meta( $id, '_dedo_file_url', true ) );
+ 		$string = str_replace( '%filename%', $value, $string );
+ 	}
+
+ 	// file extension
+ 	if ( strpos( $string, '%ext%' ) !== false ) {
+ 		$value = strtoupper( dedo_get_file_ext( get_post_meta( $id, '_dedo_file_url', true ) ) );
+ 		$string = str_replace( '%ext%', $value, $string );
+ 	}
+
+ 	 // file mime
+ 	if ( strpos( $string, '%mime%' ) !== false ) {
+ 		$value = dedo_get_file_mime( get_post_meta( $id, '_dedo_file_url', true ) );
+ 		$string = str_replace( '%mime%', $value, $string );
  	}
 
  	return apply_filters( 'dedo_search_replace_wildcards', $string, $id );
  }
+
+/**
+ * Download Link
+ *
+ * Generate download link based on provided id.
+ *
+ * @since  1.0
+ */
+function dedo_download_link( $id ) {
+	 global $dedo_options;
+	 
+	 $output = esc_html( home_url( '?' . $dedo_options['download_url'] . '=' . $id ) );
+	 return apply_filters( 'dedo_download_link', $output );
+}
 
 /**
  * Check for valid download
@@ -217,7 +239,10 @@ function dedo_download_blocked( $current_agent ) {
 
 	foreach ( $user_agents as $user_agent ) {
 		
-		if ( strpos( $current_agent, $user_agent ) ) {
+		$current_agent = trim( strtolower( $current_agent ) );
+		$user_agent = trim( strtolower( $user_agent ) );
+
+		if ( false !== strpos( $current_agent, $user_agent ) ) {
 			return false;
 		}	
 	}
@@ -252,7 +277,7 @@ function dedo_download_log( $download_id ) {
 	$download_count = get_post_meta( $download_id, '_dedo_file_count', true );
 
 	// If is admin and log admin is false, do not log
-	if ( current_user_can( 'administrator' ) && !$dedo_options['log_admin_downloads'] ) {
+	if ( current_user_can( 'administrator', $download_id ) && !$dedo_options['log_admin_downloads'] ) {
 		return;
 	}
 
@@ -294,63 +319,6 @@ function dedo_download_mime( $path ) {
 	$filetype = wp_check_filetype( $file );	
 	
 	return $filetype['type'];
-}
-
-/**
- * Get file name from path
- *
- * @since  1.0
- */
-function dedo_download_filename( $path = '' ) {
-	// Strip path, leave filename and extension
-	$file = explode( '/', $path );
-	
-	return end( $file );
-}
-
-/**
- * Convert file URL to absolute address
- *
- * @since  1.2.1
- */
-function dedo_url_to_absolute( $url ) {
-	
-	// Get URL of WordPress core files.
-	$root_url = trailingslashit( site_url() );
-
-	return str_replace( $root_url, ABSPATH, $url );
-}
-
-/**
- * Convert bytes to human readable format
- *
- * @since  1.0
- */
-function dedo_format_filesize( $bytes ) {
-	//Check a number was sent
-    if ( !empty( $bytes ) && $bytes != 0 ) {
-
-        //Set text sizes
-        $s = array( 'Bytes', 'KB', 'MB', 'GB', 'TB', 'PB' );
-        $e = floor( log( absint( $bytes ) ) / log( 1024 ) );
-
-        //Create output to 1 decimal place and return complete output
-        $output = sprintf( '%.1f '.$s[$e], ( $bytes / pow( 1024, floor( $e ) ) ) );
-        return $output;
-    }
-    else {
-    	return '0 Bytes';
-    }
-}
-
-/**
- * Format Numbers
- *
- * @since  1.0
- */
-function dedo_format_number( $number ) {
-	
-    return number_format( $number, 0, '', ',' );
 }
 
 /**
@@ -574,4 +542,116 @@ function dedo_delete_all_transients() {
 		'\_transient\_timeout\_delightful-downloads%%' );
 
 	$wpdb->query( $sql );
+}
+
+/**
+ * Get Absolute Path
+ *
+ * Searches various locations for download file.
+ *
+ * It is always recommended that the file should be within /wp-content
+ * otherwise it can't be guaranteed that the file will be found.
+ *
+ * Also allows absolute path to store files outsite the document root.
+ *
+ * @since   1.3.8
+ */
+function dedo_get_abs_path( $requested_file ) {
+	
+	$parsed_file = parse_url( $requested_file );
+
+	// Check for absolute path
+	if ( ( !isset( $parsed_file['scheme'] ) || !in_array( $parsed_file['scheme'], array( 'http', 'https' ) ) ) && isset( $parsed_file['path'] ) && file_exists( $requested_file ) ) {
+		
+		return $requested_file;
+	}
+
+	// Falls within wp_content
+	else if ( strpos( $requested_file, WP_CONTENT_URL ) !== false ) {
+		$file_path = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $requested_file );
+		
+		return realpath( $file_path );
+	}
+
+	// Falls in multisite
+	else if ( is_multisite() && !is_main_site() && strpos( $requested_file, network_site_url() ) !== false ) {
+		$site_url = trailingslashit( site_url() );
+		$file_path = str_replace( $site_url, ABSPATH, $requested_file );
+
+		$site_url = trailingslashit( network_site_url() );
+		$file_path = str_replace( $site_url, ABSPATH, $file_path );
+
+		return realpath( $file_path );
+	}
+
+	// Falls within WordPress directory structure
+	else if ( strpos( $requested_file, site_url() ) !== false ) {
+		$site_url = trailingslashit( site_url() );
+		$file_path = str_replace( $site_url, ABSPATH, $requested_file );
+
+		return realpath( $file_path );
+	}
+
+	// Falls outside WordPress structure but within document root.
+	else if ( file_exists( $_SERVER['DOCUMENT_ROOT'] . $parsed_file['path'] ) ) {
+		$file_path = $_SERVER['DOCUMENT_ROOT'] . $parsed_file['path'];
+		
+		return realpath( $file_path );
+	}
+
+	else {
+
+		return false;
+	}
+}
+
+/**
+ * Get File Name
+ *
+ * Strips the filename from a URL or path.
+ *
+ * @since   1.3.8
+ *
+ * @param string $path File path/url of filename.
+ * @return string Value of file name with extension.
+ */
+function dedo_get_file_name( $path ) {
+
+	return basename( $path );
+}
+
+/**
+ * Get File Mime
+ *
+ * Get the file mime type from the file path using WordPress
+ * built in filetype check.
+ *
+ * @since   1.3.8
+ *
+ * @param string $path File path/url of filename.
+ * @return string Value of file mime.
+ */
+function dedo_get_file_mime( $path ) {
+	
+	$file = wp_check_filetype( $path );
+
+	return $file['type'];
+}
+
+/**
+ * Get File Extension
+ *
+ * Get the file extension from the file path using WordPress
+ * built in filetype check.
+ *
+ * @since   1.3.8
+ *
+ * @param string $path File path/url of filename.
+ * @return string Value of file extension.
+ */
+function dedo_get_file_ext( $path ) {
+	
+	$file = wp_check_filetype( $path );
+	
+	return $file['ext'];
 }

@@ -125,13 +125,16 @@ PHP Max Upload Size: <?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
 ## WordPress Information ##
 
 WordPress Version: <?php echo get_bloginfo( 'version' ) . "\n"; ?>
-Multisite: <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
-Max Upload Size: <?php echo dedo_format_filesize( wp_max_upload_size() ) . "\n"; ?>
+Multisite: <?php echo ( is_multisite() ) ? 'Yes' . "\n" : 'No' . "\n" ?>
+Max Upload Size: <?php echo size_format( wp_max_upload_size(), 1 ) . "\n"; ?>
 
 Site Address: <?php echo home_url() . "\n"; ?>
 WordPress Address: <?php echo site_url() . "\n"; ?>
 Download Address: <?php echo dedo_download_link( 1 ) . "\n"; ?>
 
+<?php echo ( defined('UPLOADS') ? 'Upload Directory: ' . UPLOADS . "\n" : '' ); ?>
+Directory (wp-content): <?php echo ( defined('WP_CONTENT_DIR') ? WP_CONTENT_DIR . "\n" : '' ); ?>
+URL (wp-content): <?php echo ( defined('WP_CONTENT_URL') ? WP_CONTENT_URL . "\n" : '' ); ?>
 
 ## Active Theme ## 
 
@@ -205,7 +208,7 @@ function dedo_settings_enable_taxonomies_field() {
 	$checked = absint( $dedo_options['enable_taxonomies'] );
 
 	echo '<label for="delightful-downloads[enable_taxonomies]">';
-	echo '<input type="checkbox" name="delightful-downloads[enable_taxonomies]" id="delightful-downloads-enable-taxonomies" value="1" ' . checked( $checked, 1, false ) . ' /> ';
+	echo '<input type="checkbox" name="delightful-downloads[enable_taxonomies]" id="delightful-downloads[enable_taxonomies]" value="1" ' . checked( $checked, 1, false ) . ' /> ';
 	echo __( 'Enable', 'delightful-downloads' );
 	echo '</label>';
 	echo '<p class="description">' . __( 'Check this option to allow downloads to be tagged or categorised.', 'delightful-downloads' ) . '</p>';
@@ -222,7 +225,7 @@ function dedo_settings_members_only_field() {
 	$checked = absint( $dedo_options['members_only'] );
 
 	echo '<label for="delightful-downloads[members_only]">';
-	echo '<input type="checkbox" name="delightful-downloads[members_only]" id="delightful-downloads-members-only" value="1" ' . checked( $checked, 1, false ) . ' /> ';
+	echo '<input type="checkbox" name="delightful-downloads[members_only]" id="delightful-downloads[members_only]" value="1" ' . checked( $checked, 1, false ) . ' /> ';
 	echo __( 'Member Only', 'delightful-downloads' );
 	echo '</label>';
 	echo '<p class="description">' . __( 'Check this option to allow only logged in users to download files.', 'delightful-downloads' ) . '</p>';
@@ -276,7 +279,7 @@ global $dedo_options;
 	$checked = absint( $dedo_options['log_admin_downloads'] );
 
 	echo '<label for="delightful-downloads[log_admin_downloads]">';
-	echo '<input type="checkbox" name="delightful-downloads[log_admin_downloads]" id="delightful-downloads-log-admin-downloads" value="1" ' . checked( $checked, 1, false ) . ' /> ';
+	echo '<input type="checkbox" name="delightful-downloads[log_admin_downloads]" id="delightful-downloads[log_admin_downloads]" value="1" ' . checked( $checked, 1, false ) . ' /> ';
 	echo __( 'Log Downloads', 'delightful-downloads' );
 	echo '</label>';
 	echo '<p class="description">' . __( 'Check this option to log downloads by admins.', 'delightful-downloads' ) . '</p>';
@@ -371,7 +374,7 @@ function dedo_settings_enable_css_field() {
 	$checked = absint( $dedo_options['enable_css'] );
 
 	echo '<label for="delightful-downloads[enable_css]">';
-	echo '<input type="checkbox" name="delightful-downloads[enable_css]" value="1" ' . checked( $checked, 1, false ) . ' /> ';
+	echo '<input type="checkbox" name="delightful-downloads[enable_css]" id="delightful-downloads[enable_css]" value="1" ' . checked( $checked, 1, false ) . ' /> ';
 	echo __( 'Enable', 'delightful-downloads' );
 	echo '</label>';
 	echo '<p class="description">' . __( 'Check this option to include the Delightful Downloads stylesheet on the front-end. If this option is disabled you must manually add the button CSS classes to your theme\'s CSS file.', 'delightful-downloads' ) . '</p>';
@@ -415,8 +418,8 @@ function dedo_settings_uninstall_field() {
 
 	$checked = absint( $dedo_options['uninstall'] );
 
-	echo '<label for="delightful-downloads[unistall]">';
-	echo '<input type="checkbox" name="delightful-downloads[uninstall]" value="1" ' . checked( $checked, 1, false ) . ' /> ';
+	echo '<label for="delightful-downloads[uninstall]">';
+	echo '<input type="checkbox" name="delightful-downloads[uninstall]" id="delightful-downloads[uninstall]" value="1" ' . checked( $checked, 1, false ) . ' /> ';
 	echo __( 'Enable', 'delightful-downloads' );
 	echo '</label>';
 	echo '<p class="description">' . __( sprintf( 'Check this option to completely remove all data associated with Delightful Downloads when deleting the plugin. All downloads, categories, tags, logs and statistics will be removed. The uploaded files will remain in the %s directory.', '<code>wp-content/uploads/delightful-downloads</code>' ), 'delightful-downloads' ) . '</p>';

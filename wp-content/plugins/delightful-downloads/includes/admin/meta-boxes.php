@@ -34,13 +34,40 @@ function dedo_form_enctype() {
 add_action( 'post_edit_form_tag', 'dedo_form_enctype' );
 
 /**
+ * Add post type custom update messages
+ *
+ * @since  1.3.8
+ */
+function dedo_update_messages( $messages ) {
+	global $post, $post_ID;
+
+	$messages['dedo_download'] = array(
+		0 => '', // Unused. Messages start at index 1.
+		1 => sprintf( __('Download updated. Use the %s shortcode to include it in posts or pages.', 'delightful-downloads'), '<code>[ddownload id="' . $post_ID . '"]</code>' ),
+		2 => __('Custom field updated.', 'delightful-downloads'),
+		3 => __('Custom field deleted.', 'delightful-downloads'),
+		4 => sprintf( __('Download updated. Use the %s shortcode to include it in posts or pages.', 'delightful-downloads'), '<code>[ddownload id="' . $post_ID . '"]</code>' ),
+		5 => isset($_GET['revision']) ? sprintf( __('Download restored to revision from %s', 'delightful-downloads'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => sprintf( __('Download published. Use the %s shortcode to include it in posts or pages.', 'delightful-downloads'), '<code>[ddownload id="' . $post_ID . '"]</code>' ),
+		7 => __('Download saved.', 'delightful-downloads'),
+		8 => __('Download submitted.', 'delightful-downloads'),
+		9 => sprintf( __('Download scheduled for: <strong>%1$s</strong>.', 'delightful-downloads'),
+		  date_i18n( __( 'M j, Y @ G:i', 'delightful-downloads' ), strtotime( $post->post_date ) ) ),
+		10 => __('Download draft updated.', 'delightful-downloads'),
+	);
+
+	return $messages;
+}
+add_action( 'post_updated_messages', 'dedo_update_messages' );
+
+/**
  * Render File Metabox
  *
  * @since  1.0
  */
 function dedo_meta_box_file( $post ) {
 	$file_url = get_post_meta( $post->ID, '_dedo_file_url', true );
-	$file_size = get_post_meta( $post->ID, '_dedo_file_size', true );
+	$file_size = size_format( get_post_meta( $post->ID, '_dedo_file_size', true ), 1 );
 	
 	global $post, $dedo_options;;
 	 
@@ -80,47 +107,32 @@ function dedo_meta_box_file( $post ) {
 		var filebrowser_args = <?php echo json_encode( $filebrowser_init ); ?>;
 	</script>
 	
-	<div id="plupload-container">
-		<table class="form-table">
-			<tbody>
-				<tr valign="top">
-					<th scope="row">
-						<?php _e( 'File URL:', 'delightful-downloads' ); ?>
-					</th>
-					<td id="plupload-file">
-						<input type="text" name="dedo-file-url" id="dedo-file-url" value="<?php echo esc_attr( $file_url ); ?>" class="large-text" placeholder="<?php _e( 'Enter file URL here', 'delightful-downloads' ); ?>" />
-						<?php wp_nonce_field( 'ddownload_file_save', 'ddownload_file_save_nonce' ); ?>
-						<p class="description"><?php printf( __( 'You may manually enter a file URL here, for files that are already uploaded to the server. Please note that only files within the WordPress directory structure are allowed (for example: %s). Alternatively, you can browse to the file using the file browser, or upload a new file:', 'delightful-downloads' ), dedo_get_upload_dir( 'dedo_baseurl' ) ); ?></p>
-						<!-- Display with JS tuned on-->
-						<div class="hide-if-no-js">
-							<input id="dedo-upload-button" type="button" value="<?php _e( 'Upload File', 'delightful-downloads' ); ?>" class="button" />
-							<input id="dedo-select-button" type="button" value="<?php _e( 'Select Existing File', 'delightful-downloads' ); ?>" class="button" />
-							<div id="dedo-file-upload">
-								<p id="plupload-error" class="error" style="display: none"></p>
-								<div id="plupload-progress" style="display: none">
-									<div class="bar" style="width: 0%"></div>
-									<div class="percent"><p>Uploading...</p></div>
-								</div>
-							</div>
-							<div id="dedo-file-browser" style="display: none"></div>
-						</div>
-						<!-- Display with JS tuned off-->
-						<div class="hide-if-js">
-							<input type="file" name="dedo-async-upload" id="dedo-async-upload" />
-						</div>
-						<p class="description"><?php printf( __( 'Maximum upload file size: %s.', 'delightful-downloads' ), dedo_format_filesize( wp_max_upload_size() ) ); ?></p>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row">
-						<?php _e( 'File Size:', 'delightful-downloads' ); ?>
-					</th>
-					<td id="plupload-file-size">
-						<?php echo ($file_size !== '' ? dedo_format_filesize( $file_size ) : '-----' ); ?>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	<div id="plupload-container">	
+		<label for="dedo-file-url"><?php _e( 'File URL:', 'delightful-downloads' ); ?></label>
+		<div class="file-container">
+			<div class="file-url-container">
+				<input type="text" name="dedo-file-url" id="dedo-file-url" value="<?php echo esc_attr( $file_url ); ?>" class="large-text" placeholder="<?php _e( 'Upload or enter the file URL.', 'delightful-downloads' ); ?>" />
+				<span class="remove" style="display: none"><a href="#">Remove</a></span>
+			</div>
+			<div class="file-size-container">
+				<p><?php echo ( !$file_size ) ? __( 'Unkown', 'delightful-downloads' ) : $file_size; ?></p>
+			</div>
+		</div>
+		<?php wp_nonce_field( 'ddownload_file_save', 'ddownload_file_save_nonce' ); ?>
+		
+		<div id="plupload-file">
+			<input id="dedo-upload-button" type="button" value="<?php _e( 'Upload File', 'delightful-downloads' ); ?>" class="button" />
+			<input id="dedo-select-button" type="button" value="<?php _e( 'Select Existing File', 'delightful-downloads' ); ?>" class="button" />
+			<span class="description"><?php printf( __( 'Maximum upload file size: %s.', 'delightful-downloads' ), size_format( wp_max_upload_size(), 1 ) ); ?></span>
+			<div id="dedo-file-upload">
+				<p id="plupload-error" class="error" style="display: none"></p>
+				<div id="plupload-progress" style="display: none">
+					<div class="bar" style="width: 0"></div>
+					<div class="percent"><p>Uploading...</p></div>
+				</div>
+			</div>
+			<div id="dedo-file-browser" style="display: none"></div>
+		</div>
 	</div>
 	<?php
 }
@@ -134,19 +146,9 @@ function dedo_meta_box_stats( $post ) {
 	$file_count = get_post_meta( $post->ID, '_dedo_file_count', true );
 	?>
 	<div id="dedo-file-stats-container">
-		<table class="form-table">
-			<tbody>
-				<tr valign="top">
-					<th scope="row">
-						<label for="dedo_file_count"><?php _e( 'Count' , 'delightful-downloads' ); ?>:</label>
-						<?php wp_nonce_field( 'ddownload_stats_save', 'ddownload_stats_save_nonce' ); ?>
-					</th>
-					<td>
-						<input type="text" name="dedo_file_count" class="text-small" value="<?php echo ($file_count !== '' ? esc_attr( $file_count ) : 0 ); ?>" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<label for="dedo_file_count"><?php _e( 'Count' , 'delightful-downloads' ); ?>:</label>
+		<?php wp_nonce_field( 'ddownload_stats_save', 'ddownload_stats_save_nonce' ); ?>
+		<input type="text" name="dedo_file_count" class="large-text" value="<?php echo ($file_count !== '' ? esc_attr( $file_count ) : 0 ); ?>" />
 	</div>
 	
 	<?php
@@ -169,53 +171,47 @@ function dedo_meta_boxes_save( $post_id ) {
 	}
 
 	// Check user has permission
-	if ( !current_user_can( 'edit_post' ) ) {
+	if ( !current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
 	
-	// Handle no-ajax file uploads
-	if ( isset( $_FILES['dedo-async-upload'] ) && $_FILES['dedo-async-upload']['size'] > 0 ) {
-		// Set upload dir
-		add_filter( 'upload_dir', 'dedo_set_upload_dir' );
-	
-		// Upload the file
-		$file = wp_handle_upload( $_FILES['dedo-async-upload'], array( 'test_form' => false ) );
+	// Check for save stats nonce
+	if ( isset( $_POST['ddownload_file_save_nonce'] ) && wp_verify_nonce( $_POST['ddownload_file_save_nonce'], 'ddownload_file_save' ) ) {	
+		
+		// Save file url
+		if ( isset( $_POST['dedo-file-url'] ) && !empty( $_POST['dedo-file-url'] ) ) {
+			
+			$file_url = trim( $_POST['dedo-file-url'] );
+			
+			if ( !$file_path = dedo_get_abs_path( $file_url ) ) {
 
-		// Check for success
-		if ( isset( $file['url'] ) ) {
-			// Add/update post meta
-			update_post_meta( $post_id, '_dedo_file_url', $file['url'] );
-			update_post_meta( $post_id, '_dedo_file_size', $_FILES['dedo-async-upload']['size'] );
-		}
-		else {
-			// Display upload error
-			$notices = get_option( 'delightful-downloads-notices', array() );
-			$notices[] = '<div class="error"><p>' . $file['error'] . '</p></div>';
-			update_option( 'delightful-downloads-notices', $notices );
-		}
-	}
-	// No file present, lets save post URL if isset
-	else {
-		// Check for save stats nonce
-		if ( isset( $_POST['ddownload_file_save_nonce'] ) && wp_verify_nonce( $_POST['ddownload_file_save_nonce'], 'ddownload_file_save' ) ) {	
-			// Save file url
-			if ( isset( $_POST['dedo-file-url'] ) ) {
-				$file_url = trim( $_POST['dedo-file-url'] );
-				$file_path = dedo_url_to_absolute( $file_url );
+				// No file found locally, attempt to get file size from remote
+				$response = get_headers( $file_url, 1 );
 				
-				// Does file exist?
-				if ( file_exists( $file_path ) ) {
-					update_post_meta( $post_id, '_dedo_file_url', $file_url );
-					update_post_meta( $post_id, '_dedo_file_size', filesize( $file_path ) );
+				if ( 'HTTP/1.1 404 Not Found' !== $response[0] && isset( $response['Content-Length'] )  ) {
+					
+					$file_size = $response['Content-Length'];
 				}
 				else {
-					// Display file does not exist error
-					$notices = get_option( 'delightful-downloads-notices', array() );
-					$notices[] = '<div class="error"><p>' . sprintf( __( 'The file does not exist! Please check the URL and ensure it is within the WordPress directory structure. (For example: %s)', 'delightful-downloads' ), dedo_get_upload_dir( 'dedo_baseurl' ) ) . '</p></div>';
-					update_option( 'delightful-downloads-notices', $notices );
+
+					$file_size = 0;
 				}
+
 			}
+			else {
+				
+				$file_size = filesize( $file_path );
+			}
+
 		}
+		else {
+			
+			$file_size = 0;
+			$file_url = '';
+		}
+
+		update_post_meta( $post_id, '_dedo_file_url', $file_url );
+		update_post_meta( $post_id, '_dedo_file_size', $file_size );
 	}
 	
 	// Check for save stats nonce
@@ -232,20 +228,3 @@ function dedo_meta_boxes_save( $post_id ) {
 	dedo_delete_all_transients();
 }
 add_action( 'save_post', 'dedo_meta_boxes_save' );
-
-/**
- * Display notice to user, resolves issue with post redirect
- *
- * @since  1.0
- */
-function dedo_meta_boxes_notice() {
-	if ( $notices = get_option( 'delightful-downloads-notices' ) ) {
-		
-		foreach ( $notices as $notice ) {
-			echo $notice;
-		}
-
-		delete_option( 'delightful-downloads-notices' );
-	}
-}
-add_action( 'admin_notices', 'dedo_meta_boxes_notice' );

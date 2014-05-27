@@ -1,9 +1,32 @@
 jQuery( document ).ready( function( $ ){
 	
+	// Show remove button if URL present
+	if( $( '#dedo-file-url' ).val().length > 0 ) {
+		$( '.file-url-container .remove' ).show();
+	}
+
+	// Show/hide remove button
+	$( '#dedo-file-url' ).on( 'change', function() {
+		if( $( this ).val().length > 0 ) {
+			$( '.file-url-container .remove' ).show();
+		}
+		else {
+			$( '.file-url-container .remove' ).hide();
+		}
+	} );
+
+	// Clear URL
+	$( '.file-url-container .remove a' ).on( 'click', function( e ) {
+		$( '#dedo-file-url' ).val('');
+		$( '.file-size-container p' ).html( '' );
+		$(this).parent().hide();
+		e.preventDefault();
+	} );
+
 	// Init file browser
 	$( '#dedo-file-browser' ).fileTree( filebrowser_args, function( file ) {
-		file_path = file.replace( filebrowser_args.root, filebrowser_args.url );
-		$( '#dedo-file-url' ).val( file_path );
+		var file_path = file.replace( filebrowser_args.root, filebrowser_args.url );
+		$( '#dedo-file-url' ).val( file_path ).trigger( 'change' );
 	} );
 	
 	// Toggle file browser
@@ -43,8 +66,8 @@ jQuery( document ).ready( function( $ ){
         	});
  		}
  		else {
- 			$( '#dedo-file-url' ).val( $.trim( response.file.url ) );
-			$( '#plupload-file-size' ).html( plupload.formatSize( file['size'] ) );
+ 			$( '#dedo-file-url' ).val( $.trim( response.file.url ) ).trigger( 'change' );
+			$( '.file-size-container p' ).html( plupload.formatSize( file['size'] ) );
 			$( '#plupload-progress' ).slideUp();
  		}
 	} );

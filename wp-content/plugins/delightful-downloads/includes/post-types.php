@@ -92,8 +92,9 @@ function dedo_download_column_headings( $columns ) {
 		'cb' 				=> '<input type="checkbox" />',
 		'title' 			=> __( 'Title', 'delightful-downloads' ),
 		'file'				=> __( 'File', 'delightful-downloads' ),
-		'shortcode' 		=> __( 'Shortcode', 'delightful-downloads' ),
+		'filesize'			=> __( 'File Size', 'delightful-downloads' ),
 		'downloads' 		=> __( 'Downloads', 'delightful-downloads' ),
+		'shortcode' 		=> __( 'Shortcode', 'delightful-downloads' ),
 		'date' 				=> __( 'Date', 'delightful-downloads' )
 	);
 
@@ -122,18 +123,29 @@ add_filter( 'manage_dedo_download_posts_columns', 'dedo_download_column_headings
 function dedo_download_column_contents( $column_name, $post_id ) {
 	// File column
 	if ( $column_name == 'file' ) {
+		
 		$path = get_post_meta( $post_id, '_dedo_file_url', true );
-		echo esc_attr( dedo_download_filename( $path ) );
+		echo esc_attr( basename( $path ) );
+	}
+
+	// Filesize column
+	if ( $column_name == 'filesize' ) {
+		
+		$file_size = size_format( get_post_meta( $post_id, '_dedo_file_size', true ), 1 );
+		echo esc_attr( ( !$file_size ) ? __( 'Unknown' , 'delightful-downloads' ) : $file_size );
 	}
 	
 	// Shortcode column
 	if ( $column_name == 'shortcode' ) {
+		
 		echo '<code>[ddownload id="' . esc_attr( $post_id ) . '"]</code>';
 	}
 	
 	// Count column
 	if ( $column_name == 'downloads' ) {
-		echo esc_attr( dedo_format_number( get_post_meta( $post_id, '_dedo_file_count', true ) ) );
+		
+		$count = number_format_i18n( get_post_meta( $post_id, '_dedo_file_count', true ) );
+		echo esc_attr( $count );
 	}
 }
 add_action( 'manage_dedo_download_posts_custom_column', 'dedo_download_column_contents', 10, 2 );
@@ -144,6 +156,7 @@ add_action( 'manage_dedo_download_posts_custom_column', 'dedo_download_column_co
  * @since  1.0
  */
 function dedo_download_column_sortable( $columns ) {
+	$columns['filesize'] = 'filesize';
 	$columns['downloads'] = 'downloads';
 
 	return $columns;
@@ -158,6 +171,11 @@ add_filter( 'manage_edit-dedo_download_sortable_columns', 'dedo_download_column_
 function dedo_download_column_orderby( $query ) {
 	$orderby = $query->get( 'orderby');  
   
+	if ( $orderby == 'filesize' ) {  
+		$query->set( 'meta_key', '_dedo_file_size' );  
+		$query->set( 'orderby', 'meta_value_num' );  
+	}
+
 	if ( $orderby == 'downloads' ) {  
 		$query->set( 'meta_key', '_dedo_file_count' );  
 		$query->set( 'orderby', 'meta_value_num' );  
