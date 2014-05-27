@@ -1,0 +1,1585 @@
+// Import
+// -------------------------
+@import "elements.less";
+@import "../bootstrap-3.1.1/less/bootstrap.less";
+
+// Color Variables
+// -------------------------
+
+    @text-copy: #34495E;
+    @white: #FFF;
+
+    @stickyheight: 50px;
+
+    @investor: #2c3e50;
+    @member: #bdc3c7;
+    @entrepreneur: #f39c11;
+    @mentor: #8A51B1;
+
+    @navbar-inner: @white;
+
+    @lato: "Lato", sans-serif;
+
+    // Testimonial
+    @testimonial-bg: #D2B48C;
+    @triagle-size: 25px;
+
+    @brand-secondary: #1abc9c;
+
+// Color alterations in Variables
+// ---------------------------------
+    @bg-primary-dark: desaturate(darken(@brand-primary, 25%), 25%);
+    @text-primary-dark: darken(@brand-primary, 25%);
+    @text-primary-darker: desaturate(darken(@brand-primary, 35%), 25%);
+    @bg-primary-light: lighten(@brand-primary, 25%);
+    @text-primary-light: lighten(@brand-primary, 25%);
+
+
+// Fonts 
+// ---------------------------------
+
+
+
+
+// Color alterations in Classes
+// ---------------------------------
+.bg-primary-dark
+{
+    background: desaturate(darken(@brand-primary, 25%), 25%);
+}
+.bg-primary-darker
+{
+    background: desaturate(darken(@brand-primary, 35%), 25%);
+}
+.text-primary-dark
+{
+    color: darken(@brand-primary, 25%);
+}
+.bg-primary-light
+{
+    background: lighten(@brand-primary, 25%);
+}
+.text-primary-light
+{
+    color: lighten(@brand-primary, 25%);
+}
+.text-white
+{
+    color: #FFF;
+}
+
+// Base
+// -------------------------
+body
+{
+    .reset;
+    color: @text-copy;
+    background-color: @color-background;
+
+    & when (lightness(@color-background) > 50%)
+    {
+        color: #234;
+    }
+    & when not (lightness(@color-background) > 50%)
+    {
+        color: #fde;
+    }
+    &.bidx
+    {
+        .body-bg();
+        // .body-bg('p4/p4.png');        
+    }
+    font-family: "@{text-font}", sans-serif;
+}
+
+video
+{
+    max-width: 100%;
+    height: auto;
+}
+
+iframe,
+embed,
+object
+{
+    max-width: 100%;
+}
+
+// Sticky Footer
+// -------------------------
+html
+{
+    position: relative;
+    min-height: 100%;
+}
+body
+{
+    margin-bottom: @stickyheight + 30;
+    @media (max-width: @screen-xs-min)
+    {
+        margin-bottom: 0;
+    }
+}
+
+footer
+{
+    margin-top: 30px;
+    @media (min-width: @screen-xs-min)
+    {
+        position: absolute;
+        bottom: 0;
+        height: @stickyheight;
+        width: 100%;
+        margin-top: 0;
+    }
+}
+
+
+::-webkit-input-placeholder
+{
+   color: #333333;
+}
+
+:-moz-placeholder
+{ /* Firefox 18- */
+   color: #333333;
+}
+
+::-moz-placeholder
+{  /* Firefox 19+ */
+   color: #333333;
+   opacity: 0.5;
+}
+
+:-ms-input-placeholder
+{
+   color: #333333;
+}
+
+a,
+a:hover,
+a:visited,
+a:link
+{
+    .transition-all;
+    text-decoration: none;
+}
+
+// Headings
+// -------------------------
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "@{headings-font}", sans-serif;
+}
+
+.spacer
+{
+    margin-bottom: 40px;
+}
+
+
+// Icons manipulation
+// -------------------------
+.icons-circle
+{
+    padding: ceil(@font-size-base * 0.7);
+    background-color: lighten(@brand-primary, 40%);
+    font-size: floor(@font-size-base * 3.9);
+    width: floor(@font-size-base * 6.45);
+    height: floor(@font-size-base * 6.45);
+    display: table;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    .round;
+    .fa
+    {
+        .text-primary-dark;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .circle-thumb
+    {
+        position: absolute;
+        height: 90px;
+        top: 0;
+        left: -50%;
+        margin-left: 30%;
+    }
+}
+.icons-rounded
+{
+    padding: ceil(@font-size-base * 0.7);
+    background-color: lighten(@brand-primary, 40%);
+    font-size: floor(@font-size-base * 3.9);
+    width: floor(@font-size-base * 6.45);
+    height: floor(@font-size-base * 6.45);
+    display: table;
+    text-align: center;
+    .rounded;
+    .fa
+    {
+        .text-primary-dark;
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+.iconbar
+{
+    font-family: @lato;
+    .fa
+    {
+        font-size: ceil(@font-size-base * 1.4);
+        float: left;
+        margin-right: ceil(@font-size-base * 0.4);
+    }
+    a[type="button"]
+    {
+        padding: floor(@padding-base-vertical * 1.8) @padding-base-horizontal;
+        display: block;
+        @media (max-width: @screen-xs-min)
+        {
+            padding: floor(@padding-base-vertical) (@padding-base-horizontal * 0.25);
+        }
+    }
+    .btn-group
+    {
+        &.open:after
+        {
+            .triangle(up, 6px, lighten( @brand-primary, 40%) );
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+        }
+        a
+        {
+            color: @white;
+        }
+    }
+    .iconbar-unread
+    {
+        .rgba(@brand-primary,  0.7);
+        .rounded;
+        font-size: ceil(@font-size-base * 0.85);
+        min-width: 17px;
+        padding: 0 2px;
+        position: absolute;
+        text-align: center;
+        left: 0;
+        top: 2px;
+        -webkit-font-smoothing: auto;
+    }
+    @media (max-width: @screen-xs-max)
+    {
+        .iconbar-text
+        {
+            display: none;
+        }
+    }
+}
+
+.document-icon {
+    font-size: ceil(@font-size-base * 5.00);
+    margin-bottom: 20px;
+    color: @text-copy;
+}
+
+.img-square
+{
+    .rounded(4px);
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    margin: 10px;
+    position: relative;
+    img
+    {
+        position:absolute;
+        left: -100%;
+        right: -100%;
+        top: -100%;
+        bottom: -100%;
+        margin: auto;
+        min-height: 100%;
+        min-width: 100%;
+    }
+}
+
+// Cropping
+.profilePictureContainer
+{
+    position: relative;
+    margin-bottom: 20px;
+    float: left;
+    clear: both;
+    img {
+        .rounded(6px);
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.js-cropper
+{
+    .opacity(.4);
+    .rounded(6px);
+    background-color: #FFF;
+    border: 1px solid #000;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.img-cropper
+{
+    .rounded(6px);
+    position: relative;
+    overflow: hidden;
+    width: 90px;
+    height: 90px;
+    z-index: 1;
+    img
+    {
+        .rounded(6px);
+        position: absolute;
+    }
+}
+
+.footer-bar
+{
+    .fa
+    {
+        font-size: ceil(@font-size-base * 1.4);
+        margin: 0 @padding-base-horizontal;
+    }
+    > div
+    {
+        margin-top: ceil(@font-size-base * 1.05);
+    }
+}
+
+.member-social
+{
+    .pull-left
+    {
+        position: relative;
+        height: 32px !important;
+        width: 32px !important;
+        margin-right: 8px;
+    }
+    .fa
+    {
+        font-size: ceil(@font-size-base * 2.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        color: @brand-primary;
+    }
+
+    .linkedin
+    {
+        .IN-widget
+        {
+            position: absolute;
+            top: 0;
+            z-index: 1;
+        }
+        .li-connect-mark
+        {
+            background: none !important;
+            height: 32px !important;
+            width: 32px !important;
+        }
+    }
+
+    .skypeclass p
+    {
+        margin: 0;
+    }
+
+    .skypeclass p a
+    {
+        margin: 0;
+        display: block !important;
+        height: 32px !important;
+        width: 32px !important;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+    }
+
+    .skypeclass p img
+    {
+        margin: 0 !important;
+        vertical-align: baseline !important;
+        visibility: hidden !important;
+    }
+
+}
+
+
+//
+.sponsors
+{
+    text-align: center;
+    img
+    {
+        max-width: 100%;
+        height: auto;
+        margin: 15px;
+    }
+}
+
+// Search
+// -------------------------
+.navbar .search .input-group
+{
+    margin-top: 5px;
+    .form-control
+    {
+        .rounded(4px 0 0 4px);
+        border: none;
+        height: 30px;
+        &:focus
+        {
+            border-color: transparent;
+            .box-shadow(none)
+        }
+    }
+    .btn
+    {
+        .rounded(0 4px 4px 0);
+        border: none;
+        padding: 5px 8px;
+    }
+}
+
+// Main Menu
+// -------------------------
+.dropdown-menu
+{
+    .box-shadow(none);
+    border: 0;
+    padding: 0;
+}
+
+// Header
+// -------------------------
+header
+{
+    padding: 40px 0 0;
+}
+
+
+// Logo
+// -------------------------
+.logo-left
+{
+    text-align: left;
+    @media (max-width: @screen-xs-min)
+    {
+        text-align: center;
+    }
+    a
+    {
+        float: left;
+        @media (max-width: @screen-xs-min)
+        {
+            float: none;
+        }
+    }
+}
+.logo-centered
+{
+    text-align: center;
+    a
+    {
+        float: none;
+    }
+}
+.logo-right
+{
+    text-align: right;
+    @media (max-width: @screen-xs-min)
+    {
+        text-align: center;
+    }
+    a
+    {
+        float: right;
+        @media (max-width: @screen-xs-min)
+        {
+            float: none;
+        }
+    }
+}
+.start-btn
+{
+    .rounded(100px);
+    text-transform: uppercase;
+    font-weight: 300;
+    padding-left: floor(@font-size-base * 2.75);
+    padding-right: floor(@font-size-base * 2.75);
+    @media (max-width: @screen-xs-min)
+    {
+        float: none !important;
+    }
+}
+.btn-secondary
+{
+    background-color: @brand-secondary;
+    color: @white;
+    &:hover
+    {
+        background-color: darken(@brand-secondary, 10%);
+        color: @white;
+    }
+}
+.tagline
+{
+    margin: floor(@font-size-base * 0.95) floor(@font-size-base * 2.75);
+    @media (max-width: @screen-xs-min)
+    {
+        float: none !important;
+    }
+}
+.kickoff
+{
+    margin-top: floor(@font-size-base * 0.95);
+    @media (max-width: @screen-xs-min)
+    {
+        float: none !important;
+    }
+}
+.widget
+{
+    margin-bottom: floor(@font-size-base * 0.95);
+}
+.widget-last
+{
+    margin-bottom: 0;
+}
+
+// Iconbar and header's dropdown menu
+// --------------------------------------------------
+.navbar
+{
+    .iconbar
+    {
+        .dropdown-menu
+        {
+            .border-radius(0, 4px, 4px, 0);
+            background-color: @bg-primary-dark;
+            right: 0;
+            left: auto;
+            margin: 0;
+        }
+    }
+    .navbar-inner
+    {
+        background-color: @navbar-inner;
+        .container
+        {
+            height: 100%;
+        }
+    }
+    .home-btn
+    {
+        float: left;
+        margin-top: 5px;
+    }
+    .fa-home
+    {
+        .rounded(4px);
+        background-color: @white;
+        padding: 3px 5px;
+        font-size: floor(@font-size-base * 1.75);
+        color: @text-primary-darker;
+        margin-right: 7px;
+        float: left;
+    }
+}
+.dropdown-menu
+{
+    li
+    {
+        padding: 0 3px 3px;
+        position: relative;
+        &:first-child
+        {
+            padding-top: 3px;
+        }
+    }
+}
+
+
+// Modals
+// -------------------------
+.modal-body
+{
+    max-height: 500px;
+    overflow-y: auto;
+    .hide-in-modal
+    {
+        display: none;
+        visibility: hidden;
+    }
+}
+
+// Home Register Blocks
+// -------------------------
+
+// .bidx.home .bidx-register-block
+// {
+//     .rounded(10px);
+//     background: desaturate(darken(@brand-primary, 25%), 25%);
+//     height: 117px;
+//     a
+//     {
+//         display: block;
+//         height: inherit;
+//     }
+//     .action-call-text
+//     {
+//         line-height:                        30px;
+//         font-size:                          24px;
+//         padding-top:                        25px;
+//         margin:                             0 0 0 30%;
+//         color:                              white;
+//         font-weight:                        bold;
+//     }
+//     .icon
+//     {
+//         color: @gray-lighter;
+//         font-size: floor(@font-size-base * 6);
+//         position: absolute;
+//         left: 33px;
+//         top: 19px;
+//     }
+//     .arrow
+//     {
+//         color: @white;
+//         font-size: floor(@font-size-base * 2.1);
+//         position: absolute;
+//         right: 29px;
+//         top: 46px;
+//     }
+//     &:hover .arrow
+//     {
+//         color: lighten(@brand-primary, 25%);
+//     }
+// }
+
+// Feature Block
+// ---------------
+.feature-container
+{
+    color: @white;
+    padding: 20px 0;
+}
+
+// Testimonial
+// ----------------------
+
+.bidx-testimonial
+{
+    background-color: @testimonial-bg;
+    color: @text-copy;
+    font-size: ceil(@font-size-base * 1.25);
+    margin-bottom: @triagle-size;
+    min-height: 200px;
+    position: relative;
+    &:after
+    {
+        .box-sizing;
+        height: 0;
+        width: 100%;
+        content: "";
+        position: absolute;
+        border-top: @triagle-size solid @testimonial-bg;
+        border-right: @triagle-size solid transparent;
+        margin: 33px 0 0 0;
+        bottom: -@triagle-size;
+    }
+    .testimonial-quote
+    {
+        color: desaturate(lighten( @testimonial-bg, 15%), 5%);
+        position: absolute;
+        top: 7px;
+        right: 8px;
+        font-size: ceil(@font-size-base * 3.2);
+        line-height: 1;
+    }
+    > div
+    {
+        padding: 50px 20px 20px;
+        line-height: ceil(@font-size-base * 2);
+    }
+    p
+    {
+        font-size: 15px;
+        line-height: ceil(@font-size-base * 2);
+    }
+    .triange
+    {
+        .triangle(upleft, @triagle-size, desaturate(darken( @testimonial-bg, 15%), 15%) );
+        position: absolute;
+        bottom: -@triagle-size;
+        right: 0;
+        z-index: 1;
+    }
+}
+
+
+// Posts
+// -------------------------
+
+.alignleft
+{
+    float: left;
+    margin: 10px 20px 20px 0;
+}
+.alignright
+{
+    float: right;
+    margin: 10px 0 20px 20px;
+}
+
+
+// Apps Header
+// -------------------------
+.pageHeader
+{
+    background-color: @white;
+    .editControls
+    {
+        margin: 20px 0;
+    }
+}
+
+// Map
+// -------------------------
+.reach-map
+{
+    overflow: hidden;
+    margin: 0 15px;
+    height: 300px;
+    position: relative;
+    img
+    {
+        .transform(translateY(-50%) translateX(-50%));
+        position: absolute;
+        left: 50%;
+        top: 50%;
+    }
+}
+
+// Group's Latest
+// -------------------------
+.auth .bidx-latest .col-sm-6
+{
+    margin-bottom: (@grid-gutter-width / 2);
+    &:nth-last-child(-n+2)
+    {
+        margin-bottom: 0;
+    }
+}
+
+// Panels
+// -------------------------
+
+.panel-heading
+{
+    &.heading-error
+    {
+        background-color: lighten(@brand-danger, 35%);;
+    }
+    .js-error-count
+    {
+        background-color: @brand-danger;
+    }
+}
+
+.bidx-collapse
+{
+    display: inline-block;
+    line-height: 1;
+    font-size: floor(@font-size-base * 1.4);
+    margin-top: floor(@font-size-base * 0.5);
+}
+
+.bidx-expand
+{
+    line-height: 1;
+    display: none;
+    font-size: floor(@font-size-base * 1.4);
+    margin-top: floor(@font-size-base * 0.5);
+}
+
+.collapsed
+{
+    .bidx-expand
+    {
+        display: inline-block;
+    }
+    .bidx-collapse
+    {
+        display: none;
+    }
+}
+
+// Footer
+// -------------------------
+
+.page-footer
+{
+    color: @white;
+    font-size: ceil(@font-size-base * 0.9);
+    border-top: 1px solid darken(@bg-primary-dark, 8%);
+    border-bottom: 1px solid darken(@bg-primary-dark, 8%);
+    .footer-bar
+    {
+        height: 48px;
+    }
+    .left-block
+    {
+        margin-top: 5px;
+    }
+    .right-block
+    {
+        margin-top: 15px;
+    }
+    .footer-menu
+    {
+        display: inline-block;
+        > div
+        {
+            display: inline;
+            margin-right: 10px;
+        }
+    }
+    .copyright
+    {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    .follow-us
+    {
+        margin-right: 20px;
+    }
+    a
+    {
+        text-decoration: underline;
+        color: #fff;
+    }
+}
+
+// Elements
+// -------------------------
+.divider
+{
+    background-color: lighten(@brand-primary, 25%);
+    height: 5px;
+}
+
+.view
+{
+    display: none;
+}
+
+.viewInitial
+{
+    display: block;
+}
+
+.label
+{
+    &.bidx-label
+    {
+        margin-right: 0.5em;
+    }
+    &.bidx-investor
+    {
+        background-color: @investor;
+    }
+    &.bidx-member
+    {
+        background-color: @member;
+        color: @text-copy;
+    }
+    &.bidx-entrepreneur
+    {
+        background-color: @entrepreneur;
+    }
+    &.bidx-mentor
+    {
+        background-color: @mentor;
+    }
+}
+
+.buttonwrapper
+{
+    margin: 20px 0;
+}
+
+// Forms
+// -------------------------
+textarea
+{
+    resize: vertical;
+    min-height: 100px;
+}
+
+select
+{
+    width:                     100%;
+    height:                     40px;
+    margin-bottom:              0;
+}
+
+form .error-separate
+{ /*still used for seperate error messages not linked to an input. Login uses it*/
+    background-color:           #DBD9D9;
+    color:                      #E83E3E;
+    border:                     1px solid #FFA8A8;
+
+    padding:                    4px 10px;
+    margin:                     5px 0;
+
+    -webkit-border-radius:      4px;
+    -moz-border-radius:         4px;
+    border-radius:              4px;
+
+    display:                    none;
+}
+
+/* Chosen element validation error only */
+.has-error
+{
+    .chosen-container-multi .chosen-choices,
+    .chosen-container-single .chosen-single,
+    .bidx-tagsinput-container
+    {
+        border-color: @state-danger-text;
+    }
+}
+.side-bar {
+    h2 {
+        margin-top: 0;
+    }
+}
+
+
+/* ==========================================================================
+   2. CHECKBOXES
+   ========================================================================== */
+
+.modern-browser
+{
+    input[type="checkbox"]
+    {
+        display:none;
+        + label span
+        {
+            display:inline-block;
+            width:19px;
+            height:19px;
+            margin:-12px 5px 0 0;
+            vertical-align:middle;
+            cursor:pointer;
+            color: #99a1a7;
+            &:before
+            {
+                content: '\f0c8';
+                font-family: FontAwesome;
+                font-size: floor(@font-size-base * 1.45);
+            }
+        }
+        &:checked + label span:before
+        {
+            color: @brand-secondary;
+            content: '\f14a';
+        }
+    }
+    input[type="radio"]
+    {
+        display:none;
+        + label span
+        {
+            display:inline-block;
+            width:19px;
+            height:19px;
+            margin:-12px 5px 0 0;
+            vertical-align:middle;
+            cursor:pointer;
+            color: #99a1a7;
+            &:before
+            {
+                content: '\f10c';
+                font-family: FontAwesome;
+                font-size: floor(@font-size-base * 1.45);
+            }
+        }
+        &:checked + label span:before
+        {
+            color: @brand-secondary;
+            content: '\f192';
+        }
+    }
+}
+
+// bidX tagsinput, uses bootstrap-tagmanager
+// -----------------------------------------
+
+.bidx-tagsinput-container
+{
+    .box-sizing;
+    .rounded(4px);
+    border: 2px solid #bdc3c7;
+    color: @text-copy;
+    background-color: @white;
+    font-family: @lato;
+    font-size: 14px;
+    padding: 5px 1px 1px 6px;
+    width: 100%;
+    height: 100%;
+    white-space: normal;
+    text-indent: 0;
+    display: inline-block;
+    overflow-y: auto;
+    input[type='text'].bidx-tagsinput
+    {
+        width: 30%;
+        &.enclosed
+        {
+            width: 40%;
+            line-height: 25px;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+            height: 25px;
+            margin-bottom: 5px;
+            outline: none;
+        }
+    }
+    .bidx-tag
+    {
+        .rounded(4px);
+        background-color: @brand-secondary;
+        color: @white;
+        vertical-align: middle;
+        margin-right: 5px;
+        margin-bottom: 4px;
+        overflow: hidden;
+        line-height: 11px;
+        padding: 6px 24px 8px 10px;
+        position: relative;
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+        .tm-tag-remove
+        {
+            display: block;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 14px;
+            position: absolute;
+            top: 6px;
+            right: 5px;
+            &:before
+            {
+                content:                        "\f00d";
+                font-family:                    FontAwesome;
+                cursor:                         pointer;
+            }
+        }
+    }
+    .cross:before
+    {
+        color:                          #000;
+        content:                        "\f00d";
+        font-family:                    FontAwesome;
+        cursor:                         pointer;
+    }
+}
+
+/* Panels Icon Rotation */
+.panel-open .accordion-state-icon
+{
+    .rotation(90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+
+.accordion-state-icon
+{
+    .rotation(0deg);
+    .transition(0.3s);
+    .backface();
+    font-size: ceil(@font-size-base * 0.8);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+
+/* Pagination plugin */
+.pagination .pointer-cursor
+{
+    cursor: hand;
+    cursor: pointer;
+}
+
+.pager-loading
+{
+    .opacity;
+}
+
+/* Calendar */
+#wp-calendar
+{
+    width: 100%;
+    font-size: 11px;
+    thead
+    {
+        th
+        {
+            background: darken(@white, 5%);
+            border: 1px solid darken(@white, 15%);
+            border-top: none;
+            font-size: floor(@font-size-base * 1.10);
+        }
+    }
+    tbody
+    {
+        td
+        {
+            background-color: @white;
+            text-align: center;
+            border: 1px solid darken(@white, 15%);
+            line-height: 2.5em;
+            -webkit-transition: background 0.15s ease;
+            transition: background 0.15s ease;
+            &:hover
+            {
+                background: #f1f1f1;
+                color: #333;
+                a
+                {
+                    -webkit-transition: background 0.15s ease;
+                    transition: background 0.15s ease;
+                    background: desaturate(lighten(@brand-primary, 10%), 25%);
+                }
+            }
+            a
+            {
+                    display: block;
+                    text-decoration: none;
+                    background: desaturate(lighten(@brand-primary, 35%), 25%);
+                    color: darken(@brand-primary, 50%);
+            }
+        }
+        a
+        {
+            display: block;
+            text-decoration: underline;
+        }
+    }
+    tfoot
+    {
+        td
+        {
+            padding-top: 1px;
+            padding: 4px;
+        }
+    }
+    caption
+    {
+        font-size: 13px;
+        text-transform: uppercase;
+        margin: 0;
+        padding: 12px;
+        outline: 0 none !important;
+        background: darken(@brand-primary, 25%);
+        color: @white; 
+    }
+    th
+    {
+        text-align: center;
+        border: 1px solid transparent;
+        border-top: none;
+        padding: 7px 0;
+        color: darken(@brand-primary, 25%);
+    }
+}
+
+// --------------------------------------------------
+// Bootstrap Overides
+// --------------------------------------------------
+
+// alerts.less
+// -------------------------
+
+// badges.less
+// -------------------------
+
+// breadcrumbs.less
+// -------------------------
+
+// button-groups.less
+// -------------------------
+.btn-group.open .dropdown-toggle
+{
+    .box-shadow(none);
+}
+// buttons.less
+// -------------------------
+.btn
+{
+    &:focus
+    {
+        outline: 0;
+    }
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] &
+    {
+        cursor: not-allowed;
+        pointer-events: none; // Future-proof disabling of clicks
+    .opacity(.65);
+        .box-shadow(none);
+    }
+}
+
+// carousel.less
+// -------------------------
+.carousel-inner
+{
+  > .item
+  {
+    > img,
+    > a > img
+    {
+        width: 100%;
+    }
+  }
+}
+.carousel-caption
+{
+    // .rgba;
+    padding: 20px 20px 30px;
+}
+
+// Left/right controls for nav
+.carousel-control
+{
+    // Toggles
+    .fa-chevron-left,
+    .fa-chevron-right
+    {
+        position: absolute;
+        top: 48%;
+        z-index: 5;
+        display: inline-block;
+        font-size: floor(@font-size-base * 3);
+    }
+    .fa-chevron-left
+    {
+        left: 50%;
+    }
+    .fa-chevron-right
+    {
+        right: 50%;
+    }
+    // Set gradients for backgrounds
+    &.left
+    {
+        background: transparent;
+    }
+    &.right
+    {
+    left: auto;
+    right: 0;
+        background: transparent;
+    }
+}
+
+
+// close.less
+// -------------------------
+
+// code.less
+// -------------------------
+
+// component-animations.less
+// -------------------------
+
+// dropdowns.less
+// -------------------------
+
+// forms.less
+// -------------------------
+
+.form-control
+{
+    height: 40px;
+    color: @input-color;
+    background-color: @input-bg;
+    border: 2px solid @input-border;
+    .box-sizing;
+    .box-shadow(none)
+}
+
+.radio,
+.checkbox
+{
+  padding-left: 0;
+}
+
+.has-error > div.error {
+    color: @state-danger-text;
+}
+
+// glyphicons.less
+// -------------------------
+
+// grid.less
+// -------------------------
+
+// input-groups.less
+// -------------------------
+.input-group-addon
+{
+    padding: floor(@padding-base-vertical * 0.5) @padding-base-horizontal;
+    font-size: ceil(@font-size-base * 1.5); // ~21px
+    border: 2px solid @input-group-addon-border-color;
+    color: darken(@brand-primary, 25%);
+    background-color: @input-group-addon-bg;
+}
+// jumbotron.less
+// -------------------------
+
+// labels.less
+// -------------------------
+
+// list-group.less
+// -------------------------
+
+// media.less
+// -------------------------
+
+// modals.less
+// -------------------------
+
+// navbar.less
+// -------------------------
+.navbar {
+  border: none;
+}
+
+// navs.less
+// -------------------------
+
+// pager.less
+// -------------------------
+
+// pagination.less
+// -------------------------
+
+// panels.less
+// -------------------------
+
+// popovers.less
+// -------------------------
+
+// progress-bars.less
+// -------------------------
+
+// tables.less
+// -------------------------
+
+// thumbnails.less
+// -------------------------
+.wp-caption
+{
+    display: inline-block;
+    vertical-align: top;
+    img
+    {
+        width: 100%;
+        height: auto;
+    }
+}
+
+
+// tooltip.less
+// -------------------------
+
+// type.less
+// -------------------------
+.lead
+{
+    margin-bottom: 0;
+    font-size: floor(@font-size-base * 1.2);
+    font-weight: 400;
+    font-style: italic;
+    line-height: floor(@font-size-base * 1.2);
+
+    @media (min-width: @screen-sm-min)
+    {
+        font-size: (@font-size-base * 1.6);
+        line-height: floor(@font-size-base * 1.6);
+    }
+}
+
+// utilities.less
+// -------------------------
+.hide-overflow
+{
+    overflow: hidden !important;
+}
+.ds-block
+{
+    display: block;
+}
+.ds-none
+{
+    display: none;
+}
+.center-img
+{
+    display: block;
+    margin: 0 auto;
+}
+.center-icon
+{
+    margin: 0 auto;
+}
+.hide-it
+{
+    display: none;
+}
+
+// wells.less
+// -------------------------
+
+
+
+
+
+
+
+
+
+
+/*******************************************************************************************
+*
+*   Responsive breakpoints
+*
+********************************************************************************************/
+
+
+/*
+*   Example
+*
+*    @media (max-width: @screen-xs-max) {
+*      
+*    }
+*
+*
+*    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+*      
+*    }
+*
+*/
+
+
+/* Large desktop */
+@media (min-width: 1200px)
+{
+    .width-medium .container
+    {
+        width: 1040px;
+    }
+}
+
+/* Landscape phones and below */
+@media  (min-width: 992px)
+{
+    .width-small .container
+    {
+        width: 940px;
+    }
+}
+
+
+@media  (max-width: 767px)
+{
+
+    /* Header */
+    header.navbar .iconbar .profiles ul.dropdown-menu {
+        right: auto;
+    }
+
+    header.navbar .iconbar .profiles ul.dropdown-menu:after {
+        left: 22px;
+        right: auto;
+    }
+    
+    /* Footer */
+    .page-footer
+    {
+        .footer-bar
+        {
+            height: auto;
+            padding: 10px 0 20px;
+            .pull-left,
+            .pull-right
+            {
+                float: none !important;
+                text-align: center;
+            }
+        }
+        .follow-us
+        {
+            margin-right: 0;
+        }
+    }
+
+    .modal-body
+    {
+        max-height: 250px;
+    }
+
+    .col-xs-1,
+    .col-sm-1,
+    .col-xs-2,
+    .col-sm-2,
+    .col-xs-3,
+    .col-sm-3,
+    .col-xs-4,
+    .col-sm-4,
+    .col-xs-5,
+    .col-sm-5,
+    .col-xs-6,
+    .col-sm-6,
+    .col-xs-7,
+    .col-sm-7,
+    .col-xs-8,
+    .col-sm-8,
+    .col-xs-9,
+    .col-sm-9,
+    .col-xs-10,
+    .col-sm-10,
+    .col-xs-11,
+    .col-sm-11,
+    .col-xs-12,
+    .col-sm-12,
+    {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+@import "components/mainmenu.less";

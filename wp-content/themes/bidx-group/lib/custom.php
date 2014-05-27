@@ -2,7 +2,7 @@
 
 
 function theme_enqueue_styles() {
-    wp_enqueue_style('bidx-group', get_stylesheet_directory_uri().'/assets/bootstrap-3.1.1/less/bootstrap.less');
+    wp_enqueue_style('bidx-group', get_stylesheet_directory_uri().'/assets/less/base.less');
     
     include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
     if (is_plugin_active ('bidx-plugin/bidX-plugin.php'))

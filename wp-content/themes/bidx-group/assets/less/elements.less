@@ -1,0 +1,278 @@
+// LESS Elements 0.9
+
+// A set of useful LESS mixins
+// More info at: http://lesselements.com
+
+
+.gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF)
+{
+    background: @color;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, @start), color-stop(1, @stop));
+    background: -ms-linear-gradient(bottom, @start, @stop);
+    background: -moz-linear-gradient(center bottom, @start 0%, @stop 100%);
+    background: -o-linear-gradient(@stop, @start);
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
+}
+
+.bw-gradient(@color: #F5F5F5, @start: 0, @stop: 255)
+{
+    background: @color;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(@start,@start,@start)), color-stop(1, rgb(@stop,@stop,@stop)));
+    background: -ms-linear-gradient(bottom, rgb(@start,@start,@start) 0%, rgb(@stop,@stop,@stop) 100%);
+    background: -moz-linear-gradient(center bottom, rgb(@start,@start,@start) 0%, rgb(@stop,@stop,@stop) 100%);
+    background: -o-linear-gradient(rgb(@stop,@stop,@stop), rgb(@start,@start,@start));
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",rgb(@stop,@stop,@stop),rgb(@start,@start,@start)));
+}
+
+.bordered(@top-color: #EEE, @right-color: #EEE, @bottom-color: #EEE, @left-color: #EEE)
+{
+    border-top: solid 1px @top-color;
+    border-left: solid 1px @left-color;
+    border-right: solid 1px @right-color;
+    border-bottom: solid 1px @bottom-color;
+}
+
+.drop-shadow(@x-axis: 0, @y-axis: 1px, @blur: 2px, @alpha: 0.1)
+{
+    -webkit-box-shadow: @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
+    -moz-box-shadow: @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
+    box-shadow: @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
+}
+
+.rounded(@radius: 10px)
+{
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.round(@radius: 50%)
+{
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.border-radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0)
+{
+    -webkit-border-top-right-radius: @topright !important;
+    -webkit-border-bottom-right-radius: @bottomright !important;
+    -webkit-border-bottom-left-radius: @bottomleft !important;
+    -webkit-border-top-left-radius: @topleft !important;
+    -moz-border-radius-topright: @topright !important;
+    -moz-border-radius-bottomright: @bottomright !important;
+    -moz-border-radius-bottomleft: @bottomleft !important;
+    -moz-border-radius-topleft: @topleft !important;
+    border-top-right-radius: @topright !important;
+    border-bottom-right-radius: @bottomright !important;
+    border-bottom-left-radius: @bottomleft !important;
+    border-top-left-radius: @topleft !important;
+    .background-clip(padding-box);
+}
+
+.opacity(@opacity: 0.5)
+{
+    -moz-opacity: @opacity;
+    -khtml-opacity: @opacity;
+    -webkit-opacity: @opacity;
+    opacity: @opacity;
+    @opperc: @opacity * 100;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";
+    filter: "alpha(opacity=@{opperc})";
+}
+
+.transition-duration(@duration: 0.2s)
+{
+    -moz-transition-duration: @duration;
+    -webkit-transition-duration: @duration;
+    -o-transition-duration: @duration;
+    transition-duration: @duration;
+}
+
+.transform(...)
+{
+    -webkit-transform: @arguments;
+    -moz-transform: @arguments;
+    -o-transform: @arguments;
+    -ms-transform: @arguments;
+    transform: @arguments;
+}
+
+.transition-all(@duration: 0.3s)
+{
+    -webkit-transition-property: color, background-color, box-shadow, opacity;
+    transition-property: color, background-color, box-shadow, opacity;
+    -webkit-transition-duration: @duration;
+    transition-duration: @duration;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+    -webkit-transition-delay: 0;
+    transition-delay: 0;
+}
+
+.rotation(@deg:5deg)
+{
+    .transform(rotate(@deg));
+}
+
+.scale(@ratio:1.5)
+{
+    .transform(scale(@ratio));
+}
+
+.transition(@duration:0.2s, @ease:ease-out)
+{
+    -webkit-transition: all @duration @ease;
+    -moz-transition: all @duration @ease;
+    -o-transition: all @duration @ease;
+    transition: all @duration @ease;
+}
+
+.inner-shadow(@horizontal:0, @vertical:1px, @blur:2px, @alpha: 0.4)
+{
+    -webkit-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
+    -moz-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
+    box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
+}
+
+.box-shadow(@arguments)
+{
+    -webkit-box-shadow: @arguments;
+    -moz-box-shadow: @arguments;
+    box-shadow: @arguments;
+}
+
+.box-sizing(@sizing: border-box)
+{
+    -ms-box-sizing: @sizing;
+    -moz-box-sizing: @sizing;
+    -webkit-box-sizing: @sizing;
+    box-sizing: @sizing;
+}
+
+.user-select(@argument: none)
+{
+    -webkit-user-select: @argument;
+    -moz-user-select: @argument;
+    -ms-user-select: @argument;
+    user-select: @argument;
+}
+
+.columns(@colwidth: 250px, @colcount: 0, @colgap: 50px, @columnRuleColor: #EEE, @columnRuleStyle: solid, @columnRuleWidth: 1px)
+{
+    -moz-column-width: @colwidth;
+    -moz-column-count: @colcount;
+    -moz-column-gap: @colgap;
+    -moz-column-rule-color: @columnRuleColor;
+    -moz-column-rule-style: @columnRuleStyle;
+    -moz-column-rule-width: @columnRuleWidth;
+    -webkit-column-width: @colwidth;
+    -webkit-column-count: @colcount;
+    -webkit-column-gap: @colgap;
+    -webkit-column-rule-color: @columnRuleColor;
+    -webkit-column-rule-style: @columnRuleStyle;
+    -webkit-column-rule-width: @columnRuleWidth;
+    column-width: @colwidth;
+    column-count: @colcount;
+    column-gap: @colgap;
+    column-rule-color: @columnRuleColor;
+    column-rule-style: @columnRuleStyle;
+    column-rule-width: @columnRuleWidth;
+}
+
+.translate(@x:0, @y:0)
+{
+    .transform(translate(@x, @y));
+}
+
+.background-clip(@argument: padding-box)
+{
+    -moz-background-clip: @argument;
+    -webkit-background-clip: @argument;
+    background-clip: @argument;
+}
+// Use with colour name: .rgba(black, 0.5) or hex value: .rgba(#FF2400, 0.5)
+
+.rgba(@colour: #000, @alpha: 0.5)
+{
+    @alphaColour: hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
+    @ieAlphaColour: argb(@alphaColour);
+    background-color: @colour; // Fallback for older browsers
+    background-color: @alphaColour;
+    // IE hacks
+    zoom: 1; // hasLayout
+    background-color: transparent\9;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@{ieAlphaColour}, endColorstr=@{ieAlphaColour})"; // IE 8+
+}
+
+// Triangle
+//
+// https://github.com/stijnj/less-triangle/blob/master/less-triangle.less
+//
+.triangle-base()
+{
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+}
+
+.triangle(@direction, @size, @color) when (@direction = up)
+{
+    .triangle-base();
+    border-left: @size solid transparent;
+    border-right: @size solid transparent;
+    border-bottom: @size solid @color;
+}
+
+.triangle(@direction, @size, @color) when (@direction = down)
+{
+    .triangle-base();
+    border-left: @size solid transparent;
+    border-right: @size solid transparent;
+    border-top: @size solid @color;
+}
+
+.triangle(@direction, @size, @color) when (@direction = left)
+{
+    .triangle-base();
+    border-top: @size solid transparent;
+    border-bottom: @size solid transparent;
+    border-right: @size solid @color;
+}
+
+.triangle(@direction, @size, @color) when (@direction = right)
+{
+    .triangle-base();
+    border-top: @size solid transparent;
+    border-bottom: @size solid transparent;
+    border-left: @size solid @color;
+}
+
+.triangle(@direction, @size, @color) when (@direction = upleft)
+{
+    .triangle-base();
+    border-left: 0 solid transparent;
+    border-bottom: 0 solid transparent;
+    border-right: @size solid transparent;
+    border-top: @size solid @color;
+}
+
+.backface(@visibility: hidden)
+{
+    backface-visibility:         @visibility;
+    -webkit-backface-visibility: @visibility;
+    -moz-backface-visibility:    @visibility;
+    -ms-backface-visibility:     @visibility;
+}
+
+.reset()
+{
+    margin: 0;
+    padding: 0;
+}
+
+.body-bg( @file: NULL, @repeat: repeat, @x: center, @y: top ) when ( isstring(@file) )
+{
+    background: transparent url("../img/@{file}") @repeat @x @y;
+}
