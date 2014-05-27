@@ -264,3 +264,22 @@ body.bidx-businesssummary .companyItem label.radio {
         padding-top:                6px;
     }
 }
+
+.completeness-score
+{
+    background-color: @brand-success;
+    color: @gray-lighter;
+    margin: 0 15% 10px;
+    padding: ceil(@padding-base-horizontal * 0.5);
+    text-align: center;
+    font-weight: 100;
+    .percentage
+    {
+        font-size: ceil(@font-size-base * 2.2);
+        line-height: 1;
+        span
+        {
+            font-size: ceil(@font-size-base * 1.5);
+        }
+    }
+}

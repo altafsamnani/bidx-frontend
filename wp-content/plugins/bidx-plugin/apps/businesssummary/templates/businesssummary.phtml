@@ -2,7 +2,7 @@
 
 $businessSummary    = $this->data;
 
-$progress           = $this -> completenessScore . '%';
+$progress           = $this -> completenessScore ? $this -> completenessScore : '0';
 
 $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     ? $businessSummary->bidxMeta
@@ -77,12 +77,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
         </div>
 
-        <div class="col-sm-3 completion">
-            <h2><?php _e('Business completion', 'bidxplugin')?></h2>
-            <div class="progress progress-striped">
-                <div class="progress-bar progress-bar-success text-center" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $progress ?>">
-                    <?php echo $progress ?> <?php _e('completed', 'bidxplugin')?>
-                </div>
+        <div class="col-sm-3">
+            <div class="completeness-score">
+                <div class="percentage"><?php echo $progress ?><span>%</span></div>
+                <div class=""><?php _e('completed', 'bidxplugin')?></div>
             </div>
         </div>
 
