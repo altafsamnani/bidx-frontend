@@ -89,6 +89,19 @@ body
         .body-bg();
         // .body-bg('p4/p4.png');        
     }
+    &.bg-full
+    {
+        background-size: cover;
+        background-attachment: fixed;
+        background-image: url( @bg-image );
+        background-position: center center;
+    }
+    &.bg-pattern
+    {
+        background-image: url( @bg-image );
+        background-position: center top;
+        background-repeat: repeat;
+    }
     font-family: "@{text-font}", sans-serif;
 }
 
@@ -472,6 +485,7 @@ h1, h2, h3, h4, h5, h6,
 header
 {
     padding: 40px 0 0;
+    background-color: @white;
 }
 
 
@@ -630,110 +644,6 @@ header
     }
 }
 
-// Home Register Blocks
-// -------------------------
-
-// .bidx.home .bidx-register-block
-// {
-//     .rounded(10px);
-//     background: desaturate(darken(@brand-primary, 25%), 25%);
-//     height: 117px;
-//     a
-//     {
-//         display: block;
-//         height: inherit;
-//     }
-//     .action-call-text
-//     {
-//         line-height:                        30px;
-//         font-size:                          24px;
-//         padding-top:                        25px;
-//         margin:                             0 0 0 30%;
-//         color:                              white;
-//         font-weight:                        bold;
-//     }
-//     .icon
-//     {
-//         color: @gray-lighter;
-//         font-size: floor(@font-size-base * 6);
-//         position: absolute;
-//         left: 33px;
-//         top: 19px;
-//     }
-//     .arrow
-//     {
-//         color: @white;
-//         font-size: floor(@font-size-base * 2.1);
-//         position: absolute;
-//         right: 29px;
-//         top: 46px;
-//     }
-//     &:hover .arrow
-//     {
-//         color: lighten(@brand-primary, 25%);
-//     }
-// }
-
-// Feature Block
-// ---------------
-.feature-container
-{
-    color: @white;
-    padding: 20px 0;
-}
-
-// Testimonial
-// ----------------------
-
-.bidx-testimonial
-{
-    background-color: @testimonial-bg;
-    color: @text-copy;
-    font-size: ceil(@font-size-base * 1.25);
-    margin-bottom: @triagle-size;
-    min-height: 200px;
-    position: relative;
-    &:after
-    {
-        .box-sizing;
-        height: 0;
-        width: 100%;
-        content: "";
-        position: absolute;
-        border-top: @triagle-size solid @testimonial-bg;
-        border-right: @triagle-size solid transparent;
-        margin: 33px 0 0 0;
-        bottom: -@triagle-size;
-    }
-    .testimonial-quote
-    {
-        color: desaturate(lighten( @testimonial-bg, 15%), 5%);
-        position: absolute;
-        top: 7px;
-        right: 8px;
-        font-size: ceil(@font-size-base * 3.2);
-        line-height: 1;
-    }
-    > div
-    {
-        padding: 50px 20px 20px;
-        line-height: ceil(@font-size-base * 2);
-    }
-    p
-    {
-        font-size: 15px;
-        line-height: ceil(@font-size-base * 2);
-    }
-    .triange
-    {
-        .triangle(upleft, @triagle-size, desaturate(darken( @testimonial-bg, 15%), 15%) );
-        position: absolute;
-        bottom: -@triagle-size;
-        right: 0;
-        z-index: 1;
-    }
-}
-
 
 // Posts
 // -------------------------
@@ -845,14 +755,6 @@ header
     {
         height: 48px;
     }
-    .left-block
-    {
-        margin-top: 5px;
-    }
-    .right-block
-    {
-        margin-top: 15px;
-    }
     .footer-menu
     {
         display: inline-block;
@@ -873,19 +775,17 @@ header
     }
     a
     {
-        text-decoration: underline;
+        text-decoration: none;
         color: #fff;
+        &:hover
+        {
+            color: @bg-primary-light;
+        }
     }
 }
 
 // Elements
 // -------------------------
-.divider
-{
-    background-color: lighten(@brand-primary, 25%);
-    height: 5px;
-}
-
 .view
 {
     display: none;

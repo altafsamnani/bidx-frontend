@@ -165,31 +165,46 @@ class Bidx_Group_Customizer {
 		));
 		$wp_customize->add_control( new WP_Customize_Image_Control(
 				$wp_customize,
-				'background_image_selector',
+				'brand-background-color-image',
 				array(
 						'label'      => __( 'Background Image', 'bidx_group_theme' ),
 						'section'    => 'color_settings',
 						'settings'   => 'brand-background-color-image',
 						'context'    => 'brand-background-color-image'
 				) )
-		);				
-		$wp_customize->add_setting( 'brand-text-tone', array(
-				        'default'     => 'dark',
+		);
+
+		$wp_customize->add_setting( 'main_logo_selector' );
+		$wp_customize->add_control(
+				new WP_Customize_Image_Control(
+						$wp_customize,
+						'main_logo_selector',
+						array(
+								'label'      => __( 'Upload your main logo', 'bidx_group_theme' ),
+								'section'    => 'logo_settings',
+								'settings'   => 'main_logo_selector',
+								'context'    => 'main_logo_settings'
+						)
+				)
+		);
+
+		$wp_customize->add_setting( 'brand-full-pattern', array(
+				        'default'     => 'full',
 						'capability'  => 'edit_theme_options',
 						'type'        => 'option',
 		));
 		$wp_customize->add_control(
 				new WP_Customize_Control(
 						$wp_customize,
-						'brand-text-tone',
+						'brand-full-pattern',
 						array(
-								'label'          => __( 'Dark or light text', 'bidx_group_theme' ),
-								'section'        => 'color_settings',
-								'settings'       => 'brand-text-tone',
-								'type'           => 'radio',
-								'choices'        => array(
-										'dark'   => __( 'Dark' ),
-										'light'  => __( 'Light' )
+								'label'           => __( 'Fullscreen or Pattern (needs a Background Image)', 'bidx_group_theme' ),
+								'section'         => 'color_settings',
+								'settings'        => 'brand-full-pattern',
+								'type'            => 'radio',
+								'choices'         => array(
+										'full'    => __( 'Fullscreen background image' ),
+										'pattern' => __( 'Pattern background image' )
 								)
 						)
 				)
@@ -779,6 +794,7 @@ class Bidx_Group_Customizer {
 			'color-main' => get_option( 'brand-primary' ),
 			'color-secondary' => get_option( 'brand-secondary' ),
 			'color-background' => get_option( 'brand-background-color' ),
+			'bg-image' => "'".get_option( 'brand-background-color-image' )."'",
 			'text-font' => get_option( 'text_font' ),
 			'headings-font' => get_option( 'headings_font' ),
 			'menu-font' => get_option( 'menu_font' ),

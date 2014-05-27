@@ -18,6 +18,23 @@
     {
         $pagewidth = ' width-small';
     }
+
+    if ( get_option( 'brand-background-color-image' ) )
+    {
+        // $addbgimage = 'style="background-image:url('. $bgimage .'); background-size: cover; background-position: center center; background-attachment:fixed; "';
+        if ( get_option( 'brand-full-pattern' ) === 'full' )
+        {
+            $custombg = ' bg-full';
+        }
+        else
+        {
+            $custombg = ' bg-pattern';
+        }
+    }
+    else
+    {
+        $custombg = '';
+    }
 ?>
 
 <?php
@@ -25,7 +42,7 @@
     get_template_part('templates/head');
 ?>
 
-<body <?php body_class( "bidx " . $authClass . $pagewidth ); ?> >
+<body <?php body_class( "bidx " . $authClass . $pagewidth . $custombg );  ?> >
 
 <!--[if lt IE 8]>
 <div class="alert alert-warning">
