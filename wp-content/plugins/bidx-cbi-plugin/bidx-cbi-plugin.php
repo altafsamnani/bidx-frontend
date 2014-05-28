@@ -100,7 +100,7 @@ class CBIShortCode {
 	 * Loads the page from the CBI server.
 	 * HTML is rewritten in order to support relinking content
 	 */
-	public function loadPage( $atts, $content=null ) {
+	public function loadPage( $atts=null, $content=null ) {
 		
 		$uri = "/marketintel_platform/platform/177482/affiliate";
 		if ( isset( $_REQUEST[$this -> URL_id] ) ) {
@@ -198,8 +198,81 @@ class CBIShortCode {
 	
 }
 
+/**
+ * CBI viewing widget 
+ *
+ */
+class CBI_Widget extends WP_Widget {
+
+/**
+ * Constructor.
+ */
+function __construct() {
+
+	$this->WP_Widget (
+		'bidx_cbi_widget',
+		__('CBI Widget'),
+		array (
+			'name' => ': : Bidx CBI Data ',
+			'classname' => 'bidx_cbi_widget',
+			'description' => __( "Add data from CBI to your pages." )
+		)
+	);
+}
+
+	/**
+	 * Maintenance of the widget
+	 * @param WP_Widget $instance
+	 */
+	function form( $instance ) {
+		?>
+	        <p><?php _e( 'No configuration options available', 'wp_widget_plugin'); ?></p>
+		<?php
+	} 
+
+    /**
+     * Stores the value of the widget
+     * @param WP_Widget $new_instance
+     * @param WP_Widget $old_instance
+     * @return WP_Widget
+     */
+    function update( $new_instance, $old_instance )
+    {
+        $instance = $old_instance;
+        $instance['cbi_code'] = esc_sql( $new_instance['cbi_code']);
+        return $instance;
+    }
+
+    
+    /**
+     * 
+     * @param unknown $args
+     * @param unknown $instance
+     */
+    function widget($args, $instance) {
+        extract( $args );
+        // these are the widget options
+        $cbi_code = $instance['cbi_code'];
+       
+        echo $before_widget;
+        
+        //CBI data via class ?? static?
+        $cbi = new CBIShortCode();
+        $cbi->loadPage();
+        
+        echo $after_widget;
+    }
+
+
+}
+
 $cbi = new CBIShortCode();
 add_shortcode( 'cbi', array ( $cbi, 'loadPage' ) );
+
+add_action( 'widgets_init', function() {
+	register_widget( 'CBI_Widget' );
+});
+
 
 register_activation_hook ( __FILE__, array ( $cbi, 'load' ) );
 register_deactivation_hook ( __FILE__, array ( $cbi, 'unload' ) );
