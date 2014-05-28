@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: bidx.net translation Marianne\n"
+"Project-Id-Version: p2\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -8,652 +8,239 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr_FR\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.5\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
 
 # Language fr
-# 1) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -149
-# _e("bidX is powered by BiD Network.  60,000 online members from 90 countries, 1500 mentors, 200 investors, 822 businesses started and grown, 130 businesses financed with over $17 million. 6500 jobs created.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"bidX is powered by BiD Network.  60,000 online members from 90 countries, "
-"1500 mentors, 200 investors, 822 businesses started and grown, 130 "
-"businesses financed with over $17 million. 6500 jobs created."
-msgstr ""
-"bidX a été réalisée par BiD Network. 60.000 membres connectés venant de 90 "
-"pays, 1500 coaches, 200 investisseurs, 822 entreprises démarrés et "
-"développés, 130 entreprises financés par plus de 17 million de dollars, 6500 "
-"emplois crées. "
-
-# 2) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -152
-# _e("Use bidX to create your own online community, using your own brand, identity and language. Decide on your Groupâ€™s focus: a city, country, sector or industry.  Invite entrepreneurs to submit or create their business plans. Connect them with mentors, investors, and advisors. If your businesses are seeking export opportunities or international finance and advice, through bidX they can connect to our global network of online groups.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Use bidX to create your own online community, using your own brand, identity "
-"and language. Decide on your Groupâ€™s focus: a city, country, sector or "
-"industry.  Invite entrepreneurs to submit or create their business plans. "
-"Connect them with mentors, investors, and advisors. If your businesses are "
-"seeking export opportunities or international finance and advice, through "
-"bidX they can connect to our global network of online groups."
-msgstr ""
-"Utilisez bidX pour créer votre communauté en ligne, sous votre propre "
-"marque, identité et langue. Vous pourrez definir l'objet de votre groupe: "
-"une ville, un pays, un secteur ou une industrie. Invitez vos entrepreneurs à "
-"présenter leur plan d'affaires, ou d'en créer un. Vous pourrez les connecter "
-"le avec un coach, un investisseur ou un conseiller. Si vos entreprises "
-"cherchent des possibilités d'affaires et d'exportation ou des conseils "
-"financiers internationales, avec bidX ils peuvent se connecter avec notre "
-"réseau mondial de groupes en linge. "
-
-# 3) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -208
-# _e("Usually the parts of an entrepreneurial ecosystem are there, but they need to connected. Use bidX to integrate the players needed to grow businesses in your country or city. Also use bidX to monitor the growth of bidX Entrepreneurship groups in your country, province or city. %1$sContact%2$s","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Usually the parts of an entrepreneurial ecosystem are there, but they need "
-"to connected. Use bidX to integrate the players needed to grow businesses in "
-"your country or city. Also use bidX to monitor the growth of bidX "
-"Entrepreneurship groups in your country, province or city. %1$sContact%2$s"
-msgstr ""
-"En général, les différents segments d'un écosystème entreprenarial sont déjà "
-"en place, il ne reste plus qu'à les relier. Servez vous de bidX pour établir "
-"les connexions nécessaires au développement d'entreprises dans votre ville "
-"ou votre pays. bidX vous sert aussi à surveiller la croissance des groupes "
-"entrepreneurials bidX dans votre région. %1$sContact%2$s"
-
-# 4) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -212
-# _e("Banks, investment funds or business angel groups reject around 80%% of applicants. Use bidX to filter and rate the best business plans. Let your high potential businesses get access to mentoring. But also share dealflow: what a bank considers too risky, may be the ideal proposition for an investor. %1$sContact%2$s","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Banks, investment funds or business angel groups reject around 80%% of "
-"applicants. Use bidX to filter and rate the best business plans. Let your "
-"high potential businesses get access to mentoring. But also share dealflow: "
-"what a bank considers too risky, may be the ideal proposition for an "
-"investor. %1$sContact%2$s"
-msgstr ""
-"Les banques, les fonds d'investissement ou des réseaux d'investisseurs "
-"providentiels refusent environ 80% des applicants. Utilisez bidX pour "
-"filtrer et pour évaluer la qualité des plans d'affaires. Reliez des plans à "
-"haut potentiel à des conseillers professionels.  "
-
-# 5) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -216
-# _e("Use bidX to grow your network of businesses in need of advice and support. Offer them new services, international connections and importantly get them prepared for and matched with financiers. With bidX you will soon be able to generate a healthy revenue stream. %1$sContact%2$s","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Use bidX to grow your network of businesses in need of advice and support. "
-"Offer them new services, international connections and importantly get them "
-"prepared for and matched with financiers. With bidX you will soon be able to "
-"generate a healthy revenue stream. %1$sContact%2$s"
-msgstr ""
-"Utilisez bidX pour élargir votre réseau d' entreprises qui ont besoin de "
-"conseils et de soutien. Proposez-les de nouveaux services et des liens "
-"internationaux, et préparez les entrepreneurs à la mise en relation avec des "
-"investisseurs. Sous peu, vous pourrez très vite générer une source de "
-"revenus fiable avec bidX. %1$sContact%2$s"
-
-# 6) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -276
-# _e("Over 80%% of the new jobs in any economy are created by fewer than 10%% of the companies operating in it. These are the small and medium sized businesses that grow consistently year after year. %1$s%1$sBidx is a web-services company with a mission. We aim to integrate the often fragmented entrepreneurial ecosystems in countries thereby unleashing the growth potential of small fast growing businesses","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Over 80%% of the new jobs in any economy are created by fewer than 10%% of "
-"the companies operating in it. These are the small and medium sized "
-"businesses that grow consistently year after year. %1$s%1$sBidx is a web-"
-"services company with a mission. We aim to integrate the often fragmented "
-"entrepreneurial ecosystems in countries thereby unleashing the growth "
-"potential of small fast growing businesses"
-msgstr ""
-"Moins de 10% des entreprises sont créateurs de plus de 80% des nouveaux "
-"emplois dans leur secteur.  Il s'agit des petites et moyennes entreprises "
-"qui agradissent constamment . Bidx est une société de services Web, qui a "
-"comme mission d' intégrer les écosystèmes entreprenarial afin de rélever le "
-"potentiel des petites entreprises au croissance rapide. "
-
-# 7) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -68
-# _e("Join bidX! Create your group","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Join bidX! Create your group"
-msgstr "Rejoignez bidX! Créez votre groupe"
-
-# 8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -71
-# _e("Your email address","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Your email address"
-msgstr "Votre adresse e-mail"
-
-# 9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -75
-# _e("Your group name","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Your group name"
-msgstr "Nom de votre groupe"
-
-# 10) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -79
-# _e("Country","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Country"
-msgstr "Pays"
-
-# 11) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -82
-# _e("Submit your request","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Submit your request"
-msgstr "Introduire votre demande"
-
-# 12) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -87
-# _e("Your request is being processed","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Your request is being processed"
-msgstr "Votre demande est en cours de traitement "
-
-# 13) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -89
-# _e("Thank you for your patience","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Thank you for your patience"
-msgstr "Merci de votre patience"
-
-# 14) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -92
-# _e("You request has been sent","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "You request has been sent"
-msgstr "Votre demande a été envoyé avec succès"
-
-# 15) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -94
-# _e("Our service desk will contact you soon","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Our service desk will contact you soon"
-msgstr "Nous vous contacterons dans les plus brefs délais "
-
-# 16) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -131
-# _e("Group creation failed. Please reload the page and try again. If the problem persists, please contact us","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Group creation failed. Please reload the page and try again. If the problem "
-"persists, please contact us"
-msgstr ""
-"La création du groupe a échoué. Veuillez recharger la page et réessayer. Si "
-"le problème persiste, merci de contacter notre service client. "
-
-# 17) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -146
-# _e("Itâ€™s all about growing businesses and creating jobs","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Itâ€™s all about growing businesses and creating jobs"
-msgstr "Tout tient à la création des entreprises et des emplois"
-
-# 18) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -148
-# _e("If your goal is to grow, start or finance businesses in emerging markets, then bidX offers you an online solution to improve your results and impact.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"If your goal is to grow, start or finance businesses in emerging markets, "
-"then bidX offers you an online solution to improve your results and impact."
-msgstr ""
-"Si votre objectif est de démarrer, développer ou financer des entrepreneurs "
-"sur les marchés émergents, bidX vous propose une solution qui vous permet d' "
-"améliorer vos résultats et d' augmenter votre influence. "
-
-# 19) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -158
-# _e("bidX provides the tools â€“ you drive your network ","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "bidX provides the tools â€“ you drive your network "
-msgstr "bidX vous fourni les outils nécessaires, vous gérez votre réseau!  "
-
-# 20) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -166
-# _e("1. Free, fast and easy set-up","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "1. Free, fast and easy set-up"
-msgstr "1. Configuration gratuite, simple et rapide"
-
-# 21) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -168
-# _e("Request a Group at bidX.net","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Request a Group at bidX.net"
-msgstr "Demandez une groupe sur bidX.net"
-
-# 22) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -169
-# _e("Customize your group page according to your specific brand","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Customize your group page according to your specific brand"
-msgstr ""
-"Personnalisez votre groupe selon pour refléter votre identité et de votre "
-"image de marque"
-
-# 23) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -170
-# _e("Invite members, social media followers and contacts to join your group","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Invite members, social media followers and contacts to join your group"
-msgstr ""
-"Utilisez vos contacts dans les médias sociaux pour inviter des membres à "
-"rejoindre votre groupe"
-
-# 24) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -171
-# _e("Grow your entrepreneurial ecosystem locally and worldwide!","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Grow your entrepreneurial ecosystem locally and worldwide!"
-msgstr ""
-"Développez votre écosystème entreprenarial à l'échelle locale et mondiale!"
-
-# 25) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -178
-# _e("2. Source, Connect, Finance","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "2. Source, Connect, Finance"
-msgstr "2. Approvisionnez, connectez, financez"
-
-# 26) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -180
-# _e("Competitions: Engage promising businesses and accelerate their growth","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Competitions: Engage promising businesses and accelerate their growth"
-msgstr ""
-"Compétitions: Engagez les entrepreprises prometteuses et accélérez leur "
-"croissance  "
-
-# 27) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -181
-# _e("Mentoring: Connect your entrepreneurs with valuable free advice","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Mentoring: Connect your entrepreneurs with valuable free advice"
-msgstr ""
-"Programme de coaching: Faites bénéficier vos entrepreneurs de précieux "
-"conseils gratuits"
-
-# 28) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -182
-# _e("Matchmaking: Match the best businesses with committed investors","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Matchmaking: Match the best businesses with committed investors"
-msgstr ""
-"Rapprochement avec les financiers: Mettez les meilleures entreprises en "
-"relation avec des investisseurs engagés. "
-
-# 29) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -189
-# _e("3. Generate revenues","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "3. Generate revenues"
-msgstr "3. Générez des revenus "
-
-# 30) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -191
-# _e("In 2014 you will be able to generate revenues through your group. bidX will be launching a scheme to share its revenues with Group moderators in a fair and transparent way.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"In 2014 you will be able to generate revenues through your group. bidX will "
-"be launching a scheme to share its revenues with Group moderators in a fair "
-"and transparent way."
-msgstr ""
-"En 2014, vous pourrez générer une source de revenus fiable par votre groupe. "
-"bidX lancera un système pour partager ses revenues avec des modérateurs de "
-"groupe de manière equitable et transparente. "
-
-# 31) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -202
-# _e("Ideal solutions","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Ideal solutions"
-msgstr "Solutions idéales"
-
-# 32) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -203
-# _e("For entrepreneurs, investors, incubators, chambers of commerce, banks, investment funds...and more.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"For entrepreneurs, investors, incubators, chambers of commerce, banks, "
-"investment funds...and more."
-msgstr ""
-"Pour des entrepreneurs, des investisseurs, des incubatuers, des chambres de "
-"commerce, des banques, des fonds d' investissement... et plus encore. "
-
-# 33) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -207
-# _e("Governments & Cities","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Governments & Cities"
-msgstr "Gouvernements & villes"
-
-# 34) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -211
-# _e("Financial Sector","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Financial Sector"
-msgstr "Secteur financier"
-
-# 35) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -215
-# _e("Incubators & Advisors","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Incubators & Advisors"
-msgstr "Incubateurs & conseillers "
-
-# 36) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -221
-# _e("Grow your local businesses and create new jobs. Your economy depends on it!","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Grow your local businesses and create new jobs. Your economy depends on it!"
-msgstr ""
-"Développez vos entreprises locales et créez de nouveaux emplois. Votre "
-"reussite économique en dépend!"
-
-# 37) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -230
-# _e("We offer","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "We offer"
-msgstr "Nous proposons"
-
-# 38) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -235
-# _e("Access to Knowledge","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Access to Knowledge"
-msgstr "Accès au savoir"
-
-# 39) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -239
-# _e("We provide business plan templates, free mentoring, online tutorials and templates and Q&A functionality.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"We provide business plan templates, free mentoring, online tutorials and "
-"templates and Q&A functionality."
-msgstr ""
-"Nous vous fournissons des modèles de plan d'affaire, un programme de "
-"mentorat gratuit, un tutoriel en ligne et une fonctionalité de foire aux "
-"question (FAQ). "
-
-# 40) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -244
-# _e("Access to Finance","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Access to Finance"
-msgstr "Accès au financement"
-
-# 41) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -248
-# _e("Financiers set their preferences and get alerts on business plans that are rated, filtered and match.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Financiers set their preferences and get alerts on business plans that are "
-"rated, filtered and match."
-msgstr ""
-"Les financiers peuvent indiquer leur préférences et reçoivent des alertes "
-"sur des plan d' affaires correspondant, qui sont évalués, filtrés et "
-"connectés. "
-
-# 42) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -253
-# _e("Access to Markets","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Access to Markets"
-msgstr "Accès aux marchés"
-
-# 43) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -257
-# _e("Find buyers and sellers near you. Find importers and exporters internationally. Gain market intelligence. Advertise your goods.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"Find buyers and sellers near you. Find importers and exporters "
-"internationally. Gain market intelligence. Advertise your goods."
-msgstr ""
-"Trouvez des vendeurs et des acquéreurs dans votre région. Trouvez des "
-"importateurs et des exportateurs partout dans le monde. Acquérez de la "
-"connaissance du marché.  Faites de la publicité pour vos biens ou services. "
-
-# 44) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -262
-# _e("View our services","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "View our services"
-msgstr "Voyez nos services"
-
-# 45) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -269
-# _e("Why bidX - Our story","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Why bidX - Our story"
-msgstr "Notre histoire"
-
-# 46) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-intro.php -281
-# _e("About us","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "About us"
-msgstr "A propos de nous"
-
-# 47) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -4
-# _e("BiD Network","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "BiD Network"
-msgstr "BiD Network"
-
-# 48) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -5
-# _e("Putera Sampoerna","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Putera Sampoerna"
-msgstr "Putera Sampoerna"
-
-# 49) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -6
-# _e("Nationale Postcode Loterij","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Nationale Postcode Loterij"
-msgstr "Nationale Postcode Loterij"
-
-# 50) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -7
-# _e("Department for International Development","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Department for International Development"
-msgstr "Department for International Development"
-
-# 51) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -8
-# _e("USAID","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "USAID"
-msgstr "USAID"
-
-# 52) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -17
-# _e("Follow us","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Follow us"
-msgstr "Suivez-nous"
-
-# 53) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -26
-# _e("2013. bidX.net. All rights reserved","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "2013. bidX.net. All rights reserved"
-msgstr "2013. bidX.net. Tous droits réservés"
-
-# 54) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -28
-# _e("Sitemap","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Sitemap"
-msgstr "Plan du site"
-
-# 55) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -29
-# _e("Terms and conditions","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Terms and conditions"
-msgstr "Conditions générales"
-
-# 56) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/footer.php -30
-# _e("Privacy","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Privacy"
-msgstr "frPrivacy"
-
-# 57) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/header.php -16
-# _e("Blog","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Blog"
-msgstr "Blog"
-
-# 58) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/header.php -17
-# _e("About bidX","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "About bidX"
-msgstr "A propos de bidX"
-
-# 59) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/header.php -18
-# _e("Contact","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Contact"
-msgstr "Nous contacter"
-
-# 60) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/header.php -32
-# _e("Blog","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 61) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/header.php -33
-# _e("About bidX","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 62) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/header.php -34
-# _e("Contact","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 63) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/templates/content-default.php -4
-# _e("Sorry, no results were found.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Sorry, no results were found."
-msgstr "Désolé, aucune information ne correspond"
-
-# 64) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/functions.php -38
-# _e("Horizontal Widget Content Template","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Horizontal Widget Content Template"
-msgstr "Horizontal Widget Content Template"
-
-# 65) File -/home/altaf/workspace/bidx/wp-content/themes/bidx/functions.php -40
-# _e("An optional horizontal widget below the content","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "An optional horizontal widget below the content"
-msgstr "An optional horizontal widget below the content"
-
-# 66) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/footer.php -32
+# 1) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/footer.php -32
 # _e("All rights reserved","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "All rights reserved"
 msgstr "Tous droits réservés"
 
-# 67) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/footer.php -34
+# 2) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/footer.php -34
 # _e("Sitemap","bidxtheme");
 # Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 68) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/footer.php -35
+msgid "Sitemap"
+msgstr "Plan du site"
+
+# 3) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/footer.php -35
 # _e("Terms and service","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Terms and service"
-msgstr "Conditions et service"
+msgstr "Termes et service"
 
-# 69) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/footer.php -36
+# 4) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/footer.php -36
 # _e("Privacy","bidxtheme");
 # Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 70) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/header.php -48
+msgid "Privacy"
+msgstr "Vie privée "
+
+# 5) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/header.php -48
 # _e("Become a member","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Become a member"
-msgstr "Rejoignez bidX"
+msgstr "Devenir un membre"
 
-# 71) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/header.php -51
+# 6) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/templates/header.php -51
 # _e("Login","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Login"
-msgstr "Se connecter"
+msgstr "Identifiant"
 
-# 72) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -6
+# 7) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -446
+# _e("Favicon","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Favicon"
+msgstr "Favicon"
+
+# 8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -453
+# _e("Favicon","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -36
+# _e("Contact us to get started","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Contact us to get started"
+msgstr "Contactez-nous pour commencer"
+
+# 10) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -38
+# _e("Contact Us","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+# 11) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-clients.php -39
+# _e("Pricing","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Pricing"
+msgstr "Tarifs"
+
+# 12) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-get-started.php -37
+# _e("Contact us to get started","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 13) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-get-started.php -39
+# _e("Contact Us","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 14) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -6
 # _e("<span>bidx</span>.net","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "<span>bidx</span>.net"
 msgstr "<span>bidx</span>.net"
 
-# 73) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -7
-# _e("Grow your local businesses and create new jobs. Your economy depends on it!","bidxtheme");
+# 15) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -7
+# _e("Grow your local business network and create new jobs. Your economy depends on it!","bidxtheme");
 # Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 74) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -12
+msgid ""
+"Grow your local business network and create new jobs. Your economy depends "
+"on it!"
+msgstr ""
+"Développez votre réseau local d'affaires et créez de nouveaux emplois. Votre "
+"économie en dépend!"
+
+# 16) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -12
 # _e("Stay Connected","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Stay Connected"
-msgstr "Restez en contact"
+msgstr "Restez connecté"
 
-# 75) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -27
+# 17) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -26
 # _e("Recent Articles","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Recent Articles"
-msgstr "Actualités"
+msgstr "Articles récents"
 
-# 76) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -68
+# 18) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -68
 # _e("Testimonials","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Testimonials"
 msgstr "Témoignages"
 
-# 77) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -129
+# 19) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -130
 # _e("bidx.net Â© 2014. All Rights Reserved.","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "bidx.net Â© 2014. All Rights Reserved."
-msgstr "bidx.net Â© 2014.  Tous droits réservés"
+msgstr "frbidx.net Â© 2014. Tous droits réservés "
 
-# 78) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -134
-# _e("Privacy Policy","bidxtheme");
+# 20) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -135
+# _e("Terms and Conditions","bidxtheme");
 # Context  Textdomain bidxtheme
-msgid "Privacy Policy"
-msgstr "Politique de confidentialité"
+msgid "Terms and Conditions"
+msgstr "Termes et Conditions"
 
-# 79) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -135
-# _e("Terms Of Service","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Terms Of Service"
-msgstr "Conditions de service"
-
-# 80) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/footer.php -136
-# _e("Sitemap","bidxtheme");
+# 21) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -145
+# _e("Contact us to get started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
-# 81) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -16
+# 22) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -147
+# _e("Contact Us","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 23) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-groups.php -148
+# _e("Pricing","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 24) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -37
+# _e("Contact us to get started","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 25) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -39
+# _e("Contact Us","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 26) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/page-competitions.php -40
+# _e("Pricing","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 27) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -16
 # _e("Entrepreneurial Ecosystems Online","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Entrepreneurial Ecosystems Online"
-msgstr "Ecosystèmes entreprenarial en ligne"
+msgstr "Ecosystems Entrepreneurial En ligne"
 
-# 82) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -22
+# 28) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -22
 # _e("CREATE YOUR<br>NETWORK","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "CREATE YOUR<br>NETWORK"
-msgstr "PRESENTEZ VOTRE ENTREPRISE"
+msgstr "CREEZ VOTRE<br>RESEAU"
 
-# 83) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -29
-# _e("Unite entrepreneurs, mentors and<br>\n                    investors in emerging markets<br>\n                    connect them globally.","bidxtheme");
+# 29) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -29
+# _e("Start, grow and finance your entrepreneurs.<br>\n                    Connect them with investors, mentors<br>\n                    and business partners.","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid ""
 "Start, grow and finance your entrepreneurs.<br>\n"
 "                    Connect them with investors, mentors<br>\n"
 "                    and business partners."
 msgstr ""
-"Réunissez des entrepreneurs, des coach et <br>\n"
-"                           des investisseurs dans les marchés émergents "
-"<br>\n"
-"                          et connectez-les à l' échelle mondiale. "
+"Lancer, développer et financer vos entrepreneurs. Connectez-les avec des  "
+"investisseurs, des mentors et des partenaires d'affaires."
 
-# 84) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -38
-# _e("Learn More","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid "Learn More"
-msgstr "En savoir plus"
-
-# 85) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -44
+# 30) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -38
 # _e("Get Started","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Get Started"
 msgstr "Commencer"
 
-# 86) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -65
-# _e("Entrepreneur","bidxtheme");
+# 31) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -54
+# _e("Entrepreneurial Ecosystems Online","bidxtheme");
 # Context  Textdomain bidxtheme
-msgid "Group"
-msgstr "Groupe"
+# Already exists, doesnt need translation.
+# 32) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -56
+# _e("CREATE YOUR NETWORK","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "CREATE YOUR NETWORK"
+msgstr "CREEZ VOTRE RESEAU"
 
-# 87) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -66
-# _e("Donec in velit vel ipsum auctor pulvinar. Vesti bulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod auctor pulvinar.","bidxtheme");
+# 33) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -57
+# _e("Get started","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Get started"
+msgstr "Commencer"
+
+# 34) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -67
+# _e("Groups","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Groups"
+msgstr "Groups"
+
+# 35) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -68
+# _e("Grow your online entrepreneurial network","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Grow your online entrepreneurial network"
-msgstr "Développez votre réseau d'entreprise en ligne"
+msgstr "Développez votre réseau entrepreneurial en ligne"
 
-# 88) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -75
+# 36) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -70
+# _e("Learn More","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Learn More"
+msgstr "Savoir plus"
+
+# 37) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -80
 # _e("Competitions","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Competitions"
-msgstr "Compétitions"
+msgstr "Compétition"
 
-# 89) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -76
+# 38) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -81
 # _e("Launch your business plan competition online.","bidxtheme");
 # Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
 msgid "Launch your business plan competition online."
-msgstr "Lancez votre concours de plan d'affaires en ligne"
+msgstr "Lancer votre compétition de plan d'affaire en ligne"
 
-# 90) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -85
-# _e("Investor","bidxtheme");
+# 39) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -83
+# _e("Learn More","bidxtheme");
+# Context  Textdomain bidxtheme
+# Already exists, doesnt need translation.
+# 40) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -102
+# _e("More impact per dollar","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "More impact per dollar"
 msgstr "Plus d'impact par dollar"
 
-# 91) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -86
+# 41) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -103
 # _e("bidx has grown and started over 100 businesses which create over 500 direct jobs every year. Our investors have financed for USD 18 million. All this at a cost of USD 2000 per direct new job.","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid ""
@@ -661,46 +248,76 @@ msgid ""
 "jobs every year. Our investors have financed for USD 18 million. All this at "
 "a cost of USD 2000 per direct new job."
 msgstr ""
-"BiDx a grandi et commencé à plus de 100 entreprises qui créent plus de 500 "
-"emplois directs chaque année. Nos investisseurs ont financé pour 18 millions "
-"USD. Tout cela à un coût de 2000 euros par emploi direct."
+"bidx a créé et développé plus que 100 affaires qui ont généré plus que 500 "
+"emplois directs par an. Nos investisseurs ont financé à hauteur de 18 "
+"millions de USD. Tous ca pour un coût de 2000 USD par nouveau emploi direct "
+"créé. "
 
-# 92) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -106
-# _e("Ideal solutions","bidxtheme");
-# Context  Textdomain bidxtheme
-# Already exists, doesnt need translation.
-# 93) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -107
-# _e("For entrepreneurs, investors, incubators, chambers of commerce, banks, investment funds ...and more.","bidxtheme");
-# Context  Textdomain bidxtheme
-msgid ""
-"For entrepreneurs, investors, incubators, chambers of commerce, banks, "
-"investment funds ...and more."
-msgstr ""
-"Pour des entrepreneurs, des investisseurs, des incubatuers, des chambres de "
-"commerce, des banques, des fonds d' investissement... et plus encore. "
-
-# 94) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -108
+# 42) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -104
 # _e("Get Started","bidxtheme");
 # Context  Textdomain bidxtheme
 # Already exists, doesnt need translation.
-# 95) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -118
+# 43) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -114
 # _e("Latest Groups","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid "Latest Groups"
-msgstr "Derniers groupes "
+msgstr "Derniers groupes créés "
 
-# 96) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -207
+# 44) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -201
 # _e("Do your entrepreneurs grow 5x faster than the national economy? At bidx they do. Take your businesses to the next level.","bidxtheme");
 # Context  Textdomain bidxtheme
 msgid ""
 "Do your entrepreneurs grow 5x faster than the national economy? At bidx they "
 "do. Take your businesses to the next level."
 msgstr ""
-"Vos entrepreneurs à faire croître 5x plus rapide que l'économie nationale? "
-"Au copies; qu'ils font. Prenez vos entreprises au niveau suivant."
+"Est-ce que vos entrepreneurs se développent 5x plus rapidement que "
+"l'économie nationale? Chez bidx c'est possible. Faites évoluer vos affaires "
+"au stade supérieur"
 
-# 97) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -224
-# _e("Our Sponsors","bidxtheme");
+# 45) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -212
+# _e("Our tools have been built for you","bidxtheme");
 # Context  Textdomain bidxtheme
-msgid "Our founders"
+msgid "Our tools have been built for you"
+msgstr "Notre outil est conçu pour vous "
+
+# 46) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -218
+# _e("Banks, Funds & Angels","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Banks, Funds & Angels"
+msgstr "Banques, Fonds & Anges d'affaires"
+
+# 47) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -226
+# _e("Cities & Governments","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Cities & Governments"
+msgstr "Villes & Gouvernements "
+
+# 48) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -234
+# _e("Development organazations & Donors","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Development organazations & Donors"
+msgstr "Organisations de  développement et Donateurs"
+
+# 49) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -251
+# _e("Incubators & Chambers of Commerce","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Incubators & Chambers of Commerce"
+msgstr "Incubateurs & Chambres de Commerce"
+
+# 50) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -259
+# _e("Telcos & Corporations","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Telcos & Corporations"
+msgstr "Les opérateurs télécoms et les sociétés"
+
+# 51) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -267
+# _e("Accountants & Consultants","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Accountants & Consultants"
+msgstr "Comptables & Consultants "
+
+# 52) File -/home/altaf/workspace/bidx/wp-content/themes/bidx.net/front-page.php -282
+# _e("Our Founders","bidxtheme");
+# Context  Textdomain bidxtheme
+msgid "Our Founders"
 msgstr "Nos fondateurs"
