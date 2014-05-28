@@ -481,7 +481,7 @@ function get_string_translation ()
             $staticDataObj = new StaticDataService();
             $transientKey = 'static' . $siteLocale; // Transient key for Static Data
             $transientStaticData = get_transient ($transientKey);
-
+            $transientStaticData = false;
             /* If no value then set the site local transient */
             if ($transientStaticData === false) {
                 $resultStaticData = $staticDataObj->getStaticData (NULL);
@@ -509,7 +509,6 @@ function get_string_translation ()
         $jsonStart = ($callback) ? $callback . '( ' : NULL;
 
         $jsonDecodedData = json_encode ($translatedArr);
-
         $jsonEnd = ($callback) ? ' );' : NULL;
 
         echo $jsonStart . $jsonDecodedData . $jsonEnd;
@@ -838,7 +837,7 @@ function other_wordpress_post_action ($url, $result, $body)
                 $i18nData[$count]->value = $arr['value']->__toString ();
 
 
-                $i18nData[$count]->label = $label;
+                $i18nData[$count]->label = utf8_encode ( $label );
 
                 $count++;
             }

@@ -93,14 +93,18 @@ class BidxShortcode
         self::$scriptIdArr
             [$appname] = $appname;
 
-        if (array_key_exists ($appname, self::$mapping)) {
+        if (array_key_exists ($appname, self::$mapping))
+        {
             //Handle the i18n Data
             $bidxCommonObj = new BidxCommon();
-            if (empty (self::$transalationVars)) { // First Shortcode
+            if (empty (self::$transalationVars))
+            { // First Shortcode
                 self::$transalationVars = $bidxCommonObj->getLocaleTransient (array ($appname), $static = true, $i18nGlobal = true);
-            } else { // More than 1 shortcode
+            } else
+            { // More than 1 shortcode
                 $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ($appname), $static = false, $i18nGlobal = false);
-                if (isset ($appTranslationsArr['i18n'][$appname])) {
+                if (isset ($appTranslationsArr['i18n'][$appname]))
+                {
                     self::$transalationVars['i18n'][$appname] = $appTranslationsArr['i18n'][$appname];
                 }
             }
@@ -176,7 +180,7 @@ class BidxShortcode
             // fileupload
             wp_register_script ('jquery-iframe-transport', $bidxJsDir . '/vendor/jquery.iframe-transport.js', array ('jquery'), '1.7', true);
             wp_register_script ('jquery-fileupload', $bidxJsDir . '/vendor/jquery.fileupload.js', array ('jquery', 'jquery-iframe-transport'), '5.32.2', true);
-            
+
             //bidX scripts
             wp_register_script ('bidx-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery'), '20130501', TRUE);
             wp_register_script ('bidx-utils', $bidxJsDir . '/utils.js', array ('jquery'), '20130501', TRUE);
@@ -210,6 +214,7 @@ class BidxShortcode
 
         /*         * ** Adding Translations to Js Variables before data.js */
         // 1. I18n  & Global Data
+
         wp_localize_script ('bidx-data', '__bidxI18nPreload', self::$transalationVars['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
         // 2. Static Data
         wp_localize_script ('bidx-data', '__bidxDataPreload', self::$transalationVars['static']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/

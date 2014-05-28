@@ -676,7 +676,7 @@ class BidxCommon
                 $transientI18nData[$appName][$count]->value = $arr['value']->__toString ();
 
 
-                $transientI18nData[$appName][$count]->label = $label;
+                $transientI18nData[$appName][$count]->label = utf8_encode ( $label );
 
                 $count++;
             }
