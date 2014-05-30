@@ -17,14 +17,19 @@
 
     ,   $focusIndustry                      = $element.find( "[name='mentoringIndustry']" )
     ,   $businessSummary                    = $element.find( "[name='businessSummary']" )
+    ,   $requestMentoringBtn                = $elementMyprofile.find( '.btn-mentoring' )
 
     ,   listDropdownBp                      = bidx.utils.getValue( bidxConfig, "session.wp.entities.bidxBusinessSummary" )
 
     ,   member
-    ,   memberId
+    ,   loggedInMemberId                    = bidx.utils.getValue( bidxConfig, "session.id" )
+    ,   visitingMemberPageId                = bidx.utils.getValue( bidxConfig, "context.memberId" )
+
+
     ,   mentorProfileId
     ,   state
     ,   currentView
+
 
     ,   appName                             = "member"
     ;
@@ -36,7 +41,9 @@
     {
 
         var uriStatus
-        ,   params  = options.params
+        ,   params      = options.params
+        ,   initiatorId = bidx.utils.getValue(params, 'initiatorId')
+        ,   mentorId    = bidx.utils.getValue(params, 'mentorId')
         ;
 
          //uriStatus = document.location.href.split( "#" ).shift() + "?smsg=8&sparam=" + window.btoa('action=sent') ;
@@ -49,13 +56,12 @@
         bidx.api.call(
              "mentorRelationships.create"
         ,   {
-                groupDomain:            bidx.common.groupDomain
-            ,   requesteeId:            params.id
-            ,   data:
-                {
-                    "type":             "mentor"
-                }
-
+                groupDomain :   bidx.common.groupDomain
+            ,   entityid    :   params.entityId
+            ,   data        :   {
+                                    "initiatorId" :   parseInt(initiatorId)
+                                ,   "mentorId"    :   parseInt(mentorId)
+                                }
             ,   success: function( response )
                 {
                     bidx.utils.log("[mentor] created a mentor relationship",  response );
@@ -95,7 +101,7 @@
                         bidx.utils.error( "Internal Server error occured", response );
                         _showMainError( bidx.i18n.i("errorRequest") + response.text);
                     }
-                  
+
                     if (options && options.error)
                     {
                         options.error();
@@ -107,34 +113,82 @@
     }
 
 
-    var fields =
-    {
-        _root:
-        [
-            'summary'
-        ,   'mentoringIndustry'
-        ]
-    };
-
-        // Setup function for doing work that should only be done once
-    //
-    function _oneTimeSetup()
+    function _getBusinessPlans(  )
     {
         var option
-        ,   listArrItems = []
-        ,   $options
+        ,   bpLength    = _.size(listDropdownBp)
+        ,   counter     = 0
+        ,   promises    = []
+        ,   listBpItems = []
+        ,   $d          = $.Deferred()
         ;
 
+
+
+            $.each( listDropdownBp, function( idx, entityId )
+            {
+                bidx.api.call(
+                    "entity.fetch"
+                ,   {
+                        entityId    :   entityId
+                    ,   groupDomain :   bidx.common.groupDomain
+                    ,   success:        function( item )
+                        {
+                            // now format it into array of objects with value and label
+
+                            if ( !$.isEmptyObject(item) )
+                            {
+                                option  =   $( "<option/>",
+                                            {
+                                                value: entityId
+                                            } );
+
+                                option.text( item.name );
+
+                                listBpItems.push( option );
+
+                                counter = counter + 1;
+
+                                if(counter === bpLength )
+                                {
+                                    $d.resolve( listBpItems );
+                                }
+
+                            }
+                        }
+
+                    ,   error: function(jqXhr, textStatus)
+                        {
+                            var response = $.parseJSON( jqXhr.responseText);
+
+                            bidx.utils.log("Error retrieving the data for entityid", entityId);
+
+                            counter = counter + 1;
+
+                            if(counter === bpLength )
+                            {
+
+                                $d.resolve( listBpItems );
+                            }
+                        }
+                    });
+            } );
+
+            return $d.promise();
+    }
+
+    // Setup function for doing work that should only be done once
+    //
+    function _populateDefaultData()
+    {
+
         //  disabled links
-        //
         $element.delegate( "a.disabled", "click", function( e )
         {
             e.preventDefault();
         } );
 
         // Populate the selects
-        //
-
         $focusIndustry.bidx_chosen(
         {
             dataKey:            "industry"
@@ -145,67 +199,24 @@
        /*******
         Add Dropdown Options for Recipients , Prepare dropdown
         *******/
-        $options = $businessSummary.find( "option" );
 
-        if(listDropdownBp) {
-        
-            $.each( listDropdownBp, function( idx, bpIdx )
+        $businessSummary.chosen({
+                                    placeholder_text_single : bidx.i18n.i( "msgWaitForSave" )
+                                ,   width                   : "95%"
+                                });
+
+
+        _getBusinessPlans( )
+            .done( function( listBpItems )
             {
-                option = $( "<option/>",
-                {
-                    value: bpIdx
-                } );
-                option.text( bpIdx );
+                bidx.utils.log('listBpItems',listBpItems);
+                $businessSummary.append( listBpItems );
 
-                listArrItems.push( option );
+                $businessSummary.trigger( "chosen:updated" );
+
             } );
-        }
-        // add the options to the select
-        $businessSummary.append( listArrItems );
-
-        // init bidx_chosen plugin
-        $businessSummary.bidx_chosen();
-    }
-
-    // Use the retrieved member object to populate the form and other screen elements
-    function _populateScreen()
-    {
-        $.each( fields._root, function( i, f )
-        {
-            var $input  = $editForm.find( "[name='" + f + "']" )
-            ,   value   = bidx.utils.getValue( member, "bidxMentorProfile." + f )
-            ;
-
-            $input.each( function()
-            {
-                // Value can be an array! Most likely we are targeting a
-                //
-                bidx.utils.setElementValue( $( this ), value );
-            } );
-        } );
-
-        // Update the chosen components with our set values
-        //
-        $focusIndustry.trigger( "chosen:updated" );
-
-
 
     }
-
-    // Convert the form values back into the member object
-    //
-    function _getFormValues()
-    {
-        $.each( fields._root, function( i, f )
-        {
-            var $input  = $editForm.find( "[name='" + f + "']" )
-            ,   value   = bidx.utils.getElementValue( $input )
-            ;
-
-            bidx.utils.setValue( member, "bidxMentorProfile." + f, value );
-        } );
-    }
-
 
 
     // This is the startpoint
@@ -214,7 +225,10 @@
     {
         var $btnSave    = $element.find('.btnRequestSubmit')
         ,   $btnCancel  = $element.find('.btnRequestCancel')
+        ,   origBpLength = _.size(listDropdownBp)
         ,   btnHtml
+        ,   businessPlanEntityId
+        ,   newBpLength
         ;
 
         // Wire the submit button which can be anywhere in the DOM
@@ -254,24 +268,42 @@
                     return;
                 }
 
-                btnHtml = $btnSave.text();
+                btnHtml              = $btnSave.text();
+                businessPlanEntityId = $element.find( "[name='businessSummary']" ).val();
+
                 $btnSave.addClass( "disabled" ).i18nText("msgWaitForSave");
                 $btnCancel.addClass( "disabled" );
 
+
                 _doCreateMentorRequest(
                 {
-                    params: options.params
+                    params:
+                    {
+                        mentorId    :   options.params.mentorId
+                    ,   initiatorId :   options.params.initiatorId
+                    ,   entityId    :   businessPlanEntityId
+                    }
                 ,   callback: function()
                     {
                         $btnSave.removeClass( "disabled" );
                         $btnCancel.removeClass( "disabled" );
                         $btnSave.text(btnHtml);
 
+                        listDropdownBp = _.omit(listDropdownBp, businessPlanEntityId );
+
+                        newBpLength    = _.size(listDropdownBp); // After iteration new length
+
+                        if( origBpLength && newBpLength === 0 )
+                        {
+                            $requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
+                        }
+                        $requestMentoringBtn.removeClass('hide');
+
                         if (options && options.success)
                         {
                             options.success();
                         }
-                        
+
 
                     }
                 ,   error: function()
@@ -290,92 +322,84 @@
             }
         } );
     }
-    // Try to save the member to the API
-    //
-    function _save( params )
+
+     var getMentoringRequest = function(options)
     {
-        var bidxAPIService
-        ,   bidxAPIParams
-        ;
+            var mentorId
+            ,   entityId
+            ,   initiatorId
+            ,   bpClass
+            ,   $mentorButton
+            ,   isEntityExist
+            ,   newBpLength
+            ,   origBpLength = _.size(listDropdownBp)
+            ;
 
-        if ( !member )
-        {
-            return;
-        }
+            bidx.api.call(
+                "mentorRelationships.get"
+            ,   {
+                    requesterId:              loggedInMemberId
+                ,   groupDomain:              bidx.common.groupDomain
+                ,   success: function( response )
+                    {
+                        // now format it into array of objects with value and label
+                        //
+                        $.each( response , function ( idx, item)
+                        {
+                            mentorId        = item.mentorId;
+                            initiatorId     = item.initiatorId;
+                            entityId        = item.entityId;
 
-        // Inform the API we are updating the member profile
-        //
-        var bidxMeta = member.bidxMentorProfile.bidxMeta;
-        bidxMeta.bidxEntityType   = "bidxMentorProfile";
+                            if ( mentorId === loggedInMemberId )
+                            {
+                                bpClass         = '.bp-' + entityId;
+                                $mentorButton   = $elementMyprofile.find( bpClass );
+                                if($mentorButton)
+                                {
+                                    $mentorButton.addClass('disabled').i18nText("btnRequestSent");
+                                }
+                            }
 
-        // Update the member object
-        //
-        _getFormValues();
+                            if (initiatorId === loggedInMemberId)
+                            {
+                                isEntityExist = listDropdownBp [ entityId ];
 
-        bidx.common.notifySave();
+                                if(isEntityExist)
+                                {
+                                    listDropdownBp = _.omit(listDropdownBp, JSON.stringify(entityId) ); // removed the match value from listDropdownBp, using underscore function make sure its included
 
-        bidx.utils.log( "about to save member", member );
+                                }
+                            }
+                        });
 
-        bidxAPIParams   =
-        {
-            data:           member.bidxMentorProfile
-        ,   groupDomain:    bidx.common.groupDomain
-        ,   success:        function( response )
-            {
-                bidx.utils.log( bidxAPIService + "::success::response", response );
+                        newBpLength    = _.size(listDropdownBp); // After iteration new length
 
-                bidx.common.closeNotifications();
+                        if( origBpLength && newBpLength === 0 )
+                        {
+                            $requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
+                        }
 
-                bidx.common.notifyRedirect();
-                bidx.common.removeAppWithPendingChanges( appName );
+                        $requestMentoringBtn.removeClass('hide');
 
-                var url = document.location.href.split( "#" ).shift();
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
 
-                // Maybe rs=true was already added, or not 'true' add it before reloading
-                //
-                var rs          = bidx.utils.getQueryParameter( "rs", url );
-                var redirect_to = bidx.utils.getQueryParameter( "redirect_to", url );
+                    }
+                    , error: function(jqXhr, textStatus)
+                    {
 
+                        var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
-                if( redirect_to ) {
-                    url = '/' + redirect_to;
+                         _showMainError("Something went wrong while retrieving contactlist of the member: " + status);
+                    }
                 }
+            );
 
-                if ( !rs || rs !== "true" )
-                {
-                    url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
-                    url += "rs=true";
-                }
+    };
 
-                document.location.href = url;
-            }
-        ,   error:          function( jqXhr, textStatus )
-            {
-                params.error( jqXhr );
-                bidx.common.closeNotifications();
-            }
-        };
-
-        // Creating an mentor is not possible via the member API, therefore the
-        // raw Entity API is used for the creation of the entrepreneur
-        //
-        if ( state === "create" )
-        {
-            bidxAPIService          = "entity.save";
-        }
-        else
-        {
-            bidxAPIService          = "member.save";
-            bidxAPIParams.memberId  = memberId;
-        }
-
-        // Call that service!
-        //
-        bidx.api.call(
-            bidxAPIService
-        ,   bidxAPIParams
-        );
-    }
 
     //  ################################## MODAL #####################################  \\
 
@@ -490,6 +514,12 @@
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
     }
 
+    function _showAllView( view )
+    {
+        bidx.utils.log(view);
+        $viewsMyprofile.filter( bidx.utils.getViewName( view ) ).show();
+    }
+
     // ROUTER
     //
     function navigate( options )
@@ -506,10 +536,16 @@
                 } );
 
                 if( options.params ) {
+
                     _showModal(
                     {
                         view  : "confirmRequest"
-                    ,   params: options.params
+                    ,   params:
+                        {
+                            mentorId    :   loggedInMemberId
+                        ,   initiatorId :   loggedInMemberId
+                        ,   entityId    :   options.params.entityId
+                        }
                     ,  /* onHide: function()
                         {
                           window.bidx.controller.updateHash("#cancel", false, true);
@@ -530,7 +566,7 @@
             break;
 
             case "sendRequest":
-                var bpClass       = '.bp-' + options.params.businessid
+                var bpClass       = '.bp-' + options.params.entityId
                 ,   $mentorButton = $elementMyprofile.find( bpClass );
 
                 _closeModal(
@@ -560,8 +596,6 @@
 
             break;  /***** Mentor this plan End functionlaity **/
 
-
-
            case "confirmMentoringRequest": /***** Request mentoring this plan Start functionlaity **/
                 var $requestMentoringBtn = $elementMyprofile.find( '.btn-mentoring' );
 
@@ -570,12 +604,12 @@
                     unbindHide: true
                 } );
 
-                if( !listDropdownBp ) 
+                if( !listDropdownBp )
                 {
                     _showModal(
                     {
                         view  : "nobusinesssummary"
-                    
+
                     } );
 
                 }
@@ -583,10 +617,15 @@
                 {
                     _initMentorRequest(
                     {
-                        params: options.params
+                        params:
+                        {
+                            mentorId    :   options.params.mentorId
+                        ,   initiatorId :   loggedInMemberId
+                        }
                     ,   success: function()
                         {
-                            $requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
+
+
                             _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
                             window.bidx.controller.updateHash("#cancel");
 
@@ -605,22 +644,30 @@
                             } );
                         }
                     } );
-                    
+
                     _showModal(
                     {
                         view  : "confirmMentoringRequest"
                     ,   params: options.params
                     ,   onShow: function()
                         {
-                             _oneTimeSetup();
+                             //_populateDefaultData();
 
 
                         }
                     } );
                 }
-                
+
             break;
 
+            default: /***** Fetch mentoring request **/
+                if ( visitingMemberPageId !== loggedInMemberId  )
+                {
+                    getMentoringRequest();
+
+                }
+
+            break;
         }
     }
 
@@ -635,7 +682,7 @@
 
     // Engage!
     //
-    // _oneTimeSetup();
+    _populateDefaultData();
 
     // Expose
     //
@@ -657,4 +704,14 @@
     }
 
     window.bidx.mentoringrequest = app;
+
+
+    // if hash is empty and there is not path in the uri, load #home
+    //
+    if ($("body.bidx-member_profile").length && !bidx.utils.getValue(window, "location.hash").length)
+    {
+        window.location.hash = "#member";
+    }
+
+
 } ( jQuery ));

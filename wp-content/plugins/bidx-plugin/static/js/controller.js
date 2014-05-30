@@ -290,6 +290,7 @@
         ,   'editEntrepreneur(/:id)(/:section)':                'editEntrepreneur'
         ,   'createEntrepreneur':                               'createEntrepreneur'
         ,   'mentoringRequest(/:id)(/*splat)':                  'mentoringRequest'
+        ,   'member(/:id)(/*splat)':                            'mentoringRequest'
 
         ,   'editInvestor(/:id)(*splat)':                       'editInvestor'
         ,   'createInvestor':                                   'createInvestor'

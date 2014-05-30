@@ -106,6 +106,7 @@ if ($entrepreneurDetails &&
                     <div class="list-group js-fakecrop">
 <?php
                         foreach ($businessSummary as $index => $business) {
+
 ?>
                                     <div class="list-group-item">
                                         <h4 class="list-group-item-heading"><a href="/businesssummary/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php echo $business->name; ?></a></h4>
@@ -122,7 +123,7 @@ if ($entrepreneurDetails &&
 
                                                         echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
                                                     }
-?>                                                    
+?>
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <ul class="list-unstyled">
@@ -157,7 +158,7 @@ if ($entrepreneurDetails &&
                                                     if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isLoggedinMemberIsMentor && !$isMentor)
                                                     {
 ?>
-                                                        <a class="btn btn-sm btn-danger pull-right bp-<?php echo $businessBidxMeta->bidxEntityId;?>" href="#mentoringRequest/confirmRequest/type=mentoring&action=connect&businessid=<?php echo $businessBidxMeta->bidxEntityId;?>&id=<?php echo $memberId ?>"><?php _e('Mentor this plan', 'bidxplugin')?></a>
+                                                        <a class="btn btn-sm btn-danger pull-right bp-<?php echo $business->bidxMeta->bidxEntityId;?>" href="#mentoringRequest/confirmRequest/entityId=<?php echo $business->bidxMeta->bidxEntityId;?>"><?php _e('Mentor this plan', 'bidxplugin')?></a>
 <?php
                                                     }
 ?>
