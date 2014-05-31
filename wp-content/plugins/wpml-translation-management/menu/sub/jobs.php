@@ -115,7 +115,7 @@ $translation_jobs = $iclTranslationManagement->get_translation_jobs((array)$icl_
                 <?php endif; ?>
             </td>            
             <td width="60"><?php echo $job->job_id; ?></td>
-            <td><?php echo TranslationManagement::tm_post_link($job->original_doc_id); ?></td>
+            <td><?php echo TranslationManagement::tm_post_link($job->original_doc_id, $job->post_title); ?></td>
             <td><?php echo $job->lang_text ?></td>            
             <td><span id="icl_tj_job_status_<?php echo $job->job_id ?>"><?php echo $iclTranslationManagement->status2text($job->status) ?></span>
                 <?php if($job->needs_update) _e(' - (needs update)', 'wpml-translation-management'); ?>
