@@ -1828,7 +1828,7 @@
 
         // Did the user select that there is a company for this business summary and if so, what company was selected?
         //
-        var $selectedCompany = $companiesTable.find( "input[name='company']:checked" ).closest( ".companyItem" )
+        var $selectedCompany = $companiesTable.find( "input[name='companyList']:checked" ).closest( ".companyItem" )
         ,   company
         ,   companyId
         ;
