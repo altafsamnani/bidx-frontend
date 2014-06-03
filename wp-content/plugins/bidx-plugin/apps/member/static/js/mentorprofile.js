@@ -785,7 +785,7 @@
                 }
             ,   "linkedIn":
                 {
-                    linkedInUsername:       true
+                    linkedIn:               true
                 }
             ,   "focusLocationType":
                 {
