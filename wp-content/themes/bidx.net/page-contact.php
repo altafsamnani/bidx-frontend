@@ -27,7 +27,7 @@
                             <h5><i class="fa fa-phone"></i> Contact</h5>
                         </div>
                         <address>
-                            Phone: (020) 218-1060<br>
+                            Phone: +31 202 181 060<br>
                             <a href="mailto:info@bidx.net">info@bidx.net</a>
                         </address>
                     </div>
