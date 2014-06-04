@@ -157,11 +157,11 @@
 
       if ( ! isMoveBound ) {
         // console.log('first element bound - adding global binds');
-        $(document).bind( 'mousemove.__ue',   onMouse );
-        $(document).bind( 'touchmove.__ue',   onTouch );
-        $(document).bind( 'mouseup.__ue'  ,   onMouse );
-        $(document).bind( 'touchend.__ue' ,   onTouch );
-        $(document).bind( 'touchcancel.__ue', onTouch );
+        $(elem_this).bind( 'mousemove.__ue',   onMouse );
+        $(elem_this).bind( 'touchmove.__ue',   onTouch );
+        $(elem_this).bind( 'mouseup.__ue'  ,   onMouse );
+        $(elem_this).bind( 'touchend.__ue' ,   onTouch );
+        $(elem_this).bind( 'touchcancel.__ue', onTouch );
         isMoveBound = true;
       }
     },
@@ -276,11 +276,11 @@
       boundList.remove_val(this);
       if ( boundList.length === 0 ) {
         // console.log('last bound element removed - removing global binds');
-        $(document).unbind( 'mousemove.__ue');
-        $(document).unbind( 'touchmove.__ue');
-        $(document).unbind( 'mouseup.__ue');
-        $(document).unbind( 'touchend.__ue');
-        $(document).unbind( 'touchcancel.__ue');
+        $(elem_bound).unbind( 'mousemove.__ue');
+        $(elem_bound).unbind( 'touchmove.__ue');
+        $(elem_bound).unbind( 'mouseup.__ue');
+        $(elem_bound).unbind( 'touchend.__ue');
+        $(elem_bound).unbind( 'touchcancel.__ue');
         isMoveBound = false;
       }
     }
