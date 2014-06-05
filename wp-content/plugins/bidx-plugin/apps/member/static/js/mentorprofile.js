@@ -11,6 +11,7 @@
     ,   $focusSocialImpact                  = $editForm.find( "[name='focusSocialImpact']" )
     ,   $focusEnvImpact                     = $editForm.find( "[name='focusEnvImpact']" )
     ,   $focusIndustry                      = $editForm.find( "[name='focusIndustry']" )
+    ,   $focusExpertise                     = $editForm.find( "[name='focusExpertise']" )
     ,   $focusCountry                       = $editForm.find( "[name='focusCountry']" )
 
         // Attachnents
@@ -116,6 +117,11 @@
         $focusIndustry.bidx_chosen(
         {
             dataKey:            "industry"
+        });
+
+        $focusExpertise.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
         });
 
         $focusCountry.bidx_chosen(
@@ -548,6 +554,7 @@
         // Update the chosen components with our set values
         //
         $focusIndustry.trigger( "chosen:updated" );
+        $focusExpertise.trigger( "chosen:updated" );
         $focusLanguage.trigger( "chosen:updated" );
         $focusCountry.trigger( "chosen:updated" );
         $focusSocialImpact.trigger( "chosen:updated" );
@@ -710,7 +717,7 @@
                 }
             ,   "focusExpertise":
                 {
-                    tagsinputRequired:      true
+                    required:               true
                 }
             ,   "mentorsForInst":
                 {

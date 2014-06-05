@@ -298,6 +298,7 @@ class TemplateLibrary
             case 'language':
             case 'languageRating':
             case 'industry':
+            case 'mentorExpertise':
             case 'productService':
                 $values = $this->getStaticVal ($label, $values);
 

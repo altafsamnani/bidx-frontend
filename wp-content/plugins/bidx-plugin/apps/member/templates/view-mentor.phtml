@@ -43,6 +43,7 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                 __('Focus Gender','bidxplugin')               =>  $this->getMultiValues($this->exst ($mentorDetails->focusGender), ', ','gender'),
                 __('Stage of business','bidxplugin')          =>  $this->getMultiValues($this->exst ($mentorDetails->focusStageBusiness), ', ','stageBusiness'),
                 __('Focus Industry','bidxplugin')             =>  $this->getMultiValues($this->exst ($mentorDetails->focusIndustry), ', ','industry'),
+                __('Focus Expertise','bidxplugin')            =>  $this->getMultiValues($this->exst ($mentorDetails->focusExpertise), ', ','mentorExpertise'),
                 __('Languages','bidxplugin')                  =>  $this->getMultiValues($this->exst ($mentorDetails->focusLanguage), ', ','language'),
                 __('Social impact','bidxplugin')              =>  $this->getMultiValues($this->exst ($mentorDetails->focusSocialImpact), ', ','socialImpact'),
                 __('Environmental impact','bidxplugin')       =>  $this->getMultiValues($this->exst ($mentorDetails->focusEnvImpact), ', ','envImpact'),
