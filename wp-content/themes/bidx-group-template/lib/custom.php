@@ -33,7 +33,7 @@ function creategroup_post_type ($post_arr)
       'has_archive' => false,
       'hierarchical' => false,
       'supports' => array ('title', 'editor', 'thumbnail', 'excerpt'),
-      'taxonomies' => array() 
+      'taxonomies' => array()
     );
     $newsPostResult = register_post_type ($post_type, $args);
 
@@ -41,7 +41,7 @@ function creategroup_post_type ($post_arr)
 
 /*add_action('publish_news', 'add_news_category_automatically');
 
-function add_news_category_automatically($post_ID) 
+function add_news_category_automatically($post_ID)
 {
   global $wpdb;
 
@@ -51,7 +51,7 @@ function add_news_category_automatically($post_ID)
     $term = get_term_by('slug', 'news', 'category');
     $cat_ids[] = $term->term_id;
 
-    if(!empty($cat_ids)) 
+    if(!empty($cat_ids))
     {
       wp_set_object_terms($post_ID, 'news', 'category');
     }
@@ -60,7 +60,7 @@ function add_news_category_automatically($post_ID)
 
 add_action('do_meta_boxes', 'news_remove_metaboxes');
 
-function news_remove_metaboxes() 
+function news_remove_metaboxes()
 {
   remove_meta_box( 'categorydiv', 'news', 'side' );
 }*/
@@ -490,5 +490,25 @@ function get_custom_field_value ( $key,  $i = null)
     }
 
     return $value;
+}
+
+function languages_list_footer(){
+
+    $languages = icl_get_languages("skip_missing=0&orderby=code&link_empty_to=/{%lang}{$_SERVER['REQUEST_URI']}");
+    if(!empty($languages)){
+        echo '<div id="footer_language_list"><ul>';
+        foreach($languages as $l){
+            if($l['country_flag_url']){
+                if(!$l['active']) echo '<a href="'.$l['url'].'">';
+                echo '<img src="'.$l['country_flag_url'].'" height="12" alt="'.$l['language_code'].'" width="18" />';
+                if(!$l['active']) echo '</a>';
+            }
+            if(!$l['active']) echo '<a href="'.$l['url'].'">';
+            echo icl_disp_language($l['native_name'], $l['translated_name']);
+            if(!$l['active']) echo '</a>';
+            echo '</li>';
+        }
+        echo '</ul></div>';
+    }
 }
 

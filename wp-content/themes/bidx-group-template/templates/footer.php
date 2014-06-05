@@ -1,6 +1,10 @@
 <?php
+
+
+
     if ( get_theme_mod( 'footer' ) )
     {
+             languages_list_footer();
 ?>
 
 <footer>
@@ -13,6 +17,10 @@
 
 <?php
     } else {
+?>
+
+<?php
+    languages_list_footer();
 ?>
 
 <footer>

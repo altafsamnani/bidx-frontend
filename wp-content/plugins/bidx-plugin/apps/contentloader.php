@@ -31,7 +31,7 @@ class ContentLoader
         add_action ('init', array ($this, 'codex_custom_init'));
 
         //Load Multilingual text domain for static data
-        $this->localeTextdomainInit ();
+
 
         $bidCommonObj = new BidxCommon();
         $bidCommonObj->getBidxSessionAndScript ();
@@ -354,7 +354,7 @@ class ContentLoader
      */
     public function codex_custom_init ()
     {
-
+        $this->localeTextdomainInit ();
         //hardcoded for now
         $post_type = 'bidx';
 
@@ -387,26 +387,43 @@ class ContentLoader
      * @param $post_type type that needs to created custom
      * @example http://geertdedeckere.be/article/loading-wordpress-language-files-the-right-way
      */
+
     function localeTextdomainInit ()
     {
 
+        /*$plugin_var = 'sitepress-multilingual-cms/sitepress.php';
+
+        //If WPML is active then fetch the language of WPML url params that we are getting
+        if (in_array ($plugin_var, apply_filters ('active_plugins', get_option ('active_plugins')))) {
+
+            require_once WP_PLUGIN_DIR . '/sitepress-multilingual-cms/sitepress.php';
+
+            $sitepress          =   new SitePress();
+            $current_lang       =   $sitepress->init();
+            $current_url_locale =   $sitepress->get_locale(ICL_LANGUAGE_CODE);
+
+        } else  // Else load the site default langualge from Settings->general->site language option
+        {
+            $current_url_locale =   get_locale ();
+        }*/
+        $current_url_locale =   get_locale ();
         /* 1. Load Textdomain for Bidx Static APIs */
-        $domain = 'static'; //we use _e('String','static') see staticdataservice.php
-        $languagePath = WP_CONTENT_DIR . '/languages';
-        $locale = apply_filters ('plugin_locale', get_locale (), $domain);
-        $moStaticfile = $languagePath . '/static/' . $locale . '.mo';
+        $domain         = 'static'; //we use _e('String','static') see staticdataservice.php
+        $languagePath   = WP_CONTENT_DIR . '/languages';
+        $locale         = apply_filters ('plugin_locale', $current_url_locale, $domain);
+        $moStaticfile   = $languagePath . '/static/' . $locale . '.mo';
         load_textdomain ($domain, $moStaticfile);
 
         /* 2. Load Textdomain for Bidx Wp I18n */
-        $domain = 'i18n'; // we use _e('String','i18n')
-        $locale = apply_filters ('plugin_locale', get_locale (), $domain);
-        $moi18nfile = $languagePath . '/i18n/' . $locale . '.mo';
+        $domain         = 'i18n'; // we use _e('String','i18n')
+        $locale         = apply_filters ('plugin_locale', $current_url_locale, $domain);
+        $moi18nfile     = $languagePath . '/i18n/' . $locale . '.mo';
         load_textdomain ($domain, $moi18nfile);
 
-        /* 2. Load Textdomain for Bidx Plugin */
-        $domain = 'bidxplugin'; // we use _e('String','i18n')
-        $locale = apply_filters ('plugin_locale', get_locale (), $domain);
-        $moPluginfile = $languagePath . '/plugins/' . $locale . '.mo';
+        /* 3. Load Textdomain for Bidx Plugin */
+        $domain         = 'bidxplugin'; // we use _e('String','i18n')
+        $locale         = apply_filters ('plugin_locale', $current_url_locale, $domain);
+        $moPluginfile   = $languagePath . '/plugins/' . $locale . '.mo';
         load_textdomain ($domain, $moPluginfile);
     }
 

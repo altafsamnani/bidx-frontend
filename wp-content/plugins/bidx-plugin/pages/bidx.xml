@@ -18,42 +18,42 @@
             <post_id>0</post_id>
             <name>member_list</name>
             <title>Member List</title>
-            <mapping>^memberlist/?</mapping>
+            <mapping>(.*)memberlist/?</mapping>
             <content>[bidx app="member" view="list"]</content>
         </post>
         <post>
             <post_id>1</post_id>
             <name>member_profile</name>
             <title>Your Profile</title>
-            <mapping>^member/?</mapping>
+            <mapping>(.*)member/?</mapping>
             <content>[bidx app="member"]</content>
         </post>
         <post>
             <post_id>2</post_id>
             <name>member</name>
             <title>Memberprofile</title>
-            <mapping>^member/([^/]*)/?</mapping>
+            <mapping>(.*)member/([^/]*)/?</mapping>
             <content>[bidx app="member"]</content>
         </post>
         <post>
             <post_id>3</post_id>
             <name>search</name>
             <title>Search</title>
-            <mapping>^search/?</mapping>
+            <mapping>(.*)search/?</mapping>
             <content>[bidx app="search"]</content>
         </post>
         <post>
             <post_id>4</post_id>
             <name>search_business</name>
             <title>Search Business</title>
-            <mapping>^search/business?</mapping>
+            <mapping>(.*)search/business?</mapping>
             <content>[bidx app="search" view="cardview" query=""]</content>
         </post>
         <post>
             <post_id>5</post_id>
             <name>search_map</name>
             <title>Search Map</title>
-            <mapping>^search/near?</mapping>
+            <mapping>(.*)search/near?</mapping>
             <content>[bidx app="search" view="mapview" query=""]</content>
         </post>
         <!-- 6 and 7 are not used and free to be used -->
@@ -61,63 +61,63 @@
             <post_id>8</post_id>
             <name>last_members</name>
             <title>Last Members</title>
-            <mapping>^group/lastmembers?</mapping>
+            <mapping>(.*)group/lastmembers?</mapping>
             <content>[bidx app="group" view="last-members"]</content>
         </post>
         <post>
             <post_id>9</post_id>
             <name>group_info</name>
             <title>Group Information</title>
-            <mapping>^group/groupinfo?</mapping>
+            <mapping>(.*)group/groupinfo?</mapping>
             <content>[bidx app="group" view="group-intro"]</content>
         </post>
         <post>
             <post_id>11</post_id>
             <name>company</name>
             <title>Company Information</title>
-            <mapping>^company([^/]*)?</mapping>
+            <mapping>(.*)company([^/]*)?</mapping>
             <content>[bidx app="company"]</content>
         </post>
         <post>
             <post_id>12</post_id>
             <name>My dashboard</name>
             <title>My dashboard</title>
-            <mapping>^my-dashboard</mapping>
+            <mapping>(.*)my-dashboard</mapping>
             <content>[bidx app="dashboard" view="my-dashboard"]</content>
         </post>
         <post>
             <post_id>13</post_id>
             <name>Investor dashboard</name>
             <title>Investor dashboard</title>
-            <mapping>^investor-dashboard</mapping>
+            <mapping>(.*)investor-dashboard</mapping>
             <content>[bidx app="dashboard" view="investor-dashboard"]</content>
         </post>
         <post>
             <post_id>14</post_id>
             <name>Authentication</name>
             <title>Authentication</title>
-            <mapping>^auth</mapping>
+            <mapping>(.*)auth</mapping>
             <content>[bidx app="auth" view="composite-view"]</content>
         </post>
         <post>
             <post_id>15</post_id>
             <name>My messages</name>
             <title>My messages</title>
-            <mapping>^mail</mapping>
+            <mapping>(.*)mail</mapping>
             <content>[bidx app="mail" view="views"]</content>
         </post>
         <post>
             <post_id>16</post_id>
             <name>Group Registration</name>
             <title>Group Registration</title>
-            <mapping>^registration</mapping>
+            <mapping>(.*)registration</mapping>
             <content>[bidx app="auth" view="group-registration"]</content>
         </post>
         <post>
             <post_id>17</post_id>
             <name>media</name>
             <title>Media manager</title>
-            <mapping>^media</mapping>
+            <mapping>(.*)media</mapping>
             <content>[bidx app="media"]</content>
         </post>
 
@@ -125,7 +125,7 @@
             <post_id>18</post_id>
             <name>businesssummary</name>
             <title>Business Summary</title>
-            <mapping>^businesssummary</mapping>
+            <mapping>(.*)businesssummary</mapping>
             <content>[bidx app="businesssummary"]</content>
         </post>
 
@@ -133,79 +133,79 @@
             <post_id>19</post_id>
             <name>login</name>
             <title>Login</title>
-            <mapping>^login</mapping>
+            <mapping>(.*)login</mapping>
             <content>[bidx app="login"]</content>
         </post>
         <post>
             <post_id>20</post_id>
             <name>register</name>
             <title>Register</title>
-            <mapping>^register/([^/]*)/?</mapping>
+            <mapping>(.*)register/([^/]*)/?</mapping>
             <content>[bidx app="register"]</content>
         </post>
         <post>
             <post_id>21</post_id>
             <name>resetpassword</name>
             <title>Resetpassword</title>
-            <mapping>^resetpassword</mapping>
+            <mapping>(.*)resetpassword</mapping>
             <content>[bidx app="resetpassword"]</content>
         </post>
         <post>
             <post_id>22</post_id>
             <name>account</name>
             <title>Account settings</title>
-            <mapping>^account([^/]*)/?</mapping>
+            <mapping>(.*)account([^/]*)/?</mapping>
             <content>[bidx app="account"]</content>
         </post>
         <post>
             <post_id>23</post_id>
             <name>Entrepreneur dashboard</name>
             <title>Entrepreneur dashboard</title>
-            <mapping>^entrepreneur-dashboard</mapping>
+            <mapping>(.*)entrepreneur-dashboard</mapping>
             <content>[bidx app="dashboard" view="entrepreneur-dashboard"]</content>
         </post>
         <post>
             <post_id>24</post_id>
             <name>Sso Authentication</name>
             <title>Sso Authentication</title>
-            <mapping>^app/sso/auth</mapping>
+            <mapping>(.*)app/sso/auth</mapping>
             <content>[bidx app="login" link="true" ssoauth="true"]</content>
         </post>
         <post>
             <post_id>25</post_id>
             <name>Support</name>
             <title>Support</title>
-            <mapping>^support</mapping>
+            <mapping>(.*)support</mapping>
             <content>[bidx app="support" view="create-zendesk-tickets"]</content>
         </post>
         <post>
             <post_id>26</post_id>
             <name>activate</name>
             <title>activate</title>
-            <mapping>^activate</mapping>
+            <mapping>(.*)activate</mapping>
             <content>[bidx app="auth" view="activate"]</content>
         </post>
         <post>
             <post_id>27</post_id>
             <name>setpassword</name>
             <title>setpassword</title>
-            <mapping>^setpassword</mapping>
+            <mapping>(.*)setpassword</mapping>
             <content>[bidx app="setpassword"]</content>
         </post>
         <post>
             <post_id>28</post_id>
             <name>logout</name>
             <title>logout</title>
-            <mapping>^logout</mapping>
+            <mapping>(.*)logout</mapping>
             <content>[bidx  app="login" view="logout"]</content>
         </post>
         <post>
             <post_id>29</post_id>
             <name>Mentor dashboard</name>
             <title>Mentor dashboard</title>
-            <mapping>^mentor-dashboard</mapping>
+            <mapping>(.*)mentor-dashboard</mapping>
             <content>[bidx app="mentor" view="dashboard"]</content>
-        </post>        
+        </post>
     </posts>
 
     <widgets>
