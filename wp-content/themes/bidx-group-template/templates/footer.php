@@ -28,7 +28,7 @@
         <div class="container">
             <div class="footer-bar row">
             	<div class="pull-left col-sm-6">
-            		<div class="follow-us pull-left">Follow us</div>
+            		<div class="follow-us pull-left"><?php _e( 'Follow us','roots' )?></div>
             	 	<div class="btn-group">
                         <a target="_blank" href="https://twitter.com/bid_x"><i class="fa fa-twitter-square"></i></a>
                         <a target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook-square"></i></a>
@@ -37,11 +37,11 @@
             	</div>
 
             	<div class="pull-right col-sm-6 text-right">
-            		<div class="copyright">&copy; <?php echo date("Y") ?>. bidX.net. <?php _e('All rights reserved','bidxtheme')?></div>
+            		<div class="copyright">&copy; <?php echo date("Y") ?>. bidX.net. <?php _e( 'All rights reserved','roots' )?></div>
                     <div class="inline-list footer-menu">
-            			<div><a href="/sitemap"><?php _e('Sitemap','bidxtheme')?></a></div>
-            			<div><a href="/wp-content/themes/bidx-group-template/assets/docs/terms/BidX_Terms_and_Conditions_October_2013_en.pdf" target="_blank"><?php _e('Terms and service','bidxtheme')?></a></div>
-            			<div><a href="/privacy"><?php _e('Privacy','bidxtheme')?></a></div>
+            			<div><a href="/sitemap"><?php _e( 'Sitemap','roots' )?></a></div>
+            			<div><a href="/wp-content/themes/bidx-group-template/assets/docs/terms/BidX_Terms_and_Conditions_October_2013_en.pdf" target="_blank"><?php _e( 'Terms and service','roots' )?></a></div>
+            			<div><a href="/privacy"><?php _e( 'Privacy','roots' )?></a></div>
             		</div>
             	</div>
             </div>

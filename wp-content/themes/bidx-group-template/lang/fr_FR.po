@@ -2,335 +2,354 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 18:49+0100\n"
+"POT-Creation-Date: 2014-06-06 10:49+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
 "X-Poedit-Basepath: ../\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ./templates\n"
 "X-Poedit-SearchPath-2: ./lib\n"
 
-#: 404.php:5
-msgid "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
-msgstr "La page demandée a changé de nom ou est temporairement inaccessible."
-
 #: 404.php:8
-msgid "Please try the following:"
-msgstr "Veuillez essayer les actions suivantes :"
+msgid "Sorry, but the page you were trying to view does not exist."
+msgstr "Page d'aide non trouvée"
 
-#: 404.php:10
-msgid "Check your spelling"
-msgstr "Vérifiez votre syntaxe"
+#: 404.php:9
+msgid "It looks like this was the result of either:"
+msgstr "Il ressemble à ceci est le résultat d'une ou l'autre:"
 
 #: 404.php:11
-#, php-format
-msgid "Return to the <a href=\"%s\">home page</a>"
-msgstr "Revenir à la <a href=\"%s\">page d'accueil</a>"
+msgid "a mistyped address"
+msgstr "une adresse erronée"
 
 #: 404.php:12
-msgid "Click the <a href=\"javascript:history.back()\">Back</a> button"
-msgstr "Cliquer sur le bouton <a href=\"javascript:history.back()\">Retour</a>"
+msgid "an out-of-date link"
+msgstr "une vieille référence"
 
-#: lib/activation.php:31
-#: lib/activation.php:32
+#: lib/activation.php:33 lib/activation.php:34
 msgid "Theme Activation"
 msgstr "Activation du thème"
 
-#: lib/activation.php:68
+#: lib/activation.php:70
 #, php-format
 msgid "%s Theme Activation"
 msgstr "Activation du thème %s"
 
-#: lib/activation.php:83
-#: lib/activation.php:85
+#: lib/activation.php:85 lib/activation.php:87
 msgid "Create static front page?"
 msgstr "Créer une page d'accueil ?"
 
-#: lib/activation.php:87
-#: lib/activation.php:100
-#: lib/activation.php:113
-#: lib/activation.php:126
-#: lib/activation.php:139
+#: lib/activation.php:89 lib/activation.php:102 lib/activation.php:115
+#: lib/activation.php:128 lib/activation.php:141
 msgid "Yes"
 msgstr "Oui"
 
-#: lib/activation.php:88
-#: lib/activation.php:101
-#: lib/activation.php:114
-#: lib/activation.php:127
-#: lib/activation.php:140
+#: lib/activation.php:90 lib/activation.php:103 lib/activation.php:116
+#: lib/activation.php:129 lib/activation.php:142
 msgid "No"
 msgstr "Non"
 
-#: lib/activation.php:91
+#: lib/activation.php:93
 msgid "Create a page called Home and set it to be the static front page"
 msgstr "Créer une page \"Home\" et la définir comme page d'accueil statique ?"
 
-#: lib/activation.php:96
+#: lib/activation.php:98
 msgid "Change permalink structure?"
 msgstr "Modifier la structure des permaliens ?"
 
-#: lib/activation.php:98
+#: lib/activation.php:100
 msgid "Update permalink structure?"
 msgstr "Mettre à jour la structure des permaliens ?"
 
-#: lib/activation.php:104
+#: lib/activation.php:106
 msgid "Change permalink structure to /&#37;postname&#37;/"
 msgstr "Changer la structure permaliens en /&#37;postname&#37;/"
 
-#: lib/activation.php:109
+#: lib/activation.php:111
 msgid "Change uploads folder?"
 msgstr "Changer le dossier d'upload ?"
 
-#: lib/activation.php:111
+#: lib/activation.php:113
 msgid "Update uploads folder?"
 msgstr "Mettre à jour le dossier d'upload ?"
 
-#: lib/activation.php:117
+#: lib/activation.php:119
 msgid "Change uploads folder to /assets/ instead of /wp-content/uploads/"
-msgstr "Changer le dossier d'upload en /assets/ à la place de /wp-content/uploads/"
+msgstr ""
+"Changer le dossier d'upload en /assets/ à la place de /wp-content/uploads/"
 
-#: lib/activation.php:122
-#: lib/activation.php:124
+#: lib/activation.php:124 lib/activation.php:126
 msgid "Create navigation menu?"
 msgstr "Créer un menu de navigation ?"
 
-#: lib/activation.php:130
+#: lib/activation.php:132
 msgid "Create the Primary Navigation menu and set the location"
 msgstr "Créer le menus de navigation primaire et définir sa position"
 
-#: lib/activation.php:135
-#: lib/activation.php:137
+#: lib/activation.php:137 lib/activation.php:139
 msgid "Add pages to menu?"
 msgstr "Ajouter les pages au menu ?"
 
-#: lib/activation.php:143
+#: lib/activation.php:145
 msgid "Add all current published pages to the Primary Navigation"
-msgstr "Ajouter toutes les pages actuellement publiées à la navigation primaire"
+msgstr ""
+"Ajouter toutes les pages actuellement publiées à la navigation primaire"
 
-#: lib/cleanup.php:388
+#: lib/cleanup.php:368
 msgid "Continued"
 msgstr "Suite"
 
-#: lib/htaccess.php:25
-#, php-format
-msgid "Please make sure your <a href=\"%s\">.htaccess</a> file is writable "
-msgstr "Veuillez vérifier que votre fichier <a href=\"%s\">.htaccess</a> soit accessible en écriture"
+#: lib/custom.php:298 lib/custom.php:306
+msgid "Logo"
+msgstr "Logo"
 
-#: lib/init.php:13
+#: lib/custom.php:329
+msgid "Group Styles"
+msgstr "Styles de groupe"
+
+#: lib/custom.php:357
+msgid "Google Analytics codes"
+msgstr "Codes Google Analytics"
+
+#: lib/custom.php:387 lib/~widgets.php:17
+msgid "Footer"
+msgstr "Pied de page"
+
+#: lib/custom.php:417
+msgid "Front Main Content Area"
+msgstr "Front Main Content Area"
+
+#: lib/custom.php:446 lib/custom.php:453
+msgid "Favicon"
+msgstr "Favicon"
+
+#: lib/init.php:11
 msgid "Primary Navigation"
 msgstr "Navigation Primaire"
 
-#: lib/utils.php:14
+#: lib/utils.php:60
 msgid "Latest Posts"
 msgstr "Derniers Articles"
 
-#: lib/utils.php:23
+#: lib/utils.php:69
 #, php-format
 msgid "Daily Archives: %s"
 msgstr "Archives quotidiennes : %s"
 
-#: lib/utils.php:25
+#: lib/utils.php:71
 #, php-format
 msgid "Monthly Archives: %s"
 msgstr "Archives mensuelles : %s"
 
-#: lib/utils.php:27
+#: lib/utils.php:73
 #, php-format
 msgid "Yearly Archives: %s"
 msgstr "Archives annuelles : %s"
 
-#: lib/utils.php:31
+#: lib/utils.php:75
 #, php-format
 msgid "Author Archives: %s"
 msgstr "Archives d'auteurs : %s"
 
-#: lib/utils.php:36
+#: lib/utils.php:80
 #, php-format
 msgid "Search Results for %s"
 msgstr "Résultats de la recherche pour %s"
 
-#: lib/utils.php:38
-msgid "File Not Found"
+#: lib/utils.php:82
+#, fuzzy
+msgid "Not Found"
 msgstr "Fichier non trouvé"
 
-#: lib/widgets.php:6
-msgid "Primary Sidebar"
-msgstr "Barre latérale Primaire"
-
-#: lib/widgets.php:15
-msgid "Footer"
-msgstr "Pied de page"
-
-#: lib/widgets.php:41
-msgid "Use this widget to add a vCard"
-msgstr "Utiliser ce widget pour ajouter une vCard"
-
-#: lib/widgets.php:43
-msgid "Roots: vCard"
-msgstr "Roots: vCard"
-
-#: lib/widgets.php:70
-msgid "vCard"
-msgstr "vCard"
-
-#: templates/comments.php:7
+#: lib/utils.php:94
 #, php-format
-msgid "<cite class=\"fn\">%s</cite>"
-msgstr "<cite class=\"fn\">%s</cite>"
+msgid "Please make sure your <a href=\"%s\">.htaccess</a> file is writable "
+msgstr ""
+"Veuillez vérifier que votre fichier <a href=\"%s\">.htaccess</a> soit "
+"accessible en écriture"
 
-#: templates/comments.php:8
+#: lib/~comments.php:35
 #, php-format
 msgid "%1$s"
 msgstr "%1$s"
 
-#: templates/comments.php:9
+#: lib/~comments.php:36
 msgid "(Edit)"
 msgstr "(Editer)"
 
-#: templates/comments.php:15
+#: lib/~comments.php:40
 msgid "Your comment is awaiting moderation."
 msgstr "Votre commentaire est en attente de modération."
 
-#: templates/comments.php:32
-msgid "This post is password protected. Enter the password to view comments."
-msgstr "Cet article est protégé par mot de passe. Entrez le mot de passe pour voir les commentaires."
+#: lib/~widgets.php:8
+msgid "Primary Sidebar"
+msgstr "Barre latérale Primaire"
 
-#: templates/comments.php:39
-msgid "One Response to &ldquo;%2$s&rdquo;"
-msgid_plural "%1$s Responses to &ldquo;%2$s&rdquo;"
-msgstr[0] "Une réponse à &ldquo;%2$s&rdquo;"
-msgstr[1] "%1$s résponses à &ldquo;%2$s&rdquo;"
+#: lib/~widgets.php:45
+msgid "Use this widget to add a vCard"
+msgstr "Utiliser ce widget pour ajouter une vCard"
 
-#: templates/comments.php:49
-#: templates/comments.php:51
-msgid "&larr; Older comments"
-msgstr "&larr; Commentaires plus anciens"
+#: lib/~widgets.php:47
+msgid "Roots: vCard"
+msgstr "Roots: vCard"
 
-#: templates/comments.php:54
-#: templates/comments.php:56
-msgid "Newer comments &rarr;"
-msgstr "Commentaires plus récents &rarr;"
+#: lib/~widgets.php:74
+msgid "vCard"
+msgstr "vCard"
 
-#: templates/comments.php:66
-#: templates/comments.php:76
-msgid "Comments are closed."
-msgstr "Les commentaires sont fermés."
-
-#: templates/comments.php:83
-msgid "Leave a Reply"
-msgstr "Répondre"
-
-#: templates/comments.php:83
-#, php-format
-msgid "Leave a Reply to %s"
-msgstr "Répondre à %s"
-
-#: templates/comments.php:86
-#, php-format
-msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
-msgstr "Vous devez être <a href=\"%s\">connecté</a> pour ajouter un commentaire."
-
-#: templates/comments.php:90
-#, php-format
-msgid "Logged in as <a href=\"%s/wp-admin/profile.php\">%s</a>."
-msgstr "Connecté en tant que <a href=\"%s/wp-admin/profile.php\">%s</a>."
-
-#: templates/comments.php:90
-msgid "Log out of this account"
-msgstr "Déconnexion de ce compte"
-
-#: templates/comments.php:90
-msgid "Log out &raquo;"
-msgstr "Déconnexion &raquo;"
-
-#: templates/comments.php:92
-msgid "Name"
-msgstr "Nom"
-
-#: templates/comments.php:92
-#: templates/comments.php:94
-msgid " (required)"
-msgstr " (obligatoire)"
-
-#: templates/comments.php:94
-msgid "Email (will not be published)"
-msgstr "Email (ne sera pas publié)"
-
-#: templates/comments.php:96
-msgid "Website"
-msgstr "Site web"
-
-#: templates/comments.php:99
-msgid "Comment"
-msgstr "Commentaire"
-
-#: templates/comments.php:101
-msgid "Submit Comment"
-msgstr "Ajouter un commentaire"
-
-#: templates/content-single.php:11
+#: templates/content-single.php:64
 msgid "Pages:"
 msgstr "Pages :"
 
-#: templates/content.php:4
-msgid "Sorry, no results were found."
-msgstr "Désolé, aucun résultat n'a été trouvé."
+#: templates/footer.php:31
+msgid "Follow us"
+msgstr "Suivez-nous"
 
-#: templates/content.php:28
-#: templates/content.php:30
-msgid "&larr; Older posts"
-msgstr "&larr; Articles plus anciens"
+#: templates/footer.php:40
+msgid "All rights reserved"
+msgstr "Tous droits réservés"
 
-#: templates/content.php:33
-#: templates/content.php:35
-msgid "Newer posts &rarr;"
-msgstr "Articles plus récents &rarr;"
+#: templates/footer.php:42
+msgid "Sitemap"
+msgstr "Sitemap"
 
-#: templates/entry-meta.php:1
-#, php-format
-msgid "Posted on %s at %s."
-msgstr "Publié le %s à %s."
+#: templates/footer.php:43
+msgid "Terms and service"
+msgstr "Conditions et service"
 
-#: templates/entry-meta.php:2
-msgid "Written by"
-msgstr "Rédigé par"
+#: templates/footer.php:44
+msgid "Privacy"
+msgstr "Privacy"
 
-#: templates/searchform.php:2
-msgid "Search for:"
-msgstr "Rechercher pour :"
+#: templates/header.php:51
+msgid "Login"
+msgstr "Se connecter"
 
-#: templates/searchform.php:3
-#: templates/searchform.php:4
-msgid "Search"
-msgstr "Recherche"
+#~ msgid ""
+#~ "The page you are looking for might have been removed, had its name "
+#~ "changed, or is temporarily unavailable."
+#~ msgstr ""
+#~ "La page demandée a changé de nom ou est temporairement inaccessible."
 
-msgid "Title (optional):"
-msgstr "Titre (facultatif) :"
+#~ msgid "Please try the following:"
+#~ msgstr "Veuillez essayer les actions suivantes :"
 
-msgid "Street Address:"
-msgstr "Rue :"
+#~ msgid "Check your spelling"
+#~ msgstr "Vérifiez votre syntaxe"
 
-msgid "City/Locality:"
-msgstr "Ville/Localité :"
+#~ msgid "Return to the <a href=\"%s\">home page</a>"
+#~ msgstr "Revenir à la <a href=\"%s\">page d'accueil</a>"
 
-msgid "State/Region:"
-msgstr "État/Région :"
+#~ msgid "Click the <a href=\"javascript:history.back()\">Back</a> button"
+#~ msgstr ""
+#~ "Cliquer sur le bouton <a href=\"javascript:history.back()\">Retour</a>"
 
-msgid "Zipcode/Postal Code:"
-msgstr "Code Postal :"
+#~ msgid "<cite class=\"fn\">%s</cite>"
+#~ msgstr "<cite class=\"fn\">%s</cite>"
 
-msgid "Telephone:"
-msgstr "Téléphone :"
+#~ msgid ""
+#~ "This post is password protected. Enter the password to view comments."
+#~ msgstr ""
+#~ "Cet article est protégé par mot de passe. Entrez le mot de passe pour "
+#~ "voir les commentaires."
 
-msgid "Email:"
-msgstr "Email :"
+#~ msgid "One Response to &ldquo;%2$s&rdquo;"
+#~ msgid_plural "%1$s Responses to &ldquo;%2$s&rdquo;"
+#~ msgstr[0] "Une réponse à &ldquo;%2$s&rdquo;"
+#~ msgstr[1] "%1$s résponses à &ldquo;%2$s&rdquo;"
 
+#~ msgid "&larr; Older comments"
+#~ msgstr "&larr; Commentaires plus anciens"
+
+#~ msgid "Newer comments &rarr;"
+#~ msgstr "Commentaires plus récents &rarr;"
+
+#~ msgid "Comments are closed."
+#~ msgstr "Les commentaires sont fermés."
+
+#~ msgid "Leave a Reply"
+#~ msgstr "Répondre"
+
+#~ msgid "Leave a Reply to %s"
+#~ msgstr "Répondre à %s"
+
+#~ msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
+#~ msgstr ""
+#~ "Vous devez être <a href=\"%s\">connecté</a> pour ajouter un commentaire."
+
+#~ msgid "Logged in as <a href=\"%s/wp-admin/profile.php\">%s</a>."
+#~ msgstr "Connecté en tant que <a href=\"%s/wp-admin/profile.php\">%s</a>."
+
+#~ msgid "Log out of this account"
+#~ msgstr "Déconnexion de ce compte"
+
+#~ msgid "Log out &raquo;"
+#~ msgstr "Déconnexion &raquo;"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid " (required)"
+#~ msgstr " (obligatoire)"
+
+#~ msgid "Email (will not be published)"
+#~ msgstr "Email (ne sera pas publié)"
+
+#~ msgid "Website"
+#~ msgstr "Site web"
+
+#~ msgid "Comment"
+#~ msgstr "Commentaire"
+
+#~ msgid "Submit Comment"
+#~ msgstr "Ajouter un commentaire"
+
+#~ msgid "Sorry, no results were found."
+#~ msgstr "Désolé, aucun résultat n'a été trouvé."
+
+#~ msgid "&larr; Older posts"
+#~ msgstr "&larr; Articles plus anciens"
+
+#~ msgid "Newer posts &rarr;"
+#~ msgstr "Articles plus récents &rarr;"
+
+#~ msgid "Posted on %s at %s."
+#~ msgstr "Publié le %s à %s."
+
+#~ msgid "Written by"
+#~ msgstr "Rédigé par"
+
+#~ msgid "Search for:"
+#~ msgstr "Rechercher pour :"
+
+#~ msgid "Search"
+#~ msgstr "Recherche"
+
+#~ msgid "Title (optional):"
+#~ msgstr "Titre (facultatif) :"
+
+#~ msgid "Street Address:"
+#~ msgstr "Rue :"
+
+#~ msgid "City/Locality:"
+#~ msgstr "Ville/Localité :"
+
+#~ msgid "State/Region:"
+#~ msgstr "État/Région :"
+
+#~ msgid "Zipcode/Postal Code:"
+#~ msgstr "Code Postal :"
+
+#~ msgid "Telephone:"
+#~ msgstr "Téléphone :"
+
+#~ msgid "Email:"
+#~ msgstr "Email :"

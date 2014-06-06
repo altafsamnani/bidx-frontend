@@ -1,367 +1,399 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: Roots Theme i18n: NL_nl\n"
+"POT-Creation-Date: 2014-06-06 11:09+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jaap Gorjup <jaap@bidx.net>\n"
+"Language-Team: Jaap Gorjup <jaap@bidx.net>\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: Roots Theme i18n: NL_nl\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Herko Coomans <herko.coomans@gmail.com>\n"
-"Language-Team: Herko Coomans <herko.coomans@gmail.com>\n"
-"MIME-Version: 1.0\n"
-"X-Poedit-Language: Dutch\n"
-"X-Poedit-Country: NETHERLANDS\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-KeywordsList: _e;__;_\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./lib\n"
+"X-Poedit-SearchPath-2: ./templates\n"
 
-#. Text in echo
-#: comments.php:80
-#: comments.php:84
-msgid " (required)"
-msgstr "(verplicht)"
+#: 404.php:8
+msgid "Sorry, but the page you were trying to view does not exist."
+msgstr "Sorry, de pagina bestaat niet"
 
-#. Text in echo
-#: inc/roots-options.php:127
-#: inc/roots-options.php:129
-msgid "#main CSS Classes"
-msgstr "#main CSS klassen"
+#: 404.php:9
+msgid "It looks like this was the result of either:"
+msgstr "Dit was waarschijnlijk het gevolg van:"
 
-#. Text in echo
-#: inc/roots-options.php:137
-#: inc/roots-options.php:139
-msgid "#sidebar CSS Classes"
-msgstr "#sidebar CSS klassen"
+#: 404.php:11
+msgid "a mistyped address"
+msgstr "een incorrect web-adres"
 
-#. Text in function
-#: comments.php:46
-msgid "% Responses to"
-msgstr "% reacties op"
+#: 404.php:12
+msgid "an out-of-date link"
+msgstr "een verouderde verwijzing"
 
-#. Text in function
-#: comments.php:8
-msgid "%1$s"
-msgstr "%1$s"
+#: lib/activation.php:33 lib/activation.php:34
+#, fuzzy
+msgid "Theme Activation"
+msgstr "Thema opties"
 
-#. Text in function
-#: inc/roots-options.php:94
-msgid "%s Theme Options"
+#: lib/activation.php:70
+#, fuzzy, php-format
+msgid "%s Theme Activation"
 msgstr "%s Thema Opties"
 
-#. Text in function
-#: comments.php:53
-msgid "&larr; Older comments"
-msgstr "&larr; Oudere reacties"
+#: lib/activation.php:85 lib/activation.php:87
+msgid "Create static front page?"
+msgstr ""
 
-#. Text in function
-#: loop-search.php:33
-#: loop.php:37
-msgid "&larr; Older posts"
-msgstr "&larr; Oudere berichten"
+#: lib/activation.php:89 lib/activation.php:102 lib/activation.php:115
+#: lib/activation.php:128 lib/activation.php:141
+msgid "Yes"
+msgstr "Ja"
 
-#. Text in function
-#: comments.php:9
-msgid "(Edit)"
-msgstr "(Bewerk)"
+#: lib/activation.php:90 lib/activation.php:103 lib/activation.php:116
+#: lib/activation.php:129 lib/activation.php:142
+msgid "No"
+msgstr "Nee"
 
-#. Text in function
-#: inc/roots-options.php:1
-msgid "1140"
-msgstr "1140"
+#: lib/activation.php:93
+msgid "Create a page called Home and set it to be the static front page"
+msgstr ""
 
-#. Text in function
-#: inc/roots-options.php:1
-msgid "960gs (12 cols)"
-msgstr "960gs (12 kolommen)"
+#: lib/activation.php:98
+msgid "Change permalink structure?"
+msgstr ""
 
-#. Text in function
-#: inc/roots-options.php:1
-msgid "960gs (16 cols)"
-msgstr "960gs (16 kolommen)"
+#: lib/activation.php:100
+msgid "Update permalink structure?"
+msgstr ""
 
-#. Text in function
-#: inc/roots-options.php:1
-msgid "960gs (24 cols)"
-msgstr "960gs (24 kolommen)"
+#: lib/activation.php:106
+msgid "Change permalink structure to /&#37;postname&#37;/"
+msgstr ""
 
-#. Text in function
-#: comments.php:7
-msgid "<cite class=\"fn\">%s</cite>"
-msgstr "<cite class=\"fn\">%s</cite>"
+#: lib/activation.php:111
+msgid "Change uploads folder?"
+msgstr ""
 
-#. Text in function
-#: inc/roots-options.php:1
-msgid "Adapt.js"
-msgstr "Adapt.js"
+#: lib/activation.php:113
+msgid "Update uploads folder?"
+msgstr ""
 
-#. Text in echo
-#: page-sitemap.php:18
-msgid "Archives"
-msgstr "Archieven"
+#: lib/activation.php:119
+msgid "Change uploads folder to /assets/ instead of /wp-content/uploads/"
+msgstr ""
 
-#. Text in function
-#: inc/roots-options.php:1
-msgid "Blueprint CSS"
-msgstr "Blueprint CSS"
+#: lib/activation.php:124 lib/activation.php:126
+msgid "Create navigation menu?"
+msgstr ""
 
-#. Text in echo
-#: inc/roots-options.php:106
-#: inc/roots-options.php:108
-msgid "CSS Grid Framework"
-msgstr "CSS Grid Raamwerk"
+#: lib/activation.php:132
+msgid "Create the Primary Navigation menu and set the location"
+msgstr ""
 
-#. Text in echo
-#: 404.php:13
-msgid "Check your spelling"
-msgstr "Controleer de spelling"
+#: lib/activation.php:137 lib/activation.php:139
+msgid "Add pages to menu?"
+msgstr ""
 
-#. Text in echo
-#: inc/roots-widgets.php:61
-msgid "City/Locality:"
-msgstr "Plaats:"
+#: lib/activation.php:145
+msgid "Add all current published pages to the Primary Navigation"
+msgstr ""
 
-#. Text in echo
-#: 404.php:15
-msgid "Click the <a href=\"javascript:history.back()\">Back</a> button"
-msgstr "Klik op de <a href=\"javascript:history.back()\">Terug</a> knop"
-
-#. Text in echo
-#: comments.php:93
-msgid "Comment"
-msgstr "Reactie"
-
-#. Text in echo
-#: comments.php:63
-msgid "Comments are closed."
-msgstr "U kunt niet meer reageren."
-
-#. Text in function
-#: inc/roots-cleanup.php:1
+#: lib/cleanup.php:368
 msgid "Continued"
 msgstr "Lees verder"
 
-#. Text in function
-#: inc/roots-options.php:132
-#: inc/roots-options.php:142
-msgid "Default: %s"
-msgstr "Standaard: %s"
+#: lib/custom.php:298 lib/custom.php:306
+msgid "Logo"
+msgstr ""
 
-#. Text in echo
-#: comments.php:84
-msgid "Email (will not be published)"
-msgstr "E-mail (wordt niet gepubliceerd)"
+#: lib/custom.php:329
+msgid "Group Styles"
+msgstr "Groep Style"
 
-#. Text in echo
-#: inc/roots-widgets.php:77
-msgid "Email:"
-msgstr "E-mail:"
+#: lib/custom.php:357
+msgid "Google Analytics codes"
+msgstr "Google Analytics codes"
 
-#. Text in function
-#: inc/roots-options.php:152
-msgid "Enter your UA-XXXXX-X ID"
-msgstr "Voer uw UA-XXXXX-X ID in"
+#: lib/custom.php:387 lib/~widgets.php:17
+msgid "Footer"
+msgstr ""
 
-#. Text in echo
-#: 404.php:7
-msgid "File Not Found"
-msgstr "Bestand niet gevonden"
+#: lib/custom.php:417
+msgid "Front Main Content Area"
+msgstr ""
 
-#. Text in echo
-#: inc/roots-options.php:147
-#: inc/roots-options.php:149
-msgid "Google Analytics ID"
-msgstr "Google Analytics ID"
+#: lib/custom.php:446 lib/custom.php:453
+msgid "Favicon"
+msgstr ""
 
-#. Text in echo
-#: index.php:7
+#: lib/init.php:11
+msgid "Primary Navigation"
+msgstr "Hoofd Navigatie"
+
+#: lib/utils.php:60
 msgid "Latest Posts"
 msgstr "Laatste berichten"
 
-#. Text in function
-#: comments.php:70
-msgid "Leave a Reply"
-msgstr "Reageer"
+#: lib/utils.php:69
+#, fuzzy, php-format
+msgid "Daily Archives: %s"
+msgstr "Archieven"
 
-#. Text in function
-#: comments.php:70
-msgid "Leave a Reply to %s"
-msgstr "Reageer op %s"
+#: lib/utils.php:71
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr ""
 
-#. Text in echo
-#: comments.php:77
-msgid "Log out &raquo;"
-msgstr "Afmelden &raquo;"
+#: lib/utils.php:73
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr ""
 
-#. Text in function
-#: comments.php:77
-msgid "Log out of this account"
-msgstr "Dit profiel afmelden"
+#: lib/utils.php:75
+#, php-format
+msgid "Author Archives: %s"
+msgstr ""
 
-#. Text in function
-#: comments.php:77
-msgid "Logged in as <a href=\"%s/wp-admin/profile.php\">%s</a>."
-msgstr "Aangemeld als <a href=\"%s/wp-admin/profile.php\">%s</a>."
-
-#. Text in echo
-#: comments.php:80
-msgid "Name"
-msgstr "Naam"
-
-#. Text in function
-#: comments.php:54
-msgid "Newer comments &rarr;"
-msgstr "Nieuwere reacties &rarr;"
-
-#. Text in function
-#: loop-search.php:34
-#: loop.php:38
-msgid "Newer posts &rarr;"
-msgstr "Nieuwere berichten &rarr;"
-
-#. Text in function
-#: comments.php:46
-msgid "No Responses to"
-msgstr "Geen reacties op"
-
-#. Text in function
-#: comments.php:46
-msgid "One Response to"
-msgstr "Een reactie op"
-
-#. Text in echo
-#: page-sitemap.php:14
-msgid "Pages"
-msgstr "Pagina's"
-
-#. Text in function
-#: loop-page.php:7
-#: loop-single.php:17
-msgid "Pages:"
-msgstr "Pagina's:"
-
-#. Text in function
-#: comments.php:28
-msgid "Please do not load this page directly. Thanks!"
-msgstr "Deze pagina niet direct laden, a.u.b. Vriendelijk bedankt!"
-
-#. Text in function
-#: inc/roots-htaccess.php:1
-msgid "Please make sure your <a href=\"%s\">.htaccess</a> file is writeable "
-msgstr "Controleer a.u.b of uw <a href=\"%s\">.htaccess</a> bestand schrijfbaar is"
-
-#. Text in echo
-#: 404.php:11
-msgid "Please try the following:"
-msgstr "Probeer a.u.b. het volgende:"
-
-#. Text in function
-#: inc/roots-admin.php:1
-msgid "Please update your <a href=\"%s\">site tagline</a>"
-msgstr "Werk uw <a href=\"%s\">website slogan</a> bij."
-
-#. Text in function
-#: loop-single.php:8
-#: loop-search.php:16
-#: loop.php:16
-msgid "Posted on %s at %s."
-msgstr "Geplaatst op %s om %s."
-
-#. Text in echo
-#: page-sitemap.php:16
-msgid "Posts"
-msgstr "Berichten"
-
-#. Text in function
-#: 404.php:14
-msgid "Return to the <a href=\"%s\">home page</a>"
-msgstr "Terug naar de <a href=\"%s\">startpagina</a>"
-
-#. Text in function
-#: inc/roots-widgets.php:1
-msgid "Roots: vCard"
-msgstr "Roots: vCard"
-
-#. Text in echo
-#: searchform.php:3
-#: searchform.php:4
-msgid "Search"
-msgstr "Zoeken"
-
-#. Text in echo
-#: search.php:7
-msgid "Search Results for"
+#: lib/utils.php:80
+#, fuzzy, php-format
+msgid "Search Results for %s"
 msgstr "Zoekresultaten voor"
 
-#. Text in echo
-#: searchform.php:2
-msgid "Search for:"
-msgstr "Zoek naar:"
+#: lib/utils.php:82
+#, fuzzy
+msgid "Not Found"
+msgstr "Bestand niet gevonden"
 
-#. Text in echo
-#: loop-search.php:4
-#: loop.php:4
-msgid "Sorry, no results were found."
-msgstr "Sorry, uw zoekopdracht heeft geen resultaten opgeleverd."
+#: lib/utils.php:94
+#, fuzzy, php-format
+msgid "Please make sure your <a href=\"%s\">.htaccess</a> file is writable "
+msgstr ""
+"Controleer a.u.b of uw <a href=\"%s\">.htaccess</a> bestand schrijfbaar is"
 
-#. Text in echo
-#: inc/roots-widgets.php:65
-msgid "State/Region:"
-msgstr "Provincie/regio:"
+#: lib/~comments.php:35
+#, php-format
+msgid "%1$s"
+msgstr "%1$s"
 
-#. Text in echo
-#: inc/roots-widgets.php:57
-msgid "Street Address:"
-msgstr "Adres:"
+#: lib/~comments.php:36
+msgid "(Edit)"
+msgstr "(Bewerk)"
 
-#. Text in echo
-#: comments.php:96
-msgid "Submit Comment"
-msgstr "Reactie versturen"
-
-#. Text in echo
-#: inc/roots-widgets.php:73
-msgid "Telephone:"
-msgstr "Telefoon:"
-
-#. Text in echo
-#: 404.php:9
-msgid "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
-msgstr "De pagina waar u naar op zoek bent is mogelijk verwijderd, van naam veranderd of is tijdelijk niet beschikbaar."
-
-#. Text in function
-#: inc/roots-options.php:1
-msgid "Theme Options"
-msgstr "Thema opties"
-
-#. Text in echo
-#: comments.php:36
-msgid "This post is password protected. Enter the password to view comments."
-msgstr "Dit bericht is beschermd met een wachtwoord. Voer het wachtwoord in om de reacties te bekijken."
-
-#. Text in echo
-#: inc/roots-widgets.php:53
-msgid "Title (optional):"
-msgstr "Titel (optioneel):"
-
-#. Text in echo
-#: comments.php:88
-msgid "Website"
-msgstr "Website"
-
-#. Text in echo
-#: loop-single.php:10
-#: loop-search.php:17
-msgid "Written by"
-msgstr "Geschreven door"
-
-#. Text in function
-#: comments.php:73
-msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
-msgstr "U dient <a href=\"%s\">aangemeld</a> te zijn om te reageren."
-
-#. Text in echo
-#: comments.php:14
+#: lib/~comments.php:40
 msgid "Your comment is awaiting moderation."
 msgstr "Uw reactie wacht op goedkeuring."
 
-#. Text in echo
-#: inc/roots-widgets.php:69
-msgid "Zipcode/Postal Code:"
-msgstr "Postcode:"
+#: lib/~widgets.php:8
+msgid "Primary Sidebar"
+msgstr ""
 
+#: lib/~widgets.php:45
+msgid "Use this widget to add a vCard"
+msgstr ""
+
+#: lib/~widgets.php:47
+msgid "Roots: vCard"
+msgstr "Roots: vCard"
+
+#: lib/~widgets.php:74
+msgid "vCard"
+msgstr ""
+
+#: templates/content-single.php:64
+msgid "Pages:"
+msgstr "Pagina's:"
+
+#: templates/footer.php:31
+msgid "Follow us"
+msgstr "Volg ons"
+
+#: templates/footer.php:40
+msgid "All rights reserved"
+msgstr ""
+
+#: templates/footer.php:42
+msgid "Sitemap"
+msgstr ""
+
+#: templates/footer.php:43
+msgid "Terms and service"
+msgstr ""
+
+#: templates/footer.php:44
+msgid "Privacy"
+msgstr "Privacy"
+
+#: templates/header.php:51
+msgid "Login"
+msgstr "Inloggen"
+
+#~ msgid " (required)"
+#~ msgstr "(verplicht)"
+
+#~ msgid "#main CSS Classes"
+#~ msgstr "#main CSS klassen"
+
+#~ msgid "#sidebar CSS Classes"
+#~ msgstr "#sidebar CSS klassen"
+
+#~ msgid "% Responses to"
+#~ msgstr "% reacties op"
+
+#~ msgid "&larr; Older comments"
+#~ msgstr "&larr; Oudere reacties"
+
+#~ msgid "&larr; Older posts"
+#~ msgstr "&larr; Oudere berichten"
+
+#~ msgid "1140"
+#~ msgstr "1140"
+
+#~ msgid "960gs (12 cols)"
+#~ msgstr "960gs (12 kolommen)"
+
+#~ msgid "960gs (16 cols)"
+#~ msgstr "960gs (16 kolommen)"
+
+#~ msgid "960gs (24 cols)"
+#~ msgstr "960gs (24 kolommen)"
+
+#~ msgid "<cite class=\"fn\">%s</cite>"
+#~ msgstr "<cite class=\"fn\">%s</cite>"
+
+#~ msgid "Adapt.js"
+#~ msgstr "Adapt.js"
+
+#~ msgid "Blueprint CSS"
+#~ msgstr "Blueprint CSS"
+
+#~ msgid "CSS Grid Framework"
+#~ msgstr "CSS Grid Raamwerk"
+
+#~ msgid "Check your spelling"
+#~ msgstr "Controleer de spelling"
+
+#~ msgid "City/Locality:"
+#~ msgstr "Plaats:"
+
+#~ msgid "Click the <a href=\"javascript:history.back()\">Back</a> button"
+#~ msgstr "Klik op de <a href=\"javascript:history.back()\">Terug</a> knop"
+
+#~ msgid "Comment"
+#~ msgstr "Reactie"
+
+#~ msgid "Comments are closed."
+#~ msgstr "U kunt niet meer reageren."
+
+#~ msgid "Default: %s"
+#~ msgstr "Standaard: %s"
+
+#~ msgid "Email (will not be published)"
+#~ msgstr "E-mail (wordt niet gepubliceerd)"
+
+#~ msgid "Email:"
+#~ msgstr "E-mail:"
+
+#~ msgid "Enter your UA-XXXXX-X ID"
+#~ msgstr "Voer uw UA-XXXXX-X ID in"
+
+#~ msgid "Leave a Reply"
+#~ msgstr "Reageer"
+
+#~ msgid "Leave a Reply to %s"
+#~ msgstr "Reageer op %s"
+
+#~ msgid "Log out &raquo;"
+#~ msgstr "Afmelden &raquo;"
+
+#~ msgid "Log out of this account"
+#~ msgstr "Dit profiel afmelden"
+
+#~ msgid "Logged in as <a href=\"%s/wp-admin/profile.php\">%s</a>."
+#~ msgstr "Aangemeld als <a href=\"%s/wp-admin/profile.php\">%s</a>."
+
+#~ msgid "Name"
+#~ msgstr "Naam"
+
+#~ msgid "Newer comments &rarr;"
+#~ msgstr "Nieuwere reacties &rarr;"
+
+#~ msgid "Newer posts &rarr;"
+#~ msgstr "Nieuwere berichten &rarr;"
+
+#~ msgid "No Responses to"
+#~ msgstr "Geen reacties op"
+
+#~ msgid "One Response to"
+#~ msgstr "Een reactie op"
+
+#~ msgid "Pages"
+#~ msgstr "Pagina's"
+
+#~ msgid "Please do not load this page directly. Thanks!"
+#~ msgstr "Deze pagina niet direct laden, a.u.b. Vriendelijk bedankt!"
+
+#~ msgid "Please try the following:"
+#~ msgstr "Probeer a.u.b. het volgende:"
+
+#~ msgid "Please update your <a href=\"%s\">site tagline</a>"
+#~ msgstr "Werk uw <a href=\"%s\">website slogan</a> bij."
+
+#~ msgid "Posted on %s at %s."
+#~ msgstr "Geplaatst op %s om %s."
+
+#~ msgid "Posts"
+#~ msgstr "Berichten"
+
+#~ msgid "Return to the <a href=\"%s\">home page</a>"
+#~ msgstr "Terug naar de <a href=\"%s\">startpagina</a>"
+
+#~ msgid "Search"
+#~ msgstr "Zoeken"
+
+#~ msgid "Search for:"
+#~ msgstr "Zoek naar:"
+
+#~ msgid "Sorry, no results were found."
+#~ msgstr "Sorry, uw zoekopdracht heeft geen resultaten opgeleverd."
+
+#~ msgid "State/Region:"
+#~ msgstr "Provincie/regio:"
+
+#~ msgid "Street Address:"
+#~ msgstr "Adres:"
+
+#~ msgid "Submit Comment"
+#~ msgstr "Reactie versturen"
+
+#~ msgid "Telephone:"
+#~ msgstr "Telefoon:"
+
+#~ msgid ""
+#~ "The page you are looking for might have been removed, had its name "
+#~ "changed, or is temporarily unavailable."
+#~ msgstr ""
+#~ "De pagina waar u naar op zoek bent is mogelijk verwijderd, van naam "
+#~ "veranderd of is tijdelijk niet beschikbaar."
+
+#~ msgid ""
+#~ "This post is password protected. Enter the password to view comments."
+#~ msgstr ""
+#~ "Dit bericht is beschermd met een wachtwoord. Voer het wachtwoord in om de "
+#~ "reacties te bekijken."
+
+#~ msgid "Title (optional):"
+#~ msgstr "Titel (optioneel):"
+
+#~ msgid "Website"
+#~ msgstr "Website"
+
+#~ msgid "Written by"
+#~ msgstr "Geschreven door"
+
+#~ msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
+#~ msgstr "U dient <a href=\"%s\">aangemeld</a> te zijn om te reageren."
+
+#~ msgid "Zipcode/Postal Code:"
+#~ msgstr "Postcode:"
