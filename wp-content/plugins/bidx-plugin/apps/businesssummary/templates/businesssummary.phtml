@@ -182,7 +182,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 => $this->exst($businessSummary->summary),
 
                             __('Reason for submission of business summary','bidxplugin')
-                                => $this->exst($businessSummary->reasonForSubmission),
+                                => $this->getMultiValues( $this->exst($businessSummary->reasonForSubmission), ', ', 'reasonForSubmission' ),
+
+                            __('Expertise needed','bidxplugin')
+                                => $this->getMultiValues( $this->exst($businessSummary->expertiseNeeded), ', ', 'mentorExpertise' ),
 
                             __('Percentage equity you currently retain','bidxplugin')
                                 => $this->exst($businessSummary->equityRetained),
