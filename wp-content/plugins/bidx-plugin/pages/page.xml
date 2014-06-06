@@ -32,6 +32,7 @@
             <update>true</update>
             <template>page-intro.php</template>
             <setHomePage>true</setHomePage>
+            <setTranslate>true</setTranslate>
         </post>
 		<post>
 			<post_id>1</post_id>

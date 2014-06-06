@@ -90,8 +90,8 @@ class ContentLoader
             $posts = $document->xpath ( '//post' );
             $this->logger->trace( 'Found posts : ' . sizeof( $posts ) );
 
-            foreach ( $posts as $post ) {
-
+            foreach ( $posts as $post )
+            {
 
                 $this->logger->trace( 'Handling the post named : ' . $post->name );
 
@@ -266,12 +266,10 @@ class ContentLoader
      *  */
     function mwm_wpml_translate_post ($post_id, $insertPostArr, $lang)
     {
-        // Include WPML API
-        include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
 
         // Define title of translated post
         //$post_translated_title = get_post( $post_id )->post_title . ' (' . $lang . ')';
-        $insertPostArr['post_title'] = $insertPostArr['post_title'] . ' (' . $lang . ')';
+       // $insertPostArr['post_title'] = $insertPostArr['post_title'] . ' (' . $lang . ')';
         $insertPostArr['post_name'] = $insertPostArr['post_name'] . '_' . $lang;
         $post_type = $insertPostArr['post_type'];
         // Insert translated post
@@ -288,6 +286,8 @@ class ContentLoader
         global $wpdb;
         $wpdb->update ($wpdb->prefix . 'icl_translations', array ('trid' => $trid, 'language_code' => $lang, 'source_language_code' => $default_lang), array ('element_id' => $post_translated_id));
 
+
+        $this->logger->trace( sprintf('Language %s - %s %s: ' , $lang, $post_translated_id, $page['post_name'] ) );
         // Return translated post ID
         return $post_translated_id;
     }
@@ -380,6 +380,70 @@ class ContentLoader
 
         $this->logger->trace ('Custom Post handler ready');
         $this->logger->trace (get_post_types ());
+
+        if ( $_POST [ 'icl_ajx_action' ] && !empty ( $_POST[ 'langs' ] ) )
+        {
+            // Include WPML API
+            //include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+
+            // Include WPML API
+            include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+
+            $this->logger->trace (sprintf ('POST data export: %s' , var_export ($_POST, true)));
+
+            $langArr  = explode(',',$_POST['langs']);
+
+
+            $filename = BIDX_PLUGIN_DIR . '/../pages/page.xml';
+
+            $document = simplexml_load_file( $filename );
+
+            $this->logger->trace( 'Start processing file : ' . $filename );
+
+            $posts    = $document->xpath ( '//post' );
+
+            $this->logger->trace( 'Found posts : ' . sizeof( $posts ) );
+
+            foreach ( $posts as $post )
+            {
+                if ( $post->setTranslate == 'true' )
+                {
+                    $page               = (array) get_page_by_title( (string) $post->title, 'OBJECT', $document->posttype );
+                    $postID             = $page['ID'];
+                    $type               = $page['post_type'];
+
+                    //$trid               = wpml_get_content_trid ( 'post_'.$type, $postID );
+
+                    unset($page['ID']);
+
+                    $pageTranslations = wpml_get_content_translations( 'post_'.$type, $postID);
+
+                    $this->logger->trace( sprintf('translations %s' , var_export($pageTranslations, true) ) );
+
+                    foreach( $langArr as $langVal)
+                    {
+                        if( !array_key_exists( $langVal, $pageTranslations ) )
+                        {
+                            /*$page['post_title'] = $page['post_title']."-".$langVal;
+                            $page['post_name']  = $page['post_name']."_".$langVal;*/
+
+                            $this->logger->trace( sprintf('Inserting new post : Language %s, %s' , $langVal , var_export($page, true) ) );
+
+                           /* $contentId = wp_insert_post( $page );
+
+                            wpml_add_translatable_content ( $type, $contentId, $langVal, $trid ); */
+
+                            $this->mwm_wpml_translate_post ($postID, $page, $langVal);
+
+
+                        }
+
+                    }
+
+                }
+            }
+
+        }
     }
 
     /**
