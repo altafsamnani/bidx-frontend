@@ -67,6 +67,10 @@
 {
     color: #FFF;
 }
+.text-copy
+{
+    color: @text-copy;
+}
 
 // Base
 // -------------------------
@@ -147,6 +151,10 @@ footer
     }
 }
 
+article.type-bidx
+{
+    margin-top: ceil(@font-size-base * 2);
+}
 
 ::-webkit-input-placeholder
 {
@@ -252,19 +260,31 @@ h1, h2, h3, h4, h5, h6,
     {
         padding: floor(@padding-base-vertical * 1.8) @padding-base-horizontal;
         display: block;
-        @media (max-width: @screen-xs-min)
+        @media (max-width: @screen-sm-max)
         {
-            padding: floor(@padding-base-vertical) (@padding-base-horizontal * 0.25);
+            padding: floor(@padding-base-vertical * 1.8) (@padding-base-horizontal * 0.25);
+        }
+        @media (max-width: @screen-xs-max)
+        {
+            padding: floor(@padding-base-vertical * 1.8) (@padding-base-horizontal * 0.25);
         }
     }
     .btn-group
     {
+        @media (max-width: @screen-xs-max)
+        {
+            height: 40px;
+        }
         &.open:after
         {
             .triangle(up, 6px, lighten( @brand-primary, 40%) );
             position: absolute;
             bottom: 0;
             left: 50%;
+            @media (max-width: @screen-xs-max)
+            {
+                left: 20%;
+            }
         }
         a
         {
@@ -452,6 +472,15 @@ h1, h2, h3, h4, h5, h6,
 .navbar .search .input-group
 {
     margin-top: 5px;
+    width: 90%;
+    @media (max-width: @screen-sm-max)
+    {
+        width: 85%;
+    }
+    @media (max-width: @screen-xs-max)
+    {
+        width: 70%;
+    }
     .form-control
     {
         .rounded(4px 0 0 4px);
@@ -571,11 +600,11 @@ header
 }
 .widget
 {
-    margin-bottom: floor(@font-size-base * 0.95);
+    margin-bottom: floor(@font-size-base * 1.0);
 }
 .widget-last
 {
-    margin-bottom: 0;
+    // margin-bottom: 0;
 }
 
 // Iconbar and header's dropdown menu
@@ -591,6 +620,15 @@ header
             right: 0;
             left: auto;
             margin: 0;
+            @media (max-width: @screen-md-max)
+            {
+            }
+            @media (max-width: @screen-sm-max)
+            {
+            }
+            @media (max-width: @screen-xs-max)
+            {
+            }
         }
     }
     .navbar-inner
@@ -617,6 +655,14 @@ header
         float: left;
     }
 }
+.navbar-fixed-top .container
+{
+    @media (max-width: @screen-sm-max)
+    {
+        width: 100%;
+    }
+}
+
 .dropdown-menu
 {
     li
@@ -1154,57 +1200,6 @@ form .error-separate
 
 // carousel.less
 // -------------------------
-.carousel-inner
-{
-  > .item
-  {
-    > img,
-    > a > img
-    {
-        width: 100%;
-    }
-  }
-}
-.carousel-caption
-{
-    // .rgba;
-    padding: 20px 20px 30px;
-}
-
-// Left/right controls for nav
-.carousel-control
-{
-    // Toggles
-    .fa-chevron-left,
-    .fa-chevron-right
-    {
-        position: absolute;
-        top: 48%;
-        z-index: 5;
-        display: inline-block;
-        font-size: floor(@font-size-base * 3);
-    }
-    .fa-chevron-left
-    {
-        left: 50%;
-    }
-    .fa-chevron-right
-    {
-        right: 50%;
-    }
-    // Set gradients for backgrounds
-    &.left
-    {
-        background: transparent;
-    }
-    &.right
-    {
-    left: auto;
-    right: 0;
-        background: transparent;
-    }
-}
-
 
 // close.less
 // -------------------------
@@ -1452,34 +1447,39 @@ form .error-separate
         max-height: 250px;
     }
 
-    .col-xs-1,
-    .col-sm-1,
-    .col-xs-2,
-    .col-sm-2,
-    .col-xs-3,
-    .col-sm-3,
-    .col-xs-4,
-    .col-sm-4,
-    .col-xs-5,
-    .col-sm-5,
-    .col-xs-6,
-    .col-sm-6,
-    .col-xs-7,
-    .col-sm-7,
-    .col-xs-8,
-    .col-sm-8,
-    .col-xs-9,
-    .col-sm-9,
-    .col-xs-10,
-    .col-sm-10,
-    .col-xs-11,
-    .col-sm-11,
-    .col-xs-12,
-    .col-sm-12,
+    .navbar-fixed-top
     {
-        padding-left: 5px;
-        padding-right: 5px;
+        .col-xs-1,
+        .col-sm-1,
+        .col-xs-2,
+        .col-sm-2,
+        .col-xs-3,
+        .col-sm-3,
+        .col-xs-4,
+        .col-sm-4,
+        .col-xs-5,
+        .col-sm-5,
+        .col-xs-6,
+        .col-sm-6,
+        .col-xs-7,
+        .col-sm-7,
+        .col-xs-8,
+        .col-sm-8,
+        .col-xs-9,
+        .col-sm-9,
+        .col-xs-10,
+        .col-sm-10,
+        .col-xs-11,
+        .col-sm-11,
+        .col-xs-12,
+        .col-sm-12,
+        {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
     }
 }
 
 @import "components/mainmenu.less";
+@import "components/carousel.less";
+@import "components/promotext.less";

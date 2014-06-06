@@ -1,4 +1,5 @@
 <?php 
+
 // register widget
 add_action( 'widgets_init', function()
 {
@@ -84,11 +85,15 @@ class Start_Here_Widget extends WP_Widget {
             $add_container = true;
         }
 
-        echo $before_widget;
+        $session = BidxCommon::$staticSession;
+        if ( isset( $session->authenticated ) && $session->authenticated !== "true" ) {
+
+            echo $before_widget;
 ?>
-        <a href="/register-as-member/#register/firstLogin=getting-started-member#editPreference" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></a>
+            <a href="/register-as-member/#register/firstLogin=getting-started-member#editPreference" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></a>
 <?php 
-        echo $after_widget;
+            echo $after_widget;
+        }
     }
 
 } // END: class HotTopics
