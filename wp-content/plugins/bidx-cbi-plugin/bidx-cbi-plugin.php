@@ -14,9 +14,7 @@
  * Proxy class for interaction with CBI website.
  * Caches the data in the uploads directory
  * 
- * FIXME : Cache flush by enable disable
- * FIXME : Consolidate remote get calls (code cleanup)
- * FIXME : use relative references for plugin root uri reference to cbi-bin.php
+ * TODO : Consolidate remote get calls (code cleanup)
  * TODO : Dropdown view for shortcode for easy inclusion in a sidebar?
  * TODO : Support cache expiration 
  * 
@@ -192,33 +190,36 @@ class CBIShortCode {
 	 * Remove the cached contents during unloading of the plugin
 	 */
 	public function unload() {
-		//check if directory exists
-		//remove contents
+		$upload_dir = trailingslashit( WP_CONTENT_DIR ) . 'uploads/cbi/cache/';
+		if ( file_exists( $upload_dir ) ) {
+			foreach(glob($dir.'*.*') as $v){
+				unlink($v);
+			}
+		}
 	}
 	
 }
 
 /**
  * CBI viewing widget 
- *
  */
 class CBI_Widget extends WP_Widget {
 
-/**
- * Constructor.
- */
-function __construct() {
-
-	$this->WP_Widget (
-		'bidx_cbi_widget',
-		__('CBI Widget'),
-		array (
-			'name' => ': : Bidx CBI Data ',
-			'classname' => 'bidx_cbi_widget',
-			'description' => __( "Add data from CBI to your pages." )
-		)
-	);
-}
+	/**
+	 * Constructor.
+	 */
+	function __construct() {
+	
+		$this->WP_Widget (
+			'bidx_cbi_widget',
+			__('CBI Widget'),
+			array (
+				'name' => ': : Bidx CBI Data ',
+				'classname' => 'bidx_cbi_widget',
+				'description' => __( "Add data from CBI to your pages." )
+			)
+		);
+	}
 
 	/**
 	 * Maintenance of the widget
@@ -236,18 +237,16 @@ function __construct() {
      * @param WP_Widget $old_instance
      * @return WP_Widget
      */
-    function update( $new_instance, $old_instance )
-    {
+    function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
         $instance['cbi_code'] = esc_sql( $new_instance['cbi_code']);
         return $instance;
     }
-
-    
+   
     /**
-     * 
-     * @param unknown $args
-     * @param unknown $instance
+     * Output
+     * @param array $args arguments for input
+     * @param WP_Widget $instance instance of this widget
      */
     function widget($args, $instance) {
         extract( $args );
