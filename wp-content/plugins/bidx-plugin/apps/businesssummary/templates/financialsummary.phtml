@@ -11,7 +11,7 @@ $financialSummariesItem = <<<EOT
                 <a href="#addPreviousYear" class="btnAddPrev"><i class="fa fa-plus-circle"></i></a>
             </div>
 
-            <div class="fs-content">
+            <div class="fs-content text-center">
                 <div class="year">{{year}}</div>
                 <p class="yearLabel">{{year_label}}</p>
 
@@ -32,9 +32,9 @@ $financialSummariesItem = <<<EOT
         <div class="fs-cell fs-row form-group">
             <label class="fs-cell-label">{{lblSalesRevenues}}</label>
             <div class="view viewEdit">
-                <input type="text" class="form-control" name="salesRevenue[{{year}}]" class="noValidationErrorMessage">
+                <input type="text" class="form-control text-center" name="salesRevenue[{{year}}]" class="noValidationErrorMessage">
             </div>
-            <div class="view viewShow value fs-content">
+            <div class="view viewShow value fs-content text-center">
                 <span>{{salesRevenue}}</span>
             </div>
         </div>
@@ -43,9 +43,9 @@ $financialSummariesItem = <<<EOT
         <div class="fs-cell fs-row form-group">
             <label class="fs-cell-label">{{lblOperationalCosts}}</label>
             <div class="view viewEdit">
-                <input type="text" class="form-control" name="operationalCosts[{{year}}]" class="noValidationErrorMessage">
+                <input type="text" class="form-control text-center" name="operationalCosts[{{year}}]" class="noValidationErrorMessage">
             </div>
-            <div class="view viewShow value fs-content">
+            <div class="view viewShow value fs-content text-center">
                 <span>{{operationalCosts}}</span>
             </div>
         </div>
@@ -53,7 +53,7 @@ $financialSummariesItem = <<<EOT
         <!-- Operational Costs -->
         <div class="fs-cell fs-row">
             <label class="fs-cell-label">{{lblTotalIncome}}</label>
-            <div class="totalIncome value fs-content">
+            <div class="totalIncome value fs-content text-center">
                 <span class="view viewEdit">-</span>
                 <span class="view viewShow">{{totalIncome}}</span>
             </div>
@@ -65,9 +65,9 @@ $financialSummariesItem = <<<EOT
         <div class="fs-cell fs-row form-group">
             <label class="fs-cell-label">{{lblFinanceNeeded}}</label>
             <div class="view viewEdit">
-                <input type="text" class="form-control" name="financeNeeded[{{year}}]" class="noValidationErrorMessage">
+                <input type="text" class="form-control text-center" name="financeNeeded[{{year}}]" class="noValidationErrorMessage">
             </div>
-            <div class="view viewShow value fs-content">
+            <div class="view viewShow value fs-content text-center">
                 <span>{{financeNeeded}}</span>
             </div>
         </div>
@@ -78,9 +78,9 @@ $financialSummariesItem = <<<EOT
         <div class="fs-cell fs-row form-group">
             <label class="fs-cell-label">{{lblNumberOfEmployees}}</label>
             <div class="view viewEdit">
-                <input type="text" class="form-control" name="numberOfEmployees[{{year}}]" class="noValidationErrorMessage">
+                <input type="text" class="form-control text-center" name="numberOfEmployees[{{year}}]" class="noValidationErrorMessage">
             </div>
-            <div class="view viewShow value fs-content">
+            <div class="view viewShow value fs-content text-center">
                 <span>{{numberOfEmployees}}</span>
             </div>
         </div>

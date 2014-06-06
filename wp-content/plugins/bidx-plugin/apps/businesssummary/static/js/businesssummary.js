@@ -11,6 +11,8 @@
     ,   $editControls               = $element.find( ".editControls" )
 
     ,   $industry                   = $element.find( "[name='industry']" )
+    ,   $expertiseNeeded            = $element.find( "[name='expertiseNeeded']" )
+    ,   $jsExpertiseNeeded          = $element.find( ".js-expertiseNeeded" ).hide()
     ,   $productService             = $element.find( "[name='productService']" )
     ,   $countryOperation           = $element.find( "[name='countryOperation']" )
 
@@ -130,6 +132,7 @@
                 // but until that is available, send in reasonforSubmsision as an array
                 //
             ,   "reasonForSubmission"
+            ,   "expertiseNeeded"
             ,   "equityRetained"
             ,   "financingNeeded"
             ,   "investmentType"
@@ -240,6 +243,11 @@
             dataKey:            "industry"
         });
 
+        $expertiseNeeded.bidx_chosen(
+        {
+            dataKey:            "mentorExpertise"
+        });
+
         $productService.bidx_chosen(
         {
             dataKey:            "productService"
@@ -314,6 +322,20 @@
                 ,   reasonForSubmission:
                     {
                         required:               true
+                    }
+                ,   expertiseNeeded:
+                    {
+                        required:               { depends: function()
+                                                    {
+                                                        var coach = false;
+                                                        if ( $reasonForSubmission.find( "option:selected" ).val() === "coaching" )
+                                                        {
+                                                            coach = true;
+                                                        }
+                                                        return coach;
+                                                    }
+                                                }
+
                     }
                 ,   equityRetained:
                     {
@@ -1626,12 +1648,32 @@
         // Update the chosen components with our set values
         //
         $industry.trigger( "chosen:updated" );
+        $expertiseNeeded.trigger( "chosen:updated" );
         $productService.trigger( "chosen:updated" );
         $countryOperation.trigger( "chosen:updated" );
         $reasonForSubmission.trigger( "chosen:updated" );
         $envImpact.trigger( "chosen:updated" );
         $socialImpact.trigger( "chosen:updated" );
         $yearSalesStarted.trigger( "chosen:updated" );
+
+        $(document.body).delegate( $expertiseNeeded , 'change', function() {
+            _checkExpertiseNeeded();
+        });
+        
+    }
+
+    // Check if the Reason for Submission is coaching and then show the expertise field
+    //
+    function _checkExpertiseNeeded()
+    {
+        if ( $reasonForSubmission.find( "option:selected" ).val() === "coaching" )
+        {
+            $jsExpertiseNeeded.fadeIn();
+        }
+        else
+        {
+            $jsExpertiseNeeded.hide();
+        }
     }
 
     // Update the pre-rendered dom elements for the financial summarie
@@ -1671,6 +1713,12 @@
                     var $input = $form.find( "[name^='" + f + "']" )
                     ,   value  = bidx.utils.getElementValue( $input )
                     ;
+
+                    // If the Reason for Submission is not coaching don't PUT the expertiseNeeded field
+                    if ( f === "expertiseNeeded" && $reasonForSubmission.find( "option:selected" ).val() !== "coaching" )
+                    {
+                        value = [];
+                    }
 
                     bidx.utils.setValue( businessSummary, f, value );
                 } );
@@ -1961,6 +2009,8 @@
                 {
                     _populateScreen();
 
+                    _checkExpertiseNeeded();
+
                     $btnSave.removeClass( "disabled" );
                     $btnCancel.removeClass( "disabled" );
 
@@ -1990,6 +2040,7 @@
                 } )
             ;
         }
+
     }
 
     // Retrieve the list of companies of the currently logged in user
