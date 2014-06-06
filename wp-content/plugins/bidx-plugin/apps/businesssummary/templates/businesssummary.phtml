@@ -187,8 +187,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             __('Percentage equity you currently retain','bidxplugin')
                                 => $this->exst($businessSummary->equityRetained),
 
-                            __('Finance needed','bidxplugin')
-                                => $this->exst($businessSummary->financingNeeded),
+                            // __('Finance needed','bidxplugin')
+                            //     => $this->exst($businessSummary->financingNeeded),
 
                             __('Investment type','bidxplugin')
                                 => $this->getMultiValues( $this->exst($businessSummary->investmentType), ', ', 'investmentType' ),
