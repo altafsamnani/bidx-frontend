@@ -23,27 +23,24 @@ class SessionService extends APIBridge {
 
 	/**
 	 * Checks if the user is logged in on the API
-	 *
 	 * @param boolean $serviceCheck define if a service check is needed or a simple check on the API cookie is sufficient.
 	 * In case of no API service check, the data in the Session profile will be very limited.
 	 * @return boolean if user is logged in
 	 */
-	function isLoggedIn(  )
-	{
+	function isLoggedIn(  ) {
+		
 		$this->sessionData = $this->callBidxAPI($this->sessionUrl, array(), 'GET');
-		//trace logging this
 		return $this->sessionData;
+		
 	}
 
     /**
 	 * Checks if the user is having particular profile ex Investor, Entrprepneur,
-	 *
-	 * @param String $type Type of profile (investor,entrpreneur etc)
-	 *
+	 * @param String $type Type of profile (investor,entrepreneur, mentor)
 	 * @return boolean if having profile or not
 	 */
-    function isHavingProfile ($type)
-    {
+    function isHavingProfile( $type ) {
+    	
         $sessionData = BidxCommon::$staticSession;
         $entities = (isset($sessionData->data->entities)) ? $sessionData->data->entities : NULL;
         if ($entities) {
@@ -54,17 +51,16 @@ class SessionService extends APIBridge {
             }
         }
         return false;
+        
     }
 
     /**
      * Checks if the user is having particular profile ex Investor, Entrprepneur,
-     *
-     * @param String $type Type of profile (investor,entrpreneur etc)
-     *
+     * @param String $type Type of profile (investor,entrepreneur etc)
      * @return entity object if having the profilem or boolean if not
      */
-    function returnEntity ( $type )
-    {
+    function returnEntity ( $type ) {
+    	
         $sessionData = BidxCommon::$staticSession;
         $entities = (isset($sessionData->data->entities)) ? $sessionData->data->entities : NULL;
         if ($entities) {
@@ -75,30 +71,33 @@ class SessionService extends APIBridge {
             }
         }
         return false;
+        
     }
 
 
     /**
      * Retrieve an array of the groups this member is associated with members
-     *
      * @return array with groups or empty array if there are no group associated with this member
      */
     function getGroups( ) {
 
+    	$result = array();
         $sessionData = BidxCommon::$staticSession;
-        $groups = $sessionData->data->groups;
-        $result = array();
-	    
-        foreach($groups as $key => $value) {
-            if ( $value -> bidxMeta -> bidxGroupType === "Open" )
-            {
-                $result [ $key ] = array(
-                    "name"  => $value -> name,
-                    "url"   => $value -> bidxMeta -> bidxGroupUrl
-                );
-            }
+        if ( property_exists( $sessionData, 'data' ) ) { //validate if the data is there
+	        $groups = $sessionData->data->groups;
+		    if (! empty ( $groups ) ) {
+		        foreach ( $groups as $key => $value ) {
+		            if ( $value -> bidxMeta -> bidxGroupType === "Open" ) {
+		                $result [ $key ] = array(
+		                    "name"  => $value -> name,
+		                    "url"   => $value -> bidxMeta -> bidxGroupUrl
+		                );
+		            }
+		        }
+		    }
         }
         return $result;
+        
     }
 
     /**
@@ -118,7 +117,12 @@ class SessionService extends APIBridge {
     	return $currentGroupAdmin;
     }
 
+    /**
+     * 
+     * @return multitype:NULL
+     */
     function getGroupOwnerIds() {
+    	
         $groupOwnerIdArr = array();
         $sessionData = BidxCommon::$staticSession;
         $groupOwners = $sessionData->data->groupOwners;
@@ -127,6 +131,7 @@ class SessionService extends APIBridge {
         }
 
         return $groupOwnerIdArr;
+        
     }
 
     /**
@@ -144,7 +149,6 @@ class SessionService extends APIBridge {
         //
         $result = $this->callBidxAPI( 'session/activate', $data, 'POST' );
         return $result;
-
 
     }
 }

@@ -125,6 +125,8 @@ abstract class APIbridge
 
     /**
      * Process Bidx Api Response
+     * 
+     * FIXME in case of stdClass the magic methods must be added ??
      *
      * @param string $urlService  Name of service
      * @param array $requestData response from Bidx API
