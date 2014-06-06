@@ -300,6 +300,7 @@ class TemplateLibrary
             case 'industry':
             case 'mentorExpertise':
             case 'productService':
+            case 'reasonForSubmission':
                 $values = $this->getStaticVal ($label, $values);
 
                 break;
