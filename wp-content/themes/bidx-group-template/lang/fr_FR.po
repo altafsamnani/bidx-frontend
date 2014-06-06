@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-06 10:49+0100\n"
+"POT-Creation-Date: 2014-06-06 15:12+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Jaap Gorjup <jaap@bidx.net>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -228,6 +228,10 @@ msgstr "Conditions et service"
 #: templates/footer.php:44
 msgid "Privacy"
 msgstr "Privacy"
+
+#: templates/header.php:48
+msgid "Become a member"
+msgstr "Enregistrer"
 
 #: templates/header.php:51
 msgid "Login"
