@@ -52,8 +52,8 @@ class Bidx_Group_Customizer {
 		$wp_customize -> add_section(
 				'logo_settings',
 				array(
-						'title' => __( 'Logo Settings', 'bidx_group_theme' ),
-						'description' => __( 'Configure logo images here.', 'bidx_group_theme' ),
+						'title' => __( 'Logo Settings', 'roots' ),
+						'description' => __( 'Configure logo images here.', 'roots' ),
 						'priority' => 10,
 				)
 		);
@@ -63,7 +63,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'main_logo_selector',
 						array(
-								'label'      => __( 'Upload your main logo', 'bidx_group_theme' ),
+								'label'      => __( 'Upload your main logo', 'roots' ),
 								'section'    => 'logo_settings',
 								'settings'   => 'main_logo_selector',
 								'context'    => 'main_logo_settings'
@@ -76,7 +76,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'mobile_logo_selector',
 						array(
-								'label'      => __( 'Upload your mobile logo', 'bidx_group_theme' ),
+								'label'      => __( 'Upload your mobile logo', 'roots' ),
 								'section'    => 'logo_settings',
 								'settings'   => 'mobile_logo_selector',
 								'context'    => 'mobile_logo_settings'
@@ -89,7 +89,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'favicon_image',
 						array(
-								'label'      => __( 'Upload your favicon', 'bidx_group_theme' ),
+								'label'      => __( 'Upload your favicon', 'roots' ),
 								'section'    => 'logo_settings',
 								'settings'   => 'favicon_image',
 								'context'    => 'favicon_settings'
@@ -108,8 +108,8 @@ class Bidx_Group_Customizer {
 		$wp_customize -> add_section(
 				'color_settings',
 				array(
-						'title' => __( 'Color Settings', 'bidx_group_theme' ),
-						'description' => __( 'Configure colors here.', 'bidx_group_theme' ),
+						'title' => __( 'Color Settings', 'roots' ),
+						'description' => __( 'Configure colors here.', 'roots' ),
 						'priority' => 20,
 				)
 		);
@@ -123,7 +123,7 @@ class Bidx_Group_Customizer {
 				$wp_customize,
 				'brand-primary',
 				array(
-						'label'      => __( 'Main Color', 'bidx_group_theme' ),
+						'label'      => __( 'Main Color', 'roots' ),
 						'section'    => 'color_settings',
 						'settings'   => 'brand-primary',
 				) )
@@ -138,7 +138,7 @@ class Bidx_Group_Customizer {
 				$wp_customize,
 				'secondary_color_selector',
 				array(
-						'label'      => __( 'Secondary Color', 'bidx_group_theme' ),
+						'label'      => __( 'Secondary Color', 'roots' ),
 						'section'    => 'color_settings',
 						'settings'   => 'brand-secondary',
 				) )
@@ -153,7 +153,7 @@ class Bidx_Group_Customizer {
 				$wp_customize,
 				'brand-background-color',
 				array(
-						'label'      => __( 'Background Color', 'bidx_group_theme' ),
+						'label'      => __( 'Background Color', 'roots' ),
 						'section'    => 'color_settings',
 						'settings'   => 'brand-background-color',
 				) )
@@ -167,7 +167,7 @@ class Bidx_Group_Customizer {
 				$wp_customize,
 				'brand-background-color-image',
 				array(
-						'label'      => __( 'Background Image', 'bidx_group_theme' ),
+						'label'      => __( 'Background Image', 'roots' ),
 						'section'    => 'color_settings',
 						'settings'   => 'brand-background-color-image',
 						'context'    => 'brand-background-color-image'
@@ -180,7 +180,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'main_logo_selector',
 						array(
-								'label'      => __( 'Upload your main logo', 'bidx_group_theme' ),
+								'label'      => __( 'Upload your main logo', 'roots' ),
 								'section'    => 'logo_settings',
 								'settings'   => 'main_logo_selector',
 								'context'    => 'main_logo_settings'
@@ -198,7 +198,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'brand-full-pattern',
 						array(
-								'label'           => __( 'Fullscreen or Pattern (needs a Background Image)', 'bidx_group_theme' ),
+								'label'           => __( 'Fullscreen or Pattern (needs a Background Image)', 'roots' ),
 								'section'         => 'color_settings',
 								'settings'        => 'brand-full-pattern',
 								'type'            => 'radio',
@@ -215,7 +215,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'main_menu_invert',
 						array(
-								'label'          => __( 'Invert Main Menu colors', 'bidx_group_theme' ),
+								'label'          => __( 'Invert Main Menu colors', 'roots' ),
 								'section'        => 'color_settings',
 								'settings'       => 'main_menu_invert',
 								'type'           => 'checkbox',
@@ -246,8 +246,8 @@ class Bidx_Group_Customizer {
 		$wp_customize -> add_section(
 				'font_settings',
 				array(
-						'title' => __( 'Font Settings', 'bidx_group_theme' ),
-						'description' => __( 'Configure fonts here.', 'bidx_group_theme' ),
+						'title' => __( 'Font Settings', 'roots' ),
+						'description' => __( 'Configure fonts here.', 'roots' ),
 						'priority' => 30,
 				)
 		);
@@ -263,7 +263,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'font_size',
 						array(
-								'label'          => __( 'Font Size', 'bidx_group_theme' ),
+								'label'          => __( 'Font Size', 'roots' ),
 								'section'        => 'font_settings',
 								'settings'       => 'font_size',
 								'type'           => 'radio',
@@ -320,7 +320,7 @@ class Bidx_Group_Customizer {
 		$customFontFamilies = new Google_Font_Collection( $fonts );
 		$wp_customize->add_control( 
 				new Google_Font_Picker_Custom_Control( $wp_customize, 'text_font', array(
-				'label'             => __( 'Font Family', 'bidx_group_theme' ),
+				'label'             => __( 'Font Family', 'roots' ),
 				'section'           => 'font_settings',
 				'settings'          => 'text_font',
 				'choices'           => $customFontFamilies->getFontFamilyNameArray(),
@@ -410,7 +410,7 @@ class Bidx_Group_Customizer {
 		$customFontFamilies = new Google_Font_Collection( $fonts );
 		$wp_customize->add_control( 
 				new Google_Font_Picker_Custom_Control( $wp_customize, 'headings_font', array(
-				'label'             => __( 'Font Family', 'bidx_group_theme' ),
+				'label'             => __( 'Font Family', 'roots' ),
 				'section'           => 'font_settings',
 				'settings'          => 'headings_font',
 				'choices'           => $customFontFamilies->getFontFamilyNameArray(),
@@ -501,7 +501,7 @@ class Bidx_Group_Customizer {
 		$customFontFamilies = new Google_Font_Collection( $fonts );
 		$wp_customize->add_control( 
 				new Google_Font_Picker_Custom_Control( $wp_customize, 'menu_font', array(
-				'label'             => __( 'Font Family', 'bidx_group_theme' ),
+				'label'             => __( 'Font Family', 'roots' ),
 				'section'           => 'font_settings',
 				'settings'          => 'menu_font',
 				'choices'           => $customFontFamilies->getFontFamilyNameArray(),
@@ -523,8 +523,8 @@ class Bidx_Group_Customizer {
 		$wp_customize -> add_section(
 				'alignment_settings',
 				array(
-						'title' => __( 'Alignment Settings', 'bidx_group_theme' ),
-						'description' => __( 'Alignment of your elements.', 'bidx_group_theme' ),
+						'title' => __( 'Alignment Settings', 'roots' ),
+						'description' => __( 'Alignment of your elements.', 'roots' ),
 						'priority' => 40,
 				)
 		);
@@ -537,7 +537,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'page_width_selector',
 						array(
-								'label'          => __( 'Page Width', 'bidx_group_theme' ),
+								'label'          => __( 'Page Width', 'roots' ),
 								'section'        => 'alignment_settings',
 								'settings'       => 'page_width_selector',
 								'type'           => 'select',
@@ -562,7 +562,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'logo_alignment',
 						array(
-								'label'          => __( 'Logo Alignment', 'bidx_group_theme' ),
+								'label'          => __( 'Logo Alignment', 'roots' ),
 								'section'        => 'alignment_settings',
 								'settings'       => 'logo_alignment',
 								'type'           => 'radio',
@@ -586,7 +586,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'sidebar_alignment',
 						array(
-								'label'          => __( 'Sidebar alignment', 'bidx_group_theme' ),
+								'label'          => __( 'Sidebar alignment', 'roots' ),
 								'section'        => 'alignment_settings',
 								'settings'       => 'sidebar_alignment',
 								'type'           => 'radio',
@@ -603,7 +603,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'front_top_width',
 						array(
-								'label'          => __( 'Fixed Width Front Top', 'bidx_group_theme' ),
+								'label'          => __( 'Fixed Width Front Top', 'roots' ),
 								'section'        => 'alignment_settings',
 								'settings'       => 'front_top_width',
 								'type'           => 'checkbox',
@@ -617,7 +617,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'front_bottom_width',
 						array(
-								'label'          => __( 'Fixed Width Front Bottom', 'bidx_group_theme' ),
+								'label'          => __( 'Fixed Width Front Bottom', 'roots' ),
 								'section'        => 'alignment_settings',
 								'settings'       => 'front_bottom_width',
 								'type'           => 'checkbox',
@@ -638,8 +638,8 @@ class Bidx_Group_Customizer {
 		$wp_customize -> add_section(
 				'social_settings',
 				array(
-						'title' => __( 'Social Network', 'bidx_group_theme' ),
-						'description' => __( 'Configure your social networks', 'bidx_group_theme' ),
+						'title' => __( 'Social Network', 'roots' ),
+						'description' => __( 'Configure your social networks', 'roots' ),
 						'priority' => 50,
 				)
 		);
@@ -649,7 +649,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'facebook_url',
 						array(
-								'label'          => __( 'Facebook URL', 'bidx_group_theme' ),
+								'label'          => __( 'Facebook URL', 'roots' ),
 								'section'        => 'social_settings',
 								'settings'       => 'facebook_url',
 								'type'           => 'text'
@@ -662,7 +662,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'linkedin_url',
 						array(
-								'label'          => __( 'LinkedIN URL', 'bidx_group_theme' ),
+								'label'          => __( 'LinkedIN URL', 'roots' ),
 								'section'        => 'social_settings',
 								'settings'       => 'linkedin_url',
 								'type'           => 'text'
@@ -675,7 +675,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'twitter_handle',
 						array(
-								'label'          => __( 'Twitter Handle', 'bidx_group_theme' ),
+								'label'          => __( 'Twitter Handle', 'roots' ),
 								'section'        => 'social_settings',
 								'settings'       => 'twitter_handle',
 								'type'           => 'text'
@@ -697,8 +697,8 @@ class Bidx_Group_Customizer {
 		$wp_customize -> add_section(
 				'analytics_settings',
 				array(
-						'title' => __( 'Analytics Settings', 'bidx_group_theme' ),
-						'description' => __( 'Configure your online analytics here', 'bidx_group_theme' ),
+						'title' => __( 'Analytics Settings', 'roots' ),
+						'description' => __( 'Configure your online analytics here', 'roots' ),
 						'priority' => 60,
 				)
 		);
@@ -708,7 +708,7 @@ class Bidx_Group_Customizer {
 						$wp_customize,
 						'google_analytics',
 						array(
-								'label'          => __( 'Google Analytics code', 'bidx_group_theme' ),
+								'label'          => __( 'Google Analytics code', 'roots' ),
 								'section'        => 'analytics_settings',
 								'settings'       => 'google_analytics',
 								'type'           => 'text'
@@ -792,6 +792,7 @@ class Bidx_Group_Customizer {
 		$WPLessPlugin = WPLessPlugin::getInstance( );
 		$variables = array (
 			'color-main' => get_option( 'brand-primary' ),
+			'brand-primary' => get_option( 'brand-primary' ),
 			'color-secondary' => get_option( 'brand-secondary' ),
 			'color-background' => get_option( 'brand-background-color' ),
 			'bg-image' => "'".get_option( 'brand-background-color-image' )."'",
@@ -799,6 +800,7 @@ class Bidx_Group_Customizer {
 			'headings-font' => get_option( 'headings_font' ),
 			'menu-font' => get_option( 'menu_font' ),
 		);
+		
 		$WPLessPlugin -> setVariables( $variables );
 	}
 	

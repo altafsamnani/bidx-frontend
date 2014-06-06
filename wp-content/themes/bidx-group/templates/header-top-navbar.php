@@ -14,7 +14,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><?php echo _e('Menu', 'bidxtheme'); ?></a>
+            <a class="navbar-brand" href="/"><?php echo _e('Menu', 'roots'); ?></a>
         </div>
 
         <nav class="collapse navbar-collapse" role="navigation">

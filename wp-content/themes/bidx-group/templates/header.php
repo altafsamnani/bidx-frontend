@@ -23,7 +23,7 @@
                 <div class="col-xs-6">
 <?php
                     echo do_shortcode( '[bidx app="group" view="navbarshort"]' );
-?>
+?>        
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
                             if( !$authenticated )
                             {
 ?>
-                                <a href="/register-as-member/#register/firstLogin=getting-started-member#editPreference" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','bidxplugin'); ?></a>
+                                <a href="/register-as-member/#register/firstLogin=getting-started-member#editPreference" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','roots'); ?></a>
 <?php
                             }
 ?>
