@@ -53,6 +53,8 @@ function admin_header_style ()
 }
 
 add_custom_image_header ('', 'admin_header_style');
+//add_theme_support( 'custom-header', $args )
+
 
 // adds Post Format support
 // learn more: http://codex.wordpress.org/Post_Formats
