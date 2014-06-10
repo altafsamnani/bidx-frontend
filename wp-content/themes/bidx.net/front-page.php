@@ -123,7 +123,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <article class="post pad-0">
                         <div class="post-thumb">
-                            <a href="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo1.png"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo1.png" class="img-responsive" alt="Responsive image"></a>
+                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo1.png" class="img-responsive" alt="Responsive image"></a>
                         </div>
                         <!-- /.post-thumb -->
                     </article>
@@ -133,7 +133,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <article class="post pad-0">
                         <div class="post-thumb">
-                            <a href="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo2.png"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo2.png" class="img-responsive" alt="Responsive image"></a>
+                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo2.png" class="img-responsive" alt="Responsive image"></a>
                         </div>
                         <!-- /.post-thumb -->
                     </article>
@@ -143,7 +143,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <article class="post pad-0">
                         <div class="post-thumb">
-                            <a href="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo3.png"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo3.png" class="img-responsive" alt="Responsive image"></a>
+                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo3.png" class="img-responsive" alt="Responsive image"></a>
                         </div>
                         <!-- /.post-thumb -->
                     </article>
@@ -153,7 +153,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <article class="post pad-0">
                         <div class="post-thumb">
-                            <a href="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo4.png"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo4.png" class="img-responsive" alt="Responsive image"></a>
+                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo4.png" class="img-responsive" alt="Responsive image"></a>
                         </div>
                         <!-- /.post-thumb -->
                     </article>
@@ -163,7 +163,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <article class="post pad-0">
                         <div class="post-thumb">
-                            <a href="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo5.png"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo5.png" class="img-responsive" alt="Responsive image"></a>
+                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo5.png" class="img-responsive" alt="Responsive image"></a>
                         </div>
                         <!-- /.post-thumb -->
                     </article>
@@ -173,7 +173,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <article class="post pad-0">
                         <div class="post-thumb">
-                            <a href="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo6.png"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo6.png" class="img-responsive" alt="Responsive image"></a>
+                            <a href="/groups"><img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo6.png" class="img-responsive" alt="Responsive image"></a>
                         </div>
                         <!-- /.post-thumb -->
                     </article>
