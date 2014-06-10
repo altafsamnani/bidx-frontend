@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-3 pad-top-50">
                 <div class="service">
-                    <h1><?php _e('Groups','bidxtheme');?></h1>
+                    <h1><?php _e('Portals','bidxtheme');?></h1>
                     <p><?php _e('Grow your online entrepreneurial network','bidxtheme');?></p>
                     <br>
                     <a href="/groups" class="btn btn-flat flat-warning"><?php _e('Learn More','bidxtheme');?></a>
@@ -111,7 +111,7 @@
 <section id="blog-posts" class="pad-25 pad-top-50">
     <div class="container">
         <div class="subpage-title">
-            <h5><?php _e('Latest Groups','bidxtheme');?></h5>
+            <h5><?php _e('Latest Portals','bidxtheme');?></h5>
             <!-- Controls -->
             <div class="controls">
                 <span id="blog-posts-prev" class="prev"><i class="fa fa-angle-left"></i></span>
