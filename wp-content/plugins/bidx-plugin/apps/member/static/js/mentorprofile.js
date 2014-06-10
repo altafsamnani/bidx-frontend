@@ -691,30 +691,30 @@
                 {
                     required:               true
                 }
-            ,   "focusIndustry":
-                {
-                    required:               true
-                }
-            ,   "focusSocialImpact":
-                {
-                    required:               true
-                }
-            ,   "focusEnvImpact":
-                {
-                    required:               true
-                }
+            // ,   "focusIndustry":
+            //     {
+            //         required:               true
+            //     }
+            // ,   "focusSocialImpact":
+            //     {
+            //         required:               true
+            //     }
+            // ,   "focusEnvImpact":
+            //     {
+            //         required:               true
+            //     }
             ,   "focusLanguage":
                 {
                     required:               true
                 }
-            ,   "focusGender":
-                {
-                    required:               true
-                }
-            ,   "focusStageBusiness":
-                {
-                    required:               true
-                }
+            // ,   "focusGender":
+            //     {
+            //         required:               true
+            //     }
+            // ,   "focusStageBusiness":
+            //     {
+            //         required:               true
+            //     }
             ,   "focusExpertise":
                 {
                     required:               true
@@ -794,75 +794,75 @@
                 {
                     linkedIn:               true
                 }
-            ,   "focusLocationType":
-                {
-                    required:               { depends: function ()
-                                                {
-                                                    var checked = false;
-                                                    if (
-                                                        $( ".toggle-focusLocationType-country" ).is(':hidden') &&
-                                                        $( ".toggle-focusLocationType-city" ).is(':hidden') &&
-                                                        $( ".toggle-focusLocationType-reach" ).is(':hidden')
-                                                       )
-                                                    {
-                                                        checked = true;
-                                                    }
+            // ,   "focusLocationType":
+            //     {
+            //         required:               { depends: function ()
+            //                                     {
+            //                                         var checked = false;
+            //                                         if (
+            //                                             $( ".toggle-focusLocationType-country" ).is(':hidden') &&
+            //                                             $( ".toggle-focusLocationType-city" ).is(':hidden') &&
+            //                                             $( ".toggle-focusLocationType-reach" ).is(':hidden')
+            //                                            )
+            //                                         {
+            //                                             checked = true;
+            //                                         }
 
-                                                    return checked;
-                                                }
-                                            }
-                }
-            ,   "focusCountry":
-                {
-                    required:               { depends: function ()
-                                                {
-                                                    var visibleAndHasVal = false;
-                                                    if (
-                                                        $( "#radio-mentorFocusLocationTypeCountry" ).is(':checked') &&
-                                                        !$( ".toggle-focusLocationType-country" ).val()
-                                                       )
-                                                    {
-                                                        visibleAndHasVal = true;
-                                                    }
+            //                                         return checked;
+            //                                     }
+            //                                 }
+            //     }
+            // ,   "focusCountry":
+            //     {
+            //         required:               { depends: function ()
+            //                                     {
+            //                                         var visibleAndHasVal = false;
+            //                                         if (
+            //                                             $( "#radio-mentorFocusLocationTypeCountry" ).is(':checked') &&
+            //                                             !$( ".toggle-focusLocationType-country" ).val()
+            //                                            )
+            //                                         {
+            //                                             visibleAndHasVal = true;
+            //                                         }
 
-                                                    return visibleAndHasVal;
-                                                }
-                                            }
-                }
-            ,   "focusCity":
-                {
-                    required:               { depends: function ()
-                                                {
-                                                    var visibleAndHasVal = false;
-                                                    if (
-                                                        $( "#radio-mentorFocusLocationTypeCity" ).is(':checked') &&
-                                                        !$( ".toggle-focusLocationType-city" ).find( ".bidx-tag" ).length
-                                                       )
-                                                    {
-                                                        visibleAndHasVal = true;
-                                                    }
+            //                                         return visibleAndHasVal;
+            //                                     }
+            //                                 }
+            //     }
+            // ,   "focusCity":
+            //     {
+            //         required:               { depends: function ()
+            //                                     {
+            //                                         var visibleAndHasVal = false;
+            //                                         if (
+            //                                             $( "#radio-mentorFocusLocationTypeCity" ).is(':checked') &&
+            //                                             !$( ".toggle-focusLocationType-city" ).find( ".bidx-tag" ).length
+            //                                            )
+            //                                         {
+            //                                             visibleAndHasVal = true;
+            //                                         }
 
-                                                    return visibleAndHasVal;
-                                                }
-                                            }
-                }
-            ,   "focusReach":
-                {
-                    required:               { depends: function ()
-                                                {
-                                                    var visibleAndHasVal = false;
-                                                    if (
-                                                        $( "#radio-mentorFocusLocationTypeReach" ).is(':checked') &&
-                                                        !$( ".toggle-focusLocationType-reach" ).val()
-                                                       )
-                                                    {
-                                                        visibleAndHasVal = true;
-                                                    }
+            //                                         return visibleAndHasVal;
+            //                                     }
+            //                                 }
+            //     }
+            // ,   "focusReach":
+            //     {
+            //         required:               { depends: function ()
+            //                                     {
+            //                                         var visibleAndHasVal = false;
+            //                                         if (
+            //                                             $( "#radio-mentorFocusLocationTypeReach" ).is(':checked') &&
+            //                                             !$( ".toggle-focusLocationType-reach" ).val()
+            //                                            )
+            //                                         {
+            //                                             visibleAndHasVal = true;
+            //                                         }
 
-                                                    return visibleAndHasVal;
-                                                }
-                                            }
-                }
+            //                                         return visibleAndHasVal;
+            //                                     }
+            //                                 }
+            //     }
             }
         ,   messages:
             {
