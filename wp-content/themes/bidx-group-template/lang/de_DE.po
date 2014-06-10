@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Bidx Group Theme\n"
-"POT-Creation-Date: 2014-06-06 11:21+0100\n"
+"POT-Creation-Date: 2014-06-06 15:46+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jaap Gorjup <jaap@bidx.net>\n"
 "Language-Team: Jaap Gorjup <jaap@bidx.net>\n"
@@ -231,9 +231,13 @@ msgstr ""
 msgid "Privacy"
 msgstr ""
 
+#: templates/header.php:48
+msgid "Become a member"
+msgstr "Registrieren"
+
 #: templates/header.php:51
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #~ msgid " (required)"
 #~ msgstr "(benötigt)"
