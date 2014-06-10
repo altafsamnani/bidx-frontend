@@ -492,23 +492,56 @@ function get_custom_field_value ( $key,  $i = null)
     return $value;
 }
 
+function _l( $url )
+{
+  global $sitepress;
+  $sep = '/';
+  $currentLanguage = $sitepress->get_current_language();
+
+  if( $currentLanguage && $currentLanguage != 'en')
+  {
+    $sep = '';
+  }
+
+   echo get_home_url().$sep.$url;
+}
+
+function _wl( $url )
+{
+  global $sitepress;
+  $sep = '/';
+  $currentLanguage = $sitepress->get_current_language();
+  if( $currentLanguage && $currentLanguage != 'en')
+  {
+    $langParam = '-'.$currentLanguage ;
+    $sep = '';
+  }
+
+  $returnUrl = get_home_url().$sep.$url.$langParam ;
+
+  return $returnUrl;
+
+}
 function languages_list_footer(){
 
-    $languages = icl_get_languages("skip_missing=0&orderby=code&link_empty_to=/{%lang}{$_SERVER['REQUEST_URI']}");
-    if(!empty($languages)){
-        echo '<div id="footer_language_list"><ul>';
-        foreach($languages as $l){
-            if($l['country_flag_url']){
-                if(!$l['active']) echo '<a href="'.$l['url'].'">';
-                echo '<img src="'.$l['country_flag_url'].'" height="12" alt="'.$l['language_code'].'" width="18" />';
-                if(!$l['active']) echo '</a>';
-            }
-            if(!$l['active']) echo '<a href="'.$l['url'].'">';
-            echo icl_disp_language($l['native_name'], $l['translated_name']);
-            if(!$l['active']) echo '</a>';
-            echo '</li>';
-        }
-        echo '</ul></div>';
-    }
+  global $sitepress;
+  $currentLanguage = $sitepress->get_current_language();
+  $baseUrl         = str_replace( '/'.$currentLanguage.'/', "/", $_SERVER['REQUEST_URI'] );
+  $languages = icl_get_languages("skip_missing=0&orderby=code&link_empty_to=/{%lang}{$baseUrl}");
+  if(!empty($languages)){
+      echo '<div id="footer_language_list"><ul>';
+      foreach($languages as $l){
+          if($l['country_flag_url']){
+              if(!$l['active']) echo '<a href="'.$l['url'].'">';
+              echo '<img src="'.$l['country_flag_url'].'" height="12" alt="'.$l['language_code'].'" width="18" />';
+              if(!$l['active']) echo '</a>';
+          }
+          if(!$l['active']) echo '<a href="'.$l['url'].'">';
+          echo icl_disp_language($l['native_name'], $l['translated_name']);
+          if(!$l['active']) echo '</a>';
+          echo '</li>';
+      }
+      echo '</ul></div>';
+  }
 }
 

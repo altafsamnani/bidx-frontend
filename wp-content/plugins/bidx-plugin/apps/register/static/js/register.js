@@ -186,9 +186,11 @@
     // Initialize handlers
     _oneTimeSetup();
 
+    //var test = $("body").find('[class^="/\sregister-as-member\d+\s/"]').length;
     // Only update the hash when user is authenticating and when there is no hash defined
     //
-    if ( $( "body.bidx-register" ).length && !bidx.utils.getValue(window, "location.hash" ) )
+
+    if ( $("body").attr('class').match(/register-as-/).length && !bidx.utils.getValue(window, "location.hash" ) )
     {
 
         // if there is a hash defined in the window scope, nagivate to this has

@@ -45,10 +45,10 @@
 	 			<div class="pull-right col-sm-5 bidx-header-controls">
 					<div class="row">
 						<div class="col-sm-6">
-							<a href="register-as-member/#register/firstLogin=getting-started-member#editPreference" class="btn btn-success btn-block"><i class="fa fa-user"></i><?php  _e( 'Become a member','roots' );?></a>
+							<a href=<?php echo _wl("register-as-member")."/#register/firstLogin=getting-started-member#editPreference";?> class="btn btn-success btn-block"><i class="fa fa-user"></i><?php  _e( 'Become a member','roots' );?></a>
 						</div>
 						<div class="col-sm-6">
-							<a href="auth/#auth/login" class="btn btn-primary btn-block"><i class="fa fa-lock"></i> <?php _e( 'Login','roots' );?></a>
+							<a href=<?php echo _l("auth")."/#auth/login";?> class="btn btn-primary btn-block"><i class="fa fa-lock"></i> <?php _e( 'Login','roots' );?></a>
 						</div>
 					</div>
 				</div>

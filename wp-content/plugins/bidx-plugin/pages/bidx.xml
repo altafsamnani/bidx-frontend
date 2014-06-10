@@ -25,14 +25,14 @@
             <post_id>1</post_id>
             <name>member_profile</name>
             <title>Your Profile</title>
-            <mapping>(.*)member/?</mapping>
+            <mapping>(.*)/member/?</mapping>
             <content>[bidx app="member"]</content>
         </post>
         <post>
             <post_id>2</post_id>
             <name>member</name>
             <title>Memberprofile</title>
-            <mapping>(.*)member/([^/]*)/?</mapping>
+            <mapping>(.*)/member/([^/]*)/?</mapping>
             <content>[bidx app="member"]</content>
         </post>
         <post>

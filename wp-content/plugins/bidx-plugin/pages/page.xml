@@ -42,6 +42,7 @@
 			<content>
 				&lt;h2&gt;Terms of service&lt;/h2&gt;
 			</content>
+			<setTranslate>true</setTranslate>
 		</post>
 		<post>
 			<post_id>2</post_id>
@@ -51,6 +52,7 @@
 			<content>
 				&lt;h2&gt;Privacy&lt;/h2&gt;
 			</content>
+			<setTranslate>true</setTranslate>
 		</post>
 		<post>
 			<post_id>3</post_id>
@@ -59,6 +61,7 @@
 			<update>true</update>
 			<htmlTemplate>register-as-investor</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 		<post>
 			<post_id>4</post_id>
@@ -67,6 +70,7 @@
 			<update>true</update>
 			<htmlTemplate>register-as-entrepreneur</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 
 		<post>
@@ -76,6 +80,7 @@
 			<update>true</update>
 			<htmlTemplate>register-as-member</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 
 		<post>
@@ -85,6 +90,7 @@
 			<update>true</update>
 			<htmlTemplate>getting-started-investor</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 		<post>
 			<post_id>7</post_id>
@@ -93,6 +99,7 @@
 			<update>true</update>
 			<htmlTemplate>getting-started-entrepreneur</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 		<post>
 			<post_id>8</post_id>
@@ -101,6 +108,7 @@
 			<update>true</update>
 			<htmlTemplate>business-plan-templates</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 		<post>
 			<post_id>9</post_id>
@@ -109,6 +117,7 @@
 			<update>true</update>
 			<htmlTemplate>getting-started-member</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 		<post>
 			<post_id>10</post_id>
@@ -117,6 +126,7 @@
 			<update>true</update>
 			<htmlTemplate>getting-started-mentor</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 		<post>
 			<post_id>11</post_id>
@@ -125,6 +135,7 @@
 			<update>true</update>
 			<htmlTemplate>register-as-mentor</htmlTemplate>
 			<content></content>
+			<setTranslate>true</setTranslate>
 		</post>
 
 	</posts>

@@ -3,12 +3,12 @@ msgstr ""
 "Project-Id-Version: p3\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Altaf <altaf.samnani@bidnetwork.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.5.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Language: fr\n"
 
@@ -53,19 +53,18 @@ msgstr "Identifiant"
 # _e("Forgot your password? Click <a href=\\"#auth/resetpassword\\">here</a> to recover.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid ""
-"Forgot your password? Click <a href=\\\"#auth/resetpassword\\\">here</a> to "
+"Forgot your password? Click <a href=\"#auth/resetpassword\">here</a> to "
 "recover."
 msgstr ""
-"Mot de passe oublié? Cliquez <a href=\\\"#auth/resetpassword\\\">ici</a> "
-"pour le récupérer."
+"Mot de passe oublié? Cliquez <a href=\"#auth/resetpassword\">ici</a> pour le "
+"récupérer."
 
 # 8) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/login/templates/login.phtml -25
 # _e("Not a member? Click <a href=\\"#auth/register\\">here</a> to register.","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid ""
-"Not a member? Click <a href=\\\"#auth/register\\\">here</a> to register."
+msgid "Not a member? Click <a href=\"#auth/register\">here</a> to register."
 msgstr ""
-"Non encore membre? Cliquez <a href=\\\"#auth/register\\\">ici</a> pour vous "
+"Non encore membre? Cliquez <a href=\"#auth/register\">ici</a> pour vous "
 "inscrire."
 
 # 9) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -34
@@ -73,16 +72,16 @@ msgstr ""
 # Context  Textdomain bidxplugin
 msgid ""
 "If the message does not appear in your spam box within an hour please notify "
-"us <a href=\\\"%s\\\">here</a>."
+"us <a href=\"%s\">here</a>."
 msgstr ""
 "Si le message n'apparaît pas dans votre boîte de courriers indésirable dans "
-"l'heure, prière de nous en informer <a href=\\\"%s\\\"> ici </ a>."
+"l'heure, prière de nous en informer <a href=\"%s\"> ici </ a>."
 
 # 10) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -36
 # _e("Click <a href=\\"%s\\">here</a> to go to homepage.","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Click <a href=\\\"%s\\\">here</a> to go to homepage."
-msgstr "Cliquez <a href=\\\"%s\\\"> ici </ a> pour aller à la page d'accueil."
+msgid "Click <a href=\"%s\">here</a> to go to homepage."
+msgstr "Cliquez <a href=\"%s\"> ici </ a> pour aller à la page d'accueil."
 
 # 11) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -9
 # _e("Email address","bidxplugin");
@@ -107,8 +106,8 @@ msgstr "Vous êtes-vous souvenus de votre mot de passe de nouveau ?."
 # 15) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -23
 # _e("Click <a href=\\"#auth/login\\">here</a> to go to login.","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Click <a href=\\\"#auth/login\\\">here</a> to go to login."
-msgstr "Cliquez <a href=\\\"#auth/login\\\">ici</a> pour vous connecter."
+msgid "Click <a href=\"#auth/login\">here</a> to go to login."
+msgstr "Cliquez <a href=\"#auth/login\">ici</a> pour vous connecter."
 
 # 16) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/resetpassword/templates/resetpassword.phtml -28
 # _e("Email has been sent","bidxplugin");
@@ -1440,15 +1439,15 @@ msgstr "Pas de messages disponibles"
 # 261) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -48
 # _e("<a href=\\"%s\\"> Terms & Conditions </a>","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "<a href=\\\"%s\\\"> Terms & Conditions </a>"
-msgstr "<a href=\\\"%s\\\"> Termes & Conditions </a>"
+msgid "<a href=\"%s\"> Terms & Conditions </a>"
+msgstr "<a href=\"%s\"> Termes & Conditions </a>"
 
 # 262) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -69
 # _e("Click <a href=\\"%s\\">here</a> to go to the group homepage.","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Click <a href=\\\"%s\\\">here</a> to go to the group homepage."
+msgid "Click <a href=\"%s\">here</a> to go to the group homepage."
 msgstr ""
-"Cliquer <a href=\\\"%s\\\">ici</a> pour aller à la page d'accueil du groupe."
+"Cliquer <a href=\"%s\">ici</a> pour aller à la page d'accueil du groupe."
 
 # 263) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -22
 # _e("First name","bidxplugin");
@@ -1525,9 +1524,9 @@ msgstr "S'inscrire"
 # 276) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -60
 # _e("Login? Click <a href=\\"/auth/#auth/login\\">here</a> to go to login.","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Login? Click <a href=\\\"/auth/#auth/login\\\">here</a> to go to login."
+msgid "Login? Click <a href=\"/auth/#auth/login\">here</a> to go to login."
 msgstr ""
-"Connexion? Cliquez <a href=\\\"/auth/#auth/login\\\"> ici </ a> pour vous "
+"Connexion? Cliquez <a href=\"/auth/#auth/login\"> ici </ a> pour vous "
 "connecter."
 
 # 277) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -67
