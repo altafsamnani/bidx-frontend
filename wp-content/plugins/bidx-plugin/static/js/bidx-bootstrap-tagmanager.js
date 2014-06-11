@@ -67,7 +67,7 @@
         this.selectedClass = "selected";
         this.select = null;
         if ("typeahead" in $.fn) {
-          this.instanceSelectHandler = $.fn.typeahead.Constructor.prototype.select;
+          // this.instanceSelectHandler = $.fn.typeahead.Constructor.prototype.select;
           this.select = function (overrides) {
             this.$menu.find(".active").addClass(overrides.selectedClass);
             overrides.instanceSelectHandler.apply(this, arguments);
