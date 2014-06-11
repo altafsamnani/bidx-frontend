@@ -852,6 +852,12 @@
 
                 } );
 
+                getGrowthCount(
+                {
+                    list:        'mentors'
+                ,   searchType:  'BidxMentorProfile'
+
+                } );
 
 
                 /* Get Members on Monitoring */
