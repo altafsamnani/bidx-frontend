@@ -6,14 +6,14 @@
     //
     $profiles = array(
         'bidxInvestorProfile'        => array(
-            'Investor dashboard'     => '/investor-dashboard'
+            'Investor dashboard'     => _l('investor-dashboard')
         ),
         'bidxEntrepreneurProfile'    => array(
-            'Entrepreneur dashboard' => '/entrepreneur-dashboard'
-        //,   'Mentor Dashboard'       => '/mentordashboard'
+            'Entrepreneur dashboard' => _l('/entrepreneur-dashboard')
+      //  ,   'Mentor Dashboard'       => _l('/mentor-dashboard')
         ),
         'bidxMentorProfile'          => array(
-        //    'Mentor Dashboard'       => '/mentordashboard'
+            'Mentor Dashboard'       => _l('/mentor-dashboard')
         )
     );
 
@@ -60,6 +60,7 @@
     $judgeEmails    = explode(",", get_option ('skipso-judge-emails'));
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
     $showLogout     = true;
+
 ?>
 
 <div class="iconbar bg-primary-dark">
@@ -138,7 +139,7 @@
         if ( !$isSuperAdmin ) {
  ?>
         <div class="btn-group">
-            <a href="/mail/#mail" type="button" class="bidx-mail text-white" title="<?php _e('Mail', 'bidxplugin')?>">
+            <a href="<?php echo _l('mail');?>/#mail" type="button" class="bidx-mail text-white" title="<?php _e('Mail', 'bidxplugin')?>">
                 <!-- If messages are available -->
                 <i class="fa fa-envelope"></i>
                 <span class="iconbar-unread hide-it">?</span>
@@ -167,9 +168,9 @@
                 //
                 if ( $inGroup || $isSuperAdmin ) {
 ?>
-                    <li><a href="/member"><?php _e('Profile','bidxplugin')?></a></li>
-                    <li><a href="/account/#account"><?php _e('Account settings','bidxplugin')?></a></li>
-                    <li><a href="/media"><?php _e('All my documents','bidxplugin')?></a></li>
+                    <li><a href="<?php echo _l('member');?>"><?php _e('Profile','bidxplugin')?></a></li>
+                    <li><a href="<?php echo _l('account');?>/#account"><?php _e('Account settings','bidxplugin')?></a></li>
+                    <li><a href="<?php echo _l('media');?>"><?php _e('All my documents','bidxplugin')?></a></li>
 
 <?php
                 }
@@ -189,7 +190,7 @@
 
                     if( !$currentGroupAdmin && $hasGroups ) {?>
 
-                        <li><a href="/mail/#mail/compose"><?php _e('Help','bidxplugin')?></a></li>
+                        <li><a href="<?php echo _l('mail');?>/#mail/compose"><?php _e('Help','bidxplugin')?></a></li>
 <?php
                     }
 

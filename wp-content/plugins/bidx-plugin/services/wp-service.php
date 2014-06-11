@@ -972,8 +972,12 @@ function get_redirect ($url, $requestData, $domain = NULL)
     switch ($url) {
         case 'sessionactive':
         case 'session':
-            $redirect = ($redirect) ? $redirect : '/';
-            $requestData->redirect = $redirect;
+            global $sitepress;
+            $currentLanguage        =   $sitepress->get_current_language();
+            $redirectLang           =   ($currentLanguage != 'en') ? '/'.$currentLanguage : '/';
+            $redirect               =   ($redirect) ? $redirect : $redirectLang;
+            $requestData->redirect  =   $redirect;
+
             break;
 
         case 'groups':
