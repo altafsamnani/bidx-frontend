@@ -18,21 +18,21 @@
             <post_id>0</post_id>
             <name>member_list</name>
             <title>Member List</title>
-            <mapping>(.*)memberlist/?</mapping>
+            <mapping>([^-]*)memberlist/?</mapping>
             <content>[bidx app="member" view="list"]</content>
         </post>
         <post>
             <post_id>1</post_id>
             <name>member_profile</name>
             <title>Your Profile</title>
-            <mapping>(.*)/member/?</mapping>
+            <mapping>([^-]*)member?</mapping>
             <content>[bidx app="member"]</content>
         </post>
         <post>
             <post_id>2</post_id>
             <name>member</name>
             <title>Memberprofile</title>
-            <mapping>(.*)/member/([^/]*)/?</mapping>
+            <mapping>([^-]*)member/([^/]*)/?</mapping>
             <content>[bidx app="member"]</content>
         </post>
         <post>
