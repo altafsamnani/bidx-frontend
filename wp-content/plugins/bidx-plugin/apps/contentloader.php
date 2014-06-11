@@ -271,33 +271,27 @@ class ContentLoader
         //$post_translated_title = get_post( $post_id )->post_title . ' (' . $lang . ')';
         $insertPostArr['post_title'] = $insertPostArr['post_title'] . ' (' . $lang . ')';
 
-        $isPageExist                 = get_page_by_title( (string) $insertPostArr['post_title'], 'OBJECT', $insertPostArr['post_type'] );
+        $insertPostArr['post_name'] = $insertPostArr['post_name'] . '-' . $lang;
+        $post_type = $insertPostArr['post_type'];
+        // Insert translated post
 
-        if( !$isPageExist->ID )
-        {
-            $insertPostArr['post_name'] = $insertPostArr['post_name'] . '-' . $lang;
-            $post_type = $insertPostArr['post_type'];
-            // Insert translated post
+        $post_translated_id = wp_insert_post ($insertPostArr);
 
-            $post_translated_id = wp_insert_post ($insertPostArr);
+        // Get trid of original post
+        $trid = wpml_get_content_trid ('post_' . $post_type, $post_id);
 
-            // Get trid of original post
-            $trid = wpml_get_content_trid ('post_' . $post_type, $post_id);
+        // Get default language
+        $default_lang = wpml_get_default_language ();
 
-            // Get default language
-            $default_lang = wpml_get_default_language ();
-
-            // Associate original post and translated post
-            global $wpdb;
-            $wpdb->update ($wpdb->prefix . 'icl_translations', array ('trid' => $trid, 'language_code' => $lang, 'source_language_code' => $default_lang), array ('element_id' => $post_translated_id));
+        // Associate original post and translated post
+        global $wpdb;
+        $wpdb->update ($wpdb->prefix . 'icl_translations', array ('trid' => $trid, 'language_code' => $lang, 'source_language_code' => $default_lang), array ('element_id' => $post_translated_id));
 
 
-            $this->logger->trace( sprintf('Language %s - %s %s: ' , $lang, $post_translated_id, $page['post_name'] ) );
-            // Return translated post ID
-            return $post_translated_id;
-        } else {
-            $this->logger->trace( sprintf('Language already there %s - %s %s: ' , $lang, $post_translated_id, $page['post_name'] ) );
-        }
+        $this->logger->trace( sprintf('Language %s - %s %s: ' , $lang, $post_translated_id, $page['post_name'] ) );
+        // Return translated post ID
+        return $post_translated_id;
+
     }
 
     /**
@@ -442,8 +436,10 @@ class ContentLoader
                             wpml_add_translatable_content ( $type, $contentId, $langVal, $trid ); */
 
                             $this->mwm_wpml_translate_post ($postID, $page, $langVal);
-
-
+                        }
+                        else
+                        {
+                            $this->logger->trace( sprintf('Language already there %s - %s %s: ' , $lang, $post_translated_id, $page['post_name'] ) );
                         }
 
                     }
