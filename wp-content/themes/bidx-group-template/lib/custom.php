@@ -492,7 +492,7 @@ function get_custom_field_value ( $key,  $i = null)
     return $value;
 }
 
-function _l( $url )
+function _l( $url = NULL )
 {
   global $sitepress;
   $sep = '/';
@@ -503,10 +503,10 @@ function _l( $url )
     $sep = '';
   }
 
-   echo get_home_url().$sep.$url;
+   return get_home_url().$sep.$url;
 }
 
-function _wl( $url )
+function _wl( $url = NULL )
 {
   global $sitepress;
   $sep = '/';
