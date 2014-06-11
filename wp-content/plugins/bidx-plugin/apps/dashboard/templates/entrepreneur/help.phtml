@@ -14,13 +14,13 @@
         <div class="col-sm-6">
             <label> Your Entrepreneur profile </label>
             <p>Use your entrepreneur profile as your business card for other members of this group and platform. Investors and potential business partners will want to know what moves you to do what you do, and about your entrepreneurial background. Feel free to complete it and update it any time.</p>
-            <a class="btn btn-default pull-right" href="/member?redirect_to=entrepreneur-dashboard#editEntrepreneur/<?php echo $this->exst ($this->sessionData->data->id); ?>">Go to entrepreneur profile</a>
+            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>?redirect_to=entrepreneur-dashboard#editEntrepreneur/<?php echo $this->exst ($this->sessionData->data->id); ?>">Go to entrepreneur profile</a>
       </div>
     <!-- 2. Keep up with new plans -->
       <div class="col-sm-6">
         <label> Your business proposal </label>
         <p>Your business proposal contains the minimum information relevant to your business, enough for visitors to understand what your business is about, where it operates and who is in the entrepreneurial team.</p>
-        <a class="btn btn-default pull-right" href="/member#businesssummary">Go to business proposal</a>
+        <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#businesssummary">Go to business proposal</a>
       </div>
     </div>
 
@@ -29,12 +29,12 @@
         <div class="col-sm-6">
             <label>Your company profile</label>
             <p>You might want to wait with your business proposal, but your are ready to tell the other members about your company if you have one. If that is the case, you can create and publish details about your company without delay.</p>
-            <a class="btn btn-default pull-right" href="/member#company">Go to company profile</a>
+            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#company">Go to company profile</a>
         </div>
         <div class="col-sm-6">
             <label>Grow your network</label>
             <p>One of the advantages of being a member of a bidX group is that you can get in contact with other people that work in the same industry, in the same city or who sell that product that you need. Add these members to your contact list. Make contact with those members to be able to communicate with them through the platform messaging system.</p>
-            <a class="btn btn-default pull-right" href="/member#company">Go to company contacts</a>
+            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#company">Go to company contacts</a>
         </div>
     </div>
 
@@ -48,7 +48,7 @@
         <div class="col-sm-6">
             <label> Support  </label>
             <p>If you have questions about the tools, or encounter any problem, the group moderator will be able to help you.</p>
-            <a class="btn btn-default pull-right" href="/mail#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a>
+            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a>
         </div>
     </div>
 

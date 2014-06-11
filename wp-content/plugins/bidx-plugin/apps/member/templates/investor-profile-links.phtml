@@ -12,7 +12,7 @@
         </div>
         <div class="panel-body">
             <em><?php _e('Create your resources', 'bidxtheme')?></em>
-            <a href="/member/#createInvestor" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Invest','bidxtheme')?></a>
+            <a href="<?php echo _l('member');?>/#createInvestor" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Invest','bidxtheme')?></a>
         </div>
     </div>
 <?php
@@ -21,7 +21,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
 <?php
-        printf( __( 'View your %sinvestor profile%s', 'bidxtheme' ), '<a href="/member/#investor-profile">', '</a>' );
+        printf( __( 'View your %sinvestor profile%s', 'bidxtheme' ), '<a href="'._l('member').'/#investor-profile">', '</a>' );
 ?>
         </div>
     </div>

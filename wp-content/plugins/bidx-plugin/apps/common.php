@@ -297,13 +297,27 @@ class BidxCommon
      */
     public function getURIParams ($subDomain, $jsSessionData = NULL)
     {
-        $requestUri = explode ('?', $_SERVER ["REQUEST_URI"]);
-        $hostAddress = explode ('/', $requestUri[0]);
-        $redirect = NULL;
-        $data = new STDClass();
-        $statusMsgId = NULL;
-        $this::$bidxSession[$subDomain]->companyId = NULL;
-        $this::$bidxSession[$subDomain]->requestedBusinessSummaryId = NULL;
+    /*    include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+        echo get_home_url();
+        echo "<pre>";
+        print_r($_GET);
+        echo "</pre>";exit;*/
+        $requestUri                                                 =   explode ('?', $_SERVER ["REQUEST_URI"]);
+        $hostAddress                                                =   explode ('/', $requestUri[0]);
+        $module                                                     =   $hostAddress[1];
+        $id                                                         =   $hostAddress[2] ;
+        $redirect                                                   =   NULL;
+        $data                                                       =   new STDClass();
+        $statusMsgId                                                =   NULL;
+        $this::$bidxSession[$subDomain]->companyId                  =   NULL;
+        $this::$bidxSession[$subDomain]->requestedBusinessSummaryId =   NULL;
+
+        if( strlen ( $hostAddress[1] ) == 2 )
+        {
+            $module = $hostAddress[2];
+            $id     = $hostAddress[3];
+        }
+
         /**
          * Host Address
          * Param0 /member , /group, /profile
@@ -314,11 +328,11 @@ class BidxCommon
         if (is_array ($hostAddress)) {
 
             //Redirect URL Logic
-            switch ($hostAddress[1]) {
+            switch ($module) {
 
                 case 'member':
                     $sessionMemberId = (empty ($jsSessionData->data)) ? NULL : $jsSessionData->data->id;
-                    $memberId = ( isset ($hostAddress[2]) && $hostAddress[2]) ? $hostAddress[2] : $sessionMemberId;
+                    $memberId = ( !empty ( $id ) ) ? $id : $sessionMemberId;
 
                     if ($memberId) {
                         $data->memberId = $memberId;
@@ -334,9 +348,9 @@ class BidxCommon
 
                 case 'company':
 
-                    $companyId = null;
-                    if (!empty ($hostAddress[2])) {
-                        $companyId = $hostAddress[2];
+                    $companyId = NULL;
+                    if (!empty ($id)) {
+                        $companyId = $id;
                     }
 
                     $data->bidxGroupDomain = $jsSessionData->bidxGroupDomain;
@@ -349,9 +363,7 @@ class BidxCommon
 
                 case 'businesssummary':
 
-                    $businessSummaryId = ( $hostAddress[2] )
-                        ? $hostAddress[2]
-                        : null;
+                    $businessSummaryId = ( $id ) ? $id : NULL;
 
                     if ($businessSummaryId) {
                         $data->businessSummaryId = $businessSummaryId;
@@ -363,7 +375,7 @@ class BidxCommon
 
             if ($jsSessionData) {
                 $authenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
-                $this->redirectUrls ($hostAddress[1], $authenticated, $redirect, $statusMsgId, $subDomain);
+                $this->redirectUrls ($module, $authenticated, $redirect, $statusMsgId, $subDomain);
             }
 
             $return['data'] = $data;
@@ -391,11 +403,20 @@ class BidxCommon
      */
     function redirectUrls ($uriString, $authenticated, $redirect = NULL, $statusMsgId = NULL, $subDomain)
     {
-        $redirect_url = NULL;
-        $urlSep = '?';
-        $http = (is_ssl ()) ? 'https://' : 'http://';
-        $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $param = '';
+        $redirect_url   =   NULL;
+        $urlSep         =   '?';
+        $http           =   (is_ssl ()) ? 'https://' : 'http://';
+        $requestUri     =   explode ('?', $_SERVER ["REQUEST_URI"]);
+        $hostAddress    =   explode ('/', $requestUri[0]);
+        $current_url    =   $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $param          =   '';
+        $langUrl        =   '';
+
+        if( strlen ( $hostAddress[1] ) == 2 )
+        {
+            $langUrl = $hostAddress[1];
+        }
+
         //Status Messages
         if ($statusMsgId) {
             $param.= '?smsg=' . $statusMsgId;
@@ -408,7 +429,7 @@ class BidxCommon
 
             case 'auth' :
                 if ($authenticated == 'true') {
-                    $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/member' . $param;
+                    $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/member' . $param;
                 } else {
                     wp_clear_auth_cookie ();
                 }
@@ -417,7 +438,7 @@ class BidxCommon
             case 'member' :
 
                 if ($authenticated == 'false' && $redirect) {
-                    $redirect_url = $http . $_SERVER['HTTP_HOST'] . '/' . $redirect . $param;
+                    $redirect_url = $http . $_SERVER['HTTP_HOST'] .'/'.$langUrl . '/' . $redirect . $param;
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables
@@ -432,7 +453,7 @@ class BidxCommon
             case 'mail' :
                 if ($authenticated == 'false') {
 
-                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
+                    $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';
                     wp_clear_auth_cookie ();
 
                     //Clear Session and Static variables

@@ -2,7 +2,7 @@
     $groupOwnerIds = implode ("|", $this->groupOwnersIdsArr);
 ?>
 <div class="help">
-    
+
     <div class='alert alert-success'>
         <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
         <?php echo get_site_option ('investor-notification', 'Go and set the investor notification in Network Admin -> Settings -> Bidx !! Work Needed') ?>
@@ -14,7 +14,7 @@
         <div class="col-sm-6">
              <label> Update your preferences anytime</label>
              <p>If you want to update your preferences, you can easily do that from your dashboard. Specify different preferences to get new opportunities.</p>
-             <a class="btn btn-default pull-right" href="/member?redirect_to=investor-dashboard#editInvestor/<?php echo $this->exst ($this->sessionData->data->id); ?>/#investorProfileInvestmentPreferences">Go to investment preferences</a>
+             <a class="btn btn-default pull-right" href="<?php echo _l('member');?>?redirect_to=investor-dashboard#editInvestor/<?php echo $this->exst ($this->sessionData->data->id); ?>/#investorProfileInvestmentPreferences">Go to investment preferences</a>
          </div>
          <!-- 2. Keep up with new plans -->
         <div class="col-sm-6">
@@ -30,13 +30,13 @@
         <div class="col-sm-6">
             <label>Get alerts in your inbox</label>
             <p>We will also send you weekly updates to your inbox. These messages contain the list of businesses that have been published during the last seven days.  If during your registration you accepted that we could send you emails to your personal inbox, you will receive those alerts there too. If you didn’t do so during your registration, but you would like to receive them now, you can change that setting at your Account Settings</p>
-           <a class="btn btn-default pull-right" href="/mail#mail">Go to inbox</a>
+           <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail">Go to inbox</a>
         </div>
     <!-- 4. One click, one contact -->
         <div class="col-sm-6">
             <label>One click, one contact</label>
             <p>Invite other members to become your contacts and grow your own network. Click on the Contact link at the member profiles and an invitation to become a contact will be send to them.</p>
-            <a class="btn btn-default pull-right" href="/mail/#mail/contacts">Go to contacts</a>
+            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>/#mail/contacts">Go to contacts</a>
         </div>
 
     </div>
@@ -52,7 +52,7 @@
         <div class="col-sm-6">
             <label> Contact your group moderator</label>
             <p>For any additional questions over this group, functionalities, problems or suggestions, please contact your group moderator. He or she will be delighted to help you. If you encounter a problem with the platform, the group moderator will forward it to the bidX technical support.</p>
-            <a class="btn btn-default pull-right" href="/mail#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a>
+            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a>
         </div>
 
     </div>
