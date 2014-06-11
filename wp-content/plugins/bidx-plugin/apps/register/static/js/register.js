@@ -189,22 +189,26 @@
     //var test = $("body").find('[class^="/\sregister-as-member\d+\s/"]').length;
     // Only update the hash when user is authenticating and when there is no hash defined
     //
+    var $register = $("body").attr('class').match(/register-as-/);
 
-    if ( $("body").attr('class').match(/register-as-/).length && !bidx.utils.getValue(window, "location.hash" ) )
-    {
+    if( $register ) {
 
-        // if there is a hash defined in the window scope, nagivate to this has
-        //
-        if ( bidx.utils.getValue( window, "__bidxHash" ) )
+        if ( $register.length && !bidx.utils.getValue(window, "location.hash" ) )
         {
-            bidx.utils.log(document.location);
-            document.location.hash = window.__bidxHash;
-        }
-        // load default
-        //
-        else
-        {
-            document.location.hash = "#register";
+
+            // if there is a hash defined in the window scope, nagivate to this has
+            //
+            if ( bidx.utils.getValue( window, "__bidxHash" ) )
+            {
+                bidx.utils.log(document.location);
+                document.location.hash = window.__bidxHash;
+            }
+            // load default
+            //
+            else
+            {
+                document.location.hash = "#register";
+            }
         }
 
     }
