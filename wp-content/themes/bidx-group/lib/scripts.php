@@ -15,7 +15,7 @@ function roots_scripts() {
   wp_enqueue_style('bootstrap-datepicker',        get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datepicker-1.3.0-rc.2/css/datepicker3.css', false, null);
   // wp_enqueue_style('bidx-plugin',                 get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin.css', false, null);
 
-  wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/js/bootstrap.min.js',                       array( 'jquery' ),      '3.0.2',            true );
+  wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/js/bootstrap.min.js',                       array( 'jquery' ),      '3.1.1',            true );
 
   wp_register_script( 'bidx-checkbox',            get_template_directory_uri() . '/assets/js/bidx-checkbox.js',                       array( 'jquery' ),      '0.0.2',            true );
   wp_register_script( 'bidx-radio',               get_template_directory_uri() . '/assets/js/bidx-radio.js',                          array( 'jquery' ),      '0.0.2',            true );
@@ -42,7 +42,7 @@ function roots_scripts() {
   }
 
   if (is_single() && comments_open() && get_option('thread_comments')) {
-  wp_enqueue_script('comment-reply');
+    wp_enqueue_script('comment-reply');
   }
 
   wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr-2.7.0.min.js', array(), null, false);

@@ -38,10 +38,11 @@
         , checked = $el.prop(ch)
         , e = $.Event('toggle')
 
-      if ($el.prop('disabled') == false) {
-        $parent.toggleClass(ch) && checked ? $el.removeAttr(ch) : $el.attr(ch, true);
-        $el.trigger(e).trigger('change');
-      }
+        if ($el.prop('disabled') == false) {
+          $parent.toggleClass(ch) && checked ? $el.removeAttr(ch) : $el.attr(ch, true);
+          $el.prop(ch, $el.attr(ch) === 'checked');
+          $el.trigger(e).trigger('change');
+        }
     }
 
   , setCheck: function (option) {

@@ -124,7 +124,7 @@
 
   $(document).on('click.radio.data-api', '[data-toggle^=radio], .radio', function (e) {
     var $radio = $(e.target);
-    e && e.preventDefault() && e.stopPropagation();
+    e && e.stopPropagation();
     if (!$radio.hasClass('radio')) $radio = $radio.closest('.radio');
     $radio.find(':radio').radio('toggle');
   });
