@@ -406,7 +406,7 @@
                         <div class="panel-body attachmentsControl">
                             <div class="attachmentsContainer"></div>
 
-                            <button data-toggle="modal" data-target="#addDocs" class="btn btn-primary js-btn-add-attachments"><span class="fa fa-plus"></span> <?php _e('Add documents','bidxplugin');?></button>
+                            <button data-toggle="modal" class="btn btn-primary js-btn-add-attachments"><span class="fa fa-plus"></span> <?php _e('Add documents','bidxplugin');?></button>
 
                             <div class="addAttachmentsModal modal fade" id="addDocs" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -446,33 +446,35 @@
         <!-- Previous Investment -->
         <div class="previousInvestmentsItem col-sm-6">
             <div class="well">
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Company name','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-                        <input type="text" class="form-control" name="companyName" placeholder="<?php _e('Please enter the company name','bidxplugin'); ?>">
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Company name','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+                            <input type="text" class="form-control" name="companyName" placeholder="<?php _e('Please enter the company name','bidxplugin'); ?>">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Company website?','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                        <input type="text" class="form-control" name="companyWebsite" placeholder="<?php _e('Please enter the company URL','bidxplugin'); ?>">
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Company website?','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                            <input type="text" class="form-control" name="companyWebsite" placeholder="<?php _e('Please enter the company URL','bidxplugin'); ?>">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Amount invested','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                        <input type="text" class="form-control" name="investment" placeholder="<?php _e('Amount invested','bidxplugin'); ?>">
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Amount invested','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                            <input type="text" class="form-control" name="investment" placeholder="<?php _e('Amount invested','bidxplugin'); ?>">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Investment type','bidxplugin'); ?></label>
-                    <select name="investmentType"></select>
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Investment type','bidxplugin'); ?></label>
+                        <select name="investmentType"></select>
+                    </div>
                 </div>
 
                 <a href="#removeItem" class="btn btn-danger btn-sm btn-block"><?php _e('Remove this investment','bidxplugin'); ?></a>
@@ -482,53 +484,54 @@
         <!-- Reference -->
         <div class="referencesItem col-sm-6">
             <div class="well">
-                <div class="form-group col-sm-12">
-                    <label><?php _e('First name','bidxplugin'); ?></label>
-                    <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
-                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('First name','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
+                    </div>
 
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Last name','bidxplugin'); ?></label>
-                    <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
-                </div>
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Last name','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
+                    </div>
 
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Professional title','bidxplugin'); ?></label>
-                    <input type="text" class="form-control" name="professionalTitle" placeholder="<?php _e('Please enter the professional title','bidxplugin'); ?>">
-                </div>
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Professional title','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="professionalTitle" placeholder="<?php _e('Please enter the professional title','bidxplugin'); ?>">
+                    </div>
 
-                <div class="form-group col-sm-12" >
-                    <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
-                        <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                    <div class="form-group col-sm-12" >
+                        <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
+                            <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Email address','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input type="email" class="form-control" name="emailAddress" placeholder="<?php _e('Please enter your email address','bidxplugin'); ?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Landline','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+                            <input type="text" class="form-control" name="landLine" placeholder="<?php _e('Please enter your landline number','bidxplugin'); ?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Mobile','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
+                            <input type="text" class="form-control" name="mobile" placeholder="<?php _e('Please enter your mobile number','bidxplugin'); ?>" />
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Email address','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                        <input type="email" class="form-control" name="emailAddress" placeholder="<?php _e('Please enter your email address','bidxplugin'); ?>" />
-                    </div>
-                </div>
-
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Landline','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-                        <input type="text" class="form-control" name="landLine" placeholder="<?php _e('Please enter your landline number','bidxplugin'); ?>" />
-                    </div>
-                </div>
-
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Mobile','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
-                        <input type="text" class="form-control" name="mobile" placeholder="<?php _e('Please enter your mobile number','bidxplugin'); ?>" />
-                    </div>
-                </div>
-
                 <a href="#removeItem" class="btn btn-danger btn-sm btn-block"><?php _e('Remove this reference','bidxplugin'); ?></a>
             </div>
         </div>

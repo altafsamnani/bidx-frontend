@@ -1072,49 +1072,51 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <!-- Management Team Item -->
         <div class="managementTeamItem col-sm-6">
             <div class="well">
-                <!-- First Name -->
-                <div class="form-group col-sm-12">
-                    <label><?php _e('First name','bidxplugin'); ?></label>
-                    <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
-                </div>
-
-                <!-- Last Name -->
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Last name','bidxplugin'); ?></label>
-                    <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
-                </div>
-
-                <!-- Role -->
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Role of partner in this business','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                        <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
+                <div class="row">
+                    <!-- First Name -->
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('First name','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="firstName" placeholder="<?php _e('Please enter the first name','bidxplugin'); ?>">
                     </div>
-                </div>
 
-                <!-- Expertise -->
-                <div class="form-group col-sm-12">
-                    <label><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
-                    <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
-                </div>
-
-                <!-- LinkedIn -->
-                <div class="form-group col-sm-12">
-                    <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
-                        <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                    <!-- Last Name -->
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Last name','bidxplugin'); ?></label>
+                        <input type="text" class="form-control" name="lastName" placeholder="<?php _e('Please enter the last name','bidxplugin'); ?>">
                     </div>
-                </div>
 
-                <!-- Profile picture -->
-                <div class="profilePictureControl form-group col-sm-12">
-                    <label><?php _e('Picture','bidxplugin'); ?></label>
-                    <div class="profilePictureWrapper">
-                        <div class="profilePictureContainer"></div>
+                    <!-- Role -->
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Role of partner in this business','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                            <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
+                        </div>
                     </div>
-                    <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Change profile picture', 'bidxplugin')?></a>
+
+                    <!-- Expertise -->
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
+                        <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
+                    </div>
+
+                    <!-- LinkedIn -->
+                    <div class="form-group col-sm-12">
+                        <label><?php _e('LinkedIn profile','bidxplugin'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-linkedin-square"></i></span>
+                            <input type="text" class="form-control" name="linkedIn" placeholder="<?php _e('Please enter your LinkedIn profile URL','bidxplugin'); ?>" />
+                        </div>
+                    </div>
+
+                    <!-- Profile picture -->
+                    <div class="profilePictureControl form-group col-sm-12">
+                        <label><?php _e('Picture','bidxplugin'); ?></label>
+                        <div class="profilePictureWrapper">
+                            <div class="profilePictureContainer"></div>
+                        </div>
+                        <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Change profile picture', 'bidxplugin')?></a>
+                    </div>
                 </div>
 
                 <a href="#removeItem" class="btn btn-danger btn-sm btn-block"><?php _e('Remove this partner','bidxplugin'); ?></a>
