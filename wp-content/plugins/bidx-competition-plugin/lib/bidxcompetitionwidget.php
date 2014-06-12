@@ -94,69 +94,8 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		extract( $args );	
 		$competition_id = $instance['competition_id'];
 		$competition_link = $instance['competition_link'];
-		
 		echo $before_widget;
-		
-		if ( empty( $competition_id ) ) {
-			_e('No Competition Set','bidx_competition');
-		}
-		else {
-			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
-			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );
-			$post = get_post($competition_id);		
-			
-			$diff = abs(strtotime($enddate) - time());
-
-			//strip the link to make it relative from the website root
-			
-		?>
-		<div class="well">
-		<h3><?php _e('Competition','bidx_competition_plugin');?></h3>
-		<div class="bidx countdown-title ">
-			<a class="btn" href="<?php echo get_permalink( $competition_id ); ?>"><?php echo $post -> post_title ?></a>
-		</div>
-		<div class="bidx countdown-time">
-			<h4><?php 
-			if ($diff < 0) {
-				_e( 'This competition has expired.','bidx_competition_plugin' );
-				?><a href="#"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
-			}
-			else
-			{
-				$years = floor($diff / (365*60*60*24));
-				$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-				$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-				
-				_e( 'You have','bidx_competition_plugin' );
-				
-				echo '<div>';
-				if ( $years > 0 ) {
-					echo ' '.$years. ' ';
-					if ( $years > 1 ) {
-						_e( 'Years','bidx_competition_plugin' );
-					} else {
-						_e( 'Year','bidx_competition_plugin' );
-					}
-				}
-				if ( $months > 0 ) {
-					echo ' '.$months. ' ';
-					_e( 'Months','bidx_competition_plugin' );
-				}
-				if ( $days > 0 ) {
-					echo ' '.$days. ' ';
-					_e( 'Days','bidx_competition_plugin' );
-				}
-				echo '</div>';
-				_e( 'left to join','bidx_competition_plugin' );
-			}	
-			?>
-			</h4>
-			<a class="btn btn-secondary btn-lg pull-right" href="<?php echo get_permalink( $competition_id ); ?>">View Now</a>
-		</div>
-		
-		<?php
-		}
-		echo '</div>';
+		echo $this -> render_content( $competition_id, $competition_link );
 		echo $after_widget;
 	}	
 	
@@ -165,16 +104,18 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 */
 	function render_content( $competition_id, $competition_link='' ) {
 
-	if ( empty( $competition_id ) ) {
-		_e('No Competition Set','bidx_competition');
-	}
-	else {
-		$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
-		$enddate = get_post_meta( $competition_id, 'competition_enddate', true );
-		$post = get_post($competition_id);		
-		$diff = abs(strtotime($enddate) - time());
-
-	//strip the link to make it relative from the website root
+		if ( empty( $competition_id ) ) {
+			_e('No Competition Set','bidx_competition');
+		}
+		else {
+			//TODO first check if it is a competition post type
+			$post = get_post($competition_id);
+			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
+			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );	
+			
+			$diff = abs(strtotime($enddate) - time());
+	
+		//TODO strip the link to make it relative from the website root
 		
 	?>
 		<div class="well">
@@ -266,8 +207,35 @@ class BidxCompetitionRegistrationWidget extends WP_Widget {
 	 * @param WP_Widget $instance
 	 */
 	function form( $instance ) {
+		
+		if ( $instance )
+		{
+			$competition_id = $instance['competition_id'];
+			$competition_link = $instance['competition_link'];
+		}
+		else
+		{
+			$competition_id = '';
+			$competition_link = '';
+		}
+		//get list of competitions
+		$competitions = BidxCompetition :: get_competitions_list();
 		?>
-	        <p><?php _e( 'No configuration options available', 'bidx_competition'); ?></p>
+	    <p>
+            <label for="<?php echo $this->get_field_id('competition_id'); ?>"><?php _e('Select Competition:', 'bidx_competition'); ?></label>
+			<select name="<?php echo $this->get_field_name('competition_id') ?>" id="<?php echo $this->get_field_id('competition_id') ?>">
+			<?php 
+            foreach ( $competitions->posts as $competition) {
+                printf(
+                    '<option value="%s" %s >%s</option>',
+                    $competition->ID,
+                    $competition->ID == $competition_id ? 'selected="selected"' : '',
+                    $competition->post_title
+                );
+            }
+            ?>
+            </select>
+        </p> 
 		<?php
 	} 	
 	
@@ -290,13 +258,26 @@ class BidxCompetitionRegistrationWidget extends WP_Widget {
 	 * @param WP_Widget $instance instance of this widget
 	 */
 	function widget($args, $instance) {
-		extract( $args );		 
+		extract( $args );
+		$competition_id = $instance['competition_id'];
+		
 		echo $before_widget;
-		?>
-		<p><?php _e( 'No configuration options available', 'bidx_competition'); ?></p>
-		<?php 
+		echo $this -> render_content( $competition_id );
 		echo $after_widget;
 	}	
+	
+	/**
+	 * Render the output for the registration
+	 * @param string $competition_id
+	 */
+	function render_content( $competition_id ) {
+		//check if user is logged in --> link to login with link to status page
+		//check if user has already joined this competition --> link to status page
+		//check if competition is still over time --> link to status page
+		//render registration output
+		//store data is competition_id/user_id/e-mail/registration-datetime
+		
+	}
 	
 }
 
