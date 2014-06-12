@@ -4,7 +4,7 @@
 //    ,   $views                      = $element.find( ".view" )
     ,   $frmResetpassword           = $element.find( "#frmResetpassword" )
     ,   $btnResetpassword           = $frmResetpassword.find( ":submit" )
-    ,   $resetpasswordSuccess       = $element.find( ".resetpasswordSuccess" )
+    ,   $resetpasswordSuccess       = $element.find( ".resetpasswordSuccess" ).hide()
     ,   $loginErrorMessage          = $frmResetpassword.find( ".error-separate" )
     ,   bidx                        = window.bidx
     ,   appName                     = "resetpassword"
