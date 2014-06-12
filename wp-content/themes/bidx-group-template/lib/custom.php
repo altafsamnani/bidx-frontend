@@ -400,7 +400,26 @@ function theme_customizer_footer( $wp_customize ) {
 }
 add_action( 'customize_register', 'theme_customizer_footer' );
 
+function add_frontend_content( $wp_customize, $lang = '' )
+{
 
+  $wp_customize->add_section( 'front_content'.$lang, array(
+            'title'    => __( $lang. 'Front Main Content Area' ),
+            'priority' => ($lang == '') ? 90 : 91,
+    ) );
+
+  $wp_customize->add_setting( 'front_content'.$lang, array(
+      'default'        => '',
+  ) );
+
+
+  $wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'front_content'.$lang, array(
+      'label'   => $lang. 'Custom HTML for the Front main content area',
+      'section' => 'front_content'.$lang,
+      'settings'   => 'front_content'.$lang,
+  ) ) );
+
+}
 
 /**
  * Add front main content section with textarea control theme customizer
@@ -413,20 +432,25 @@ add_action( 'customize_register', 'theme_customizer_footer' );
  * @access public
    */
 function theme_customizer_front_content( $wp_customize ) {
-    $wp_customize->add_section( 'front_content', array(
-            'title'    => __( 'Front Main Content Area' ),
-            'priority' => 90,
-    ) );
-    $wp_customize->add_setting( 'front_content', array(
-        'default'        => '',
-    ) );
+    global $sitepress;
 
+    add_frontend_content( $wp_customize ); // Add default always
 
-    $wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'front_content', array(
-        'label'   => 'Custom HTML for the Front main content area',
-        'section' => 'front_content',
-        'settings'   => 'front_content',
-    ) ) );
+    if( $sitepress) {
+
+      $langArr = $sitepress->get_active_languages();
+      unset( $langArr['en'] );
+
+      if( $langArr)
+      {
+        foreach( $langArr as $langKey => $langVal) {
+
+          $lang   = ($langKey == 'en') ? '': '_'.$langKey; // If english add the original else front_content_%lang%
+
+          add_frontend_content( $wp_customize, $lang);
+        }
+      }
+    }
 }
 add_action( 'customize_register', 'theme_customizer_front_content' );
 

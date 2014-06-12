@@ -1,4 +1,8 @@
 <?php
+    global $sitepress;
+
+
+
     echo bidx_get_status_msgs();
 
     // include the carousel ( id=groupCarousel )
@@ -12,11 +16,19 @@
 <?php
     // if there is custom frontpage markup defind in wordpress theme customizr
     //
-    if (get_theme_mod( 'front_content' ))
+    $frontContent = 'front_content';
+    if( $sitepress ) {
+
+        $currentLanguage = $sitepress->get_current_language();
+        $frontContent .= ( $currentLanguage != 'en') ? '_'.$currentLanguage : '';
+    }
+
+    $themeMod = get_theme_mod( $frontContent );
+    if ( $themeMod )
     {
 ?>
         <div class="container">
-            <?php echo get_theme_mod( 'front_content' ); ?>
+            <?php echo $themeMod; ?>
         </div>
 <?php
 
