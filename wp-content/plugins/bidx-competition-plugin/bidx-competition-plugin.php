@@ -12,7 +12,12 @@
 require_once 'lib/bidxcompetition.php';
 require_once 'lib/bidxcompetitionwidget.php';
 
-register_activation_hook ( __FILE__, array ( BidxCompetition, 'load' ) );
-register_deactivation_hook ( __FILE__, array ( BidxCompetition, 'unload' ) );
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+$competition = new BidxCompetition();
+register_activation_hook ( __FILE__, array ( $competition, 'load' ) );
+register_deactivation_hook ( __FILE__, array ( $competition, 'unload' ) );
 
 	
