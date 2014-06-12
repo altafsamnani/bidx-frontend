@@ -3,7 +3,7 @@
 Plugin Name: K-news
 Plugin URI: http://www.knewsplugin.com
 Description: Finally, newsletters are multilingual, quick and professional.
-Version: 1.6.0
+Version: 1.6.2
 Author: Carles Reverter
 Author URI: http://www.carlesrever.com
 License: GPLv2 or later
@@ -438,6 +438,15 @@ if (!class_exists("KnewsPlugin")) {
 			return mktime(substr($sqldate,11,2), substr($sqldate,14,2), substr($sqldate,17,2), substr($sqldate,5,2), substr($sqldate,8,2), substr($sqldate,0,4));
 		}
 
+		function real_insert_id() {
+			global $wpdb;
+			$insert = $wpdb->insert_id; 
+			if ($insert == 0) {
+				$insert = mysql_insert_id(); ;
+			}
+			return $insert;
+		}
+		
 		function humanize_dates ($date, $format) {
 			
 			if ($date == '0000-00-00 00:00:00') return '-';
@@ -483,9 +492,14 @@ if (!class_exists("KnewsPlugin")) {
 		function get_user_field ($user_id, $field_id, $empty='') {
 			global $wpdb;
 			
+			if ($field_id==0) {
+				$query = "SELECT email FROM " . KNEWS_USERS . " WHERE id=" . $user_id;
+				$field_found = $wpdb->get_col( $query, 0 );
+
+			} else {
 			$query = "SELECT * FROM " . KNEWS_USERS_EXTRA . " WHERE user_id=" . $user_id . ' AND field_id=' . $field_id;
 			$field_found = $wpdb->get_col( $query, 3 );
-
+			}
 			if ($field_found) {
 				if ($field_found[0]!='') return $field_found[0];
 			}
@@ -528,7 +542,7 @@ if (!class_exists("KnewsPlugin")) {
 			if ( get_magic_quotes_gpc()) $value = stripslashes_deep($value);
 			if ($mode=='unsafe') return $value;
 			if ($mode=='int') return intval($value);
-			if ($mode=='paranoid') return mysql_real_escape_string(htmlspecialchars(strip_tags($value)));
+			if ($mode=='paranoid') return esc_sql(htmlspecialchars(strip_tags($value)));
 		}
 
 		function post_safe($field, $un_set='', $mode='paranoid') {
@@ -536,7 +550,7 @@ if (!class_exists("KnewsPlugin")) {
 			if ( get_magic_quotes_gpc()) $value = stripslashes_deep($value);
 			if ($mode=='unsafe') return $value;
 			if ($mode=='int') return intval($value);
-			if ($mode=='paranoid') return mysql_real_escape_string(htmlspecialchars(strip_tags($value)));
+			if ($mode=='paranoid') return esc_sql(htmlspecialchars(strip_tags($value)));
 		}
 
 		function escape_js($txt, $comma='"') {
@@ -565,7 +579,7 @@ if (!class_exists("KnewsPlugin")) {
 
 			global $knewsOptions;
 
-			//$name = mysql_real_escape_string($_POST['name']);
+			//$name = esc_sql($_POST['name']);
 			$lang = $this->post_safe('lang_user');
 			$lang_locale = $this->post_safe('lang_locale_user');
 			$email = $this->post_safe('knewsemail');
@@ -672,7 +686,7 @@ if (!class_exists("KnewsPlugin")) {
 				$ip = $_SERVER['REMOTE_ADDR'];
 				$query = "INSERT INTO " . KNEWS_USERS . " (email, lang, state, joined, confkey, ip) VALUES ('" . $email . "','" . $lang . "', " . ($bypass_confirmation ? '2' : '1') . ", '" . $date . "','" . $confkey . "','" . $ip . "');";
 				$results = $wpdb->query( $query );
-				$user_id=$wpdb->insert_id; $user_id2=mysql_insert_id(); if ($user_id==0) $user_id=$user_id2;
+				$user_id = $this->real_insert_id();
 
 			} else if ($user_found[0]->state=='2') {
 				$user_id = $user_found[0]->id;
@@ -686,7 +700,7 @@ if (!class_exists("KnewsPlugin")) {
 			}
 			
 			while ($cf = current($custom_fields)) {
-				$this->set_user_field ($user_id, key($custom_fields), mysql_real_escape_string($cf), false);
+				$this->set_user_field ($user_id, key($custom_fields), esc_sql($cf), false);
 				next($custom_fields);
 			}
 			
@@ -810,7 +824,8 @@ if (!class_exists("KnewsPlugin")) {
 			$results = $wpdb->get_row( $query );
 			if (!isset($results->id)) return false;
 
-			$query = "UPDATE ".KNEWS_USERS." SET state='2' WHERE email='" . $email . "' AND confkey='" . $confkey . "'";
+			$date = $this->get_mysql_date();
+			$query = "UPDATE ".KNEWS_USERS." SET state='2', joined='" . $date . "' WHERE email='" . $email . "' AND confkey='" . $confkey . "'";
 			$results = $wpdb->query( $query );
 			
 			return true;
@@ -1161,7 +1176,8 @@ if (!class_exists("KnewsPlugin")) {
 				$requiredtxt = '1'; if (isset($instance['requiredtext'])) $requiredtxt = $instance['requiredtext'];
 
 				foreach ($extra_fields as $field) {
-					$name = strtolower($field->name);
+					$name = $field->name;
+					if (!isset($instance[$name])) $name = strtolower($field->name);
 					if (isset($instance[$name]) && ($instance[$name]=='ask' || $instance[$name]=='required')) {
 						$response .= '<fieldset class="' . $field->name . '">';
 						
@@ -1428,13 +1444,13 @@ if (!function_exists("Knews_plugin_ap")) {
 
 	if (class_exists("KnewsPlugin")) {
 		$Knews_plugin = new KnewsPlugin();
-		define('KNEWS_VERSION', '1.6.0');
+		define('KNEWS_VERSION', '1.6.2');
 
 		add_filter( 'knews_submit_confirmation', array($Knews_plugin, 'submit_confirmation'), 10, 4 );
 		add_filter( 'knews_add_user_db', array($Knews_plugin, 'add_user_db'), 10, 7 );
 		add_filter( 'knews_get_cpt', array($Knews_plugin, 'get_cpt'), 10, 1 );
 		add_filter( 'knews_posts_preview', array($Knews_plugin, 'posts_preview'), 10, 8 );
-		add_filter( 'knews_get_post', 'get_post_knews', 10, 3 );
+		add_filter( 'knews_get_post', 'get_post_knews', 10, 4 );
 		add_action( 'knews_echo_ajax_reply', array($Knews_plugin, 'echo_ajax_reply'), 10, 3 );
 		add_action( 'knews_echo_dialog', array($Knews_plugin, 'echo_dialog'), 10, 5 );
 

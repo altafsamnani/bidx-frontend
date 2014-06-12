@@ -11,13 +11,13 @@ function duplicate_news($results) {
 	
 	if ($results) {
 		
-		$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, subject, created, modified, template, html_mailing, html_head, html_modules, html_container, lang, automated, mobile, id_mobile, newstype) VALUES ('(copy)" . mysql_real_escape_string($results[0]->name) . "', '" . mysql_real_escape_string($results[0]->subject) . "', '" . $Knews_plugin->get_mysql_date() . "', '" . $Knews_plugin->get_mysql_date() . "','" . $results[0]->template . "','" . mysql_real_escape_string($results[0]->html_mailing) . "','" . mysql_real_escape_string($results[0]->html_head) . "','" . mysql_real_escape_string($results[0]->html_modules) . "','" . mysql_real_escape_string($results[0]->html_container) . "', '" . $results[0]->lang . "', 0, " . $results[0]->mobile . ", " . $results[0]->id_mobile . ", '" . $results[0]->newstype . "')";
+		$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, subject, created, modified, template, html_mailing, html_head, html_modules, html_container, lang, automated, mobile, id_mobile, newstype) VALUES ('(copy)" . esc_sql($results[0]->name) . "', '" . esc_sql($results[0]->subject) . "', '" . $Knews_plugin->get_mysql_date() . "', '" . $Knews_plugin->get_mysql_date() . "','" . $results[0]->template . "','" . esc_sql($results[0]->html_mailing) . "','" . esc_sql($results[0]->html_head) . "','" . esc_sql($results[0]->html_modules) . "','" . esc_sql($results[0]->html_container) . "', '" . $results[0]->lang . "', 0, " . $results[0]->mobile . ", " . $results[0]->id_mobile . ", '" . $results[0]->newstype . "')";
 			
 		$results = $wpdb->query($sql);
 		
 		if ($results) {
 
-			$news_id=$wpdb->insert_id; $news_id2=mysql_insert_id(); if ($news_id==0) $news_id=$news_id2;
+			$news_id = $Knews_plugin->real_insert_id();
 			return $news_id;
 
 		}
@@ -85,7 +85,7 @@ function duplicate_news($results) {
 						$results_per_page=10;
 
 					$query = " FROM " . KNEWS_NEWSLETTERS . " WHERE mobile=0 AND automated=" . (($tab=='autocreated') ? '1' : '0');
-					if ($tab=='') $query .= ' AND (newstype="unknown" OR newstype="manual")';
+					if ($tab=='') $query .= ' AND (newstype="unknown" OR newstype="manual" OR newstype="")';
 					if ($tab=='automation') $query .= ' AND (newstype="autocreation" OR newstype="autoresponder")';
 					
 					$filtered_lists = $wpdb->get_results( 'SELECT COUNT(id) AS n ' . $query );

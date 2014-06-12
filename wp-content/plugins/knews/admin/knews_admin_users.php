@@ -211,7 +211,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 	
 					if ($results) {
 						
-						$user_id=$wpdb->insert_id; $user_id2=mysql_insert_id(); if ($user_id==0) $user_id=$user_id2;
+						$user_id = $Knews_plugin->real_insert_id();
 						
 						foreach ($extra_fields as $ef) {
 							$Knews_plugin->set_user_field ($user_id, $ef->id, $Knews_plugin->post_safe('cf_' . $ef->id));

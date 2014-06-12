@@ -33,8 +33,8 @@ if ($Knews_plugin) {
 	
 	if (strlen($Knews_plugin->post_safe('testslash', '', 'unsafe'))==5) {
 		
-		$title = mysql_real_escape_string($title);
-		$query = "UPDATE " . KNEWS_NEWSLETTERS . " SET html_mailing='" . mysql_real_escape_string($code) . "', modified='" . $date . "', subject='" . $title . "', newstype='" . $newstype . "' WHERE id=" . $id;
+		$title = esc_sql($title);
+		$query = "UPDATE " . KNEWS_NEWSLETTERS . " SET html_mailing='" . esc_sql($code) . "', modified='" . $date . "', subject='" . $title . "', newstype='" . $newstype . "' WHERE id=" . $id;
 	} else {
 		
 		$query = "UPDATE " . KNEWS_NEWSLETTERS . " SET html_mailing='" . $code . "', modified='" . $date . "', subject='" . $title . "', newstype='" . $newstype . "' WHERE id=" . $id;

@@ -12,15 +12,25 @@ if ($Knews_plugin) {
 
 	$ajaxid = $Knews_plugin->get_safe('ajaxid', 0, 'int');
 	$type = $Knews_plugin->get_safe('type', 'post');
+	$ajaxlang = $Knews_plugin->get_safe('lang', 'en');
 
-	function get_post_knews ($reply, $id, $type) {
+	function get_post_knews ($reply, $id, $type, $lang) {
 		
 		if (is_array($reply) && isset($reply['skip'])) return $reply;
 		
 		global $post, $Knews_plugin, $knewsOptions;
 		
 		$post = get_post($id);
+		
+		$permalink = get_permalink();
+
+		if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='qt' && function_exists('qtrans_convertURL')) {
+			$post = qtrans_use($lang, $post, false);
+			$permalink = qtrans_convertURL($permalink, $lang, true);
+		}
+		
 		setup_postdata($post);
+
 
 		$excerpt_length = apply_filters('excerpt_length', 55);
 		$excerpt = (string) get_the_excerpt();
@@ -57,12 +67,13 @@ if ($Knews_plugin) {
 			}
 		}
 
-		return array('title' => get_the_title(), 'excerpt' => $excerpt, 'content' => $content, 'permalink' => get_permalink($id), 'image' => $featimg);
+		return array('title' => get_the_title(), 'excerpt' => $excerpt, 'content' => $content, 'permalink' => $permalink, 'image' => $featimg);
+
 	}
 
 	if ($ajaxid != 0) {
 
-		$jsondata = apply_filters('knews_get_post', array(), $ajaxid, $type);
+		$jsondata = apply_filters('knews_get_post', array(), $ajaxid, $type, $ajaxlang);
  		echo json_encode($jsondata);
 		
 	} else {

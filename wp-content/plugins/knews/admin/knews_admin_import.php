@@ -588,7 +588,7 @@ function print_state($step, $where) {
 													$query = "INSERT INTO " . KNEWS_USERS . " (email, lang, state, joined, confkey, ip) VALUES ('" . 
 																$email . "','" . $lang . "', $state, '" . $date . "','" . $confkey . "','');";
 													$results = $wpdb->query( $query );
-													$id_user=$wpdb->insert_id; $id_new_user2=mysql_insert_id(); if ($id_user==0) $id_user=$id_new_user2;
+													$id_user = $Knews_plugin->real_insert_id();
 	
 													if ($results) {
 														$update_lists=true; $update_ef=true; $allow_confirm=true;
@@ -648,7 +648,7 @@ function print_state($step, $where) {
 													$names = explode(',',$user_csv[$Knews_plugin->post_safe('list_col_val', 0, 'int')-1]);
 													foreach ($names as $name) {
 														$name=trim($name);
-														$query = "SELECT * FROM " . KNEWS_LISTS . " WHERE name='" . $name . "'";
+														$query = "SELECT * FROM " . KNEWS_LISTS . " WHERE name LIKE '" . $name . "'";
 														$results = $wpdb->get_row( $query );
 														
 														if (isset($results->id)) {
@@ -657,7 +657,7 @@ function print_state($step, $where) {
 															//Add new mailing list
 															$query = "INSERT INTO " . KNEWS_LISTS . " (name, open, open_registered, langs, orderlist) VALUES ('" . $name . "', 0, 0, '', 99);";
 															$results = $wpdb->query( $query );
-															$insert_into_list=$wpdb->insert_id; $insert_into_list2=mysql_insert_id(); if ($insert_into_list==0) $insert_into_list=$insert_into_list2;
+															$insert_into_list = $Knews_plugin->real_insert_id();
 														}
 														$query="INSERT INTO " . KNEWS_USERS_PER_LISTS . " (id_user, id_list) VALUES (" . $id_user . ", " . $insert_into_list . ")";
 														$results = $wpdb->query( $query );
@@ -682,7 +682,7 @@ function print_state($step, $where) {
 														} else {
 															$cf=$user_csv[intval($cf)-1];
 														}
-														$Knews_plugin->set_user_field ($id_user, $ef->id, mysql_real_escape_string($cf));
+														$Knews_plugin->set_user_field ($id_user, $ef->id, esc_sql($cf));
 													}
 												}
 											}
@@ -996,7 +996,7 @@ function add_confirm($id_user) {
 		$mysqldate = $Knews_plugin->get_mysql_date();
 		$query = 'INSERT INTO ' . KNEWS_NEWSLETTERS_SUBMITS . ' (blog_id, newsletter, finished, paused, start_time, users_total, users_ok, users_error, priority, strict_control, emails_at_once, special, end_time,id_smtp) VALUES (' . get_current_blog_id() . ', 0, 0, 1, \'' . $mysqldate . '\', 0, 0, 0, 5, \'\', 10, \'import_confirm\', \'0000-00-00 00:00:00\', ' . $knewsOptions['smtp_default'] . ')';
 		$results = $wpdb->query( $query );
-		$submit_confirmation_id=$wpdb->insert_id; $submit_confirmation_id2=mysql_insert_id(); if ($submit_confirmation_id==0) $submit_confirmation_id=$submit_confirmation_id2;
+		$submit_confirmation_id = $Knews_plugin->real_insert_id();
 		//echo $query;
 	}
 	

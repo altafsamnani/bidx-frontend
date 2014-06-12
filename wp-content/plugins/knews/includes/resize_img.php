@@ -5,6 +5,8 @@ function knews_resize_img_fn($url_img, $width, $height) {
 	$wp_dirs = wp_upload_dir();
 		
 	$blog_url = get_bloginfo('url');
+	if (function_exists( 'qtrans_init')) $blog_url = site_url();
+	
 	if (substr($blog_url, -1, 1) == '/') $blog_url = substr($blog_url, 0, strlen($blog_url)-1);
 	//$absolute_dir = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], 'wp-admin'));
 

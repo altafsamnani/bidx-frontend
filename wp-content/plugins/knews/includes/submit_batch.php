@@ -11,7 +11,7 @@ if (count($targets) > 0) {
 	
 	$results = $wpdb->query( $query );
 	
-	$submit_id=$wpdb->insert_id; $submit_id2=mysql_insert_id(); if ($submit_id==0) $submit_id=$submit_id2;
+	$submit_id = $Knews_plugin->real_insert_id();
 
 	foreach ($targets as $target) {
 		

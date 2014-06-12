@@ -68,9 +68,9 @@ if ($Knews_plugin) {
 			$delay = array('minutes' => 60, 'hours' => 60*60, 'days' => 60*60*24, 'weeks' => 60*60*24*7);
 			$max_date = time() - $delay[$aj->delay_unit] * $aj->delay;
 			
-			$select = 'SELECT u.*';
+			$select = 'SELECT u.id AS real_user_id, u.email, u.joined, u.state';
 			$from = ' FROM ' . KNEWS_USERS . ' u';
-			$left_join = ' LEFT JOIN (SELECT user_id FROM ' . KNEWS_USERS_EVENTS . ' WHERE event = \'' . $aj->event . '\' AND u.joined >= \'' . $aj->last_run . '\') ue ON u.id = ue.user_id';
+			$left_join = ' LEFT JOIN (SELECT user_id FROM ' . KNEWS_USERS_EVENTS . ' WHERE event = \'' . $aj->event . '\' ) ue ON u.id = ue.user_id';
 			$where = " WHERE ue.user_id IS NULL AND u.joined < '" . $Knews_plugin->get_mysql_date($max_date) . "' AND u.joined >= '" . $aj->last_run . "'";
 			
 			if ($aj->target_id != 0) {
@@ -97,15 +97,15 @@ if ($Knews_plugin) {
 
 				$results = $wpdb->query( $query );
 				
-				$submit_id=$wpdb->insert_id; $submit_id2=mysql_insert_id(); if ($submit_id==0) $submit_id=$submit_id2;
+				$submit_id = $Knews_plugin->real_insert_id();
 	
 				foreach ($selected_users as $user) {
 					knews_debug("\r\n" . $user->email . "\r\n");
 					//$target->id;
-					$query = 'INSERT INTO ' . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . ' (submit, user, status) VALUES (' . $submit_id . ', ' . $user->id . ', 0)';
+					$query = 'INSERT INTO ' . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . ' (submit, user, status) VALUES (' . $submit_id . ', ' . $user->real_user_id . ', 0)';
 					$results = $wpdb->query( $query );
 
-					$query = 'INSERT INTO ' . KNEWS_USERS_EVENTS . ' (user_id, event, triggered) VALUES (' . $user->id . ', \'' . $aj->event . '\', \'' . $mysqldate . '\')';
+					$query = 'INSERT INTO ' . KNEWS_USERS_EVENTS . ' (user_id, event, triggered) VALUES (' . $user->real_user_id . ', \'' . $aj->event . '\', \'' . $mysqldate . '\')';
 					$results = $wpdb->query( $query );
 				}
 				
@@ -413,9 +413,9 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 			}
 			
 			knews_debug('- saving the created newsletter' . "\r\n");
-			$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, subject, created, modified, template, html_mailing, html_head, html_modules, html_container, lang, automated, mobile, id_mobile, newstype) VALUES ('" . mysql_real_escape_string($news[0]->name) . " (" . date('d/m/Y') . ")', '" . mysql_real_escape_string($subject) . "', '" . $Knews_plugin->get_mysql_date() . "', '" . $Knews_plugin->get_mysql_date() . "','" . $news[0]->template . "','" . mysql_real_escape_string($news_mod) . "','" . mysql_real_escape_string($news[0]->html_head) . "','" . mysql_real_escape_string($news[0]->html_modules) . "','" . mysql_real_escape_string($news[0]->html_container) . "', '" . $news[0]->lang . "', 1, " . (($mobile) ? '1' : '0') . ", " . $mobile_news_id . ", 'automated')";
+			$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, subject, created, modified, template, html_mailing, html_head, html_modules, html_container, lang, automated, mobile, id_mobile, newstype) VALUES ('" . esc_sql($news[0]->name) . " (" . date('d/m/Y') . ")', '" . esc_sql($subject) . "', '" . $Knews_plugin->get_mysql_date() . "', '" . $Knews_plugin->get_mysql_date() . "','" . $news[0]->template . "','" . esc_sql($news_mod) . "','" . esc_sql($news[0]->html_head) . "','" . esc_sql($news[0]->html_modules) . "','" . esc_sql($news[0]->html_container) . "', '" . $news[0]->lang . "', 1, " . (($mobile) ? '1' : '0') . ", " . $mobile_news_id . ", 'automated')";
 			$results = $wpdb->query($sql);				
-			$id_newsletter = $wpdb->insert_id; $id_newsletter2=mysql_insert_id(); if ($id_newsletter==0) $id_newsletter=$id_newsletter2;
+			$id_newsletter = $Knews_plugin->real_insert_id();
 
 			$query = "UPDATE " . KNEWS_AUTOMATED_POSTS . " SET id_news=" . $id_newsletter . " WHERE id_news=0";
 			$results = $wpdb->query($query);				

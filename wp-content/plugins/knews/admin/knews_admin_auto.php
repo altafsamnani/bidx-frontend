@@ -20,7 +20,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 	if ($Knews_plugin->get_safe('activated')==1 || $Knews_plugin->get_safe('activated',2)==0) {
 		$query = "UPDATE ".KNEWS_AUTOMATED." SET paused=" . $Knews_plugin->get_safe('activated') . " WHERE id=" . $Knews_plugin->get_safe('idauto', 0, 'int');
 		$result=$wpdb->query( $query );
-		echo '<div class="updated"><p>' . (($Knews_plugin->get_safe('activated')==1) ? __('Automated process activated','knews') : __('Automated process deactivated','knews')) . '</p></div>';
+		echo '<div class="updated"><p>' . (($Knews_plugin->get_safe('activated')!=1) ? __('Automated process activated','knews') : __('Automated process deactivated','knews')) . '</p></div>';
 	}
 
 	if ($Knews_plugin->get_safe('auto')==1 || $Knews_plugin->get_safe('auto',2)==0) {
@@ -351,7 +351,9 @@ if ($selector = $Knews_plugin->get_smtp_selector()) {
 <?php 
 			$query = "SELECT * FROM " . KNEWS_AUTOMATED . " WHERE what_is='autoresponder'"; 
 			$results = $wpdb->get_results( $query );
+			$pending=false;
 			if (count($results) != 0) {
+				$pending=true;
 			?>
 				<form method="post" action="admin.php?page=knews_auto&tab=autoresponders">
 				<table class="widefat">

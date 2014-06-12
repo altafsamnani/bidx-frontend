@@ -73,7 +73,7 @@ if (version_compare(get_option('knews_version','0.0.0'), '1.1.0') < 0) {
 				
 				$query = 'INSERT INTO ' . KNEWS_NEWSLETTERS_SUBMITS . ' (blog_id, newsletter, finished, paused, start_time, users_total, users_ok, users_error, priority, strict_control, emails_at_once, special, end_time, id_smtp) VALUES (' . get_current_blog_id() . ', ' . $sp->newsletter . ', ' . $sp->finished . ', ' . $sp->paused . ', \'' . $sp->start_time . '\', ' . $sp->users_total . ', ' . $sp->users_ok . ', ' . $sp->users_error . ', ' . $sp->priority . ', \'' . $sp->strict_control . '\', ' . $sp->emails_at_once . ', \'' . $sp->special . '\', \'' . $sp->end_time . '\', ' . $knewsOptions['smtp_default'] . ')';
 				$results = $wpdb->query( $query );
-				$submit_confirmation_id=$wpdb->insert_id; $submit_confirmation_id2=mysql_insert_id(); if ($submit_confirmation_id==0) $submit_confirmation_id=$submit_confirmation_id2;
+				$submit_confirmation_id = $Knews_plugin->real_insert_id();
 
 				if ($submit_confirmation_id != 0) {
 					$query  = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS_DETAILS . " SET submit=" . $submit_confirmation_id . " WHERE submit=" . $sp->id;

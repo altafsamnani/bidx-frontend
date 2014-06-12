@@ -64,6 +64,8 @@
 				
 				if ((!$mobile && count($results)==0) || ($mobile && count($results)!=0)) {
 					
+					if ($mobile) $newstype = $results[0]->newstype;
+					
 					$template = $Knews_plugin->post_safe('template');
 	
 					if ($template != '') {
@@ -152,13 +154,13 @@
 						if (!knews_is_utf8($headTemplate)) $headTemplate=utf8_encode($headTemplate);
 						if (!knews_is_utf8($codeModule)) $codeModule=utf8_encode($codeModule);
 	
-						$bodyTemplate = mysql_real_escape_string($Knews_plugin->htmlentities_corrected($bodyTemplate));
-						$headTemplate = mysql_real_escape_string($Knews_plugin->htmlentities_corrected($headTemplate));
-						$codeModule = mysql_real_escape_string($Knews_plugin->htmlentities_corrected($codeModule));
+						$bodyTemplate = esc_sql($Knews_plugin->htmlentities_corrected($bodyTemplate));
+						$headTemplate = esc_sql($Knews_plugin->htmlentities_corrected($headTemplate));
+						$codeModule = esc_sql($Knews_plugin->htmlentities_corrected($codeModule));
 	
 						$sql = "INSERT INTO " . KNEWS_NEWSLETTERS . "(name, created, modified, template, html_mailing, html_head, html_modules, html_container, subject, lang, automated, mobile, id_mobile, newstype) VALUES ('" . $name . "', '" . $date . "', '" . $date . "','" . $template . "','" . $bodyTemplate . "','" . $headTemplate . "','" . $codeModule . "','" . $containerModulesTemplate . "','', '" . $Knews_plugin->post_safe('lang') . "', 0, " . (($mobile) ? "1" : "0") . ", 0, '" . $newstype . "')";
 						if ($wpdb->query($sql)) {
-							$id_edit=$wpdb->insert_id; $id_edit2=mysql_insert_id(); if ($id_edit==0) $id_edit=$id_edit2;
+							$id_edit = $Knews_plugin->real_insert_id();
 							
 							$section='add_news';
 							echo '<div class="updated"><p>' . __('The newsletter has been created successfully','knews') . '</p></div>';
