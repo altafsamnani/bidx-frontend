@@ -21,7 +21,8 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 						'classname' => 'bidx_competition_counter_widget',
 						'description' => __( 'Add a expiration clock for your competition' )
 				)
-		);		
+		);
+		add_shortcode( 'competition', array( $this, 'handle_shortcode' ) );
 	}	
 	
 	/**
@@ -91,9 +92,6 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 */
 	function widget($args, $instance) {
 		extract( $args );	
-
-		
-		
 		$competition_id = $instance['competition_id'];
 		$competition_link = $instance['competition_link'];
 		
@@ -103,27 +101,140 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 			_e('No Competition Set','bidx_competition');
 		}
 		else {
-			//get competition by id
-			//read fields
 			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
 			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );
-			$post = get_post($competition_id);
+			$post = get_post($competition_id);		
 			
+			$diff = abs(strtotime($enddate) - time());
 
-			error_log(' >>> '. print_R($startdate, true) );
-		
 			//strip the link to make it relative from the website root
 			
 		?>
-		<h3><?php _e('Countdown','bidx_competition_plugin');?></h3>
-		<div class="bidx countdown-title"><?php echo $post -> post_title ?></div>
-		<div class="bidx countdown-time"><?php echo $startdate ?> - <?php echo $enddate ?></div>
-		<div class="bidx countdown-link button"><a class="btn" href="<?php echo get_permalink( $competition_id ); ?>">View Now</a></div>
+		<div class="well">
+		<h3><?php _e('Competition','bidx_competition_plugin');?></h3>
+		<div class="bidx countdown-title ">
+			<a class="btn" href="<?php echo get_permalink( $competition_id ); ?>"><?php echo $post -> post_title ?></a>
+		</div>
+		<div class="bidx countdown-time">
+			<h4><?php 
+			if ($diff < 0) {
+				_e( 'This competition has expired.','bidx_competition_plugin' );
+				?><a href="#"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
+			}
+			else
+			{
+				$years = floor($diff / (365*60*60*24));
+				$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+				$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+				
+				_e( 'You have','bidx_competition_plugin' );
+				
+				echo '<div>';
+				if ( $years > 0 ) {
+					echo ' '.$years. ' ';
+					if ( $years > 1 ) {
+						_e( 'Years','bidx_competition_plugin' );
+					} else {
+						_e( 'Year','bidx_competition_plugin' );
+					}
+				}
+				if ( $months > 0 ) {
+					echo ' '.$months. ' ';
+					_e( 'Months','bidx_competition_plugin' );
+				}
+				if ( $days > 0 ) {
+					echo ' '.$days. ' ';
+					_e( 'Days','bidx_competition_plugin' );
+				}
+				echo '</div>';
+				_e( 'left to join','bidx_competition_plugin' );
+			}	
+			?>
+			</h4>
+			<a class="btn btn-secondary btn-lg pull-right" href="<?php echo get_permalink( $competition_id ); ?>">View Now</a>
+		</div>
+		
 		<?php
 		}
-		
+		echo '</div>';
 		echo $after_widget;
 	}	
+	
+	/**
+	 * Output rendering for the widget and for the shortcode
+	 */
+	function render_content( $competition_id, $competition_link='' ) {
+
+	if ( empty( $competition_id ) ) {
+		_e('No Competition Set','bidx_competition');
+	}
+	else {
+		$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
+		$enddate = get_post_meta( $competition_id, 'competition_enddate', true );
+		$post = get_post($competition_id);		
+		$diff = abs(strtotime($enddate) - time());
+
+	//strip the link to make it relative from the website root
+		
+	?>
+		<div class="well">
+		<h3><?php _e('Competition','bidx_competition_plugin');?></h3>
+		<div class="bidx countdown-title ">
+			<a class="btn" href="<?php echo get_permalink( $competition_id ); ?>"><?php echo $post -> post_title ?></a>
+		</div>
+		<div class="bidx countdown-time">
+			<h4><?php 
+			if ($diff < 0) {
+				_e( 'This competition has expired.','bidx_competition_plugin' );
+				?><a href="#"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
+			}
+			else
+			{
+				$years = floor($diff / (365*60*60*24));
+				$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+				$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+				
+				_e( 'You have','bidx_competition_plugin' );
+				
+				echo '<div>';
+				if ( $years > 0 ) {
+					echo ' '.$years. ' ';
+					if ( $years > 1 ) {
+						_e( 'Years','bidx_competition_plugin' );
+					} else {
+						_e( 'Year','bidx_competition_plugin' );
+					}
+				}
+				if ( $months > 0 ) {
+					echo ' '.$months. ' ';
+					_e( 'Months','bidx_competition_plugin' );
+				}
+				if ( $days > 0 ) {
+					echo ' '.$days. ' ';
+					_e( 'Days','bidx_competition_plugin' );
+				}
+				echo '</div>';
+				_e( 'left to join','bidx_competition_plugin' );
+			}	
+			?>
+			</h4>
+			<a class="btn btn-secondary btn-lg pull-right" href="<?php echo get_permalink( $competition_id ); ?>">View Now</a>
+		</div>
+		
+		<?php
+		}
+		echo '</div>';
+	}
+	
+	/**
+	 * Called when the shortcode is used
+	 * @param array $atts
+	 */
+	function handle_shortcode( $atts ) {
+		$competition_id = $atts['id'];
+		$this :: render_content( $competition_id );
+	}
+	
 }
 
 /**
