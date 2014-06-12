@@ -46,8 +46,20 @@
     $hasGroups      = count( $groups) > 1;
     $isAdmin        = $sessionSvc->isAdmin();
 
-    // check if the curent user is has joined this group
-    //
+   
+?>
+
+<div class="iconbar pull-right">
+
+<?php
+    
+    $session = BidxCommon::$staticSession;
+    $authenticated  = $session -> authenticated;
+
+    if ( $authenticated === "true" ) {
+
+	// check if the curent user is has joined this group
+    // only when a member has profiles, show the profile dropdown
     $currentGroup   = $this -> sessionData -> data -> currentGroup;
     $groupIds       = array_keys ( (array)$this -> sessionData -> data -> groups );
     $inGroup        = in_array( $currentGroup, $groupIds);
@@ -57,19 +69,7 @@
     $displayName    = $this -> sessionData -> data -> bidxMemberProfile -> firstName;
     $judgeEmails    = explode(",", get_option ('skipso-judge-emails'));
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
-    $showLogout     = true;
-
-    $session = BidxCommon::$staticSession;
-    $authenticated  = $session -> authenticated;
-?>
-
-<div class="iconbar pull-right">
-
-<?php
-    
-    if ( $authenticated === "true" ) {
-        // only when a member has profiles, show the profile dropdown
-        //
+    $showLogout     = true; 
 
         if ( $isAdmin || ( $inGroup && $hasProfiles ) ||  $isJudge) {
  ?>
