@@ -860,7 +860,7 @@
                 ,   totalIncome         = salesRevenue - operationalCosts
                 ;
 
-                $item.find( ".totalIncome .viewEdit" ).text( totalIncome );
+                $item.find( ".totalIncome .viewEdit" ).text( "$ " + totalIncome );
             }
 
             // Select a certain year, update the selected state, show the correct years and disable/enable the buttons
@@ -1687,7 +1687,7 @@
             $item.find( "[name^='" + f + "']" ).val( value );
         } );
 
-        $item.find( ".totalIncome .viewEdit" ).text( data[ "totalIncome" ]);
+        $item.find( ".totalIncome .viewEdit" ).text("$ " + data[ "totalIncome" ]);
     }
 
     // Convert the form values back into the member object
