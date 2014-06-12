@@ -383,7 +383,7 @@ class ContentLoader
         $this->logger->trace ('Custom Post handler ready');
         $this->logger->trace (get_post_types ());
 
-        if ( $_POST [ 'icl_ajx_action' ] && !empty ( $_POST[ 'langs' ] ) )
+        if ( !empty($_POST [ 'icl_ajx_action' ]) && !empty ( $_POST[ 'langs' ] ) )
         {
             // Include WPML API
             //include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );

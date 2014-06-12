@@ -542,21 +542,41 @@ function languages_list_footer()
     $currentLanguage = $sitepress->get_current_language();
     $baseUrl         = str_replace( '/'.$currentLanguage.'/', "/", $_SERVER['REQUEST_URI'] );
     $languages = icl_get_languages("skip_missing=0&orderby=code&link_empty_to=/{%lang}{$baseUrl}");
-    if(!empty($languages)){
-        echo '<div id="footer_language_list"><ul>';
-        foreach($languages as $l){
-            if($l['country_flag_url']){
-                if(!$l['active']) echo '<a href="'.$l['url'].'">';
-                echo '<img src="'.$l['country_flag_url'].'" height="12" alt="'.$l['language_code'].'" width="18" />';
-                if(!$l['active']) echo '</a>';
+    if(!empty($languages))
+    {
+        $html   = '<div id="lang_sel_footer">
+                      <ul>';
+
+        foreach($languages as $l)
+        {
+            $html         .=   '<li>';
+            $anchorStart  =   '';
+            $anchorEnd    =   '';
+
+            if($l['country_flag_url'])
+            {
+                if(!$l['active'])
+                {
+                  $anchorStart  =  '<a href="'.$l['url'].'">';
+                  $anchorEnd    =  '</a>';
+                }
+
+                $imgHtml  =  '<img src="'.$l['country_flag_url'].'" class="iclflag" alt="'.$l['language_code'].'" />';
+                $html     .=  $anchorStart.$imgHtml.$anchorEnd;
+
             }
-            if(!$l['active']) echo '<a href="'.$l['url'].'">';
-            echo icl_disp_language($l['native_name'], $l['translated_name']);
-            if(!$l['active']) echo '</a>';
-            echo '</li>';
+              $nameHtml   =   icl_disp_language($l['native_name'], $l['translated_name']);
+              $html      .=   $anchorStart.$nameHtml.$anchorEnd;
+
+            $html        .= '</li>';
         }
-        echo '</ul></div>';
+
+        $html   .=    '</ul></div>';
+
+        echo $html;
     }
   }
 }
+
+
 
