@@ -2293,8 +2293,12 @@
     var _showView = function( v )
     {
         currentView = v;
-
         $views.hide().filter( ".view" + v.charAt( 0 ).toUpperCase() + v.substr( 1 ) ).show();
+
+        if ( currentView === "show" )
+        {
+            $element.find( ".total-error-message" ).hide();
+        }
     };
 
     // ROUTER

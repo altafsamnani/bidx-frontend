@@ -59,6 +59,7 @@
     <Item value="frmInvalidDigits">Please provide a positive number</Item>
     <Item value="frmInvalidMaxlength">Please provide no more than maximum {0} characters</Item>
     <Item value="frmInvalidMinlength">Please enter at least {0} characters</Item>
+    <Item value="frmInvalidMsg">Please fill all the required fields</Item>
 
 
     <!-- This value is a error Code coming from API for username exists check -->

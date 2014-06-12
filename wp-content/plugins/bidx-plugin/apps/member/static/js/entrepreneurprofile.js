@@ -1087,8 +1087,10 @@
     function reset()
     {
         state = null;
+
         bidx.common.removeAppWithPendingChanges( appName );
 
+        $(".type-bidx").find( ".total-error-message" ).hide();
     }
 
     // Engage!

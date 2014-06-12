@@ -941,8 +941,39 @@
                 $accordionHeading.removeClass( "heading-error" );
                 $accordionHeading.removeData( "data-bidx-errorCount" );
             }
+            updateValidationToasts();
+        }
+
+        // function to show or hide a toast for required fields next to the editControls
+        //
+        function updateValidationToasts()
+        {
+            var $editControls               = $( ".editControls" ).parent()
+            ,   $toast                      = $editControls.find( ".total-error-message" )
+            ,   message                     = bidx.i18n.i( "frmInvalidMsg" )
+            ;
+
+            if ( !$toast.length )
+            {
+                $toast = $editControls
+                    .append( $( "<div />", { class: 'alert alert-danger pull-right total-error-message' }) )
+                    .find( ".total-error-message" )
+                    .text(message)
+                    .hide()
+                ;
+            }
+            if ( errorCount > 0 )
+            {
+                $toast.fadeIn();
+            }
+            else
+            {
+                $toast.hide();
+            }
         }
     }
+
+
 
     // General function to remove validation errors, meant to be used before we show the forms in various edit states
     // TODO: check for any remainings in the $accordionHeading.data( "data-bidx-errorCount" )
