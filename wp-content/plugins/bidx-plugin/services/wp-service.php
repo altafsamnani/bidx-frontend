@@ -653,7 +653,6 @@ function create_bidx_po ()
                 bidx_st_scan_plugin_files ($plugin);
                 $po = plugin_theme_po_action ($pluginStrings, $_GET);
 
-
                 break;
 
             case 'bidxtheme' :
@@ -710,7 +709,7 @@ function bidx_st_scan_plugin_files ($plugin)
         }
     }
 
-    $scan_stats .= __ ('Done scanning files', 'wpml-string-translation') . PHP_EOL;
+    $scan_stats .= __('Done scanning files', 'wpml-string-translation') . PHP_EOL;
 }
 
 function __bidx_scan_plugin_files_results ($string, $domain, $_gettext_context, $file, $line)

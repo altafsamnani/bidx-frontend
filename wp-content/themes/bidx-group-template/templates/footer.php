@@ -1,26 +1,32 @@
 <?php
+    global $sitepress;
+    $footerContent = 'footer';
+    if( $sitepress ) {
 
+        $currentLanguage = $sitepress->get_current_language();
+        $footerContent .= ( $currentLanguage != 'en') ? '_'.$currentLanguage : '';
+    }
 
+    $themeMod = get_theme_mod( $footerContent );
 
-    if ( get_theme_mod( 'footer' ) )
+    languages_list_footer();
+
+    if ( $themeMod )
     {
-             languages_list_footer();
 ?>
 
 <footer>
     <div class="page-footer bg-primary-dark">
         <div class="container">
-                <?php echo get_theme_mod( 'footer' ); ?>
+                <?php echo $themeMod; ?>
         </div>
     </div>
 </footer>
 
 <?php
-    } else {
-?>
 
-<?php
-    languages_list_footer();
+    } else {
+
 ?>
 
 <footer>

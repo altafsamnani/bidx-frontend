@@ -370,7 +370,26 @@ function theme_customizer_analytics_codes( $wp_customize ) {
 }
 add_action( 'customize_register', 'theme_customizer_analytics_codes' );
 
+function add_footer_content( $wp_customize, $lang = '' )
+{
 
+  $wp_customize->add_section( 'footer'.$lang, array(
+            'title'    => __( $lang. 'Footer' ),
+            'priority' => ($lang == '') ? 91 : 93,
+    ) );
+
+  $wp_customize->add_setting( 'footer'.$lang, array(
+      'default'        => '',
+  ) );
+
+
+  $wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'footer'.$lang, array(
+      'label'   => $lang. 'Custom HTML for the footer',
+      'section' => 'footer'.$lang,
+      'settings'   => 'footer'.$lang,
+  ) ) );
+
+}
 
 /**
  * Add footer section with textarea control theme customizer
@@ -383,21 +402,28 @@ add_action( 'customize_register', 'theme_customizer_analytics_codes' );
  * @access public
    */
 function theme_customizer_footer( $wp_customize ) {
-    $wp_customize->add_section( 'footer', array(
-            'title'    => __( 'Footer' ),
-            'priority' => 100,
-    ) );
-    $wp_customize->add_setting( 'footer', array(
-        'default'        => '',
-    ) );
 
+    global $sitepress;
 
-    $wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'footer', array(
-        'label'   => 'Custom HTML for the Footer',
-        'section' => 'footer',
-        'settings'   => 'footer',
-    ) ) );
+    add_footer_content( $wp_customize ); // Add default always
+
+    if( $sitepress) {
+
+      $langArr = $sitepress->get_active_languages();
+      unset( $langArr['en'] );
+
+      if( $langArr)
+      {
+        foreach( $langArr as $langKey => $langVal) {
+
+          $lang   = ($langKey == 'en') ? '': '_'.$langKey; // If english add the original else front_content_%lang%
+
+          add_footer_content( $wp_customize, $lang);
+        }
+      }
+    }
 }
+
 add_action( 'customize_register', 'theme_customizer_footer' );
 
 function add_frontend_content( $wp_customize, $lang = '' )
@@ -405,7 +431,7 @@ function add_frontend_content( $wp_customize, $lang = '' )
 
   $wp_customize->add_section( 'front_content'.$lang, array(
             'title'    => __( $lang. 'Front Main Content Area' ),
-            'priority' => ($lang == '') ? 90 : 91,
+            'priority' => ($lang == '') ? 90 : 92,
     ) );
 
   $wp_customize->add_setting( 'front_content'.$lang, array(

@@ -106,7 +106,7 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
             $rowValues = array (
                 __('Focus countries','bidxplugin') => $this->getMultiValues ($this->exst ($investorDetails->focusCountry), ', ','country'),
                 __('Focus cities','bidxplugin') => $this->getMultiValues($this->exst ($investorDetails->focusCity), ',', null, 'cityTown'),
-                _x('Other preferences','test','bidxplugin') => $this->exst ($investorDetails->additionalPreferences),
+                __('Other preferences','bidxplugin') => $this->exst ($investorDetails->additionalPreferences),
                 __('Number of investments in the last 12 months','bidxplugin') => $this->exst( $investorDetails->numberInvestments ),
                 __('Total investments made in the last 12 months','bidxplugin') => $this->exst( $investorDetails->totalInvestment )
             );
