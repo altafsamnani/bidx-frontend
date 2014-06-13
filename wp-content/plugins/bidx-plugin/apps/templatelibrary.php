@@ -1127,10 +1127,10 @@ class TemplateLibrary
 
         foreach ($matches[0] as $match) {
             if (isset ($tokens[$match])) {
-                $body = str_replace ($match, $tokens[$match], $body);
+                $body = str_replace ($match, htmlspecialchars_decode($tokens[$match]), $body);
             } else {
                 $tokenVal = $this->getBidxToken ($match);
-                $body = str_replace ($match, $tokenVal, $body);
+                $body = str_replace ($match, htmlspecialchars_decode($tokenVal), $body);
             }
         }
 

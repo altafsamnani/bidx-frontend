@@ -27,7 +27,8 @@ $businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
 //
 $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSummary->accessAuthorization : null;
 
-
+// check, is access granted?
+$hasAccess = false;
 
 
 $attachmentItem = <<<EOT
@@ -41,6 +42,7 @@ $attachmentItem = <<<EOT
                     <h3 class="documentName">{{documentName}}</h3>
                     <p class="purpose">{{purpose}}</p>
                     <p class="documentType">{{documentType}}</p>
+                    {{documentLink}}
                 </div>
             </div>
         </div>
@@ -886,6 +888,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             if ( !is_null( $attachment ) ) {
                 $count = 0;
 
+                if ( $requestStatus === "granted")
+                {
+                    $hasAccess = true;
+                }
+
                 foreach ( $attachment as $a ) {
                     if ( $a->bidxMeta->bidxUploadId != NULL ) {
                         $isimage = false;
@@ -908,6 +915,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         $imageOrIcon = ( $isimage )
                                      ? '<img src="'. $this->exst( $a->document ) .'" class="img-rounded documentImage">'
                                      : '<i class="fa fa-file-text-o document-icon"></i>';
+                        $documentLink = ( $hasAccess )
+                                      ? '<a href="'. $this->exst( $a->document ) .'" class="btn btn-sm btn-warning" target="_blank">Download <i class="fa fa-download"></i></a>'
+                                      : '';
+
 
                         // Echo the attachment item with the values from the API
                         //
@@ -919,7 +930,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     '{{documentName}}'          => $this->exst( $a->documentName ),
                                     '{{purpose}}'               => $this->exst( $a->purpose ),
                                     '{{documentType}}'          => $this->getStaticVal( 'documenType', $this->exst( $a->documentType )),
-                                    '{{documentImage}}'         => $imageOrIcon
+                                    '{{documentImage}}'         => $imageOrIcon,
+                                    '{{documentLink}}'          => $documentLink
                                 )
                             )
                         );
