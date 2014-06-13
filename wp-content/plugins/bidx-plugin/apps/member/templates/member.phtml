@@ -6,7 +6,7 @@ $isSuperAdmin   = is_super_admin();
 <div class="block-odd member">
     <div class="clearfix">
         <h1 class="pull-left bidx-page-heading">
-            <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile') : $member; ?></span>
+            <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile','bidxplugin') : $member; ?></span>
 
             <span class="editMember hide"><?php _e('Edit my member profile', 'bidxplugin')?></span>
 

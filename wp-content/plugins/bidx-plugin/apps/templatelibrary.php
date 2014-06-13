@@ -213,11 +213,11 @@ class TemplateLibrary
                 break;
 
             case 'motherlanguage':
-                $values = ($values) ? 'My mother language is  ' . $this->getStaticVal ('language', $values) : '';
+                $values = ($values) ? __('My mother language is  ','bidxplugin') . $this->getStaticVal ('language', $values) : '';
                 break;
 
             case 'language':
-                $values = ($values) ? 'I speak ' . $this->getStaticVal ('language', $values) : '';
+                $values = ($values) ? __('I speak ','bidxplugin') . $this->getStaticVal ('language', $values) : '';
                 break;
 
             case 'nationality':
