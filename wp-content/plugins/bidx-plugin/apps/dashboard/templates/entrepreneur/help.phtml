@@ -2,7 +2,7 @@
     $groupOwnerIds = implode ("|", $this->groupOwnersIdsArr);
 ?>
 <div class="help">
-<!-- 
+<!--
     <p>Welcome to your new bidX group! You can always come here to:</p>
     <div class='alert alert-success'>
         <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
@@ -13,43 +13,43 @@
     <!-- 1. Preference -->
     <div class="row">
         <div class="col-sm-6">
-            <label> Your Entrepreneur profile </label>
-            <p>Use your entrepreneur profile as your business card for other members of this group and platform. Investors and potential business partners will want to know what moves you to do what you do, and about your entrepreneurial background. Feel free to complete it and update it any time.</p>
-            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>?redirect_to=entrepreneur-dashboard#editEntrepreneur/<?php echo $this->exst ($this->sessionData->data->id); ?>">Go to entrepreneur profile</a>
+            <label> <?php _e('Your Entrepreneur profile','bidxplugin')?> </label>
+            <p><?php _e('Use your entrepreneur profile as your business card for other members of this group and platform. Investors and potential business partners will want to know what moves you to do what you do, and about your entrepreneurial background. Feel free to complete it and update it any time.','bidxplugin')?></p>
+            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>?redirect_to=entrepreneur-dashboard#editEntrepreneur/<?php echo $this->exst ($this->sessionData->data->id); ?>"><?php _e('Go to entrepreneur profile','bidxplugin')?></a>
       </div>
     <!-- 2. Keep up with new plans -->
       <div class="col-sm-6">
-        <label> Your business proposal </label>
-        <p>Your business proposal contains the minimum information relevant to your business, enough for visitors to understand what your business is about, where it operates and who is in the entrepreneurial team.</p>
-        <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#businesssummary">Go to business proposal</a>
+        <label> <?php _e('Your business proposal','bidxplugin')?> </label>
+        <p><?php _e('Your business proposal contains the minimum information relevant to your business, enough for visitors to understand what your business is about, where it operates and who is in the entrepreneurial team.','bidxplugin')?></p>
+        <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#businesssummary"><?php _e('Go to business proposal','bidxplugin')?></a>
       </div>
     </div>
 
     <!-- 3. Get alerts in your inbox -->
     <div class="row">
         <div class="col-sm-6">
-            <label>Your company profile</label>
-            <p>You might want to wait with your business proposal, but your are ready to tell the other members about your company if you have one. If that is the case, you can create and publish details about your company without delay.</p>
-            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#company">Go to company profile</a>
+            <label><?php _e('Your company profile','bidxplugin')?></label>
+            <p><?php _e('You might want to wait with your business proposal, but your are ready to tell the other members about your company if you have one. If that is the case, you can create and publish details about your company without delay.','bidxplugin')?></p>
+            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#company"><?php _e('Go to company profile','bidxplugin')?></a>
         </div>
         <div class="col-sm-6">
-            <label>Grow your network</label>
-            <p>One of the advantages of being a member of a bidX group is that you can get in contact with other people that work in the same industry, in the same city or who sell that product that you need. Add these members to your contact list. Make contact with those members to be able to communicate with them through the platform messaging system.</p>
-            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#company">Go to company contacts</a>
+            <label><?php _e('Grow your network','bidxplugin')?></label>
+            <p><?php _e('One of the advantages of being a member of a bidX group is that you can get in contact with other people that work in the same industry, in the same city or who sell that product that you need. Add these members to your contact list. Make contact with those members to be able to communicate with them through the platform messaging system.','bidxplugin')?></p>
+            <a class="btn btn-default pull-right" href="<?php echo _l('member');?>#company"><?php _e('Go to company contacts','bidxplugin')?></a>
         </div>
     </div>
 
     <!-- 5. Access to businesses full information   -->
     <div class="row">
         <div class="col-sm-6">
-            <label> Joining other groups  </label>
-            <p>You might find other interesting groups in the bidX platform. You are free to join them without having to register or login (if you already are). It is worth being aware that your personal and business data will be visible to those group members as soon as you join.</p>
+            <label> <?php _e('Joining other groups','bidxplugin')?>  </label>
+            <p><?php _e('You might find other interesting groups in the bidX platform. You are free to join them without having to register or login (if you already are). It is worth being aware that your personal and business data will be visible to those group members as soon as you join.','bidxplugin')?></p>
         </div>
     <!-- 6. Contact your group moderator    -->
         <div class="col-sm-6">
-            <label> Support  </label>
-            <p>If you have questions about the tools, or encounter any problem, the group moderator will be able to help you.</p>
-            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a>
+            <label> <?php _e('Support','bidxplugin')?>  </label>
+            <p><?php _e('If you have questions about the tools, or encounter any problem, the group moderator will be able to help you.','bidxplugin')?></p>
+            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail/compose/recipients=<?php echo $groupOwnerIds;?>"><?php _e('Send message to group moderator','bidxplugin')?></a>
         </div>
     </div>
 
