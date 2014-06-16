@@ -5,14 +5,14 @@
     //
     $profiles = array(
         'bidxInvestorProfile'        => array(
-            'Investor Dashboard'     => '/investor-dashboard'
+            'Investor dashboard'     => _l('investor-dashboard')
         ),
         'bidxEntrepreneurProfile'    => array(
-            'Entrepreneur Dashboard' => '/entrepreneur-dashboard'
-        //,   'Mentor Dashboard'       => '/mentordashboard'
+            'Entrepreneur dashboard' => _l('entrepreneur-dashboard')
+       // ,   'Mentor Dashboard'       => _l('mentor-dashboard')
         ),
         'bidxMentorProfile'          => array(
-        //    'Mentor Dashboard'       => '/mentordashboard'
+       //     'Mentor Dashboard'       => _l('mentor-dashboard')
         )
     );
 
@@ -46,13 +46,13 @@
     $hasGroups      = count( $groups) > 1;
     $isAdmin        = $sessionSvc->isAdmin();
 
-   
+
 ?>
 
 <div class="iconbar pull-right">
 
 <?php
-    
+
     $session = BidxCommon::$staticSession;
     $authenticated  = $session -> authenticated;
 
@@ -69,7 +69,7 @@
     $displayName    = $this -> sessionData -> data -> bidxMemberProfile -> firstName;
     $judgeEmails    = explode(",", get_option ('skipso-judge-emails'));
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
-    $showLogout     = true; 
+    $showLogout     = true;
 
         if ( $isAdmin || ( $inGroup && $hasProfiles ) ||  $isJudge) {
  ?>
@@ -217,7 +217,7 @@
             </div>
 
 
-<?php 
+<?php
     }
 ?>
 </div>

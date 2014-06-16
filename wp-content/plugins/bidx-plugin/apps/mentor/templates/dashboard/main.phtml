@@ -1,6 +1,6 @@
 <div id="mentor-dashboard">
 
-    <h1 class="pagetitle">My mentor dashboard</h1>
+    <h1 class="pagetitle"><?php _e('My mentor dashboard','bidxplugin');?></h1>
     <div class="dashboard">
 
         <div class="view viewError alert alert-warning">
@@ -15,74 +15,74 @@
                          <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3 id="myModalLabel"><?php _e ('Send request') ?></h3>
+                                <h3 id="myModalLabel"><?php _e ('Send request','bidxplugin') ?></h3>
                             </div>
                             <div class="modal-body">
                                 <p>
-                                    <?php _e ('You are about to %action% the request. Are you sure?') ?>
+                                    <?php _e ('You are about to %action% the request. Are you sure?','bidxplugin') ?>
                                 </p>
                             </div>
 
                             <div class="modal-footer">
-                                <a class="btn" href="#dashboard/mentor/"><?php _e ('Cancel') ?></a>
-                                <a href="#" class="btn btn-primary btn-request" data-href="#dashboard/sendRequest/" ><?php _e ('Send request') ?></a>
+                                <a class="btn" href="#dashboard/mentor/"><?php _e ('Cancel','bidxplugin') ?></a>
+                                <a href="#" class="btn btn-primary btn-request" data-href="#dashboard/sendRequest/" ><?php _e ('Send request','bidxplugin') ?></a>
                             </div>
                          </div>
                     </div>
                 </div>
         </div>
         <!-- Modal -->
-        <div class="modalView modalConfirmFeedback">                
+        <div class="modalView modalConfirmFeedback">
             <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackLabel" aria-hidden="true">
                 <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h3 id="feedbackLabel"><?php _e ('Add feedback') ?></h3>
+                            <h3 id="feedbackLabel"><?php _e ('Add feedback','bidxplugin') ?></h3>
                         </div>
                         <div class="modal-body">
                             <p>
-                                <?php _e ('You are about to add the feedback. Are you sure?') ?>
+                                <?php _e ('You are about to add the feedback. Are you sure?','bidxplugin') ?>
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <a href="#" class="btn btn-cancel btn-cancel-feedback" data-href="#dashboard/addFeedback/"><?php _e ('Change feedback') ?></a>
-                            <a href="#" class="btn btn-primary btn-send-feedback" data-href="#dashboard/sendFeedback/" ><?php _e ('Add feedback') ?></a>
+                            <a href="#" class="btn btn-cancel btn-cancel-feedback" data-href="#dashboard/addFeedback/"><?php _e ('Change feedback','bidxplugin') ?></a>
+                            <a href="#" class="btn btn-primary btn-send-feedback" data-href="#dashboard/sendFeedback/" ><?php _e ('Add feedback','bidxplugin') ?></a>
                         </div>
                      </div>
                 </div>
             </div>
         </div>
         <!-- View feedback modal -->
-        <div class="modalView modalListFeedback">                
+        <div class="modalView modalListFeedback">
             <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackLabel" aria-hidden="true">
                 <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header">
                             <a  class="close" href="#dashboard/cancel">×</a>
-                            <h3 id="feedbackLabel"><?php _e ('View feedback') ?></h3>
+                            <h3 id="feedbackLabel"><?php _e ('View feedback','bidxplugin') ?></h3>
                         </div>
                         <div class="modal-body">
                             <form action="">
                                 <!-- MESSAGE LIST -->
                                 <ul class="list media-list ">
-                                    <li class="media">                                       
+                                    <li class="media">
                                         <div class="pull-left">
                                             <?php _e('Loading...','bidxplugin')?>
                                         </div>
                                     </li>
                                 </ul>
-                            </form>                          
+                            </form>
                         </div>
-                        <div class="modal-footer">                        
-                            <a href="#dashboard/cancel" class="btn btn-view-feedback" href=""><?php _e ('Close') ?></a>
+                        <div class="modal-footer">
+                            <a href="#dashboard/cancel" class="btn btn-view-feedback" href=""><?php _e ('Close','bidxplugin') ?></a>
                         </div>
                      </div>
                 </div>
             </div>
         </div>
         <!-- Modal -->
-        <div class="modalView modalSendFeedback">                
+        <div class="modalView modalSendFeedback">
             <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                      <div class="modal-content">
@@ -90,7 +90,7 @@
                             <a class="btn btnRequestCancel pull-right" href="#dashboard/cancel">
                                 <button type="button" class="close">×</button>
                             </a>
-                            <h3 id="myModalLabel"><?php _e ('Send feedback') ?></h3>
+                            <h3 id="myModalLabel"><?php _e ('Send feedback','bidxplugin') ?></h3>
                         </div>
                         <div class="modal-body">
                             <form class="frmsendFeedback">
@@ -109,8 +109,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <a class="btn btn-feedback-cancel" href="#dashboard/cancel"><?php _e ('Cancel') ?></a>
-                            <a class="btn btn-primary btn-feedback-submit"  ><?php _e ('Add feedback') ?></a> <!-- data-href="#mentoringRequest/sendRequest/" -->
+                            <a class="btn btn-feedback-cancel" href="#dashboard/cancel"><?php _e ('Cancel','bidxplugin') ?></a>
+                            <a class="btn btn-primary btn-feedback-submit"  ><?php _e ('Add feedback','bidxplugin') ?></a> <!-- data-href="#mentoringRequest/sendRequest/" -->
                         </div>
                      </div>
                 </div>
@@ -124,7 +124,7 @@
           </div>
         </div>
         <div id="mentorDashboardAccordion">
-            <!-- Help -->        
+            <!-- Help -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <a class="btn-block" data-toggle="collapse" data-parent="#mentorDashboardAccordion" href="#mentorDashboardAccordion-Help"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
@@ -134,7 +134,7 @@
                        <?php $this->render('dashboard/help.phtml'); ?>
                     </div>
                  </div>
-            </div>           
+            </div>
               <?php ($this->isMentor)       ? $this->render('dashboard/mentor-mentoring.phtml')       : '' ?>
               <?php ($this->isEntrpreneur)  ? $this->render('dashboard/entrepreneur-mentoring.phtml') : '' ?>
               <?php ($this->isGroupOwner)   ? $this->render('dashboard/groupowner-mentoring.phtml')   : '' ?>
@@ -159,7 +159,7 @@
 <!--
 <li class="media %emailRead%" >
     <div class="row">
-        <div class="col-sm-12">           
+        <div class="col-sm-12">
             <div class="media-body" >
                 <div class="row">
                     <div class="col-sm-9">
@@ -177,10 +177,10 @@
                     <div class="col-sm-12 panel-collapse collapse" id="feedback-%accordion-id%">
                         <span>%subject%</span>
                     </div>
-                </div>                    
-            </div>           
+                </div>
+            </div>
         </div>
-    </div>   
+    </div>
 </li>
 -->
 </script>

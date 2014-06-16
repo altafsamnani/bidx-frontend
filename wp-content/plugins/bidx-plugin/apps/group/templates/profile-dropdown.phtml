@@ -1,26 +1,26 @@
-<?php 
-	
+<?php
+
 
 ?>
 
 <ul class="memberInfo pull-right nav nav-pills">
 	<li class="dropdown dropdown-hover">
-   		<a href="#" class="dropdown-toggle" 
-   			data-toggle="dropdown"><?php echo $this -> sessionData -> data -> displayName?></a> 
+   		<a href="#" class="dropdown-toggle"
+   			data-toggle="dropdown"><?php echo $this -> sessionData -> data -> displayName?></a>
    		<ul class="dropdown-menu">
-			<li><a href="/member">Profile</a></li>
+			<li><a href="/member"><?php _e('Profile', 'bidxplugin')?></a></li>
 <?php
-if (property_exists($this -> sessionData, 'data') && 
+if (property_exists($this -> sessionData, 'data') &&
 	false != ($roles = $this -> sessionData -> data -> roles)) {
-	if ( in_array( 'GroupAdmin', $roles ) || 
+	if ( in_array( 'GroupAdmin', $roles ) ||
 		 in_array( 'GroupOwner', $roles ) ) {
-?>		
-            <li><a href="/wp-admin">Content</a></li>
+?>
+            <li><a href="/wp-admin"><?php _e('Content', 'bidxplugin')?></a></li>
 <?php
 	}
 }
 ?>
-			<li><a href="<?php echo wp_logout_url('/'); ?>">Logout</a></li>
+			<li><a href="<?php echo wp_logout_url('/'); ?>"><?php _e('Logout', 'bidxplugin')?></a></li>
    		</ul>
    	</li>
 </ul>

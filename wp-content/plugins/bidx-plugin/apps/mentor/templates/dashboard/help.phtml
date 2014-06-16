@@ -2,25 +2,25 @@
     $groupOwnerIds = implode ("|", $this->groupOwnersIdsArr);
 ?>
 <div class="help">
-    <p>Welcome to your new bidX group! You can always come here to:</p>
+    <p><?php _e('Welcome to your new bidX group! You can always come here to:','bidxplugin');?></p>
     <div class='alert alert-success'>
         <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
         <?php echo get_site_option ('investor-notification', 'Go and set the investor notification in Network Admin -> Settings -> Bidx !! Work Needed') ?>
     </div>
-    <p>Congratulations! You are now a registered mentor in the bidX platform. Get familiar with your new tools:</p>
+    <p><?php _e('Congratulations! You are now a registered mentor in the bidX platform. Get familiar with your new tools:','bidxplugin');?></p>
 
     <!-- 1. Preference -->
     <div class="row">
         <div class="col-sm-6">
-             <label> Update your preferences anytime</label>
-             <p>If you want to update your preferences, you can easily do that from your dashboard. Specify different preferences to get new opportunities.</p>
-             <a class="btn btn-default pull-right" href="<?php echo _l('member');?>?redirect_to=mentor-dashboard#editMentor/<?php echo $this->exst ($this->sessionData->data->id); ?>">Go to mentor preferences</a>
+             <label> <?php _e('Update your preferences anytime','bidxplugin');?></label>
+             <p><?php _e('If you want to update your preferences, you can easily do that from your dashboard. Specify different preferences to get new opportunities.','bidxplugin');?></p>
+             <a class="btn btn-default pull-right" href="<?php echo _l('member');?>?redirect_to=mentor-dashboard#editMentor/<?php echo $this->exst ($this->sessionData->data->id); ?>"><?php _e('Go to mentor preferences','bidxplugin');?></a>
          </div>
          <!-- 2. Keep up with new plans -->
         <div class="col-sm-6">
-            <label> Keep up with new plans</label>
-            <p>bidX finds  your best suited plans as soon as these are published. We match your mentor profile data with that of new businesses. The section Recommended plans in your dashboard lists the plans that could be interesting for you.</p>
-            <a class="btn btn-default pull-right" data-toggle="collapse" data-parent="#mentorDashboardAccordion" href="#mentorDashboardAccordion-RecommendedBusiness">Go to recommended plans</a>
+            <label> <?php _e('Keep up with new plans','bidxplugin');?></label>
+            <p><?php _e('bidX finds  your best suited plans as soon as these are published. We match your mentor profile data with that of new businesses. The section Recommended plans in your dashboard lists the plans that could be interesting for you.','bidxplugin');?></p>
+            <a class="btn btn-default pull-right" data-toggle="collapse" data-parent="#mentorDashboardAccordion" href="#mentorDashboardAccordion-RecommendedBusiness"><?php _e('Go to recommended plans','bidxplugin');?></a>
         </div>
     </div>
 
@@ -28,15 +28,15 @@
     <!-- 3. Get alerts in your inbox -->
     <div class="row">
         <div class="col-sm-6">
-            <label>Get alerts in your inbox</label>
-            <p>We will also send you weekly updates to your inbox. These messages contain the list of businesses that have been published during the last seven days.  If during your registration you accepted that we could send you emails to your personal inbox, you will receive those alerts there too. If you didn’t do so during your registration, but you would like to receive them now, you can change that setting at your Account Settings</p>
-           <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail">Go to inbox</a>
+            <label><?php _e('Get alerts in your inbox','bidxplugin');?></label>
+            <p><?php _e('We will also send you weekly updates to your inbox. These messages contain the list of businesses that have been published during the last seven days.  If during your registration you accepted that we could send you emails to your personal inbox, you will receive those alerts there too. If you didn’t do so during your registration, but you would like to receive them now, you can change that setting at your Account Settings','bidxplugin');?></p>
+           <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail"><?php _e('Go to inbox','bidxplugin');?></a>
         </div>
     <!-- 4. One click, one contact -->
         <div class="col-sm-6">
-            <label>One click, one contact</label>
-            <p>Invite other members to become your contacts and grow your own network. Click on the Contact link at the member profiles and an invitation to become a contact will be send to them.</p>
-            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>/#mail/contacts">Go to contacts</a>
+            <label><?php _e('One click, one contact','bidxplugin');?></label>
+            <p><?php _e('Invite other members to become your contacts and grow your own network. Click on the Contact link at the member profiles and an invitation to become a contact will be send to them.','bidxplugin');?></p>
+            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>/#mail/contacts"><?php _e('Go to contacts','bidxplugin');?></a>
         </div>
 
     </div>
@@ -44,15 +44,15 @@
     <!-- 5. Access to businesses full information   -->
     <div class="row">
         <div class="col-sm-6">
-            <label> Access to businesses full information  </label>
-            <p>If you see a business that you are interested about, you can request the entrepreneur to grant you access to view full data of the business. This will enclose full business and financial plan as well as the CV of the entrepreneur.  Click the link Request access that you will see on the business page. A message will be sent to the entrepreneur with your request. Plans you have requested access to will be listed in the section Contacted businesses in your dashboard</p>
-           <a class="btn btn-default pull-right" data-toggle="collapse" data-parent="#mentorDashboardAccordion" href="#mentorDashboardAccordion-BusinessesContacted">Go to contacted businesses</a>
+            <label> <?php _e('Access to businesses full information','bidxplugin');?>  </label>
+            <p><?php _e('If you see a business that you are interested about, you can request the entrepreneur to grant you access to view full data of the business. This will enclose full business and financial plan as well as the CV of the entrepreneur.  Click the link Request access that you will see on the business page. A message will be sent to the entrepreneur with your request. Plans you have requested access to will be listed in the section Contacted businesses in your dashboard','bidxplugin');?></p>
+           <a class="btn btn-default pull-right" data-toggle="collapse" data-parent="#mentorDashboardAccordion" href="#mentorDashboardAccordion-BusinessesContacted"><?php _e('Go to contacted businesses','bidxplugin');?></a>
         </div>
     <!-- 6. Contact your group moderator    -->
         <div class="col-sm-6">
-            <label> Contact your group moderator</label>
-            <p>For any additional questions over this group, functionalities, problems or suggestions, please contact your group moderator. He or she will be delighted to help you. If you encounter a problem with the platform, the group moderator will forward it to the bidX technical support.</p>
-            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail/compose/recipients=<?php echo $groupOwnerIds;?>">Send message to group moderator</a>
+            <label> <?php _e('Contact your group moderator','bidxplugin');?></label>
+            <p><?php _e('For any additional questions over this group, functionalities, problems or suggestions, please contact your group moderator. He or she will be delighted to help you. If you encounter a problem with the platform, the group moderator will forward it to the bidX technical support.','bidxplugin');?></p>
+            <a class="btn btn-default pull-right" href="<?php echo _l('mail');?>#mail/compose/recipients=<?php echo $groupOwnerIds;?>"><?php _e('Send message to group moderator','bidxplugin');?></a>
         </div>
 
     </div>
