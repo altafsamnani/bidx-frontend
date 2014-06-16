@@ -182,7 +182,7 @@
 		*/
 		function meta_box_callback( $post ) {
 		
-			// Add an nonce field so we can check for it later.
+			// Add an nonce field so we can check for it later. bidxcompetition_meta_box_nonce
 			wp_nonce_field( 'bidxcompetition_meta_box', 'bidxcompetition_meta_box_nonce' );
 		
 			/*
@@ -215,7 +215,7 @@
 		 */
 		function bidxcompetition_save_meta_box_data( $post_id ) {
 		
-			// Verify that the nonce is valid.
+			// Verify that the nonce is valid. bidxcompetition_meta_box_nonce
 			if ( ( ! isset( $_POST['bidxcompetition_meta_box_nonce'] ) && 
 				 !wp_verify_nonce( $_POST['bidxcompetition_meta_box_nonce'], 'bidxcompetition_meta_box' ) ) ) {
 				return;

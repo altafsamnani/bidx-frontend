@@ -9,6 +9,8 @@
  */
 class BidxCompetitionCounterWidget extends WP_Widget {
 	
+	private $diff = 0;
+	
 	/**
 	 * Constructor
 	 */
@@ -29,7 +31,7 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 * Maintenance of the widget. The following fields can be set in the admin:
 	 * - Name of the competition (if none show error)
 	 * - Competition link (optional)
-	 * 
+	 * - Counter type (flipclock)
 	 * 
 	 * @param WP_Widget $instance
 	 */
@@ -113,49 +115,29 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
 			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );	
 			
-			$diff = abs(strtotime($enddate) - time());
+			$this->diff = abs(strtotime($enddate) - time());
 	
 		//TODO strip the link to make it relative from the website root
 		
 	?>
-		<div class="well">
+		<div class="competition">
 		<h3><?php _e('Competition','bidx_competition_plugin');?></h3>
 		<div class="bidx countdown-title ">
 			<a class="btn" href="<?php echo get_permalink( $competition_id ); ?>"><?php echo $post -> post_title ?></a>
 		</div>
 		<div class="bidx countdown-time">
 			<h4><?php 
-			if ($diff < 0) {
+			if ($this->diff < 0) {
 				_e( 'This competition has expired.','bidx_competition_plugin' );
 				?><a href="#"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
 			}
 			else
 			{
-				$years = floor($diff / (365*60*60*24));
-				$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-				$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-				
-				_e( 'You have','bidx_competition_plugin' );
-				
-				echo '<div>';
-				if ( $years > 0 ) {
-					echo ' '.$years. ' ';
-					if ( $years > 1 ) {
-						_e( 'Years','bidx_competition_plugin' );
-					} else {
-						_e( 'Year','bidx_competition_plugin' );
-					}
-				}
-				if ( $months > 0 ) {
-					echo ' '.$months. ' ';
-					_e( 'Months','bidx_competition_plugin' );
-				}
-				if ( $days > 0 ) {
-					echo ' '.$days. ' ';
-					_e( 'Days','bidx_competition_plugin' );
-				}
-				echo '</div>';
-				_e( 'left to join','bidx_competition_plugin' );
+				add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );			
+				?>
+				<link rel="stylesheet" href="<?php echo plugins_url() ?>/bidx-competition-plugin/js/flipclock/flipclock.css">
+				<div class="your-clock"></div>		
+				<?php 
 			}	
 			?>
 			</h4>
@@ -165,6 +147,11 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		<?php
 		}
 		echo '</div>';
+	}
+	
+	function add_clock_footer_scripts() {
+		echo "<script src='".plugins_url() ."/bidx-competition-plugin/js/flipclock/flipclock.min.js'></script>";
+		echo "<script>var clock = jQuery('.your-clock').FlipClock(". $this->diff .", { clockFace: 'DailyCounter', countdown: true });</script>";
 	}
 	
 	/**
