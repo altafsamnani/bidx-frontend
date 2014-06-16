@@ -26,23 +26,25 @@
 		const COMPETITION_END_KEY = 'enddate';
 		const COMPETITION_TYPE_KEY = 'type';	
 		
-		public function __construct() {
-			
+		/**
+		 * Constructor sets up the actions for the backend functions and the widgets
+		 * 
+		 * TODO load screen for competition with custom help sidebar : set_help_sidebar( $content )
+		 * TODO load screen for competition overview with link to monitoring
+		 * 
+		 */
+		public function __construct() {		
 			add_action( 'add_meta_boxes', array( $this, 'bidxcompetition_add_meta_box' ) );
-			add_action( 'save_post', array( $this, 'bidxcompetition_save_meta_box_data' ) );
-			
+			add_action( 'save_post', array( $this, 'bidxcompetition_save_meta_box_data' ) );		
 			add_action( 'init', array( $this, 'create_competition' ) );
 			add_action( 'widgets_init', array( $this, 'create_competition_widget' ) );
-	
 		}
 		
 		/**
 		 * List the competitions in this site
 		 */
-		static function get_competitions_list() {
-			
-			return new WP_Query( array( 'post_type' => 'competition' ) );
-			
+		static function get_competitions_list() {		
+			return new WP_Query( array( 'post_type' => 'competition' ) );		
 		}
 		
 		/**
@@ -50,28 +52,30 @@
 		 */
 		function create_competition() {
 			
-			//TODO move all labelling local
-			$labels = array(
-					'name'                => _x( 'Competitions', 'Competitions', 'bidx_competition' ),
-					'singular_name'       => _x( 'Competition', 'Competition', 'bidx_competition' ),
-					'menu_name'           => __( 'Competitions', 'bidx_competition' ),
-					'parent_item_colon'   => __( 'Parent Items:', 'bidx_competition' ),
-					'all_items'           => __( 'All Competitions', 'bidx_competition' ),
-					'view_item'           => __( 'View Competition', 'bidx_competition' ),
-					'add_new_item'        => __( 'Add New Competition', 'bidx_competition' ),
-					'add_new'             => __( 'Add New', 'bidx_competition' ),
-					'edit_item'           => __( 'Edit Competition', 'bidx_competition' ),
-					'update_item'         => __( 'Update Competition', 'bidx_competition' ),
-					'search_items'        => __( 'Search Competition', 'bidx_competition' ),
-					'not_found'           => __( 'Competition not found', 'bidx_competition' ),
-					'not_found_in_trash'  => __( 'Competition not found in Trash', 'bidx_competition' ),
-			);
-			
+			//TODO add support for thumbnail
 			$args = array(
-					'label'               => __( 'post_type', 'text_domain' ),
-					'description'         => __( 'Competition definition', 'text_domain' ),
-					'labels'              => $labels,
-					'supports'            => array( ),
+					'label'               => __( 'post_type', 'bidx_competition' ),
+					'description'         => __( 'Competition definition', 'bidx_competition' ),
+					'labels'              => array(
+							'name'                => _x( 'Competitions', 'Competitions', 'bidx_competition' ),
+							'singular_name'       => _x( 'Competition', 'Competition', 'bidx_competition' ),
+							'menu_name'           => __( 'Competitions', 'bidx_competition' ),
+							'parent_item_colon'   => __( 'Parent Items:', 'bidx_competition' ),
+							'all_items'           => __( 'All Competitions', 'bidx_competition' ),
+							'view_item'           => __( 'View Competition', 'bidx_competition' ),
+							'add_new_item'        => __( 'Add New Competition', 'bidx_competition' ),
+							'add_new'             => __( 'Add New', 'bidx_competition' ),
+							'edit_item'           => __( 'Edit Competition', 'bidx_competition' ),
+							'update_item'         => __( 'Update Competition', 'bidx_competition' ),
+							'search_items'        => __( 'Search Competition', 'bidx_competition' ),
+							'not_found'           => __( 'Competition not found', 'bidx_competition' ),
+							'not_found_in_trash'  => __( 'Competition not found in Trash', 'bidx_competition' ),
+					),
+					'supports'            => array( 
+							'thumbnail',  //theme must also support post-thumbnails
+							'title', 
+							'editor' 
+					),
 					'hierarchical'        => true,
 					'public'              => true,
 					'show_ui'             => true,
@@ -88,20 +92,46 @@
 			);
 			register_post_type ( self::POST_TYPE, $args );
 			
-			register_post_type( 'judges',
-				array(
-					'public' => true,
-					'supports' => array( 'thumbnail', 'title', 'excerpt', 'post' ),
-					'show_in_menu' => 'edit.php?post_type=competition',
-					'menu_icon' => 'dashicons-awards',
-					'exclude_from_search' => true,
-					'labels' => array(
-						'name' 			  => _e( 'Judges', 'bidx_competition' ),
-						)
-				)
-			);
+// 			register_post_type( 'judges',
+// 				array(
+// 					'public' => true,
+// 					'supports' => array( 'thumbnail', 'title', 'excerpt', 'post' ),
+// 					'show_in_menu' => 'edit.php?post_type=competition',
+// 					'menu_icon' => 'dashicons-awards',
+// 					'exclude_from_search' => true,
+// 					'labels' => array(
+// 						'name' 			  => _e( 'Judges', 'bidx_competition' ),
+// 						)
+// 				)
+// 			);
+			
+
+//			Move to top			
+//			add_action('admin_menu', array( $this, 'register_monitoring_page' ) );
+			
+
+			
 			
 		}
+
+		function register_monitoring_page() {
+			add_submenu_page( 'edit.php?post_type=competition', //parent slug 
+							  'Competition Monitoring', 		//page title
+							  'Competition Monitoring',			//menu title 
+							  'manage_options',					//capability 
+							  'competition-monitoring-page',	//menu-slug 
+							  'monitoring_page_callback'		//callback function 
+							);
+		}
+			
+		function monitoring_page_callback() {
+				
+			echo '<div class="wrap"><div id="icon-tools" class="icon32"></div>';
+			echo '<h2>My Custom Submenu Page</h2>';
+			echo '</div>';
+				
+		}		
+		
 		
 		function create_competition_widget() {
 			register_widget( 'BidxCompetitionCounterWidget' );	
@@ -113,10 +143,10 @@
 		}
 		
 		/**
-		 * Currently nothing assigned
+		 * Initialize database object initialization.
 		 */
 		function load() {
-		
+			CompetitionRegistration :: initialize();
 		}
 			
 		/**
@@ -138,7 +168,7 @@
 		
 			add_meta_box(
 				'bidxcompetition_sectionid',
-				__( 'Competition Settings', 'myplugin_textdomain' ),
+				__( 'Competition Settings', 'bidx_competition' ),
 				array( $this, 'meta_box_callback' ),
 				$this :: POST_TYPE,
 				'side'
@@ -165,13 +195,13 @@
 			
 			//do HTML inlining here
 			//add default values
-			
+			echo '<p>'. _e('These settings are needed for a competition to work.','bidx-competition') . '</p>';
 			echo '<p><label for="competition_startdate">';
-			_e( 'Startdate (optional)', 'myplugin_textdomain' );
+			_e( 'Startdate (optional)', 'bidx_competition' );
 			echo '</label> ';
 			echo '<input type="date" id="competition_startdate" name="competition_startdate" value="' . esc_attr( $startdate ) . '" class="bidx-datepicker" />';
 			echo '</p><p><label for="competition_enddate">';
-			_e( 'Enddate (mandatory)', 'myplugin_textdomain' );
+			_e( 'Enddate (mandatory)', 'bidx_competition' );
 			echo '</label> ';
 			echo '<input type="date" id="competition_enddate" name="competition_enddate" value="' . esc_attr( $enddate ) . '" class="bidx-datepicker" />';
 			echo '</p>';

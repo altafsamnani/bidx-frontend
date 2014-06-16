@@ -271,7 +271,18 @@ class BidxCompetitionRegistrationWidget extends WP_Widget {
 	 * @param string $competition_id
 	 */
 	function render_content( $competition_id ) {
+
 		//check if user is logged in --> link to login with link to status page
+		if ( is_user_logged_in() ) {
+$user_id = ''; //get from environment
+			$registration = new CompetitionRegistration( $competition_id );
+			if ( $registration->is_user_in_competition( $user_id ) ) {
+
+			}
+
+		}
+
+
 		//check if user has already joined this competition --> link to status page
 		//check if competition is still over time --> link to status page
 		//render registration output
