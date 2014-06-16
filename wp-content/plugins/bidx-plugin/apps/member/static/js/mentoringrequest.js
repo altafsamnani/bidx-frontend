@@ -189,33 +189,50 @@
         } );
 
         // Populate the selects
-        $focusIndustry.bidx_chosen(
+        if( $focusIndustry )
         {
-            dataKey:            "industry"
-        });
+            $focusIndustry.bidx_chosen(
+            {
+                dataKey:            "industry"
+            });
 
-        $focusIndustry.trigger( "chosen:updated" );
-
+            $focusIndustry.trigger( "chosen:updated" );
+        }
        /*******
         Add Dropdown Options for Recipients , Prepare dropdown
         *******/
+        if( $businessSummary )
+        {
+            $businessSummary.chosen({
+                                        placeholder_text_single : bidx.i18n.i( "msgWaitForSave" )
+                                    ,   width                   : "95%"
+                                    ,   disable_search_threshold : 10
+                                    });
 
-        $businessSummary.chosen({
-                                    placeholder_text_single : bidx.i18n.i( "msgWaitForSave" )
-                                ,   width                   : "95%"
-                                });
-
-
-        _getBusinessPlans( )
-            .done( function( listBpItems )
+            if ( visitingMemberPageId !== loggedInMemberId  )
             {
-                bidx.utils.log('listBpItems',listBpItems);
-                $businessSummary.append( listBpItems );
 
-                $businessSummary.trigger( "chosen:updated" );
+                getMentoringRequest(
+                {
+                    callback    :   function()
+                                    {
+                                        var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
+                                        if( bpLength )
+                                        {
+                                            _getBusinessPlans( )
+                                            .done( function( listBpItems )
+                                            {
 
-            } );
+                                                bidx.utils.log('listBpItems',listBpItems);
+                                                $businessSummary.append( listBpItems );
+                                                $businessSummary.trigger( "chosen:updated" );
 
+                                            } );
+                                        }
+                                    }
+                });
+            }
+        }
     }
 
 
@@ -244,15 +261,11 @@
         //
         var $validator = $editForm.validate(
         {
-            debug: true
+            debug: false
         ,   ignore: ".chosen-search input"
         ,   rules:
             {
                 "summary":
-                {
-                    required:               true
-                }
-            ,   "businessSummary":
                 {
                     required:               true
                 }
@@ -289,13 +302,23 @@
                         $btnCancel.removeClass( "disabled" );
                         $btnSave.text(btnHtml);
 
+                        bidx.utils.log('listDropdownBp',listDropdownBp);
+                        bidx.utils.log('businessPlanEntityId',businessPlanEntityId);
                         listDropdownBp = _.omit(listDropdownBp, businessPlanEntityId );
+                        bidx.utils.log('newlistDropdownBp',listDropdownBp);
+
+
+                        $businessSummary.find("option[value='" + businessPlanEntityId + "']").remove();
+                        $businessSummary.trigger('chosen:updated');
 
                         newBpLength    = _.size(listDropdownBp); // After iteration new length
 
                         if( origBpLength && newBpLength === 0 )
                         {
                             $requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
+                        }
+                        else {
+
                         }
                         $requestMentoringBtn.removeClass('hide');
 
@@ -323,7 +346,7 @@
         } );
     }
 
-     var getMentoringRequest = function(options)
+    function getMentoringRequest (options)
     {
             var mentorId
             ,   entityId
@@ -360,8 +383,9 @@
                                 }
                             }
 
-                            if (initiatorId === loggedInMemberId)
+                            if (initiatorId === loggedInMemberId && origBpLength)
                             {
+                                bidx.utils.log('listDropdownBp',listDropdownBp);
                                 isEntityExist = listDropdownBp [ entityId ];
 
                                 if(isEntityExist)
@@ -394,6 +418,12 @@
                         var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
 
                          _showMainError("Something went wrong while retrieving contactlist of the member: " + status);
+
+                         //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
                     }
                 }
             );
@@ -661,11 +691,7 @@
             break;
 
             default: /***** Fetch mentoring request **/
-                if ( visitingMemberPageId !== loggedInMemberId  )
-                {
-                    getMentoringRequest();
 
-                }
 
             break;
         }
@@ -710,7 +736,7 @@
     //
     if ($("body.bidx-member_profile").length && !bidx.utils.getValue(window, "location.hash").length)
     {
-        window.location.hash = "#member";
+       // window.location.hash = "#member";
     }
 
 
