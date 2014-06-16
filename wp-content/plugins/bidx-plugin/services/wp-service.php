@@ -737,9 +737,9 @@ function plugin_theme_po_action ($displayData, $body)
     $validate = array ();
 
     foreach ($displayData as $dataId) {
-        $msgId = str_replace ('"', '\"', $dataId->value);
+        $msgId = $dataId->value;
         $msgStr = (isset ($body['lang'])) ? $body['lang'] . $msgId : '';
-        $msgCtxt = str_replace ('"', '\"', $dataId->key);
+        $msgCtxt = $dataId->key;
 
         if ($msgCtxt) {
             $_tag = '# _x("<!--msgId-->", "<!--msgcTxt-->","' . $body['type'] . '");';
@@ -761,8 +761,8 @@ function plugin_theme_po_action ($displayData, $body)
         if (!isset ($validate[$valCTxt][$msgId])) {
 
             $po .= ($_x) ? 'msgctxt "' . str_replace ('"', '\"', $msgCtxt) . '"' . PHP_EOL : '';
-            $po .= 'msgid "' . str_replace ('"', '\"', $msgId) . '"' . PHP_EOL;
-            $po .= 'msgstr "' . str_replace ('"', '\"', $msgStr) . '"' . PHP_EOL;
+            $po .= 'msgid "' . $msgId . '"' . PHP_EOL;
+            $po .= 'msgstr "' . $msgStr . '"' . PHP_EOL;
             $po .= PHP_EOL;
             $validate[$valCTxt][$msgId] = true;
         } else {
