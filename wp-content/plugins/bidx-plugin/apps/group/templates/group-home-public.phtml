@@ -134,19 +134,19 @@
             <div class="container">
                 <div class="row">
 
-                    <div class="col-sm-4 feature-col js-fakecrop">
+                    <div class="col-sm-4 feature-col feature-businesses js-fakecrop">
                         <h2><?php _e('New Businesses', 'bidxplugin')?></h2>
                         <!-- Grab latests members -->
                         <?php echo do_shortcode( '[bidx app="group" view="latest-business-summaries"]' ); ?>
                     </div>
 
-                    <div class="col-sm-4 feature-col">
+                    <div class="col-sm-4 feature-col feature-members">
                         <h2><?php _e('New Members', 'bidxplugin')?></h2>
                         <!-- Grab latests members -->
                         <?php echo do_shortcode( '[bidx app="group" view="last-members" authenticated="false"]' ); ?>
                     </div>
 
-                    <div class="col-sm-4 feature-col">
+                    <div class="col-sm-4 feature-col feature-news">
                         <h2><?php _e('News &amp; Events', 'bidxplugin')?></h2>
                         <!-- Grab news -->
                         <?php echo do_shortcode( '[bidx app="group" view="latest-news"]' ); ?>
