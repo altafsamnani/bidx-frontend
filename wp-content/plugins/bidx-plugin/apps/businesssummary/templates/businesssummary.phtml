@@ -361,14 +361,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 __('Industry','bidxplugin')
                     => $this->getMultiValues( $this->exst($businessSummary->industry), ', ', 'industry' ),
 
-                __('Suggested industry','bidxplugin')
-                    => $this->getMultiValues( $this->exst($businessSummary->suggestedIndustry), ', ' ),
+                // __('Suggested industry','bidxplugin')
+                //     => $this->getMultiValues( $this->exst($businessSummary->suggestedIndustry), ', ' ),
 
                 __('Product / Service','bidxplugin')
                     => $this->getMultiValues( $this->exst($businessSummary->productService), ', ', 'productService' ),
 
-                __('Suggested product service','bidxplugin')
-                    => $this->getMultiValues( $this->exst($businessSummary->suggestedProductService), ', ' ),
+                // __('Suggested product service','bidxplugin')
+                //     => $this->getMultiValues( $this->exst($businessSummary->suggestedProductService), ', ' ),
 
                 __('Country of business','bidxplugin')
                     => $this->getMultiValues( $this->exst($businessSummary->countryOperation), ', ', 'country' ),
@@ -418,29 +418,29 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <select name="industry" multiple></select>
                                 </div>
 
-                                <!-- Suggested Industry -->
-                                <div class="form-group col-sm-6">
-                                    <label><?php _e('Suggested industry','bidxplugin'); ?></label>
-                                    <div class="bidx-tagsinput-container">
-                                        <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <!-- Product Service -->
                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Product / service','bidxplugin'); ?></label>
                                     <select name="productService" multiple></select>
                                 </div>
+                                <!-- Suggested Industry -->
+<!--                                 <div class="form-group col-sm-6">
+                                    <label><?php _e('Suggested industry','bidxplugin'); ?></label>
+                                    <div class="bidx-tagsinput-container">
+                                        <input type="text" autocomplete="off" name="suggestedIndustry" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested industry','bidxplugin'); ?>">
+                                    </div>
+                                </div>
+ -->                            </div>
+                            <div class="row">
 
                                 <!-- Suggested Product Service -->
-                                <div class="form-group col-sm-6">
+<!--                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Suggested product / service','bidxplugin'); ?></label>
                                     <div class="bidx-tagsinput-container">
                                         <input type="text" autocomplete="off" name="suggestedProductService" class="bidx-tagsinput enclosed" placeholder="<?php _e('Suggested product / service','bidxplugin'); ?>">
                                     </div>
                                 </div>
-                            </div>
+ -->                            </div>
                             <div class="row">
                                 <!-- Country operation -->
                                 <div class="form-group col-sm-6">
