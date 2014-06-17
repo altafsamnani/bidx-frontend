@@ -22,8 +22,10 @@
     ,   state
 
     ,   $fakecrop               = $views.find( ".js-fakecrop img" )
+    // Remove from here when switching to new theme
     ,   $sponsors               = $( ".sponsors" )
     ,   $sponsorImg             = $sponsors.find( "img" )
+    // Remove till here when switching to new theme
 
     ,   $unreadCount            = $navbar.find( ".iconbar-unread" )
     ,   paging                  =
@@ -118,8 +120,9 @@
 
         $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
 
+        // Remove from here when switching to new theme
         // Set the height of sporsors carousel
-        //
+        
         if ( $sponsors )
         {
             var tallest = 0;
@@ -132,6 +135,7 @@
                 $sponsors.height(tallest);
             });
         }
+        // Remove till here when switching to new theme
 
     }
 
