@@ -1151,6 +1151,12 @@
 
                         bidx.common.notifyError( "Something went wrong during save: " + response );
 
+                        // Offer a login modal if not authecticated
+                        if ( jqXhr.status === 401 )
+                        {
+                            $( ".loginModal" ).modal();
+                        }
+
                         $btnSave.removeClass( "disabled" );
                         $btnCancel.removeClass( "disabled" );
                     }

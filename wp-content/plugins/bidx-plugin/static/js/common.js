@@ -651,16 +651,14 @@
     //
     var modalLogin = function ( params )
     {
-        if ( bidx.utils.getValue( bidxConfig, "authenticated" ))
-        {
-            bidx.utils.log( "already logged in" );
-            return;
-        }
+
+        // TODO: Validate the form
 
         bidx.api.call(
-            "auth.login"
+            "session.save"
         ,   {
                 data:       $frmLoginModal.find(":input:not(.ignore)").serialize()
+        ,       groupDomain:        groupDomain
 
             ,   success: function( response, textStatus, jqXHR )
                 {
@@ -668,11 +666,15 @@
                     {
                         if ( response.status === 'OK' )
                         {
-                            if (response.redirect)
-                            {
+                            // Hide modal
+                            $( ".loginModal" ).modal( "hide" );
 
-                                document.location=response.redirect;
-                            }
+                            // Clear error messages
+                            $frmLoginModal.find( ".error-separate" ).text( "" ).hide();
+                            
+                            // Empty password field for security reasons
+                            $frmLoginModal.find( "[name='password']" ).val( "" );
+
                         }
                         else if ( response.status === "ERROR")
                         {
@@ -686,7 +688,7 @@
                     {
                         if ( response === 0 )
                         {
-                            $frmLoginModal.find( ".error-separate" ).text( "Please log out of Wordpress administrator").show();
+                            $frmLoginModal.find( ".error-separate" ).text( "Please log out of Wordpress").show();
                         }
                         params.error( jqXHR );
                     }
@@ -694,12 +696,25 @@
 
             ,   error:  function( jqXhr )
                 {
+                    $frmLoginModal.find(".error-separate").text( jqXhr.statusText ).show();
 
                     params.error( "Error", jqXhr );
                 }
             }
         );
     };
+
+    $frmLoginModal.find( ".js-relogin" ).click( function()
+    {
+        modalLogin(
+        {
+            error: function( jqXhr )
+            {
+                bidx.utils.log('jqXhr', jqXhr);
+            }
+        } );
+    });
+
 
 
     // Make sure the i18n translations for the general form validations are available so we
@@ -1187,26 +1202,6 @@
             $( 'a[href='+ panelHash +']' ).click();
         }
     }
-
-    // On Window Scroll
-    // $(window).scroll( function(e)
-    // {
-    //     var scrollPosition = $(window).scrollTop()
-    //     ,   $innerWrap          = $( ".inner-wrap" )
-    //     ,   $headerControls     = $( ".bidx-header-controls a" )
-    //     ;
-    //     if ( scrollPosition >= 120 )
-    //     {
-    //         $innerWrap.addClass( "smaller" );
-    //         $headerControls.addClass( "btn-sm" );
-    //     }
-    //     if ( scrollPosition <= 30 )
-    //     {
-    //         $innerWrap.removeClass( "smaller" );
-    //         $headerControls.removeClass( "btn-sm" );
-    //     }
-    // });
-
 
     // Temporary solution for public home page, find a better place for this
     //
