@@ -716,11 +716,16 @@ class BidxCommon
             $body = $templateLibrary->replaceMessageTokens ($message->content);
             $subject = $templateLibrary->replaceMessageTokens ($message->subject);
 
+            if ( !isset($transientI18nData['templates'][$countMessage]) ) {
+            	$transientI18nData['templates'][$countMessage] = new stdClass();
+            }
             $transientI18nData['templates'][$countMessage] = new stdClass();
             $transientI18nData['templates'][$countMessage]->value = $message->name.'subject';
             $transientI18nData['templates'][$countMessage]->label = $subject;
             $countMessage++;
-
+            if ( !isset($transientI18nData['templates'][$countMessage]) ) {
+            	$transientI18nData['templates'][$countMessage] = new stdClass();
+            }
             $transientI18nData['templates'][$countMessage] = new stdClass();
             $transientI18nData['templates'][$countMessage]->value = $message->name.'body';
             $transientI18nData['templates'][$countMessage]->label = $body;
