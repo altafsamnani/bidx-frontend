@@ -80,10 +80,10 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 			<select name="<?php echo $this->get_field_name( 'clock_size' ) ?>" id="<?php echo $this->get_field_id( 'clock_size' ) ?>">
 			<?php 
 				$sizes = array( 
-					__( 'small', 'bidx_competition' )  => '0.3',
+					__( 'small',  'bidx_competition' ) => '0.3',
 					__( 'medium', 'bidx_competition' ) => '0.5',
 					__( 'normal', 'bidx_competition' ) => '1.0',
-					__( 'large', 'bidx_competition' )  => '1.3'		
+					__( 'large',  'bidx_competition' ) => '1.3'		
 				);
 				foreach ( $sizes as $key => $value ) {
 					printf(
@@ -137,70 +137,76 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	/**
 	 * Output rendering for the widget and for the shortcode
 	 */
-	function render_content( $competition_id, $clock_size='1.0', $competition_link='' ) {
+	function render_content( $competition_id, $clock_size='1.0', $competition_link=null ) {
 
 		if ( empty( $competition_id ) ) {
-			_e('No Competition Set','bidx_competition');
+			_e( 'No Competition Set','bidx_competition' );
 		}
 		else {
 			//TODO first check if it is a competition post type
 			$post = get_post($competition_id);
+			if ($post -> post_type != 'competition') {
+				_e( 'Defined post is not a competition','bidx_competition' );
+			}
 			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
 			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );	
-			
-			$this->diff = abs(strtotime($enddate) - time());
-	
-		//TODO strip the link to make it relative from the website root
-		
+			$this->diff = abs(strtotime($enddate) - time());	
+			if ( $competition_link == null ) {
+				$competition_link = get_permalink( $competition_id );
+			}	
 	?>
 		<div class="competition">
-		<h3><?php _e('Competition','bidx_competition_plugin');?></h3>
-		<div class="bidx countdown-title ">
-			<a class="btn" href="<?php echo get_permalink( $competition_id ); ?>"><?php echo $post -> post_title ?></a>
-		</div>
-		<div class="bidx countdown-time">
-			<h4><?php 
-			if ($this->diff < 0) {
-				_e( 'This competition has expired.','bidx_competition_plugin' );
-				?><a href="#"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
-			}
-			else
-			{
-				add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );			
-				?>
-				<link rel="stylesheet" href="<?php echo plugins_url() ?>/bidx-competition-plugin/js/flipclock/flipclock.css">
-				<style>.your-clock { zoom: <?php echo $clock_size ?>; -moz-transform: scale(<?php echo $clock_size ?>) }</style>
-				<div class="your-clock"></div>		
-				<?php 
-			}	
+		<h3><?php echo $post -> post_title ?></h3>
+		<p><?php echo $post -> post_excerpt ?></p>
+		<div class="counter">
+		<?php 
+		if ($this->diff < 0) {
 			?>
-			</h4>
-			<a class="btn btn-secondary btn-lg pull-right" href="<?php echo get_permalink( $competition_id ); ?>">View Now</a>
+			<h4><?php _e( 'This competition has expired.','bidx_competition_plugin' ); ?></h4>
+			<a href="/competition"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
+		} else {
+			add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );			
+			?>
+			<link rel="stylesheet" href="<?php echo plugins_url() ?>/bidx-competition-plugin/js/flipclock/flipclock.css">
+			<style>.your-clock { zoom: <?php echo $clock_size ?>; -moz-transform: scale(<?php echo $clock_size ?>) }</style>
+			<div class="your-clock"></div>
+		</div>			
+			<?php 
+		}	
+		?>
+		<a class="btn btn-secondary btn-block" href="<?php echo $competition_link; ?>">View Now</a>
 		</div>
-		
 		<?php
 		}
-		echo '</div>';
 	}
 	
+	/**
+	 * Adds the extra javascripts on the bottom for the FlipClock
+	 */
 	function add_clock_footer_scripts() {
 		echo "<script src='".plugins_url() ."/bidx-competition-plugin/js/flipclock/flipclock.min.js'></script>";
 		echo "<script>var clock = jQuery('.your-clock').FlipClock(". $this->diff .", { clockFace: 'DailyCounter', countdown: true });</script>";
 	}
 	
 	/**
-	 * Called when the shortcode is used
+	 * Called when the shortcode is used with the following parameters :
+	 * - id    : post_id
+	 * - size  : relative size between 0.2 and 2
+	 * - link  : optional link to override link to competition page
+	 * 
 	 * @param array $atts
 	 */
 	function handle_shortcode( $atts ) {
 		$competition_id = $atts['id'];
+		$clock_size = 0.5;
+		$link = null;
 		if ( isset ($atts['size'] ) ) {
 			$clock_size = $atts['size'];
-		} else {
-			$clock_size = 0.5;
 		}
-		
-		$this :: render_content( $competition_id, $clock_size );
+		if ( isset ($atts['link'] ) ) {
+			$link = $atts['link'];
+		}	
+		$this :: render_content( $competition_id, $clock_size, $link );
 	}
 	
 }

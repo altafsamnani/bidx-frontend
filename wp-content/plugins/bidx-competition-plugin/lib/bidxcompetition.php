@@ -43,7 +43,7 @@
 		 * List the competitions in this site
 		 */
 		static function get_competitions_list() {		
-			return new WP_Query( array( 'post_type' => 'competition' ) );		
+			return new WP_Query( array( 'post_type' => 'competition', 'post_status' => 'publish' ) );		
 		}
 		
 		/**
@@ -73,7 +73,8 @@
 					'supports'            => array( 
 							'thumbnail',  //theme must also support post-thumbnails
 							'title', 
-							'editor' 
+							'editor',
+							'excerpt' 
 					),
 					'hierarchical'        => true,
 					'public'              => true,
