@@ -10,6 +10,8 @@
  * The competition_id should be a valid id else nothing is shown.
  * The scale is for making it bigger and smaller where standard is 1.0 and it can range from 0.2 to 2.0.
  * 
+ * TODO : join two widgets and make type selector for function (informational / registration/ call to action)
+ * 
  * @author Jaap Gorjup
  */
 class BidxCompetitionCounterWidget extends WP_Widget {
@@ -78,17 +80,17 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 			<select name="<?php echo $this->get_field_name( 'clock_size' ) ?>" id="<?php echo $this->get_field_id( 'clock_size' ) ?>">
 			<?php 
 				$sizes = array( 
-					_e( 'small', 'bidx_competition' )  => '0.3',
-					_e( 'medium', 'bidx_competition' ) => '0.5',
-					_e( 'normal', 'bidx_competition' ) => '1.0',
-					_e( 'large', 'bidx_competition' )  => '1.3'		
+					__( 'small', 'bidx_competition' )  => '0.3',
+					__( 'medium', 'bidx_competition' ) => '0.5',
+					__( 'normal', 'bidx_competition' ) => '1.0',
+					__( 'large', 'bidx_competition' )  => '1.3'		
 				);
 				foreach ( $sizes as $key => $value ) {
 					printf(
 						'<option value="%s" %s >%s</option>',
-						$key,
+						$value,
 						$value == $clock_size ? 'selected="selected"' : '',
-						$value
+						$key
 					);
 				}
 			?>			
@@ -302,16 +304,17 @@ class BidxCompetitionRegistrationWidget extends WP_Widget {
 			$user_id = ''; //get from environment
 			$registration = new CompetitionRegistration( $competition_id );
 			if ( $registration->is_user_in_competition( $user_id ) ) {
-				//You have been registered for...
-				
-			} else {
-								
+				_e( 'You have been registered for this competition.','bidx_competition' );			
+			} else {								
 				if ( isset( $_REQUEST['REGISTRATION'] ) ) {
 					$registration->registerUser( $user_id );
-					//Thank you for registering
+					_e( 'Thank you for registering for this competition.','bidx_competition' );
 				}
-				else {
-					//Show Registration button
+				else { 
+				//	if 
+
+					?><a class="btn btn-secondary btn-lg " href="?REGISTRATION"><?php _e( 'Register Now','bidx_competition' ) ?></a><?php 
+									
 				}			
 			}
 		}	
