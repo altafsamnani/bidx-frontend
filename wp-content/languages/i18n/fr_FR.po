@@ -106,7 +106,7 @@ msgstr "Envoyés"
 # _x("Trash", "mail","i18n");
 # Context mail TextDomain i18n
 msgctxt "mail"
-msgid "Trash"
+msgid "Deleted"
 msgstr "Corbeille"
 
 # _x("Fwd", "mail","i18n");
