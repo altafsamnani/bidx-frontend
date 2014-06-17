@@ -24,7 +24,7 @@
     @testimonial-bg: #D2B48C;
     @triagle-size: 25px;
 
-    @brand-secondary: #1abc9c;
+    @brand-secondary: @color-secondary;
 
 // Color alterations in Variables
 // ---------------------------------
@@ -122,6 +122,11 @@ object
     max-width: 100%;
 }
 
+.linkedin iframe
+{
+    max-width: inherit;
+}
+
 // Sticky Footer
 // -------------------------
 html
@@ -205,7 +210,7 @@ h1, h2, h3, h4, h5, h6,
 .icons-circle
 {
     padding: ceil(@font-size-base * 0.7);
-    background-color: lighten(@brand-primary, 40%);
+    background-color: lighten(#000, 90%);
     font-size: floor(@font-size-base * 3.9);
     width: floor(@font-size-base * 6.45);
     height: floor(@font-size-base * 6.45);
@@ -216,7 +221,7 @@ h1, h2, h3, h4, h5, h6,
     .round;
     .fa
     {
-        .text-primary-dark;
+        color: lighten(#000, 60%);
         display: table-cell;
         vertical-align: middle;
     }
@@ -232,7 +237,7 @@ h1, h2, h3, h4, h5, h6,
 .icons-rounded
 {
     padding: ceil(@font-size-base * 0.7);
-    background-color: lighten(@brand-primary, 40%);
+    background-color: lighten(#000, 90%);
     font-size: floor(@font-size-base * 3.9);
     width: floor(@font-size-base * 6.45);
     height: floor(@font-size-base * 6.45);
@@ -241,7 +246,7 @@ h1, h2, h3, h4, h5, h6,
     .rounded;
     .fa
     {
-        .text-primary-dark;
+        color: lighten(#000, 60%);
         display: table-cell;
         vertical-align: middle;
     }
@@ -717,6 +722,12 @@ header
     }
 }
 
+.total-error-message
+{
+    .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @border-radius-base);
+    margin-right: 20px;
+}
+
 // Map
 // -------------------------
 .reach-map
@@ -887,19 +898,8 @@ select
     margin-bottom:              0;
 }
 
-form .error-separate
+.error-separate
 { /*still used for seperate error messages not linked to an input. Login uses it*/
-    background-color:           #DBD9D9;
-    color:                      #E83E3E;
-    border:                     1px solid #FFA8A8;
-
-    padding:                    4px 10px;
-    margin:                     5px 0;
-
-    -webkit-border-radius:      4px;
-    -moz-border-radius:         4px;
-    border-radius:              4px;
-
     display:                    none;
 }
 
