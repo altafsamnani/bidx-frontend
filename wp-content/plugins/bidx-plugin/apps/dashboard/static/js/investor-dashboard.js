@@ -261,8 +261,6 @@
           , success           : function(item)
             {
 
-                ;
-
                 //clear listing
                 $list.empty();
 
