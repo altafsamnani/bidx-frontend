@@ -5,6 +5,11 @@
  * - There must a defined competition
  * - Must have a valid end-date defined 
  * 
+ * The counter can be added and configured as a widget.
+ * It also can be used as shortcode [competition id="competition_id" size="scale"]
+ * The competition_id should be a valid id else nothing is shown.
+ * The scale is for making it bigger and smaller where standard is 1.0 and it can range from 0.2 to 2.0.
+ * 
  * @author Jaap Gorjup
  */
 class BidxCompetitionCounterWidget extends WP_Widget {
@@ -41,11 +46,13 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		{
 			$competition_id = $instance['competition_id'];
 			$competition_link = $instance['competition_link'];
+			$clock_size = $instance['clock_size'];
 		}
 		else
 		{
 			$competition_id = '';
 			$competition_link = '';
+			$clock_size = 1.0;
 		}
 		//get list of competitions
 		$competitions = BidxCompetition :: get_competitions_list();
@@ -67,6 +74,27 @@ class BidxCompetitionCounterWidget extends WP_Widget {
             </select>
         </p>
     	<p>
+            <label for="<?php echo $this->get_field_id( 'clock_size' ); ?>"><?php _e( 'Size of the countdown clock:', 'bidx_competition' ); ?></label>
+			<select name="<?php echo $this->get_field_name( 'clock_size' ) ?>" id="<?php echo $this->get_field_id( 'clock_size' ) ?>">
+			<?php 
+				$sizes = array( 
+					_e( 'small', 'bidx_competition' )  => '0.3',
+					_e( 'medium', 'bidx_competition' ) => '0.5',
+					_e( 'normal', 'bidx_competition' ) => '1.0',
+					_e( 'large', 'bidx_competition' )  => '1.3'		
+				);
+				foreach ( $sizes as $key => $value ) {
+					printf(
+						'<option value="%s" %s >%s</option>',
+						$key,
+						$value == $clock_size ? 'selected="selected"' : '',
+						$value
+					);
+				}
+			?>			
+			</select>
+		</p>        
+    	<p>
             <label for="<?php echo $this->get_field_id('competition_link'); ?>"><?php _e('Alternative link to competition (optional):', 'bidx_competition'); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id('competition_link'); ?>" name="<?php echo $this->get_field_name('competition_link'); ?>" type="text" value="<?php echo $competition_link; ?>" />
         </p>        
@@ -83,7 +111,8 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['competition_id'] = esc_sql( $new_instance['competition_id']);
-		$instance['competition_link'] = esc_sql( $new_instance['competition_link']);	
+		$instance['competition_link'] = esc_sql( $new_instance['competition_link']);
+		$instance['clock_size'] = esc_sql( $new_instance['clock_size']);
 		return $instance;
 	}
 	 
@@ -96,15 +125,17 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		extract( $args );	
 		$competition_id = $instance['competition_id'];
 		$competition_link = $instance['competition_link'];
+		$clock_size = $instance['clock_size'];
+		
 		echo $before_widget;
-		echo $this -> render_content( $competition_id, $competition_link );
+		echo $this -> render_content( $competition_id, $clock_size, $competition_link );
 		echo $after_widget;
 	}	
 	
 	/**
 	 * Output rendering for the widget and for the shortcode
 	 */
-	function render_content( $competition_id, $competition_link='' ) {
+	function render_content( $competition_id, $clock_size='1.0', $competition_link='' ) {
 
 		if ( empty( $competition_id ) ) {
 			_e('No Competition Set','bidx_competition');
@@ -136,6 +167,7 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 				add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );			
 				?>
 				<link rel="stylesheet" href="<?php echo plugins_url() ?>/bidx-competition-plugin/js/flipclock/flipclock.css">
+				<style>.your-clock { zoom: <?php echo $clock_size ?>; -moz-transform: scale(<?php echo $clock_size ?>) }</style>
 				<div class="your-clock"></div>		
 				<?php 
 			}	
@@ -160,7 +192,13 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 */
 	function handle_shortcode( $atts ) {
 		$competition_id = $atts['id'];
-		$this :: render_content( $competition_id );
+		if ( isset ($atts['size'] ) ) {
+			$clock_size = $atts['size'];
+		} else {
+			$clock_size = 0.5;
+		}
+		
+		$this :: render_content( $competition_id, $clock_size );
 	}
 	
 }
