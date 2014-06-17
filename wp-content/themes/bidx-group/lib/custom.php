@@ -7,7 +7,7 @@ function theme_enqueue_styles() {
     include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
     if (is_plugin_active ('bidx-plugin/bidX-plugin.php'))
     {
-        wp_enqueue_style('bidx-plugin', plugins_url().'/bidx-plugin/static/less/bidx.less');
+        wp_enqueue_style('bidx-plugin', plugins_url().'/bidx-plugin/static/less/bidx_newtheme.less');
     }
 }
 add_action('init', 'theme_enqueue_styles');
@@ -226,6 +226,94 @@ function get_custom_field_value ( $key,  $i = null)
     }
 
     return $value;
+}
+
+
+
+function _l( $url = NULL )
+{
+  global $sitepress;
+  $sep = '/';
+
+  if( $sitepress )
+  {
+    $currentLanguage = $sitepress->get_current_language();
+
+    if( $currentLanguage && $currentLanguage != 'en')
+    {
+      $sep = '';
+    }
+  }
+
+  $returnUrl = get_home_url().$sep.$url;
+
+  return $returnUrl;
+}
+
+function _wl( $url = NULL )
+{
+  global $sitepress;
+  $sep        =   '/';
+  $langParam  =   '';
+
+  if( $sitepress )
+  {
+    $currentLanguage = $sitepress->get_current_language();
+    if( $currentLanguage && $currentLanguage != 'en')
+    {
+      $langParam = '-'.$currentLanguage ;
+      $sep = '';
+    }
+  }
+
+  $returnUrl = get_home_url().$sep.$url.$langParam ;
+
+  return $returnUrl;
+
+}
+function languages_list_footer()
+{
+
+  global $sitepress;
+  if( $sitepress )
+  {
+    $currentLanguage = $sitepress->get_current_language();
+    $baseUrl         = str_replace( '/'.$currentLanguage.'/', "/", $_SERVER['REQUEST_URI'] );
+    $languages = icl_get_languages("skip_missing=0&orderby=code&link_empty_to=/{%lang}{$baseUrl}");
+    if(!empty($languages))
+    {
+        $html   = '<div id="lang_sel_footer">
+                      <ul>';
+
+        foreach($languages as $l)
+        {
+            $html         .=   '<li>';
+            $anchorStart  =   '';
+            $anchorEnd    =   '';
+
+            if($l['country_flag_url'])
+            {
+                if(!$l['active'])
+                {
+                  $anchorStart  =  '<a href="'.$l['url'].'">';
+                  $anchorEnd    =  '</a>';
+                }
+
+                $imgHtml  =  '<img src="'.$l['country_flag_url'].'" class="iclflag" alt="'.$l['language_code'].'" />';
+                $html     .=  $anchorStart.$imgHtml.$anchorEnd;
+
+            }
+              $nameHtml   =   icl_disp_language($l['native_name'], $l['translated_name']);
+              $html      .=   $anchorStart.$nameHtml.$anchorEnd;
+
+            $html        .= '</li>';
+        }
+
+        $html   .=    '</ul></div>';
+
+        echo $html;
+    }
+  }
 }
 
 
