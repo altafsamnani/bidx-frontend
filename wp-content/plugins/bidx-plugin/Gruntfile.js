@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 
     watch: {
       recess: {
-        files: [ 'static/less/**/*.less', 'apps/*/static/less/*.less' ],
+        files: [ 'static/less/**/*.less', 'apps/*/static/less/*.less', '!static/less/bidx_newtheme.less' ],
         tasks: ['recess']
       }
     },
