@@ -84,6 +84,9 @@ class CompetitionRegistration {
 	 * Deregisters a user in the competition.
 	 * Only possible when it is an existing competition.
 	 * The registration is not removed!
+	 * 
+	 * TODO : set the sql timestamp of today
+	 * 
 	 * @param unknown $user_id
 	 */
 	public function deregisterUser( $user_id ) {
@@ -92,7 +95,7 @@ class CompetitionRegistration {
 			$wpdb->update(
 				$wpdb->prefix . "competition_registration",
 				array(
-					'deregistration_date' => 'now', // TODO set the sql timestamp of today
+					'deregistration_date' => 'now', 
 				),
 				array(
 					'competition_id' => $this->post_id,
@@ -108,15 +111,23 @@ class CompetitionRegistration {
 	
 	/**
 	 * Validates if the current user is in an active competition
+	 * 
 	 * @param string $competition_id
 	 * @param string $user_id
 	 */
 	public function is_user_in_competition( $user_id ) {
 		if ( $this->isCompetitionActive() ) {
 			global $wpdb;
+			$sql = $wpdb->prepare( 'SELECT registration_date, deregistration_date FROM '. $wpdb->prefix 
+									. 'competition_registration WHERE competition_id = %s AND user_id=%s',
+									$post_id, $user_id );
+			$result = $wpdb->get_results( $sql, OBJECT );
+			if ( $result ) {
+				return false;
+			}
+			//check if deregistration date is filled
 			
-			
-			
+			return true;
 		}
 		return false;
 	}
@@ -125,14 +136,16 @@ class CompetitionRegistration {
 	 * Returns a object array with all registration data for one competition
 	 */
 	public function getCompetitionStats( ) {
-		return $wpdb->get_results( 'SELECT * FROM '. $wpdb->prefix . "competition_registration" .' WHERE competition_id = '.$postid, OBJECT );
+		$sql = $wpdb->prepare( 'SELECT * FROM '. $wpdb->prefix . "competition_registration" .' WHERE competition_id=%s', $postid );
+		return $wpdb->get_results( $sql, OBJECT );
 	}
 
 	/**
 	 * Returns an integer summarizing all active competition users
 	 */
 	public function getActiveCompetitionUsers( ) {
-		return $wpdb->get_var( 'SELECT count(*) FROM '. $wpdb->prefix . "competition_registration" .' WHERE competition_id = '.$postid );
+		$sql = $wpdb->prepare( 'SELECT count(*) FROM '. $wpdb->prefix . "competition_registration" .' WHERE competition_id=%s', $postid );
+		return $wpdb->get_var( $sql );
 	}	
 	
 	/**
