@@ -43,27 +43,39 @@
     color: lighten(@brand-primary, 25%);
 }
 
-.bidx.home .bidx-register-block
+.bidx-register-block
 {
-    background: @brand-primary;
-    .action-call-text
+    display: none;
+}
+
+.bidx-header-controls .btn-success
+{
+    display: none;
+}
+
+.get-started-btn
+{
+    .call-btn
     {
-        color:                              @white;
-    }
-    .icon
-    {
-        color: @gray-lighter;
-    }
-    .arrow
-    {
-        color: @white;
-    }
-    &:hover .arrow
-    {
-        color: lighten(@brand-primary, 25%);
+        .rounded(6px);
+        background-color: lighten(@brand-primary, 25%);
+        color: #FFF;
+        position: absolute;
+        right: 150px;
+        padding: 10px 20px;
+        font-size: 40px;
+        top: 30px;
+        &:hover
+        {
+            background-color: lighten(@brand-primary, 5%);
+        }
     }
 }
 
+.logged-in.bidx .get-started-btn
+{
+    display: none;
+}
 
 .modern-browser
 {
