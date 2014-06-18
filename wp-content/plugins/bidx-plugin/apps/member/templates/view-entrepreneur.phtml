@@ -37,28 +37,26 @@ if ($entrepreneurDetails &&
 
 
 
-                <div class="btn-group pull-right">
+                <div class="btn-group show hide-overflow">
 <?php               if ($entrepreneurBidxMeta->bidxCanEdit)
                     {
 ?>
-                        <a class="btn btn-sm btn-primary" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurBidxMeta->bidxOwnerId); ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                        <a class="btn btn-sm btn-primary pull-right" href="#editEntrepreneur/<?php echo $this->exst ($entrepreneurBidxMeta->bidxOwnerId); ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
                     }
 ?>
                 </div>
 
                     <?php
-                    $rowValues = array ( __('Summary','bidxplugin') => $this->exst ($entrepreneurDetails->summary));
-                    echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
-                    ?>
-                    <br/>
-                    <?php
-                    $focusIndustry = $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ','industry');
-                    $rowValues = array ( __('Focus Industry','bidxplugin') => $focusIndustry);
-                    echo $this->addRowsWithLabelAdjacent ('col-sm-6', 'col-sm-6', $rowValues, array ('tag_label' => 'label', 'class_value' => ''));
-                    ?>
-                    <br/>
-                    <?php
+                    $rowValues = array(
+                        __('Summary','bidxplugin')          =>  $this->exst ($entrepreneurDetails->summary),
+                        __('Focus Industry','bidxplugin')   =>  $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ','industry')
+                        );
+                    echo $this->pairRows( $rowValues );
+?>
+                    <hr>
+<?php 
+
                     $previousBusiness = $this->exst ($entrepreneurDetails->previousBusiness);
                     $header = array (
                         __('Name of Company','bidxplugin') => 'company',
@@ -67,16 +65,13 @@ if ($entrepreneurDetails &&
                     );
                     $previousBusinessHtml = $this->addTableRows ($header, $previousBusiness, 'table table-bordered', '', array('webSite' => 'hidden-xs'), array( 'businessOutcome' ));
                     $rowValues = array ( __('Previous Business(es)','bidxplugin') => $previousBusinessHtml);
-                    echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h5'));
-                    ?>
-                    <br/>
-<?php
+                    echo $this->addRowsWithLabelBelow ('col-sm-12', 'col-sm-12', $rowValues, array ('tag_label' => 'h4'));
                     /* Cv Display */
                     if ( $this->exst( $entrepreneurDetails->cv->document ) ) {
 ?>
                         <div class="row">
                             <div class="col-sm-12">
-                                <h5><?php _e( 'CV', 'bidxplugin' ); ?></h5>
+                                <h4><?php _e( 'CV', 'bidxplugin' ); ?></h4>
                                 <a class="btn btn-info" href="<?php echo $entrepreneurDetails->cv->document; ?>">
                                     <?php echo $entrepreneurDetails->cv->documentName; ?>
                                     <i class="fa fa-download"></i>
@@ -100,7 +95,7 @@ if ($entrepreneurDetails &&
 ?>
             <div class="row">
                 <div class="col-sm-12">
-                    <h5><?php echo $labelBusiness; ?></h5>
+                    <h4><?php echo $labelBusiness; ?></h4>
 
 
                     <div class="list-group js-fakecrop">
@@ -109,7 +104,6 @@ if ($entrepreneurDetails &&
 
 ?>
                                     <div class="list-group-item">
-                                        <h4 class="list-group-item-heading"><a href="/businesssummary/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php echo $business->name; ?></a></h4>
                                         <div class="list-group-item-text">
                                             <div class="row">
                                                 <div class="col-sm-2">
@@ -126,6 +120,7 @@ if ($entrepreneurDetails &&
 ?>
                                                 </div>
                                                 <div class="col-sm-8">
+                                                    <h4 class="list-group-item-heading"><a href="/businesssummary/<?php echo $business->bidxMeta->bidxEntityId ?>"><?php echo $business->name; ?></a></h4>
                                                     <ul class="list-unstyled">
 <?php
                                                         $businessSlogan = $this->exst ( $business->slogan );
@@ -161,6 +156,12 @@ if ($entrepreneurDetails &&
                                                         <a class="btn btn-sm btn-danger pull-right bp-<?php echo $business->bidxMeta->bidxEntityId;?>" href="#mentoringRequest/confirmRequest/entityId=<?php echo $business->bidxMeta->bidxEntityId;?>"><?php _e('Mentor this plan', 'bidxplugin')?></a>
 <?php
                                                     }
+                                                    if ( $memberId === $loggedInMemberId )
+                                                    {
+?>
+                                                        <a class="btn btn-xs btn-primary pull-right" href="/businesssummary/<?php echo $business->bidxMeta->bidxEntityId ?>/#editBusinessSummary/<?php echo $business->bidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+                                                    }
 ?>
                                                 </div>
                                             </div>
@@ -183,7 +184,7 @@ if ($entrepreneurDetails &&
 ?>
             <div class="row">
                 <div class="col-sm-12">
-                    <h5><?php echo $labelCompany; ?></h5>
+                    <h4><?php echo $labelCompany; ?></h4>
 
 
                     <div class="list-group js-fakecrop">
@@ -191,7 +192,6 @@ if ($entrepreneurDetails &&
                         foreach ($companies as $index => $company) {
 ?>
                             <div class="list-group-item">
-                                <h4 class="list-group-item-heading"><a href="/company/<?php echo $company->bidxMeta->bidxEntityId ?>"><?php echo $company->name; ?></a></h4>
                                 <div class="list-group-item-text">
                                     <div class="row">
                                         <div class="col-sm-2">
@@ -204,6 +204,7 @@ if ($entrepreneurDetails &&
 ?>
                                         </div>
                                         <div class="col-sm-8">
+                                            <h4 class="list-group-item-heading"><a href="/company/<?php echo $company->bidxMeta->bidxEntityId ?>"><?php echo $company->name; ?></a></h4>
                                             <ul class="list-unstyled">
                                                 <?php
                                                 $companyWebsite = $this->exst ( $company->website );
@@ -252,7 +253,7 @@ if ($entrepreneurDetails &&
                                         <div class="col-sm-2">
                                             <?php if ($company->bidxMeta->bidxCanEdit) { ?>
                                                 <div class="hide-overflow">
-                                                    <a class="btn btn-sm btn-primary pull-right" href="/company/<?php echo $company->bidxMeta->bidxEntityId;; ?>/#editCompany/<?php echo $company->bidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                                                    <a class="btn btn-xs btn-primary pull-right" href="/company/<?php echo $company->bidxMeta->bidxEntityId;; ?>/#editCompany/<?php echo $company->bidxMeta->bidxEntityId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
                                                 </div>
                                             <?php } ?>
                                         </div>

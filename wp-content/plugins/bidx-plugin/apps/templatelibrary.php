@@ -544,7 +544,7 @@ class TemplateLibrary
     public function displayDocuments( $docs, $label )
     {
         $html = '<div class="row"><div class="col-sm-12">';
-        $html .= '<h5>' . $label . '</h5>';
+        $html .= '<h4>' . $label . '</h4>';
         $html .= '<table class="table table-bordered"> <tbody>';
         $html .= '<tr>';
         $html .= '<th>' . __('Name', 'bidxplugin') . '</th>';
@@ -554,7 +554,7 @@ class TemplateLibrary
         foreach ($docs as $doc) {
             $purpose = $doc->purpose ? $doc->purpose : '-';
             $html .= '<tr>';
-            $html .= '<td><a class="" href="'.$doc->document.'">'. $doc->documentName .'</a></td>';
+            $html .= '<td><a class="word-break" href="'.$doc->document.'">'. $doc->documentName .'</a></td>';
             $html .= '<td>'. $purpose .'</td>';
             $html .= '<td>'. $this->getMultiReplacedValues( 'documentType', $doc->documentType ) .'</td>';
             $html .= '</tr>';
@@ -590,7 +590,7 @@ class TemplateLibrary
                     //Display Label
                     $rowHtml .= "<div class='row'>";
                     $rowHtml .= "<div class='" . $gridLabel . "'>";
-                    $rowHtml .= "<h5 " . $classLabel . " > " . $this->escapeHtml ($label) . " </h5>";
+                    $rowHtml .= "<h4 " . $classLabel . " > " . $this->escapeHtml ($label) . " </h4>";
                     $rowHtml .= "</div>";
                     $rowHtml .= "</div>";
                     //Display Value
@@ -1056,7 +1056,7 @@ class TemplateLibrary
                     $html .= '</div>';
 
                     $html .= '<div class="col-sm-9">';
-                    $html .= "<h5 class='documentName'>" . $this->escapeHtml ($attachment->documentName) . "</h5>";
+                    $html .= "<strong class='documentName word-break'>" . $this->escapeHtml ($attachment->documentName) . "</strong>";
                     $html .= "<p>{$date} </p>";
 
                     if ($this->exst ($attachment->purpose)) {
