@@ -156,13 +156,13 @@
 
 
             <li class="media well">
-                <a class="pull-left" href="/member/%memberId%" data-role="memberImage">
+                <a class="pull-left" href="<?php echo _l('member');?>/%memberId%" data-role="memberImage">
                     <div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a href="/member/%memberId%" data-role="memberLink">%firstname% %lastname%</a>
-                        <a href="/mail/#mail/contacts/action=connect&amp;id=%memberId%" class="btn btn-xs btn-warning pull-right" data-role="memberId"><?php _e('Connect','bidxplugin')?></a>
+                        <a href="<?php echo _l('member');?>/%memberId%" data-role="memberLink">%firstname% %lastname%</a>
+                        <a href="<?php echo _l('mail');?>/#mail/contacts/action=connect&amp;id=%memberId%" class="btn btn-xs btn-warning pull-right" data-role="memberId"><?php _e('Connect','bidxplugin')?></a>
                     </h4>
                     <div data-role="profession"></div>
                     <div data-role="country"></div>
@@ -184,12 +184,12 @@
 
 
             <li class="media well js-fakecrop">
-                <a class="pull-left" href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryImage">
+                <a class="pull-left" href="<?php echo _l('businesssummary');?>/%businessSummaryLink%" data-role="businessSummaryImage">
                     <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryName">%name%</a>
+                        <a href="<?php echo _l('businesssummary');?>/%businessSummaryLink%" data-role="businessSummaryName">%name%</a>
                     </h4>
                     <div data-role="summary"></div>
                     <div data-role="slogan"></div>
@@ -197,7 +197,7 @@
                     <div data-role="country"></div>
 
                     <div class="pull-right">
-                        <a href="/businesssummary/%businessSummaryLink%" data-role="businessSummaryLink"><?php _e('View Business Summary','bidxplugin')?></a>
+                        <a href="<?php echo _l('businesssummary');?>/%businessSummaryLink%" data-role="businessSummaryLink"><?php _e('View Business Summary','bidxplugin')?></a>
                     </div>
                 </div>
             </li>
