@@ -42,12 +42,12 @@
                     <img class="img" src="<?php echo $img_url['path'] ?>" />
 <?php
                     if ( !empty( $image -> post_excerpt ) ) {
-                        echo $image -> post_excerpt;
+                        echo do_shortcode( $image -> post_excerpt );
                     }
 
                     if ( !empty( $image -> post_content ) ) {
 ?>
-                        <div class="carousel-caption img-rounded"><?php echo $image -> post_content ?></div>
+                        <div class="carousel-caption img-rounded"><?php echo do_shortcode( $image -> post_content ) ?></div>
 <?php
                     } // !empty( $image  -> post_content )
 ?>
