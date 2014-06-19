@@ -2,4 +2,6 @@
     <!-- <Item value=""></Item> -->
     <Item value="feedbackSent">Feedback sent</Item>
     <Item value="feedbackNew">new</Item>
+    <Item value="waiting">Waiting</Item>
+
 </I18N>
