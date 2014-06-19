@@ -43,16 +43,18 @@
             <input type="text" class="form-control" name="personalDetails.address.cityTown" placeholder="<?php _e('Enter your city','bidxplugin');?>" />
         </div>
 
-        <div class="form-group checkbox">
+        <div class="form-group checkbox" style="display: inline;">
             <input type="checkbox" value="" id="checkbox-acceptTerms" name="acceptTerms" />
-            <label for="checkbox-acceptTerms"><span></span><?php _e( 'I accept the bidX', 'bidxplugin' )?><?php printf( __( '<a href="%s"> Terms & Conditions </a>', 'bidxplugin'), "/termsandconditions" ); ?></label>
+            <label for="checkbox-acceptTerms"><span></span><?php _e( 'I accept the bidX', 'bidxplugin' )?></label>
         </div>
+        <?php printf( __( '<a href="%s"> Terms & Conditions </a>', 'bidxplugin'), "/termsofservice" ); ?>
 
-        <div class="form-group checkbox">
+        <div class="form-group checkbox" style="display: inline-block;">
             <input type="checkbox" value="" id="checkbox-preventSpam" name="preventSpam" />
             <label for="checkbox-preventSpam"><span></span><?php _e( 'Please check this to help us prevent spam', 'bidxplugin' )?></label>
         </div>
-        <button type="submit" class="btn btn-primary"><?php _e('Register','bidxplugin');?></button>
+        <br>
+        <button type="submit" class="btn btn-primary" style="display: block;"><?php _e('Register','bidxplugin');?></button>
 
         <?php if( isset($this->showLoginLink) && $this->showLoginLink) { ?>
         <p>
