@@ -360,10 +360,10 @@
             //
             switch ( baseName )
             {
-                case "webSite":
+                case "company":
                     $input.rules( "add",
                     {
-                        urlOptionalProtocol:        true
+                        required:               true
                     } );
                 break;
                 case "businessOutcome":
@@ -375,6 +375,17 @@
                         "search_contains":              true
                     ,   "disable_search_threshold":     10
                     ,   "width":                        "100%"
+                    } );
+
+                    $input.rules( "add",
+                    {
+                        required:               true
+                    } );
+                break;
+                case "webSite":
+                    $input.rules( "add",
+                    {
+                        urlOptionalProtocol:        true
                     } );
                 break;
 
