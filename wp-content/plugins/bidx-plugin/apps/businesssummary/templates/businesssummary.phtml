@@ -511,8 +511,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         $tableHeader = array (
                             ''                                                                      => 'profilePicture',
                             __('Name','bidxplugin')                                                 => 'name',
-                            __('Role of partner in this business','bidxplugin')                     => 'role',
-                            __('Describe relevant expertise of business partner','bidxplugin')      => 'expertise',
+                            __('Role of the team member in this business','bidxplugin')                     => 'role',
+                            __('Describe relevant expertise of the team member','bidxplugin')      => 'expertise',
                             'LinkedIn'                                                              => 'linkedIn'
                         );
 
@@ -1075,17 +1075,17 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                     <!-- Role -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Role of partner in this business','bidxplugin'); ?></label>
+                        <label><?php _e('Role of the team member in this business','bidxplugin'); ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                            <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the partner','bidxplugin'); ?>">
+                            <input type="text" class="form-control" name="role" placeholder="<?php _e('Please type the role of the team member','bidxplugin'); ?>">
                         </div>
                     </div>
 
                     <!-- Expertise -->
                     <div class="form-group col-sm-12">
-                        <label><?php _e('Describe relevant expertise of business partner','bidxplugin'); ?></label>
-                        <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of business partner','bidxplugin'); ?>"></textarea>
+                        <label><?php _e('Describe relevant expertise of the team member','bidxplugin'); ?></label>
+                        <textarea type="text" class="form-control" name="expertise" placeholder="<?php _e('Please describe relevant expertise of the team member','bidxplugin'); ?>"></textarea>
                     </div>
 
                     <!-- LinkedIn -->
@@ -1100,14 +1100,14 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <!-- Profile picture -->
                     <div class="profilePictureControl form-group col-sm-12">
                         <label><?php _e('Picture','bidxplugin'); ?></label>
-                        <div class="profilePictureWrapper">
+                        <div class="profilePictureWrapper hide-overflow">
                             <div class="profilePictureContainer"></div>
                         </div>
                         <a href="#changeProfilePicture" class="btn btn-primary"><?php _e('Upload picture', 'bidxplugin')?></a>
                     </div>
                 </div>
 
-                <a href="#removeItem" class="btn btn-danger btn-sm btn-block"><?php _e('Remove this partner','bidxplugin'); ?></a>
+                <a href="#removeItem" class="btn btn-danger btn-sm btn-block"><?php _e('Remove this team member','bidxplugin'); ?></a>
             </div>
         </div>
     </div>
