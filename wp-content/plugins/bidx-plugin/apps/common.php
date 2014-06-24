@@ -185,6 +185,7 @@ class BidxCommon
     public function setStaticVariables ($subDomain, $sessionVars)
     {
         if (empty ($sessionVars)) {
+        	$sessionVars = new stdClass();
             $sessionVars->data = NULL;
             $sessionVars->authenticated = 'false';
         }
