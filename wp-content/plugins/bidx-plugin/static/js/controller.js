@@ -650,7 +650,7 @@
                 );
             }
 
-            /* 3 Entrpreneur Mentoring Activities Functions */
+            /* 3 Entrpreneur Mentoring Activities Functions
             var isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
 
             if ( isEntrepreneur )
@@ -664,8 +664,8 @@
                     }
                 );
             }
-
-            /* 4 Groupowner/admin Mentoring Activities Functions */
+            */
+            /* 4 Groupowner/admin Mentoring Activities Functions
             var roles = bidx.utils.getValue( bidxConfig.session, "roles" );
 
             if ( $.inArray("GroupOwner", roles) !== -1 )
@@ -678,7 +678,7 @@
                     ,   params:   _deparamSplat( splat )
                     }
                 );
-            }
+            } */
         }
      ,  monitoring:               function( state, splat )
         {

@@ -41,7 +41,7 @@
     mentorRelationships.get = function( params )
     {
         var method = "GET"
-        ,   url    = memberFetchUrl.replace( "%id%", params.requesterId )
+        ,   url    = memberFetchUrl.replace( "%id%", params.id )
         ;
 
 
@@ -67,7 +67,7 @@
         } );
     };
 
-    mentorRelationships.fetch = function( params )
+    mentorRelationships.fetch = function( params ) /* remove later */
     {
         var method = "GET"
         ,   url    = fetchUrl.replace( "%id%", params.requesterId )
@@ -99,14 +99,37 @@
     mentorRelationships.mutate = function( params )
     {
         var method  = "PUT"
-        ,   url     = baseUrl.replace( "%id%", params.requesterId )
+        ,   url     = baseUrl.replace( "%id%", params.entityId )
         ;
 
         api._call(
         {
             method:                 method
         ,   groupDomain:            params.groupDomain
-        ,   extraUrlParameters:     params.extraUrlParameters
+        ,   data:                   params.data
+        ,   baseUrl:                url
+
+        ,   success:        function( data, textStatus, jqXhr )
+            {
+                params.success( data, textStatus, jqXhr );
+            }
+        ,   error:          function( jqXhr, textStatus, errorThrown )
+            {
+                params.error( jqXhr, textStatus, errorThrown );
+            }
+        } );
+    };
+
+    mentorRelationships.cancel = function( params )
+    {
+        var method  = "DELETE"
+        ,   url     = baseUrl.replace( "%id%", params.entityId )
+        ;
+
+        api._call(
+        {
+            method:                 method
+        ,   groupDomain:            params.groupDomain
         ,   baseUrl:                url
 
         ,   success:        function( data, textStatus, jqXhr )

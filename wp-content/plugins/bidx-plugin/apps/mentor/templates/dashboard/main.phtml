@@ -9,27 +9,24 @@
         </div>
 
         <div class="modalView modalConfirmRequest">
-                <!-- Modal -->
-                <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                         <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3 id="myModalLabel"><?php _e ('Send request','bidxplugin') ?></h3>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    <?php _e ('You are about to %action% the request. Are you sure?','bidxplugin') ?>
-                                </p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <a class="btn" href="#dashboard/mentor/"><?php _e ('Cancel','bidxplugin') ?></a>
-                                <a href="#" class="btn btn-primary btn-request" data-href="#dashboard/sendRequest/" ><?php _e ('Send request','bidxplugin') ?></a>
-                            </div>
-                         </div>
-                    </div>
+            <!-- Modal -->
+            <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel"><?php _e ('Send request','bidxplugin') ?></h3>
+                        </div>
+                        <div class="modal-body">
+                            %message%
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn" href="#mentoring/mentor/"><?php _e ('Cancel','bidxplugin') ?></a>
+                            <a href="#" class="btn btn-primary btn-request" data-href="#mentoring/sendRequest/" ><?php _e ('Send request','bidxplugin') ?></a>
+                        </div>
+                     </div>
                 </div>
+            </div>
         </div>
         <!-- Modal -->
         <div class="modalView modalConfirmFeedback">
@@ -46,8 +43,8 @@
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <a href="#" class="btn btn-cancel btn-cancel-feedback" data-href="#dashboard/addFeedback/"><?php _e ('Change feedback','bidxplugin') ?></a>
-                            <a href="#" class="btn btn-primary btn-send-feedback" data-href="#dashboard/sendFeedback/" ><?php _e ('Add feedback','bidxplugin') ?></a>
+                            <a href="#" class="btn btn-cancel btn-cancel-feedback" data-href="#mentoring/addFeedback/"><?php _e ('Change feedback','bidxplugin') ?></a>
+                            <a href="#" class="btn btn-primary btn-send-feedback" data-href="#mentoring/sendFeedback/" ><?php _e ('Add feedback','bidxplugin') ?></a>
                         </div>
                      </div>
                 </div>
@@ -59,7 +56,7 @@
                 <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header">
-                            <a  class="close" href="#dashboard/cancel">×</a>
+                            <a  class="close" href="#mentoring/cancel">×</a>
                             <h3 id="feedbackLabel"><?php _e ('View feedback','bidxplugin') ?></h3>
                         </div>
                         <div class="modal-body">
@@ -75,7 +72,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <a href="#dashboard/cancel" class="btn btn-view-feedback" href=""><?php _e ('Close','bidxplugin') ?></a>
+                            <a href="#mentoring/cancel" class="btn btn-view-feedback" href=""><?php _e ('Close','bidxplugin') ?></a>
                         </div>
                      </div>
                 </div>
@@ -87,7 +84,7 @@
                 <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header">
-                            <a class="btn btnRequestCancel pull-right" href="#dashboard/cancel">
+                            <a class="btn btnRequestCancel pull-right" href="#mentoring/cancel">
                                 <button type="button" class="close">×</button>
                             </a>
                             <h3 id="myModalLabel"><?php _e ('Send feedback','bidxplugin') ?></h3>
@@ -109,7 +106,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <a class="btn btn-feedback-cancel" href="#dashboard/cancel"><?php _e ('Cancel','bidxplugin') ?></a>
+                            <a class="btn btn-feedback-cancel" href="#mentoring/cancel"><?php _e ('Cancel','bidxplugin') ?></a>
                             <a class="btn btn-primary btn-feedback-submit"  ><?php _e ('Add feedback','bidxplugin') ?></a> <!-- data-href="#mentoringRequest/sendRequest/" -->
                         </div>
                      </div>
@@ -148,6 +145,14 @@
        </div>
     </td>
 </tr>
+-->
+</script>
+
+<script type="text/html" id="mentor-request-txt">
+<!--
+<p>
+    <?php _e ('You are about to %action% the request. Are you sure?','bidxplugin') ?>
+</p>
 -->
 </script>
 

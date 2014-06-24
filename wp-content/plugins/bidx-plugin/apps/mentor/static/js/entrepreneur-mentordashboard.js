@@ -14,6 +14,7 @@
     ,   $modal
     ,   currentGroupId    = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId     = bidx.common.getCurrentUserId( "id" )
+    ,   appName              = 'mentor'
     ;
 
     // this function mutates the relationship between two contacts. Possible mutations for relationship: action=[ignore / accept]
@@ -89,7 +90,7 @@
                         bidx.utils.error( "Internal Server error occured", response );
                         _showMainError( "Something went wrong while updating a relationship: " + response.code );
                     }
-                    
+
                     if (options && options.callback)
                     {
                         options.callback();
@@ -110,98 +111,102 @@
         //
         var callbacks =
         {
-            active:     function(  $listItem, item )
+            ongoing:     function(  $listItem, item, userId, mentorId )
             {
-                var params =
-                {
-                    requesterId:     item.id
-                ,   requesteeId:     currentUserId
-              /*  ,   type:            'mentor'       */
-                };
+                var $addFeedbackBtn     =   $listItem.find( ".btn-bidx-add-feedback")
+                ,   $viewFeedbackBtn    =   $listItem.find( ".btn-bidx-view-feedback")
+                ,   $contactBtn         =   $listItem.find( ".btn-bidx-contact")
+                ,   $stopBtn            =   $listItem.find( ".btn-bidx-stop")
 
-                /* 1 Add Feedback */
-
-                $listItem.find( ".btn-bidx-add-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/addFeedback/" +$.param( params ) )
+                ,   hrefaddFeedback     =   $addFeedbackBtn.attr( "data-href" )
+                ,   hrefviewFeedback    =   $viewFeedbackBtn.attr( "data-href" )
+                ,   hrefContact         =   $contactBtn.attr( "data-href" )
+                ,   hrefStop            =   $stopBtn.attr( 'data-href' )
                 ;
+
+                /* 1 dd Feedback */
+                hrefaddFeedback = hrefaddFeedback
+                            .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%commentorId%/g,      mentorId )
+                            ;
 
                 /* 2 View Feedback */
+                hrefviewFeedback = hrefviewFeedback
+                            .replace( /%entityId%/g,      item.entityId )
+                           ;
 
-                $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/viewFeedback/" +$.param( params ) )
-                ;
+                $viewFeedbackBtn.attr( "href", hrefviewFeedback );
 
                 /* 3 Contact Entrepreneur */
-                $listItem.find( ".btn-bidx-contact")
-                    .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
-                ;
+                hrefContact = hrefContact.replace( /%receipientId%/g,      mentorId );
+                $contactBtn.attr( "href", hrefContact );
 
-                /* 4 Stop Link */
-                params.action = "stop";
-                $listItem.find( ".btn-bidx-stop")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
-                   // .click( _doMutateContactRequest )
-                ;
+                /* 4 Cancel request */
+                hrefStop = hrefStop
+                            .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%userId%/g,        userId );
+
+                $stopBtn.attr( "href", hrefStop );
+
 
             }
-        ,   pending:    function(  $listItem, item )
+        ,   pending:    function(  $listItem, item, userId, mentorId )
             {
-                var params =
-                {
-                    requesterId:     item.id
-                ,   requesteeId:     currentUserId
-                ,   type:            'mentor'
-                ,   action:          "cancel"
-                };
-
-                /* 1 Send Reminder */
-                $listItem.find( ".btn-bidx-reminder")
-                    .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
-                   // .click( _doMutateContactRequest )
+                var $reminderBtn    =   $listItem.find( ".btn-bidx-reminder")
+                ,   $cancelBtn      =   $listItem.find( ".btn-bidx-cancel")
+                ,   $contactBtn     =   $listItem.find( ".btn-bidx-contact")
+                ,   hrefReminder    =   $reminderBtn.attr( "data-href" )
+                ,   hrefCancel      =   $cancelBtn.attr( "data-href" )
+                ,   hrefContact     =   $contactBtn.attr( "data-href" )
                 ;
 
-                /* 2 Cancel Link */
-                $listItem.find( ".btn-bidx-cancel")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
-                   // .click( _doMutateContactRequest )
-                ;
+                /* 1 Accept Link */
+                hrefReminder = hrefReminder.replace( /%receipientId%/g,      mentorId );
+                $reminderBtn.attr( "href", hrefReminder );
+
+                /* 2 Ignore Link */
+                hrefCancel = hrefCancel
+                            .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%userId%/g,        userId );
+
+                $cancelBtn.attr( "href", hrefCancel );
 
                 /* 3 Contact Entrepreneur */
-                $listItem.find( ".btn-bidx-contact")
-                    .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
-                ;
+                hrefContact = hrefContact.replace( /%receipientId%/g,      mentorId );
+                $contactBtn.attr( "href", hrefContact );
+
             }
         ,   ignored:    function()
             {
             }
-        ,   incoming:   function(  $listItem, item )
+        ,   incoming:   function(  $listItem, item, userId, mentorId )
             {
-
-                var params =
-                {
-                    requesterId:     item.id
-                ,   requesteeId:     currentUserId
-                ,   type:            'mentor'
-                ,   action:          "accept"
-                };
+                var $acceptBtn  =   $listItem.find( ".btn-bidx-accept")
+                ,   $ignoreBtn  =   $listItem.find( ".btn-bidx-ignore")
+                ,   $contactBtn =   $listItem.find( ".btn-bidx-contact")
+                ,   hrefAccept  =   $acceptBtn.attr( "data-href" )
+                ,   hrefIgnore  =   $ignoreBtn.attr( "data-href" )
+                ,   hrefContact =   $contactBtn.attr( "data-href" )
+                ;
 
                 /* 1 Accept Link */
-                $listItem.find( ".btn-bidx-accept")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" + $.param( params ) )
-                    //.click( _doMutateContactRequest )
-                ;
+                hrefAccept = hrefAccept
+                            .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%userId%/g,        userId );
+
+                $acceptBtn.attr( "href", hrefAccept );
+
 
                 /* 2 Ignore Link */
-                params.action = "ignore";
-                $listItem.find( ".btn-bidx-ignore")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
-                   // .click( _doMutateContactRequest )
-                ;
+                hrefIgnore = hrefIgnore
+                            .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%userId%/g,        userId );
 
-                /* 3 Contact Entrepreneur */             
-                $listItem.find( ".btn-bidx-contact")
-                    .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )                  
-                ;
+                $ignoreBtn.attr( "href", hrefIgnore );
+
+                /* 3 Contact Entrepreneur */
+                hrefContact = hrefContact.replace( /%receipientId%/g,      mentorId );
+                $contactBtn.attr( "href", hrefContact );
 
             }
         ,   renew:   function(  $listItem, item )
@@ -217,25 +222,25 @@
 
                 /* 1 View  Feedback */
                $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
                 ;
 
                 /* 2 Contact Entrepreneur */
                 $listItem.find( ".btn-bidx-contact")
                     .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
                 ;
-           
+
                 /* 3 Renew Link */
                 params.action = "renew";
                 $listItem.find( ".btn-bidx-renew")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
                 ;
 
                 /* 4 Stop Link */
                 params.action = "stop";
                 $listItem.find( ".btn-bidx-stop")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
                 ;
 
@@ -253,20 +258,20 @@
 
                 /* 1 View  Feedback */
                 $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
                 ;
 
                 /* 2 Contact Entrepreneur */
                 $listItem.find( ".btn-bidx-contact")
                     .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
                 ;
-           
+
                 /* 3 Delete Link */
                 params.action = "renew";
                 $listItem.find( ".btn-bidx-delete")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
-                ;               
+                ;
 
             }
 
@@ -281,17 +286,21 @@
         ,   $listEmpty       = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData       = $("#entrepreneur-respond-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response         = options.response
-        ,   incomingResponse = response.relationshipType.mentor.types.incoming
+        ,   incomingResponse = response.respond
         ,   $list            = $element.find("." + options.list)
         ,   emptyVal         = '-'
+        ,   counter          = 1
         ,   $listItem
         ,   listItem
-
+        ,   itemEntity
+        ,   itemMember
+        ,   mentorId
+        ,   $d              =  $.Deferred()
+        ,   incomingLength      = incomingResponse.length
         ;
 
-        $list.empty();
+        if ( incomingResponse && incomingLength )
 
-        if ( incomingResponse &&  incomingResponse.length )
         {
             // Add Default image if there is no image attached to the bs
             var addDefaultImage = function( el )
@@ -300,38 +309,76 @@
             };
             $.each( incomingResponse , function ( idx, item)
             {
-
-                 listItem = snippit
-                    .replace( /%accordion-id%/g,      item.id   ? item.id     : emptyVal )
-                    .replace( /%name_s%/g,       item.name    ? item.name      : emptyVal )
-                    .replace( /%creator%/g,       item.name    ? item.name      : emptyVal )
-                    .replace( /%creatorId%/g,       item.id    ? item.id      : emptyVal )
-                    .replace( /%status%/g,      item.id   ? 'Received request'     : emptyVal )
-                    .replace( /%action%/g,      actionData )
-                    .replace( /%companylogodoc_url%/g,      item.companylogodoc_url   ? item.companylogodoc_url     : addDefaultImage('js-companylogo') );
-
-                // Remove the js selector
-                $element.find('.js-companylogo').first().removeClass('js-companylogo');
-
-                // execute cb function
-                //
-                $listItem = $( listItem );
-
-                if( $.isFunction( options.cb ) )
+                showEntity(
                 {
-                    // call Callback with current contact item as this scope and pass the current $listitem
-                    //
-                    options.cb.call( this, $listItem, item );
-                }
-                //  add mail element to list
-                $list.append( $listItem );
+                    entityId    :   item.entityId
+                ,   entityType  :   'bidxBusinessSummary'
+                ,   callback    :   function ( itemEntity )
+                                    {
+
+                                        if( itemEntity )
+                                        {
+                                            mentorId    = item.mentorId;
+                                             showMemberProfile(
+                                            {
+                                                mentorId     :   mentorId
+                                             ,  callback    :   function ( itemMember )
+                                                                {
+                                                                    listItem = snippit
+                                                                    .replace( /%accordion-id%/g,        itemEntity.bidxMeta.bidxEntityId    ? itemEntity.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%name_s%/g,              itemEntity.name                     ? itemEntity.name      : emptyVal )
+                                                                    .replace( /%creator%/g,             itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,           mentorId                             ? mentorId      : emptyVal )
+                                                                    .replace( /%status%/g,              bidx.i18n.i( "receivedRequest", appName )  )
+                                                                    .replace( /%action%/g,              actionData )
+                                                                    .replace( /%companylogodoc_url%/g,  itemEntity.companylogodoc_url       ? itemEntity.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                                                                    ;
+                                                                    bidx.utils.log('company',  itemEntity.companylogodoc_url);
+                                                                    // Remove the js selector
+                                                                    $element.find('.js-companylogo').first().removeClass('js-companylogo');
+                                                                    // execute cb function                //
+                                                                    $listItem = $( listItem );
+
+                                                                    if( $.isFunction( options.cb ) )
+                                                                    {
+                                                                        // call Callback with current contact item as this scope and pass the current $listitem
+                                                                        //
+                                                                        options.cb.call( this, $listItem, item, currentUserId, mentorId );
+                                                                    }
+                                                                    //  add mail element to list
+                                                                    $list.append( $listItem );
+
+                                                                    if( counter === incomingLength )
+                                                                    {
+
+                                                                        $d.resolve( );
+                                                                    }
+
+                                                                     counter = counter + 1;
+                                                                }
+                                            } );
+                                        }
+                                        else
+                                        {
+                                            if(counter === incomingLength )
+                                            {
+                                                $d.resolve( );
+                                            }
+                                            counter = counter + 1;
+                                        }
+                                    }
+                } );
+
             });
         }
         else
         {
-  
             $list.append($listEmpty);
+
+            $d.resolve( );
         }
+
+        return $d.promise( );
     }
 
     function waitingRequest( options )
@@ -340,16 +387,22 @@
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData      = $("#entrepreneur-wait-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
-        ,   waitingResponse = response.relationshipType.mentor.types.pending
+        ,   waitingResponse = response.wait
         ,   $list           = $element.find("." + options.list)
         ,   emptyVal        = '-'
         ,   $listItem
         ,   listItem
+        ,   itemEntity
+        ,   itemMember
+        ,   mentorId
+        ,   $d              =  $.Deferred()
+        ,   counter         = 1
+        ,   waitLength      = waitingResponse.length
         ;
 
-        $list.empty();
+        //$list.empty();
 
-        if ( waitingResponse && waitingResponse.length )
+        if ( waitingResponse && waitLength )
 
         {
             // Add Default image if there is no image attached to the bs
@@ -359,40 +412,78 @@
             };
             $.each( waitingResponse , function ( idx, item)
             {
-                                   
-                listItem = snippit
-                    .replace( /%accordion-id%/g,      item.id   ? item.id     : emptyVal )
-                    .replace( /%name_s%/g,       item.name    ? item.name      : emptyVal )
-                    .replace( /%creator%/g,       item.name    ? item.name      : emptyVal )
-                    .replace( /%creatorId%/g,       item.id    ? item.id      : emptyVal )
-                    .replace( /%status%/g,      item.id   ? 'Waiting'     : emptyVal )
-                    .replace( /%action%/g,      actionData )
-                    .replace( /%companylogodoc_url%/g,      item.companylogodoc_url   ? item.companylogodoc_url     : addDefaultImage('js-companylogo') );
-
-                // Remove the js selector
-                $element.find('.js-companylogo').first().removeClass('js-companylogo');
-
-                // execute cb function
-                //
-                $listItem = $( listItem );
-
-                if( $.isFunction( options.cb ) )
+                showEntity(
                 {
-                    // call Callback with current contact item as this scope and pass the current $listitem
-                    //
-                    options.cb.call( this, $listItem, item );
-                }
+                    entityId    :   item.entityId
+                ,   entityType  :   'bidxBusinessSummary'
+                ,   callback    :   function ( itemEntity )
+                                    {
 
 
-                //  add mail element to list
-                $list.append( $listItem );
+
+                                        if( itemEntity )
+                                        {
+                                            mentorId    = item.mentorId;
+                                             showMemberProfile(
+                                            {
+                                                mentorId     :   mentorId
+                                             ,  callback    :   function ( itemMember )
+                                                                {
+                                                                    listItem = snippit
+                                                                    .replace( /%accordion-id%/g,        itemEntity.bidxMeta.bidxEntityId    ? itemEntity.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%name_s%/g,              itemEntity.name                     ? itemEntity.name      : emptyVal )
+                                                                    .replace( /%creator%/g,             itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,           mentorId                             ? mentorId      : emptyVal )
+                                                                    .replace( /%status%/g,              bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                    .replace( /%action%/g,              actionData )
+                                                                    .replace( /%companylogodoc_url%/g,  itemEntity.companylogodoc_url       ? itemEntity.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                                                                    ;
+                                                                    bidx.utils.log('company',  itemEntity.companylogodoc_url);
+                                                                    // Remove the js selector
+                                                                    $element.find('.js-companylogo').first().removeClass('js-companylogo');
+                                                                    // execute cb function                //
+                                                                    $listItem = $( listItem );
+
+                                                                    if( $.isFunction( options.cb ) )
+                                                                    {
+                                                                        // call Callback with current contact item as this scope and pass the current $listitem
+                                                                        //
+                                                                        options.cb.call( this, $listItem, item, mentorId, mentorId );
+                                                                    }
+                                                                    //  add mail element to list
+                                                                    $list.append( $listItem );
+
+                                                                    if(counter === waitLength )
+                                                                    {
+
+                                                                        $d.resolve( );
+                                                                    }
+
+                                                                     counter = counter + 1;
+                                                                }
+                                            } );
+                                        }
+                                        else
+                                        {
+                                            if(counter === waitLength )
+                                            {
+                                                $d.resolve( );
+                                            }
+                                            counter = counter + 1;
+                                        }
+                                    }
+                } );
 
             });
         }
         else
         {
             $list.append($listEmpty);
+
+            $d.resolve( );
         }
+
+        return $d.promise( );
     }
 
     function ongoingRequest( options )
@@ -401,16 +492,23 @@
         ,   $listEmpty      = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData      = $("#entrepreneur-ongoing-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response        = options.response
-        ,   ongoingResponse = response.relationshipType.mentor.types.active
+         ,   ongoingResponse = response.ongoing
         ,   $list           = $element.find("." + options.list)
         ,   emptyVal        = '-'
         ,   $listItem
         ,   listItem
+        ,   itemEntity
+        ,   itemMember
+        ,   mentorId
+        ,   $d              =  $.Deferred()
+        ,   counter         = 1
+        ,   ongoingLength   = ongoingResponse.length
         ;
 
-        $list.empty();
+        //$list.empty();
 
-        if ( ongoingResponse && ongoingResponse.length )
+        if ( ongoingResponse && ongoingLength )
+
         {
             // Add Default image if there is no image attached to the bs
             var addDefaultImage = function( el )
@@ -419,41 +517,81 @@
             };
             $.each( ongoingResponse , function ( idx, item)
             {
-
-                listItem = snippit
-                    .replace( /%accordion-id%/g,      item.id   ? item.id     : emptyVal )
-                    .replace( /%name_s%/g,       item.name    ? item.name      : emptyVal )
-                    .replace( /%creator%/g,       item.name    ? item.name      : emptyVal )
-                    .replace( /%creatorId%/g,       item.id    ? item.id      : emptyVal )
-                    .replace( /%status%/g,      item.id   ? 'On going'     : emptyVal )
-                    .replace( /%action%/g,      actionData )
-                    .replace( /%companylogodoc_url%/g,      item.companylogodoc_url   ? item.companylogodoc_url     : addDefaultImage('js-companylogo') );
-
-                // Remove the js selector
-                $element.find('.js-companylogo').first().removeClass('js-companylogo');
-
-                // execute cb function
-                //
-                $listItem = $( listItem );
-
-                if( $.isFunction( options.cb ) )
+                showEntity(
                 {
-                    // call Callback with current contact item as this scope and pass the current $listitem
-                    //
-                    options.cb.call( this, $listItem, item );
-                }
+                    entityId    :   item.entityId
+                ,   entityType  :   'bidxBusinessSummary'
+                ,   callback    :   function ( itemEntity )
+                                    {
 
 
-                //  add mail element to list
-                $list.append( $listItem );
+
+                                        if( itemEntity )
+                                        {
+                                            mentorId    = item.mentorId;
+                                             showMemberProfile(
+                                            {
+                                                mentorId     :   mentorId
+                                             ,  callback    :   function ( itemMember )
+                                                                {
+                                                                    listItem = snippit
+                                                                    .replace( /%accordion-id%/g,        itemEntity.bidxMeta.bidxEntityId    ? itemEntity.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%name_s%/g,              itemEntity.name                     ? itemEntity.name      : emptyVal )
+                                                                    .replace( /%creator%/g,             itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,           mentorId                             ? mentorId      : emptyVal )
+                                                                    .replace( /%status%/g,              bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                    .replace( /%action%/g,              actionData )
+                                                                    .replace( /%companylogodoc_url%/g,  itemEntity.companylogodoc_url       ? itemEntity.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                                                                    ;
+                                                                    bidx.utils.log('company',  itemEntity.companylogodoc_url);
+                                                                    // Remove the js selector
+                                                                    $element.find('.js-companylogo').first().removeClass('js-companylogo');
+                                                                    // execute cb function                //
+                                                                    $listItem = $( listItem );
+
+                                                                    if( $.isFunction( options.cb ) )
+                                                                    {
+                                                                        // call Callback with current contact item as this scope and pass the current $listitem
+                                                                        //
+                                                                        options.cb.call( this, $listItem, item, mentorId, mentorId );
+                                                                    }
+                                                                    //  add mail element to list
+                                                                    $list.append( $listItem );
+
+                                                                    if(counter === ongoingLength )
+                                                                    {
+
+                                                                        $d.resolve( );
+                                                                    }
+
+                                                                     counter = counter + 1;
+                                                                }
+                                            } );
+                                        }
+                                        else
+                                        {
+                                            if(counter === ongoingLength )
+                                            {
+                                                $d.resolve( );
+                                            }
+                                            counter = counter + 1;
+                                        }
+                                    }
+                } );
 
             });
         }
         else
         {
             $list.append($listEmpty);
+
+            $d.resolve( );
         }
+
+        return $d.promise( );
+
     }
+
 
     function renewRequest( options )
     {
@@ -575,95 +713,217 @@
         }
     }
 
-    // function that retrieves group members returned in an array of key/value objects
-    // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
-    //
-    var getMentoringRequest = function(options)
+    function showEntity( options )
     {
+        var  bidxMeta
+        ;
 
         bidx.api.call(
-            "mentorRelationships.fetch"
+            "entity.fetch"
         ,   {
-                 extraUrlParameters:
-                    [
-                        {
-                            label:      "type",
-                            value:      "mentor"
-                        }
-                    ,   {
-                            label:      "limit",
-                            value:      5
-                        }
-
-                    ]
-            ,   requesterId:              bidx.common.getCurrentUserId( "id" )
-            ,   groupDomain:              bidx.common.groupDomain
-            ,   success: function( response )
+                entityId:       options.entityId
+            ,   groupDomain:    bidx.common.groupDomain
+            ,   success:        function( itemEntity )
                 {
                     // now format it into array of objects with value and label
-                    //
-                    if ( response && response.relationshipType && response.relationshipType.mentor && response.relationshipType.mentor.types )
+
+                    if ( !$.isEmptyObject(itemEntity) )
                     {
-                        _showView("load");
-                        _showView("loadcontact", true);
-                        _showView("loadpreference", true );
 
-                        respondRequest(
+                        bidxMeta       = bidx.utils.getValue( itemEntity, "bidxMeta" );
+
+                        if( bidxMeta && bidxMeta.bidxEntityType === options.entityType )
                         {
-                            response : response,
-                            list     : "respond",
-                            cb       : _getContactsCallback( 'incoming' )
 
-                        } );
-                        waitingRequest(
-                        {
-                            response : response,
-                            list     : "wait",
-                            cb       : _getContactsCallback( 'pending' )
+                            //  execute callback if provided
+                            if (options && options.callback)
+                            {
+                                options.callback( itemEntity );
+                            }
 
-                        } );
-                        ongoingRequest(
-                        {
-                            response : response,
-                            list     : "ongoing",
-                            cb       : _getContactsCallback( 'active' )
-
-                        } );
-                        renewRequest(
-                        {
-                            response : response,
-                            list     : "renew",
-                            cb       : _getContactsCallback( 'renew' )
-
-                        } );
-                        endedRequest(
-                        {
-                            response : response,
-                            list     : "ended",
-                            cb       : _getContactsCallback( 'ended' )
-
-                        } );
+                        }
                     }
 
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
                     //  execute callback if provided
                     if (options && options.callback)
                     {
-                        options.callback();
+                        options.callback( false );
                     }
-
-                }
-                , error: function(jqXhr, textStatus)
-                {
-
-                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
-
-                     _showMainError("Something went wrong while retrieving contactlist of the member: " + status);
+                    return false;
                 }
             }
         );
+
+    }
+
+
+    function showMemberProfile( options )
+    {
+        var bidxMeta
+        ;
+
+        bidx.api.call(
+            "member.fetch"
+        ,   {
+                id:          options.mentorId
+            ,   requesteeId: options.mentorId
+            ,   groupDomain: bidx.common.groupDomain
+            ,   success:        function( item )
+                {
+                    // now format it into array of objects with value and label
+
+                    if ( !$.isEmptyObject(item.bidxMemberProfile) )
+                    {
+                        //if( item.bidxEntityType == 'bidxBusinessSummary') {
+                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile.bidxMeta" );
+
+                        if( bidxMeta  )
+                        {
+                            //  execute callback if provided
+                            if (options && options.callback)
+                            {
+                                options.callback( item );
+                            }
+                        }
+
+                    }
+
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    return false;
+                }
+            }
+        );
+
+
+    }
+
+    // function that retrieves group members returned in an array of key/value objects
+    // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
+    //
+    var getMentorRequest = function(options)
+    {
+
+
+        // now format it into array of objects with value and label
+        //
+        var     result      = options.result
+        ,       response    =  {}
+        ,       respond     =  []
+        ,       wait        =  []
+        ,       ongoing     =  []
+        ;
+
+        if ( result  )
+        {
+          //  _showView("load");
+          //  _showView("loadcontact", true);
+         //   _showView("loadpreference", true );
+
+            $.each( result , function ( idx, item)
+            {
+                bidx.utils.log('item',item.status);
+                bidx.utils.log('mentorid',item.mentorId);
+                if ( ( item.status      === 'requested' ) &&
+                     ( item.mentorId    !== currentUserId ) &&
+                     ( item.initiatorId === currentUserId ) )
+                {
+                    wait.push( item );
+                }
+                else if( ( item.status      === 'requested' ) &&
+                         ( item.mentorId    !== currentUserId ) &&
+                         ( item.initiatorId !== currentUserId ) )
+                {
+                    respond.push( item );
+                }
+                else if( ( item.status     === 'accepted')  &&
+                         ( item.mentorId    !== currentUserId )
+                 )
+                {
+                    ongoing.push ( item );
+                }
+            });
+
+            response    =   {
+                                wait    : wait
+                            ,   respond : respond
+                            ,   ongoing : ongoing
+                            };
+
+
+           respondRequest(
+            {
+                response : response,
+                list     : "respond",
+                cb       : _getContactsCallback( 'incoming' )
+
+            } )
+           .done( function(  )
+            {
+                _hideView("loadrespond");
+
+            } );
+
+            waitingRequest(
+            {
+                response : response,
+                list     : "wait",
+                cb       : _getContactsCallback( 'pending' )
+
+            } )
+            .done( function(  )
+            {
+                _hideView("loadwait");
+
+            } );
+
+            ongoingRequest(
+            {
+                response : response,
+                list     : "ongoing",
+                cb       : _getContactsCallback( 'ongoing' )
+
+            } )
+            .done( function(  )
+            {
+                _hideView("loadongoing");
+
+            } );
+
+
+
+            /*
+            renewRequest(
+            {
+                response : response,
+                list     : "renew",
+                cb       : _getContactsCallback( 'renew' )
+
+            } );
+            endedRequest(
+            {
+                response : response,
+                list     : "ended",
+                cb       : _getContactsCallback( 'ended' )
+
+            } );*/
+
+        }
+
+        //  execute callback if provided
+        if (options && options.callback)
+        {
+            options.callback( result );
+        }
+
+    return ;
     };
 
-    //  ################################## MODAL #####################################  \\    
+    //  ################################## MODAL #####################################  \\
 
     //  show modal view with optionally and ID to be appended to the views buttons
     function _showModal( options )
@@ -701,7 +961,12 @@
         if( options.onHide )
         {
             //  to prevent duplicate attachments bind event only onces
-            $modal.one( 'hidden.bs.modal', options.onHide );
+            $modal.on( 'hidden.bs.modal', options.onHide );
+        }
+        if( options.onShow )
+        {
+
+            $modal.on( 'show.bs.modal' ,options.onShow );
         }
     }
 
@@ -729,7 +994,10 @@
          var $view = $views.filter(bidx.utils.getViewName(view)).show();
     };
 
-    
+    var _hideView = function( hideview )
+    {
+        $views.filter(bidx.utils.getViewName(hideview)).hide();
+    };
 
     var _showHideView = function(view, hideview)
     {
@@ -747,7 +1015,7 @@
         _showView( "error" , true);
     }
 
-    function _menuActivateWithTitle ( menuItem,pageTitle) {
+     function _menuActivateWithTitle ( menuItem,pageTitle) {
         //Remove active class from li and add active class to current menu
         $element.find(".limenu").removeClass('active').filter(menuItem).addClass('active');
         /*Empty page title and add currentpage title
@@ -756,60 +1024,6 @@
     }
 
     /*************** Main Views *************************/
-
-    //  show modal view with optionally and ID to be appended to the views buttons
-    function _showMainModal( options )
-    {
-        var href
-        ,   replacedModal
-        ,   action
-        ,   params = {};
-
-        if(options.params)
-        {
-            params = options.params;
-            action = options.params.action;
-        }
-
-        bidx.utils.log("[dashboard] show modal", options );
-
-        $mainModal        = $mainModals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
-        replacedModal = $mainModal.html()
-                        .replace( /%action%/g, action );
-
-        $mainModal.html(  replacedModal );
-
-        $mainModal.find( ".btn-primary[href]" ).each( function()
-        {
-            var $this = $( this );
-
-            href = $this.attr( "data-href" ) + $.param( params ) ;
-
-            $this.attr( "href", href );
-        } );
-
-        $mainModal.modal( {} );
-
-        if( options.onHide )
-        {
-            //  to prevent duplicate attachments bind event only onces
-            $mainModal.one( 'hidden.bs.modal', options.onHide );
-        }
-    }
-
-    //  closing of modal view state
-    var _closeMainModal = function(options)
-    {
-        if ($mainModal)
-        {
-            if (options && options.unbindHide)
-            {
-                $mainModal.unbind('hide');
-            }
-            $mainModal.modal('hide');
-        }
-    };
-
     var _showMainView = function(view, showAll)
     {
 
@@ -821,13 +1035,6 @@
          var $mainView = $mainViews.filter(bidx.utils.getViewName(view)).show();
     };
 
-    var _showMainHideView = function(view, hideview)
-    {
-
-        $mainViews.filter(bidx.utils.getViewName(hideview)).hide();
-        var $mainView = $mainViews.filter(bidx.utils.getViewName(view)).show();
-
-    };
 
     // display generic error view with msg provided
     //
@@ -871,77 +1078,48 @@
 
 
                 _menuActivateWithTitle(".Dashboard","My mentor dashboard");
-                _showView("loadrespond");
-                _showView("loadwait", true);
-                _showView("loadongoing", true );
-                _showView("loadrenew", true );
-                _showView("loadended", true );
+                _showView( 'respond', true );
+                _showView( 'loadrespond', true);
 
-                getMentoringRequest(
+                _showView( 'wait', true );
+                _showView('loadwait', true);
+
+                _showView( 'ongoing', true );
+                _showView("loadongoing", true );
+
+                /* owView( 'renew', true );
+                _showView("loadrenew", true );
+
+                _showView("ended", true );
+                _showView("loadended", true ); */
+
+                getMentorRequest(
                 {
-                    list: "match"
-                ,   view: "match"
-                ,   callback: function()
+                    result  :  options.result
+                ,   callback: function( item )
                     {
-                        _showHideView("respond", "loadrespond");
+
+                        /*var isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
+                        if ( isEntrepreneur )
+                        {
+                            options.item = item;
+
+                            bidx.entrepreneurmentordashboard.navigate( options );
+
+                        }*/
+                        /*_showHideView("respond", "loadrespond");
                         _showHideView("wait",    "loadwait");
                         _showHideView("ongoing", "loadongoing");
                         _showHideView("renew",   "loadrenew");
-                        _showHideView("ended",   "loadended");
+                        _showHideView("ended",   "loadended");*/
 
 
-                    }
-                } );
-
-                break;
-
-            case "confirmRequest":
-
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-
-                _showMainModal(
-                {
-                    view  : "confirmRequest"
-                ,   params: options.params
-                ,   onHide: function()
-                    {
-                        window.bidx.controller.updateHash("#dashboard/mentor", false, false);
-                    }
-                } );
-
-                break;
-
-            case "sendRequest":
-                var btnHtml
-                ,   $mentorButton
-                ;
-
-                $mentorButton = $mainElement.find( '.btn-request' );
-                btnHtml = $mentorButton.text();
-                $mentorButton.addClass( "disabled" ).i18nText("msgWaitForSave");
-                
-                _showMainView("loadrequest", true);
-                
-                _doMutateContactRequest(
-                {
-                    params: options.params
-                ,   callback: function()
-                    {
-                        _showMainHideView("respond", "loadrequest");
-                        $mentorButton.removeClass( "disabled" );
-                        $mentorButton.text(btnHtml);
-                        _closeMainModal(
-                        {
-                            unbindHide: true
-                        } );
 
                     }
                 } );
 
                 break;
+
          }
     };
 

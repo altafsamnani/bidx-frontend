@@ -2,6 +2,8 @@
     <!-- <Item value=""></Item> -->
     <Item value="feedbackSent">Feedback sent</Item>
     <Item value="feedbackNew">new</Item>
-    <Item value="waiting">Waiting</Item>
+    <Item value="mentoringRequestPending">Mentoring request pending</Item>
+    <Item value="receivedRequest">Received request</Item>
+    <Item value="ongoing">Ongoing</Item>
 
 </I18N>

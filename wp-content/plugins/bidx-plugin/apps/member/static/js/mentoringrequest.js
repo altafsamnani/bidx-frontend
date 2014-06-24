@@ -361,7 +361,7 @@
             bidx.api.call(
                 "mentorRelationships.get"
             ,   {
-                    requesterId:              loggedInMemberId
+                    id:              loggedInMemberId
                 ,   groupDomain:              bidx.common.groupDomain
                 ,   success: function( response )
                     {
@@ -428,7 +428,7 @@
                 }
             );
 
-    };
+    }
 
 
     //  ################################## MODAL #####################################  \\

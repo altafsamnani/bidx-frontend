@@ -89,7 +89,7 @@
                         bidx.utils.error( "Internal Server error occured", response );
                         _showMainError( "Something went wrong while updating a relationship: " + response.code );
                     }
-                    
+
                     if (options && options.callback)
                     {
                         options.callback();
@@ -122,13 +122,13 @@
                 /* 1 Add Feedback */
 
                 $listItem.find( ".btn-bidx-add-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/addFeedback/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/addFeedback/" +$.param( params ) )
                 ;
 
                 /* 2 View Feedback */
 
                 $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
                 ;
 
                 /* 3 Contact Entrepreneur */
@@ -139,7 +139,7 @@
                 /* 4 Stop Link */
                 params.action = "stop";
                 $listItem.find( ".btn-bidx-stop")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
                 ;
 
@@ -162,7 +162,7 @@
 
                 /* 2 Cancel Link */
                 $listItem.find( ".btn-bidx-cancel")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
                 ;
 
@@ -187,20 +187,20 @@
 
                 /* 1 Accept Link */
                 $listItem.find( ".btn-bidx-accept")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" + $.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" + $.param( params ) )
                     //.click( _doMutateContactRequest )
                 ;
 
                 /* 2 Ignore Link */
                 params.action = "ignore";
                 $listItem.find( ".btn-bidx-ignore")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
                 ;
 
-                /* 3 Contact Entrepreneur */             
+                /* 3 Contact Entrepreneur */
                 $listItem.find( ".btn-bidx-contact")
-                    .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )                  
+                    .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
                 ;
 
             }
@@ -217,25 +217,25 @@
 
                 /* 1 View  Feedback */
                $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
                 ;
 
                 /* 2 Contact Entrepreneur */
                 $listItem.find( ".btn-bidx-contact")
                     .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
                 ;
-           
+
                 /* 3 Renew Link */
                 params.action = "renew";
                 $listItem.find( ".btn-bidx-renew")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
                 ;
 
                 /* 4 Stop Link */
                 params.action = "stop";
                 $listItem.find( ".btn-bidx-stop")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                    // .click( _doMutateContactRequest )
                 ;
 
@@ -253,18 +253,18 @@
 
                 /* 1 View  Feedback */
                 $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentordashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
                 ;
 
                 /* 2 Contact Entrepreneur */
                 $listItem.find( ".btn-bidx-contact")
                     .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
                 ;
-           
+
                 /* 3 Delete Link */
                 params.action = "renew";
                 $listItem.find( ".btn-bidx-delete")
-                    .attr( "href", "/mentordashboard/#dashboard/confirmRequest/" +$.param( params ) )
+                    .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
                 ;
 
             }
@@ -328,7 +328,7 @@
         }
         else
         {
-  
+
             $list.append($listEmpty);
         }
     }
@@ -358,7 +358,7 @@
             };
             $.each( waitingResponse , function ( idx, item)
             {
-                                   
+
                 listItem = snippit
                     .replace( /%accordion-id%/g,      item.id   ? item.id     : emptyVal )
                     .replace( /%name_s%/g,       item.name    ? item.name      : emptyVal )
@@ -662,7 +662,7 @@
         );
     };
 
-    //  ################################## MODAL #####################################  \\    
+    //  ################################## MODAL #####################################  \\
 
     //  show modal view with optionally and ID to be appended to the views buttons
     function _showModal( options )
@@ -728,7 +728,7 @@
          var $view = $views.filter(bidx.utils.getViewName(view)).show();
     };
 
-    
+
 
     var _showHideView = function(view, hideview)
     {
@@ -921,9 +921,9 @@
                 $mentorButton = $mainElement.find( '.btn-request' );
                 btnHtml = $mentorButton.text();
                 $mentorButton.addClass( "disabled" ).i18nText("msgWaitForSave");
-                
+
                 _showMainView("loadrequest", true);
-                
+
                 _doMutateContactRequest(
                 {
                     params: options.params
