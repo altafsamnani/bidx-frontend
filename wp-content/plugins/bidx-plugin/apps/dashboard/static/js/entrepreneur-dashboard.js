@@ -65,7 +65,7 @@
                             item.businessSummary.investorType = item.investor.investorType;
                             item.businessSummary.summaryRequestStatus = item.status;
 
-                            getStaticDataVal(
+                            bidx.data.getStaticDataVal(
                             {
                                 dataArr    : dataArr
                               , item       : item.businessSummary
@@ -288,36 +288,6 @@
     }
 
 
-    // function that retrieves group members returned in an array of key/value objects
-    // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
-    //
-
-    var getStaticDataVal = function( options ) {
-        var dataArr      = options.dataArr
-        ,   item         = options.item
-        ,   textVal
-        ;
-
-        //Get i18n arr like industry = [chemical, painting, software]
-        $.each(dataArr, function(clsKey, clsVal) {
-              if( item.hasOwnProperty(clsKey)) {
-                     bidx.data.getItem(item[clsKey], clsVal, function(err, label)
-                        {
-                           textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;
-
-                        });
-
-               item[clsKey] = textVal;
-              }
-       });
-       //If callback set use it
-       if (options && options.callback)
-       {
-        options.callback(item);
-       }
-
-    };
-
     var getBusinessesAndCompanies = function(options)
     {
 
@@ -366,7 +336,7 @@
                                                , 'investmentType'   : 'investmentType'
                                              };
 
-                               getStaticDataVal(
+                               bidx.data.getStaticDataVal(
                                 {
                                     dataArr    : dataArr
                                   , item       : item
