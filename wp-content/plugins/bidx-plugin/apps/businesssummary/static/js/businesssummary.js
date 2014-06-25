@@ -12,7 +12,6 @@
 
     ,   $industry                   = $element.find( "[name='industry']" )
     ,   $expertiseNeeded            = $element.find( "[name='expertiseNeeded']" )
-    ,   $jsExpertiseNeeded          = $element.find( ".js-expertiseNeeded" ).hide()
     ,   $productService             = $element.find( "[name='productService']" )
     ,   $countryOperation           = $element.find( "[name='countryOperation']" )
 
@@ -55,6 +54,10 @@
             {
                 $el:                    $element.find( "#frmBusinessSummary-CompanyDetails" )
             }
+        ,   mentoringDetails:
+            {
+                $el:                    $element.find( "#frmBusinessSummary-MentoringDetails" )
+            }
         }
 
         // Financial Summary / Details
@@ -76,6 +79,11 @@
     ,   $companiesTable                     = $doesHaveCompany.find( "table" )
     ,   $addNewCompany                      = $companyDetails.find( ".addNewCompany")
     ,   $btnAddNewCompany                   = $companyDetails.find( "a[href$='addNewCompany']" )
+
+        // Mentoring Details
+        //
+    ,   $toggles                            = $element.find( ".toggle" ).hide()
+    ,   $toggleExpertiseNeeded              = $element.find( "[name='mentorAdvisory']" )
 
         // Buttons under to control the add company form
         //
@@ -131,9 +139,8 @@
                 // but until that is available, send in reasonforSubmsision as an array
                 //
             ,   "reasonForSubmission"
-            ,   "expertiseNeeded"
             ,   "equityRetained"
-            ,   "financingNeeded"
+            // ,   "financingNeeded"
             ,   "investmentType"
             ,   "summaryFinancingNeeded"
             ,   "externalVideoPitch"
@@ -146,9 +153,9 @@
             "_root":
             [
                 "industry"
-            ,   "suggestedIndustry"
+            // ,   "suggestedIndustry"
             ,   "productService"
-            ,   "suggestedProductService"
+            // ,   "suggestedProductService"
             ,   "countryOperation"
             ,   "socialImpact"
             ,   "envImpact"
@@ -203,6 +210,16 @@
             ,   "operationalCosts"
             ,   "salesRevenue"
             //  totalIncome is a derived field, but not a input
+            ]
+        }
+
+    ,   "mentoringDetails":
+        {
+            "_root":
+            [
+                "mentorAdvisory"
+            ,   "expertiseNeeded"
+            ,   "expertiseNeededDetail"
             ]
         }
     };
@@ -321,20 +338,6 @@
                 ,   reasonForSubmission:
                     {
                         required:               true
-                    }
-                ,   expertiseNeeded:
-                    {
-                        required:               { depends: function()
-                                                    {
-                                                        var coach = false;
-                                                        if ( $reasonForSubmission.find( "option:selected" ).val() === "coaching" )
-                                                        {
-                                                            coach = true;
-                                                        }
-                                                        return coach;
-                                                    }
-                                                }
-
                     }
                 ,   equityRetained:
                     {
@@ -471,6 +474,40 @@
                 ,   company:
                     {
                         required:               function() { return $hasCompany.filter( ":checked" ).val() === "true"; }
+                    }
+                }
+
+            ,   messages:
+                {
+
+                }
+
+            ,   submitHandler:        function( e )
+                {
+                    _doSave();
+                }
+            } );
+
+            // Financial Details
+            //
+            forms.mentoringDetails.$el.validate(
+            {
+                ignore:                 ""
+            ,   debug:                  false
+            ,   rules:
+                {
+                    mentorAdvisory:
+                    {
+                        required:               true
+                    }
+                ,   expertiseNeeded:
+                    {
+                        required:               { depends: function () { return !$( ".toggle-mentorAdvisory" ).is(':hidden'); } }
+                    }
+                ,   expertiseNeededDetail:
+                    {
+                        required:               { depends: function () { return !$( ".toggle-mentorAdvisory" ).is(':hidden'); } }
+                    ,   maxlength:              300
                     }
                 }
 
@@ -1192,6 +1229,23 @@
         $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
     }
 
+    var _handleToggleChange = function( show, group )
+    {
+        var fn = show ? "fadeIn" : "hide";
+
+        $toggles.filter( ".toggle-" + group )[ fn ]();
+    };
+
+    // Update the UI to show the input / previous run business'
+    //
+    $toggleExpertiseNeeded.change( function()
+    {
+        var value   = $toggleExpertiseNeeded.filter( "[checked]" ).val();
+
+        _handleToggleChange( value === "true", "mentorAdvisory" );
+    } );
+
+
     // Do a full access request for this businessSummar
     //
     function _doAccessRequest()
@@ -1653,26 +1707,7 @@
         $reasonForSubmission.trigger( "chosen:updated" );
         $envImpact.trigger( "chosen:updated" );
         $socialImpact.trigger( "chosen:updated" );
-        $yearSalesStarted.trigger( "chosen:updated" );
-
-        $(document.body).delegate( $expertiseNeeded , 'change', function() {
-            _checkExpertiseNeeded();
-        });
-        
-    }
-
-    // Check if the Reason for Submission is coaching and then show the expertise field
-    //
-    function _checkExpertiseNeeded()
-    {
-        if ( $reasonForSubmission.find( "option:selected" ).val() === "coaching" )
-        {
-            $jsExpertiseNeeded.fadeIn();
-        }
-        else
-        {
-            $jsExpertiseNeeded.hide();
-        }
+        $yearSalesStarted.trigger( "chosen:updated" );        
     }
 
     // Update the pre-rendered dom elements for the financial summarie
@@ -1712,12 +1747,6 @@
                     var $input = $form.find( "[name^='" + f + "']" )
                     ,   value  = bidx.utils.getElementValue( $input )
                     ;
-
-                    // If the Reason for Submission is not coaching don't PUT the expertiseNeeded field
-                    if ( f === "expertiseNeeded" && $reasonForSubmission.find( "option:selected" ).val() !== "coaching" )
-                    {
-                        value = [];
-                    }
 
                     bidx.utils.setValue( businessSummary, f, value );
                 } );
@@ -2007,8 +2036,6 @@
                 .done( function()
                 {
                     _populateScreen();
-
-                    _checkExpertiseNeeded();
 
                     $btnSave.removeClass( "disabled" );
                     $btnCancel.removeClass( "disabled" );
@@ -2374,7 +2401,7 @@
             break;
 
             case "create":
-                bidx.utils.log( "EditBusinessSummary::AppRouter::create" );
+                bidx.utils.log( "CreateBusinessSummary::AppRouter::create" );
 
                 businessSummaryId   = null;
                 state               = "create";
