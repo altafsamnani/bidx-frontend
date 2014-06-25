@@ -170,6 +170,15 @@ $isSuperAdmin   = is_super_admin();
     }
           //  }
             $this->render('view-group.phtml');
+
+            if ( BidxCommon::$staticSession->authenticated == 'true')
+            {
+                dynamic_sidebar('priv-member-side');
+            }
+            else
+            {
+                dynamic_sidebar('pub-member-side');
+            }
 ?>
 
             </div>
