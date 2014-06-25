@@ -29,6 +29,8 @@
     <Item value="btnPleaseWait">Please wait...</Item>
     <Item value="btnTryAgain">Try again</Item>
     <Item value="btnRequestSent">Request sent</Item>
+    <Item value="btnCreateBs">Create business proposal</Item>
+    <Item value="btnCreateCompany">Create company profile</Item>
 
     <!-- Common Status Msgs -->
     <Item value="statusRequest">You request has been sent successfully</Item>

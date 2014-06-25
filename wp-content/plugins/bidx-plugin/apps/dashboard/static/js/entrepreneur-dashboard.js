@@ -4,6 +4,8 @@
     ,   $views            = $element.find(".view")
     ,   $elementHelp      = $element.find(".startpage")
     ,   $firstPage        = $element.find( "input[name='firstpage']" )
+    ,   $gotoSummaryBtn   = $element.find( ".js-goto-summary" )
+    ,   $gotoCompanyBtn   = $element.find( ".js-goto-company" )
     ,   bidx              = window.bidx
     ,   currentUserId     = bidx.common.getSessionValue( "id" )
     ;
@@ -316,7 +318,7 @@
 
     };
 
-    var getBusiness = function(options)
+    var getBusinessesAndCompanies = function(options)
     {
 
         var snippit       = $("#entrepreneur-businessitem").html().replace(/(<!--)*(-->)*/g, "")
@@ -338,6 +340,7 @@
                     // Do we have edit perms?
                     //
                     var entities    = bidx.utils.getValue( response, "entities" );
+                    var companies   = bidx.utils.getValue( response, "companies" );
 
                     //clear listing
                     $list.empty();
@@ -416,15 +419,40 @@
                     {
                         options.callback();
                     }
-            }
 
-            , error: function(jqXhr, textStatus)
-            {
-                var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+                    // Check and add the correct url for Business proposal
+                    if ( !$.isEmptyObject(entities) )
+                    {
+                        $gotoSummaryBtn.attr( "href", $gotoSummaryBtn.attr( "href" ).replace( /%bslink%/g, entities[0].bidxMeta.bidxEntityId ) );
+                    }
+                    else
+                    {
+                        $gotoSummaryBtn.attr( "href", $gotoSummaryBtn.attr( "href" )
+                                .replace( /%bslink%/g, "#createBusinessSummary" ) )
+                                .text( bidx.i18n.i( "btnCreateBs" ) );
+                    }
 
-                _showError("Something went wrong while retrieving investorslist of the member: " + status);
+                    // Check and add the correct url for Company profile
+                    if ( !$.isEmptyObject(companies) )
+                    {
+                        $gotoCompanyBtn.attr( "href", $gotoCompanyBtn.attr( "href" ).replace( /%companylink%/g, companies[0].bidxMeta.bidxEntityId ) );
+                    }
+                    else
+                    {
+                        $gotoCompanyBtn.attr( "href", $gotoCompanyBtn.attr( "href" )
+                                .replace( /%companylink%/g, "#createCompany" ) )
+                                .text( bidx.i18n.i( "btnCreateCompany" ) );
+                    }
+
+                }
+
+                , error: function(jqXhr, textStatus)
+                {
+                    var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                    _showError("Something went wrong while retrieving investorslist of the member: " + status);
+                }
             }
-        }
         );
     };
 
@@ -491,7 +519,7 @@
                 _showView("load");
                 _showView("loadinvestors",true);
 
-                getBusiness(
+                getBusinessesAndCompanies(
                 {
                     list: "business"
                   , view: "business"
