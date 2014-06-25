@@ -21,9 +21,6 @@
     ,   mailboxes            = {}
     ,   appName              = 'mentor'
 
-
-
-
     ,   listDropdownFeedback =  {
                                     "0":"General"
                                 ,   "1":"General overview section"
@@ -32,6 +29,15 @@
                                 ,   "5":"Financial section"
                                 ,   "6":"Company section"
                                 ,   "7":"Document section"
+                                }
+
+    ,   dataArr              =  {
+                                    'industry'         : 'industry'
+                                ,   'countryOperation' : 'country'
+                                ,   'stageBusiness'    : 'stageBusiness'
+                                ,   'productService'   : 'productService'
+                                ,   'envImpact'        : 'envImpact'
+                                ,   'summaryRequestStatus' : 'summaryRequestStatus'
                                 }
     ;
 
@@ -218,67 +224,8 @@
         return callbacks[ contactCategory ];
     }
 
-    function respondRequest_old( options )
-    {
-        var snippit          = $("#mentor-activities").html().replace(/(<!--)*(-->)*/g, "")
-        ,   $listEmpty       = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData       = $("#mentor-respond-action").html().replace(/(<!--)*(-->)*/g, "")
-        ,   response         = options.response
-        ,   incomingResponse = response.respond
-        ,   $list            = $element.find("." + options.list)
-        ,   emptyVal         = '-'
-        ,   $listItem
-        ,   listItem
 
-        ;
-
-        $list.empty();
-
-        if ( incomingResponse &&  incomingResponse.length )
-        {
-            // Add Default image if there is no image attached to the bs
-            var addDefaultImage = function( el )
-            {
-                $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
-            };
-            $.each( incomingResponse , function ( idx, item)
-            {
-
-                 listItem = snippit
-                    .replace( /%accordion-id%/g,      item.id   ? item.id     : emptyVal )
-                    .replace( /%name_s%/g,       item.name    ? item.name      : emptyVal )
-                    .replace( /%creator%/g,       item.name    ? item.name      : emptyVal )
-                    .replace( /%creatorId%/g,       item.id    ? item.id      : emptyVal )
-                    .replace( /%status%/g,      item.id   ? 'Received request'     : emptyVal )
-                    .replace( /%action%/g,      actionData )
-                    .replace( /%companylogodoc_url%/g,      item.companylogodoc_url   ? item.companylogodoc_url     : addDefaultImage('js-companylogo') );
-
-                // Remove the js selector
-                $element.find('.js-companylogo').first().removeClass('js-companylogo');
-
-                // execute cb function
-                //
-                $listItem = $( listItem );
-
-                if( $.isFunction( options.cb ) )
-                {
-                    // call Callback with current contact item as this scope and pass the current $listitem
-                    //
-                    options.cb.call( this, $listItem, item );
-                }
-                //  add mail element to list
-                $list.append( $listItem );
-            });
-        }
-        else
-        {
-
-            $list.append($listEmpty);
-        }
-    }
-
-
-     function respondRequest( options )
+    function respondRequest( options )
     {
         var snippit          = $("#mentor-activities").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty       = $("#mentor-empty").html().replace(/(<!--)*(-->)*/g, "")
@@ -290,9 +237,10 @@
         ,   counter          = 1
         ,   $listItem
         ,   listItem
-        ,   itemEntity
+        ,   itemSummary
         ,   itemMember
         ,   ownerId
+        ,   i18nItem
         ,   $d              =  $.Deferred()
         ,   incomingLength      = incomingResponse.length
         ;
@@ -300,40 +248,52 @@
         if ( incomingResponse && incomingLength )
 
         {
-            // Add Default image if there is no image attached to the bs
-            var addDefaultImage = function( el )
-            {
-                $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
-            };
             $.each( incomingResponse , function ( idx, item)
             {
                 showEntity(
                 {
                     entityId    :   item.entityId
                 ,   entityType  :   'bidxBusinessSummary'
-                ,   callback    :   function ( itemEntity )
+                ,   callback    :   function ( itemSummary )
                                     {
 
-                                        if( itemEntity )
+                                        if( itemSummary )
                                         {
-                                            ownerId    = bidx.utils.getValue( itemEntity, "bidxMeta.bidxOwnerId" );
+                                            ownerId    = bidx.utils.getValue( itemSummary, "bidxMeta.bidxOwnerId" );
                                              showMemberProfile(
                                             {
                                                 ownerId     :   ownerId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                    bidx.data.getStaticDataVal(
+                                                                    {
+                                                                        dataArr    : dataArr
+                                                                      , item       : itemSummary
+                                                                      , callback   : function (label)
+                                                                                    {
+                                                                                        i18nItem = label;
+                                                                                    }
+                                                                    });
+
                                                                     listItem = snippit
-                                                                    .replace( /%accordion-id%/g,        itemEntity.bidxMeta.bidxEntityId    ? itemEntity.bidxMeta.bidxEntityId    : emptyVal )
-                                                                    .replace( /%name_s%/g,              itemEntity.name                     ? itemEntity.name      : emptyVal )
-                                                                    .replace( /%creator%/g,             itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
-                                                                    .replace( /%creatorId%/g,           ownerId                             ? ownerId      : emptyVal )
-                                                                    .replace( /%status%/g,              bidx.i18n.i( "receivedRequest", appName )  )
+                                                                    .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
+                                                                    .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,               ownerId                             ? ownerId      : emptyVal )
+                                                                    .replace( /%status%/g,                  bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                    .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
+                                                                    .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
+                                                                    .replace( /%bidxCreationDateTime%/g,    itemSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(itemSummary.bidxCreationDateTime, "date") : emptyVal )
+                                                                    .replace( /%creator%/g,                 i18nItem.creator    ? i18nItem.creator      : emptyVal )
+                                                                    .replace( /%productService%/g,          i18nItem.productService    ? i18nItem.productService      : emptyVal)
+                                                                    .replace( /%financingNeeded%/g,         i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
+                                                                    .replace( /%stageBusiness%/g,           i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
+                                                                    .replace( /%envImpact%/g,               i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
                                                                     .replace( /%action%/g,              actionData )
-                                                                    .replace( /%companylogodoc_url%/g,  itemEntity.companylogodoc_url       ? itemEntity.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                                                                    .replace( /%document%/g,            ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                                                     ;
-                                                                    bidx.utils.log('company',  itemEntity.companylogodoc_url);
-                                                                    // Remove the js selector
-                                                                    $element.find('.js-companylogo').first().removeClass('js-companylogo');
+
                                                                     // execute cb function                //
                                                                     $listItem = $( listItem );
 
@@ -392,9 +352,10 @@
         ,   emptyVal        = '-'
         ,   $listItem
         ,   listItem
-        ,   itemEntity
+        ,   itemSummary
         ,   itemMember
         ,   ownerId
+        ,   i18nItem
         ,   $d              =  $.Deferred()
         ,   counter         = 1
         ,   waitLength      = waitingResponse.length
@@ -405,42 +366,54 @@
         if ( waitingResponse && waitLength )
 
         {
-            // Add Default image if there is no image attached to the bs
-            var addDefaultImage = function( el )
-            {
-                $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
-            };
             $.each( waitingResponse , function ( idx, item)
             {
                 showEntity(
                 {
                     entityId    :   item.entityId
                 ,   entityType  :   'bidxBusinessSummary'
-                ,   callback    :   function ( itemEntity )
+                ,   callback    :   function ( itemSummary )
                                     {
 
 
 
-                                        if( itemEntity )
+                                        if( itemSummary )
                                         {
-                                            ownerId    = bidx.utils.getValue( itemEntity, "bidxMeta.bidxOwnerId" );
+                                            ownerId    = bidx.utils.getValue( itemSummary, "bidxMeta.bidxOwnerId" );
                                              showMemberProfile(
                                             {
                                                 ownerId     :   ownerId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                    bidx.data.getStaticDataVal(
+                                                                    {
+                                                                        dataArr    : dataArr
+                                                                      , item       : itemSummary
+                                                                      , callback   : function (label)
+                                                                                    {
+                                                                                        i18nItem = label;
+                                                                                    }
+                                                                    });
+
                                                                     listItem = snippit
-                                                                    .replace( /%accordion-id%/g,        itemEntity.bidxMeta.bidxEntityId    ? itemEntity.bidxMeta.bidxEntityId    : emptyVal )
-                                                                    .replace( /%name_s%/g,              itemEntity.name                     ? itemEntity.name      : emptyVal )
-                                                                    .replace( /%creator%/g,             itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
-                                                                    .replace( /%creatorId%/g,           ownerId                             ? ownerId      : emptyVal )
-                                                                    .replace( /%status%/g,              bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                    .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
+                                                                    .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,               ownerId                             ? ownerId      : emptyVal )
+                                                                    .replace( /%status%/g,                  bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                    .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
+                                                                    .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
+                                                                    .replace( /%bidxCreationDateTime%/g,    itemSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(itemSummary.bidxCreationDateTime, "date") : emptyVal )
+                                                                    .replace( /%creator%/g,                 i18nItem.creator    ? i18nItem.creator      : emptyVal )
+                                                                    .replace( /%productService%/g,          i18nItem.productService    ? i18nItem.productService      : emptyVal)
+                                                                    .replace( /%financingNeeded%/g,         i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
+                                                                    .replace( /%stageBusiness%/g,           i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
+                                                                    .replace( /%envImpact%/g,               i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
                                                                     .replace( /%action%/g,              actionData )
-                                                                    .replace( /%companylogodoc_url%/g,  itemEntity.companylogodoc_url       ? itemEntity.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                                                                    .replace( /%document%/g,            ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                                                     ;
-                                                                    bidx.utils.log('company',  itemEntity.companylogodoc_url);
-                                                                    // Remove the js selector
-                                                                    $element.find('.js-companylogo').first().removeClass('js-companylogo');
+
                                                                     // execute cb function                //
                                                                     $listItem = $( listItem );
 
@@ -497,56 +470,72 @@
         ,   emptyVal        = '-'
         ,   $listItem
         ,   listItem
-        ,   itemEntity
+        ,   itemSummary
         ,   itemMember
         ,   ownerId
+        ,   i18nItem
         ,   $d              =  $.Deferred()
         ,   counter         = 1
         ,   ongoingLength   = ongoingResponse.length
         ;
+
 
         //$list.empty();
 
         if ( ongoingResponse && ongoingLength )
 
         {
-            // Add Default image if there is no image attached to the bs
-            var addDefaultImage = function( el )
-            {
-                $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
-            };
             $.each( ongoingResponse , function ( idx, item)
             {
                 showEntity(
                 {
                     entityId    :   item.entityId
                 ,   entityType  :   'bidxBusinessSummary'
-                ,   callback    :   function ( itemEntity )
+                ,   callback    :   function ( itemSummary )
                                     {
 
 
 
-                                        if( itemEntity )
+                                        if( itemSummary )
                                         {
-                                            ownerId    = bidx.utils.getValue( itemEntity, "bidxMeta.bidxOwnerId" );
+                                            ownerId    = bidx.utils.getValue( itemSummary, "bidxMeta.bidxOwnerId" );
                                              showMemberProfile(
                                             {
                                                 ownerId     :   ownerId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                    bidx.data.getStaticDataVal(
+                                                                    {
+                                                                        dataArr    : dataArr
+                                                                      , item       : itemSummary
+                                                                      , callback   : function (label)
+                                                                                    {
+                                                                                        i18nItem = label;
+                                                                                    }
+                                                                    });
+
                                                                     listItem = snippit
-                                                                    .replace( /%accordion-id%/g,        itemEntity.bidxMeta.bidxEntityId    ? itemEntity.bidxMeta.bidxEntityId    : emptyVal )
-                                                                    .replace( /%name_s%/g,              itemEntity.name                     ? itemEntity.name      : emptyVal )
-                                                                    .replace( /%creator%/g,             itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
-                                                                    .replace( /%creatorId%/g,           ownerId                             ? ownerId      : emptyVal )
-                                                                    .replace( /%status%/g,              bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                    .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
+                                                                    .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
+                                                                    .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,               ownerId                             ? ownerId      : emptyVal )
+                                                                    .replace( /%status%/g,                  bidx.i18n.i( "mentoringRequestPending", appName )  )
+                                                                    .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
+                                                                    .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
+                                                                    .replace( /%bidxCreationDateTime%/g,    itemSummary.bidxCreationDateTime    ? bidx.utils.parseISODateTime(itemSummary.bidxCreationDateTime, "date") : emptyVal )
+                                                                    .replace( /%creator%/g,                 i18nItem.creator    ? i18nItem.creator      : emptyVal )
+                                                                    .replace( /%productService%/g,          i18nItem.productService    ? i18nItem.productService      : emptyVal)
+                                                                    .replace( /%financingNeeded%/g,         i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
+                                                                    .replace( /%stageBusiness%/g,           i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
+                                                                    .replace( /%envImpact%/g,               i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
                                                                     .replace( /%action%/g,              actionData )
-                                                                    .replace( /%companylogodoc_url%/g,  itemEntity.companylogodoc_url       ? itemEntity.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                                                                    .replace( /%document%/g,            ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                                                     ;
-                                                                    bidx.utils.log('company',  itemEntity.companylogodoc_url);
-                                                                    // Remove the js selector
-                                                                    $element.find('.js-companylogo').first().removeClass('js-companylogo');
-                                                                    // execute cb function                //
+
+
+                                                                    // execute cb function
+                                                                    //
                                                                     $listItem = $( listItem );
 
                                                                     if( $.isFunction( options.cb ) )
@@ -609,11 +598,7 @@
 
         if ( renewResponse && renewResponse.length )
         {
-            // Add Default image if there is no image attached to the bs
-            var addDefaultImage = function( el )
-            {
-                $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
-            };
+
             $.each( renewResponse , function ( idx, item)
             {
 
@@ -624,10 +609,9 @@
                     .replace( /%creatorId%/g,       item.id    ? item.id      : emptyVal )
                     .replace( /%status%/g,      item.id   ? 'On going'     : emptyVal )
                     .replace( /%action%/g,      actionData )
-                    .replace( /%companylogodoc_url%/g,      item.companylogodoc_url   ? item.companylogodoc_url     : addDefaultImage('js-companylogo') );
+                    //.replace( /%document%/g,            ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                    ;
 
-                // Remove the js selector
-                $element.find('.js-companylogo').first().removeClass('js-companylogo');
 
                 // execute cb function
                 //
@@ -670,10 +654,7 @@
         if ( endedResponse && endedResponse.length )
         {
             // Add Default image if there is no image attached to the bs
-            var addDefaultImage = function( el )
-            {
-                $element.find('.' + el).html('<div class="icons-circle pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>');
-            };
+
             $.each( endedResponse , function ( idx, item)
             {
 
@@ -684,10 +665,10 @@
                     .replace( /%creatorId%/g,       item.id    ? item.id      : emptyVal )
                     .replace( /%status%/g,      item.id   ? 'On going'     : emptyVal )
                     .replace( /%action%/g,      actionData )
-                    .replace( /%companylogodoc_url%/g,      item.companylogodoc_url   ? item.companylogodoc_url     : addDefaultImage('js-companylogo') );
+                   // .replace( /%document%/g,            ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                    ;
 
-                // Remove the js selector
-                $element.find('.js-companylogo').first().removeClass('js-companylogo');
+
 
                 // execute cb function
                 //
@@ -722,14 +703,14 @@
         ,   {
                 entityId:       options.entityId
             ,   groupDomain:    bidx.common.groupDomain
-            ,   success:        function( itemEntity )
+            ,   success:        function( itemSummary )
                 {
                     // now format it into array of objects with value and label
 
-                    if ( !$.isEmptyObject(itemEntity) )
+                    if ( !$.isEmptyObject(itemSummary) )
                     {
 
-                        bidxMeta       = bidx.utils.getValue( itemEntity, "bidxMeta" );
+                        bidxMeta       = bidx.utils.getValue( itemSummary, "bidxMeta" );
 
                         if( bidxMeta && bidxMeta.bidxEntityType === options.entityType )
                         {
@@ -737,7 +718,7 @@
                             //  execute callback if provided
                             if (options && options.callback)
                             {
-                                options.callback( itemEntity );
+                                options.callback( itemSummary );
                             }
 
                         }
@@ -825,8 +806,6 @@
 
             $.each( result , function ( idx, item)
             {
-                bidx.utils.log('item',item.status);
-                bidx.utils.log('mentorid',item.mentorId);
                 if ( ( item.status      === 'requested' ) &&
                      ( item.mentorId    === currentUserId ) &&
                      ( item.initiatorId === currentUserId ) )

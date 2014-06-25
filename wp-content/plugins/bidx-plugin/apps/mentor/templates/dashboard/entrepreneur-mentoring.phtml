@@ -115,7 +115,7 @@
    </td>
    <td>
       <a data-toggle="collapse" data-target="#%accordion-id%" class="btn-block">
-      <span class="placeholder name_s">%name_s%</span>
+      <span class="placeholder name">%name%</span>
       </a>
    </td>
    <td class="hidden-xs">
@@ -130,13 +130,13 @@
       <div class="panel-collapse collapse" id="%accordion-id%">
       <div class="row">
             <div class="col-sm-3">
-                <span class="placeholder js-companylogo companylogodoc_url"><img src="%companylogodoc_url%"/></span>
+                <span class="placeholder document js-companylogo"><img src="%document%"/></span>
             </div>
         <div class="col-sm-9">
             <div class="row">
                 <div class="col-sm-6">
                     <label><?php _e('Business proposal','bidxplugin');?></label>
-                    <div class="placeholder name_s"><a target = "_blank" href="/businesssummary/%entityid_l%">%name_s%</a></div>
+                    <div class="placeholder name"><a target = "_blank" href="/businesssummary/%entityId%">%name%</a></div>
                 </div>
                 <div class="col-sm-6">
                      <label><?php _e('Entrepreneur','bidxplugin');?></label>
@@ -146,37 +146,37 @@
             <div class="row">
                 <div class="col-sm-6">
                     <label><?php _e('Industry','bidxplugin');?></label>
-                    <div class="placeholder industrylabel_ss">%industrylabel_ss%</div>
+                    <div class="placeholder industry">%industry%</div>
                 </div>
                 <div class="col-sm-6">
                     <label><?php _e('Product','bidxplugin');?></label>
-                    <div class="placeholder productservicelabel_ss">%productservicelabel_ss%</div>
+                    <div class="placeholder productService">%productService%</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <label><?php _e('Country','bidxplugin');?></label>
-                    <div class="placeholder countrylabel_ss">%countrylabel_ss%</div>
+                    <div class="placeholder countryOperation">%countryOperation%</div>
                 </div>
                 <div class="col-sm-6">
                     <label><?php _e('Investment needed','bidxplugin');?></label>
-                    <div class="placeholder financingneeded_d">%financingneeded_d%</div>
+                    <div class="placeholder financingNeeded">%financingNeeded%</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <label><?php _e('Business stage','bidxplugin');?></label>
-                    <div class="placeholder stagebusinesslabel_s">%stagebusinesslabel_s%</div>
+                    <div class="placeholder stageBusiness">%stageBusiness%</div>
                 </div>
                 <div class="col-sm-6">
                     <label><?php _e('Environmental Impact','bidxplugin');?></label>
-                    <div class="placeholder envimpactlabel_ss">%envimpactlabel_ss%</div>
+                    <div class="placeholder envImpact">%envImpact%</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-6">
                     <div class="pull-right">
-                        <span class="placeholder entityid_l"><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%entityid_l%"><?php _e('View Proposal','bidxplugin');?></a> </span>
+                        <span class="placeholder entityid_l"><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%entityId%"><?php _e('View Proposal','bidxplugin');?></a> </span>
                     </div>
                 </div>
             </div>

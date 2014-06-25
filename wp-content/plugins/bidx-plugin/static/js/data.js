@@ -212,6 +212,39 @@
         }
     }
 
+    //public functions
+
+    var getStaticDataVal = function( options )
+    {
+        var dataArr      = options.dataArr
+        ,   item         = options.item
+        ,   textVal
+        ;
+
+        //Get i18n arr like industry = [chemical, painting, software]
+        $.each(dataArr, function(clsKey, clsVal)
+        {
+            if( item.hasOwnProperty(clsKey))
+            {
+                 getItem(item[clsKey], clsVal, function(err, label)
+                    {
+                       textVal = ($.isArray(item[clsKey])) ?  label.join(', '): label;
+
+                    });
+
+               item[clsKey] = textVal;
+
+            }
+       } );
+
+       //If callback set use it
+       if (options && options.callback)
+       {
+        options.callback(item);
+       }
+
+    };
+
     // Internal setter of cache items
     //
     var setItem = function( context, data )
@@ -284,6 +317,7 @@
         getItem:                    getItem
     ,   setItem:                    setItem
     ,   getContext:                 getContext
+    ,   getStaticDataVal:           getStaticDataVal
     ,   load:                       load
     ,   i:                          i
     };

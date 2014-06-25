@@ -137,8 +137,7 @@
         //
         var $validator = $editForm.validate(
         {
-            debug: true
-        ,   ignore: ".chosen-search input"
+            debug: false
         ,   rules:
             {
                 "feedback":
@@ -260,7 +259,7 @@
                         options.callback();
                     }
 
-                    bidx.controller.updateHash( "#mentoring/mentor", true, false );
+                    bidx.controller.updateHash( "#mentoring/mentor", false, false );
                 }
 
             ,   error: function( jqXhr, textStatus )
@@ -273,14 +272,14 @@
                     if ( jqXhr.status >= 400 && jqXhr.status < 500)
                     {
                         bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong while sending the feedback: " + response.text );
+                        _showMainError( "Something went wrong while sending the feedback: " + response.text );
                     }
                     // 500 erors are Server errors
                     //
                     if ( jqXhr.status >= 500 && jqXhr.status < 600)
                     {
                         bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while sending the feedback: " + response.text );
+                        _showMainError( "Something went wrong while sending the feedback: " + response.text );
                     }
 
                     if (options && options.callback)
@@ -401,14 +400,14 @@
                         if ( jqXhr.status >= 400 && jqXhr.status < 500)
                         {
                             bidx.utils.error( "Client  error occured", response );
-                            _showError( "Something went wrong while retrieving the email(s): " + response.text );
+                            _showMainError( "Something went wrong while retrieving the email(s): " + response.text );
                         }
                         // 500 erors are Server errors
                         //
                         if ( jqXhr.status >= 500 && jqXhr.status < 600)
                         {
                             bidx.utils.error( "Internal Server error occured", response );
-                            _showError( "Something went wrong while retrieving the email(s): " + response.text );
+                            _showMainError( "Something went wrong while retrieving the email(s): " + response.text );
                         }
 
                     }
@@ -880,7 +879,10 @@
                         $btnConfirmFeedbackSave.removeClass( "disabled" ).text( btnFeedbackText );
                         $btnConfirmFeedbackCancel.removeClass( "disabled" );
                         _resetFeedbackForm();
-
+                        _closeMainModal(
+                        {
+                            unbindHide: true
+                        } );
 
                     }
                 } );
