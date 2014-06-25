@@ -2486,7 +2486,100 @@ function bidx_dashboard_support ()
 function bidx_group_settings ()
 {
     //wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='group-settings']");
+    // echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='group-settings']");
+
+    $bidxCommonObj  = new BidxCommon();
+    $staticData     = $bidxCommonObj->getLocaleTransient (array (), $static = true, $i18nGlobal = false);
+
+    $industry       = $staticData['static']['industry'];
+    $socialImpact   = $staticData['static']['socialImpact'];
+    $envImpact      = $staticData['static']['envImpact'];
+?>
+    <h2><?php echo __('Group Settings', 'bidxplugin') ?></h2>
+    <div class="form-wrap">
+        <form method="POST" id="bidx-group-settings">
+            <div class="form-field">
+                <label for="group-slogan"><?php echo __('Slogan', 'bidxplugin') ?></label>
+                <input type="text" size="30" maxlength="140" id="group-slogan" name="group-slogan">
+                <p><?php echo __('Max 140 chars.', 'bidxplugin') ?></p>
+            </div>
+            <div class="form-field">
+                <label for="group-description"><?php echo __('Description', 'bidxplugin') ?></label>
+                <textarea cols="40" rows="2" maxlength="200" id="group-description" name="group-description"></textarea>
+                <p><?php echo __('Max 200 chars.', 'bidxplugin') ?></p>
+            </div>
+            <table>
+                <tbody>
+                    <tr><td><?php echo __('Focus Location', 'bidxplugin') ?></td><td></td></tr>
+                    <tr>
+                        <td>
+                            <div class="form-field">
+                                <label for="group-location-lon"><?php echo __('Longitude', 'bidxplugin') ?></label>
+                                <input type="text" size="30" id="group-location-lon" name="group-location-lon">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-field">
+                                <label for="group-location-lat"><?php echo __('Latitude', 'bidxplugin') ?></label>
+                                <input type="text" size="30" id="group-location-lat" name="group-location-lat">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="form-field">
+                                <label for="group-industry"><?php echo __('Industry', 'bidxplugin') ?></label>
+                                <select class="" id="group-industry" name="group-industry" multiple>
+<?php
+                                    foreach ($industry as $option) {
+?>
+                                        <option value="<?php echo $option->value; ?>"><?php echo $option->label; ?></option>
+<?php
+                                    }
+?>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                                            
+                            <div class="form-field">
+                                <label for="group-socialImpact"><?php echo __('Social Impact', 'bidxplugin') ?></label>
+                                <select class="" id="group-socialImpact" name="group-socialImpact" multiple>
+<?php
+                                    foreach ($socialImpact as $option) {
+?>
+                                        <option value="<?php echo $option->value; ?>"><?php echo $option->label; ?></option>
+<?php
+                                    }
+?>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-field">
+                                <label for="group-envImpact"><?php echo __('Environmental Impact', 'bidxplugin') ?></label>
+                                <select class="" id="group-envImpact" name="group-envImpact" multiple>
+<?php
+                                    foreach ($envImpact as $option) {
+?>
+                                        <option value="<?php echo $option->value; ?>"><?php echo $option->label; ?></option>
+<?php
+                                    }
+?>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Save" class="button button-primary menu-save" id="save_group-settings" name="save_group-settings">
+        </form>
+    </div>
+<?php
 }
 
 add_action ('wp_ajax_nopriv_bidx_set_option', 'bidx_set_option');
