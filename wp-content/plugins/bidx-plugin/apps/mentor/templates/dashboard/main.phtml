@@ -59,7 +59,7 @@
                             <a  class="close" href="#mentoring/cancel">×</a>
                             <h3 id="feedbackLabel"><?php _e ('View feedback','bidxplugin') ?></h3>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body well">
                             <form action="">
                                 <!-- MESSAGE LIST -->
                                 <ul class="list media-list ">
@@ -73,6 +73,7 @@
                         </div>
                         <div class="modal-footer">
                             <a href="#mentoring/cancel" class="btn btn-view-feedback" href=""><?php _e ('Close','bidxplugin') ?></a>
+                            <a href="#" data-href="#mentoring/addFeedback/" class="btn btn-primary btn-feedback-submit">Add feedback</a>
                         </div>
                      </div>
                 </div>
@@ -158,31 +159,15 @@
 
 <script type="text/html" id="feedback-listitem">
 <!--
-<li class="media %emailRead%" >
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="media-body" >
-                <div class="row">
-                    <div class="col-sm-9">
-                        <span class="media-heading">
-                            <a class="btn-block" data-toggle="collapse" data-target="#feedback-%accordion-id%">%senderReceiverName% %emailNew%</a>
-                        </span>
-                    </div>
-                    <div class="col-sm-3">
-                        %dateSent%
-                        <br>
-                        %timeSent%
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 panel-collapse collapse" id="feedback-%accordion-id%">
-                        <span>%subject%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading" data-toggle="collapse" data-target="#feedback-%accordion-id%">
+         <div class="col-sm-12"><?php _e('Posted on','bidxplugin');?> <strong>%dateSent%-%timeSent%</strong> <?php _e('by','bidxplugin');?> <strong>%senderReceiverName%</strong>
+         </div>
     </div>
-</li>
+    <div class="panel-body panel-collapse collapse in" id="feedback-%accordion-id%">
+       <span>%comment%</span>
+    </div>
+</div>
 -->
 </script>
 <script type="text/html" id="feedback-empty">

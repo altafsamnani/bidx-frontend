@@ -16,9 +16,7 @@
     ,   $modal
     ,   currentGroupId       = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId        = bidx.common.getCurrentUserId( "id" )
-    ,   mailOffset           = 0
-    ,   MAILPAGESIZE         = 10
-    ,   mailboxes            = {}
+    ,   memberData           = {}
     ,   appName              = 'mentor'
 
     ,   listDropdownFeedback =  {
@@ -69,7 +67,7 @@
                 /* 1 add Feedback */
                 hrefaddFeedback = hrefaddFeedback
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%commentorId%/g,      ownerId );
+                            .replace( /%commentorId%/g,      currentUserId );
 
                 $addFeedbackBtn.attr( "href", hrefaddFeedback );
 
@@ -265,6 +263,8 @@
                                                 ownerId     :   ownerId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                    memberData[ ownerId ]   = itemMember.member.displayName;
+
                                                                     bidx.data.getStaticDataVal(
                                                                     {
                                                                         dataArr    : dataArr
@@ -385,6 +385,8 @@
                                                 ownerId     :   ownerId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                    memberData[ ownerId ]   = itemMember.member.displayName;
+
                                                                     bidx.data.getStaticDataVal(
                                                                     {
                                                                         dataArr    : dataArr
@@ -504,6 +506,8 @@
                                                 ownerId     :   ownerId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                    memberData[ ownerId ]   = itemMember.member.displayName;
+
                                                                     bidx.data.getStaticDataVal(
                                                                     {
                                                                         dataArr    : dataArr
@@ -1084,8 +1088,9 @@
     //expose
     var dashboard =
             {
-                navigate: navigate
-              , $element: $element
+                navigate:       navigate
+              , $element:       $element
+              , memberData:     memberData
             };
 
 

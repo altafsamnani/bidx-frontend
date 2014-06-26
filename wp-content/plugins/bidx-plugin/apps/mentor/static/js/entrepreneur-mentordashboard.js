@@ -12,6 +12,7 @@
     ,   $modal
     ,   currentGroupId    = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId     = bidx.common.getCurrentUserId( "id" )
+    ,   memberData        = {}
     ,   appName           = 'mentor'
 
     ,   dataArr           = {
@@ -136,7 +137,7 @@
                 /* 1 Add Feedback */
                 hrefaddFeedback = hrefaddFeedback
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%commentorId%/g,      mentorId )
+                            .replace( /%commentorId%/g,      currentUserId )
                             ;
                 $addFeedbackBtn.attr( "href", hrefaddFeedback );
 
@@ -335,6 +336,8 @@
                                                 mentorId     :   mentorId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                    memberData[ mentorId ]   = itemMember.member.displayName;
+
                                                                     bidx.data.getStaticDataVal(
                                                                     {
                                                                         dataArr    : dataArr
@@ -457,6 +460,8 @@
                                                 mentorId     :   mentorId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                     memberData[ mentorId ]   = itemMember.member.displayName;
+
                                                                     bidx.data.getStaticDataVal(
                                                                     {
                                                                         dataArr    : dataArr
@@ -579,6 +584,8 @@
                                                 mentorId     :   mentorId
                                              ,  callback    :   function ( itemMember )
                                                                 {
+                                                                     memberData[ mentorId ]   = itemMember.member.displayName;
+
                                                                     bidx.data.getStaticDataVal(
                                                                     {
                                                                         dataArr    : dataArr
@@ -1188,8 +1195,9 @@
     //expose
     var mentordashboard =
             {
-                navigate: navigate
-              , $element: $element
+                navigate:   navigate
+              , $element:   $element
+              , memberData: memberData
             };
 
 

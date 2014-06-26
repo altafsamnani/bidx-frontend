@@ -16,10 +16,8 @@
     ,   $modal
     ,   currentGroupId       = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId        = bidx.common.getCurrentUserId( "id" )
-    ,   mailOffset           = 0
-    ,   MAILPAGESIZE         = 10
-    ,   mailboxes            = {}
     ,   appName              = 'mentor'
+    ,   memberData           = {}
 
 
 
@@ -293,6 +291,109 @@
 
     }
 
+    function showMemberProfile( options )
+    {
+        var bidxMeta
+        ,   item        = options.item
+        ;
+
+        if($.isEmptyObject( memberData[ item.commentorId ] ))
+        {
+            bidx.api.call(
+                "member.fetch"
+            ,   {
+                    id:          item.commentorId
+                ,   requesteeId: item.commentorId
+                ,   groupDomain: bidx.common.groupDomain
+                ,   success:        function( itemResult )
+                    {
+                        // now format it into array of objects with value and label
+
+                        if ( !$.isEmptyObject(itemResult.bidxMemberProfile) )
+                        {
+                            //if( item.bidxEntityType == 'bidxBusinessSummary') {
+                            bidxMeta       = bidx.utils.getValue( itemResult, "bidxMemberProfile.bidxMeta" );
+
+                            if( bidxMeta  )
+                            {
+                                memberData[ item.commentorId ]   = itemResult.member.displayName;
+
+                            }
+
+                        }
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback( item );
+                        }
+
+                    }
+                ,   error: function(jqXhr, textStatus)
+                    {
+                        return false;
+                    }
+                }
+            );
+        } else {
+
+            //  execute callback if provided
+            if (options && options.callback)
+            {
+                options.callback( item );
+            }
+
+        }
+
+
+
+        return;
+
+    }
+
+    function _getMemberData ()
+    {
+        var  mentorMemberData
+        ,   entrepreneurMemberData
+        ,   groupOwnersArr = []
+        ;
+
+        // Add member that are already retrieved through entre/mentor calls
+        mentorMemberData            = bidx.utils.getValue( bidx, "entrepreneurmentordashboard.memberData" );
+        entrepreneurMemberData      = bidx.utils.getValue( bidx, "mentormentordashboard.memberData" );
+
+        mentorMemberData            = (mentorMemberData) ? mentorMemberData : {};
+        entrepreneurMemberData      = (entrepreneurMemberData) ? entrepreneurMemberData : {};
+
+        //Add current user
+        memberData                  = _.extend(mentorMemberData, entrepreneurMemberData);
+        memberData [currentUserId ] =  bidx.common.getSessionValue( 'displayName' );
+
+        // Add Groupowners
+        groupOwnersArr = bidx.common.getSessionValue( 'groupOwners' );
+        $.each( groupOwnersArr, function( index, item )
+        {
+            memberData [item.id ] =  item.displayName;
+        } );
+
+        return memberData;
+
+    }
+
+    function _replaceViewFeedbackContent (newListItem, item ) {
+
+         newListItem = newListItem
+                                            .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.feedbackId )
+                                            .replace( /%accordion-id%/g, ( item.feedbackId ) ? item.feedbackId: "" )
+                                            .replace( /%emailRead%/g, ( !item.read ) ? "email-new" : "" )
+                                            .replace( /%emailNew%/g, ( !item.read ) ? " <small>" + bidx.i18n.i( "feedbackNew", appName ) + "</small>" : "" )
+                                            .replace( /%senderReceiverName%/g, item.senderReceiverName )
+                                            .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.updated, "date" ) )
+                                            .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.updated, "time" ) )
+                                            .replace( /%comment%/g, item.comment )
+                                    ;
+        return newListItem;
+    }
+
 
     function _doViewFeedbackRequest( options )
     {
@@ -302,10 +403,14 @@
             ,   $list                   = $view.find( ".list" )
             ,   listItem                =  $( "#feedback-listitem" ).html().replace( /(<!--)*(-->)*/g, "" )
             ,   $listEmpty              = $( $( "#feedback-empty") .html().replace( /(<!--)*(-->)*/g, "" ) )
+            ,   params                  = options.params
+            ,   $d                      = $.Deferred()
             ,   messages
             ,   newListItem
-            ,   params                  = options.params
             ;
+
+
+            memberData = (memberData.length) ? memberData : _getMemberData( );
 
             bidx.api.call(
                 "feedback.fetch"
@@ -319,12 +424,11 @@
                             bidx.utils.log("[feedback] following feedback received", response.data );
                             var item
                             ,   $element
-                            ,   cls
-                            ,   textValue
-                            ,   $checkboxes
-                            ,   recipients
-                            ,   $elements           = []
                             ,   senderReceiverName
+                            ,   $elements           = []
+                            ,   $elementList        = []
+                            ,   counter             = 1
+                            ,   feedbackLength      = response.data.length
                             ;
 
                             // clear listing
@@ -333,53 +437,65 @@
 
                             // check if there are emails, otherwise show listEmpty
                             //
-                            if( response.data.length > 0 )
+                            if( feedbackLength > 0 )
                             {
                                 // loop through response
                                 //
                                 $.each( response.data, function( index, item )
                                 {
-                                    var    subject;
 
-                                    newListItem = listItem;
+                                    bidx.utils.log( 'id', currentUserId, 'comid', item.commentorId);
+
+                                    showMemberProfile(
+                                    {
+                                        item     :   item
+                                     ,  callback    :   function ( itemMember )
+                                                        {
+                                                            bidx.utils.log('itemMember', itemMember);
+                                                            itemMember.senderReceiverName = memberData[ itemMember.commentorId ];
+                                                            newListItem = listItem;
+                                                            newListItem             = newListItem
+                                                                                    .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + itemMember.feedbackId )
+                                                                                    .replace( /%accordion-id%/g, ( itemMember.feedbackId ) ? itemMember.feedbackId: "" )
+                                                                                    .replace( /%emailRead%/g, ( !itemMember.read ) ? "email-new" : "" )
+                                                                                    .replace( /%emailNew%/g, ( !itemMember.read ) ? " <small>" + bidx.i18n.i( "feedbackNew", appName ) + "</small>" : "" )
+                                                                                    .replace( /%senderReceiverName%/g, itemMember.senderReceiverName )
+                                                                                    .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( itemMember.updated, "date" ) )
+                                                                                    .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( itemMember.updated, "time" ) )
+                                                                                    .replace( /%comment%/g, itemMember.comment );
+
+                                                            $element                =   {
+                                                                                            newListItem: newListItem
+                                                                                        ,   updatedDate: itemMember.updated
+                                                                                        };
+
+                                                            $elements.push( $element );
 
 
-                                    senderReceiverName = item.commentorId;
+                                                            bidx.utils.log('counter', counter );
+                                                            bidx.utils.log('feedbackLength', feedbackLength);
+                                                            if( counter === feedbackLength )
+                                                            {
+                                                                $elementList = _.indexBy($elements, 'updatedDate'); // First set the updateDate as a index ex [20140112] = value, [20140603] = value2
+                                                                //$elementList = _.sortBy($elementList); // Now sort the data
+                                                                $elementList = _.pluck($elementList, 'newListItem');
+                                                                bidx.utils.log('$elements', $elementList );
+                                                                $list.append( $elementList );
+                                                                $d.resolve( );
+                                                            }
 
+                                                            counter = counter + 1;
 
+                                                        }
+                                    } );
 
-                                    // replace placeholders
-                                    //
-
-                                    newListItem = newListItem
-                                            .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.feedbackId )
-                                            .replace( /%accordion-id%/g, ( item.feedbackId ) ? item.feedbackId: "" )
-                                            .replace( /%emailRead%/g, ( !item.read ) ? "email-new" : "" )
-                                            .replace( /%emailNew%/g, ( !item.read ) ? " <small>" + bidx.i18n.i( "feedbackNew", appName ) + "</small>" : "" )
-                                            .replace( /%senderReceiverName%/g, senderReceiverName )
-                                            .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.updated, "date" ) )
-                                            .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.updated, "time" ) )
-                                            .replace( /%subject%/g, item.comment )
-                                    ;
-
-                                    $element = $( newListItem );
-
-                                    $element.find( ":checkbox" ).attr( "data-id", item.id );
-
-                                    // add mail element to elements collection
-                                    //
-                                    $elements.push( $element );
-
-                                });
-
-                                // add mail elements to list
-                                //
-                                $list.append( $elements );
-
+                                } );
                             } // end of handling emails from response
                             else
                             {
                                 $list.append( $listEmpty );
+
+                                $d.resolve( );
                             }
                             // execute callback if provided
                             //
@@ -388,6 +504,7 @@
                                 options.callback( response);
                             }
                         }
+
                     }
 
                 ,   error: function( jqXhr, textStatus )
@@ -410,9 +527,13 @@
                             _showMainError( "Something went wrong while retrieving the email(s): " + response.text );
                         }
 
+                        $d.resolve( );
+
                     }
                 }
             );
+
+            return $d.promise( );
         }
 
     // this function mutates the relationship between two contacts. Possible mutations for relationship: action=[ignore / accept]
@@ -915,12 +1036,11 @@
                     unbindHide: true
                 } );
 
-
                 _doViewFeedbackRequest(
                 {
                     params: options.params
-                ,    view: 'listFeedback'
-                ,   callback: function()
+                ,   view: 'listFeedback'
+                /*,   callback: function()
                     {
                         _showMainModal(
                         {
@@ -928,7 +1048,17 @@
                         ,   params: options.params
                         } );
 
-                    }
+                    }*/
+                } )
+                .done( function(  )
+                {
+                    options.params.commentorId = currentUserId;
+                    _showMainModal(
+                        {
+                            view  : "listFeedback"
+                        ,   params: options.params
+                        } );
+
                 } );
 
 
