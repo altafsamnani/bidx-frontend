@@ -19,18 +19,8 @@
     ,   appName              = 'mentor'
     ,   memberData           = {}
 
+    ,   listDropdownFeedback =  [ "feedbackGeneral", "feedbackOverview", "feedbackBusiness", "feedbackTeam", "feedbackFinancial", "feedbackCompany", "feedbackMentoring", "feedbackDocument" ]
 
-
-
-    ,   listDropdownFeedback =  {
-                                    "0":"General"
-                                ,   "1":"General overview section"
-                                ,   "2":"About the business section"
-                                ,   "4":"About the team section"
-                                ,   "5":"Financial section"
-                                ,   "6":"Company section"
-                                ,   "7":"Document section"
-                                }
     ;
 
     function _oneTimeSetup()
@@ -70,7 +60,7 @@
                 {
                     value: bpIdx
                 } );
-                option.text( bpIdx );
+                option.text( bidx.i18n.i( bpIdx,     appName )  );
 
                 listArrItems.push( option );
             } );
@@ -225,6 +215,7 @@
         var params  =   options.params
         ,   postData
         ,   message =   bidx.utils.getElementValue( $editForm.find( "[name=feedback]" ) )
+        ,   scope   =   bidx.utils.getElementValue( $editForm.find( "[name=feedbackpurpose]" ) )
         ;
 
         if ( !message )
@@ -235,6 +226,7 @@
         postData =  {
                         commentorId:     params.commentorId
                     ,   comment:         message
+                    ,   scope:           (scope) ? scope : 'feedbackGeneral'
                     };
 
         bidx.api.call(
@@ -394,6 +386,59 @@
         return newListItem;
     }
 
+    function _prepareFeedbackListing( options )
+    {
+
+        var     $elementList
+        ,       $filteredElementList
+        ,       $scopeList
+        ,       $orderedList = []
+        ,       newScopeItem
+        ,       $newScopeItem
+        ,       scopeItem   =  $( "#feedback-scopeitem" ).html().replace( /(<!--)*(-->)*/g, "" )
+        ,       $elements   =  options.elements;
+
+        $elementList = _.indexBy($elements, 'updatedDate'); // First set the updateDate as a index ex [20140112] = value, [20140603] = value2
+
+
+        if(listDropdownFeedback) {
+
+            $.each( listDropdownFeedback, function( idx, bpIdx )
+            {
+
+                $filteredElementList = $elementList;
+
+                $filteredElementList = _.where($filteredElementList , { scope: bpIdx }); // Find the element which matches scope ex feedbackGeneral, feedbackCompany etc , Underscore.js function
+
+                if( $filteredElementList.length )
+                {
+
+                    newScopeItem     = scopeItem;
+
+                    newScopeItem     = newScopeItem
+                                      .replace( /%feedbackScopeName%/g, bidx.i18n.i( bpIdx, appName ) )
+                                      .replace( /%feedbackScopeId%/g, idx )
+                                      ;
+
+                    $newScopeItem    = $( newScopeItem );
+
+                    $filteredElementList = _.pluck($filteredElementList, 'newListItem'); // Picku new list item to add html
+
+                    $newScopeItem.find('.scopefeedback').append( $filteredElementList );
+
+                    $orderedList.push( $newScopeItem );
+                }
+
+            } );
+        }
+
+        if( options && options.callback )
+        {
+            options.callback( $orderedList );
+        }
+
+    }
+
 
     function _doViewFeedbackRequest( options )
     {
@@ -425,8 +470,7 @@
                             var item
                             ,   $element
                             ,   senderReceiverName
-                            ,   $elements           = []
-                            ,   $elementList        = []
+                            ,   $elements            = []
                             ,   counter             = 1
                             ,   feedbackLength      = response.data.length
                             ;
@@ -467,6 +511,7 @@
                                                             $element                =   {
                                                                                             newListItem: newListItem
                                                                                         ,   updatedDate: itemMember.updated
+                                                                                        ,   scope      : ( itemMember.scope ) ? itemMember.scope : 'feedbackGeneral'
                                                                                         };
 
                                                             $elements.push( $element );
@@ -476,12 +521,17 @@
                                                             bidx.utils.log('feedbackLength', feedbackLength);
                                                             if( counter === feedbackLength )
                                                             {
-                                                                $elementList = _.indexBy($elements, 'updatedDate'); // First set the updateDate as a index ex [20140112] = value, [20140603] = value2
-                                                                //$elementList = _.sortBy($elementList); // Now sort the data
-                                                                $elementList = _.pluck($elementList, 'newListItem');
-                                                                bidx.utils.log('$elements', $elementList );
-                                                                $list.append( $elementList );
-                                                                $d.resolve( );
+                                                                _prepareFeedbackListing(
+                                                                {
+                                                                    elements:   $elements
+                                                                ,   callback:   function( $orderedList )
+                                                                                {
+                                                                                    bidx.utils.log('ordereList', $orderedList );
+                                                                                    $list.append( $orderedList );
+                                                                                    $d.resolve( );
+                                                                                }
+                                                                } );
+
                                                             }
 
                                                             counter = counter + 1;
