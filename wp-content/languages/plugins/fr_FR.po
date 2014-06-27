@@ -2402,7 +2402,7 @@ msgstr "Actions"
 # 646) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-mentor.phtml -16
 # _e("Creating mentor profile...","bidxplugin");
 # Context  Textdomain bidxplugin
-msgid "Waiting a mentoring approval"
+msgid "Waiting for a mentoring approval"
 msgstr "En attente d'une acceptation de mentoring"
 
 # 238) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/groupowner-mentoring.phtml -36

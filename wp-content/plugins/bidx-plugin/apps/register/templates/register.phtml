@@ -11,7 +11,7 @@
     }
 
         $groupNotification = (isset($this->groupNotification) && $this->groupNotification) ? $this->groupNotification : NULL;
-    
+
 
  ?>
 <div id="register" class="block-odd mainState mainStateRegister">
@@ -47,7 +47,7 @@
             <input type="checkbox" value="" id="checkbox-acceptTerms" name="acceptTerms" />
             <label for="checkbox-acceptTerms"><span></span><?php _e( 'I accept the bidX', 'bidxplugin' )?></label>
         </div>
-        <?php printf( __( '<a href="%s"> Terms & Conditions </a>', 'bidxplugin'), "/termsofservice" ); ?>
+        <?php printf( __( '<a href="%s" target="_blank"> Terms & Conditions </a>', 'bidxplugin'), "/wp-content/themes/bidx-group-template/assets/docs/terms/BidX_Terms_and_Conditions_October_2013_en.pdf" ); ?>
 
         <div class="form-group checkbox" style="display: inline-block;">
             <input type="checkbox" value="" id="checkbox-preventSpam" name="preventSpam" />
