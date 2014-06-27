@@ -12,7 +12,6 @@
         ),
         'bidxEntrepreneurProfile'    => array(
             __('Entrepreneur dashboard', 'bidxplugin') => _l('entrepreneur-dashboard')
-        ,   __('Mentor Dashboard', 'bidxplugin')       => _l('mentor-dashboard')
         ),
         'bidxMentorProfile'          => array(
             __('Mentor Dashboard', 'bidxplugin')       => _l('mentor-dashboard')
@@ -32,9 +31,6 @@
             unset( $profiles[ $profilekey ] );
         }
 
-        if( $sessionSvc->isHavingProfile( 'bidxEntrepreneurProfile' ) ) {
-            unset( $profiles[ 'bidxMentorProfile' ] );
-        }
     }
 
     // get the groups for his user
