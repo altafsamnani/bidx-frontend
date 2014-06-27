@@ -472,7 +472,7 @@
                             ,   senderReceiverName
                             ,   $elements            = []
                             ,   counter             = 1
-                            ,   feedbackLength      = response.data.length
+                            ,   feedbackLength      = (response.data) ? response.data.length : 0
                             ;
 
                             // clear listing
