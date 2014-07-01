@@ -114,17 +114,18 @@
             <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading (Sending your request)...', 'bidxplugin') ?>
         </div>
         <div id="mentorDashboardAccordion">
-            <!-- Help -->
+            <!-- Help
             <div class="panel panel-default">
+
                 <div class="panel-heading">
-                    <a class="btn-block" data-toggle="collapse" data-parent="#mentorDashboardAccordion" href="#mentorDashboardAccordion-Help"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Help','bidxplugin'); ?></a>
+                    <a class="btn-block" data-toggle="collapse" data-parent="#mentorDashboardAccordion" href="#mentorDashboardAccordion-Help"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php //_e('Help','bidxplugin'); ?></a>
                 </div>
                 <div id="mentorDashboardAccordion-Help" class="panel-collapse collapse">
                     <div class="panel-body">
-                       <?php $this->render('dashboard/help.phtml'); ?>
+                       <?php //$this->render('dashboard/help.phtml'); ?>
                     </div>
-                 </div>
-            </div>
+                </div>
+            </div> -->
               <?php ($this->isMentor)       ? $this->render('dashboard/mentor-mentoring.phtml')       : '' ?>
               <?php ($this->isEntrpreneur)  ? $this->render('dashboard/entrepreneur-mentoring.phtml') : '' ?>
               <?php ($this->isGroupOwner)   ? $this->render('dashboard/groupowner-mentoring.phtml')   : '' ?>

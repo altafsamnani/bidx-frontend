@@ -605,6 +605,7 @@
                                         ,   "offset"        :   paging.search.offset
                                         ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
                                         ,   "facetsVisible" :   true
+                                        ,   "scope"         :   "local"
                                         }
                     };
 
