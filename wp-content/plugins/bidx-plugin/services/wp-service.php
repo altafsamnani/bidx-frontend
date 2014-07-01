@@ -2545,7 +2545,7 @@ function bidx_group_settings ()
                             </div>
                         </td>
                         <td>
-                                            
+
                             <div class="form-field">
                                 <label for="group-socialImpact"><?php echo __('Social Impact', 'bidxplugin') ?></label>
                                 <select class="" id="group-socialImpact" name="group-socialImpact" multiple>
@@ -2653,7 +2653,7 @@ function bidx_wp_content() {
         case 'Getting started investor':
 //            $bidxPreferencePath       = sprintf ('%s/../apps/member/static/js/memberpreference.js',    BIDX_PLUGIN_URI);
 //            $deps                     = $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
-//			'gmaps-places', 'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
+//			'holder', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
 //			'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
 //			'bidx-location','bidx-chosen', 'typeahead'
 //	);
