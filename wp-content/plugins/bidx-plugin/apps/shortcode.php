@@ -164,7 +164,8 @@ class BidxShortcode
         } else {
 
             //vendor scripts
-            wp_register_script ('gmaps-places', '//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places', array (), '20130501', TRUE);
+           //s wp_register_script ('gmaps-places', '//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places', array (), '20130501', TRUE);
+            wp_register_script ('google-jsapi', '//www.google.com/jsapi', array (), '20130501', TRUE);
             wp_register_script ('jquery-validation', $bidxJsDir . '/vendor/jquery.validate.js', array ('jquery'), '1.1.11', true);
             wp_register_script ('jquery-validation-additional-methods', $bidxJsDir . '/vendor/additional-methods.js', array ('jquery-validation'), '1.1.11', true);
             wp_register_script ('jquery-validation-bidx-additional-methods', $bidxJsDir . '/additional-methods.js', array ('jquery-validation'), '20130812', true);
@@ -195,7 +196,7 @@ class BidxShortcode
             wp_register_script ('bidx-data', $bidxJsDir . '/data.js', array ('jquery'), '20130626', TRUE);
             wp_register_script ('bidx-i18n', $bidxJsDir . '/i18n.js', array ('jquery'), '20130626', TRUE);
             wp_register_script ('bidx-delaykeyup', $bidxJsDir . '/bidx-delaykeyup.js', array ('jquery'), '20131103', TRUE);
-            wp_register_script ('bidx-location', $bidxJsDir . '/bidx-location.js', array ('jquery', 'bidx-utils', 'jquery-ui-widget', 'gmaps-places'), '20130904', true);
+            wp_register_script ('bidx-location', $bidxJsDir . '/bidx-location.js', array ('jquery', 'bidx-utils', 'jquery-ui-widget','google-jsapi'), '20130904', true);
             wp_register_script ('bidx-chosen',  $bidxJsDir . '/bidx-chosen.js', array ('jquery', 'chosen'),  '20131118', TRUE);
 
             wp_enqueue_script ('bidx-common');

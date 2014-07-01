@@ -671,7 +671,7 @@
 
                             // Clear error messages
                             $frmLoginModal.find( ".error-separate" ).text( "" ).hide();
-                            
+
                             // Empty password field for security reasons
                             $frmLoginModal.find( "[name='password']" ).val( "" );
 
@@ -1037,6 +1037,62 @@
         } );
 
     };
+
+   /* function loadbidxLocation ( )
+    {
+        var     src = '/wp-content/plugins/bidx-plugin/static/js/bidx-location.js'
+        ;
+
+        document.write('<' + 'script src="' + src + '"' +
+                   ' type="text/javascript"><' + '/script>');
+
+    }*/
+
+    function loadGoogleMap ( options )
+    {
+        var defaultOptions =    {
+                                    other_params : 'sensor=false&libraries=places'
+                                }; //http://stackoverflow.com/questions/5296115/can-you-load-google-maps-api-v3-via-google-ajax-api-loader
+
+        options             =   $.extend (defaultOptions, options);
+
+        google.load(
+                        "maps"
+                    ,   "3"
+                    ,   options
+                    );
+
+
+
+        /*var callback   = options.callback
+        ,   src        = "//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places"
+        ;
+        var   script_tag = document.createElement('script');
+
+        script_tag.type = 'text/javascript';
+
+        script_tag.src = src;
+
+        script_tag.setAttribute('async',false);
+
+        document.body.appendChild(script_tag);
+
+        document.write('<' + 'script src="' + src + '"' +
+                   ' type="text/javascript"><' + '/script>');*/
+
+
+
+
+
+        /*var script_tag_location = document.createElement('script');
+
+        script_tag_location.type = 'text/javascript';
+
+        script_tag_location.src = "/wp-content/plugins/bidx-plugin/static/js/bidx-location.js";
+
+        document.body.appendChild(script_tag_location);*/
+
+    }
     //
     // end validator extentions
 
@@ -1094,6 +1150,7 @@
     ,   addAppWithPendingChanges:       addAppWithPendingChanges
     ,   removeAppWithPendingChanges:    removeAppWithPendingChanges
     ,   checkPendingChanges:            checkPendingChanges
+    ,   loadGoogleMap:                  loadGoogleMap
     ,   getChangesQueue:                function()
         {
             return changesQueue.slice();

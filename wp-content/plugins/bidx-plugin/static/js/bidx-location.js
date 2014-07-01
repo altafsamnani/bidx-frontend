@@ -78,9 +78,9 @@
 
         ,   mapOptions:
             {
-                center:                 new google.maps.LatLng( -33.8688, 151.2195 )
-            ,   zoom:                   13
-            ,   mapTypeId:              google.maps.MapTypeId.ROADMAP
+           //     center:                 new google.maps.LatLng( -33.8688, 151.2195 )
+                zoom:                   13
+          //  ,   mapTypeId:              google.maps.MapTypeId.ROADMAP
             }
 
         ,   autoCompleteOptions:
@@ -123,11 +123,13 @@
                 }
             } );
 
-            widget.options  = $.extend( widget.options, params );
-            var options     = widget.options;
-            var state       = options.state;
+            widget.options.center       = new google.maps.LatLng( -33.8688, 151.2195 );
 
+            widget.options.mapTypeId    = google.maps.MapTypeId.ROADMAP;
 
+            widget.options          = $.extend( widget.options, params );
+            var options             = widget.options;
+            var state               = options.state;
 
             $el.addClass( options.widgetClass );
 

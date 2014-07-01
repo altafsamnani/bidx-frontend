@@ -51,6 +51,13 @@
     ,   investorProfileId
     ,   state
     ,   currentView
+
+    //Map variables
+    ,   institutionAddressMapOptions
+    ,   institutionAddressMap
+    ,   geocoder
+    ,   geocodeTimer
+
     ,   redirect                        = {}
     ,   snippets                        = {}
 
@@ -691,41 +698,6 @@
 
 
 
-
-    // Build up the gmaps for the current address
-    //
-    var institutionAddressMapOptions =
-        {
-            center:             new google.maps.LatLng( 0, 0 )
-        ,   zoom:               1
-        ,   panControl:         false
-        ,   scrollwheel:        false
-        ,   zoomControl:        true
-        ,   streetViewControl:  false
-        ,   rotateControl:      false
-        ,   overviewMapControl: false
-        ,   mapTypeControl:     false
-        ,   draggable:          false
-        ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
-        }
-    ,   institutionAddressMap
-    ;
-
-    if ( $institutionAddressMap.length )
-    {
-        institutionAddressMap = new google.maps.Map( $institutionAddressMap[ 0 ], institutionAddressMapOptions );
-    }
-
-    var geocoder        = new google.maps.Geocoder()
-    ,   geocodeTimer    = null
-    ;
-
-    $institutionAddressCountry.change(      function() { _updateInstitutionAddressMap();    } );
-    $institutionAddressCityTown.change(     function() { _updateInstitutionAddressMap();    } );
-    $institutionAddressStreet.change(       function() { _updateInstitutionAddressMap();    } );
-    $institutionAddressStreetNumber.change( function() { _updateInstitutionAddressMap();    } );
-    $institutionAddressPostalCode.change(   function() { _updateInstitutionAddressMap();    } );
-
     // Try to gecode the address (array)
     // On failure, pop one item from the address array and retry untill there is no
     // address left or we found a location
@@ -1295,6 +1267,51 @@
 
         bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 
+         // Build up the gmaps for the current address
+        bidx.common.loadGoogleMap( { callback:   _currentAddress } );
+
+        function _currentAddress ( )
+        {
+            // Build up the gmaps for the current address
+            //
+            institutionAddressMapOptions =
+                {
+                    center:             new google.maps.LatLng( 0, 0 )
+                ,   zoom:               1
+                ,   panControl:         false
+                ,   scrollwheel:        false
+                ,   zoomControl:        true
+                ,   streetViewControl:  false
+                ,   rotateControl:      false
+                ,   overviewMapControl: false
+                ,   mapTypeControl:     false
+                ,   draggable:          false
+                ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
+                }
+            ;
+
+            if ( $institutionAddressMap.length )
+            {
+                institutionAddressMap = new google.maps.Map( $institutionAddressMap[ 0 ], institutionAddressMapOptions );
+            }
+
+            geocoder        = new google.maps.Geocoder();
+            geocodeTimer    = null;
+
+            $institutionAddressCountry.change(      function() { _updateInstitutionAddressMap();    } );
+            $institutionAddressCityTown.change(     function() { _updateInstitutionAddressMap();    } );
+            $institutionAddressStreet.change(       function() { _updateInstitutionAddressMap();    } );
+            $institutionAddressStreetNumber.change( function() { _updateInstitutionAddressMap();    } );
+            $institutionAddressPostalCode.change(   function() { _updateInstitutionAddressMap();    } );
+
+            // Instantiate location plugin
+            //
+            $editForm.find( "[data-type=location]"   ).bidx_location(
+            {
+                drawCircle:                 true
+            } );
+            }
+
         // Wire the submit button which can be anywhere in the DOM
         //
         $btnSave.click( function( e )
@@ -1488,12 +1505,7 @@
             }
         } );
 
-        // Instantiate location plugin
-        //
-        $editForm.find( "[data-type=location]"   ).bidx_location(
-        {
-            drawCircle:                 true
-        } );
+
 
         if ( state === "create" )
         {

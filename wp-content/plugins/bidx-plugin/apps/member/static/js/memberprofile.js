@@ -42,6 +42,7 @@
 
     ,   geocoder
     ,   currentAddressMap
+    ,   currentAddressMapOptions
 
     ,   member
     ,   memberId
@@ -128,7 +129,6 @@
         _snippets();
         _languages();
         _attachments();
-        _currentAddress();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -423,42 +423,6 @@
                 itemsPerRow:        3
             ,   itemClass:          "attachmentItem"
             } );
-        }
-
-        // Current address control
-        //
-        function _currentAddress()
-        {
-            // Build up the gmaps for the current address
-            //
-            var currentAddressMapOptions =
-                {
-                    center:             new google.maps.LatLng( 0, 0 )
-                ,   zoom:               1
-                ,   panControl:         false
-                ,   scrollwheel:        false
-                ,   zoomControl:        true
-                ,   streetViewControl:  false
-                ,   rotateControl:      false
-                ,   overviewMapControl: false
-                ,   mapTypeControl:     false
-                ,   draggable:          false
-                ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
-                }
-            ;
-
-            if ( $currentAddressMap.length )
-            {
-                currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions );
-            }
-
-            geocoder        = new google.maps.Geocoder();
-
-            $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
-            $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
-            $currentAddressStreet.change(       function() { _updateCurrentAddressMap();    } );
-            $currentAddressStreetNumber.change( function() { _updateCurrentAddressMap();    } );
-            $currentAddressPostalCode.change(   function() { _updateCurrentAddressMap();    } );
         }
     }
 
@@ -1059,6 +1023,9 @@
 
         $attachmentsContainer.reflowrower( "empty" );
 
+        // Build up the gmaps for the current address
+        bidx.common.loadGoogleMap( { callback:   _currentAddress } );
+
         // Inject the save and button into the controls
         //
         var $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    })
@@ -1213,6 +1180,42 @@
                 }
             }
         );
+
+         // Current address control
+        //
+        function _currentAddress()
+        {
+            // Build up the gmaps for the current address
+            //
+            currentAddressMapOptions =
+                {
+                    center:             new google.maps.LatLng( 0, 0 )
+                ,   zoom:               1
+                ,   panControl:         false
+                ,   scrollwheel:        false
+                ,   zoomControl:        true
+                ,   streetViewControl:  false
+                ,   rotateControl:      false
+                ,   overviewMapControl: false
+                ,   mapTypeControl:     false
+                ,   draggable:          false
+                ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
+                }
+            ;
+
+            if ( $currentAddressMap.length )
+            {
+                currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions );
+            }
+
+            geocoder        = new google.maps.Geocoder();
+
+            $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
+            $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
+            $currentAddressStreet.change(       function() { _updateCurrentAddressMap();    } );
+            $currentAddressStreetNumber.change( function() { _updateCurrentAddressMap();    } );
+            $currentAddressPostalCode.change(   function() { _updateCurrentAddressMap();    } );
+        }
     }
 
     // Try to save the member to the API
