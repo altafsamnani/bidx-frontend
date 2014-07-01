@@ -10,8 +10,8 @@ class company
 
     public $scriptInject;
 
-    static $deps = array ('jquery', 'bootstrap', 'underscore', 'backbone', 'json2','gmaps-places', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
-                              'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen', 'bidx-reflowrower');
+    static $deps = array ('jquery', 'jquery-ui-widget','bootstrap', 'underscore', 'backbone', 'json2', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-data', 'bidx-i18n',
+                            'bidx-reflowrower',  'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen', 'bidx-reflowrower','google-jsapi');
 
     /**
      * Constructor
@@ -49,32 +49,32 @@ class company
 
         //2. Service company
         $companySvc = new CompanyService( );
-        
 
-        //3. Determine the view needed        
+
+        //3. Determine the view needed
         if (isset ($atts) && isset ($atts['view'])){
             $command = $atts['view'];
-        }      
-        
-        if (isset ($atts) && isset ($atts['id']))   {
-            $companyId          = $atts['id'];            
-        } else if (isset ($sessionData->companyId)) {
-            $companyId          = $sessionData->companyId;            
         }
-        
+
+        if (isset ($atts) && isset ($atts['id']))   {
+            $companyId          = $atts['id'];
+        } else if (isset ($sessionData->companyId)) {
+            $companyId          = $sessionData->companyId;
+        }
+
         switch ($command) {
             case 'list-companies' :
                 // TODO: Chris will lookup what API to use for listing the companies of a member
                 return $view->render ('company-list.phtml');
                 break;
-            
+
             default :
-          
+
                 if ($companyId) {
                     $view->company = $companySvc->getCompanyDetails ($companyId);
                     $view->companyTitle = true;
                 }
-                
+
                 $view->noheader = $atts['noheader'];
 
                 return $view->render ('company.phtml');

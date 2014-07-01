@@ -7,10 +7,10 @@
  */
 class member {
 
-	static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
-			'gmaps-places', 'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
+	static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2'
+			,'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
 			'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
-			'bidx-location','bidx-chosen', 'typeahead', 'jquery-event-ue', 'jquery-udraggable'
+			'bidx-location','bidx-chosen', 'typeahead', 'jquery-event-ue', 'jquery-udraggable','google-jsapi'
 	);
 
  	/**
@@ -32,7 +32,12 @@ class member {
 		wp_register_script( 'mentorprofile',		plugins_url( 'static/js/mentorprofile.js', 			__FILE__ ), array(), '20131111', TRUE );
 		wp_register_script( 'mentoringrequest',		plugins_url( 'static/js/mentoringrequest.js', 		__FILE__ ), array(), '20140411', TRUE );
 
-		$deps = array_merge( self :: $deps, array( 'memberprofile', 'entrepreneurprofile', 'investorprofile', 'mentorprofile','mentoringrequest' ) );
+		$deps = array_merge( self :: $deps, array(  	'memberprofile'
+													,	'entrepreneurprofile'
+												 	,	'investorprofile'
+													,	'mentorprofile'
+													,	'mentoringrequest'
+												 ) );
 
 	  	wp_register_script( 'member', plugins_url( 'static/js/member.js', __FILE__ ), $deps, '20130501', TRUE );
 	}

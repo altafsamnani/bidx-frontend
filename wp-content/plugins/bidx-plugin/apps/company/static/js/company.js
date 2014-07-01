@@ -54,6 +54,10 @@
     ,   slaveApp        = false
 
     ,   callbacks       = null
+    ,   currentAddressMapOptions = {}
+    ,   currentAddressMap
+    ,   geocoder
+    ,   geocodeTimer    = null
     ;
 
     if ( !$element.length )
@@ -192,7 +196,7 @@
             // Instantiate reflowrower on the countryOperationSpecifics container
             //
             $countryOperationSpecificsContainer.reflowrower();
-            
+
             // Add an empty previous business block
             //
             $btnAddCountryOperationSpecifics.click( function( e )
@@ -316,34 +320,7 @@
         _handleToggleChange( value === "true", "haveEmployees" );
     } );
 
-    // Build up the gmaps for the current address
-    //
-    var currentAddressMapOptions =
-        {
-            center:             new google.maps.LatLng( 0, 0 )
-        ,   zoom:               1
-        ,   panControl:         false
-        ,   scrollwheel:        false
-        ,   zoomControl:        true
-        ,   streetViewControl:  false
-        ,   rotateControl:      false
-        ,   overviewMapControl: false
-        ,   mapTypeControl:     false
-        ,   draggable:          false
-        ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
-        }
-    ,   currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions )
-    ;
 
-    var geocoder        = new google.maps.Geocoder()
-    ,   geocodeTimer    = null
-    ;
-
-    $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
-    $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
-    $currentAddressStreet.change(       function() { _updateCurrentAddressMap();    } );
-    $currentAddressStreetNumber.change( function() { _updateCurrentAddressMap();    } );
-    $currentAddressPostalCode.change(   function() { _updateCurrentAddressMap();    } );
 
     // Try to gecode the address (array)
     // On failure, pop one item from the address array and retry untill there is no
@@ -526,6 +503,7 @@
     //
     var _populateScreen = function()
     {
+
         // Start by setting the toggles false, will switch to true if needed
         //
         $toggleRegistered.filter( "[value='false']" ).prop( "checked", true );
@@ -598,7 +576,7 @@
                 _noLogo();
             }
         }
-        
+
         // Now the nested objects, NOT ARRAY's
         //
         $.each( [ "statutoryAddress" ], function()
@@ -767,6 +745,7 @@
         bidx.utils.setValue( company, "logo", logo );
     };
 
+
     // This is the startpoint
     //
     var _init = function()
@@ -792,6 +771,12 @@
 
             $btnSave.i18nText( ( state === "create" ? "btnAddCompany" : "btnSaveCompany" ), appName );
             $btnCancel.i18nText( "btnCancel" );
+
+            // Build up the gmaps for the current address
+            bidx.common.loadGoogleMap( { callback:   _currentAddress } );
+
+
+
 
             // Wire the submit button which can be anywhere in the DOM
             //
@@ -982,6 +967,39 @@
 
             _showView( "edit" );
         }
+
+        // Current address control
+        //
+        function _currentAddress ( )
+        {
+            currentAddressMapOptions =
+            {
+                center:             new google.maps.LatLng( 0, 0 )
+            ,   zoom:               1
+            ,   panControl:         false
+            ,   scrollwheel:        false
+            ,   zoomControl:        true
+            ,   streetViewControl:  false
+            ,   rotateControl:      false
+            ,   overviewMapControl: false
+            ,   mapTypeControl:     false
+            ,   draggable:          false
+            ,   mapTypeId:          google.maps.MapTypeId.ROADMAP
+            };
+
+            currentAddressMap       = new google.maps.Map( $currentAddressMap[ 0 ], currentAddressMapOptions );
+
+            geocoder        = new google.maps.Geocoder();
+
+            geocodeTimer    = null;
+
+
+            $currentAddressCountry.change(      function() { _updateCurrentAddressMap();    } );
+            $currentAddressCityTown.change(     function() { _updateCurrentAddressMap();    } );
+            $currentAddressStreet.change(       function() { _updateCurrentAddressMap();    } );
+            $currentAddressStreetNumber.change( function() { _updateCurrentAddressMap();    } );
+            $currentAddressPostalCode.change(   function() { _updateCurrentAddressMap();    } );
+        }
     };
 
     // Central save method, also exposed to the outside world
@@ -1098,6 +1116,8 @@
     {
         // Set the slave mode when the navigate is called with a slaveApp mode
         //
+
+
         if ( typeof options.slaveApp !== "undefined" )
         {
             slaveApp = options.slaveApp;
@@ -1224,6 +1244,7 @@
     // Engage!
     //
     _oneTimeSetup();
+
 
     // Expose
     //
