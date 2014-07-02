@@ -6,8 +6,8 @@
     <Item value="selectCountry">Select country</Item>
     <Item value="selectNationality">Select your nationality</Item>
     <Item value="selectEducation">Select your highest level of education</Item>
-
     <Item value="frmNoCv">CV is required</Item>
-
+    <Item value="preferredCommunicationAll">Please check one of the above</Item>
+    <Item value="referencesAll">Please fill your LinkedIn profile url or upload at least one document</Item>
 
 </I18N>

@@ -1817,7 +1817,7 @@ msgstr "Nouveaux membres"
 # _e("News &amp; Events","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "News &amp; Events"
-msgstr "Actualités &amps; Evénements "
+msgstr "Actualités &amp; Evénements "
 
 # 145) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/latest-business-summaries.phtml -145
 # _e("There are currently no new business summaries","bidxplugin");

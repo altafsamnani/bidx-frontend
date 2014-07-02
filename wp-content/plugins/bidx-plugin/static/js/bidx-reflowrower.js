@@ -26,7 +26,7 @@
         ,   confirmRemove:      true
         ,   prependNewItems:    true
 
-        ,   txtAreYouSure:      "Are you sure?"
+        ,   txtAreYouSure:      bidx.i18n.i( "btnConfirm" )
 
         ,   extraRowClasses:    "row"
 
