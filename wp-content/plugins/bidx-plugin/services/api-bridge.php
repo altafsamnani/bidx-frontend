@@ -237,33 +237,26 @@ abstract class APIbridge
     function getBidxSubdomain ($echo = false, $url = false)
     {
 
-        $bidxUrl = $_SERVER ["HTTP_HOST"];
 
-        if ($url)
-        {
-            $bidxUrl = str_replace (array ('http://', 'https://'), '', $url);
-        }
-
-        $hostAddress = explode ('.', $bidxUrl);
+    	if ( defined( 'ORIGINAL_DOMAIN' ) ) {
+    	
+    		$httpHost = ORIGINAL_DOMAIN;
+    	} else {
+    	
+    		$httpHost = ($url) ? str_replace(array("http://", "https://"),"",$url) : $_SERVER ["HTTP_HOST"];
+    	}
+    	   	
+        $hostAddress = explode ('.', $httpHost);
 
         if (is_array ($hostAddress))
         {
-            if (strcasecmp ("www", $hostAddress [0]) == 0)
-            {
-                $passBack = 1;
-            }
-            else
-            {
-                $passBack = 0;
-            }
-
             if ($echo == false)
             {
-                return ( $hostAddress [$passBack] );
+                return ( $hostAddress [0] );
             }
             else
             {
-                echo ( $hostAddress [$passBack] );
+                echo ( $hostAddress [0] );
             }
         }
         else

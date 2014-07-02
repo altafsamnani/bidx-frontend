@@ -213,13 +213,14 @@
 
             // Override groupDomain from the URL
             //
-            var forcedGroupDomain = bidx.utils.getQueryParameter( "__bidxGroupDomain" );
-
+            //var forcedGroupDomain = bidx.utils.getQueryParameter( "__bidxGroupDomain" );
+            
+            
             // the WordPress handler can't handle the extra url variables, so we only use this for direct API calls
             //
             if( !supressBidxUrlParams )
             {
-                result += "?csrf=false&bidxGroupDomain=" + encodeURIComponent( forcedGroupDomain || groupDomain ) + extraUrlParams;
+                result += "?csrf=false&bidxGroupDomain=" + encodeURIComponent( bidxConfig.groupName || groupDomain ) + extraUrlParams;
             }
 
             return result;

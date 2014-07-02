@@ -114,7 +114,11 @@ class BidxCommon
         $this->clearSessionFromParam ($session_id);
 
         //Set Cookie Timeout
-        session_set_cookie_params ($time,'/','bidx.net');
+        session_set_cookie_params (
+        		$time
+        		,'/'
+  //      		,'bidx.net'
+        );
 //        if ($session_id) {
 //            session_id ($session_id);
 //        }
@@ -597,18 +601,23 @@ class BidxCommon
      */
     static function get_bidx_subdomain ($echo = false, $url = NULL)
     {
-        $httpHost = ($url) ? str_replace(array("http://", "https://"),"",$url) : $_SERVER ["HTTP_HOST"];
+		if ( defined( 'ORIGINAL_DOMAIN' ) ) {
+				
+			$httpHost = ORIGINAL_DOMAIN;
+    	} else {	
+    		
+        	$httpHost = ($url) ? str_replace(array("http://", "https://"),"",$url) : $_SERVER ["HTTP_HOST"];
+    	}
+	
         $hostAddress = explode ('.', $httpHost );
         if (is_array ($hostAddress)) {
-            if (strcasecmp ("www", $hostAddress [0]) == 0) {
-                $passBack = 1;
-            } else {
-                $passBack = 0;
-            }
+
+            $domain = $hostAddress [0];
+                        
             if ($echo == false) {
-                return ( $hostAddress [$passBack] );
+                return $domain;
             } else {
-                echo ( $hostAddress [$passBack] );
+                echo $domain;
             }
         } else {
             return ( false );
