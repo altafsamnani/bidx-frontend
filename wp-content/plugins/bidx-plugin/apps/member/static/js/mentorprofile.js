@@ -35,6 +35,9 @@
     ,   state
     ,   currentView
 
+    ,   geocoder
+    ,  _getMapData
+
     ,   snippets                    = {}
 
     ,   appName                     = "member"
@@ -535,30 +538,7 @@
         $focusSocialImpact.trigger( "chosen:updated" );
         $focusEnvImpact.trigger( "chosen:updated" );
 
-        var geocoder = new google.maps.Geocoder();
-        var _getMapData = function( Lat, Lng, cb )
-        {
-            var location = new google.maps.LatLng( Lat, Lng );
 
-            geocoder.geocode(
-                {
-                    "latLng":      location
-                }
-            ,   function( results, status )
-                {
-                    bidx.utils.log( "_getMapData::geocode", results );
-
-                    if ( status === google.maps.GeocoderStatus.OK )
-                    {
-                        cb( null, { results: results[ 0 ] } );
-                    }
-                    else
-                    {
-                        cb( new Error( "Unable to geocode " + status ));
-                    }
-                }
-            );
-        };
 
     }
 
@@ -920,6 +900,32 @@
                                                     {
                                                         drawCircle:                 true
                                                     } );
+
+                                                    geocoder = new google.maps.Geocoder();
+
+                                                    _getMapData = function( Lat, Lng, cb )
+                                                    {
+                                                        var location = new google.maps.LatLng( Lat, Lng );
+
+                                                        geocoder.geocode(
+                                                            {
+                                                                "latLng":      location
+                                                            }
+                                                        ,   function( results, status )
+                                                            {
+                                                                bidx.utils.log( "_getMapData::geocode", results );
+
+                                                                if ( status === google.maps.GeocoderStatus.OK )
+                                                                {
+                                                                    cb( null, { results: results[ 0 ] } );
+                                                                }
+                                                                else
+                                                                {
+                                                                    cb( new Error( "Unable to geocode " + status ));
+                                                                }
+                                                            }
+                                                        );
+                                                    };
                                                 }
                                     } );
 

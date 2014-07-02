@@ -266,9 +266,9 @@ msgstr ""
 "Vos changements ne sont pas encore enregistrés. êtes-vous sur de vouloir "
 "quitter cette page et perdre tous les changements? "
 
-# _e("Please wait while you are redirectedâ€¦", "i18n");
+# _e("Please wait while you are redirected", "i18n");
 # Context  TextDomain i18n
-msgid "Please wait while you are redirectedâ€¦"
+msgid "Please wait while you are redirected"
 msgstr "Vous allez être redirigé, veuillez patientez"
 
 # _e("Processing request", "i18n");
