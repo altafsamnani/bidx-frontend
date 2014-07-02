@@ -44,14 +44,18 @@ abstract class APIbridge
         $groupDomain    = $this->getBidxSubdomain ();
 
         // 1. Retrieve Bidx Cookies and send back to api to check
-        $cookieInfo = $_COOKIE;
-        foreach ($_COOKIE as $cookieKey => $cookieValue)
-        {
-            if (preg_match ("/^bidx/i", $cookieKey))
-            {
-                $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
-                //$cookieHeader = $cookieKey . '=' . $cookieValue. '; ';
-            }
+        if ($do_not_reuse) {
+        	$cookieArr[] = array();
+        } else {
+	        $cookieInfo = $_COOKIE;
+	        foreach ($_COOKIE as $cookieKey => $cookieValue)
+	        {
+	            if (preg_match ("/^bidx/i", $cookieKey))
+	            {
+	                $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
+	                //$cookieHeader = $cookieKey . '=' . $cookieValue. '; ';
+	            }
+	        }
         }
 
 //        if(!empty( $cookieHeader))
@@ -183,6 +187,11 @@ abstract class APIbridge
 
                 $this->bidxRedirectLogin ($groupDomain, $statusText);
             }
+        }
+        else if ($httpCode == 500)
+        {
+        	//registering as an incorrect response to avoid caching
+        	$requestData->status = 'ERROR';
         }
         else if ($httpCode == 'timeout')
         {
