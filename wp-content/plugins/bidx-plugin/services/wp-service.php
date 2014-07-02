@@ -124,7 +124,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $logger          = Logger::getLogger ("Bidx Service Login");
     $bidxMethod      = strtoupper ($method);
     $bidxGetParams   = "";
-    $sendDomain      = 'bidx.net';
+    $sendDomain      = '';
     $cookieArr       = array ();
     $headers         = array ();
     $cookieHeader    = '';
