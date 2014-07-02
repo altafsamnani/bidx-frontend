@@ -12,7 +12,7 @@
     $authClass = "not-auth";
     $authenticated = false;
 
-    if ($session->authenticated == 'true' ) {
+    if ( isset( $session->authenticated ) && $session->authenticated == 'true' ) {
         $authenticated = true;
         $authClass = "auth";
     }
