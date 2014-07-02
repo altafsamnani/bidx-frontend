@@ -4856,7 +4856,7 @@ msgid ""
 "Tell visitors and members of the group how you see yourself as a mentor. "
 "Give a brief description of your mentor interests."
 msgstr ""
-"Dîtes ou visiteurs et membres du groupe comment vous-vous voyez en tant que "
+"Dîtes aux visiteurs et membres du groupe comment vous-vous voyez en tant que "
 "mentor. Donnez une brève description de vos intérêts en tant que mentor."
 
 # 650) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-mentor.phtml -57
