@@ -568,6 +568,8 @@ function _pageuri( $contenPath )
 
   global $sitepress;
 
+  $translatedContentId = NULL;
+
   if( $sitepress )
   {
     $currentLanguage = $sitepress->get_current_language();
@@ -580,7 +582,9 @@ function _pageuri( $contenPath )
 
       $translatedContent = wpml_get_content_translation ('post_'.$pageByPath->post_type, $pageByPath->ID, $currentLanguage);
 
-      $contenPath = get_page_uri($translatedContent[$currentLanguage]);
+      $translatedContentId = $translatedContent[$currentLanguage];
+
+      $contenPath = ($translatedContentId) ? get_page_uri($translatedContentId) : $contenPath;
     }
   }
 
