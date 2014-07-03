@@ -255,40 +255,39 @@ class BidxCommon
      */
     public function injectJsVariables ($subDomain)
     {
-        $jsSessionData = (isset($this::$bidxSession[$subDomain])) ?  $this::$bidxSession[$subDomain] : NULL;
-        $jsSessionVars = (isset ($jsSessionData->data)) ? json_encode ($jsSessionData->data) : '{}';
-        $jsAuthenticated = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
-        $bidxJsDir = sprintf ('%s/../static/js', BIDX_PLUGIN_URI);
-
-
+        $jsSessionData      = (isset($this::$bidxSession[$subDomain])) ?  $this::$bidxSession[$subDomain] : NULL;
+        $jsSessionVars      = (isset ($jsSessionData->data)) ? json_encode ($jsSessionData->data) : '{}';
+        $jsAuthenticated    = (isset ($jsSessionData->authenticated)) ? $jsSessionData->authenticated : 'false';
+        $bidxJsDir          = sprintf ('%s/../static/js', BIDX_PLUGIN_URI);
         //API Response data
-        $result = ($jsSessionData) ? $this->getURIParams ($subDomain, $jsSessionData) : NULL;
-
+        $result             = ($jsSessionData) ? $this->getURIParams ($subDomain, $jsSessionData) : NULL;
         //$data = $result['data'];
-        $jsApiVars = (isset ($result['data'])) ? json_encode ($result['data']) : '{}';
-
+        $jsApiVars          = (isset ($result['data'])) ? json_encode ($result['data']) : '{}';
         // milliseconds from 1 jan 1970 GMT
-        //
-        $now = time () * 1000;
+        $now                = time () * 1000;
 
-        $scriptJs = "<script>
-            var bidxConfig  = bidxConfig || {};
+        /*global $sitepress;
 
-            window.bidx     = window.bidx || {};
-            bidx.data       = bidx.data || {};
-            bidx.i18n       = bidx.i18n || {};
+        $currentLanguage = $sitepress->get_current_language();
 
-            bidxConfig.context =  $jsApiVars ;
+        echo "<pre>";
+        print_r($currentLanguage);
+        echo "</pre>";exit;*/
 
-            /* Dump response of the session-api */
-            bidxConfig.session = $jsSessionVars ;
+        $scriptJs           = "<script>
+                                    var bidxConfig              = bidxConfig || {};
+                                    window.bidx                 = window.bidx || {};
+                                    bidx.data                   = bidx.data || {};
+                                    bidx.i18n                   = bidx.i18n || {};
+                                    bidxConfig.context          =  $jsApiVars ;
 
-            bidxConfig.now = $now;
-            bidxConfig.groupName = '{$subDomain}';
-
-            bidxConfig.authenticated = {$jsAuthenticated};
-                 </script>
-            ";
+                                    bidxConfig.session          = $jsSessionVars ; /* Dump response of the session-api */
+                                    bidxConfig.now              = $now;
+                                    bidxConfig.groupName        = '{$subDomain}';
+                                    bidxConfig.currentLanguage  = '{$langCountry[0]}';
+                                    bidxConfig.authenticated    = {$jsAuthenticated};
+                                </script>
+                            ";
         return $scriptJs;
     }
 

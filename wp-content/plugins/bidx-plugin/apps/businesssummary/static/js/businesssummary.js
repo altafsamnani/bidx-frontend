@@ -31,7 +31,8 @@
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
-    
+
+
     ,   forms                       =
         {
             generalOverview:
@@ -1707,7 +1708,7 @@
         $reasonForSubmission.trigger( "chosen:updated" );
         $envImpact.trigger( "chosen:updated" );
         $socialImpact.trigger( "chosen:updated" );
-        $yearSalesStarted.trigger( "chosen:updated" );        
+        $yearSalesStarted.trigger( "chosen:updated" );
     }
 
     // Update the pre-rendered dom elements for the financial summarie
@@ -2225,7 +2226,7 @@
                 }
 
                 bidx.common.notifyError( "Something went wrong during save: " + response );
-                
+
                 // Offer a login modal if not authecticated
                 if ( jqXhr.status === 401 )
                 {
@@ -2242,6 +2243,10 @@
     //
     function _save( params )
     {
+        var currentLanguage
+        //,   icl_vars
+        ;
+
         if ( !businessSummary )
         {
             return;
@@ -2295,9 +2300,32 @@
 
                     bidx.common.removeAppWithPendingChanges( appName );
 
-                    var url = "/businesssummary/" + businessSummaryId + "?rs=true";
+                    /*icl_vars                    = window.icl_vars || {};
+                    currentLanguage             = bidx.utils.getValue( icl_vars, "current_language" );
+                    currentLanguage             = (currentLanguage && currentLanguage !== 'en') ? '/' + currentLanguage : '';
+                    var url = currentLanguage + "/businesssummary/" + businessSummaryId + "?rs=true";
+
+                    document.location.href = url;*/
+
+                    var url = document.location.href.split( "#" ).shift();
+                    // Maybe rs=true was already added, or not 'true' add it before reloading
+                    //
+                    var rs = bidx.utils.getQueryParameter( "rs", url );
+                    var redirect_to = bidx.utils.getQueryParameter( "redirect_to", url );
+
+
+                    if( redirect_to ) {
+                        url = '/' + redirect_to;
+                    }
+
+                    if ( !rs || rs !== "true" )
+                    {
+                        url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
+                        url += "rs=true";
+                    }
 
                     document.location.href = url;
+
                 }
             ,   error:          function( jqXhr )
                 {

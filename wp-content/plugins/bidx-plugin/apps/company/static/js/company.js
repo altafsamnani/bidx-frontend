@@ -47,6 +47,7 @@
     ,   companyProfileId
     ,   state
     ,   currentView
+    ,   icl_vars
 
     ,   snippets        = {}
 
@@ -1018,7 +1019,10 @@
             return;
         }
 
-        var bidxMeta    = bidx.utils.getValue( company, "bidxMeta" ) || company;
+        var bidxMeta    = bidx.utils.getValue( company, "bidxMeta" ) || company
+       // ,   currentLanguage
+        //,   icl_vars
+        ;
 
         // Inform the API we are updating the company profile
         //
@@ -1064,7 +1068,31 @@
                     bidx.common.closeNotifications();
                     bidx.common.notifyRedirect();
 
-                    var url = "/company/" + companyId + "?rs=true";
+                    /*icl_vars                    = window.icl_vars || {};
+                    currentLanguage             = bidx.utils.getValue( icl_vars, "current_language" );
+                    currentLanguage             = (currentLanguage && currentLanguage !== 'en') ? '/' + currentLanguage : '';
+
+                    var url = currentLanguage + "/company/" + companyId + "?rs=true";
+
+                    document.location.href = url;*/
+
+
+                    var url = document.location.href.split( "#" ).shift();
+                    // Maybe rs=true was already added, or not 'true' add it before reloading
+                    //
+                    var rs = bidx.utils.getQueryParameter( "rs", url );
+                    var redirect_to = bidx.utils.getQueryParameter( "redirect_to", url );
+
+
+                    if( redirect_to ) {
+                        url = '/' + redirect_to;
+                    }
+
+                    if ( !rs || rs !== "true" )
+                    {
+                        url += ( url.indexOf( "?" ) === -1 ) ? "?" : "&";
+                        url += "rs=true";
+                    }
 
                     document.location.href = url;
                 }

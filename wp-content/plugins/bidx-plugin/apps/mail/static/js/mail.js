@@ -3049,4 +3049,10 @@
                 _oneTimeSetup();
             } );
 
+    if ($("body.bidx-my-messages").length && !bidx.utils.getValue(window, "location.hash").length)
+    {
+
+        document.location.hash = "#mail";
+    }
+
 } ( jQuery ) );
