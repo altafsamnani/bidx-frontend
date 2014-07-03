@@ -27,9 +27,9 @@ $businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
 //
 $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSummary->accessAuthorization : null;
 
+
 // check, is access granted?
 $hasAccess = false;
-
 
 $attachmentItem = <<<EOT
     <div class="col-sm-4">
@@ -220,7 +220,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 => $this->exst($businessSummary->externalAudioPitch)
                         );
                         echo $this->pairRows( $rowValues );
-?>                        
+?>
 
                     </div>
 
@@ -875,7 +875,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         {
 ?>
                         <blockquote class="alert-info"><?php _e('Mentoring has not been requested ​for this business proposal.', 'bidxplugin')?></blockquote>
-<?php                           
+<?php
                         }
 ?>
                     </div>
@@ -1041,7 +1041,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 <?php _e('If you do not have a full business or financial plan yet, you can use our templates to create one.', 'bidxplugin')?>
                             </div>
                             <p>
-                                <a class="btn btn-warning" target="_blank" href="/download-business-plan-templates/">
+
+                                <a class="btn btn-warning" target="_blank" href="<?php echo _l(_pageuri('download-business-plan-templates'));?>">
                                     <?php _e('Go to templates page', 'bidxplugin' ); ?>
                                 </a>
                             </p>

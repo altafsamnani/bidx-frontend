@@ -542,6 +542,52 @@ function get_custom_field_value ( $key,  $i = null)
     return $value;
 }
 
+function getLangPrefix( $sep = '' )
+{
+  global $sitepress;
+
+  $siteLanguage = NULL;
+
+  if( $sitepress )
+  {
+    $currentLanguage = $sitepress->get_current_language();
+
+    if( $currentLanguage !== 'en')
+    {
+      $siteLanguage = $currentLanguage;
+    } else
+    {
+      $sep = '';
+    }
+  }
+   return $sep.$siteLanguage ;
+}
+
+function _pageuri( $contenPath )
+{
+
+  global $sitepress;
+
+  if( $sitepress )
+  {
+    $currentLanguage = $sitepress->get_current_language();
+
+    if( $currentLanguage && $currentLanguage != 'en')
+    {
+      require_once ABSPATH. "/wp-content/plugins/sitepress-multilingual-cms/inc/wpml-api.php";
+
+      $pageByPath = get_page_by_path  ($contenPath );
+
+      $translatedContent = wpml_get_content_translation ('post_'.$pageByPath->post_type, $pageByPath->ID, $currentLanguage);
+
+      $contenPath = get_page_uri($translatedContent[$currentLanguage]);
+    }
+  }
+
+  return $contenPath;
+
+}
+
 function _l( $url = NULL )
 {
   global $sitepress;
