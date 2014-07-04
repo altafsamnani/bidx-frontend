@@ -1601,7 +1601,7 @@ function icl_st_scan_theme_files($dir = false, $recursion = 0){
             $scan_stats .= str_repeat("\t",$recursion) . sprintf(__('Opening folder: %s', 'wpml-string-translation'), $dir . "/" . $file) . PHP_EOL;
             icl_st_scan_theme_files($dir . "/" . $file, $recursion);            
             $recursion--;
-        }elseif(preg_match('#(\.php|\.inc)$#i', $file)){     
+        }elseif(preg_match('#(\.php|\.inc|\.phtml)$#i', $file)){
             // THE potx way
             $scan_stats .=  str_repeat("\t",$recursion) . sprintf(__('Scanning file: %s', 'wpml-string-translation'), $dir . "/" . $file) . PHP_EOL;
             $scanned_files[] = $dir . "/" . $file;
@@ -1700,7 +1700,7 @@ function icl_st_scan_plugin_files($plugin, $recursion = 0){
                 $scan_stats .= str_repeat("\t",$recursion-1) . sprintf(__('Opening folder: %s', 'wpml-string-translation'), "/" . $file) . PHP_EOL;
                 icl_st_scan_plugin_files($plugin . "/" . $file, $recursion);            
                 $recursion--;
-            }elseif(preg_match('#(\.php|\.inc)$#i', $file)){     
+            }elseif(preg_match('#(\.php|\.inc|\.phtml)$#i', $file)){
                 $scan_stats .=  str_repeat("\t",$recursion) . sprintf(__('Scanning file: %s', 'wpml-string-translation'), "/" . $file) . PHP_EOL;
                 $scanned_files[] = "/" . $file;
                 _potx_process_file($plugin . "/" . $file, 0, '__icl_st_scan_plugin_files_store_results','_potx_save_version', POTX_API_7);
