@@ -9,6 +9,8 @@
                 "search_contains":              true
             ,   "width":                        "100%"
             ,   "disable_search_threshold":     10
+            ,   "placeholder_text_single":      bidx.i18n.i("selectSingleOption")
+            ,   "placeholder_text_multiple":    bidx.i18n.i("selectMultipleOptions")
             }
         }
     ;

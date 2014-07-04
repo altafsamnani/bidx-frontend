@@ -35,11 +35,16 @@
     <Item value="btnGoBack">No, go back</Item>
 
 
-    <!-- Common Status Msgs -->
+    <!-- Common status msgs -->
     <Item value="statusRequest">You request has been sent successfully</Item>
 
-      <!-- Common Error Msgs -->
+      <!-- Common error msgs -->
     <Item value="errorRequest">Something went wrong while creating a relationship:</Item>
+
+    <!-- Dropdown messages -->
+    <Item value="selectSingleOption">Select an Option</Item>
+    <Item value="selectMultipleOptions">Select Some Options</Item>
+
 
     <!--
         Form validations

@@ -4,9 +4,11 @@
 {
     "use strict";
 
-    var bidx            = window.bidx || {}
-    ,   bidxConfig      = window.bidxConfig || {}
-
+    var bidx                = window.bidx || {}
+    ,   bidxConfig          = window.bidxConfig || {}
+    ,   iclVars             = window.icl_vars || {}
+    ,   currentLanguageVal  = bidx.utils.getValue( iclVars, "current_language" )
+    ,   currentLanguage     = (currentLanguageVal) ? currentLanguageVal : 'en'
         // $bidx will be used to trigger events from
         //
     ,   $bidx           = $( bidx )
@@ -1189,6 +1191,8 @@
 
     // Activate all datepickers (this was previously done as part of the form.js plugin)
     //
+    bidx.utils.log('currentLangauge', currentLanguage);
+
     $( "input[data-type=date]" ).datepicker(
     {
         format:                 "d M yyyy"
@@ -1197,6 +1201,7 @@
     ,   yearRange:              "-100:+3"
     ,   todayHighlight:         true
     ,   weekStart:              1
+    ,   language:               currentLanguage
     } );
 
     // Disable disabled links

@@ -148,6 +148,30 @@ class BidxShortcode
     }
 
     /**
+     *Get Current site language
+     *
+     * @return string $currentLanguage returns the current language
+     */
+
+    function getSiteLanguageOptions(  )
+    {
+        global $sitepress;
+        $currentLanguage = '';
+
+        if( $sitepress )
+        {
+            $currentLanguage = $sitepress->get_current_language();
+
+            if( $currentLanguage && $currentLanguage === 'en')
+            {
+                $currentLanguage = '';
+            }
+        }
+        $currentLanguage = ($currentLanguage)? $currentLanguage    :   NULL;
+        return $currentLanguage;
+    }
+
+    /**
      * Register the scripts to be used.
      * We will load jquery and bootstrap as default :
      * 'jquery', 'jqueryui', 'bootstrap', 'underscore', 'backbone',
@@ -162,6 +186,8 @@ class BidxShortcode
         if (BidxCommon :: isWPInternalFunction ()) {
             Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
         } else {
+            $langLocale         = $this->getSiteLanguageOptions( );
+            $sitepressDepArr    = ( $langLocale ) ? array('sitepress') : array( );
 
             //vendor scripts
            //s wp_register_script ('gmaps-places', '//maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places', array (), '20130501', TRUE);
@@ -171,7 +197,16 @@ class BidxShortcode
             wp_register_script ('jquery-validation-bidx-additional-methods', $bidxJsDir . '/additional-methods.js', array ('jquery-validation'), '20130812', true);
             wp_register_script ('bootstrap-paginator', $bidxJsDir . '/vendor/bootstrap-paginator.js', array ('bootstrap', 'jquery'), '20131103', TRUE);
             wp_register_script ('chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
-            wp_register_script ('bootstrap-datepicker', $vendorDir . '/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js', array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
+
+            if( $langLocale )
+            {
+                wp_register_script ('bootstrap-datepicker-main', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
+                wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/locales/bootstrap-datepicker.{$langLocale}.js", array ('bootstrap-datepicker-main'), '1.3.0-rc.2', TRUE);
+            } else
+            {
+                wp_register_script ('bootstrap-datepicker', $vendorDir . "/bootstrap-datepicker-1.3.0-rc.2/js/bootstrap-datepicker.js", array ('bootstrap', 'jquery'), '1.3.0-rc.2', TRUE);
+            }
+
             wp_register_script ('typeahead', $bidxJsDir . '/vendor/typeahead.js', array ('jquery'), '0.9.3', TRUE);
             wp_register_script ('jquery-fitvids', $bidxJsDir . '/vendor/jquery.fitvids.js', array ('jquery'), '20140321', TRUE);
             wp_register_script ('jquery-event-ue', $bidxJsDir . '/vendor/jquery.event.ue.js', array ('jquery'), '20140325', TRUE);
@@ -189,7 +224,10 @@ class BidxShortcode
             wp_register_script ('bidx-tagsinput', $bidxJsDir . '/bidx-tagsinput.js', array ('bidx-bootstrap-tagmanager', 'bidx-utils', 'bidx-data'), '20130703', TRUE);
 
             wp_register_script ('bidx-bootstrap-tagmanager', $bidxJsDir . '/bidx-bootstrap-tagmanager.js', array ('bootstrap', 'jquery-ui-widget'), '20130703', TRUE);
-            wp_register_script ('bidx-common', $bidxJsDir . '/common.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'bidx-tagsinput', 'jquery-validation', 'bidx-i18n', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bootstrap-paginator', 'bootstrap-datepicker' ), '20130501', TRUE);
+
+            $sitepressArr = array_merge( array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'bidx-tagsinput', 'jquery-validation', 'bidx-i18n', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bootstrap-paginator', 'bootstrap-datepicker'), $sitepressDepArr  );
+
+            wp_register_script ('bidx-common', $bidxJsDir . '/common.js', $sitepressArr, '20130501', TRUE);
             wp_register_script ('bidx-controller', $bidxJsDir . '/controller.js', array ('bidx-utils', 'bidx-api-core', 'bidx-data', 'backbone'), '20130501', TRUE);
 
             wp_register_script ('bidx-reflowrower', $bidxJsDir . '/bidx-reflowrower.js', array ('jquery', 'jquery-ui-widget'), '20130501', TRUE);
