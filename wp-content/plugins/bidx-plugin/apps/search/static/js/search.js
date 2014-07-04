@@ -741,6 +741,10 @@
                 {
                     bidx.utils.log("Page Clicked", page);
 
+                    // Force it to scroll to top of the page before the removal and addition of the results 
+                    //
+                    $(document).scrollTop(0);
+
                     // update internal page counter for businessSummaries
                     //
                     paging.search.offset = ( page - 1 ) * tempLimit;
