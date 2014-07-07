@@ -39,6 +39,7 @@
             SEARCH_LIMIT:                       10
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
         ,   LOAD_COUNTER:                       0
+        ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
                                                     {
                                                         "type": "bidxMemberProfile"
@@ -333,6 +334,9 @@
         ,   $viewFacetItem
         ,   $this
         ,   $currentCategory
+        ,   $bigCategory
+        ,   $categoryList
+        ,   $hiddenItems
         ,   newname
         ,   listItem
         ,   listFacetsItem
@@ -360,26 +364,25 @@
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
-
-                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name, appName ) : emptyVal ).replace( /%idx%/g, idx );
+                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name, appName ) : emptyVal );
 
                     $listItem  = listItem;
                     $list.append($listItem );
-                    $currentCategory = $list.find( ".facet-category-" + idx );
+                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
 
                     $.each( facetValues , function ( idx, item )
                     {
 
-                        if( facetItems.name !== 'facet_entityType')
+                        if ( facetItems.name !== 'facet_entityType' )
                         {
-                            item.name    = bidx.data.i(item.name,facetLabel.toLowerCase() );  // ict.services in industry
+                            item.name    = bidx.data.i( item.name, facetLabel.toLowerCase() );  // ict.services in industry
                         }
                         else
                         {
                             item.name    = bidx.i18n.i( item.name, appName );
                         }
 
-                        if( item.name )
+                        if ( item.name )
                         {
                             newname = item.name.replace(/ /g, '');
 
@@ -394,11 +397,11 @@
                             //
                             $listFacetsItem = $( listFacetsItem );
 
-                            //bidx.utils.log( facetCriteria);
+                            // bidx.utils.log( facetCriteria);
 
                             // Display Close button for criteria
                             //
-                            if($.inArray(item.filterQuery, criteria.filters) !== -1)
+                            if ( $.inArray( item.filterQuery, criteria.filters ) !== -1 )
                             {
                                 $viewFacetItem = $listFacetsItem.find('.view');
                                 _showElement('close', $viewFacetItem);
@@ -414,7 +417,25 @@
                         }
                     });
                 }
+
+                // Show the first VISIBLE_FILTER_ITEMS filter items if more than (VISIBLE_FILTER_ITEMS + 3)
+                //
+                if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
+                {
+                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $categoryList = $bigCategory.find( ".list-group" );
+
+                    $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
+                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore", appName ), class: "list-group-item list-group-item-warning text-center more-less" }) );
+                    
+                    $categoryList.find( ".more-less" ).on('click', function( e )
+                    {
+                        e.preventDefault();
+                        _showMoreLess( $(this).parent().find( ".toggling" ) );
+                    });
+                }
             });
+
 
             // Facet Label Click
             //
@@ -485,6 +506,21 @@
         }
     }
 
+    function _showMoreLess ( items )
+    {
+        var $moreless = $(items).parent().find( ".more-less" );
+        if ( items.hasClass( "hide" ) )
+        {
+            items.removeClass( "hide" );
+            $moreless.html( bidx.i18n.i( "showLess", appName ) );
+        }
+        else
+        {
+            items.addClass( "hide" );
+            $moreless.html( bidx.i18n.i( "showMore", appName ) );
+        }
+    }
+
     function _getSearchCriteria ( params ) {
 
         var q
@@ -544,7 +580,7 @@
         // 3. Filter
         // ex filters:["0": "facet_language:fi" ]
         //
-        
+
         filters = bidx.utils.getValue(params, 'filters' );
         if(  filters )
         {

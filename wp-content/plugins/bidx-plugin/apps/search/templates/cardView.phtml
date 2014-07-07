@@ -83,7 +83,7 @@
 
         <!-- Html Templates for Facet Category -->
         <script type="text/html" id="facet-listitem">
-            <div class="facet-category-%idx%">
+            <div class="facet-category-%facets_name%">
                 <h5 class="facet-title">%facets_name%</h5>
                 <div class="list-group"></div>
             </div>
@@ -91,7 +91,7 @@
         <!-- Html Templates for Category results -->
         <script type="text/html" id="facetsub-listitem">
             <a data-filter="%filterQuery%" class="list-group-item filter">
-                <span class="view viewClose"><i class="fa fa-times-circle text-danger"></i></span>
+                <span class="view viewClose"><i class="fa fa-times text-success"></i></span>
                 <span class="badge">%facetValues_count%</span>
                 %facetValues_name%
             </a>
