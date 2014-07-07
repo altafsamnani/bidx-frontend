@@ -1,6 +1,6 @@
 <?php $http = (is_ssl()) ? 'https://':'http://'; ?>
 
-<div id="searchHome" class="container">
+<div id="searchHome">
 
 
     <div class="row">
@@ -44,7 +44,7 @@
                     </ul>
 
                     <div class="view viewLoad alert alert-info text-center">
-                        <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading search results, please wait...","bidxplugin");?>
+                        <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e("Loading search results, please wait...", "bidxplugin");?>
                     </div>
                     <div class="view viewPager">
                         <div class="pagerContainer">
@@ -68,10 +68,10 @@
             <div class="col-sm-4">
                 <div class="side-bar well sideBar main-facet">
                     <article class="viewFacet">
-                        <div class="col-sm-12 facet-reset">
-                            <a data-filter="reset" class="filter btn-link pull-right">Clear all</a>
+                        <div class="facet-reset hide">
+                            <a data-filter="reset" class="filter btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
                         </div>
-                         <div class="media-list facet-list">
+                         <div class="facet-list">
 
                             <?php _e('Rendering facets...', 'bidxplugin');?>
                          </div>
@@ -81,18 +81,20 @@
         </section>
     </div>
 
-        <!-- Html Templates for Facets -->
+        <!-- Html Templates for Facet Category -->
         <script type="text/html" id="facet-listitem">
-                <div class="col-sm-12">
-                    <span class="facetTitle"><h4>%facets_name%</h4></span>
-                </div>
-        </script>
-        <!-- Html Templates for blocks -->
-        <script type="text/html" id="facetsub-listitem">
-            <div class="col-sm-12 facetSubTitle">
-                    <a data-filter="%filterQuery%" class="filter btn-link" >%facetValues_name%(%facetValues_count%)</a>
-                    <a data-filter="%filterQuery%" class="view viewClose close" >&times;</a>
+            <div class="facet-category-%idx%">
+                <h5 class="facet-title">%facets_name%</h5>
+                <div class="list-group"></div>
             </div>
+        </script>
+        <!-- Html Templates for Category results -->
+        <script type="text/html" id="facetsub-listitem">
+            <a data-filter="%filterQuery%" class="list-group-item filter">
+                <span class="view viewClose"><i class="fa fa-times-circle text-danger"></i></span>
+                <span class="badge">%facetValues_count%</span>
+                %facetValues_name%
+            </a>
         </script>
 
         <!-- Html Template for Sort -->

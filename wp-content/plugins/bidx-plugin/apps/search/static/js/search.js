@@ -108,8 +108,6 @@
                 });
             }
         } );
-
-
     }
 
     // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
@@ -139,13 +137,9 @@
 
     var _showElement = function(view, $listViews)
     {
-
         //  show title of the view if available
-        //bidx.utils.log('shoeeee',$elements);
          var $mainView = $listViews.filter(bidx.utils.getViewName(view)).show();
     };
-
-
 
     function _toggleListLoading( list)
     {
@@ -154,8 +148,6 @@
             list.toggleClass( "pager-loading" );
         }
     }
-
-
 
     function _addVideoThumb( url, element )
     {
@@ -191,12 +183,12 @@
         {
             bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
         }
-
     }
 
     function _languages()
     {
         // Retrieve the list of languages from the data api
+        //
         bidx.data.getContext( "language", function( err, data )
         {
             languages = data;
@@ -221,11 +213,12 @@
             }
         });
 
-        //If callback set use it
-       if (options && options.callback)
-       {
-        options.callback( $listItem  );
-       }
+        // If callback set use it
+        //
+        if (options && options.callback)
+        {
+            options.callback( $listItem  );
+        }
 
     };
 
@@ -258,8 +251,8 @@
 
         $list.empty();
 
-        /***********Adjusting Sort asc/desc values *************/
-
+        // Adjusting Sort asc/desc values
+        //
         sortRelevance   =   bidx.utils.getValue( originalSort, 'relevance' );
         sortIndustry    =   bidx.utils.getValue( originalSort, 'industry' );
         sortCountry     =   bidx.utils.getValue( originalSort, 'country' );
@@ -314,18 +307,13 @@
                             ,   type        :   'sort'
                             }
             });
-
         });
-
-
-
     }
 
     /* Get the search list
     Sample
     bidxBusinessGroup - 8747 - Cleancookstoves
     */
-
 
     function _doFacetListing(options)
     {
@@ -335,6 +323,7 @@
         ,   criteria        = options.criteria
         ,   response        = options.response
         ,   $mainFacet      = $element.find(".main-facet")
+        ,   $resetFacet     = $element.find(".facet-reset")
         ,   $list           = $element.find(".facet-list")
         ,   emptyVal        = ''
         ,   $listItem
@@ -343,6 +332,7 @@
         ,   $listClose
         ,   $viewFacetItem
         ,   $this
+        ,   $currentCategory
         ,   newname
         ,   listItem
         ,   listFacetsItem
@@ -362,28 +352,25 @@
         if ( response && response.facets )
         {
             // Add Default image if there is no image attached to the bs
-
-            $.each( response.facets , function ( idx, facetitems)
+            $.each( response.facets , function ( idx, facetItems)
             {
 
-                facetValues    = bidx.utils.getValue( facetitems, "facetValues" );
-                facetLabel     = bidx.i18n.i( facetitems.name, appName );
-
+                facetValues    = bidx.utils.getValue( facetItems, "facetValues" );
+                facetLabel     = bidx.i18n.i( facetItems.name, appName );
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
 
-                    listItem = snippit
-                                .replace( /%facets_name%/g,             facetitems.name    ? bidx.i18n.i( facetitems.name, appName ) : emptyVal );
+                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name, appName ) : emptyVal ).replace( /%idx%/g, idx );
 
                     $listItem  = listItem;
-
                     $list.append($listItem );
+                    $currentCategory = $list.find( ".facet-category-" + idx );
 
-                    $.each( facetValues , function ( idf, item )
+                    $.each( facetValues , function ( idx, item )
                     {
 
-                        if( facetitems.name !== 'facet_entityType')
+                        if( facetItems.name !== 'facet_entityType')
                         {
                             item.name    = bidx.data.i(item.name,facetLabel.toLowerCase() );  // ict.services in industry
                         }
@@ -397,10 +384,10 @@
                             newname = item.name.replace(/ /g, '');
 
                             listFacetsItem = subsnippit
-                                .replace( /%facetValues_name%/g,       item.name    ? item.name      : emptyVal )
-                                .replace( /%facetValues_anchor%/g,       item.name    ? newname      : emptyVal )
-                                .replace( /%facetValues_count%/g,       item.count    ? item.count      : emptyVal )
-                                .replace( /%filterQuery%/g,       item.filterQuery    ? item.filterQuery      : emptyVal)
+                                .replace( /%facetValues_name%/g,    item.name           ? item.name        :    emptyVal )
+                                .replace( /%facetValues_anchor%/g,  item.name           ? newname          :    emptyVal )
+                                .replace( /%facetValues_count%/g,   item.count          ? item.count       :    emptyVal )
+                                .replace( /%filterQuery%/g,         item.filterQuery    ? item.filterQuery :    emptyVal )
                                 ;
 
                             // execute cb function
@@ -409,38 +396,51 @@
 
                             //bidx.utils.log( facetCriteria);
 
-
-                            /*******Display Close button for criteria********/
-
+                            // Display Close button for criteria
+                            //
                             if($.inArray(item.filterQuery, criteria.filters) !== -1)
                             {
                                 $viewFacetItem = $listFacetsItem.find('.view');
                                 _showElement('close', $viewFacetItem);
+                                $resetFacet.removeClass( "hide" );
 
+                                if ( $listFacetsItem.find( ".viewClose:visible" ) )
+                                {
+                                    $listFacetsItem.addClass( "list-group-item-success" );
+                                }
                             }
 
-                            $list.append($listFacetsItem);
-
+                            $currentCategory.find( ".list-group" ).append($listFacetsItem);
                         }
-
                     });
                 }
-
             });
 
-            /*************Face Label Click ****************/
+            // Facet Label Click
+            //
             $listAnchor = $mainFacet.find('.filter');
 
             $listAnchor.on('click', function( e )
             {
                 e.preventDefault();
 
-                bidx.utils.log('Criteria before filter click=', criteria);
+                bidx.utils.log('Criteria before click=', criteria);
 
                 $this           = $( this );
                 filterQuery     = $this.data('filter');
 
-                //For search filtering add the current filter
+                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterQuery, criteria.filters ) !== -1)
+                {
+                    bidx.utils.log('criteria removed' , filterQuery, criteria.filters);
+                    criteria.filters = _.without(criteria.filters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
+
+                }
+                else if ( $.inArray(filterQuery, criteria.filters ) === -1)
+                {
+                    criteria.filters.push( filterQuery );
+                }
+
+                // For search filtering add the current filter
                 if( filterQuery === 'reset')
                 {
                     criteria.filters = [];
@@ -448,14 +448,17 @@
                     options.sort     = [];
                     bidx.controller.updateHash( "#search/list" );
 
+                    $resetFacet.addClass( "hide" );
                 }
-                else if($.inArray(filterQuery, criteria.filters) === -1)
+
+                if ( criteria.filters.length === 0 )
                 {
-                    criteria.filters.push( filterQuery );
+                    $resetFacet.addClass( "hide" );
                 }
 
                 //Make offset 0 for filtering so start from begining
                 paging.search.offset = 0;
+
                 //set the max records limit to 10
                 tempLimit = CONSTANTS.SEARCH_LIMIT;
 
@@ -471,54 +474,10 @@
                                     q           :   options.q
                                 ,   sort        :   options.sort
                                 ,   filters     :   criteria.filters
+                                // ,   type        :   'facet'
                                 }
                 });
-
             });
-
-            /*************Face Close Click ****************/
-            $listClose = $mainFacet.find('.viewClose');
-
-            $listClose.on('click', function( e )
-            {
-                e.preventDefault();
-
-                bidx.utils.log('Criteria before close click =', criteria);
-
-                $this           = $( this );
-                filterQuery     = $this.data('filter');
-
-                //For search filtering add the current filter
-                if($.inArray(filterQuery, criteria.filters) !== -1)
-                {
-                    bidx.utils.log('criteria removed' , filterQuery, criteria.filters);
-                    criteria.filters = _.without(criteria.filters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
-                }
-
-                //Make offset 0 for filtering so start from begining
-                paging.search.offset = 0;
-                //set the max records limit to 10
-                tempLimit = CONSTANTS.SEARCH_LIMIT;
-
-                bidx.utils.log('Filter clicked ', filterQuery);
-                bidx.utils.log('Close Filter clicked with q=', options.q);
-                bidx.utils.log('Close Filter sort=', options.sort);
-                bidx.utils.log('Close Filter criteria=', criteria.filters);
-
-                navigate(
-                {
-                    state   :   'list'
-                ,   params  :   {
-                                    q           :   options.q
-                                ,   sort        :   options.sort
-                                ,   filters     :   criteria.filters
-                                ,   type        :   'facet'
-                                }
-                });
-
-            });
-
-
         }
         else
         {
@@ -540,11 +499,11 @@
         ,   criteriaSort    = []
         ;
 
-        /**********************************
-        *********1. Search parameter*******
-        *****ex searchTerm:text:altaf******/
-
-        //See if its coming from the search page itself(if) or from the top(else)
+        // 1. Search paramete
+        // ex searchTerm:text:altaf
+        //
+        // See if its coming from the search page itself(if) or from the top(else)
+        //
         q = bidx.utils.getValue( params, 'q' );
 
         if ( !q )
@@ -562,10 +521,9 @@
 
         criteriaQ = (q) ? q : '*';
 
-        /***************************************************
-        *********2. Sort criteria***************************
-        *****ex sort:["field":"entity", "order": asc ]******/
-
+        // 2. Sort criteria
+        // ex sort:["field":"entity", "order": asc ]
+        //
         sort = bidx.utils.getValue( params, 'sort' );
 
         if( sort )
@@ -583,11 +541,11 @@
 
         }
 
-        /***************************************************
-        *********3. Filter *********************************
-        *****ex filters:["0": "facet_language:fi" ]******/
+        // 3. Filter
+        // ex filters:["0": "facet_language:fi" ]
+        //
+        
         filters = bidx.utils.getValue(params, 'filters' );
-
         if(  filters )
         {
             criteriaFilters = filters;
@@ -686,7 +644,7 @@
         );
     }
 
-     // Convenience function for translating a language key to it's description
+    // Convenience function for translating a language key to it's description
     //
     function _getLanguageLabelByValue( value )
     {
@@ -783,7 +741,6 @@
 
             // create member listitems
             //
-
             $.each( data.docs, function( idx, response )
             {
                 switch( response.entityType )
@@ -874,12 +831,8 @@
                     default:
 
                     break;
-
                 }
-
-            } );
-
-
+            });
         }
         else
         {
@@ -902,7 +855,6 @@
     function replaceStringsCallback( response, i18nItem )
     {
         //if( item.bidxEntityType == 'bidxBusinessSummary') {
-
 
         var $listItem
         ,   listItem
@@ -942,6 +894,7 @@
 
 
                 //search for placeholders in snippit
+                //
                 listItem = snippit
                     .replace( /%entityId%/g,    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
                     .replace( /%name%/g,        i18nItem.name           ? i18nItem.name     : emptyVal )
@@ -953,7 +906,8 @@
 
                 $listItem = $(listItem);
 
-                /* Company Image */
+                // Company Image
+                //
                 image       = bidx.utils.getValue( i18nItem, "logo" );
 
                 if (image)
@@ -1024,7 +978,8 @@
 
 
 
-                //search for placeholders in snippit
+                // search for placeholders in snippit
+                //
                 listItem = snippit
                     .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
                     .replace( /%name%/g,                        i18nItem.name   ? i18nItem.name     : emptyVal )
@@ -1115,7 +1070,8 @@
 
 
 
-                //search for placeholders in snippit
+                // search for placeholders in snippit
+                //
                 listItem = snippit
                     .replace( /%entityId%/g,                    bidxMeta.bidxEntityId   ? bidxMeta.bidxEntityId     : emptyVal )
                     .replace( /%name%/g,                        i18nItem.name   ? i18nItem.name     : emptyVal )
@@ -1183,7 +1139,8 @@
                 cityTown         = bidx.utils.getValue( personalDetails, "address.0.cityTown");
                 memberCountry    = bidx.utils.getValue( personalDetails, "address.0.country");
 
-                /* Member Role */
+                // Member Role
+                //
                 if(personalDetails.highestEducation)
                 {
                     bidx.data.getItem(personalDetails.highestEducation, 'education', function(err, label)
@@ -1247,7 +1204,8 @@
                     });
                 }
 
-                //search for placeholders in snippit
+                // search for placeholders in snippit
+                //
                 listItem = snippit
                     .replace( /%memberId%/g,            bidxMeta.bidxOwnerId   ? bidxMeta.bidxOwnerId     : emptyVal )
                     .replace( /%firstName%/g,           personalDetails.firstName   ? personalDetails.firstName     : emptyVal )
@@ -1275,7 +1233,8 @@
 
                 $listItem     = $(listItem);
 
-                /* Member Image */
+                // Member Image
+                //
                 image       = bidx.utils.getValue( personalDetails, "profilePicture" );
 
                 if (image)
@@ -1302,7 +1261,6 @@
             default:
 
             break;
-
         }
 
         replacedList =
@@ -1313,7 +1271,6 @@
         ;
 
         return replacedList;
-
     }
 
     function showEntity( options )
