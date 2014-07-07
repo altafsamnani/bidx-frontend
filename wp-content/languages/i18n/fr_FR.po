@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: P4\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Altaf <altaf.samnani@bidnetwork.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -53,7 +53,7 @@ msgstr "Sélectionner les licences obtenues"
 # Context company TextDomain i18n
 msgctxt "company"
 msgid "Select the legal form of your company"
-msgstr "Sélectionner la forme lÃ©gale de votre entreprise"
+msgstr "Sélectionner la forme légale de votre entreprise"
 
 # _x("Add company", "company","i18n");
 # Context company TextDomain i18n
@@ -95,7 +95,7 @@ msgstr "Message envoyé"
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Inbox"
-msgstr "Messages ReÃ§us"
+msgstr "Reçus"
 
 # _x("Sent", "mail","i18n");
 # Context mail TextDomain i18n

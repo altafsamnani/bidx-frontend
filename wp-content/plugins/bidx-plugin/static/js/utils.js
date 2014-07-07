@@ -1,9 +1,12 @@
 (function( $ )
 {
     "use strict";
+    var iclVars             = window.icl_vars || {}
+    ,   currentLanguage     = ( iclVars.current_language ) ? iclVars.current_language : 'en' // get the current language from sitepress if set
+    ,   months              = $.fn.datepicker.dates[currentLanguage].months // Coming from bootstrap datepicker[ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
-    var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-
+    ;
+    //months =
     // Normalize some input into the best possible / guessable form of a linkedin profile url
     //
     function normalizeLinkedInUrl( input )
@@ -786,7 +789,7 @@
         ,   obj     =
             {
                 y:      d.getFullYear()
-            ,   m:      months[ d.getMonth()]
+            ,   m:      months[ d.getMonth()].toLowerCase()
             ,   d:      d.getDate()
             ,   h:      d.getHours()
             ,   n:      d.getMinutes()

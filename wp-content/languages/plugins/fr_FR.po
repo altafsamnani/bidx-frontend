@@ -255,7 +255,7 @@ msgstr "Effacer définitivement"
 # _e("Edit","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Edit"
-msgstr "Edité"
+msgstr "Modifier"
 
 # 608) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-investor.phtml -32
 # _e("Edit","bidxplugin");
@@ -1673,7 +1673,7 @@ msgstr "Nouvelles affaires"
 # _e("Name of the group","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "New members in the group"
-msgstr "Nouveau membres dans le groupe"
+msgstr "Nouveaux membres dans le groupe"
 
 # 617) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -49
 # _e("Create and grow","bidxplugin");
@@ -3917,7 +3917,7 @@ msgstr ""
 # _e("This is my mother tongue","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "This is my mother tongue"
-msgstr "Ce ci est ma langue maternelle"
+msgstr "Ceci est ma langue maternelle"
 
 # 478) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -413
 # _e("My mother tongue","bidxplugin");

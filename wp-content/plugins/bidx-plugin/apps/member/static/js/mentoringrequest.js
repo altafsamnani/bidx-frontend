@@ -209,7 +209,7 @@
                                     ,   disable_search_threshold : 10
                                     });
 
-            if ( visitingMemberPageId !== loggedInMemberId  )
+            if ( loggedInMemberId && visitingMemberPageId !== loggedInMemberId  )
             {
 
                 getMentoringRequest(

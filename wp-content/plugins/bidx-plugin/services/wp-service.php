@@ -601,6 +601,7 @@ function get_wp_news ()
  *
  * Create the Po file from settings->Bidx
  * http://local.bidx.net/wp-admin/admin-ajax.php?action=bidx_createpo
+ * //wp-content/plugins/wpml-string-translation/inc/functions.php Changes file for phtml files scanning
  *
  */
 
@@ -1951,6 +1952,16 @@ function alter_network_menu ()
 }
 
 add_action ('network_admin_menu', 'alter_network_menu');
+
+
+/* Bidx options
+ * Reference //wp-content/plugins/wpml-string-translation/inc/functions.php , added phtml options, changed core file.
+ * @author Altaf Samnani
+ * @version 1.0
+ *
+ *
+ * @param bool $echo
+ */
 
 function bidx_options ()
 {

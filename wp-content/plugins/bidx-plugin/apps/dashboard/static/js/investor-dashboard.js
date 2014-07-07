@@ -127,10 +127,6 @@
                         label: "rows",
                         value: "6"
                     }
-                  , {
-                        label: "sort",
-                        value: "created desc"
-                    }
                 ];
 
         bidx.api.call(
