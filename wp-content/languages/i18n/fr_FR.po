@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Project-Id-Version: P4\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Altaf <altaf.samnani@bidnetwork.org>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.7\n"
 
 # Language Original
@@ -163,6 +163,12 @@ msgctxt "mail"
 msgid "new"
 msgstr "Nouveau"
 
+# _x("Group admin", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Group admin"
+msgstr ""
+
 # _x("Select the outcome of this business", "member","i18n");
 # Context member TextDomain i18n
 msgctxt "member"
@@ -211,6 +217,18 @@ msgctxt "member"
 msgid "CV is required"
 msgstr "Le CV est obligatoire "
 
+# _x("Please check one of the above", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Please check one of the above"
+msgstr ""
+
+# _x("Please fill your LinkedIn profile url or upload at least one document", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Please fill your LinkedIn profile url or upload at least one document"
+msgstr "Veuilliez entrer l' url de votre profile LinkedIn, ou chargez votre CV"
+
 # _x("Feedback sent", "mentor","i18n");
 # Context mentor TextDomain i18n
 msgctxt "mentor"
@@ -222,6 +240,73 @@ msgstr "Commentaires envoyés"
 msgctxt "mentor"
 msgid "new"
 msgstr "Nouveau"
+
+# _x("Mentoring request pending", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Mentoring request pending"
+msgstr ""
+
+# _e("Processing request", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgctxt "mentor"
+msgid "Received request"
+msgstr "Demande en cours de traitement "
+
+# _x("Ongoing", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Ongoing"
+msgstr ""
+
+# _x("General", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "General"
+msgstr ""
+
+# _x("General overview section", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "General overview section"
+msgstr ""
+
+# _x("About the business section", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "About the business section"
+msgstr ""
+
+# _x("About the team section", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "About the team section"
+msgstr ""
+
+# _x("Financial section", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Financial section"
+msgstr ""
+
+# _x("Company section", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Company section"
+msgstr ""
+
+# _x("Mentoring section", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Mentoring section"
+msgstr ""
+
+# _x("Document section", "mentor","i18n");
+# Context mentor TextDomain i18n
+msgctxt "mentor"
+msgid "Document section"
+msgstr ""
 
 # _x("Please select a location from the dropdown", "register","i18n");
 # Context register TextDomain i18n
@@ -246,6 +331,77 @@ msgstr "Intéressé(e) par"
 msgctxt "search"
 msgid "Registered"
 msgstr "Enregistré(e)"
+
+# _x("Industry", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Industry"
+msgstr ""
+
+# _x("Country", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Country"
+msgstr ""
+
+# _x("Language", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Language"
+msgstr ""
+
+# _x("Type", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Type"
+msgstr ""
+
+# _e("Save profile", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgctxt "search"
+msgid "Member profile"
+msgstr "Sauvegarder le profil"
+
+# _x("Business summary", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Business summary"
+msgstr ""
+
+# _e("Investor", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgctxt "search"
+msgid "Investor"
+msgstr "Investisseur"
+
+# _e("Entrepreneur", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgctxt "search"
+msgid "Entrepeneur"
+msgstr "Entrepreneur"
+
+# _x("Group", "search","i18n");
+# Context search TextDomain i18n
+msgctxt "search"
+msgid "Group"
+msgstr ""
+
+# _x("Add company", "company","i18n");
+# Context company TextDomain i18n
+#, fuzzy
+msgctxt "search"
+msgid "Company"
+msgstr "Ajouter une entreprise"
+
+# _e("Mentor", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgctxt "search"
+msgid "Mentor"
+msgstr "Mentor"
 
 # _e("You do not have the rights to edit this profile", "i18n");
 # Context  TextDomain i18n
@@ -353,7 +509,8 @@ msgstr "êtes-vous sur ? "
 
 # _e("Please wait...", "i18n");
 # Context  TextDomain i18n
-msgid "Please wait..."
+#, fuzzy
+msgid "Please wait"
 msgstr "Prière attendre..."
 
 # _e("Try again", "i18n");
@@ -366,6 +523,26 @@ msgstr "Essayez encore"
 msgid "Request sent"
 msgstr "Demande envoyée"
 
+# _e("Create business proposal", "i18n");
+# Context  TextDomain i18n
+msgid "Create business proposal"
+msgstr ""
+
+# _e("Create company profile", "i18n");
+# Context  TextDomain i18n
+msgid "Create company profile"
+msgstr ""
+
+# _e("Yes, lose changes", "i18n");
+# Context  TextDomain i18n
+msgid "Yes, lose changes"
+msgstr "Oui, n'enregistrez pas les modifications"
+
+# _e("No, go back", "i18n");
+# Context  TextDomain i18n
+msgid "No, go back"
+msgstr "Non, revenez sur la page"
+
 # _e("You request has been sent successfully", "i18n");
 # Context  TextDomain i18n
 msgid "You request has been sent successfully"
@@ -375,6 +552,17 @@ msgstr "Votre demande a été transmise avec succès "
 # Context  TextDomain i18n
 msgid "Something went wrong while creating a relationship:"
 msgstr "Une erreur est survenue lors de la création de la relation:"
+
+# _x("Select your nationality", "member","i18n");
+# Context member TextDomain i18n
+#, fuzzy
+msgid "Select an Option"
+msgstr "Sélectionner votre nationalité"
+
+# _x("Select your nationality", "member","i18n");
+# Context member TextDomain i18n
+msgid "Select Some Options"
+msgstr "Sélectionnez des options"
 
 # _e("This field is required", "i18n");
 # Context  TextDomain i18n
@@ -455,6 +643,11 @@ msgstr "Prière de ne fournir qu'un maximum de {0} caractères"
 # Context  TextDomain i18n
 msgid "Please enter at least {0} characters"
 msgstr "Prière de ne fournir au moins {0} caractères"
+
+# _e("Please fill all the required fields", "i18n");
+# Context  TextDomain i18n
+msgid "Please fill all the required fields"
+msgstr "Remplissez toutes les champs obligatoires"
 
 # _e("This email address is already in use", "i18n");
 # Context  TextDomain i18n

@@ -1,7 +1,6 @@
 <I18N>
     <Item value="selectCountry">Select country</Item>
     <Item value="selectPermitsObtained">Select licenses obtained</Item>
-    <Item value="selectLegalForm">Select the legal form of your company</Item>
     <Item value="selectLegalFormBusiness">Select the legal form of your company</Item>
 
     <!-- Buttons -->
