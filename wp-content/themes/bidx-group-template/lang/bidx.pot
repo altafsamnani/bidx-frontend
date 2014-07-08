@@ -1,0 +1,64 @@
+# Language Original
+
+#1) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -236
+# _e("Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "Your session expired. Please login again, sorry for any inconvenience and appreciate your patience."
+msgstr ""
+
+
+#2) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -240
+# _e("Welcome in the group!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "Welcome in the group!"
+msgstr ""
+
+
+#3) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -244
+# _e("Successfully left the group!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "Successfully left the group!"
+msgstr ""
+
+
+#4) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -248
+# _e("Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you."
+msgstr ""
+
+
+#5) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -252
+# _e("Successfully published!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "Successfully published!"
+msgstr ""
+
+
+#6) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -255
+# _e("Request accepted!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "Request accepted!"
+msgstr ""
+
+
+#7) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -258
+# _e("Request refused!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "Request refused!"
+msgstr ""
+
+
+#8) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -261
+# _e("You have successfully %action% the request!","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "You have successfully %action% the request!"
+msgstr ""
+
+
+#9) File -/home/altaf/workspace/bidx/wp-content/themes/bidx-group-template/lib/custom.php -266
+# _e("Add your notification message to custom.php with id ","bidxgrouptheme");
+# Context  Textdomain bidxgrouptheme
+msgid "Add your notification message to custom.php with id "
+msgstr ""
+

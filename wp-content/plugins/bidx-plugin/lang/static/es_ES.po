@@ -1,0 +1,118 @@
+# Language Original
+# _x("Select the country", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the country"
+msgstr "esSelect the country"
+
+# _x("Select the obtained licenses", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the obtained licenses"
+msgstr "esSelect the obtained licenses"
+
+# _x("Select the legal form of your company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the legal form of your company"
+msgstr "esSelect the legal form of your company"
+
+# _x("Select the legal form of your company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the legal form of your company"
+msgstr "esSelect the legal form of your company"
+
+# _x("Add company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Add company"
+msgstr "esAdd company"
+
+# _x("Save company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Save company"
+msgstr "esSave company"
+
+# _x("Select the outcome of this business", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select the outcome of this business"
+msgstr "esSelect the outcome of this business"
+
+# _x("Select the investment type", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select the investment type"
+msgstr "esSelect the investment type"
+
+# _x("Select your investor", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your investor"
+msgstr "esSelect your investor"
+
+# _x("Select the country", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select the country"
+msgstr "esSelect the country"
+
+# _x("Select your nationality", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your nationality"
+msgstr "esSelect your nationality"
+
+# _x("Select your highest education", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your highest education"
+msgstr "esSelect your highest education"
+
+# _e("You do not have the rights to edit this profile", "i18n");
+# Context  TextDomain i18n
+msgid "You do not have the rights to edit this profile"
+msgstr "esYou do not have the rights to edit this profile"
+
+# _e("Select the type", "i18n");
+# Context  TextDomain i18n
+msgid "Select the type"
+msgstr "esSelect the type"
+
+# _e("Attachment deleted", "i18n");
+# Context  TextDomain i18n
+msgid "Attachment deleted"
+msgstr "esAttachment deleted"
+
+# _e("Attachment upload done", "i18n");
+# Context  TextDomain i18n
+msgid "Attachment upload done"
+msgstr "esAttachment upload done"
+
+# _e("Problems deleting attachment", "i18n");
+# Context  TextDomain i18n
+msgid "Problems deleting attachment"
+msgstr "esProblems deleting attachment"
+
+# _e("Next", "i18n");
+# Context  TextDomain i18n
+msgid "Next"
+msgstr "esNext"
+
+# _e("Cancel", "i18n");
+# Context  TextDomain i18n
+msgid "Cancel"
+msgstr "esCancel"
+
+# _e("Save profile", "i18n");
+# Context  TextDomain i18n
+msgid "Save profile"
+msgstr "esSave profile"
+
+# _e("This field is required", "i18n");
+# Context  TextDomain i18n
+msgid "This field is required"
+msgstr "esThis field is required"
+

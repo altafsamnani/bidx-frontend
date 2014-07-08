@@ -62,9 +62,19 @@ function bidx_mailer ()
 function bidx_redirect_login ($groupDomain)
 {
     wp_clear_auth_cookie ();
+
+    $requestUri = $_SERVER['REQUEST_URI'];
+    $uri        = explode('/', $requestUri);
+    $lang       = '';
+
+    if ( strlen($uri[1]) == 2 )   // /fr /es
+    {
+        $lang = '/'.$uri[1];
+    }
+
     $http = (is_ssl ()) ? 'https://' : 'http://';
-    $current_url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) . '&emsg=1';
+    $current_url = $http . $_SERVER['HTTP_HOST'] . $requestUri;
+    $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . $lang . '/auth?q=' . base64_encode ($current_url) . '&emsg=1';
 
     header ("Location: $redirect_url");
 }
@@ -657,6 +667,7 @@ function create_bidx_po ()
                 break;
 
             case 'bidxtheme' :
+            case 'bidxgrouptheme':
                 $plugin = $_GET['path'];
                 global $pluginStrings;
                 bidx_st_scan_plugin_files ($plugin);
@@ -670,7 +681,7 @@ function create_bidx_po ()
             $poname = $lang . '_' . strtoupper ($lang);
         } else {
             $popot = 'pot';
-            $poname = 'i18n';
+            $poname = 'bidx';
         }
 
 
@@ -1989,10 +2000,16 @@ function bidx_options ()
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxplugin&lang=fr&path=" . WP_PLUGIN_DIR . "/bidx-plugin'>here</a> to create Apps Demo Fr PO <br/><br/>";
 
         /* 1.4. Bidx Theme Pot Generator */
-        echo "<b>Bidx Wp Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
+        echo "<b>Bidx Main Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
         echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
-        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxtheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/><br/>";
+
+        /* 1.4. Bidx Group Theme Pot Generator */
+        echo "<b>Bidx Group Theme Pot Generator (Bidx Theme) (Text domain bidxtheme)</b><br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&lang=es&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Es PO <br/>";
+        echo "Click <a href='/wp-admin/admin-ajax.php?action=bidx_createpo&type=bidxgrouptheme&lang=fr&path=" . WP_CONTENT_DIR . "/themes'>here</a> to create Apps Demo Fr PO <br/>";
 
 
         /* 2 Bidx Push Notification */

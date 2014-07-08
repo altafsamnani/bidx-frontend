@@ -384,7 +384,7 @@ class ContentLoader
         $this->logger->trace (get_post_types ());
 
         if ( isset( $_POST [ 'icl_ajx_action' ] ) && $_POST [ 'icl_ajx_action' ] && !empty ( $_POST[ 'langs' ] ) ) {
-        
+
             // Include WPML API
             //include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
 
@@ -474,10 +474,12 @@ class ContentLoader
         {
             $current_url_locale =   get_locale ();
         }*/
+
         $current_url_locale =   get_locale ();
         /* 1. Load Textdomain for Bidx Static APIs */
         $domain         = 'static'; //we use _e('String','static') see staticdataservice.php
-        $languagePath   = WP_CONTENT_DIR . '/languages';
+        $languagePath   = BIDX_PLUGIN_DIR . '/../lang';
+
         $locale         = apply_filters ('plugin_locale', $current_url_locale, $domain);
         $moStaticfile   = $languagePath . '/static/' . $locale . '.mo';
         load_textdomain ($domain, $moStaticfile);
@@ -491,7 +493,7 @@ class ContentLoader
         /* 3. Load Textdomain for Bidx Plugin */
         $domain         = 'bidxplugin'; // we use _e('String','i18n')
         $locale         = apply_filters ('plugin_locale', $current_url_locale, $domain);
-        $moPluginfile   = $languagePath . '/plugins/' . $locale . '.mo';
+        $moPluginfile   = $languagePath . '/' . $locale . '.mo';
         load_textdomain ($domain, $moPluginfile);
     }
 

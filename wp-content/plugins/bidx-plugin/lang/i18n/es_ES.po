@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+
+# Language Original
+# _x("Select the country", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the country"
+msgstr "esSelect the country"
+
+# _x("Select the obtained licenses", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the obtained licenses"
+msgstr "esSelect the obtained licenses"
+
+# _x("Select the legal form of your company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the legal form of your company"
+msgstr "esSelect the legal form of your company"
+
+# _x("Select the legal form of your company2", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Select the legal form of your company2"
+msgstr "esSelect the legal form of your company2"
+
+# _x("Add company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Add company"
+msgstr "esAdd company"
+
+# _x("Save company", "company","i18n");
+# Context company TextDomain i18n
+msgctxt "company"
+msgid "Save company"
+msgstr "esSave company"
+
+# _x("On %date% at %time%, %sender% wrote:", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "On %date% at %time%, %sender% wrote:"
+msgstr "esOn %date% at %time%, %sender% wrote:"
+
+# _x("Forwarded message", "mail","i18n");
+# Context mail TextDomain i18n
+msgctxt "mail"
+msgid "Forwarded message"
+msgstr "esForwarded message"
+
+# _x("Select the outcome of this business", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select the outcome of this business"
+msgstr "esSelect the outcome of this business"
+
+# _x("Select the investment type", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select the investment type"
+msgstr "esSelect the investment type"
+
+# _x("Select your investor", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your investor"
+msgstr "esSelect your investor"
+
+# _x("Select the country", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select the country"
+msgstr "esSelect the country"
+
+# _x("Select your nationality", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your nationality"
+msgstr "esSelect your nationality"
+
+# _x("Select your highest education", "member","i18n");
+# Context member TextDomain i18n
+msgctxt "member"
+msgid "Select your highest education"
+msgstr "esSelect your highest education"
+
+# _e("You do not have the rights to edit this profile", "i18n");
+# Context  TextDomain i18n
+msgid "You do not have the rights to edit this profile"
+msgstr "esYou do not have the rights to edit this profile"
+
+# _e("Select the type", "i18n");
+# Context  TextDomain i18n
+msgid "Select the type"
+msgstr "esSelect the type"
+
+# _e("Attachment deleted", "i18n");
+# Context  TextDomain i18n
+msgid "Attachment deleted"
+msgstr "esAttachment deleted"
+
+# _e("Attachment upload done", "i18n");
+# Context  TextDomain i18n
+msgid "Attachment upload done"
+msgstr "esAttachment upload done"
+
+# _e("Problems deleting attachment", "i18n");
+# Context  TextDomain i18n
+msgid "Problems deleting attachment"
+msgstr "esProblems deleting attachment"
+
+# _e("Next", "i18n");
+# Context  TextDomain i18n
+msgid "Next"
+msgstr "esNext"
+
+# _e("Cancel", "i18n");
+# Context  TextDomain i18n
+msgid "Cancel"
+msgstr "esCancel"
+
+# _e("Save profile", "i18n");
+# Context  TextDomain i18n
+msgid "Save profile"
+msgstr "esSave profile"
+
+# _e("This field is required", "i18n");
+# Context  TextDomain i18n
+msgid "This field is required"
+msgstr "esThis field is required"
+
+# _e("Please enter a valid date", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid date"
+msgstr "esPlease enter a valid date"
+
+# _e("Please enter a valid e-mail address", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid e-mail address"
+msgstr "esPlease enter a valid e-mail address"
+
+# _e("Please enter a valid Skype username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Skype username"
+msgstr "esPlease enter a valid Skype username"
+
+# _e("Please enter a valid LinkedIn username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid LinkedIn username"
+msgstr "esPlease enter a valid LinkedIn username"
+
+# _e("Please enter a valid Facebook username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Facebook username"
+msgstr "esPlease enter a valid Facebook username"
+
+# _e("Please enter a valid Twitter username", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a valid Twitter username"
+msgstr "esPlease enter a valid Twitter username"
+
+# _e("Please enter a valid date", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgid "Please enter a valid url"
+msgstr "esPlease enter a valid date"
+
+# _e("Please enter a valid date", "i18n");
+# Context  TextDomain i18n
+#, fuzzy
+msgid "Please enter a valid amount"
+msgstr "esPlease enter a valid date"
+
+# _e("Please give at least {0} items", "i18n");
+# Context  TextDomain i18n
+msgid "Please give at least {0} items"
+msgstr "esPlease give at least {0} items"
+
+# _e("Please enter a value greater than or equal to {0}", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "esPlease enter a value greater than or equal to {0}"
+
+# _e("Please enter a value less than or equal to {0}", "i18n");
+# Context  TextDomain i18n
+msgid "Please enter a value less than or equal to {0}"
+msgstr "esPlease enter a value less than or equal to {0}"
+
+# _e("Please provide a positive number", "i18n");
+# Context  TextDomain i18n
+msgid "Please provide a positive number"
+msgstr "esPlease provide a positive number"

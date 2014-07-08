@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-06 15:12+0100\n"
+"POT-Creation-Date: 2014-07-07 18:07+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jaap Gorjup <jaap@bidx.net>\n"
 "Language-Team: \n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ./templates\n"
 "X-Poedit-SearchPath-2: ./lib\n"
@@ -33,6 +33,110 @@ msgstr "une adresse erronée"
 #: 404.php:12
 msgid "an out-of-date link"
 msgstr "une vieille référence"
+
+#: lib/cleanup.php:368
+msgid "Continued"
+msgstr "Suite"
+
+#: lib/~comments.php:35
+#, php-format
+msgid "%1$s"
+msgstr "%1$s"
+
+#: lib/~comments.php:36
+msgid "(Edit)"
+msgstr "(Editer)"
+
+#: lib/~comments.php:40
+msgid "Your comment is awaiting moderation."
+msgstr "Votre commentaire est en attente de modération."
+
+#: lib/~widgets.php:8
+msgid "Primary Sidebar"
+msgstr "Barre latérale Primaire"
+
+#: lib/~widgets.php:17 lib/custom.php:377
+msgid "Footer"
+msgstr "Pied de page"
+
+#: lib/~widgets.php:45
+msgid "Use this widget to add a vCard"
+msgstr "Utiliser ce widget pour ajouter une vCard"
+
+#: lib/~widgets.php:47
+msgid "Roots: vCard"
+msgstr "Roots: vCard"
+
+#: lib/~widgets.php:74
+msgid "vCard"
+msgstr "vCard"
+
+#: lib/custom.php:236
+msgid ""
+"Your session expired. Please login again, sorry for any inconvenience and "
+"appreciate your patience."
+msgstr ""
+"Votre session a expiré. Veuillez vous connecter à nouveau. Nous nous "
+"excusons pour cet inconvénient."
+
+#: lib/custom.php:240
+msgid "Welcome in the group!"
+msgstr ""
+
+#: lib/custom.php:244
+msgid "Successfully left the group!"
+msgstr ""
+
+#: lib/custom.php:248
+msgid ""
+"Thank you! You are successful registered as a member of the bidX platform "
+"and this group. Feel free to browse around and see what <!--groupname--> can "
+"offer you."
+msgstr ""
+
+#: lib/custom.php:252
+msgid "Successfully published!"
+msgstr ""
+
+#: lib/custom.php:255
+msgid "Request accepted!"
+msgstr ""
+
+#: lib/custom.php:258
+msgid "Request refused!"
+msgstr ""
+
+#: lib/custom.php:261
+msgid "You have successfully %action% the request!"
+msgstr ""
+
+#: lib/custom.php:266
+msgid "Add your notification message to custom.php with id "
+msgstr ""
+
+#: lib/custom.php:298 lib/custom.php:306
+msgid "Logo"
+msgstr "Logo"
+
+#: lib/custom.php:329
+msgid "Group Styles"
+msgstr "Styles de groupe"
+
+#: lib/custom.php:357
+msgid "Google Analytics codes"
+msgstr "Codes Google Analytics"
+
+#: lib/custom.php:433
+msgid "Front Main Content Area"
+msgstr "Front Main Content Area"
+
+#: lib/custom.php:496 lib/custom.php:503
+msgid "Favicon"
+msgstr "Favicon"
+
+#: lib/init.php:11
+msgid "Primary Navigation"
+msgstr "Navigation Primaire"
 
 #: lib/activation.php:33 lib/activation.php:34
 msgid "Theme Activation"
@@ -103,38 +207,6 @@ msgid "Add all current published pages to the Primary Navigation"
 msgstr ""
 "Ajouter toutes les pages actuellement publiées à la navigation primaire"
 
-#: lib/cleanup.php:368
-msgid "Continued"
-msgstr "Suite"
-
-#: lib/custom.php:298 lib/custom.php:306
-msgid "Logo"
-msgstr "Logo"
-
-#: lib/custom.php:329
-msgid "Group Styles"
-msgstr "Styles de groupe"
-
-#: lib/custom.php:357
-msgid "Google Analytics codes"
-msgstr "Codes Google Analytics"
-
-#: lib/custom.php:387 lib/~widgets.php:17
-msgid "Footer"
-msgstr "Pied de page"
-
-#: lib/custom.php:417
-msgid "Front Main Content Area"
-msgstr "Front Main Content Area"
-
-#: lib/custom.php:446 lib/custom.php:453
-msgid "Favicon"
-msgstr "Favicon"
-
-#: lib/init.php:11
-msgid "Primary Navigation"
-msgstr "Navigation Primaire"
-
 #: lib/utils.php:60
 msgid "Latest Posts"
 msgstr "Derniers Articles"
@@ -176,56 +248,23 @@ msgstr ""
 "Veuillez vérifier que votre fichier <a href=\"%s\">.htaccess</a> soit "
 "accessible en écriture"
 
-#: lib/~comments.php:35
-#, php-format
-msgid "%1$s"
-msgstr "%1$s"
-
-#: lib/~comments.php:36
-msgid "(Edit)"
-msgstr "(Editer)"
-
-#: lib/~comments.php:40
-msgid "Your comment is awaiting moderation."
-msgstr "Votre commentaire est en attente de modération."
-
-#: lib/~widgets.php:8
-msgid "Primary Sidebar"
-msgstr "Barre latérale Primaire"
-
-#: lib/~widgets.php:45
-msgid "Use this widget to add a vCard"
-msgstr "Utiliser ce widget pour ajouter une vCard"
-
-#: lib/~widgets.php:47
-msgid "Roots: vCard"
-msgstr "Roots: vCard"
-
-#: lib/~widgets.php:74
-msgid "vCard"
-msgstr "vCard"
-
-#: templates/content-single.php:64
-msgid "Pages:"
-msgstr "Pages :"
-
-#: templates/footer.php:31
+#: templates/footer.php:37
 msgid "Follow us"
 msgstr "Suivez-nous"
 
-#: templates/footer.php:40
+#: templates/footer.php:46
 msgid "All rights reserved"
 msgstr "Tous droits réservés"
 
-#: templates/footer.php:42
+#: templates/footer.php:48
 msgid "Sitemap"
 msgstr "Sitemap"
 
-#: templates/footer.php:43
+#: templates/footer.php:49
 msgid "Terms and service"
 msgstr "Conditions et service"
 
-#: templates/footer.php:44
+#: templates/footer.php:50
 msgid "Privacy"
 msgstr "Privacy"
 
@@ -236,6 +275,14 @@ msgstr "Enregistrer"
 #: templates/header.php:51
 msgid "Login"
 msgstr "Se connecter"
+
+#: templates/searchform.php:3
+msgid "Search"
+msgstr "Recherche"
+
+#: templates/content-single.php:64
+msgid "Pages:"
+msgstr "Pages :"
 
 #~ msgid ""
 #~ "The page you are looking for might have been removed, had its name "
@@ -333,9 +380,6 @@ msgstr "Se connecter"
 
 #~ msgid "Search for:"
 #~ msgstr "Rechercher pour :"
-
-#~ msgid "Search"
-#~ msgstr "Recherche"
 
 #~ msgid "Title (optional):"
 #~ msgstr "Titre (facultatif) :"

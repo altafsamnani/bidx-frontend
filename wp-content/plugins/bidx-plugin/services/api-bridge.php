@@ -129,7 +129,7 @@ abstract class APIbridge
 
     /**
      * Process Bidx Api Response
-     * 
+     *
      * FIXME in case of stdClass the magic methods must be added ??
      *
      * @param string $urlService  Name of service
@@ -239,13 +239,13 @@ abstract class APIbridge
 
 
     	if ( defined( 'ORIGINAL_DOMAIN' ) ) {
-    	
+
     		$httpHost = ORIGINAL_DOMAIN;
     	} else {
-    	
+
     		$httpHost = ($url) ? str_replace(array("http://", "https://"),"",$url) : $_SERVER ["HTTP_HOST"];
     	}
-    	   	
+
         $hostAddress = explode ('.', $httpHost);
 
         if (is_array ($hostAddress))
@@ -274,15 +274,23 @@ abstract class APIbridge
      */
     function bidxRedirectLogin ($groupDomain,$statusText)
     {
-        //wp_clear_auth_cookie();
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $uri        = explode('/', $requestUri);
+        $lang       = '';
+
+        if ( strlen($uri[1]) == 2 )   // /fr /es
+        {
+            $lang = '/'.$uri[1];
+        }
+
         $http           = (is_ssl ()) ? 'https://' : 'http://';
-        $current_url    = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $current_url    = $http . $_SERVER['HTTP_HOST'] . $requestUri ;
 
         //If its illegal request like group is not backend that it sends back group missing with illegal request, so to know that error using edmsg
         //To genuine session expire using emsg=1
         $statusText     = ($statusText) ? '&edmsg='.base64_encode($statusText) : '&emsg=1';
 
-        $redirect_url   = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/auth?q=' . base64_encode ($current_url) .$statusText ;
+        $redirect_url   = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . $lang. '/auth?q=' . base64_encode ($current_url) .$statusText ;
 
         header ("Location: " . $redirect_url);
 
