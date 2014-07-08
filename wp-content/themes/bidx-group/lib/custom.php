@@ -3,7 +3,7 @@
 
 function theme_enqueue_styles() {
     wp_enqueue_style('bidx-group', get_stylesheet_directory_uri().'/assets/less/base.less');
-    
+
     include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
     if (is_plugin_active ('bidx-plugin/bidX-plugin.php'))
     {
@@ -228,7 +228,33 @@ function get_custom_field_value ( $key,  $i = null)
     return $value;
 }
 
+function _pageuri( $contenPath )
+{
 
+  global $sitepress;
+
+  $translatedContentId = NULL;
+
+  if( $sitepress )
+  {
+    $currentLanguage = $sitepress->get_current_language();
+
+    if( $currentLanguage && $currentLanguage != 'en')
+    {
+      require_once ABSPATH. "/wp-content/plugins/sitepress-multilingual-cms/inc/wpml-api.php";
+
+      $pageByPath = get_page_by_path  ($contenPath );
+
+      $translatedContent = wpml_get_content_translation ('post_'.$pageByPath->post_type, $pageByPath->ID, $currentLanguage);
+
+      $translatedContentId = $translatedContent[$currentLanguage];
+
+      $contenPath = ($translatedContentId) ? get_page_uri($translatedContentId) : $contenPath;
+    }
+  }
+
+  return $contenPath;
+}
 
 function _l( $url = NULL )
 {
