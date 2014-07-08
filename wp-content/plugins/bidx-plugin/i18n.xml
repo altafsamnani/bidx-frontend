@@ -29,6 +29,7 @@
     <Item value="btnPleaseWait">Please wait</Item>
     <Item value="btnTryAgain">Try again</Item>
     <Item value="btnRequestSent">Request sent</Item>
+    <Item value="btnRequestReceived">Request received</Item>
     <Item value="btnCreateBs">Create business proposal</Item>
     <Item value="btnCreateCompany">Create company profile</Item>
     <Item value="btnLooseChanges">Yes, lose changes</Item>

@@ -355,6 +355,7 @@
             ,   $mentorButton
             ,   isEntityExist
             ,   newBpLength
+            ,   btnText
             ,   origBpLength = _.size(listDropdownBp)
             ;
 
@@ -379,7 +380,9 @@
                                 $mentorButton   = $elementMyprofile.find( bpClass );
                                 if($mentorButton)
                                 {
-                                    $mentorButton.addClass('disabled').i18nText("btnRequestSent");
+                                    btnText = (initiatorId === mentorId) ? 'btnRequestSent' : 'btnRequestReceived'; // Temparary fixed replace it with Accept later
+
+                                    $mentorButton.addClass('disabled').i18nText( btnText );
                                 }
                             }
 
