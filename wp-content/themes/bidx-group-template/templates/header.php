@@ -42,7 +42,7 @@
 				if( !$authenticated )
 				{
 ?>
-	 			<div class="pull-right col-sm-5 bidx-header-controls">
+	 			<div class="pull-right col-sm-5 bidx-header-controls hidden-xs">
 					<div class="row">
 						<div class="col-sm-6">
 							<a href=<?php echo _wl("register-as-member")."/#register/firstLogin=getting-started-member#editPreference";?> class="btn btn-success btn-block"><i class="fa fa-user"></i><?php  _e( 'Become a member','roots' );?></a>
@@ -52,12 +52,26 @@
 						</div>
 					</div>
 				</div>
+
+	 			<div class="bidx-header-controls visible-xs">
+					<div class="row">
+						<div class="col-xs-7">
+							<a href=<?php echo _wl("register-as-member")."/#register/firstLogin=getting-started-member#editPreference";?> class="btn btn-success btn-block"><i class="fa fa-user"></i><?php  _e( 'Become a member','roots' );?></a>
+						</div>
+						<div class="col-xs-5">
+							<a href=<?php echo _l("auth")."/#auth/login";?> class="btn btn-primary btn-block"><i class="fa fa-lock"></i> <?php _e( 'Login','roots' );?></a>
+						</div>
+					</div>
+				</div>
 <?php
 			 	}
+
+				get_template_part('templates/header-top-navbar');
+
 			 	if( $authenticated )
 				{
 ?>
-				<nav class="nav-collapse menu-main">
+				<nav class="nav-collapse menu-main hidden-xs">
 <?php
 					if (has_nav_menu('primary_navigation')) :
 						wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav nav-pills'));
@@ -67,7 +81,7 @@
 <?php
 				} else {
 ?>
-				<nav class="nav-collapse menu-main">
+				<nav class="nav-collapse menu-main hidden-xs">
 <?php
 					if (has_nav_menu('primary_notloggedin_navigation')) :
 						wp_nav_menu(array('theme_location' => 'primary_notloggedin_navigation', 'menu_class' => 'nav nav-pills'));
