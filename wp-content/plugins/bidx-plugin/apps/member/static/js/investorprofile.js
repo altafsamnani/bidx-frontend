@@ -520,12 +520,12 @@
                     } );
                 break;
 
-                case "linkedIn":
-                    $input.rules( "add",
-                    {
-                        linkedInUsername:       true
-                    } );
-                break;
+                // case "linkedIn":
+                //     $input.rules( "add",
+                //     {
+                //         linkedInUsername:       true
+                //     } );
+                // break;
 
                 default:
                     // NOOP

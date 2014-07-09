@@ -769,10 +769,10 @@
                                                 }
                                             }
                 }
-            ,   "linkedIn":
-                {
-                    linkedIn:               true
-                }
+            // ,   "linkedIn":
+            //     {
+            //         linkedIn:               true
+            //     }
             // ,   "focusLocationType":
             //     {
             //         required:               { depends: function ()

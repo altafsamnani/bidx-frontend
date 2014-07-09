@@ -1071,10 +1071,10 @@
                 {
                     skypeUsername:              true
                 }
-            ,   "personalDetails.linkedIn":
-                {
-                    linkedIn:                   true
-                }
+            // ,   "personalDetails.linkedIn":
+            //     {
+            //         linkedIn:                   true
+            //     }
             ,   "personalDetails.facebook":
                 {
                     facebookUsername:           true

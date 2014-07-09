@@ -1575,12 +1575,12 @@
                     } );
                 break;
 
-                case "linkedIn":
-                    $input.rules( "add",
-                    {
-                        linkedIn:               true
-                    } );
-                break;
+                // case "linkedIn":
+                //     $input.rules( "add",
+                //     {
+                //         linkedIn:               true
+                //     } );
+                // break;
 
                 default:
                     // NOOP
