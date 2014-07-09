@@ -81,11 +81,11 @@ class auth {
                 //
                 if ( isset ( $result -> data -> SessionState ) && ( $result -> data -> SessionState === "PendingInitialPasswordSet" || $result -> data -> SessionState === "PendingPasswordReset"  ) ) {
 
-                    $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/setpassword';
+                    $redirect_url = '/setpassword';
 
                 } elseif ( isset ( $result -> code ) && $result -> code === "activationTokenExpired" ) {
 
-                    $redirect_url = $http . $groupDomain . '.' . DOMAIN_CURRENT_SITE . '/setpassword/#setpassword/expired';
+                    $redirect_url = '/setpassword/#setpassword/expired';
 
                 } else {
                     // THIS NEEDS TO GET SOME DECENT ERROR HANDLING
