@@ -326,7 +326,7 @@
                                 .replace( /%location%/g,      item.location   ? item.location     : emptyVal )
                                 .replace( /%membersince%/g,      item.membersince   ? item.membersince     : emptyVal )
                                 .replace( /%role%/g,      item.role   ? item.role     : emptyVal )
-                                .replace( /%lastlogin%/g,      item.lastlogin   ? item.lastlogin     : emptyVal )
+                            //    .replace( /%lastlogin%/g,      item.lastlogin   ? item.lastlogin     : emptyVal )
                                 .replace( /%subject%/g,      item.subject   ? item.subject     : emptyVal )
                                 ;
 
