@@ -635,7 +635,7 @@
             );
 
 
-            /* 2 Mentor Mentoring Activities Functions */
+            /* 2 Mentor Mentoring Activities Functions
             var isMentor = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxMentorProfile" );
 
             if ( isMentor )

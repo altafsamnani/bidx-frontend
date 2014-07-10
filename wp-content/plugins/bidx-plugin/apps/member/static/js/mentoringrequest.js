@@ -24,9 +24,8 @@
     ,   member
     ,   loggedInMemberId                    = bidx.utils.getValue( bidxConfig, "session.id" )
     ,   visitingMemberPageId                = bidx.utils.getValue( bidxConfig, "context.memberId" )
+    ,   mentorProfileId                     = bidx.common.getMentorProfileId()
 
-
-    ,   mentorProfileId
     ,   state
     ,   currentView
 
@@ -233,6 +232,33 @@
                 });
             }
         }
+
+        if( mentorProfileId )
+        {
+
+            getMatchingEntrepreneur(
+                {
+                    callback    :   function()
+                                    {
+                                        var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
+                                        if( bpLength )
+                                        {
+                                            _getBusinessPlans( )
+                                            .done( function( listBpItems )
+                                            {
+
+                                                bidx.utils.log('listBpItems',listBpItems);
+                                                $businessSummary.append( listBpItems );
+                                                $businessSummary.trigger( "chosen:updated" );
+
+                                            } );
+                                        }
+                                    }
+                });
+
+        }
+
+
     }
 
 
@@ -344,6 +370,133 @@
 
             }
         } );
+    }
+
+    function _getSearchCriteria ( params ) {
+
+        var q
+        ,   sort
+        ,   filters
+        ,   criteria
+        ,   criteriaQ
+        ,   paramFilter
+        ,   search
+        ,   sortQuery       = []
+        ,   criteriaFilters = []
+        ,   criteriaSort    = []
+        ;
+
+        // 1. Search paramete
+        // ex searchTerm:text:altaf
+        //
+        // See if its coming from the search page itself(if) or from the top(else)
+        //
+
+        // 2. Sort criteria
+        // ex sort:["field":"entity", "order": asc ]
+        //
+        sort = bidx.utils.getValue( params, 'sort' );
+
+        if( sort )
+        {
+
+            $.each( sort, function( sortField, sortOrder )
+            {
+                criteriaSort.push( {
+                                            "field" : sortField
+                                        ,   "order":  sortOrder
+                                    });
+
+
+            } );
+
+        }
+
+        // 3. Filter
+        // ex filters:["0": "facet_language:fi" ]
+        //
+
+        filters = bidx.utils.getValue(params, 'filters' );
+
+        if(  filters )
+        {
+            criteriaFilters = filters;
+        }
+
+        search =    {
+                        criteria    :   {
+                                            "searchTerm"    :   "text:*"
+                                        ,   "filters"       :   criteriaFilters
+                                        ,   "maxResult"     :   0
+                                        ,   "entityTypes"   :   [ { "type": "bidxMentorProfile" } ]
+                                        ,   "scope"         :   "local"
+                                        }
+                    };
+
+        return search;
+
+    }
+
+    function getMatchingEntrepreneur( options )
+    {
+
+        var search
+        ,   numFound
+        ,   $mentoringCount     =   $elementMyprofile.find( '.countMentoringProposals' )
+        ,   mentoringCountHtml  =   $mentoringCount.html()
+        ;
+
+        search = _getSearchCriteria( options.params );
+
+        bidx.api.call(
+            "search.get"
+        ,   {
+                    groupDomain:          bidx.common.groupDomain
+                ,   data:                 search.criteria
+                ,   success: function( response )
+                    {
+                        bidx.utils.log("[searchList] retrieved results ", response );
+                        numFound    = response.numFound ;
+                        if(numFound && mentoringCountHtml)
+                        {
+
+                            mentoringCountHtml  =   mentoringCountHtml.replace( /%count%/g,     numFound );
+                            $mentoringCount.html(mentoringCountHtml);
+                            _showAllView( 'mentoringbutton' );
+
+                        }
+                        else
+                        {
+                            _showAllView( 'noproposals' );
+                        }
+
+                    }
+                    ,
+                    error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText)
+                        ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                        ;
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        }
+
+                    }
+            }
+        );
     }
 
     function getMentoringRequest (options)

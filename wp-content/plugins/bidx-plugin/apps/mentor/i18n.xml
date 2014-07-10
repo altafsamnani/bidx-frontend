@@ -13,4 +13,5 @@
     <Item value="feedbackCompany">Company section</Item>
     <Item value="feedbackMentoring">Mentoring section</Item>
     <Item value="feedbackDocument">Document section</Item>
+    <Item value="matchCount">%count% matches found</Item>
 </I18N>

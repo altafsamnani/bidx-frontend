@@ -1139,7 +1139,7 @@
                 _showView("help");
                 break;
 
-            case "mentor":
+            case "mentor": // Called from common-mentordashboard mentor navigate
                  _closeModal(
                 {
                     unbindHide: true
