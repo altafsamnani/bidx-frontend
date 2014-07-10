@@ -67,7 +67,7 @@
                     <h1><?php _e('Portals','bidxtheme');?></h1>
                     <p><?php _e('Grow your online entrepreneurial network','bidxtheme');?></p>
                     <br>
-                    <a href="/groups" class="btn btn-flat flat-warning"><?php _e('Learn More','bidxtheme');?></a>
+                    <a href="/portals" class="btn btn-flat flat-warning"><?php _e('Learn More','bidxtheme');?></a>
                 </div>
             </div>
             <!-- /.col-sm-6 -->
