@@ -169,7 +169,7 @@
                         ,   q           :   search.q
                         ,   sort        :   search.sort
                         ,   criteria    :   search.criteria
-                        ,   list        :   'match'
+                        ,   list        :   'matching'
                         ,   cb          : _getContactsCallback( 'match' )
                         } )
                         .done(  function(  )
@@ -231,12 +231,12 @@
         ,   itemMember
         ,   ownerId
         ,   i18nItem
+        ,   entityOwnerId
         ,   countHtml
         ,   $d              =  $.Deferred()
-
         ;
 
-        bidx.utils.log("[response] retrieved results ", response );
+        bidx.utils.log("[response] retrieved results $list ", $list );
 
         if ( response.docs && response.docs.length )
         {
@@ -324,9 +324,10 @@
                                                                 {
                                                                     if( itemMember )
                                                                     {
-                                                                        bidx.utils.log( 'temSummary.bidxMeta.bidxLastUpdateDateTime', itemSummary.bidxMeta.bidxLastUpdateDateTime);
+                                                                        entityOwnerId = itemMember.member.bidxMeta.bidxMemberId;
 
-                                                                        memberData[ ownerId ]   = itemMember.member.displayName;
+
+                                                                        memberData[ entityOwnerId ]   = itemMember.member.displayName;
 
                                                                         bidx.data.getStaticDataVal(
                                                                         {
@@ -367,7 +368,7 @@
                                                                         {
                                                                             // call Callback with current contact item as this scope and pass the current $listitem
                                                                             //
-                                                                            options.cb.call( this, $listItem, item, currentUserId, ownerId );
+                                                                            options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
                                                                         }
                                                                         //  add mail element to list
                                                                         $list.append( $listItem );
@@ -462,13 +463,13 @@
                 /* 4 Cancel request */
                 hrefStop = hrefStop
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            ;
 
                 $stopBtn.attr( "href", hrefStop );
 
 
             }
-        ,   pending:    function(  $listItem, item, userId, ownerId )
+        ,   pending:    function(  $listItem, item, userId, entityOwnerId )
             {
                 var $reminderBtn    =   $listItem.find( ".btn-bidx-reminder")
                 ,   $cancelBtn      =   $listItem.find( ".btn-bidx-cancel")
@@ -478,26 +479,26 @@
                 ,   hrefContact     =   $contactBtn.attr( "data-href" )
                 ;
 
-                /* 1 Accept Link */
-                hrefReminder = hrefReminder.replace( /%receipientId%/g,      ownerId );
+                /* 1 Reminder Link */
+                hrefReminder = hrefReminder.replace( /%receipientId%/g,      entityOwnerId );
                 $reminderBtn.attr( "href", hrefReminder );
 
                 /* 2 Ignore Link */
                 hrefCancel = hrefCancel
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            ;
 
                 $cancelBtn.attr( "href", hrefCancel );
 
                 /* 3 Contact Entrepreneur */
-                hrefContact = hrefContact.replace( /%receipientId%/g,      ownerId );
+                hrefContact = hrefContact.replace( /%receipientId%/g,      entityOwnerId );
                 $contactBtn.attr( "href", hrefContact );
 
             }
         ,   ignored:    function()
             {
             }
-        ,   incoming:   function(  $listItem, item, userId, ownerId )
+        ,   incoming:   function(  $listItem, item, userId, entityOwnerId )
             {
                 var $acceptBtn  =   $listItem.find( ".btn-bidx-accept")
                 ,   $ignoreBtn  =   $listItem.find( ".btn-bidx-ignore")
@@ -510,7 +511,7 @@
                 /* 1 Accept Link */
                 hrefAccept = hrefAccept
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            .replace( /%initiatorId%/g,        entityOwnerId );
 
                 $acceptBtn.attr( "href", hrefAccept );
 
@@ -518,12 +519,12 @@
                 /* 2 Ignore Link */
                 hrefIgnore = hrefIgnore
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            .replace( /%initiatorId%/g,        entityOwnerId );
 
                 $ignoreBtn.attr( "href", hrefIgnore );
 
                 /* 3 Contact Entrepreneur */
-                hrefContact = hrefContact.replace( /%receipientId%/g,      ownerId );
+                hrefContact = hrefContact.replace( /%receipientId%/g,      entityOwnerId );
                 $contactBtn.attr( "href", hrefContact );
 
             }
@@ -635,6 +636,7 @@
         ,   itemMember
         ,   ownerId
         ,   i18nItem
+        ,   entityOwnerId
         ,   $d              =  $.Deferred()
         ,   incomingLength      = incomingResponse.length
         ;
@@ -661,7 +663,9 @@
                                                                 {
                                                                     if(itemMember)
                                                                     {
-                                                                        memberData[ ownerId ]   = itemMember.member.displayName;
+                                                                        entityOwnerId = itemMember.member.bidxMeta.bidxMemberId;
+
+                                                                        memberData[ entityOwnerId ]   = itemMember.member.displayName;
 
                                                                         bidx.data.getStaticDataVal(
                                                                         {
@@ -678,7 +682,7 @@
                                                                         .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                         .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
                                                                         .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
-                                                                        .replace( /%creatorId%/g,               itemMember.member.bidxMeta.bidxMemberId        ? itemMember.member.bidxMeta.bidxMemberId      : emptyVal )
+                                                                        .replace( /%creatorId%/g,               entityOwnerId        ? entityOwnerId      : emptyVal )
                                                                         .replace( /%status%/g,                  bidx.i18n.i( "receivedRequest", appName )  )
                                                                         .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
                                                                         .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
@@ -699,7 +703,7 @@
                                                                         {
                                                                             // call Callback with current contact item as this scope and pass the current $listitem
                                                                             //
-                                                                            options.cb.call( this, $listItem, item, currentUserId, ownerId );
+                                                                            options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
                                                                         }
                                                                         //  add mail element to list
                                                                         $list.append( $listItem );
@@ -755,6 +759,7 @@
         ,   itemMember
         ,   ownerId
         ,   i18nItem
+        ,   entityOwnerId
         ,   $d              =  $.Deferred()
         ,   counter         = 1
         ,   waitLength      = waitingResponse.length
@@ -786,7 +791,8 @@
                                                                 {
                                                                     if( itemMember )
                                                                     {
-                                                                        memberData[ ownerId ]   = itemMember.member.displayName;
+                                                                        entityOwnerId = itemMember.member.bidxMeta.bidxMemberId;
+                                                                        memberData[ entityOwnerId ]   = itemMember.member.displayName;
 
                                                                         bidx.data.getStaticDataVal(
                                                                         {
@@ -824,7 +830,7 @@
                                                                         {
                                                                             // call Callback with current contact item as this scope and pass the current $listitem
                                                                             //
-                                                                            options.cb.call( this, $listItem, item, ownerId, ownerId );
+                                                                            options.cb.call( this, $listItem, item, ownerId, entityOwnerId );
                                                                         }
                                                                         //  add mail element to list
                                                                         $list.append( $listItem );
@@ -878,12 +884,13 @@
         ,   itemMember
         ,   ownerId
         ,   i18nItem
+        ,   entityOwnerId
         ,   $d              =  $.Deferred()
         ,   counter         = 1
         ,   ongoingLength   = ongoingResponse.length
         ;
 
-
+        bidx.utils.log('ongoing', ongoingResponse);
         //$list.empty();
 
         if ( ongoingResponse && ongoingLength )
@@ -910,7 +917,8 @@
                                                                 {
                                                                     if( itemMember )
                                                                     {
-                                                                        memberData[ ownerId ]   = itemMember.member.displayName;
+                                                                        entityOwnerId = itemMember.member.bidxMeta.bidxMemberId;
+                                                                        memberData[ entityOwnerId ]   = itemMember.member.displayName;
 
                                                                         bidx.data.getStaticDataVal(
                                                                         {
@@ -950,7 +958,7 @@
                                                                         {
                                                                             // call Callback with current contact item as this scope and pass the current $listitem
                                                                             //
-                                                                            options.cb.call( this, $listItem, item, ownerId, ownerId );
+                                                                            options.cb.call( this, $listItem, item, ownerId, entityOwnerId );
                                                                         }
                                                                         //  add mail element to list
                                                                         $list.append( $listItem );
@@ -1455,6 +1463,10 @@
                 } );
 
                 _menuActivateWithTitle(".Dashboard","My mentor dashboard");
+
+                _showView( 'match', true );
+                _showView("loadmatch", true );
+
                 _showView( 'respond', true );
                 _showView( 'loadrespond', true);
 
@@ -1470,8 +1482,7 @@
                 _showView("ended", true );
                 _showView("loadended", true ); */
 
-                _showView( 'match', true );
-                _showView("loadmatch", true );
+
 
                 getMentorProposals(
                 {

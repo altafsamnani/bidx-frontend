@@ -597,7 +597,7 @@
         ;
 
         postData =  {
-                        userId:     params.userId
+                        initiatorId:     params.initiatorId
                     ,   status:     params.action
                     ,   reason:     params.type
                     };
