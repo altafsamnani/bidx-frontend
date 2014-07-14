@@ -2244,7 +2244,7 @@
     function _save( params )
     {
         var currentLanguage
-        //,   icl_vars
+        ,   icl_vars
         ;
 
         if ( !businessSummary )
