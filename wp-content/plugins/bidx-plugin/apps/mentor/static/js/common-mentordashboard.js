@@ -1264,7 +1264,6 @@
                 break;
 
                 case 'mentor' :
-                bidx.utils.log('Mentor fireeeeeeeeeeeeeeeeeeeeeeeeee');
                 getMentoringRequest(
                 {
                     list: "match"
