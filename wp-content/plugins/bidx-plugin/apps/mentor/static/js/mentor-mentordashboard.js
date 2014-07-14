@@ -44,7 +44,7 @@
     //
     var CONSTANTS =
         {
-            SEARCH_LIMIT:                       10
+            SEARCH_LIMIT:                       5
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
@@ -604,7 +604,8 @@
                 /* 1 Accept Link */
                 hrefAccept = hrefAccept
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            .replace( /%mentorId%/g,              currentUserId)
+                            .replace( /%initiatorId%/g,              currentUserId);
 
                 $acceptBtn.attr( "href", hrefAccept );
 
@@ -640,6 +641,8 @@
         ,   $d              =  $.Deferred()
         ,   incomingLength      = incomingResponse.length
         ;
+
+        $list.empty();
 
         if ( incomingResponse && incomingLength )
 
@@ -765,7 +768,7 @@
         ,   waitLength      = waitingResponse.length
         ;
 
-        //$list.empty();
+        $list.empty();
 
         if ( waitingResponse && waitLength )
 
@@ -890,8 +893,7 @@
         ,   ongoingLength   = ongoingResponse.length
         ;
 
-        bidx.utils.log('ongoing', ongoingResponse);
-        //$list.empty();
+        $list.empty();
 
         if ( ongoingResponse && ongoingLength )
 
@@ -1315,10 +1317,10 @@
         }
 
         //  execute callback if provided
-        if (options && options.callback)
+        /*if (options && options.callback)
         {
             options.callback( result );
-        }
+        }*/
 
     return ;
     };
@@ -1436,13 +1438,11 @@
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
     {
-        bidx.utils.log("routing options", options);
+        bidx.utils.log("mentor mentoring routing options", options);
         var state
         ;
 
         state  = options.state;
-
-
 
         switch (state)
         {
@@ -1462,8 +1462,6 @@
                     unbindHide: true
                 } );
 
-                _menuActivateWithTitle(".Dashboard","My mentor dashboard");
-
                 _showView( 'match', true );
                 _showView("loadmatch", true );
 
@@ -1482,7 +1480,7 @@
                 _showView("ended", true );
                 _showView("loadended", true ); */
 
-
+                bidx.utils.log('in mentor mentorrrrrrrrrrrrrrrrrr');
 
                 getMentorProposals(
                 {

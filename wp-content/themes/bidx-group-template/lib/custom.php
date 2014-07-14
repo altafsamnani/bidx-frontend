@@ -251,16 +251,18 @@ function bidx_status_text ( $textId, $replaceString ) {
     case '5':
         $text = __('Successfully published!','bidxgrouptheme');
         break;
+
     case '6':
         $text = __('Request accepted!','bidxgrouptheme');
         break;
+
     case '7':
         $text = __('Request refused!','bidxgrouptheme');
         break;
+
     case '8':
         $text = __('You have successfully %action% the request!','bidxgrouptheme');
         break;
-
 
     default :
         $text = __('Add your notification message to custom.php with id ','bidxgrouptheme');

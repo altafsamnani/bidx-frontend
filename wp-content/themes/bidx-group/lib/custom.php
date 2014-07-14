@@ -145,37 +145,39 @@ function bidx_status_text ( $textId, $replaceString ) {
     switch($textId) {
 
     case '1' :
-        $text = "Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.";
+        $text = __("Your session expired. Please login again, sorry for any inconvenience and appreciate your patience.",'bidxgrouptheme');
         break;
 
     case '2' :
-        $text = "Welcome in the group!";
+        $text = __("Welcome in the group!",'bidxgrouptheme');
         break;
 
     case '3' :
-        $text = "Successfully left the group!";
+        $text = __("Successfully left the group!",'bidxgrouptheme');
         break;
 
     case '4' :
-        $text = "Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.";
+        $text = __("Thank you! You are successful registered as a member of the bidX platform and this group. Feel free to browse around and see what <!--groupname--> can offer you.",'bidxgrouptheme');
         break;
 
     case '5':
-        $text = 'Successfully published!';
-        break;
-    case '6':
-        $text = 'Request accepted!';
-        break;
-    case '7':
-        $text = 'Request refused!';
-        break;
-    case '8':
-        $text = 'You have successfully %action% the request!';
+        $text = __('Successfully published!','bidxgrouptheme');
         break;
 
+    case '6':
+        $text = __('Request accepted!','bidxgrouptheme');
+        break;
+
+    case '7':
+        $text = __('Request refused!','bidxgrouptheme');
+        break;
+
+    case '8':
+        $text = __('You have successfully %action% the request!','bidxgrouptheme');
+        break;
 
     default :
-        $text = 'Add your notification message to custom.php with id ';
+        $text = __('Add your notification message to custom.php with id ','bidxgrouptheme');
 
      }
 

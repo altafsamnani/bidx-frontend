@@ -5,6 +5,7 @@
     <Item value="msgOnPageUnload">Your changes have not yet been saved. Are you sure you want to navigate away from this page and lose your pending changes?</Item>
     <Item value="msgWaitForRedirect">Please wait while you are redirected</Item>
     <Item value="msgWaitForSave">Processing request</Item>
+
     <Item value="docDeleted">This document has been removed from your media library.</Item>
 
     <!-- Booleans -->
@@ -35,9 +36,12 @@
     <Item value="btnLooseChanges">Yes, lose changes</Item>
     <Item value="btnGoBack">No, go back</Item>
 
-
     <!-- Common status msgs -->
     <Item value="statusRequest">You request has been sent successfully</Item>
+    <Item value="statusAccept">You have successfully accepted the request</Item>
+    <Item value="statusIgnore">You have successfully ignored the request</Item>
+    <Item value="statusCancel">You have successfully cancelled the request</Item>
+
 
       <!-- Common error msgs -->
     <Item value="errorRequest">Something went wrong while creating a relationship:</Item>
@@ -84,5 +88,15 @@
     <Item value="mentor">Mentor</Item>
 
 
+    <!-- Modal dialogs status messages -->
+     <Item value="modalSend">You are about to send the request. Are you sure?</Item>
+     <Item value="modalAccept">You are about to accept the request. Are you sure?</Item>
+     <Item value="modalReject">You are about to ignore the request. Are you sure?</Item>
+     <Item value="modalCancel">You are about to cancel the request. Are you sure?</Item>
+    <!-- Modal button messages -->
+     <Item value="modalBtnSend">Send request</Item>
+     <Item value="modalBtnAccept">Accept request</Item>
+     <Item value="modalBtnReject">Ignore request</Item>
+     <Item value="modalBtnCancel">Cancel request</Item>
 
 </I18N>

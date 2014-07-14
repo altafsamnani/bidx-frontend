@@ -311,6 +311,8 @@
         ,   incomingLength      = incomingResponse.length
         ;
 
+        $list.empty();
+
         if ( incomingResponse && incomingLength )
 
         {
@@ -431,7 +433,7 @@
         ,   waitLength      = waitingResponse.length
         ;
 
-        //$list.empty();
+        $list.empty();
 
         if ( waitingResponse && waitLength )
 
@@ -555,7 +557,7 @@
         ,   ongoingLength   = ongoingResponse.length
         ;
 
-        //$list.empty();
+        $list.empty();
 
         if ( ongoingResponse && ongoingLength )
 
@@ -1119,7 +1121,7 @@
     //var navigate = function( requestedState, section, id )
     var navigate = function(options)
     {
-        bidx.utils.log("routing options", options);
+        bidx.utils.log("entrpreneur mentoring routing options", options);
         var state
         ;
 

@@ -2,6 +2,9 @@
 
     <h1 class="pagetitle"><?php _e('My mentor dashboard','bidxplugin');?></h1>
     <div class="dashboard">
+        <div class="view viewMainsuccess alert alert-success">
+                <p class="successMsg"></p>
+        </div>
 
         <div class="view viewError alert alert-warning">
             <h1><?php _e('Error','bidxplugin')?></h1>
@@ -21,7 +24,7 @@
                             %message%
                         </div>
                         <div class="modal-footer">
-                            <a class="btn" href="#mentoring/mentor/"><?php _e ('Cancel','bidxplugin') ?></a>
+                            <a class="btn" href="#mentoring/cancel/"><?php _e ('Cancel','bidxplugin') ?></a>
                             <a href="#" class="btn btn-primary btn-request" data-href="#mentoring/sendRequest/" ><?php _e ('Send request','bidxplugin') ?></a>
                         </div>
                      </div>
@@ -143,14 +146,6 @@
        </div>
     </td>
 </tr>
--->
-</script>
-
-<script type="text/html" id="mentor-request-txt">
-<!--
-<p>
-    <?php _e ('You are about to %action% the request. Are you sure?','bidxplugin') ?>
-</p>
 -->
 </script>
 
