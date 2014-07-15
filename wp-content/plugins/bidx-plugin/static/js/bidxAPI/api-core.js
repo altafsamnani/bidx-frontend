@@ -165,6 +165,7 @@
                     url:        api.settings.servicesPath + file + ".js?__b=" + api.buildNr + ( api.settings.deCaching ? +new Date() : "" )
                 ,   type:       "GET"
                 ,   dataType:   "script"
+                ,   cache:      false
                 ,   success:    function( data, status, xhr )
                                 {
                                     $.each( currentlyLoading[ method ], function( index, callback )
