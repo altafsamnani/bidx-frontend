@@ -32,6 +32,10 @@
 
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
 
+    ,   $tabMentor                  = $element.find( "#businessSummaryCollapse-MentoringDetails" )
+
+    ,   loggedInMemberId            = bidx.common.getCurrentUserId()
+
 
     ,   forms                       =
         {
@@ -1939,12 +1943,260 @@
         bidx.utils.setValue( businessSummary, "attachment", attachments );
     }
 
+    function showEntity( options )
+    {
+        var  bidxMeta
+        ;
+
+        bidx.api.call(
+            "entity.fetch"
+        ,   {
+                entityId:       options.entityId
+            ,   groupDomain:    bidx.common.groupDomain
+            ,   success:        function( itemSummary )
+                {
+                    // now format it into array of objects with value and label
+
+                    if ( !$.isEmptyObject(itemSummary) )
+                    {
+
+                        bidxMeta       = bidx.utils.getValue( itemSummary, "bidxMeta" );
+
+                        if( bidxMeta && bidxMeta.bidxEntityType === options.entityType )
+                        {
+
+                            //  execute callback if provided
+                            if (options && options.callback)
+                            {
+                                options.callback( itemSummary );
+                            }
+
+                        }
+                    }
+
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback( false );
+                    }
+                    return false;
+                }
+            }
+        );
+
+    }
+
+
+    function showMemberProfile( options )
+    {
+        var bidxMeta
+        ;
+
+        bidx.api.call(
+            "member.fetch"
+        ,   {
+                id:          options.ownerId
+            ,   requesteeId: options.ownerId
+            ,   groupDomain: bidx.common.groupDomain
+            ,   success:        function( item )
+                {
+                    // now format it into array of objects with value and label
+
+                    if ( !$.isEmptyObject(item.bidxMemberProfile) )
+                    {
+                        //if( item.bidxEntityType == 'bidxBusinessSummary') {
+                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile.bidxMeta" );
+
+                        if( bidxMeta  )
+                        {
+                            //  execute callback if provided
+                            if (options && options.callback)
+                            {
+                                options.callback( item );
+                            }
+                        }
+
+                    }
+
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback( false );
+                    }
+                    return false;
+                }
+            }
+        );
+    }
+
+    function _getMentorsAndMatches( options )
+    {
+            var snippet          = $("#active-mentors").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
+            ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $list            = $element.find("." + options.list)
+            ,   emptyVal         = ''
+            ,   counter          = 1
+            ,   $listItem
+            ,   listItem
+            ,   mentorId
+            ,   memberId
+            ,   profilePic
+            ,   memberProfile
+            ,   personalDetails
+            ,   contactPicture
+            ,   memberCountry
+            ,   imageWidth
+            ,   imageLeft
+            ,   imageTop
+            ,   country
+            ,   isEntrepreneur
+            ,   isMentor
+            ,   isInvestor
+            ,   $d              =  $.Deferred()
+            ,   responseLength
+            ;
+
+            bidx.api.call(
+                "mentorRelationships.get"
+            ,   {
+                    id:              loggedInMemberId
+                ,   groupDomain:     bidx.common.groupDomain
+                ,   success: function( response )
+                    {
+                        responseLength      = response.length;
+
+                        $list.empty();
+
+                        if ( response && responseLength )
+
+                        {
+                            $.each( response , function ( idx, item)
+                            {
+                                 mentorId    = bidx.utils.getValue( item, "mentorId" );
+
+                                 showMemberProfile(
+                                {
+                                    ownerId     :   mentorId
+                                 ,  callback    :   function ( itemMember )
+                                                    {
+                                                        if(itemMember)
+                                                        {
+                                                            memberId        =   bidx.utils.getValue( itemMember, "member.bidxMeta.bidxMemberId" );
+                                                            memberProfile   =   bidx.utils.getValue( itemMember, "bidxMemberProfile" );
+                                                            personalDetails =   bidx.utils.getValue( itemMember, "bidxMemberProfile.personalDetails" );
+                                                            profilePic      =   bidx.utils.getValue( personalDetails, "profilePicture" );
+                                                            memberCountry   =   bidx.utils.getValue( personalDetails, "address.0.country");
+                                                            isEntrepreneur   = bidx.utils.getValue( itemMember, "bidxEntrepreneurProfile" );
+                                                            isInvestor       = bidx.utils.getValue( itemMember, "bidxInvestorProfile" );
+                                                            isMentor         = bidx.utils.getValue( itemMember, "bidxMentorProfile" );
+
+                                                            /* Profile Picture */
+                                                            if ( profilePic )
+                                                            {
+                                                                imageWidth  = bidx.utils.getValue( profilePic, "width" );
+                                                                imageLeft   = bidx.utils.getValue( profilePic, "left" );
+                                                                imageTop    = bidx.utils.getValue( profilePic, "top" );
+                                                                contactPicture = '<div class="img-cropper"><img class="media-object" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" src="' + profilePic.document + '"></div>';
+                                                            }
+                                                            else
+                                                            {
+                                                                contactPicture = "<div class='icons-rounded pull-left'><i class='fa fa-user text-primary-light'></i></div>";
+                                                            }
+
+                                                            /* Member Country */
+                                                            if(memberCountry)
+                                                            {
+
+                                                                bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
+                                                                {
+                                                                    country    =  labelCountry;
+                                                                });
+                                                            }
+                                                            // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
+                                                            //
+                                                            listItem = snippet
+                                                                .replace( /%pictureUrl%/g,          contactPicture )
+                                                                .replace( /%contactId%/g,           memberId                 ? memberId : emptyVal )
+                                                                .replace( /%contactName%/g,         itemMember.member.displayName               ? itemMember.member.displayName : emptyVal)
+                                                                .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
+                                                                .replace( /%country%/g,             country            ? country   : "" )
+                                                                .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
+                                                                .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
+                                                                .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
+                                                                .replace( /%action%/g,   '')
+                                                            ;
+
+                                                            $listItem = $( listItem );
+
+                                                            if( $.isFunction( options.cb ) )
+                                                            {
+                                                                // call Callback with current contact item as this scope and pass the current $listitem
+                                                                //
+                                                                //options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
+                                                            }
+                                                            //  add mail element to list
+                                                            $list.append( $listItem );
+                                                        }
+
+                                                        if( counter === responseLength )
+                                                        {
+
+                                                            $d.resolve( );
+                                                        }
+
+                                                         counter = counter + 1;
+                                                    }
+                                } );
+
+                            });
+                        }
+                        else
+                        {
+                            $list.append($listEmpty);
+
+                            $d.resolve( );
+                        }
+
+                        //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
+
+                    }
+                    , error: function(jqXhr, textStatus)
+                    {
+
+                        var status = bidx.utils.getValue(jqXhr, "status") || textStatus;
+
+                         _showError("Something went wrong while retrieving contactlist of the member: " + status);
+
+                         //  execute callback if provided
+                        if (options && options.callback)
+                        {
+                            options.callback();
+                        }
+                    }
+                }
+            );
+
+    }
+
+
     // This is the startpoint for the edit state
     //
     function _init()
     {
         // Reset any state
         //
+
         financialSummary.deletedYears = {};
 
         $doesHaveCompany.hide();
@@ -1959,6 +2211,15 @@
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
         $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  });
+
+
+        $tabMentor.on( "shown.bs.collapse", function ()
+        {
+            _getMentorsAndMatches(
+            {
+                list:'mentor-active-list'
+            });
+        });
 
         $btnCancel.bind( "click", function( e )
         {

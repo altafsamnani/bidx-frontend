@@ -1202,8 +1202,6 @@
                 }
             }
         );
-
-
     }
 
     // function that retrieves group members returned in an array of key/value objects
