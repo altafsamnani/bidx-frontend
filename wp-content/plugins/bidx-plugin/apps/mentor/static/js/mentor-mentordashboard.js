@@ -603,9 +603,9 @@
 
                 /* 1 Accept Link */
                 hrefAccept = hrefAccept
-                            .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%mentorId%/g,              currentUserId)
-                            .replace( /%initiatorId%/g,              currentUserId);
+                            .replace( /%entityId%/g,    item.entityId )
+                            .replace( /%mentorId%/g,    currentUserId)
+                            .replace( /%initiatorId%/g, currentUserId);
 
                 $acceptBtn.attr( "href", hrefAccept );
 
@@ -1480,7 +1480,6 @@
                 _showView("ended", true );
                 _showView("loadended", true ); */
 
-                bidx.utils.log('in mentor mentorrrrrrrrrrrrrrrrrr');
 
                 getMentorProposals(
                 {

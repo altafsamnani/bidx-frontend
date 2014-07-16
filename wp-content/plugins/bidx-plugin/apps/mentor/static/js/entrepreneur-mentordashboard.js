@@ -155,7 +155,7 @@
                 /* 4 Cancel request */
                 hrefStop = hrefStop
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            ;
 
                 $stopBtn.attr( "href", hrefStop );
 
@@ -171,14 +171,14 @@
                 ,   hrefContact     =   $contactBtn.attr( "data-href" )
                 ;
 
-                /* 1 Accept Link */
+                /* 1 Reminder Link */
                 hrefReminder = hrefReminder.replace( /%receipientId%/g,      mentorId );
                 $reminderBtn.attr( "href", hrefReminder );
 
                 /* 2 Ignore Link */
                 hrefCancel = hrefCancel
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            ;
 
                 $cancelBtn.attr( "href", hrefCancel );
 
@@ -203,7 +203,7 @@
                 /* 1 Accept Link */
                 hrefAccept = hrefAccept
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            .replace( /%initiatorId%/g,        mentorId );
 
                 $acceptBtn.attr( "href", hrefAccept );
 
@@ -211,7 +211,7 @@
                 /* 2 Ignore Link */
                 hrefIgnore = hrefIgnore
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%userId%/g,        userId );
+                            .replace( /%initiatorId%/g,        mentorId );
 
                 $ignoreBtn.attr( "href", hrefIgnore );
 
@@ -306,6 +306,7 @@
         ,   itemSummary
         ,   itemMember
         ,   mentorId
+        ,   mentorUserId
         ,   i18nItem
         ,   $d              =  $.Deferred()
         ,   incomingLength      = incomingResponse.length
@@ -333,12 +334,14 @@
                                         if( itemSummary )
                                         {
                                             mentorId    = item.mentorId;
-                                             showMemberProfile(
+                                            showMemberProfile(
                                             {
                                                 mentorId     :   mentorId
                                              ,  callback    :   function ( itemMember )
                                                                 {
-                                                                    memberData[ mentorId ]   = itemMember.member.displayName;
+                                                                    mentorUserId = itemMember.member.bidxMeta.bidxMemberId;
+
+                                                                    memberData[ mentorUserId ]   = itemMember.member.displayName;
 
                                                                     bidx.data.getStaticDataVal(
                                                                     {
@@ -354,8 +357,8 @@
                                                                     .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                     .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                     .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
-                                                                    .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
-                                                                    .replace( /%creatorId%/g,               mentorId                             ? mentorId      : emptyVal )
+                                                                    .replace( /%creator%/g,                 itemMember.member.displayName        ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,               mentorUserId                         ? mentorUserId      : emptyVal )
                                                                     .replace( /%status%/g,                  bidx.i18n.i( "mentoringRequestPending", appName )  )
                                                                     .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
                                                                     .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
@@ -375,7 +378,7 @@
                                                                     {
                                                                         // call Callback with current contact item as this scope and pass the current $listitem
                                                                         //
-                                                                        options.cb.call( this, $listItem, item, currentUserId, mentorId );
+                                                                        options.cb.call( this, $listItem, item, currentUserId, mentorUserId );
                                                                     }
                                                                     //  add mail element to list
                                                                     $list.append( $listItem );
@@ -427,6 +430,7 @@
         ,   itemSummary
         ,   itemMember
         ,   mentorId
+        ,   mentorUserId
         ,   i18nItem
         ,   $d              =  $.Deferred()
         ,   counter         = 1
@@ -452,17 +456,16 @@
                 ,   callback    :   function ( itemSummary )
                                     {
 
-
-
                                         if( itemSummary )
                                         {
                                             mentorId    = item.mentorId;
-                                             showMemberProfile(
+                                            showMemberProfile(
                                             {
                                                 mentorId     :   mentorId
                                              ,  callback    :   function ( itemMember )
                                                                 {
-                                                                     memberData[ mentorId ]   = itemMember.member.displayName;
+                                                                    mentorUserId = itemMember.member.bidxMeta.bidxMemberId;
+                                                                    memberData[ mentorUserId ]   = itemMember.member.displayName;
 
                                                                     bidx.data.getStaticDataVal(
                                                                     {
@@ -478,8 +481,8 @@
                                                                     .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                     .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                     .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
-                                                                    .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
-                                                                    .replace( /%creatorId%/g,               mentorId                             ? mentorId      : emptyVal )
+                                                                    .replace( /%creator%/g,                 itemMember.member.displayName        ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,               mentorUserId                         ? mentorUserId      : emptyVal )
                                                                     .replace( /%status%/g,                  bidx.i18n.i( "mentoringRequestPending", appName )  )
                                                                     .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
                                                                     .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
@@ -489,8 +492,8 @@
                                                                     .replace( /%financingNeeded%/g,         i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
                                                                     .replace( /%stageBusiness%/g,           i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
                                                                     .replace( /%envImpact%/g,               i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
-                                                                    .replace( /%action%/g,              actionData )
-                                                                    .replace( /%document%/g,            ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
+                                                                    .replace( /%action%/g,                  actionData )
+                                                                    .replace( /%document%/g,                ( !$.isEmptyObject( itemSummary.company ) && !$.isEmptyObject( itemSummary.company.logo ) && !$.isEmptyObject( itemSummary.company.logo.document ) )   ? itemSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                                                     ;
                                                                     // execute cb function                //
                                                                     $listItem = $( listItem );
@@ -499,7 +502,7 @@
                                                                     {
                                                                         // call Callback with current contact item as this scope and pass the current $listitem
                                                                         //
-                                                                        options.cb.call( this, $listItem, item, mentorId, mentorId );
+                                                                        options.cb.call( this, $listItem, item, mentorUserId, mentorUserId );
                                                                     }
                                                                     //  add mail element to list
                                                                     $list.append( $listItem );
@@ -551,6 +554,7 @@
         ,   itemSummary
         ,   itemMember
         ,   mentorId
+        ,   mentorUserId
         ,   i18nItem
         ,   $d              =  $.Deferred()
         ,   counter         = 1
@@ -575,18 +579,17 @@
                 ,   entityType  :   'bidxBusinessSummary'
                 ,   callback    :   function ( itemSummary )
                                     {
-
-
-
                                         if( itemSummary )
                                         {
                                             mentorId    = item.mentorId;
-                                             showMemberProfile(
+                                            showMemberProfile(
                                             {
                                                 mentorId     :   mentorId
                                              ,  callback    :   function ( itemMember )
                                                                 {
-                                                                     memberData[ mentorId ]   = itemMember.member.displayName;
+                                                                    mentorUserId = itemMember.member.bidxMeta.bidxMemberId;
+
+                                                                    memberData[ mentorUserId ]   = itemMember.member.displayName;
 
                                                                     bidx.data.getStaticDataVal(
                                                                     {
@@ -602,8 +605,8 @@
                                                                     .replace( /%accordion-id%/g,            itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                     .replace( /%entityId%/g,                itemSummary.bidxMeta.bidxEntityId    ? itemSummary.bidxMeta.bidxEntityId    : emptyVal )
                                                                     .replace( /%name%/g,                    itemSummary.name                     ? itemSummary.name      : emptyVal )
-                                                                    .replace( /%creator%/g,                 itemMember.member.displayName       ? itemMember.member.displayName      : emptyVal )
-                                                                    .replace( /%creatorId%/g,               mentorId                             ? mentorId      : emptyVal )
+                                                                    .replace( /%creator%/g,                 itemMember.member.displayName        ? itemMember.member.displayName      : emptyVal )
+                                                                    .replace( /%creatorId%/g,               mentorUserId                         ? mentorUserId      : emptyVal )
                                                                     .replace( /%status%/g,                  bidx.i18n.i( "mentoringRequestPending", appName )  )
                                                                     .replace( /%industry%/g,                i18nItem.industry    ? i18nItem.industry      : emptyVal )
                                                                     .replace( /%countryOperation%/g,        i18nItem.countryOperation  ? i18nItem.countryOperation    : emptyVal )
@@ -624,7 +627,7 @@
                                                                     {
                                                                         // call Callback with current contact item as this scope and pass the current $listitem
                                                                         //
-                                                                        options.cb.call( this, $listItem, item, mentorId, mentorId );
+                                                                        options.cb.call( this, $listItem, item, mentorUserId, mentorUserId );
                                                                     }
                                                                     //  add mail element to list
                                                                     $list.append( $listItem );
@@ -897,8 +900,7 @@
 
             $.each( result , function ( idx, item)
             {
-                bidx.utils.log('item',item.status);
-                bidx.utils.log('mentorid',item.mentorId);
+
                 if ( ( item.status      === 'requested' ) &&
                      ( item.mentorId    !== currentUserId ) &&
                      ( item.initiatorId === currentUserId ) )
@@ -924,7 +926,6 @@
                             ,   respond : respond
                             ,   ongoing : ongoing
                             };
-
 
            respondRequest(
             {
