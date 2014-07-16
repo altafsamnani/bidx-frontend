@@ -428,7 +428,7 @@
         //
         var callbacks =
         {
-            ongoing:     function(  $listItem, item, userId, ownerId )
+            ongoing:     function(  $listItem, item, entityOwnerId )
             {
                 var $addFeedbackBtn     =   $listItem.find( ".btn-bidx-add-feedback")
                 ,   $viewFeedbackBtn    =   $listItem.find( ".btn-bidx-view-feedback")
@@ -453,23 +453,23 @@
                             .replace( /%entityId%/g,      item.entityId )
                             ;
 
-
                 $viewFeedbackBtn.attr( "href", hrefviewFeedback );
 
                 /* 3 Contact Entrepreneur */
-                hrefContact = hrefContact.replace( /%receipientId%/g,      ownerId );
+                hrefContact = hrefContact.replace( /%receipientId%/g,      entityOwnerId );
                 $contactBtn.attr( "href", hrefContact );
 
                 /* 4 Cancel request */
                 hrefStop = hrefStop
                             .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%initiatorId%/g,   item.initiatorId )
                             ;
 
                 $stopBtn.attr( "href", hrefStop );
 
 
             }
-        ,   pending:    function(  $listItem, item, userId, entityOwnerId )
+        ,   pending:    function(  $listItem, item, entityOwnerId )
             {
                 var $reminderBtn    =   $listItem.find( ".btn-bidx-reminder")
                 ,   $cancelBtn      =   $listItem.find( ".btn-bidx-cancel")
@@ -498,7 +498,7 @@
         ,   ignored:    function()
             {
             }
-        ,   incoming:   function(  $listItem, item, userId, entityOwnerId )
+        ,   incoming:   function(  $listItem, item )
             {
                 var $acceptBtn  =   $listItem.find( ".btn-bidx-accept")
                 ,   $ignoreBtn  =   $listItem.find( ".btn-bidx-ignore")
@@ -511,7 +511,7 @@
                 /* 1 Accept Link */
                 hrefAccept = hrefAccept
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%initiatorId%/g,        entityOwnerId );
+                            .replace( /%initiatorId%/g,   item.initiatorId );
 
                 $acceptBtn.attr( "href", hrefAccept );
 
@@ -519,12 +519,12 @@
                 /* 2 Ignore Link */
                 hrefIgnore = hrefIgnore
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%initiatorId%/g,        entityOwnerId );
+                            .replace( /%initiatorId%/g,   item.initiatorId );
 
                 $ignoreBtn.attr( "href", hrefIgnore );
 
                 /* 3 Contact Entrepreneur */
-                hrefContact = hrefContact.replace( /%receipientId%/g,      entityOwnerId );
+                hrefContact = hrefContact.replace( /%receipientId%/g,      item.initiatorId );
                 $contactBtn.attr( "href", hrefContact );
 
             }

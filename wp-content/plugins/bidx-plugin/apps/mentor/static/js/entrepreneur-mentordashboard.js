@@ -121,7 +121,7 @@
         //
         var callbacks =
         {
-            ongoing:     function(  $listItem, item, userId, mentorId )
+            ongoing:     function(  $listItem, item )
             {
                 var $addFeedbackBtn     =   $listItem.find( ".btn-bidx-add-feedback")
                 ,   $viewFeedbackBtn    =   $listItem.find( ".btn-bidx-view-feedback")
@@ -148,20 +148,22 @@
 
                 $viewFeedbackBtn.attr( "href", hrefviewFeedback );
 
-                /* 3 Contact Entrepreneur */
-                hrefContact = hrefContact.replace( /%receipientId%/g,      mentorId );
+                /* 3 Contact Mentor */
+                hrefContact = hrefContact.replace( /%receipientId%/g,      item.mentorId );
                 $contactBtn.attr( "href", hrefContact );
 
                 /* 4 Cancel request */
                 hrefStop = hrefStop
                             .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%initiatorId%/g,   item.initiatorId )
                             ;
 
                 $stopBtn.attr( "href", hrefStop );
 
 
+
             }
-        ,   pending:    function(  $listItem, item, userId, mentorId )
+        ,   pending:    function(  $listItem, item  )
             {
                 var $reminderBtn    =   $listItem.find( ".btn-bidx-reminder")
                 ,   $cancelBtn      =   $listItem.find( ".btn-bidx-cancel")
@@ -172,7 +174,7 @@
                 ;
 
                 /* 1 Reminder Link */
-                hrefReminder = hrefReminder.replace( /%receipientId%/g,      mentorId );
+                hrefReminder = hrefReminder.replace( /%receipientId%/g,      item.mentorId );
                 $reminderBtn.attr( "href", hrefReminder );
 
                 /* 2 Ignore Link */
@@ -183,14 +185,14 @@
                 $cancelBtn.attr( "href", hrefCancel );
 
                 /* 3 Contact Entrepreneur */
-                hrefContact = hrefContact.replace( /%receipientId%/g,      mentorId );
+                hrefContact = hrefContact.replace( /%receipientId%/g,      item.mentorId );
                 $contactBtn.attr( "href", hrefContact );
 
             }
         ,   ignored:    function()
             {
             }
-        ,   incoming:   function(  $listItem, item, userId, mentorId )
+        ,   incoming:   function(  $listItem, item )
             {
                 var $acceptBtn  =   $listItem.find( ".btn-bidx-accept")
                 ,   $ignoreBtn  =   $listItem.find( ".btn-bidx-ignore")
@@ -203,7 +205,7 @@
                 /* 1 Accept Link */
                 hrefAccept = hrefAccept
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%initiatorId%/g,        mentorId );
+                            .replace( /%initiatorId%/g,   item.initiatorId );
 
                 $acceptBtn.attr( "href", hrefAccept );
 
@@ -211,12 +213,12 @@
                 /* 2 Ignore Link */
                 hrefIgnore = hrefIgnore
                             .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%initiatorId%/g,        mentorId );
+                            .replace( /%initiatorId%/g,   item.initiatorId );
 
                 $ignoreBtn.attr( "href", hrefIgnore );
 
                 /* 3 Contact Entrepreneur */
-                hrefContact = hrefContact.replace( /%receipientId%/g,      mentorId );
+                hrefContact = hrefContact.replace( /%receipientId%/g,      item.mentorId );
                 $contactBtn.attr( "href", hrefContact );
 
             }
@@ -378,7 +380,7 @@
                                                                     {
                                                                         // call Callback with current contact item as this scope and pass the current $listitem
                                                                         //
-                                                                        options.cb.call( this, $listItem, item, currentUserId, mentorUserId );
+                                                                        options.cb.call( this, $listItem, item );
                                                                     }
                                                                     //  add mail element to list
                                                                     $list.append( $listItem );
@@ -502,7 +504,7 @@
                                                                     {
                                                                         // call Callback with current contact item as this scope and pass the current $listitem
                                                                         //
-                                                                        options.cb.call( this, $listItem, item, mentorUserId, mentorUserId );
+                                                                        options.cb.call( this, $listItem, item );
                                                                     }
                                                                     //  add mail element to list
                                                                     $list.append( $listItem );
@@ -627,7 +629,7 @@
                                                                     {
                                                                         // call Callback with current contact item as this scope and pass the current $listitem
                                                                         //
-                                                                        options.cb.call( this, $listItem, item, mentorUserId, mentorUserId );
+                                                                        options.cb.call( this, $listItem, item );
                                                                     }
                                                                     //  add mail element to list
                                                                     $list.append( $listItem );
