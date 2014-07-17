@@ -1239,7 +1239,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 <script type="text/html" id="active-mentors">
 <!--
-    <div class="col-sm-6">
         <div class="well media">
             <a class="pull-left" href="/member/%contactId%">
                 %pictureUrl%
@@ -1256,7 +1255,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 %action%
             </div>
         </div>
-    </div>
 -->
 </script>
 <script type="text/html" id="empty-mentors">
@@ -1275,5 +1273,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=send" class="btn-bidx-send label bidx-mentor btn btn-sm"><?php _e('Offer mentoring','bidxplugin');?></a>
 <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide"><?php _e('Contact entrepreneur','bidxplugin');?></a>
 -->
+</script>
+<script type="text/html" id="load-mentor">
+    <div class="col-sm-6 member%contactId%">
+        <div class="viewLoadrequest alert alert-info text-center">
+                <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading active mentors', 'bidxplugin') ?>
+        </div>
+    </div>
 </script>
 

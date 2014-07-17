@@ -2039,6 +2039,7 @@
     {
             var snippet          = $("#active-mentors").html().replace(/(<!--)*(-->)*/g, "")
             ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
+            ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
             ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
             ,   $list            = $element.find("." + options.list)
             ,   emptyVal         = ''
@@ -2080,6 +2081,11 @@
                             $.each( response , function ( idx, item)
                             {
                                  mentorId    = bidx.utils.getValue( item, "mentorId" );
+
+                                 listItem = loaderSnippet
+                                            .replace( /%contactId%/g, mentorId );
+
+                                 $list.append( listItem );
 
                                  showMemberProfile(
                                 {
@@ -2142,7 +2148,7 @@
                                                                 //options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
                                                             }
                                                             //  add mail element to list
-                                                            $list.append( $listItem );
+                                                            $list.find('.member' + memberId ).empty().append( $listItem );
                                                         }
 
                                                         if( counter === responseLength )
