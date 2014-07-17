@@ -57,7 +57,24 @@ class businesssummary
             $businessSummaryData = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
 
             $view->data = $businessSummaryData->data;
-            $view->completenessScore = isset( $businessSummaryData -> data -> completeness ) ? $businessSummaryData -> data -> completeness : 0;
+            
+            if ( isset( $businessSummaryData -> data -> completeness ) ) {
+            	$completeness = $businessSummaryData -> data -> completeness;
+            	
+            	//TODO : structurally fix this using the scoring service
+            	$view->completenessScore = round(($completeness / 68)*100);
+            	if ( $view->completenessScore < 30 ) {
+            		$view->completenessColour = 'incomplete';
+            	} else if ( $view->completenessScore < 60 ) {
+            		$view->completenessColour = 'medium';
+            	} else {
+            		$view->completenessColour = 'good';
+            	}
+            }
+            else {
+            	$view->completenessScore = 0;
+            	$view->completenessColour = 'red';
+            }
         }
 
         $view->render('businesssummary.phtml');
