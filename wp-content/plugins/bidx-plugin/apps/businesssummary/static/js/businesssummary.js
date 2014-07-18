@@ -123,8 +123,36 @@
         {
             deletedYears:               {}
         }
-    ;
+    ,   $searchPagerContainer   = $views.filter( ".mentor-match-list" ).find( ".pagerContainer")
+    ,   $searchPager            = $searchPagerContainer.find( ".pager" )
 
+    ,   paging                      =
+        {
+            search:
+            {
+                offset:         0
+            ,   totalPages:     null
+            }
+        }
+    ;
+    // Constants
+    //
+    var CONSTANTS =
+        {
+            SEARCH_LIMIT:                       5
+        ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
+        ,   LOAD_COUNTER:                       0
+        ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
+        ,   ENTITY_TYPES:                       [
+                                                    {
+                                                        "type": "bidxBusinessSummary"
+                                                    }
+                                                ]
+        }
+
+    ,   tempLimit = CONSTANTS.SEARCH_LIMIT
+
+    ;
     // Form fields
     //
     var fields =
@@ -2024,20 +2052,379 @@
                 }
             ,   error: function(jqXhr, textStatus)
                 {
+
                     //  execute callback if provided
                     if (options && options.callback)
                     {
                         options.callback( false );
                     }
-                    return false;
+
                 }
             }
         );
     }
 
-    function _getMentorsAndMatches( options )
+    /*
+        {
+            "searchTerm"    :   "text:*"
+        ,   "sort"          :   [
+                                  {
+                                    "field": "entityId",
+                                    "order": "asc"
+                                  }
+                                ]
+        ,   "maxResult"     :   10
+        ,   "offset"        :   0
+        ,   "entityTypes"   :   [
+                                    {
+                                        "type": "bidxBusinessSummary"
+                                    }
+                                ]
+        ,   "scope"         :   "local"
+        }
+
+    */
+    function _getSearchCriteria ( params ) {
+
+        var q
+        ,   sort
+        ,   filters
+        ,   criteria
+        ,   criteriaQ
+        ,   paramFilter
+        ,   search
+        ,   sortQuery       = []
+        ,   criteriaFilters = []
+        ,   criteriaSort    = []
+        ;
+
+        // 1. Search paramete
+        // ex searchTerm:text:altaf
+        //
+        // See if its coming from the search page itself(if) or from the top(else)
+        //
+
+        // 2. Sort criteria
+        // ex sort:["field":"entity", "order": asc ]
+        //
+        sort = bidx.utils.getValue( params, 'sort' );
+
+        if( sort )
+        {
+
+            $.each( sort, function( sortField, sortOrder )
+            {
+                criteriaSort.push( {
+                                            "field" : sortField
+                                        ,   "order":  sortOrder
+                                    });
+
+
+            } );
+
+        }
+
+        // 3. Filter
+        // ex filters:["0": "facet_language:fi" ]
+        //
+
+        filters = bidx.utils.getValue(params, 'filters' );
+
+        if(  filters )
+        {
+            criteriaFilters = filters;
+        }
+
+        search =    {
+                        criteria    :   {
+                                            "searchTerm"    :   "text:*"
+                                        ,   "filters"       :   criteriaFilters
+                                        ,   "sort"          :   criteriaSort
+                                        ,   "maxResult"     :   tempLimit
+                                        ,   "offset"        :   paging.search.offset
+                                        ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
+                                        ,   "scope"         :   "local"
+                                        }
+                    };
+
+
+        return search;
+
+    }
+
+     function _doSearchListing( options )
     {
-            var snippet          = $("#active-mentors").html().replace(/(<!--)*(-->)*/g, "")
+        var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
+        ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   response         = options.response
+        ,   $list            = $element.find("." + options.list)
+        ,   emptyVal         = ''
+        ,   counter          = 1
+        ,   pagerOptions    = {}
+        ,   $listItem
+        ,   listItem
+        ,   mentorId
+        ,   memberId
+        ,   entityId
+        ,   profilePic
+        ,   memberProfile
+        ,   personalDetails
+        ,   contactPicture
+        ,   memberCountry
+        ,   imageWidth
+        ,   imageLeft
+        ,   imageTop
+        ,   country
+        ,   isEntrepreneur
+        ,   isMentor
+        ,   isInvestor
+        ,   activeMembers = []
+        ,   countHtml
+        ,   $d              =  $.Deferred()
+        ,   responseLength
+        ;
+
+        bidx.utils.log("[response] retrieved results $list ", $list );
+
+        if ( response.docs && response.docs.length )
+        {
+            // if ( response.totalMembers > currentPage size  --> show paging)
+            //
+            $list.empty();
+
+            responseLength      = response.docs.length;
+
+            pagerOptions  =
+            {
+                currentPage:            ( paging.search.offset / tempLimit  + 1 ) // correct for api value which starts with 0
+            ,   totalPages:             Math.ceil( response.numFound / tempLimit )
+            ,   numberOfPages:          CONSTANTS.NUMBER_OF_PAGES_IN_PAGINATOR
+            ,   useBootstrapTooltip:    true
+
+            ,   itemContainerClass:     function ( type, page, current )
+                {
+                    return ( page === current ) ? "active" : "pointer-cursor";
+                }
+
+            ,   onPageClicked:          function( e, originalEvent, type, page )
+                {
+                    bidx.utils.log("Page Clicked", page);
+
+                    // Force it to scroll to top of the page before the removal and addition of the results
+                    //
+                    $(document).scrollTop(0);
+
+                    // update internal page counter for businessSummaries
+                    //
+                    paging.search.offset = ( page - 1 ) * tempLimit;
+
+                    //_showAllView( "loadmatch" );
+
+                     _getMentorMatches(
+                    {
+                        params  :   {
+                                        q           :   options.q
+                                    ,   sort        :   options.sort
+                                    }
+                    ,   cb      :   function()
+                                    {
+                                        //_hideView( "loadmatch" );
+                                        _showAllView( "pager" );
+                                        tempLimit = CONSTANTS.SEARCH_LIMIT;
+                                    }
+                    });
+                }
+            };
+
+            tempLimit = response.docs.length;
+
+            bidx.utils.log("pagerOptions", pagerOptions);
+
+           if( response.numFound ) {
+                //countHtml = bidx.i18n.i( "matchCount", appName ).replace( /%count%/g,  response.numFound);
+                //$searchPagerContainer.find('.pagerTotal').empty( ).append('<h5>' + countHtml + '</h5>');
+                //$searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + response.numFound + ' results found</h5>');
+            }
+
+            $searchPager.bootstrapPaginator( pagerOptions );
+
+            // create member listitems
+            //
+            $.each( response.docs, function( idx, item )
+            {
+
+                mentorId    = bidx.utils.getValue( item, "ownerId" );
+
+                listItem = loaderSnippet
+                            .replace( /%contactId%/g, mentorId );
+
+                $list.append( listItem );
+
+                 showMemberProfile(
+                {
+                    ownerId     :   mentorId
+                ,   callback    :   function ( itemMember )
+                                    {
+                                        if(itemMember)
+                                        {
+                                            memberId        =   bidx.utils.getValue( itemMember, "member.bidxMeta.bidxMemberId" );
+                                            memberProfile   =   bidx.utils.getValue( itemMember, "bidxMemberProfile" );
+                                            personalDetails =   bidx.utils.getValue( itemMember, "bidxMemberProfile.personalDetails" );
+                                            profilePic      =   bidx.utils.getValue( personalDetails, "profilePicture" );
+                                            memberCountry   =   bidx.utils.getValue( personalDetails, "address.0.country");
+                                            isEntrepreneur   = bidx.utils.getValue( itemMember, "bidxEntrepreneurProfile" );
+                                            isInvestor       = bidx.utils.getValue( itemMember, "bidxInvestorProfile" );
+                                            isMentor         = bidx.utils.getValue( itemMember, "bidxMentorProfile" );
+
+                                            /* Profile Picture */
+                                            if ( profilePic )
+                                            {
+                                                imageWidth  = bidx.utils.getValue( profilePic, "width" );
+                                                imageLeft   = bidx.utils.getValue( profilePic, "left" );
+                                                imageTop    = bidx.utils.getValue( profilePic, "top" );
+                                                contactPicture = '<div class="img-cropper"><img class="media-object" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" src="' + profilePic.document + '"></div>';
+                                            }
+                                            else
+                                            {
+                                                contactPicture = "<div class='icons-rounded pull-left'><i class='fa fa-user text-primary-light'></i></div>";
+                                            }
+
+                                            /* Member Country */
+                                            if(memberCountry)
+                                            {
+
+                                                bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
+                                                {
+                                                    country    =  labelCountry;
+                                                });
+                                            }
+                                            // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
+                                            //
+                                            listItem = snippet
+                                                .replace( /%pictureUrl%/g,          contactPicture )
+                                                .replace( /%contactId%/g,           memberId                 ? memberId : emptyVal )
+                                                .replace( /%contactName%/g,         itemMember.member.displayName               ? itemMember.member.displayName : emptyVal)
+                                                .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
+                                                .replace( /%country%/g,             country            ? country   : "" )
+                                                .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
+                                                .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
+                                                .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
+                                                .replace( /%action%/g,   '')
+                                            ;
+
+                                            $listItem = $( listItem );
+
+                                            if( $.isFunction( options.cb ) )
+                                            {
+                                                // call Callback with current contact item as this scope and pass the current $listitem
+                                                //
+                                                //options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
+                                            }
+                                            //  add mail element to list
+
+                                        }
+
+                                        $list.find('.member' + mentorId ).empty().append( $listItem );
+
+                                        if( counter === responseLength )
+                                        {
+
+                                            $d.resolve( );
+                                        }
+
+                                         counter = counter + 1;
+                                    }
+                } );
+
+
+            });
+        }
+        else
+        {
+            $list.empty();
+
+            $list.append($listEmpty);
+
+            _hideView( "pager" );
+
+            $d.resolve( );
+        }
+
+        return $d.promise( );
+
+
+        // execute cb function
+        //
+
+    }
+
+    function _getMentorMatches( options )
+    {
+        var search
+        ;
+
+        search = _getSearchCriteria( options.params );
+
+        bidx.api.call(
+            "search.get"
+        ,   {
+                    groupDomain:          bidx.common.groupDomain
+                ,   data:                 search.criteria
+                ,   success: function( response )
+                    {
+                        bidx.utils.log("[searchList] retrieved results ", response );
+                         _doSearchListing(
+                        {
+                            response    :   response
+                        ,   q           :   search.q
+                        ,   sort        :   search.sort
+                        ,   criteria    :   search.criteria
+                        ,   list        :   'mentor-match-list'
+                       // ,   cb          : _getContactsCallback( 'match' )
+                        } )
+                        .done(  function(  )
+                        {
+                            //  execute callback if provided
+                            if (options && options.cb)
+                            {
+                                options.cb(  );
+                            }
+                        } );
+
+                    }
+                    ,
+                    error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText)
+                        ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                        ;
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        }
+
+                    }
+            }
+        );
+    }
+
+    function _getActiveMentorsAndMatches( options )
+    {
+            var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
             ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
             ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
             ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
@@ -2091,7 +2478,7 @@
                                     activeMembers.push( itemResponse );
                                 }
                             });
-                            bidx.utils.log(activeMembers);
+
                             responseLength = activeMembers.length;
 
                             if( responseLength )
@@ -2169,8 +2556,10 @@
                                                                     //options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
                                                                 }
                                                                 //  add mail element to list
-                                                                $list.find('.member' + memberId ).empty().append( $listItem );
+
                                                             }
+
+                                                            $list.find('.member' + memberId ).empty().append( $listItem );
 
                                                             if( counter === responseLength )
                                                             {
@@ -2219,6 +2608,7 @@
                     }
                 }
             );
+        return $d;
 
     }
 
@@ -2248,10 +2638,17 @@
 
         $tabMentor.on( "shown.bs.collapse", function ()
         {
-            _getMentorsAndMatches(
+            _getActiveMentorsAndMatches(
             {
                 list:'mentor-active-list'
-            });
+            })
+            .done( function()
+                {
+                    _getMentorMatches(
+                    {
+                        list:'mentor-match-list'
+                    });
+                });
         });
 
         $btnCancel.bind( "click", function( e )
@@ -2648,6 +3045,15 @@
         {
             $element.find( ".total-error-message" ).hide();
         }
+    };
+    var _showAllView = function ( view )
+    {
+        var $view = $views.filter( bidx.utils.getViewName( view ) ).show();
+    };
+
+    var _hideView = function( hideview )
+    {
+        $views.filter(bidx.utils.getViewName(hideview)).hide();
     };
 
     // ROUTER

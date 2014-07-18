@@ -930,36 +930,47 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             <!-- ---------------Mentor Matching Start------------------ -->
                             <div id="contacts">
                                 <!-- ACTIVE REQUESTS -->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <a class="btn-block trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
-                                            <?php _e('Active mentors')?>
-                                        </a>
-                                    </div>
-                                    <div id="activeRequests" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <div class="mentor-active-list list-unstyled clearfix row">
-                                            </div>
+                                <div class="panel-heading">
+                                    <a class="btn-block trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
+                                        <?php _e('Active mentors')?>
+                                    </a>
+                                </div>
+                                <div id="activeRequests" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="mentor-active-list list-unstyled clearfix row">
                                         </div>
                                     </div>
                                 </div>
+
                                  <!-- RECEIVED CONTACT REQUESTS -->
-                                <div class="panel panel-default hide">
-                                    <div class="panel-heading">
-                                        <a class="btn-block trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
-                                            <?php _e('Matching mentors')?>
-                                        </a>
-                                    </div>
-                                    <div id="incomingRequests" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="contact-request-list list-unstyled clearfix row">
-                                            </div>
-                                            <div class="text-center clearfix">
-                                                <a class="btn btn-warning bidx-btn-showMore" href="showMore=incoming"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
+
+                                <div class="panel-heading">
+                                    <a class="btn-block trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
+                                        <?php _e('Matching mentors')?>
+                                    </a>
+                                </div>
+                                <div id="incomingRequests" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="mentor-match-list list-unstyled clearfix row">
+                                        </div>
+                                        <div class="text-center clearfix">
+                                            <a class="btn btn-warning bidx-btn-showMore" href="showMore=incoming"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
+                                        </div>
+                                        <div class="view viewPager">
+                                            <div class="pagerContainer">
+                                                <div class="row">
+                                                    <div class="col-sm-2 pagerTotal">
+                                                        <?php _e('%count% matches found', 'bidxplugin'); ?>
+                                                    </div>
+                                                    <div class="col-sm-10">
+                                                        <ul class="pager pull-left"></ul>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
 
 
                             </div> <!-- ---------------Mentor Matching End------------------ -->
@@ -1237,7 +1248,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 </div><!-- /businesssummary -->
 
-<script type="text/html" id="active-mentors">
+<script type="text/html" id="mentor-snippet">
 <!--
         <div class="well media">
             <a class="pull-left" href="/member/%contactId%">
