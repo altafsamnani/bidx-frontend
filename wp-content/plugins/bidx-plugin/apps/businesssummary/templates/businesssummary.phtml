@@ -926,16 +926,17 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- ---------------Mentor Matching Start------------------ -->
-                            <div id="contacts">
+                        </form>
+                    </div><!-- /EDIT -->
+                    <!-- ---------------Mentor Matching Start------------------ -->
+                            <div id="contacts" class="view viewMentor">
                                 <!-- ACTIVE REQUESTS -->
                                 <div class="panel-heading">
-                                    <a class="btn-block trigger-active-contacts" data-toggle="collapse" data-parent="#contacts" href="#activeRequests">
+                                    <a class="btn-block trigger-active-contacts">
                                         <?php _e('Active mentors')?>
                                     </a>
                                 </div>
-                                <div id="activeRequests" class="panel-collapse collapse in">
+                                <div id="activeRequests">
                                     <div class="panel-body">
                                         <div class="mentor-active-list list-unstyled clearfix row">
                                         </div>
@@ -945,16 +946,13 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                  <!-- RECEIVED CONTACT REQUESTS -->
 
                                 <div class="panel-heading">
-                                    <a class="btn-block trigger-incoming-contacts" data-toggle="collapse" data-parent="#contacts" href="#incomingRequests">
+                                    <a class="btn-block trigger-incoming-contacts">
                                         <?php _e('Matching mentors')?>
                                     </a>
                                 </div>
-                                <div id="incomingRequests" class="panel-collapse collapse in">
+                                <div id="incomingRequests">
                                     <div class="panel-body">
                                         <div class="mentor-match-list list-unstyled clearfix row">
-                                        </div>
-                                        <div class="text-center clearfix">
-                                            <a class="btn btn-warning bidx-btn-showMore" href="showMore=incoming"><?php _e('Show more', 'bidxplugin')?> <i class="fa fa-chevron-down"></i></a>
                                         </div>
                                         <div class="view viewPager">
                                             <div class="pagerContainer">
@@ -970,14 +968,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </div> <!-- ---------------Mentor Matching End------------------ -->
-
-                        </form>
-
-                    </div><!-- /EDIT -->
 
                 </div><!-- /Accordion inner -->
                 <div class="panel-footer hide-overflow">
@@ -1286,10 +1277,21 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 -->
 </script>
 <script type="text/html" id="load-mentor">
+<!--
     <div class="col-sm-6 member%contactId%">
         <div class="viewLoadrequest alert alert-info text-center">
                 <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading active mentors', 'bidxplugin') ?>
         </div>
     </div>
+-->
+</script>
+<script type="text/html" id="error-mentor">
+<!--
+    <div>
+        <div class="viewLoadrequest alert alert-danger text-center">
+            <?php _e ('Error loading mentor', 'bidxplugin') ?>
+        </div>
+    </div>
+-->
 </script>
 

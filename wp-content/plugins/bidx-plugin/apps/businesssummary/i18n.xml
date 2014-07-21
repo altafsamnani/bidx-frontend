@@ -3,4 +3,5 @@
     <Item value="currentYear">Current year</Item>
     <Item value="actuals">Actuals</Item>
     <Item value="forecast">Forecast</Item>
+    <Item value="matchCount">%count% matches found</Item>
 </I18N>

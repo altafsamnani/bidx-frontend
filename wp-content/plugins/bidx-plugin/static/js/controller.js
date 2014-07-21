@@ -303,6 +303,7 @@
 
         ,   'editBusinessSummary(/:id)':                        'editBusinessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
+        ,   'viewBusinessSummary':                            'viewBusinessSummary'
 
         ,   'auth(/:state)(*splat)':                            'auth'
 
@@ -584,6 +585,20 @@
                 "businesssummary"
             ,   {
                     requestedState: "create"
+                }
+            );
+        }
+    ,   viewBusinessSummary:          function()
+        {
+            bidx.utils.log( "AppRouter::viewBusinessSummary" );
+
+            mainState       = "viewBusinessSummary";
+
+             _navigateToApp
+            (
+                "businesssummary"
+            ,   {
+                    requestedState: "view"
                 }
             );
         }

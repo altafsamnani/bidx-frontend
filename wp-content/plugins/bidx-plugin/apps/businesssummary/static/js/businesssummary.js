@@ -123,7 +123,7 @@
         {
             deletedYears:               {}
         }
-    ,   $searchPagerContainer   = $views.filter( ".mentor-match-list" ).find( ".pagerContainer")
+    ,   $searchPagerContainer   = $element.find( "#incomingRequests" ).find( ".pagerContainer")
     ,   $searchPager            = $searchPagerContainer.find( ".pager" )
 
     ,   paging                      =
@@ -139,13 +139,13 @@
     //
     var CONSTANTS =
         {
-            SEARCH_LIMIT:                       5
+            SEARCH_LIMIT:                       4
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
         ,   ENTITY_TYPES:                       [
                                                     {
-                                                        "type": "bidxBusinessSummary"
+                                                        "type": "bidxMentorProfile"
                                                     }
                                                 ]
         }
@@ -2043,7 +2043,7 @@
                             //  execute callback if provided
                             if (options && options.callback)
                             {
-                                options.callback( item );
+                                options.callback( item, options.ownerId );
                             }
                         }
 
@@ -2056,7 +2056,7 @@
                     //  execute callback if provided
                     if (options && options.callback)
                     {
-                        options.callback( false );
+                        options.callback( false, options.ownerId );
                     }
 
                 }
@@ -2156,6 +2156,7 @@
     {
         var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
+        ,   $listError       = $("#error-mentor").html().replace(/(<!--)*(-->)*/g, "")
         ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
         ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response         = options.response
@@ -2240,18 +2241,18 @@
 
             tempLimit = response.docs.length;
 
-            bidx.utils.log("pagerOptions", pagerOptions);
-
            if( response.numFound ) {
-                //countHtml = bidx.i18n.i( "matchCount", appName ).replace( /%count%/g,  response.numFound);
-                //$searchPagerContainer.find('.pagerTotal').empty( ).append('<h5>' + countHtml + '</h5>');
-                //$searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + response.numFound + ' results found</h5>');
+                countHtml = bidx.i18n.i( "matchCount", appName ).replace( /%count%/g,  response.numFound);
+                $searchPagerContainer.find('.pagerTotal').empty( ).append('<h5>' + countHtml + '</h5>');
+                $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + response.numFound + ' results found</h5>');
             }
 
             $searchPager.bootstrapPaginator( pagerOptions );
 
             // create member listitems
             //
+
+
             $.each( response.docs, function( idx, item )
             {
 
@@ -2265,7 +2266,7 @@
                  showMemberProfile(
                 {
                     ownerId     :   mentorId
-                ,   callback    :   function ( itemMember )
+                ,   callback    :   function ( itemMember, itemMemberId )
                                     {
                                         if(itemMember)
                                         {
@@ -2324,9 +2325,12 @@
                                             }
                                             //  add mail element to list
 
+                                        } else
+                                        {
+                                            $listItem = $listError;
                                         }
 
-                                        $list.find('.member' + mentorId ).empty().append( $listItem );
+                                        $list.find('.member' + itemMemberId ).empty().append( $listItem );
 
                                         if( counter === responseLength )
                                         {
@@ -2498,7 +2502,7 @@
                                      showMemberProfile(
                                     {
                                         ownerId     :   mentorId
-                                     ,  callback    :   function ( itemMember )
+                                     ,  callback    :   function ( itemMember, itemMemberId )
                                                         {
                                                             if(itemMember)
                                                             {
@@ -2612,10 +2616,45 @@
 
     }
 
+    function _getMentorRequests ( )
+    {
+        var $mentorPanel        =   $element.find("#businessSummaryCollapse-MentoringDetails")
+        ,   $mentorRequest      =   $mentorPanel.find('.mentor-active-list')
+        ,   isMentorListEmpty   =   ($.trim( $mentorRequest.html()) === '') ? true : false
+        ;
+        bidx.utils.log('Mentor already loaded', isMentorListEmpty);
+
+        _showAllView( "mentor" );
+
+        if( isMentorListEmpty )
+        {
+            _getActiveMentorsAndMatches(
+            {
+                list:   'mentor-active-list'
+            });
+             _getMentorMatches(
+            {
+                list:   'mentor-match-list'
+            ,   cb  :   function ( )
+                        {
+                            _showAllView( "pager" );
+                        }
+            });
+        }
+    }
+
+    function _getMentors()
+    {
+
+        $tabMentor.on( "shown.bs.collapse", function ()
+        {
+            _getMentorRequests( );
+        });
+    }
 
     // This is the startpoint for the edit state
     //
-    function _init()
+    function _init( state )
     {
         // Reset any state
         //
@@ -2633,23 +2672,16 @@
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#cancel"  });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#viewBusinessSummary"  });
 
 
-        $tabMentor.on( "shown.bs.collapse", function ()
+        if( state === 'edit')
         {
-            _getActiveMentorsAndMatches(
+            $tabMentor.on( "shown.bs.collapse", function ()
             {
-                list:'mentor-active-list'
-            })
-            .done( function()
-                {
-                    _getMentorMatches(
-                    {
-                        list:'mentor-match-list'
-                    });
-                });
-        });
+                _getMentorRequests( );
+            });
+        }
 
         $btnCancel.bind( "click", function( e )
         {
@@ -2670,13 +2702,15 @@
             else
             {
                 bidx.common.removeAppWithPendingChanges( appName );
-                bidx.controller.updateHash( "" );
+                bidx.controller.updateHash( "#viewBusinessSummary", true );
 
                 reset();
 
                 bidx.common.removeValidationErrors();
 
                 _showView( "show" );
+
+                _showAllView( "mentor" );
             }
         } );
 
@@ -2735,8 +2769,11 @@
                     bidx.common.removeValidationErrors();
 
                     _showView( "edit" );
+                    _showAllView( "mentor" );
                 })
             ;
+
+
         }
         else
         {
@@ -3067,6 +3104,13 @@
 
         switch ( options.requestedState )
         {
+            case 'view':
+
+               bidx.utils.log( "View BusinessSummary::AppRouter::view" );
+
+               _getMentors( );
+
+            break;
             case "edit":
                 bidx.utils.log( "EditBusinessSummary::AppRouter::edit", options.id, options.section );
 
@@ -3109,7 +3153,7 @@
                         } )
                         .done( function()
                         {
-                            _init();
+                            _init( state );
                         } );
                 }
 
@@ -3126,6 +3170,7 @@
 
                     return hash;
                 }
+
             break;
 
             case "create":
@@ -3141,7 +3186,7 @@
                 bidx.i18n.load( [ "__global", appName ] )
                     .done( function()
                     {
-                        _init();
+                        _init( state );
                     } );
             break;
         }
@@ -3198,4 +3243,12 @@
     }
 
     window.bidx.businesssummary = app;
+
+
+    // if hash is empty and there is not path in the uri, load #home
+    //
+    if ($("body.bidx-businesssummary").length && !bidx.utils.getValue(window, "location.hash").length)
+    {
+        window.location.hash = "#viewBusinessSummary";
+    }
 } ( jQuery ));
