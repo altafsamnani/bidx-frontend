@@ -1,8 +1,12 @@
 <?php
     global $sitepress;
-    $footerContent = 'footer';
-    if( $sitepress ) {
+    
+    $session = BidxCommon::$staticSession;
 
+    $footerContent = 'footer';
+    
+    if( $sitepress )
+    {
         $currentLanguage = $sitepress->get_current_language();
         $footerContent .= ( $currentLanguage != 'en') ? '_'.$currentLanguage : '';
     }
@@ -57,6 +61,33 @@
 <?php
     }
 ?>
+
+<div class="loginModal modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3><?php _e('Your session expired, login to continue', 'bidxplugin' ); ?></h3>
+            </div>
+            <div class="modal-body">
+                <div id="frmLoginModal">
+                    <div class="form-group">
+                        <label class=""><?php _e('Email address','bidxplugin');?></label>
+                        <input type="email" class="form-control" name="shownusername" value="<?php echo $session->data->username ?>" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label class=""><?php _e('Password','bidxplugin');?></label>
+                        <input type="password" class="form-control" name="password" placeholder="<?php _e('Enter your password','bidxplugin');?>" />
+                    </div>
+                    <input type="email" class="hide" name="username" value="<?php echo $session->data->username ?>" />
+                    
+                    <div class="error-separate alert alert-danger"></div>
+                    <button type="submit" class="btn btn-primary js-relogin"><?php _e('Login','bidxplugin');?></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>        
 
 <?php wp_footer(); ?>
 
