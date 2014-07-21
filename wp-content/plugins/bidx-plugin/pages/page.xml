@@ -36,12 +36,12 @@
         </post>
 		<post>
 			<post_id>1</post_id>
-			<name>TermsofService</name>
+			<name>Terms of Service</name>
 			<title>Terms of Service</title>
 			<update>true</update>
-			<content>
-				&lt;h2&gt;Terms of service&lt;/h2&gt;
-			</content>
+			<template>template-full.php</template>
+			<htmlTemplate>terms-of-service</htmlTemplate>
+			<content></content>
 			<setTranslate>true</setTranslate>
 		</post>
 		<post>
@@ -49,9 +49,9 @@
 			<name>Privacy</name>
 			<title>Privacy</title>
 			<update>true</update>
-			<content>
-				&lt;h2&gt;Privacy&lt;/h2&gt;
-			</content>
+			<template>template-full.php</template>
+			<htmlTemplate>privacy</htmlTemplate>
+			<content></content>
 			<setTranslate>true</setTranslate>
 		</post>
 		<post>
@@ -146,7 +146,6 @@
 			<content></content>
 			<setTranslate>true</setTranslate>
 		</post>
-
 	</posts>
 
 </data>
