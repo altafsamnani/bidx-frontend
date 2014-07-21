@@ -1310,7 +1310,7 @@
             {
                 drawCircle:                 true
             } );
-            }
+        }
 
         // Wire the submit button which can be anywhere in the DOM
         //
@@ -1663,7 +1663,7 @@
             }
         };
 
-        // Creating an entrepreneur is not possible via the member API, therefore the
+        // Creating an investor is not possible via the member API, therefore the
         // raw Entity API is used for the creation of the entrepreneur
         //
         if ( state === "create" )
