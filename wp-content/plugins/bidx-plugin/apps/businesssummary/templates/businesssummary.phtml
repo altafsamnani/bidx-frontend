@@ -657,7 +657,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                             $todayYear = date( 'Y' );
                                             $firstYear = $todayYear - 10;
 
-                                            for ( $i = $firstYear; $i <= $todayYear; $i++ ) {
+                                            for ( $i = $todayYear; $i >= $firstYear; $i-- ) {
                                                 printf( '<option value="%s">%s</option>', $i, $i );
                                             }
 ?>
