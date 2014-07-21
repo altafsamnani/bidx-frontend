@@ -53,7 +53,7 @@ class MemberService extends APIbridge {
     $sessionGroups = (!empty($sessionData->data->groups)) ? $sessionData->data->groups : NULL;
     $loggedInGroups = (array) $sessionGroups;
     $loggedInGroupKeys = array_keys($loggedInGroups);
-    $groupInfo = NULL;
+    $groupInfo = new stdClass();
     foreach ($groupDetails as $groupKey => $groupValue) {
       //Group Info
 
