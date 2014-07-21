@@ -328,6 +328,11 @@ class TemplateLibrary
             }
         }
 
+        if ( !$items )
+        {
+            return;
+        }
+
         $pairs = array_chunk($items, 2, true);
         $pairRow = '';
         foreach ($pairs as $pair) {
