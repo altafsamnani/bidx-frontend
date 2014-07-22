@@ -2474,11 +2474,13 @@
                                 //Cast to string for comparison
                                 entityId = itemResponse.entityId.toString();
 
+
                                 if ( ( itemResponse.status  === 'accepted' ) &&
                                      ( itemResponse.mentorId    !== loggedInMemberId ) &&
-                                     ( entityId === businessSummaryId )
+                                     ( entityId === bidxConfig.context.businessSummaryId )
                                      )
                                 {
+
                                     activeMembers.push( itemResponse );
                                 }
                             });
@@ -2491,8 +2493,6 @@
                                 $.each( activeMembers , function ( idx, item)
                                 {
                                     mentorId    = bidx.utils.getValue( item, "mentorId" );
-
-
 
                                      listItem = loaderSnippet
                                                 .replace( /%contactId%/g, mentorId );
@@ -2616,22 +2616,36 @@
 
     }
 
-    function _getMentorRequests ( )
+    function _getMentorRequests ( options )
     {
         var $mentorPanel        =   $element.find("#businessSummaryCollapse-MentoringDetails")
         ,   $mentorRequest      =   $mentorPanel.find('.mentor-active-list')
+        ,   $mentorMatchRequest =   $mentorPanel.find('.mentor-match-list')
         ,   isMentorListEmpty   =   ($.trim( $mentorRequest.html()) === '') ? true : false
+        ,   isMentorMatchEmpty  =   ($.trim( $mentorMatchRequest.html()) === '') ? true : false
+        ,   showMatch           =   bidx.utils.getValue(options, 'showMatch')
         ;
-        bidx.utils.log('Mentor already loaded', isMentorListEmpty);
+        bidx.utils.log('showMatch', showMatch);
 
         _showAllView( "mentor" );
 
+        if(showMatch !== 'hide')
+        {
+            _showAllView( "matchingmentors" );
+        }
+
         if( isMentorListEmpty )
         {
+            bidx.utils.log('inside isMentorListEmpty', isMentorListEmpty );
             _getActiveMentorsAndMatches(
             {
                 list:   'mentor-active-list'
             });
+        }
+
+        if(isMentorMatchEmpty && showMatch !== 'hide')
+        {
+            bidx.utils.log('inside isMentorMatchEmpty', isMentorMatchEmpty );
              _getMentorMatches(
             {
                 list:   'mentor-match-list'
@@ -2640,15 +2654,16 @@
                             _showAllView( "pager" );
                         }
             });
+
         }
     }
 
-    function _getMentors()
+    function _getMentors( options )
     {
 
         $tabMentor.on( "shown.bs.collapse", function ()
         {
-            _getMentorRequests( );
+            _getMentorRequests( options );
         });
     }
 
@@ -2710,7 +2725,9 @@
 
                 _showView( "show" );
 
+                /* Show active/matching mentors */
                 _showAllView( "mentor" );
+                _hideView( "matchingmentors" );
             }
         } );
 
@@ -2769,7 +2786,10 @@
                     bidx.common.removeValidationErrors();
 
                     _showView( "edit" );
+                    _getMentorRequests( );
                     _showAllView( "mentor" );
+                    _showAllView( "matchingmentors" );
+
                 })
             ;
 
@@ -3108,7 +3128,9 @@
 
                bidx.utils.log( "View BusinessSummary::AppRouter::view" );
 
-               _getMentors( );
+               _getMentors({
+                    showMatch : 'hide'
+                });
 
             break;
             case "edit":
