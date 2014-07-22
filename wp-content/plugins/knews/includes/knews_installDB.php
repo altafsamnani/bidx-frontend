@@ -172,6 +172,13 @@ $sql =	"CREATE TABLE " .KNEWS_AUTOMATED . " (
 		delay int(11) NOT NULL DEFAULT 0,
 		delay_unit varchar(20) NOT NULL DEFAULT '',
 
+		use_post_embed_pref bigint(1) UNSIGNED NOT NULL DEFAULT '1',
+		include_cats varchar(255) NOT NULL DEFAULT '',
+		exclude_cats varchar(255) NOT NULL DEFAULT '',
+		include_tags varchar(255) NOT NULL DEFAULT '',
+		exclude_tags varchar(255) NOT NULL DEFAULT '',
+		include_postypes varchar(255) NOT NULL DEFAULT '',
+
 		UNIQUE KEY id (id)
 	   )$charset_collate;";
 	   

@@ -196,7 +196,7 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 							echo '<td align="center"><strong style="color:#25c500">' . $count[0]->HOW_MANY . '</strong> / ' . $count2[0]->HOW_MANY . '</td>';
 							
 							//echo '<td align="center"><input type="checkbox" value="1" name="' . $list->id . '_delete" id="' . $list->id . '_delete" /></td>';
-							echo '<td><input type="text" value="' . $list->orderlist . '" name="' . $list->id . '_order" id="' . $list->id . '_order" style="width:35px;" /></td>';
+							echo '<td><input type="text" value="' . $list->orderlist . '" name="' . $list->id . '_order" id="' . $list->id . '_order" style="width:45px;" /></td>';
 							$alt=!$alt;
 						}
 				?>

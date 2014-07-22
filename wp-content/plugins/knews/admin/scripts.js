@@ -106,3 +106,50 @@ jQuery(document).ready(function() {
 function enfocar_knews(que) {
 	setTimeout("jQuery('" + que + "').focus();", 100);
 }
+
+/* automation creation */
+jQuery(document).ready(function() {
+	jQuery('input[name="knews_get_cpt"]').click(function () {
+		if(jQuery(this).is(":checked")) {
+			jQuery('div.knews_radios_cat, div.knews_radios_tags').fadeOut();
+			jQuery('div.knews_hidden_cpt').fadeIn();
+		} else {
+			jQuery('div.knews_radios_cat, div.knews_radios_tags').fadeIn();
+			jQuery('div.knews_hidden_cpt').fadeOut();
+		}
+	});
+	jQuery('input[name="knews_get_categories"]').click(function () {
+		if (jQuery(this).val()=='all') {
+			jQuery('div.knews_hidden_cat').fadeOut();
+		} else {
+			jQuery('div.knews_hidden_cat').fadeIn();			
+		}
+	});
+	jQuery('input[name="knews_get_tags"]').click(function () {
+		if (jQuery(this).val()=='all') {
+			jQuery('div.knews_hidden_tags').fadeOut();
+		} else {
+			jQuery('div.knews_hidden_tags').fadeIn();			
+		}
+	});
+	jQuery('#auto_lang').change(function() {
+		lang = jQuery(this).val();
+		
+		jQuery('div.knews_hidden_cat select').empty();
+		for (var x=0; x<knews_cats_tags['cats'][lang].length; x++) {
+			option = jQuery('<option></option>').attr("value", knews_cats_tags['cats'][lang][x][0]).text(knews_cats_tags['cats'][lang][x][1]);
+			jQuery('div.knews_hidden_cat select').append(option);
+		}
+		
+		jQuery('div.knews_hidden_tags select').empty();
+		for (var x=0; x<knews_cats_tags['tags'][lang].length; x++) {
+			option = jQuery('<option></option>').attr("value", knews_cats_tags['tags'][lang][x][0]).text(knews_cats_tags['tags'][lang][x][1]);
+			jQuery('div.knews_hidden_tags select').append(option);
+		}
+		
+	});
+	jQuery('a.knews_alert_click').click(function() {
+		alert(jQuery(this).attr('title'));
+		return false;
+	});
+});

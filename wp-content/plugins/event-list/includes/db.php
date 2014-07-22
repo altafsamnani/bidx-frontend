@@ -217,63 +217,108 @@ class EL_Db {
 		// date filter
 		$date_filter=str_replace(' ','',$date_filter);
 		if(null != $date_filter && 'all' != $date_filter && '' != $date_filter) {
-			if(is_numeric($date_filter)) {
-				// get events of a specific year
-				$range_start = $date_filter.'-01-01';
-				$range_end = $date_filter.'-12-31';
-			}
-			elseif('past' === $date_filter) {
-				// get only events in the past
-				$range_start = '0000-01-01';
-				$range_end = date('Y-m-d', current_time('timestamp')-86400); // previous day (86400 seconds = 1*24*60*60 = 1 day))
-			}
-			else {  // upcoming
-				// get only events from today and in the future
-				$range_start = date('Y-m-d', current_time('timestamp'));
-				$range_end = '9999-12-31';
-			}
-			$sql_filter_string .= '(end_date >= "'.$range_start.'" AND start_date <= "'.$range_end.'")';
+			$sql_filter_string .= $this->filter_walker($date_filter, 'sql_date_filter');
 		}
-
 		// cat_filter
 		$cat_filter=str_replace(' ', '', $cat_filter);
 		if(null != $cat_filter && 'all' != $cat_filter && '' != $cat_filter) {
 			if('' != $sql_filter_string) {
 				$sql_filter_string .= ' AND ';
 			}
-			$sql_filter_string .= '(';
-			$delimiters = array('&' => ' AND ',
-			                    '|' => ' OR ',
-			                    ',' => ' OR ',
-			                    '(' => '(',
-			                    ')' => ')');
-			$delimiter_keys = array_keys($delimiters);
-			$tmp_element = '';
-			$len_cat_filter = strlen($cat_filter);
-			for($i=0; $i<$len_cat_filter; $i++) {
-				if(in_array($cat_filter[$i], $delimiter_keys)) {
-					if('' !== $tmp_element) {
-						$sql_filter_string .= 'categories LIKE "%|'.$tmp_element.'|%"';
-						$tmp_element = '';
-					}
-					$sql_filter_string .= $delimiters[$cat_filter[$i]];
-				}
-				else {
-					$tmp_element .= $cat_filter[$i];
-				}
-			}
-			if('' !== $tmp_element) {
-				$sql_filter_string .= 'categories LIKE "%|'.$tmp_element.'|%"';
-			}
-			$sql_filter_string .= ')';
+			$sql_filter_string .= $this->filter_walker($cat_filter, 'sql_cat_filter');
 		}
-
 		// no filter
 		if('' == $sql_filter_string) {
 			$sql_filter_string = '1';   // in SQL "WHERE 1" is used to show all events
 		}
-
 		return $sql_filter_string;
+	}
+
+	private function filter_walker(&$filter_text, $callback) {
+		$delimiters = array('&' => ' AND ',
+		                    '|' => ' OR ',
+		                    ',' => ' OR ',
+		                    '(' => '(',
+		                    ')' => ')');
+		$delimiter_keys = array_keys($delimiters);
+		$element = '';
+		$filter_length = strlen($filter_text);
+		$filter_sql = '(';
+		for($i=0; $i<$filter_length; $i++) {
+			if(in_array($filter_text[$i], $delimiter_keys)) {
+				if('' !== $element) {
+					$filter_sql .= call_user_func(array($this, $callback), $element);
+					$element = '';
+				}
+				$filter_sql .= $delimiters[$filter_text[$i]];
+			}
+			else {
+				$element .= $filter_text[$i];
+			}
+		}
+		if('' !== $element) {
+			$filter_sql .= call_user_func(array($this, $callback), $element);
+		}
+		return $filter_sql.')';
+	}
+
+	private function sql_date_filter($element) {
+		$range = $this->check_date_formats($element);
+		if(null === $range) {
+			$range = $this->check_daterange_formats($element);
+		}
+		if(null === $range) {
+			//set to standard (upcoming)
+			$range = $this->get_date_range($element, $this->options->daterange_formats['upcoming']);
+		}
+		return '(end_date >= "'.$range[0].'" AND start_date <= "'.$range[1].'")';
+	}
+
+	private function sql_cat_filter ($element) {
+		return 'categories LIKE "%|'.$element.'|%"';
+	}
+
+	private function check_date_formats($element) {
+		foreach($this->options->date_formats as $date_type) {
+			if(preg_match('@'.$date_type['regex'].'@', $element)) {
+				return $this->get_date_range($element, $date_type);
+			}
+		}
+		return null;
+	}
+
+	private function check_daterange_formats($element) {
+		foreach($this->options->daterange_formats as $key => $daterange_type) {
+			if(preg_match('@'.$daterange_type['regex'].'@', $element)) {
+				//check for date_range which requires special handling
+				if('date_range' == $key) {
+					$sep_pos = strpos($element, "~");
+					$startrange = $this->check_date_range(substr($element, 0, $sep_pos));
+					$endrange = $this->check_date_range(substr($element, $sep_pos+1));
+					return array($startrange[0], $endrange[1]);
+				}
+				return $this->get_date_range($element, $daterange_type);
+			}
+		}
+		return null;
+	}
+
+	private function get_date_range($element, &$range_type) {
+		// range start
+		if(substr($range_type['start'], 0, 8) == '--func--') {
+			eval('$range[0] = '.substr($range_type['start'], 8));
+		}
+		else {
+			$range[0] = str_replace('%v%', $element, $range_type['start']);
+		}
+		// range end
+		if(substr($range_type['end'], 0, 8) == '--func--') {
+			eval('$range[1] = '.substr($range_type['end'], 8));
+		}
+		else {
+			$range[1] = str_replace('%v%', $element, $range_type['end']);
+		}
+		return $range;
 	}
 
 	/** ************************************************************************************************************

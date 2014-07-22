@@ -51,6 +51,9 @@ if ($Knews_plugin) {
 	$used_tokens = array();
 	
 	$all_tokens = $Knews_plugin->get_extra_fields();
+
+	$c = count($all_tokens); $all_tokens[$c] = new stdClass; 
+	$all_tokens[$c]->token = '%email%'; $all_tokens[$c]->id = 0;
 	
 	foreach ($all_tokens as $token) {
 		if ($token->token != '') {

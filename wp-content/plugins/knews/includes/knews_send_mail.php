@@ -89,6 +89,9 @@
 
 			$submit_error=0;
 			$submit_ok=0;
+			$partial_submit_error=0;
+			$partial_submit_ok=0;
+			$timer = time();
 			$error_info=array();
 
 			foreach ($recipients as $recipient) {
@@ -142,10 +145,12 @@
 
 					if (wp_mail($mail_recipient, $customSubject, $message, $headers)) {
 						$submit_ok++;
+						$partial_submit_ok++;
 						$error_info[]='submit ok [wp_mail()]';
 						$status_submit=1;
 					} else {
 						$submit_error++;
+						$partial_submit_error++;
 						$error_info[]='wp_mail() error';
 						$status_submit=2;
 					}
@@ -170,10 +175,12 @@
 
 					if ($mail->Send()) {
 						$submit_ok++;
+						$partial_submit_ok++;
 						$error_info[]='submit ok [smtp]';
 						$status_submit=1;
 					} else {
 						$submit_error++;
+						$partial_submit_error++;
 						$error_info[]=$mail->ErrorInfo . ' [smtp]';
 						$status_submit=2;
 					}
@@ -187,6 +194,16 @@
 				if (count($recipients) > 1) {
 					if( !ini_get('safe_mode') ) set_time_limit(25);
 					echo ' ';
+					
+					if ($timer + 8 <= time()) {
+						$query = "UPDATE " . KNEWS_NEWSLETTERS_SUBMITS . " SET users_ok = users_ok + " . $partial_submit_ok . ", users_error = users_error + " . $partial_submit_error . " WHERE id=" . $idNewsletter;
+						$result = $wpdb->query( $query );
+						$partial_submit_error = 0;
+						$partial_submit_ok = 0;
+						
+						$timer = time();
+					}
+
 				}
 
 				if (isset($recipient->unique_submit)) {

@@ -125,6 +125,9 @@ if (!empty($_POST)) $w=check_admin_referer($knews_nonce_action, $knews_nonce_nam
 		$query = "DELETE FROM " . KNEWS_USERS_EXTRA . " WHERE user_id=" . $Knews_plugin->get_safe('uid', 0, 'int');
 		$results = $wpdb->query( $query );
 
+		$query = "DELETE FROM " . KNEWS_USERS_EVENTS . " WHERE user_id=" . $Knews_plugin->get_safe('uid', 0, 'int');
+		$results = $wpdb->query( $query );
+
 		echo '<div class="updated"><p>' . __('User deleted','knews') . '</p></div>';
 	}
 	if ($Knews_plugin->get_safe('da')=='bounce') {

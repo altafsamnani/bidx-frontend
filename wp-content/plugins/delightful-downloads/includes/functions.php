@@ -266,45 +266,22 @@ function dedo_get_agents() {
 }
 
 /**
- * Log Download
- *
- * @since  1.0
- */
-function dedo_download_log( $download_id ) {
-	global $dedo_options;
-
-	// Get current download count
-	$download_count = get_post_meta( $download_id, '_dedo_file_count', true );
-
-	// If is admin and log admin is false, do not log
-	if ( current_user_can( 'administrator', $download_id ) && !$dedo_options['log_admin_downloads'] ) {
-		return;
-	}
-
-	// Update download count
-	update_post_meta( $download_id, '_dedo_file_count', ++$download_count );
-
-	// Add log post type
-	if ( $download_log = wp_insert_post( array( 'post_type' => 'dedo_log', 'post_author' => get_current_user_id() ) ) ) {
-		// Add meta data if log sucessfully created
-		update_post_meta( $download_log, '_dedo_log_download', $download_id );
-		update_post_meta( $download_log, '_dedo_log_ip', dedo_download_ip() );
-		update_post_meta( $download_log, '_dedo_log_agent', sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ) );
-	}
-}
-
-/**
  * Get users IP Address
  *
  * @since  1.0
  */
 function dedo_download_ip() {
-	if ( isset( $_SERVER[ 'REMOTE_ADDR' ] ) ) {
-		return sanitize_text_field( $_SERVER[ 'REMOTE_ADDR' ] );
-	}
+	if ( !empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+		$ip_address = sanitize_text_field( $_SERVER['HTTP_CLIENT_IP'] );
+	} 
+	elseif ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+		$ip_address = sanitize_text_field( $_SERVER['HTTP_X_FORWARDED_FOR'] );
+	} 
 	else {
-		return '0.0.0.0';
+		$ip_address = sanitize_text_field( $_SERVER['REMOTE_ADDR'] );
 	}
+
+	return $ip_address;
 }
 
 /**
@@ -441,86 +418,30 @@ function dedo_folder_scan( $dir ) {
 }
 
 /**
- * Get Total Downloads Count
- *
- * Returns the total download count of all files. The number of 
- * days can be specified to limit the query.
- *
- * @since   1.0
- */
-function dedo_get_total_count( $days = 0 ) {
-	global $wpdb;
-	
-	// Get current time in WordPress
-	$current_time = current_time( 'mysql' );
-
-	// Validate days
-	$days = absint( $days );
-
-	// Set correct SQL query
-	if ( $days > 0 ) {
-		$sql = $wpdb->prepare( "
-			SELECT COUNT( $wpdb->posts.ID )
-			FROM $wpdb->posts
-			WHERE post_type  = %s
-			AND DATE_SUB( %s, INTERVAL %d DAY ) <= post_date
-			", 
-			'dedo_log', 
-			$current_time, 
-			$days 
-		);
-	}
-	else {
-		$sql = $wpdb->prepare( "
-			SELECT SUM( meta_value )
-			FROM $wpdb->postmeta
-			WHERE meta_key = %s
-			", 
-			'_dedo_file_count' 
-		);
-	}
-
-	return $wpdb->get_var( $sql );
-}
-
-/**
- * Get Total Downloads Filesize
+ * Get Downloads Filesize
  *
  * Returns the total filesize of all files.
  *
  * @since   1.3
  */
-function dedo_get_total_filesize() {
+function dedo_get_filesize( $download_id = false ) {
 	global $wpdb;
 
 	$sql = $wpdb->prepare( "
 		SELECT SUM( meta_value )
 		FROM $wpdb->postmeta
 		WHERE meta_key = %s
-		", 
-		'_dedo_file_size' 
-	);
+	", 
+	'_dedo_file_size' );
+
+	if ( $download_id ) {
+
+		$sql .= $wpdb->prepare( " AND post_id = %d", $download_id );
+	}
 
 	$return = $wpdb->get_var( $sql );
 
-	if ( $return == NULL ) {
-		return 0;
-	}
-
-	return $return;
-}
-
-/**
- * Get Total Files
- *
- * Returns the total number of files.
- *
- * @since   1.3
- */
-function dedo_get_total_files() {
-	$total_files = wp_count_posts( 'dedo_download' );
-
-	return $total_files->publish;
+	return ( NULL !== $return ) ? $return : 0;
 }
 
 /**
@@ -537,9 +458,13 @@ function dedo_delete_all_transients() {
 		DELETE FROM $wpdb->options
 		WHERE option_name LIKE %s
 		OR option_name LIKE %s
+		OR option_name LIKE %s
+		OR option_name LIKE %s
 		", 
 		'\_transient\_delightful-downloads%%', 
-		'\_transient\_timeout\_delightful-downloads%%' );
+		'\_transient\_timeout\_delightful-downloads%%',
+		'\_transient\_dedo%%',
+		'\_transient\_timeout\_dedo%%' );
 
 	$wpdb->query( $sql );
 }

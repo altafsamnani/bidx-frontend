@@ -3,7 +3,7 @@
 Plugin Name: K-news
 Plugin URI: http://www.knewsplugin.com
 Description: Finally, newsletters are multilingual, quick and professional.
-Version: 1.6.2
+Version: 1.6.3
 Author: Carles Reverter
 Author URI: http://www.carlesrever.com
 License: GPLv2 or later
@@ -547,10 +547,15 @@ if (!class_exists("KnewsPlugin")) {
 
 		function post_safe($field, $un_set='', $mode='paranoid') {
 			$value = ((isset($_POST[$field])) ? $_POST[$field] : $un_set);
-			if ( get_magic_quotes_gpc()) $value = stripslashes_deep($value);
-			if ($mode=='unsafe') return $value;
-			if ($mode=='int') return intval($value);
-			if ($mode=='paranoid') return esc_sql(htmlspecialchars(strip_tags($value)));
+			if (!is_array($un_set)) $value = array($value);
+			
+			for ($x=0; $x++; $x<count($value)) {
+				if ( get_magic_quotes_gpc()) $value[$x] = stripslashes_deep($value[$x]);
+				if ($mode=='int') $value[$x] = intval($value[$x]);
+				if ($mode=='paranoid') $value[$x] = esc_sql(htmlspecialchars(strip_tags($value[$x])));
+			}
+			if (!is_array($un_set)) $value = $value[0];
+			return $value;
 		}
 
 		function escape_js($txt, $comma='"') {
@@ -916,9 +921,9 @@ if (!class_exists("KnewsPlugin")) {
             if ((KNEWS_MULTILANGUAGE) && $knewsOptions['multilanguage_knews']=='pll') {
                 global $polylang;
                 if (isset($polylang)) {
-                    //$pll_options = get_option('polylang','');        
-                    $active_langs = $polylang->get_languages_list();
+                    $active_langs = $polylang->model->get_languages_list();
 					$pll_active = pll_current_language();
+					if ($pll_active=='') $pll_active = $polylang->options['default_lang'];
 
                     foreach ($active_langs as $lang) {
                         $wpml_style_langs[$lang->slug] = array (
@@ -1444,7 +1449,7 @@ if (!function_exists("Knews_plugin_ap")) {
 
 	if (class_exists("KnewsPlugin")) {
 		$Knews_plugin = new KnewsPlugin();
-		define('KNEWS_VERSION', '1.6.2');
+		define('KNEWS_VERSION', '1.6.3');
 
 		add_filter( 'knews_submit_confirmation', array($Knews_plugin, 'submit_confirmation'), 10, 4 );
 		add_filter( 'knews_add_user_db', array($Knews_plugin, 'add_user_db'), 10, 7 );

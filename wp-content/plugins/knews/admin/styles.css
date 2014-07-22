@@ -283,6 +283,31 @@ div.knews_error {
 	border-color: #CC0000;
 }
 
+div.knews_hidden_cpt,
+div.knews_hidden_tags,
+div.knews_hidden_cat {
+	display:none;
+	padding-left:30px;
+}
+div.knews_hidden_cat select,
+div.knews_hidden_tags select {
+	min-width:300px;
+}
+a.knews_details {
+	display:inline-block;
+	padding:2px 8px;
+	background:#e0e0e0;
+	border-radius:2px;
+	color:#0074a2;
+	font-weight:bold;
+	margin-left:10px;
+}
+a.knews_details:hover {
+	background:#0074a2;
+	color:#fff;
+}
+	
+
 /* 3.8 new look & feel */
 .knews_cooltabs .active:after {
 	background:#f1f1f1;

@@ -231,6 +231,7 @@
 
 	#dedo-file-url {
 		width: 100%;
+		padding-right: 60px;
 		box-sizing: border-box;
 	}
 
@@ -355,75 +356,165 @@
 }
 
 /* Dashboard */
-#dedo_dashboard_downloads .inside {
-	font-size: 13px;
-	padding-top: 20px;
+#ddownload-count {
+	margin: -11px 0 0;
+
+	ul {
+		margin: 0;
+		overflow: hidden;
+
+		li {
+			display: block;
+			margin: 0;
+			padding: 20px 0;
+			width: 50%;
+			float: left;
+			box-sizing: border-box;
+			text-align: center;
+			
+
+			.count {
+				display: block;
+				font-size: 32px;
+				font-weight: lighter;
+				line-height: 1.5;
+				color: #2ea2cc;
+			}
+
+			.label {
+				display: block;
+				color: #ccc;
+				font-size: 12px;
+				text-transform: uppercase;
+			}
+		}
+
+		li:nth-of-type(odd) {
+			border-right: 1px dotted #eee;
+		}
+
+		li:nth-of-type(-n+2) {
+			padding-top: 40px;
+		}
+
+		li:nth-of-type(n+3) {
+			padding-bottom: 40px;
+		}
+	}
 }
 
-#dedo_dashboard_downloads .table {
-	position: relative;
+.admin-color-light #ddownload-count .count {
+	color: #04a4cc;
+}
+
+.admin-color-blue #ddownload-count .count {
+	color: #52accc;
+}
+
+.admin-color-coffee #ddownload-count .count {
+	color: #c7a589;
+}
+
+.admin-color-ectoplasm #ddownload-count .count {
+	color: #a3b745;
+}
+
+.admin-color-midnight #ddownload-count .count {
+	color: #e14d43;
+}
+
+.admin-color-ocean #ddownload-count .count {
+	color: #9ebaa0;
+}
+
+.admin-color-sunrise #ddownload-count .count {
+	color: #dd823b;
+}
+
+#ddownload-popular {
 	margin: 0;
-	padding: 0;
-	border-top: 1px solid #ececec;
-	width: 45%;
-}
 
-#dedo_dashboard_downloads .table_today, #dedo_dashboard_downloads .table_last7 {
-	float: left;
-	clear: left;
-}
+	h4 {
+		position: relative;
+		margin: 0 -12px;
+		padding: 8px 12px;
+		border-top: 1px solid #eee;
+		border-bottom: 1px solid #eee;
+	}
 
-#dedo_dashboard_downloads .table_alltime, #dedo_dashboard_downloads .table_last30 {
-	float: right;
-	clear: right;
-}
+	ol {
+		margin: 0 -12px;
+		list-style-position: inside;
 
-#dedo_dashboard_downloads .table_last7, #dedo_dashboard_downloads .table_last30 {
-	margin-top: 40px;
-}
+		li {
+			margin: 0;
+			color: #777;
 
-#dedo_dashboard_downloads .sub, #dedo_dashboard_downloads .version {
-	margin: -12px;
-}
+			a {
+				display: block;
+				padding: 8px 12px;
+			}
 
-#dedo_dashboard_downloads .sub {
-	position: absolute;
-	top: -17px;
-	left: 15px;
-	padding: 5px 0 15px;
-	color: #8f8f8f;
-	font-size: 14px;
-}
+			.count, .percentage {
+				float: right;
+			}
 
-#dedo_dashboard_downloads table td {
-	padding: 3px 0;
-	white-space: nowrap;
-}
+			&:hover {
+				background: darken(#fff, 5%);
+			}
+		}
 
-#dedo_dashboard_downloads td.b {
-	padding-right: 6px;
-	text-align: right;
-	font-size: 18px;
-	width: 1%;
-}
+		li:nth-child(odd) {
+			background: #fafafa;
 
-#dedo_dashboard_downloads td.t {
-	padding-right: 12px;
-	padding-top: 6px;
-}
+			&:hover {
+				background: darken(#fafafa, 1%);
+			}
+		}
+	}
 
-#dedo_dashboard_downloads .dedo-version {
-	padding: 6px 0 0;
-	clear: both;
-}
+	.sub{
+		margin: 0 -12px;
+		padding: 11px 12px 0;
+		border-top: 1px solid #eee;
+		overflow: hidden;
 
-#dedo_dashboard_downloads .dedo-version p {
-	margin-bottom: 0;
+		#popular-downloads-dropdown, .spinner {
+			float: right;
+		}
+
+		.error {
+			margin: 0;
+			line-height: 28px;
+			color: #dd3d36;
+		}
+	}
 }
 
 /* Settings page */
+.dedo_download_page_dedo_settings .nav-tab-wrapper {
+	margin-bottom: 0;
+}
+
+.dedo_download_page_dedo_settings #dedo-settings-main {
+	float: left;
+	width: 75%;
+	padding-right: 20px;
+	padding-top: 1em;
+	box-sizing: border-box;
+}
+
+.dedo_download_page_dedo_settings #dedo-settings-sidebar {
+	float: left;
+	width: 25%;
+	border-left: 1px solid #ccc;
+	padding-top: 1em;
+	padding-left: 20px;
+	box-sizing: border-box;
+}
+
 .dedo_download_page_dedo_settings .description {
-	max-width: 600px;
+	max-width: 500px;
 }
 
 .dedo-settings-textarea {
@@ -436,4 +527,5 @@
 #dedo_support {
 	width: 100%;
 	height: 500px;
+	resize: vertical;
 }

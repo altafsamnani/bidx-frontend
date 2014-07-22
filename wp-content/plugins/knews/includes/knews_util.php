@@ -1,4 +1,16 @@
 <?php
+function knews_list_items($element, $all_elements) {
+	$reply = '';
+	if (!is_array($element)) $element = explode(',', $element);
+	foreach ($element as $e) {
+		if (isset($all_elements[$e])) {
+			if ($reply != '') $reply .= ', ';
+			$reply .= $all_elements[$e];
+		}
+	}
+	return $reply;
+}
+
 function knews_print_mailinglists() {
 	global $Knews_plugin, $wpdb;
 	

@@ -1520,7 +1520,7 @@ function dialog_ask_type() {
 
 	height = 190; content = '';
 	
-	if (newstype=='unknown') {
+	if (newstype=='unknown' || newstype=='') {
 		content += '<p><input type="radio" name="newstype" value="unknown"' + ((newstype=='unknown') ? ' checked="checked"' : '') + '> I\'m not sure, leave as unknown</p>';
 		height = 240;
 	}

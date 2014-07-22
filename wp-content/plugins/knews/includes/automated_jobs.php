@@ -73,6 +73,8 @@ if ($Knews_plugin) {
 			$left_join = ' LEFT JOIN (SELECT user_id FROM ' . KNEWS_USERS_EVENTS . ' WHERE event = \'' . $aj->event . '\' ) ue ON u.id = ue.user_id';
 			$where = " WHERE ue.user_id IS NULL AND u.joined < '" . $Knews_plugin->get_mysql_date($max_date) . "' AND u.joined >= '" . $aj->last_run . "'";
 			
+			if ($aj->lang != '') $where .= " AND u.lang='" . $aj->lang . "'";
+			
 			if ($aj->target_id != 0) {
 				$select .= ', upl.*';
 				$from .=  ' JOIN ' . KNEWS_USERS_PER_LISTS . ' upl';
@@ -83,11 +85,10 @@ if ($Knews_plugin) {
 			if ($aj->event == 'after_confirmation') $where .= ' AND u.state = 2';
 			
 			$query = $select . $from . $left_join . $where . ' LIMIT ' . $aj->emails_at_once;			
-			//$Knews_plugin->get_mysql_date(
 			
 			$selected_users = $wpdb->get_results( $query );
 			
-			knews_debug("\r\n" . 'There are ' . count($selected_users) . ' users to send this autoresponder' . "\r\n");
+			knews_debug("\r\n" . '- There are ' . count($selected_users) . ' users to send this autoresponder' . "\r\n");
 			
 			if (count($selected_users) > 0) {
 				
@@ -109,7 +110,8 @@ if ($Knews_plugin) {
 					$results = $wpdb->query( $query );
 				}
 				
-				$query = "UPDATE " . KNEWS_AUTOMATED . " SET last_run='" . $Knews_plugin->get_mysql_date() . "', run_yet=1 WHERE id=" . $aj->id . " ";
+				//$query = "UPDATE " . KNEWS_AUTOMATED . " SET last_run='" . $Knews_plugin->get_mysql_date() . "', run_yet=1 WHERE id=" . $aj->id . " ";
+				$query = "UPDATE " . KNEWS_AUTOMATED . " SET run_yet=1 WHERE id=" . $aj->id . " ";
 				$results = $wpdb->query($query);				
 			}
 			
@@ -121,7 +123,7 @@ if ($Knews_plugin) {
 			while (true) :
 				if ($aj->every_mode ==1) {
 					$knews_aj_look_date = $aj->last_run;
-					$pend_posts = knews_search_posts($aj->id, $aj->every_posts, $aj->lang);
+					$pend_posts = knews_search_posts($aj, $aj->every_posts);
 					if (count($pend_posts) == $aj->every_posts) $doit = true;
 					knews_debug('- posts to send: ' .count($pend_posts) . "\r\n");
 			
@@ -147,7 +149,7 @@ if ($Knews_plugin) {
 					
 					if ($doit) {
 						$knews_aj_look_date = $aj->last_run;
-						$pend_posts = knews_search_posts($aj->id, -1, $aj->lang);
+						$pend_posts = knews_search_posts($aj, -1);
 						knews_debug('- posts to send: ' .count($pend_posts) . "\r\n");
 					}
 				}
@@ -195,39 +197,47 @@ function knews_debug($message) {
 	
 }
 
-function knews_search_posts($id_automated, $max, $lang='en') {
+function knews_search_posts($aj, $max) {
 	global $wpdb, $Knews_plugin, $knewsOptions, $post;
 	
 	//$look_posts = get_posts( array('numberposts'=> -1, 'suppress_filters'=>0, 'order'=>'ASC'));
 	
 
-	$cpt=array();
+	$cpt=array('post');
+
 	if ($Knews_plugin->im_pro()) {
-		$post_types = $Knews_plugin->getCustomPostTypes();
-		foreach ($post_types as $pt) {
-			if ($pt['automate']==1) $cpt[]=$pt['name'];
+		if ($aj->include_postypes != '') {
+			 $cpt = explode(',', $aj->include_postypes);
+		} else {
+			$post_types = $Knews_plugin->getCustomPostTypes();
+			foreach ($post_types as $pt) {
+				if ($pt['automate']==1) $cpt[]=$pt['name'];
+			}
 		}
 	}
-	$cpt[]='post';
-	
+
 	$args = array(
 		'post_type' => $cpt,
 		'posts_per_page' => -1,
 		'order' => 'ASC',
 		'post_status' => 'publish'
 	);
-	
-	if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='pll') $args['lang']=$lang;
+	if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='pll') $args['lang']=$aj->lang;
 
 	$look_posts = new WP_Query($args);
 	
 	$pend_posts = array();
 	while ($look_posts->have_posts()) {
 		$look_posts->the_post();
-		$query = 'SELECT * FROM ' . KNEWS_AUTOMATED_POSTS . ' WHERE id_automated=' . $id_automated . ' AND id_post=' . $post->ID;
+		$query = 'SELECT * FROM ' . KNEWS_AUTOMATED_POSTS . ' WHERE id_automated=' . $aj->id . ' AND id_post=' . $post->ID;
 		$result = $wpdb->get_results($query);
 		if (count($result) == 0) {
-			$include_option=get_post_meta($post->ID, '_knews_automated', true);
+			
+			if ($aj->use_post_embed_pref==0) {
+				$include_option='1';
+			} else {
+				$include_option=get_post_meta($post->ID, '_knews_automated', true);
+			}
 			if ($include_option=='1' || ($include_option=='' && $knewsOptions['def_autom_post']==1)) {
 
 				if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='qt') $post->post_title = get_the_title();
@@ -306,15 +316,25 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 		$subject = $news[0]->subject;
 		$most_recent=0;
 		foreach ($pend_posts as $pp) {
-			knews_debug('- including post: ' . $pp->post_title . "\r\n");
 
 			global $post;
 			$post = get_post($pp->ID);
+
+			//qTranslate support
+			$permalink = get_permalink();
+			if (KNEWS_MULTILANGUAGE && $knewsOptions['multilanguage_knews']=='qt' && function_exists('qtrans_convertURL')) {
+				$post = qtrans_use($aj->lang, $post, false);
+				$permalink = qtrans_convertURL($permalink, $aj->lang, true);
+			}
+			//End qT
 			setup_postdata($post);
 	
 			$excerpt_length = apply_filters('excerpt_length', 55);
 			$excerpt = (string) get_the_excerpt();
 			$content = (string) get_the_content();
+			$title = get_the_title();
+
+			knews_debug('- including post: ' . $title . "\r\n");
 	
 			if ($knewsOptions['apply_filters_on']=='1') $content = apply_filters('the_content', $content);
 	
@@ -360,8 +380,8 @@ function knews_create_news($aj, $pend_posts, $news, $fp, $mobile, $mobile_news_i
 			if ($knewsOptions['apply_filters_on']=='1') $content = apply_filters('the_content', $content);
 			*/
 			
-			$title = $pp->post_title;
-			$permalink = get_permalink($pp->ID);
+			//$title = $pp->post_title;
+			//$permalink = get_permalink($pp->ID);
 			
 			$s=0;
 			while ($news_mod_map[$s]==0 && $s < count($news_mod_map)) { $s++; }

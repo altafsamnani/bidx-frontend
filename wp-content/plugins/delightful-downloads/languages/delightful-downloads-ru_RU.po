@@ -1,765 +1,759 @@
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Delightful Downloads v1.3.2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-01-28 17:45-0000\n"
-"Last-Translator: Dmitry Butkevich - WPNICE.ru <db65@bk.ru>\n"
-"Language-Team: \n"
+"Project-Id-Version: Delightful Downloads\n"
+"POT-Creation-Date: 2014-06-27 12:07-0000\n"
+"PO-Revision-Date: 2014-06-27 11:08+0000\n"
+"Last-Translator: Ashley Rich <hello@ashleyrich.com>\n"
+"Language-Team: Russian (Russia) (http://www.transifex.com/projects/p/delightful-downloads/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%100/10==1 ? 2 : n%10==1 ? 0 : (n"
-"+9)%10>3 ? 2 : 1;\n"
-"X-Generator: Poedit 1.6.3\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
-"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
-"X-Poedit-Basepath: ../\n"
-"X-Textdomain-Support: yes\n"
-"Language: ru\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
-# @ delightful-downloads
-#: delightful-downloads.php:214 includes/admin/page-support.php:21
-#: includes/admin/page-support.php:46
-msgid "Support"
-msgstr "Поддержка"
-
-# @ delightful-downloads
-#: delightful-downloads.php:215 includes/admin/page-settings.php:19
+#: delightful-downloads.php:217 includes/admin/page-settings.php:19
 msgid "Settings"
 msgstr "Настройки"
 
-# @ delightful-downloads
-#: includes/admin/dashboard.php:20 includes/options.php:22
-msgid "Statistics"
-msgstr "Статистика"
+#: includes/admin/class-dedo-list-table.php:30
+msgid "Log"
+msgstr "Лог"
 
-# @ delightful-downloads
-#: includes/admin/dashboard.php:33
+#: includes/admin/class-dedo-list-table.php:31
+#: includes/admin/page-statistics.php:22
+msgid "Logs"
+msgstr "Логи"
+
+#: includes/admin/class-dedo-list-table.php:48 includes/options.php:65
+#: includes/post-types.php:22
+msgid "Download"
+msgstr "Скачать"
+
+#: includes/admin/class-dedo-list-table.php:49
+msgid "User"
+msgstr "Пользователь"
+
+#: includes/admin/class-dedo-list-table.php:50
+msgid "IP Address"
+msgstr "IP адрес"
+
+#: includes/admin/class-dedo-list-table.php:51
+msgid "User Agent"
+msgstr "Имя пользователя"
+
+#: includes/admin/class-dedo-list-table.php:52 includes/post-types.php:65
+msgid "Date"
+msgstr "Дата"
+
+#: includes/admin/class-dedo-list-table.php:133
+#: includes/admin/media-button.php:64 includes/admin/media-button.php:66
+#: includes/post-types.php:102
+msgid "Unknown"
+msgstr ""
+
+#: includes/admin/class-dedo-list-table.php:147
+msgid "Non-member"
+msgstr ""
+
+#: includes/admin/class-dedo-list-table.php:183
+msgid "No download logs found."
+msgstr ""
+
+#: includes/admin/dashboard.php:22
+msgid "Download Statistics"
+msgstr ""
+
+#: includes/admin/dashboard.php:40
+msgid "Download statistics could not be retrieved."
+msgstr ""
+
+#: includes/admin/dashboard.php:41 includes/admin/dashboard.php:88
+msgid "There are no popular downloads yet!"
+msgstr ""
+
+#: includes/admin/dashboard.php:50 includes/admin/dashboard.php:95
 msgid "Last 24 Hours"
 msgstr "За 24 часа"
 
-# @ delightful-downloads
-#: includes/admin/dashboard.php:37 includes/admin/dashboard.php:47
-#: includes/admin/dashboard.php:57 includes/admin/dashboard.php:67
-#: includes/admin/media-button.php:51 includes/post-types.php:21
-#: includes/post-types.php:33 includes/post-types.php:96
-msgid "Downloads"
-msgstr "Загрузки"
-
-# @ delightful-downloads
-#: includes/admin/dashboard.php:43
-msgid "All Time"
-msgstr "За все время"
-
-# @ delightful-downloads
-#: includes/admin/dashboard.php:53
+#: includes/admin/dashboard.php:54 includes/admin/dashboard.php:96
 msgid "Last 7 Days"
 msgstr "За 7 дней"
 
-# @ delightful-downloads
-#: includes/admin/dashboard.php:63
+#: includes/admin/dashboard.php:58 includes/admin/dashboard.php:97
 msgid "Last 30 Days"
 msgstr "За 30 дней"
 
-# @ default
-#: includes/admin/dashboard.php:73
-msgid "You are using"
-msgstr "Вы используете"
+#: includes/admin/dashboard.php:62 includes/admin/dashboard.php:98
+msgid "All Time"
+msgstr "За все время"
 
-# @ delightful-downloads
+#: includes/admin/dashboard.php:67
+msgid "Popular Downloads"
+msgstr ""
+
+#: includes/admin/dashboard.php:122 includes/admin/dashboard.php:160
+#: includes/admin/upgrades.php:140
+msgid "Failed security check!"
+msgstr ""
+
 #: includes/admin/media-button.php:39 includes/admin/media-button.php:111
 msgid "Insert Download"
 msgstr "Вставить Загрузку"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:43
 msgid "Search"
 msgstr "Поиск"
 
-# @ delightful-downloads
-#: includes/admin/media-button.php:49 includes/functions.php:102
-#: includes/post-types.php:93
+#: includes/admin/media-button.php:49 includes/functions.php:88
+#: includes/post-types.php:60
 msgid "Title"
 msgstr "Заголовок"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:50
 msgid "Size"
 msgstr "Размер"
 
-# @ delightful-downloads
+#: includes/admin/media-button.php:51 includes/post-types.php:21
+#: includes/post-types.php:33 includes/post-types.php:63
+msgid "Downloads"
+msgstr "Загрузки"
+
 #: includes/admin/media-button.php:79
 msgid "Download Details"
 msgstr "Детали загрузки"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:82
 msgid "Downloads:"
 msgstr "Загрузок:"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:85
 msgid "Text"
 msgstr "Текст"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:87
 msgid "Style"
 msgstr "Стиль"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:89 includes/admin/media-button.php:101
 msgid "Default"
 msgstr "По умолчанию"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:99
 msgid "Color"
 msgstr "Цвет"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:112
 msgid "Insert File Size"
 msgstr "Вставить размер файла"
 
-# @ delightful-downloads
 #: includes/admin/media-button.php:113
 msgid "Insert Download Count"
 msgstr "Вставить счетчик скачиваний"
 
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:19 includes/post-types.php:94
+#: includes/admin/meta-boxes.php:19 includes/post-types.php:61
 msgid "File"
 msgstr "Файл"
 
-# @ delightful-downloads
 #: includes/admin/meta-boxes.php:20
 msgid "Download Stats"
 msgstr "Статистика скачиваний"
 
-# @ default
-#: includes/admin/meta-boxes.php:58
+#: includes/admin/meta-boxes.php:46 includes/admin/meta-boxes.php:49
+#, php-format
+msgid ""
+"Download updated. Use the %s shortcode to include it in posts or pages."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:47
+msgid "Custom field updated."
+msgstr "Поле изменено."
+
+#: includes/admin/meta-boxes.php:48
+msgid "Custom field deleted."
+msgstr "Поле удалено."
+
+#: includes/admin/meta-boxes.php:50
+#, php-format
+msgid "Download restored to revision from %s"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:51
+#, php-format
+msgid ""
+"Download published. Use the %s shortcode to include it in posts or pages."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:52
+msgid "Download saved."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:53
+msgid "Download submitted."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:54
+#, php-format
+msgid "Download scheduled for: <strong>%1$s</strong>."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:55
+msgid "M j, Y @ G:i"
+msgstr "d.m.Y H:i"
+
+#: includes/admin/meta-boxes.php:56
+msgid "Download draft updated."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:85
 msgid "Allowed Files"
 msgstr "Разрешенных Файлов"
 
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:88
+#: includes/admin/meta-boxes.php:111
 msgid "File URL:"
 msgstr "Файл URL:"
 
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:91
-msgid "Enter file URL here"
-msgstr "Введите URL файла тут"
-
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:93
-#, php-format
-msgid ""
-"You may manually enter a file URL here, for files that are already uploaded "
-"to the server. Please note that only files within the WordPress directory "
-"structure are allowed (for example: %s). Alternatively, you can browse to "
-"the file using the file browser, or upload a new file:"
+#: includes/admin/meta-boxes.php:114
+msgid "Upload or enter the file URL."
 msgstr ""
-"Вы можете вручную ввести URL-адрес файла здесь, для файлов, которые уже "
-"загружены на сервер. Обратите внимание, что это актуально только для файлов "
-"в каталоге WordPress (например: %s). Кроме того, вы можете открыть этот файл "
-"с помощью файлового браузера, или загрузить новый файл:"
 
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:96
+#: includes/admin/meta-boxes.php:118
+msgid "Unkown"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:124
 msgid "Upload File"
 msgstr "Загрузить файл"
 
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:97
+#: includes/admin/meta-boxes.php:125
 msgid "Select Existing File"
 msgstr "Выбрать существующий файл"
 
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:111
+#: includes/admin/meta-boxes.php:126
 #, php-format
 msgid "Maximum upload file size: %s."
 msgstr "Максимальный размер файла: %s."
 
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:116
-msgid "File Size:"
-msgstr "Размер файла:"
-
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:141
+#: includes/admin/meta-boxes.php:149
 msgid "Count"
 msgstr "Счетчик"
 
-# @ delightful-downloads
-#: includes/admin/meta-boxes.php:214
-#, php-format
-msgid ""
-"The file does not exist! Please check the URL and ensure it is within the "
-"WordPress directory structure. (For example: %s)"
+#: includes/admin/page-settings.php:19 includes/admin/page-settings.php:79
+msgid "Download Settings"
 msgstr ""
-"Файл не существует! Пожалуйста, проверьте URL и убедитесь, что он находится "
-"в каталоге вашего WordPress. (Например: %s)"
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:88
+#: includes/admin/page-settings.php:80
+msgid "You are about to reset the download settings."
+msgstr ""
+
+#: includes/admin/page-settings.php:80
+msgid "Reset Defaults"
+msgstr ""
+
+#: includes/admin/page-settings.php:85
 msgid "Settings updated successfully."
 msgstr "Настройки обновлены успешно."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:125 includes/admin/page-settings.php:291
+#: includes/admin/page-settings.php:198
+msgid "Help and Support"
+msgstr ""
+
+#: includes/admin/page-settings.php:199
+#, php-format
+msgid ""
+"Please take a moment to look at the %sdocumentation%s. If you are still "
+"having issues, please leave a %ssupport request%s."
+msgstr ""
+
+#: includes/admin/page-settings.php:201
+msgid "Share the Love"
+msgstr ""
+
+#: includes/admin/page-settings.php:202
+#, php-format
+msgid ""
+"Enjoy Delightful Downloads? Please consider %sdonating%s a few dollars, to "
+"help support future development. Alternatively, a %splugin review%s is "
+"always appreciated."
+msgstr ""
+
+#: includes/admin/page-settings.php:204
+msgid "About the Developer"
+msgstr ""
+
+#: includes/admin/page-settings.php:205
+#, php-format
+msgid ""
+"Hey there! I'm %sAshley Rich%s, a freelance web designer and WordPress "
+"developer based in the West Midlands, England."
+msgstr ""
+
+#: includes/admin/page-settings.php:206
+#, php-format
+msgid "%sTwitter%s"
+msgstr ""
+
+#: includes/admin/page-settings.php:234
+msgid "Default settings reset successfully."
+msgstr ""
+
+#: includes/admin/page-settings.php:263 includes/admin/page-settings.php:457
+#: includes/admin/page-settings.php:502
 msgid "Enable"
 msgstr "Включено"
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:127
+#: includes/admin/page-settings.php:265
 msgid "Check this option to allow downloads to be tagged or categorised."
-msgstr ""
-"Установите этот флажок, чтобы разрешить загрузку с тегами или категориями."
+msgstr "Установите этот флажок, чтобы разрешить загрузку с тегами или категориями."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:142
+#: includes/admin/page-settings.php:280
 msgid "Member Only"
 msgstr "Зарегистрированных только"
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:144
+#: includes/admin/page-settings.php:282
 msgid "Check this option to allow only logged in users to download files."
-msgstr ""
-"Установите эту опцию, чтобы разрешить только для зарегистрированных "
-"пользователей загружать файлы."
+msgstr "Установите эту опцию, чтобы разрешить только для зарегистрированных пользователей загружать файлы."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:167
+#: includes/admin/page-settings.php:305
 msgid ""
 "Select the page that a user should be redirected to if they try to download "
-"a file when not logged in and the Members Only option is checked. If no page "
-"is selected a generic error message will be displayed."
-msgstr ""
-"Выберите страницу, на которую пользователь должен быть перенаправлен в "
-"случае, если до попытки загрузить файл, не был выполнен вход в систему. Если "
-"не выбрана страница, будет отображаться сообщение об ошибке."
+"a file when not logged in and the Members Only option is checked. If no page"
+" is selected a generic error message will be displayed."
+msgstr "Выберите страницу, на которую пользователь должен быть перенаправлен в случае, если до попытки загрузить файл, не был выполнен вход в систему. Если не выбрана страница, будет отображаться сообщение об ошибке."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:181
+#: includes/admin/page-settings.php:319
 msgid "Enter user agents to block from downloading files. One per line."
 msgstr "Введите пользователей для блокирования. По одному в каждой строке."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:196
-msgid "Log Downloads"
-msgstr "Лог скачиваний"
-
-# @ delightful-downloads
-#: includes/admin/page-settings.php:198
-msgid "Check this option to log downloads by admins."
-msgstr "Установите эту опцию, чтобы вести журнал (лог) для администраторов."
-
-# @ delightful-downloads
-#: includes/admin/page-settings.php:212
+#: includes/admin/page-settings.php:333
 msgid ""
 "Set the default text to display on button and link style outputs. This can "
 "be overwritten on a per-download basis using the 'text' attribute."
 msgstr "Установить по умолчанию текст, отображаемый на кнопке и стиль ссылок."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:232
+#: includes/admin/page-settings.php:353
 msgid ""
 "Choose the default output style for downloads. This can be overwritten on a "
 "per-download basis using the 'style' attribute."
 msgstr "Выберите по умолчанию стиль вывода кнопок для загрузки."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:254
+#: includes/admin/page-settings.php:375
 msgid ""
 "Choose the default button style. This can be overwritten on a per-download "
 "basis using the 'button' attribute."
 msgstr "Выбрать стиль кнопки по умолчанию."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:276
+#: includes/admin/page-settings.php:397
 msgid ""
-"Choose the default output style for downloads lists. This can be overwritten "
-"on a per-list basis using the 'style' attribute."
+"Choose the default output style for downloads lists. This can be overwritten"
+" on a per-list basis using the 'style' attribute."
 msgstr "Выберите по умолчанию стиль вывода загрузки для  списков. "
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:293
+#: includes/admin/page-settings.php:412
+msgid "Log Downloads"
+msgstr "Лог скачиваний"
+
+#: includes/admin/page-settings.php:414
+msgid "Check this option to log downloads by admins."
+msgstr "Установите эту опцию, чтобы вести журнал (лог) для администраторов."
+
+#: includes/admin/page-settings.php:428
+msgid ""
+"Set the time in minutes before creating an additional log when the user "
+"tries to download the same file multiple times (0 to disable)."
+msgstr ""
+
+#: includes/admin/page-settings.php:442
+msgid ""
+"Set the amount of days that logs should be kept (0 to disable). Logs older "
+"than the specified value will be deleted once a day."
+msgstr ""
+
+#: includes/admin/page-settings.php:459
 msgid ""
 "Check this option to include the Delightful Downloads stylesheet on the "
 "front-end. If this option is disabled you must manually add the button CSS "
 "classes to your theme's CSS file."
-msgstr ""
-"Установите этот параметр, чтобы включить Delightful Downloads стиль. Если "
-"эта опция отключена, вы должны вручную добавить CSS классы для вашей темы."
+msgstr "Установите этот параметр, чтобы включить Delightful Downloads стиль. Если эта опция отключена, вы должны вручную добавить CSS классы для вашей темы."
 
-# @ delightful-downloads
-#: includes/admin/page-settings.php:321
+#: includes/admin/page-settings.php:487
 msgid ""
 "Set the URL for download links. This should be left as the default value, "
 "unless absolutely sure that it will not cause conflicts with existing "
 "permalinks or plugins."
-msgstr ""
-"Задайте URL для ссылки на скачивание. Это должно быть перенесено как "
-"значение по умолчанию, если только вы не уверены, что оно не будет вызывать "
-"постоянные конфликты с существующими или подключаемыми модулями."
+msgstr "Задайте URL для ссылки на скачивание. Это должно быть перенесено как значение по умолчанию, если только вы не уверены, что оно не будет вызывать постоянные конфликты с существующими или подключаемыми модулями."
 
-# @ delightful-downloads
-#: includes/admin/page-support.php:47
+#: includes/admin/page-statistics.php:22 includes/admin/page-statistics.php:38
+#: includes/admin/page-statistics.php:107
+msgid "Download Logs"
+msgstr "Логи скачиваний"
+
+#: includes/admin/page-statistics.php:39
+msgid "You are about to permanently delete the download logs."
+msgstr ""
+
+#: includes/admin/page-statistics.php:39
+msgid "Empty Logs"
+msgstr ""
+
+#: includes/admin/page-statistics.php:74
+msgid "Logs could not be deleted."
+msgstr ""
+
+#: includes/admin/page-statistics.php:79
+msgid "Logs deleted successfully."
+msgstr ""
+
+#: includes/admin/upgrades.php:55
+msgid "Delightful Downloads updated to version 1.4."
+msgstr ""
+
+#: includes/admin/upgrades.php:102 includes/admin/upgrades.php:111
+msgid "Migrate"
+msgstr ""
+
+#: includes/admin/upgrades.php:103
+msgid "Stop"
+msgstr ""
+
+#: includes/admin/upgrades.php:104
+msgid "The migration could not start due to an error."
+msgstr ""
+
+#: includes/admin/upgrades.php:109
+#, php-format
 msgid ""
-"Please include the following information when requesting <a href=\"http://"
-"wordpress.org/support/plugin/delightful-downloads\">support</a>."
+"You have %s logs from an older version of Delightful Downloads. %sPlease "
+"make a backup of your database before migrating!%s"
 msgstr ""
-"Пожалуйста, предоставьте следующую информацию при запросе <a href=\"http://"
-"wordpress.org/support/plugin/delightful-downloads\">support</a>"
 
-# @ default
-#: includes/cron.php:46
+#: includes/admin/upgrades.php:115
+msgid "JavaScript must be enabled to migrate legacy logs."
+msgstr ""
+
+#: includes/cron.php:74
 msgid "Once Weekly"
 msgstr "Один раз в неделю"
 
-# @ delightful-downloads
-#: includes/functions.php:36
+#: includes/functions.php:22
 msgid "Button"
 msgstr "Кнопка"
 
-# @ delightful-downloads
-#: includes/functions.php:40
+#: includes/functions.php:26
 msgid "Link"
 msgstr "Ссылка"
 
-# @ delightful-downloads
-#: includes/functions.php:44
+#: includes/functions.php:30
 msgid "Plain Text"
 msgstr "Обычный текст"
 
-# @ delightful-downloads
-#: includes/functions.php:61
+#: includes/functions.php:47
 msgid "Black"
 msgstr "Черная"
 
-# @ delightful-downloads
-#: includes/functions.php:65
+#: includes/functions.php:51
 msgid "Blue"
 msgstr "Синяя"
 
-# @ delightful-downloads
-#: includes/functions.php:69
+#: includes/functions.php:55
 msgid "Grey"
 msgstr "Серая"
 
-# @ delightful-downloads
-#: includes/functions.php:73
+#: includes/functions.php:59
 msgid "Green"
 msgstr "Зеленая"
 
-# @ delightful-downloads
-#: includes/functions.php:77
+#: includes/functions.php:63
 msgid "Purple"
 msgstr "Фиолетовая"
 
-# @ delightful-downloads
-#: includes/functions.php:81
+#: includes/functions.php:67
 msgid "Red"
 msgstr "Красная"
 
-# @ delightful-downloads
-#: includes/functions.php:85
+#: includes/functions.php:71
 msgid "Yellow"
 msgstr "Жёлтая"
 
-# @ delightful-downloads
-#: includes/functions.php:106
+#: includes/functions.php:92
 msgid "Title (Date)"
 msgstr "Заголовок (Дата)"
 
-# @ delightful-downloads
-#: includes/functions.php:110
+#: includes/functions.php:96
 msgid "Title (Count)"
 msgstr "Заголовок (Счетчик)"
 
-# @ delightful-downloads
-#: includes/functions.php:114
-msgid "Title (Filesize)"
-msgstr "Заголовок (Размер файла)"
+#: includes/functions.php:100
+msgid "Title (File size)"
+msgstr ""
 
-# @ delightful-downloads
+#: includes/functions.php:104
+msgid "Title (Extension, File size)"
+msgstr ""
+
 #: includes/options.php:20
 msgid "General"
 msgstr "Главные"
 
-# @ delightful-downloads
 #: includes/options.php:21
 msgid "Shortcodes"
 msgstr "Шорткоды"
 
-# @ delightful-downloads
+#: includes/options.php:22
+msgid "Statistics"
+msgstr "Статистика"
+
 #: includes/options.php:23
 msgid "Advanced"
 msgstr "Расширенные"
 
-# @ delightful-downloads
-#: includes/options.php:37
+#: includes/options.php:24
+msgid "Support"
+msgstr "Поддержка"
+
+#: includes/options.php:38
 msgid "Categories and Tags"
 msgstr "Категории и теги"
 
-# @ delightful-downloads
-#: includes/options.php:43
+#: includes/options.php:44
 msgid "Members Download"
 msgstr "Скачивание для зарегистрированных"
 
-# @ delightful-downloads
-#: includes/options.php:49
+#: includes/options.php:50
 msgid "Non-Members Redirect"
 msgstr "Перенаправление для не зарегистрированных"
 
-# @ delightful-downloads
-#: includes/options.php:55
+#: includes/options.php:56
 msgid "Block User Agents"
 msgstr "Блокировать имена пользователей"
 
-# @ delightful-downloads
-#: includes/options.php:61
+#: includes/options.php:62
 msgid "Default Text"
 msgstr "Текст по умолчанию"
 
-# @ delightful-downloads
-#: includes/options.php:64 includes/post-types.php:22
-#: includes/post-types.php:176
-msgid "Download"
-msgstr "Скачать"
-
-# @ delightful-downloads
-#: includes/options.php:67
+#: includes/options.php:68
 msgid "Default Style"
 msgstr "Стиль по умолчанию"
 
-# @ delightful-downloads
-#: includes/options.php:73
+#: includes/options.php:74
 msgid "Default Button Style"
 msgstr "Стиль кнопки по умолчанию"
 
-# @ delightful-downloads
-#: includes/options.php:79
+#: includes/options.php:80
 msgid "Default List Style"
 msgstr "Стиль списка по умолчанию"
 
-# @ delightful-downloads
-#: includes/options.php:85
+#: includes/options.php:86
 msgid "Admin Downloads"
 msgstr "Администрирование скачиваний"
 
-# @ delightful-downloads
-#: includes/options.php:91
+#: includes/options.php:92
+msgid "Grace Period"
+msgstr ""
+
+#: includes/options.php:98
+msgid "Auto Delete"
+msgstr ""
+
+#: includes/options.php:104
 msgid "Default CSS Styles"
 msgstr "По умолчанию CSS Styles"
 
-# @ delightful-downloads
-#: includes/options.php:97
+#: includes/options.php:110
 msgid "Cache Duration"
 msgstr "Срок Действия Кэша"
 
-# @ delightful-downloads
-#: includes/options.php:103
+#: includes/options.php:116
 msgid "Download Address"
 msgstr "Адрес загрузки"
 
-# @ delightful-downloads
-#: includes/post-types.php:23 includes/post-types.php:60
+#: includes/options.php:122
+msgid "Complete Uninstall"
+msgstr ""
+
+#: includes/post-types.php:23
 msgid "Add New"
 msgstr "Добавить новую"
 
-# @ delightful-downloads
 #: includes/post-types.php:24
 msgid "Add New Download"
 msgstr "Добавить новую загрузку"
 
-# @ delightful-downloads
 #: includes/post-types.php:25
 msgid "Edit Download"
 msgstr "Редактировать загрузку"
 
-# @ delightful-downloads
 #: includes/post-types.php:26
 msgid "New Download"
 msgstr "Новая загрузка"
 
-# @ delightful-downloads
 #: includes/post-types.php:27
 msgid "All Downloads"
 msgstr "Все загрузки"
 
-# @ delightful-downloads
 #: includes/post-types.php:28
 msgid "View Download"
 msgstr "Просмотр загрузок"
 
-# @ delightful-downloads
 #: includes/post-types.php:29
 msgid "Search Downloads"
 msgstr "Искать загрузки"
 
-# @ delightful-downloads
 #: includes/post-types.php:30
 msgid "No downloads found"
 msgstr "Загрузок не найдено"
 
-# @ delightful-downloads
 #: includes/post-types.php:31
 msgid "No downloads found in Trash"
 msgstr "Загрузок в корзине не найдено"
 
-# @ delightful-downloads
-#: includes/post-types.php:58
-msgid "Download Logs"
-msgstr "Логи скачиваний"
-
-# @ delightful-downloads
-#: includes/post-types.php:59
-msgid "Log"
-msgstr "Лог"
-
-# @ delightful-downloads
-#: includes/post-types.php:61
-msgid "Add New Log"
-msgstr "Добавить новый лог"
-
-# @ delightful-downloads
 #: includes/post-types.php:62
-msgid "Edit Log"
-msgstr "Редактировать лог"
+msgid "File Size"
+msgstr ""
 
-# @ delightful-downloads
-#: includes/post-types.php:63
-msgid "New Log"
-msgstr "Новый лог"
-
-# @ delightful-downloads
-#: includes/post-types.php:64 includes/post-types.php:70
-msgid "Logs"
-msgstr "Логи"
-
-# @ delightful-downloads
-#: includes/post-types.php:65
-msgid "View Log"
-msgstr "Смотреть лог"
-
-# @ delightful-downloads
-#: includes/post-types.php:66
-msgid "Search Logs"
-msgstr "Искать логи"
-
-# @ delightful-downloads
-#: includes/post-types.php:67
-msgid "No logs found"
-msgstr "Логи не найдены"
-
-# @ delightful-downloads
-#: includes/post-types.php:68
-msgid "No logs found in Trash"
-msgstr "Логи не найдены в корзине"
-
-# @ delightful-downloads
-#: includes/post-types.php:95
+#: includes/post-types.php:64
 msgid "Shortcode"
 msgstr "Шорткод"
 
-# @ delightful-downloads
-#: includes/post-types.php:97 includes/post-types.php:180
-msgid "Date"
-msgstr "Дата"
-
-# @ delightful-downloads
-#: includes/post-types.php:104 includes/taxonomies.php:25
+#: includes/post-types.php:72 includes/taxonomies.php:25
 msgid "Categories"
 msgstr "Категории"
 
-# @ delightful-downloads
-#: includes/post-types.php:105 includes/taxonomies.php:49
+#: includes/post-types.php:73 includes/taxonomies.php:49
 msgid "Tags"
 msgstr "Теги"
 
-# @ delightful-downloads
-#: includes/post-types.php:177
-msgid "User"
-msgstr "Пользователь"
-
-# @ delightful-downloads
-#: includes/post-types.php:178
-msgid "IP Address"
-msgstr "IP адрес"
-
-# @ delightful-downloads
-#: includes/post-types.php:179
-msgid "User Agent"
-msgstr "Имя пользователя"
-
-# @ delightful-downloads
-#: includes/post-types.php:215
-msgid "Anonymous"
-msgstr "Аноним"
-
-# @ delightful-downloads
-#: includes/process-download.php:48
-msgid "Please login to download this file!"
-msgstr "Пожалуйста войдите на сайт для скачивания!"
-
-# @ delightful-downloads
-#: includes/process-download.php:56
-msgid "You are blocked from downloading this file!"
-msgstr "Скачивание файла заблокировано!"
-
-# @ delightful-downloads
-#: includes/process-download.php:63
+#: includes/process-download.php:36
 msgid "Invalid download."
 msgstr "Не верное скачивание."
 
-# @ delightful-downloads
-#: includes/process-download.php:74
-msgid "File does not exist!"
-msgstr "Файл не найден!"
+#: includes/process-download.php:55
+msgid "Please login to download this file!"
+msgstr "Пожалуйста войдите на сайт для скачивания!"
 
-# @ delightful-downloads
-#: includes/process-download.php:81
+#: includes/process-download.php:65
+msgid "You are blocked from downloading this file!"
+msgstr "Скачивание файла заблокировано!"
+
+#: includes/process-download.php:73
+msgid "You must attach a file to this download."
+msgstr ""
+
+#: includes/process-download.php:123
 msgid "Server error, file cannot be opened!"
 msgstr "Ошибка сервера, файл не найден!"
 
-# @ delightful-downloads
-#: includes/shortcodes.php:37 includes/shortcodes.php:109
-#: includes/shortcodes.php:142
+#: includes/shortcodes.php:46 includes/shortcodes.php:332
+#: includes/shortcodes.php:396
 msgid "Invalid download ID."
 msgstr "Не правильный ID."
 
-# @ delightful-downloads
-#: includes/shortcodes.php:47 includes/shortcodes.php:292
+#: includes/shortcodes.php:58 includes/shortcodes.php:251
 msgid "Invalid style attribute."
 msgstr "Не правильный стиль атрибута."
 
-# @ delightful-downloads
-#: includes/shortcodes.php:64
+#: includes/shortcodes.php:79
 msgid "Invalid button attribute."
 msgstr "Не правильный атрибут кнопки."
 
-# @ delightful-downloads
-#: includes/shortcodes.php:195
+#: includes/shortcodes.php:144
 msgid "Invalid orderby attribute."
 msgstr "Не правильный атрибут действия."
 
-# @ delightful-downloads
-#: includes/shortcodes.php:221
+#: includes/shortcodes.php:175
 msgid "Invalid order attribute."
 msgstr "Не правильный атрибут"
 
-# @ delightful-downloads
-#: includes/shortcodes.php:229
+#: includes/shortcodes.php:184
 msgid "Invalid relation attribute."
 msgstr "Устаревший атрибут."
 
-# @ delightful-downloads
-#: includes/shortcodes.php:323
+#: includes/shortcodes.php:298
 msgid "No downloads found."
 msgstr "Скачиваний не найдено."
 
-# @ delightful-downloads
 #: includes/taxonomies.php:23
 msgid "Download Categories"
 msgstr "Категории загрузки"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:24
 msgid "Download Category"
 msgstr "Категория загрузки"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:26
 msgid "All Categories"
 msgstr "Все категории"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:27
 msgid "Edit Category"
 msgstr "редактировать категорию"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:28
 msgid "View Category"
 msgstr "Смотреть категорию"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:29
 msgid "Update Category"
 msgstr "Обновить категорию"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:30
 msgid "Add New Category"
 msgstr "Добавить новую категорию"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:31
 msgid "New Category Name"
 msgstr "Имя новой категории"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:32
 msgid "Search Categories"
 msgstr "Искать категорию"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:33
 msgid "Popular Categories"
 msgstr "Популярные категории"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:47
 msgid "Download Tags"
 msgstr "Теги загрузок"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:48
 msgid "Download Tag"
 msgstr "Тег загрузки"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:50
 msgid "All Tags"
 msgstr "Все теги"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:51
 msgid "Edit Tag"
 msgstr "Редактировать тег"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:52
 msgid "View Tag"
 msgstr "Смотреть тег"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:53
 msgid "Update Tag"
 msgstr "Обновить тег"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:54
 msgid "Add New Tag"
 msgstr "Добавить новый тег"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:55
 msgid "New Tag Name"
 msgstr "Имя нового тега"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:56
 msgid "Search Tags"
 msgstr "Искать теги"
 
-# @ delightful-downloads
 #: includes/taxonomies.php:57
 msgid "Popular Tags"
 msgstr "Популярные теги"

@@ -44,15 +44,16 @@ if ($Knews_plugin) {
 		
 		if (count($user) ==1) $user_id=$user[0]->id;
 		
-		if ($key_track[0]->type==1 && $what==1) {
+		/**************** REVISAR ******************/
+		if ($key_track[0]->type==1 && $what==1 && isset($key_track[0]->id) ) {
 			$query = "INSERT INTO " . KNEWS_STATS . " (what, user_id, submit_id, date, statkey) VALUES (1, " . $user_id . ", " . $key_track[0]->submit_id . ", '" . $mysqldate . "', " . $key_track[0]->id . ")";
 			$result=$wpdb->query( $query );
 		}
 
 		$query = "SELECT * FROM " . KNEWS_STATS . " WHERE what=7 AND user_id='" . $user_id . "' AND submit_id='" . $key_track[0]->submit_id . "'";
 		$stat = $wpdb->get_row( $query );
-		
-		if (!isset($stat->id)) {
+		/**************** REVISAR ******************/
+		if (!isset($stat->id) && isset($key_track[0]->id) ) {
 			$query = "INSERT INTO " . KNEWS_STATS . " (what, user_id, submit_id, date, statkey) VALUES (7, " . $user_id . ", " . $key_track[0]->submit_id . ", '" . $mysqldate . "', " . $key_track[0]->id . ")";
 			$result=$wpdb->query( $query );
 		}

@@ -88,6 +88,18 @@ function dedo_get_options() {
 			'type'		=> 'check',
 			'default'	=> 0
 		),
+		'grace_period'	=> array(
+			'name'		=> __( 'Grace Period', 'delightful-downloads' ),
+			'tab'		=> 'statistics',
+			'type'		=> 'text',
+			'default'	=> 3
+		),
+		'auto_delete'	=> array(
+			'name'		=> __( 'Auto Delete', 'delightful-downloads' ),
+			'tab'		=> 'statistics',
+			'type'		=> 'text',
+			'default'	=> 0
+		),
 		'enable_css'		=> array(
 			'name'		=> __( 'Default CSS Styles', 'delightful-downloads' ),
 			'tab'		=> 'advanced',
@@ -98,7 +110,7 @@ function dedo_get_options() {
 			'name'		=> __( 'Cache Duration', 'delightful-downloads' ),
 			'tab'		=> 'advanced',
 			'type'		=> 'text',
-			'default'	=> 10,
+			'default'	=> 15,
 		),
 		'download_url'		=> array(
 			'name'		=> __( 'Download Address', 'delightful-downloads' ),

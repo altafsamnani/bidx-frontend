@@ -3,7 +3,7 @@
 Plugin Name: Delightful Downloads
 Plugin URI: http://delightfulwp.com/delightful-downloads/
 Description: A super-awesome downloads manager for WordPress.
-Version: 1.3.8
+Version: 1.4
 Author: Delightful WP
 Author URI: http://delightfulwp.com
 License: GPL2
@@ -94,7 +94,7 @@ class Delightful_Downloads {
 	private function setup_constants() {
 
 		if( !defined( 'DEDO_VERSION' ) ) {
-			define( 'DEDO_VERSION', '1.3.8' );
+			define( 'DEDO_VERSION', '1.4' );
 		}
 
 		if( !defined( 'DEDO_PLUGIN_URL' ) ) {
@@ -144,6 +144,9 @@ class Delightful_Downloads {
 	 */
 	private function includes() {
 
+		include_once( DEDO_PLUGIN_DIR . 'includes/class-dedo-cache.php' );
+		include_once( DEDO_PLUGIN_DIR . 'includes/class-dedo-logging.php' );
+		include_once( DEDO_PLUGIN_DIR . 'includes/class-dedo-statistics.php' );
 		include_once( DEDO_PLUGIN_DIR . 'includes/cron.php' );
 		include_once( DEDO_PLUGIN_DIR . 'includes/functions.php' );
 		include_once( DEDO_PLUGIN_DIR . 'includes/mime-types.php' );
@@ -155,10 +158,14 @@ class Delightful_Downloads {
 		
 		if ( is_admin() ) {
 			include_once( DEDO_PLUGIN_DIR . 'includes/admin/ajax.php' );
+			include_once( DEDO_PLUGIN_DIR . 'includes/admin/class-dedo-list-table.php' );
+			include_once( DEDO_PLUGIN_DIR . 'includes/admin/class-dedo-notices.php' );
 			include_once( DEDO_PLUGIN_DIR . 'includes/admin/dashboard.php' );
 			include_once( DEDO_PLUGIN_DIR . 'includes/admin/media-button.php' );
 			include_once( DEDO_PLUGIN_DIR . 'includes/admin/meta-boxes.php' );
 			include_once( DEDO_PLUGIN_DIR . 'includes/admin/page-settings.php' );
+			include_once( DEDO_PLUGIN_DIR . 'includes/admin/page-statistics.php' );
+			include_once( DEDO_PLUGIN_DIR . 'includes/admin/upgrades.php' );
 		}
 
 	}
@@ -170,18 +177,16 @@ class Delightful_Downloads {
 	 */
 	public function activate() {
 
-		global $dedo_default_options;
+		global $dedo_default_options, $dedo_statistics;
 	
-		// Add prior version to database if version already exists
-		if ( $current_version = get_option( 'delightful-downloads-version' ) ) {
-			update_option( 'delightful-downloads-prior-version', $current_version );
-		}
-
-		// Add current version to database
-		update_option( 'delightful-downloads-version', DEDO_VERSION );
+		// Install database table
+		$dedo_statistics->setup_table();
 
 		// Add default options to database if no options exist
 		add_option( 'delightful-downloads', $dedo_default_options );
+
+		// Add option for admin notices
+		add_option( 'delightful-downloads-notices', array() );
 
 		// Run folder protection
 		dedo_folder_protection();
@@ -197,7 +202,6 @@ class Delightful_Downloads {
 
 		// Clear dedo transients
 		dedo_delete_all_transients();
-		
 	}
 
 	/**

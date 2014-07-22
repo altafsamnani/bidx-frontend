@@ -4,6 +4,14 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 global $wpdb, $knewsOptions, $Knews_plugin;
 
+if (version_compare(get_option('knews_version','0.0.0'), '1.6.3') < 0 || ( $this->im_pro() && version_compare(get_option('knews_version','0.0.0'), '2.2.5') < 0)) {
+	if (!knews_add_column(KNEWS_AUTOMATED, 'include_cats', "varchar(255) NOT NULL DEFAULT ''")) return;
+	if (!knews_add_column(KNEWS_AUTOMATED, 'exclude_cats', "varchar(255) NOT NULL DEFAULT ''")) return;
+	if (!knews_add_column(KNEWS_AUTOMATED, 'include_tags', "varchar(255) NOT NULL DEFAULT ''")) return;
+	if (!knews_add_column(KNEWS_AUTOMATED, 'exclude_tags', "varchar(255) NOT NULL DEFAULT ''")) return;
+	if (!knews_add_column(KNEWS_AUTOMATED, 'include_postypes', "varchar(255) NOT NULL DEFAULT ''")) return;
+	if (!knews_add_column(KNEWS_AUTOMATED, 'use_post_embed_pref', "bigint(1) UNSIGNED NOT NULL DEFAULT '1'")) return;
+}
 if ( $this->im_pro() && version_compare(get_option('knews_version','0.0.0'), '2.0.9') < 0) {
 	//Let's add new cappabilitie 
 	global $wp_roles;
