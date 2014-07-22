@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Bidx Group\n"
-"POT-Creation-Date: 2014-06-06 14:48+0100\n"
+"POT-Creation-Date: 2014-06-10 21:11+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jaap Gorjup <jaap@bidx.net>\n"
 "Language-Team: Bidx Development <devteam@bidx.net>\n"
