@@ -119,10 +119,9 @@ add_action('widgets_init', 'bidx_widgets_init');
 * 
 * Information
 * 1] bidx group changes (selector for members / businessplans / changes / all + view-type + amount 3-5)
-* 2] active competitions (integrates with XML feed from Skipso)
-* 3] bidx conversion widget (logged-in for access plan / profile + create new)
-* 4] bidx search widget (quick access to search function)
-* 5] bidx maps search widget (map view from a central location in a range)
+* 2] active competitions  ==> in the competitions plugin
+* 3] bidx search widget (quick access to search function) ==> in the plugin
+* 4] bidx maps search widget (map view from a central location in a range) ==> in the plugin
 * 
 * --------------------------
 */
@@ -137,3 +136,5 @@ require_once locate_template('lib/widgets/latest_businesses.php');
 require_once locate_template('lib/widgets/latest_members.php');
 require_once locate_template('lib/widgets/starthere.php');
 require_once locate_template('lib/widgets/video.php');
+require_once locate_template('lib/widgets/multicolumn.php');
+require_once locate_template('lib/widgets/post.php');
