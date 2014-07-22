@@ -73,10 +73,6 @@ class auth {
 
                 $result = $sessionObj -> getActivationSession( $activationCode );
 
-                $http = (is_ssl ()) ? 'https://' : 'http://';
-                $groupDomain = $result -> bidxGroupDomain;
-
-
                 // if sessionState is pending, redirect to setpassword
                 //
                 if ( isset ( $result -> data -> SessionState ) && ( $result -> data -> SessionState === "PendingInitialPasswordSet" || $result -> data -> SessionState === "PendingPasswordReset"  ) ) {
