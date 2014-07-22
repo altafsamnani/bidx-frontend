@@ -30,10 +30,12 @@ class auth {
 	function register_auth_bidx_ui_libs() {
 
         wp_register_script( 'registration',  plugins_url( 'static/js/group-registration.js',    __FILE__ ), array(), '20130501', TRUE );
+        wp_register_script( 'join', plugins_url( 'static/js/join.js', __FILE__ ), $deps, '20140710', TRUE );
 
-        $deps = array_merge( self :: $deps, array( 'registration' ) );
+        $deps = array_merge( self :: $deps, array( 'registration', 'join' ) );
 
-		wp_register_script( 'auth', plugins_url( 'static/js/auth.js', __FILE__ ), $deps, '20130501', TRUE );
+        wp_register_script( 'auth', plugins_url( 'static/js/auth.js', __FILE__ ), $deps, '20130501', TRUE );
+		
 	}
 
 	/**
@@ -105,8 +107,11 @@ class auth {
 
 
         } else {
+            require_once( BIDX_PLUGIN_DIR . '/../services/group-service.php' );
+            $groupSvc = new GroupService( );
             $view->groupNotification = (!empty($atts['name'])) ? $atts['name']: 'we';
-            $view -> render( $render . '.phtml' );
+            $view->group = $groupSvc->getGroupDetails();
+            $view->render( $render . '.phtml' );
         }
 
 

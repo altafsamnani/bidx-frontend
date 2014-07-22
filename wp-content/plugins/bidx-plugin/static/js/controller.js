@@ -313,6 +313,8 @@
         ,   'resetpassword':                                    'resetpassword'
         ,   'setpassword(/:state)':                             'setpassword'
 
+        ,   'join(/:state)':                                    'join'
+        
         ,   'mail(/:state)(*splat)':                            'mail'
 
         ,   'media(/:appState)(/:id)':                          'media'
@@ -744,8 +746,6 @@
         {
             bidx.utils.log( "AppRouter::auth State: ", state, splat );
 
-
-
             mainState = "auth";
 
             _navigateToApp
@@ -767,6 +767,20 @@
             (
                 "login"
             ,   {}
+            );
+        }
+    ,   join:                       function( state )
+        {
+            bidx.utils.log( "AppRouter::join" );
+
+            mainState = "join";
+
+            _navigateToApp
+            (
+                "join"
+            ,   {
+                    state:    state
+                }
             );
         }
     ,   register:                   function( splat )

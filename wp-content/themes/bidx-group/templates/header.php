@@ -92,7 +92,7 @@
                             if( !$authenticated )
                             {
 ?>
-                                <a href="/register-as-member/#register/firstLogin=getting-started-member#editPreference" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','roots'); ?></a>
+                                <a href="/join" class="btn btn-secondary btn-lg start-btn <?php echo $kickoff_alignment; ?>"><?php _e('Start here','roots'); ?></a>
 <?php
                             }
 ?>

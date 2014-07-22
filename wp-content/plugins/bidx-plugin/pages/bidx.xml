@@ -206,6 +206,13 @@
             <mapping>(.*)mentor-dashboard</mapping>
             <content>[bidx app="mentor" view="dashboard"]</content>
         </post>
+        <post>
+            <post_id>30</post_id>
+            <name>Join</name>
+            <title>Join</title>
+            <mapping>(.*)join</mapping>
+            <content>[bidx app="auth" view="join"]</content>
+        </post>
     </posts>
 
     <widgets>
