@@ -2317,7 +2317,7 @@ function alter_site_menu ()
             remove_menu_page ('index.php');
             remove_submenu_page ('index.php', 'my-sites.php');
             remove_submenu_page ('themes.php', 'themes.php');
-            remove_submenu_page ('themes.php', 'customize.php');
+ //           remove_submenu_page ('themes.php', 'customize.php');
             add_action ('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
             add_action ('admin_head', 'wpc_remove_admin_elements');
 
