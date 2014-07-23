@@ -263,7 +263,7 @@ filter: alpha(opacity=100);
                     <!-- SHOW -->
                     <div class="view viewShow">
 
-                        <a class="btn btn-primary" href="#editBusinessSummary/219">Edit</a>
+                        <a class="btn btn-primary" href="#editBusinessSummary/edit/219">Edit</a>
                     </div>
 
                     <!-- EDIT -->

@@ -90,6 +90,7 @@
 
     <!-- Modal dialogs status messages -->
      <Item value="modalSend">You are about to send the request. Are you sure?</Item>
+     <Item value="modalSendFrmBp">You are about to send the request. Are you sure?</Item>
      <Item value="modalAccept">You are about to accept the request. Are you sure?</Item>
      <Item value="modalReject">You are about to ignore the request. Are you sure?</Item>
      <Item value="modalCancel">You are about to cancel the request. Are you sure?</Item>
@@ -98,5 +99,15 @@
      <Item value="modalBtnAccept">Accept request</Item>
      <Item value="modalBtnReject">Ignore request</Item>
      <Item value="modalBtnCancel">Cancel request</Item>
+
+     <!-- Mentoring Feedback -->
+    <Item value="feedbackGeneral">General</Item>
+    <Item value="feedbackOverview">General overview section</Item>
+    <Item value="feedbackBusiness">About the business section</Item>
+    <Item value="feedbackTeam">About the team section</Item>
+    <Item value="feedbackFinancial">Financial section</Item>
+    <Item value="feedbackCompany">Company section</Item>
+    <Item value="feedbackMentoring">Mentoring section</Item>
+    <Item value="feedbackDocument">Document section</Item>
 
 </I18N>

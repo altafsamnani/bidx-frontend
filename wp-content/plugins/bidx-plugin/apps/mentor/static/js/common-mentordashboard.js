@@ -60,7 +60,7 @@
                 {
                     value: bpIdx
                 } );
-                option.text( bidx.i18n.i( bpIdx,     appName )  );
+                option.text( bidx.i18n.i( bpIdx )  );
 
                 listArrItems.push( option );
             } );
@@ -626,7 +626,7 @@
 
                        _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
 
-                        window.bidx.controller.updateHash("#mentoring/mentor", true);
+                        window.bidx.controller.updateHash( params.updateHash, true );
 
                         if (options && options.callback)
                         {
@@ -870,10 +870,12 @@
         if( action )
         {
 
+
             // Modal popup message
             action      =   action.replace( /ed/g, '');
             actionKey   =   'modal' + action.substring(0,1).toUpperCase() + action.substring(1); // ex 'modalAccept, modalCancel, modalIgnore'
             actionMsg   =   bidx.i18n.i( actionKey ) ;
+           // bidx.utils.log("action", bidx.utils.getViewName ( options.view, "modal" )  );
             $mainModal.find(".modal-body").empty().append( actionMsg );
 
             //Modal Primary Button Text
@@ -1026,7 +1028,7 @@
                 } );
 
                 if( options.params ) {
-
+                    bidx.utils.log('insideconfirm request');
                     _showMainModal(
                     {
                         view  : "confirmRequest"
@@ -1079,6 +1081,8 @@
 
                     case 'send':
 
+                        params.updateHash = '#mentoring/mentor';
+
                          _doCreateMentorRequest(
                         {
                             params: params
@@ -1094,6 +1098,27 @@
 
                             }
                         } );
+                    break;
+
+                    case 'sendFrmBp': // this is initiated from edit businesssummary-->mentor tab
+                        params.updateHash = '#editBusinessSummary/load';
+
+                         _doCreateMentorRequest(
+                        {
+                            params: params
+                        ,   callback: function()
+                            {
+                                _showMainHideView("match", "loadrequest");
+                                $mentorButton.removeClass( "disabled" );
+                                $mentorButton.text(btnHtml);
+                                _closeMainModal(
+                                {
+                                    unbindHide: true
+                                } );
+
+                            }
+                        } );
+
                     break;
 
                     default:

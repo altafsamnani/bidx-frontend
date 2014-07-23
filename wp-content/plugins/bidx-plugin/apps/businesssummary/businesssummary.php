@@ -25,7 +25,13 @@ class businesssummary
     */
     function register_businesssummary_bidx_ui_libs()
     {
-        wp_register_script('businesssummary', plugins_url('static/js/businesssummary.js', __FILE__), self :: $deps, '20130501', TRUE);
+        /* Common mentoring functions & mentoring activities functions */
+     ;
+        wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), $deps, '20140307', TRUE);
+        $deps = array_merge( self :: $deps, array(  'bp-mentor' ) );
+        //$deps = self::$deps;
+
+        wp_register_script('businesssummary', plugins_url('static/js/businesssummary.js', __FILE__), $deps, '20130501', TRUE);
     }
 
     /**
@@ -57,10 +63,10 @@ class businesssummary
             $businessSummaryData = $businessSummaryObj->getSummaryDetails( $businessSummaryId );
 
             $view->data = $businessSummaryData->data;
-            
+
             if ( isset( $businessSummaryData -> data -> completeness ) ) {
             	$completeness = $businessSummaryData -> data -> completeness;
-            	
+
             	//TODO : structurally fix this using the scoring service
             	$view->completenessScore = round(($completeness / 68)*100);
             	if ( $view->completenessScore < 30 ) {

@@ -1,6 +1,11 @@
 <div id="mentor-dashboard">
+    <?php
+    if($this->isMentor || $this->isEntrpreneur || $this->isGroupOwner)
+    { ?>
+        <h1 class="pagetitle"><?php _e('My mentor dashboard','bidxplugin');?></h1>
+    <?php }
+    ?>
 
-    <h1 class="pagetitle"><?php _e('My mentor dashboard','bidxplugin');?></h1>
     <div class="dashboard">
         <div class="view viewMainsuccess alert alert-success">
                 <p class="successMsg"></p>

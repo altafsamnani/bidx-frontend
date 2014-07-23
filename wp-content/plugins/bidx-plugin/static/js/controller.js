@@ -301,9 +301,8 @@
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
 
-        ,   'editBusinessSummary(/:id)':                        'editBusinessSummary'
+        ,   'editBusinessSummary(/:state)(/:id)':               'editBusinessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
-        ,   'viewBusinessSummary':                            'viewBusinessSummary'
 
         ,   'auth(/:state)(*splat)':                            'auth'
 
@@ -561,9 +560,9 @@
                 }
             );
         }
-    ,   editBusinessSummary:    function( id )
+    ,   editBusinessSummary:    function( state, id )
         {
-            bidx.utils.log( "AppRouter::editBusinessSummary" );
+            bidx.utils.log( "AppRouter::editBusinessSummary", state );
 
             mainState   = "editBusinessSummary";
 
@@ -571,7 +570,7 @@
             (
                 "businesssummary"
             ,   {
-                    requestedState: "edit"
+                    requestedState: state
                 ,   id:             id
                 }
             );
@@ -590,20 +589,7 @@
                 }
             );
         }
-    ,   viewBusinessSummary:          function()
-        {
-            bidx.utils.log( "AppRouter::viewBusinessSummary" );
 
-            mainState       = "viewBusinessSummary";
-
-             _navigateToApp
-            (
-                "businesssummary"
-            ,   {
-                    requestedState: "view"
-                }
-            );
-        }
     ,   mail:                   function( state, splat )
         {
             bidx.utils.log( "AppRouter::mailInbox State: ", state );

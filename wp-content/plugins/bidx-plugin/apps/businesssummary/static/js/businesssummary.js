@@ -36,6 +36,10 @@
 
     ,   loggedInMemberId            = bidx.common.getCurrentUserId()
 
+    ,   active                      = []
+    ,   wait                        = []
+    ,   respond                     = []
+
 
     ,   forms                       =
         {
@@ -2152,15 +2156,67 @@
 
     }
 
+    // This function is a collection of callbacks for the contact categories. It is meant to execute contact-category specific code
+    //
+    function _getContactsCallback( $listItem, mentorId )
+    {
+        //      $listItem    = jQuery object of the contact category listItem
+        // active, wait, respond
+        var $matchBtn  =   $listItem.find( ".btn-bidx-mentoring")
+        ,   hrefMatch  =   $matchBtn.attr( "data-href" )
+        ,   waitArr     =   []
+        ,   respondArr  =   []
+        ,   isWaitingRequest
+        ,   isRespondRequest
+        ;
+
+
+        waitArr             =   _.pluck (   wait,   'mentorId' );
+
+        respondArr          =   _.pluck (   respond,  'mentorId' );
+
+        isWaitingRequest    =   _.contains( waitArr,    mentorId );
+
+        isRespondRequest    =   _.contains( respondArr,    mentorId );
+
+        switch(true)
+        {
+
+            case isWaitingRequest:
+                bidx.utils.log('iswaiting');
+                $matchBtn.addClass('disabled').i18nText("btnRequestSent");
+            break;
+
+            case isRespondRequest:
+                bidx.utils.log('isRespondRequest');
+            break;
+
+            default:
+                bidx.utils.log('default');
+                /* 1 Accept Link */
+                hrefMatch   =   hrefMatch
+                        .replace( /%entityId%/g,    businessSummaryId )
+                        .replace( /%mentorId%/g,    mentorId )
+                        .replace( /%initiatorId%/g, loggedInMemberId )
+                        ;
+
+                $matchBtn.attr( "href", hrefMatch );
+            break;
+        }
+
+        return ;
+    }
+
      function _doSearchListing( options )
     {
         var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listError       = $("#error-mentor").html().replace(/(<!--)*(-->)*/g, "")
         ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
+        ,   actionData       = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response         = options.response
         ,   $list            = $element.find("." + options.list)
+        ,   $listMatchList
         ,   emptyVal         = ''
         ,   counter          = 1
         ,   pagerOptions    = {}
@@ -2181,8 +2237,8 @@
         ,   isEntrepreneur
         ,   isMentor
         ,   isInvestor
-        ,   activeMembers = []
         ,   countHtml
+        ,   $requestMentoringBtn
         ,   $d              =  $.Deferred()
         ,   responseLength
         ;
@@ -2252,96 +2308,107 @@
             // create member listitems
             //
 
-
             $.each( response.docs, function( idx, item )
             {
-
                 mentorId    = bidx.utils.getValue( item, "ownerId" );
 
-                listItem = loaderSnippet
-                            .replace( /%contactId%/g, mentorId );
-
-                $list.append( listItem );
-
-                 showMemberProfile(
+                if( mentorId !== loggedInMemberId.toString() )
                 {
-                    ownerId     :   mentorId
-                ,   callback    :   function ( itemMember, itemMemberId )
-                                    {
-                                        if(itemMember)
+                    listItem = loaderSnippet
+                                .replace( /%contactId%/g, mentorId );
+
+                    $list.append( listItem );
+
+                    showMemberProfile(
+                    {
+                        ownerId     :   mentorId
+                    ,   callback    :   function ( itemMember, itemMemberId )
                                         {
-                                            memberId        =   bidx.utils.getValue( itemMember, "member.bidxMeta.bidxMemberId" );
-                                            memberProfile   =   bidx.utils.getValue( itemMember, "bidxMemberProfile" );
-                                            personalDetails =   bidx.utils.getValue( itemMember, "bidxMemberProfile.personalDetails" );
-                                            profilePic      =   bidx.utils.getValue( personalDetails, "profilePicture" );
-                                            memberCountry   =   bidx.utils.getValue( personalDetails, "address.0.country");
-                                            isEntrepreneur   = bidx.utils.getValue( itemMember, "bidxEntrepreneurProfile" );
-                                            isInvestor       = bidx.utils.getValue( itemMember, "bidxInvestorProfile" );
-                                            isMentor         = bidx.utils.getValue( itemMember, "bidxMentorProfile" );
+                                            $listMatchList      =   $list.find('.member' + itemMemberId );
 
-                                            /* Profile Picture */
-                                            if ( profilePic )
+                                            if(itemMember)
                                             {
-                                                imageWidth  = bidx.utils.getValue( profilePic, "width" );
-                                                imageLeft   = bidx.utils.getValue( profilePic, "left" );
-                                                imageTop    = bidx.utils.getValue( profilePic, "top" );
-                                                contactPicture = '<div class="img-cropper"><img class="media-object" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" src="' + profilePic.document + '"></div>';
-                                            }
-                                            else
-                                            {
-                                                contactPicture = "<div class='icons-rounded pull-left'><i class='fa fa-user text-primary-light'></i></div>";
-                                            }
+                                                memberId        =   bidx.utils.getValue( itemMember,        "member.bidxMeta.bidxMemberId" );
+                                                memberProfile   =   bidx.utils.getValue( itemMember,        "bidxMemberProfile" );
+                                                personalDetails =   bidx.utils.getValue( itemMember,        "bidxMemberProfile.personalDetails" );
+                                                profilePic      =   bidx.utils.getValue( personalDetails,   "profilePicture" );
+                                                memberCountry   =   bidx.utils.getValue( personalDetails,   "address.0.country");
+                                                isEntrepreneur  =   bidx.utils.getValue( itemMember,        "bidxEntrepreneurProfile" );
+                                                isInvestor      =   bidx.utils.getValue( itemMember,        "bidxInvestorProfile" );
+                                                isMentor        =   bidx.utils.getValue( itemMember,        "bidxMentorProfile" );
 
-                                            /* Member Country */
-                                            if(memberCountry)
-                                            {
-
-                                                bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
+                                                /* Profile Picture */
+                                                if ( profilePic )
                                                 {
-                                                    country    =  labelCountry;
-                                                });
-                                            }
-                                            // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
-                                            //
-                                            listItem = snippet
-                                                .replace( /%pictureUrl%/g,          contactPicture )
-                                                .replace( /%contactId%/g,           memberId                 ? memberId : emptyVal )
-                                                .replace( /%contactName%/g,         itemMember.member.displayName               ? itemMember.member.displayName : emptyVal)
-                                                .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
-                                                .replace( /%country%/g,             country            ? country   : "" )
-                                                .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
-                                                .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
-                                                .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
-                                                .replace( /%action%/g,   '')
-                                            ;
+                                                    imageWidth  = bidx.utils.getValue( profilePic, "width" );
+                                                    imageLeft   = bidx.utils.getValue( profilePic, "left" );
+                                                    imageTop    = bidx.utils.getValue( profilePic, "top" );
+                                                    contactPicture = '<div class="img-cropper"><img class="media-object" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" src="' + profilePic.document + '"></div>';
+                                                }
+                                                else
+                                                {
+                                                    contactPicture = "<div class='icons-rounded pull-left'><i class='fa fa-user text-primary-light'></i></div>";
+                                                }
 
-                                            $listItem = $( listItem );
+                                                /* Member Country */
+                                                if(memberCountry)
+                                                {
 
-                                            if( $.isFunction( options.cb ) )
-                                            {
-                                                // call Callback with current contact item as this scope and pass the current $listitem
+                                                    bidx.data.getItem(memberCountry, 'country', function(err, labelCountry)
+                                                    {
+                                                        country    =  labelCountry;
+                                                    });
+                                                }
+                                                // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
                                                 //
-                                                //options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
+                                                listItem = snippet
+                                                    .replace( /%pictureUrl%/g,          contactPicture )
+                                                    .replace( /%contactId%/g,           memberId                 ? memberId : emptyVal )
+                                                    .replace( /%contactName%/g,         itemMember.member.displayName               ? itemMember.member.displayName : emptyVal)
+                                                    .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
+                                                    .replace( /%country%/g,             country            ? country   : "" )
+                                                    .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
+                                                    .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
+                                                    .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
+                                                    .replace( /%action%/g,   actionData)
+                                                ;
+
+                                                $listItem                = $( listItem );
+                                                //$requestMentoringBtn     = $listItem.find( '.btn-mentoring' );
+
+                                                //$requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
+
+                                                if( options && options.cb )
+                                                {
+                                                    // call Callback with current contact item as this scope and pass the current $listitem
+                                                    //
+                                                    options.cb( $listItem,  memberId );
+
+                                                    $listItem.find( '.viewRequestmentor').show( );
+                                                }
+                                                //  add mail element to list
+
+                                            } else
+                                            {
+                                                $listItem = $listError;
                                             }
-                                            //  add mail element to list
 
-                                        } else
-                                        {
-                                            $listItem = $listError;
+                                            $listMatchList.empty().append( $listItem );
+
+
+                                            if( counter === responseLength )
+                                            {
+
+                                                $d.resolve( );
+                                            }
+
+                                             counter = counter + 1;
                                         }
-
-                                        $list.find('.member' + itemMemberId ).empty().append( $listItem );
-
-                                        if( counter === responseLength )
-                                        {
-
-                                            $d.resolve( );
-                                        }
-
-                                         counter = counter + 1;
-                                    }
-                } );
-
+                    } );
+                } else
+                {
+                    counter = counter + 1;
+                }
 
             });
         }
@@ -2386,7 +2453,10 @@
                         ,   sort        :   search.sort
                         ,   criteria    :   search.criteria
                         ,   list        :   'mentor-match-list'
-                       // ,   cb          : _getContactsCallback( 'match' )
+                        ,   cb          :   function( $listItem, mentorId )
+                                            {
+                                                _getContactsCallback( $listItem, mentorId );
+                                            }
                         } )
                         .done(  function(  )
                         {
@@ -2426,7 +2496,7 @@
         );
     }
 
-    function _getActiveMentorsAndMatches( options )
+    function _getActiveMentors( options )
     {
             var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
             ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
@@ -2452,7 +2522,6 @@
             ,   isEntrepreneur
             ,   isMentor
             ,   isInvestor
-            ,   activeMembers = []
             ,   $d              =  $.Deferred()
             ,   responseLength
             ;
@@ -2481,16 +2550,30 @@
                                      )
                                 {
 
-                                    activeMembers.push( itemResponse );
+                                    active.push( itemResponse );
+                                }
+                                else if ( ( itemResponse.status      === 'requested' ) &&
+                                     ( itemResponse.mentorId    !== loggedInMemberId ) &&
+                                     ( itemResponse.initiatorId === loggedInMemberId ) )
+                                {
+
+                                    wait.push( itemResponse );
+                                }
+                                else if( ( itemResponse.status      === 'requested' ) &&
+                                         ( itemResponse.mentorId    !== loggedInMemberId ) &&
+                                         ( itemResponse.initiatorId !== loggedInMemberId ) )
+                                {
+
+                                    respond.push( itemResponse );
                                 }
                             });
 
-                            responseLength = activeMembers.length;
+                            responseLength = active.length;
 
                             if( responseLength )
                             {
 
-                                $.each( activeMembers , function ( idx, item)
+                                $.each( active , function ( idx, item)
                                 {
                                     mentorId    = bidx.utils.getValue( item, "mentorId" );
 
@@ -2625,7 +2708,6 @@
         ,   isMentorMatchEmpty  =   ($.trim( $mentorMatchRequest.html()) === '') ? true : false
         ,   showMatch           =   bidx.utils.getValue(options, 'showMatch')
         ;
-        bidx.utils.log('showMatch', showMatch);
 
         _showAllView( "mentor" );
 
@@ -2636,8 +2718,7 @@
 
         if( isMentorListEmpty )
         {
-            bidx.utils.log('inside isMentorListEmpty', isMentorListEmpty );
-            _getActiveMentorsAndMatches(
+            _getActiveMentors(
             {
                 list:   'mentor-active-list'
             });
@@ -2645,7 +2726,6 @@
 
         if(isMentorMatchEmpty && showMatch !== 'hide')
         {
-            bidx.utils.log('inside isMentorMatchEmpty', isMentorMatchEmpty );
              _getMentorMatches(
             {
                 list:   'mentor-match-list'
@@ -2687,7 +2767,7 @@
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#viewBusinessSummary"  });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#editBusinessSummary/view"  });
 
 
         if( state === 'edit')
@@ -2717,7 +2797,7 @@
             else
             {
                 bidx.common.removeAppWithPendingChanges( appName );
-                bidx.controller.updateHash( "#viewBusinessSummary", true );
+                bidx.controller.updateHash( "#editBusinessSummary/view", true );
 
                 reset();
 
@@ -3126,11 +3206,35 @@
         {
             case 'view':
 
-               bidx.utils.log( "View BusinessSummary::AppRouter::view" );
+               bidx.utils.log( "EditBusinessSummary::AppRouter::view" );
 
                _getMentors({
                     showMatch : 'hide'
                 });
+
+            break;
+            case 'load':
+                bidx.utils.log( "EditBusinessSummary::AppRouter::load" );
+
+                _showAllView( "mentor" );
+                _showAllView( "matchingmentors" );
+
+
+                _getActiveMentors(
+                {
+                    list:   'mentor-active-list'
+                });
+
+                 _getMentorMatches(
+                {
+                    list:   'mentor-match-list'
+                ,   cb  :   function ( )
+                            {
+                                _showAllView( "pager" );
+                            }
+                });
+
+
 
             break;
             case "edit":
@@ -3183,7 +3287,7 @@
 
                 if ( updateHash )
                 {
-                    var hash = "editBusinessSummary/" + options.id;
+                    var hash = "editBusinessSummary/edit/" + options.id;
 
                     if ( options.section )
                     {
@@ -3271,6 +3375,6 @@
     //
     if ($("body.bidx-businesssummary").length && !bidx.utils.getValue(window, "location.hash").length)
     {
-        window.location.hash = "#viewBusinessSummary";
+        window.location.hash = "#editBusinessSummary/view";
     }
 } ( jQuery ));

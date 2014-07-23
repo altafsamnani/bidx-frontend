@@ -5,13 +5,5 @@
     <Item value="mentoringRequestPending">Mentoring request pending</Item>
     <Item value="receivedRequest">Received request</Item>
     <Item value="ongoing">Ongoing</Item>
-    <Item value="feedbackGeneral">General</Item>
-    <Item value="feedbackOverview">General overview section</Item>
-    <Item value="feedbackBusiness">About the business section</Item>
-    <Item value="feedbackTeam">About the team section</Item>
-    <Item value="feedbackFinancial">Financial section</Item>
-    <Item value="feedbackCompany">Company section</Item>
-    <Item value="feedbackMentoring">Mentoring section</Item>
-    <Item value="feedbackDocument">Document section</Item>
     <Item value="matchCount">%count% matches found</Item>
 </I18N>

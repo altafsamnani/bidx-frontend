@@ -137,7 +137,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 //
                 if ( $canEdit ) {
 ?>
-                    <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary" href="#editBusinessSummary/edit/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
                     if ( $entityStatus == 'DRAFT' ) {
 ?>
@@ -929,7 +929,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </form>
                     </div><!-- /EDIT -->
                     <!-- ---------------Mentor Matching Start------------------ -->
-                            <div id="contacts" class="view viewMentor">
+                            <div class="view viewMentor">
                                 <!-- ACTIVE REQUESTS -->
                                 <div class="panel-heading">
                                     <a class="btn-block trigger-active-contacts">
@@ -1237,6 +1237,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             </div>
         </div>
     </div>
+    <?php $this->render('../../mentor/templates/dashboard/main.phtml'); ?>
 
 </div><!-- /businesssummary -->
 
@@ -1246,8 +1247,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             <a class="pull-left" href="/member/%contactId%">
                 %pictureUrl%
             </a>
+            %action%
             <div class="media-body">
                 <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
+
                 <div>%professionalTitle%</div>
                 <div>%country%</div>
                 <div>
@@ -1255,7 +1258,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <span class="label bidx-label bidx-mentor">%role_mentor%</span>
                     <span class="label bidx-label bidx-investor">%role_investor%</span>
                 </div>
-                %action%
+
             </div>
         </div>
 -->
@@ -1275,6 +1278,16 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <!--
 <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=send" class="btn-bidx-send label bidx-mentor btn btn-sm"><?php _e('Offer mentoring','bidxplugin');?></a>
 <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide"><?php _e('Contact entrepreneur','bidxplugin');?></a>
+-->
+</script>
+<script type="text/html" id="send-mentor-action">
+<!--
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=sendFrmBp" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-mentoring" >Request mentoring</a>
+-->
+</script>
+<script type="text/html" id="accept-mentor-action">
+<!--
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=sendFrmBp" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-mentoring" >Request mentoring</a>
 -->
 </script>
 <script type="text/html" id="load-mentor">
