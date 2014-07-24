@@ -809,6 +809,16 @@ header
         border-color: desaturate(darken(@brand-primary, 25%), 25%);
         background-color: desaturate(darken(@brand-primary, 25%), 25%);
     }
+    .media-list
+    {
+        .col
+        {
+            @media (max-width: @screen-sm-min)
+            {
+                margin-bottom: @font-size-base;
+            }
+        }
+    }
 }
 
 .bidx-collapse

@@ -11,9 +11,9 @@
         $addColumns = false;
     endif;
 
-    $columnsCount = 'col-sm-4';
+    $columnsCount = 'col col-sm-4';
     if ( $addColumns && $isPanel && ( $region === 'priv-front-body' || $region === 'pub-front-body' ) ) :
-        $columnsCount = 'col-sm-6';
+        $columnsCount = 'col col-sm-6';
     endif;
 
         if (is_array( $this -> summaries )) {
@@ -30,7 +30,7 @@
                 $bsitems = (int)$latest_items;
             }
 ?>
-            <ul class="media-list">
+            <ul class="media-list bottom-0">
 <?php
             if ( $addColumns && $isPanel ) :
 ?>
