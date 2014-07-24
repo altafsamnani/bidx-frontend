@@ -122,19 +122,21 @@
 
         // Remove from here when switching to new theme
         // Set the height of sporsors carousel
-        
-        if ( $sponsors )
+        $sponsorImg.load( function()
         {
-            var tallest = 0;
-            $.each( $sponsorImg, function(index, img) {
-                if ( img.height > tallest )
-                {
-                    tallest = img.height;
-                }
+            if ( $sponsors )
+            {
+                var tallest = 0;
+                $.each( $sponsorImg, function(index, img) {
+                    if ( img.height > tallest )
+                    {
+                        tallest = img.height;
+                    }
 
-                $sponsors.height(tallest);
-            });
-        }
+                    $sponsors.height(tallest);
+                });
+            }
+        });
         // Remove till here when switching to new theme
 
     }
