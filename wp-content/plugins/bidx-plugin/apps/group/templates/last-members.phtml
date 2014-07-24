@@ -1,7 +1,7 @@
 <?php
         // check if user is logged in
         //
-        $authenticated = isset( $this -> authenticated ) && $this -> authenticated ==  'true';
+        $authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
         $joinedGroup = isset( $this -> joinedGroup ) && $this -> joinedGroup ==  'true';
 
         if (is_array($this -> members)) {
