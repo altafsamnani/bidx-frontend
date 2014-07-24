@@ -52,13 +52,33 @@ class group {
 				$view->summaries = $groupSvc->getLatestBusinessSummaries();
 				return $view->render( 'latest-business-summaries.phtml' );
 				break;
+			case "widget-latest-business-summaries" :
+				$view->summaries = $groupSvc->getLatestBusinessSummaries();
+				$view->panel 	 = isset( $atts[ "panel" ] ) ? true : false;
+				$view->items 	 = $atts[ "items" ];
+				$view->region 	 = $atts[ "region" ];
+				return $view->render( 'widget-latest-business-summaries.phtml' );
+				break;
 			case "last-members":
-				$view->authenticated 	= isset( $atts[ "authenticated" ] ) ? $atts[ "authenticated" ] : "";
+				$view->authenticated = isset( $atts[ "authenticated" ] ) ? $atts[ "authenticated" ] : "";
 				$view->members 			= $groupSvc->getLatestMembers(  );
 				return $view->render( 'last-members.phtml' );
 				break;
+			case "widget-latest-members":
+				$view->members 	= $groupSvc->getLatestMembers(  );
+				$view->panel 	= isset( $atts[ "panel" ] ) ? true : false;
+				$view->items 	= $atts[ "items" ];
+				$view->region 	= $atts[ "region" ];
+				return $view->render( 'widget-latest-members.phtml' );
+				break;
 			case "latest-news" :
 				return $view->render( 'latest-news.phtml' );
+				break;
+			case "widget-latest-news" :
+				$view->panel 	= isset( $atts[ "panel" ] ) ? true : false;
+				$view->items 	= $atts[ "items" ];
+				$view->region 	= $atts[ "region" ];
+				return $view->render( 'widget-latest-news.phtml' );
 				break;
 			case "list-groups" :
 				$view->groups = $groupSvc->getGroupDetails(  );

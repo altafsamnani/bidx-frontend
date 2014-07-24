@@ -56,7 +56,8 @@
     $session = BidxCommon::$staticSession;
     $authenticated  = $session -> authenticated;
 
-    if ( $authenticated === "true" ) {
+    if ( $authenticated === "true" )
+    {
 
 	// check if the curent user is has joined this group
     // only when a member has profiles, show the profile dropdown
@@ -71,7 +72,8 @@
     $isJudge        = ($isCompetition && in_array( $userName, $judgeEmails )) ? true : false;
     $showLogout     = true;
 
-        if ( $isAdmin || ( $inGroup && $hasProfiles ) ||  $isJudge) {
+        if ( $isAdmin || ( $inGroup && $hasProfiles ) || $isJudge)
+        {
  ?>
             <div class="btn-group profiles">
                 <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Dashboards', 'bidxplugin')?>">
@@ -80,23 +82,26 @@
                 </a>
                 <ul class="dropdown-menu bg-primary-darker">
 <?php
-                    foreach ( $profiles as $profilekey => $profilevalue ) {
-                        foreach($profilevalue as $menuName => $menuLink) {
-                        // fetch the key value for printing as text in the hyperlink
-                        //
-
+                    foreach ( $profiles as $profilekey => $profilevalue )
+                    {
+                        foreach($profilevalue as $menuName => $menuLink)
+                        {
+                            // fetch the key value for printing as text in the hyperlink
+                            //
 ?>
-                        <li><a href="<?php echo $menuLink ?>"><?php _e( $menuName, 'bidxplugin' ); ?></a></li>
+                            <li><a href="<?php echo $menuLink ?>"><?php _e( $menuName, 'bidxplugin' ); ?></a></li>
 <?php                   }
                     }
-                    if ( $isAdmin ) {
+                    if ( $isAdmin )
+                    {
 ?>
                         <li>
                             <a href="/wp-admin/admin.php?page=getting-started"><?php _e( 'bidX Dashboard', 'bidxplugin' ); ?></a>
                         </li>
 <?php
                     }
-                    if( $isJudge ) {
+                    if ( $isJudge )
+                    {
 ?>
                         <li>
                             <a href="<?php echo $skipsoJudgeUrl;?>"><?php _e('Judge Dashboard','bidxplugin')?></a>
@@ -113,7 +118,8 @@
  <?php
         // only when a has grous, show the group dropdown
         //
-        if ( $hasGroups ) {
+        if ( $hasGroups )
+        {
  ?>
             <div class="btn-group groups">
                 <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Groups', 'bidxplugin')?>">
@@ -142,17 +148,16 @@
             </a>
         </div>
 <?php
-        $roles = (!empty($this -> sessionData -> data -> roles)) ? $this -> sessionData -> data -> roles:NULL;
+        $roles = ( !empty( $this -> sessionData -> data -> roles ) ) ? $this -> sessionData -> data -> roles : NULL;
         $currentGroupAdmin = false;
-        if ( !empty($this->sessionData) && !empty( $roles) ) {
-            if ( in_array( 'GroupAdmin', $roles ) ||
-                 in_array( 'GroupOwner', $roles ) ) {
+        
+        if ( !empty($this->sessionData) && !empty( $roles) )
+        {
+            if ( in_array( 'GroupAdmin', $roles ) || in_array( 'GroupOwner', $roles ) )
+            {
                 $currentGroupAdmin = true;
-?>
-
-<?php
-    }
-}
+            }
+        }
 ?>
         <div class="btn-group settings">
             <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Account settings','bidxplugin')?>">
@@ -163,41 +168,43 @@
 <?php
                 // the following menu-items only to be displayed when user has joined the group
                 //
-                if ( $inGroup ) {
+                if ( $inGroup )
+                {
 ?>
                     <li><a href="/member"><?php _e('Profile','bidxplugin')?></a></li>
                     <li><a href="/account/#account"><?php _e('Account settings','bidxplugin')?></a></li>
                     <li><a href="/media"><?php _e('All my documents','bidxplugin')?></a></li>
-
 <?php
                 }
 
-
-                    if ( !$inGroup) {
+                if ( !$inGroup )
+                {
 ?>
-                        <li><a href="#joinGroup"><?php _e('Join this group', 'bidxplugin')?></a></li>
+                    <li><a href="#joinGroup"><?php _e('Join this group', 'bidxplugin')?></a></li>
 <?php
-                    } else if(!$currentGroupAdmin) {
+                }
+                elseif ( !$currentGroupAdmin )
+                {
 ?>
-                        <li><a href="#leaveGroup"><?php _e('Leave this group', 'bidxplugin')?></a></li>
+                    <li><a href="#leaveGroup"><?php _e('Leave this group', 'bidxplugin')?></a></li>
 <?php
-                    }
+                }
 
-
-                if( !$currentGroupAdmin && $hasGroups ) {?>
-
+                if( !$currentGroupAdmin && $hasGroups )
+                {
+?>
                     <li><a href="/mail/#mail/compose"><?php _e('Help','bidxplugin')?></a></li>
 <?php
                 }
 
-
-                if ($currentGroupAdmin && is_plugin_active('zendesk/zendesk-support.php'))  { ?>
-
+                if ( $currentGroupAdmin && is_plugin_active('zendesk/zendesk-support.php') )
+                {
+?>
                      <li><a href="/support"><?php _e('Ask your question','bidxplugin')?></a></li>
 <?php           }
 
-
-                if( $showLogout ) {
+                if( $showLogout )
+                {
 ?>
                      <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e('Logout', 'bidxplugin')?></a>
 <?php
@@ -206,17 +213,16 @@
             </ul>
         </div>
 <?php
-    } else {
+    }
+    else
+    {
 ?>
-
-            <div class="btn-group">
-                <a href="/auth/#auth/login" type="button" class="text-white" title="<?php _e('Login', 'bidxplugin')?>">
-                    <i class="fa fa-lock"></i>
-                    <span><?php _e('Login','bidxplugin')?></span>
-                </a>
-            </div>
-
-
+        <div class="btn-group">
+            <a href="/auth/#auth/login" type="button" class="text-white" title="<?php _e('Login', 'bidxplugin')?>">
+                <i class="fa fa-lock"></i>
+                <span><?php _e('Login','bidxplugin')?></span>
+            </a>
+        </div>
 <?php
     }
 ?>

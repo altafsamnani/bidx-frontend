@@ -1,0 +1,179 @@
+<?php
+    global $latest_items;
+
+    $authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+    $isPanel = isset( $this -> panel ) && $this -> panel ==  'true';
+    $panelItems = (int)$this -> items;
+    $region = $this -> region;
+    
+    $addColumns = true;
+    if ( $isPanel && ( $region === 'priv-front-side' || $region === 'pub-front-side' ) ) :
+        $addColumns = false;
+    endif;
+
+    $columnsCount = 'col-sm-4';
+    if ( $addColumns && $isPanel && ( $region === 'priv-front-body' || $region === 'pub-front-body' ) ) :
+        $columnsCount = 'col-sm-6';
+    endif;
+
+        if (is_array( $this -> summaries )) {
+            $index = 0;
+            if ( $isPanel )
+            {
+                $bsitems = $panelItems;
+            }
+            else
+            {
+?>
+                <h2><?php _e('New Businesses', 'bidxplugin')?></h2>
+<?php                 
+                $bsitems = (int)$latest_items;
+            }
+?>
+            <ul class="media-list">
+<?php
+            if ( $addColumns && $isPanel ) :
+?>
+                <div class="row">
+<?php         
+            endif;
+
+            foreach ( $this -> summaries as $summary ) {
+
+                if ( $index === $bsitems ) {
+                    break;
+                }
+                if ( $addColumns && $isPanel ) :
+                    if ( $index % 2 == 0  ) {
+
+                        if ( $index != 0 ) {
+                            echo "</div>";
+                        }
+
+                        echo '<div class="'. $columnsCount .'">';
+                    }
+                endif;
+
+                $summaryBidxMeta = isset( $summary->bidxMeta ) ? $summary->bidxMeta : $summary;
+ ?>
+                <li class="media">
+<?php
+                    if ( $authenticated ) {
+?>
+                        <a class="pull-left" href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>">
+<?php
+                    }
+
+                    if ( empty( $summary -> externalVideoPitch ) ) {
+                        echo '<div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>';
+                    } else {
+                        $videoUrl = $this->exst($summary -> externalVideoPitch);
+                        $parsedVideo = $this->parseVideos( $videoUrl );
+                        $videoThumb = $parsedVideo[0]['fullsize'];
+
+                        echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
+                    }
+                    
+                    if ( $authenticated ) {
+?>
+                        </a>
+<?php
+                    }
+?>
+                    <div class="media-body">
+                        <div class="media-heading">
+<?php
+                        if ( $authenticated ) {
+?>
+                            <a href="/businesssummary/<?php echo $summary -> bidxMeta -> bidxEntityId ?>"><strong>
+<?php
+                        }
+
+                        echo html_entity_decode( $summary -> name  );
+
+                        if ( $authenticated ) {
+?>
+                            </strong></a>
+<?php
+                        }
+?>
+
+                        </div>
+                        <div>
+<?php
+                            $industries = $this -> exst( $summary -> industry );
+
+                            $ix = 1;
+                            // create a comma separated list of translated industries
+                            //
+                            foreach ( $industries as $industry )
+                            {
+                                echo $this->getStaticVal( 'industry', $industry ) ;
+                                if ( count( $industries ) != $ix )
+                                {
+                                    echo ", ";
+                                }
+                                $ix++;
+                            }
+?>
+                        </div>
+                        <div>
+<?php
+                            $countries =  $this -> exst( $summary -> countryOperation );
+
+                            $ix = 1;
+                            // create a comma separated list of translated industries
+                            //
+                            foreach ( $countries as $country )
+                            {
+                                echo $this->getStaticVal( 'country', $country ) ;
+                                if ( count( $countries ) != $ix )
+                                {
+                                    echo ", ";
+                                }
+                                $ix++;
+                            }
+?>
+                        </div>
+<?php
+                            if ( $authenticated ) {
+?>
+                        <div>
+<?php
+                                echo date_i18n( 'd M Y', $summary -> bidxMeta -> bidxCreationDateTime );
+?>
+                        </div>
+<?php
+                            }
+?>
+                    </div>
+                </li>
+<?php
+                $index++;
+            } // end foreach
+
+            if ( $addColumns && $isPanel ) :
+?>
+                    </div>
+                </div>
+<?php                
+            endif;
+?>
+        </ul>
+        <a href="#" class="hide btn btn-link btn-block"><?php _e( "View more", 'bidxplugin' ); ?></a>
+<?php
+        } else {
+?>
+            <ul class="media-list">
+                <li class="media">
+                    <div class="icons-rounded pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
+                    <div class="media-body">
+                        <p><?php _e( "There are currently no new business summaries", 'bidxplugin' ); ?></p>
+                    </div>
+                </li>
+            </ul>
+<?php
+        }
+?>
+
+

@@ -74,6 +74,7 @@ class Latest_Businesses_Widget extends WP_Widget {
         // Region Check
         $active_region = $args['id'];
         $add_container = false;
+        $items = 4;
         if  (
                 $active_region === 'pub-front-top' ||
                 $active_region === 'pub-front-bottom' ||
@@ -82,11 +83,37 @@ class Latest_Businesses_Widget extends WP_Widget {
             )
         {
             $add_container = true;
+            $items = 6;
         }
 
         echo $before_widget;
 
-        echo do_shortcode( '[bidx app="group" view="latest-business-summaries"]' );
+        if ( $add_container ) :
+?>
+            <div class="container">
+<?php                 
+        endif; 
+?>
+                <div class="panel panel-primary panel-members">
+                    <div class="panel-heading hide-overflow">
+                        <h4 class="pull-left">
+                            <?php _e('New Businesses', 'wp_widget_plugin')?>
+                        </h4>
+                        <a href="#" class="hide pull-right btn btn-default"><?php _e('view all','bidxplugin')?></a>
+                    </div>
+                    <div class="panel-body">
+                        <!-- Grab latests members -->
+<?php
+                        echo do_shortcode( '[bidx app="group" view="widget-latest-business-summaries" panel="true" region="'.$active_region.'" items="'.$items.'"]' );
+?>
+                    </div>
+                </div>
+<?php 
+        if ( $add_container ) :
+?>
+            </div>
+<?php                 
+        endif; 
 
         echo $after_widget;
     }

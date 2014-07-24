@@ -1,0 +1,183 @@
+<?php
+    global $latest_items;
+
+    // check if user is logged in
+    //
+    $authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+    $joinedGroup = isset( $this -> joinedGroup ) && $this -> joinedGroup ==  'true';
+    $isPanel = isset( $this -> panel ) && $this -> panel ==  'true';
+    $panelItems = (int)$this -> items;
+    $region = $this -> region;
+
+    $addColumns = true;
+    if ( $isPanel && ( $region === 'priv-front-side' || $region === 'pub-front-side' ) ) :
+        $addColumns = false;
+    endif;
+
+    $columnsCount = 'col-sm-4';
+    if ( $addColumns && $isPanel && ( $region === 'priv-front-body' || $region === 'pub-front-body' ) ) :
+        $columnsCount = 'col-sm-6';
+    endif;
+
+
+        if ( is_array( $this -> members ) )
+        {
+            $index = 0;
+            if ( $isPanel )
+            {
+                $maxMemberItems = $panelItems;
+            }
+            else
+            {
+?>
+                <h2><?php _e('New Members', 'bidxplugin')?></h2>
+<?php                 
+                $maxMemberItems = (int)$latest_items;
+            }
+?>
+            <ul class="media-list">
+<?php
+            if ( $addColumns && $isPanel ) :
+?>
+                <div class="row">
+<?php         
+            endif;
+            
+            // iterate through the members
+            foreach ($this -> members as $member)
+            {
+
+                // if maxmembers has been reached, stop the itaration
+                //
+                if ( $index === $maxMemberItems )
+                {
+                    break;
+                }
+                if ( $addColumns && $isPanel ) :
+                    if ( $index % 2 == 0  ) {
+
+                        if ( $index != 0 ) {
+                            echo "</div>";
+                        }
+
+                        echo '<div class="'. $columnsCount .'">';
+                    }
+                endif;
+
+		      	$memberBidxMeta = isset( $member->bidxMeta ) ? $member->bidxMeta : $member;
+?>
+                <li class="media">
+                    <a class="pull-left" href="/member/<?php echo $member -> id ?>">
+<?php
+    				  	if ( empty( $member -> profilePicture ) ) {
+    						echo '<div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>';
+                        } else {
+
+                            $pisWidth = $member->width  ?       $member->width . 'px;' : "auto;";
+                            $pisLeft  = $member->left   ? '-' . $member->left  . 'px;' : "auto;";
+                            $pisTop   = $member->top    ? '-' . $member->top   . 'px;' : "auto;";
+
+                            $profileImage = '<img' . 
+                                            ' src="' . $member -> profilePicture . '"'.
+                                            ' style="'.
+                                                'width: ' . $pisWidth .
+                                                'left: ' . $pisLeft .
+                                                'top: ' . $pisTop .
+                                            '"' .' />';
+
+    						echo '<div class="img-cropper">' . $profileImage . '</div>';
+                        }
+?>
+                    </a>
+                    <div class="media-body">
+
+                <div>
+                    <a href="/member/<?php echo $member -> id ?>">
+                        <strong>
+<?php
+                            echo $this -> exst( $member -> firstName ) . ' ' . $this -> exst( $member -> lastName );
+?>
+                        </strong>
+                    </a>
+                </div>
+<?php
+                if ( $this -> exst( $member -> professionalTitle) ) {
+                    echo '<div>' . $this -> escapeHtml( $member -> professionalTitle ) . '</div>';
+                }
+
+                if ( $this -> exst( $member -> country) ) {
+                    echo '<div>' . $this->getStaticVal( 'country', $member -> country ) . '</div>';
+                }
+
+                echo '<div>';
+
+                if ( $this -> exst( $member -> roles ) ) {
+
+                    foreach ($member -> roles as $role) {
+                        if ( $role === 'entrepreneur' ) {
+?>
+                        <span class="label bidx-label bidx-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
+<?php
+                        }
+                        if ( $role === 'investor' ) {
+?>
+                        <span class="label bidx-label bidx-investor"><?php _e('Investor', 'bidxplugin') ?></span>
+<?php
+                        }
+                        if ( $role === 'mentor' ) {
+?>
+                        <span class="label bidx-label bidx-mentor"><?php _e('Mentor', 'bidxplugin') ?></span>
+<?php
+                        }
+                    }
+
+                }
+                echo '</div>';
+?>
+<?php
+                // only show connect link when authenticated and member has joined the group
+                //
+                if ( $authenticated && $joinedGroup ) {
+?>
+                    <div>
+                        <a href="/mail/#mail/contacts/action=connect&id=<?php echo $member -> bidxMeta -> bidxMemberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
+                    </div>
+<?php
+                }
+?>
+                    </div>
+                </li>
+<?php
+                $index++;
+            } // end foreach
+
+            if ( $addColumns && $isPanel ) :
+?>
+                    </div>
+                </div>
+<?php                
+            endif;
+
+?>
+                </ul>
+<?php
+                if ( !$isPanel )
+                {
+?>
+                    <a href="#" class="hide btn btn-link btn-block"><?php _e( "View more", 'bidxplugin' ); ?></a>
+<?php                    
+                }
+
+        } else {
+?>
+            <ul class="media-list">
+                <li class="media">
+                    <div class="icons-rounded pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
+                    <div class="media-body">
+                        <p><?php _e( "There are currently no new members", 'bidxplugin' ); ?></p>
+                    </div>
+                </li>
+            </ul>
+<?php
+        }
+?>

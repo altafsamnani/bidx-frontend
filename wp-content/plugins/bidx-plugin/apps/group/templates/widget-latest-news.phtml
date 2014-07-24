@@ -1,0 +1,132 @@
+<?php
+    global $latest_items;
+
+    // check if user is logged in
+    //
+    $authenticated = isset($this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
+    $newsitems = (int)$latest_items;
+    $post_type = (get_option ('group-news')) ? 'news' : 'post';
+    $isPanel = isset( $this -> panel ) && $this -> panel ==  'true';
+    $panelItems = (int)$this -> items;
+    $region = $this -> region;
+
+    $addColumns = true;
+    if ( $isPanel && ( $region === 'priv-front-side' || $region === 'pub-front-side' ) ) :
+        $addColumns = false;
+    endif;
+
+    $columnsCount = 'col-sm-4';
+    if ( $addColumns && $isPanel && ( $region === 'priv-front-body' || $region === 'pub-front-body' ) ) :
+        $columnsCount = 'col-sm-6';
+    endif;
+
+    if ( $isPanel )
+    {
+        $newsitems = $panelItems;
+    }
+
+    $args = array(
+      'post_type' => $post_type,
+      'post_status' => 'publish',
+      'posts_per_page' => $newsitems
+    );
+    
+    $my_query = null;
+    $my_query = new WP_Query($args);
+
+    if( $my_query->have_posts() ) {
+
+        if ( !$isPanel )
+        {
+?>
+            <h2><?php _e('News &amp; Events', 'bidxplugin')?></h2>
+<?php
+        }
+?>
+        <ul class="media-list">
+<?php
+        $index = 0;
+        
+        if ( $addColumns && $isPanel ) :
+?>
+            <div class="row">
+<?php         
+        endif;
+
+
+        while ( $my_query->have_posts() ) {
+            if ( $index == $newsitems) {
+                break;
+            }
+            if ( $addColumns && $isPanel ) :
+                if ( $index % 2 == 0  ) {
+
+                    if ( $index != 0 ) {
+                        echo "</div>";
+                    }
+
+                    echo '<div class="'. $columnsCount .'">';
+                }
+            endif;
+
+            $my_query->the_post();
+?>
+                    <li class="media">
+                        <a class="pull-left" href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+<?php
+                        if ( has_post_thumbnail() ) {
+                            $size = array(90);
+                            $atts = array( 'class' => '' );
+?>
+                        <div class="img-cropper">
+<?php                             
+                            the_post_thumbnail($size, $atts);
+?>
+                        </div>
+<?php 
+                        } else {
+?>
+                            <div class="icons-rounded pull-left"><i class="fa fa-bullhorn text-primary-light"></i></div>
+<?php
+                        }
+?>
+                        </a>
+
+                        <div class="media-body">
+                            <div><a href="<?php the_permalink() ?>"><strong><?php the_title(); ?></strong></a></div>
+                            <div><?php the_date( 'd M Y' ) ?></div>
+<?php
+                            if ( $authenticated ) {
+                                echo ucfirst( strtolower( substr( get_the_excerpt(),0,65 ) ) ) . '...';
+                            }
+?>
+                        </div>
+                    </li>
+<?php
+         $index++;
+        } //while
+
+        if ( $addColumns && $isPanel ) :
+?>
+                </div>
+            </div>
+<?php                
+        endif;
+?>
+            </ul>
+            <a href="#" class="hide btn btn-link btn-block"><?php _e( "View more", 'bidxplugin' ); ?></a>
+<?php
+        } else {
+?>
+            <ul class="media-list">
+                <li class="media">
+                    <div class="icons-rounded pull-left"><i class="fa fa-exclamation text-primary-light"></i></div>
+                    <div class="media-body">
+                        <p><?php _e( "There are currently no news or events", 'bidxplugin' ); ?></p>
+                    </div>
+                </li>
+            </ul>
+<?php
+        }
+    wp_reset_query();
+?>

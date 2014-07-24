@@ -43,6 +43,10 @@
 
 // Color alterations in Classes
 // ---------------------------------
+.bg-primary-light
+{
+    background: lighten(@brand-primary, 25%);
+}
 .bg-primary-dark
 {
     background: desaturate(darken(@brand-primary, 25%), 25%);
@@ -51,13 +55,28 @@
 {
     background: desaturate(darken(@brand-primary, 35%), 25%);
 }
+
+.bg-secondary-light
+{
+    background: lighten(@brand-secondary, 25%);
+}
+.bg-secondary-dark
+{
+    background: desaturate(darken(@brand-secondary, 25%), 25%);
+}
+.bg-secondary-darker
+{
+    background: desaturate(darken(@brand-secondary, 35%), 25%);
+}
+
+.bg-white
+{
+    background: @white;
+}
+
 .text-primary-dark
 {
     color: darken(@brand-primary, 25%);
-}
-.bg-primary-light
-{
-    background: lighten(@brand-primary, 25%);
 }
 .text-primary-light
 {
@@ -65,7 +84,7 @@
 }
 .text-white
 {
-    color: #FFF;
+    color: @white;
 }
 .text-copy
 {
@@ -156,10 +175,10 @@ footer
     }
 }
 
-article.type-bidx
-{
-    margin-top: ceil(@font-size-base * 2);
-}
+// article.type-bidx
+// {
+//     margin-top: ceil(@font-size-base * 2);
+// }
 
 ::-webkit-input-placeholder
 {
@@ -203,7 +222,6 @@ h1, h2, h3, h4, h5, h6,
 {
     margin-bottom: 40px;
 }
-
 
 // Icons manipulation
 // -------------------------
@@ -459,8 +477,8 @@ h1, h2, h3, h4, h5, h6,
 
 }
 
-
-//
+// Sponsors
+// -------------------------
 .sponsors
 {
     text-align: center;
@@ -588,9 +606,15 @@ header
     color: @white;
     &:hover
     {
-        background-color: darken(@brand-secondary, 10%);
+        background-color: darken(@brand-secondary, 5%);
         color: @white;
     }
+}
+.site-title
+{
+  font-family: "@{headings-font}", sans-serif;
+  font-size: floor(@font-size-base * 2.2);
+  line-height: 3;
 }
 .tagline
 {
@@ -777,6 +801,16 @@ header
     }
 }
 
+.panel-primary
+{
+    border-color: desaturate(darken(@brand-primary, 25%), 25%);
+    > .panel-heading
+    {
+        border-color: desaturate(darken(@brand-primary, 25%), 25%);
+        background-color: desaturate(darken(@brand-primary, 25%), 25%);
+    }
+}
+
 .bidx-collapse
 {
     display: inline-block;
@@ -883,6 +917,44 @@ header
         background-color: @mentor;
     }
 }
+
+.label-center
+{
+    display: block;
+    text-align: center;
+}
+
+.investor-cl
+{
+    background-color: @investor;
+    color: @white;
+    &:hover, &:focus
+    {
+        background-color: darken(@investor, 10%);
+        color: @white;
+    }
+}
+.mentor-cl
+{
+    background-color: @mentor;
+    color: @white;
+    &:hover, &:focus
+    {
+        background-color: darken(@mentor, 10%);
+        color: @white;
+    }
+}
+.entrepreneur-cl
+{
+    background-color: @entrepreneur;
+    color: @white;
+    &:hover, &:focus
+    {
+        background-color: darken(@entrepreneur, 10%);
+        color: @white;
+    }
+}
+
 label small
 {
     font-weight: normal;
@@ -1075,7 +1147,7 @@ select
     .rotation(0deg);
     .transition(0.3s);
     .backface();
-    font-size: ceil(@font-size-base * 0.8);
+    font-size: ceil(@font-size-base * 0.9);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 }
 
@@ -1325,7 +1397,6 @@ select
 // -------------------------
 .lead
 {
-    margin-bottom: 0;
     font-size: floor(@font-size-base * 1.2);
     font-weight: 400;
     font-style: italic;
@@ -1375,6 +1446,10 @@ select
 {
     margin-top: 0;
 }
+.top-margin-lineheight
+{
+    margin-top: @line-height-computed;
+}
 .right-0
 {
     margin-right: 0;
@@ -1387,7 +1462,18 @@ select
 {
     margin-bottom: 0;
 }
-
+.main-padding
+{
+    padding: @font-size-base;
+}
+.main-padding-vertical
+{
+    padding: @font-size-base 0;
+}
+.main-padding-horizontal
+{
+    padding: 0 @font-size-base;
+}
 // wells.less
 // -------------------------
 
