@@ -7,73 +7,61 @@ $groupInfo      = isset($this->data->groupInfo) ? $this->data->groupInfo: NULL;
 ?>
 <!-- Group Info -->
 <?php
-    if ( $groupInfo ) {
-        $groupDataSrc   = false;
-        $picSrc         = $groupInfo->logo;
-
-        if (!$groupInfo->logo) {
-            $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image - group';
-            $groupDataSrc = true;
-        }
+    if ( $groupInfo )
+    {
 ?>
-<hr />
-<ul class="media-list">
-    <li class="media">
-        <div class="pull-left">
-            <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
-        </div>
-        <div class="media-body">
-            <h4><?php echo $groupInfo->groupName ?></h4>
-            <p><?php echo $groupInfo->slogan ?></p>
-        </div>
-    </li>
-
-    <!-- Description -->
-    <br>
-    <p><?php echo $groupInfo->description;?></p>
-</ul>
+        <hr >
+        <ul class="media-list">
+            <li class="media">
+                <div class="pull-left">
+                    <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
+                </div>
+                <div class="media-body">
+                    <h4><?php echo $groupInfo->groupName ?></h4>
+                    <p><?php echo $groupInfo->slogan ?></p>
+                </div>
+            </li>
+            
+            <!-- Description -->
+            <br>
+            <p><?php echo $groupInfo->description;?></p>
+        </ul>
 <?php
     }
 
-    if( $showGroup ) {
+    if( $showGroup )
+    {
 ?>
-<hr />
+        <hr />
 
-<ul class="media-list">
-    <!-- Joined Group -->
-    <h2><?php _e('Joined groups','bidxplugin'); ?></h3>
+        <ul class="media-list">
+            <!-- Joined Group -->
+            <h2><?php _e('Joined groups','bidxplugin'); ?></h3>
 
 <?php
-        foreach( $groupDetails as $groupValue) {
-            $joinLink = ($this->exst($groupValue->join)) ? "<a class='btn btn-xs btn-warning pull-right' href='#joinGroup/".$groupValue->bidxGroupId."'>" . __('Join','bidxplugin') . "</a>":'';
-            $groupDataSrc = false;
-            $picSrc     = $this->exst($groupValue->logo);
-
-            if (!$picSrc) {
-                $picSrc     = 'holder.js/100x100/industrial/auto/text:No Image - showgroup';
-                $groupDataSrc = true;
+            foreach( $groupDetails as $groupValue)
+            {
+                $joinLink = ($this->exst($groupValue->join)) ? "<a class='btn btn-xs btn-warning pull-right' href='#joinGroup/".$groupValue->bidxGroupId."'>" . __('Join','bidxplugin') . "</a>":'';
+?>
+                <li class="media">
+                    <div class="pull-left">
+                        <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
+                    </div>
+                    <div class="media-body">
+                        <h4><?php echo $groupValue->name?></h4>
+                        <p><?php echo $groupValue->slogan?></p>
+<?php
+                        if ( !empty($joinLink) )
+                        {
+                            echo $joinLink;
+                        }
+?>
+                    </div>
+                </li>
+<?php
             }
 ?>
-    <li class="media">
-        <div class="pull-left">
-            <div class="icons-rounded pull-left"><i class="fa fa-group text-primary-light"></i></div>
-        </div>
-        <div class="media-body">
-            <h4><?php echo $groupValue->name?></h4>
-            <p><?php echo $groupValue->slogan?></p>
-<?php
-        if ( !empty($joinLink) ) {
-?>
-        <?php echo $joinLink ?>
-<?php
-        }
-?>
-        </div>
-    </li>
-<?php
-        }
-?>
-</ul>
+        </ul>
 
 <?php
     }

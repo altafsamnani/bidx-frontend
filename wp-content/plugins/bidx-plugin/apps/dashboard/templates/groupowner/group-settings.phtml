@@ -1,13 +1,15 @@
 <?php
-$groupProfile = $this->group->data->bidxGroupProfile;
+    $groupProfile = $this->group->data->bidxGroupProfile;
 
-$useDataSrc = false;
-$picSrc = $this->exst ($groupProfile->logo->document);
-
-if (!$picSrc) {
-    $picSrc = 'holder.js/100x100/industrial/auto/text:No Image';
-    $useDataSrc = true;
-}
+    $picSrc = $this->exst ($groupProfile->logo->document);
+    $image = '';
+    if (!$picSrc) {
+        $image = '<div class="icons-rounded pull-left"><i class="fa fa-user text-primary-light"></i></div>';
+    }
+    else
+    {
+        $image = '<div class="img-cropper"><img src="'. $picSrc .'"></div>'
+    }
 ?>
 
 <div class="well groupsettings details-block">
@@ -41,7 +43,7 @@ if (!$picSrc) {
             </div>
         </div>
         <div class="col-sm-3">
-            <img height="175px" width="150px" <?php $useDataSrc ? "data-" : "" ?>src="<?php echo $picSrc ?>" class="img-rounded">
+            <?php echo $image; ?>
         </div>
     </div>
 

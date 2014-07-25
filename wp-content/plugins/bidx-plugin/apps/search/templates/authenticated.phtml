@@ -1,231 +1,50 @@
-<!--
-	Search startpage.
-	Single page application that is setup
- -->
- <br /><br />
-<div>
+<?php $http = (is_ssl()) ? 'https://':'http://'; ?>
 
-	<div class="row">
-		<div class="search alert">
-			 <button type="button" class="close" data-dismiss="alert">&times;</button>
-			 <h3>No results</h3>
-			 <p>Your query did not have any results. Please retry with a more specific search term</p>
-		</div>
-	</div>
+<div id="searchHome">
 
-	<div class="row">
-		<div class="col-sm-12"><h4>Search results (<?php echo $this -> results -> data -> numFound ?>)</h4></div>
-	</div>
+    <div class="row">
 
-	<div class="row">
-		<div class="search-result-container col-sm-8">
+         <section class="views">
 
-			<div class="search-result-item well">
-				<div class="row">
-					<div class="col-sm-2">
-						<div>
-							<a href="/member/<?php echo $doc -> userId ?>">
-						<?php if (property_exists( $doc , 'profilepicturedoc_url' ) ) {
-							?>
-								<img src="<?php echo $doc -> profilepicturedoc_url ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
-						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
-						<?php  }?>
-							</a>
-						</div>
-					</div>
-					<div class="col-sm-8">
-						<div>
-							<em><?php echo $fullname ?></em>
-							<p><?php echo $doc -> professionaltitle_t ?></p>
-							<p><?php echo $doc -> countrylabel_s ?></p>
-						</div>
-						<div>
-							<span class="label">Member</span>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<a href="/member/<?php echo $doc -> userId ?>">view</a>
-					</div>
-				</div>
-			</div>
+            <div class="col-sm-8">
+                <div class="searchcontrol">
+                    <div class="search">
+                        <form action="" class="searchform">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-q" name="q" placeholder="<?php _e("Search","bidxplugin");?>" value="">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-			<div class="search-result-item well">
-				<div class="row">
-					<div class="col-sm-2">
-						<div>
-							<img data-src="holder.js/75x75/social/text:company" class="logo img-rounded" alt=""/>
-						</div>
-					</div>
-					<div class="col-sm-8">
-						<div>
-							<em><?php echo $doc -> id ?></em>
-						</div>
-						<div>
-							<span class="label">Company</span>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<a href="#">view</a>
-					</div>
-				</div>
-			</div>
+                <!-- ERROR -->
+                <div class="view viewError alert alert-warning">
+                    <p class="errorMsg"></p>
+                </div>
 
-			<div class="search-result-item well">
-				<div class="row">
-					<div class="col-sm-2">
-						<div>
-							<img data-src="holder.js/75x75/social/text:investor" class="logo img-rounded" alt=""/>
-						</div>
-					</div>
-					<div class="col-sm-8">
-						<em><?php echo $fullname ?></em><br />
-						<?php echo $doc -> summary_t ?><br />
-						<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />
-						<span class="label">Investor</span>
-					</div>
-					<div class="col-sm-2">
-						<a href="#">view</a>
-					</div>
-				</div>
-			</div>
+            </div>
 
-			<div class="search-result-item well">
-				<div class="row">
-					<div class="col-sm-2">
-						<div>
- 							<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">
-						<?php if (property_exists( $doc , 'profilePicturedoc_url' ) ) {
-								$items = explode( '/', $doc -> profilePicturedoc_url );
-								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
-							?>
-								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
-						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:member" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
-						<?php  }?>
-							</a>
-						</div>
-					</div>
-					<div class="col-sm-8">
-						<div>
-							<em><?php echo $fullname ?></em><br />
-							<?php echo $doc -> professionaltitle_t ?><br />
-							<?php echo $doc -> countrylabel_s ?>, <?php echo $doc -> city_s ?><br />
-							<span class="label">Entrepreneur</span>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<a href="/member/<?php echo $doc -> userId ?>?#showEntrepreneur">view</a>
-					</div>
-				</div>
-			</div>
+            <div class="col-sm-4">
+                <div class="side-bar well sideBar main-facet">
+                    <article class="viewFacet">
+                        <div class="facet-reset hide">
+                            <a data-filter="reset" class="filter btn btn-block btn-danger"><?php _e("Clear all filters", "bidxplugin");?></a>
+                        </div>
+                         <div class="facet-list">
 
-			<div class="search-result-item well">
-				<div class="row">
-					<div class="col-sm-2">
-						<div>
-							<a href="/business/<?php echo $doc -> userId ?>">
-						<?php if (property_exists( $doc , 'picturedoc_url' ) ) {
-								$items = explode( '/', $doc -> 	picturedoc_url );
-								$imageUrl = '/dl/document/' . $items[2] . '/' . $items[3] ;
-							?>
-								<img src="<?php echo $imageUrl ?>" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
-						<?php  } else { ?>
-								<img data-src="holder.js/75x75/social/text:business" class="logo img-rounded" alt="<?php echo $fullname ?>"/>
-						<?php  }?>
-							</a>
-						</div>
-					</div>
-					<div class="col-sm-8">
-						<div>
-							<em><?php echo $doc -> name_s ?></em><br />
-							<?php echo $doc -> slogan_s ?><br/>
-							<?php echo $doc -> industrylabel_ss ?>, <?php echo $doc -> countrylabel_s ?><br />
-							<span class="label">Business</span>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<a href="/business/<?php echo $doc -> userId ?>">view</a>
-					</div>
-				</div>
-			</div>
+                            <?php _e('Rendering facets...', 'bidxplugin');?>
+                         </div>
+                    </article>
+                </div>
+            </div>
+            
+        </section>
 
-			<div>
+    </div>
 
-	<a href="?<?php echo $this -> previousLink ?>" class="btn">Previous</a>
-
-	<a href="?<?php echo $this -> nextLink ?>" class="btn">Next</a>
-
-			</div>
-		</div>
-
-
-		<div class="sidebar col-sm-4">
-			<div>
-
-			</div>
-			<div>
-			<ul class="nav nav-list">
-	            <li class="nav-header">Find By Type</li>
-	            <li class="active">
-	              <a href="#fakelink">
-	                All
-	                <span class="nav-counter"><?php echo $this -> results -> data -> numFound ?></span>
-	              </a>
-	            </li>
-	            <li>
-	              <a href="#fakelink">
-	                Members Only
-	                <span class="nav-counter">19</span>
-	              </a>
-	            </li>
-	            <li>
-	              <a href="#fakelink">
-	                Entrepreneurs
-	                <span class="nav-counter">130</span>
-	              </a>
-	            </li>
-	            <li>
-	              <a href="#fakelink">
-	                Investors
-	                <span class="nav-counter">49</span>
-	              </a>
-	            </li>
-	            <li>
-	              <a href="#fakelink">
-	                Businesses
-	                <span class="nav-counter">9</span>
-	              </a>
-	            </li>
-	            <li>
-	              <a href="#fakelink">
-	                Groups
-	                <span class="nav-counter">11</span>
-	              </a>
-	            </li>
-	            <li class="divider"></li>
-	            <li class="nav-header">Filters</li>
-	            <li>
-	                <label>Industry</label>
-          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_industry" style="display: none;">
-          			<div id="tags_industry_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
-          				<div class="tagsinput-add-container" id="tags_industry_addTag">
-          					<div class="tagsinput-add"></div>
-          					<input id="tags_industry_tag small" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
-          				</div>
-          			</div>
-	            </li>
-	            <li>
-	                <label>Theme</label>
-          			<input name="tagsinput" class="tagsinput tagsinput-primary" value="" id="tags_theme" style="display: none;">
-          			<div id="tags_theme_tagsinput" class="tagsinput tagsinput-primary small" style="height: 100%;">
-          				<div class="tagsinput-add-container" id="tags_theme_addTag">
-          					<div class="tagsinput-add"></div>
-          					<input id="tags_theme_tag" value="" data-default="" style="color: rgb(102, 102, 102); width: 12px;">
-          				</div>
-          			</div>
-	            </li>;
-
-		</div>
-	</div>
 </div>
