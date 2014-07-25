@@ -2,11 +2,14 @@
 {
     "use strict";
     var $mainElement         = $("#mentor-dashboard")
-     ,  $mainViews           = $mainElement.find(".view")
+    ,   $mainViews           = $mainElement.find(".view")
     ,   $mainModals          = $mainElement.find(".modalView")
     ,   $mainModal
     ,   $editForm            = $mainElement.find( ".frmsendFeedback" )
     ,   $feedbackDropDown    = $mainElement.find( "[name='feedbackpurpose']" )
+
+    ,   $bpElement           = $("#businessSummary")
+    ,   $mainBpViews         = $bpElement.find(".view")
 
 
     ,   $element             = $mainElement.find(".mentor-mentordashboard")
@@ -624,7 +627,7 @@
                         //bidx.controller.updateHash(uriStatus, true, true);
                        // bidx.controller.doSuccess( uriStatus,false);
 
-                       _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
+
 
                         window.bidx.controller.updateHash( params.updateHash, true );
 
@@ -640,26 +643,9 @@
             ,   error: function( jqXhr, textStatus )
                 {
 
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showMainError( bidx.i18n.i("errorRequest") + response.text);
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showMainError( bidx.i18n.i("errorRequest") + response.text);
-                    }
-
                     if (options && options.callback)
                     {
-                        options.callback();
+                        options.callback( jqXhr );
                     }
 
                 }
@@ -850,6 +836,7 @@
         var href
         ,   replacedModal
         ,   action
+        ,   redirect
         ,   actionKey
         ,   actionMsg
         ,   btnKey
@@ -859,8 +846,9 @@
 
         if(options.params)
         {
-            params = options.params;
-            action = options.params.action;
+            params  =   options.params;
+            action  =   options.params.action;
+            redirect =   bidx.utils.getValue(options.params, 'redirect');
         }
 
         bidx.utils.log("[dashboard] show modal", options );
@@ -885,6 +873,12 @@
 
             //Modal header change
             $mainModal.find("#myModalLabel").html(btnTxt);
+
+            //Change the cancel button link if refresh exists
+            if( redirect )
+            {
+                $mainModal.find(".btn-request-cancel").attr( 'href' , redirect + '/cancel=true') ;
+            }
         }
 
         $mainModal.find( ".btn-primary[href], .btn-cancel[href]" ).each( function()
@@ -935,6 +929,16 @@
         }
          var $mainView = $mainViews.filter(bidx.utils.getViewName(view)).show();
     };
+    var _showBpView = function(view, showAll)
+    {
+
+        //  show title of the view if available
+        if (!showAll)
+        {
+            $mainBpViews.hide();
+        }
+         var $mainView = $mainBpViews.filter(bidx.utils.getViewName(view)).show();
+    };
 
     var _showMainHideView = function(view, hideview)
     {
@@ -948,10 +952,16 @@
     //
     function _showMainError( msg )
     {
-        $mainViews.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
+        $mainBpViews.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
         _showMainView( "error" , true);
     }
-
+    // display generic error view with msg provided
+    //
+    function _showBpError( msg )
+    {
+        $mainViews.filter( ".viewError" ).append( msg );
+        _showBpView( "error" , true);
+    }
      // Private functions
     //
     function _showMainSuccessMsg( msg , hideview )
@@ -963,6 +973,15 @@
         $mainViews.filter( ".viewMainsuccess" ).find( ".successMsg" ).text( msg );
         _showMainView( "mainsuccess" );
     }
+    function _showBpSuccessMsg( msg , hideview )
+    {
+        if( hideview ) {
+            $mainBpViews.filter(bidx.utils.getViewName(hideview)).hide();
+        }
+
+        $mainBpViews.filter( ".viewMainsuccess" ).find( ".successMsg" ).text( msg );
+        _showBpView( "mainsuccess" );
+    }
 
     // ROUTER
 
@@ -972,6 +991,7 @@
     {
         bidx.utils.log("routing options", options);
         var state
+        ,   updateHash
         ;
 
         state  = options.state;
@@ -980,7 +1000,7 @@
 
         switch (state)
         {
-            case "load" :
+            /*case "load" :
 
                 _showView("load");
                 break;
@@ -988,7 +1008,7 @@
              case "help" :
                  _menuActivateWithTitle(".Help","My mentor Helppage");
                 _showView("help");
-                break;
+                break;*/
 
             case "cancel":
 
@@ -1014,7 +1034,15 @@
                 ,   params: options.params
                 ,   onHide: function()
                     {
-                        window.bidx.controller.updateHash("#mentoring/mentor", false, false);
+                        updateHash  = bidx.utils.getValue( options.params, 'redirect' );
+
+                        if( !updateHash )
+                        {
+                            updateHash  = '#mentoring/mentor';
+                            window.bidx.controller.updateHash( updateHash, false, false );
+
+                        }
+
                     }
                 } );
 
@@ -1088,6 +1116,7 @@
                             params: params
                         ,   callback: function()
                             {
+                                _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
                                 _showMainHideView("match", "loadrequest");
                                 $mentorButton.removeClass( "disabled" );
                                 $mentorButton.text(btnHtml);
@@ -1095,6 +1124,13 @@
                                 {
                                     unbindHide: true
                                 } );
+
+                            }
+                        ,   error:  function(jqXhr)
+                            {
+                                var response = $.parseJSON( jqXhr.responseText);
+                                bidx.utils.error( "Client  error occured", response );
+                                _showMainError( bidx.i18n.i("errorRequest") + response.text);
 
                             }
                         } );
@@ -1108,13 +1144,20 @@
                             params: params
                         ,   callback: function()
                             {
-                                _showMainHideView("match", "loadrequest");
+                               _showBpSuccessMsg(bidx.i18n.i("statusRequest"));
                                 $mentorButton.removeClass( "disabled" );
                                 $mentorButton.text(btnHtml);
                                 _closeMainModal(
                                 {
                                     unbindHide: true
                                 } );
+
+                            }
+                        ,   error:  function(jqXhr)
+                            {
+                                var response = $.parseJSON( jqXhr.responseText);
+                                bidx.utils.error( "Client  error occured", response );
+                                _showBpError( bidx.i18n.i("errorRequest") + response.text);
 
                             }
                         } );

@@ -509,6 +509,7 @@
             ,   isEntityExist
             ,   newBpLength
             ,   btnText
+            ,   isAnyOnePlanRequested
             ,   origBpLength = _.size(listDropdownBp)
             ;
 
@@ -521,6 +522,8 @@
                     {
                         // now format it into array of objects with value and label
                         //
+                        isAnyOnePlanRequested = false;
+
                         $.each( response , function ( idx, item)
                         {
                             mentorId        = item.mentorId;
@@ -539,7 +542,7 @@
                                 }
                             }
 
-                            if (initiatorId === loggedInMemberId && origBpLength)
+                            if (initiatorId === loggedInMemberId && visitingMemberPageId === mentorId.toString() && origBpLength)
                             {
                                 bidx.utils.log('listDropdownBp',listDropdownBp);
                                 isEntityExist = listDropdownBp [ entityId ];
@@ -549,12 +552,16 @@
                                     listDropdownBp = _.omit(listDropdownBp, JSON.stringify(entityId) ); // removed the match value from listDropdownBp, using underscore function make sure its included
 
                                 }
+
+                                if(item.status === 'requested') {
+                                    isAnyOnePlanRequested = true;
+                                }
                             }
                         });
-
+                        bidx.utils.log('listDropdownBp', listDropdownBp);
                         newBpLength    = _.size(listDropdownBp); // After iteration new length
 
-                        if( origBpLength && newBpLength === 0 )
+                        if( origBpLength && newBpLength === 0 && isAnyOnePlanRequested)
                         {
                             $requestMentoringBtn.addClass('disabled').i18nText("btnRequestSent");
                         }

@@ -27,7 +27,6 @@ $businessSummaryId = $businessSummaryBidxMeta->bidxEntityId;
 //
 $requestStatus = isset( $businessSummary->accessAuthorization ) ? $businessSummary->accessAuthorization : null;
 
-
 // check, is access granted?
 $hasAccess = false;
 
@@ -115,7 +114,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             $accessRequestSend = 'hide';
                             $accessGranted = '';
                             break;
-                        case 'None':
+                        case 'none':
                             $accessRequestProgress = 'hide';
                             $accessRequestSend = '';
                             $accessGranted = 'hide';
@@ -153,6 +152,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                 <!-- ERROR, used as a placeholder for showing errors -->
                 <div class="view viewError"></div>
+                <div class="view viewMainsuccess alert alert-success">
+                    <p class="successMsg"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -1237,9 +1239,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             </div>
         </div>
     </div>
-    <?php $this->render('../../mentor/templates/dashboard/main.phtml'); ?>
 
 </div><!-- /businesssummary -->
+<?php $this->render('../../mentor/templates/dashboard/main.phtml'); ?>
 
 <script type="text/html" id="mentor-snippet">
 <!--
@@ -1247,7 +1249,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             <a class="pull-left" href="/member/%contactId%">
                 %pictureUrl%
             </a>
-            %action%
+            <div class="action">%action%</div>
             <div class="media-body">
                 <a class="media-heading" href="/member/%contactId%"><strong>%contactName%</strong></a>
 
@@ -1276,18 +1278,19 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 </script>
 <script type="text/html" id="active-mentor-action">
 <!--
-<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=send" class="btn-bidx-send label bidx-mentor btn btn-sm"><?php _e('Offer mentoring','bidxplugin');?></a>
-<a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide"><?php _e('Contact entrepreneur','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#editBusinessSummary/load/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-reject"><?php _e('Ignore request','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="send-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=sendFrmBp" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-mentoring" >Request mentoring</a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=sendFrmBp&redirect=#editBusinessSummary/load/%entityId%" class="view viewRequestmentor btn btn-xs btn-success pull-right label bidx-label btn-bidx-send" ><?php _e('Request mentoring','bidxplugin');?></a>
 -->
 </script>
-<script type="text/html" id="accept-mentor-action">
+<script type="text/html" id="respond-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=sendFrmBp" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-mentoring" >Request mentoring</a>
+<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#editBusinessSummary/load/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=accepted&redirect=#editBusinessSummary/load/%entityId%" class="view viewRequestmentor btn btn-success pull-right label bidx-label btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
+
 -->
 </script>
 <script type="text/html" id="load-mentor">

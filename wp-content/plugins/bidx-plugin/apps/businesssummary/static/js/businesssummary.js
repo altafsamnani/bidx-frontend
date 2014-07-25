@@ -2158,44 +2158,129 @@
 
     // This function is a collection of callbacks for the contact categories. It is meant to execute contact-category specific code
     //
-    function _getContactsCallback( $listItem, mentorId )
+    function _getContactsCallback( $listItem, params )
     {
         //      $listItem    = jQuery object of the contact category listItem
         // active, wait, respond
-        var $matchBtn  =   $listItem.find( ".btn-bidx-mentoring")
-        ,   hrefMatch  =   $matchBtn.attr( "data-href" )
-        ,   waitArr     =   []
-        ,   respondArr  =   []
+        var $matchBtn
+        ,   $acceptBtn
+        ,   hrefMatch
+        ,   filteredRequest
+        ,   initiatorId
+        ,   mentorId            =   params.mentorId
+        ,   isActiveRequest     =   params.isActiveRequest
+        ,   waitArr             =   []
+        ,   respondArr          =   []
         ,   isWaitingRequest
         ,   isRespondRequest
+        ,   contextBpId         =   bidxConfig.context.businessSummaryId
+        ,   actionData
         ;
 
+        if(!isActiveRequest)
+        {
+            waitArr             =   _.pluck (   wait,   'mentorId' );
 
-        waitArr             =   _.pluck (   wait,   'mentorId' );
+            respondArr          =   _.pluck (   respond,  'mentorId' );
 
-        respondArr          =   _.pluck (   respond,  'mentorId' );
+            isWaitingRequest    =   _.contains( waitArr,    mentorId );
 
-        isWaitingRequest    =   _.contains( waitArr,    mentorId );
-
-        isRespondRequest    =   _.contains( respondArr,    mentorId );
+            isRespondRequest    =   _.contains( respondArr,    mentorId );
+        }
 
         switch(true)
         {
 
             case isWaitingRequest:
-                bidx.utils.log('iswaiting');
-                $matchBtn.addClass('disabled').i18nText("btnRequestSent");
+                bidx.utils.log('request sent');
+                actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
+                $listItem.find( '.action' ).empty( ).append( actionData );
+
+                /***************Request sent**************************/
+                $matchBtn   =   $listItem.find( ".btn-bidx-send");
+                $matchBtn.removeClass('btn-success').addClass('disabled btn-info').i18nText("btnRequestSent");
             break;
 
             case isRespondRequest:
-                bidx.utils.log('isRespondRequest');
+                bidx.utils.log('accept/reject');
+
+                filteredRequest =   _.findWhere(    respond
+                                                ,   {
+                                                        mentorId:   mentorId
+                                                    ,   entityId:   parseInt(contextBpId)
+                                                    }
+                                                );
+                initiatorId     =   filteredRequest.initiatorId;
+                bidx.utils.log('initiatorId', initiatorId);
+                actionData  = $("#respond-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
+                $listItem.find( '.action' ).empty( ).append( actionData );
+
+                /***************Accept request**************************/
+                $acceptBtn   =   $listItem.find( ".btn-bidx-accept");
+                hrefMatch   =   $acceptBtn.attr( "data-href" );
+
+                /* 1 Accept Link */
+                hrefMatch   =   hrefMatch
+                        .replace( /%entityId%/g,    contextBpId )
+                        .replace( /%mentorId%/g,    mentorId )
+                        .replace( /%initiatorId%/g, initiatorId )
+                        ;
+
+                $acceptBtn.attr( "href", hrefMatch );
+
+                /***************Accept request**************************/
+                $matchBtn   =   $listItem.find( ".btn-bidx-ignore");
+                hrefMatch   =   $matchBtn.attr( "data-href" );
+
+                /* 1 Accept Link */
+                hrefMatch   =   hrefMatch
+                        .replace( /%entityId%/g,    contextBpId )
+                        .replace( /%mentorId%/g,    mentorId )
+                        .replace( /%initiatorId%/g, initiatorId )
+                        ;
+
+                $matchBtn.attr( "href", hrefMatch );
+            break;
+
+            case isActiveRequest:
+                bidx.utils.log('cancel');
+
+                filteredRequest =   _.findWhere(    active
+                                                ,   {
+                                                        mentorId:   mentorId
+                                                    ,   entityId:   parseInt(contextBpId)
+                                                    }
+                                                );
+                initiatorId     =   filteredRequest.initiatorId;
+
+                actionData  = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
+                $listItem.find( '.action' ).empty( ).append( actionData );
+
+                $matchBtn   =   $listItem.find( ".btn-bidx-reject");
+                hrefMatch   =   $matchBtn.attr( "data-href" );
+
+                /*************Cancel request*******************/
+                hrefMatch   =   hrefMatch
+                        .replace( /%entityId%/g,    contextBpId )
+                        .replace( /%mentorId%/g,    mentorId )
+                        .replace( /%initiatorId%/g, initiatorId )
+                        ;
+
+                $matchBtn.attr( "href", hrefMatch );
             break;
 
             default:
-                bidx.utils.log('default');
-                /* 1 Accept Link */
+                bidx.utils.log('request mentoring');
+
+                actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
+                $listItem.find( '.action' ).empty( ).append( actionData );
+
+                $matchBtn   =   $listItem.find( ".btn-bidx-send");
+                hrefMatch   =   $matchBtn.attr( "data-href" );
+
+                /*************Send request*******************/
                 hrefMatch   =   hrefMatch
-                        .replace( /%entityId%/g,    businessSummaryId )
+                        .replace( /%entityId%/g,    contextBpId )
                         .replace( /%mentorId%/g,    mentorId )
                         .replace( /%initiatorId%/g, loggedInMemberId )
                         ;
@@ -2213,7 +2298,6 @@
         ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listError       = $("#error-mentor").html().replace(/(<!--)*(-->)*/g, "")
         ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
-        ,   actionData       = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
         ,   response         = options.response
         ,   $list            = $element.find("." + options.list)
         ,   $listMatchList
@@ -2238,6 +2322,7 @@
         ,   isMentor
         ,   isInvestor
         ,   countHtml
+        ,   cbParams        =  {}
         ,   $requestMentoringBtn
         ,   $d              =  $.Deferred()
         ,   responseLength
@@ -2370,8 +2455,9 @@
                                                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                                                     .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
                                                     .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
-                                                    .replace( /%action%/g,   actionData)
-                                                ;
+                                                    ;
+
+
 
                                                 $listItem                = $( listItem );
                                                 //$requestMentoringBtn     = $listItem.find( '.btn-mentoring' );
@@ -2382,7 +2468,11 @@
                                                 {
                                                     // call Callback with current contact item as this scope and pass the current $listitem
                                                     //
-                                                    options.cb( $listItem,  memberId );
+                                                    cbParams = {
+                                                                    mentorId    : memberId
+                                                                };
+
+                                                    options.cb( $listItem,  cbParams );
 
                                                     $listItem.find( '.viewRequestmentor').show( );
                                                 }
@@ -2453,9 +2543,9 @@
                         ,   sort        :   search.sort
                         ,   criteria    :   search.criteria
                         ,   list        :   'mentor-match-list'
-                        ,   cb          :   function( $listItem, mentorId )
+                        ,   cb          :   function( $listItem, params )
                                             {
-                                                _getContactsCallback( $listItem, mentorId );
+                                                _getContactsCallback( $listItem, params );
                                             }
                         } )
                         .done(  function(  )
@@ -2522,6 +2612,7 @@
             ,   isEntrepreneur
             ,   isMentor
             ,   isInvestor
+            ,   cbParams        =  {}
             ,   $d              =  $.Deferred()
             ,   responseLength
             ;
@@ -2538,6 +2629,10 @@
                         if ( response && response.length )
 
                         {
+                            active  =   [];
+                            wait    =   [];
+                            respond =   [];
+
                             $.each( response , function ( idx, itemResponse)
                             {
                                 //Cast to string for comparison
@@ -2631,16 +2726,21 @@
                                                                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
                                                                     .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
                                                                     .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
-                                                                    .replace( /%action%/g,   '')
+                                                                    .replace( /%action%/g,   actionData)
                                                                 ;
 
                                                                 $listItem = $( listItem );
 
-                                                                if( $.isFunction( options.cb ) )
+                                                                if( options && options.cb )
                                                                 {
-                                                                    // call Callback with current contact item as this scope and pass the current $listitem
-                                                                    //
-                                                                    //options.cb.call( this, $listItem, item, currentUserId, entityOwnerId );
+                                                                    cbParams = {
+                                                                                    mentorId:           memberId
+                                                                                ,   isActiveRequest:    true
+                                                                                };
+
+                                                                    options.cb( $listItem,  cbParams );
+
+                                                                    $listItem.find( '.viewRequestmentor').show( );
                                                                 }
                                                                 //  add mail element to list
 
@@ -2721,6 +2821,10 @@
             _getActiveMentors(
             {
                 list:   'mentor-active-list'
+            ,   cb:     function( $listItem, params )
+                        {
+                            _getContactsCallback( $listItem, params );
+                        }
             });
         }
 
@@ -3197,6 +3301,10 @@
     //
     function navigate( options )
     {
+        var params  = options.params
+        ,   cancel  = bidx.utils.getValue( params, 'cancel')
+        ;
+
         if ( options.requestedState !== "edit" )
         {
             $element.removeClass( "edit" );
@@ -3213,28 +3321,43 @@
                 });
 
             break;
+
             case 'load':
-                bidx.utils.log( "EditBusinessSummary::AppRouter::load" );
+                bidx.utils.log( "EditBusinessSummary::AppRouter::load", params );
 
-                _showAllView( "mentor" );
-                _showAllView( "matchingmentors" );
+                // Hide common-mentordashboard.js mentor ex click on cacncel modal box etc
+                $( ".bidx-modal").unbind('hide');
+                $( ".bidx-modal").modal('hide');
 
 
-                _getActiveMentors(
+                if( !cancel )
                 {
-                    list:   'mentor-active-list'
-                });
-
-                 _getMentorMatches(
-                {
-                    list:   'mentor-match-list'
-                ,   cb  :   function ( )
-                            {
-                                _showAllView( "pager" );
-                            }
-                });
+                    _showAllView( "mentor" );
 
 
+
+                    _getActiveMentors(
+                    {
+                        list:   'mentor-active-list'
+                    ,   cb:     function( $listItem, params )
+                                {
+                                    _getContactsCallback( $listItem, params );
+                                }
+                    });
+
+                    if( businessSummaryId )
+                    {
+                        _showAllView( "matchingmentors" );
+                         _getMentorMatches(
+                        {
+                            list:   'mentor-match-list'
+                        ,   cb  :   function ( )
+                                    {
+                                        _showAllView( "pager" );
+                                    }
+                        });
+                    }
+                }
 
             break;
             case "edit":

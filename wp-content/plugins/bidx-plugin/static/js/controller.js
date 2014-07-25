@@ -301,7 +301,7 @@
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
 
-        ,   'editBusinessSummary(/:state)(/:id)':               'editBusinessSummary'
+        ,   'editBusinessSummary(/:state)(/:id)(*splat)':       'editBusinessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
 
         ,   'auth(/:state)(*splat)':                            'auth'
@@ -313,7 +313,7 @@
         ,   'setpassword(/:state)':                             'setpassword'
 
         ,   'join(/:state)':                                    'join'
-        
+
         ,   'mail(/:state)(*splat)':                            'mail'
 
         ,   'media(/:appState)(/:id)':                          'media'
@@ -560,7 +560,7 @@
                 }
             );
         }
-    ,   editBusinessSummary:    function( state, id )
+    ,   editBusinessSummary:    function( state, id, splat )
         {
             bidx.utils.log( "AppRouter::editBusinessSummary", state );
 
@@ -572,6 +572,7 @@
             ,   {
                     requestedState: state
                 ,   id:             id
+                ,   params:   _deparamSplat( splat )
                 }
             );
         }
