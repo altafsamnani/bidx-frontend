@@ -298,20 +298,35 @@ h1, h2, h3, h4, h5, h6,
         {
             height: 40px;
         }
-        &.open:after
+        &.open
         {
-            .triangle(up, 6px, lighten( @brand-primary, 40%) );
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            @media (max-width: @screen-xs-max)
+            background-color: desaturate(darken(@brand-primary, 25%), 25%);
+            &:after
             {
-                left: 20%;
+                .triangle(up, 6px, lighten( @brand-primary, 40%) );
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                @media (max-width: @screen-xs-max)
+                {
+                    left: 20%;
+                }
+            }
+            .dropdown-menu
+            {
+                a:hover
+                {
+                    background-color: @white;
+                }
             }
         }
         a
         {
             color: @white;
+            &:hover
+            {
+                background-color: desaturate(darken(@brand-primary, 25%), 25%);
+            }
         }
     }
     .iconbar-unread
