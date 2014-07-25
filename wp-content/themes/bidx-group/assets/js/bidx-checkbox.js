@@ -37,7 +37,7 @@
         , $parent = $el.closest('.checkbox')
         , checked = $el.prop(ch)
         , e = $.Event('toggle')
-        , $form = $el.parents( "form" )
+        , $form = $el.parents( "form[id]" )
         , validator = $form.validate()
         ;
 

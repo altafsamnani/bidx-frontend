@@ -40,7 +40,7 @@
         , $parentWrap = $el.closest('form').length ? $el.closest('form') : $el.closest('body')
         , $elemGroup = $parentWrap.find(':radio[name="' + $el.attr('name') + '"]')
         , e = $.Event('toggle')
-        , $form = $el.parents( "form" )
+        , $form = $el.parents( "form[id]" )
         , validator = $form.validate()
         ;
 
