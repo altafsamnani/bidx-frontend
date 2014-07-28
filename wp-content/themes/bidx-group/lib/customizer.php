@@ -52,8 +52,8 @@ class Bidx_Group_Customizer {
 		$wp_customize -> add_section(
 				'logo_settings',
 				array(
-						'title' => __( 'Logo Settings', 'roots' ),
-						'description' => __( 'Configure logo images here.', 'roots' ),
+						'title' => __( 'Logo and Slogan', 'roots' ),
+						'description' => __( 'Configure logo images and the site slogan here.', 'roots' ),
 						'priority' => 10,
 				)
 		);
@@ -96,7 +96,20 @@ class Bidx_Group_Customizer {
 						)
 				)
 		);
-		
+		$wp_customize->add_setting( 'slogan' );
+		$wp_customize->add_control(
+				new WP_Customize_Control(
+						$wp_customize,
+						'slogan',
+						array(
+								'label'          => __( 'Slogan', 'roots' ),
+								'section'        => 'logo_settings',
+								'settings'       => 'slogan',
+								'type'           => 'text'
+						)
+				)
+		);
+
 	}
 	
 	/**

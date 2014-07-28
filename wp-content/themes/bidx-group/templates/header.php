@@ -98,7 +98,7 @@
 ?>
                                 <div class="lead pull-right tagline">
 <?php 
-                                    echo get_bloginfo('description') ;
+                                    echo get_theme_mod( 'slogan' ) ;
 ?>
                                 </div>
                             </div>
