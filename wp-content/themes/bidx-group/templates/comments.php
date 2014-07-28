@@ -1,3 +1,4 @@
+<div class="well">
 <?php
   if (post_password_required()) {
     return;
@@ -78,3 +79,4 @@
     <?php endif; ?>
   </section><!-- /#respond -->
 <?php endif; ?>
+</div>
