@@ -643,9 +643,9 @@
             ,   error: function( jqXhr, textStatus )
                 {
 
-                    if (options && options.callback)
+                    if (options && options.error)
                     {
-                        options.callback( jqXhr );
+                        options.error( jqXhr );
                     }
 
                 }
@@ -948,19 +948,29 @@
 
     };
 
+    var _hideMainView = function(hideview)
+    {
+        $mainViews.filter(bidx.utils.getViewName(hideview)).hide();
+    };
+
     // display generic error view with msg provided
     //
     function _showMainError( msg )
     {
-        $mainBpViews.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
+        $mainViews.filter( ".viewError" ).find( ".errorMsg" ).text( msg );
         _showMainView( "error" , true);
     }
     // display generic error view with msg provided
     //
     function _showBpError( msg )
     {
-        $mainViews.filter( ".viewError" ).append( msg );
-        _showBpView( "error" , true);
+        $mainBpViews.filter( "#businessSummaryCollapse-MentoringDetails .viewError" ).append( msg ).show();
+       // _showBpView( "error" , true);
+    }
+
+    function _hideBpError(msg)
+    {
+        $mainBpViews.filter( "#businessSummaryCollapse-MentoringDetails .viewError" ).hide();
     }
      // Private functions
     //
@@ -1023,6 +1033,8 @@
 
             case "confirmRequest":
 
+                _hideBpError(); // Remove previous occured error
+
                 _closeMainModal(
                 {
                     unbindHide: true
@@ -1050,6 +1062,7 @@
 
             case "confirmInitiateMentoring": /***** Mentor this plan Start functionlaity **/
 
+                _hideBpError(); // Remove previous occured error
                 _closeMainModal(
                 {
                     unbindHide: true
@@ -1131,7 +1144,13 @@
                                 var response = $.parseJSON( jqXhr.responseText);
                                 bidx.utils.error( "Client  error occured", response );
                                 _showMainError( bidx.i18n.i("errorRequest") + response.text);
-
+                                 _hideMainView( 'loadrequest');
+                                $mentorButton.removeClass( "disabled" );
+                                $mentorButton.text(btnHtml);
+                                _closeMainModal(
+                                {
+                                    unbindHide: true
+                                } );
                             }
                         } );
                     break;
@@ -1158,6 +1177,13 @@
                                 var response = $.parseJSON( jqXhr.responseText);
                                 bidx.utils.error( "Client  error occured", response );
                                 _showBpError( bidx.i18n.i("errorRequest") + response.text);
+                                _hideMainView( 'loadrequest');
+                                $mentorButton.removeClass( "disabled" );
+                                $mentorButton.text(btnHtml);
+                                _closeMainModal(
+                                {
+                                    unbindHide: true
+                                } );
 
                             }
                         } );

@@ -504,6 +504,7 @@
             var mentorId
             ,   entityId
             ,   initiatorId
+            ,   status
             ,   bpClass
             ,   $mentorButton
             ,   isEntityExist
@@ -529,6 +530,7 @@
                             mentorId        = item.mentorId;
                             initiatorId     = item.initiatorId;
                             entityId        = item.entityId;
+                            status          = item.status;
 
                             if ( mentorId === loggedInMemberId )
                             {
@@ -536,7 +538,25 @@
                                 $mentorButton   = $elementMyprofile.find( bpClass );
                                 if($mentorButton)
                                 {
-                                    btnText = (initiatorId === mentorId) ? 'btnRequestSent' : 'btnRequestReceived'; // Temparary fixed replace it with Accept later
+                                    if( initiatorId === mentorId ) // Temparary fixed replace it with Accept later
+                                    {
+                                        switch(status)
+                                        {
+                                            case 'rejected' :
+
+                                            btnText =   'btnRequestRejected';
+                                            break;
+
+                                            default:
+                                            btnText =   'btnRequestSent';
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        btnText =  'btnRequestReceived';
+                                    }
+
 
                                     $mentorButton.addClass('disabled').i18nText( btnText );
                                 }
