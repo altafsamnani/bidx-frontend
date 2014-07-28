@@ -1,44 +1,8 @@
 // Import
 // -------------------------
 @import "elements.less";
+@import "basevars.less";
 @import "../bootstrap-3.1.1/less/bootstrap.less";
-
-// Color Variables
-// -------------------------
-
-    @text-copy: #34495E;
-    @white: #FFF;
-
-    @stickyheight: 50px;
-
-    @investor: #2c3e50;
-    @member: #bdc3c7;
-    @entrepreneur: #f39c11;
-    @mentor: #8A51B1;
-
-    @navbar-inner: @white;
-
-    @lato: "Lato", sans-serif;
-
-    // Testimonial
-    @testimonial-bg: #D2B48C;
-    @triagle-size: 25px;
-
-    @brand-secondary: @color-secondary;
-
-// Color alterations in Variables
-// ---------------------------------
-    @bg-primary-dark: desaturate(darken(@brand-primary, 25%), 25%);
-    @text-primary-dark: darken(@brand-primary, 25%);
-    @text-primary-darker: desaturate(darken(@brand-primary, 35%), 25%);
-    @bg-primary-light: lighten(@brand-primary, 25%);
-    @text-primary-light: lighten(@brand-primary, 25%);
-
-
-// Fonts 
-// ---------------------------------
-
-
 
 
 // Color alterations in Classes
@@ -301,22 +265,31 @@ h1, h2, h3, h4, h5, h6,
         &.open
         {
             background-color: desaturate(darken(@brand-primary, 25%), 25%);
-            &:after
-            {
-                .triangle(up, 6px, lighten( @brand-primary, 40%) );
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                @media (max-width: @screen-xs-max)
-                {
-                    left: 20%;
-                }
-            }
+            // &:after
+            // {
+            //     .triangle(up, 6px, lighten( @brand-primary, 40%) );
+            //     position: absolute;
+            //     bottom: 0;
+            //     left: 50%;
+            //     @media (max-width: @screen-xs-max)
+            //     {
+            //         left: 20%;
+            //     }
+            // }
             .dropdown-menu
             {
-                a:hover
+                min-width: 180px;
+                a
                 {
-                    background-color: @white;
+                    padding-left: @font-size-base;
+                    &:hover
+                    {
+                        background-color: @white;
+                    }
+                }
+                .fa
+                {
+                    width: 8px;
                 }
             }
         }
@@ -327,6 +300,10 @@ h1, h2, h3, h4, h5, h6,
             {
                 background-color: desaturate(darken(@brand-primary, 25%), 25%);
             }
+        }
+        &.settings.open .dropdown-menu .fa
+        {
+            width: 18px;
         }
     }
     .iconbar-unread

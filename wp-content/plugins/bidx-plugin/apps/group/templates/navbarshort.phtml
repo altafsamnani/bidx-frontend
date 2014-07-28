@@ -5,11 +5,11 @@
     //
     $profiles = array(
         'bidxInvestorProfile'        => array(
-            __('Investor dashboard', 'bidxplugin')     => _l('investor-dashboard')
+            __('Investor', 'bidxplugin')     => _l('investor-dashboard')
         ),
         'bidxEntrepreneurProfile'    => array(
-            __('Entrepreneur dashboard', 'bidxplugin') => _l('entrepreneur-dashboard')
-        ,   __('Mentor Dashboard', 'bidxplugin')       => _l('mentor-dashboard')
+            __('Entrepreneur', 'bidxplugin') => _l('entrepreneur-dashboard')
+        ,   __('Mentor', 'bidxplugin')       => _l('mentor-dashboard')
         ),
         'bidxMentorProfile'          => array(
             __('Mentor Dashboard', 'bidxplugin')       => _l('mentor-dashboard')
@@ -89,14 +89,14 @@
                             // fetch the key value for printing as text in the hyperlink
                             //
 ?>
-                            <li><a href="<?php echo $menuLink ?>"><?php _e( $menuName, 'bidxplugin' ); ?></a></li>
+                            <li><a href="<?php echo $menuLink ?>"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( $menuName, 'bidxplugin' ); ?></a></li>
 <?php                   }
                     }
                     if ( $isAdmin )
                     {
 ?>
                         <li>
-                            <a href="/wp-admin/admin.php?page=getting-started"><?php _e( 'bidX Dashboard', 'bidxplugin' ); ?></a>
+                            <a href="/wp-admin/admin.php?page=getting-started"><i class="fa fa-angle-right"></i>&nbsp;<?php _e( 'bidX', 'bidxplugin' ); ?></a>
                         </li>
 <?php
                     }
@@ -104,7 +104,7 @@
                     {
 ?>
                         <li>
-                            <a href="<?php echo $skipsoJudgeUrl;?>"><?php _e('Judge Dashboard','bidxplugin')?></a>
+                            <a href="<?php echo $skipsoJudgeUrl;?>"><i class="fa fa-angle-right"></i>&nbsp;<?php _e('Judge','bidxplugin')?></a>
                         </li>
 <?php
                     }
@@ -130,7 +130,7 @@
 <?php
                     foreach ( $groups as $groupKey => $groupValue ) {
 ?>
-                        <li><a href="<?php echo $groupValue[ "url" ] ?>"><?php echo $groupValue[ "name" ] ?></a></li>
+                        <li><a href="<?php echo $groupValue[ "url" ] ?>"><i class="fa fa-angle-right"></i>&nbsp;<?php echo $groupValue[ "name" ] ?></a></li>
 <?php
                     }
 ?>
@@ -161,7 +161,7 @@
 ?>
         <div class="btn-group settings">
             <a href="#" type="button" class="text-white dropdown-toggle" data-toggle="dropdown" title="<?php _e('Account settings','bidxplugin')?>">
-                <i class="fa fa-cog"></i>
+                <i class="fa fa-cogs"></i>
                 <span class="iconbar-text"><?php echo $displayName; ?></span>
             </a>
             <ul class="dropdown-menu bg-primary-darker">
@@ -171,29 +171,29 @@
                 if ( $inGroup )
                 {
 ?>
-                    <li><a href="/member"><?php _e('Profile','bidxplugin')?></a></li>
-                    <li><a href="/account/#account"><?php _e('Account settings','bidxplugin')?></a></li>
-                    <li><a href="/media"><?php _e('All my documents','bidxplugin')?></a></li>
+                    <li><a href="/member"><i class="fa fa-user"></i>&nbsp;<?php _e('Profile','bidxplugin')?></a></li>
+                    <li><a href="/account/#account"><i class="fa fa-cog"></i>&nbsp;<?php _e('Account settings','bidxplugin')?></a></li>
+                    <li><a href="/media"><i class="fa fa-file"></i>&nbsp;<?php _e('All my documents','bidxplugin')?></a></li>
 <?php
                 }
 
                 if ( !$inGroup )
                 {
 ?>
-                    <li><a href="#joinGroup"><?php _e('Join this group', 'bidxplugin')?></a></li>
+                    <li><a href="#joinGroup"><i class="fa fa-sign-in"></i>&nbsp;<?php _e('Join this group', 'bidxplugin')?></a></li>
 <?php
                 }
                 elseif ( !$currentGroupAdmin )
                 {
 ?>
-                    <li><a href="#leaveGroup"><?php _e('Leave this group', 'bidxplugin')?></a></li>
+                    <li><a href="#leaveGroup"><i class="fa fa-sign-out"></i>&nbsp;<?php _e('Leave this group', 'bidxplugin')?></a></li>
 <?php
                 }
 
                 if( !$currentGroupAdmin && $hasGroups )
                 {
 ?>
-                    <li><a href="/mail/#mail/compose"><?php _e('Help','bidxplugin')?></a></li>
+                    <li><a href="/mail/#mail/compose"><i class="fa fa-question"></i>&nbsp;<?php _e('Help','bidxplugin')?></a></li>
 <?php
                 }
 
@@ -206,7 +206,7 @@
                 if( $showLogout )
                 {
 ?>
-                     <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e('Logout', 'bidxplugin')?></a>
+                     <li> <a href="<?php echo wp_logout_url( home_url() ); ?>"><i class="fa fa-power-off"></i>&nbsp;<?php _e('Logout', 'bidxplugin')?></a>
 <?php
                 }
 ?>
