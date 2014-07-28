@@ -144,7 +144,7 @@ class Bidx_Group_Customizer {
 				) )
 		);
 		$wp_customize->add_setting( 'brand-background-color', array(
-		        'default'           => 'FFF',
+		        'default'           => '#FFF',
 		        'sanitize_callback' => 'sanitize_hex_color',
 		        'capability'        => 'edit_theme_options',
 		        'type'              => 'option', 
@@ -791,14 +791,14 @@ class Bidx_Group_Customizer {
 	{
 		$WPLessPlugin = WPLessPlugin::getInstance( );
 		$variables = array (
-			'color-main' => get_option( 'brand-primary' ),
-			'brand-primary' => get_option( 'brand-primary' ),
-			'color-secondary' => get_option( 'brand-secondary' ),
-			'color-background' => get_option( 'brand-background-color' ),
+			'color-main' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#3498db',
+			'brand-primary' => get_option( 'brand-primary' ) ? get_option( 'brand-primary' ) : '#3498db',
+			'color-secondary' => get_option( 'brand-secondary' ) ? get_option( 'brand-secondary' ) : '#1abc9c',
+			'color-background' => get_option( 'brand-background-color' ) ? get_option( 'brand-background-color' ) : '#fff',
 			'bg-image' => "'".get_option( 'brand-background-color-image' )."'",
-			'text-font' => get_option( 'text_font' ),
-			'headings-font' => get_option( 'headings_font' ),
-			'menu-font' => get_option( 'menu_font' ),
+			'text-font' => get_option( 'text_font' ) ? get_option( 'text_font' ) : "Lato",
+			'headings-font' => get_option( 'headings_font' ) ? get_option( 'headings_font' ) : "Lato",
+			'menu-font' => get_option( 'menu_font' ) ? get_option( 'menu_font' ) : "Lato",
 		);
 		
 		$WPLessPlugin -> setVariables( $variables );
