@@ -508,15 +508,20 @@ class TemplateLibrary
                         //
                         if ( !empty( $entityType ) && $entityType == 'bidxDocument' ) {
 
-                            $documentImage = '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
+                            // $documentImage = '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
 
                             $document = $rowValue->$headerValue;
 
-                            if ( preg_match ("/^image/i", $document->mimeType) ) {
+                            if ( preg_match ("/^image/i", $document->mimeType) )
+                            {
                                 $documentImage = $document->document;
+                                $html .= sprintf( '<div class="img-cropper pull-left"><img src="%s" /></div>', $document->document, $documentImage );
+                            }
+                            else
+                            {
+                                $html .= '<div class="icons-rounded pull-left"><i class="fa fa-file-text-o text-primary-light"></i></div>';
                             }
 
-                            $html .= sprintf( '<div class="img-cropper pull-left"><img src="%s" /></div>', $document->document, $documentImage );
 
                         } else {
 
