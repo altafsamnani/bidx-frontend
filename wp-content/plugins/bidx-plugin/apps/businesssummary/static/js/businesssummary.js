@@ -39,6 +39,8 @@
     ,   active                      = []
     ,   wait                        = []
     ,   respond                     = []
+    ,   rejectByEntrepreneur        = []
+    ,   rejectByMentor              = []
 
 
     ,   forms                       =
@@ -1280,6 +1282,8 @@
         var value   = $toggleExpertiseNeeded.filter( "[checked]" ).val();
 
         _handleToggleChange( value === "true", "mentorAdvisory" );
+        _handleToggleChange( value === "true", "mentorMatches" );
+
     } );
 
 
@@ -2092,14 +2096,18 @@
 
         var q
         ,   sort
-        ,   filters
         ,   criteria
         ,   criteriaQ
         ,   paramFilter
         ,   search
-        ,   sortQuery       = []
-        ,   criteriaFilters = []
-        ,   criteriaSort    = []
+        ,   valueExpertiseNeeded
+        ,   filterExpertiseNeeded   = ''
+        ,   sep                     = ''
+        ,   filters                 = []
+        ,   sortQuery               = []
+        ,   criteriaFilters         = []
+        ,   criteriaSort            = []
+        ,   entityFilters           = CONSTANTS.ENTITY_TYPES
         ;
 
         // 1. Search paramete
@@ -2132,7 +2140,25 @@
         // ex filters:["0": "facet_language:fi" ]
         //
 
-        filters = bidx.utils.getValue(params, 'filters' );
+
+        valueExpertiseNeeded    =   bidx.utils.getElementValue( $expertiseNeeded );
+
+        if(valueExpertiseNeeded)
+        {
+            filterExpertiseNeeded   =   'expertiseNeeded:(';
+
+            $.each( valueExpertiseNeeded, function( idx, item )
+            {
+                filterExpertiseNeeded   +=   sep + item;
+                sep                     =   ' OR ';
+            });
+
+            filterExpertiseNeeded   +=   ')';
+
+            //entityFilters[0].filters = [filterExpertiseNeeded]; //Uncomment when bas fixes the expetise filter
+        }
+
+        bidx.utils.log('filterExpertiseNeeded',filters);
 
         if(  filters )
         {
@@ -2146,7 +2172,7 @@
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
-                                        ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
+                                        ,   "entityTypes"   :   entityFilters
                                         ,   "scope"         :   "local"
                                         }
                     };
@@ -2167,25 +2193,37 @@
         ,   hrefMatch
         ,   filteredRequest
         ,   initiatorId
-        ,   mentorId            =   params.mentorId
-        ,   isActiveRequest     =   params.isActiveRequest
-        ,   waitArr             =   []
-        ,   respondArr          =   []
+        ,   mentorId                =   params.mentorId
+        ,   isActiveRequest         =   params.isActiveRequest
+        ,   waitArr                 =   []
+        ,   respondArr              =   []
+        ,   rejectMentorArr         =   []
+        ,   rejectEntrepreneurArr   =   []
         ,   isWaitingRequest
         ,   isRespondRequest
-        ,   contextBpId         =   bidxConfig.context.businessSummaryId
+        ,   isRejectByEntrepreneur
+        ,   isRejectByMentor
+        ,   contextBpId             =   bidxConfig.context.businessSummaryId
         ,   actionData
         ;
 
         if(!isActiveRequest)
         {
-            waitArr             =   _.pluck (   wait,   'mentorId' );
+            waitArr                 =   _.pluck (   wait,   'mentorId' );
 
-            respondArr          =   _.pluck (   respond,  'mentorId' );
+            respondArr              =   _.pluck (   respond,  'mentorId' );
 
-            isWaitingRequest    =   _.contains( waitArr,    mentorId );
+            rejectMentorArr         =   _.pluck (   rejectByMentor,  'mentorId' );
 
-            isRespondRequest    =   _.contains( respondArr,    mentorId );
+            rejectEntrepreneurArr   =   _.pluck (   rejectByEntrepreneur,  'mentorId' );
+
+            isWaitingRequest        =   _.contains( waitArr,    mentorId );
+
+            isRespondRequest        =   _.contains( respondArr,    mentorId );
+
+            isRejectByEntrepreneur  =   _.contains( rejectEntrepreneurArr,    mentorId );
+
+            isRejectByMentor        =   _.contains( rejectMentorArr,    mentorId );
         }
 
         switch(true)
@@ -2199,6 +2237,26 @@
                 /***************Request sent**************************/
                 $matchBtn   =   $listItem.find( ".btn-bidx-send");
                 $matchBtn.removeClass('btn-success').addClass('disabled btn-info').i18nText("btnRequestSent");
+            break;
+
+            case isRejectByEntrepreneur:
+                bidx.utils.log('rejected by entrepreneur');
+                actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
+                $listItem.find( '.action' ).empty( ).append( actionData );
+
+                /***************Request sent**************************/
+                $matchBtn   =   $listItem.find( ".btn-bidx-send");
+                $matchBtn.removeClass('btn-success').addClass('disabled btn-info').i18nText("btnRequestRejectedByEntrepreneur");
+            break;
+
+            case isRejectByMentor:
+                bidx.utils.log('rejected by mentor');
+                actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
+                $listItem.find( '.action' ).empty( ).append( actionData );
+
+                /***************Request sent**************************/
+                $matchBtn   =   $listItem.find( ".btn-bidx-send");
+                $matchBtn.removeClass('btn-success').addClass('disabled btn-info').i18nText("btnRequestRejectedByMentor");
             break;
 
             case isRespondRequest:
@@ -2551,7 +2609,7 @@
                         .done(  function(  )
                         {
                             //  execute callback if provided
-                            if (options && options.cb)
+                            if (response.numFound && options && options.cb)
                             {
                                 options.cb(  );
                             }
@@ -2638,28 +2696,43 @@
                                 //Cast to string for comparison
                                 entityId = itemResponse.entityId.toString();
 
-
-                                if ( ( itemResponse.status  === 'accepted' ) &&
-                                     ( itemResponse.mentorId    !== loggedInMemberId ) &&
-                                     ( entityId === bidxConfig.context.businessSummaryId )
-                                     )
+                                if( entityId === bidxConfig.context.businessSummaryId )
                                 {
+                                    if ( ( itemResponse.status  === 'accepted' ) &&
+                                         ( itemResponse.mentorId    !== loggedInMemberId )
+                                         )
+                                    {
 
-                                    active.push( itemResponse );
-                                }
-                                else if ( ( itemResponse.status      === 'requested' ) &&
-                                     ( itemResponse.mentorId    !== loggedInMemberId ) &&
-                                     ( itemResponse.initiatorId === loggedInMemberId ) )
-                                {
-
-                                    wait.push( itemResponse );
-                                }
-                                else if( ( itemResponse.status      === 'requested' ) &&
+                                        active.push( itemResponse );
+                                    }
+                                    else if ( ( itemResponse.status      === 'requested' ) &&
                                          ( itemResponse.mentorId    !== loggedInMemberId ) &&
-                                         ( itemResponse.initiatorId !== loggedInMemberId ) )
-                                {
+                                         ( itemResponse.initiatorId === loggedInMemberId ) )
+                                    {
 
-                                    respond.push( itemResponse );
+                                        wait.push( itemResponse );
+                                    }
+                                    else if( ( itemResponse.status      === 'requested' ) &&
+                                             ( itemResponse.mentorId    !== loggedInMemberId ) &&
+                                             ( itemResponse.initiatorId !== loggedInMemberId ) )
+                                    {
+
+                                        respond.push( itemResponse );
+                                    }
+                                    else if( ( itemResponse.status      === 'rejected' ) &&
+                                             ( itemResponse.mentorId    !== loggedInMemberId ) &&
+                                             ( itemResponse.initiatorId !== loggedInMemberId ) )
+                                    {
+
+                                        rejectByEntrepreneur.push( itemResponse );
+                                    }
+                                    else if( ( itemResponse.status      === 'rejected' ) &&
+                                             ( itemResponse.mentorId    !== loggedInMemberId ) &&
+                                             ( itemResponse.initiatorId === loggedInMemberId ) )
+                                    {
+
+                                        rejectByMentor.push( itemResponse );
+                                    }
                                 }
                             });
 
@@ -2951,6 +3024,18 @@
 
         if ( state === "edit" )
         {
+
+            $expertiseNeeded.on('change', function(evt, params) {
+                _getMentorMatches(
+                {
+                    list:   'mentor-match-list'
+                ,   cb  :   function ( )
+                            {
+                                _showAllView( "pager" );
+                            }
+                });
+            });
+
             _getBusinessSummary()
                 .then( function()
                 {

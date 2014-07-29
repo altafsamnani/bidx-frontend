@@ -543,8 +543,11 @@
                                         switch(status)
                                         {
                                             case 'rejected' :
-
                                             btnText =   'btnRequestRejected';
+                                            break;
+
+                                            case 'accepted' :
+                                            btnText =   'btnRequestAccepted';
                                             break;
 
                                             default:

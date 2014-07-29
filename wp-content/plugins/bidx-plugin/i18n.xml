@@ -32,6 +32,11 @@
     <Item value="btnRequestSent">Request sent</Item>
     <Item value="btnRequestReceived">Request received</Item>
     <Item value="btnRequestRejected">Request rejected</Item>
+    <Item value="btnRequestRejectedByMentor">Rejected by mentor</Item>
+    <Item value="btnRequestRejectedByEntrepreneur">Rejected by entrepreneur</Item>
+    <Item value="btnRequestAccepted">Request accepted</Item>
+
+
 
     <Item value="btnCreateBs">Create business proposal</Item>
     <Item value="btnCreateCompany">Create company profile</Item>

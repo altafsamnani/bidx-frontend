@@ -660,6 +660,7 @@
 
         var uriStatus
         ,   smsg
+        ,   updateHash
         ,   params = options.params
         ,   postData = {}
         ;
@@ -688,15 +689,10 @@
                     {
 
                         //  execute callback if provided
-                        smsg       = (params.action === 'accepted') ? 'statusAccept' : 'statusIgnore';
-                       // uriStatus = document.location.href.split( "#" ).shift() + '?smsg=' + smsg + '#mentoring/mentor';
 
-                        //bidx.controller.updateHash(uriStatus, true, true);
-                        //bidx.controller.doSuccess( uriStatus,false);
+                        updateHash  =   (params.redirect) ? params.redirect : '#mentoring/mentor';
 
-                        _showMainSuccessMsg(bidx.i18n.i(smsg));
-
-                        window.bidx.controller.updateHash("#mentoring/mentor", true);
+                        window.bidx.controller.updateHash( updateHash, true );
 
                         if (options && options.callback)
                         {
@@ -712,24 +708,9 @@
 
                     var response = $.parseJSON( jqXhr.responseText);
 
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                    if (options && options.error)
                     {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showMainError( "Something went wrong while updating a relationship: " + response.code );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showMainError( "Something went wrong while updating a relationship: " + response.code );
-                    }
-
-                    if (options && options.callback)
-                    {
-                        options.callback();
+                        options.error();
                     }
 
                 }
@@ -1086,6 +1067,7 @@
                 var btnHtml
                 ,   $mentorButton
                 ,   params = options.params
+                ,   smsg
                 ,   action = params.action
                 ;
 
@@ -1191,12 +1173,14 @@
                     break;
 
                     default:
-
                         _doMutateMentoringRequest(
                         {
                             params: params
                         ,   callback: function()
                             {
+                                smsg       = (action === 'accepted') ? 'statusAccept' : 'statusIgnore';
+                                _showMainSuccessMsg(bidx.i18n.i(smsg));
+
                                 _showMainHideView("respond", "loadrequest");
                                 $mentorButton.removeClass( "disabled" );
                                 $mentorButton.text(btnHtml);
@@ -1205,6 +1189,19 @@
                                     unbindHide: true
                                 } );
 
+                            }
+                        ,   error: function(jqXhr)
+                            {
+                                var response = $.parseJSON( jqXhr.responseText);
+                                bidx.utils.error( "Client  error occured", response );
+                                _showBpError( bidx.i18n.i("errorRequest") + response.text);
+                                _showMainHideView("respond", "loadrequest");
+                                $mentorButton.removeClass( "disabled" );
+                                $mentorButton.text(btnHtml);
+                                _closeMainModal(
+                                {
+                                    unbindHide: true
+                                } );
                             }
                         } );
 
