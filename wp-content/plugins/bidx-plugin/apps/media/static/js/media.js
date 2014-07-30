@@ -631,7 +631,7 @@
 
         $viewEdit.find( ".filename"     ).text( upload.documentName );
         $details.find( ".created"       ).text( created );
-        $details.find( ".size"          ).text( upload.size );
+        $details.find( ".size"          ).text( upload.size + ' (Bytes)' );
         $details.find( ".contentType"   ).text( upload.mimeType );
 
         $btnDownload.attr( "href", upload.document );
@@ -750,6 +750,27 @@
                     var status = bidx.utils.getValue( jqXhr, "status" ) || textStatus;
 
                     _showError( "Something went wrong while retrieving the current list of media: " + status );
+
+                    // Offer re-login modal if is slaveApp
+                    //
+                    if ( textStatus === "parsererror" && slaveApp === true )
+                    {
+                        var $attachmentsModal = $( ".addFiles, .addAttachmentsModal" )
+                        ,   $loginModal = $( ".loginModal" )
+                        ;
+
+                        $attachmentsModal.each( function()
+                        {
+                            var $el = $(this);
+
+                            if ( $el.data( "bs.modal" ) !== undefined && $el.data( "bs.modal" ).isShown )
+                            {
+                                $el.modal('hide');
+                                $loginModal.modal();
+                            }
+                        });
+
+                    }
                 }
             }
         );
