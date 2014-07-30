@@ -210,7 +210,10 @@
             <?php
                 // Attachments
                 //
-                echo $this->displayAttachments ($header = '<h4>' . __('Documents','bidxplugin') . '</h4>', $this->exst ($personalDetails->attachment));
+                if ( $this->exst ($personalDetails->attachment) )
+                {
+                    echo $this->displayDocuments ( $personalDetails->attachment, __('Documents','bidxplugin') );
+                }
             ?>
 
         </div>

@@ -25,11 +25,11 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
             <?php
                 if ($mentorDetailsBidxMeta->bidxCanEdit)
                 {  ?>
+                    <div class="view viewNoproposals alert alert-warning pull-left">
+                        <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
+                        <?php _e( 'No business proposals found based on your filter settings', 'bidxplugin'); ?>
+                    </div>
                     <div class="btn-group show hide-overflow">
-                        <div class="view viewNoproposals alert alert-warning pull-left">
-                            <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
-                            <?php _e( 'No business proposals found based on your filter settings', 'bidxplugin'); ?>
-                        </div>
 
             <?php
 
@@ -98,7 +98,11 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
                 );
                 echo $this->pairRows( $rowValues );
 
-                echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ('Documents' => $this->exst ($mentorDetails->attachment)));
+                if ( $this->exst ($mentorDetails->attachment) )
+                {
+                    echo $this->displayDocuments ( $mentorDetails->attachment, __('Documents','bidxplugin') );
+                }
+
         ?>
 
         <?php

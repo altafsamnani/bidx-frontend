@@ -316,21 +316,27 @@
     {
         if ( attachment === null )
         {
-            bidx.util.warn( "investorprofile::_addAttachment: attachment is null!" );
+            bidx.util.warn( "entrepreneurprofile::_addAttachment: attachment is null!" );
             return;
         }
 
         var $attachment         = snippets.$attachment.clone()
         ,   createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   $attachmentImage    = $attachment.find( ".documentImage" )
         ,   $attachmentLink     = $attachment.find( ".documentLink" )
+        ,   $attachmentImage    = $attachment.find( ".documentImage" )
+        ,   $attachmentDefault  = $attachment.find( ".attachmentDefault" )
+        ,   $attachmentMissing  = $attachment.find( ".attachmentMissing" )
         ,   deletedDoc          = false
         ;
 
         if ( !attachment.bidxMeta.bidxUploadId )
         {
-            bidx.utils.warn( "investorprofile::_addAttachment: attachment has been deleted!" );
+            bidx.utils.warn( "entrepreneurprofile::_addAttachment: attachment has been deleted!" );
             deletedDoc = true;
+        }
+        else
+        {
+            $attachmentLink.attr( "href", attachment.document );
         }
 
         // Store the data so we can later use it to merge the updated data in
@@ -343,27 +349,31 @@
         $attachment.find( ".purpose"            ).text( attachment.purpose );
         $attachment.find( ".documentType"       ).text( bidx.data.i( attachment.documentType, "documentType" ) );
 
-        $attachmentLink.attr( "href", attachment.document );
-
+        // Check if attachment is an image
         if ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
         {
-            $attachmentImage.attr( "src", attachment.document );
+            $attachmentDefault.remove();
+            $attachmentMissing.remove();
+
+            $attachmentImage
+                .attr( "src", attachment.document )
+                .fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} )
+            ;
         }
         else
         {
             $attachmentImage.remove();
-
+            
             // Check if the file has been removed
             //
             if ( deletedDoc )
             {
-                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) );
-                $attachmentLink.parent().append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) ).addClass( "text-danger" );
                 $attachmentLink.remove();
             }
             else
             {
-                $attachmentLink.append( $( "<i />", { "class": "fa fa-file-text-o document-icon" } ) );
+                $attachmentMissing.remove();
             }
         }
 

@@ -562,12 +562,15 @@ class TemplateLibrary
         $html .= '<th>' . __('Type', 'bidxplugin') . '</th>';
         $html .= '</tr>';
         foreach ($docs as $doc) {
-            $purpose = $doc->purpose ? $doc->purpose : '-';
-            $html .= '<tr>';
-            $html .= '<td><a class="word-break" href="'.$doc->document.'">'. $doc->documentName .'</a></td>';
-            $html .= '<td>'. $purpose .'</td>';
-            $html .= '<td>'. $this->getMultiReplacedValues( 'documentType', $doc->documentType ) .'</td>';
-            $html .= '</tr>';
+            if ( isset( $doc->bidxMeta->bidxUploadId ) )
+            {
+                $purpose = $doc->purpose ? $doc->purpose : '-';
+                $html .= '<tr>';
+                $html .= '<td><a class="word-break" href="'.$doc->document.'">'. $doc->documentName .'</a></td>';
+                $html .= '<td>'. $purpose .'</td>';
+                $html .= '<td>'. $this->getMultiReplacedValues( 'documentType', $doc->documentType ) .'</td>';
+                $html .= '</tr>';
+            }
         }
         $html .= '</tbody></table>';
         $html .= '</div></div>';

@@ -1407,8 +1407,10 @@
     function _updateAttachment( $attachment, attachment )
     {
         var createdDateTime     = bidx.utils.parseTimestampToDateStr( attachment.uploadedDateTime )
-        ,   $documentImage      = $attachment.find( ".documentImage" )
         ,   $documentLink       = $attachment.find( ".documentLink" )
+        ,   $documentImage      = $attachment.find( ".documentImage" )
+        ,   $documentDefault    = $attachment.find( ".attachmentDefault" )
+        ,   $documentMissing    = $attachment.find( ".attachmentMissing" )
         ,   deletedDoc          = false
         ;
 
@@ -1433,26 +1435,29 @@
 
         if ( attachment.mimeType && attachment.mimeType.match( /^image/ ) )
         {
-            $documentImage.attr( "src", attachment.document );
+            $documentDefault.remove();
+            $documentMissing.remove();
+
+            $documentImage
+                .attr( "src", attachment.document )
+                .fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} )
+            ;
         }
         else
         {
             $documentImage.remove();
-
+            
             // Check if the file has been removed
             //
             if ( deletedDoc )
             {
-                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) );
-                $attachment.find( ".editDocumentProp" ).hide();
-                $documentLink.parent().append( $( "<i />", { "class": "fa fa-question-circle document-icon" } ) );
+                $attachment.find( ".documentName" ).text( bidx.i18n.i( "docDeleted" ) ).addClass( "text-danger" );
                 $documentLink.remove();
             }
             else
             {
-                $documentLink.append(" <i class='fa fa-file-text-o document-icon'></i> ");
+                $documentMissing.remove();
             }
-
         }
 
         $documentLink.attr( "href", attachment.document );

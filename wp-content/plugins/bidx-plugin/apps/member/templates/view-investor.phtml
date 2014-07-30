@@ -125,7 +125,11 @@ if ( $investorDetails && ( $investorDetailsBidxMeta->bidxEntityStatus == 'PUBLIS
 
             echo $this->addTableRows($header, $this->exst( $investorDetails->previousInvestments ), 'table table-bordered', '', array('investmentType' => 'hidden-xs', 'companyWebsite' => 'hidden-xs') );
 
-            echo $this->getAttachmentsDisplay ('col-sm-12', 'col-sm-12', array ('Documents' => $this->exst ($investorDetails->attachment)));
+            if ( $this->exst ($investorDetails->attachment) )
+            {
+                echo $this->displayDocuments ( $investorDetails->attachment, __('Documents','bidxplugin') );
+            }
+
     ?>
 
     <?php

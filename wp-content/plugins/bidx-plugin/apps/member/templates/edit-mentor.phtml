@@ -346,20 +346,20 @@
     <div class="snippets hide">
 
         <!-- Attachment -->
-        <div class="attachmentItem col-sm-4">
-            <div class="well">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <a href="#" class="documentLink"><img class="img-rounded documentImage"></a>
-                    </div>
-                    <div class="col-sm-7">
-                        <h3 class="documentName"></h3>
-                        <p class="createdDateTime"></p>
-                        <p class="purpose"></p>
-                        <p class="documentType"></p>
-                    </div>
+        <div class="attachmentItem col-md-4">
+            <div class="media well">
+                <div class="pull-left icons-rounded attachmentMissing"><i class="fa fa-question-circle text-primary-light"></i></div>
+                <a class="pull-left documentLink img-cropper" href="#">
+                    <div class="icons-rounded attachmentDefault"><i class="fa fa-file-text-o text-primary-light"></i></div>
+                    <img class="media-object img-rounded documentImage">
+                </a>
+                <div class="media-body">
+                    <strong class="media-heading documentName"></strong>
+                    <div class="createdDateTime"></div>
+                    <div class="purpose"></div>
+                    <div class="documentType"></div>
                 </div>
-                <a href="#removeItem" class="btn btn-danger btn-sm btn-block"><?php _e('Remove from profile','bidxplugin'); ?></a>
+                <a href="#removeItem" class="btn btn-danger btn-sm btn-block clearboth top-margin-lineheight"><?php _e('Remove','bidxplugin'); ?></a>
             </div>
         </div>
     </div>
