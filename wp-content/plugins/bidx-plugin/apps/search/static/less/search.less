@@ -11,9 +11,21 @@
         padding: 20px;
         margin-bottom: 20px;
     }
-    .searchform button
+    .searchform
     {
-        height: 40px;
+        input
+        {
+            border: none;
+            &:focus
+            {
+                box-shadow: none;
+            }
+        }
+        button
+        {
+            height: 40px;
+            border: none;
+        }
     }
 }
 
