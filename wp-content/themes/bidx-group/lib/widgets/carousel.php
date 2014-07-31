@@ -119,7 +119,6 @@ class Carousel_Widget extends WP_Widget {
 
             <div id="<?php echo $widget_id ?>" class="carousel slide">
 <?php
-                $count = 0;
                 if ( $images_id )
                 {
 
@@ -130,10 +129,11 @@ class Carousel_Widget extends WP_Widget {
 ?>
                     <ol class="carousel-indicators">
 <?php
+                        $olcount = 0;
                         foreach ( $images_id as $image_id )
                         {
 ?>
-                            <li data-target="#<?php echo $widget_id ?>" data-slide-to="<?php echo $count ?>" <?php if ($count == 0) { ?>class="active" <?php } $count++; ?> ></li>
+                            <li data-target="#<?php echo $widget_id ?>" data-slide-to="<?php echo $olcount ?>" <?php if ($olcount == 0) { ?>class="active" <?php } $olcount++; ?> ></li>
 <?php
                         }
 ?>
@@ -144,6 +144,7 @@ class Carousel_Widget extends WP_Widget {
                 <!-- Carousel items -->
                 <div class="carousel-inner">
 <?php
+                        $count = 0;
                         foreach ( $images_id as $image_id )
                         {
                             $img = wp_get_attachment_image_src( $image_id, 'full' );
