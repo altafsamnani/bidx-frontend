@@ -2080,22 +2080,18 @@
     /*
         {
             "searchTerm"    :   "text:*"
-        ,   "sort"          :   [
-                                  {
-                                    "field": "entityId",
-                                    "order": "asc"
-                                  }
-                                ]
         ,   "maxResult"     :   10
         ,   "offset"        :   0
         ,   "entityTypes"   :   [
                                     {
-                                        "type": "bidxBusinessSummary"
+                                        "type": "bidxMentorProfile"
                                     }
                                 ]
         ,   "scope"         :   "local"
+        ,   "filters": [
+                        "-ownerId:4321"
+                        ]
         }
-
     */
     function _getSearchCriteria ( params ) {
 
@@ -2108,9 +2104,9 @@
         ,   valueExpertiseNeeded
         ,   filterExpertiseNeeded   = ''
         ,   sep                     = ''
-        ,   facetFilters                 = []
+        ,   facetFilters            = []
+        ,   filters                 = []
         ,   sortQuery               = []
-        ,   criteriaFilters         = []
         ,   criteriaSort            = []
         ,   entityFilters           = CONSTANTS.ENTITY_TYPES
         ;
@@ -2146,7 +2142,9 @@
         //
 
 
-        valueExpertiseNeeded    =   bidx.utils.getElementValue( $expertiseNeeded );
+        valueExpertiseNeeded        =   bidx.utils.getElementValue( $expertiseNeeded );
+
+        entityFilters[0].filters    =   [];
 
         if(valueExpertiseNeeded)
         {
@@ -2163,19 +2161,30 @@
             entityFilters[0].filters = [filterExpertiseNeeded]; //Uncomment when bas fixes the expetise filter
         }
 
-        if(  facetFilters )
+         //Exclude current user and active mentors from the criteria
+        //1 Exclude current user
+        if ( loggedInMemberId )
         {
-            criteriaFilters = facetFilters;
+            filters.push('-ownerId:' + loggedInMemberId);
+        }
+        //Exclude active users
+        if ( active )
+        {
+            $.each( active , function ( id, item)
+            {
+                filters.push('-ownerId:' + item.mentorId);
+            });
         }
 
         search =    {
                         criteria    :   {
                                             "searchTerm"    :   "text:*"
-                                        ,   "facetFilters"  :   criteriaFilters
+                                        ,   "facetFilters"  :   facetFilters
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
                                         ,   "entityTypes"   :   entityFilters
+                                        ,   "filters"       :   filters
                                         ,   "scope"         :   "local"
                                         }
                     };
@@ -2381,8 +2390,6 @@
         ,   responseLength
         ;
 
-        bidx.utils.log("[response] retrieved results $list ", $list );
-
         if ( response.docs && response.docs.length )
         {
             // if ( response.totalMembers > currentPage size  --> show paging)
@@ -2437,14 +2444,12 @@
 
             if( response.numFound )
             {
-                isCurrentUserInList =   _.findWhere (   response.docs
+                /*isCurrentUserInList =   _.findWhere (   response.docs
                                                     ,   {
                                                             ownerId:   loggedInMemberId.toString()
                                                         }
                                                     );
-                response.numFound   =   ( !$.isEmptyObject(isCurrentUserInList) ) ? response.numFound - 1 : response.numFound ;
-
-                bidx.utils.log('isCurrentUserInList', isCurrentUserInList);
+                response.numFound   =   ( !$.isEmptyObject(isCurrentUserInList) ) ? response.numFound - 1 : response.numFound ;*/
 
                 countHtml = bidx.i18n.i( "matchCount", appName ).replace( /%count%/g,  response.numFound);
 
@@ -2457,7 +2462,6 @@
 
             // create member listitems
             //
-            bidx.utils.log('response.docs', response.docs );
             $.each( response.docs, function( idx, item )
             {
                 mentorId    = bidx.utils.getValue( item, "ownerId" );
@@ -2891,7 +2895,7 @@
 
         _showAllView( "mentor" );
 
-        if(showMatch !== 'hide')
+        if(showMatch !== 'hide') //If its not view and in edit state then show matches
         {
             _showAllView( "matchingmentors" );
         }
@@ -2904,22 +2908,35 @@
             ,   cb:     function( $listItem, params )
                         {
                             _getContactsCallback( $listItem, params );
+
+                            if(isMentorMatchEmpty && showMatch !== 'hide') //If its not view and in edit state and not loaded then load matches
+                            {
+                                 _getMentorMatches(
+                                {
+                                    list:   'mentor-match-list'
+                                ,   cb  :   function ( )
+                                            {
+                                                _showAllView( "pager" );
+                                            }
+                                });
+
+                            }
                         }
             });
         }
-
-        if(isMentorMatchEmpty && showMatch !== 'hide')
+        else if(isMentorMatchEmpty && showMatch !== 'hide') //If acitve members loaded in view and now in edit state then show matches
         {
-             _getMentorMatches(
-            {
-                list:   'mentor-match-list'
-            ,   cb  :   function ( )
-                        {
-                            _showAllView( "pager" );
-                        }
-            });
-
+         _getMentorMatches(
+                            {
+                                list:   'mentor-match-list'
+                            ,   cb  :   function ( )
+                                        {
+                                            _showAllView( "pager" );
+                                        }
+                            });
         }
+
+
     }
 
     function _getMentors( options )
@@ -2927,6 +2944,7 @@
 
         $tabMentor.on( "shown.bs.collapse", function ()
         {
+            _handleToggleChange( "true", "mentorMatches" );
             _getMentorRequests( options );
         });
     }
@@ -3033,6 +3051,10 @@
         {
 
             $expertiseNeeded.on('change', function(evt, params) {
+                //Reset the search result offset and limit
+                tempLimit               = CONSTANTS.SEARCH_LIMIT ;
+                paging.search.offset    = CONSTANTS.LOAD_COUNTER;
+
                 _getMentorMatches(
                 {
                     list:   'mentor-match-list'

@@ -20,6 +20,11 @@
     ,   memberData           = {}
     ,   appName              = 'mentor'
 
+    ,   respond              = []
+    ,   wait                 = []
+    ,   ongoing              = []
+    ,   allRequest           = []
+
     ,   dataArr              =  {
                                     'industry'         : 'industry'
                                 ,   'countryOperation' : 'country'
@@ -84,17 +89,17 @@
 
         var q
         ,   sort
-        ,   filters
+        ,   facetFilters
         ,   criteria
         ,   criteriaQ
         ,   paramFilter
         ,   search
-        ,   sep                  = ''
-        ,   filterFocusExpertise = ''
-        ,   sortQuery       = []
-        ,   criteriaFilters = []
-        ,   criteriaSort    = []
-        ,   entityFilters   = CONSTANTS.ENTITY_TYPES
+        ,   sep                     = ''
+        ,   filterFocusExpertise    = ''
+        ,   sortQuery               = []
+        ,   filters                 = []
+        ,   criteriaSort            = []
+        ,   entityFilters           = CONSTANTS.ENTITY_TYPES
         ;
 
         // 1. Search paramete
@@ -123,6 +128,7 @@
 
         }
 
+        entityFilters[0].filters = [];
 
         if(focusExpertise)
         {
@@ -140,20 +146,27 @@
         }
 
         // 3. Filter
-        // ex filters:["0": "facet_language:fi" ]
+        // ex facetFilters:["0": "facet_language:fi" ]
         //
 
-        filters = bidx.utils.getValue(entityFilters, 'filters' );
+        //facetFilters = bidx.utils.getValue(facetFilters, 'facetFilters' );
 
-        if(  filters )
+        //Exclude active users
+
+        filters.push('-ownerId:' + currentUserId); //Why do we want current user business summaries, EXCLUDE IT...
+
+        if ( allRequest )
         {
-            criteriaFilters = filters;
+            $.each( allRequest , function ( id, item)
+            {
+                filters.push('-entityId:' + item.entityId);
+            });
         }
 
         search =    {
                         criteria    :   {
                                             "searchTerm"    :   "text:*"
-                                        ,   "filters"       :   criteriaFilters
+                                        ,   "filters"       :   filters
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
@@ -1257,6 +1270,37 @@
         );
     }
 
+    var _initRequestVariables = function( options )
+    {
+        var result  =   options.result
+        ;
+
+        $.each( result , function ( idx, item)
+            {
+                if ( ( item.status      === 'requested' ) &&
+                     ( item.mentorId    === currentUserId ) &&
+                     ( item.initiatorId === currentUserId ) )
+                {
+                    wait.push( item );
+                    allRequest.push (item);
+                }
+                else if( ( item.status      === 'requested' ) &&
+                         ( item.mentorId    === currentUserId ) &&
+                         ( item.initiatorId !== currentUserId ) )
+                {
+                    respond.push( item );
+                    allRequest.push (item);
+                }
+                else if( ( item.status     === 'accepted')  &&
+                         ( item.mentorId    === currentUserId )
+                 )
+                {
+                    ongoing.push ( item );
+                    allRequest.push (item);
+                }
+        });
+    };
+
     // function that retrieves group members returned in an array of key/value objects
     // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
     //
@@ -1268,9 +1312,6 @@
         //
         var     result      = options.result
         ,       response    =  {}
-        ,       respond     =  []
-        ,       wait        =  []
-        ,       ongoing     =  []
         ;
 
         if ( result  )
@@ -1278,28 +1319,6 @@
           //  _showView("load");
           //  _showView("loadcontact", true);
          //   _showView("loadpreference", true );
-
-            $.each( result , function ( idx, item)
-            {
-                if ( ( item.status      === 'requested' ) &&
-                     ( item.mentorId    === currentUserId ) &&
-                     ( item.initiatorId === currentUserId ) )
-                {
-                    wait.push( item );
-                }
-                else if( ( item.status      === 'requested' ) &&
-                         ( item.mentorId    === currentUserId ) &&
-                         ( item.initiatorId !== currentUserId ) )
-                {
-                    respond.push( item );
-                }
-                else if( ( item.status     === 'accepted')  &&
-                         ( item.mentorId    === currentUserId )
-                 )
-                {
-                    ongoing.push ( item );
-                }
-            });
 
             response    =   {
                                 wait    : wait
@@ -1530,6 +1549,10 @@
 
                 _showView("ended", true );
                 _showView("loadended", true ); */
+                _initRequestVariables(
+                {
+                    result  :  options.result
+                });
 
                 _getMentorExpertise( )
                     .always( function()
