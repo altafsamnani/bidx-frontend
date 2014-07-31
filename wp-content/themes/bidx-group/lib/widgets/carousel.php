@@ -97,17 +97,16 @@ class Carousel_Widget extends WP_Widget {
         $images_id = $instance['select'];
         $widget_id = $args['widget_id'];
 
-        // Region Check
         $active_region = $args['id'];
         $add_container = false;
-        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) === FALSE )
+        if  (
+                $active_region === 'pub-front-top' ||
+                $active_region === 'pub-front-bottom' ||
+                $active_region === 'priv-front-top' ||
+                $active_region === 'priv-front-bottom'
+            )
         {
-                $add_container = true;
-        }
-        
-        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) === FALSE )
-        {
-                $add_container = true;
+            $add_container = true;
         }
 
         echo $before_widget;
@@ -130,7 +129,6 @@ class Carousel_Widget extends WP_Widget {
 ?>
                     <ol class="carousel-indicators">
 <?php
-                        $count = 0;
                         foreach ( $images_id as $image_id )
                         {
 ?>
