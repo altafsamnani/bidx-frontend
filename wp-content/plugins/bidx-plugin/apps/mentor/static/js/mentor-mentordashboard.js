@@ -14,6 +14,7 @@
     ,   bidx                 = window.bidx
     ,   $modals              = $element.find(".modalView")
     ,   $modal
+    ,   focusExpertise
     ,   currentGroupId       = bidx.common.getCurrentGroupId( "currentGroup ")
     ,   currentUserId        = bidx.common.getCurrentUserId( "id" )
     ,   memberData           = {}
@@ -88,9 +89,12 @@
         ,   criteriaQ
         ,   paramFilter
         ,   search
+        ,   sep                  = ''
+        ,   filterFocusExpertise = ''
         ,   sortQuery       = []
         ,   criteriaFilters = []
         ,   criteriaSort    = []
+        ,   entityFilters   = CONSTANTS.ENTITY_TYPES
         ;
 
         // 1. Search paramete
@@ -119,11 +123,27 @@
 
         }
 
+
+        if(focusExpertise)
+        {
+            filterFocusExpertise    =   'expertiseNeeded:(';
+
+            $.each( focusExpertise, function( idx, item )
+            {
+                filterFocusExpertise   +=   sep + item;
+                sep                     =   ' OR ';
+            });
+
+            filterFocusExpertise   +=   ')';
+
+            entityFilters[0].filters = [filterFocusExpertise]; //Uncomment when bas fixes the expetise filter
+        }
+
         // 3. Filter
         // ex filters:["0": "facet_language:fi" ]
         //
 
-        filters = bidx.utils.getValue(params, 'filters' );
+        filters = bidx.utils.getValue(entityFilters, 'filters' );
 
         if(  filters )
         {
@@ -137,8 +157,8 @@
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
-                                        ,   "entityTypes"   :   CONSTANTS.ENTITY_TYPES
-                                        ,   "scope"         :   "local"
+                                        ,   "entityTypes"   :   entityFilters
+                                        ,   "scope"         :   "global"
                                         }
                     };
 
@@ -147,7 +167,40 @@
 
     }
 
-    function getMentorProposals( options )
+    function _getMentorExpertise( options )
+    {
+        var $d              =  $.Deferred()
+        ;
+        bidx.api.call(
+                "member.fetch"
+            ,   {
+                    memberId:       currentUserId
+                ,   groupDomain:    bidx.common.groupDomain
+                ,   success:        function( response )
+                    {
+                        focusExpertise =   bidx.utils.getValue(response, 'bidxMentorProfile.focusExpertise');
+
+                        $d.resolve( focusExpertise );
+
+                    }
+                ,   error:          function( jqXhr, textStatus )
+                    {
+                        var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                        ,   msg     = "Something went wrong while retrieving the business summary: " + status
+                        ,   error   = new Error( msg )
+                        ;
+
+                        _showError( msg );
+
+                        $d.reject( error );
+                    }
+                }
+            );
+
+        return $d.promise( );
+    }
+
+    function _getMentorProposals( options )
     {
 
         var search
@@ -272,7 +325,7 @@
 
                     _showAllView( "loadmatch" );
 
-                     getMentorProposals(
+                     _getMentorProposals(
                     {
                         params  :   {
                                         q           :   options.q
@@ -403,10 +456,10 @@
             $list.empty();
 
             $list.append($listEmpty);
-
+            bidx.utils.log('i am emptyyyyyyyyyyyyyy');
             _hideView( "pager" );
 
-            $d.resolve( );
+            $d.reject( );
         }
 
         return $d.promise( );
@@ -1207,7 +1260,7 @@
     // function that retrieves group members returned in an array of key/value objects
     // NOTE: @19-8-2013 currently the search function is used. This needs to be revised when API exposes new member functions
     //
-    var getMentorRequest = function(options)
+    var _getMentorRequest = function(options)
     {
 
 
@@ -1478,41 +1531,32 @@
                 _showView("ended", true );
                 _showView("loadended", true ); */
 
-
-                getMentorProposals(
-                {
-                    params : {}
-                ,   cb     : function( )
-                            {
-                                 _hideView("loadmatch");
-                                 _showAllView( "pager" );
-                            }
-                }) ;
-
-                getMentorRequest(
-                {
-                    result  :  options.result
-                ,   callback: function( item )
+                _getMentorExpertise( )
+                    .always( function()
                     {
-
-                        /*var isEntrepreneur = bidx.utils.getValue( bidxConfig.session, "wp.entities.bidxEntrepreneurProfile" );
-                        if ( isEntrepreneur )
+                        _getMentorRequest(
                         {
-                            options.item = item;
+                            result  :  options.result
 
-                            bidx.entrepreneurmentordashboard.navigate( options );
-
-                        }*/
-                        /*_showHideView("respond", "loadrespond");
-                        _showHideView("wait",    "loadwait");
-                        _showHideView("ongoing", "loadongoing");
-                        _showHideView("renew",   "loadrenew");
-                        _showHideView("ended",   "loadended");*/
-
-
-
-                    }
-                } );
+                        } );
+                    })
+                    .fail( function()
+                    {
+                        _hideView( "loadmatch" );
+                    })
+                    .done( function( expertiseNeeded )
+                    {
+                        _getMentorProposals(
+                            {
+                                params: { }
+                            ,   cb     : function( )
+                                        {
+                                             _hideView("loadmatch");
+                                             _showAllView( "pager" );
+                                        }
+                            }) ;
+                    })
+                ;
 
                 break;
 

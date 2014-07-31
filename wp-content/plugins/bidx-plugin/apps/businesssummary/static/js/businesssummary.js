@@ -1446,7 +1446,7 @@
         else
         {
             $documentImage.remove();
-            
+
             // Check if the file has been removed
             //
             if ( deletedDoc )
@@ -2108,7 +2108,7 @@
         ,   valueExpertiseNeeded
         ,   filterExpertiseNeeded   = ''
         ,   sep                     = ''
-        ,   filters                 = []
+        ,   facetFilters                 = []
         ,   sortQuery               = []
         ,   criteriaFilters         = []
         ,   criteriaSort            = []
@@ -2142,7 +2142,7 @@
         }
 
         // 3. Filter
-        // ex filters:["0": "facet_language:fi" ]
+        // ex facetFilters:["0": "facet_language:fi" ]
         //
 
 
@@ -2150,7 +2150,7 @@
 
         if(valueExpertiseNeeded)
         {
-            filterExpertiseNeeded   =   'expertiseNeeded:(';
+            filterExpertiseNeeded   =   'focusExpertise:(';
 
             $.each( valueExpertiseNeeded, function( idx, item )
             {
@@ -2160,20 +2160,18 @@
 
             filterExpertiseNeeded   +=   ')';
 
-            //entityFilters[0].filters = [filterExpertiseNeeded]; //Uncomment when bas fixes the expetise filter
+            entityFilters[0].filters = [filterExpertiseNeeded]; //Uncomment when bas fixes the expetise filter
         }
 
-        bidx.utils.log('filterExpertiseNeeded',filters);
-
-        if(  filters )
+        if(  facetFilters )
         {
-            criteriaFilters = filters;
+            criteriaFilters = facetFilters;
         }
 
         search =    {
                         criteria    :   {
                                             "searchTerm"    :   "text:*"
-                                        ,   "filters"       :   criteriaFilters
+                                        ,   "facetFilters"  :   criteriaFilters
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
@@ -2235,7 +2233,6 @@
         {
 
             case isWaitingRequest:
-                bidx.utils.log('request sent');
                 actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
                 $listItem.find( '.action' ).empty( ).append( actionData );
 
@@ -2245,7 +2242,6 @@
             break;
 
             case isRejectByEntrepreneur:
-                bidx.utils.log('rejected by entrepreneur');
                 actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
                 $listItem.find( '.action' ).empty( ).append( actionData );
 
@@ -2255,7 +2251,6 @@
             break;
 
             case isRejectByMentor:
-                bidx.utils.log('rejected by mentor');
                 actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
                 $listItem.find( '.action' ).empty( ).append( actionData );
 
@@ -2265,8 +2260,6 @@
             break;
 
             case isRespondRequest:
-                bidx.utils.log('accept/reject');
-
                 filteredRequest =   _.findWhere(    respond
                                                 ,   {
                                                         mentorId:   mentorId
@@ -2306,8 +2299,6 @@
             break;
 
             case isActiveRequest:
-                bidx.utils.log('cancel');
-
                 filteredRequest =   _.findWhere(    active
                                                 ,   {
                                                         mentorId:   mentorId
@@ -2333,8 +2324,6 @@
             break;
 
             default:
-                bidx.utils.log('request mentoring');
-
                 actionData  = $("#send-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
                 $listItem.find( '.action' ).empty( ).append( actionData );
 
@@ -2385,6 +2374,7 @@
         ,   isMentor
         ,   isInvestor
         ,   countHtml
+        ,   isCurrentUserInList
         ,   cbParams        =  {}
         ,   $requestMentoringBtn
         ,   $d              =  $.Deferred()
@@ -2445,9 +2435,21 @@
 
             tempLimit = response.docs.length;
 
-           if( response.numFound ) {
+            if( response.numFound )
+            {
+                isCurrentUserInList =   _.findWhere (   response.docs
+                                                    ,   {
+                                                            ownerId:   loggedInMemberId.toString()
+                                                        }
+                                                    );
+                response.numFound   =   ( !$.isEmptyObject(isCurrentUserInList) ) ? response.numFound - 1 : response.numFound ;
+
+                bidx.utils.log('isCurrentUserInList', isCurrentUserInList);
+
                 countHtml = bidx.i18n.i( "matchCount", appName ).replace( /%count%/g,  response.numFound);
+
                 $searchPagerContainer.find('.pagerTotal').empty( ).append('<h5>' + countHtml + '</h5>');
+
                 $searchPagerContainer.find('.pagerTotal').empty().append('<h5>' + response.numFound + ' results found</h5>');
             }
 
@@ -2455,7 +2457,7 @@
 
             // create member listitems
             //
-
+            bidx.utils.log('response.docs', response.docs );
             $.each( response.docs, function( idx, item )
             {
                 mentorId    = bidx.utils.getValue( item, "ownerId" );

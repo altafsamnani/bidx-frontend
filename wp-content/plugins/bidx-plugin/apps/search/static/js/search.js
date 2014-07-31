@@ -304,7 +304,7 @@
             ,   params  :   {
                                 q           :   options.q
                             ,   sort        :   sort
-                            ,   filters     :   criteria.filters
+                            ,   facetFilters     :   criteria.facetFilters
                             ,   type        :   'sort'
                             }
             });
@@ -401,7 +401,7 @@
 
                             // Display Close button for criteria
                             //
-                            if ( $.inArray( item.filterQuery, criteria.filters ) !== -1 )
+                            if ( $.inArray( item.filterQuery, criteria.facetFilters ) !== -1 )
                             {
                                 $viewFacetItem = $listFacetsItem.find('.view');
                                 _showElement('close', $viewFacetItem);
@@ -427,7 +427,7 @@
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
                     $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore", appName ), class: "list-group-item list-group-item-warning text-center more-less" }) );
-                    
+
                     $categoryList.find( ".more-less" ).on('click', function( e )
                     {
                         e.preventDefault();
@@ -450,21 +450,21 @@
                 $this           = $( this );
                 filterQuery     = $this.data('filter');
 
-                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterQuery, criteria.filters ) !== -1)
+                if ( $this.hasClass( "list-group-item-success" ) && $.inArray( filterQuery, criteria.facetFilters ) !== -1)
                 {
-                    bidx.utils.log('criteria removed' , filterQuery, criteria.filters);
-                    criteria.filters = _.without(criteria.filters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
+                    bidx.utils.log('criteria removed' , filterQuery, criteria.facetFilters);
+                    criteria.facetFilters = _.without(criteria.facetFilters, filterQuery); // removed the match value from criteria, using underscore function make sure its included
 
                 }
-                else if ( $.inArray(filterQuery, criteria.filters ) === -1)
+                else if ( $.inArray(filterQuery, criteria.facetFilters ) === -1)
                 {
-                    criteria.filters.push( filterQuery );
+                    criteria.facetFilters.push( filterQuery );
                 }
 
                 // For search filtering add the current filter
                 if( filterQuery === 'reset')
                 {
-                    criteria.filters = [];
+                    criteria.facetFilters = [];
                     options.q        = '';
                     options.sort     = [];
                     bidx.controller.updateHash( "#search/list" );
@@ -472,7 +472,7 @@
                     $resetFacet.addClass( "hide" );
                 }
 
-                if ( criteria.filters.length === 0 )
+                if ( criteria.facetFilters.length === 0 )
                 {
                     $resetFacet.addClass( "hide" );
                 }
@@ -486,7 +486,7 @@
                 bidx.utils.log('Filter clicked ', filterQuery);
                 bidx.utils.log('Filter clicked with q=', options.q);
                 bidx.utils.log('Filter sort=', options.sort);
-                bidx.utils.log('Filter criteria=', criteria.filters);
+                bidx.utils.log('Filter criteria=', criteria.facetFilters);
 
                 navigate(
                 {
@@ -494,7 +494,7 @@
                 ,   params  :   {
                                     q           :   options.q
                                 ,   sort        :   options.sort
-                                ,   filters     :   criteria.filters
+                                ,   facetFilters:   criteria.facetFilters
                                 // ,   type        :   'facet'
                                 }
                 });
@@ -525,7 +525,7 @@
 
         var q
         ,   sort
-        ,   filters
+        ,   facetFilters
         ,   criteria
         ,   criteriaQ
         ,   paramFilter
@@ -578,22 +578,22 @@
         }
 
         // 3. Filter
-        // ex filters:["0": "facet_language:fi" ]
+        // ex facetFilters:["0": "facet_language:fi" ]
         //
 
-        filters = bidx.utils.getValue(params, 'filters' );
-        if(  filters )
+        facetFilters = bidx.utils.getValue(params, 'facetFilters' );
+        if(  facetFilters )
         {
-            criteriaFilters = filters;
+            criteriaFilters = facetFilters;
         }
 
         search =    {
                         q           :   criteriaQ
                     ,   sort        :   sort
-                    ,   filters     :   filters
+                    ,   facetFilters:   facetFilters
                     ,   criteria    :   {
                                             "searchTerm"    :   "text:" + criteriaQ
-                                        ,   "filters"       :   criteriaFilters
+                                        ,   "facetFilters"  :   criteriaFilters
                                         ,   "sort"          :   criteriaSort
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
@@ -735,7 +735,7 @@
                 {
                     bidx.utils.log("Page Clicked", page);
 
-                    // Force it to scroll to top of the page before the removal and addition of the results 
+                    // Force it to scroll to top of the page before the removal and addition of the results
                     //
                     $(document).scrollTop(0);
 
@@ -751,7 +751,7 @@
                         params  :   {
                                         q           :   options.q
                                     ,   sort        :   options.sort
-                                    ,   filters     :   criteria.filters
+                                    ,   facetFilters:   criteria.facetFilters
                                     }
                     ,   cb      :   function()
                                     {
