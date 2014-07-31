@@ -132,7 +132,7 @@ define('SUBDOMAIN_INSTALL', true);
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
-define('NOBLOGREDIRECT', 'http://' . DOMAIN_CURRENT_SITE . '/unknown-group');
+define('NOBLOGREDIRECT', 'http://' . DOMAIN_CURRENT_SITE . '/active-portals');
 
 define('BIDX_PLUGIN_METADATA_PATH', 'http://bidx-builds.s3-website-eu-west-1.amazonaws.com/acceptance/bidx-plugin/metadata.json');
 
