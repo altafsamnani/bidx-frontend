@@ -21,7 +21,7 @@ class Start_Here_Widget extends WP_Widget {
             (
                 'name' => ': : Bidx Start Button ',
                 'classname' => 'widget-start-btn',
-                'description' => __( "Use this widget add the START HERE button." )
+                'description' => __( "Use this widget to add the START HERE button. Works only in Public regions" )
             )
         );
     }
@@ -32,7 +32,6 @@ class Start_Here_Widget extends WP_Widget {
     ///////////////////////////
     function form( $instance )
     {
-        // d($instance);
         if ( $instance )
         {
             $title = $instance['title'];
@@ -44,6 +43,8 @@ class Start_Here_Widget extends WP_Widget {
 ?>
 
         <p>
+            <p><?php _e('Use this widget to add the START HERE button. Works only in Public regions', 'wp_widget_plugin'); ?></p>
+            <br>
             <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Widget Title:', 'wp_widget_plugin'); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
         </p>
@@ -68,7 +69,7 @@ class Start_Here_Widget extends WP_Widget {
     /////////////////////////////////////////
     function widget($args, $instance) {
         extract( $args );
-        // d($instance);
+
         // these are the widget options
         $widget_id = $args['widget_id'];
 
@@ -89,9 +90,21 @@ class Start_Here_Widget extends WP_Widget {
         if ( isset( $session->authenticated ) && $session->authenticated !== "true" ) {
 
             echo $before_widget;
+
+            if ( $add_container ) :
 ?>
-            <a href="/join" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></a>
+                <div class="container">
+<?php                 
+            endif; 
+?>
+                <a href="/join" class="btn btn-secondary btn-lg start-btn btn-block"><?php _e('Start Here', 'wp_widget_plugin'); ?></a>
 <?php 
+            if ( $add_container ) :
+?>
+                </div>
+<?php                 
+            endif; 
+
             echo $after_widget;
         }
     }

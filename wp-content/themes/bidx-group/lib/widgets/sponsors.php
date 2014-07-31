@@ -112,17 +112,20 @@ class Sponsors_Widget extends WP_Widget {
         echo $before_widget;
 
 
+        if ( $add_container ) :
+?>
+            <div class="container">
+<?php                 
+        endif; 
 
         if ( count( $sponsors_id ) > 0 )
         {
-            if ( $add_container ) :
-?>
-                <div class="container">
-<?php                 
-            endif; 
+            if ( $sponsors_id )
+            {
 ?>
                 <div class="sponsors">
 <?php
+
                     $count = 1;
                     foreach ( $sponsors_id as $sponsor_id )
                     {
@@ -155,34 +158,56 @@ class Sponsors_Widget extends WP_Widget {
 <?php
                             }
 ?>
-<?php
-                                // if ( $description )
-                                // {
-?>
-                                    <!-- <span class="sponsor-description"><?php echo $description ?></span> -->
-<?php
-                                // }
-?>
                         </span> <!-- item -->
 <?php                                 
                     } // foreach
+                }
+                else
+                {
 ?>
+                    <div class="alert alert-danger">
+                        <blockquote>
+                            <p><?php _e('Please select the images you want to show to this sponsors widget', 'bidxtheme') ?></p>
+                        </blockquote>
+                        <p class="hide-overflow">
+                            <span class="pull-left">
+                                <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                            </span>
+                            <span class="pull-right">
+                                <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                            </span>
+                        </p>
+                    </div>
                 </div>
+<?php                    
+                }
+?>
 <?php             
-            if ( $add_container ) :
-?>
-                </div>
-<?php                 
-            endif; 
         }
         else
         {
 ?>
             <div class="alert alert-danger">
-                <?php _e('Please select the images you want to show to this sponsors widget', 'bidxtheme') ?>
+                <blockquote>
+                    <p><?php _e('Please select the images you want to show to this sponsors widget', 'bidxtheme') ?></p>
+                </blockquote>
+                <p class="hide-overflow">
+                    <span class="pull-left">
+                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                    </span>
+                    <span class="pull-right">
+                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                    </span>
+                </p>
             </div>
 <?php
         }
+
+        if ( $add_container ) :
+?>
+            </div>
+<?php                 
+        endif; 
 
        echo $after_widget;
     }

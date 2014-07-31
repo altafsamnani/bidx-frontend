@@ -96,6 +96,20 @@ class Carousel_Widget extends WP_Widget {
         // these are the widget options
         $images_id = $instance['select'];
         $widget_id = $args['widget_id'];
+
+        // Region Check
+        $active_region = $args['id'];
+        $add_container = false;
+        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) === FALSE )
+        {
+                $add_container = true;
+        }
+        
+        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) === FALSE )
+        {
+                $add_container = true;
+        }
+
         echo $before_widget;
 
         if ( count( $images_id ) > 0 )
@@ -104,10 +118,14 @@ class Carousel_Widget extends WP_Widget {
         <!-- IMAGE Carousel -->
 
             <div id="<?php echo $widget_id ?>" class="carousel slide">
-                <?php
+<?php
+                $count = 0;
+                if ( $images_id )
+                {
+
                 // If there is only 1 image in the array don't show the nav arrows and the indicator
-                // TODO: Don't load the carousel plugin and the extra markup
-                if ( count($images_id) != 1 )
+                //
+                if ( count( $images_id ) != 1 )
                 {
 ?>
                     <ol class="carousel-indicators">
@@ -127,43 +145,42 @@ class Carousel_Widget extends WP_Widget {
                 <!-- Carousel items -->
                 <div class="carousel-inner">
 <?php
-                    $count = 0;
-                    foreach ( $images_id as $image_id )
-                    {
-                        $img = wp_get_attachment_image_src( $image_id, 'full' );
-                        $img_meta = wp_get_attachment_metadata($image_id);
-                        $img_height = $img_meta['height'] . 'px';
-                        //parse URL to ensure having only relative links
-                        $img_url = parse_url($img[0]);
+                        foreach ( $images_id as $image_id )
+                        {
+                            $img = wp_get_attachment_image_src( $image_id, 'full' );
+                            $img_meta = wp_get_attachment_metadata($image_id);
+                            $img_height = $img_meta['height'] . 'px';
+                            //parse URL to ensure having only relative links
+                            $img_url = parse_url($img[0]);
 
-                        // Get Caption and Description
-                        $caption = get_post_field('post_excerpt', $image_id );
-                        $description = get_post_field('post_content', $image_id );
+                            // Get Caption and Description
+                            $caption = get_post_field('post_excerpt', $image_id );
+                            $description = get_post_field('post_content', $image_id );
 
-                        // Alt text -- Not in use --
-                        $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
-?>
-                        <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>"
-                             style="background: url(<?php echo $img_url['path'] ?>) top center no-repeat; height: <?php echo $img_height; ?>; ">
-<?php
+                            // Alt text -- Not in use --
+                            $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
+    ?>
+                            <div class="item <?php if ($count == 0) { ?>active<?php } $count++; ?>"
+                                 style="background: url(<?php echo $img_url['path'] ?>) top center no-repeat; height: <?php echo $img_height; ?>; ">
+    <?php
 
-                            if ( $caption )
-                            {
-?>
-                                <div class="carousel-caption"><?php echo $caption ?></div>
-<?php
-                            }
+                                if ( $caption )
+                                {
+    ?>
+                                    <div class="carousel-caption"><?php echo $caption ?></div>
+    <?php
+                                }
 
-                            if ( $description )
-                            {
-?>
-                                <div class="carousel-description"><?php echo $description ?></div>
-<?php
-                            }
-?>
-                        </div>
-<?php
-                    } // foreach
+                                if ( $description )
+                                {
+    ?>
+                                    <div class="carousel-description"><?php echo $description ?></div>
+    <?php
+                                }
+    ?>
+                            </div>
+    <?php
+                        } // foreach
 ?>
                 </div>
 <?php
@@ -177,6 +194,35 @@ class Carousel_Widget extends WP_Widget {
                     <a class="right carousel-control img-rounded" href="#<?php echo $widget_id ?>" data-slide="next"><span class="fa fa-chevron-right"></span></a>
 <?php
                 }
+            }
+            else
+            {
+                if ( $add_container ) :
+?>
+                    <div class="container">
+<?php                 
+                endif; 
+?>
+                <div class="alert alert-danger">
+                    <blockquote>
+                        <p><?php _e('Please select the images you want to show to this carousel from the widget', 'bidxtheme') ?></p>
+                    </blockquote>
+                    <p class="hide-overflow">
+                        <span class="pull-left">
+                            <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                        </span>
+                        <span class="pull-right">
+                            <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                        </span>
+                    </p>
+                </div>
+<?php 
+                if ( $add_container ) :
+?>  
+                    </div>
+<?php                    
+                endif;
+            }
 ?>
             </div>
 
@@ -185,11 +231,32 @@ class Carousel_Widget extends WP_Widget {
         }
         else
         {
+            if ( $add_container ) :
+?>
+                <div class="container">
+<?php                 
+            endif; 
 ?>
             <div class="alert alert-danger">
-                <?php _e('Please select the images you want to show to this carousel from the widget', 'bidxtheme') ?>
+                <blockquote>
+                    <p><?php _e('Please select the images you want to show to this carousel from the widget', 'bidxtheme') ?></p>
+                </blockquote>
+                <p class="hide-overflow">
+                    <span class="pull-left">
+                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                    </span>
+                    <span class="pull-right">
+                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                    </span>
+                </p>
             </div>
 <?php
+            if ( $add_container ) :
+?>  
+                </div>
+<?php                    
+            endif;
+
         }
 
        echo $after_widget;

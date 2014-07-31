@@ -230,6 +230,7 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
         $col3 = array_search($instance['col3'], $this->column_contents);
         $col4 = array_search($instance['col4'], $this->column_contents);
         $col_class = '';
+        $empty_cols = false;
         $all_cols = array( $col1, $col2, $col3, $col4 );
         
         // Check if the text color needs to be white
@@ -257,14 +258,26 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
         if ( $columns === "4" )
         {
             $col_class = 'col-sm-3';
+            if ( $instance['col1'] === "Empty" || $instance['col2'] === "Empty" || $instance['col3'] === "Empty" || $instance['col4'] === "Empty" )
+            {
+                $empty_cols = true;
+            }
         }
         elseif ( $columns === "3" )
         {
             $col_class = 'col-sm-4';
+            if ( $instance['col1'] === "Empty" || $instance['col2'] === "Empty" || $instance['col3'] === "Empty" )
+            {
+                $empty_cols = true;
+            }
         }
         else
         {
             $col_class = 'col-sm-6';
+            if ( $instance['col1'] === "Empty" || $instance['col2'] === "Empty" )
+            {
+                $empty_cols = true;
+            }
         }
 
         if ( $has_bg ) :
@@ -277,6 +290,26 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
 <?php                 
         endif; 
 
+        if ( $empty_cols )
+        {
+?>
+            <div class="alert alert-danger">
+                <blockquote>
+                    <p><?php _e('One or more columns are empty', 'bidxtheme') ?></p>
+                </blockquote>
+                <p class="hide-overflow">
+                    <span class="pull-left">
+                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                    </span>
+                    <span class="pull-right">
+                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                    </span>
+                </p>
+            </div>
+<?php             
+        }
+        else
+        {
             echo '<div class="row">';
 
             for ( $col=1; $col <= $columns; $col++ )
@@ -287,6 +320,7 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
             }
                        
             echo '</div>';
+        }
 
         if ( $add_container ) :
 ?>

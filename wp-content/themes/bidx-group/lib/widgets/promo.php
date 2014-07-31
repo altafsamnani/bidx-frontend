@@ -146,14 +146,14 @@ class Promo_Widget extends WP_Widget {
         echo $before_widget;
 
 
+        if ( $add_container ) :
+?>
+            <div class="container">
+<?php                 
+        endif; 
 
         if ( $promotext )
         {
-            if ( $add_container ) :
-?>
-                <div class="container">
-<?php                 
-            endif; 
 ?>
             <div class="promo <?php echo $promoalign; ?>">
 <?php
@@ -165,20 +165,31 @@ class Promo_Widget extends WP_Widget {
 ?>
             </div>
 <?php             
-            if ( $add_container ) :
-?>
-                </div>
-<?php                 
-            endif; 
         }
         else
         {
 ?>
             <div class="alert alert-danger">
-                <?php _e('Please add text and an optional link', 'bidxtheme') ?>
+                <blockquote>
+                    <p><?php _e('Please add text and optionally a link', 'bidxtheme') ?></p>
+                </blockquote>
+                <p class="hide-overflow">
+                    <span class="pull-left">
+                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                    </span>
+                    <span class="pull-right">
+                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                    </span>
+                </p>
             </div>
 <?php
         }
+
+        if ( $add_container ) :
+?>
+            </div>
+<?php                 
+        endif; 
 
        echo $after_widget;
     }

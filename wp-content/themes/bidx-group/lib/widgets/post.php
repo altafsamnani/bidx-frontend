@@ -41,7 +41,7 @@ class Bidx_Post_Widget extends WP_Widget {
         if ( $instance )
         {
             $title = $instance['title']; 
-            $post_id = $instance['post'];           
+            $post_id = $instance['post_id'];           
         }
         else
         {
@@ -108,26 +108,62 @@ class Bidx_Post_Widget extends WP_Widget {
         extract( $args );
         $post_id = $instance['post_id'];
         $widget_id = $args['widget_id'];
-		
         echo $before_widget;
-			
+            
+        // Region Check
+        $active_region = $args['id'];
+        $add_container = false;
+        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) === FALSE )
+        {
+                $add_container = true;
+        }
+        
+        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) === FALSE )
+        {
+                $add_container = true;
+        }
+
         $the_query = new WP_Query( array( 'post_id' => $post_id, 'post_status' => 'publish' ) );
 
- //
- // TODO : add HTML layout for the post
- //       
-        
-        
-        if ( $the_query->have_posts() ) {
+        if ( $add_container ) :
+?>
+            <div class="container">
+<?php                 
+        endif; 
 
-        	while ( $the_query->have_posts() ) {
-        		$the_query->the_post();
-        		echo '<h2>' . get_the_title() . '</h2>';
-        		echo '<p>' . get_the_content() . '</p>';
-        	}
-        } else {
-        	// no posts found
+        
+        if ( $the_query->have_posts() )
+        {
+?>
+            <h1><?php echo $the_query->post->post_title; ?></h1>
+            <p><?php echo $the_query->post->post_content; ?></p>
+<?php 
         }
+        else
+        {
+?>
+            <div class="alert alert-danger">
+                <blockquote>
+                    <p><?php _e('No posts available, please create a post from Posts section ', 'bidxtheme') ?></p>
+                </blockquote>
+                <p class="hide-overflow">
+                    <span class="pull-left">
+                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                    </span>
+                    <span class="pull-right">
+                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                    </span>
+                </p>
+            </div>
+<?php
+        }
+
+        if ( $add_container ) :
+?>
+            </div>
+<?php                 
+        endif;
+
         /* Restore original Post Data */
         wp_reset_postdata();
         

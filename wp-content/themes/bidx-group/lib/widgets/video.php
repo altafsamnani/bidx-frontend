@@ -54,14 +54,64 @@ class VideoBox extends WP_Widget
         $video_text = $instance['video_text'];
         $video_more = $instance['video_more'];
         $video_link = $instance['video_link'];
+
+        // Region Check
+        $active_region = $args['id'];
+        $add_container = false;
+        if  (
+                $active_region === 'pub-front-top' ||
+                $active_region === 'pub-front-bottom' ||
+                $active_region === 'priv-front-top' ||
+                $active_region === 'priv-front-bottom'
+            )
+        {
+            $add_container = true;
+        }
+
         echo $before_widget;
+
+        if ( $add_container ) :
 ?>
-        <div class="video-box text-center">
-            <?php if ( strlen($video_title)>0) { echo '<h2>'.$video_title.'</h2>'; } ?>
-            <?php echo $video_text; ?>
-            <?php if ( strlen($video_more)>0) { echo '<br/><a href="'.$video_link.'">'.$video_more.'</a>'; } ?>
-        </div>
-<?php
+            <div class="container">
+<?php                 
+        endif; 
+
+        if ( $video_text )
+        {
+?>
+            <div class="video-box text-center">
+                <?php if ( strlen($video_title)>0) { echo '<h2>'.$video_title.'</h2>'; } ?>
+                <?php echo $video_text; ?>
+                <?php if ( strlen($video_more)>0) { echo '<br/><a href="'.$video_link.'">'.$video_more.'</a>'; } ?>
+            </div>
+<?php            
+        }
+        else
+        {
+?>
+            <div class="alert alert-danger">
+                <blockquote>
+                    <p><?php _e('The embed code field is empty. Please insert an <code>iframe</code> from Youtube, Dailymotion, Vimeo, Vevo, Veoh or Metacafe', 'bidxtheme') ?></p>
+                </blockquote>
+                <p class="hide-overflow">
+                    <span class="pull-left">
+                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                    </span>
+                    <span class="pull-right">
+                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                    </span>
+                </p>
+            </div>
+
+<?php    
+        }
+
+        if ( $add_container ) :
+?>
+            </div>
+<?php                 
+        endif; 
+
         echo $after_widget;
     }
 
