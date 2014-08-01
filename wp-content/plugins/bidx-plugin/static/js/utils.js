@@ -746,7 +746,7 @@
         switch( format )
         {
             case "date":
-                result = d.getDate() + " " + months[ d.getMonth()-1 ] + " " + d.getFullYear();
+                result = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear();
             break;
 
             case "time":
@@ -754,7 +754,7 @@
             break;
 
             default:
-                result = d.getDate() + " " + months[ d.getMonth()-1 ] + " " + d.getFullYear() + " " + obj.h + ":" + obj.n + ":" + obj.s;
+                result = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear() + " " + obj.h + ":" + obj.n + ":" + obj.s;
         }
 
         return result;
@@ -769,8 +769,11 @@
         }
 
         var d       = new Date( parseInt( ts + "000", 10 ) )
-        ,   result  = d.getDate() + " " + months[ d.getMonth()-1 ] + " " + d.getFullYear()
+        ,   result  = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear()
         ;
+
+        console.log('date');
+        console.log(d.getMonth()-1);
         return result;
     };
 
