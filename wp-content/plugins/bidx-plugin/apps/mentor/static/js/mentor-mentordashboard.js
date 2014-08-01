@@ -171,7 +171,7 @@
                                         ,   "maxResult"     :   tempLimit
                                         ,   "offset"        :   paging.search.offset
                                         ,   "entityTypes"   :   entityFilters
-                                        ,   "scope"         :   "global"
+                                        ,   "scope"         :   "local"
                                         }
                     };
 

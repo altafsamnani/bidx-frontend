@@ -25,12 +25,26 @@
     ,   loggedInMemberId                    = bidx.utils.getValue( bidxConfig, "session.id" )
     ,   visitingMemberPageId                = bidx.utils.getValue( bidxConfig, "context.memberId" )
     ,   mentorProfileId                     = bidx.common.getMentorProfileId()
+    ,   allRequest                          = []
+    ,   memberData                          = window.__bidxMember
 
     ,   state
     ,   currentView
 
 
     ,   appName                             = "member"
+    ;
+
+     // Constants
+    //
+    var CONSTANTS =
+        {
+            ENTITY_TYPES:   [
+                                {
+                                    "type": "bidxBusinessSummary"
+                                }
+                            ]
+        }
     ;
 
 
@@ -208,57 +222,56 @@
                                     ,   disable_search_threshold : 10
                                     });
 
-            if ( loggedInMemberId && visitingMemberPageId !== loggedInMemberId  )
+            if ( loggedInMemberId )
             {
-
+                //Call mentoring request always, When visiting own profile at that time for mentor matches text and otherwise to display buttons on member profile ex send request etc
                 getMentoringRequest(
                 {
-                    callback    :   function()
+                    callback    :   function( )
                                     {
-                                        var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
-                                        if( bpLength )
+                                        /* 1. When visiting other members profile need to populate dropdown */
+                                        if( visitingMemberPageId !== loggedInMemberId )
                                         {
-                                            _getBusinessPlans( )
-                                            .done( function( listBpItems )
+                                            var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
+                                            if( bpLength )
                                             {
+                                                _getBusinessPlans( )
+                                                .done( function( listBpItems )
+                                                {
 
-                                                bidx.utils.log('listBpItems',listBpItems);
-                                                $businessSummary.append( listBpItems );
-                                                $businessSummary.trigger( "chosen:updated" );
+                                                    bidx.utils.log('listBpItems',listBpItems);
+                                                    $businessSummary.append( listBpItems );
+                                                    $businessSummary.trigger( "chosen:updated" );
 
-                                            } );
+                                                } );
+                                            }
+                                        }
+                                        else if( mentorProfileId )
+                                        {
+                                            getMatchingEntrepreneur(
+                                            {
+                                                callback    :   function()
+                                                                {
+                                                                    var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
+                                                                    if( bpLength )
+                                                                    {
+                                                                        _getBusinessPlans( )
+                                                                        .done( function( listBpItems )
+                                                                        {
+
+                                                                            bidx.utils.log('listBpItems',listBpItems);
+                                                                            $businessSummary.append( listBpItems );
+                                                                            $businessSummary.trigger( "chosen:updated" );
+
+                                                                        } );
+                                                                    }
+                                                                }
+                                            });
                                         }
                                     }
                 });
             }
         }
-
-        if( mentorProfileId )
-        {
-
-            getMatchingEntrepreneur(
-                {
-                    callback    :   function()
-                                    {
-                                        var bpLength    = _.size(listDropdownBp); //Have to add the condition because when user is mentor and viewing normal profile then we dont want to populate dropdown
-                                        if( bpLength )
-                                        {
-                                            _getBusinessPlans( )
-                                            .done( function( listBpItems )
-                                            {
-
-                                                bidx.utils.log('listBpItems',listBpItems);
-                                                $businessSummary.append( listBpItems );
-                                                $businessSummary.trigger( "chosen:updated" );
-
-                                            } );
-                                        }
-                                    }
-                });
-
-        }
-
-
     }
 
 
@@ -376,14 +389,13 @@
 
         var q
         ,   sort
-        ,   filters
-        ,   criteria
-        ,   criteriaQ
-        ,   paramFilter
+        ,   filters                 = []
         ,   search
-        ,   sortQuery       = []
-        ,   criteriaFilters = []
-        ,   criteriaSort    = []
+        ,   sep                     = ''
+        ,   filterFocusExpertise    = ''
+        ,   criteriaSort            = []
+        ,   entityFilters           = CONSTANTS.ENTITY_TYPES
+        ,   focusExpertise          = bidx.utils.getValue(memberData, 'member.bidxMentorProfile.focusExpertise')
         ;
 
         // 1. Search paramete
@@ -412,28 +424,61 @@
 
         }
 
-        // 3. Filter
+        // 2. FocusExpertise
         // ex filters:["0": "facet_language:fi" ]
         //
 
-        filters = bidx.utils.getValue(params, 'filters' );
+        entityFilters[0].filters = [];
 
-        if(  filters )
+        if(focusExpertise)
         {
-            criteriaFilters = filters;
+            filterFocusExpertise    =   'expertiseNeeded:(';
+
+            $.each( focusExpertise, function( idx, item )
+            {
+                filterFocusExpertise   +=   sep + item;
+                sep                     =   ' OR ';
+            });
+
+            filterFocusExpertise   +=   ')';
+
+            entityFilters[0].filters = [filterFocusExpertise]; //Uncomment when bas fixes the expetise filter
         }
+
+        // 3. Filter
+        //Exclude active users
+
+        filters.push('-ownerId:' + loggedInMemberId); //Why do we want current user business summaries, EXCLUDE IT...
+
+        if ( allRequest )
+        {
+            $.each( allRequest , function ( id, item)
+            {
+                filters.push('-entityId:' + item.entityId);
+            });
+        }
+
+        bidx.utils.log('allrequest', allRequest );
+        bidx.utils.log('filters', filters);
+        bidx.utils.log('focusExpertise', focusExpertise);
+
 
         search =    {
                         criteria    :   {
                                             "searchTerm"    :   "text:*"
-                                        ,   "filters"       :   criteriaFilters
+                                        ,   "filters"       :   filters
                                         ,   "maxResult"     :   0
-                                        ,   "entityTypes"   :   [ { "type": "bidxMentorProfile" } ]
+                                        ,   "entityTypes"   :   entityFilters
                                         ,   "scope"         :   "local"
                                         }
                     };
 
         return search;
+
+
+
+
+
 
     }
 
@@ -563,11 +608,16 @@
 
                                     $mentorButton.addClass('disabled').i18nText( btnText );
                                 }
+                                //Building it for search criteria later to apply for mentor matching getMatchingEntrepreneur->_getSearchCriteria
+                                if(item.status === 'requested' || item.status === 'accepted')
+                                {
+                                    allRequest.push( item );
+                                }
                             }
 
                             if (initiatorId === loggedInMemberId && visitingMemberPageId === mentorId.toString() && origBpLength)
                             {
-                                bidx.utils.log('listDropdownBp',listDropdownBp);
+
                                 isEntityExist = listDropdownBp [ entityId ];
 
                                 if(isEntityExist)
@@ -580,8 +630,9 @@
                                     isAnyOnePlanRequested = true;
                                 }
                             }
+
                         });
-                        bidx.utils.log('listDropdownBp', listDropdownBp);
+
                         newBpLength    = _.size(listDropdownBp); // After iteration new length
 
                         if( origBpLength && newBpLength === 0 && isAnyOnePlanRequested)
