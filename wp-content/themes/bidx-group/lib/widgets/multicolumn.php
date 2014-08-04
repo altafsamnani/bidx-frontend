@@ -18,7 +18,7 @@ add_action( 'widgets_init', function()
  */
 class Bidx_MultiColumn_Widget extends WP_Widget {
 
-    private $columns_list    = array( 2,3,4 );
+    private $columns_list    = array( 1,2,3,4 );
 	private $items_list 	 = array( 2,3,4,5,6 );
 	
 	private $column_contents = array( 
@@ -243,12 +243,12 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
         // Region Check
         $active_region = $args['id'];
         $add_container = false;
-        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) === FALSE )
+        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) !== true )
         {
                 $add_container = true;
         }
         
-        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) === FALSE )
+        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
                 $add_container = true;
         }
@@ -271,9 +271,25 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
                 $empty_cols = true;
             }
         }
-        else
+        elseif ( $columns === "2" )
         {
             $col_class = 'col-sm-6';
+            if ( $instance['col1'] === "Empty" || $instance['col2'] === "Empty" )
+            {
+                $empty_cols = true;
+            }
+        }
+        elseif ( $columns === "1" )
+        {
+            $col_class = 'col-sm-12';
+            if ( $instance['col1'] === "Empty" )
+            {
+                $empty_cols = true;
+            }
+        }
+        else
+        {
+            $col_class = 'col-sm-4';
             if ( $instance['col1'] === "Empty" || $instance['col2'] === "Empty" )
             {
                 $empty_cols = true;

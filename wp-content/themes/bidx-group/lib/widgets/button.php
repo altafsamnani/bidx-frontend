@@ -155,6 +155,15 @@ class Button_Widget extends WP_Widget {
                 value="btn-lg" <?php if($buttonsize === 'btn-lg'){ echo 'checked="checked"'; } ?>
             /><?php _e('LG', 'wp_widget_plugin'); ?>&nbsp;
             </label>
+            <label for="<?php echo $this->get_field_id('xl'); ?>">
+            <input
+                class="radio"
+                type="radio"
+                id="<?php echo $this->get_field_id('xl'); ?>"
+                name="<?php echo $this->get_field_name('buttonsize'); ?>"
+                value="btn-xl" <?php if($buttonsize === 'btn-xl'){ echo 'checked="checked"'; } ?>
+            /><?php _e('XL', 'wp_widget_plugin'); ?>&nbsp;
+            </label>
         </p>
         <p>
             <input class="checkbox" type="checkbox" <?php echo $buttonblock; ?> id="<?php echo $this->get_field_id('buttonblock'); ?>" name="<?php echo $this->get_field_name('buttonblock'); ?>" />

@@ -100,12 +100,12 @@ class Carousel_Widget extends WP_Widget {
         // Region Check
         $active_region = $args['id'];
         $add_container = false;
-        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) === FALSE )
+        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) !== true )
         {
                 $add_container = true;
         }
         
-        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) === FALSE )
+        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
                 $add_container = true;
         }
@@ -231,32 +231,30 @@ class Carousel_Widget extends WP_Widget {
         }
         else
         {
-            if ( $add_container ) :
 ?>
-                <div class="container">
+            <div class="carousel-empty">
+<?php             
+                if ( $add_container ) :
+?>
+                    <div class="container">
 <?php                 
-            endif; 
+                endif; 
 ?>
-            <div class="alert alert-danger">
-                <blockquote>
-                    <p><?php _e('Please select the images you want to show to this carousel from the widget', 'bidxtheme') ?></p>
-                </blockquote>
-                <p class="hide-overflow">
-                    <span class="pull-left">
-                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
-                    </span>
-                    <span class="pull-right">
-                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
-                    </span>
-                </p>
+                    <div class="carousel-inner">
+                        <div class="item active" style="background: url(<?php echo $img_url['path'] ?>) top center no-repeat; height: 250px; ">
+                            <div class="carousel-caption"><?php _e( "Welcome to Bidx Portals, let's get started ", 'bidxtheme') ?></div>
+                            <div class="carousel-description"><a href="/wp-admin/widgets.php"><?php _e('Configure theme', 'bidxtheme') ?></a></div>
+                        </div>
+                    </div>
+<?php
+                if ( $add_container ) :
+?>  
+                    </div>
+<?php                    
+                endif;
+?>
             </div>
 <?php
-            if ( $add_container ) :
-?>  
-                </div>
-<?php                    
-            endif;
-
         }
 
        echo $after_widget;

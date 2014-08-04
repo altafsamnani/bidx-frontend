@@ -17,19 +17,30 @@ class VideoBox extends WP_Widget
 {
     function VideoBox()
     {
-        $widget_ops = array('classname' => 'VideoBox', 'description' => 'Paste Embed code from Youtube, Dailymotion, Vimeo, Vevo, Veoh and Metacafe' );
-        $this->WP_Widget('VideoBox', ':: Bidx Video', $widget_ops);
+        $this->WP_Widget
+        (
+            'videoBox_widget',
+            __('VideoBox'),
+            array
+            (
+                'name' => ': : Bidx Video ',
+                'classname' => 'widget-video',
+                'description' => __( "Paste Embed code from Youtube, Dailymotion, Vimeo, Vevo, Veoh and Metacafe" )
+            )
+        );
     }
+
+
 
     function form($instance)
     {
-        $instance = wp_parse_args( (array) $instance, array( 'video_title' => '', 'video_text' => '', 'video_more' => '', 'video_link' => '' ) );
-        $video_title = $instance['video_title'];
+        $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'video_text' => '', 'video_more' => '', 'video_link' => '' ) );
+        $title = $instance['title'];
         $video_text = $instance['video_text'];
         $video_more = $instance['video_more'];
         $video_link = $instance['video_link'];
 ?>
-  <p><label for="<?php echo $this->get_field_id('video_title'); ?>">Title: <input class="widefat" id="<?php echo $this->get_field_id('video_title'); ?>" name="<?php echo $this->get_field_name('video_title'); ?>" type="text" value="<?php echo attribute_escape($video_title); ?>" /></label></p>
+  <p><label for="<?php echo $this->get_field_id('title'); ?>">Title: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></label></p>
   <p><label for="<?php echo $this->get_field_id('video_text'); ?>">Embed Code: <textarea class="widefat" id="<?php echo $this->get_field_id('video_text'); ?>" name="<?php echo $this->get_field_name('video_text'); ?>"><?php echo attribute_escape($video_text); ?></textarea></label></p>
   <p><label for="<?php echo $this->get_field_id('video_more'); ?>">More Text: <input class="widefat" id="<?php echo $this->get_field_id('video_more'); ?>" name="<?php echo $this->get_field_name('video_more'); ?>" type="text" value="<?php echo attribute_escape($video_more); ?>" /></label></p>
   <p><label for="<?php echo $this->get_field_id('video_link'); ?>">Link: <input class="widefat" id="<?php echo $this->get_field_id('video_link'); ?>" name="<?php echo $this->get_field_name('video_link'); ?>" type="text" value="<?php echo attribute_escape($video_link); ?>" /></label></p>
@@ -39,7 +50,7 @@ class VideoBox extends WP_Widget
     function update($new_instance, $old_instance)
     {
         $instance = $old_instance;
-        $instance['video_title'] = $new_instance['video_title'];
+        $instance['title'] = $new_instance['title'];
         $instance['video_text'] = $new_instance['video_text'];
         $instance['video_more'] = $new_instance['video_more'];
         $instance['video_link'] = $new_instance['video_link'];
@@ -50,7 +61,7 @@ class VideoBox extends WP_Widget
     {
         extract( $args );
 
-        $video_title = $instance['video_title'];
+        $title = $instance['title'];
         $video_text = $instance['video_text'];
         $video_more = $instance['video_more'];
         $video_link = $instance['video_link'];
@@ -80,7 +91,7 @@ class VideoBox extends WP_Widget
         {
 ?>
             <div class="video-box text-center">
-                <?php if ( strlen($video_title)>0) { echo '<h2>'.$video_title.'</h2>'; } ?>
+                <?php if ( strlen($title)>0) { echo '<h2>'.$title.'</h2>'; } ?>
                 <?php echo $video_text; ?>
                 <?php if ( strlen($video_more)>0) { echo '<br/><a href="'.$video_link.'">'.$video_more.'</a>'; } ?>
             </div>

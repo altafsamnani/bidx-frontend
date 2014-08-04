@@ -51,17 +51,18 @@ class Bidx_Post_Widget extends WP_Widget {
         
         //get list of posts
         $args = array(
-        		'numberposts' => 20,
-        		'offset' => 0,
-        		'category' => 0,
-        		'orderby' => 'post_date',
-        		'order' => 'DESC',
-        		'post_type' => 'post',
-        		'post_status' => 'draft, publish, future, pending, private',
-        		'suppress_filters' => true );
+            		'numberposts' => 20,
+            		'offset' => 0,
+            		'category' => 0,
+            		'orderby' => 'post_date',
+            		'order' => 'DESC',
+            		'post_type' => 'post',
+            		'post_status' => 'draft, publish, future, pending, private',
+            		'suppress_filters' => true
+                );
         
         $recent_posts = wp_get_recent_posts( $args );
-        
+
         //check if post_id exists in $recent post else add it to the $recent_posts
         //can we update the query to support it on top?
 ?>
@@ -74,17 +75,20 @@ class Bidx_Post_Widget extends WP_Widget {
             <select  name="<?php echo $this->get_field_name( 'post_id' ) ?>" 
 					id="<?php echo $this->get_field_id( 'post_id' ) ?>"
 			>
-			<?php 
-			foreach( $recent_posts as $recent ){
-				echo '<option value="' . get_permalink($recent["ID"]) . '" '.esc_attr($recent["post_title"]).'" >' .   $recent["post_title"].'</a> </li> ';
+<?php 
+			foreach( $recent_posts as $recent )
+            {
+                printf(
+                    '<option value="%s" %s >%s</option>',
+                    $recent["ID"],
+                    esc_attr($recent["ID"]) === $post_id ? 'selected="selected"' : '',
+                    $recent["post_title"]
+                );
 			}
-			?>
+?>
 			</select>
        </p>
-
 <?php
-
-
     } 
 
    /**
@@ -109,7 +113,7 @@ class Bidx_Post_Widget extends WP_Widget {
         $post_id = $instance['post_id'];
         $widget_id = $args['widget_id'];
         echo $before_widget;
-            
+
         // Region Check
         $active_region = $args['id'];
         $add_container = false;
@@ -123,20 +127,20 @@ class Bidx_Post_Widget extends WP_Widget {
                 $add_container = true;
         }
 
-        $the_query = new WP_Query( array( 'post_id' => $post_id, 'post_status' => 'publish' ) );
-
         if ( $add_container ) :
 ?>
             <div class="container">
 <?php                 
         endif; 
 
+        $the_query = new WP_Query( array( 'post_id' => $post_id, 'post_status' => 'publish' ) );
         
         if ( $the_query->have_posts() )
         {
+            $selected_post = get_post($instance['post_id']);
 ?>
-            <h1><?php echo $the_query->post->post_title; ?></h1>
-            <p><?php echo $the_query->post->post_content; ?></p>
+            <h1><?php echo $selected_post->post_title; ?></h1>
+            <p><?php echo $selected_post->post_content; ?></p>
 <?php 
         }
         else
