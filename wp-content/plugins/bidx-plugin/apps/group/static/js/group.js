@@ -133,7 +133,7 @@
                         tallest = img.height;
                     }
 
-                    $sponsors.height(tallest);
+                    $sponsors.height(tallest + 30); // Top and Bottom margin 2 * 15px
                 });
             }
         });
