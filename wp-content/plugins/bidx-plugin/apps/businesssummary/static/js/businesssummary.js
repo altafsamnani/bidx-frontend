@@ -371,28 +371,26 @@
                     }
                 ,   summary:
                     {
-                        required:               true
-                    ,   maxlength:              900
+                        maxlength:              900
                     }
                 ,   reasonForSubmission:
                     {
-                        required:               true
+                        // required:               true
                     }
                 ,   equityRetained:
                     {
-                        required:               true
-                    ,   number:                 true
-                    ,   min:                    0
+                        // number:                 true
+                        min:                    0
                     ,   max:                    100
                     }
                 ,   financingNeeded:
                     {
-                        required:               true
-                    ,   monetaryAmount:         true
+                        // required:               true
+                        monetaryAmount:         true
                     }
                 ,   "investmentType[]":
                     {
-                        required:               true
+                        // required:               true
                     }
                 ,   summaryFinancingNeeded:
                     {
@@ -419,19 +417,19 @@
                 {
                     industry:
                     {
-                        required:      true
+                        // required:      true
                     }
                 ,   productService:
                     {
-                        required:      true
+                        // required:      true
                     }
                 ,   countryOperation:
                     {
-                        required:      true
+                        // required:      true
                     }
                 ,   "consumerType[]":
                     {
-                        required:      true
+                        // required:      true
                     }
                 }
             ,   messages:
@@ -454,13 +452,13 @@
                 {
                     personalRole:
                     {
-                        required:               true
-                    ,   maxlength:              30
+                        // required:               true
+                        maxlength:              30
                     }
                 ,   personalExpertise:
                     {
-                        required:               true
-                    ,   maxlength:              180
+                        // required:               true
+                        maxlength:              180
                     }
                 }
             ,   messages:
@@ -483,7 +481,7 @@
                 {
                     yearSalesStarted:
                     {
-                        required:               true
+                        // required:               true
                     }
                 }
 
@@ -537,7 +535,7 @@
                 {
                     mentorAdvisory:
                     {
-                        required:               true
+                        // required:               true
                     }
                 ,   expertiseNeeded:
                     {
