@@ -162,7 +162,15 @@
         </ul>
         <a href="#" class="hide btn btn-link btn-block"><?php _e( "View more", 'bidxplugin' ); ?></a>
 <?php
-        } else {
+        }
+        else
+        {
+            if ( !$isPanel )
+            {
+?>
+                <h2><?php _e('New Businesses', 'bidxplugin')?></h2>
+<?php
+            }
 ?>
             <ul class="media-list">
                 <li class="media">

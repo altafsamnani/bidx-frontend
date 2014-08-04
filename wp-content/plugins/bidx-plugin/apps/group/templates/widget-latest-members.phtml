@@ -168,7 +168,15 @@
 <?php                    
                 }
 
-        } else {
+        }
+        else
+        {
+            if ( !$isPanel )
+            {
+?>
+                <h2><?php _e('New Members', 'bidxplugin')?></h2>
+<?php
+            }
 ?>
             <ul class="media-list">
                 <li class="media">
