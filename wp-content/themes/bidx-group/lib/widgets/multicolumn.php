@@ -25,10 +25,10 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
     									'', 'Empty',
     									'[bidx app="group" view="widget-latest-members"]'=>'Latest Members',
     									'[bidx app="group" view="widget-latest-business-summaries"]'=>'Latest Business Summaries',
-    //									'[bidx app=\" \"]'=>'Latest Companies',
-    //									'[bidx app=\" \"]'=>'Latest Mentors',
-    //									'[bidx app=\" \"]'=>'Active Competition(s)',	
     									'[bidx app="group" view="widget-latest-news"]'=>'Latest Posts',	
+    //                                  '[bidx app=\" \"]'=>'Latest Companies',
+    //                                  '[bidx app=\" \"]'=>'Latest Mentors',
+    //                                  '[bidx app=\" \"]'=>'Active Competition(s)',    
                         			);
 	
     /**

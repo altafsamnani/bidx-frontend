@@ -81,6 +81,16 @@
 <?php
                         if ( $authenticated )
                         {
+?>
+                        <div class="side-bar well sideBar">
+                        <h2><?php _e('Create and grow', 'bidxplugin')?></h2>
+<?php
+                            echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
+                            echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
+                            echo do_shortcode( '[bidx app="member" view="mentor-profile-links"]' );
+?>
+                        </div>
+<?php                        
                             dynamic_sidebar('priv-front-side');
                         }
                         else

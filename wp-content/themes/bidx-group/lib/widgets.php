@@ -127,6 +127,7 @@ add_action('widgets_init', 'bidx_widgets_init');
 */
 
 // Load the Bidx Widgets
+//
 require_once locate_template('lib/widgets/carousel.php');
 require_once locate_template('lib/widgets/sponsors.php');
 require_once locate_template('lib/widgets/promo.php');
@@ -138,3 +139,7 @@ require_once locate_template('lib/widgets/starthere.php');
 require_once locate_template('lib/widgets/video.php');
 require_once locate_template('lib/widgets/multicolumn.php');
 require_once locate_template('lib/widgets/post.php');
+
+// Activate default widgets
+//
+require_once locate_template('lib/widgets/default.php');

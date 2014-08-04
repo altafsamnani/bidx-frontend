@@ -1,8 +1,8 @@
 // Import
 // -------------------------
+@import "../bootstrap-3.1.1/less/bootstrap.less";
 @import "elements.less";
 @import "basevars.less";
-@import "../bootstrap-3.1.1/less/bootstrap.less";
 
 
 // Color alterations in Classes
@@ -1289,9 +1289,28 @@ select
         .box-shadow(none);
     }
 }
-
+.btn-xl
+{
+    font-size: ceil(@font-size-base * 3.75);
+    padding-top: ceil(@font-size-base * 1.2);
+    padding-bottom: ceil(@font-size-base * 1.2);
+    font-weight: 100;
+}
 // carousel.less
 // -------------------------
+.carousel-empty
+{
+    @topright: lighten(@brand-primary, 35%);
+    @bottomleft: darken(@brand-primary, 25%);
+    background:@bottomleft;
+    background:-webkit-gradient(linear,right top,left bottom,color-stop(1.82%,@topright),color-stop(100%,@bottomleft));
+    background:-webkit-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-moz-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-o-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:-ms-linear-gradient(top right,@topright 1.82%,@bottomleft 100%);
+    background:linear-gradient(to bottom left,@topright 1.82%,@bottomleft 100%);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#b2f0cc', endColorstr='#0e5d30',GradientType=1);
+}
 
 // close.less
 // -------------------------
