@@ -41,6 +41,7 @@ class Button_Widget extends WP_Widget {
             $buttonalign = esc_attr($instance['buttonalign']);
             $buttonstyle = esc_attr($instance['buttonstyle']);
             $buttonsize = esc_attr($instance['buttonsize']);
+            $buttonicon = $instance['buttonicon'];
         }
         else
         {
@@ -51,6 +52,7 @@ class Button_Widget extends WP_Widget {
             $buttonalign ='text-center';
             $buttonstyle ='btn-primary';
             $buttonsize ='btn';
+            $buttonicon = '';
         }
 ?>
 
@@ -169,6 +171,11 @@ class Button_Widget extends WP_Widget {
             <input class="checkbox" type="checkbox" <?php echo $buttonblock; ?> id="<?php echo $this->get_field_id('buttonblock'); ?>" name="<?php echo $this->get_field_name('buttonblock'); ?>" />
             <label for="<?php echo $this->get_field_id('buttonblock'); ?>"><?php _e('Block button', 'wp_widget_plugin'); ?></label>
         </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('buttonicon'); ?>"><?php _e('Icon:', 'wp_widget_plugin'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('buttonicon'); ?>" placeholder="fa-arrow-right" name="<?php echo $this->get_field_name('buttonicon'); ?>" type="text" value="<?php echo $buttonicon; ?>" />
+            <label>Find the icon from <a target="_blank" href="http://fontawesome.io/icons/">this</a> list</label>
+        </p>
 
 <?php
 
@@ -188,6 +195,7 @@ class Button_Widget extends WP_Widget {
         $instance['buttonalign'] = strip_tags( $new_instance['buttonalign'] );
         $instance['buttonstyle'] = strip_tags( $new_instance['buttonstyle'] );
         $instance['buttonsize'] = strip_tags( $new_instance['buttonsize'] );
+        $instance['buttonicon'] = esc_sql( $new_instance['buttonicon'] );
         return $instance;
     }
 
@@ -196,7 +204,6 @@ class Button_Widget extends WP_Widget {
     /////////////////////////////////////////
     function widget($args, $instance) {
         extract( $args );
-        // d($instance);
         // these are the widget options
         $buttontext = $instance['buttontext'];
         $buttonlink = $instance['buttonlink'];
@@ -205,6 +212,7 @@ class Button_Widget extends WP_Widget {
         $buttonstyle = $instance['buttonstyle'];
         $buttonsize = $instance['buttonsize'];
         $widget_id = $args['widget_id'];
+        $buttonicon = $instance['buttonicon'];
 
         // Region Check
         $active_region = $args['id'];
@@ -221,8 +229,6 @@ class Button_Widget extends WP_Widget {
 
         echo $before_widget;
 
-
-
         if ( $buttonlink && $buttontext )
         {
             if ( $add_container ) :
@@ -231,9 +237,10 @@ class Button_Widget extends WP_Widget {
 <?php                 
             endif; 
 ?>
-            <div class="promo <?php echo $buttonalign; ?>">
+            <div class="<?php echo $buttonalign; ?>">
 <?php
                 if ( $buttonlink ) { echo '<a class="btn' . ' ' . $buttonsize . ' ' . $buttonstyle . ' ' . $buttonblock .' " href="' . $buttonlink . '">'; } 
+                    if ($buttonicon) { echo '<i class="fa '.$buttonicon.'"></i>&nbsp;'; }
                     echo $buttontext; 
                 if ( $buttonlink ) { echo '</a>'; }
 ?>
