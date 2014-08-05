@@ -223,6 +223,6 @@ function set_default_theme_widgets ( $old_theme, $WP_theme = null ) {
     update_option('sidebars_widgets',$sidebar_options);
 
 }
-add_action('after_switch_theme', 'set_default_theme_widgets', 10, 2);
+add_action('after_switch_theme', 'set_default_theme_widgets');
 
 
