@@ -1938,7 +1938,7 @@ function assign_bidxgroup_theme_page ($blog_id)
     //Login to the site
     switch_to_blog ($blog_id);
     // Action 1 Switch theme to assign
-    switch_theme ('bidx-group-template');
+    switch_theme ('bidx-group');
     //Create custom role and capablitiei
     //create_custom_role_capabilities ($blog_id);
 
