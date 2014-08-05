@@ -885,7 +885,7 @@ class TemplateLibrary
                                     $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$video_id.php"));
                                     if (!empty($hash) && is_array($hash)) {
                                         $video_str = 'http://vimeo.com/moogaloop.swf?clip_id=%s';
-                                        $videoPlayer = '<iframe src="http://player.vimeo.com/video/%s?title=0&amp;byline=0&amp;portrait=0" frameborder="0"></iframe>';
+                                        $videoPlayer = '<iframe src="//player.vimeo.com/video/%s?title=0&amp;byline=0&amp;portrait=0" frameborder="0"></iframe>';
                                         $thumbnail_str = $hash[0]['thumbnail_small'];
                                         $fullsize_str = $hash[0]['thumbnail_large'];
                                     } else {
