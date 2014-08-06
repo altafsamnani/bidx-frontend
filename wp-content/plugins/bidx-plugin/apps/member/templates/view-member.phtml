@@ -139,6 +139,9 @@
 ?>
                         </div>
                     </div>
+<?php
+                    if ( $firstName ) :
+?>
                     <div class="row">
                         <div class="col-sm-12">
                             <?php echo $professionalTitle; ?>
@@ -156,54 +159,54 @@
                             <?php } ?>
                         </div>
                     </div>
+                    <hr>
 
                     <div class="row">
-                        <div class="col-sm-12"> <hr> </div>
-                    </div>
-                    <div class="row">
-                        <?php
-                            // Fields for left column
-                            $leftCol = array ( $gender, $nationality, $motherlanguage );
-                            echo $this->addMultipleRows('col-sm-5', $leftCol);
+<?php
+                        // Fields for left column
+                        $leftCol = array ( $gender, $nationality, $motherlanguage );
+                        echo $this->addMultipleRows('col-sm-5', $leftCol);
 
-                            // Fields for right column
-                            $rightCol = array ( $dateofBirth, $highestEducation, $languageDetails, $address );
-                            echo $this->addMultipleRows('col-sm-7', $rightCol);
-                        ?>
+                        // Fields for right column
+                        $rightCol = array ( $dateofBirth, $highestEducation, $languageDetails, $address );
+                        echo $this->addMultipleRows('col-sm-7', $rightCol);
+?>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-sm-8">
-                            <?php
-                                $rowValues = array (__('E-mail','bidxplugin') => $this->exst ($personalDetails->emailAddress));
-                                echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                                $rowValues = array (__('Mobile','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
-                                echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                                $rowValues = array (__('Fax','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
-                                echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                                $rowValues = array (__('Landline','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
-                                echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
-                            ?>
+<?php
+                            $rowValues = array (__('E-mail','bidxplugin') => $this->exst ($personalDetails->emailAddress));
+                            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                            $rowValues = array (__('Mobile','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'mobile'));
+                            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                            $rowValues = array (__('Fax','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'fax'));
+                            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+                            $rowValues = array (__('Landline','bidxplugin') => $this->getMultiValues ($this->exst ($personalDetails->contactDetail), ', ', NULL, 'landLine'));
+                            echo $this->addRowsWithLabelAdjacent ('col-sm-3', 'col-sm-8 col-sm-offset-1', $rowValues, array ('class_label' => 'label label-info btn-block text-center'));
+?>
                         </div>
 
-                            <div class="col-sm-4 member-social">
-                                <?php
-                                    $rowValues1 = array (
-                                        __('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
-                                        __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
-                                    );
-                                    if ( $authenticated ) {
-                                        $rowValues2 = array (
-                                            __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
-                                            __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
-                                        );
-                                    }
-                                    $rowValues = ( isset( $rowValues2 ) ) ? array_merge( $rowValues1, $rowValues2 ) : $rowValues1;
-                                    echo $this->addAdjacentRows ('pull-left', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'linkedin', 'Facebook' => 'facebook', 'Twitter' => 'twitter' ));
-                                ?>
-                            </div>
-
+                        <div class="col-sm-4 member-social">
+<?php
+                            $rowValues1 = array (
+                                __('Facebook','bidxplugin') => $this->addSocialPluginScript ('facebookprofile', $this->exst ($personalDetails->facebook)),
+                                __('Linkedin','bidxplugin') => $this->addSocialPluginScript ('linkedin', $this->exst ($personalDetails->linkedIn)),
+                            );
+                            if ( $authenticated ) {
+                                $rowValues2 = array (
+                                    __('Twitter','bidxplugin') => $this->addSocialPluginScript ('twitterprofile', $this->exst ($personalDetails->twitter)),
+                                    __('Skype','bidxplugin') => $this->addSocialPluginScript ('skype', $this->exst ($personalDetails->skype))
+                                );
+                            }
+                            $rowValues = ( isset( $rowValues2 ) ) ? array_merge( $rowValues1, $rowValues2 ) : $rowValues1;
+                            echo $this->addAdjacentRows ('pull-left', $rowValues, array ('Skype' => 'skypeclass', 'Linkedin' => 'linkedin', 'Facebook' => 'facebook', 'Twitter' => 'twitter' ));
+?>
+                        </div>
                     </div>
+<?php
+                    endif;
+?>                    
                 </div>
             </div>
 
