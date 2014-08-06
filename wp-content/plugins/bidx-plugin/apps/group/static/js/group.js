@@ -455,7 +455,7 @@
                 [
                     {
                         label:      "sort"
-                    ,   value:      "created"
+                    ,   value:      "e.modified"
                     }
                 ,   {
                         label:      "order"
