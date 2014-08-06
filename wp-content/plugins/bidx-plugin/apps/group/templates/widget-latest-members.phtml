@@ -19,8 +19,7 @@
         $columnsCount = 'col col-sm-6';
     endif;
 
-
-        if ( is_array( $this -> members ) )
+        if ( is_array( $this -> members ) && !empty( $this -> members ) )
         {
             $index = 0;
             if ( $isPanel )

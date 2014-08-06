@@ -16,7 +16,7 @@
         $columnsCount = 'col col-sm-6';
     endif;
 
-        if (is_array( $this -> summaries )) {
+        if ( is_array( $this -> summaries ) && !empty( $this -> summaries )) {
             $index = 0;
             if ( $isPanel )
             {
