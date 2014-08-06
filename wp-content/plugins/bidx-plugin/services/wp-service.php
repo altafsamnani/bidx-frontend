@@ -831,13 +831,13 @@ function other_wordpress_post_action ($url, $result, $body)
             break;
 
         case 'translatei18n' :
-            $count = 0;
-            $appName = $body['app'];
-            $i18nData = array ();
+            $count      = 0;
+            $appName    = $body['app'];
+            $i18nData   = array ();
             foreach ($result as $xmlObj) {
-
-                $arr = $xmlObj->attributes ();
-                $xmlLabel = $xmlObj->__toString ();
+                $i18nData[$count]   = new stdClass();
+                $arr                = $xmlObj->attributes ();
+                $xmlLabel           = $xmlObj->__toString ();
 
                 if ($appName == '__global') {
                     $label = __ ($xmlLabel, 'i18n');
