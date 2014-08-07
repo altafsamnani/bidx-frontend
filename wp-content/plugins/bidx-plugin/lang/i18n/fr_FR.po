@@ -167,7 +167,7 @@ msgstr "Nouveau"
 # Context mail TextDomain i18n
 msgctxt "mail"
 msgid "Group admin"
-msgstr ""
+msgstr "Modérateur du groupe"
 
 # _x("Select the outcome of this business", "member","i18n");
 # Context member TextDomain i18n
@@ -221,7 +221,7 @@ msgstr "Le CV est obligatoire "
 # Context member TextDomain i18n
 msgctxt "member"
 msgid "Please check one of the above"
-msgstr ""
+msgstr "Veuillez cocher une des cases ci-dessus"
 
 # _x("Please fill your LinkedIn profile url or upload at least one document", "member","i18n");
 # Context member TextDomain i18n
@@ -245,7 +245,7 @@ msgstr "Nouveau"
 # Context mentor TextDomain i18n
 msgctxt "mentor"
 msgid "Mentoring request pending"
-msgstr ""
+msgstr "Demande de mentorat en attente"
 
 # _e("Processing request", "i18n");
 # Context  TextDomain i18n
@@ -258,55 +258,47 @@ msgstr "Demande en cours de traitement "
 # Context mentor TextDomain i18n
 msgctxt "mentor"
 msgid "Ongoing"
-msgstr ""
+msgstr "En cours"
 
 # _x("General", "mentor","i18n");
-# Context mentor TextDomain i18n
-msgctxt "mentor"
+# Context TextDomain i18n
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 # _x("General overview section", "mentor","i18n");
-# Context mentor TextDomain i18n
-msgctxt "mentor"
+# Context  TextDomain i18n
 msgid "General overview section"
-msgstr ""
+msgstr "Section des présentations générales"
 
 # _x("About the business section", "mentor","i18n");
-# Context mentor TextDomain i18n
-msgctxt "mentor"
+# Context  TextDomain i18n
 msgid "About the business section"
-msgstr ""
+msgstr "A propos de l ‘affaire"
 
 # _x("About the team section", "mentor","i18n");
-# Context mentor TextDomain i18n
-msgctxt "mentor"
+# Context  TextDomain i18n
 msgid "About the team section"
-msgstr ""
+msgstr "A propos de l’ équipe"
 
 # _x("Financial section", "mentor","i18n");
-# Context mentor TextDomain i18n
-msgctxt "mentor"
+# Context  TextDomain i18n
 msgid "Financial section"
-msgstr ""
+msgstr "Section des détails financiers"
 
 # _x("Company section", "mentor","i18n");
-# Context mentor TextDomain i18n
-msgctxt "mentor"
+# Context  TextDomain i18n
 msgid "Company section"
-msgstr ""
+msgstr "Section des détails concernant l ‘entreprise"
 
 # _x("Mentoring section", "mentor","i18n");
-# Context mentor TextDomain i18n
-msgctxt "mentor"
+# Context  TextDomain i18n
 msgid "Mentoring section"
-msgstr ""
+msgstr "Section des détails de mentorat"
 
 # _x("Document section", "mentor","i18n");
-# Context mentor TextDomain i18n
-msgctxt "mentor"
+# Context  TextDomain i18n
 msgid "Document section"
-msgstr ""
+msgstr "Section des documents"
 
 # _x("Please select a location from the dropdown", "register","i18n");
 # Context register TextDomain i18n
@@ -336,25 +328,25 @@ msgstr "Enregistré(e)"
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Industry"
-msgstr ""
+msgstr "Industrie"
 
 # _x("Country", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 # _x("Language", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 # _x("Type", "search","i18n");
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 # _e("Save profile", "i18n");
 # Context  TextDomain i18n
@@ -367,7 +359,7 @@ msgstr "Sauvegarder le profil"
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Business summary"
-msgstr ""
+msgstr "Résumé de l’affaire"
 
 # _e("Investor", "i18n");
 # Context  TextDomain i18n
@@ -387,7 +379,7 @@ msgstr "Entrepreneur"
 # Context search TextDomain i18n
 msgctxt "search"
 msgid "Group"
-msgstr ""
+msgstr "Groupe"
 
 # _x("Add company", "company","i18n");
 # Context company TextDomain i18n
@@ -509,9 +501,8 @@ msgstr "êtes-vous sur ? "
 
 # _e("Please wait...", "i18n");
 # Context  TextDomain i18n
-#, fuzzy
 msgid "Please wait"
-msgstr "Prière attendre..."
+msgstr "Attendez SVP"
 
 # _e("Try again", "i18n");
 # Context  TextDomain i18n
@@ -526,12 +517,12 @@ msgstr "Demande envoyée"
 # _e("Create business proposal", "i18n");
 # Context  TextDomain i18n
 msgid "Create business proposal"
-msgstr ""
+msgstr "Créez votre proposition d’ affaires"
 
 # _e("Create company profile", "i18n");
 # Context  TextDomain i18n
 msgid "Create company profile"
-msgstr ""
+msgstr "Créez le profil de votre entreprise"
 
 # _e("You request has been sent successfully", "i18n");
 # Context  TextDomain i18n

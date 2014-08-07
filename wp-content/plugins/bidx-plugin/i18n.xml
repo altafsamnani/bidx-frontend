@@ -40,6 +40,8 @@
 
     <Item value="btnCreateBs">Create business proposal</Item>
     <Item value="btnCreateCompany">Create company profile</Item>
+    <Item value="btnLooseChanges">Yes, lose changes</Item>
+    <Item value="btnGoBack">No, go back</Item>
 
     <!-- Common status msgs -->
     <Item value="statusRequest">You request has been sent successfully</Item>
