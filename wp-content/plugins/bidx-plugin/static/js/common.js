@@ -97,7 +97,7 @@
                 [
                     {
                         addClass:       "btn btn-primary"
-                    ,   text:           bidx.i18n.i( "btnLooseChanges" )
+                    ,   text:           bidx.i18n.i( "yes" )
                     ,   onClick: function( $noty )
                         {
                             // Clear the queue, because the user confirmed it
@@ -111,7 +111,7 @@
                     }
                 ,   {
                         addClass:       "btn btn-danger"
-                    ,   text:           bidx.i18n.i( "btnGoBack" )
+                    ,   text:           bidx.i18n.i( "no" )
                     ,   onClick: function( $noty )
                         {
                             cb( false );

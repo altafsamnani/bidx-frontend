@@ -772,8 +772,6 @@
         ,   result  = d.getDate() + " " + months[ d.getMonth() ] + " " + d.getFullYear()
         ;
 
-        console.log('date');
-        console.log(d.getMonth()-1);
         return result;
     };
 

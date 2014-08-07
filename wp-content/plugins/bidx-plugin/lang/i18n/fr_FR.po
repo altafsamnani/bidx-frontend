@@ -419,7 +419,7 @@ msgid ""
 "Your changes have not yet been saved. Are you sure you want to navigate away "
 "from this page and lose your pending changes?"
 msgstr ""
-"Vos changements ne sont pas encore enregistrés. êtes-vous sur de vouloir "
+"Vos changements ne sont pas encore enregistrés. Êtes-vous sur de vouloir "
 "quitter cette page et perdre tous les changements? "
 
 # _e("Please wait while you are redirected", "i18n");
@@ -532,16 +532,6 @@ msgstr ""
 # Context  TextDomain i18n
 msgid "Create company profile"
 msgstr ""
-
-# _e("Yes, lose changes", "i18n");
-# Context  TextDomain i18n
-msgid "Yes, lose changes"
-msgstr "Oui, n'enregistrez pas les modifications"
-
-# _e("No, go back", "i18n");
-# Context  TextDomain i18n
-msgid "No, go back"
-msgstr "Non, revenez sur la page"
 
 # _e("You request has been sent successfully", "i18n");
 # Context  TextDomain i18n
