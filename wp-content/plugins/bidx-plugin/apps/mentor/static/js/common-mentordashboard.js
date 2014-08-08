@@ -419,7 +419,7 @@
                     newScopeItem     = scopeItem;
 
                     newScopeItem     = newScopeItem
-                                      .replace( /%feedbackScopeName%/g, bidx.i18n.i( bpIdx, appName ) )
+                                      .replace( /%feedbackScopeName%/g, bidx.i18n.i( bpIdx ) )
                                       .replace( /%feedbackScopeId%/g, idx )
                                       ;
 
@@ -451,6 +451,7 @@
             ,   $list                   = $view.find( ".list" )
             ,   listItem                =  $( "#feedback-listitem" ).html().replace( /(<!--)*(-->)*/g, "" )
             ,   $listEmpty              = $( $( "#feedback-empty") .html().replace( /(<!--)*(-->)*/g, "" ) )
+            ,   $feedbackBtn            = $view.find( ".btn-feedback-submit" )
             ,   params                  = options.params
             ,   $d                      = $.Deferred()
             ,   messages
@@ -519,9 +520,6 @@
 
                                                             $elements.push( $element );
 
-
-                                                            bidx.utils.log('counter', counter );
-                                                            bidx.utils.log('feedbackLength', feedbackLength);
                                                             if( counter === feedbackLength )
                                                             {
                                                                 _prepareFeedbackListing(
@@ -547,6 +545,8 @@
                             else
                             {
                                 $list.append( $listEmpty );
+
+                                $feedbackBtn.html( bidx.i18n.i( "feedbackAdd", appName ) );
 
                                 $d.resolve( );
                             }

@@ -6,4 +6,5 @@
     <Item value="receivedRequest">Received request</Item>
     <Item value="ongoing">Ongoing</Item>
     <Item value="matchCount">%count% matches found</Item>
+    <Item value="feedbackAdd">Add feedback </Item>
 </I18N>
