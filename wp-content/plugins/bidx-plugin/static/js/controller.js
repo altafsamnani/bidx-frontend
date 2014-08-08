@@ -101,7 +101,7 @@
     function _showMainState( s )
     {
         bidx.utils.log("mainstate", s);
-        if ( s.match( /^(edit|create)/ ) && s !== "editBusinessSummary" )
+        if ( s.match( /^(edit|create)/ ) && s !== "businessSummary" )
         {
             $( "body" ).addClass( "bidx-edit" );
         }
@@ -301,7 +301,7 @@
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
 
-        ,   'editBusinessSummary(/:state)(/:id)(*splat)':       'editBusinessSummary'
+        ,   'businessSummary(/:state)(/:id)(*splat)':       'businessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
 
         ,   'auth(/:state)(*splat)':                            'auth'
@@ -560,11 +560,11 @@
                 }
             );
         }
-    ,   editBusinessSummary:    function( state, id, splat )
+    ,   businessSummary:    function( state, id, splat )
         {
-            bidx.utils.log( "AppRouter::editBusinessSummary", state );
+            bidx.utils.log( "AppRouter::businessSummary", state );
 
-            mainState   = "editBusinessSummary";
+            mainState   = "businessSummary";
 
             _navigateToApp
             (
@@ -580,7 +580,7 @@
         {
             bidx.utils.log( "AppRouter::createBusinessSummary" );
 
-            mainState       = "editBusinessSummary";
+            mainState       = "businessSummary";
 
              _navigateToApp
             (

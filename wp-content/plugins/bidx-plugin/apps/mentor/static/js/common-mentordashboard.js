@@ -1138,7 +1138,7 @@
                     break;
 
                     case 'sendFrmBp': // this is initiated from edit businesssummary-->mentor tab
-                        params.updateHash = '#editBusinessSummary/load';
+                        params.updateHash = '#businessSummary/load';
 
                          _doCreateMentorRequest(
                         {

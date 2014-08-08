@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Project-Id-Version: tMay\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
-"X-Generator: Poedit 1.6.5\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Bookmarks: -1,-1,1126,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Language fr
@@ -10279,6 +10279,158 @@ msgctxt "na"
 msgid "Not Applicable"
 msgstr "Non Applicable"
 
+#  _x("Business plan", "businessplan", "static");
+# Context businessplan Textdomain static
+#, fuzzy
+msgctxt "business.plans"
+msgid "Business plans"
+msgstr "Plan d'affaire"
+
+#  _x("Certification (iso, hccp, etc.)", "certification", "static");
+# Context certification Textdomain static
+msgctxt "certification"
+msgid "Certification (iso, hccp, etc.)"
+msgstr ""
+
+#  _x("Design (product, graphic, industrial)", "design", "static");
+# Context design Textdomain static
+msgctxt "design"
+msgid "Design (product, graphic, industrial)"
+msgstr ""
+
+#  _x("E-commerce (webshops)", "ecommerce", "static");
+# Context ecommerce Textdomain static
+msgctxt "ecommerce"
+msgid "E-commerce (webshops)"
+msgstr ""
+
+#  _x("Finance, accounting (operations)", "finance.accounting", "static");
+# Context finance.accounting Textdomain static
+msgctxt "finance.accounting"
+msgid "Finance, accounting (operations)"
+msgstr ""
+
+#  _x("Financial plan", "financialplan", "static");
+# Context financialplan Textdomain static
+#, fuzzy
+msgctxt "financial.valuations"
+msgid "Financial valuations"
+msgstr "étude financière"
+
+#  _x("Financing (loans, equity, contracts)", "financing", "static");
+# Context financing Textdomain static
+msgctxt "financing"
+msgid "Financing (loans, equity, contracts)"
+msgstr ""
+
+#  _x("Intellectual property rights & patents", "ipr.patents", "static");
+# Context ipr.patents Textdomain static
+msgctxt "ipr.patents"
+msgid "Intellectual property rights & patents"
+msgstr ""
+
+#  _x("Investors (pitching, due diligence)", "investors", "static");
+# Context investors Textdomain static
+msgctxt "investors"
+msgid "Investors (pitching, due diligence)"
+msgstr ""
+
+#  _x("Business Associations", "BusinessAssociations", "static");
+# Context BusinessAssociations Textdomain static
+#, fuzzy
+msgctxt "IT.business.operations"
+msgid "IT - business operations"
+msgstr "Associations d'affaires"
+
+#  _x("IT - software development", "IT.software.development", "static");
+# Context IT.software.development Textdomain static
+msgctxt "IT.software.development"
+msgid "IT - software development"
+msgstr ""
+
+#  _x("IT - web development", "IT.web.development", "static");
+# Context IT.web.development Textdomain static
+msgctxt "IT.web.development"
+msgid "IT - web development"
+msgstr ""
+
+#  _x("Legal", "services.legal", "static");
+# Context services.legal Textdomain static
+#, fuzzy
+msgctxt "legal"
+msgid "Legal"
+msgstr "Légal"
+
+#  _x("Logistics, distribution, storage", "logistics.distribution.storage", "static");
+# Context logistics.distribution.storage Textdomain static
+msgctxt "logistics.distribution.storage"
+msgid "Logistics, distribution, storage"
+msgstr ""
+
+#  _x("Management Services", "ManagementServices", "static");
+# Context ManagementServices Textdomain static
+#, fuzzy
+msgctxt "management"
+msgid "Management"
+msgstr "Services de gestion"
+
+#  _x("Manufacture of dairy products", "1050", "static");
+# Context 1050 Textdomain static
+#, fuzzy
+msgctxt "manufacturing.production"
+msgid "Manufacturing, production"
+msgstr "Fabrication de produits laitiers"
+
+#  _x("Research", "services.research", "static");
+# Context services.research Textdomain static
+#, fuzzy
+msgctxt "market.research"
+msgid "Market research"
+msgstr "Recherche"
+
+#  _x("Marketing online (social media, seo)", "marketing.online", "static");
+# Context marketing.online Textdomain static
+msgctxt "marketing.online"
+msgid "Marketing online (social media, seo)"
+msgstr ""
+
+#  _x("Marketing, branding, advertising", "marketing.branding.advertising", "static");
+# Context marketing.branding.advertising Textdomain static
+msgctxt "marketing.branding.advertising"
+msgid "Marketing, branding, advertising"
+msgstr ""
+
+#  _x("Personnel, HR", "personnel.hr", "static");
+# Context personnel.hr Textdomain static
+msgctxt "personnel.hr"
+msgid "Personnel, HR"
+msgstr ""
+
+#  _x("Pricing", "pricing", "static");
+# Context pricing Textdomain static
+msgctxt "pricing"
+msgid "Pricing"
+msgstr ""
+
+#  _x("Senegalese", "sn", "static");
+# Context sn Textdomain static
+#, fuzzy
+msgctxt "sales"
+msgid "Sales"
+msgstr "Sénégalais"
+
+#  _x("Social & environmental impact & CSR", "impact.csr", "static");
+# Context impact.csr Textdomain static
+msgctxt "impact.csr"
+msgid "Social & environmental impact & CSR"
+msgstr ""
+
+#  _x("Strategy, leadership", "strategy", "static");
+# Context strategy Textdomain static
+msgctxt "strategy"
+msgid "Strategy, leadership"
+msgstr ""
+
 # 19 permitsObtained
 #  _x("Permit obtained", "permitobtained", "static");
 # Context permitobtained Textdomain static
@@ -10479,8 +10631,9 @@ msgstr "Aruba"
 
 #  _x("Ãland Islands", "AX", "static");
 # Context AX Textdomain static
+#, fuzzy
 msgctxt "AX"
-msgid "Ãland Islands"
+msgid "Åland Islands"
 msgstr "Les îles Åland "
 
 #  _x("Azerbaijan", "AZ", "static");
@@ -10545,8 +10698,9 @@ msgstr "Bénin"
 
 #  _x("Saint BarthÃ©lemy", "BL", "static");
 # Context BL Textdomain static
+#, fuzzy
 msgctxt "BL"
-msgid "Saint BarthÃ©lemy"
+msgid "Saint Barthélemy"
 msgstr "Saint Barthélemy"
 
 #  _x("Bermuda", "BM", "static");
@@ -10653,8 +10807,9 @@ msgstr "Suisse"
 
 #  _x("CÃ´te d'Ivoire", "CI", "static");
 # Context CI Textdomain static
+#, fuzzy
 msgctxt "CI"
-msgid "CÃ´te d'Ivoire"
+msgid "Côte d'Ivoire"
 msgstr "Côte d'Ivoire"
 
 #  _x("Cook Islands", "CK", "static");
@@ -10707,8 +10862,9 @@ msgstr "Cap Vert"
 
 #  _x("CuraÃ§ao", "CW", "static");
 # Context CW Textdomain static
+#, fuzzy
 msgctxt "CW"
-msgid "CuraÃ§ao"
+msgid "Curaçao"
 msgstr "Curaçao"
 
 #  _x("Christmas Island", "CX", "static");
@@ -11101,6 +11257,12 @@ msgctxt "KI"
 msgid "Kiribati"
 msgstr "Kiribati"
 
+#  _x("Kinyarwanda", "KIN", "static");
+# Context KIN Textdomain static
+msgctxt "KIN"
+msgid "Kinyarwanda"
+msgstr ""
+
 #  _x("Comoros", "KM", "static");
 # Context KM Textdomain static
 msgctxt "KM"
@@ -11112,6 +11274,12 @@ msgstr "Comores"
 msgctxt "KN"
 msgid "Saint Kitts And Nevis"
 msgstr "Saint Christophe et Niévès "
+
+#  _x("Kosovo", "KO", "static");
+# Context KO Textdomain static
+msgctxt "KO"
+msgid "Kosovo"
+msgstr "Kosovar"
 
 #  _x("North Korea", "KP", "static");
 # Context KP Textdomain static
@@ -11172,6 +11340,12 @@ msgstr "Liechtenstein"
 msgctxt "LK"
 msgid "Sri Lanka"
 msgstr "Sri Lanka"
+
+#  _x("Lingala", "LN", "static");
+# Context LN Textdomain static
+msgctxt "LN"
+msgid "Lingala"
+msgstr ""
 
 #  _x("Liberia", "LR", "static");
 # Context LR Textdomain static
@@ -11539,6 +11713,13 @@ msgctxt "RU"
 msgid "Russia"
 msgstr "Russie"
 
+#  _x("Burundi", "BI", "static");
+# Context BI Textdomain static
+#, fuzzy
+msgctxt "RUN"
+msgid "Kirundi"
+msgstr "Burundi"
+
 #  _x("Rwanda", "RW", "static");
 # Context RW Textdomain static
 msgctxt "RW"
@@ -11881,12 +12062,6 @@ msgctxt "ZW"
 msgid "Zimbabwe"
 msgstr "Zimbabwe"
 
-#  _x("Kosovo", "KO", "static");
-# Context KO Textdomain static
-msgctxt "KO"
-msgid "Kosovo"
-msgstr "Kosovar"
-
 # 25 nationality
 #  _x("Afghan", "af", "static");
 # Context af Textdomain static
@@ -12199,8 +12374,9 @@ msgstr "Cubain"
 
 #  _x("Cura?Ãaoan", "cw", "static");
 # Context cw Textdomain static
+#, fuzzy
 msgctxt "cw"
-msgid "Cura?Ãaoan"
+msgid "Cura├Úaoan"
 msgstr "Curacien"
 
 #  _x("Cypriot", "cy", "static");
@@ -12916,8 +13092,9 @@ msgstr "Rwandais"
 
 #  _x("of Saint Barth??lemy", "bl", "static");
 # Context bl Textdomain static
+#, fuzzy
 msgctxt "bl"
-msgid "of Saint Barth??lemy"
+msgid "of Saint Barth├⌐lemy"
 msgstr "de Saint_Barthélemy"
 
 #  _x("SH", "sh", "static");
@@ -12968,11 +13145,11 @@ msgctxt "sm"
 msgid "San Marinese"
 msgstr "Saint-Marinais"
 
-#  _x("S?Ãºo Tom??an", "st", "static");
+#  _x("S├úo Tom├⌐an", "st", "static");
 # Context st Textdomain static
 msgctxt "st"
-msgid "S?Ãºo Tom??an"
-msgstr "Santoméen"
+msgid "S├úo Tom├⌐an"
+msgstr ""
 
 #  _x("Saudi Arabian", "sa", "static");
 # Context sa Textdomain static

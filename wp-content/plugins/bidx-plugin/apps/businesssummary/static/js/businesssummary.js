@@ -2967,7 +2967,7 @@
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#editBusinessSummary/view"  });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#businessSummary/view"  });
 
 
         if( state === 'edit')
@@ -2997,7 +2997,7 @@
             else
             {
                 bidx.common.removeAppWithPendingChanges( appName );
-                bidx.controller.updateHash( "#editBusinessSummary/view", true );
+                bidx.controller.updateHash( "#businessSummary/view", true );
 
                 reset();
 
@@ -3426,7 +3426,7 @@
         {
             case 'view':
 
-               bidx.utils.log( "EditBusinessSummary::AppRouter::view" );
+               bidx.utils.log( "businessSummary::AppRouter::view" );
 
                _getMentors({
                     showMatch : 'hide'
@@ -3435,7 +3435,7 @@
             break;
 
             case 'load':
-                bidx.utils.log( "EditBusinessSummary::AppRouter::load", params );
+                bidx.utils.log( "businessSummary::AppRouter::load", params );
 
                 // Hide common-mentordashboard.js mentor ex click on cacncel modal box etc
                 $( ".bidx-modal").unbind('hide');
@@ -3473,7 +3473,7 @@
 
             break;
             case "edit":
-                bidx.utils.log( "EditBusinessSummary::AppRouter::edit", options.id, options.section );
+                bidx.utils.log( "businessSummary::AppRouter::edit", options.id, options.section );
 
                 var newBusinessSummaryId
                 ,   splatItems
@@ -3522,7 +3522,7 @@
 
                 if ( updateHash )
                 {
-                    var hash = "editBusinessSummary/edit/" + options.id;
+                    var hash = "businessSummary/edit/" + options.id;
 
                     if ( options.section )
                     {
@@ -3610,6 +3610,6 @@
     //
     if ($("body.bidx-businesssummary").length && !bidx.utils.getValue(window, "location.hash").length)
     {
-        window.location.hash = "#editBusinessSummary/view";
+        window.location.hash = "#businessSummary/view";
     }
 } ( jQuery ));
