@@ -1553,7 +1553,6 @@
 
             ,   $listItem
             ,   listItem
-            ,   count           = 0
             ;
 
 
@@ -1563,20 +1562,19 @@
             {
                 $list.empty();
             }
-
             // Set the count number based on if the status of the contact is "ACTIVE"
             //
-            $.each( options.items.members, function( idx, item )
-            {
-                if ( item.status === "ACTIVE" )
-                {
-                    count = count+1;
-                }
-            });
+            // $.each( options.items.members, function( idx, item )
+            // {
+            //     if ( item.status === "ACTIVE" )
+            //     {
+            //         count = count+1;
+            //     }
+            // });
 
             // update counter displaying amount of contacts for this category
             //
-            _setContactsCount( options.view, options.category, count );
+            _setContactsCount( options.view, options.category, options.items.totals );
 
             // if list for this contact status is empty return
             //
