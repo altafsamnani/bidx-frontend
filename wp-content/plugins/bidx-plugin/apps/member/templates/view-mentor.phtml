@@ -19,16 +19,22 @@ if ( $mentorDetails && ( $mentorDetailsBidxMeta->bidxEntityStatus == 'PUBLISHED'
     </div>
     <div id="mentor-profile" class="panel-collapse collapse">
         <div class="panel-body">
-
+<?php 
+                if ($mentorDetailsBidxMeta->bidxCanEdit)
+                {
+?>
+                    <div class="view viewNoproposals alert alert-warning">
+                        <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
+                        <?php _e( 'No business proposals found based on your filter settings', 'bidxplugin'); ?>
+                    </div>
+<?php
+                }
+?>
 
             <div class="profile-block">
             <?php
                 if ($mentorDetailsBidxMeta->bidxCanEdit)
                 {  ?>
-                    <div class="view viewNoproposals alert alert-warning pull-left">
-                        <a data-dismiss='alert' class='close fa fa-times' type='button'></a>
-                        <?php _e( 'No business proposals found based on your filter settings', 'bidxplugin'); ?>
-                    </div>
                     <div class="btn-group show hide-overflow">
 
             <?php
