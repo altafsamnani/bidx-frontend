@@ -35,7 +35,34 @@ function set_default_theme_widgets ( $old_theme, $WP_theme = null ) {
         //
         $my_post = array(
           'post_title'    => 'Welcome',
-          'post_content'  => 'Welcome to our Portal, here you can do many things. First you should edit this post by clicking edit in the Posts Section from the admin panel.',
+          'post_content'  => '<p>You have successfully created your very own bidx Portal.</br>
+With just a few adjustments, you will be ready to welcome your first members.</p>
+
+<p>To help you get started, we have already inserted some widgets for you. These are the elements you see here on your Portal homepage. Using the widget control panel in your dashboard, you can personalise these, move them to different sections of your homepage or remove these and add other elements.</p>
+
+<h3>Here are some suggestions:</h3>
+
+        <dl>
+            <dt class="title">Setting your banner: bidx Carousel</dt>
+            <dd class="text">
+                As the main eye catcher for your homepage, select images for the bidx Carousel widget that will welcome the visitors to your Portal. This tool let\'s you add a header and a url for taking viewers to, for example, news on a special event or a registration page.
+            </dd>
+            <br> 
+            <dt class="title">Create Buttons: bidx Start button</dt>
+            <dd class="text">
+                Help potential new members find their way around your Portal.<br>Buttons are a great tool to encourage visitors\' curiosity to keep exploring or to take action.
+            </dd>
+            <br>
+            <dt class="title">Post Some Content: bidx Post</dt>
+            <dd class="text">
+                Whether it is to provide useful information, publishing the latest news or sharing success stories, you can create as many posts as you like using the bidx Post widget.
+            </dd>
+            <br>
+            <dt class="title">Feature columns: bidx Latest...</dt>
+            <dd class="text">
+                Allow activity on your Portal to show up on your Portal homepage. You can add different types of feeds here with the widgets: bidx Latest business, bidx Latest members and bidx Latest posts.
+            </dd>
+        </dl>',
           'post_status'   => 'publish',
           'post_author'   => 2, // Hacky way for empty "Author" field
           'post_category' => array(0)
