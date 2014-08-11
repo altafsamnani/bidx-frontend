@@ -34,7 +34,7 @@ function set_default_theme_widgets ( $old_theme, $WP_theme = null ) {
         // Create post object
         //
         $my_post = array(
-          'post_title'    => 'Welcome',
+          'post_title'    => 'Welcome!',
           'post_content'  => '<p>You have successfully created your very own bidx Portal.</br>
 With just a few adjustments, you will be ready to welcome your first members.</p>
 
