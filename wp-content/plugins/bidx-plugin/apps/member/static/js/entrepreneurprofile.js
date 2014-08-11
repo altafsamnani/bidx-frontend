@@ -790,12 +790,12 @@
             {
                 // Make sure our extra validation implemetnation is always executed
                 //
-                _extraValidation();
+                // _extraValidation();
             }
         ,   submitHandler: function( e )
             {
-                if ( _extraValidation() )
-                {
+                // if ( _extraValidation() )
+                // {
                     if ( $btnSave.hasClass( "disabled" ) )
                     {
                         return;
@@ -833,7 +833,7 @@
                             $btnCancel.removeClass( "disabled" );
                         }
                     } );
-                }
+                // }
             }
         } );
 
