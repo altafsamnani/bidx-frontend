@@ -158,23 +158,27 @@
 
                     $.each(response.docs, function(idx, i18nItem)
                     {
+                        if ( $.isArray(i18nItem.countrylabel_ss) )        { i18nItem.countrylabel_ss        = i18nItem.countrylabel_ss.join( ", " );        }
+                        if ( $.isArray(i18nItem.industrylabel_ss) )       { i18nItem.industrylabel_ss       = i18nItem.industrylabel_ss.join( ", " );       }
+                        if ( $.isArray(i18nItem.envimpactlabel_ss) )      { i18nItem.envimpactlabel_ss      = i18nItem.envimpactlabel_ss.join( ", " );      }
+                        if ( $.isArray(i18nItem.productservicelabel_ss) ) { i18nItem.productservicelabel_ss = i18nItem.productservicelabel_ss.join( ", " ); }
 
-                                //search for placeholders in snippit
-                                listItem = snippit
-                                    .replace( /%accordion-id%/g,      i18nItem.id   ? i18nItem.id     : emptyVal )
-                                    .replace( /%name_s%/g,       i18nItem.name_s    ? i18nItem.name_s      : emptyVal )
-                                    .replace( /%creator%/g,       i18nItem.creator    ? i18nItem.creator      : emptyVal )
-                                    .replace( /%creatorId%/g,       i18nItem.creatorId    ? i18nItem.creatorId      : emptyVal )
-                                    .replace( /%countrylabel_ss%/g,       i18nItem.countrylabel_ss    ? i18nItem.countrylabel_ss      : emptyVal )
-                                    .replace( /%industrylabel_ss%/g,       i18nItem.industrylabel_ss    ? i18nItem.industrylabel_ss      : emptyVal )
-                                    .replace( /%productservicelabel_ss%/g,       i18nItem.productservicelabel_ss    ? i18nItem.productservicelabel_ss      : emptyVal )
-                                    .replace( /%financingneeded_d%/g,       i18nItem.financingneeded_d    ? i18nItem.financingneeded_d      : emptyVal )
-                                    .replace( /%stagebusinesslabel_s%/g,       i18nItem.stagebusinesslabel_s    ? i18nItem.stagebusinesslabel_s      : emptyVal )
-                                    .replace( /%envimpactlabel_ss%/g,       i18nItem.envimpactlabel_ss    ? i18nItem.envimpactlabel_ss      : emptyVal )
-                                    .replace( /%productservicelabel_ss%/g,       i18nItem.productservicelabel_ss    ? i18nItem.productservicelabel_ss      : emptyVal)
-                                    .replace( /%companylogodoc_url%/g,      i18nItem.companylogodoc_url   ? i18nItem.companylogodoc_url     : addDefaultImage('js-companylogo') )
-                                    .replace( /%entityid_l%/g,       i18nItem.entityid_l    ? i18nItem.entityid_l      : emptyVal )
-                                    ;
+                        //search for placeholders in snippit
+                        listItem = snippit
+                            .replace( /%accordion-id%/g,           i18nItem.id                     ? i18nItem.id                     : emptyVal )
+                            .replace( /%name_s%/g,                 i18nItem.name_s                 ? i18nItem.name_s                 : emptyVal )
+                            .replace( /%creator%/g,                i18nItem.creator                ? i18nItem.creator                : emptyVal )
+                            .replace( /%creatorId%/g,              i18nItem.creatorId              ? i18nItem.creatorId              : emptyVal )
+                            .replace( /%countrylabel_ss%/g,        i18nItem.countrylabel_ss        ? i18nItem.countrylabel_ss        : emptyVal )
+                            .replace( /%industrylabel_ss%/g,       i18nItem.industrylabel_ss       ? i18nItem.industrylabel_ss       : emptyVal )
+                            .replace( /%productservicelabel_ss%/g, i18nItem.productservicelabel_ss ? i18nItem.productservicelabel_ss : emptyVal )
+                            .replace( /%financingneeded_d%/g,      i18nItem.financingneeded_d      ? i18nItem.financingneeded_d      : emptyVal )
+                            .replace( /%stagebusinesslabel_s%/g,   i18nItem.stagebusinesslabel_s   ? i18nItem.stagebusinesslabel_s   : emptyVal )
+                            .replace( /%envimpactlabel_ss%/g,      i18nItem.envimpactlabel_ss      ? i18nItem.envimpactlabel_ss      : emptyVal )
+                            .replace( /%productservicelabel_ss%/g, i18nItem.productservicelabel_ss ? i18nItem.productservicelabel_ss : emptyVal)
+                            .replace( /%companylogodoc_url%/g,     i18nItem.companylogodoc_url     ? i18nItem.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                            .replace( /%entityid_l%/g,             i18nItem.entityid_l             ? i18nItem.entityid_l             : emptyVal )
+                            ;
 
                         // Remove the js selector
                         $element.find('.js-companylogo').first().removeClass('js-companylogo');
