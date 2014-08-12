@@ -763,8 +763,8 @@
 
                     $input.rules( "add",
                     {
-                        required:               true
-                    ,   monetaryAmount:         true
+                        // required:               true
+                        monetaryAmount:         true
 
                     ,   messages:
                         {
