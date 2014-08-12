@@ -1272,9 +1272,9 @@
 
                     bidx.common.removeAppWithPendingChanges( appName );
 
-                    var url = document.location.href.split( "#" ).shift();
+                    // var url = document.location.href.split( "#" ).shift();
 
-                    document.location.href = url;
+                    document.location.href = "/member/?rs=true";
                 }
             ,   error:          function( jqXhr )
                 {
