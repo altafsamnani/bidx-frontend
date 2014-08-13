@@ -301,7 +301,7 @@
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
 
-        ,   'businessSummary(/:state)(/:id)(*splat)':       'businessSummary'
+        ,   'businessSummary(/:state)(/:id)(*splat)':           'businessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
 
         ,   'auth(/:state)(*splat)':                            'auth'
