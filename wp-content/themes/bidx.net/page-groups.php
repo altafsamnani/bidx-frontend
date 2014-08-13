@@ -50,6 +50,19 @@ get_header();
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
                                     <div class="portfolio-item">
                                         <div class="portfolio-thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo17.jpg" class="img-responsive" alt="Shape & Lead">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://shapeandlead.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                        </div>
+                                        <div class="portfolio-details">
+                                            <!-- <h5>2nd Group name</h5> -->
+                                            <p>Shape & Lead</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
                                             <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo14.png" class="img-responsive" alt="2nd Portfolio Thumb">
                                             <div class="image-overlay"></div>
                                             <a href="https://ozg.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
@@ -127,7 +140,7 @@ get_header();
                                         <div class="portfolio-thumb">
                                             <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo15.png" class="img-responsive" alt="4th Portfolio Thumb">
                                             <div class="image-overlay"></div>
-                                            <a href="https://demogroup.demo.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                            <a href="http://demogroup.demo.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
                                             <!-- <h5>4th Group name</h5> -->

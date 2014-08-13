@@ -412,8 +412,8 @@
     function _addVideoThumb( url, element )
     {
         var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
-        ,   provider    = matches[3]
-        ,   id          = matches[6]
+        ,   provider    = bidx.utils.getValue(matches,"3")
+        ,   id          = bidx.utils.getValue(matches,"6")
         ,   $el         = element
         ;
 
