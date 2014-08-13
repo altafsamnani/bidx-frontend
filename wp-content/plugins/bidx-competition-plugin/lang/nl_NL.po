@@ -1,0 +1,185 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Bidx Competition Module\n"
+"POT-Creation-Date: 2014-06-22 16:47+0100\n"
+"PO-Revision-Date: 2014-06-22 16:54+0100\n"
+"Last-Translator: Jaap Gorjup <jaap@bidx.net>\n"
+"Language-Team: Bidx Development Team <devteam@bidx.net>\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./lib\n"
+
+#: lib/bidxcompetition.php:67
+msgid "post_type"
+msgstr ""
+
+#: lib/bidxcompetition.php:68
+msgid "Competition definition"
+msgstr "Competitie Beheer"
+
+#: lib/bidxcompetition.php:72
+msgid "Competitions"
+msgstr "Competities"
+
+#: lib/bidxcompetition.php:73
+msgid "Parent Items:"
+msgstr ""
+
+#: lib/bidxcompetition.php:74
+msgid "All Competitions"
+msgstr "Alle Competitions"
+
+#: lib/bidxcompetition.php:75
+msgid "View Competition"
+msgstr "Competitie Bekijken"
+
+#: lib/bidxcompetition.php:76
+msgid "Add New Competition"
+msgstr "Maak een Nieuwe Competitie"
+
+#: lib/bidxcompetition.php:77
+msgid "Add New"
+msgstr "Maak Nieuwe"
+
+#: lib/bidxcompetition.php:78
+msgid "Edit Competition"
+msgstr "Competitie Bijwerken"
+
+#: lib/bidxcompetition.php:79
+msgid "Update Competition"
+msgstr "Competitie Bijwerken"
+
+#: lib/bidxcompetition.php:80
+msgid "Search Competition"
+msgstr "Zoek door de competities"
+
+#: lib/bidxcompetition.php:81
+msgid "Competition not found"
+msgstr "Competitie niet gevonden"
+
+#: lib/bidxcompetition.php:82
+msgid "Competition not found in Trash"
+msgstr "Competitie niet in de prullenbak gevonden"
+
+#: lib/bidxcompetition.php:114
+msgid "Startdate"
+msgstr "Start Datum"
+
+#: lib/bidxcompetition.php:115
+msgid "Enddate"
+msgstr "Eind Datum"
+
+#: lib/bidxcompetition.php:116
+msgid "Monitoring"
+msgstr "Monitoren"
+
+#: lib/bidxcompetition.php:182
+msgid "Competition Settings"
+msgstr "Competitie Instellingen"
+
+#: lib/bidxcompetition.php:209
+msgid "These settings are needed for a competition to work."
+msgstr "Deze instellingen zijn nodig om een competitie te laten werken"
+
+#: lib/bidxcompetition.php:210
+msgid "Competition Type"
+msgstr "Competitie Soort"
+
+#: lib/bidxcompetition.php:218
+msgid "Startdate (optional)"
+msgstr "Startdatum (optioneel)"
+
+#: lib/bidxcompetition.php:260
+msgid "Competition Type does not exist"
+msgstr "Competitie code bestaat niet"
+
+#: lib/bidxcompetition.php:263
+msgid "Enddate is mandatory and is not set"
+msgstr "Einddatum is verplicht maar is niet ingesteld"
+
+#: lib/bidxcompetition.php:267
+msgid "Enddate is in the past"
+msgstr "Eind datum is in het verleden"
+
+#: lib/bidxcompetition.php:273
+msgid "Startdate and enddate not in the correct order"
+msgstr "Start- en Einddatum zijn volgordelijk fout"
+
+#: lib/bidxcompetitionwidget.php:27 lib/bidxcompetitionwidget.php:229
+msgid "Counter Widget"
+msgstr "Countdown klok Widget"
+
+#: lib/bidxcompetitionwidget.php:31
+msgid "Add a expiration clock for your competition"
+msgstr "Voeg een countdown klok toe aan een competitie"
+
+#: lib/bidxcompetitionwidget.php:64 lib/bidxcompetitionwidget.php:258
+msgid "Select Competition:"
+msgstr "Selecteer een Competitie:"
+
+#: lib/bidxcompetitionwidget.php:79
+msgid "Size of the countdown clock:"
+msgstr "Grootte van de countdown klok:"
+
+#: lib/bidxcompetitionwidget.php:83
+msgid "small"
+msgstr "petit"
+
+#: lib/bidxcompetitionwidget.php:84
+msgid "medium"
+msgstr "medium"
+
+#: lib/bidxcompetitionwidget.php:85
+msgid "normal"
+msgstr "normaal"
+
+#: lib/bidxcompetitionwidget.php:86
+msgid "large"
+msgstr "groot"
+
+#: lib/bidxcompetitionwidget.php:100
+msgid "Alternative link to competition (optional):"
+msgstr "Alternatieve link naar een competitie (optioneel):"
+
+#: lib/bidxcompetitionwidget.php:143
+msgid "No Competition Set"
+msgstr "Competitie niet ingesteld"
+
+#: lib/bidxcompetitionwidget.php:149
+msgid "Defined post is not a competition"
+msgstr "Deze link bevat geen competitie"
+
+#: lib/bidxcompetitionwidget.php:165
+msgid "This competition has expired."
+msgstr "Deze competitie is verlopen."
+
+#: lib/bidxcompetitionwidget.php:166
+msgid "Visit our competition overview."
+msgstr "Bekijk ons competitie overzicht."
+
+#: lib/bidxcompetitionwidget.php:233
+msgid "Provides quick registration to a competition"
+msgstr "Snelle registratie voor een competitie"
+
+#: lib/bidxcompetitionwidget.php:313
+msgid "You have been registered for this competition."
+msgstr "U bent geregistreerd voor deze competitie."
+
+#: lib/bidxcompetitionwidget.php:317
+msgid "Thank you for registering for this competition."
+msgstr "Dank u voor het registreren voor deze competitie."
+
+#: lib/bidxcompetitionwidget.php:322
+msgid "Register Now"
+msgstr "Registreer Nu"
+
+#: lib/monitoring.php:36
+msgid "Competition Monitoring"
+msgstr "Competitie Monitoren"

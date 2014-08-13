@@ -10,11 +10,16 @@
  * The competition_id should be a valid id else nothing is shown.
  * The scale is for making it bigger and smaller where standard is 1.0 and it can range from 0.2 to 2.0.
  * 
- * TODO : join two widgets and make type selector for function (informational / registration/ call to action)
+ * TODO : join two widgets and make type selector for function (informational / registration / call to action)
  * 
  * @author Jaap Gorjup
  */
 class BidxCompetitionCounterWidget extends WP_Widget {
+	
+	const COMPETITION_ID_KEY = 'competition_id';
+	const COMPETITION_LINK_KEY = 'competition_link';
+	const CLOCK_SIZE_KEY = 'clock-size';
+	
 	
 	private $diff = 0;
 	
@@ -44,27 +49,24 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 */
 	function form( $instance ) {
 		
-		if ( $instance )
-		{
-			$competition_id = $instance['competition_id'];
-			$competition_link = $instance['competition_link'];
-			$clock_size = $instance['clock_size'];
-			$style = $instance['style'];
-		}
-		else
-		{
-			$competition_id = '';
+
+		if ( $instance ) {
+			$competition_id   = $instance[$this->COMPETITION_ID_KEY];
+			$competition_link = $instance[$this->COMPETITION_LINK_KEY];
+			$clock_size 	  = $instance[$this->CLOCK_SIZE_KEY];
+		} else {
+			$competition_id   = '';
 			$competition_link = '';
-			$clock_size = 1.0;
+			$clock_size 	  = 1.0;
 			$style = 'fancy';
 		}
-		//get list of competitions
-		$competitions = BidxCompetition :: get_competitions_list();
-		//check if competitions exist
+
+		$competitions = BidxCompetition :: get_competitions_list();		//get list of competitions
+
 		?>
     	<p>
-            <label for="<?php echo $this->get_field_id('competition_id'); ?>"><?php _e('Select Competition:', 'bidx_competition'); ?></label>
-			<select name="<?php echo $this->get_field_name('competition_id') ?>" id="<?php echo $this->get_field_id('competition_id') ?>">
+            <label for="<?php echo $this->get_field_id( $this->COMPETITION_ID_KEY ); ?>"><?php _e('Select Competition:', 'bidx_competition'); ?></label>
+			<select name="<?php echo $this->get_field_name( $this->COMPETITION_ID_KEY ) ?>" id="<?php echo $this->get_field_id( $this->COMPETITION_ID_KEY ) ?>">
 			<?php 
             foreach ( $competitions->posts as $competition) {
                 printf(
@@ -132,10 +134,11 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 * @return WP_Widget
 	 */
 	function update( $new_instance, $old_instance ) {
+
 		$instance = $old_instance;
-		$instance['competition_id'] = esc_sql( $new_instance['competition_id']);
-		$instance['competition_link'] = esc_sql( $new_instance['competition_link']);
-		$instance['clock_size'] = esc_sql( $new_instance['clock_size']);
+		$instance[$this->COMPETITION_ID_KEY] = esc_sql( $new_instance[$this->COMPETITION_ID_KEY]);
+		$instance[$this->COMPETITION_LINK_KEY] = esc_sql( $new_instance[$this->COMPETITION_LINK_KEY]);
+		$instance[$this->CLOCK_SIZE_KEY] = esc_sql( $new_instance[$this->CLOCK_SIZE_KEY]);
 		$instance['style'] = esc_sql( $new_instance['style']);
 		return $instance;
 	}
@@ -146,12 +149,12 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 * @param WP_Widget $instance instance of this widget
 	 */
 	function widget($args, $instance) {
+
 		extract( $args );	
-		$competition_id = $instance['competition_id'];
-		$competition_link = $instance['competition_link'];
-		$clock_size = $instance['clock_size'];
-		$style = $instance['style'];
-		
+		$competition_id = $instance[$this->COMPETITION_ID_KEY];
+		$competition_link = $instance[$this->COMPETITION_LINK_KEY];
+		$clock_size = $instance[$this->CLOCK_SIZE_KEY];
+
 		echo $before_widget;
 		echo $this -> render_content( $competition_id, $clock_size, $competition_link, $style );
 		echo $after_widget;
@@ -163,10 +166,10 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	function render_content( $competition_id, $clock_size='1.0', $competition_link=null, $style='fancy' ) {
 
 		if ( empty( $competition_id ) ) {
+
 			_e( 'No Competition Set','bidx_competition' );
-		}
-		else {
-			//TODO first check if it is a competition post type
+		} else {
+
 			$post = get_post($competition_id);
 			if ($post -> post_type != 'competition') {
 				_e( 'Defined post is not a competition','bidx_competition' );
@@ -207,6 +210,7 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 * Adds the extra javascripts on the bottom for the FlipClock
 	 */
 	function add_clock_footer_scripts() {
+
 		echo "<script src='".plugins_url() ."/bidx-competition-plugin/js/flipclock/flipclock.min.js'></script>";
 		echo "<script>var clock = jQuery('.your-clock').FlipClock(". $this->diff .", { clockFace: 'DailyCounter', countdown: true });</script>";
 	}
@@ -220,6 +224,7 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 * @param array $atts
 	 */
 	function handle_shortcode( $atts ) {
+
 		$competition_id = $atts['id'];
 		$clock_size = 0.5;
 		$link = null;
@@ -239,7 +244,12 @@ class BidxCompetitionCounterWidget extends WP_Widget {
  * Rules are:
  * - Competition should still be active (in time)
  * - The user should not be registered, else it is a link to the competition info page en the business summary page.
- * - 
+ * 
+ * Move this centrally in one Widget.
+ * This widget also shows the Judge information
+ * Clock can be sized to invisible
+ * Various view templates can be chosen
+ * 
  */
 class BidxCompetitionRegistrationWidget extends WP_Widget {
 
@@ -249,7 +259,7 @@ class BidxCompetitionRegistrationWidget extends WP_Widget {
 	public function __construct() {
 		$this->WP_Widget (
 				'bidx_competition_registration_widget',
-				__('Counter Widget'),
+				__('Registration Widget'),
 				array (
 						'name' => ': : Bidx Competition Registration',
 						'classname' => 'bidx_competition_registration_widget',

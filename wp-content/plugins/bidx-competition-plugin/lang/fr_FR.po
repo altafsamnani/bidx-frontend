@@ -1,0 +1,185 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Bidx Competition Module\n"
+"POT-Creation-Date: 2014-06-22 16:07+0100\n"
+"PO-Revision-Date: 2014-06-22 16:10+0100\n"
+"Last-Translator: Jaap Gorjup <jaap@bidx.net>\n"
+"Language-Team: Bidx Development Team <devteam@bidx.net>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./lib\n"
+
+#: lib/bidxcompetition.php:70
+msgid "post_type"
+msgstr ""
+
+#: lib/bidxcompetition.php:71
+msgid "Competition definition"
+msgstr "Definition de Competition"
+
+#: lib/bidxcompetition.php:75
+msgid "Competitions"
+msgstr "Competitiones"
+
+#: lib/bidxcompetition.php:76
+msgid "Parent Items:"
+msgstr ""
+
+#: lib/bidxcompetition.php:77
+msgid "All Competitions"
+msgstr "Tout les competitiones"
+
+#: lib/bidxcompetition.php:78
+msgid "View Competition"
+msgstr "Regard Competition"
+
+#: lib/bidxcompetition.php:79
+msgid "Add New Competition"
+msgstr ""
+
+#: lib/bidxcompetition.php:80
+msgid "Add New"
+msgstr ""
+
+#: lib/bidxcompetition.php:81
+msgid "Edit Competition"
+msgstr ""
+
+#: lib/bidxcompetition.php:82
+msgid "Update Competition"
+msgstr ""
+
+#: lib/bidxcompetition.php:83
+msgid "Search Competition"
+msgstr ""
+
+#: lib/bidxcompetition.php:84
+msgid "Competition not found"
+msgstr ""
+
+#: lib/bidxcompetition.php:85
+msgid "Competition not found in Trash"
+msgstr ""
+
+#: lib/bidxcompetition.php:117
+msgid "Startdate"
+msgstr ""
+
+#: lib/bidxcompetition.php:118
+msgid "Enddate"
+msgstr ""
+
+#: lib/bidxcompetition.php:119
+msgid "Monitoring"
+msgstr ""
+
+#: lib/bidxcompetition.php:173
+msgid "Competition Settings"
+msgstr ""
+
+#: lib/bidxcompetition.php:199
+msgid "These settings are needed for a competition to work."
+msgstr ""
+
+#: lib/bidxcompetition.php:201
+msgid "Competition Type"
+msgstr ""
+
+#: lib/bidxcompetition.php:209
+msgid "Startdate (optional)"
+msgstr ""
+
+#: lib/bidxcompetition.php:215
+msgid "Enddate (mandatory)"
+msgstr ""
+
+#: lib/bidxcompetition.php:253
+msgid "Enddate is mandatory and is not set"
+msgstr ""
+
+#: lib/bidxcompetition.php:257
+msgid "Enddate is in the past"
+msgstr ""
+
+#: lib/bidxcompetition.php:263
+msgid "Startdate and enddate not in the correct order"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:27 lib/bidxcompetitionwidget.php:229
+msgid "Counter Widget"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:31
+msgid "Add a expiration clock for your competition"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:64 lib/bidxcompetitionwidget.php:258
+msgid "Select Competition:"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:79
+msgid "Size of the countdown clock:"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:83
+msgid "small"
+msgstr "petit"
+
+#: lib/bidxcompetitionwidget.php:84
+msgid "medium"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:85
+msgid "normal"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:86
+msgid "large"
+msgstr "Grande"
+
+#: lib/bidxcompetitionwidget.php:100
+msgid "Alternative link to competition (optional):"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:143
+msgid "No Competition Set"
+msgstr "Pas de Competition"
+
+#: lib/bidxcompetitionwidget.php:149
+msgid "Defined post is not a competition"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:165
+msgid "This competition has expired."
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:166
+msgid "Visit our competition overview."
+msgstr "Visitez votre compétitions."
+
+#: lib/bidxcompetitionwidget.php:233
+msgid "Provides quick registration to a competition"
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:313
+msgid "You have been registered for this competition."
+msgstr ""
+
+#: lib/bidxcompetitionwidget.php:317
+msgid "Thank you for registering for this competition."
+msgstr "Merci Beaucoup"
+
+#: lib/bidxcompetitionwidget.php:322
+msgid "Register Now"
+msgstr ""
+
+#: lib/monitoring.php:36
+msgid "Competition Monitoring"
+msgstr ""
