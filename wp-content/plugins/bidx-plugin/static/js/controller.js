@@ -126,57 +126,60 @@
             {
                 if ( confirmed )
                 {
-                    _doNavigateToApp();
+                    _doNavigateToApp( toApp, options );
                 }
             } );
 
             if ( !pendingChanges )
             {
-                _doNavigateToApp();
+                _doNavigateToApp( toApp, options );
             }
         }
         else
         {
-            _doNavigateToApp();
-        }
-
-        function _doNavigateToApp()
-        {
-            if ( !bidx[ toApp ] )
-            {
-                bidx.utils.error( "bidx::controller trying to navigate ", toApp, " but that app is not loaded!" );
-                router.navigate( "" );
-                return;
-            }
-
-            // When switching to the app, start by scrolling to the top of the page
-            //
-            if ( differentApp )
-            {
-                $( "html, body" ).animate( {scrollTop: 0}, 500 );
-            }
-
-            app = bidx[ toApp ];
-
-            // Perform a navigate request to the app, might come back with the
-            // request for us to update the hash
-            //
-            var newHash = bidx[ toApp ].navigate( options );
-
-            // Switch the UI to the app
-            //
-            _showMainState( mainState );
-
-            // Save a reference to the container element of the app
-            //
-            $element = app.$element;
-
-            if ( newHash )
-            {
-                updateHash( newHash );
-            }
+            _doNavigateToApp( toApp, options );
         }
     }
+
+    function _doNavigateToApp( toApp, options )
+    {
+        var differentApp    = app !== bidx[ toApp ];
+
+        if ( !bidx[ toApp ] )
+        {
+            bidx.utils.error( "bidx::controller trying to navigate ", toApp, " but that app is not loaded!" );
+            router.navigate( "" );
+            return;
+        }
+
+        // When switching to the app, start by scrolling to the top of the page
+        //
+        if ( differentApp )
+        {
+            $( "html, body" ).animate( {scrollTop: 0}, 500 );
+        }
+
+        app = bidx[ toApp ];
+
+        // Perform a navigate request to the app, might come back with the
+        // request for us to update the hash
+        //
+        var newHash = bidx[ toApp ].navigate( options );
+
+        // Switch the UI to the app
+        //
+        _showMainState( mainState );
+
+        // Save a reference to the container element of the app
+        //
+        $element = app.$element;
+
+        if ( newHash )
+        {
+            updateHash( newHash );
+        }
+    }
+
 
     // private function which deparamatizes the splat string
     //
@@ -301,8 +304,10 @@
         ,   'editCompany(/:id)(/:section)':                     'editCompany'
         ,   'createCompany':                                    'createCompany'
 
-        ,   'businessSummary(/:state)(/:id)(*splat)':           'businessSummary'
+        ,   'editBusinessSummary(/:id)(*splat)':                'editBusinessSummary'
         ,   'createBusinessSummary':                            'createBusinessSummary'
+        ,   'viewBusinessSummary':                              'viewBusinessSummary'
+        ,   'loadMentors(/:id)(*splat)':                        'loadMentors'
 
         ,   'auth(/:state)(*splat)':                            'auth'
 
@@ -560,17 +565,17 @@
                 }
             );
         }
-    ,   businessSummary:    function( state, id, splat )
+    ,   editBusinessSummary:    function( id, splat )
         {
-            bidx.utils.log( "AppRouter::businessSummary", state );
+            bidx.utils.log( "AppRouter::editBusinessSummary", id  );
 
-            mainState   = "businessSummary";
+            mainState   = "editBusinessSummary";
 
-            _navigateToApp
+            _doNavigateToApp
             (
                 "businesssummary"
             ,   {
-                    requestedState: state
+                    requestedState: "edit"
                 ,   id:             id
                 ,   params:   _deparamSplat( splat )
                 }
@@ -580,7 +585,7 @@
         {
             bidx.utils.log( "AppRouter::createBusinessSummary" );
 
-            mainState       = "businessSummary";
+            mainState       = "editBusinessSummary";
 
              _navigateToApp
             (
@@ -590,7 +595,36 @@
                 }
             );
         }
+    ,   viewBusinessSummary:          function()
+        {
+            bidx.utils.log( "AppRouter::viewBusinessSummary" );
 
+            mainState       = "viewBusinessSummary";
+
+             _navigateToApp
+            (
+                "businesssummary"
+            ,   {
+                    requestedState: "view"
+                }
+            );
+        }
+    ,   loadMentors:          function( id, splat )
+        {
+            bidx.utils.log( "AppRouter::loadMentors" );
+
+            mainState       = "loadMentors";
+
+             _doNavigateToApp
+            (
+                "businesssummary"
+            ,   {
+                    requestedState: "load"
+                ,   id:             id
+                ,   params:   _deparamSplat( splat )
+                }
+            );
+        }
     ,   mail:                   function( state, splat )
         {
             bidx.utils.log( "AppRouter::mailInbox State: ", state );
@@ -629,7 +663,7 @@
             mainState = "mentoring";
 
             /* 1 Common Mentoring Activities Functions */
-            _navigateToApp
+            _doNavigateToApp
             (
                 "commonmentordashboard"
             ,   {

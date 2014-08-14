@@ -47,7 +47,7 @@
     <Item value="statusRequest">You request has been sent successfully</Item>
     <Item value="statusAccept">You have successfully accepted the request</Item>
     <Item value="statusIgnore">You have successfully ignored the request</Item>
-    <Item value="statusCancel">You have successfully cancelled the request</Item>
+    <Item value="statusCancel">You have successfully stopped the mentoring</Item>
 
 
       <!-- Common error msgs -->
@@ -101,11 +101,13 @@
      <Item value="modalAccept">You are about to accept the request. Are you sure?</Item>
      <Item value="modalReject">You are about to ignore the request. Are you sure?</Item>
      <Item value="modalCancel">You are about to cancel the request. Are you sure?</Item>
+     <Item value="modalStop">You are about to stop the mentoring. Are you sure?</Item>
     <!-- Modal button messages -->
      <Item value="modalBtnSend">Send request</Item>
      <Item value="modalBtnAccept">Accept request</Item>
      <Item value="modalBtnReject">Ignore request</Item>
      <Item value="modalBtnCancel">Cancel request</Item>
+     <Item value="modalBtnStop">Stop mentoring</Item>
 
      <!-- Mentoring Feedback -->
     <Item value="feedbackGeneral">General</Item>

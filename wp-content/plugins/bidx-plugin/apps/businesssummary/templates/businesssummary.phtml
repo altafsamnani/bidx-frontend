@@ -135,7 +135,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 //
                 if ( $canEdit ) {
 ?>
-                    <a class="btn btn-primary" href="#businessSummary/edit/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
                     if ( $entityStatus == 'DRAFT' ) {
 ?>
@@ -874,7 +874,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         else
                         {
 ?>
-                        <blockquote class="alert-info"><?php _e('Mentoring has not been requested ​for this business proposal.', 'bidxplugin')?></blockquote>
 <?php
                         }
 ?>
@@ -1273,18 +1272,18 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 </script>
 <script type="text/html" id="active-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#businessSummary/load/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-reject"><?php _e('Ignore request','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-reject"><?php _e('Ignore request','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="send-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=sendFrmBp&redirect=#businessSummary/load/%entityId%" class="view viewRequestmentor btn btn-xs btn-success pull-right label bidx-label btn-bidx-send" ><?php _e('Request mentoring','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=sendFrmBp&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-success pull-right label bidx-label btn-bidx-send" ><?php _e('Request mentoring','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="respond-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#businessSummary/load/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=accepted&redirect=#businessSummary/load/%entityId%" class="view viewRequestmentor btn btn-success pull-right label bidx-label btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=accepted&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-success pull-right label bidx-label btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
 
 -->
 </script>

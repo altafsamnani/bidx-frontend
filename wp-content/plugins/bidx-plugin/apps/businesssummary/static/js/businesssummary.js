@@ -2967,7 +2967,7 @@
         // Inject the save and button into the controls
         //
         $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#businessSummary/view"  });
+        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#loadMentors"  });
 
 
         if( state === 'edit')
@@ -2997,7 +2997,7 @@
             else
             {
                 bidx.common.removeAppWithPendingChanges( appName );
-                bidx.controller.updateHash( "#businessSummary/view", true );
+                bidx.controller.updateHash( "#loadMentors", true );
 
                 reset();
 
@@ -3446,8 +3446,6 @@
                 {
                     _showAllView( "mentor" );
 
-
-
                     _getActiveMentors(
                     {
                         list:   'mentor-active-list'
@@ -3522,7 +3520,7 @@
 
                 if ( updateHash )
                 {
-                    var hash = "businessSummary/edit/" + options.id;
+                    var hash = "editBusinessSummary/" + options.id;
 
                     if ( options.section )
                     {
@@ -3610,6 +3608,6 @@
     //
     if ($("body.bidx-businesssummary").length && !bidx.utils.getValue(window, "location.hash").length)
     {
-        window.location.hash = "#businessSummary/view";
+        window.location.hash = "#viewBusinessSummary";
     }
 } ( jQuery ));
