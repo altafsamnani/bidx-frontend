@@ -18,7 +18,7 @@
     <Item value="bidxMemberProfile">Member profile</Item>
     <Item value="bidxBusinessSummary">Business summary</Item>
     <Item value="bidxInvestorProfile">Investor</Item>
-    <Item value="bidxEntrepeneurProfile">Entrepeneur</Item>
+    <Item value="bidxEntrepreneurProfile">Entrepeneur</Item>
     <Item value="bidxBusinessGroup">Group</Item>
     <Item value="bidxCompany">Company</Item>
     <Item value="bidxMentorProfile">Mentor</Item>

@@ -48,11 +48,15 @@
                                                         "type": "bidxInvestorProfile"
                                                     },
                                                     {
-                                                        "type": "bidxEntrepeneurProfile"
+                                                        "type": "bidxEntrepreneurProfile"
                                                     },
                                                     {
                                                         "type": "bidxBusinessSummary"
+                                                    },
+                                                    {
+                                                        "type": "bidxMentorProfile"
                                                     }
+
                                                 ]
         }
 
