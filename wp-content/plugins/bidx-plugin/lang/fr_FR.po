@@ -22,9 +22,8 @@ msgstr "Les options BidX sont mises à jour avec succès."
 # 98) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/group-settings.phtml -110
 # _e("Group status","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Group Settings"
-msgstr "Statut du groupe"
+msgstr "Paramètres de groupe"
 
 # 170) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/entrepreneur/dashboard.phtml -157
 # _e("Business proposal","bidxplugin");
@@ -57,9 +56,8 @@ msgstr "Max 200 caractères"
 # 63) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/edit-group-settings.phtml -77
 # _e("Location","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Focus Location"
-msgstr "Emplacement"
+msgstr "Lieu"
 
 # 8) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/services/wp-service.php -2528
 # _e("Longitude","bidxplugin");
@@ -82,7 +80,6 @@ msgstr "Industrie"
 # 86) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/group-settings.phtml -69
 # _e("Social impact","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Social Impact"
 msgstr "Impact social"
 
@@ -102,7 +99,7 @@ msgstr "Identifiant"
 # _e("Choose a social network","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Choose a social network"
-msgstr ""
+msgstr "Veuillez choisir le réseau social "
 
 # 2) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/login/templates/login.phtml -5
 # _e("Email address","bidxplugin");
@@ -1146,9 +1143,8 @@ msgstr "Dernière mise à jour"
 # 34) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/media/templates/media.phtml -98
 # _e("Created on","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Interested investors"
-msgstr "Intéressé par"
+msgstr "Investisseurs intéressés "
 
 # 78) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/groupowner/edit-group-settings.phtml -210
 # _e("Send message","bidxplugin");
@@ -1465,7 +1461,6 @@ msgstr ""
 # 265) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -27
 # _e("Last name","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Last Updated"
 msgstr "Dernière mise à jour"
 
@@ -1589,13 +1584,13 @@ msgstr "Tableaux de bord"
 # _e("bidX","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "bidX"
-msgstr ""
+msgstr "bidX"
 
 # 292) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/navbarshort.phtml -107
 # _e("Judge","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Judge"
-msgstr ""
+msgstr "Juge"
 
 # 134) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/navbar.phtml -113
 # _e("Groups","bidxplugin");
@@ -1807,9 +1802,8 @@ msgstr "Actualités &amp; Evénements "
 # 311) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/views.phtml -223
 # _e("Show more","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "View more"
-msgstr "Plus"
+msgstr "Voir plus"
 
 # 144) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/group/templates/latest-news.phtml -94
 # _e("There are currently no news or events","bidxplugin");
@@ -1964,9 +1958,8 @@ msgstr "Prière d'entrer le nom de votre entreprise"
 # 423) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -58
 # _e("Options","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Optional"
-msgstr "Options"
+msgstr "Facultatif"
 
 # 153) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/company/templates/edit-company.phtml -42
 # _e("Company website","bidxplugin");
@@ -2462,9 +2455,8 @@ msgstr ""
 # 548) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -388
 # _e("Entrepreneurs References","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Groupowner's mentoring activities"
-msgstr "Supervision de l'activité entrepreunariale"
+msgstr "L'activité de mentorat "
 
 # 240) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/groupowner-mentoring.phtml -80
 # _e("Loading mentoring renew requests...","bidxplugin");
@@ -2737,7 +2729,6 @@ msgstr "Chargement  (Envoi de votre demande)..."
 # 34) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/media/templates/media.phtml -98
 # _e("Created on","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Posted on"
 msgstr "Créé le "
 
@@ -2745,7 +2736,7 @@ msgstr "Créé le "
 # _e("by","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "by"
-msgstr ""
+msgstr "par"
 
 # 248) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/main.phtml -130
 # _e("Help","bidxplugin");
@@ -2995,7 +2986,7 @@ msgstr "Supervision de l'activité entrepreunariale"
 # _e("Find a Business to Mentor","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Find a Business to Mentor"
-msgstr ""
+msgstr "Trouver une entreprise pour guider"
 
 # 630) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/mentor-mentoring.phtml -14
 # _e("Entrepreneur","bidxplugin");
@@ -3009,7 +3000,7 @@ msgstr ""
 # _e("Completion ratio","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Completion ratio"
-msgstr ""
+msgstr "Taux d'achèvement "
 
 # 754) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -73
 # _e("Industry","bidxplugin");
@@ -3024,7 +3015,6 @@ msgstr "Financement désiré"
 # 265) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -27
 # _e("Last name","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Last updated"
 msgstr "Dernière mise à jour"
 
@@ -3038,7 +3028,7 @@ msgstr "Chargement en cours..."
 # _e("%count% matches found","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "%count% matches found"
-msgstr ""
+msgstr "%count% résultats trouvés"
 
 # 589) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/entrepreneur-mentoring.phtml -241
 # _e("Delete from dashboard","bidxplugin");
@@ -3057,9 +3047,8 @@ msgstr "Activités de mentoring pour le mentor"
 # 755) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -77
 # _e("Finance needed","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Expertise needed details"
-msgstr "Financement désiré"
+msgstr "L'expertise désirée plus en détail"
 
 # 623) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -69
 # _e("Add","bidxplugin");
@@ -3082,9 +3071,8 @@ msgstr "Contacter l'entrepreneur"
 # 713) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-member.phtml -135
 # _e("Request mentoring","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Offer mentoring"
-msgstr "Arrêter un mentorat"
+msgstr "Offrir du mentorat "
 
 # 796) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -747
 # _e("Registration number","bidxplugin");
@@ -3145,7 +3133,6 @@ msgstr "Devenez un membre"
 # 261) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/register/templates/register.phtml -48
 # _e("<a href=\\"%s\\"> Terms & Conditions </a>","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "<a href=\"%s\" target=\"_blank\"> Terms of Service </a>"
 msgstr "<a href=\"%s\"> Termes & Conditions </a>"
 
@@ -3509,6 +3496,7 @@ msgid ""
 "By clicking this you accept the <a target=\"_blank\" href=\"%s\">Terms of "
 "Service</a>."
 msgstr ""
+"En cliquant ici, vous acceptez automatiquement <a target=\"_blank\" href=\"%s\">les conditions de service</a>."
 
 # 786) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -241
 # _e("By clicking this you automatically accept the <a target=\"_blank\" href=\"%s\">Terms of Service</a>.","bidxplugin");
@@ -3517,6 +3505,7 @@ msgid ""
 "By clicking this you automatically accept the <a target=\"_blank\" href=\"%s"
 "\">Terms of Service</a>."
 msgstr ""
+"En cliquant ici, vous acceptez automatiquement les conditions de service."
 
 # 1242) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/view-group.phtml -48
 # _e("Join","bidxplugin");
@@ -3528,7 +3517,7 @@ msgstr "Rejoindre"
 # _e("To get started, create your member account here.","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "To get started, create your member account here."
-msgstr ""
+msgstr "Commencez et créez un compte ici. "
 
 # 791) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -14
 # _e("Choose a social network","bidxplugin");
@@ -3538,7 +3527,7 @@ msgstr ""
 # _e("Or use the login form","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Or use the login form"
-msgstr ""
+msgstr "Ou utilisez le formulaire de connection"
 
 # 623) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -69
 # _e("Add","bidxplugin");
@@ -3547,16 +3536,14 @@ msgstr ""
 # 624) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -82
 # _e("Become an entrepreneur","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "welcome to"
-msgstr "Devenez un mentor"
+msgstr "Bienvenue à"
 
 # 616) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -19
 # _e("Create my mentor profile","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Create a profile."
-msgstr "Créer mon profil mentor"
+msgstr "Créer mon profil "
 
 # 795) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -46
 # _e("We are excited to get you set up so you can begin reaching out to other members!","bidxplugin");
@@ -3565,6 +3552,8 @@ msgid ""
 "We are excited to get you set up so you can begin reaching out to other "
 "members!"
 msgstr ""
+"Nous sommes très heureux d' établir votre profiel au plus vite, pour pouvoir "
+"commencer de vous connecter avec d' autres membres!"
 
 # 796) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/auth/templates/join.phtml -47
 # _e("Select your main role to create a profile. Once you are logged in, you will be able to edit your profile details and create another type of profile if you want to take on different roles.","bidxplugin");
@@ -3574,6 +3563,9 @@ msgid ""
 "be able to edit your profile details and create another type of profile if "
 "you want to take on different roles."
 msgstr ""
+"Veuillez sélectioner votre rôle pour créer un profile correspondant. Une "
+"fois connecté, vous pourrez modifier votre profile, ou ajouter un autre "
+"profile si vous voulez avoir des rôles differents. "
 
 # 616) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -19
 # _e("Create my mentor profile","bidxplugin");
@@ -3588,6 +3580,8 @@ msgid ""
 "The details entered here will help to find suitable matches with "
 "entrepreneurs. Be as specific as you can be!"
 msgstr ""
+"Les détails renseignés ici serviront à trouver des entrepreneurs "
+"compatibles. Veuillez être aussi précis que possible. "
 
 # 650) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-mentor.phtml -57
 # _e("Describe yourself as a mentor","bidxplugin");
@@ -3608,7 +3602,6 @@ msgstr "Saisir ici votre description en tant que mentor"
 # 508) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-investor.phtml -168
 # _e("Languages","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Focus languages"
 msgstr "Langues"
 
@@ -3792,12 +3785,11 @@ msgstr "Saisissez le site web de votre institution"
 # _e("Join Portal","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Join Portal"
-msgstr ""
+msgstr "Rejoindre le portail"
 
 # 612) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/member.phtml -13
 # _e("Create my investor profile","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Create your investor profile"
 msgstr "Créer mon profil investisseur"
 
@@ -3874,6 +3866,8 @@ msgid ""
 "The details entered here will help to find suitable matches with mentors and "
 "investors. Be as specific as you can be!"
 msgstr ""
+"Les détails renseignés ici serviront à trouver des mentors et des "
+"investisseurs compatibles. Veuillez être aussi précis que possible. "
 
 # 764) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -177
 # _e("Business name","bidxplugin");
@@ -3963,7 +3957,6 @@ msgstr "Les types de clients auxquels vous vendez"
 # 755) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -77
 # _e("Finance needed","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Financing needed"
 msgstr "Financement désiré"
 
@@ -4023,7 +4016,6 @@ msgstr "Est-ce que vous avez besoin de conseils d’ un mentor?"
 # 412) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/mentoring-request.phtml -66
 # _e("Which expertise do you need?","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "In which areas of expertise do you seek support?"
 msgstr "Quel type d'expertise nécessitez-vous ? "
 
@@ -4514,7 +4506,7 @@ msgstr "Effacer cette affaire"
 # _e("Remove","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 # 410) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/mentoring-request.phtml -62
 # _e("What advice do you need ?","bidxplugin");
@@ -6089,7 +6081,7 @@ msgstr "Chercher"
 # _e("Clear all filters","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Clear all filters"
-msgstr ""
+msgstr "Effacer tous les filtres"
 
 # 41) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/investor/dashboard.phtml -7
 # _e(« Error », »bidxplugin »);
@@ -6360,16 +6352,14 @@ msgstr "Expertise applicable à cette affaire"
 # 783) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -500
 # _e("Role of entrepreneur in this business","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Role of the team member in this business"
-msgstr "Le rôle de l'entrepreneur dans l'affaire"
+msgstr "Le rôle du membre de l'équipe dans l'affaire"
 
 # 787) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -514
 # _e("Describe relevant expertise of business partner","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Describe relevant expertise of the team member"
-msgstr "Décrire l'expertise principale du partenaire"
+msgstr "Décrire l'expertise principale du membre de l'équipe"
 
 # 788) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -530
 # _e("Supporting members of management team","bidxplugin");
@@ -6484,9 +6474,8 @@ msgstr "Boîte postale"
 # 755) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/search/templates/cardView.phtml -77
 # _e("Finance needed","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Expertise needed in detail"
-msgstr "Financement désiré"
+msgstr "L'expertise désirée plus en détail"
 
 # 808) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -783
 # _e("City","bidxplugin");
@@ -6883,7 +6872,6 @@ msgstr "Ajouter à la liste"
 # 668) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-mentor.phtml -155
 # _e("Mentoring preferences","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Mentoring Details"
 msgstr "Préférences de mentorat"
 
@@ -7009,9 +6997,8 @@ msgstr "Editer les propriétés du document"
 # 914) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1085
 # _e("Please type the role of the partner","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Please type the role of the team member"
-msgstr "Prière de saisir le rôle du partenaire"
+msgstr "Prière de saisir le rôle du membre de l'équipe"
 
 # 915) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1091
 # _e("Describe relevant expertise of business partner","bidxplugin");
@@ -7020,9 +7007,8 @@ msgstr "Prière de saisir le rôle du partenaire"
 # 916) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1092
 # _e("Please describe relevant expertise of business partner","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Please describe relevant expertise of the team member"
-msgstr "Prière de décrire l'expertise pertinente du partenaire d'affaires"
+msgstr "Prière de décrire l'expertise pertinente du membre de l'équipe"
 
 # 917) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1097
 # _e("LinkedIn profile","bidxplugin");
@@ -7041,23 +7027,20 @@ msgstr "Photo"
 # 428) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/member/templates/edit-member.phtml -69
 # _e("Profile picture","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Upload picture"
-msgstr "Photo de profil"
+msgstr " Téléchargez une photo"
 
 # 921) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1113
 # _e("Remove this partner","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Remove this team member"
-msgstr "Retirer ce partenaire"
+msgstr "Retirer ce membre de l'équipe"
 
 # 281) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mail/templates/views.phtml -15
 # _e("Contacts","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "No mentors"
-msgstr "Contacter un mentor"
+msgstr "Pas de mentors"
 
 # 503) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/groupowner-mentoring.phtml -231
 # _e("View feedback","bidxplugin");
@@ -7070,22 +7053,20 @@ msgstr "Contacter un mentor"
 # 505) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/mentor/templates/dashboard/groupowner-mentoring.phtml -233
 # _e("Renew request","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Ignore request"
-msgstr "Renouveler la demande "
+msgstr "Ingorez la demande"
 
 # 50) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/dashboard/templates/entrepreneur/dashboard.phtml -23
 # _e("Loading investors ...","bidxplugin");
 # Context  Textdomain bidxplugin
-#, fuzzy
 msgid "Loading active mentors"
-msgstr "Chargement des investisseurs..."
+msgstr "Chargement des mentors..."
 
 # 1603) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1303
 # _e("Error loading mentor","bidxplugin");
 # Context  Textdomain bidxplugin
 msgid "Error loading mentor"
-msgstr ""
+msgstr "Erreur lors du chargement de mentors"
 
 # 923) File -/home/altaf/workspace/bidx/wp-content/plugins/bidx-plugin/apps/businesssummary/templates/businesssummary.phtml -1127
 # _e("Login","bidxplugin");
