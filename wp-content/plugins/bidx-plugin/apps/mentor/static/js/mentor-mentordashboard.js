@@ -467,11 +467,10 @@
         else
         {
             $list.empty();
-
             $list.append($listEmpty);
-            bidx.utils.log('i am emptyyyyyyyyyyyyyy');
-            _hideView( "pager" );
 
+            _hideView( "pager" );
+            _hideView( "loadmatch" );
             $d.reject( );
         }
 
