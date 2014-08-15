@@ -148,7 +148,7 @@
                             <?php if ( $isEntrepreneur ) { ?>
                                 <span class="label bidx-label bidx-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
                             <?php } ?>
-                            <?php if ( $isInvestor ) { ?>
+                            <?php if ( $isInvestor && ($this->isLoggedInInvestor || $this->isLoggedInGroupOwner)) { ?>
                                 <span class="label bidx-label bidx-investor"><?php _e('Investor', 'bidxplugin') ?></span>
                             <?php } ?>
                             <?php if ( $isMentor ) { ?>
@@ -206,7 +206,7 @@
                     </div>
 <?php
                     endif;
-?>                    
+?>
                 </div>
             </div>
 

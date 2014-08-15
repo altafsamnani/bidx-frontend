@@ -30,7 +30,7 @@
             {
 ?>
                 <h2><?php _e('New Members', 'bidxplugin')?></h2>
-<?php                 
+<?php
                 $maxMemberItems = (int)$latest_items;
             }
 ?>
@@ -39,9 +39,9 @@
             if ( $addColumns && $isPanel ) :
 ?>
                 <div class="row">
-<?php         
+<?php
             endif;
-            
+
             // iterate through the members
             foreach ($this -> members as $member)
             {
@@ -80,7 +80,7 @@
                                 $pisLeft  = $member->left   ? '-' . $member->left  . 'px;' : "auto;";
                                 $pisTop   = $member->top    ? '-' . $member->top   . 'px;' : "auto;";
 
-                                $profileImage = '<img' . 
+                                $profileImage = '<img' .
                                                 ' src="' . $member -> profilePicture . '"'.
                                                 ' style="'.
                                                     'width: ' . $pisWidth .
@@ -122,7 +122,7 @@
                             <span class="label bidx-label bidx-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
 <?php
                             }
-                            if ( $role === 'investor' ) {
+                            if ( $role === 'investor' && ($this->isLoggedInInvestor || $this->isLoggedInGroupOwner)) {
 ?>
                             <span class="label bidx-label bidx-investor"><?php _e('Investor', 'bidxplugin') ?></span>
 <?php
@@ -159,7 +159,7 @@
             if ( $addColumns && $isPanel ) :
 ?>
                     </div>
-<?php                
+<?php
             endif;
 
 ?>
@@ -169,7 +169,7 @@
                 {
 ?>
                     <a href="#" class="hide btn btn-link btn-block"><?php _e( "View more", 'bidxplugin' ); ?></a>
-<?php                    
+<?php
                 }
 
         }

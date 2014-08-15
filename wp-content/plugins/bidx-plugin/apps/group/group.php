@@ -14,8 +14,9 @@
  */
 class group {
 
-	static $deps = array( 'jquery', 'bootstrap', 'bidx-data', 'bidx-location', 'bidx-utils', 'bidx-api-core', 'bootstrap-paginator', 'jquery-fakecrop');
-
+	//static $deps = array( 'jquery', 'bootstrap', 'bidx-data', 'bidx-location', 'bidx-utils', 'bidx-api-core', 'bootstrap-paginator', 'jquery-fakecrop');
+	static $deps = array ('bidx-tagsinput', 'jquery-fakecrop','bidx-common','bidx-data', 'bidx-i18n', 'jquery-validation',
+      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods','bidx-chosen', );
 	/**
 	 * Constructor
 	*/
@@ -60,11 +61,22 @@ class group {
 				return $view->render( 'widget-latest-business-summaries.phtml' );
 				break;
 			case "last-members":
+				$sessionSvc = new SessionService( );
+
+                /*************** Is investor or groupadmin *****************/
+                $view->isLoggedInInvestor      = $sessionSvc->isHavingProfile ('bidxInvestorProfile');
+                $view->isLoggedInGroupOwner    = $sessionSvc->isAdmin ( );
+
 				$view->authenticated = isset( $atts[ "authenticated" ] ) ? $atts[ "authenticated" ] : "";
 				$view->members 			= $groupSvc->getLatestMembers(  );
 				return $view->render( 'last-members.phtml' );
 				break;
 			case "widget-latest-members":
+				$sessionSvc = new SessionService( );
+
+                /*************** Is investor or groupadmin *****************/
+                $view->isLoggedInInvestor      = $sessionSvc->isHavingProfile ('bidxInvestorProfile');
+                $view->isLoggedInGroupOwner    = $sessionSvc->isAdmin ( );
 				$view->members 	= $groupSvc->getLatestMembers(  );
 				$view->panel 	= isset( $atts[ "panel" ] ) ? true : false;
 				$view->items 	= $atts[ "items" ];

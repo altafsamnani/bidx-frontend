@@ -22,10 +22,6 @@
     ,   languages
     ,   appName                 = "search"
 
-    ,   currentInvestorId       = bidx.common.getInvestorProfileId()
-    ,   roles                   = bidx.utils.getValue( bidxConfig.session, "roles" )
-    ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 || currentInvestorId ) ? true : false //If current user not investor or groupadmin then dont allow access for investor profiles
-
     ,   paging                  =
         {
             search:
@@ -49,9 +45,6 @@
                                                         "type": "bidxMemberProfile"
                                                     },
                                                     {
-                                                        "type": "bidxInvestorProfile"
-                                                    },
-                                                    {
                                                         "type": "bidxEntrepreneurProfile"
                                                     },
                                                     {
@@ -59,16 +52,31 @@
                                                     },
                                                     {
                                                         "type": "bidxMentorProfile"
-                                                    }
+                                                    },
+                                                    {
+                                                        "type": "bidxInvestorProfile"
+                                                    },
 
                                                 ]
         }
 
-    ,   tempLimit = CONSTANTS.SEARCH_LIMIT
+    ,   tempLimit               = CONSTANTS.SEARCH_LIMIT
+    ,   currentInvestorId       = bidx.common.getInvestorProfileId()
+    ,   roles                   = bidx.utils.getValue( bidxConfig.session, "roles" )
+    ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 || currentInvestorId ) ? true : false //If current user not investor or groupadmin then dont allow access for investor profiles
     ;
+
+    if(roles ){
+
+    }
 
     function _oneTimeSetup()
     {
+        if(!displayInvestorProfile)
+        {
+            CONSTANTS.ENTITY_TYPES.pop(); // Removes Investor Profile, not to display
+        }
+
         _languages();
 
         $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
@@ -1258,7 +1266,7 @@
                     .replace( /%lastName%/g,            personalDetails.lastName   ? personalDetails.lastName    : emptyVal )
                     .replace( /%professionalTitle%/g,   personalDetails.professionalTitle   ? personalDetails.professionalTitle     : emptyVal )
                     .replace( /%role_entrepreneur%/g,   ( isEntrepreneur )  ? bidx.i18n.i( 'entrepreneur' )    : '' )
-                    .replace( /%role_investor%/g,       ( isInvestor )      ? bidx.i18n.i( 'investor' )   : '' )
+                    .replace( /%role_investor%/g,       ( isInvestor && displayInvestorProfile )      ? bidx.i18n.i( 'investor' )   : '' )
                     .replace( /%role_mentor%/g,         ( isMentor )        ? bidx.i18n.i( 'mentor' )   : '' )
                     .replace( /%gender%/g,              personalDetails.gender   ? gender    : emptyVal )
                     .replace( /%dateOfBirth%/g,         personalDetails.dateOfBirth   ? bidx.utils.parseISODateTime( personalDetails.dateOfBirth, 'date' )    : emptyVal )

@@ -45,7 +45,7 @@
                             $pisLeft  = $member->left   ? '-' . $member->left  . 'px;' : "auto;";
                             $pisTop   = $member->top    ? '-' . $member->top   . 'px;' : "auto;";
 
-                            $profileImage = '<img' . 
+                            $profileImage = '<img' .
                                             ' src="' . $member -> profilePicture . '"'.
                                             ' style="'.
                                                 'width: ' . $pisWidth .
@@ -87,7 +87,7 @@
                         <span class="label bidx-label bidx-entrepreneur"><?php _e('Entrepreneur', 'bidxplugin') ?></span>
 <?php
                         }
-                        if ( $role === 'investor' ) {
+                        if ( $role === 'investor' && ($this->isLoggedInInvestor || $this->isLoggedInGroupOwner)) {
 ?>
                         <span class="label bidx-label bidx-investor"><?php _e('Investor', 'bidxplugin') ?></span>
 <?php

@@ -37,7 +37,7 @@ $isSuperAdmin   = is_super_admin();
             <div id="myProfile">
                 <?php $this->render('view-member.phtml');  ?>
                 <?php $this->render('view-entrepreneur.phtml'); ?>
-                <?php $this->render('view-investor.phtml'); ?>
+                <?php ($this->isLoggedInInvestor || $this->isLoggedInGroupOwner) ? $this->render('view-investor.phtml') : ''; ?>
                 <?php $this->render('view-mentor.phtml'); ?>
             </div>
         </div>

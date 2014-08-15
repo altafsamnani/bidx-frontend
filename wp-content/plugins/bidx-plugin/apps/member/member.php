@@ -79,6 +79,12 @@ class member {
 
 			    $view->data = (isset($memberData->data)) ? $memberData->data:NULL;
 
+			    $sessionSvc = new SessionService( );
+
+                /*************** Is investor or groupadmin *****************/
+                $view->isLoggedInInvestor      = $sessionSvc->isHavingProfile ('bidxInvestorProfile');
+                $view->isLoggedInGroupOwner    = $sessionSvc->isAdmin ( );
+
 
 			    //Localize to js variables, currently to use focusexpertise for mentoring to display match
 			    $jsParams = array('member' => $view->data);

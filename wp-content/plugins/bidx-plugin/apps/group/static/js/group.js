@@ -48,6 +48,11 @@
             ,   sort:           "date"
             }
         }
+
+    ,   currentInvestorId       = bidx.common.getInvestorProfileId()
+    ,   roles                   = bidx.utils.getValue( bidxConfig.session, "roles" )
+    ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 || currentInvestorId ) ? true : false //If current user not investor or groupadmin then dont allow access for investor profiles
+
     ;
 
     // Constants
@@ -354,8 +359,15 @@
                             $.each( bidx.utils.getValue( member, "roles" ), function( mId, memberRole )
                             {
                                 $memberRole = $roleSnippet.clone();
+
                                 $memberRole.addClass( "bidx-label bidx-" + memberRole ).text( memberRole );
-                                roles.push( $memberRole );
+
+                                if((memberRole === 'investor' && displayInvestorProfile ) ||
+                                    memberRole !== 'investor' )
+                                {
+                                    roles.push( $memberRole );
+                                }
+
                             } );
                             // add the roles to the DOM
                             //
@@ -884,6 +896,7 @@
 
                 // hide the carousel
                 //
+                bidx.utils.log('displayprofile',displayInvestorProfile)
                 $carousel.hide();
 
                 _showView( "load" );
