@@ -221,6 +221,11 @@ class BidxCommon
                 $bidxEntityType = $meta->bidxEntityType;
                 $bidxEntityValue = $meta->bidxEntityId;
 
+                if(!is_object($this::$bidxSession[$subDomain]->data->wp->entities))
+                {
+                    $this::$bidxSession[$subDomain]->data->wp->entities = new stdClass();
+                }
+
                 if($bidxEntityType == 'bidxBusinessSummary') {
                     $this::$bidxSession[$subDomain]->data->wp->entities->bidxBusinessSummary[$bidxEntityValue] = $bidxEntityValue;
                 } else {
@@ -601,18 +606,18 @@ class BidxCommon
     static function get_bidx_subdomain ($echo = false, $url = NULL)
     {
 		if ( defined( 'ORIGINAL_DOMAIN' ) ) {
-				
+
 			$httpHost = ORIGINAL_DOMAIN;
-    	} else {	
-    		
+    	} else {
+
         	$httpHost = ($url) ? str_replace(array("http://", "https://"),"",$url) : $_SERVER ["HTTP_HOST"];
     	}
-	
+
         $hostAddress = explode ('.', $httpHost );
         if (is_array ($hostAddress)) {
 
             $domain = $hostAddress [0];
-                        
+
             if ($echo == false) {
                 return $domain;
             } else {

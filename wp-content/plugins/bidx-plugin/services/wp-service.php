@@ -347,8 +347,11 @@ function bidx_signout ()
     $skipsoUrl = NULL;
 
     $current_user = wp_get_current_user ();
-    if (in_array (WP_OWNER_ROLE, $currentUser->roles) || in_array (WP_ADMIN_ROLE, $currentUser->roles)) {
-        $skipsoUrl = 'skipso-backend-logout';
+    if( !empty ( $currentUser->roles ) )
+    {
+        if (in_array (WP_OWNER_ROLE, $currentUser->roles) || in_array (WP_ADMIN_ROLE, $currentUser->roles)) {
+            $skipsoUrl = 'skipso-backend-logout';
+        }
     }
 
     clear_bidx_cookies ();

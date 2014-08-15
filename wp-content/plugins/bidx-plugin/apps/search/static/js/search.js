@@ -22,6 +22,10 @@
     ,   languages
     ,   appName                 = "search"
 
+    ,   currentInvestorId       = bidx.common.getInvestorProfileId()
+    ,   roles                   = bidx.utils.getValue( bidxConfig.session, "roles" )
+    ,   displayInvestorProfile  = ( $.inArray("GroupOwner", roles) !== -1 || $.inArray("GroupOwner", roles) !== -1 || currentInvestorId ) ? true : false //If current user not investor or groupadmin then dont allow access for investor profiles
+
     ,   paging                  =
         {
             search:
@@ -113,6 +117,8 @@
                 });
             }
         } );
+
+
     }
 
     // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view

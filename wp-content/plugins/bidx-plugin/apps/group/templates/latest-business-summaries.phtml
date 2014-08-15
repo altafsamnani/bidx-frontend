@@ -44,7 +44,7 @@
 
                         echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
                     }
-                    
+
                     if ( $authenticated ) {
 ?>
                         </a>
@@ -77,14 +77,17 @@
                             $ix = 1;
                             // create a comma separated list of translated industries
                             //
-                            foreach ( $industries as $industry )
+                            if(!empty($industries))
                             {
-                                echo $this->getStaticVal( 'industry', $industry ) ;
-                                if ( count( $industries ) != $ix )
+                                foreach ( $industries as $industry )
                                 {
+                                    echo $this->getStaticVal( 'industry', $industry ) ;
+                                    if ( count( $industries ) != $ix )
+                                    {
                                     echo ", ";
+                                    }
+                                    $ix++;
                                 }
-                                $ix++;
                             }
 ?>
                         </div>
@@ -95,14 +98,16 @@
                             $ix = 1;
                             // create a comma separated list of translated industries
                             //
-                            foreach ( $countries as $country )
-                            {
-                                echo $this->getStaticVal( 'country', $country ) ;
-                                if ( count( $countries ) != $ix )
+                            if(!empty($countries))
+                                foreach ( $countries as $country )
                                 {
-                                    echo ", ";
+                                    echo $this->getStaticVal( 'country', $country ) ;
+                                    if ( count( $countries ) != $ix )
+                                    {
+                                        echo ", ";
+                                    }
+                                    $ix++;
                                 }
-                                $ix++;
                             }
 ?>
                         </div>

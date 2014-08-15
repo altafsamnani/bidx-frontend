@@ -17,8 +17,8 @@ class GroupService extends APIbridge {
 
 	/** cache timeout **/
 	private $cache = 5;
-	
-	
+
+
 	/**
 	 * Constructs the API bridge.
 	 * Needed for operational logging.
@@ -36,7 +36,7 @@ class GroupService extends APIbridge {
   public function getLatestMembers( $group_id = null ) {
 
   	$result = $this -> getGroupDetails( $group_id, 'latest_members', $this->cache );
-    
+
   	if ( property_exists( $result, 'data' ) ) {
   		return $result -> data -> latestMembers;
   	}
@@ -57,7 +57,7 @@ class GroupService extends APIbridge {
 
     $result = $this -> getGroupDetails( $group_id, 'latest_groups', $this->cache );
 
-    if ( property_exists( $result, 'data' ) ) {
+    if ( !empty( $result) ) {
       return $result -> data -> latestBusinessSummaries;
     }
     else {
@@ -76,12 +76,12 @@ class GroupService extends APIbridge {
    * @return full result from the service in JSON form
    */
   public function getGroupDetails( $group_id = null, $transient = 'localgroup', $cached = 3600 ) {
-  
+
 	if ($group_id == null) {
-		
+
     	$result = get_transient( $transient );
-		if ( empty($result) || $result === false) { 		
-    
+		if ( empty($result) || $result === false) {
+
 			// It wasn't there, so regenerate the data and save the transient
 			$result = $this->callBidxAPI( 'groups/' . $this -> getBidxSubdomain(), array(), 'GET', false, true );
 
@@ -92,13 +92,13 @@ class GroupService extends APIbridge {
 				set_transient( $transient . '_backup', $result, $cached + 5 ); //backup store for 5 minute
 			} else {
 				$result = get_transient( $transient . '_backup' );
-			}    
-		} 
+			}
+		}
 
 	} else {
-    
+
 		$result = $this->callBidxAPI( 'groups/' . $group_id, array(), 'GET' );
-		
+
 	}
 
 
