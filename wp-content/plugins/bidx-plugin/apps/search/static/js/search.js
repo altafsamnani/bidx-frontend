@@ -479,8 +479,8 @@
                     criteria.facetFilters.push( filterQuery );
                 }
 
-                // For search filtering add the current filter
-                if( filterQuery === 'reset')
+                /*// For search filtering add the current filter
+                if( filterQuery === 'reset' && !$resetFacet.hasClass('hide'))
                 {
                     criteria.facetFilters = [];
                     options.q        = '';
@@ -488,7 +488,7 @@
                     bidx.controller.updateHash( "#search/list" );
 
                     $resetFacet.addClass( "hide" );
-                }
+                }*/
 
                 if ( criteria.facetFilters.length === 0 )
                 {
@@ -522,6 +522,42 @@
         {
             $list.append($listEmpty);
         }
+    }
+
+
+    function _init( )
+    {
+        var $mainFacet      = $element.find(".main-facet").data()
+        ,   $resetFacet     = $element.find(".facet-reset")
+        ,   $listAnchor     = $resetFacet.find('.anchor-reset')
+        ,   criteria        = {}
+        ,   options         = {}
+        ;
+
+            $listAnchor.unbind("click").on('click', function( e )
+            {
+                e.preventDefault();
+
+                criteria.facetFilters = [];
+                options.q        = '';
+                options.sort     = [];
+                bidx.controller.updateHash( "#search/list" );
+
+                $resetFacet.addClass( "hide" );
+
+                navigate(
+                {
+                    state   :   'list'
+                ,   params  :   {
+                                    q           :   options.q
+                                ,   sort        :   options.sort
+                                ,   facetFilters:   criteria.facetFilters
+                                // ,   type        :   'facet'
+                                }
+                });
+
+            });
+
     }
 
     function _showMoreLess ( items )
@@ -1529,6 +1565,7 @@
 
                 // load businessSummaries
                 //
+                _init();
                 _getSearchList(
                 {
                     params      : options.params
