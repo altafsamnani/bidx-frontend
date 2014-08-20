@@ -1754,7 +1754,7 @@
         $yearSalesStarted.trigger( "chosen:updated" );
     }
 
-    // Update the pre-rendered dom elements for the financial summarie
+    // Update the pre-rendered dom elements for the financial summary
     //
     function _updateFinancialSummariesItem( $item, data )
     {
@@ -1848,8 +1848,14 @@
                             var $input  = $financialSummariesItem.find( "[name^='" + f + "']" )
                             ,   value   = bidx.utils.getElementValue( $input )
                             ;
+                            
+                            if (value == '') 
+                            {
+                            	value = 0;
+                            }
 
                             item[ year ][ f ] = value;
+                     
                         } );
                     } );
 
