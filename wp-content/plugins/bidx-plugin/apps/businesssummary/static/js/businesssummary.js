@@ -1521,7 +1521,7 @@
         // Instantiate radio controls
         //
         $company
-            .find( "input[name='company']" )
+            .find( "input[name='companyList']" )
             .radio()
             .attr( "value", bidx.utils.getValue( company, "bidxMeta.bidxEntityId" ))
         ;
@@ -1660,7 +1660,7 @@
                     var $input = $form.find( "[name^='" + f + "']" )
                     ,   value  = bidx.utils.getValue( businessSummary, f )
                     ;
-
+                    
                     bidx.utils.setElementValue( $input, value );
                 } );
             }
@@ -1701,8 +1701,8 @@
 
         if ( companyId )
         {
-            bidx.utils.setElementValue( $hasCompany, "true" );
-            bidx.utils.setElementValue( $companiesTable.find( "[name='company']" ), companyId );
+            bidx.utils.setElementValue( $hasCompany, "true" );       
+            bidx.utils.setElementValue( $companiesTable.find( "[name='companyList']" ), companyId );
         }
         else
         {
