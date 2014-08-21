@@ -63,7 +63,7 @@ class Bidx_Admin_Page
 
 		add_action('admin_print_footer_scripts', array($this,'footer_scripts'));
 
-		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/static/templates/' ); 		
+		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/admin/static/templates/' ); 		
 		
 	}
 
@@ -199,17 +199,15 @@ class Bidx_Admin_Page
 	
 	function analytics_roles()
 	{
-		//1. Template Rendering
-               
-        $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/static/templates/' );        
+		//1. Template Rendering               
+        $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/admin/static/templates/' );        
         echo $view->render( 'monitoring.phtml' );		
 
 	}
 
 	function analytics_summaries()
 	{
-		echo 'Inside roles';		
-		
+		echo 'Inside roles';				
 
 	}
 	?>
