@@ -1100,8 +1100,10 @@
 
     // Set the bootstrap version to 3 by default so we don't have to change it in every app
     //
-    $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
-
+    if(typeof bootstrapPaginator === 'function')
+    {
+        $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
+    }
 
     // Expose
     //
@@ -1187,23 +1189,27 @@
     // The ones with a class 'defer' on them are left alone in case there is a dependency
     // with the app that otherwise can't be fixed
     //
-    $( "input.bidx-tagsinput:not(.defer)" ).tagsinput();
-
+    if ( typeof tagsinput === 'function' )
+    {
+        $( "input.bidx-tagsinput:not(.defer)" ).tagsinput();
+    }
     // Activate all datepickers (this was previously done as part of the form.js plugin)
     //
     bidx.utils.log('currentLangauge', currentLanguage);
 
-    $( "input[data-type=date]" ).datepicker(
+    if(typeof datepicker === 'function')
     {
-        format:                 "d M yyyy"
-    ,   changeYear:             true
-    ,   changeMonth:            true
-    ,   yearRange:              "-100:+3"
-    ,   todayHighlight:         true
-    ,   weekStart:              1
-    ,   language:               currentLanguage
-    } );
-
+        $( "input[data-type=date]" ).datepicker(
+        {
+            format:                 "d M yyyy"
+        ,   changeYear:             true
+        ,   changeMonth:            true
+        ,   yearRange:              "-100:+3"
+        ,   todayHighlight:         true
+        ,   weekStart:              1
+        ,   language:               currentLanguage
+        } );
+    }
     // Disable disabled links
     //
     $body.delegate( "a.disabled", "click", function( e )

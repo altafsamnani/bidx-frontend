@@ -69,6 +69,9 @@ if (!BidxCommon :: isWPInternalFunction ()) {
     //cleanup body tag
 }
 //Bidx WP Hooks file
+require_once( BIDX_PLUGIN_DIR . '/../admin/admin_screens.php' );
+
+//Bidx WP Hooks file
 require_once( BIDX_PLUGIN_DIR . '/../services/wp-service.php' );
 
 add_filter ('body_class', 'my_class_names', 100000);

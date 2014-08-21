@@ -44,19 +44,8 @@ class dashboard
         $isBidxAdminPage = false;
 
         if (in_array (WP_ADMIN_ROLE, $currentUser->roles) || in_array (WP_OWNER_ROLE, $currentUser->roles)) {
-
+  
             switch ($menuTitle) {
-
-                case 'monitoring':
-                    roots_scripts ();
-
-                    $mailDepArr = array ('bootstrap-paginator', 'bidx-delaykeyup', 'bidx-common', 'bidx-i18n', 'jquery-validation',
-                      'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods', 'bidx-chosen');
-
-                    /* Script */
-                    wp_register_script ('monitoring', '/wp-content/plugins/bidx-plugin/apps/dashboard/static/js/monitoring.js', $mailDepArr, '20130715', TRUE);
-
-                    break;
 
                 case 'invite-members':
 

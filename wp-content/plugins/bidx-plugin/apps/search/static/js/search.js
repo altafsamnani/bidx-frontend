@@ -55,7 +55,7 @@
                                                     },
                                                     {
                                                         "type": "bidxInvestorProfile"
-                                                    },
+                                                    }
 
                                                 ]
         }

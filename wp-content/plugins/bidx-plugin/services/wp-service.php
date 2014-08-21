@@ -2326,8 +2326,7 @@ function alter_site_menu ()
 
             /* Dashboard GroupAdmin/GroupOwner Menus */
             if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles)) {
-                add_menu_page ('invite-members', 'Invite members', 'edit_theme_options', 'invite-members', 'bidx_dashboard_invite');
-                add_menu_page ('monitoring', 'Monitoring', 'edit_theme_options', 'monitoring', 'bidx_dashboard_monitoring');
+                add_menu_page ('invite-members', 'Invite members', 'edit_theme_options', 'invite-members', 'bidx_dashboard_invite');               
                 add_menu_page ('getting-started', 'Getting Started', 'edit_theme_options', 'getting-started', 'bidx_getting_started');
                 add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
                 add_menu_page ('group-settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
@@ -2467,17 +2466,6 @@ function bidx_dashboard_invite ()
     echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='invite-members']");
 }
 
-/* Create the function to output the contents of our Dashboard Widget.
- * @author Altaf Samnani
- * @version 1.0
- *
- */
-
-function bidx_dashboard_monitoring ()
-{
-    wp_enqueue_style( 'dashboard' );
-    echo do_shortcode ("[bidx app='dashboard' view='group-dashboard' menu='monitoring']");
-}
 
 /* Create the function to output the contents of our Dashboard Widget.
  * @author Altaf Samnani
