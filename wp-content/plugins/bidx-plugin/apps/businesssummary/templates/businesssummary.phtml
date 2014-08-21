@@ -498,7 +498,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 => $this->exst($businessSummary->personalRole),
 
                             __('Expertise applicable to this business','bidxplugin')
-                                => $this->exst($businessSummary->personalExpertise)
+                                => $this->exst($businessSummary->personalExpertise),
+
+							__('Entrepreneur Profile', 'bidxplugin')
+								=> '<a class="btn btn-primary" href="/member/' . $businessSummaryBidxMeta->bidxOwnerId . '">'.__('View Now', 'bidxplugin').'</a>'
+
                         );
                         echo $this->pairRows( $rowValues );
 
