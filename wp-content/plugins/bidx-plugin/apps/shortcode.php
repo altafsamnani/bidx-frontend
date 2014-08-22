@@ -30,8 +30,8 @@ class BidxShortcode
     function __construct ()
     {
         $currentUser = wp_get_current_user ();
-        
-        
+
+
         Logger :: getLogger ('shortcode')->trace ('Constructing bidx shortcode instance for ' . get_bloginfo ());
         add_shortcode ('bidx', array (&$this, 'handle_bidx_shortcode'));
         add_action ('init', array (&$this, 'register_script'));
@@ -40,10 +40,10 @@ class BidxShortcode
         //Group admn / owner scripts
         if (in_array (WP_ADMIN_ROLE, $currentUser->roles) || in_array (WP_OWNER_ROLE, $currentUser->roles))
         {
-            add_action ('admin_init', array (&$this, 'register_group_owner_admin_scripts'));        
+            add_action ('admin_init', array (&$this, 'register_group_owner_admin_scripts'));
             add_action ('admin_print_footer_scripts', array (&$this, 'bidx_group_admin_owner_footer'));
-        } 
-        
+        }
+
 
         // Style
         add_action ('init', array (&$this, 'load_style'));
@@ -184,33 +184,36 @@ class BidxShortcode
 
         $bidxJsDir = sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
         $vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
-        
+
         wp_enqueue_style('bidx-plugin', get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin.css', false, null);
 
         wp_register_script ('google-jsapi', '//www.google.com/jsapi', array (), '20130501', TRUE);
 
         wp_register_script ('jquery-validation', $bidxJsDir . '/vendor/jquery.validate.js', array ('jquery'), '1.1.11', true);
-        
+
         wp_register_script ('jquery-validation-additional-methods', $bidxJsDir . '/vendor/additional-methods.js', array ('jquery-validation'), '1.1.11', true);
-        
+
         wp_register_script ('jquery-validation-bidx-additional-methods', $bidxJsDir . '/additional-methods.js', array ('jquery-validation'), '20130812', true);
 
         wp_register_script ('bidx-admin-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery' ), '20130501', TRUE);
 
         wp_register_script ('bidx-admin-utils', $bidxJsDir . '/utils.js', array ('jquery' ), '20130501', TRUE);
 
+
         wp_register_script ('bidx-admin-data', $bidxJsDir . '/data.js', array ( 'jquery' ), '20130626', TRUE);
 
-        wp_register_script ('bidx-admin-i18n', $bidxJsDir . '/i18n.js', array ('jquery' ) , '20130626', TRUE);    
+        $this->bidx_admin_print_i18nJs( );
+
+        wp_register_script ('bidx-admin-i18n', $bidxJsDir . '/i18n.js', array ('jquery' ) , '20130626', TRUE);
 
         wp_register_script ('bidx-admin-common', $bidxJsDir . '/common.js', array ('bidx-admin-utils', 'bidx-api-core', 'bidx-admin-data' , 'jquery-validation', 'bidx-admin-i18n', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods'), '20130501', TRUE);
-        
+
         wp_register_script ('bidx-admin-controller', $bidxJsDir . '/controller.js', array ('bidx-admin-utils', 'bidx-admin-api-core', 'bidx-admin-data', 'backbone'), '20130501', TRUE);
-    
+
         wp_enqueue_script ('bidx-admin-common');
-       
-        wp_enqueue_script ('bidx-admin-controller'); 
-        
+
+        wp_enqueue_script ('bidx-admin-controller');
+
 
     }
 
@@ -320,25 +323,32 @@ class BidxShortcode
         }
     }
 
- 
+
+    function bidx_admin_print_i18nJs ( )
+    {
+
+        $bidxCommonObj = new BidxCommon();
+
+        $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ('monitoring'), $static = true, $i18nGlobal = true);
+
+        // 1. I18n  & Global Data
+        wp_localize_script ('bidx-admin-data', '__bidxI18nPreload', $appTranslationsArr['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+        // 2. Static Data
+        wp_localize_script ('bidx-admin-data', '__bidxDataPreload', $appTranslationsArr['static']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+
+    }
+
     function bidx_group_admin_owner_footer ()
     {
-         
-      
+
             $menuTitle = strtolower (str_replace (" ", "", get_admin_page_title ()));
+
             $dashboardPages =  array ( 'monitoring', 'support', 'group-settings' );
 
-            $bidxCommonObj = new BidxCommon();
-            $appTranslationsArr = $bidxCommonObj->getLocaleTransient (array ('dashboard'), $static = false, $i18nGlobal = false);
-            // 1. I18n  & Global Data
-            wp_localize_script ('bidx-data', '__bidxI18nPreload', $appTranslationsArr['i18n']); //http://www.ronakg.com/2011/05/passing-php-array-to-javascript-using-wp_localize_script/
+                if(in_array($menuTitle, $dashboardPages)) {
 
-            if(in_array($menuTitle, $dashboardPages)) {
-      
                 wp_print_scripts ($menuTitle);
             }
-        
-
     }
 
 }

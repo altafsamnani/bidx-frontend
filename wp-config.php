@@ -24,7 +24,7 @@ define('BIDX_ENV', 'local');
 //replace this by automatic value and connect to backend.test.bidnet.vc:8080
 define('API_DOMAIN', 'test.bidx.net');
 //autofill this by environment
-define('WP_DEVELOPMENT', true);
+define('WP_DEVELOPMENT', false);
 
 //these values should NOT be in the generic defines (hackable)
 //ideally we remove the need for the username/password and use another mechanism
@@ -107,7 +107,7 @@ define('WPLANG', '');
  * in their development environments.
  */
 if (WP_DEVELOPMENT) {
-	define('WP_DEBUG_DISPLAY', false);
+	define('WP_DEBUG_DISPLAY', true);
 	define('WP_DEBUG', true);
 	define('WP_DEBUG_LOG', true);
 	define('SAVEQUERIES', true);

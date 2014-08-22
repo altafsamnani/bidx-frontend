@@ -378,7 +378,7 @@
             {
 
                 facetValues    = bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel     = bidx.i18n.i( facetItems.name, appName );
+                facetLabel     = bidx.i18n.i( facetItems.name );
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
@@ -397,7 +397,7 @@
                         }
                         else
                         {
-                            item.name    = bidx.i18n.i( item.name, appName );
+                            item.name    = bidx.i18n.i( item.name );
                         }
 
                         if ( item.name )

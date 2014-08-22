@@ -1701,7 +1701,7 @@
 
         if ( companyId )
         {
-            bidx.utils.setElementValue( $hasCompany, "true" );       
+            bidx.utils.setElementValue( $hasCompany, "true" );
             bidx.utils.setElementValue( $companiesTable.find( "[name='companyList']" ), companyId );
         }
         else

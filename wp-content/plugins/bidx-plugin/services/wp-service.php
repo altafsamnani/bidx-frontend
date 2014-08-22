@@ -643,17 +643,17 @@ function create_bidx_po ()
 
 
                 $body = $_GET;
-                $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*/{i18n.xml}', GLOB_BRACE);
+                $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{apps,admin}/*/{i18n.xml}', GLOB_BRACE);
                 $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}', GLOB_BRACE);
 
                 $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
 
                 foreach ($fileArr as $fileName) {
 
-                    $body['is_app'] = (preg_match ("/apps/i", $fileName)) ? true : false;
+                    $body['is_app'] = (preg_match ("/(apps|admin)/i", $fileName)) ? true : false;
 
-                    $dirArr = (preg_match ("/apps\/(.*)\/i18n.xml/i", $fileName, $matches));
-                    $body['app'] = (isset ($matches[1])) ? $matches[1] : NULL;
+                    $dirArr = (preg_match ("/(apps|admin)\/(.*)\/i18n.xml/i", $fileName, $matches));
+                    $body['app'] = (isset ($matches[2])) ? $matches[2] : NULL;
 
                     $document = simplexml_load_file ($fileName);
                     $items = $document->xpath ('//Item');

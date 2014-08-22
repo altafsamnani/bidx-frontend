@@ -661,7 +661,7 @@ class BidxCommon
             $siteLocale = get_locale ();
             $staticDataObj = new StaticDataService();
             $transientKey = 'static' . $siteLocale; // Transient key for Static Data
-            $transientStaticData = get_transient ($transientKey);
+            //$transientStaticData = get_transient ($transientKey);
 
             /* If no value then set the site local transient */
             if ($transientStaticData == false) {
@@ -676,21 +676,27 @@ class BidxCommon
         $i18PluginArr = array ();
         $i18AppsArr = array ();
 
-        if ($i18nGlobal) {
+        if ($i18nGlobal)
+        {
             $i18PluginArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/{i18n.xml}', GLOB_BRACE);
         }
 
-        if (!empty ($i18n)) {
-            $moduleNameArr = implode (',', $i18n);
-            $i18AppsArr = glob (WP_PLUGIN_DIR . '/bidx-plugin/apps/*{' . $moduleNameArr . '}/{i18n.xml}', GLOB_BRACE);
+        if (!empty ($i18n))
+        {
+            $moduleNameArr  =   implode (',', $i18n);
+            $i18AppsArr     =   glob (WP_PLUGIN_DIR . '/bidx-plugin/{apps,admin}/*{' . $moduleNameArr . '}/{i18n.xml}', GLOB_BRACE);
+
         }
+
 
         $fileArr = array_merge ($i18AppsArr, $i18PluginArr);
 
         foreach ($fileArr as $fileName) {
 
-            $dirArr = (preg_match ("/apps\/(.*)\/i18n.xml/i", $fileName, $matches));
-            $appName = (isset ($matches[1])) ? $matches[1] : '__global';
+            $dirArr = (preg_match ("/(apps|admin)\/(.*)\/i18n.xml/i", $fileName, $matches));
+
+            $appName = (isset ($matches[2])) ? $matches[2] : '__global';
+
             $document = simplexml_load_file ($fileName);
             $items = $document->xpath ('//Item');
             $count = 0;
