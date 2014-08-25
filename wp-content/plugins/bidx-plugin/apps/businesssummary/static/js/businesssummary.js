@@ -30,6 +30,13 @@
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
+    ,   $ratingControls             = $element.find( ".ratingControls" )
+    ,   $ratingAverageInput         = $ratingControls.find( ".ratingAverage" )
+    ,   $ratingAverageLabel         = $ratingControls.find( ".ratingAverageLabel" )
+    ,   $ratingUserInput            = $ratingControls.find( ".ratingUser" )
+    ,   $ratingUserLabel            = $ratingControls.find( ".ratingUserLabel" )
+    ,   $ratingUserClear            = $ratingControls.find( ".ratingUserClear" )
+    
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
 
     ,   $tabMentor                  = $element.find( "#businessSummaryCollapse-MentoringDetails" )
@@ -1258,6 +1265,29 @@
                 } );
         }
 
+        // bind Rating stars
+        // only for users not owning the current summary ( summary owners do not get this button rendered )
+        //
+        if ( $ratingUserInput )
+        {
+        	$ratingUserInput.on( "rating.change rating.clear", function(event, value, caption) {
+        	    var scope = null;
+        	    var comment = null;
+        	    bidx.common.rate( bidxConfig.context.businessSummaryId, scope, value, comment, function(data) {
+        	    	$ratingAverageInput.rating( "update", data.totals.average );
+        	    	// Officially we could use: 
+        	    	//     $ratingUserInput.rating( "refresh", {showClear: data.userRating != null} );
+        	    	// ...but that somehow binds the handlers again, making them run multiple times for every click.
+        	    	$ratingUserClear.toggle( data.userRating != null );
+        	    	var count = data.totals.count;
+        	    	$ratingAverageLabel.text( bidx.i18n.i( "ratingAverageLabel" + (count == 1 ? "" : "Plural"), appName ).replace( /%d/g, count) );
+        	    	$ratingUserLabel.text( bidx.i18n.i( data.userRating != null ? "ratingUserLabel" : "ratingUserLabelNone", appName ) );
+        	    } );
+        	});
+        	// Once the plugin has initialized our own .ratingUserClear is no longer available
+        	$ratingUserClear.toggle( $ratingUserInput.val() != 0 );
+        }
+
         if ( $videoWrapper )
         {
             $videoWrapper.fitVids();
@@ -1285,7 +1315,7 @@
     } );
 
 
-    // Do a full access request for this businessSummar
+    // Do a full access request for this businessSummary
     //
     function _doAccessRequest()
     {
@@ -3554,6 +3584,119 @@
                         _init( state );
                     } );
             break;
+            
+            
+            // TODO Arjan This is duplicated from mentor dashboard
+            case "addFeedback" :
+                var $feedbackBtn = $mainElement.find( '.btn-feedback-submit' );
+
+                _closeMainModal(
+                {
+                    unbindHide: true
+                } );
+
+                _initAddFeedback(
+                    {
+                        params: options.params
+                    /*,   success: function()
+                        {
+                            //$feedbackDropDownBtn.addClass('disabled').i18nText("btnRequestSent");
+                            _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
+                            window.bidx.controller.updateHash("#cancel");
+
+                            _closeModal(
+                            {
+                                unbindHide: true
+                            } );
+                        }
+                    ,   error: function()
+                        {
+                            $feedbackDropDownBtn.removeClass('disabled').i18nText('btnTryAgain');
+                            window.bidx.controller.updateHash("#cancel");
+                            _closeModal(
+                            {
+                                unbindHide: true
+                            } );
+                        }*/
+                    } );
+
+
+                _showMainModal(
+                {
+                    view  : "sendFeedback"
+                ,   params: options.params
+                /*,   onHide: function()
+                    {
+                        window.bidx.controller.updateHash("#mentoring/mentor", false, false);
+                    }*/
+                ,   onShow: function()
+                    {
+                       //_oneTimeSetup();
+
+
+                    }
+
+                } );
+
+
+                break;
+
+                case "sendFeedback" :
+
+                var btnFeedbackText
+                ,   $btnSave                  = $mainElement.find('.btn-feedback-submit')
+                ,   $btnCancel                = $mainElement.find('.btn-feedback-cancel')
+                ,   $btnConfirmFeedbackSave   = $mainElement.find('.btn-send-feedback')
+                ,   $btnConfirmFeedbackCancel = $mainElement.find('.btn-cancel-feedback')
+                ;
+
+                btnFeedbackText = $btnConfirmFeedbackSave.text();
+
+
+                $btnConfirmFeedbackSave.addClass( "disabled" ).i18nText("msgWaitForSave");
+                $btnConfirmFeedbackCancel.addClass( "disabled" );
+
+
+                _doSendFeedback(
+                {
+                    params: options.params
+                ,   callback: function()
+                    {
+                        $btnSave.removeClass( "disabled" );
+                        $btnCancel.removeClass( "disabled" );
+                        $btnConfirmFeedbackSave.removeClass( "disabled" ).text( btnFeedbackText );
+                        $btnConfirmFeedbackCancel.removeClass( "disabled" );
+                        _resetFeedbackForm();
+                        _closeMainModal(
+                        {
+                            unbindHide: true
+                        } );
+
+                    }
+                } );
+
+                break;
+
+                case 'confirmFeedback' :
+
+                _closeMainModal(
+                {
+                    unbindHide: true
+                } );
+
+                _showMainModal(
+                {
+                    view  : "confirmFeedback"
+                ,   params: options.params
+                /*,   onHide: function()
+                    {
+                        window.bidx.controller.updateHash("#mentoring/mentor", false, false);
+                    }*/
+                } );
+
+                break;
+            
+            // TODO Arjan end
         }
     }
 

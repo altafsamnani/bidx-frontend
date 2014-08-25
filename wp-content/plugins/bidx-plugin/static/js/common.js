@@ -528,6 +528,56 @@
         );
     }
 
+    // Perform an API call to rate an entity
+    // If value is null, then the current rating (for the given scope) is removed.
+    function rate( entityId, scope, value, comment, cb )
+    {
+        if ( !bidx.utils.getValue( bidxConfig, "authenticated" ))
+        {
+            alert( "It is only possible to rate something when you are logged in" );
+            return;
+        }
+        bidx.api.call(
+            "entityRate.save"
+        ,   {
+                id:                 entityId
+            ,   groupDomain:        groupDomain
+            ,   data:
+            	{
+                    scope:          scope
+                ,   value:          value
+                ,   comment:        comment
+                }
+            ,   success:            function( response )
+                {
+                    bidx.utils.log( "bidx::entityRate::save::success", response );
+                    if ( cb ) {
+                    	cb( response.data );
+                	}
+                }
+            ,   error:              function( jqXhr, textStatus )
+                {
+                    bidx.utils.log( "bidx::entityRate::save::error", jqXhr, textStatus );
+
+                    var response;
+
+                    try
+                    {
+                        response = JSON.stringify( JSON.parse( jqXhr.responseText ), null, 4 );
+                    }
+                    catch ( e )
+                    {
+                        bidx.utils.error( "problem parsing error response from entityRate" );
+                    }
+
+                    if ( cb ) {
+                    	cb( new Error( "Problem rating entity: " + response ) );
+                    }
+                }
+            }
+        );
+    }
+    
     // Trigger an internal event on the $( window.bidx ) object
     //
     function trigger( event, data )
@@ -1130,6 +1180,7 @@
 
     ,   joinGroup:                      joinGroup
     ,   leaveGroup:                     leaveGroup
+    ,   rate:							rate
 
     ,   getInvestorProfileId: function()
         {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Session service that returns a list of session variables.
+ * Entity service that returns details for business plans.
  *
  * @author Altaf Samnani
  * @version 1.0
@@ -22,7 +22,7 @@ class BusinessPlanService extends APIbridge
     }
 
     /**
-     * Retrieve the details of a single company
+     * Retrieve the details of a single business plan summary
      *
      * @param integer $companyId
      *
@@ -30,7 +30,7 @@ class BusinessPlanService extends APIbridge
      */
     function getSummaryDetails ()
     {
-        //Call company API
+        //Call entity API
         $sessionData = BidxCommon::$staticSession;
 
         $bidxBusinessSummaryId = $sessionData->bidxBusinessSummaryId;

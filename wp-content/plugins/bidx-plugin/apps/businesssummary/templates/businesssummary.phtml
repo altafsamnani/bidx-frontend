@@ -16,6 +16,8 @@ $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 $sessionData    = BidxCommon::$staticSession;
 $entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
 
+$ownerId 		= $businessSummary->bidxMeta->bidxOwnerId;	
+$loggedInUserId = $sessionData->data->id;
 
 // if a user has an investorProfile, he is allowed to request access to a business summary
 //
@@ -71,18 +73,65 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <div class="businessSummary" id="businessSummary">
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             <h1><?php _e('Business Summary', 'bidxplugin')?></h1>
             <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="completeness-score <?php echo $this->completenessColour ?>" >
                 <div class="percentage"><?php echo $progress ?><span>%</span></div>
                 <div class=""><?php _e('completed', 'bidxplugin')?></div>
             </div>
+		</div>
+		
+        <div class="col-sm-2">
+<?php
+       		/* 
+       		 * We want ratings to be indexed by Google, so need to include this on page load. It 
+           	 * might be updated in JavaScript though, so also check the translations in i18n.xml.
+           	 * For a consistent layout, an empty div will be outputted if rating is not enabled. 
+           	 */ 
+            
+            $ratingTotals = $this->rating->totals;
+            
+            if( $ratingTotals ) 
+            {
+            	$ratingAllowed = $loggedInUserId != $ownerId;
+	            $ratingUser = $this->rating->userRating;
+	            
+            	$count = $ratingTotals->count;
+	            if ( $count == 1 ) 
+				{
+		            $ratingAverageLabel = sprintf( __( 'Rating (%d vote)', 'bidxplugin' ), $count );
+	            }
+	            else
+				{
+		            $ratingAverageLabel = sprintf( __( 'Rating (%d votes)', 'bidxplugin' ), $count );
+	            }
+?> 
+		        <div class="ratingControls">
+		            <span class="ratingAverageLabel"><?php echo $ratingAverageLabel ?></span>
+		            <!-- TODO Arjan Using an INPUT is not ideal, as the browser might re-populate it on navigation. -->
+		            <input class="rating ratingAverage" value="<?php echo $ratingTotals->average; ?>" type="number" data-readonly="true" data-show-clear="false" data-size="xs" data-show-caption="false">
+		        </div>
+<?php
+           		if( $ratingAllowed )
+           		{ 
+?>
+			        <div class="ratingControls">
+		   		        <span class="ratingUserLabel"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Please rate this plan', 'bidxplugin') ?></span>
+		   		        <span class="ratingUserClear" style="padding-left: 5px"></span> 
+			            <input name="rating" class="rating ratingUser" value="<?php echo $ratingUser->value; ?>" type="number" data-clear-element=".ratingUserClear" data-size="xs" data-show-caption="false" data-step=1>
+		            <!-- TODO Arjan remove -->
+		<!--             <a class="btn btn-primary" href="#mentoring/addFeedback/entityId=<?php echo $businessSummaryId; ?>&commentorId=><?php echo $loggedInMemberId; ?>"><?php _e('Add feedback','bidxplugin');?></a>
+		-->
+		    	    </div>
+<?php
+				 }
+			 }
+?>
         </div>
-
 
         <div class="col-sm-3 editControlsContainer">
             <div class="editControls pull-right">

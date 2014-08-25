@@ -4,4 +4,8 @@
     <Item value="actuals">Actuals</Item>
     <Item value="forecast">Forecast</Item>
     <Item value="matchCount">%count% matches found</Item>
+    <Item value="ratingAverageLabel">Rating (%d vote)</Item>
+    <Item value="ratingAverageLabelPlural">Rating (%d votes)</Item>
+    <Item value="ratingUserLabel">Your rating</Item>
+    <Item value="ratingUserLabelNone">Please rate this plan</Item>
 </I18N>

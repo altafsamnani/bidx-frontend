@@ -9,7 +9,7 @@ class businesssummary
     static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
         'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
-        'bidx-location', 'bidx-chosen', 'jquery-fitvids'
+        'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'bootstrap-starrating'
     );
 
     /**
@@ -80,6 +80,18 @@ class businesssummary
             else {
             	$view->completenessScore = 0;
             	$view->completenessColour = 'red';
+            }
+
+            // TODO Arjan TODO Altaf use some admin setting
+            $ratingEnabledForGroup = true;
+            
+            if ( $ratingEnabledForGroup )
+            {
+	            /* Fetch the entity rating. */
+	            require_once( BIDX_PLUGIN_DIR .'/../services/rating-service.php' );
+	            $ratingServiceObj = new RatingService( );
+	            $ratingData = $ratingServiceObj->getRating( $businessSummaryId );
+	            $view->rating = $ratingData->data;
             }
         }
 
