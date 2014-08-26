@@ -25,18 +25,18 @@ class BidxCompetition {
 		
 	/** constants for the competition **/
 	const POST_TYPE = 'competition';
-	const COMPETITION_START_KEY = 'competition_startdate';
+	const COMPETITION_START_KEY = '	';
 	const COMPETITION_END_KEY 	= 'competition_enddate';
 		
-	const COMPETITION_TYPE_KEY 	= 'type';	
+	const COMPETITION_TYPE_KEY 	= 'competition_type';	
 	const COMPETITION_TYPE_OPEN_KEY 		= 'open';
 	const COMPETITION_TYPE_REGISTRATION_KEY = 'registered';
 	const COMPETITION_TYPE_CLOSED_KEY 		= 'closed';
-// 		const COMPETITION_TYPES	= array(
-// 				COMPETITION_TYPE_OPEN_KEY, 
-// 				COMPETITION_TYPE_REGISTRATION_KEY,
-// 				COMPETITION_TYPE_CLOSED_KEY
-// 		);		
+ 	private static $competition_types	= array(
+ 				COMPETITION_TYPE_OPEN_KEY, 
+ 				COMPETITION_TYPE_REGISTRATION_KEY,
+ 				COMPETITION_TYPE_CLOSED_KEY
+ 	);		
 		
 	/**
 	 * Constructor sets up the actions for the backend functions and the widgets
@@ -236,7 +236,7 @@ class BidxCompetition {
 <p><label for="competition_type"><?php _e( 'Competition Type', 'bidx_competition' ) ?></label>	
 <select name="<?php echo $this->COMPETITION_TYPE ?>">
 <?php 
-foreach ( $this->COMPETITION_TYPES  as $c_type ) {
+foreach ( $this->competition_types  as $c_type ) {
 	echo '<option name="' . $c_type  . '" >'. _e( $c_type,'bidx-competition' ) . '</option>';
 } ?>
 </select>
@@ -245,7 +245,7 @@ foreach ( $this->COMPETITION_TYPES  as $c_type ) {
 	<input type="date" id="<?php echo $this->COMPETITION_START_KEY ?>" name="<?php echo $this->COMPETITION_START_KEY ?>" value="<?php echo esc_attr( $startdate ) ?>"/>
 </p>
 <p>
-	<label for="<?php echo $this->COMPETITION_END_KEY ?>">_e( 'Enddate (mandatory)', 'bidx_competition' );</label> ';
+	<label for="<?php echo $this->COMPETITION_END_KEY ?>"><?php _e( 'Enddate (mandatory)', 'bidx_competition' ); ?></label> ';
 	<input type="date" id="<?php echo $this->COMPETITION_END_KEY ?>" name="<?php echo $this->COMPETITION_END_KEY ?>" value="<?php echo esc_attr( $enddate ) ?>" />
 </p>
 <?php 
@@ -283,7 +283,7 @@ foreach ( $this->COMPETITION_TYPES  as $c_type ) {
 		} 
 		$type = sanitize_text_field( $_POST[$this->COMPETITION_TYPE_KEY] );
 		if ( ! in_array( $this->COMPETITION_TYPES, $type ) ) {
-			return WPError( __('Competition Type does not exist', 'bidx-competition' ) );
+			//return WPError( __('Competition Type does not exist', 'bidx-competition' ) );
 		}
 		if ( ! isset( $_POST[$this->COMPETITION_END_KEY] ) ) {	
 			return WPError( __('Enddate is mandatory and is not set', 'bidx-competition' ) );
