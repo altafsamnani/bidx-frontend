@@ -20,7 +20,6 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	const COMPETITION_LINK_KEY = 'competition_link';
 	const CLOCK_SIZE_KEY = 'clock-size';
 	
-	
 	private $diff = 0;
 	
 	/**

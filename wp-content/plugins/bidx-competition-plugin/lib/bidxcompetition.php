@@ -58,7 +58,7 @@ class BidxCompetition {
 		//load the monitoring
 		$monitoring = new CompetitionMonitoring();
 		//load the judging
-		$judges = new CompetitionJudging();
+		//$judges = new CompetitionJudging();
 	}
 		
 	/**
@@ -237,7 +237,13 @@ class BidxCompetition {
 <select name="<?php echo $this->COMPETITION_TYPE ?>">
 <?php 
 foreach ( $this->competition_types  as $c_type ) {
-	echo '<option name="' . $c_type  . '" >'. _e( $c_type,'bidx-competition' ) . '</option>';
+
+	printf(
+		'<option value="%s" %s >%s</option>',
+		$c_type,
+		$type = $c_type ? 'selected="selected"' : '',
+		_e( $c_type,'bidx-competition' )
+		);
 } ?>
 </select>
 <p>
@@ -282,8 +288,8 @@ foreach ( $this->competition_types  as $c_type ) {
 			return;
 		} 
 		$type = sanitize_text_field( $_POST[$this->COMPETITION_TYPE_KEY] );
-		if ( ! in_array( $this->COMPETITION_TYPES, $type ) ) {
-			//return WPError( __('Competition Type does not exist', 'bidx-competition' ) );
+		if ( ! in_array( $this->competition_types, $type ) ) {
+			return WPError( __('Competition Type does not exist', 'bidx-competition' ) );
 		}
 		if ( ! isset( $_POST[$this->COMPETITION_END_KEY] ) ) {	
 			return WPError( __('Enddate is mandatory and is not set', 'bidx-competition' ) );
