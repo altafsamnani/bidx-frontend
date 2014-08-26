@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         compile: true
       },
       bidx: {
-        src: ['static/less/bidx.less', 'apps/*/static/less/*.less', 'admin/static/less/*.less' ],
+        src: ['static/less/bidx.less', 'apps/*/static/less/*.less', 'admin/*/static/less/*.less' ],
         dest: 'static/css/<%= pkg.name %>.css'
       },
       min: {
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 
     watch: {
       recess: {
-        files: [ 'static/less/**/*.less', 'apps/*/static/less/*.less', '!static/less/bidx_newtheme.less', 'admin/static/less/*.less' ],
+        files: [ 'static/less/**/*.less', 'apps/*/static/less/*.less', '!static/less/bidx_newtheme.less', 'admin/*/static/less/*.less' ],
         tasks: ['recess']
       }
     },

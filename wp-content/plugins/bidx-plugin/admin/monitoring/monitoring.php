@@ -1,11 +1,11 @@
 <?php
 
-    require_once( BIDX_PLUGIN_DIR . '/../admin/admin.php' ); 
-    
+    require_once( BIDX_PLUGIN_DIR . '/../admin/admin.php' );
+
 	//Create a page
 	$admin_mon = new Bidx_Admin_Monitoring('edit.php',
 									__('Monitoring','domain'),
-									__('Monitoring','domain'), 
+									__('Monitoring','domain'),
 									'editor',
 									'bidx_monitoring_page',
 									'admin_body_content');
@@ -14,31 +14,31 @@
 	function admin_body_content()
 	{
 		//echo 'Monitoring page contains the latest status of your portal.';
-	
+
 	}
 
 	//Add metaboxes to the page
 	add_action('add_meta_boxes','sh_example_metaboxes');
-	
+
 	function sh_example_metaboxes()
 	{
 
 		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), 'analytics_geo', null, 'normal', 'default' );
-		
-		add_meta_box( 'User Data', __('User Data','bidx-plugin'), 'analytics_user', null, 'normal', 'default' );	
+
+		add_meta_box( 'User Data', __('User Data','bidx-plugin'), 'analytics_user', null, 'normal', 'default' );
 
 		add_meta_box( 'Roles', __('User Roles','bidx-plugin'), 'analytics_roles', null, 'side' ,  'default' );
 
 		add_meta_box( 'Registraions', __('Registrations','bidx-plugin'), 'analytics_registrations', null, 'side', 'default' );
-		
-		add_meta_box( 'Summaries', __('Business Summaries','bidx-plugin'), 'analytics_summaries', null, 'side', 'default' );	
-		
+
+		add_meta_box( 'Summaries', __('Business Summaries','bidx-plugin'), 'analytics_summaries', null, 'side', 'default' );
+
 		/* Add metaboxes help */
 		get_current_screen()->add_help_tab( array(
 			'id'      => 'How to use ? ',
 			'title'   => __('Overview'),
 			'content' =>
-			'<p>' . __( 'This report gives overview of Registered Users, Business Summaries, Geographical data' ) . '</p>' 			
+			'<p>' . __( 'This report gives overview of Registered Users, Business Summaries, Geographical data' ) . '</p>'
 		) );
 
 		get_current_screen()->set_help_sidebar(
@@ -50,31 +50,33 @@
 
 	function analytics_geo()
 	{
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );        
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
         echo $view->render( 'country-geochart.phtml' );
-	}	
+	}
 
 	function analytics_user()
 	{
 		echo 'Inside analytics_user';
-	}	
+	}
 
 	function analytics_registrations()
 	{
-		echo 'Inside analytics_registrations';
-	}	
-	
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
+        echo $view->render( 'user-linechart.phtml' );
+	}
+
 	function analytics_roles()
 	{
-		//1. Template Rendering               
-        $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );        
-        echo $view->render( 'userrole-piechart.phtml' );		
+		//1. Template Rendering
+        $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
+        echo $view->render( 'userrole-piechart.phtml' );
 
 	}
 
 	function analytics_summaries()
 	{
-		echo 'Inside roles';				
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
+        echo $view->render( 'bp-barchart.phtml' );
 
 	}
 	?>

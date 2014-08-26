@@ -34,52 +34,7 @@
     ,   appName     =   'monitoring'
     ;
 
-    /*
-        {
-        "searchTerm": "text:*",
-        "entityTypes": [
-          {
-            "type": "bidxMemberProfile"
-            },
-            {
-                "type": "bidxEntrepreneurProfile"
-            },
-            {
-                "type": "bidxBusinessSummary"
-            },
-            {
-                "type": "bidxMentorProfile"
-            },
-            {
-                "type": "bidxInvestorProfile"
-            }
-        ],
-        "maxResult": 0,
-        "facetsVisible": true,
-        "scope": "local"
 
-      }
-
-      */
-    function _getSearchCriteria (  )
-    {
-
-        var   entityFilters           = CONSTANTS.ENTITY_TYPES
-        ,     search
-        ;
-        search =    {
-                    criteria    :   {
-                                        "searchTerm"    :   "text:*"
-                                    ,   "facetsVisible" :   true
-                                    ,   "maxResult"     :   0
-                                    ,   "entityTypes"   :   entityFilters
-                                    ,   "scope"         :   "local"
-                                    }
-                    };
-
-    return search;
-
-    }
     /*
         Example
         data.addRows([
@@ -90,9 +45,8 @@
                     ['Pepperoni', 2]
                     ]);
     */
-    function createRolesChart( response, type )
+    function _createRolesChart( response, type )
     {
-
         // Create the data table.
         var label
         ,   facets      =   []
@@ -109,8 +63,6 @@
         {
             facets      =   response.facets;
             facetList   =   _.findWhere( facets, { name :   type });
-
-            bidx.utils.log(facetList);
 
             $.each( facetList.facetValues, function( idx, item )
             {
@@ -139,7 +91,7 @@
         chart.draw(data, options);
     }
 
-    function createRegionsMap( response, type )
+    function _createRegionsMap( response, type )
     {
         // Create the data table.
         var label
@@ -157,8 +109,6 @@
         {
             facets      =   response.facets;
             facetList   =   _.findWhere( facets, { name :   type });
-
-            bidx.utils.log(facetList);
 
             listItem.push( [countryLabel, growthLabel ] );
 
@@ -185,27 +135,250 @@
         chart.draw(data, options);
     }
 
+
+
+    /*
+        {
+        "searchTerm": "text:*",
+        "entityTypes": [
+          {
+            "type": "bidxMemberProfile"
+            },
+            {
+                "type": "bidxEntrepreneurProfile"
+            },
+            {
+                "type": "bidxBusinessSummary"
+            },
+            {
+                "type": "bidxMentorProfile"
+            },
+            {
+                "type": "bidxInvestorProfile"
+            }
+        ],
+        "maxResult": 0,
+        "facetsVisible": true,
+        "scope": "local"
+
+      }
+
+      */
+    function _getSearchCriteria ( data  )
+    {
+
+        var  search
+        ,    entityTypes    = bidx.utils.getValue('data', 'entityTypes')
+        ,    filters        = bidx.utils.getValue('data', 'filters')
+        ;
+
+
+
+        search =    {
+                    criteria    :   {
+                                        "searchTerm"    :   "text:*"
+                                    ,   "facetsVisible" :   true
+                                    //,   "maxResult"     :   0
+                                    ,   "entityTypes"   :   (entityTypes) ? entityTypes : CONSTANTS.ENTITY_TYPES
+                                    ,   "scope"         :   "local"
+                                    ,   "filters"       :   (filters) ? filters : []
+                                    }
+                    };
+
+    return search;
+
+    }
+
+    function _createUsersLineChart( response, type )
+    {
+        var data = google.visualization.arrayToDataTable([
+          ['Day', 'New users', 'Logins/day'],
+          ['Day 1',  1000,      400],
+          ['Day 2',  1170,      460],
+          ['Day 3',  660,       1120],
+          ['Day 4',  1030,      540],
+          ['Day 5',  1030,      540],
+          ['Day 6',  1030,      540],
+          ['Day 7',  1030,      540],
+        ]);
+
+        var options = {
+          title: 'Weekly users & logins'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('user_line_chart'));
+
+        chart.draw(data, options);
+    }
+    function _createBpBarChart( response, type )
+    {
+        var data = google.visualization.arrayToDataTable([
+          ['Day', 'New members', 'Business summaries'],
+          ['Day 1',  1000,      400],
+          ['Day 2',  1170,      460],
+          ['Day 3',  660,       1120],
+          ['Day 4',  1030,      540],
+          ['Day 5',  1030,      540],
+          ['Day 6',  1030,      540],
+          ['Day 7',  1030,      540],
+        ]);
+
+        var options =   {
+                            title: 'Weekly performance',
+                            vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
+                        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('bp_bar_chart'));
+
+        chart.draw(data, options);
+    }
+
+    function _getLoginAndUsers ( options )
+    {
+        var search
+        ,   fromTime    =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
+        ,   criteria    =   {
+                                entityTypes     :   [
+                                                        {
+                                                            "type": "bidxBusinessSummary"
+                                                        }
+                                                    ]
+                            ,   filters         :   [
+                                                        "modified:" +   fromTime
+                                                    ]
+                            }
+        ;
+
+        bidx.utils.log('fromTime', fromTime);
+        search = _getSearchCriteria( criteria );
+
+        bidx.api.call(
+            "search.get"
+        ,   {
+                    groupDomain:        bidx.common.groupDomain
+                ,   data:               search.criteria
+                ,   success: function( response )
+                    {
+                        bidx.utils.log("[searchList] retrieved results ", response );
+
+                        // Set a callback to run when the Google Visualization API is loaded.
+                        _createUsersLineChart( response, 'facet_entityType' );
+
+
+                    }
+                    ,
+                    error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText)
+                        ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                        ;
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        }
+                    }
+            }
+        );
+
+        return ;
+
+    }
+
+    function _getBusinessSumarries ( options )
+    {
+        var search
+        ,   fromTime    =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
+        ,   criteria    =   {
+                                entityTypes     :   [
+                                                        {
+                                                            "type": "bidxBusinessSummary"
+                                                        }
+                                                    ]
+                            ,   filters         :   [
+                                                        "modified:" +   fromTime
+                                                    ]
+                            }
+        ;
+
+        bidx.utils.log('fromTime', fromTime);
+        search = _getSearchCriteria( criteria );
+
+        bidx.api.call(
+            "search.get"
+        ,   {
+                    groupDomain:        bidx.common.groupDomain
+                ,   data:               search.criteria
+                ,   success: function( response )
+                    {
+                        bidx.utils.log("[searchList] retrieved results ", response );
+
+                        // Set a callback to run when the Google Visualization API is loaded.
+                        _createBpBarChart( response, 'facet_entityType' );
+
+
+                    }
+                    ,
+                    error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText)
+                        ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
+                        ;
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
+                        }
+                    }
+            }
+        );
+
+        return ;
+    }
+
     function _getSearchFacets( options )
     {
 
         var search
         ;
 
-        search = _getSearchCriteria(  );
+        search = _getSearchCriteria( );
 
         bidx.api.call(
             "search.get"
         ,   {
-                    groupDomain:          bidx.common.groupDomain
-                ,   data:                 search.criteria
+                    groupDomain:        bidx.common.groupDomain
+                ,   data:               search.criteria
                 ,   success: function( response )
                     {
                         bidx.utils.log("[searchList] retrieved results ", response );
 
                         // Set a callback to run when the Google Visualization API is loaded.
-                        createRolesChart( response, 'facet_entityType' );
+                        _createRolesChart( response, 'facet_entityType' );
 
-                        createRegionsMap( response, 'facet_country');
+                        _createRegionsMap( response, 'facet_country');
 
 
                     }
@@ -243,6 +416,12 @@
         google.load("visualization", "1.0", {packages:["corechart"]});
 
         google.setOnLoadCallback(_getSearchFacets);
+
+        google.setOnLoadCallback(_getBusinessSumarries);
+
+        google.setOnLoadCallback(_getLoginAndUsers);
+
+
 
     }
 

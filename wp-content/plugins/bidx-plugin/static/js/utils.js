@@ -673,6 +673,14 @@
         return document.location.hostname.split( "." ).shift();
     };
 
+
+    var toTimeStamp    = function(strDate)
+    {
+        var datum = Date.parse(strDate);
+
+        return datum/1000;
+    };
+
     var getISODate = function( obj )
     {
         var result = "";
@@ -883,6 +891,7 @@
     ,   getValue:                   getValue
     ,   setValue:                   setValue
     ,   getGroupDomain:             getGroupDomain
+    ,   toTimeStamp:                toTimeStamp
     ,   getISODate:                 getISODate
     ,   parseISODate:               parseISODate
     ,   parseISODateTime:           parseISODateTime
