@@ -444,7 +444,7 @@
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
-                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore", appName ), class: "list-group-item list-group-item-warning text-center more-less" }) );
+                    $categoryList.append( $( "<a />", { html: bidx.i18n.i( "showMore", appName ), "class": "list-group-item list-group-item-warning text-center more-less" }) );
 
                     $categoryList.find( ".more-less" ).on('click', function( e )
                     {

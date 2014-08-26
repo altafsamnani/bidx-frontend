@@ -986,7 +986,7 @@
             {
                 $errorCount = $( "<span/>",
                 {
-                    class:      "pull-right badge js-error-count"
+                    "class":      "pull-right badge js-error-count"
                 } );
 
                 $accordionHeading.prepend( $errorCount );
@@ -1023,7 +1023,7 @@
             if ( !$toast.length )
             {
                 $toast = $editControls
-                    .append( $( "<div />", { class: 'alert alert-danger pull-right total-error-message' }) )
+                    .append( $( "<div />", { "class": 'alert alert-danger pull-right total-error-message' }) )
                     .find( ".total-error-message" )
                     .text(message)
                     .hide()

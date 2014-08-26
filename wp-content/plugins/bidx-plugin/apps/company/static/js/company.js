@@ -761,8 +761,8 @@
         //
 
         var cancelHref = companyId ? "/company/" + companyId : "/member";
-        $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: cancelHref  });
+        $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    });
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: cancelHref  });
 
         // Inject the save and button into the controls
         //

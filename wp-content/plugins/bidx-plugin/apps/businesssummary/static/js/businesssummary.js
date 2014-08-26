@@ -3002,8 +3002,8 @@
 
         // Inject the save and button into the controls
         //
-        $btnSave    = $( "<a />", { class: "btn btn-primary disabled", href: "#save"    });
-        $btnCancel  = $( "<a />", { class: "btn btn-primary disabled", href: "#loadMentors"  });
+        $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save"    });
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: "#loadMentors"  });
 
 
         if( state === 'edit')
