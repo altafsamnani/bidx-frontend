@@ -4,9 +4,11 @@
     "use strict";
 
     var responseFacets
+    ,   $element             = $(".monitoring")
+    ,   $views               = $element.find(".view")
     ,   CONSTANTS =
         {
-            SEARCH_LIMIT:                       5
+            SEARCH_LIMIT:                       10
         ,   NUMBER_OF_PAGES_IN_PAGINATOR:       10
         ,   LOAD_COUNTER:                       0
         ,   VISIBLE_FILTER_ITEMS:               4 // 0 index (it will show +1)
@@ -118,7 +120,6 @@
 
                 listItem.push( [ label, item.count] );
             } );
-            bidx.utils.log(listItem);
 
             data = google.visualization.arrayToDataTable( listItem );
         }
@@ -137,57 +138,7 @@
 
 
 
-    /*
-        {
-        "searchTerm": "text:*",
-        "entityTypes": [
-          {
-            "type": "bidxMemberProfile"
-            },
-            {
-                "type": "bidxEntrepreneurProfile"
-            },
-            {
-                "type": "bidxBusinessSummary"
-            },
-            {
-                "type": "bidxMentorProfile"
-            },
-            {
-                "type": "bidxInvestorProfile"
-            }
-        ],
-        "maxResult": 0,
-        "facetsVisible": true,
-        "scope": "local"
 
-      }
-
-      */
-    function _getSearchCriteria ( data  )
-    {
-
-        var  search
-        ,    entityTypes    = bidx.utils.getValue('data', 'entityTypes')
-        ,    filters        = bidx.utils.getValue('data', 'filters')
-        ;
-
-
-
-        search =    {
-                    criteria    :   {
-                                        "searchTerm"    :   "text:*"
-                                    ,   "facetsVisible" :   true
-                                    //,   "maxResult"     :   0
-                                    ,   "entityTypes"   :   (entityTypes) ? entityTypes : CONSTANTS.ENTITY_TYPES
-                                    ,   "scope"         :   "local"
-                                    ,   "filters"       :   (filters) ? filters : []
-                                    }
-                    };
-
-    return search;
-
-    }
 
     function _createUsersLineChart( response, type )
     {
@@ -233,6 +184,194 @@
         chart.draw(data, options);
     }
 
+    function showMemberProfile( options )
+    {
+        var bidxMeta
+        ;
+
+        bidx.api.call(
+            "member.fetch"
+        ,   {
+                id:          options.ownerId
+            ,   requesteeId: options.ownerId
+            ,   groupDomain: bidx.common.groupDomain
+            ,   success:        function( item )
+                {
+                    // now format it into array of objects with value and label
+
+                    if ( !$.isEmptyObject(item.bidxMemberProfile) )
+                    {
+                        //if( item.bidxEntityType == 'bidxBusinessSummary') {
+                        bidxMeta       = bidx.utils.getValue( item, "bidxMemberProfile.bidxMeta" );
+
+                        if( bidxMeta  )
+                        {
+                            //  execute callback if provided
+                            if (options && options.callback)
+                            {
+                                options.callback( item );
+                            }
+                        }
+
+                    }
+
+                }
+            ,   error: function(jqXhr, textStatus)
+                {
+                    //  execute callback if provided
+                    if (options && options.callback)
+                    {
+                        options.callback( false );
+                    }
+                    return false;
+                }
+            }
+        );
+    }
+
+     /*
+        {
+        "searchTerm": "text:*",
+        "entityTypes": [
+          {
+            "type": "bidxMemberProfile"
+            },
+            {
+                "type": "bidxEntrepreneurProfile"
+            },
+            {
+                "type": "bidxBusinessSummary"
+            },
+            {
+                "type": "bidxMentorProfile"
+            },
+            {
+                "type": "bidxInvestorProfile"
+            }
+        ],
+        "maxResult": 0,
+        "facetsVisible": true,
+        "scope": "local"
+
+      }
+
+      */
+    function _getSearchCriteria ( data  )
+    {
+        var  search
+        ,    entityTypes    = bidx.utils.getValue('data', 'entityTypes')
+        ,    filters        = bidx.utils.getValue('data', 'filters')
+        ,    maxResult      = bidx.utils.getValue('data', 'maxResult')
+        ,    facetsVisible  = bidx.utils.getValue('data', 'facetsVisible')
+        ,    sort           = bidx.utils.getValue('data', 'sort')
+        ;
+
+        search =    {
+                    criteria    :   {
+                                        "searchTerm"    :   "text:*"
+                                    ,   "facetsVisible" :   (facetsVisible) ? facetsVisible : true
+                                    ,   "maxResult"     :   (maxResult) ? maxResult : tempLimit
+                                    ,   "entityTypes"   :   (entityTypes) ? entityTypes : CONSTANTS.ENTITY_TYPES
+                                    ,   "scope"         :   "local"
+                                    ,   "filters"       :   (filters) ? filters : []
+                                    ,   "sort"          :   (sort) ? sort : []
+                                    }
+                    };
+
+        return search;
+    }
+
+    function _getLatestUsers ( options )
+    {
+        var search
+        ,   responseLength
+        ,   responseDocs
+        ,   listArr         =   []
+        ,   counter         = 1
+        ,   $d              =   $.Deferred()
+        ,   fromTime        =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
+        ,   criteria        =   {
+                                    entityTypes     :   [
+                                                            {
+                                                                "type": "bidxMemberProfile"
+                                                            }
+                                                        ]
+                                ,   sort                :   [
+                                                           {
+                                                                "field": "created",
+                                                                "order": "asc"
+                                                            }
+                                                        ]
+                                }
+        ;
+
+        search = _getSearchCriteria( criteria );
+
+        bidx.api.call(
+            "search.get"
+        ,   {
+                    groupDomain:        bidx.common.groupDomain
+                ,   data:               search.criteria
+                ,   success: function( response )
+                    {
+                        bidx.utils.log("[searchList] retrieved users ", response );
+
+                        responseDocs    =   response.docs;
+
+                        responseLength  =   response.docs.length;
+
+                        if( responseLength )
+                        {
+                            $.each( responseDocs , function ( idx, item)
+                            {
+
+                                    showMemberProfile(
+                                    {
+                                        ownerId     :   item.ownerId
+                                    ,   callback    :   function ( itemMember )
+                                                        {
+                                                            if( itemMember )
+                                                            {
+                                                                listArr.push(itemMember);
+                                                            }
+
+                                                            if(counter === responseLength )
+                                                            {
+
+                                                                $d.resolve( listArr );
+                                                            }
+
+                                                             counter = counter + 1;
+                                                        }
+                                    } );
+
+                            });
+                        }
+                        else
+                        {
+                            $d.resolve( );
+                        }
+                    }
+                    ,
+                    error: function( jqXhr, textStatus )
+                    {
+
+                        var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                        ,   msg     = "Something went wrong while retrieving the business summary: " + status
+                        ,   error   = new Error( msg )
+                        ;
+
+                        //_showError( msg );
+
+                        $d.reject( error );
+                    }
+            }
+        );
+
+        return $d.promise( );
+
+    }
+
     function _getLoginAndUsers ( options )
     {
         var search
@@ -249,7 +388,6 @@
                             }
         ;
 
-        bidx.utils.log('fromTime', fromTime);
         search = _getSearchCriteria( criteria );
 
         bidx.api.call(
@@ -263,6 +401,11 @@
 
                         // Set a callback to run when the Google Visualization API is loaded.
                         _createUsersLineChart( response, 'facet_entityType' );
+
+                        if (options && options.callback)
+                        {
+                            options.callback(  );
+                        }
 
 
                     }
@@ -312,7 +455,7 @@
                             }
         ;
 
-        bidx.utils.log('fromTime', fromTime);
+
         search = _getSearchCriteria( criteria );
 
         bidx.api.call(
@@ -326,6 +469,11 @@
 
                         // Set a callback to run when the Google Visualization API is loaded.
                         _createBpBarChart( response, 'facet_entityType' );
+
+                        if (options && options.callback)
+                        {
+                            options.callback(  );
+                        }
 
 
                     }
@@ -362,9 +510,12 @@
     {
 
         var search
+        ,   criteria    =   {
+                                maxResult : 0
+                            }
         ;
 
-        search = _getSearchCriteria( );
+        search = _getSearchCriteria( criteria );
 
         bidx.api.call(
             "search.get"
@@ -380,6 +531,10 @@
 
                         _createRegionsMap( response, 'facet_country');
 
+                        if (options && options.callback)
+                        {
+                            options.callback(  );
+                        }
 
                     }
                     ,
@@ -411,17 +566,119 @@
         return ;
     }
 
+    /*data.addRows([
+          ['Mike',  {v: 10000, f: '$10,000'}, true],
+          ['Jim',   {v:8000,   f: '$8,000'},  false],
+          ['Alice', {v: 12500, f: '$12,500'}, true],
+          ['Bob',   {v: 7000,  f: '$7,000'},  true]
+        ]);*/
+
+    function _createUserTables ( listArr )
+    {
+        bidx.utils.log(listArr);
+        var dataArr =   []
+        ,   dateTime
+        ,   strDateTime
+        ,   anchorName
+        ,   data    =   new google.visualization.DataTable()
+        ;
+
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Roles');
+        data.addColumn('string', 'Created');
+
+        $.each( listArr , function ( idx, item)
+        {
+            dateTime    = bidx.utils.getValue(item, 'bidxMemberProfile.bidxMeta.bidxCreationDateTime');
+
+            strDateTime = bidx.utils.parseISODateTime(dateTime.toString(), "date");
+
+            anchorName  =   "<a target='_blank' href='/member/" + item.member.bidxMeta.bidxMemberId    +   "'>" + item.member.displayName +"</a>";
+
+            dataArr.push( [anchorName,  item.bidxMemberProfile.roles, strDateTime] );
+
+        });
+
+        data.addRows( dataArr );
+
+        var table = new google.visualization.Table(document.getElementById('user-table'));
+
+        table.draw  (   data
+                    ,   {
+                            showRowNumber: true
+                        ,   allowHtml:     true
+                        }
+                    );
+
+    }
+
+    function _getData ()
+    {
+        /* 1. Load Country Geo Chart & Load User Role Pie Chart */
+        _showView("loadcountrygeochart", true );
+
+        _showView("loaduserrolepiechart", true );
+
+        _getSearchFacets(
+        {
+            callback :  function( )
+                        {
+                            _hideView("loadcountrygeochart");
+                            _hideView("loaduserrolepiechart");
+                        }
+        });
+
+        /* 2. Load Business Summary Chart */
+        _showView("loadbpbarchart", true );
+        _getBusinessSumarries(
+        {
+            callback :  function( )
+                        {
+                            _hideView("loadbpbarchart");
+                        }
+        });
+
+        /* 3. Load Login and Registered users Chart */
+        _showView("loaduserlinechart", true );
+        _getLoginAndUsers(
+        {
+            callback :  function( )
+                        {
+                            _hideView("loaduserlinechart");
+                        }
+        });
+
+        /* 4. Load Latest uers  in Table */
+        _showView("loadusertablechart", true );
+        _getLatestUsers()
+        .done( function( listArr )
+                    {
+                        _hideView("loadusertablechart");
+                        _createUserTables ( listArr );
+                    });
+    }
+
+    var _showView = function(view, showAll)
+    {
+
+        //  show title of the view if available
+        if (!showAll)
+        {
+            $views.hide();
+        }
+         var $view = $views.filter(bidx.utils.getViewName(view)).show();
+    };
+
+    var _hideView = function( hideview )
+    {
+        $views.filter(bidx.utils.getViewName(hideview)).hide();
+    };
+
     function _init()
     {
-        google.load("visualization", "1.0", {packages:["corechart"]});
+        google.load("visualization", "1.0", {packages:["corechart","table"]});
 
-        google.setOnLoadCallback(_getSearchFacets);
-
-        google.setOnLoadCallback(_getBusinessSumarries);
-
-        google.setOnLoadCallback(_getLoginAndUsers);
-
-
+        google.setOnLoadCallback(_getData);
 
     }
 

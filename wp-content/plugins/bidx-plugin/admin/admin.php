@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Bidx Admin Page class.
  *
@@ -13,12 +13,12 @@
  *
  * Example use
  * $my_admin page = new Bidx_Admin_Page('my_hook','My Admin Page','My Admin Page', 'manage_options','my-admin-page')
- * Note - 
- * JsLibraries are registered in shortcode.php through admin_init & admin_print_footer_scripts plz refer that 
+ * Note -
+ * JsLibraries are registered in shortcode.php through admin_init & admin_print_footer_scripts plz refer that
  *
  *
  */
-require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' ); 
+require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 
 class Bidx_Admin_Monitoring
 {
@@ -30,7 +30,8 @@ class Bidx_Admin_Monitoring
 	public $page;
 	public $userId;
 	public $view;
-	static $deps 	= 	array (	'underscore' 
+	public $className;
+	static $deps 	= 	array (	'underscore'
 							  ,	'bidx-admin-api-core'
 							  , 'bidx-admin-common'
 							  , 'google-jsapi'
@@ -44,7 +45,7 @@ class Bidx_Admin_Monitoring
 	 * @param $slug - (string) a slug identifier for this page
 	 * @param $body_content_cb - (callback)  (optional) a callback that prints to the page, above the metaboxes. See the tutorial for more details.
 	 */
-	function __construct( $hook, $title, $menu, $permissions, $slug, $body_content_cb='__return_true' )
+	function __construct( $hook, $title, $menu, $permissions, $slug, $body_content_cb='__return_true', $className = NULL )
 	{
 		$this->hook 			= $hook;
 		$this->title 			= $title;
@@ -53,6 +54,7 @@ class Bidx_Admin_Monitoring
 		$this->slug 			= $slug;
 		$this->body_content_cb 	= $body_content_cb;
 		$this->userId  			= get_current_user_id();
+		$this->className        = $className;
 
 		/* Add the page */
 		add_action( 'admin_menu', array( $this,'add_page' ) );
@@ -61,15 +63,15 @@ class Bidx_Admin_Monitoring
 
 		add_action('admin_print_footer_scripts', array($this,'footer_scripts'));
 
-		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/static/templates/' ); 		
-		
+		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/static/templates/' );
+
 	}
 
 	/**
 	 * Loads the Google basis. Might be useful for everything instead of loading Google Maps only
 	 * load them when needed by Javascript.
 	 */
-	public function register_admin_bidx_ui_libs() 
+	public function register_admin_bidx_ui_libs()
 	{
 		//1. Load Js Libraries
 		wp_register_script ('monitoring', plugins_url('monitoring/static/js/monitoring.js', __FILE__), self::$deps, '20140620', TRUE);
@@ -79,8 +81,8 @@ class Bidx_Admin_Monitoring
 	public function footer_scripts( )
 	{
 		/* For postmetadata dragging and arrow close/open icon functionality */
- 		echo "<script>jQuery(document).ready(function(){ postboxes.add_postbox_toggles(pagenow); });</script>";	
-		
+ 		echo "<script>jQuery(document).ready(function(){ postboxes.add_postbox_toggles(pagenow); });</script>";
+
 	}
 
 	/**
@@ -92,22 +94,22 @@ class Bidx_Admin_Monitoring
 
 		/* Add the page */
 		$this->page = add_submenu_page( $this->hook,
-										$this->title, 
-										$this->menu, 
+										$this->title,
+										$this->menu,
 										$this->permissions,
-										$this->slug,  
+										$this->slug,
 										array($this,'render_page'),
 										1);
 
 		/* Add callbacks for this screen only */
 		add_action('load-'.$this->page,  array($this,'page_actions'));
-	
-	}		
+
+	}
 
    /**
 	* Actions to be taken prior to page loading. This is after headers have been set.
     * call on load-$hook
-	* This calls the add_meta_boxes hooks, adds screen options and enqueues the postbox.js script.   
+	* This calls the add_meta_boxes hooks, adds screen options and enqueues the postbox.js script.
 	*/
 	function page_actions( )
 	{
@@ -118,7 +120,7 @@ class Bidx_Admin_Monitoring
 		add_screen_option( 'layout_columns', array( 'max' => 2, 'default' => 2 ) );
 
 		/* Enqueue WordPress' script for handling the metaboxes */
-		wp_enqueue_script( 'postbox' ); 
+		wp_enqueue_script( 'postbox' );
 	}
 
 	/**
@@ -127,8 +129,9 @@ class Bidx_Admin_Monitoring
 	function render_page()
 	{
 		$this->view->title 				= 	$this->title;
-		$this->view->userId 			= 	$this->userId;       	
+		$this->view->userId 			= 	$this->userId;
 		$this->view->body_content_cb 	= 	$this->body_content_cb;
+		$this->view->className          =   $this->className;
 
         echo $this->view->render( 'main.phtml' );
 	}

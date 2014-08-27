@@ -8,7 +8,8 @@
 									__('Monitoring','domain'),
 									'editor',
 									'bidx_monitoring_page',
-									'admin_body_content');
+									'admin_body_content',
+									'monitoring');
 
 	//Define the body content for the page (if callback is specified above)
 	function admin_body_content()
@@ -25,13 +26,14 @@
 
 		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), 'analytics_geo', null, 'normal', 'default' );
 
-		add_meta_box( 'User Data', __('User Data','bidx-plugin'), 'analytics_user', null, 'normal', 'default' );
+		add_meta_box( 'Latest Members', __('User Data','bidx-plugin'), 'analytics_user', null, 'normal', 'default' );
 
 		add_meta_box( 'Roles', __('User Roles','bidx-plugin'), 'analytics_roles', null, 'side' ,  'default' );
 
-		add_meta_box( 'Registraions', __('Registrations','bidx-plugin'), 'analytics_registrations', null, 'side', 'default' );
+		add_meta_box( 'Registraions', __('Sample Registraions (In Progress)','bidx-plugin'), 'analytics_registrations', null, 'side', 'default' );
 
-		add_meta_box( 'Summaries', __('Business Summaries','bidx-plugin'), 'analytics_summaries', null, 'side', 'default' );
+		add_meta_box( 'Summaries', __('Sample Summaries (In Progress)','bidx-plugin'), 'analytics_summaries', null, 'side', 'default' );
+
 
 		/* Add metaboxes help */
 		get_current_screen()->add_help_tab( array(
@@ -56,7 +58,8 @@
 
 	function analytics_user()
 	{
-		echo 'Inside analytics_user';
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
+        echo $view->render( 'user-table.phtml' );
 	}
 
 	function analytics_registrations()
