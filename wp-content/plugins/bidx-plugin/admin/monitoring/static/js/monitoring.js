@@ -6,6 +6,9 @@
     var responseFacets
     ,   $element             = $(".monitoring")
     ,   $views               = $element.find(".view")
+    ,   tableData
+    ,   table
+    ,   tableOptions
     ,   CONSTANTS =
         {
             SEARCH_LIMIT:                       10
@@ -32,8 +35,31 @@
                                                 ]
         }
 
-    ,   tempLimit   =   CONSTANTS.SEARCH_LIMIT
-    ,   appName     =   'monitoring'
+    ,   tempLimit           =   CONSTANTS.SEARCH_LIMIT
+    ,   appName             =   'monitoring'
+    ,   paging                  =
+        {
+            search:
+            {
+                offset:         0
+            ,   totalPages:     null
+            }
+        }
+    ,   tableHeader     =   [
+                                {
+                                    name:   'Name'
+                                ,   type:   'string'
+                                }
+                            ,   {
+                                    name:   'Roles'
+                                ,   type:   'string'
+                                }
+                            ,   {
+                                    name:   'Created'
+                                ,   type:   'string'
+                                }
+                            ]
+
     ;
 
 
@@ -219,14 +245,230 @@
             ,   error: function(jqXhr, textStatus)
                 {
                     //  execute callback if provided
-                    if (options && options.callback)
+                    if (options && options.error)
                     {
-                        options.callback( false );
+                        options.error( item );
                     }
                     return false;
                 }
             }
         );
+    }
+
+    function _initTable( options )
+    {
+        var startPage       =   options.startPage
+        ;
+        tableOptions    =   {
+                                    showRowNumber:                      true
+                                ,   allowHtml:                          true
+                                ,   page:                               'enable'
+                                ,   sort:                               'disable'
+                               // ,   pageSize:                           pageSize
+                                ,   pagingSymbols:                      {prev: 'prev', next: 'next'}
+                                ,   pagingButtonsConfiguration:         'auto' //( paging.search.offset === 0 )  ?   'next'  :   'both'
+                                ,   firstRowNumber:                     1
+                                ,   startPage:                          startPage
+                                }
+        ;
+
+    }
+
+    function _addMemberDataToTable( options )
+    {
+        var dateTime
+        ,   colName
+        ,   item                =   options.item
+        ,   displayStartRow     =   options.displayStartRow
+        ,   result  =   []
+        ;
+
+        dateTime    = bidx.utils.getValue(item, 'bidxMemberProfile.bidxMeta.bidxCreationDateTime');
+
+        result['Created']   =   bidx.utils.parseTimestampToDateTime(dateTime.toString(), "date");
+
+        result['Name']      =   "<a target='_blank' href='/member/" + item.member.bidxMeta.bidxMemberId    +   "'>" + item.member.displayName +"</a>";
+
+        result['Roles']     =   item.bidxMemberProfile.roles;
+
+        $.each ( tableHeader,  function (tableIndex, colValue)
+        {
+
+            colName         =   colValue.name;
+
+            tableData.setCell(displayStartRow, tableIndex, result[colName]);
+
+            table.draw  ( tableData,   tableOptions );
+
+        });
+    }
+
+    function _addErrorDataToTable ( options )
+    {
+        var displayStartRow     =   options.displayStartRow;
+        tableData.setCell(displayStartRow, 0, 'Loading Data Error');
+        table.draw  ( tableData,   tableOptions );
+
+    }
+
+
+    function _addRowsToTable ( options  )
+    {
+        var dateTime
+        ,   colName
+        ,   anchorName
+      //  ,   pageSize        =   CONSTANTS.SEARCH_LIMIT
+        ,   pageSize        =   options.pageSize
+        ,   result          =   []
+        ,   strDateTime
+        ,   displayStartRow =   paging.search.offset
+        ,   listArr         =   options.listArr
+        ,   startPage       =   options.startPage
+        ,   listArrLength   =   listArr.length
+        ,   diffLength
+        ,   tableOptions    =   {
+                                    showRowNumber:                      true
+                                ,   allowHtml:                          true
+                                ,   page:                               'enable'
+                                ,   sort:                               'disable'
+                               // ,   pageSize:                           pageSize
+                                ,   pagingSymbols:                      {prev: 'prev', next: 'next'}
+                                ,   pagingButtonsConfiguration:         'auto' //( paging.search.offset === 0 )  ?   'next'  :   'both'
+                                ,   firstRowNumber:                     1
+                                ,   startPage:                          startPage
+                            }
+        ;
+
+        if(pageSize)
+        {
+            tableOptions.pageSize = pageSize ;
+        }
+
+        $.each( listArr , function ( idx, item)
+        {
+            dateTime    = bidx.utils.getValue(item, 'bidxMemberProfile.bidxMeta.bidxCreationDateTime');
+
+            result['Created']   =   bidx.utils.parseTimestampToDateTime(dateTime.toString(), "date");
+
+            result['Name']      =   "<a target='_blank' href='/member/" + item.member.bidxMeta.bidxMemberId    +   "'>" + item.member.displayName +"</a>";
+
+            result['Roles']     =   item.bidxMemberProfile.roles;
+
+            //dataArr.push( [anchorName,  item.bidxMemberProfile.roles, strDateTime] );
+            //tableData.addRow( [anchorName,  , strDateTime] );
+
+            $.each ( tableHeader,  function (tableIndex, colValue)
+            {
+
+                colName         =   colValue.name;
+
+                tableData.setCell(displayStartRow, tableIndex, result[colName]);
+
+                table.draw  ( tableData,   tableOptions );
+
+            });
+
+            //data.addRows( dataArr );
+            displayStartRow++;
+
+        });
+
+        if( listArrLength < pageSize)
+        {
+            diffLength = pageSize - listArrLength;
+            while ( diffLength > 0 )
+            {
+                tableData.setCell(displayStartRow, 0, 'Loading Data Error');
+                displayStartRow++;
+                diffLength--;
+
+                table.draw  ( tableData,   tableOptions );
+            }
+        }
+
+        bidx.utils.log('after getRows',tableData.getNumberOfRows());
+    }
+
+    /*data.addRows([
+          ['Mike',  {v: 10000, f: '$10,000'}, true],
+          ['Jim',   {v:8000,   f: '$8,000'},  false],
+          ['Alice', {v: 12500, f: '$12,500'}, true],
+          ['Bob',   {v: 7000,  f: '$7,000'},  true]
+        ]);*/
+
+    function _createUserTables ( options )
+    {
+
+        var dataArr         =   []
+        ,   numFound        =   options.numFound
+        ,   addListener     =   google.visualization.events.addListener
+        ;
+
+        tableData           =   new google.visualization.DataTable();
+
+        table               =   new google.visualization.Table(document.getElementById('user-table'));
+        /*
+        Example     data.addColumn('string', 'Name');
+                    data.addColumn('string', 'Roles');
+                    data.addColumn('string', 'Created');
+        */
+
+        $.each ( tableHeader,  function (tableIndex, colValue)
+        {
+            tableData.addColumn  (   colValue.type
+                            ,   colValue.name);
+        });
+        bidx.utils.log('numFound',numFound);
+        tableData.addRows(numFound);
+
+        addListener (   table
+                    ,   'page'
+                    ,   function(e)
+                        {
+                            handlePage(e);
+                        }
+                    );
+
+       /* _addRowsToTable(
+        {
+            listArr:    listArr
+        ,   startPage:  0
+        ,   pageSize:   CONSTANTS.SEARCH_LIMIT
+        });*/
+
+
+
+      //  google.visualization.events.addListener(table, 'event', selectionHandler);
+
+
+        var handlePage = function(properties)
+        {
+
+            var page              =   properties.page
+            ,   isDataExist
+            ;
+
+            paging.search.offset  =   page  *   tempLimit;
+
+            isDataExist       =   tableData.getValue(paging.search.offset, 0  );
+
+            bidx.utils.log('Data Exists Already', isDataExist);
+
+            if(!isDataExist)
+            {
+            _showView("loadusertablechart", true );
+
+            _getLatestUsers(
+            {
+                page:   page
+            })
+            .done( function( listArr, numFound )
+                    {
+                        _hideView("loadusertablechart");
+                    });
+            }
+        };
+
     }
 
      /*
@@ -259,22 +501,24 @@
     function _getSearchCriteria ( data  )
     {
         var  search
-        ,    entityTypes    = bidx.utils.getValue('data', 'entityTypes')
-        ,    filters        = bidx.utils.getValue('data', 'filters')
-        ,    maxResult      = bidx.utils.getValue('data', 'maxResult')
-        ,    facetsVisible  = bidx.utils.getValue('data', 'facetsVisible')
-        ,    sort           = bidx.utils.getValue('data', 'sort')
+        ,    entityTypes    = bidx.utils.getValue(data, 'entityTypes')
+        ,    filters        = bidx.utils.getValue(data, 'filters')
+        ,    maxResult      = bidx.utils.getValue(data, 'maxResult')
+        ,    facetsVisible  = bidx.utils.getValue(data, 'facetsVisible')
+        ,    sort           = bidx.utils.getValue(data, 'sort')
+        ,    offset         = bidx.utils.getValue(data, 'offset')
         ;
 
         search =    {
                     criteria    :   {
                                         "searchTerm"    :   "text:*"
                                     ,   "facetsVisible" :   (facetsVisible) ? facetsVisible : true
-                                    ,   "maxResult"     :   (maxResult) ? maxResult : tempLimit
-                                    ,   "entityTypes"   :   (entityTypes) ? entityTypes : CONSTANTS.ENTITY_TYPES
+                                    ,   "offset"        :   paging.search.offset
+                                    ,   "maxResult"     :   (maxResult)     ? maxResult     : tempLimit
+                                    ,   "entityTypes"   :   (entityTypes)   ? entityTypes   : CONSTANTS.ENTITY_TYPES
                                     ,   "scope"         :   "local"
-                                    ,   "filters"       :   (filters) ? filters : []
-                                    ,   "sort"          :   (sort) ? sort : []
+                                    ,   "filters"       :   (filters)       ? filters       : []
+                                    ,   "sort"          :   (sort)          ? sort          : []
                                     }
                     };
 
@@ -286,22 +530,26 @@
         var search
         ,   responseLength
         ,   responseDocs
+        ,   numFound
+        ,   page            =   bidx.utils.getValue(options, 'page')
         ,   listArr         =   []
-        ,   counter         = 1
+        ,   counter         =   1
         ,   $d              =   $.Deferred()
         ,   fromTime        =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
+        ,   displayStartRow =   paging.search.offset
         ,   criteria        =   {
                                     entityTypes     :   [
                                                             {
                                                                 "type": "bidxMemberProfile"
                                                             }
                                                         ]
-                                ,   sort                :   [
-                                                           {
-                                                                "field": "created",
-                                                                "order": "asc"
+                                ,   sort            :   [
+                                                            {
+                                                                "field": "created"
+                                                            ,   "order": "asc"
                                                             }
                                                         ]
+
                                 }
         ;
 
@@ -319,6 +567,22 @@
                         responseDocs    =   response.docs;
 
                         responseLength  =   response.docs.length;
+
+                        numFound        =   response.numFound;
+
+                        //  calling _createUserTables first time to let him know the numFound and then we dont need it
+                        if (options && options.callback)
+                        {
+                            options.callback( numFound );
+                        }
+
+                        /* Set the table properties for current page*/
+                        _initTable(
+                        {
+                            startPage:  page
+                        ,   pageSize:   CONSTANTS.SEARCH_LIMIT
+                        }
+                        );
 
                         if( responseLength )
                         {
@@ -338,10 +602,29 @@
                                                             if(counter === responseLength )
                                                             {
 
-                                                                $d.resolve( listArr );
+                                                                $d.resolve( listArr, numFound );
                                                             }
 
-                                                             counter = counter + 1;
+                                                            _addMemberDataToTable(
+                                                            {
+                                                                item:               itemMember
+                                                            ,   displayStartRow:    displayStartRow
+                                                            });
+
+                                                            counter = counter + 1;
+                                                            displayStartRow++;
+
+                                                        }
+                                    ,   error       :   function ( itemMember )
+                                                        {
+                                                            _addErrorDataToTable(
+                                                            {
+                                                                item:                itemMember
+                                                            ,   displayStartRow:     displayStartRow
+                                                            }
+                                                            );
+                                                            counter = counter + 1;
+                                                            displayStartRow++;
                                                         }
                                     } );
 
@@ -475,7 +758,6 @@
                             options.callback(  );
                         }
 
-
                     }
                     ,
                     error: function( jqXhr, textStatus )
@@ -566,55 +848,9 @@
         return ;
     }
 
-    /*data.addRows([
-          ['Mike',  {v: 10000, f: '$10,000'}, true],
-          ['Jim',   {v:8000,   f: '$8,000'},  false],
-          ['Alice', {v: 12500, f: '$12,500'}, true],
-          ['Bob',   {v: 7000,  f: '$7,000'},  true]
-        ]);*/
-
-    function _createUserTables ( listArr )
-    {
-        bidx.utils.log(listArr);
-        var dataArr =   []
-        ,   dateTime
-        ,   strDateTime
-        ,   anchorName
-        ,   data    =   new google.visualization.DataTable()
-        ;
-
-        data.addColumn('string', 'Name');
-        data.addColumn('string', 'Roles');
-        data.addColumn('string', 'Created');
-
-        $.each( listArr , function ( idx, item)
-        {
-            dateTime    = bidx.utils.getValue(item, 'bidxMemberProfile.bidxMeta.bidxCreationDateTime');
-
-            strDateTime = bidx.utils.parseISODateTime(dateTime.toString(), "date");
-
-            anchorName  =   "<a target='_blank' href='/member/" + item.member.bidxMeta.bidxMemberId    +   "'>" + item.member.displayName +"</a>";
-
-            dataArr.push( [anchorName,  item.bidxMemberProfile.roles, strDateTime] );
-
-        });
-
-        data.addRows( dataArr );
-
-        var table = new google.visualization.Table(document.getElementById('user-table'));
-
-        table.draw  (   data
-                    ,   {
-                            showRowNumber: true
-                        ,   allowHtml:     true
-                        }
-                    );
-
-    }
-
     function _getData ()
     {
-        /* 1. Load Country Geo Chart & Load User Role Pie Chart */
+        /*// 1. Load Country Geo Chart & Load User Role Pie Chart
         _showView("loadcountrygeochart", true );
 
         _showView("loaduserrolepiechart", true );
@@ -628,7 +864,7 @@
                         }
         });
 
-        /* 2. Load Business Summary Chart */
+        // 2. Load Business Summary Chart
         _showView("loadbpbarchart", true );
         _getBusinessSumarries(
         {
@@ -638,7 +874,7 @@
                         }
         });
 
-        /* 3. Load Login and Registered users Chart */
+        // 3. Load Login and Registered users Chart
         _showView("loaduserlinechart", true );
         _getLoginAndUsers(
         {
@@ -646,15 +882,25 @@
                         {
                             _hideView("loaduserlinechart");
                         }
-        });
+        });*/
 
-        /* 4. Load Latest uers  in Table */
+        // 4. Load Latest uers  in Table
         _showView("loadusertablechart", true );
-        _getLatestUsers()
-        .done( function( listArr )
+        _getLatestUsers(
+        {
+            callback : function( numFound )
+                        {
+                            _createUserTables (
+                            {
+                                numFound:   numFound
+
+                            });
+                        }
+        })
+        .done( function( listArr, numFound )
                     {
                         _hideView("loadusertablechart");
-                        _createUserTables ( listArr );
+                        //_createUserTables ( listArr, numFound );
                     });
     }
 

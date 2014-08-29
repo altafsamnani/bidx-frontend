@@ -577,7 +577,7 @@
             }
         );
     }
-    
+
     // Trigger an internal event on the $( window.bidx ) object
     //
     function trigger( event, data )
@@ -1150,10 +1150,8 @@
 
     // Set the bootstrap version to 3 by default so we don't have to change it in every app
     //
-    if(typeof bootstrapPaginator === 'function')
-    {
-        $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
-    }
+
+    $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
 
     // Expose
     //
