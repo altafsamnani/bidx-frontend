@@ -1150,9 +1150,10 @@
 
     // Set the bootstrap version to 3 by default so we don't have to change it in every app
     //
-
-    $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
-
+    if ($.isFunction($.fn.bootstrapPaginator))
+    {
+        $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
+    }
     // Expose
     //
     if ( !window.bidx )
