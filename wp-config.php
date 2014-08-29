@@ -17,7 +17,6 @@
 /**
  * 	--- Environment specific settings ---
  */
-
 /** what environment : local/test/acceptance/demo or empty for production**/
 define('BIDX_ENV', 'local');
 
@@ -78,6 +77,7 @@ define('COOKIE_DOMAIN', 'bidx.net');
 define('COOKIEPATH', '/');
 define('SITECOOKIEPATH', '/');
 define('LOGGED_IN_COOKIE', 'bidx_logged_in' . BIDX_ENV . '_' . COOKIEHASH);
+define('BIDX_ALLOWED_COOKIES', '(bidx)|(JSESSIONID)');
 
 define('SCRIPT_DEBUG', false);
 define('CONCATENATE_SCRIPTS', true);

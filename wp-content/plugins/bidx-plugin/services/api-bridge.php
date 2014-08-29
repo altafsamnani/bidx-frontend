@@ -36,7 +36,7 @@ abstract class APIbridge
 
         $bidxMethod     = strtoupper ($method);
         $bidxGetParams  = "";
-        $sendDomain     = 'bidx.net';
+        $sendDomain     = DOMAIN_CURRENT_SITE;
         $cookieHeader   = '';
         $cookieArr      = array ();
         $headers        = array ();
@@ -50,7 +50,7 @@ abstract class APIbridge
 	        $cookieInfo = $_COOKIE;
 	        foreach ($_COOKIE as $cookieKey => $cookieValue)
 	        {
-	            if (preg_match ("/^bidx/i", $cookieKey))
+	            if (preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $cookieKey))
 	            {
 	                $cookieArr[] = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
 	                //$cookieHeader = $cookieKey . '=' . $cookieValue. '; ';
@@ -108,7 +108,7 @@ abstract class APIbridge
                 {
                     if (!empty ($bidxAuthCookie->name) && $bidxAuthCookie->name)
                     {
-                        //$cookieDomain = $bidxAuthCookie->domain;
+
                         ob_start (); // To avoid error headers already sent in apibridge setcookie
                         setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
                         ob_end_flush ();
@@ -219,9 +219,9 @@ abstract class APIbridge
         $cookieInfo = $_COOKIE;
         foreach ($_COOKIE as $cookieKey => $cookieValue)
         {
-            if (preg_match ("/^bidx/i", $cookieKey))
+            if (preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $cookieKey))
             {
-                setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
+                setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, '/', DOMAIN_CURRENT_SITE);
             }
         }
     }

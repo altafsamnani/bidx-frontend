@@ -134,7 +134,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     $logger          = Logger::getLogger ("Bidx Service Login");
     $bidxMethod      = strtoupper ($method);
     $bidxGetParams   = "";
-    $sendDomain      = '';
+    $sendDomain      = DOMAIN_CURRENT_SITE;
     $cookieArr       = array ();
     $headers         = array ();
     $cookieHeader    = '';
@@ -143,7 +143,7 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     /*****1. Retrieve Bidx Cookies and send back to api to check ******/
     foreach ($_COOKIE as $cookieKey => $cookieValue)
     {
-        if (preg_match ("/^bidx/i", $cookieKey))
+        if (preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $cookieKey))
         {
             $cookieArr[]  = new WP_Http_Cookie (array ('name' => $cookieKey, 'value' => urlencode ($cookieValue), 'domain' => $sendDomain));
            // $cookieHeader = $cookieKey . '=' . $cookieValue. '; ';
@@ -202,8 +202,8 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
     if (is_array ($result)) {
         if (isset ($result['cookies']) && count ($result['cookies'])) {
             $cookies = $result['cookies'];
-            foreach ($cookies as $bidxAuthCookie) {
-
+            foreach ($cookies as $bidxAuthCookie)
+            {
                 setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
                 $_COOKIE[$bidxAuthCookie->name] = urlencode($bidxAuthCookie->value);
 
@@ -420,8 +420,9 @@ function clear_bidx_cookies ()
     /*     * *********Retrieve Bidx Cookies and send back to api to check ******* */
     $cookieInfo = $_COOKIE;
     foreach ($_COOKIE as $cookieKey => $cookieValue) {
-        if (preg_match ("/^bidx/i", $cookieKey)) {
-            setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, '/', 'bidx.net');
+        if (preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $cookieKey))
+        {
+            setcookie ($cookieKey, ' ', time () - YEAR_IN_SECONDS, '/', DOMAIN_CURRENT_SITE);
         }
     }
 }
@@ -2326,7 +2327,7 @@ function alter_site_menu ()
 
             /* Dashboard GroupAdmin/GroupOwner Menus */
             if (in_array (WP_ADMIN_ROLE, $current_user->roles) || in_array (WP_OWNER_ROLE, $current_user->roles)) {
-                add_menu_page ('invite-members', 'Invite members', 'edit_theme_options', 'invite-members', 'bidx_dashboard_invite');               
+                add_menu_page ('invite-members', 'Invite members', 'edit_theme_options', 'invite-members', 'bidx_dashboard_invite');
                 add_menu_page ('getting-started', 'Getting Started', 'edit_theme_options', 'getting-started', 'bidx_getting_started');
                 add_menu_page ('support', 'Support', 'edit_theme_options', 'support', 'bidx_dashboard_support');
                 add_menu_page ('group-settings', 'Group Settings', 'edit_theme_options', 'group-settings', 'bidx_group_settings');
