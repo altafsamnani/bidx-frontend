@@ -61,7 +61,7 @@ class Bidx_Admin_Monitoring
 
 		add_action('admin_enqueue_scripts', array(&$this, 'register_admin_bidx_ui_libs'));
 
-		add_action('admin_print_footer_scripts', array($this,'footer_scripts'));
+		add_action('admin_print_footer_scripts-'.$this->page, array($this,'footer_scripts'));
 
 		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/static/templates/' );
 

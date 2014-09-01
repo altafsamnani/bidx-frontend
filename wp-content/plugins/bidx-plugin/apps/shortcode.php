@@ -229,7 +229,7 @@ class BidxShortcode
         $bidxJsDir = sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
         $vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
 
-        if (BidxCommon :: isWPInternalFunction ()) {
+        if (BidxCommon :: isWPInternalFunction () || is_super_admin() ) {
             Logger :: getLogger ('shortcode')->trace ('Skipping enqueueing because of admin.');
         } else {
             $langLocale         = $this->getSiteLanguageOptions( );

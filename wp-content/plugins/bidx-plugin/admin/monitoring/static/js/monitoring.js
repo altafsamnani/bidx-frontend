@@ -247,7 +247,7 @@
                     //  execute callback if provided
                     if (options && options.error)
                     {
-                        options.error( item );
+                        options.error( );
                     }
                     return false;
                 }
@@ -305,10 +305,22 @@
 
     function _addErrorDataToTable ( options )
     {
-        var displayStartRow     =   options.displayStartRow;
-        tableData.setCell(displayStartRow, 0, 'Loading Data Error');
-        table.draw  ( tableData,   tableOptions );
+        var displayStartRow     =   options.displayStartRow
+        ,   errorTxt            =   bidx.i18n.i('loadingDataError', appName);
 
+        tableData.setCell ( displayStartRow, 0, errorTxt, errorTxt, {style:'color:red}'} ) ;
+
+        table.draw  ( tableData,   tableOptions );
+    }
+
+    function _loadingForDataToTable ( options )
+    {
+        var loadStartRow     =   options.loadStartRow
+        ,   loadTxt             =   bidx.i18n.i('loadingData', appName);
+
+        tableData.setCell ( loadStartRow, 0, loadTxt, null, {style:'color:green'} ) ;
+
+        table.draw  ( tableData,   tableOptions );
     }
 
 
@@ -537,6 +549,7 @@
         ,   $d              =   $.Deferred()
         ,   fromTime        =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
         ,   displayStartRow =   paging.search.offset
+        ,   loadStartRow    =   paging.search.offset
         ,   criteria        =   {
                                     entityTypes     :   [
                                                             {
@@ -589,6 +602,13 @@
                             $.each( responseDocs , function ( idx, item)
                             {
 
+                                    _loadingForDataToTable(
+                                    {
+                                        loadStartRow : loadStartRow
+                                    } );
+
+                                    loadStartRow ++;
+
                                     showMemberProfile(
                                     {
                                         ownerId     :   item.ownerId
@@ -615,14 +635,14 @@
                                                             displayStartRow++;
 
                                                         }
-                                    ,   error       :   function ( itemMember )
+                                    ,   error       :   function (  )
                                                         {
                                                             _addErrorDataToTable(
                                                             {
-                                                                item:                itemMember
+                                                                item:                item
                                                             ,   displayStartRow:     displayStartRow
-                                                            }
-                                                            );
+                                                            });
+
                                                             counter = counter + 1;
                                                             displayStartRow++;
                                                         }

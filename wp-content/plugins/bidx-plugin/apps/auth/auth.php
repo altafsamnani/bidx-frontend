@@ -35,7 +35,7 @@ class auth {
         $deps = array_merge( self :: $deps, array( 'registration', 'join' ) );
 
         wp_register_script( 'auth', plugins_url( 'static/js/auth.js', __FILE__ ), $deps, '20130501', TRUE );
-		
+
 	}
 
 	/**
@@ -74,6 +74,7 @@ class auth {
                 $sessionObj = new SessionService( );
 
                 $result = $sessionObj -> getActivationSession( $activationCode );
+
 
                 // if sessionState is pending, redirect to setpassword
                 //
