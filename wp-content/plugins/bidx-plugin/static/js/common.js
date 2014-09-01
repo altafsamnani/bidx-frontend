@@ -1239,7 +1239,7 @@
     // The ones with a class 'defer' on them are left alone in case there is a dependency
     // with the app that otherwise can't be fixed
     //
-    if ( typeof tagsinput === 'function' )
+    if ( typeof $.prototype.tagsinput === "function" )
     {
         $( "input.bidx-tagsinput:not(.defer)" ).tagsinput();
     }
@@ -1247,7 +1247,7 @@
     //
     bidx.utils.log('currentLangauge', currentLanguage);
 
-    if(typeof datepicker === 'function')
+    if ( typeof $.prototype.datepicker === "function" )
     {
         $( "input[data-type=date]" ).datepicker(
         {
