@@ -870,7 +870,7 @@
 
     function _getData ()
     {
-        /*// 1. Load Country Geo Chart & Load User Role Pie Chart
+        // 1. Load Country Geo Chart & Load User Role Pie Chart
         _showView("loadcountrygeochart", true );
 
         _showView("loaduserrolepiechart", true );
@@ -902,7 +902,7 @@
                         {
                             _hideView("loaduserlinechart");
                         }
-        });*/
+        });
 
         // 4. Load Latest uers  in Table
         _showView("loadusertablechart", true );
