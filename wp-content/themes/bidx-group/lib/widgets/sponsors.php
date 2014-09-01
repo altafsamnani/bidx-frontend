@@ -57,14 +57,15 @@ class Sponsors_Widget extends WP_Widget {
             $images = array();
 
             printf (
-                '<select multiple="multiple" name="%s[]" id="%s">',
+                '<select multiple="multiple" style="width:21em;" name="%s[]" id="%s">',
                 $this->get_field_name('select'),
                 $this->get_field_id('select')
             );
 
             foreach ( $query_images->posts as $image) {
                 printf(
-                    '<option value="%s" %s >%s</option>',
+                    '<option style="background-image:url(%s); background-repeat:no-repeat; height: 100px; background-size: 21em;" value="%s" %s >%s</option>',
+                    wp_get_attachment_url( $image->ID ),
                     $image->ID,
                     in_array( $image->ID, $select) ? 'selected="selected"' : '',
                     $image->post_title
@@ -99,12 +100,12 @@ class Sponsors_Widget extends WP_Widget {
         // Region Check
         $active_region = $args['id'];
         $add_container = false;
-        if  (
-                $active_region === 'pub-front-top' ||
-                $active_region === 'pub-front-bottom' ||
-                $active_region === 'priv-front-top' ||
-                $active_region === 'priv-front-bottom'
-            )
+        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) !== true )
+        {
+            $add_container = true;
+        }
+        
+        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
             $add_container = true;
         }
