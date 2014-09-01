@@ -73,14 +73,15 @@ class Latest_Members_Widget extends WP_Widget {
 
         // Region Check
         $active_region = $args['id'];
-        $add_container = false;
         $items = 4;
-        if  (
-                $active_region === 'pub-front-top' ||
-                $active_region === 'pub-front-bottom' ||
-                $active_region === 'priv-front-top' ||
-                $active_region === 'priv-front-bottom'
-            )
+        $add_container = false;
+        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) !== true )
+        {
+            $add_container = true;
+            $items = 6;
+        }
+        
+        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
             $add_container = true;
             $items = 6;

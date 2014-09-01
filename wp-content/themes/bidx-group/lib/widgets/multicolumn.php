@@ -245,12 +245,12 @@ class Bidx_MultiColumn_Widget extends WP_Widget {
         $add_container = false;
         if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) !== true )
         {
-                $add_container = true;
+            $add_container = true;
         }
         
         if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
         {
-                $add_container = true;
+            $add_container = true;
         }
         
         echo $before_widget;

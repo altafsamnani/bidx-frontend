@@ -119,12 +119,12 @@ class Bidx_Post_Widget extends WP_Widget {
         $add_container = false;
         if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) === FALSE )
         {
-                $add_container = true;
+            $add_container = true;
         }
         
         if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) === FALSE )
         {
-                $add_container = true;
+            $add_container = true;
         }
 
         if ( $add_container ) :
