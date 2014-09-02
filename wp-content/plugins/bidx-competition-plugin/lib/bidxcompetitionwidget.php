@@ -15,10 +15,10 @@
  * @author Jaap Gorjup
  */
 class BidxCompetitionCounterWidget extends WP_Widget {
-	
-	const COMPETITION_ID_KEY = 'competition_id';
-	const COMPETITION_LINK_KEY = 'competition_link';
-	const CLOCK_SIZE_KEY = 'clock-size';
+		
+	private $COMPETITION_ID_KEY = 'competition_id';
+	private $COMPETITION_LINK_KEY = 'competition_link';
+	private $CLOCK_SIZE_KEY = 'clock-size';
 	
 	private $diff = 0;
 	
