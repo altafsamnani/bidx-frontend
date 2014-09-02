@@ -190,8 +190,10 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 			<h4><?php _e( 'This competition has expired.','bidx_competition_plugin' ); ?></h4>
 			<a href="/competition"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
 		} else {
-			add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );			
+			add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );	
+			$this -> add_clock_footer_scripts();		
 			?>
+			
 			<link rel="stylesheet" href="<?php echo plugins_url() ?>/bidx-competition-plugin/js/flipclock/flipclock.css">
 			<style>.your-clock { zoom: <?php echo $clock_size ?>; -moz-transform: scale(<?php echo $clock_size ?>) }</style>
 			<div class="your-clock"></div>
