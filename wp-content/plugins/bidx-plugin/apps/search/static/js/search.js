@@ -382,11 +382,11 @@
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
-                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name, appName ) : emptyVal );
+                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name ) : emptyVal );
 
                     $listItem  = listItem;
                     $list.append($listItem );
-                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name ) );
 
                     $.each( facetValues , function ( idx, item )
                     {
@@ -440,7 +440,7 @@
                 //
                 if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
                 {
-                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
+                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name ) );
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
