@@ -52,7 +52,8 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		if ( $instance ) {
 			$competition_id   = $instance[$this->COMPETITION_ID_KEY];
 			$competition_link = $instance[$this->COMPETITION_LINK_KEY];
-			$clock_size 	  = $instance[$this->CLOCK_SIZE_KEY];
+			$clock_size 	  = $instance['clock_size'];
+			$style			  = $instance['style'];
 		} else {
 			$competition_id   = '';
 			$competition_link = '';
@@ -82,6 +83,8 @@ class BidxCompetitionCounterWidget extends WP_Widget {
             <label for="<?php echo $this->get_field_id( 'clock_size' ); ?>"><?php _e( 'Size of the countdown clock:', 'bidx_competition' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'clock_size' ) ?>" id="<?php echo $this->get_field_id( 'clock_size' ) ?>">
 			<?php 
+				//@Sakis : can you please validate the sizes?
+				
 				$sizes = array( 
 					__( 'small',  'bidx_competition' ) => '0.3',
 					__( 'medium', 'bidx_competition' ) => '0.5',
@@ -135,10 +138,10 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 
 		$instance = $old_instance;
-		$instance[$this->COMPETITION_ID_KEY] = esc_sql( $new_instance[$this->COMPETITION_ID_KEY]);
-		$instance[$this->COMPETITION_LINK_KEY] = esc_sql( $new_instance[$this->COMPETITION_LINK_KEY]);
-		$instance[$this->CLOCK_SIZE_KEY] = esc_sql( $new_instance[$this->CLOCK_SIZE_KEY]);
-		$instance['style'] = esc_sql( $new_instance['style']);
+		$instance[$this->COMPETITION_ID_KEY] = esc_sql( $new_instance[$this->COMPETITION_ID_KEY] );
+		$instance[$this->COMPETITION_LINK_KEY] = esc_sql( $new_instance[$this->COMPETITION_LINK_KEY] );
+		$instance['clock_size'] = esc_sql( $new_instance['clock_size'] );
+		$instance['style'] = esc_sql( $new_instance['style'] );
 		return $instance;
 	}
 	 
@@ -152,7 +155,9 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		extract( $args );	
 		$competition_id = $instance[$this->COMPETITION_ID_KEY];
 		$competition_link = $instance[$this->COMPETITION_LINK_KEY];
-		$clock_size = $instance[$this->CLOCK_SIZE_KEY];
+		$clock_size = $instance['clock_size'];
+		$style = $instance['style'];
+		
 
 		echo $before_widget;
 		echo $this -> render_content( $competition_id, $clock_size, $competition_link, $style );
@@ -166,11 +171,14 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 
 		if ( empty( $competition_id ) ) {
 
+			//@Sakis : how should this error be shown?
 			_e( 'No Competition Set','bidx_competition' );
+			
 		} else {
 
 			$post = get_post($competition_id);
 			if ($post -> post_type != 'competition') {
+				//@Sakis : how should this error be shown?
 				_e( 'Defined post is not a competition','bidx_competition' );
 			}
 			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
@@ -178,22 +186,20 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 			$this->diff = abs(strtotime($enddate) - time());	
 			if ( $competition_link == null ) {
 				$competition_link = get_permalink( $competition_id );
-			}	
+			}
 	?>
-		<div class="competition <?php echo $style; ?>">
+		<div class="competition">
 		<h3><?php echo $post -> post_title ?></h3>
 		<p><?php echo $post -> post_excerpt ?></p>
-		<div class="counter">
+		<div class="counter <?php echo $style ?>">
 		<?php 
 		if ($this->diff < 0) {
 			?>
 			<h4><?php _e( 'This competition has expired.','bidx_competition_plugin' ); ?></h4>
 			<a href="/competition"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
 		} else {
-			add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );	
-			$this -> add_clock_footer_scripts();		
-			?>
-			
+			add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );		
+			?>		
 			<link rel="stylesheet" href="<?php echo plugins_url() ?>/bidx-competition-plugin/js/flipclock/flipclock.css">
 			<style>.your-clock { zoom: <?php echo $clock_size ?>; -moz-transform: scale(<?php echo $clock_size ?>) }</style>
 			<div class="your-clock"></div>
@@ -221,7 +227,7 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 * - id    : post_id
 	 * - size  : relative size between 0.2 and 2
 	 * - link  : optional link to override link to competition page
-	 * 
+	 * - style : fancy or flat
 	 * @param array $atts
 	 */
 	function handle_shortcode( $atts ) {
