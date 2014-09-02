@@ -25,18 +25,7 @@ class BidxCompetition {
 		
 	/** constants for the competition **/
 	const POST_TYPE = 'competition';
-	const COMPETITION_START_KEY = '	';
-	const COMPETITION_END_KEY 	= 'competition_enddate';
-		
-	const COMPETITION_TYPE_KEY 	= 'competition_type';	
-	const COMPETITION_TYPE_OPEN_KEY 		= 'open';
-	const COMPETITION_TYPE_REGISTRATION_KEY = 'registered';
-	const COMPETITION_TYPE_CLOSED_KEY 		= 'closed';
- 	private static $competition_types	= array(
- 				COMPETITION_TYPE_OPEN_KEY, 
- 				COMPETITION_TYPE_REGISTRATION_KEY,
- 				COMPETITION_TYPE_CLOSED_KEY
- 	);		
+ 	static $competition_types	= array( 'open', 'registered', 'closed' );
 		
 	/**
 	 * Constructor sets up the actions for the backend functions and the widgets
@@ -135,7 +124,7 @@ class BidxCompetition {
 		 * @return string
 		 */
 		function competition_table_head( $defaults ) {
-			$defaults['thumbnail'] 			   = __( 'Thumbnail',  'bidx_competition' );
+			//$defaults['thumbnail'] 			   = __( 'Thumbnail',  'bidx_competition' );
 			$defaults['competition_startdate'] = __( 'Startdate',  'bidx_competition' );
 			$defaults['competition_enddate']   = __( 'Enddate',    'bidx_competition' );
 			$defaults['monitoring']   		   = __( 'Monitoring', 'bidx_competition' );
@@ -227,32 +216,33 @@ class BidxCompetition {
 			*/
 			$startdate = get_post_meta( $post->ID, 'competition_startdate', true );
 			$enddate = get_post_meta( $post->ID, 'competition_enddate', true );
-			$type = get_post_meta( $post->ID, $this->COMPETITION_TYPE, true );
+			$type = get_post_meta( $post->ID, 'competition_type', true );		
 			if ( $type == null ) {
-				$type = $this->COMPETITION_TYPE_OPEN;
+				$type = 'open';
 			}
+			
 			?>
 <p><?php _e('These settings are needed for a competition to work.','bidx-competition' ) ?></p>
 <p><label for="competition_type"><?php _e( 'Competition Type', 'bidx_competition' ) ?></label>	
-<select name="<?php echo $this->COMPETITION_TYPE ?>">
+<select name="competition_type">
 <?php 
-foreach ( $this->competition_types  as $c_type ) {
+foreach ( BidxCompetition::$competition_types as $c_type ) {
 
 	printf(
 		'<option value="%s" %s >%s</option>',
 		$c_type,
-		$type = $c_type ? 'selected="selected"' : '',
-		_e( $c_type,'bidx-competition' )
+		$type == $c_type ? ' selected="selected"' : '',
+		__( $c_type,'bidx-competition' )
 		);
 } ?>
 </select>
 <p>
-	<label for="<?php echo $this->COMPETITION_START_KEY ?>"><?php _e( 'Startdate (optional)', 'bidx_competition' ) ?></label>
-	<input type="date" id="<?php echo $this->COMPETITION_START_KEY ?>" name="<?php echo $this->COMPETITION_START_KEY ?>" value="<?php echo esc_attr( $startdate ) ?>"/>
+	<label for="competition_startdate"><?php _e( 'Startdate (optional)', 'bidx_competition' ) ?></label>
+	<input type="date" name="competition_startdate" value="<?php echo esc_attr( $startdate ) ?>"/>
 </p>
 <p>
-	<label for="<?php echo $this->COMPETITION_END_KEY ?>"><?php _e( 'Enddate (mandatory)', 'bidx_competition' ); ?></label> ';
-	<input type="date" id="<?php echo $this->COMPETITION_END_KEY ?>" name="<?php echo $this->COMPETITION_END_KEY ?>" value="<?php echo esc_attr( $enddate ) ?>" />
+	<label for="competition_enddate"><?php _e( 'Enddate (mandatory)', 'bidx_competition' ); ?></label> 
+	<input type="date" name="competition_enddate" value="<?php echo esc_attr( $enddate ) ?>" />
 </p>
 <?php 
 	}
@@ -287,27 +277,27 @@ foreach ( $this->competition_types  as $c_type ) {
 		} else {
 			return;
 		} 
-		$type = sanitize_text_field( $_POST[$this->COMPETITION_TYPE_KEY] );
-		if ( ! in_array( $this->competition_types, $type ) ) {
-			return WPError( __('Competition Type does not exist', 'bidx-competition' ) );
+		$type = sanitize_text_field( $_POST[$this->competition_type] );
+		if ( ! in_array( BidxCompetition::$competition_types, $type ) ) {
+			$type = 'open';
 		}
-		if ( ! isset( $_POST[$this->COMPETITION_END_KEY] ) ) {	
+		if ( ! isset( $_POST['competition_enddate'] ) ) {	
 			return WPError( __('Enddate is mandatory and is not set', 'bidx-competition' ) );
 		}
-		$my_enddate = sanitize_text_field( $_POST[$this->COMPETITION_END_KEY] );
+		$my_enddate = sanitize_text_field( $_POST[ 'competition_enddate' ] );
 		if  ( abs( strtotime( $my_enddate ) - $now ) < 0 ) {
 			return WPError( __('Enddate is in the past', 'bidx-competition' ) );
 		}
-		if ( isset( $_POST[$this->COMPETITION_START_KEY] ) ) {
-			$my_startdate = sanitize_text_field( $_POST[$this->COMPETITION_START_KEY] );
+		if ( isset( $_POST[ 'competition_startdate' ] ) ) {
+			$my_startdate = sanitize_text_field( $_POST[ 'competition_startdate']  );
 			$diff = abs( strtotime( $my_enddate ) - strtotime( $my_startdate ) );
 			if ( $diff < 0 ) {
-				return WPError( __('Startdate and enddate not in the correct order', 'bidx-competition' ) );
+				return WPError( __( 'Startdate and enddate not in the correct order', 'bidx-competition' ) );
 			}			
 		}
-		update_post_meta( $post_id, $this->COMPETITION_START_KEY, $my_startdate );
-		update_post_meta( $post_id, $this->COMPETITION_END_KEY, $my_enddate );
-		update_post_meta( $post_id, $this->COMPETITION_TYPE_KEY , $type );
+		update_post_meta( $post_id, 'competition_startdate', $my_startdate );
+		update_post_meta( $post_id, 'competition_enddate', $my_enddate );
+		update_post_meta( $post_id, 'competition_type' , $type );
 	}
 }
 
