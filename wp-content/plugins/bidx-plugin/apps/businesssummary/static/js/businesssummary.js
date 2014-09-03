@@ -1270,22 +1270,31 @@
         //
         if ( $ratingUserInput )
         {
-        	$ratingUserInput.on( "rating.change rating.clear", function(event, value, caption) {
-        	    var scope = null;
-        	    var comment = null;
-        	    bidx.common.rate( bidxConfig.context.businessSummaryId, scope, value, comment, function(data) {
-        	    	$ratingAverageInput.rating( "update", data.totals.average );
-        	    	// Officially we could use: 
-        	    	//     $ratingUserInput.rating( "refresh", {showClear: data.userRating != null} );
-        	    	// ...but that somehow binds the handlers again, making them run multiple times for every click.
-        	    	$ratingUserClear.toggle( data.userRating != null );
-        	    	var count = data.totals.count;
-        	    	$ratingAverageLabel.text( bidx.i18n.i( "ratingAverageLabel" + (count == 1 ? "" : "Plural"), appName ).replace( /%d/g, count) );
-        	    	$ratingUserLabel.text( bidx.i18n.i( data.userRating != null ? "ratingUserLabel" : "ratingUserLabelNone", appName ) );
-        	    } );
-        	});
-        	// Once the plugin has initialized our own .ratingUserClear is no longer available
-        	$ratingUserClear.toggle( $ratingUserInput.val() != 0 );
+            $ratingUserInput.on( "rating.change rating.clear", function( event, value, caption )
+            {
+                var scope = null
+                ,   comment = null;
+
+                bidx.common.rate( bidxConfig.context.businessSummaryId, scope, value, comment, function( data )
+                {
+                    var count = data.totals.count;
+
+                    $ratingAverageInput.rating( "update", data.totals.average );
+                    // Officially we could use: 
+                    //     $ratingUserInput.rating( "refresh", {showClear: data.userRating != null} );
+                    // ...but that somehow binds the handlers again, making them run multiple times for every click.
+                    
+                    $ratingUserClear.toggle( data.userRating !== null );
+                    $ratingAverageLabel.text( bidx.i18n.i( "ratingAverageLabel" + ( count === 1 ? "" : "Plural"), appName ).replace( /%d/g, count ) );
+                    $ratingUserLabel.text( bidx.i18n.i( data.userRating !== null ? "ratingUserLabel" : "ratingUserLabelNone", appName ) );
+
+                    $( ".rating-average" ).text(data.totals.average ? data.totals.average : "?" );
+                } );
+            } );
+
+            // Once the plugin has initialized our own .ratingUserClear is no longer available
+            //
+            $ratingUserClear.toggle( $ratingUserInput.val() !== 0 );
         }
 
         if ( $videoWrapper )

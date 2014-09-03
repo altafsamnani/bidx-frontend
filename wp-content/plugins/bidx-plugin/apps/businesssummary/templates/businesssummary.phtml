@@ -73,71 +73,107 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <div class="businessSummary" id="businessSummary">
 
     <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-8">
             <h1><?php _e('Business Summary', 'bidxplugin')?></h1>
             <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
         </div>
 
-        <div class="col-sm-2">
-            <div class="completeness-score <?php echo $this->completenessColour ?>" >
-                <div class="percentage"><?php echo $progress ?><span>%</span></div>
-                <div class=""><?php _e('completed', 'bidxplugin')?></div>
-            </div>
-		</div>
-		
-        <div class="col-sm-2">
-<?php
-       		/* 
-       		 * We want ratings to be indexed by Google, so need to include this on page load. It 
-           	 * might be updated in JavaScript though, so also check the translations in i18n.xml.
-           	 * For a consistent layout, an empty div will be outputted if rating is not enabled. 
-           	 */ 
-            
-            $ratingTotals = $this->rating->totals;
-            
-            if( $ratingTotals ) 
-            {
-            	$ratingAllowed = $loggedInUserId != $ownerId;
-	            $ratingUser = $this->rating->userRating;
-	            
-            	$count = $ratingTotals->count;
-	            if ( $count == 1 ) 
-				{
-		            $ratingAverageLabel = sprintf( __( 'Rating (%d vote)', 'bidxplugin' ), $count );
-	            }
-	            else
-				{
-		            $ratingAverageLabel = sprintf( __( 'Rating (%d votes)', 'bidxplugin' ), $count );
-	            }
-?> 
-		        <div class="ratingControls">
-		            <span class="ratingAverageLabel"><?php echo $ratingAverageLabel ?></span>
-		            <!-- TODO Arjan Using an INPUT is not ideal, as the browser might re-populate it on navigation. -->
-		            <input class="rating ratingAverage" value="<?php echo $ratingTotals->average; ?>" type="number" data-readonly="true" data-show-clear="false" data-size="xs" data-show-caption="false">
-		        </div>
-<?php
-           		if( $ratingAllowed )
-           		{ 
-?>
-			        <div class="ratingControls">
-		   		        <span class="ratingUserLabel"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Please rate this plan', 'bidxplugin') ?></span>
-		   		        <span class="ratingUserClear" style="padding-left: 5px"></span> 
-			            <input name="rating" class="rating ratingUser" value="<?php echo $ratingUser->value; ?>" type="number" data-clear-element=".ratingUserClear" data-size="xs" data-show-caption="false" data-step=1>
-		            <!-- TODO Arjan remove -->
-		<!--             <a class="btn btn-primary" href="#mentoring/addFeedback/entityId=<?php echo $businessSummaryId; ?>&commentorId=><?php echo $loggedInMemberId; ?>"><?php _e('Add feedback','bidxplugin');?></a>
-		-->
-		    	    </div>
-<?php
-				 }
-			 }
-?>
-        </div>
 
-        <div class="col-sm-3 editControlsContainer">
+        <div class="col-sm-4 editControlsContainer">
             <div class="editControls pull-right">
 
                 <!-- SHOW -->
                 <div class="view viewShow">
+<?php
+                // does a user have rights to edit ( is the owner )
+                //
+                if ( $canEdit ) {
+?>
+                    <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+                    if ( $entityStatus == 'DRAFT' ) {
+?>
+                        <a class="btn btn-default" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
+<?php
+                    }
+                }
+?>
+                </div>
+
+                <!-- EDIT, conditionally filled by the app -->
+                <div class="view viewEdit btn-group"></div>
+
+                <!-- sucess msg, used as a placeholder for showing msgs -->
+
+                <div class="view viewMainsuccess alert alert-success">
+                    <p class="successMsg"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="well">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="completeness-score <?php echo $this->completenessColour ?>" >
+                    <div class="percentage"><?php echo $progress ?><span>%</span></div>
+                    <div class=""><?php _e('completed', 'bidxplugin')?></div>
+                </div>
+            </div>
+
+            <div class="col-sm-5 hide-overflow">
+                <div class="rating-wrapper">
+                    <div class="rating-total">
+                        <i class="fa fa-star"></i>
+                        <span class="rating-average"><?php echo $this->rating->totals->average ? $this->rating->totals->average : "?"; ?></span>
+                    </div>
+                </div>
+    <?php
+                /* 
+                 * We want ratings to be indexed by Google, so need to include this on page load. It 
+                 * might be updated in JavaScript though, so also check the translations in i18n.xml.
+                 * For a consistent layout, an empty div will be outputted if rating is not enabled. 
+                 */ 
+                $ratingTotals = $this->rating->totals;
+                
+                if( $ratingTotals ) 
+                {
+                    $ratingAllowed = $loggedInUserId != $ownerId;
+                    $ratingUser = $this->rating->userRating;
+                    
+                    $count = $ratingTotals->count;
+                    if ( $count == 1 ) 
+                    {
+                        $ratingAverageLabel = sprintf( __( 'Rating (%d vote)', 'bidxplugin' ), $count );
+                    }
+                    else
+                    {
+                        $ratingAverageLabel = sprintf( __( 'Rating (%d votes)', 'bidxplugin' ), $count );
+                    }
+    ?> 
+    <!--                <div class="ratingControls">
+                        <span class="ratingAverageLabel"><?php echo $ratingAverageLabel ?></span>
+     -->                    <!-- TODO Arjan Using an INPUT is not ideal, as the browser might re-populate it on navigation. -->
+    <!--                    <input class="rating ratingAverage" value="<?php echo $ratingTotals->average; ?>" type="number" data-readonly="true" data-show-clear="false" data-size="xs" data-show-caption="false">
+                    </div> -->
+    <?php
+                    if( $ratingAllowed )
+                    { 
+    ?>
+                        <div class="ratingControls">
+                            <span class="ratingUserLabel"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span>
+                            <span class="ratingUserClear" style="padding-left: 5px"></span> 
+                            <input name="rating" class="rating ratingUser" value="<?php echo $ratingUser->value; ?>" type="number" data-clear-element=".ratingUserClear" data-size="xs" data-show-caption="false" data-step=1>
+                        <!-- TODO Arjan remove -->
+            <!--             <a class="btn btn-primary" href="#mentoring/addFeedback/entityId=<?php echo $businessSummaryId; ?>&commentorId=><?php echo $loggedInMemberId; ?>"><?php _e('Add feedback','bidxplugin');?></a>
+            -->
+                        </div>
+    <?php
+                     }
+                 }
+    ?>
+            </div>
+            <div class="col-sm-3 text-right">
 <?php
                 // if a user is allowed to request full access to a business summary and it NOT The owner of the business summary
                 //
@@ -179,34 +215,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 <?php
                 }
-
-                // does a user have rights to edit ( is the owner )
-                //
-                if ( $canEdit ) {
 ?>
-                    <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-<?php
-                    if ( $entityStatus == 'DRAFT' ) {
-?>
-                        <a class="btn btn-default" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
-<?php
-                    }
-                }
-?>
-                </div>
-
-                <!-- EDIT, conditionally filled by the app -->
-                <div class="view viewEdit btn-group"></div>
-
-                <!-- sucess msg, used as a placeholder for showing msgs -->
-
-                <div class="view viewMainsuccess alert alert-success">
-                    <p class="successMsg"></p>
-                </div>
             </div>
         </div>
     </div>
-
 
     <!-- Accordion -->
     <div id="businessSummaryCollapse">
