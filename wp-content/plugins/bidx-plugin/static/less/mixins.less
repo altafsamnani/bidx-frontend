@@ -221,3 +221,17 @@
 .body-bg( @file: NULL, @repeat: repeat, @x: center, @y: top ) when ( isstring(@file) ) {
     background: transparent url("../img/@{file}") @repeat @x @y;
 }
+.btn-social( @social-bg, @text-color )
+{
+    color: @text-color;
+    background-color: @social-bg;
+    border-color: darken(@social-bg, 5%);
+    &:hover,
+    &:focus,
+    &:active
+    {
+        color: @text-color;
+        background-color: darken(@social-bg, 10%);
+        border-color: darken(@social-bg, 12%);
+    }
+}
