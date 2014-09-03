@@ -540,14 +540,17 @@ class BidxCommon
      */
     static public function isWPInternalFunction ()
     {
-        $serverUri = $_SERVER["REQUEST_URI"];
-        $currentUser = wp_get_current_user ();
-        $currentRoles = $currentUser->roles;
-        $iswpInternalVar = (   preg_match ('/wp-login/i', $serverUri)
-                            || preg_match ('/admin-ajax/i', $serverUri)
-                            || in_array('administrator', $currentRoles)
-                            || (is_super_admin() && preg_match ('/wp-admin/i', $serverUri))
-                            );
+
+        $serverUri          =   $_SERVER[ "REQUEST_URI" ];
+        $currentUser        =   wp_get_current_user ();
+        $currentRoles       =   $currentUser->roles;
+
+        $iswpInternalVar    =   (   preg_match ( '/wp-login/i', $serverUri )
+                                ||  preg_match ( '/admin-ajax/i', $serverUri )
+                                ||  in_array( 'administrator', $currentRoles )
+                                ||  ( is_super_admin( ) && preg_match ('/wp-admin/i', $serverUri ) )
+                                );
+
         return $iswpInternalVar;
     }
 

@@ -12,11 +12,13 @@ class Google_Font_Picker_Custom_Control extends WP_Customize_Control
 	public function enqueue()
 	{
 		// styles
-		wp_register_style( 'font-picker-custom-control', plugins_url( 'assets/style.css', __FILE__ ));
+		$stylePath 	=	get_template_directory_uri() . '/vendor/lib/wp-google-font-picker-control/assets/style.css';
+		wp_register_style( 'font-picker-custom-control', $stylePath);
 		wp_enqueue_style( 'font-picker-custom-control' );
-	
+
 		// scripts
-		wp_register_script( 'font-picker-custom-control', plugins_url( 'assets/script.js', __FILE__ ));
+		$scriptPath	=   get_template_directory_uri() . '/vendor/lib/wp-google-font-picker-control/assets/script.js';
+		wp_register_script( 'font-picker-custom-control', $scriptPath);
 		wp_enqueue_script( 'font-picker-custom-control' );
 	}
 
@@ -49,7 +51,7 @@ class Google_Font_Picker_Custom_Control extends WP_Customize_Control
 			case 'menu_font':
 				echo '<span class="customize-control-title">Menu Font</span>';
 				break;
-			
+
 			default:
 				echo '<span class="customize-control-title">Choose a Font</span>';
 				break;
