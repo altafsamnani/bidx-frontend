@@ -190,12 +190,12 @@ class CBIShortCode {
 	 * Remove the cached contents during unloading of the plugin
 	 */
 	public function unload() {
-		$upload_dir = trailingslashit( WP_CONTENT_DIR ) . 'uploads/cbi/cache/';
-		if ( file_exists( $upload_dir ) ) {
-			foreach(glob($dir.'*.*') as $v){
-				unlink($v);
-			}
-		}
+// 		$upload_dir = trailingslashit( WP_CONTENT_DIR ) . 'uploads/cbi/cache/';
+// 		if ( file_exists( $upload_dir ) ) {
+// 			foreach(glob($dir.'*.*') as $v){
+// 				unlink($v);
+// 			}
+// 		}
 	}
 	
 }
