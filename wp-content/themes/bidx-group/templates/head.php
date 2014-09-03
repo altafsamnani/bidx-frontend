@@ -36,7 +36,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-48404092-2', 'auto');
 ga('send', 'pageview');
 <?php
-	$analytics = explode( ',' , get_theme_mod( 'analytics_codes' ) );
+	$analytics = explode( ',' , get_theme_mod( 'google_analytics' ) );
 	foreach ( $analytics as $key ) {
 		//add check if not empty
 		$tracker = trim($key) ;
