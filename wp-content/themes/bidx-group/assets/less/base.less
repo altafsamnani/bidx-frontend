@@ -1257,6 +1257,57 @@ select
     }
 }
 
+/* Social Auth */
+.btn-facebook
+{
+    .btn-social( @facebook, @white )
+}
+.btn-google
+{
+    .btn-social( @google, @white )
+}
+.btn-linkedin
+{
+    .btn-social( @linkedin, @white )
+}
+.btn-hotmail
+{
+    .btn-social( @hotmail, @white )
+}
+
+/* Speed Rating*/
+.ratingControls
+{
+    text-align: center;
+    float: left;
+}
+.rating-wrapper
+{
+    float: left;
+    position: relative;
+    margin-right: 1em;
+}
+.rating-total
+{
+    text-align: center;
+    i
+    {
+        font-size: ceil(@font-size-base * 4.4);
+        color: #fde16d;
+    }
+    .rating-average
+    {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        font-size: ceil(@font-size-base * 1.25);
+        font-weight: 300;
+        font-family: @lato;
+        line-height: ceil(@font-size-base * 4.25);
+    }
+}
+
 // --------------------------------------------------
 // Bootstrap Overides
 // --------------------------------------------------
