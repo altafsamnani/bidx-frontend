@@ -543,7 +543,7 @@
                 id:                 entityId
             ,   groupDomain:        groupDomain
             ,   data:
-            	{
+                {
                     scope:          scope
                 ,   value:          value
                 ,   comment:        comment
@@ -552,8 +552,8 @@
                 {
                     bidx.utils.log( "bidx::entityRate::save::success", response );
                     if ( cb ) {
-                    	cb( response.data );
-                	}
+                        cb( response.data );
+                    }
                 }
             ,   error:              function( jqXhr, textStatus )
                 {
@@ -571,7 +571,7 @@
                     }
 
                     if ( cb ) {
-                    	cb( new Error( "Problem rating entity: " + response ) );
+                        cb( new Error( "Problem rating entity: " + response ) );
                     }
                 }
             }
