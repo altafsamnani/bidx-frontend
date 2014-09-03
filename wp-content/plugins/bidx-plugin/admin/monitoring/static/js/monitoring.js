@@ -187,18 +187,34 @@
 
         chart.draw(data, options);
     }
+
+    /*var data = google.visualization.arrayToDataTable([
+          ,
+          ['Day 1',  100    ],
+          ['Day 2',  117    ],
+          ['Day 3',  660    ],
+          ['Day 4',  103    ],
+          ['Day 5',  103    ],
+          ['Day 6',  103    ],
+          ['Day 7',  103    ],
+        ]);*/
     function _createBpBarChart( response, type )
     {
-        var data = google.visualization.arrayToDataTable([
-          ['Day', 'New members', 'Business summaries'],
-          ['Day 1',  1000,      400],
-          ['Day 2',  1170,      460],
-          ['Day 3',  660,       1120],
-          ['Day 4',  1030,      540],
-          ['Day 5',  1030,      540],
-          ['Day 6',  1030,      540],
-          ['Day 7',  1030,      540],
-        ]);
+        var data
+        ,   eventData = response.events
+        ,   graphData     = []
+        ;
+
+        if(!$.isEmptyObject(eventData))
+        {   bidx.utils.log('eventData',eventData);
+            graphData.push( ['Day', 'New Busienss Summaries'] );
+
+            $.each( eventData, function( date, count )
+            {
+                graphData.push( [date, count] );
+            });
+        }
+        data = google.visualization.arrayToDataTable(graphData);
 
         var options =   {
                             title: 'Weekly performance',
@@ -744,7 +760,7 @@
 
     function _getBusinessSumarries ( options )
     {
-        var search
+        /*var search
         ,   fromTime    =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
         ,   criteria    =   {
                                 entityTypes     :   [
@@ -759,19 +775,32 @@
         ;
 
 
-        search = _getSearchCriteria( criteria );
+        search = _getSearchCriteria( criteria );*/
+
+        var extraUrlParameters =
+            [
+                {
+                    label: "eventName"
+                ,   value: "loginUser"
+                }
+            ,   {
+                    label: "days"
+                ,   value: 120
+                    //value: "type:bidxMemberProfile+AND+groupIds:" + '2' + searchName
+                }
+            ];
 
         bidx.api.call(
-            "search.get"
+            "statistics.fetch"
         ,   {
-                    groupDomain:        bidx.common.groupDomain
-                ,   data:               search.criteria
+                    groupDomain:            bidx.common.groupDomain
+                ,   extraUrlParameters:     extraUrlParameters
                 ,   success: function( response )
                     {
                         bidx.utils.log("[searchList] retrieved results ", response );
 
                         // Set a callback to run when the Google Visualization API is loaded.
-                        _createBpBarChart( response, 'facet_entityType' );
+                        _createBpBarChart( response );
 
                         if (options && options.callback)
                         {
