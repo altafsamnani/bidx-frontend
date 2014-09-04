@@ -167,17 +167,45 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 */
 	function render_content( $competition_id, $competition_link=null, $style='circle' ) {
 
-		if ( empty( $competition_id ) ) {
-
-			//@Sakis : how should this error be shown?
-			_e( 'No Competition Set','bidx_competition' );
-			
-		} else {
+		if ( empty( $competition_id ) )
+		{
+?>
+            <div class="alert alert-danger">
+                <blockquote>
+                    <p><?php _e( 'No Competition Set','bidx_competition' ); ?></p>
+                </blockquote>
+                <p class="hide-overflow">
+                    <span class="pull-left">
+                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+                    </span>
+                    <span class="pull-right">
+                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+                    </span>
+                </p>
+            </div>
+<?php
+		}
+		else
+		{
 
 			$post = get_post($competition_id);
-			if ($post -> post_type != 'competition') {
-				//@Sakis : how should this error be shown?
-				_e( 'Defined post is not a competition','bidx_competition' );
+			if ($post -> post_type != 'competition')
+			{
+?>
+	            <div class="alert alert-danger">
+	                <blockquote>
+	                    <p><?php _e( 'Defined post is not a competition','bidx_competition' ); ?></p>
+	                </blockquote>
+	                <p class="hide-overflow">
+	                    <span class="pull-left">
+	                        <?php _e('Sidebar', 'bidxtheme') ?>: <strong><?php echo $args['name']; ?></strong>&nbsp;
+	                    </span>
+	                    <span class="pull-right">
+	                        <?php _e('Widget', 'bidxtheme') ?>: <strong><?php echo $args['widget_name']; ?></strong>
+	                    </span>
+	                </p>
+	            </div>
+<?php
 			}
 			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
 			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );
