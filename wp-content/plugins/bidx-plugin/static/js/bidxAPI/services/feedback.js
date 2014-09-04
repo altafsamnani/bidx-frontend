@@ -49,14 +49,9 @@
             method:                     method
         ,   groupDomain:                params.groupDomain
         ,   baseUrl:                    url
-        ,   success:        function( response, textStatus, jqXhr )
+        ,   success:        function( data, textStatus, jqXhr )
             {
-                if ( response && response.data )
-                {
-                    response = response.data;
-                }
-
-                params.success( response, textStatus, jqXhr );
+                params.success( data, textStatus, jqXhr );
             }
         ,   error:          function( jqXhr, textStatus, errorThrown )
             {
