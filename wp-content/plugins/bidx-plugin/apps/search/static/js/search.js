@@ -79,7 +79,10 @@
 
         _languages();
 
-        $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        if ( $fakecrop )
+        {
+            $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        }
 
         $frmSearch.validate(
         {
