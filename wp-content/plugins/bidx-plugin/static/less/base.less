@@ -39,17 +39,40 @@
 
 // Color alterations in Classes
 // ---------------------------------
+.bg-primary-light
+{
+    background: lighten(@brand-primary, 25%);
+}
 .bg-primary-dark
 {
     background: desaturate(darken(@brand-primary, 25%), 25%);
 }
+.bg-primary-darker
+{
+    background: desaturate(darken(@brand-primary, 35%), 25%);
+}
+
+.bg-secondary-light
+{
+    background: lighten(@brand-secondary, 25%);
+}
+.bg-secondary-dark
+{
+    background: desaturate(darken(@brand-secondary, 25%), 25%);
+}
+.bg-secondary-darker
+{
+    background: desaturate(darken(@brand-secondary, 35%), 25%);
+}
+
+.bg-white
+{
+    background: @white;
+}
+
 .text-primary-dark
 {
     color: darken(@brand-primary, 25%);
-}
-.bg-primary-light
-{
-    background: lighten(@brand-primary, 25%);
 }
 .text-primary-light
 {
@@ -57,7 +80,11 @@
 }
 .text-white
 {
-    color: #FFF;
+    color: @white;
+}
+.text-copy
+{
+    color: @text-copy;
 }
 
 // Base
