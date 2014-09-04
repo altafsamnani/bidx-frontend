@@ -1308,6 +1308,134 @@ select
     }
 }
 
+/* Counter */
+.counter-block
+{
+    width: 23%;
+    margin: 1%;
+    float: left;
+}
+.counter-number
+{
+    font-family: "@{menu-font}", sans-serif;
+    font-size: ceil(@font-size-base * 7.15);
+    font-weight: 100;
+    @media (max-width: @screen-md-min)
+    {
+        font-size: ceil(@font-size-base * 4.15);
+    }
+    @media (max-width: @screen-sm-min)
+    {
+        font-size: ceil(@font-size-base * 3.85);
+    }
+    @media (max-width: @screen-xs-min)
+    {
+        font-size: ceil(@font-size-base * 2.25);
+    }
+}
+.counter-text
+{
+    font-weight: 600;
+    padding: ceil(@font-size-base * 0.5);
+    font-size: ceil(@font-size-base * 1.2);
+    @media (max-width: @screen-md-min)
+    {
+        font-size: ceil(@font-size-base * 0.9);
+    }
+    @media (max-width: @screen-xs-min)
+    {
+        font-size: ceil(@font-size-base * 0.6);
+    }
+}
+.counter
+{
+    margin-bottom: @line-height-computed;
+    &.flat
+    {
+        .counter-number
+        {
+            background-color: desaturate(lighten(@brand-primary, 25%), 25%);
+        }        
+        .counter-text
+        {
+            background-color: desaturate(lighten(@brand-primary, 10%), 25%);
+        }
+    }
+    &.circle
+    {
+        .counter-block
+        {
+            position: relative;
+        }
+        .counter-number
+        {
+            position: absolute;
+            width: 100%;
+            top: 40%;
+            line-height: 1;
+            margin-top: -0.5em;
+        }
+        .counter-text
+        {
+            position: absolute;
+            width: 100%;
+            top: 60%;
+        }
+        .counter-block:after
+        {
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+            background-color: desaturate(lighten(@brand-primary, 25%), 25%);
+            .round;
+        }
+    }
+}
+.region-body
+{
+    .counter-number
+    {
+        @media (min-width: @screen-lg-min)
+        {
+            font-size: ceil(@font-size-base * 4.15);
+        }
+        @media (max-width: @screen-lg-min)
+        {
+            font-size: ceil(@font-size-base * 4.15);
+        }
+        @media (max-width: @screen-md-min)
+        {
+            font-size: ceil(@font-size-base * 3.85);
+        }
+        @media (max-width: @screen-sm-min)
+        {
+            font-size: ceil(@font-size-base * 3.15);
+        }
+        @media (max-width: @screen-xs-min)
+        {
+            font-size: ceil(@font-size-base * 2.25);
+        }
+    }
+}
+.region-side
+{
+    .counter-number
+    {
+        @media (min-width: @screen-sm-min)
+        {
+            font-size: ceil(@font-size-base * 2.05);
+        }
+    }
+    .counter-text
+    {
+        @media (min-width: @screen-sm-min)
+        {
+            font-size: ceil(@font-size-base * 0.6);
+        }
+    }
+}
+
+
 // --------------------------------------------------
 // Bootstrap Overides
 // --------------------------------------------------

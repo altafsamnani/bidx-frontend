@@ -170,18 +170,31 @@ $isSuperAdmin   = is_super_admin();
     }
           //  }
             $this->render('view-group.phtml');
-
-            if ( BidxCommon::$staticSession->authenticated == 'true')
-            {
-                dynamic_sidebar('priv-member-side');
-            }
-            else
-            {
-                dynamic_sidebar('pub-member-side');
-            }
 ?>
 
             </div>
+<?php 
+            if ( BidxCommon::$staticSession->authenticated == 'true')
+            {
+?>
+                <div class="region-side">
+<?php               
+                    dynamic_sidebar('priv-member-side');
+?>
+                </div>
+<?php                
+            }
+            else
+            {
+?>
+                <div class="region-side">
+<?php               
+                    dynamic_sidebar('pub-member-side');
+?>
+                </div>
+<?php                
+            }
+?>
         </div>
     </div>
     <?php $this->render('edit-member.phtml'); ?>

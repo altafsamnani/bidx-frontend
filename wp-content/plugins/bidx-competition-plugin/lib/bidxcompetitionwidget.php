@@ -18,7 +18,6 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		
 	private $COMPETITION_ID_KEY = 'competition_id';
 	private $COMPETITION_LINK_KEY = 'competition_link';
-	private $CLOCK_SIZE_KEY = 'clock-size';
 	
 	private $diff = 0;
 	
@@ -52,22 +51,20 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		if ( $instance ) {
 			$competition_id   = $instance[$this->COMPETITION_ID_KEY];
 			$competition_link = $instance[$this->COMPETITION_LINK_KEY];
-			$clock_size 	  = $instance['clock_size'];
 			$style			  = $instance['style'];
 		} else {
 			$competition_id   = '';
 			$competition_link = '';
-			$clock_size 	  = 1.0;
-			$style = 'fancy';
+			$style = 'flat';
 		}
 
 		$competitions = BidxCompetition :: get_competitions_list();		//get list of competitions
 
-		?>
+?>
     	<p>
             <label for="<?php echo $this->get_field_id( $this->COMPETITION_ID_KEY ); ?>"><?php _e('Select Competition:', 'bidx_competition'); ?></label>
 			<select name="<?php echo $this->get_field_name( $this->COMPETITION_ID_KEY ) ?>" id="<?php echo $this->get_field_id( $this->COMPETITION_ID_KEY ) ?>">
-			<?php 
+<?php 
             foreach ( $competitions->posts as $competition) {
                 printf(
                     '<option value="%s" %s >%s</option>',
@@ -76,39 +73,16 @@ class BidxCompetitionCounterWidget extends WP_Widget {
                     $competition->post_title
                 );
             }
-            ?>
+?>
             </select>
         </p>
-    	<p>
-            <label for="<?php echo $this->get_field_id( 'clock_size' ); ?>"><?php _e( 'Size of the countdown clock:', 'bidx_competition' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'clock_size' ) ?>" id="<?php echo $this->get_field_id( 'clock_size' ) ?>">
-			<?php 
-				//@Sakis : can you please validate the sizes?
-				
-				$sizes = array( 
-					__( 'small',  'bidx_competition' ) => '0.3',
-					__( 'medium', 'bidx_competition' ) => '0.5',
-					__( 'normal', 'bidx_competition' ) => '1.0',
-					__( 'large',  'bidx_competition' ) => '1.3'		
-				);
-				foreach ( $sizes as $key => $value ) {
-					printf(
-						'<option value="%s" %s >%s</option>',
-						$value,
-						$value == $clock_size ? 'selected="selected"' : '',
-						$key
-					);
-				}
-			?>			
-			</select>
-		</p>
 		<p>
             <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e( 'Clock Style:', 'bidx_competition' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'style' ) ?>" id="<?php echo $this->get_field_id( 'style' ) ?>">
-			<?php 
+<?php 
 				$styles = array( 
-					__( 'Fancy', 'bidx_competition' ) => 'fancy',
 					__( 'Flat', 'bidx_competition' ) => 'flat',
+					__( 'Circle', 'bidx_competition' ) => 'circle',
 				);
 				foreach ( $styles as $key => $value ) {
 					printf(
@@ -118,7 +92,7 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 						$key
 					);
 				}
-			?>			
+?>			
 			</select>
 		</p>
     	<p>
@@ -140,7 +114,6 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		$instance = $old_instance;
 		$instance[$this->COMPETITION_ID_KEY] = esc_sql( $new_instance[$this->COMPETITION_ID_KEY] );
 		$instance[$this->COMPETITION_LINK_KEY] = esc_sql( $new_instance[$this->COMPETITION_LINK_KEY] );
-		$instance['clock_size'] = esc_sql( $new_instance['clock_size'] );
 		$instance['style'] = esc_sql( $new_instance['style'] );
 		return $instance;
 	}
@@ -155,19 +128,44 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		extract( $args );	
 		$competition_id = $instance[$this->COMPETITION_ID_KEY];
 		$competition_link = $instance[$this->COMPETITION_LINK_KEY];
-		$clock_size = $instance['clock_size'];
 		$style = $instance['style'];
-		
+
+		// Region Check
+		$active_region = $args['id'];
+        $add_container = false;
+        if  ( ( $active_region === 'pub-front-top' || $active_region === 'priv-front-top' ) && get_theme_mod( 'front_top_width' ) !== true )
+        {
+            $add_container = true;
+        }
+        
+        if  ( ( $active_region === 'pub-front-bottom' || $active_region === 'priv-front-bottom' ) && get_theme_mod( 'front_bottom_width' ) !== true )
+        {
+            $add_container = true;
+        }
 
 		echo $before_widget;
-		echo $this -> render_content( $competition_id, $clock_size, $competition_link, $style );
+
+        if ( $add_container ) :
+?>
+            <div class="container">
+<?php                 
+        endif; 
+
+		echo $this -> render_content( $competition_id, $competition_link, $style );
+
+        if ( $add_container ) :
+?>
+            </div>
+<?php                 
+        endif; 
+
 		echo $after_widget;
 	}	
 	
 	/**
 	 * Output rendering for the widget and for the shortcode
 	 */
-	function render_content( $competition_id, $clock_size='1.0', $competition_link=null, $style='fancy' ) {
+	function render_content( $competition_id, $competition_link=null, $style='circle' ) {
 
 		if ( empty( $competition_id ) ) {
 
@@ -182,44 +180,85 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 				_e( 'Defined post is not a competition','bidx_competition' );
 			}
 			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
-			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );	
+			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );
+			$this->timestamp = strtotime($enddate);	
 			$this->diff = abs(strtotime($enddate) - time());	
 			if ( $competition_link == null ) {
 				$competition_link = get_permalink( $competition_id );
 			}
-	?>
+?>
 		<div class="competition">
-		<h3><?php echo $post -> post_title ?></h3>
+		<h2><?php echo $post -> post_title ?></h2>
 		<p><?php echo $post -> post_excerpt ?></p>
-		<div class="counter <?php echo $style ?>">
-		<?php 
+		<div class="counter hide-overflow text-center <?php echo $style ?>">
+<?php 
 		if ($this->diff < 0) {
-			?>
+?>
 			<h4><?php _e( 'This competition has expired.','bidx_competition_plugin' ); ?></h4>
 			<a href="/competition"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
 		} else {
 			add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );		
 			?>		
-			<link rel="stylesheet" href="<?php echo plugins_url() ?>/bidx-competition-plugin/js/flipclock/flipclock.css">
-			<style>.your-clock { zoom: <?php echo $clock_size ?>; -moz-transform: scale(<?php echo $clock_size ?>) }</style>
-			<div class="your-clock"></div>
+			<div class="counter-block">
+				<div class="days counter-number"></div>
+				<div class="counter-text"><?php _e( 'DAYS','bidx_competition_plugin' ); ?></div>
+			</div>
+			<div class="counter-block">
+				<div class="hours counter-number"></div>
+				<div class="counter-text"><?php _e( 'HOURS','bidx_competition_plugin' ); ?></div>
+			</div>
+			<div class="counter-block">
+				<div class="minutes counter-number"></div>
+				<div class="counter-text"><?php _e( 'MINUTES','bidx_competition_plugin' ); ?></div>
+			</div>
+			<div class="counter-block">
+				<div class="seconds counter-number"></div>
+				<div class="counter-text"><?php _e( 'SECONDS','bidx_competition_plugin' ); ?></div>
+			</div>
 		</div>			
-			<?php 
+<?php 
 		}	
-		?>
+?>
 		<a class="btn btn-secondary btn-block" href="<?php echo $competition_link; ?>">View Now</a>
 		</div>
-		<?php
+<?php
 		}
 	}
 	
 	/**
-	 * Adds the extra javascripts on the bottom for the FlipClock
+	 * Adds the extra javascripts on the bottom for the widget
 	 */
 	function add_clock_footer_scripts() {
 
-		echo "<script src='".plugins_url() ."/bidx-competition-plugin/js/flipclock/flipclock.min.js'></script>";
-		echo "<script>var clock = jQuery('.your-clock').FlipClock(". $this->diff .", { clockFace: 'DailyCounter', countdown: true });</script>";
+		echo "<script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js'></script>";
+		echo "<script>
+				countdown();
+				setInterval(countdown, 1000);
+
+				function countdown ()
+				{
+					var now = moment(),
+						then = moment.unix(".$this->timestamp."),
+
+					ms = then.diff(now, 'milliseconds', true);
+					days = Math.floor(moment.duration(ms).asDays());
+					then = then.subtract('days', days);
+					ms = then.diff(now, 'milliseconds', true);
+					hours = Math.floor(moment.duration(ms).asHours());
+					then = then.subtract('hours', hours);
+					ms = then.diff(now, 'milliseconds', true);
+					minutes = Math.floor(moment.duration(ms).asMinutes());
+					then = then.subtract('minutes', minutes);
+					ms = then.diff(now, 'milliseconds', true);
+					seconds = Math.floor(moment.duration(ms).asSeconds());
+
+					$('.counter .days').text(days);
+					$('.counter .hours').text(hours);
+					$('.counter .minutes').text(minutes);
+					$('.counter .seconds').text(seconds);
+				}
+
+		</script>";
 	}
 	
 	/**
@@ -227,21 +266,17 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 	 * - id    : post_id
 	 * - size  : relative size between 0.2 and 2
 	 * - link  : optional link to override link to competition page
-	 * - style : fancy or flat
+	 * - style : circle or flat
 	 * @param array $atts
 	 */
 	function handle_shortcode( $atts ) {
 
 		$competition_id = $atts['id'];
-		$clock_size = 0.5;
 		$link = null;
-		if ( isset ($atts['size'] ) ) {
-			$clock_size = $atts['size'];
-		}
 		if ( isset ($atts['link'] ) ) {
 			$link = $atts['link'];
 		}	
-		$this :: render_content( $competition_id, $clock_size, $link );
+		$this :: render_content( $competition_id, $link );
 	}
 	
 }
@@ -293,11 +328,11 @@ class BidxCompetitionRegistrationWidget extends WP_Widget {
 		}
 		//get list of competitions
 		$competitions = BidxCompetition :: get_competitions_list();
-		?>
+?>
 	    <p>
             <label for="<?php echo $this->get_field_id('competition_id'); ?>"><?php _e('Select Competition:', 'bidx_competition'); ?></label>
 			<select name="<?php echo $this->get_field_name('competition_id') ?>" id="<?php echo $this->get_field_id('competition_id') ?>">
-			<?php 
+<?php 
             foreach ( $competitions->posts as $competition) {
                 printf(
                     '<option value="%s" %s >%s</option>',
@@ -306,10 +341,10 @@ class BidxCompetitionRegistrationWidget extends WP_Widget {
                     $competition->post_title
                 );
             }
-            ?>
+?>
             </select>
         </p> 
-		<?php
+<?php
 	} 	
 	
 

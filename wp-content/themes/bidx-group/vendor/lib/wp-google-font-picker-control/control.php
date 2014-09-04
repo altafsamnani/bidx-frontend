@@ -9,18 +9,18 @@ class Google_Font_Picker_Custom_Control extends WP_Customize_Control
 	/**
 	 * Enqueue the styles and scripts
 	**/
-	public function enqueue()
-	{
+	// public function enqueue()
+	// {
 		// styles
-		$stylePath 	=	get_template_directory_uri() . '/vendor/lib/wp-google-font-picker-control/assets/style.css';
-		wp_register_style( 'font-picker-custom-control', $stylePath);
-		wp_enqueue_style( 'font-picker-custom-control' );
+		// $stylePath 	=	get_template_directory_uri() . '/vendor/lib/wp-google-font-picker-control/assets/style.css';
+		// wp_register_style( 'font-picker-custom-control', $stylePath);
+		// wp_enqueue_style( 'font-picker-custom-control' );
 
 		// scripts
-		$scriptPath	=   get_template_directory_uri() . '/vendor/lib/wp-google-font-picker-control/assets/script.js';
-		wp_register_script( 'font-picker-custom-control', $scriptPath);
-		wp_enqueue_script( 'font-picker-custom-control' );
-	}
+		// $scriptPath	=   get_template_directory_uri() . '/vendor/lib/wp-google-font-picker-control/assets/script.js';
+		// wp_register_script( 'font-picker-custom-control', $scriptPath);
+		// wp_enqueue_script( 'font-picker-custom-control' );
+	// }
 
 	/**
 	 * Render the content on the theme customizer page
