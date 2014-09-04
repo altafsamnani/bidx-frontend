@@ -2092,7 +2092,10 @@
                                 {
                                     return true;
                                 }
-                                mailboxes[ el.name.toLowerCase() ] = el;
+                                //If does not exist skip it
+                                if ( typeof el.name != 'undefined' ) {
+                                	mailboxes[ el.name.toLowerCase() ] = el;
+                                }
                             } );
                             bidx.utils.log( "[mail] mailboxes loaded ", mailboxes );
 
