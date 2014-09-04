@@ -106,7 +106,7 @@ abstract class APIbridge
                 $cookies = $result['cookies'];
                 foreach ($cookies as $bidxAuthCookie)
                 {
-                    if (!empty ($bidxAuthCookie->name) && $bidxAuthCookie->name)
+                    if (!empty ($bidxAuthCookie->name) && $bidxAuthCookie->name && preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $bidxAuthCookie->name))
                     {
 
                         ob_start (); // To avoid error headers already sent in apibridge setcookie

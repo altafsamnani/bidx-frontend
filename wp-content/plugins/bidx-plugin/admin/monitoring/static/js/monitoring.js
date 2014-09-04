@@ -163,12 +163,8 @@
     }
 
 
-
-
-
-    function _createUsersLineChart( response, type )
-    {
-        var data = google.visualization.arrayToDataTable([
+  /*
+    var data = google.visualization.arrayToDataTable([
           ['Day', 'New users', 'Logins/day'],
           ['Day 1',  1000,      400],
           ['Day 2',  1170,      460],
@@ -178,14 +174,56 @@
           ['Day 6',  1030,      540],
           ['Day 7',  1030,      540],
         ]);
+  */
 
-        var options = {
-          title: 'Weekly users & logins'
-        };
 
-        var chart = new google.visualization.LineChart(document.getElementById('user_line_chart'));
+    function _createUsersLineChart( params )
+    {
+        var data
+        ,   chart
+        ,   newUser
+        ,   login
+        ,   $container      =   document.getElementById('user_line_chart')
+        ,   graphData       =   []
+        ,   eventRegister   =   bidx.utils.getValue(params.responseRegister,   'events')
+        ,   eventLogin      =   bidx.utils.getValue(params.responseLogin,      'events')
+        ,   keysRegister    =   _.keys( eventRegister ) // Keys of registrations ex 2014-02-02
+        ,   keysLogin       =   _.keys( eventLogin )     // Keys of Login ex 2014-02-02
+        ,   alldateKeys     =   _.union( keysRegister, keysLogin) // Common keys for iteration
+        ,   options         =   {
+                                    title: 'Weekly users & logins'
+                                }
+        ;
 
-        chart.draw(data, options);
+        if ( alldateKeys.length )
+        {
+            graphData.push( ['Day', 'New Users', 'Logins'] );
+            bidx.utils.log('eventLogin',eventLogin);
+            $.each( alldateKeys, function( idx, date )
+            {
+                // newUser    =   ($.isEmptyObject(eventRegister[date])) ? eventRegister[date] : 0;
+                // login      =   ($.isEmptyObject(eventLogin[date])) ? eventLogin[date] : 0;
+
+                 newUser    =   bidx.utils.getValue(eventRegister, date);
+                 login      =   bidx.utils.getValue(eventLogin, date);
+                 login      =   ( login ) ? login : 0;
+                 newUser    =   ( newUser ) ? newUser : 0;
+
+                 graphData.push( [date, newUser, login] );
+            } );
+
+            data = google.visualization.arrayToDataTable(graphData);
+
+            chart = new google.visualization.LineChart($container);
+
+            chart.draw(data, options);
+        }
+        else
+        {
+           $container.innerHTML =  bidx.i18n.i('noData', appName);
+        }
+
+
     }
 
     /*var data = google.visualization.arrayToDataTable([
@@ -201,29 +239,37 @@
     function _createBpBarChart( response, type )
     {
         var data
-        ,   eventData = response.events
-        ,   graphData     = []
+        ,   chart
+        ,   $container  =   document.getElementById('bp_bar_chart')
+        ,   eventData   =   response.events
+        ,   graphData   =   []
+        ,   options     =   {
+                                title: 'Weekly performance',
+                                vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
+                            }
         ;
 
+        graphData.push( ['Day', 'New Busienss Summaries'] );
+
         if(!$.isEmptyObject(eventData))
-        {   bidx.utils.log('eventData',eventData);
-            graphData.push( ['Day', 'New Busienss Summaries'] );
+        {
 
             $.each( eventData, function( date, count )
             {
                 graphData.push( [date, count] );
             });
+
+            data    = google.visualization.arrayToDataTable(graphData);
+
+            chart   = new google.visualization.BarChart($container);
+
+            chart.draw(data, options);
         }
-        data = google.visualization.arrayToDataTable(graphData);
+        else
+        {
+           $container.innerHTML = bidx.i18n.i('noData', appName);
+        }
 
-        var options =   {
-                            title: 'Weekly performance',
-                            vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
-                        };
-
-        var chart = new google.visualization.BarChart(document.getElementById('bp_bar_chart'));
-
-        chart.draw(data, options);
     }
 
     function showMemberProfile( options )
@@ -691,104 +737,21 @@
 
     }
 
-    function _getLoginAndUsers ( options )
+    function _getStatistics ( options )
     {
-        var search
-        ,   fromTime    =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
-        ,   criteria    =   {
-                                entityTypes     :   [
-                                                        {
-                                                            "type": "bidxBusinessSummary"
-                                                        }
-                                                    ]
-                            ,   filters         :   [
-                                                        "modified:" +   fromTime
-                                                    ]
-                            }
-        ;
-
-        search = _getSearchCriteria( criteria );
-
-        bidx.api.call(
-            "search.get"
-        ,   {
-                    groupDomain:        bidx.common.groupDomain
-                ,   data:               search.criteria
-                ,   success: function( response )
-                    {
-                        bidx.utils.log("[searchList] retrieved results ", response );
-
-                        // Set a callback to run when the Google Visualization API is loaded.
-                        _createUsersLineChart( response, 'facet_entityType' );
-
-                        if (options && options.callback)
-                        {
-                            options.callback(  );
-                        }
-
-
-                    }
-                    ,
-                    error: function( jqXhr, textStatus )
-                    {
-
-                        var response = $.parseJSON( jqXhr.responseText)
-                        ,   responseText = response && response.text ? response.text : "Status code " + jqXhr.status
-                        ;
-
-                        // 400 errors are Client errors
-                        //
-                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                        {
-                            bidx.utils.error( "Client  error occured", response );
-                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
-                        }
-                        // 500 erors are Server errors
-                        //
-                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                        {
-                            bidx.utils.error( "Internal Server error occured", response );
-                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
-                        }
-                    }
+        var extraUrlParameters  =
+        [
+            {
+                label: "eventName"
+            ,   value: options.eventName
             }
-        );
-
-        return ;
-
-    }
-
-    function _getBusinessSumarries ( options )
-    {
-        /*var search
-        ,   fromTime    =   bidx.utils.toTimeStamp('Fri, 18 Jul 2014 09:41:42')
-        ,   criteria    =   {
-                                entityTypes     :   [
-                                                        {
-                                                            "type": "bidxBusinessSummary"
-                                                        }
-                                                    ]
-                            ,   filters         :   [
-                                                        "modified:" +   fromTime
-                                                    ]
-                            }
+        ,   {
+                label: "days"
+            ,   value: options.days
+                //value: "type:bidxMemberProfile+AND+groupIds:" + '2' + searchName
+            }
+        ]
         ;
-
-
-        search = _getSearchCriteria( criteria );*/
-
-        var extraUrlParameters =
-            [
-                {
-                    label: "eventName"
-                ,   value: "loginUser"
-                }
-            ,   {
-                    label: "days"
-                ,   value: 120
-                    //value: "type:bidxMemberProfile+AND+groupIds:" + '2' + searchName
-                }
-            ];
 
         bidx.api.call(
             "statistics.fetch"
@@ -797,14 +760,11 @@
                 ,   extraUrlParameters:     extraUrlParameters
                 ,   success: function( response )
                     {
-                        bidx.utils.log("[searchList] retrieved results ", response );
-
-                        // Set a callback to run when the Google Visualization API is loaded.
-                        _createBpBarChart( response );
+                        bidx.utils.log("[statistics] retrieved results ", response );
 
                         if (options && options.callback)
                         {
-                            options.callback(  );
+                            options.callback( response );
                         }
 
                     }
@@ -899,6 +859,8 @@
 
     function _getData ()
     {
+        var options
+        ;
         // 1. Load Country Geo Chart & Load User Role Pie Chart
         _showView("loadcountrygeochart", true );
 
@@ -915,22 +877,43 @@
 
         // 2. Load Business Summary Chart
         _showView("loadbpbarchart", true );
-        _getBusinessSumarries(
+        _getStatistics(
         {
-            callback :  function( )
-                        {
-                            _hideView("loadbpbarchart");
-                        }
+            eventName   :   'businessSummaryCreate'
+        ,   days        :   7
+        ,   callback    :   function( response )
+                            {
+                                // Set a callback to run when the Google Visualization API is loaded.
+                                _createBpBarChart( response );
+                                _hideView("loadbpbarchart");
+                            }
         });
 
         // 3. Load Login and Registered users Chart
         _showView("loaduserlinechart", true );
-        _getLoginAndUsers(
+        _getStatistics(
         {
-            callback :  function( )
-                        {
-                            _hideView("loaduserlinechart");
-                        }
+            eventName   :   'registerMember'
+        ,   days        :   30
+        ,   callback    :   function( responseRegister )
+                            {
+                                // Set a callback to run when the Google Visualization API is loaded.
+                                _getStatistics(
+                                {
+                                    eventName   :   'loginUser'
+                                ,   days        :   30
+                                ,   callback    :   function( responseLogin )
+                                                    {
+                                                        // Set a callback to run when the Google Visualization API is loaded.
+                                                        _createUsersLineChart(
+                                                        {
+                                                            responseRegister:   responseRegister
+                                                        ,   responseLogin:      responseLogin
+                                                        } );
+                                                        _hideView("loaduserlinechart");
+                                                    }
+                                });
+                            }
         });
 
         // 4. Load Latest uers  in Table

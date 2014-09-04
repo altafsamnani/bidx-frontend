@@ -204,13 +204,16 @@ function call_bidx_service ($urlservice, $body, $method = 'POST', $formType = fa
             $cookies = $result['cookies'];
             foreach ($cookies as $bidxAuthCookie)
             {
-                setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
-                $_COOKIE[$bidxAuthCookie->name] = urlencode($bidxAuthCookie->value);
+                if (preg_match ("/^".BIDX_ALLOWED_COOKIES."/i", $bidxAuthCookie->name))
+                {
+                    setrawcookie ($bidxAuthCookie->name, urlencode($bidxAuthCookie->value), $bidxAuthCookie->expires, $bidxAuthCookie->path, $sendDomain, FALSE, $bidxAuthCookie->httponly);
+                    $_COOKIE[$bidxAuthCookie->name] = urlencode($bidxAuthCookie->value);
 
-                $competitionCookieVals = array('expires'  => $bidxAuthCookie->expires,
-                                               'path'     => $bidxAuthCookie->path,
-                                               'domain'   => $sendDomain,
-                                               'httpOnly' => $bidxAuthCookie->httponly);
+                    $competitionCookieVals = array('expires'  => $bidxAuthCookie->expires,
+                                                   'path'     => $bidxAuthCookie->path,
+                                                   'domain'   => $sendDomain,
+                                                   'httpOnly' => $bidxAuthCookie->httponly);
+                }
             }
 
             if($urlservice == 'session' && $bidxMethod == 'POST') {

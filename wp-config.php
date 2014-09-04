@@ -77,7 +77,7 @@ define('COOKIE_DOMAIN', 'bidx.net');
 define('COOKIEPATH', '/');
 define('SITECOOKIEPATH', '/');
 define('LOGGED_IN_COOKIE', 'bidx_logged_in' . BIDX_ENV . '_' . COOKIEHASH);
-define('BIDX_ALLOWED_COOKIES', '(bidx)|(JSESSIONID)');
+define('BIDX_ALLOWED_COOKIES', '(bidx)');
 
 define('SCRIPT_DEBUG', false);
 define('CONCATENATE_SCRIPTS', true);

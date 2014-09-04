@@ -30,9 +30,9 @@
 
 		add_meta_box( 'Roles', __('User Roles','bidx-plugin'), 'analytics_roles', null, 'side' ,  'default' );
 
-		add_meta_box( 'Registraions', __('Sample Registraions (In Progress)','bidx-plugin'), 'analytics_registrations', null, 'side', 'default' );
+		add_meta_box( 'Registraions', __('New User + Login / Day','bidx-plugin'), 'analytics_registrations', null, 'side', 'default' );
 
-		add_meta_box( 'Summaries', __('Sample Summaries (In Progress)','bidx-plugin'), 'analytics_summaries', null, 'side', 'default' );
+		add_meta_box( 'Summaries', __('Business Summaries / Day','bidx-plugin'), 'analytics_summaries', null, 'side', 'default' );
 
 
 		/* Add metaboxes help */
