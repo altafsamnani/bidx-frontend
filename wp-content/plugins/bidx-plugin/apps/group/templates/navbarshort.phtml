@@ -140,12 +140,25 @@
         }
  ?>
         <div class="btn-group">
-            <a href="/mail/#mail" type="button" class="bidx-mail text-white" title="<?php _e('Mail', 'bidxplugin')?>">
-                <!-- If messages are available -->
-                <i class="fa fa-envelope"></i>
-                <span class="iconbar-unread hide-it">?</span>
-                <span class="iconbar-text"><?php _e('Messages','bidxplugin')?></span>
-            </a>
+<?php
+            if ( $inGroup )
+            {
+?>
+                <a href="/mail/#mail" type="button" class="bidx-mail text-white" title="<?php _e('Mail', 'bidxplugin')?>">
+                    <!-- If messages are available -->
+                    <i class="fa fa-envelope"></i>
+                    <span class="iconbar-unread hide-it">?</span>
+                    <span class="iconbar-text"><?php _e('Messages','bidxplugin')?></span>
+                </a>
+<?php
+            }
+            else
+            {
+?>
+                <a type="button" class="text-white" href="#joinGroup"><i class="fa fa-sign-in"></i>&nbsp;<?php _e('Join this group', 'bidxplugin')?></a>
+<?php
+            }
+?>
         </div>
 <?php
         $roles = ( !empty( $this -> sessionData -> data -> roles ) ) ? $this -> sessionData -> data -> roles : NULL;
