@@ -74,8 +74,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
     <div class="row">
         <div class="col-sm-8">
-            <h1><?php _e('Business Summary', 'bidxplugin')?></h1>
-            <p><?php echo $this->exst( $businessSummary->slogan ); ?></p>
+            <h1><?php echo $this->exst( $businessSummary->name ); ?></h1>
+            <!-- <small>by <a href="#">Small</a></small> -->
         </div>
 
 
@@ -121,55 +121,45 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 </div>
             </div>
 
-            <div class="col-sm-5 hide-overflow">
-                <div class="rating-wrapper">
-                    <div class="rating-total">
-                        <i class="fa fa-star"></i>
-                        <span class="rating-average"><?php echo $this->rating->totals->average ? $this->rating->totals->average : "?"; ?></span>
-                    </div>
-                </div>
+            <div class="col-sm-5">
     <?php
                 /* 
                  * We want ratings to be indexed by Google, so need to include this on page load. It 
                  * might be updated in JavaScript though, so also check the translations in i18n.xml.
-                 * For a consistent layout, an empty div will be outputted if rating is not enabled. 
                  */ 
                 $ratingTotals = $this->rating->totals;
-                
+
                 if( $ratingTotals ) 
                 {
                     $ratingAllowed = $loggedInUserId != $ownerId;
                     $ratingUser = $this->rating->userRating;
-                    
-                    $count = $ratingTotals->count;
-                    if ( $count == 1 ) 
-                    {
-                        $ratingAverageLabel = sprintf( __( 'Rating (%d vote)', 'bidxplugin' ), $count );
-                    }
-                    else
-                    {
-                        $ratingAverageLabel = sprintf( __( 'Rating (%d votes)', 'bidxplugin' ), $count );
-                    }
     ?> 
-    <!--                <div class="ratingControls">
-                        <span class="ratingAverageLabel"><?php echo $ratingAverageLabel ?></span>
-     -->                    <!-- TODO Arjan Using an INPUT is not ideal, as the browser might re-populate it on navigation. -->
-    <!--                    <input class="rating ratingAverage" value="<?php echo $ratingTotals->average; ?>" type="number" data-readonly="true" data-show-clear="false" data-size="xs" data-show-caption="false">
-                    </div> -->
+                        <div class="rating-wrapper">
+                            <div class="rating-total">
+                                <div class="rating-no-score <?php echo !$ratingUser ? '' : 'hide' ?>">
+                                    <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
+                                </div>
+                                <div class="rating-score <?php echo $ratingUser ? '' : 'hide' ?>">
+                                    <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
+                                    <i class="fa fa-star"></i>
+                                    <span class="rating-average"><?php echo $ratingTotals->average ? $ratingTotals->average : "?"; ?></span>
+                                </div>
+<?php
+?>                                
+                            </div>
+<?php
+                            if( $ratingAllowed )
+                            { 
+?>
+                                <div class="rating-vote">
+                                    <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
+                                    <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
+                                </div>
     <?php
-                    if( $ratingAllowed )
-                    { 
+                            }
     ?>
-                        <div class="ratingControls">
-                            <span class="ratingUserLabel"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span>
-                            <span class="ratingUserClear" style="padding-left: 5px"></span> 
-                            <input name="rating" class="rating ratingUser" value="<?php echo $ratingUser->value; ?>" type="number" data-clear-element=".ratingUserClear" data-size="xs" data-show-caption="false" data-step=1>
-                        <!-- TODO Arjan remove -->
-            <!--             <a class="btn btn-primary" href="#mentoring/addFeedback/entityId=<?php echo $businessSummaryId; ?>&commentorId=><?php echo $loggedInMemberId; ?>"><?php _e('Add feedback','bidxplugin');?></a>
-            -->
                         </div>
     <?php
-                     }
                  }
     ?>
             </div>

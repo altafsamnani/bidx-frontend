@@ -7,5 +7,5 @@
     <Item value="ratingAverageLabel">Rating (%d vote)</Item>
     <Item value="ratingAverageLabelPlural">Rating (%d votes)</Item>
     <Item value="ratingUserLabel">Your rating</Item>
-    <Item value="ratingUserLabelNone">Please rate this plan</Item>
+    <Item value="ratingUserLabelNone">Rate this plan</Item>
 </I18N>

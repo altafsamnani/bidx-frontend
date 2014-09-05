@@ -1292,37 +1292,107 @@ select
 }
 
 /* Speed Rating*/
-.ratingControls
-{
-    text-align: center;
-    float: left;
-}
 .rating-wrapper
 {
-    float: left;
     position: relative;
     margin-right: 1em;
 }
 .rating-total
 {
     text-align: center;
-    i
+    margin-bottom: ceil(@font-size-base * 1.0);
+    .fa-star
     {
-        font-size: ceil(@font-size-base * 4.4);
-        color: #fde16d;
+        font-size: ceil(@font-size-base * 1.0);
+        color: #C4B830;
+        vertical-align: middle;
+        margin: 0 ceil(@font-size-base * 0.2);
     }
     .rating-average
     {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        font-size: ceil(@font-size-base * 1.25);
-        font-weight: 300;
+        font-size: ceil(@font-size-base * 1.75);
+        font-weight: 500;
         font-family: @lato;
-        line-height: ceil(@font-size-base * 4.25);
+    }
+    .rating-score-text
+    {
+        text-transform: uppercase;
+    }
+    span
+    {
+        font-size: ceil(@font-size-base * 1.75);
+        vertical-align: middle;
+        font-weight: 300;
+        line-height: 2.6;
     }
 }
+.rating-vote
+{
+    text-align: center;
+    margin-bottom: ceil(@font-size-base * 1.0);
+}
+.rating-score,
+.rating-no-score
+{
+    line-height: 5;
+}
+
+
+.cancel-on-png, .cancel-off-png, .star-on-png, .star-off-png, .star-half-png
+{
+  font-size: ceil(@font-size-base * 2.5);
+  color: #C4B830;
+}
+.cancel-on-png,
+.cancel-off-png,
+.star-on-png,
+.star-off-png,
+.star-half-png
+{
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: "FontAwesome";
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  speak: none;
+  text-transform: none;
+  vertical-align: middle;
+}
+.raty-cancel
+{
+    font-size: ceil(@font-size-base * 1.5);
+    line-height: ceil(@font-size-base * 2.25);
+    color: #800505;
+}
+
+.star-off-png
+{
+    color: #aaa;
+}
+.cancel-on-png:before
+{
+  content: "\f057";
+}
+.cancel-off-png:before
+{
+  content: "\f05c";
+}
+.star-on-png:before
+{
+  content: "\f005";
+}
+.star-off-png:before
+{
+  content: "\f006";
+}
+.star-half-png:before
+{
+  content: "\f123";
+}
+
+
 
 /* Counter */
 .counter-block

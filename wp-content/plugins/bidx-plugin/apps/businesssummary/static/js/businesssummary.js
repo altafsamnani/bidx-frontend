@@ -30,12 +30,12 @@
     ,   $controlsForEdit            = $editControls.find( ".viewEdit" )
     ,   $controlsForError           = $editControls.find( ".viewError" )
 
-    ,   $ratingControls             = $element.find( ".ratingControls" )
-    ,   $ratingAverageInput         = $ratingControls.find( ".ratingAverage" )
-    ,   $ratingAverageLabel         = $ratingControls.find( ".ratingAverageLabel" )
-    ,   $ratingUserInput            = $ratingControls.find( ".ratingUser" )
-    ,   $ratingUserLabel            = $ratingControls.find( ".ratingUserLabel" )
-    ,   $ratingUserClear            = $ratingControls.find( ".ratingUserClear" )
+    ,   $ratingWrapper              = $element.find( ".rating-wrapper" )
+    ,   $ratingAverage              = $ratingWrapper.find( ".rating-average" )
+    ,   $ratingVote                 = $ratingWrapper.find( ".rating-vote" )
+    ,   $ratingTotal                = $ratingWrapper.find( ".rating-total" )
+    ,   $ratingUserLabel            = $ratingWrapper.find( ".rating-user-label" )
+    ,   $raty                       = $ratingWrapper.find( ".raty" )
     
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
 
@@ -1265,36 +1265,47 @@
                 } );
         }
 
+
         // bind Rating stars
         // only for users not owning the current summary ( summary owners do not get this button rendered )
         //
-        if ( $ratingUserInput )
+        if ( $ratingVote )
         {
-            $ratingUserInput.on( "rating.change rating.clear", function( event, value, caption )
-            {
-                var scope = null
-                ,   comment = null;
-
-                bidx.common.rate( bidxConfig.context.businessSummaryId, scope, value, comment, function( data )
+            $raty.raty({
+                cancel   : true,
+                starType : 'i',
+                hints       : ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
+                click: function( value )
                 {
-                    var count = data.totals.count;
+                    var scope = null
+                    ,   comment = null;
 
-                    $ratingAverageInput.rating( "update", data.totals.average );
-                    // Officially we could use: 
-                    //     $ratingUserInput.rating( "refresh", {showClear: data.userRating != null} );
-                    // ...but that somehow binds the handlers again, making them run multiple times for every click.
-                    
-                    $ratingUserClear.toggle( data.userRating !== null );
-                    $ratingAverageLabel.text( bidx.i18n.i( "ratingAverageLabel" + ( count === 1 ? "" : "Plural"), appName ).replace( /%d/g, count ) );
-                    $ratingUserLabel.text( bidx.i18n.i( data.userRating !== null ? "ratingUserLabel" : "ratingUserLabelNone", appName ) );
+                    bidx.common.rate( bidxConfig.context.businessSummaryId, scope, value, comment, function( data )
+                    {
+                        var count = data.totals.count;
+                        bidx.utils.log('data.userRating', data);
+                        $ratingUserLabel.text( bidx.i18n.i( data.userRating ? "ratingUserLabel" : "ratingUserLabelNone", appName ) );
 
-                    $( ".rating-average" ).text(data.totals.average ? data.totals.average : "?" );
-                } );
-            } );
+                        $ratingAverage.text(data.totals.average ? data.totals.average : "?" );
 
-            // Once the plugin has initialized our own .ratingUserClear is no longer available
-            //
-            $ratingUserClear.toggle( $ratingUserInput.val() !== 0 );
+                        if ( data.userRating )
+                        {
+                            $ratingTotal.find( ".rating-score" ).removeClass( "hide" );
+                            $ratingTotal.find( ".rating-no-score" ).addClass( "hide" );
+                        }
+                        else
+                        {
+                            $ratingTotal.find( ".rating-no-score" ).removeClass( "hide" );
+                            $ratingTotal.find( ".rating-score" ).addClass( "hide" );
+                        }
+                    } );
+                },
+                score: function()
+                {
+                    return $(this).attr('data-rating');
+                }
+
+            });
         }
 
         if ( $videoWrapper )
@@ -1302,7 +1313,10 @@
             $videoWrapper.fitVids();
         }
 
-        $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        if ( $fakecrop )
+        {
+            $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        }
     }
 
     var _handleToggleChange = function( show, group )
