@@ -1288,7 +1288,7 @@
 
                         $ratingAverage.text(data.totals.average ? data.totals.average : "?" );
 
-                        if ( data.userRating )
+                        if ( data.totals.average )
                         {
                             $ratingTotal.find( ".rating-score" ).removeClass( "hide" );
                             $ratingTotal.find( ".rating-no-score" ).addClass( "hide" );

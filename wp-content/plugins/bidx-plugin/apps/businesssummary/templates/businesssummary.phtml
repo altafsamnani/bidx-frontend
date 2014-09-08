@@ -74,8 +74,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
     <div class="row">
         <div class="col-sm-8">
-            <h1><?php echo $this->exst( $businessSummary->name ); ?></h1>
-            <!-- <small>by <a href="#">Small</a></small> -->
+            <h1>
+                <?php echo $this->exst( $businessSummary->name ); ?>
+                <small>&nbsp;<?php echo _e( 'by' ); ?>&nbsp;
+                    <a href="/member/<?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerId ); ?>"><?php echo $this->exst( $businessSummaryBidxMeta->bidxOwnerDisplayName ); ?></a>
+                </small>
+            </h1>
         </div>
 
 
@@ -136,10 +140,10 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     ?> 
                         <div class="rating-wrapper">
                             <div class="rating-total">
-                                <div class="rating-no-score <?php echo !$ratingUser ? '' : 'hide' ?>">
+                                <div class="rating-no-score <?php echo !$ratingTotals->average ? '' : 'hide' ?>">
                                     <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
                                 </div>
-                                <div class="rating-score <?php echo $ratingUser ? '' : 'hide' ?>">
+                                <div class="rating-score <?php echo $ratingTotals->average ? '' : 'hide' ?>">
                                     <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
                                     <i class="fa fa-star"></i>
                                     <span class="rating-average"><?php echo $ratingTotals->average ? $ratingTotals->average : "?"; ?></span>
