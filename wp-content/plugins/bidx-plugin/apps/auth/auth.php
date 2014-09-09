@@ -80,7 +80,7 @@ class auth {
                 //
                 if ( isset ( $result -> data -> SessionState ) && ( $result -> data -> SessionState === "PendingInitialPasswordSet" || $result -> data -> SessionState === "PendingPasswordReset"  ) ) {
 
-                    $redirect_url = '/setpassword';
+                    $redirect_url = '/setpassword/';
 
                 } elseif ( isset ( $result -> code ) && $result -> code === "activationTokenExpired" ) {
 

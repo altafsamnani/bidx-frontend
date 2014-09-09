@@ -1,38 +1,133 @@
 <?php
+require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 
-    require_once( BIDX_PLUGIN_DIR . '/../admin/admin.php' );
+class Bidx_Admin_Monitoring
+{
+	public 	$hook
+	,		$title
+	,		$menu
+	,		$permissions
+	,		$slug
+	,		$page
+	,		$userId
+	,		$view
+	,		$className
+	, 		$deps 	= 	array (	'underscore'
+							  ,	'bidx-admin-api-core'
+							  , 'bidx-admin-common'
+							  , 'google-jsapi'
+							  );
+	/**
+	 * Constructor class for the Simple Admin Metabox
+	 * @param $hook - (string) parent page hook
+	 * @param $title - (string) the browser window title of the page
+	 * @param $menu - (string)  the page title as it appears in the menuk
+	 * @param $permissions - (string) the capability a user requires to see the page
+	 * @param $slug - (string) a slug identifier for this page
+	 * @param $body_content_cb - (callback)  (optional) a callback that prints to the page, above the metaboxes. See the tutorial for more details.
+	 */
+	function __construct(  )
+	{
+		$this->hook 			=	'edit.php';
+		$this->title    		=   __('Monitoring','domain');
+		$this->menu     		=   __('Monitoring','domain');
+		$this->permissions 		=	'editor';
+		$this->slug 			=   'bidx_monitoring_page';
+		$this->userId  			=	 get_current_user_id();
+		$this->body_content_cb 	=   'admin_body_content';
+		$this->className        =   'monitoring';
 
-	//Create a page
-	$admin_mon = new Bidx_Admin_Monitoring('edit.php',
-									__('Monitoring','domain'),
-									__('Monitoring','domain'),
-									'editor',
-									'bidx_monitoring_page',
-									'admin_body_content',
-									'monitoring');
+		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
+
+		$this->page = add_menu_page (	$this->title
+									,	$this->menu
+									,	$this->permissions
+									,	$this->slug
+									,	array($this,'render_page')
+									,	'dashicons-chart-line');
+
+
+		//Add metaboxes to the page
+		add_action('add_meta_boxes', array(&$this,'add_meta_box'));
+
+		add_action('load-'.$this->page,  array(&$this,'page_actions'));
+
+		/* Add callbacks for this screen only */
+		add_action('admin_enqueue_scripts', array(&$this, 'register_admin_bidx_ui_libs'));
+
+		//add_action('admin_print_footer_scripts-'.$this->page, array(&$this,'footer_scripts'));
+
+
+
+	}
+	/**
+	* Actions to be taken prior to page loading. This is after headers have been set.
+    * call on load-$hook
+	* This calls the add_meta_boxes hooks, adds screen options and enqueues the postbox.js script.
+	*/
+	public function page_actions( )
+	{
+		do_action( 'add_meta_boxes_'.$this->page, null );
+		do_action( 'add_meta_boxes', $this->page, null );
+
+		/* User can choose between 1 or 2 columns (default 2) */
+		add_screen_option( 'layout_columns', array( 'max' => 2, 'default' => 2 ) );
+
+		/* Enqueue WordPress' script for handling the metaboxes */
+		wp_enqueue_script( 'postbox' );
+	}
+
+	/**
+	 * Renders the page
+	*/
+	public function render_page()
+	{
+
+		$this->view->title 				= 	$this->title;
+		$this->view->userId 			= 	$this->userId;
+		$this->view->body_content_cb 	= 	$this->body_content_cb;
+		$this->view->className          =   $this->className;
+
+        echo $this->view->render( 'main.phtml' );
+	}
+
+	/**
+	 * Loads the Google basis. Might be useful for everything instead of loading Google Maps only
+	 * load them when needed by Javascript.
+	 */
+	public function register_admin_bidx_ui_libs()
+	{
+		//1. Load Js Libraries
+		wp_register_script ($this->className, plugins_url("static/js/{$this->className}.js", __FILE__), $this->deps, '20140620', TRUE);
+	}
+
+
+	public function footer_scripts( )
+	{
+		/* For postmetadata dragging and arrow close/open icon functionality */
+ 		echo "<script>jQuery(document).ready(function(){ postboxes.add_postbox_toggles(pagenow); });</script>";
+
+	}
 
 	//Define the body content for the page (if callback is specified above)
-	function admin_body_content()
+	public function admin_body_content()
 	{
 		//echo 'Monitoring page contains the latest status of your portal.';
 
 	}
 
-	//Add metaboxes to the page
-	add_action('add_meta_boxes','sh_example_metaboxes');
-
-	function sh_example_metaboxes()
+	public function add_meta_box()
 	{
 
-		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), 'analytics_geo', null, 'normal', 'default' );
+		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), array($this,'analytics_geo'), null, 'normal', 'default' );
 
-		add_meta_box( 'Latest Members', __('User Data','bidx-plugin'), 'analytics_user', null, 'normal', 'default' );
+		add_meta_box( 'Latest Members', __('User Data','bidx-plugin'), array($this,'analytics_user'), null, 'normal', 'default' );
 
-		add_meta_box( 'Roles', __('User Roles','bidx-plugin'), 'analytics_roles', null, 'side' ,  'default' );
+		add_meta_box( 'Roles', __('User Roles','bidx-plugin'), array($this,'analytics_roles'), null, 'side' ,  'default' );
 
-		add_meta_box( 'Registraions', __('New User + Login / Day','bidx-plugin'), 'analytics_registrations', null, 'side', 'default' );
+		add_meta_box( 'Registraions', __('New User + Login / Day','bidx-plugin'), array($this,'analytics_registrations'), null, 'side', 'default' );
 
-		add_meta_box( 'Summaries', __('Business Summaries / Day','bidx-plugin'), 'analytics_summaries', null, 'side', 'default' );
+		add_meta_box( 'Summaries', __('Business Summaries / Day','bidx-plugin'), array($this,'analytics_summaries'), null, 'side', 'default' );
 
 
 		/* Add metaboxes help */
@@ -50,36 +145,33 @@
 		);
 	}
 
-	function analytics_geo()
+	public function analytics_geo()
 	{
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
-        echo $view->render( 'country-geochart.phtml' );
+        echo $this->view->render( 'country-geochart.phtml' );
 	}
 
-	function analytics_user()
+	public function analytics_user()
 	{
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
-        echo $view->render( 'user-table.phtml' );
+        echo $this->view->render( 'user-table.phtml' );
 	}
 
-	function analytics_registrations()
+	public function analytics_registrations()
 	{
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
-        echo $view->render( 'user-linechart.phtml' );
+        echo $this->view->render( 'user-linechart.phtml' );
 	}
 
-	function analytics_roles()
+	public function analytics_roles()
 	{
 		//1. Template Rendering
-        $view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
-        echo $view->render( 'userrole-piechart.phtml' );
+        echo $this->view->render( 'userrole-piechart.phtml' );
 
 	}
 
-	function analytics_summaries()
+	public function analytics_summaries()
 	{
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
-        echo $view->render( 'bp-barchart.phtml' );
+        echo $this->view->render( 'bp-barchart.phtml' );
 
 	}
+
+}
 	?>
