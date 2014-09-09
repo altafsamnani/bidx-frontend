@@ -66,8 +66,8 @@ if (!BidxCommon :: isWPInternalFunction ()) {
     $shortcode = new BidxShortCode();
     $shortcode->addMappingArray ($ruleitems);
 
-    //Bidx WP Hooks file
-    require_once( BIDX_PLUGIN_DIR . '/../admin/monitoring/monitoring.php' );
+    require_once( BIDX_PLUGIN_DIR . '/../admin/admin.php' );
+
 }
 
 

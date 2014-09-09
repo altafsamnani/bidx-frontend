@@ -51,9 +51,9 @@ class setpassword {
 
         // ob_start is necessary to capture the shortcode response. ob_get_Clean returns the captured content
         //
-        ob_start();
+        //ob_start();
         $view -> render( $render . '.phtml' );
-        return ob_get_clean();
+        //return ob_get_clean();
 
 
     }

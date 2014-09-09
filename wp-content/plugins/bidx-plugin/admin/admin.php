@@ -18,123 +18,38 @@
  *
  *
  */
-require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 
-class Bidx_Admin_Monitoring
+
+class Bidx_Admin_Admin
 {
-	public $hook;
-	public $title;
-	public $menu;
-	public $permissions;
-	public $slug;
-	public $page;
-	public $userId;
-	public $view;
-	public $className;
-	static $deps 	= 	array (	'underscore'
-							  ,	'bidx-admin-api-core'
-							  , 'bidx-admin-common'
-							  , 'google-jsapi'
-							  );
-	/**
-	 * Constructor class for the Simple Admin Metabox
-	 * @param $hook - (string) parent page hook
-	 * @param $title - (string) the browser window title of the page
-	 * @param $menu - (string)  the page title as it appears in the menuk
-	 * @param $permissions - (string) the capability a user requires to see the page
-	 * @param $slug - (string) a slug identifier for this page
-	 * @param $body_content_cb - (callback)  (optional) a callback that prints to the page, above the metaboxes. See the tutorial for more details.
-	 */
-	function __construct( $hook, $title, $menu, $permissions, $slug, $body_content_cb='__return_true', $className = NULL )
+	public $ruleitems;
+
+	function __construct()
 	{
-		$this->hook 			= $hook;
-		$this->title 			= $title;
-		$this->menu 			= $menu;
-		$this->permissions 		= $permissions;
-		$this->slug 			= $slug;
-		$this->body_content_cb 	= $body_content_cb;
-		$this->userId  			= get_current_user_id();
-		$this->className        = $className;
+		$this->ruleitems 	= 	array (	'monitoring'
+	      							 // ,	'mail'
+	    					  		  );
 
-		/* Add the page */
-		add_action( 'admin_menu', array( $this,'add_page' ) );
+		add_action ('admin_menu', array(&$this, 'group_admin_menu'));
+	}
 
-		add_action('admin_enqueue_scripts', array(&$this, 'register_admin_bidx_ui_libs'));
+	function group_admin_menu( )
+	{
+		foreach($this->ruleitems as $fileName)
+		{
 
-		add_action('admin_print_footer_scripts-'.$this->page, array($this,'footer_scripts'));
+			require_once( BIDX_PLUGIN_DIR . "/../admin/{$fileName}/{$fileName}.php" );
 
-		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/static/templates/' );
+			$className	=	'Bidx_Admin_'.ucfirst($fileName);
+
+	        $adminTab	=	new $className ();
+
+		}
 
 	}
 
-	/**
-	 * Loads the Google basis. Might be useful for everything instead of loading Google Maps only
-	 * load them when needed by Javascript.
-	 */
-	public function register_admin_bidx_ui_libs()
-	{
-		//1. Load Js Libraries
-		wp_register_script ('monitoring', plugins_url('monitoring/static/js/monitoring.js', __FILE__), self::$deps, '20140620', TRUE);
-	}
-
-
-	public function footer_scripts( )
-	{
-		/* For postmetadata dragging and arrow close/open icon functionality */
- 		echo "<script>jQuery(document).ready(function(){ postboxes.add_postbox_toggles(pagenow); });</script>";
-
-	}
-
-	/**
-	 * Adds the custom page.
-	 * Adds callbacks to the load-* and admin_footer-* hooks
-	*/
-	function add_page( )
-	{
-
-		/* Add the page */
-		$this->page = add_submenu_page( $this->hook,
-										$this->title,
-										$this->menu,
-										$this->permissions,
-										$this->slug,
-										array($this,'render_page'),
-										1);
-
-		/* Add callbacks for this screen only */
-		add_action('load-'.$this->page,  array($this,'page_actions'));
-
-	}
-
-   /**
-	* Actions to be taken prior to page loading. This is after headers have been set.
-    * call on load-$hook
-	* This calls the add_meta_boxes hooks, adds screen options and enqueues the postbox.js script.
-	*/
-	function page_actions( )
-	{
-		do_action( 'add_meta_boxes_'.$this->page, null );
-		do_action( 'add_meta_boxes', $this->page, null );
-
-		/* User can choose between 1 or 2 columns (default 2) */
-		add_screen_option( 'layout_columns', array( 'max' => 2, 'default' => 2 ) );
-
-		/* Enqueue WordPress' script for handling the metaboxes */
-		wp_enqueue_script( 'postbox' );
-	}
-
-	/**
-	 * Renders the page
-	*/
-	function render_page()
-	{
-		$this->view->title 				= 	$this->title;
-		$this->view->userId 			= 	$this->userId;
-		$this->view->body_content_cb 	= 	$this->body_content_cb;
-		$this->view->className          =   $this->className;
-
-        echo $this->view->render( 'main.phtml' );
-	}
 }
+
+$bidxAdminClass = new Bidx_Admin_Admin ();
 
 ?>

@@ -24,6 +24,7 @@ class BidxCommon
     public function __construct ()
     {
         $this->subDomain = self::get_bidx_subdomain ();
+        $this->logger = Logger::getLogger (__CLASS__);
 
     }
 
@@ -37,9 +38,15 @@ class BidxCommon
     public function isSetBidxAuthCookie ()
     {
         $bidxAuthCookie = false;
-        foreach ($_COOKIE as $cookieKey => $cookieValue) {
-            if (preg_match ("/^bidx-auth/i", $cookieKey)) {
-                $bidxAuthCookie = true;
+        $requestUri     =   explode ('?', $_SERVER ["REQUEST_URI"]);
+        $hostAddress    =   explode ('/', $requestUri[0]);
+
+        if($hostAddress[1] !== 'setpassword')  // Need to exclude setpassword as we dont want to call SessionService() for the same.
+        {
+            foreach ($_COOKIE as $cookieKey => $cookieValue) {
+                if (preg_match ("/^bidx-auth/i", $cookieKey)) {
+                    $bidxAuthCookie = true;
+                }
             }
         }
 
@@ -79,6 +86,8 @@ class BidxCommon
                         //Set firsttime/new session variables
                         $sessionVars = $this->setSessionVariables ($subDomain, $bidxSessionVars);
                     }
+
+
 
                     //If not Logged in forcefully login to WP
                     $this->forceWordpressLogin ($subDomain, $sessionVars);
@@ -664,7 +673,7 @@ class BidxCommon
             $siteLocale = get_locale ();
             $staticDataObj = new StaticDataService();
             $transientKey = 'static' . $siteLocale; // Transient key for Static Data
-            //$transientStaticData = get_transient ($transientKey);
+            $transientStaticData = get_transient ($transientKey);
 
             /* If no value then set the site local transient */
             if ($transientStaticData == false) {
