@@ -1,6 +1,6 @@
 <?php
 
-class Bidx_Admin_Monitoring
+class Bidx_Admin_Mail
 {
 	public 	$hook
 	,		$title
@@ -36,7 +36,7 @@ class Bidx_Admin_Monitoring
 		$this->className        =    strtolower($this->menu);
 		$icon                   =    (string) $options->icon;
 
-		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
+		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/mail/static/templates/' );
 
 		$this->page = add_menu_page (	$this->title
 									,	$this->menu
@@ -87,7 +87,7 @@ class Bidx_Admin_Monitoring
 		$this->view->body_content_cb 	= 	$this->admin_body_content();
 		$this->view->className          =   $this->className;
 
-        echo $this->view->render( 'main.phtml' );
+       // echo $this->view->render( 'main.phtml' );
 	}
 
 	/**
@@ -120,14 +120,6 @@ class Bidx_Admin_Monitoring
 
 		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), array($this,'analytics_geo'), null, 'normal', 'default' );
 
-		add_meta_box( 'Latest Members', __('User Data','bidx-plugin'), array($this,'analytics_user'), null, 'normal', 'default' );
-
-		add_meta_box( 'Roles', __('User Roles','bidx-plugin'), array($this,'analytics_roles'), null, 'side' ,  'default' );
-
-		add_meta_box( 'Registraions', __('New User + Login / Day','bidx-plugin'), array($this,'analytics_registrations'), null, 'side', 'default' );
-
-		add_meta_box( 'Summaries', __('Business Summaries / Day','bidx-plugin'), array($this,'analytics_summaries'), null, 'side', 'default' );
-
 
 		/* Add metaboxes help */
 		get_current_screen()->add_help_tab( array(
@@ -146,31 +138,10 @@ class Bidx_Admin_Monitoring
 
 	public function analytics_geo()
 	{
-        echo $this->view->render( 'country-geochart.phtml' );
+        echo $this->view->render( 'main.phtml' );
 	}
 
-	public function analytics_user()
-	{
-        echo $this->view->render( 'user-table.phtml' );
-	}
 
-	public function analytics_registrations()
-	{
-        echo $this->view->render( 'user-linechart.phtml' );
-	}
-
-	public function analytics_roles()
-	{
-		//1. Template Rendering
-        echo $this->view->render( 'userrole-piechart.phtml' );
-
-	}
-
-	public function analytics_summaries()
-	{
-        echo $this->view->render( 'bp-barchart.phtml' );
-
-	}
 
 }
 	?>
