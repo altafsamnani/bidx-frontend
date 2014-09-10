@@ -87,7 +87,7 @@ class Bidx_Admin_Mail
 		$this->view->body_content_cb 	= 	$this->admin_body_content();
 		$this->view->className          =   $this->className;
 
-       // echo $this->view->render( 'main.phtml' );
+        echo $this->view->render( 'main.phtml' );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Bidx_Admin_Mail
 	public function add_meta_box()
 	{
 
-		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), array($this,'analytics_geo'), null, 'normal', 'default' );
+		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), array($this,'get_mail'), null, 'normal', 'default' );
 
 
 		/* Add metaboxes help */
@@ -136,7 +136,7 @@ class Bidx_Admin_Mail
 		);
 	}
 
-	public function analytics_geo()
+	public function get_mail()
 	{
         echo $this->view->render( 'main.phtml' );
 	}
