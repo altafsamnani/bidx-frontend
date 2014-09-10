@@ -20,7 +20,7 @@
             <title>Monitoring</title>
             <permissions>editor</permissions>
             <slug>bidx_monitoring_page</slug>
-            <icon>dashicons-chart-line</icon>
+            <icon>dashicons-chart-pie</icon>
         </item>
         <item>
 		 	<menu>Mail</menu>
@@ -28,7 +28,7 @@
             <title>Mail</title>
             <permissions>editor</permissions>
             <slug>bidx_mail_page</slug>
-            <icon>dashicons-chart-line</icon>
+            <icon>dashicons-networking</icon>
         </item>
 	</hooks>
 </data>
