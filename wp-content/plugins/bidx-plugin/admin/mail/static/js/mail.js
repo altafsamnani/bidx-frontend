@@ -722,9 +722,11 @@
                     {
 
                         var status  = bidx.utils.getValue( jqXhr, "status" ) || textStatus
-                        ,   msg     = "Something went wrong while retrieving the users: " + status
+                        ,   msg     = "Something went wrong while retrieving the business summary: " + status
                         ,   error   = new Error( msg )
                         ;
+
+                        //_showError( msg );
 
                         $d.reject( error );
                     }
@@ -779,20 +781,14 @@
                         if ( jqXhr.status >= 400 && jqXhr.status < 500)
                         {
                             bidx.utils.error( "Client  error occured", response );
-                            if (options && options.error)
-                            {
-                                options.error( responseText );
-                            }
+                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
                         }
                         // 500 erors are Server errors
                         //
                         if ( jqXhr.status >= 500 && jqXhr.status < 600)
                         {
                             bidx.utils.error( "Internal Server error occured", response );
-                            if (options && options.error)
-                            {
-                                options.error( responseText );
-                            }
+                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
                         }
                     }
             }
@@ -845,22 +841,15 @@
                         if ( jqXhr.status >= 400 && jqXhr.status < 500)
                         {
                             bidx.utils.error( "Client  error occured", response );
-                            if (options && options.error)
-                            {
-                                options.error( responseText );
-                            }
+                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
                         }
                         // 500 erors are Server errors
                         //
                         if ( jqXhr.status >= 500 && jqXhr.status < 600)
                         {
                             bidx.utils.error( "Internal Server error occured", response );
-                            if (options && options.error)
-                            {
-                                options.error( responseText );
-                            }
+                            //_showError( "Something went wrong while retrieving the members relationships: " + responseText );
                         }
-
                     }
             }
         );
@@ -884,13 +873,6 @@
                             _hideView("loadcountrygeochart");
                             _hideView("loaduserrolepiechart");
                         }
-        ,   error   :   function ( responseText )
-                        {
-                            _hideView("loadcountrygeochart");
-                            _hideView("loaduserrolepiechart");
-                            _showError( 'geoChartError', "Something went wrong while retrieving the search data: " + responseText );
-                            _showError( 'pieChartError', "Something went wrong while retrieving the search data: " + responseText );
-                        }
         });
 
         // 2. Load Business Summary Chart
@@ -905,12 +887,6 @@
                                 _createBpBarChart( response );
                                 _hideView("loadbpbarchart");
                             }
-        ,   error   :   function ( responseText )
-                        {
-                            _hideView("loadbpbarchart");
-                            _showError( 'barChartError', "Something went wrong while retrieving the search data: " + responseText );
-
-                        }
         });
 
         // 3. Load Login and Registered users Chart
@@ -936,19 +912,7 @@
                                                         } );
                                                         _hideView("loaduserlinechart");
                                                     }
-                                ,   error       :   function ( responseText )
-                                    {
-                                        _hideView("loaduserlinechart");
-                                        _showError( 'lineChartError', "Something went wrong while retrieving the search data: " + responseText );
-
-                                    }
                                 });
-                            }
-        ,   error       :   function ( responseText )
-                            {
-                                _hideView("loaduserlinechart");
-                                _showError( 'lineChartError', "Something went wrong while retrieving the search data: " + responseText );
-
                             }
         });
 
@@ -966,15 +930,10 @@
                         }
         })
         .done( function( listArr, numFound )
-        {
-            _hideView("loadusertablechart");
-            //_createUserTables ( listArr, numFound );
-        })
-        .fail( function ( responseText )
-        {
-            _hideView("loadusertablechart");
-            _showError( 'userTableError', responseText );
-        });
+                    {
+                        _hideView("loadusertablechart");
+                        //_createUserTables ( listArr, numFound );
+                    });
     }
 
     var _showView = function(view, showAll)
@@ -993,12 +952,6 @@
         $views.filter(bidx.utils.getViewName(hideview)).hide();
     };
 
-    function _showError( view, msg )
-    {
-        $views.filter(bidx.utils.getViewName(view)).find( ".errorMsg" ).text( msg );
-        _showView( view, true );
-    }
-
     function _init()
     {
         google.load("visualization", "1.0", {packages:["corechart","table"]});
@@ -1008,6 +961,8 @@
     }
 
     _init();
+
+
 
 
 }(jQuery));

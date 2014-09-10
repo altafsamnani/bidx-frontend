@@ -24,7 +24,7 @@ echo delete_user_option( $this->userId, "meta-box-order_".$screen->id, true );
 			<div id="post-body" class="metabox-holder<?php echo $columns_css; ?>">
 
 				<div id="post-body-content">
-					<?php call_user_func( $this->body_content_cb ); ?>
+					<?php $this->body_content_cb; ?>
 				</div>
 
 				<div id='postbox-container-1' class='postbox-container'>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./pages.xsd">
+
+	<posttype>page</posttype>
+	<description>List of public editable page resources for the groupadmin/groupowner to manage</description>
+	<version>1.0</version>
+	<!--
+		WP Page preloader:
+		Use <content> only with escaped html
+		Use <htmlTenpplate> with the template name without extention that has to be available in the templates folder. The content of the htmlTemplate will overwrite the content of the <content> tag.
+		Add template filename in <template> tag set a template
+		Use <setHomePage>true</setHomePage> to set page as Homepage
+
+		NOTE: adding comment between the xml childs will break the import
+	-->
+	<hooks>
+		 <item>
+		 	<menu>Monitoring</menu>
+		 	<title>Monitoring</title>
+		 	<name>Monitoring</name>
+            <hook>edit.php</hook>
+            <permissions>editor</permissions>
+            <slug>bidx_monitoring_page</slug>
+            <icon>dashicons-chart-pie</icon>
+        </item>
+        <item>
+		 	<menu>Connect</menu>
+		 	<title>Connect</title>
+		 	<name>Mail</name>
+            <hook>edit.php</hook>
+            <permissions>editor</permissions>
+            <slug>bidx_mail_page</slug>
+            <icon>dashicons-networking</icon>
+        </item>
+	</hooks>
+</data>

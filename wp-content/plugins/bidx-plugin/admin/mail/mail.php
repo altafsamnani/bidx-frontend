@@ -1,6 +1,6 @@
 <?php
 
-class Bidx_Admin_Monitoring
+class Bidx_Admin_Mail
 {
 	public 	$hook
 	,		$title
@@ -37,14 +37,23 @@ class Bidx_Admin_Monitoring
 		$icon                   =    (string) $options->icon;
 
 
+
 		$this->page = add_menu_page (	$this->title
 									,	$this->menu
 									,	$this->permissions
 									,	$this->slug
-									,	array(&$this,'monitoring_render_page')
+									,	array($this,'mail_render_page')
 									,	$icon);
 
-		add_action('load-'.$this->page,  array(&$this,'monitoring_page_actions'));
+
+
+		add_action('load-'.$this->page,  array(&$this,'mail_page_actions'));
+
+
+
+
+
+
 
 	}
 	/**
@@ -52,12 +61,11 @@ class Bidx_Admin_Monitoring
     * call on load-$hook
 	* This calls the add_meta_boxes hooks, adds screen options and enqueues the postbox.js script.
 	*/
-	public function monitoring_page_actions( )
+	public function mail_page_actions( )
 	{
-
-
 		//Add metaboxes to the page
-		add_action('add_meta_boxes', array(&$this,'monitoring_add_meta_box'));
+		add_action('add_meta_boxes', array(&$this,'mail_add_meta_box'));
+
 
 		do_action( 'add_meta_boxes_'.$this->page, null );
 		do_action( 'add_meta_boxes', $this->page, null );
@@ -69,15 +77,16 @@ class Bidx_Admin_Monitoring
 		wp_enqueue_script( 'postbox' );
 
 		/* Add callbacks for this screen only */
-		add_action('admin_print_footer_scripts', array(&$this,'monitoring_footer_scripts'));
-		add_action('admin_enqueue_scripts', array(&$this, 'register_monitoring_bidx_ui_libs'));
+		add_action('admin_print_footer_scripts', array(&$this,'mail_footer_scripts'));
+		add_action('admin_enqueue_scripts', array(&$this, 'register_mail_bidx_ui_libs'));
 	}
 
 	/**
 	 * Renders the page
 	*/
-	public function monitoring_render_page( )
+	public function mail_render_page()
 	{
+
 		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/static/templates/' );
 
 		$view->title 			= 	$this->title;
@@ -85,21 +94,21 @@ class Bidx_Admin_Monitoring
 		$view->body_content_cb 	= 	$this->admin_body_content();
 		$view->className        =   $this->className;
 
-        echo $view->render( 'two-column.phtml' );
+        echo $view->render( 'one-column.phtml' );
 	}
 
 	/**
 	 * Loads the Google basis. Might be useful for everything instead of loading Google Maps only
 	 * load them when needed by Javascript.
 	 */
-	public function register_monitoring_bidx_ui_libs()
+	public function register_mail_bidx_ui_libs()
 	{
 		//1. Load Js Libraries
 		wp_register_script ($this->className, plugins_url("static/js/{$this->className}.js", __FILE__), $this->deps, '20140620', TRUE);
 	}
 
 
-	public function monitoring_footer_scripts( )
+	public function mail_footer_scripts( )
 	{
 		/* For postmetadata dragging and arrow close/open icon functionality */
  		echo "<script>jQuery(document).ready(function(){ postboxes.add_postbox_toggles(pagenow); });</script>";
@@ -113,20 +122,11 @@ class Bidx_Admin_Monitoring
 
 	}
 
-	public function monitoring_add_meta_box()
+	public function mail_add_meta_box()
 	{
+		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/mail/static/templates/' );
 
-		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/monitoring/static/templates/' );
-
-		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), array($this,'analytics_geo'), null, 'normal', 'default' );
-
-		add_meta_box( 'Latest Members', __('User Data','bidx-plugin'), array($this,'analytics_user'), null, 'normal', 'default' );
-
-		add_meta_box( 'Roles', __('User Roles','bidx-plugin'), array($this,'analytics_roles'), null, 'side' ,  'default' );
-
-		add_meta_box( 'Registraions', __('New User + Login / Day','bidx-plugin'), array($this,'analytics_registrations'), null, 'side', 'default' );
-
-		add_meta_box( 'Summaries', __('Business Summaries / Day','bidx-plugin'), array($this,'analytics_summaries'), null, 'side', 'default' );
+		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), array($this,'get_mail'), null, 'normal', 'default' );
 
 
 		/* Add metaboxes help */
@@ -144,32 +144,9 @@ class Bidx_Admin_Monitoring
 		);
 	}
 
-	public function analytics_geo()
+	public function get_mail()
 	{
-        echo $this->view->render( 'country-geochart.phtml' );
-	}
-
-	public function analytics_user()
-	{
-        echo $this->view->render( 'user-table.phtml' );
-	}
-
-	public function analytics_registrations()
-	{
-        echo $this->view->render( 'user-linechart.phtml' );
-	}
-
-	public function analytics_roles()
-	{
-		//1. Template Rendering
-        echo $this->view->render( 'userrole-piechart.phtml' );
-
-	}
-
-	public function analytics_summaries()
-	{
-        echo $this->view->render( 'bp-barchart.phtml' );
-
+        echo $this->view->render( 'mail.phtml' );
 	}
 
 }

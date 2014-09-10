@@ -18,7 +18,7 @@
  *
  *
  */
-
+require_once( BIDX_PLUGIN_DIR . '/templatelibrary.php' );
 
 class Bidx_Admin_Admin
 {
@@ -26,25 +26,36 @@ class Bidx_Admin_Admin
 
 	function __construct()
 	{
-		$this->ruleitems 	= 	array (	'monitoring'
-	      							 // ,	'mail'
-	    					  		  );
+		$this->logger = Logger::getLogger (__CLASS__);
 
 		add_action ('admin_menu', array(&$this, 'group_admin_menu'));
 	}
 
 	function group_admin_menu( )
 	{
-		foreach($this->ruleitems as $fileName)
-		{
+		$adminHookXml     =   BIDX_PLUGIN_DIR . '/../pages/admin.xml';
 
-			require_once( BIDX_PLUGIN_DIR . "/../admin/{$fileName}/{$fileName}.php" );
+
+
+        //try /catch / log ignore
+        $document = simplexml_load_file( $adminHookXml );
+
+        $this->logger->trace( 'Start processing file : ' . $document );
+
+        $items = $document->xpath ( '//item' );
+        $this->logger->trace( 'Found items : ' . sizeof( $items ) );
+
+        foreach ( $items as $item )
+        {
+        	$fileName   =  strtolower( $item->name );
+
+        	require_once( BIDX_PLUGIN_DIR . "/../admin/{$fileName}/{$fileName}.php" );
 
 			$className	=	'Bidx_Admin_'.ucfirst($fileName);
 
-	        $adminTab	=	new $className ();
+        	$adminTab	=	new $className ( $item );
+        }
 
-		}
 
 	}
 
