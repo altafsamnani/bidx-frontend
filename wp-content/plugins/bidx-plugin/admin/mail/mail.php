@@ -36,25 +36,22 @@ class Bidx_Admin_Mail
 		$this->className        =    strtolower($this->menu);
 		$icon                   =    (string) $options->icon;
 
-		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/mail/static/templates/' );
+
 
 		$this->page = add_menu_page (	$this->title
 									,	$this->menu
 									,	$this->permissions
 									,	$this->slug
-									,	array($this,'render_page')
+									,	array($this,'mail_render_page')
 									,	$icon);
 
 
-		//Add metaboxes to the page
-		add_action('add_meta_boxes', array(&$this,'add_meta_box'));
 
-		add_action('load-'.$this->page,  array(&$this,'page_actions'));
+		add_action('load-'.$this->page,  array(&$this,'mail_page_actions'));
 
-		/* Add callbacks for this screen only */
-		add_action('admin_enqueue_scripts', array(&$this, 'register_admin_bidx_ui_libs'));
 
-		//add_action('admin_print_footer_scripts-'.$this->page, array(&$this,'footer_scripts'));
+
+
 
 
 
@@ -64,8 +61,12 @@ class Bidx_Admin_Mail
     * call on load-$hook
 	* This calls the add_meta_boxes hooks, adds screen options and enqueues the postbox.js script.
 	*/
-	public function page_actions( )
+	public function mail_page_actions( )
 	{
+		//Add metaboxes to the page
+		add_action('add_meta_boxes', array(&$this,'mail_add_meta_box'));
+
+
 		do_action( 'add_meta_boxes_'.$this->page, null );
 		do_action( 'add_meta_boxes', $this->page, null );
 
@@ -74,34 +75,40 @@ class Bidx_Admin_Mail
 
 		/* Enqueue WordPress' script for handling the metaboxes */
 		wp_enqueue_script( 'postbox' );
+
+		/* Add callbacks for this screen only */
+		add_action('admin_print_footer_scripts', array(&$this,'mail_footer_scripts'));
+		add_action('admin_enqueue_scripts', array(&$this, 'register_mail_bidx_ui_libs'));
 	}
 
 	/**
 	 * Renders the page
 	*/
-	public function render_page()
+	public function mail_render_page()
 	{
 
-		$this->view->title 				= 	$this->title;
-		$this->view->userId 			= 	$this->userId;
-		$this->view->body_content_cb 	= 	$this->admin_body_content();
-		$this->view->className          =   $this->className;
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/static/templates/' );
 
-        echo $this->view->render( 'main.phtml' );
+		$view->title 			= 	$this->title;
+		$view->userId 			= 	$this->userId;
+		$view->body_content_cb 	= 	$this->admin_body_content();
+		$view->className        =   $this->className;
+
+        echo $view->render( 'one-column.phtml' );
 	}
 
 	/**
 	 * Loads the Google basis. Might be useful for everything instead of loading Google Maps only
 	 * load them when needed by Javascript.
 	 */
-	public function register_admin_bidx_ui_libs()
+	public function register_mail_bidx_ui_libs()
 	{
 		//1. Load Js Libraries
 		wp_register_script ($this->className, plugins_url("static/js/{$this->className}.js", __FILE__), $this->deps, '20140620', TRUE);
 	}
 
 
-	public function footer_scripts( )
+	public function mail_footer_scripts( )
 	{
 		/* For postmetadata dragging and arrow close/open icon functionality */
  		echo "<script>jQuery(document).ready(function(){ postboxes.add_postbox_toggles(pagenow); });</script>";
@@ -115,8 +122,9 @@ class Bidx_Admin_Mail
 
 	}
 
-	public function add_meta_box()
+	public function mail_add_meta_box()
 	{
+		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/mail/static/templates/' );
 
 		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), array($this,'get_mail'), null, 'normal', 'default' );
 
@@ -138,10 +146,8 @@ class Bidx_Admin_Mail
 
 	public function get_mail()
 	{
-        echo $this->view->render( 'main.phtml' );
+        echo $this->view->render( 'mail.phtml' );
 	}
-
-
 
 }
 	?>

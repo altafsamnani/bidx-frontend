@@ -16,16 +16,18 @@
 	<hooks>
 		 <item>
 		 	<menu>Monitoring</menu>
+		 	<title>Monitoring</title>
+		 	<name>Monitoring</name>
             <hook>edit.php</hook>
-            <title>Monitoring</title>
             <permissions>editor</permissions>
             <slug>bidx_monitoring_page</slug>
             <icon>dashicons-chart-pie</icon>
         </item>
         <item>
-		 	<menu>Mail</menu>
+		 	<menu>Connect</menu>
+		 	<title>Connect</title>
+		 	<name>Mail</name>
             <hook>edit.php</hook>
-            <title>Mail</title>
             <permissions>editor</permissions>
             <slug>bidx_mail_page</slug>
             <icon>dashicons-networking</icon>

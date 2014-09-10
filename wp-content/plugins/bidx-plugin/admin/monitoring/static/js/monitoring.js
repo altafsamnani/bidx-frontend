@@ -1008,8 +1008,6 @@
     }
 
     _init();
-    //postboxes.add_postbox_toggles(pagenow);
-
 
 
 }(jQuery));

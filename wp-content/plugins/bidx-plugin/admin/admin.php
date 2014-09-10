@@ -47,10 +47,11 @@ class Bidx_Admin_Admin
 
         foreach ( $items as $item )
         {
-        	$fileName   =  strtolower( $item->menu);
+        	$fileName   =  strtolower( $item->name );
+
         	require_once( BIDX_PLUGIN_DIR . "/../admin/{$fileName}/{$fileName}.php" );
 
-			$className	=	'Bidx_Admin_'.ucfirst($item->menu);
+			$className	=	'Bidx_Admin_'.ucfirst($fileName);
 
         	$adminTab	=	new $className ( $item );
         }
