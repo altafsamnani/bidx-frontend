@@ -1,0 +1,50 @@
+<?php
+
+$screen = get_current_screen();
+$columns = absint( $screen->get_columns() );
+$columns_css = '';
+if ( $columns ) {
+	$columns_css = " columns-$columns";
+}
+
+echo delete_user_option( $this->userId, "meta-box-order_".$screen->id, true );
+
+?>
+<div class="wrap <?php echo $this->className;?>">
+
+	<?php screen_icon(); ?>
+
+	<h2> <?php echo esc_html($this->title);?> </h2>
+
+	<form name="my_form" method="post">
+		<input type="hidden" name="action" value="some-action">
+		<?php wp_nonce_field( 'some-action-nonce' ); ?>
+
+		<div id="poststuff">
+			<div id="post-body" class="metabox-holder<?php echo $columns_css; ?>">
+
+				<div id="post-body-content">
+					<?php $this->body_content_cb; ?>
+				</div>
+
+				<div id='postbox-container-1' class='postbox-container'>
+					<?php do_meta_boxes( $screen->id, 'side', '' ); ?>
+				</div>
+
+				<div id='postbox-container-2' class='postbox-container'>
+					<?php do_meta_boxes( $screen->id, 'normal', '' );
+						do_meta_boxes( $screen->id, 'advanced', '' );
+					?>
+				</div>
+
+			</div> <!-- #post-body -->
+		</div> <!-- #poststuff -->
+
+	</form>
+</div><!-- .wrap -->
+
+<?php
+	/* Used to save closed metaboxes and their order */
+	wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+	wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+?>
