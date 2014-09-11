@@ -1,6 +1,6 @@
 <?php
 
-class Bidx_Admin_Mail
+class Bidx_Admin_Connect
 {
 	public 	$hook
 	,		$title
@@ -33,7 +33,7 @@ class Bidx_Admin_Mail
 		$this->permissions 		=	 (string) $options->permissions;
 		$this->slug 			=    (string) $options->slug;
 		$this->userId  			=	 get_current_user_id();
-		$this->className        =    strtolower($this->menu);
+		$this->className        =    strtolower($this->title);
 		$icon                   =    (string) $options->icon;
 
 
@@ -118,17 +118,14 @@ class Bidx_Admin_Mail
 	//Define the body content for the page (if callback is specified above)
 	public function admin_body_content()
 	{
+		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/connect/static/templates/' );
+		echo $view->render('connect.phtml');
 		//echo 'Monitoring page contains the latest status of your portal.';
 
 	}
 
 	public function mail_add_meta_box()
 	{
-		$this->view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/mail/static/templates/' );
-
-		add_meta_box( 'Geo Location', __('Geo Location','bidx-plugin'), array($this,'get_mail'), null, 'normal', 'default' );
-
-
 		/* Add metaboxes help */
 		get_current_screen()->add_help_tab( array(
 			'id'      => 'How to use ? ',
@@ -142,11 +139,6 @@ class Bidx_Admin_Mail
 			'<p>' . __( '<a href="/wp-admin/admin.php?page=getting-started" target="_blank">Getting started</a>' ) . '</p>' .
 			'<p>' . __( '<a href="/wp-admin/admin.php?page=group-settings" target="_blank">Group Settings</a>' ) . '</p>'
 		);
-	}
-
-	public function get_mail()
-	{
-        echo $this->view->render( 'mail.phtml' );
 	}
 
 }

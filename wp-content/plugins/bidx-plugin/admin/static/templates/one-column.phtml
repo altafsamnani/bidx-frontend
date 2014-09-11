@@ -27,11 +27,7 @@ echo delete_user_option( $this->userId, "meta-box-order_".$screen->id, true );
 					<?php $this->body_content_cb; ?>
 				</div>
 
-				<div id='postbox-container-1' class='postbox-container'>
-					<?php do_meta_boxes( $screen->id, 'side', '' ); ?>
-				</div>
-
-				<div id='postbox-container-2' class='postbox-container'>
+				<div class='postbox-container'>
 					<?php do_meta_boxes( $screen->id, 'normal', '' );
 						do_meta_boxes( $screen->id, 'advanced', '' );
 					?>

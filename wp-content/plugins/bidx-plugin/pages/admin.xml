@@ -17,7 +17,6 @@
 		 <item>
 		 	<menu>Monitoring</menu>
 		 	<title>Monitoring</title>
-		 	<name>Monitoring</name>
             <hook>edit.php</hook>
             <permissions>editor</permissions>
             <slug>bidx_monitoring_page</slug>
@@ -26,7 +25,6 @@
         <item>
 		 	<menu>Connect</menu>
 		 	<title>Connect</title>
-		 	<name>Mail</name>
             <hook>edit.php</hook>
             <permissions>editor</permissions>
             <slug>bidx_mail_page</slug>

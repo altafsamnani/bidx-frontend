@@ -1,7 +1,0 @@
-<I18N>
-
-    <Item value="userRolesTitle">Rolewise division of Users</Item>
-    <Item value="loadingDataError">Loading Data Error</Item>
-	 <Item value="loadingData">Loading ...</Item>
-	 <Item value="noData">No data found! How is it possible ?</Item>
-</I18N>

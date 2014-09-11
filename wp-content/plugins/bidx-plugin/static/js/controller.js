@@ -333,6 +333,9 @@
         ,   'cancel(/*splat)':                                  'showCancel'
         ,   '*path':                                            'show'
 
+        /*   Group Admin Pages */
+        ,   'connect(/:state)(*splat)':                         'connect'
+
         }
     ,   editPreference:             function(  )
         {
@@ -863,6 +866,21 @@
                 "account"
             ,   {
                    params:   params
+                }
+            );
+        }
+    ,   connect:                   function( state, splat )
+        {
+            bidx.utils.log( "AppRouter::connect State: ", state );
+
+            mainState = "connect";
+
+            _navigateToApp
+            (
+                "connect"
+            ,   {
+                    state:    state
+                ,   params:   _deparamSplat( splat )
                 }
             );
         }
