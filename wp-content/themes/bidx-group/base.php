@@ -64,7 +64,9 @@
 
                 <?php if (roots_display_sidebar()) : ?>
                     <aside class="sidebar <?php echo roots_sidebar_class(); ?>" role="complementary">
-                        <?php include roots_sidebar_path(); ?>
+                        <div class="region-side">
+                            <?php include roots_sidebar_path(); ?>
+                        </div>
                     </aside><!-- /.sidebar -->
                 <?php endif; ?>
             </div>

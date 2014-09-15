@@ -210,7 +210,6 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 			$startdate = get_post_meta( $competition_id, 'competition_startdate', true );
 			$enddate = get_post_meta( $competition_id, 'competition_enddate', true );
 			$this->timestamp = strtotime($enddate);	
-			$this->diff = abs(strtotime($enddate) - time());	
 			if ( $competition_link == null ) {
 				$competition_link = get_permalink( $competition_id );
 			}
@@ -220,10 +219,12 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 		<p><?php echo $post -> post_excerpt ?></p>
 		<div class="counter hide-overflow text-center <?php echo $style ?>">
 <?php 
-		if ($this->diff < 0) {
+		if ( $this->timestamp < time() ) {
 ?>
-			<h4><?php _e( 'This competition has expired.','bidx_competition_plugin' ); ?></h4>
-			<a href="/competition"><?php _e( 'Visit our competition overview.','bidx_competition_plugin' ); ?> </a><?php 
+            <div class="alert alert-warning">
+                <strong><i class="fa fa-exclamation-triangle"></i> <?php _e( 'This competition has expired','bidx_competition' ); ?></strong>
+            </div>
+			<a class="btn btn-secondary btn-block" href="/competition"><?php _e( 'Visit our competition overview','bidx_competition_plugin' ); ?> </a><?php 
 		} else {
 			add_action( 'wp_print_footer_scripts', array( &$this, 'add_clock_footer_scripts' ) );		
 			?>		
@@ -244,10 +245,10 @@ class BidxCompetitionCounterWidget extends WP_Widget {
 				<div class="counter-text"><?php _e( 'SECONDS','bidx_competition_plugin' ); ?></div>
 			</div>
 		</div>			
+		<a class="btn btn-secondary btn-block" href="<?php echo $competition_link; ?>"><?php _e( 'View Now','bidx_competition_plugin' ); ?></a>
 <?php 
 		}	
 ?>
-		<a class="btn btn-secondary btn-block" href="<?php echo $competition_link; ?>">View Now</a>
 		</div>
 <?php
 		}

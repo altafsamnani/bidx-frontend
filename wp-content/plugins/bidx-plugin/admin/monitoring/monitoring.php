@@ -33,7 +33,7 @@ class Bidx_Admin_Monitoring
 		$this->permissions 		=	 (string) $options->permissions;
 		$this->slug 			=    (string) $options->slug;
 		$this->userId  			=	 get_current_user_id();
-		$this->className        =    strtolower($this->menu);
+		$this->className        =    strtolower($this->title);
 		$icon                   =    (string) $options->icon;
 
 
