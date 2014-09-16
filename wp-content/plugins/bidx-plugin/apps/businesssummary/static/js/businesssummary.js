@@ -22,8 +22,8 @@
 
     ,   $btnSave
     ,   $btnCancel
-    ,   $btnFullAccessRequest       = $editControls.find( ".bidxRequestFullAccess")
-    ,   $bidxAccessRequestPending   = $editControls.find( ".bidxAccessRequestPending")
+    ,   $btnFullAccessRequest       = $element.find( ".bidxRequestFullAccess")
+    ,   $bidxAccessRequestPending   = $element.find( ".bidxAccessRequestPending")
 
     ,   $videoWrapper               = $element.find( ".video-wrapper" )
 
