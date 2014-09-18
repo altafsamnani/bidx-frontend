@@ -5,9 +5,6 @@
      ,  $mainViews           = $mainElement.find(".view")
     ,   $mainModals          = $mainElement.find(".modalView")
     ,   $mainModal
-    ,   $editForm            = $mainElement.find( ".frmsendFeedback" )
-    ,   $feedbackDropDown    = $mainElement.find( "[name='feedbackpurpose']" )
-
 
     ,   $element             = $mainElement.find(".mentor-mentordashboard")
     ,   $views               = $element.find(".view")
@@ -495,36 +492,21 @@
         {
             ongoing:     function(  $listItem, item, entityOwnerId )
             {
-                var $addFeedbackBtn     =   $listItem.find( ".btn-bidx-add-feedback")
-                ,   $viewFeedbackBtn    =   $listItem.find( ".btn-bidx-view-feedback")
-                ,   $contactBtn         =   $listItem.find( ".btn-bidx-contact")
+                var $contactBtn         =   $listItem.find( ".btn-bidx-contact")
                 ,   $stopBtn            =   $listItem.find( ".btn-bidx-stop")
-
-                ,   hrefaddFeedback     =   $addFeedbackBtn.attr( "data-href" )
-                ,   hrefviewFeedback    =   $viewFeedbackBtn.attr( "data-href" )
                 ,   hrefContact         =   $contactBtn.attr( "data-href" )
                 ,   hrefStop            =   $stopBtn.attr( 'data-href' )
                 ;
 
-                /* 1 add Feedback */
-                hrefaddFeedback = hrefaddFeedback
-                            .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%commentorId%/g,      currentUserId );
+                /* 1 View Feedback and Add Feedback */
+                $listItem.find( "[href=#commenting],[href^='#commenting/']")
+                    .data( "entityid", item.entityId );
 
-                $addFeedbackBtn.attr( "href", hrefaddFeedback );
-
-                /* 2 View Feedback */
-                hrefviewFeedback = hrefviewFeedback
-                            .replace( /%entityId%/g,      item.entityId )
-                            ;
-
-                $viewFeedbackBtn.attr( "href", hrefviewFeedback );
-
-                /* 3 Contact Entrepreneur */
+                /* 2 Contact Entrepreneur */
                 hrefContact = hrefContact.replace( /%receipientId%/g,      entityOwnerId );
                 $contactBtn.attr( "href", hrefContact );
 
-                /* 4 Cancel request */
+                /* 3 Cancel request */
                 hrefStop = hrefStop
                             .replace( /%entityId%/g,      item.entityId )
                             .replace( /%initiatorId%/g,   item.initiatorId )
@@ -605,8 +587,8 @@
                 };
 
                 /* 1 View  Feedback */
-               $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                $listItem.find( "[href=#commenting],[href^='#commenting/']" )
+                    .data( "entityid", item.entityId )
                 ;
 
                 /* 2 Contact Entrepreneur */
@@ -641,8 +623,8 @@
                 };
 
                 /* 1 View  Feedback */
-                $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                $listItem.find( "[href=#commenting],[href^='#commenting/']" )
+                    .data( "entityid", item.entityId )
                 ;
 
                 /* 2 Contact Entrepreneur */
@@ -1033,7 +1015,8 @@
 
                                                                     if(counter === ongoingLength )
                                                                     {
-
+                                                                        // Update the counts, if applicable
+                                                                        window.bidx.commenting.refresh();
                                                                         $d.resolve( );
                                                                     }
 

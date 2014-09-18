@@ -119,24 +119,19 @@
               /*  ,   type:            'mentor'       */
                 };
 
-                /* 1 Add Feedback */
-
-                $listItem.find( ".btn-bidx-add-feedback")
-                    .attr( "href", "/mentor-dashboard/#dashboard/addFeedback/" +$.param( params ) )
+                /* 1 Add Feedback and View Feedback */
+                // TODO Arjan TODO Altaf
+                // 2014-09-17 This is currently not used, hence was not tested.
+                $listItem.find( "[href=#commenting],[href^='#commenting/']" )
+                    .data( "entityid", item.entityId )
                 ;
 
-                /* 2 View Feedback */
-
-                $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
-                ;
-
-                /* 3 Contact Entrepreneur */
+                /* 2 Contact Entrepreneur */
                 $listItem.find( ".btn-bidx-contact")
                     .attr( "href", "/mail/#mail/compose/recipients=" + params.requesterId )
                 ;
 
-                /* 4 Stop Link */
+                /* 3 Stop Link */
                 params.action = "stop";
                 $listItem.find( ".btn-bidx-stop")
                     .attr( "href", "/mentor-dashboard/#dashboard/confirmRequest/" +$.param( params ) )
@@ -216,8 +211,10 @@
                 };
 
                 /* 1 View  Feedback */
-               $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                // TODO Arjan TODO Altaf
+                // 2014-09-17 This is currently not used, hence was not tested.
+                $listItem.find( "[href=#commenting],[href^='#commenting/']" )
+                    .data( "entityid", item.entityId )
                 ;
 
                 /* 2 Contact Entrepreneur */
@@ -252,8 +249,10 @@
                 };
 
                 /* 1 View  Feedback */
-                $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                // TODO Arjan TODO Altaf
+                // 2014-09-17 This is currently not used, hence was not tested.
+                $listItem.find( "[href=#commenting],[href^='#commenting/']" )
+                    .data( "entityid", item.entityId )
                 ;
 
                 /* 2 Contact Entrepreneur */

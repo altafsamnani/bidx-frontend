@@ -1,5 +1,6 @@
 <div id="mentor-dashboard">
     <?php
+    // TODO Arjan TODO Altaf typo in $this->isEntrpreneur ?
     if($this->isMentor || $this->isEntrpreneur || $this->isGroupOwner)
     { ?>
         <h1 class="pagetitle"><?php _e('My mentor dashboard','bidxplugin');?></h1>
@@ -37,87 +38,6 @@
             </div>
         </div>
         <!-- Modal -->
-        <div class="modalView modalConfirmFeedback">
-            <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h3 id="feedbackLabel"><?php _e ('Add feedback','bidxplugin') ?></h3>
-                        </div>
-                        <div class="modal-body">
-                            <p>
-                                <?php _e ('You are about to add the feedback. Are you sure?','bidxplugin') ?>
-                            </p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#" class="btn btn-cancel btn-cancel-feedback" data-href="#mentoring/addFeedback/"><?php _e ('Change feedback','bidxplugin') ?></a>
-                            <a href="#" class="btn btn-primary btn-send-feedback" data-href="#mentoring/sendFeedback/" ><?php _e ('Add feedback','bidxplugin') ?></a>
-                        </div>
-                     </div>
-                </div>
-            </div>
-        </div>
-        <!-- View feedback modal -->
-        <div class="modalView modalListFeedback">
-            <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                            <a  class="close" href="#mentoring/cancel">×</a>
-                            <h3 id="feedbackLabel"><?php _e ('View feedback','bidxplugin') ?></h3>
-                        </div>
-                        <div class="modal-body well">
-                            <form action="">
-                                <!-- MESSAGE LIST -->
-                                <div class="list media-list" id="mentorListingAccordion">
-
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#mentoring/cancel" class="btn btn-view-feedback" href=""><?php _e ('Close','bidxplugin') ?></a>
-                            <a href="#" data-href="#mentoring/addFeedback/" class="btn btn-primary btn-feedback-submit"><?php _e('Respond to feedback', 'bidxplugin');?></a>
-                        </div>
-                     </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-        <div class="modalView modalSendFeedback">
-            <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                            <a class="btn btnRequestCancel pull-right" href="#mentoring/cancel">
-                                <button type="button" class="close">×</button>
-                            </a>
-                            <h3 id="myModalLabel"><?php _e ('Send feedback','bidxplugin') ?></h3>
-                        </div>
-                        <div class="modal-body">
-                            <form class="frmsendFeedback">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label><?php _e('Feedback purpose','bidxplugin'); ?></label>
-                                             <select class= "chosen-feedback" name="feedbackpurpose"></select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><?php _e('Feedback','bidxplugin'); ?></label>
-                                            <textarea name="feedback" class="form-control" placeholder="<?php _e('Please write your feedback','bidxplugin');?>" ></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="btn btn-feedback-cancel" href="#mentoring/cancel"><?php _e ('Cancel','bidxplugin') ?></a>
-                            <a class="btn btn-primary btn-feedback-submit"  ><?php _e ('Add feedback','bidxplugin') ?></a> <!-- data-href="#mentoringRequest/sendRequest/" -->
-                        </div>
-                     </div>
-                </div>
-            </div>
-        </div>
         <div class="view viewLoadrequest alert alert-info text-center">
             <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e ('Loading (Sending your request)...', 'bidxplugin') ?>
         </div>
@@ -154,46 +74,3 @@
 -->
 </script>
 
-<script type="text/html" id="feedback-listitem">
-<!--
-<div class="panel well">
-    <div class="" data-toggle="collapse" data-target="#feedback-%accordion-id%">
-         <span>%comment%</span>
-    </div>
-    <div class="panel-body panel-collapse collapse in" id="feedback-%accordion-id%">
-       <div class="small pull-right"><?php _e('Posted on','bidxplugin');?> <strong>%dateSent%-%timeSent%</strong> <?php _e('by','bidxplugin');?> <strong>%senderReceiverName%</strong>
-         </div>
-    </div>
-</div>
--->
-</script>
-
-
-<script type="text/html" id="feedback-scopeitem">
-<!--
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <a  class="btn-block" data-toggle="collapse" data-parent="#mentorListingAccordion" href="#feedback-%feedbackScopeId%">
-        %feedbackScopeName%
-        </a>
-    </div>
-    <div class="panel-collapse collapse in" id="feedback-%feedbackScopeId%">
-      <div class="panel-body scopefeedback">
-
-      </div>
-    </div>
-</div>
--->
-</script>
-
-
-<script type="text/html" id="feedback-empty">
-<!--
-<li class="media">
-    <div class="pull-left check"></div>
-    <div class="">
-        <?php _e('No messages available','bidxplugin')?>
-    </div>
-</li>
--->
-</script>
