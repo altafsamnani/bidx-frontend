@@ -28,7 +28,7 @@ class businesssummary
         /* Common mentoring functions & mentoring activities functions */
      ;
         wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), $deps, '20140307', TRUE);
-        $deps = array_merge( self :: $deps, array(  'bp-mentor' ) );
+        $deps = array_merge( self :: $deps, array(  'bp-mentor', 'commenting' ) );
         //$deps = self::$deps;
 
         wp_register_script('businesssummary', plugins_url('static/js/businesssummary.js', __FILE__), $deps, '20130501', TRUE);

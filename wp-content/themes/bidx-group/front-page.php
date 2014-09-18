@@ -72,7 +72,6 @@
                     </div>
                 </div>
 
-
 <?php
             if ( $sidebar_alignment === 'right' ) :
 ?>                
@@ -82,14 +81,19 @@
                         if ( $authenticated )
                         {
 ?>
-                        <div class="side-bar well sideBar">
-                        <h2><?php _e('Create and grow', 'bidxplugin')?></h2>
+                            <div class="panel panel-primary panel-members">
+                                <div class="panel-heading hide-overflow">
+                                    <h4 class="pull-left"><?php _e('Create and grow', 'bidxplugin')?></h4>
+                                </div>
+                                <div class="panel-body">
 <?php
-                            echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
-                            echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
-                            echo do_shortcode( '[bidx app="member" view="mentor-profile-links"]' );
+                                    echo do_shortcode( '[bidx app="member" view="entrepreneur-profile-links"]' );
+                                    echo do_shortcode( '[bidx app="member" view="investor-profile-links"]' );
+                                    echo do_shortcode( '[bidx app="member" view="mentor-profile-links"]' );
 ?>
-                        </div>
+                                </div>
+                            </div>
+
 <?php                        
                             dynamic_sidebar('priv-front-side');
                         }

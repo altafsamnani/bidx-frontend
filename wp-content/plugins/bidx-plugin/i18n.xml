@@ -109,16 +109,6 @@
      <Item value="modalBtnCancel">Cancel request</Item>
      <Item value="modalBtnStop">Stop mentoring</Item>
 
-     <!-- Mentoring Feedback -->
-    <Item value="feedbackGeneral">General</Item>
-    <Item value="feedbackOverview">General overview section</Item>
-    <Item value="feedbackBusiness">About the business section</Item>
-    <Item value="feedbackTeam">About the team section</Item>
-    <Item value="feedbackFinancial">Financial section</Item>
-    <Item value="feedbackCompany">Company section</Item>
-    <Item value="feedbackMentoring">Mentoring section</Item>
-    <Item value="feedbackDocument">Document section</Item>
-
       <!-- Facet Entity types -->
     <Item value="bidxMemberProfile">Member profile</Item>
     <Item value="bidxBusinessSummary">Business summary</Item>

@@ -42,7 +42,7 @@
         {
             timeout:        30000
         ,   servicesPath:   "js/bidxAPI/services/"
-        ,   deCaching:      false
+        ,   deCaching:      false // deCaching only applies to loading a specific API script
         }, ( api.settings || {} ) );
 
 
@@ -235,6 +235,7 @@
                 {
                     url:            url
                 ,   method:         options.method
+                ,   cache:          false // For GET requests in IE8 and IE9
                 ,   type:           options.method
                 ,   dataType:       "json"
                 ,   success:        options.success
