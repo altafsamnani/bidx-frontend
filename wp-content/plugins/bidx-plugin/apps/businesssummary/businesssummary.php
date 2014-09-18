@@ -82,17 +82,11 @@ class businesssummary
             	$view->completenessColour = 'red';
             }
 
-            // TODO Arjan TODO Altaf use some admin setting
-            $ratingEnabledForGroup = true;
-            
-            if ( $ratingEnabledForGroup )
-            {
-	            /* Fetch the entity rating. */
-	            require_once( BIDX_PLUGIN_DIR .'/../services/rating-service.php' );
-	            $ratingServiceObj = new RatingService( );
-	            $ratingData = $ratingServiceObj->getRating( $businessSummaryId );
-	            $view->rating = $ratingData->data;
-            }
+            /* Fetch the entity rating. */
+            require_once (BIDX_PLUGIN_DIR . '/../services/rating-service.php');
+            $ratingServiceObj = new RatingService ();
+            $ratingData = $ratingServiceObj->getRating ( $businessSummaryId );
+            $view->rating = $ratingData->data;
         }
 
         $view->render('businesssummary.phtml');
