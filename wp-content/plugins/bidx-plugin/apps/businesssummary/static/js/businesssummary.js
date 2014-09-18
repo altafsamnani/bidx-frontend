@@ -1277,6 +1277,7 @@
             $raty.raty({
                 cancel   : true,
                 starType : 'i',
+                // TODO Arjan remove or translate?
                 hints       : ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent'],
                 click: function( value )
                 {
@@ -3611,119 +3612,6 @@
                         _init( state );
                     } );
             break;
-            
-            
-            // TODO Arjan This is duplicated from mentor dashboard
-            case "addFeedback" :
-                var $feedbackBtn = $mainElement.find( '.btn-feedback-submit' );
-
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-
-                _initAddFeedback(
-                    {
-                        params: options.params
-                    /*,   success: function()
-                        {
-                            //$feedbackDropDownBtn.addClass('disabled').i18nText("btnRequestSent");
-                            _showMainSuccessMsg(bidx.i18n.i("statusRequest"));
-                            window.bidx.controller.updateHash("#cancel");
-
-                            _closeModal(
-                            {
-                                unbindHide: true
-                            } );
-                        }
-                    ,   error: function()
-                        {
-                            $feedbackDropDownBtn.removeClass('disabled').i18nText('btnTryAgain');
-                            window.bidx.controller.updateHash("#cancel");
-                            _closeModal(
-                            {
-                                unbindHide: true
-                            } );
-                        }*/
-                    } );
-
-
-                _showMainModal(
-                {
-                    view  : "sendFeedback"
-                ,   params: options.params
-                /*,   onHide: function()
-                    {
-                        window.bidx.controller.updateHash("#mentoring/mentor", false, false);
-                    }*/
-                ,   onShow: function()
-                    {
-                       //_oneTimeSetup();
-
-
-                    }
-
-                } );
-
-
-                break;
-
-                case "sendFeedback" :
-
-                var btnFeedbackText
-                ,   $btnSave                  = $mainElement.find('.btn-feedback-submit')
-                ,   $btnCancel                = $mainElement.find('.btn-feedback-cancel')
-                ,   $btnConfirmFeedbackSave   = $mainElement.find('.btn-send-feedback')
-                ,   $btnConfirmFeedbackCancel = $mainElement.find('.btn-cancel-feedback')
-                ;
-
-                btnFeedbackText = $btnConfirmFeedbackSave.text();
-
-
-                $btnConfirmFeedbackSave.addClass( "disabled" ).i18nText("msgWaitForSave");
-                $btnConfirmFeedbackCancel.addClass( "disabled" );
-
-
-                _doSendFeedback(
-                {
-                    params: options.params
-                ,   callback: function()
-                    {
-                        $btnSave.removeClass( "disabled" );
-                        $btnCancel.removeClass( "disabled" );
-                        $btnConfirmFeedbackSave.removeClass( "disabled" ).text( btnFeedbackText );
-                        $btnConfirmFeedbackCancel.removeClass( "disabled" );
-                        _resetFeedbackForm();
-                        _closeMainModal(
-                        {
-                            unbindHide: true
-                        } );
-
-                    }
-                } );
-
-                break;
-
-                case 'confirmFeedback' :
-
-                _closeMainModal(
-                {
-                    unbindHide: true
-                } );
-
-                _showMainModal(
-                {
-                    view  : "confirmFeedback"
-                ,   params: options.params
-                /*,   onHide: function()
-                    {
-                        window.bidx.controller.updateHash("#mentoring/mentor", false, false);
-                    }*/
-                } );
-
-                break;
-            
-            // TODO Arjan end
         }
     }
 

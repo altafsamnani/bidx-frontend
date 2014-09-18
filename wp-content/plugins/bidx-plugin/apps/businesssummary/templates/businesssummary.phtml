@@ -229,6 +229,57 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <?php
                 }
 ?>
+
+<?php
+                // TODO Arjan TODO Sakis Remove the testing code.
+
+                // If a user can comment then show the button. When data-setcount is set, its
+                // label will be updated on page load using JavaScript.
+                //
+                if ( isset( $_GET["test-commenting"] ) )
+                {
+?>
+                <div class="commenting-wrapper">
+                    <!--  TODO Arjan TODO Sakis CSS class conventions? Commenting itself only needs href="#commenting" (starts with), and needs the data-xx attributes -->
+
+                    <!-- One button for both viewing and adding a comment, always shown, and label updated if count > 0 -->
+                    <a class="btn btn-primary" href="#commenting/viewComments" data-entityid=<?php echo $businessSummaryId ?>
+                        data-setcount=true data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument"><?php _e('Comments','bidxplugin');?></a>
+
+                    <!-- Same information, using two links: one to view, only shown if comments exist, another to write. 
+                        The view button happens to have data-scopes="*", hence only applies to viewing and will not have the
+                        "Add comment" button at the bottom. This also implies that one cannot BOTH hide the "Add comment" 
+                        and limit on specific scopes. Easily added, of course, with a different prefix or some extra 
+                        data-displaybutton thingy. -->
+                    <p/>
+                    <p>Same information, two links, with "View" only shown if comments exist:
+                        <br/>
+                        <a class="" href="#commenting/writeComment" data-entityid=<?php echo $businessSummaryId ?>
+                            data-setcount=false data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument"><?php _e('Add comment','bidxplugin');?></a>
+                        | <a class="" href="#commenting/viewComments" data-entityid=<?php echo $businessSummaryId ?> 
+                            data-setcount=true data-setdisplay=true data-scopes="*"><?php _e('View comments','bidxplugin');?></a>
+                    </p>
+
+                    <!-- Filtered information, like showing (and counting) only some visibilites or scopes. Labels
+                        are hardcoded to avoid polluting the i18n plugin. -->
+                    <p>Filtered information, like showing (and counting) only some visibilites or scopes:
+                        <br/>
+                        <a class="" href="#commenting" data-entityid=<?php echo $businessSummaryId ?>
+                            data-setcount=true data-scopes="general">General</a>
+                        | <a class="" href="#commenting" data-entityid=<?php echo $businessSummaryId ?>
+                            data-setcount=true data-visibilities="groupAdmin,private" data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument">Private</a>
+                        <!-- When limiting on only groupAdmin, it would make sense to use data-setdisplay=true to ensure
+                            other users don't see the link that is useless for them. -->
+                        | <a class="" href="#commenting" data-entityid=<?php echo $businessSummaryId ?>
+                            data-setcount=true data-setdisplay=false data-visibilities="groupAdmin" data-scopes="general">Admin</a>
+                    </p>
+                </div>
+
+<?php
+                // TODO Arjan TODO Sakis Remove the testing code.
+                }
+?>
+
             </div>
         </div>
     </div>
@@ -1317,6 +1368,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
 </div><!-- /businesssummary -->
 <?php $this->render('../../mentor/templates/dashboard/main.phtml'); ?>
+<?php $this->render('../../commenting/templates/commenting.phtml'); ?>
 
 <script type="text/html" id="mentor-snippet">
 <!--

@@ -1,0 +1,36 @@
+<I18N>
+    <!-- <Item value=""></Item> -->
+    <Item value="commentSent">Comment saved</Item>
+
+    <!--
+        Scopes. For translation, the codes in the template are prefixed with "scopes"
+        and are case sensitive, such as data-scopes+"general,bsOverview,bsBusiness".
+        This can be ANY code, simply stored by the backend without its "scope" prefix:
+        bs=Business Summary; (future) other entity types may use different codes. 
+    -->
+    <!-- Generic -->
+    <Item value="scopeGeneral">General comment</Item>
+    <!-- Business Summary -->
+    <Item value="scopeBsOverview">General overview section</Item>
+    <Item value="scopeBsBusiness">About the business section</Item>
+    <Item value="scopeBsTeam">About the team section</Item>
+    <Item value="scopeBsFinancial">Financial section</Item>
+    <Item value="scopeBsCompany">Company section</Item>
+    <Item value="scopeBsMentoring">Mentoring section</Item>
+    <Item value="scopeBsDocument">Document section</Item>
+
+    <!--
+        Visibilities. For translation, the codes in the templates are prefixed with
+        "visibility" and are case sensitive, like data-visibilites="private,groupAdmin".
+        The code, without its prefix, is converted into an API enum value, hence must 
+        match the known Visibilities in the backend.
+     -->
+    <Item value="visibilityPrivate">Private note (just for you)</Item>
+    <Item value="visibilityGroupAdmin">Administrative note (for all group admins)</Item>
+    <!--     <Item value="visibilityAssessor">Assessor note (for assessors of the plan)</Item> -->
+    <!--     <Item value="visibilityJudge">Judge note (for all jury members)</Item> -->
+    <Item value="visibilityMentor">Mentor feedback (for entrepreneur and their mentors)</Item>
+    <Item value="visibilityInvestor">Investor feedback (for entrepreneur, their mentors and all investors)</Item>
+    <Item value="visibilityPublic">Public comment (for anyone)</Item>
+
+</I18N>

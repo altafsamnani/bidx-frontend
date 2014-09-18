@@ -1,10 +1,7 @@
 <I18N>
     <!-- <Item value=""></Item> -->
-    <Item value="feedbackSent">Feedback sent</Item>
-    <Item value="feedbackNew">new</Item>
     <Item value="mentoringRequestPending">Mentoring request pending</Item>
     <Item value="receivedRequest">Received request</Item>
     <Item value="ongoing">Ongoing</Item>
     <Item value="matchCount">%count% matches found</Item>
-    <Item value="feedbackAdd">Add feedback </Item>
 </I18N>

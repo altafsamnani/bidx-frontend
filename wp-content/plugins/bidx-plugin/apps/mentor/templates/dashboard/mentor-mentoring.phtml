@@ -152,6 +152,10 @@
     </div>
 </div>
 
+<!-- TODO Arjan TODO Sakis is this the way? But then how to pass entity data? -->
+<?php $this->render('../../commenting/templates/commenting.phtml'); ?>
+
+
 <script type="text/html" id="mentor-bp-matches">
     <!--
     <tr>
@@ -349,10 +353,28 @@
 </script>
 <script type="text/html" id="mentor-ongoing-action">
 <!--
-<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/addFeedback/entityId=%entityId%&commentorId=%commentorId%" class="btn-bidx-add-feedback"><?php _e('Add feedback','bidxplugin');?></a>|
-<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/viewFeedback/entityId=%entityId%" class="btn-bidx-view-feedback"><?php _e('View feedback','bidxplugin');?></a>
+<a href="#commenting/writeComment" data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument" data-visibilities="mentor" data-hidevisibilities=true><?php _e('Add feedback','bidxplugin');?></a> |
+<a href="#commenting/viewComments" data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument" data-visibilities="mentor" data-hidevisibilities=true data-setcount-xxx=true><?php _e('View feedback','bidxplugin');?></a>
 <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide"><?php _e('Contact entrepreneur','bidxplugin');?></a>|
 <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/entityId=%entityId%&type=mentor&action=stop" class="btn-bidx-stop"><?php _e('Stop mentoring','bidxplugin');?></a>
+
+<?php
+    // TODO Arjan TODO Sakis Remove the testing code below, change/remove data-visibilities="mentor" above, remove data-hidevisiblities, enable data-setcount-xxx above.
+
+    // When data-setcount is set, its label will be updated on page load using JavaScript.
+
+    if ( isset( $_GET["test-commenting"] ) )
+    {
+?>
+<p/>
+<p>With all allowed visibilities for the current user (and even showing that if it's only one), and the counter:<br/>
+<a href="#commenting/writeComment" data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument"><?php _e('Add comment','bidxplugin');?></a> |
+<a href="#commenting/viewComments" data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument" data-setcount=true><?php _e('View comments','bidxplugin');?></a>
+</p>
+<?php
+    // TODO Arjan TODO Sakis Remove 
+    }
+?>
 -->
 </script>
 <script type="text/html" id="mentor-renew-action">

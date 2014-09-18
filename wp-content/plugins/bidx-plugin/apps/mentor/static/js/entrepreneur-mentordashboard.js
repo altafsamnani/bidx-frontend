@@ -123,36 +123,21 @@
         {
             ongoing:     function(  $listItem, item )
             {
-                var $addFeedbackBtn     =   $listItem.find( ".btn-bidx-add-feedback")
-                ,   $viewFeedbackBtn    =   $listItem.find( ".btn-bidx-view-feedback")
+                var $commentingBtns     =   $listItem.find( "[href=#commenting],[href^='#commenting/']")
                 ,   $contactBtn         =   $listItem.find( ".btn-bidx-contact")
                 ,   $stopBtn            =   $listItem.find( ".btn-bidx-stop")
-
-                ,   hrefaddFeedback     =   $addFeedbackBtn.attr( "data-href" )
-                ,   hrefviewFeedback    =   $viewFeedbackBtn.attr( "data-href" )
                 ,   hrefContact         =   $contactBtn.attr( "data-href" )
                 ,   hrefStop            =   $stopBtn.attr( 'data-href' )
                 ;
 
-                /* 1 Add Feedback */
-                hrefaddFeedback = hrefaddFeedback
-                            .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%commentorId%/g,      currentUserId )
-                            ;
-                $addFeedbackBtn.attr( "href", hrefaddFeedback );
+                /* 1 View and Add Feedback */
+                $commentingBtns.data( "entityid", item.entityId );
 
-                /* 2 View Feedback */
-                hrefviewFeedback = hrefviewFeedback
-                            .replace( /%entityId%/g,      item.entityId )
-                           ;
-
-                $viewFeedbackBtn.attr( "href", hrefviewFeedback );
-
-                /* 3 Contact Mentor */
+                /* 2 Contact Mentor */
                 hrefContact = hrefContact.replace( /%receipientId%/g,      item.mentorId );
                 $contactBtn.attr( "href", hrefContact );
 
-                /* 4 Cancel request */
+                /* 3 Cancel request */
                 hrefStop = hrefStop
                             .replace( /%entityId%/g,      item.entityId )
                             .replace( /%initiatorId%/g,   item.initiatorId )
@@ -233,9 +218,9 @@
                 ,   action:          "renew"
                 };
 
-                /* 1 View  Feedback */
-               $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                /* 1 View Feedback and Add Feedback */
+                $listItem.find( "[href=#commenting],[href^='#commenting/']" )
+                    .data( "entityid", item.entityId )
                 ;
 
                 /* 2 Contact Entrepreneur */
@@ -270,8 +255,8 @@
                 };
 
                 /* 1 View  Feedback */
-                $listItem.find( ".btn-bidx-view-feedback")
-                    .attr( "href", "/mentor-dashboard/#dashboard/viewFeedback/" +$.param( params ) )
+                $listItem.find( "[href=#commenting],[href^='#commenting/']" )
+                    .data( "entityid", item.entityId )
                 ;
 
                 /* 2 Contact Entrepreneur */

@@ -1,0 +1,148 @@
+<div id="commenting">
+
+    <div class="commenting">
+
+        <div class="view viewError alert alert-warning">
+            <h1><?php _e('Error','bidxplugin')?></h1>
+            <span class="errorMsg"></span>
+        </div>
+
+        <!-- View comments modal -->
+        <div class="modalView modalListComments">
+            <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                            <a  class="close" href="#commenting/cancel">×</a>
+                            <h3 id="feedbackLabel"><?php _e ('Comments','bidxplugin') ?></h3>
+                        </div>
+                        <div class="modal-body well">
+                            <form action="">
+                                <!-- MESSAGE LIST -->
+                                <div class="list media-list" id="commentListingAccordion">
+
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#commenting/cancel" class="btn btn-view-feedback" href=""><?php _e ('Close','bidxplugin') ?></a>
+                            <a href="#" data-href="#commenting/writeComment/" class="btn btn-primary btn-feedback-submit"><?php _e('Leave a comment', 'bidxplugin');?></a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Write comment modal -->
+        <div class="modalView modalWriteComment">
+            <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                            <a class="btn btnRequestCancel pull-right" href="#commenting/cancel">
+                                <button type="button" class="close">×</button>
+                            </a>
+                            <h3 id="myModalLabel"><?php _e ('Write your comment','bidxplugin') ?></h3>
+                        </div>
+                        <div class="modal-body">
+                            <form class="frmsendFeedback">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label><?php _e('Comment purpose','bidxplugin'); ?></label>
+                                             <select class= "chosen-feedback" name="feedbackpurpose"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><?php _e('Visibility','bidxplugin'); ?></label>
+                                             <select class= "chosen-visibility" name="feedbackvisibility"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><?php _e('Comment','bidxplugin'); ?></label>
+                                            <textarea name="feedback" class="form-control" placeholder="<?php _e('Please write your comment','bidxplugin');?>" ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-feedback-cancel" href="#commenting/cancel"><?php _e ('Cancel','bidxplugin') ?></a>
+                            <a class="btn btn-primary btn-feedback-submit"  ><?php _e ('Save comment','bidxplugin') ?></a> <!-- data-href="#commentingRequest/sendRequest/" -->
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm comment modal -->
+        <div class="modalView modalConfirmComment">
+            <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="feedbackLabel"><?php _e ('Save comment','bidxplugin') ?></h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                <?php _e ('You are about to add the comment. Are you sure?','bidxplugin') ?>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-cancel btn-cancel-feedback" data-href="#commenting/writeComment/"><?php _e ('Change comment','bidxplugin') ?></a>
+                            <a href="#" class="btn btn-primary btn-send-feedback" data-href="#commenting/postComment/" ><?php _e ('Save comment','bidxplugin') ?></a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- TODO Arjan TODO Sakis we might want to show the visibilty type somehow; see %classVisibility%
+    and %visibility% and maybe we need different i18n for the dropdown and for viewing?
+-->
+<script type="text/html" id="comments-listitem">
+<!--
+<div class="panel well %classVisibility%">
+    <div class="" data-toggle="collapse" data-target="#feedback-%accordion-id%">
+         <span>%comment%</span>
+    </div>
+    <div class="panel-body panel-collapse collapse in" id="feedback-%accordion-id%">
+       <div class="small pull-right">
+         <?php _e('Posted on','bidxplugin');?> <strong>%dateCreated%-%timeCreated%</strong> <?php _e('by','bidxplugin');?> <strong>%senderReceiverName%</strong>
+         </div>
+    </div>
+</div>
+-->
+</script>
+
+
+<script type="text/html" id="comments-scopeitem">
+<!--
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a  class="btn-block" data-toggle="collapse" data-parent="#commentingListingAccordion" href="#feedback-%feedbackScopeId%">
+        %feedbackScopeName%
+        </a>
+    </div>
+    <div class="panel-collapse collapse in" id="feedback-%feedbackScopeId%">
+      <div class="panel-body scopefeedback">
+
+      </div>
+    </div>
+</div>
+-->
+</script>
+
+
+<script type="text/html" id="comments-empty">
+<!--
+<li class="media">
+    <div class="pull-left check"></div>
+    <div class="">
+        <?php _e('No comments available','bidxplugin')?>
+    </div>
+</li>
+-->
+</script>
