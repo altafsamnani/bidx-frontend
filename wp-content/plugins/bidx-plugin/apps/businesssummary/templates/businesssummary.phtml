@@ -161,6 +161,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
                                     <i class="fa fa-star"></i>
                                     <span class="rating-average"><?php echo $ratingTotals->average ? $ratingTotals->average : "?"; ?></span>
+                                    <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingTotals->count; ?></span>)</span>
                                 </div>
 <?php
 ?>                                

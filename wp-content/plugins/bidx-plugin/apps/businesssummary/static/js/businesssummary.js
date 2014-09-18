@@ -34,7 +34,10 @@
     ,   $ratingAverage              = $ratingWrapper.find( ".rating-average" )
     ,   $ratingVote                 = $ratingWrapper.find( ".rating-vote" )
     ,   $ratingTotal                = $ratingWrapper.find( ".rating-total" )
+    ,   $ratingTotalVoters          = $ratingWrapper.find( ".rating-total-voters-count" )
     ,   $ratingUserLabel            = $ratingWrapper.find( ".rating-user-label" )
+    ,   $ratingScore                = $ratingWrapper.find( ".rating-score" )
+    ,   $ratingNoScore              = $ratingWrapper.find( ".rating-no-score" )
     ,   $raty                       = $ratingWrapper.find( ".raty" )
     
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
@@ -1287,16 +1290,17 @@
                         $ratingUserLabel.text( bidx.i18n.i( data.userRating ? "ratingUserLabel" : "ratingUserLabelNone", appName ) );
 
                         $ratingAverage.text(data.totals.average ? data.totals.average : "?" );
+                        $ratingTotalVoters.text(data.totals.count);
 
                         if ( data.totals.average )
                         {
-                            $ratingTotal.find( ".rating-score" ).removeClass( "hide" );
-                            $ratingTotal.find( ".rating-no-score" ).addClass( "hide" );
+                            $ratingScore.removeClass( "hide" );
+                            $ratingNoScore.addClass( "hide" );
                         }
                         else
                         {
-                            $ratingTotal.find( ".rating-no-score" ).removeClass( "hide" );
-                            $ratingTotal.find( ".rating-score" ).addClass( "hide" );
+                            $ratingNoScore.removeClass( "hide" );
+                            $ratingScore.addClass( "hide" );
                         }
                     } );
                 },
