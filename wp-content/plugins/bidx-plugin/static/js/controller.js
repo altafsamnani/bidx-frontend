@@ -90,6 +90,7 @@
                     {
                         bidx.utils.error( "[controller._checkMailboxState] error ", jqXhr );
                         _restartTimer();
+                        $( ".loginModal" ).modal();
                     }
                 }
             );
