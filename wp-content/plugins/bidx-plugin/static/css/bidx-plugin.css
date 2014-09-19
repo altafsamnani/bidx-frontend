@@ -1615,6 +1615,16 @@ select {
   font-weight: 500;
 }
 
+.rating-total .rating-total-voters {
+  margin-left: 3px;
+  font-size: 16px;
+}
+
+.rating-total .rating-total-voters-count {
+  font-size: 16px;
+  vertical-align: baseline;
+}
+
 .rating-total .rating-score-text {
   text-transform: uppercase;
 }
@@ -2304,6 +2314,8 @@ fieldset[disabled] .btn {
   background-color: #d9534f;
 }
 
+/* Nothing yet */
+
 #editCompany {
   display: none;
 }
@@ -2793,6 +2805,14 @@ Group Admin Dashboard:  Support
 
 .zendesk-tickets-bottom {
   display: none;
+}
+
+#post-body.columns-2 #postbox-container-1 {
+  width: 45%;
+}
+
+#post-body.columns-2 #postbox-container-2 {
+  width: 70%;
 }
 
 #post-body.columns-2 #postbox-container-1 {
