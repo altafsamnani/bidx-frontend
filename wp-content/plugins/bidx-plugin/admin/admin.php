@@ -60,7 +60,7 @@ class Bidx_Admin_Admin
 	        $bidxJsDir = sprintf ('%s/../static/js',    BIDX_PLUGIN_URI);
 	        $vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
 
-	        wp_enqueue_style('bidx-plugin', get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin.css', false, null);
+	        wp_enqueue_style('bidx-admin-plugin', get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin-admin.css', false, null);
 
 	        wp_register_script ('google-jsapi', '//www.google.com/jsapi', array (), '20130501', TRUE);
 
@@ -69,6 +69,8 @@ class Bidx_Admin_Admin
 	        wp_register_script ('jquery-validation-additional-methods', $bidxJsDir . '/vendor/additional-methods.js', array ('jquery-validation'), '1.1.11', true);
 
 	        wp_register_script ('jquery-validation-bidx-additional-methods', $bidxJsDir . '/additional-methods.js', array ('jquery-validation'), '20130812', true);
+
+            wp_register_script ('admin-chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
 
 	        wp_register_script ('bidx-admin-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery' ), '20130501', TRUE);
 
@@ -83,6 +85,8 @@ class Bidx_Admin_Admin
 	        wp_register_script ('bidx-admin-common', $bidxJsDir . '/common.js', array ('bidx-admin-utils', 'bidx-api-core', 'bidx-admin-data' , 'jquery-validation', 'bidx-admin-i18n', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods'), '20130501', TRUE);
 
 	        wp_register_script ('bidx-admin-controller', $bidxJsDir . '/controller.js', array ('bidx-admin-utils', 'bidx-admin-api-core', 'bidx-admin-data', 'backbone'), '20130501', TRUE);
+
+            wp_register_script ('bidx-admin-chosen',  $bidxJsDir . '/bidx-chosen.js', array ('jquery', 'admin-chosen'),  '20131118', TRUE);
 
 	        wp_enqueue_script ('bidx-admin-common');
 

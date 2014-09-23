@@ -16,7 +16,7 @@ $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 $sessionData    = BidxCommon::$staticSession;
 $entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
 
-$ownerId 		= $businessSummary->bidxMeta->bidxOwnerId;	
+$ownerId 		= $businessSummary->bidxMeta->bidxOwnerId;
 $loggedInUserId = $sessionData->data->id;
 
 // if a user has an investorProfile, he is allowed to request access to a business summary
@@ -74,7 +74,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
     <div class="row">
         <div class="col-sm-8">
-<?php 
+<?php
             if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
             {
 ?>
@@ -91,7 +91,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
                 <h1><?php echo _e( 'Create Business Summary', 'bidxplugin' ); ?></h1>
 <?php
-                
+
             }
 ?>
         </div>
@@ -130,7 +130,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div>
     </div>
 
-<?php 
+<?php
     if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
     {
 ?>
@@ -145,17 +145,17 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             <div class="col-sm-5">
     <?php
-                /* 
-                 * We want ratings to be indexed by Google, so need to include this on page load. It 
+                /*
+                 * We want ratings to be indexed by Google, so need to include this on page load. It
                  * might be updated in JavaScript though, so also check the translations in i18n.xml.
-                 */ 
+                 */
                 $ratingTotals = $this->rating->totals;
 
-                if( $ratingTotals ) 
+                if( $ratingTotals )
                 {
                     $ratingAllowed = $loggedInUserId != $ownerId;
                     $ratingUser = $this->rating->userRating;
-    ?> 
+    ?>
                         <div class="rating-wrapper">
                             <div class="rating-total">
                                 <div class="rating-no-score <?php echo !$ratingTotals->average ? '' : 'hide' ?>">
@@ -168,11 +168,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingTotals->count; ?></span>)</span>
                                 </div>
 <?php
-?>                                
+?>
                             </div>
 <?php
                             if( $ratingAllowed )
-                            { 
+                            {
 ?>
                                 <div class="rating-vote">
                                     <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
@@ -246,17 +246,17 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     <a class="btn btn-primary" href="#commenting/viewComments" data-entityid=<?php echo $businessSummaryId ?>
                         data-setcount=true data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument"><?php _e('Comments','bidxplugin');?></a>
 
-                    <!-- Same information, using two links: one to view, only shown if comments exist, another to write. 
+                    <!-- Same information, using two links: one to view, only shown if comments exist, another to write.
                         The view button happens to have data-scopes="*", hence only applies to viewing and will not have the
-                        "Add comment" button at the bottom. This also implies that one cannot BOTH hide the "Add comment" 
-                        and limit on specific scopes. Easily added, of course, with a different prefix or some extra 
+                        "Add comment" button at the bottom. This also implies that one cannot BOTH hide the "Add comment"
+                        and limit on specific scopes. Easily added, of course, with a different prefix or some extra
                         data-displaybutton thingy. -->
                     <p/>
                     <p>Same information, two links, with "View" only shown if comments exist:
                         <br/>
                         <a class="" href="#commenting/writeComment" data-entityid=<?php echo $businessSummaryId ?>
                             data-setcount=false data-scopes="general,bsOverview,bsBusiness,bsTeam,bsFinancial,bsCompany,bsMentoring,bsDocument"><?php _e('Add comment','bidxplugin');?></a>
-                        | <a class="" href="#commenting/viewComments" data-entityid=<?php echo $businessSummaryId ?> 
+                        | <a class="" href="#commenting/viewComments" data-entityid=<?php echo $businessSummaryId ?>
                             data-setcount=true data-setdisplay=true data-scopes="*"><?php _e('View comments','bidxplugin');?></a>
                     </p>
 
@@ -283,7 +283,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             </div>
         </div>
     </div>
-<?php 
+<?php
     }
 ?>
 
@@ -586,7 +586,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                         // Render the checkboxes based upon the items from the static data api for the 'consumerType' typeCode / groupCode / context
                                         //
                                         $typeCode = 'consumerType';
-                                        if ( isset(BidxCommon::$i18nData['static'][$typeCode]) ) {
+                                        if ( !empty(BidxCommon::$i18nData['static'][$typeCode]) ) {
                                             foreach ( BidxCommon::$i18nData['static'][$typeCode] as $item ) {
                                                 printf( '<div class="checkbox">
                                                             <input type="checkbox" value="%s" id="checkbox-%s" name="consumerType[]" />

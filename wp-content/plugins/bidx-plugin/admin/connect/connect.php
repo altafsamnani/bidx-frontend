@@ -15,6 +15,7 @@ class Bidx_Admin_Connect
 							  ,	'bidx-admin-api-core'
 							  , 'bidx-admin-common'
 							  , 'google-jsapi'
+							  , 'bidx-admin-chosen'
 							  );
 	/**
 	 * Constructor class for the Simple Admin Metabox
@@ -91,7 +92,6 @@ class Bidx_Admin_Connect
 
 		$view->title 			= 	$this->title;
 		$view->userId 			= 	$this->userId;
-		$view->body_content_cb 	= 	$this->admin_body_content();
 		$view->className        =   $this->className;
 
         echo $view->render( 'one-column.phtml' );
@@ -118,8 +118,7 @@ class Bidx_Admin_Connect
 	//Define the body content for the page (if callback is specified above)
 	public function admin_body_content()
 	{
-		$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/connect/static/templates/' );
-		echo $view->render('connect.phtml');
+
 		//echo 'Monitoring page contains the latest status of your portal.';
 
 	}

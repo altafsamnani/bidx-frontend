@@ -7,15 +7,18 @@
     <Item value="Inbox">Inbox</Item>
     <Item value="Sent">Sent</Item>
     <Item value="Deleted">Deleted</Item>
+    <Item value="Trash">Trash</Item>
     <Item value="Fwd">Fwd</Item>
     <Item value="Re">Re</Item>
-    <Item value="incomingContact">Incoming contact requests</Item>
-    <Item value="pendingContact">Pending contact requests</Item>
-    <Item value="contactRequestSendTo">New contact request has been send to</Item>
-    <Item value="activeContact">Active contacts</Item>
-    <Item value="ignoredContact">Ignored contacts</Item>
-    <Item value="contactRequest">New contact request</Item>
     <Item value="emailNew">new</Item>
     <Item value="groupAdmin">Group admin</Item>
-
+    <Item value="groupEntrepreneurs">All Entrepreneurs</Item>
+    <Item value="groupInvestors">All Investors</Item>
+    <Item value="groupMentors">All Mentors</Item>
+    <Item value="groupMembers">All Members</Item>
+    <Item value="frmGroupFieldRequired">Please select sender group</Item>
+    <Item value="emailSent">Your email has been sent successfully</Item>
+    <Item value="moveFolderMsg">Move message to folder</Item>
+    <Item value="alertDeleteMsg">You are about to delete this/these message(s). Are you sure?</Item>
+    <Item value="alertDiscardMsg">"You are about to discard this message. Are you sure?"</Item>
 </I18N>

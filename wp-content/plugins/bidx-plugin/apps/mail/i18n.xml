@@ -6,7 +6,8 @@
     <Item value="messageSent">Message sent</Item>
     <Item value="Inbox">Inbox</Item>
     <Item value="Sent">Sent</Item>
-    <Item value="Deleted">Deleted</Item>   
+    <Item value="Deleted">Deleted</Item>
+    <Item value="Trash">Trash</Item>
     <Item value="Fwd">Fwd</Item>
     <Item value="Re">Re</Item>
     <Item value="incomingContact">Incoming contact requests</Item>
