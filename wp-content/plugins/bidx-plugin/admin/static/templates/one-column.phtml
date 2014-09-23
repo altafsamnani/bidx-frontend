@@ -1,5 +1,5 @@
 <?php
-
+$view = new TemplateLibrary( BIDX_PLUGIN_DIR . '/../admin/'.$this->className.'/static/templates/' );
 $screen = get_current_screen();
 $columns = absint( $screen->get_columns() );
 $columns_css = '';
@@ -16,24 +16,19 @@ echo delete_user_option( $this->userId, "meta-box-order_".$screen->id, true );
 
 	<h2> <?php echo esc_html($this->title);?> </h2>
 
+	<div id="message" class="updated below-h2 view viewMessage" style="display:none;">
+
+	</div>
+
 	<form name="my_form" method="post">
 		<input type="hidden" name="action" value="some-action">
 		<?php wp_nonce_field( 'some-action-nonce' ); ?>
 
 		<div id="poststuff">
+
 			<div id="post-body" class="metabox-holder<?php echo $columns_css; ?>">
-
-				<div id="post-body-content">
-					<?php $this->body_content_cb; ?>
-				</div>
-
-				<div class='postbox-container'>
-					<?php do_meta_boxes( $screen->id, 'normal', '' );
-						do_meta_boxes( $screen->id, 'advanced', '' );
-					?>
-				</div>
-
-			</div> <!-- #post-body -->
+				<?php echo $view->render( $this->className.'.phtml' ); ?>
+			</div>
 		</div> <!-- #poststuff -->
 
 	</form>

@@ -17,8 +17,12 @@ module.exports = function(grunt) {
         compile: true
       },
       bidx: {
-        src: ['static/less/bidx.less', 'apps/*/static/less/*.less', 'admin/*/static/less/*.less' ],
+        src: ['static/less/bidx.less', 'apps/*/static/less/*.less' ],
         dest: 'static/css/<%= pkg.name %>.css'
+      },
+      admin: {
+        src: ['static/less/bidx-admin.less' ],
+        dest: 'static/css/<%= pkg.name %>-admin.css'
       },
       min: {
         options: {
