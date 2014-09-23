@@ -289,19 +289,19 @@
         <div class="row flush">
             <div id="caroufredsel-clients-container">
                 <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">
-                    <a href="#"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/bidnetwork.jpg" alt="Client Image"></a>
+                    <a href="http://bidnetwork.org/"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/bidnetwork.jpg" alt="Client Image"></a>
                 </div>
                 <!-- /.client-wrapper -->
                 <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">
-                    <a href="#"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/sampoerna.jpg" alt="Client Image"></a>
+                    <a href="http://www.sampoernastrategic.com/"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/sampoerna.jpg" alt="Client Image"></a>
                 </div>
                 <!-- /.client-wrapper -->
                 <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">
-                    <a href="#"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/npl.jpg" alt="Client Image"></a>
+                    <a href="https://www.postcodeloterij.nl/organisatie/over-de-postcode-loterij.htm "><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/npl.jpg" alt="Client Image"></a>
                 </div>
                 <!-- /.client-wrapper -->
                 <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">
-                    <a href="#"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/usaid.jpg" alt="Client Image"></a>
+                    <a href="http://www.usaid.gov/"><img class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/assets/img/clients/usaid.jpg" alt="Client Image"></a>
                 </div>
                 <!-- /.client-wrapper -->
                 <div class="col-xs-12 col-sm-4 col-md-3 client-wrapper">

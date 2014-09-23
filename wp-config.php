@@ -15,15 +15,16 @@
  */
 
 /**
- * 	--- Environment specific settings ---
+ *  --- Environment specific settings ---
  */
+
 /** what environment : local/test/acceptance/demo or empty for production**/
 define('BIDX_ENV', 'local');
 
 //replace this by automatic value and connect to backend.test.bidnet.vc:8080
 define('API_DOMAIN', 'test.bidx.net');
 //autofill this by environment
-define('WP_DEVELOPMENT', false);
+define('WP_DEVELOPMENT', true);
 
 //these values should NOT be in the generic defines (hackable)
 //ideally we remove the need for the username/password and use another mechanism
@@ -35,14 +36,14 @@ define('API_AUTH_PASS','gobidx');
 /** The name of the database for WordPress */
 define('DB_NAME', 'bidx');
 /** MySQL database username */
-define('DB_USER', 'bidx');
+define('DB_USER', 'root');
 /** MySQL database password */
-define('DB_PASSWORD', 'bidx12345');
+define('DB_PASSWORD', 'root');
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
 
 /**
- * 	--- End of environment specific settings ---
+ *  --- End of environment specific settings ---
  */
 
 /** Database Charset to use in creating database tables. */
@@ -77,7 +78,7 @@ define('COOKIE_DOMAIN', 'bidx.net');
 define('COOKIEPATH', '/');
 define('SITECOOKIEPATH', '/');
 define('LOGGED_IN_COOKIE', 'bidx_logged_in' . BIDX_ENV . '_' . COOKIEHASH);
-define('BIDX_ALLOWED_COOKIES', '(bidx)');
+define('BIDX_ALLOWED_COOKIES', '(bidx)|(JSESSIONID)');
 
 define('SCRIPT_DEBUG', false);
 define('CONCATENATE_SCRIPTS', true);
@@ -107,15 +108,15 @@ define('WPLANG', '');
  * in their development environments.
  */
 if (WP_DEVELOPMENT) {
-	define('WP_DEBUG_DISPLAY', true);
-	define('WP_DEBUG', true);
-	define('WP_DEBUG_LOG', true);
-	define('SAVEQUERIES', true);
+    define('WP_DEBUG_DISPLAY', false);
+    define('WP_DEBUG', false);
+    define('WP_DEBUG_LOG', true);
+    define('SAVEQUERIES', true);
 } else {
-	define('WP_DEBUG_DISPLAY', false);
-	define('WP_DEBUG', false);
-	define('WP_DEBUG_LOG', false);
-	define('SAVEQUERIES', false);
+    define('WP_DEBUG_DISPLAY', false);
+    define('WP_DEBUG', false);
+    define('WP_DEBUG_LOG', false);
+    define('SAVEQUERIES', false);
 }
 define('FS_METHOD','direct');
 
@@ -132,7 +133,7 @@ define('SUBDOMAIN_INSTALL', true);
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
-define('NOBLOGREDIRECT', 'http://' . DOMAIN_CURRENT_SITE . '/active-portals');
+define('NOBLOGREDIRECT', 'http://' . DOMAIN_CURRENT_SITE . '/unknown-group');
 
 define('BIDX_PLUGIN_METADATA_PATH', 'http://bidx-builds.s3-website-eu-west-1.amazonaws.com/acceptance/bidx-plugin/metadata.json');
 
@@ -140,8 +141,9 @@ define('BIDX_PLUGIN_METADATA_PATH', 'http://bidx-builds.s3-website-eu-west-1.ama
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
+    define('ABSPATH', dirname(__FILE__) . '/');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
+error_reporting(0);
 

@@ -90,6 +90,7 @@
                     {
                         bidx.utils.error( "[controller._checkMailboxState] error ", jqXhr );
                         _restartTimer();
+                        $( ".loginModal" ).modal();
                     }
                 }
             );
@@ -320,6 +321,7 @@
         ,   'join(/:state)':                                    'join'
 
         ,   'mail(/:state)(*splat)':                            'mail'
+        ,   'connect(/:state)(*splat)':                         'connect'
 
         ,   'media(/:appState)(/:id)':                          'media'
 
@@ -333,8 +335,6 @@
         ,   'cancel(/*splat)':                                  'showCancel'
         ,   '*path':                                            'show'
 
-        /*   Group Admin Pages */
-        ,   'connect(/:state)(*splat)':                         'connect'
 
         }
     ,   editPreference:             function(  )
@@ -643,6 +643,21 @@
                 }
             );
         }
+     ,   connect:                   function( state, splat )
+        {
+            bidx.utils.log( "AppRouter::connect State: ", state );
+
+            mainState = "connect";
+
+            _navigateToApp
+            (
+                "connect"
+            ,   {
+                    state:    state
+                ,   params:   _deparamSplat( splat )
+                }
+            );
+        }
      ,  dashboard:               function( state, splat )
         {
             bidx.utils.log( "AppRouter::dashboard State: ", state );
@@ -866,21 +881,6 @@
                 "account"
             ,   {
                    params:   params
-                }
-            );
-        }
-    ,   connect:                   function( state, splat )
-        {
-            bidx.utils.log( "AppRouter::connect State: ", state );
-
-            mainState = "connect";
-
-            _navigateToApp
-            (
-                "connect"
-            ,   {
-                    state:    state
-                ,   params:   _deparamSplat( splat )
                 }
             );
         }

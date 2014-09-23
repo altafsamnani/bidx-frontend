@@ -3,7 +3,8 @@
 {
     "use strict";
 
-    var $element                    = $( "#mail" )
+    var $main                       = $( ".connect")
+    ,   $element                    = $( "#mail" )
     ,   $views                      = $element.find( ".view" )
     ,   $currentView
     ,   $modals                     = $element.find( ".modalView" )
@@ -13,6 +14,7 @@
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
     ,   $mailFolderNavigation       = $element.find(".bidx-mailFolders")
     ,   $contactsDropdown           = $frmCompose.find( "[name=contacts]" )
+    ,   $groupDropDown              = $frmCompose.find( "[name='sendergroup']" )
     ,   bidx                        = window.bidx
     ,   currentGroupId              = bidx.common.getCurrentGroupId( "currentGroup" )
     ,   appName                     = "connect"
@@ -22,12 +24,16 @@
     ,   toolbar                     = {}
     ,   message                     = {}
     ,   itemList                    = {} // will contain key/value pairs where key=mailId and value always 1
+    ,   groupItems                  = {}
     ,   contactsOffset              = {} // will contain key/value pairs for each contact status (category)
     ,   mailOffset                  = 0
     ,   $mailboxToolbar
     ,   $mailboxToolbarButtons
     ,   state
     ,   section
+    ,   listDropdownGroup =  [ "groupEntrepreneurs", "groupInvestors", "groupMentors", "groupMembers" ]
+
+
     ;
 
     // Constants
@@ -46,14 +52,14 @@
     //
     function _oneTimeSetup()
     {
-        bidx.utils.log("[mail] oneTimeSetup");
+        bidx.utils.log("[connect] oneTimeSetup");
 
 
         // initiate formvalidation for compose view
         //
         $frmCompose.validate(
         {
-            ignore: ".chosen-search input, .search-field input"
+            ignore: ".chosen-container input"
 
         ,   rules:
             {
@@ -78,20 +84,24 @@
             }
         ,   submitHandler:  function()
             {
-                if ( $btnComposeSubmit.hasClass( "disabled" ) )
+                /*if ( $btnComposeSubmit.hasClass( "disabled" ) )
                 {
                     return;
-                }
+                }*/
 
                 $btnComposeSubmit.addClass( "disabled" );
-
+                $frmCompose.find('.spinner').show();
 
                 _doSend(
                 {
-                    error: function()
+                    callback: function()
+                    {
+                        $frmCompose.find('.spinner').hide();
+                    }
+                ,   error: function()
                     {
                         alert( "Something went wrong during submit" );
-
+                        $frmCompose.find('.spinner').hide();
                         $btnComposeSubmit.removeClass( "disabled" );
                         $btnComposeCancel.removeClass( "disabled" );
                     }
@@ -106,7 +116,7 @@
         // init the mailbox list toolbar buttons
         //
         $mailboxToolbar         = $views.find( ".mail-toolbar" );
-        $mailboxToolbarButtons  = $mailboxToolbar.find( ".btn" );
+        $mailboxToolbarButtons  = $mailboxToolbar.find( ".button" );
 
 
         // bind the toolbar buttons to their handlers. Reply and forward use HREF for navigation
@@ -118,19 +128,19 @@
         $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).bind( "click", "action=showPrev&confirm=false", _doPaging );
         $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).bind( "click", "action=showNext&confirm=false", _doPaging );
 
-
-        // hide showMore buttons on contacts and showMore handler
-        //
-        $views.filter( bidx.utils.getViewName( "contacts" ) ).find( ".bidx-btn-showMore" )
-            .hide()
-            .click( _doShowMoreContacts )
-        ;
-
-
     }
 
     function _loadActiveMembers()
     {
+        var entrepreuenrItems       = []
+        ,   investorItems           = []
+        ,   mentorItems             = []
+        ,   totalItems              = []
+        ,   roles                   = []
+        ,   listArrItems            = []
+        ,   contactEntrepreneurs    = []
+        ,   selectedGroup
+        ;
         // get recipient list and initiate recipient compose combobox (chosen)
         //
         _getMembers(
@@ -150,7 +160,9 @@
                     //
                     var listItems       = []
                     ,   option
+                    ,   optionGroup
                     ,   $options
+                    ,   $optionsGroup
                     ;
 
                     $options = $contactsDropdown.find( "option" );
@@ -159,7 +171,6 @@
                     {
                         $options.empty();
                     }
-
 
                     // sort the array, if not empty
                     //
@@ -170,14 +181,44 @@
 
                     $.each( data.sortIndex, function( idx, key )
                     {
+                        roles    =   data.contacts[ key ].roles;
                         option = $( "<option/>",
                         {
                             value: data.contacts[ key ].value
                         } );
+
                         option.text( data.contacts[ key ].label );
 
                         listItems.push( option );
+
+                        //Get Entrpreuenrers for group  mailing
+                        if($.inArray( 'entrepreneur' , roles) !== -1 )
+                        {
+                            entrepreuenrItems.push(data.contacts[ key ] );
+                        }
+                        //Get Investor for group  mailing
+                        if($.inArray( 'investor' , roles) !== -1 )
+                        {
+                            investorItems.push(data.contacts[ key ] );
+                        }
+                        //Get Mentor for gropu mailing
+                        if($.inArray( 'mentor' , roles) !== -1 )
+                        {
+                            mentorItems.push(data.contacts[ key ] );
+                        }
+
+                        //Get all users for group  mailing
+                        totalItems.push( data.contacts[ key ] );
+
                     } );
+                    //Store user item with roles to send out mail to particular group
+                    groupItems  =   {
+                                        groupEntrepreneurs : entrepreuenrItems
+                                    ,   groupInvestors:      investorItems
+                                    ,   groupMentors:        mentorItems
+                                    ,   groupMembers:        totalItems
+                                    };
+
 
                     // add the options to the select
                     //
@@ -186,6 +227,53 @@
                     // init bidx_chosen plugin
                     //
                     $contactsDropdown.bidx_chosen();
+
+
+                    /*******
+                    Add Dropdown optionsGroup for Recipients , Prepare dropdown
+                    *******/
+                    $optionsGroup = $groupDropDown.find( "option" );
+
+                    if ( $optionsGroup.length )
+                    {
+                        $optionsGroup.empty();
+                    }
+
+                    $groupDropDown.bidx_chosen(
+                    {
+                        emptyValue:         bidx.i18n.i( "frmGroupFieldRequired", appName )
+                    } );
+
+                    if(listDropdownGroup) {
+
+                        $.each( listDropdownGroup, function( idx, bpIdx )
+                        {
+                            optionGroup = $( "<option/>",
+                            {
+                                value: bpIdx
+                            } );
+                            optionGroup.text( bidx.i18n.i( bpIdx, 'connect' )  );
+
+                            listArrItems.push( optionGroup );
+                        } );
+                    }
+
+                    // add the options to the select
+                    $groupDropDown.append( listArrItems );
+                    $groupDropDown.trigger('chosen:updated');
+
+                    // init bidx_chosen plugin
+
+
+                    $groupDropDown.on('change', function(evt, params)
+                    {
+                        $contactsDropdown.val('');
+                        selectedGroup           =  params.selected;
+                        contactEntrepreneurs    = _.pluck(groupItems[ selectedGroup ], 'value');
+                        bidx.utils.setElementValue( $contactsDropdown, contactEntrepreneurs );
+                        $contactsDropdown.trigger('chosen:updated');
+                    });
+
                 }
             }
         } );
@@ -195,7 +283,7 @@
 
     function _createMailFolderNavigation()
     {
-        bidx.utils.log("[mail] create folder navigation");
+        bidx.utils.log("[connect] create folder navigation");
         if( mailboxes )
         {
             $mailFolderNavigation.empty();
@@ -211,8 +299,8 @@
                     //
                     $button = $( "<a/>",
                     {
-                        "class":      "btn btn-block btn-default"
-                    ,   "href":       "#mail/mbx-" + el.name.toLowerCase()
+                        "class":      "button button-large button-bidx"
+                    ,   "href":       "#connect/mbx-" + el.name.toLowerCase()
                     } );
 
                     // switch case for different mailbox classes
@@ -298,12 +386,28 @@
         }
     }
 
+    // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
+    //
+    function _showMessage( view, message )
+    {
+        var $view = $main.find( bidx.utils.getViewName( view ) ).append( message ).show();
+        //  show title of the view if available
+
+    }
+
+    function _hideMessage( view )
+    {
+        var $view = $main.find( bidx.utils.getViewName( view ) ).hide();
+        //  show title of the view if available
+
+    }
+
     // hide all the toolbar buttons for the toolbar of the vieww
     //
     function _hideToolbarButtons( view )
     {
         var $view               = $views.filter( bidx.utils.getViewName( view ) )
-        ,   $toolbarButtons     = $view.find( "nav.mail-toolbar .btn" )
+        ,   $toolbarButtons     = $view.find( "mail-toolbar .button" )
         ;
         $toolbarButtons.hide();
     }
@@ -313,7 +417,7 @@
     function _showToolbarButtons( view, buttons )
     {
         var $view               = $views.filter( bidx.utils.getViewName( view ) )
-        ,   $toolbarButtons     = $view.find( "nav.mail-toolbar .btn" )
+        ,   $toolbarButtons     = $view.find( "mail-toolbar .button" )
         ;
 
         $toolbarButtons.filter( buttons.toString() ).show();
@@ -324,7 +428,7 @@
     //
     function _setActiveMenu()
     {
-        bidx.utils.log( "[mail] set active menu" ,  $element.find( ".side-menu .bidx-menuitems a") );
+        bidx.utils.log( "[connect] set active menu" ,  $element.find( ".side-menu .bidx-menuitems a") );
         $element.find( ".side-menu .bidx-menuitems a").each( function( index, item )
         {
             var $this = $( item );
@@ -352,73 +456,11 @@
     }
 
 
-    // this functions shows an amount of contacts in the related contactlist
-    // work in progress, waiting on API
-    //
-    function _doShowMoreContacts( e )
-    {
-        e.preventDefault();
 
-        var $this       = $( this)
-        ,   params      = bidx.utils.bidxDeparam( $this.attr( "href") )
-        ,   status
-        ;
-
-        // if there is no showMore defined, return
-        if( !params.showMore )
-        {
-            return;
-        }
-        // the status or category we want to showMore results for
-        //
-        status = params.showMore;
-
-
-        // update the contacts Offset
-        //
-        contactsOffset[ status ] += CONTACTSPAGESIZE;
-
-        // start a promise chain
-        //
-        _getContacts(
-        {
-            extraUrlParameters:
-            [
-                {
-                    label:      "type",
-                    value:      "contact"
-                }
-            ,   {
-                    label:      "status",
-                    value:      status
-                }
-            ,   {
-                    label:      "limit",
-                    value:      CONTACTSPAGESIZE
-                }
-            ,   {
-                    label:      "offset",
-                    value:      contactsOffset[ status ]
-                }
-            ]
-        ,   filter:             contactStatuses
-        } )
-            .fail( function ( error )
-            {
-                bidx.utils.log( "Error in promise chain ", error );
-            } )
-            .done( function( contacts )
-            {
-                var res = {};
-                res[ status ] = contacts[status];
-
-                _initContactListing( res, true );
-            } );
-    }
 
     // actual sending of message to API
     //
-    function _doSend( params )
+    function _doSend( options )
     {
         //var key = "sendingMessage";
 
@@ -447,18 +489,28 @@
             ,   success: function( response )
                 {
 
-                    bidx.utils.log( "[mail] mail send", response );
+                    bidx.utils.log( "[connect] mail send", response );
                     //var key = "messageSent";
 
-                    bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", appName ) );
+                    //bidx.common.notifyCustomSuccess( bidx.i18n.i( "messageSent", appName ) );
 
-                    bidx.controller.updateHash( "#mail/mbx-inbox", true, false );
+                    if( options && options.callback )
+                    {
+                        options.callback( response);
+                    }
+
+                    bidx.controller.updateHash( "#connect/mbx-inbox/message=emailSent", true, false );
                 }
 
             ,   error: function( jqXhr, textStatus )
                 {
 
                     var response = $.parseJSON( jqXhr.responseText);
+
+                    if( options && options.callback )
+                    {
+                        options.callback( response);
+                    }
 
                     // 400 errors are Client errors
                     //
@@ -474,6 +526,7 @@
                         bidx.utils.error( "Internal Server error occured", response );
                         _showError( "Something went wrong while sending the email: " + response.text );
                     }
+
 
                 }
             }
@@ -517,7 +570,7 @@
                     {
                         // extract state and params from hash. Remove mail app and first forward slash. We then have the state and extra queryparams
                         //
-                        hash            = document.location.hash.replace( /^#mail\//, "" );
+                        hash            = document.location.hash.replace( /^#connect\//, "" );
                         hashElements    = hash.split( "/" );
                         reloadState     = hashElements[ 0 ];
 
@@ -532,13 +585,13 @@
                         //
                         if (params.id )
                         {
-                           bidx.controller.updateHash( "#mail/" + reloadState, true, false );
+                           bidx.controller.updateHash( "#connect/" + reloadState, true, false );
                         }
                         // else just reload the current state
                         //
                         else
                         {
-                            mail.navigate( {state: hashElements[0], params: {} } );
+                            connect.navigate( {state: hashElements[0], params: {} } );
                         }
                     }
 
@@ -582,7 +635,7 @@
                 {
                     if ( response && response.code === "mailboxEmptyTrashOk" )
                     {
-                        bidx.controller.updateHash( "#mail/mbx-trash", true, false );
+                        bidx.controller.updateHash( "#connect/mbx-trash", true, false );
                     }
 
                 }
@@ -619,8 +672,9 @@
     {
         e.preventDefault();
 
-        var $this   = $ ( this )
-        ,   href    = $this.attr( "href" ).replace( /^[/]/, "")
+        var $this   = $ ( this );
+
+        var   href    = $this.val().replace( /^[/]/, "")
         ,   params  = {}
         ,   ids
         ,   hash
@@ -663,7 +717,7 @@
                     {
                         // extract state and params from hash. Remove mail app and first forward slash. We then have the state and extra queryparams
                         //
-                        hash            = document.location.hash.replace( /^#mail\//, "" );
+                        hash            = document.location.hash.replace( /^#connect\//, "" );
                         hashElements    = hash.split( "/" );
                         reloadState     = hashElements[ 0 ];
 
@@ -678,13 +732,13 @@
                         //
                         if (params.id )
                         {
-                           bidx.controller.updateHash( "#mail/" + reloadState, true, false );
+                           bidx.controller.updateHash( "#connect/" + reloadState, true, false );
                         }
                         // else just reload the current state
                         //
                         else
                         {
-                            mail.navigate( {state: hashElements[0], params: {} } );
+                            connect.navigate( {state: hashElements[0], params: {} } );
                         }
 
                     }
@@ -716,227 +770,6 @@
         );
     }
 
-    // this function mutates the relationship between two contacts. Possible mutations for relationship: action=[ignore / accept]
-    //
-    function _doMutateContactRequest( e )
-    {
-        // prevent anchor tag to navigate to href
-        //
-        if( e.preventDefault )
-        {
-            e.preventDefault();
-        }
-
-        var $this                   = $( this )
-        ,   href                    = $this.attr( "href" ).replace( /^[/]/, "" )
-        ;
-
-        // convert back to object
-        //
-        href = bidx.utils.bidxDeparam( href );
-
-
-        bidx.api.call(
-             "memberRelationships.mutate"
-        ,   {
-                groupDomain:            bidx.common.groupDomain
-            ,   requesterId:            href.requesterId
-            ,   extraUrlParameters:
-                [
-                    {
-                        label:          "action"
-                    ,   value:          href.action
-                    }
-                ,   {
-                        label:          "type"
-                    ,   value:          href.type
-                    }
-                ]
-
-            ,   success: function( response )
-                {
-                    bidx.utils.log("[contacts] mutated a contact",  response );
-                    if ( response && response.status === "OK" )
-                    {
-
-                        // load the active members in the chosen selectbox
-                        //
-                        _loadActiveMembers();
-
-                        // navigate to contacts page
-                        //
-                        mail.navigate( {state: "contacts" , params: {} } );
-
-                    }
-
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong while updating a relationship: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while updating a relationship: " + response.text );
-                    }
-
-                }
-            }
-        );
-    }
-
-    // Create a connection between requester and Requestee (the logged in user)
-    // @params: options
-    // {
-    //     requesterId: [ ID person to connect with ]
-    // ,   requesteeId: [ ID logged in user ]
-    // }
-    //
-    function _doSendContactRequest( options )
-    {
-        var $currentView    = $views.filter( bidx.utils.getViewName( "contacts" ) )
-        ,   $alert          = $currentView.find( ".alert" )
-        ,   $toastWrapper   = $currentView.find( ".toast-wrapper" )
-        ,   toastSnippet    = $( "#toast-snippet" ).html().replace( /(<!--)*(-->)*/g, "" )
-        ,   $toast          = $( toastSnippet )
-        ;
-
-
-        bidx.api.call(
-             "memberRelationships.create"
-        ,   {
-                groupDomain:            bidx.common.groupDomain
-            ,   requesteeId:            options.requesteeId
-            ,   data:
-                {
-                    "type":             "contact"
-                }
-
-            ,   success: function( response )
-                {
-                    bidx.utils.log("[contacts] requested a relationship",  response );
-                    if ( response && response.status === "OK" )
-                    {
-
-                        $toastWrapper.append( $toast );
-                        // set text for success toast on contact overview page
-                        //
-
-
-                        $toast.find( ".messageContent" )
-                            .i18nText( "contactRequestSendTo", appName )
-                            .append( " " + response.data.name )
-                        ;
-
-                        // show the toast
-                        //
-                        $toast.toggleClass( "hide" );
-
-                        // change hash to contacts overview
-                        //
-                        bidx.controller.updateHash( "#mail/contacts", true, false );
-                    }
-
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client error occured", response );
-                        _showError( "Something went wrong while creating a relationship: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        if( response.code === "relationshipPendingBetweenUsers" )
-                        {
-
-                            // show the user that there is already a pending relationship between these two users
-                            //
-                            _showPendingRelationship( options.requesteeId );
-
-
-
-                        }
-                        else
-                        {
-                            bidx.utils.error( "Internal Server error occured", response );
-                            _showError( "Something went wrong while creating a relationship: " + response.text );
-                        }
-
-                    }
-
-
-                }
-            }
-        );
-    }
-
-    function _showPendingRelationship( requesteeId )
-    {
-        bidx.api.call(
-            "member.fetch"
-        ,   {
-                requesteeId:              requesteeId
-            ,   groupDomain:              bidx.common.groupDomain
-
-            ,   success: function( response )
-                {
-                    var $contactPending         = $views.filter( ".viewContactPending" )
-                    ,   $relationshipUser       = $contactPending.find( ".js-pending-relationship-with-user" )
-                    ;
-
-
-                    if ( response && response && response.member && response.member.displayName )
-                    {
-                        $relationshipUser.text( response.member.displayName );
-
-                    }
-                    _showView( "ContactPending" );
-                }
-
-            ,   error: function( jqXhr, textStatus )
-                {
-
-                    var response = $.parseJSON( jqXhr.responseText);
-
-                    // 400 errors are Client errors
-                    //
-                    if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                    {
-                        bidx.utils.error( "Client  error occured", response );
-                        _showError( "Something went wrong while retrieving the member info: " + response.text );
-                    }
-                    // 500 erors are Server errors
-                    //
-                    if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                    {
-                        bidx.utils.error( "Internal Server error occured", response );
-                        _showError( "Something went wrong while retrieving the member info: " + response.text );
-                    }
-
-                }
-            }
-        );
-
-    }
 
     // handler for deleting multiple items
     //
@@ -947,6 +780,8 @@
         ,   ids
         ,   actionFn
         ,   currentState
+        ,   confirmMessage
+        ,   alertDeleteMsg
         ;
 
         e.preventDefault();
@@ -981,7 +816,7 @@
                             {
                                 unbindHide: true
                             } );
-                            window.bidx.controller.updateHash( "#mail/" + state, true, false );
+                            window.bidx.controller.updateHash( "#connect/" + state, true, false );
 
                         }
                     } );
@@ -1006,7 +841,7 @@
         ;
 
 
-        bidx.utils.log("[MAIL] do action ", params.action, " for ids: ", ids );
+        bidx.utils.log("[connect] do action ", params.action, " for ids: ", ids );
 
         // switch based on the action we want to execute
         //
@@ -1016,19 +851,15 @@
 
                 if ( params.confirm )
                 {
-                    _showModal(
+                    confirmMessage  =   confirm( bidx.i18n.i( "alertDeleteMsg", appName ) );
+
+                    if ( confirmMessage === true)
                     {
-                        view:           "deleteConfirm"
-                    ,   state:          state
-                    ,   onConfirm:      function( e )
-                        {
                             e.preventDefault();
                             // excetute the action handler
                             //
                             actionFn[ params.action ]();
-                        }
-                    ,   onHide:         function(){}
-                    } );
+                    }
                 }
                 else
                 {
@@ -1193,7 +1024,7 @@
                     {
                         // after a marking you always want to reload the current state
                         //
-                        mail.navigate( {state: options.state, params: {} } );
+                        connect.navigate( {state: options.state, params: {} } );
 
                     }
 
@@ -1242,7 +1073,7 @@
             {
                 currentState = state.replace( /(^mbx-)/, "" );
             }
-            bidx.utils.log("[mail] Loading Mailbox" , currentState, " message");
+            bidx.utils.log("[connect] Loading Mailbox" , currentState, " message");
 
             _getEmails(
             {
@@ -1354,7 +1185,7 @@
 
             if( !$.isEmptyObject( message ) )
             {
-                bidx.utils.log("[mail] init forward/reply ", message);
+                bidx.utils.log("[connect] init forward/reply ", message);
                 var recipients = []
                 ,   content    = message.content
                 ,   lbl
@@ -1404,9 +1235,11 @@
                                 .replace( "%date%", bidx.utils.parseTimestampToDateTime( message.dateSent, "date" ) )
                                 .replace( "%time%", bidx.utils.parseTimestampToDateTime( message.dateSent, "time" ) )
                                 .replace( "%sender%", message.sender.displayName );
-                        content = "\n\n" + lbl + "\n" + content;
+                        content = "<br><br>" + lbl + "<br>" + content;
 
                         $frmCompose.find( "[name=content]" ).val( content );
+                        /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
+                        window.parent.tinymce.get('connect_editor_id').setContent( content );
                         $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
 
                     break;
@@ -1421,9 +1254,12 @@
                         //
                         lbl     = bidx.i18n.i( "forwardContentHeader", appName );
                         lbl     = "----------" + lbl + "----------";
-                        content = "\n\n" + lbl + "\n" + content;
-
+                        content = "<br><br>" + lbl + "<br>" + content;
+                        bidx.utils.log($frmCompose.find( "[name=content]" ));
+                        bidx.utils.log('content',content);
                         $frmCompose.find( "[name=content]" ).val( content );
+                        /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
+                        window.parent.tinymce.get('connect_editor_id').setContent( content );
                         $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
 
                     break;
@@ -1432,269 +1268,8 @@
             else
             {
                 bidx.utils.error( "Message object is empty. Forward or Reply can not be inialized" );
-                window.bidx.controller.updateHash( "#mail/" + state + "/id=" + id + "&action=" + action, true, false );
+                window.bidx.controller.updateHash( "#connect/" + state + "/id=" + id + "&action=" + action, true, false );
             }
-
-        }
-
-        // initializes the contactlisting. Expects an object with array per contact category (active, pending, ignore, incoming, ... )
-        //
-        function _initContactListing( contacts, append )
-        {
-            bidx.utils.log("[mail initialing contactlisting", contacts );
-
-
-            var $listEmpty      = $( $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" ) )
-            ,   appendToList    = append ? true : false
-            ,   showMore
-            ;
-
-            // loop through all contact statuses and populate the associated lists
-            //
-            $.each( contacts, function( key, items )
-            {
-                // decide if we show the ShowMore button again
-                //
-                showMore =  ( items.totals > ( contactsOffset[ key ] + CONTACTSPAGESIZE ) ) ? true : false;
-
-
-                // create the itemList for this category
-                // the argument 'key' is key in finding the correct snippet and list associated with this category
-                // the callback in this function is defined in the function that is called and also associated with the key
-                //
-                _createListItems(
-                {
-                    snippetId:              "contact-request-" + key
-                ,   category:               key
-                ,   items:                  items
-                ,   appendToList:           appendToList
-                ,   pageSize:               CONTACTSPAGESIZE
-                ,   currentPage:            1
-                ,   addShowMoreButton:      showMore
-                ,   view:                   "Contacts"
-                ,   targetListSelector:     "#"+ key + "Requests .contact-request-list"
-                ,   cb:                     _getContactsCallback( key )
-                } );
-            } );
-        }
-
-        // This function is a collection of callbacks for the contact categories. It is meant to execute contact-category specific code
-        //
-        function _getContactsCallback( contactCategory )
-        {
-            // these function are executed within the _createListItems function and will therefor have the following variables at their disposal:
-            //      this         = current API contact
-            //      $listItem    = jQuery object of the contact category listItem
-            //
-            var callbacks =
-            {
-                active:     function()
-                {
-                }
-            ,   pending:    function()
-                {
-                }
-            ,   ignored:    function()
-                {
-                }
-            ,   incoming:   function(  $listItem )
-                {
-                    // this holds the current contact item (coming from API)
-                    //
-                    var item = this;
-                    // create params so we can store it in the href attribute
-                    //
-                    var params =
-                    {
-                        requesterId:     item.contactId
-                    ,   requesteeId:     bidx.common.getCurrentUserId( "id" )
-                    ,   type:            "contact"
-                    ,   action:          "accept"
-                    };
-
-                    $listItem.find( ".btn-bidx-accept ")
-                        .attr( "href", "/" + $.param( params ) )
-                        .click( _doMutateContactRequest )
-                    ;
-
-                    // change action to ignore amd set ignore href
-                    //
-                    params.action = "ignore";
-
-                    $listItem.find( ".btn-bidx-ignore ")
-                        .attr( "href", "/" +$.param( params ) )
-                        .click( _doMutateContactRequest )
-                    ;
-                }
-
-            };
-
-            return callbacks[ contactCategory ];
-        }
-
-        // Generic function to create itemList based a snipped
-        // Arguments contain an option object:
-        // options:
-        // {
-        //      snippetId:          [ id of snippet script template ]
-        // ,    category:           [ the category of contacts ]
-        // ,    items:              [ the collection of items to be converted into itemList ]
-        // ,    view:               [ view selector ]
-        // ,    targetListSelector: [ selector of target list ]
-        // ,    cb:                 [ callback to do specific code for this contact item, $listItem is passed as argument ]
-        // }
-        //
-        function _createListItems( options )
-        {
-            var snippet         = $( "#" + options.snippetId ).html().replace( /(<!--)*(-->)*/g, "" )
-            ,   emptySnippet    = $( "#contacts-empty" ).html().replace( /(<!--)*(-->)*/g, "" )
-            ,   $view           = $views.filter( bidx.utils.getViewName( options.view ) )
-            ,   $list           = $view.find( options.targetListSelector )
-
-            ,   $listItem
-            ,   listItem
-            ;
-
-
-            // if we do not want to append results to the list, clear it
-            //
-            if( !options.appendToList )
-            {
-                $list.empty();
-            }
-            // Set the count number based on if the status of the contact is "ACTIVE"
-            //
-            // $.each( options.items.members, function( idx, item )
-            // {
-            //     if ( item.status === "ACTIVE" )
-            //     {
-            //         count = count+1;
-            //     }
-            // });
-
-            // update counter displaying amount of contacts for this category
-            //
-            _setContactsCount( options.view, options.category, options.items.totals );
-
-            // if list for this contact status is empty return
-            //
-            if ( options.items.members.length === 0 )
-            {
-                // add empty Listitem
-                //
-                $list.append( emptySnippet );
-
-                return;
-            }
-
-            // iterate of each item an append a modified snippet to the list
-            //
-            $.each( options.items.members, function( idx, item )
-            {
-                var contactPicture;
-
-                // If the Contact has a status of "REMOVED" stop
-                //
-                if (item.status === "REMOVED")
-                {
-                    return;
-                }
-
-                if ( item.profilePicture )
-                {
-                    contactPicture = '<div class="img-cropper"><img class="media-object" style="width:'+ item.width +'px; left:-'+ item.left +'px; top:-'+ item.top +'px;" src="' + item.profilePicture + '"></div>';
-                }
-                else
-                {
-                    contactPicture = "<div class='icons-rounded pull-left'><i class='fa fa-user text-primary-light'></i></div>";
-                }
-                // duplicate snippet source and replace all placeholders (not every snippet will have all of these placeholders )
-                //
-                listItem = snippet
-                    .replace( /%pictureUrl%/g,          contactPicture )
-                    .replace( /%contactId%/g,           item.id                 ? item.id                                                       : "%contactId%" )
-                    .replace( /%contactName%/g,         item.name               ? item.name                                                     : "%contactName%" )
-                    .replace( /%professionalTitle%/g,   item.professionalTitle  ? '<div>' + item.professionalTitle + '</div>'                   : "" )
-                    .replace( /%country%/g,             item.country            ? '<div>' + bidx.data.i( item.country, "country" ) + '</div>'   : "" )
-                    .replace( /%roles%/g,               item.roles.length       ? _placeRoles( item.roles )                                     : "" )
-                ;
-
-                $listItem = $( listItem );
-
-                // execute cb function
-                //
-                if( $.isFunction( options.cb ) )
-                {
-                    // call Callback with current contact item as this scope and pass the current $listitem
-                    //
-                    options.cb.call( this, $listItem );
-                }
-
-                // finally append item to list
-                //
-                $list.append( $listItem );
-
-                // if max items per page have been reached, break out of loop
-                //
-                if( idx === CONTACTSPAGESIZE-1 )
-                {
-                    return false;
-                }
-            } );
-
-            if ( options.addShowMoreButton )
-            {
-                $view.find( "#" + options.category + "Requests .bidx-btn-showMore" ).show();
-            }
-            else
-            {
-                $view.find( "#" + options.category + "Requests .bidx-btn-showMore" ).hide();
-            }
-
-            function _placeRoles( roles )
-            {
-                var $roles = "";
-
-                $.each( roles, function( index, role ) {
-                    $roles += '<span class="label bidx-label bidx-'+ role +'">' + role + '</span>';
-                });
-
-                return $roles;
-            }
-
-
-        }
-
-        // this function updates the count of contacts for a category (of contacts)
-        // category [incoming] and [pending] are treated differently with singular and plural forms
-        //
-        function _setContactsCount( view, category, count )
-        {
-            var $view       = $views.filter( bidx.utils.getViewName( view ) )
-            ,   $trigger    = $view.find( ".trigger-" + category + "-contacts" )
-            ,   text
-            ,   key
-            ;
-
-/*            if( category === "incoming" || category === "pending" )
-            {
-                // create i18n key
-                //
-                key = count === 1 ? category + "ContactRequest" : category + "ContactRequests";
-
-                // set translated text in trigger element
-                //
-                $trigger
-                    .i18nText( key, appName )
-                    .append( " ( " + count + " )" )
-                ;
-            }
-            else*/
-            //{
-                // replace placeholder in trigger element (hyperlink)
-                //
-                $trigger.i18nText( category + "Contact", appName ).append( " <span class='badge pull-right'> " + count + " </span> " );
-            //}
 
         }
 
@@ -1706,62 +1281,20 @@
             ,   $mailBody
             ,   $htmlParser
             ,   subject
-            ,   snippet         = $( "#contactRequest-email-snippet" ).html().replace( /(<!--)*(-->)*/g, "" )
+          //  ,   snippet         = $( "#contactRequest-email-snippet" ).html().replace( /(<!--)*(-->)*/g, "" )
             ;
             $currentView = $views.filter( bidx.utils.getViewName( action ) );
 
             // contact request receive a different email body
             //
-            if ( message.type === "MAIL_CONTACT_REQUEST" )
-            {
-                // replace contact requesters name in the snippet
-                //
-                snippet  = snippet
-                                .replace( "%contactName%", message.sender.displayName )
-                                .replace( "%contactId%", message.sender.id )
-                                ;
 
-                // convert snippet to DOM object so we can use jQuery selectors
-                //
-                $mailBody = $( snippet );
-
-                // create params so we can store it in the href attribute
-                //
-                var params =
-                {
-                    requesterId:     message.sender.id
-                ,   requesteeId:     bidx.common.getCurrentUserId( "id" )
-                ,   type:            "contact"
-                ,   action:          "accept"
-                };
-
-                // update the buttons with the new href
-                //
-                $mailBody.find( ".btn-bidx-accept ")
-                    .attr( "href", "/" + $.param( params ) )
-                    .click( _doMutateContactRequest )
-                ;
-
-                // change action to ignore amd set ignore href
-                //
-                params.action = "ignore";
-
-                // update the buttons with the new href
-                //
-                $mailBody.find( ".btn-bidx-ignore ")
-                    .attr( "href", "/" +$.param( params ) )
-                    .click( _doMutateContactRequest )
-                ;
-            }
-            else
-            {
                 $htmlParser = $( "<div/>" );
                 // filter HTML before we can insert into the mailbody, by adding it into a DOM element
                 //
                 $htmlParser.html( message.content );
                 mailBody = $htmlParser.text().replace( /\n/g, "<br/>" );
                 $mailBody = mailBody;
-            }
+
 
             // insert mail body in to placeholder of the view
             //
@@ -1779,12 +1312,16 @@
         {
             if( mailboxes )
             {
-                var $toolbar        = $views.filter( bidx.utils.getViewName( view ) ).find( ".mail-toolbar" )
-                ,   $dropdown       = $toolbar.find( ".btngroup-move-to-folder .dropdown-menu" )
-                ,   params          = {}
+                var $toolbar                = $views.filter( bidx.utils.getViewName( view ) )
+                ,   $dropdown               = $toolbar.find( ".btngroup-move-to-folder .dropdown-menu" )
+                ,   $moveFolderDropDown     = $toolbar.find( ".btngroup-move-to-folder .chosen-move-tofolder" )
+                ,   params                  = {}
                 ,   $listItem
                 ,   $anchor
+                ,   $optionsFolderDropDown
                 ,   currentState
+                ,   optionGroup
+                ,   listArrItems            = []
                 ;
 
                 // remove the mbx-prefix so we can use the state as a key to match the mailbox
@@ -1795,7 +1332,7 @@
                 }
 
 
-                // cleaer dropdown
+                /*// cleaer dropdown
                 //
                 $dropdown.empty();
 
@@ -1825,7 +1362,53 @@
 
                     $listItem.append ( $anchor );
                     $dropdown.append( $listItem );
+                } );*/
+
+                bidx.utils.log('moveFolderDropDown',$moveFolderDropDown);
+
+                $optionsFolderDropDown = $moveFolderDropDown.find( "option" );
+
+                if ( $optionsFolderDropDown.length )
+                {
+                    $optionsFolderDropDown.empty();
+                }
+
+                $moveFolderDropDown.bidx_chosen(
+                {
+                    emptyValue:         bidx.i18n.i( "moveFolderMsg", appName )
                 } );
+
+                if(mailboxes)
+                {
+                    $.each( mailboxes, function( idx, item )
+                    {
+                        if( /^sent$/i.test( item.name )  || item.name.match( new RegExp( currentState, "i") ) )
+                        {
+                            return true;
+                        }
+                        params.folderId = item.id;
+
+                        optionGroup = $( "<option/>",
+                        {
+                            value:          "/" + $.param( params )
+                        ,   'data-href':    "/" + $.param( params )
+                        } );
+
+                        optionGroup.text( bidx.i18n.i( item.name, appName )  );
+
+                        listArrItems.push( optionGroup );
+                    } );
+                }
+
+                // add the options to the select
+                $moveFolderDropDown.append( listArrItems );
+                $moveFolderDropDown.trigger('chosen:updated');
+
+                    // init bidx_chosen plugin
+
+
+                $moveFolderDropDown.on('change', _doMoveToFolder);
+
             }
             else
             {
@@ -1893,7 +1476,7 @@
                             {
                                 // first add the admins and groupowners
                                 //
-                                if ( response.relationshipType.contact.types.groupOwner )
+                                /*if ( response.relationshipType.contact.types.groupOwner )
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
@@ -1904,11 +1487,12 @@
                                             {
                                                 value:      item.id
                                             ,   label:      item.name + " (" + bidx.i18n.i( "groupAdmin", appName ) + ")"
+                                            ,   roles:      item.roles
                                             };
                                             sortIndex.push( item.name.toLowerCase() );
                                         }
                                     } );
-                                }
+                                }*/
 
 
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
@@ -1938,6 +1522,7 @@
                                         {
                                             value:      item.id
                                         ,   label:      item.name
+                                        ,   roles:      item.roles
                                         };
                                         sortIndex.push( item.name.toLowerCase() );
                                     }
@@ -1994,7 +1579,7 @@
         //
         function _getEmail( id )
         {
-            bidx.utils.log( "[mail] fetching mail content for message ", id );
+            bidx.utils.log( "[connect] fetching mail content for message ", id );
 
             // create a promise object
             //
@@ -2008,7 +1593,7 @@
 
                 ,   success: function( response )
                     {
-                        bidx.utils.log("[mail] get email", response);
+                        bidx.utils.log("[connect] get email", response);
                         if( response.data )
                         {
                             // cache current email for later reply or forward action where we need the message content
@@ -2065,7 +1650,7 @@
         //
         function _getMailBoxes( cb )
         {
-            bidx.utils.log( "[mail] fetch mailboxes from API", state );
+            bidx.utils.log( "[connect] fetch mailboxes from API", state );
 
             // create a promise object
             //
@@ -2081,7 +1666,7 @@
                     {
                         if ( response && response.data )
                         {
-                            bidx.utils.log( "[mail] following mailboxes retrieved from API", response.data );
+                            bidx.utils.log( "[connect] following mailboxes retrieved from API", response.data );
                             // store mailbox folders in local variable mailboxes WITHOUT mbx- prefix
                             //
                             $.each( response.data, function( idx, el )
@@ -2097,7 +1682,7 @@
                                     mailboxes[ el.name.toLowerCase() ] = el;
                                 }
                             } );
-                            bidx.utils.log( "[mail] mailboxes loaded ", mailboxes );
+                            bidx.utils.log( "[connect] mailboxes loaded ", mailboxes );
 
                             // load the folder navigation
                             //
@@ -2161,7 +1746,7 @@
         //
         function _getEmails( options )
         {
-            bidx.utils.log("[mail] get emails ", options );
+            bidx.utils.log("[connect] get emails ", options );
 
             var $view                   = $views.filter( bidx.utils.getViewName( options.view ) )
             ,   $list                   = $view.find( ".list" )
@@ -2193,7 +1778,7 @@
                     {
                         if( response.data && response.data.mail )
                         {
-                            bidx.utils.log("[mail] following emails received", response.data );
+                            bidx.utils.log("[connect] following emails received", response.data );
                             var item
                             ,   $element
                             ,   cls
@@ -2256,6 +1841,7 @@
 
                                     $element = $( newListItem );
 
+
                                     $element.find( ":checkbox" ).attr( "data-id", item.id );
 
                                     // add mail element to elements collection
@@ -2273,7 +1859,7 @@
 
                                 // enable flatui checkbox
                                 //
-                                $checkboxes.checkbox();
+                                //$checkboxes.checkbox();
 
                                 //  set change event which add/removes the checkbox ID in the listElements variable
                                 //
@@ -2336,7 +1922,7 @@
                             }
                             // uncheck the Big Kahuna checkbox on each list load
                             //
-                            $view.find( ".messagesCheckall" ).checkbox("uncheck");
+                            //$view.find( ".messagesCheckall" ).checkbox("uncheck");
 
                             // execute callback if provided
                             //
@@ -2372,101 +1958,7 @@
             );
         }
 
-        function _getContacts( options )
-        {
-            // create a promise object
-            //
-            var $d = $.Deferred();
 
-            bidx.api.call(
-                "memberRelationships.fetch"
-            ,   {
-                    extraUrlParameters:       options.extraUrlParameters
-                ,   requesterId:              bidx.common.getCurrentUserId( "id" )
-                ,   groupDomain:              bidx.common.groupDomain
-
-                ,   success: function( response )
-                    {
-                        var result = {};
-
-                        bidx.utils.log("[mail] contacts loaded ", response );
-
-                        if ( response.relationshipType &&  response.relationshipType.contact &&  response.relationshipType.contact.types )
-                        {
-                            // if filter is defined, only add arrays that match the filter value
-                            //
-                            if ( options.filter )
-                            {
-                                $.each( options.filter, function( idx, value )
-                                {
-                                    if ( response.relationshipType.contact.types[ value ] )
-                                    {
-                                        result[ value ] = {};
-                                        result[ value ][ "members"] = response.relationshipType.contact.types[ value ];
-                                        result[ value ][ "totals" ] = response.relationshipType.contact.totals[ value ];
-
-                                        if ( options.resetOffset )
-                                        {
-                                            // preset the offset for this contact type
-                                            //
-                                            contactsOffset[ value ] = 0;
-                                        }
-
-
-                                    }
-                                } );
-                            }
-                            // otherwise return everything
-                            //
-                            else
-                            {
-                                result = response.contact;
-                            }
-                        }
-                        else
-                        {
-
-                            bidx.utils.warn( "No contacts retrieved. Please check filtering" );
-
-                        }
-                        // resolve the promise
-                        //
-                        $d.resolve( result );
-
-                    }
-
-                ,   error: function( jqXhr, textStatus )
-                    {
-
-                        var response = $.parseJSON( jqXhr.responseText);
-
-                        // 400 errors are Client errors
-                        //
-                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
-                        {
-                            bidx.utils.error( "Client  error occured", response );
-                            _showError( "Something went wrong while fetching the relationship: " + response.text );
-                        }
-                        // 500 erors are Server errors
-                        //
-                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
-                        {
-                            bidx.utils.error( "Internal Server error occured", response );
-                            _showError( "Something went wrong while fetching the relationship: " + response.text );
-                        }
-
-                        // reject the promise
-                        //
-                        $d.reject( new Error( response ) );
-                    }
-                }
-            );
-
-            // return a promise which will be resolved when the async call is finished
-            //
-            return $d.promise();
-
-        }
 
 
 
@@ -2482,7 +1974,7 @@
             ;
 
 
-            $toolbar.find(".btn").each( function()
+            $toolbar.find(".button").each( function()
             {
                 $this = $( this );
                 // get the base href fron data-href and modify it for this message
@@ -2493,7 +1985,7 @@
                             .replace( "%state%", state )
                             .replace( "%id%", id )
                     ;
-                    bidx.utils.log("[mail] linked href ", href );
+                    bidx.utils.log("[connect] linked href ", href );
                     $this.attr( "href", href );
                 }
             });
@@ -2513,7 +2005,7 @@
                 var id = options.id;
             }
 
-            bidx.utils.log("[mail] show modal", options );
+            bidx.utils.log("[connect] show modal", options );
 
             $modal = $modals.filter( bidx.utils.getViewName ( options.view, "modal" ) ).find( ".bidx-modal");
             bidx.utils.log("MODALS", $modals);
@@ -2577,7 +2069,7 @@
 
     function navigate( options )
     {
-        bidx.utils.log("[mail] navigate", options, "itemList:",  itemList );
+        bidx.utils.log("[connect] navigate", options, "itemList:",  itemList );
 
         // options argument holds 2 key/value pairs:
         // -   state (which state of the mail app has to be displayed; mbx-inbox, mbx-sent, compose etc...)
@@ -2588,11 +2080,11 @@
         // if an ID is provided and but NO action is provided, the state/action will always be READ!
         //
         // Example URLs:
-        //     #mail/inbox/action=deleteConfirm&id=3412
-        //     #mail/inbox/action=delete&id=3412
-        //     #mail/inbox/id=3433                      -> read email (no action provided)
-        //     #mail/3433                               -> read email (no action provided)
-        //     #mail/compose
+        //     #connect/inbox/action=deleteConfirm&id=3412
+        //     #connect/inbox/action=delete&id=3412
+        //     #connect/inbox/id=3433                      -> read email (no action provided)
+        //     #connect/3433                               -> read email (no action provided)
+        //     #connect/compose
 
         var mailId
         ,   action
@@ -2608,6 +2100,8 @@
 
         //  if options.state is an ID, OR params.id exists without an params.action ---> set action  to 'read'
         //
+        _hideMessage('message');
+
         if ( ( ( options.state && options.state.match( /^\d+$/ ) ) ) || (  options.params && options.params.id && !options.params.action ) )
         {
             //  if state holds the id, transfer its value to id
@@ -2638,10 +2132,18 @@
                     action = options.params.action;
                 }
 
+                if(options.params.message)
+                {
+                    message = bidx.i18n.i( options.params.message, appName ) ;
+
+                    _showMessage('message', message);
+                }
+
             }
 
         }
-        bidx.utils.log( "[mail] state:", state, " action:", action );
+
+        bidx.utils.log( "[connect] state:", state, " action:", action );
 
         switch( true )
         {
@@ -2670,7 +2172,7 @@
                 //
                 if ( $.isEmptyObject( mailboxes ) )
                 {
-                    bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
+                    bidx.utils.warn("[connect] mailbox ", action, " does not exist, do retrieve mailboxes");
 
                     // reload mailboxes, receiving a promise
                     //
@@ -2695,26 +2197,12 @@
                         if ( state !== "mbx-sent" )
                         {
                             // if message is not a contact request
-                            //
-                            if ( message.type !== "MAIL_CONTACT_REQUEST" )
-                            {
-                                buttons.push( ".bidx-btn-delete" );
-                                buttons.push( ".btn-move-to-folder" );
-                            }
-                            else
-                            {
-                                // contact request only has delete button
-                                //
-                                buttons =
-                                [
-                                    ".bidx-btn-delete"
-                                ];
-                            }
-
-
-
+                            // contact request only has delete button
+                            buttons =
+                            [
+                                ".bidx-btn-delete"
+                            ];
                         }
-
 
                         _showToolbarButtons( action, buttons );
 
@@ -2771,7 +2259,7 @@
                 if ( $.isEmptyObject( mailboxes ) )
                 {
 
-                    bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
+                    bidx.utils.warn("[connect] mailbox ", action, " does not exist, do retrieve mailboxes");
                     // reload mailboxes, without callback
                     //
                     _getMailBoxes();
@@ -2821,17 +2309,17 @@
 
             case /^discardConfirm$/.test( action ):
 
-                _showModal(
-                {
-                    view:       "discardConfirm"
-                ,   id:         mailId
-                ,   state:      state
+                var confirmMessage  =   confirm( bidx.i18n.i( 'alertDiscardMsg', appName ) )
+                ;
 
-                ,   onHide: function()
-                    {
-                        window.bidx.controller.updateHash( "#mail/compose", true, false );
-                    }
-                } );
+                if ( confirmMessage === true)
+                {
+                   window.bidx.controller.updateHash( "#connect/inbox", true, false );
+                }
+                else
+                {
+                    window.bidx.controller.updateHash( "#connect/compose", true, false );
+                }
 
             break;
 
@@ -2844,7 +2332,7 @@
 
                 ,   onHide: function()
                     {
-                        window.bidx.controller.updateHash( "#mail/mbx-trash", true, false );
+                        window.bidx.controller.updateHash( "#connect/mbx-trash", true, false );
                     }
                 } );
 
@@ -2866,79 +2354,6 @@
             break;
 
 
-            case /^contacts$/.test( action ):
-                _showView( "load" );
-
-
-                if ( $.isEmptyObject( mailboxes ) )
-                {
-                    bidx.utils.warn("[mail] mailbox ", section, " does not exist, do retrieve mailboxes");
-                    _getMailBoxes();
-                }
-
-
-                // start a promise chain
-                //
-                _getContacts(
-                {
-                    extraUrlParameters:
-                    [
-                        {
-                            label:      "type",
-                            value:      "contact"
-                        }
-                    ,   {
-                            label:      "limit",
-                            value:      CONTACTSPAGESIZE
-                        }
-                    ,   {
-                            label:      "offset",
-                            value:      0
-                        }
-                    ]
-                    ,   filter:         contactStatuses
-                    ,   resetOffset:    true
-                } )
-                    .then( function( contacts )
-                    {
-                        _initContactListing( contacts );
-                    })
-                    .fail( function ( error )
-                    {
-                        bidx.utils.log( "Error in promise chain ", error );
-                    } )
-                    .done( function()
-                    {
-                        _showView( "contacts" );
-                        _setActiveMenu();
-                    } );
-
-
-            break;
-
-            case /^connect$/.test( action ):
-
-                _showView( "load" );
-
-                // try to send contact request
-                //
-                if ( options.params.id && options.params.id.match( /^\d+$/ ) )
-                {
-                    _doSendContactRequest(
-                    {
-                        requesterId:    bidx.common.getCurrentUserId()
-                    ,   requesteeId:    options.params.id
-                    } );
-                }
-                else
-                {
-                    // no ID, request failed
-                    //
-                    _showError( "Something went wrong will connecting to a member: " + "No ID submitted or ID is not a number" );
-                }
-
-            break;
-
             // catch all for mailbox folders; for example mbx-inbox. For convenience I remove the prefix within this closure
             //
             case /^mbx-/.test( action ):
@@ -2959,12 +2374,12 @@
                 //
                 action = action.replace( /(^mbx-)/, "" );
 
-                bidx.utils.log( "[mail] requested load of mailbox ", action );
+                bidx.utils.log( "[connect] requested load of mailbox ", action );
 
                 // check if mailbox exists, else reload mailboxes and redraw folder navigation
                 if ( !mailboxes[ action ] )
                 {
-                    bidx.utils.warn("[mail] mailbox ", action, " does not exist, do retrieve mailboxes");
+                    bidx.utils.warn("[connect] mailbox ", action, " does not exist, do retrieve mailboxes");
                     // NOTE: #matts; REFACTOR TO PROMISE CONSTRUCTION. Too much hidden CallBacks in these functions
                     //
                     _getMailBoxes( _initMailBox );
@@ -2998,7 +2413,7 @@
                     }
                     if ( folder )
                     {
-                        document.location.hash = "#mail/mbx-" + folder;
+                        document.location.hash = "#connect/mbx-" + folder;
                     }
 
                 } );

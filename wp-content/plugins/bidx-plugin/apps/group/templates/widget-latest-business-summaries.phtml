@@ -5,7 +5,7 @@
     $isPanel = isset( $this -> panel ) && $this -> panel ==  'true';
     $panelItems = (int)$this -> items;
     $region = $this -> region;
-    
+
     $addColumns = true;
     if ( $isPanel && ( $region === 'priv-front-side' || $region === 'pub-front-side' ) ) :
         $addColumns = false;
@@ -26,7 +26,7 @@
             {
 ?>
                 <h2><?php _e('New Businesses', 'bidxplugin')?></h2>
-<?php                 
+<?php
                 $bsitems = (int)$latest_items;
             }
 ?>
@@ -35,7 +35,7 @@
             if ( $addColumns && $isPanel ) :
 ?>
                 <div class="row">
-<?php         
+<?php
             endif;
 
             foreach ( $this -> summaries as $summary ) {
@@ -73,7 +73,7 @@
 
                         echo '<div class="img-cropper pull-left"><img src="' . $videoThumb . '" alt=""></div>';
                     }
-                    
+
                     if ( $authenticated ) {
 ?>
                         </a>
@@ -106,14 +106,17 @@
                             $ix = 1;
                             // create a comma separated list of translated industries
                             //
-                            foreach ( $industries as $industry )
+                            if( $industries )
                             {
-                                echo $this->getStaticVal( 'industry', $industry ) ;
-                                if ( count( $industries ) != $ix )
+                                foreach ( $industries as $industry )
                                 {
-                                    echo ", ";
+                                    echo $this->getStaticVal( 'industry', $industry ) ;
+                                    if ( count( $industries ) != $ix )
+                                    {
+                                        echo ", ";
+                                    }
+                                    $ix++;
                                 }
-                                $ix++;
                             }
 ?>
                         </div>
@@ -124,14 +127,17 @@
                             $ix = 1;
                             // create a comma separated list of translated industries
                             //
-                            foreach ( $countries as $country )
+                            if( !empty( $countries ))
                             {
-                                echo $this->getStaticVal( 'country', $country ) ;
-                                if ( count( $countries ) != $ix )
+                                foreach ( $countries as $country )
                                 {
-                                    echo ", ";
+                                    echo $this->getStaticVal( 'country', $country ) ;
+                                    if ( count( $countries ) != $ix )
+                                    {
+                                        echo ", ";
+                                    }
+                                    $ix++;
                                 }
-                                $ix++;
                             }
 ?>
                         </div>
@@ -155,7 +161,7 @@
             if ( $addColumns && $isPanel ) :
 ?>
                 </div>
-<?php                
+<?php
             endif;
 ?>
         </ul>
