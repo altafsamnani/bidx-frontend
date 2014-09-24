@@ -81,7 +81,7 @@
                         if ( $authenticated )
                         {
 ?>
-                            <div class="panel panel-primary panel-members">
+                            <div class="panel panel-primary panel-members widget">
                                 <div class="panel-heading hide-overflow">
                                     <h4 class="pull-left"><?php _e('Create and grow', 'bidxplugin')?></h4>
                                 </div>
