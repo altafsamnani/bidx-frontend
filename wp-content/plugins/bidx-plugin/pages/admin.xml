@@ -22,13 +22,13 @@
             <slug>bidx_monitoring_page</slug>
             <icon>dashicons-chart-pie</icon>
         </item>
-        <item>
+<!--        <item>
 		 	<menu>Connect</menu>
 		 	<title>Connect</title>
             <hook>edit.php</hook>
             <permissions>editor</permissions>
             <slug>bidx_mail_page</slug>
             <icon>dashicons-networking</icon>
-        </item>
+        </item> -->
 	</hooks>
 </data>
