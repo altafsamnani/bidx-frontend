@@ -527,7 +527,7 @@ function get_string_translation ()
 
         $jsonDecodedData = json_encode ($translatedArr);
         $jsonEnd = ($callback) ? ' );' : NULL;
-
+        Header('content-type: application/javascript');
         echo $jsonStart . $jsonDecodedData . $jsonEnd;
     }
 
