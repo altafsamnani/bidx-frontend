@@ -679,7 +679,7 @@
             ,   groupDomain:       bidx.common.groupDomain
             ,   success: function( response )
                 {
-                    if( response )
+                    if( response.data.feedbacks )
                     {
                         bidx.utils.log( "[commenting] following comments received", response.data );
 
@@ -688,9 +688,9 @@
                             _createFeedbackPost( feedback );
                         });
 
-                        _handleClicked();
 
                     }
+                        _handleClicked();
                 }
 
             ,   error: function( jqXhr, textStatus )
