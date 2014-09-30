@@ -87,13 +87,14 @@
     feedback.cancel = function( params )
     {
         var method  = "DELETE"
-        ,   url     = baseUrl.replace( "%id%", params.entityId )
+        ,   url     = baseUrl.replace( "%id%", params.id )
         ;
 
         api._call(
         {
             method:                 method
         ,   groupDomain:            params.groupDomain
+        ,   data:                   params.data
         ,   baseUrl:                url
 
         ,   success:        function( data, textStatus, jqXhr )

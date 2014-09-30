@@ -127,4 +127,13 @@
     <!-- Chart Label -->
     <Item value="chart_growth">Growth </Item>
 
+    <!-- Feedback -->
+    <Item value="showFeedback">Feedback</Item>
+    <Item value="hideFeedback">Hide feedback</Item>
+    <Item value="submitFeedback">Submit feedback</Item>
+    <Item value="addNewFeedback">Add new feedback</Item>
+    <Item value="successAddingMsgFeedback">Feedback added successfully</Item>
+    <Item value="successDeletingMsgFeedback">Feedback deleted successfully</Item>
+    <Item value="errorMsgFeedback">Error occured, try again</Item>
+
 </I18N>

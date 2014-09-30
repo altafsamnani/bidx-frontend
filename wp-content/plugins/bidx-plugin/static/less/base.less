@@ -1167,7 +1167,80 @@ select
   content: "\f123";
 }
 
+/* FEEDBACK */
+.businessSummary .panel-heading
+{
+    position: relative;
+}
+.feedback-box
+{
+    margin: -15px 0;
+    // min-height: 200px;
+    border-left: 1px solid darken(spin(@state-warning-bg, -10), 5%);
+    margin-bottom: -1000em !important;
+    padding-bottom: 1000em !important;
+}
+.feedback-posts
+{
+    max-height: 580px;
+    overflow-y: auto;
+}
+.btn-feedback
+{
+    position: absolute;
+    right: 15px;
+    top: 9px;
+    display: none;
+    span
+    {
+        margin-left: ceil(@font-size-base * 0.4);
+    }
+}
+.bidx-edit .btn-feedback,
+.bidx-edit .panel-open .btn-feedback
+{
+    display: none;
+}
+.feedback-submit
+{
+    margin-bottom: ceil(@font-size-base * 1);
+    textarea
+    {
+        margin-bottom: ceil(@font-size-base * 1);
+    }
+}
+.feedback-actions
+{
+    display: none;
+}
+.feedback-post:hover
+{
+    .feedback-actions
+    {
+        display: block;
+    }
+}
+.feedback-post
+{
+    .transition-all;
+    margin-top: ceil(@font-size-base * 0.75);
+    padding-right: ceil(@font-size-base * 0.75);
+}
+.feedback-commentor,
+.feedback-visibilities
+{
+    margin-bottom: ceil(@font-size-base * 0.5);
+}
+.feedback-to-remove
+{
+    .opacity();
+}
 
+
+.panel-open .btn-feedback
+{
+    display: block;
+}
 
 // --------------------------------------------------
 // Bootstrap Overides

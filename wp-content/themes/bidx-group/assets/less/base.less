@@ -167,7 +167,9 @@ footer
 a,
 a:hover,
 a:visited,
-a:link
+a:link, 
+button,
+button:hover
 {
     .transition-all;
     text-decoration: none;
@@ -1594,11 +1596,18 @@ select
 }
 .feedback-post
 {
+    .transition-all;
     margin-top: ceil(@font-size-base * 0.75);
+    padding-right: ceil(@font-size-base * 0.75);
 }
-.feedback-commentor
+.feedback-commentor,
+.feedback-visibilities
 {
     margin-bottom: ceil(@font-size-base * 0.5);
+}
+.feedback-to-remove
+{
+    .opacity();
 }
 
 
