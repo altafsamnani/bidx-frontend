@@ -1281,9 +1281,13 @@
         {
             var $accordionBody = $( this );
             $accordionBody.closest( ".panel" ).first().removeClass( "panel-open" );
-            $accordionBody.closest( ".panel" )
-                .css( { overflow: 'hidden' } )
-                .find( ".panel-body" ).first().css({ overflow: 'hidden' });
+
+            if ( $(".bidx-edit .panel-collapse .viewEdit").is( ":visible" ) )
+            {
+                $accordionBody.closest( ".panel" )
+                    .css( { overflow: 'hidden' } )
+                    .find( ".panel-body" ).first().css({ overflow: 'hidden' });
+            }
         } )
         .on( "shown.bs.collapse", function ()
         {
@@ -1292,9 +1296,13 @@
             ,   offSet = 165
             ,   targetOffset = $accordionBody.offset().top - offSet
             ;
-            $accordionBody.closest( ".panel" )
-                .css( { overflow: 'visible' } )
-                .find( ".panel-body" ).first().css({ overflow: 'visible' });
+            
+            if ( $(".bidx-edit .panel-collapse .viewEdit").is( ":visible" ) )
+            {
+                $accordionBody.closest( ".panel" )
+                    .css( { overflow: 'visible' } )
+                    .find( ".panel-body" ).first().css({ overflow: 'visible' });
+            }
 
             // Fix for "Your current address" in member profile
             // Trigger the _updateCurrentAddressMap function when the panel is shown
@@ -1303,7 +1311,7 @@
                 bidx.member._updateCurrentAddressMap();
             }
 
-            $('html,body').delay(300).animate({scrollTop:targetOffset}, 200);
+            $('html,body').delay( 300 ).animate( {scrollTop:targetOffset}, 200 );
 
         } );
 
@@ -1323,7 +1331,7 @@
 
     // Temporary solution for public home page, find a better place for this
     //
-    if($(".js-fakecrop").length)
+    if ( $(".js-fakecrop").length )
     {
         $( ".js-fakecrop img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
     }

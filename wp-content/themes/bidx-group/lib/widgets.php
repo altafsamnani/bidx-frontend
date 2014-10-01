@@ -50,7 +50,7 @@ function bidx_widgets_init() {
         'after_title'   => '</h3>',
     )); 
     register_sidebar(array(
-        'name'          => __('Public Member Sidebar', 'bidx_group_theme'),
+        'name'          => __('Public Sidebar', 'bidx_group_theme'),
         'id'            => 'pub-member-side',
         'before_widget' => '<section class="widget %1$s %2$s">',
         'after_widget'  => '</section>',
@@ -94,7 +94,7 @@ function bidx_widgets_init() {
         'after_title'   => '</h3>',
     )); 
     register_sidebar(array(
-        'name'          => __('Private Member Sidebar', 'bidx_group_theme'),
+        'name'          => __('Private Sidebar', 'bidx_group_theme'),
         'id'            => 'priv-member-side',
         'before_widget' => '<section class="widget %1$s %2$s">',
         'after_widget'  => '</section>',
