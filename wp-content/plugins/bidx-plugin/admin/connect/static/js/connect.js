@@ -373,8 +373,8 @@
     //
     function _showError( msg )
     {
-        $views.filter( bidx.utils.getViewName( "error" ) ).find( ".errorMsg" ).text( msg );
-        _showView( "error" );
+        $main.find( bidx.utils.getViewName( "error" ) ).text( msg ).show();
+        //_showViewAll( "error" );
     }
 
 
@@ -393,11 +393,18 @@
         }
     }
 
+    function _showViewAll( view, state)
+    {
+       var title
+        ,   $view = $views.filter( bidx.utils.getViewName( view ) ).show();
+
+    }
+
     // generic view function. Hides all views and then shows the requested view. In case State argument is passed in, it will be used to show the title tag of that view
     //
     function _showMessage( view, message )
     {
-        var $view = $main.find( bidx.utils.getViewName( view ) ).append( message ).show();
+        var $view = $main.find( bidx.utils.getViewName( view ) ).text( message ).show();
         //  show title of the view if available
 
     }
@@ -422,9 +429,30 @@
         $viewBulk.hide();
     }
 
+    function _hideBulkActions ( view )
+    {
+        var $viewAction         = $main.find( bidx.utils.getViewName( 'action' ) )
+        ,   $viewBulk           = $viewAction.find( bidx.utils.getViewName( 'bulk' ) )
+        ;
+
+        $viewBulk.hide();
+        $viewAction.hide();
+    }
+
+    function _hideoveToFolderActions ( view )
+    {
+        var $viewAction         = $main.find( bidx.utils.getViewName( 'action' ) )
+        ,   $viewBulk           = $viewAction.find( bidx.utils.getViewName( 'movetofolder' ) )
+        ;
+
+        $viewBulk.hide();
+        $viewAction.hide();
+
+    }
+
     // show provided list of buttons for this view
     //
-    function _showToolbarButtons( view, buttons )
+    /*function _showToolbarButtons( view, buttons )
     {
         var $view               = $views.filter( bidx.utils.getViewName( view ) )
         ,   $toolbarButtons     = $main.find( ".bulk-dropdown-menu" ).find('option')
@@ -436,6 +464,34 @@
         bidx.utils.log('viewsssssssss', buttons);
         //$toolbarButtons.filter( buttons.toString() ).show();
         $viewBulk.show();
+    }*/
+
+    function _showBulkActions ( view, buttons )
+    {
+        var $viewAction         = $main.find( bidx.utils.getViewName( 'action' ) )
+        ,   $toolbarButtons     = $viewAction.find( ".bulk-dropdown-menu" ).find('option')
+        ,   $viewBulk           = $viewAction.find( bidx.utils.getViewName( 'bulk' ) )
+        ;
+        $toolbarButtons.hide();
+        $toolbarButtons.filter( buttons.toString() ).show();
+
+        bidx.utils.log('bulk', $viewBulk);
+        //$toolbarButtons.filter( buttons.toString() ).show();
+        $viewBulk.show();
+        $viewAction.show();
+
+    }
+
+    function _showMoveToFolderActions ( view, buttons )
+    {
+        var $viewAction         = $main.find( bidx.utils.getViewName( 'action' ) )
+        ,   $viewMoveToFolder   = $viewAction.find( bidx.utils.getViewName( 'movetofolder' ) )
+        ;
+
+        bidx.utils.log('move to folder', buttons);
+        //$toolbarButtons.filter( buttons.toString() ).show();
+        $viewMoveToFolder.show();
+        $viewAction.show();
     }
 
 
@@ -1155,7 +1211,11 @@
                     //
                     _initMoveToFolderDropDown( "list" );
 
-                    _showToolbarButtons( "list", buttons );
+                    //_showToolbarButtons( "list", buttons );
+
+                    _showBulkActions ( "list", buttons );
+
+                    _showMoveToFolderActions();
 
                     //bidx.utils.log("state [", currentState,"]");
                     _showState( currentState );
@@ -2122,7 +2182,7 @@
 
         //  sets any given toolbar and associate toolbar buttons with ID
         //
-        /*function _setToolbarButtonsTarget( id, state, v )
+        function _setToolbarButtonsTarget( id, state, v )
         {
             var $toolbar = $views.filter( bidx.utils.getViewName( v ) ).find( ".mail-toolbar" )
             ,   $this
@@ -2145,7 +2205,7 @@
                     $this.attr( "href", href );
                 }
             });
-        }*/
+        }
 
 
     //  ################################## MODAL #####################################  \\
@@ -2257,6 +2317,7 @@
         //  if options.state is an ID, OR params.id exists without an params.action ---> set action  to 'read'
         //
         _hideMessage('message');
+        _hideMessage('error');
 
         if ( ( ( options.state && options.state.match( /^\d+$/ ) ) ) || (  options.params && options.params.id && !options.params.action ) )
         {
@@ -2322,7 +2383,9 @@
 
                 _closeModal();
                 _showView( "load" );
-                _hideToolbarButtons( action );
+                //_hideToolbarButtons( action );
+                _hideBulkActions( );
+
 
                 // check if mailbox is not empty, else reload mailboxes and redraw folder navigation
                 //
@@ -2360,9 +2423,12 @@
                             ];
                         }
 
-                        _showToolbarButtons( action, buttons );
+                        //_showToolbarButtons( action, buttons );
 
-                        //_setToolbarButtonsTarget( mailId, state, action );
+                        //_showBulkActions ( action, buttons );
+                        _showMoveToFolderActions();
+
+                        _setToolbarButtonsTarget( mailId, state, action );
 
                         // check if $pGetMailboxes is a Deferred object with a promise function
                         if( $pGetMailboxes && $pGetMailboxes.promise )
@@ -2425,6 +2491,8 @@
                 {
                     // if message has not been cached (this happens when you read a message first), get the message directly from the api
                     //
+
+
                     if( $.isEmptyObject( message ) )
                     {
                         // start a promise chain
@@ -2459,6 +2527,10 @@
                 }
 
                 _showView( "compose", action );
+
+                _hideBulkActions( );
+
+                _hideoveToFolderActions( );
 
 
             break;
@@ -2524,7 +2596,8 @@
                 } );
 
                 _showView( "load" );
-                _hideToolbarButtons( "list" );
+                //_hideToolbarButtons( "list" );
+                _hideBulkActions( );
 
                 // remove the prefix mbx- from the action because
                 //
