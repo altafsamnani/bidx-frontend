@@ -136,4 +136,10 @@
     <Item value="successDeletingMsgFeedback">Feedback deleted successfully</Item>
     <Item value="errorMsgFeedback">Error occured, try again</Item>
 
+    <Item value="visiblePrivate">Only me</Item>
+    <Item value="visibleMentor">My mentors</Item>
+    <Item value="visibleInvestor">All investors</Item>
+    <Item value="visiblePublic">Everyone</Item>
+    <Item value="visibleGroupadmin">Group admin</Item>
+
 </I18N>
