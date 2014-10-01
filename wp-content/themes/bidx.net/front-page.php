@@ -231,7 +231,7 @@
                 <a href="/development-organisations-donors" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-23"></div>
-                        <p><?php _e('Development organazations & Donors','bidxtheme');?></p>
+                        <p><?php _e('Development organisations & Donors','bidxtheme');?></p>
                     </div>
                 </a>
             </div>
@@ -261,7 +261,7 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <a href="/consultants-accountants" class="btn btn-block flat flat-clients">
+                <a href="/consultants" class="btn btn-block flat flat-clients">
                     <div class="service">
                         <div class="handicon handicon-25"></div>
                         <p><?php _e('Accountants & Consultants','bidxtheme');?></p>

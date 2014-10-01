@@ -39,7 +39,7 @@
     ,   $ratingScore                = $ratingWrapper.find( ".rating-score" )
     ,   $ratingNoScore              = $ratingWrapper.find( ".rating-no-score" )
     ,   $raty                       = $ratingWrapper.find( ".raty" )
-    
+
     ,   $fakecrop                   = $views.find( ".bidx-profilepicture img" )
 
     ,   $tabMentor                  = $element.find( "#businessSummaryCollapse-MentoringDetails" )
@@ -760,7 +760,7 @@
             } );
 
             // Setup validation on a specific year item
-            //
+            // Altaf
             function _setupValidationForYearItem( $yearItem )
             {
                 // Shortcut it for now by treating all the inputs the same
@@ -779,7 +779,7 @@
                     ,   messages:
                         {
                             required:               ""
-                        ,   monetaryAmount:         ""
+                        ,   monetaryAmount:         "Please enter only numbers"
                         }
                     } );
                 } );
@@ -1718,7 +1718,7 @@
                     var $input = $form.find( "[name^='" + f + "']" )
                     ,   value  = bidx.utils.getValue( businessSummary, f )
                     ;
-                    
+
                     bidx.utils.setElementValue( $input, value );
                 } );
             }
@@ -1906,14 +1906,14 @@
                             var $input  = $financialSummariesItem.find( "[name^='" + f + "']" )
                             ,   value   = bidx.utils.getElementValue( $input )
                             ;
-                            
-                            if (value == '') 
+
+                            if (value == '')
                             {
                             	value = 0;
                             }
 
                             item[ year ][ f ] = value;
-                     
+
                         } );
                     } );
 

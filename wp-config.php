@@ -78,7 +78,7 @@ define('COOKIE_DOMAIN', 'bidx.net');
 define('COOKIEPATH', '/');
 define('SITECOOKIEPATH', '/');
 define('LOGGED_IN_COOKIE', 'bidx_logged_in' . BIDX_ENV . '_' . COOKIEHASH);
-define('BIDX_ALLOWED_COOKIES', '(bidx)|(JSESSIONID)');
+define('BIDX_ALLOWED_COOKIES', '(bidx)');
 
 define('SCRIPT_DEBUG', false);
 define('CONCATENATE_SCRIPTS', true);
@@ -133,7 +133,7 @@ define('SUBDOMAIN_INSTALL', true);
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
-define('NOBLOGREDIRECT', 'http://' . DOMAIN_CURRENT_SITE . '/unknown-group');
+define('NOBLOGREDIRECT', 'http://' . DOMAIN_CURRENT_SITE . '/active-portals');
 
 define('BIDX_PLUGIN_METADATA_PATH', 'http://bidx-builds.s3-website-eu-west-1.amazonaws.com/acceptance/bidx-plugin/metadata.json');
 
@@ -145,5 +145,4 @@ if ( !defined('ABSPATH') )
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
-error_reporting(0);
 
