@@ -505,10 +505,19 @@
 
 .btngroup-move-to-folder {
   float: right;
+  width: 18%;
+}
+
+.bulkactions {
+  width: 18%;
 }
 
 #publishing-action {
   padding: 0 3px;
+}
+
+.btngroup-move-to-folder {
+  float: left;
 }
 
 .monitoring #post-body.columns-2 #postbox-container-1 {

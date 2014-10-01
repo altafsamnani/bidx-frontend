@@ -160,6 +160,14 @@
                         $options.empty();
                     }
 
+                    option = $( "<option/>",
+                    {
+                       'data-groupid': currentGroupId
+                    } );
+
+                    option.text( bidx.i18n.i( "msgToGroup", appName ) );
+
+                    listItems.push( option );
 
                     // sort the array, if not empty
                     //
@@ -258,6 +266,12 @@
     //
     function _prepareMessage()
     {
+        var selectedOptions =   $contactsDropdown.val()
+        ,   groupVal        =   bidx.i18n.i( "msgToGroup", appName )
+        ,   groupId         =   $contactsDropdown.find("option:selected").data("groupid")
+        ;
+
+        selectedOptions     =   _.without(selectedOptions, groupVal );
         /*
             API expected format
             {
@@ -268,9 +282,17 @@
         */
         message = {}; // clear message because it can still hold the reply content
 
-        $currentView = $views.filter( bidx.utils.getViewName( "compose" ) );
+        $currentView    = $views.filter( bidx.utils.getViewName( "compose" ) );
 
-        bidx.utils.setValue( message, "userIds", $contactsDropdown.val() );
+
+
+        if( groupId)
+        {
+            bidx.utils.setValue( message, "groupId", groupId );
+
+        }
+
+        bidx.utils.setValue( message, "userIds", selectedOptions );
         bidx.utils.setValue( message, "subject", $currentView.find( "[name=subject]" ).val() );
         bidx.utils.setValue( message, "content", $currentView.find( "[name=content]" ).val() );
 
@@ -1893,7 +1915,7 @@
                             {
                                 // first add the admins and groupowners
                                 //
-                                if ( response.relationshipType.contact.types.groupOwner )
+                                /*if ( response.relationshipType.contact.types.groupOwner )
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
@@ -1908,7 +1930,7 @@
                                             sortIndex.push( item.name.toLowerCase() );
                                         }
                                     } );
-                                }
+                                } */
 
 
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
@@ -3047,6 +3069,7 @@
             {
                 // vámonos!!
                 //
+
                 _oneTimeSetup();
             } );
 

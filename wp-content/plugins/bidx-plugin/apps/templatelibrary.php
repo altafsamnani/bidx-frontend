@@ -503,7 +503,7 @@ class TemplateLibrary
                         $display = true;
                     } else if (isset ($rowValue->$headerValue)) {
 
-                        $entityType = $this->exst( $rowValue->$headerValue->bidxMeta->bidxEntityType );
+                        $entityType = (!empty( $rowValue->$headerValue->bidxMeta->bidxEntityType ) ) ? $rowValue->$headerValue->bidxMeta->bidxEntityType: NULL;
 
                         // If the value is a document, insert an image tag
                         //
