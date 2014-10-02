@@ -1016,7 +1016,7 @@
                                                                     if(counter === ongoingLength )
                                                                     {
                                                                         // Update the counts, if applicable
-                                                                        window.bidx.commenting.refresh();
+                                                                        // window.bidx.commenting.refresh();
                                                                         $d.resolve( );
                                                                     }
 
