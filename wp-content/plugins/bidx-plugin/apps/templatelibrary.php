@@ -96,9 +96,7 @@ class TemplateLibrary
      */
     public function addAdjacentRows ($gridColumnVal, $rowValues, $className = NULL, $tagName = 'div')
     {
-
-        $rowHtml = "<div class='row'>";
-
+        $rowHtml = "";
 
         foreach ($rowValues as $label => $values) {
 
@@ -121,14 +119,10 @@ class TemplateLibrary
                     $tagRow = $tagName;
                 }
 
-
                 $rowHtml .= "<$tagRow " . $classRow . " > " . $values . " </$tagRow>";
                 $rowHtml .= "</div>";
             }
         }
-
-
-        $rowHtml .= "</div>";
 
         return $rowHtml;
     }
