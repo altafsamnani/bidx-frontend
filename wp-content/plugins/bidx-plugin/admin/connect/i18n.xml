@@ -20,5 +20,6 @@
     <Item value="emailSent">Your email has been sent successfully</Item>
     <Item value="moveFolderMsg">Move message to folder</Item>
     <Item value="alertDeleteMsg">You are about to delete this/these message(s). Are you sure?</Item>
-    <Item value="alertDiscardMsg">"You are about to discard this message. Are you sure?"</Item>
+    <Item value="alertDiscardMsg">You are about to discard this message. Are you sure?</Item>
+    <Item value="errorNoSelection">You have not selected any message, please click on checkbox to make selection</Item>
 </I18N>

@@ -119,13 +119,13 @@
         $mailboxToolbar         = $views.find( ".mail-toolbar" );
         $mailboxToolbarButtons  = $mailboxToolbar.find( ".button" );
 
-
+        bidx.utils.log('viewsssssssss',$mailboxToolbarButtons);
         // bind the toolbar buttons to their handlers. Reply and forward use HREF for navigation
         //
-        $mailboxToolbarButtons.filter( ".bidx-btn-delete" ).bind( "click", "action=delete&confirm=true", _doAction );
-        $mailboxToolbarButtons.filter( ".bidx-btn-mark-read" ).bind( "click", "action=read&confirm=false", _doAction );
+       $mailboxToolbarButtons.filter( ".btn-delete" ).bind( "click", "action=delete&confirm=true", _doAction );
+         /*$mailboxToolbarButtons.filter( ".bidx-btn-mark-read" ).bind( "click", "action=read&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread" ).bind( "click", "action=unread&confirm=false", _doAction );
-        $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder" ).bind( "click", "action=move&confirm=false", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder" ).bind( "click", "action=move&confirm=false", _doAction );*/
         $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).bind( "click", "action=showPrev&confirm=false", _doPaging );
         $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).bind( "click", "action=showNext&confirm=false", _doPaging );
 
@@ -488,12 +488,10 @@
         ,   $viewMoveToFolder   = $viewAction.find( bidx.utils.getViewName( 'movetofolder' ) )
         ;
 
-        bidx.utils.log('move to folder', buttons);
         //$toolbarButtons.filter( buttons.toString() ).show();
         $viewMoveToFolder.show();
         $viewAction.show();
     }
-
 
     // sync the sidemenu with the current hash value
     //
@@ -517,7 +515,6 @@
         });
     }
 
-
     // store the current message, for reply or forward purposes
     //
     function _cacheMailMessage( msg )
@@ -525,9 +522,6 @@
         message = msg;
 
     }
-
-
-
 
     // actual sending of message to API
     //
@@ -758,6 +752,7 @@
         if( $.isEmptyObject( itemList ) || href === -1)
         {
             bidx.utils.warn( "No messages Id(s) available for action ");
+            _showError( bidx.i18n.i( "errorNoSelection", appName ) );
             return;
         }
 
@@ -859,18 +854,25 @@
 
         e.preventDefault();
 
-        if ( !e.data )
+        if ( e.data )
         {
+            params = bidx.utils.bidxDeparam( e.data );
+
+        }
+        else
+        {
+            params  =
+            {
+                action:     $bulkDropdown.val()
+            ,   confirm:    $bulkDropdown.data('confirm')
+            };
             bidx.utils.error( "No action defined" );
             return;
         }
-        //params = bidx.utils.bidxDeparam( e.data );
+        //
 
-        params  =   {
-                        action:     $bulkDropdown.val()
-                    ,   confirm:    $bulkDropdown.data('confirm')
-                    };
 
+        bidx.utils.log('params', params);
         // remove the mbx-prefix so we can use the state as a key to match the mailbox
         //
         if( state.search( /(^mbx-)/ ) === 0 )
@@ -1492,8 +1494,6 @@
 
                     $applyBulk.on('click', _doAction);
                 }
-
-                bidx.utils.log('dropdown', $dropdown);
 
             }
             else
@@ -2537,17 +2537,9 @@
 
             case /^discardConfirm$/.test( action ):
 
-                var confirmMessage  =   confirm( bidx.i18n.i( 'alertDiscardMsg', appName ) )
-                ;
+                var confirmMessage  =   confirm( bidx.i18n.i( 'alertDiscardMsg', appName ) )  ;
 
-                if ( confirmMessage === true)
-                {
-                   window.bidx.controller.updateHash( "#connect/inbox", true, false );
-                }
-                else
-                {
-                    window.bidx.controller.updateHash( "#connect/compose", true, false );
-                }
+                window.bidx.controller.updateHash( "#connect/mbx-inbox", confirmMessage, false );
 
             break;
 
