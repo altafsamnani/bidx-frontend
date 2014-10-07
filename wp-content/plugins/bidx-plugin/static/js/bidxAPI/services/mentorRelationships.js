@@ -11,6 +11,7 @@
     ,   baseUrl                 = "/api/v1/entity/%id%/mentor"
     ,   fetchUrl                = "/api/v1/members/%id%/relationships"
     ,   memberFetchUrl          = "/api/v1/members/%id%/mentor"
+    ,   mentorUrl               = "/api/v1/mentor/%id%"
     ,   params                  = []
     ;
 
@@ -99,7 +100,7 @@
     mentorRelationships.mutate = function( params )
     {
         var method  = "PUT"
-        ,   url     = baseUrl.replace( "%id%", params.entityId )
+        ,   url     = mentorUrl.replace( "%id%", params.requestId )
         ;
 
         api._call(
@@ -123,7 +124,7 @@
     mentorRelationships.cancel = function( params )
     {
         var method  = "DELETE"
-        ,   url     = baseUrl.replace( "%id%", params.entityId )
+        ,   url     = mentorUrl.replace( "%id%", params.requestId )
         ;
 
         api._call(

@@ -508,8 +508,10 @@
 
                 /* 3 Cancel request */
                 hrefStop = hrefStop
-                            .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%initiatorId%/g,   item.initiatorId )
+                            .replace( /%requestId%/g,      item.requestId )
+                           // .replace( /%entityId%/g,      item.entityId )
+                          //  .replace( /%initiatorId%/g,   item.initiatorId )
+
                             ;
 
                 $stopBtn.attr( "href", hrefStop );
@@ -532,7 +534,7 @@
 
                 /* 2 Ignore Link */
                 hrefCancel = hrefCancel
-                            .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%requestId%/g,      item.requestId )
                             ;
 
                 $cancelBtn.attr( "href", hrefCancel );
@@ -557,16 +559,20 @@
 
                 /* 1 Accept Link */
                 hrefAccept = hrefAccept
-                            .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%initiatorId%/g,   item.initiatorId );
+                            .replace( /%requestId%/g,      item.requestId )
+                           // .replace( /%entityId%/g,      item.entityId )
+                           // .replace( /%initiatorId%/g,   item.initiatorId )
+                           ;
 
                 $acceptBtn.attr( "href", hrefAccept );
 
 
                 /* 2 Ignore Link */
                 hrefIgnore = hrefIgnore
-                            .replace( /%entityId%/g,      item.entityId )
-                            .replace( /%initiatorId%/g,   item.initiatorId );
+                            .replace( /%requestId%/g,      item.requestId )
+                            //.replace( /%entityId%/g,      item.entityId )
+                            //.replace( /%initiatorId%/g,   item.initiatorId )
+                            ;
 
                 $ignoreBtn.attr( "href", hrefIgnore );
 
