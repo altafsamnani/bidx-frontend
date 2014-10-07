@@ -243,7 +243,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <div class="panel panel-default panel-feedback panel-open">
             <div class="panel-heading">
                 <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-GeneralOverview"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
-                <!-- <button class="btn btn-xs btn-success btn-feedback"><i class="fa fa-comments"></i> Feedback</button> -->
             </div>
             <div id="businessSummaryCollapse-GeneralOverview" class="panel-collapse collapse in">
                 <div class="panel-body clearfix" style="overflow: visible;">
@@ -690,7 +689,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div><!-- /About you & your team -->
 
         <!-- Financial details -->
-        <div class="panel panel-default panel-feedback">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-FinancialDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
             </div>
@@ -706,8 +705,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 __('Business sales started in','bidxplugin') => $this->exst($businessSummary->yearSalesStarted)
                             );
                             echo $this->pairRows( $rowValues );
-
-                            $this->render('financialsummary.phtml');
 ?>
                         </div>
 
@@ -754,11 +751,15 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     </div>
                                 </div>
                             </div>
+
+                        </div>
+
+                        <!-- VIEW and EDIT -->
+                        <div class="view viewShow viewEdit">
 <?php
                             $this->render('financialsummary.phtml');
 ?>
-
-                        </div>
+                        </div><!-- /VIEW and EDIT -->
 
                         <!-- ERROR -->
                         <div class="view viewError alert alert-warning">
