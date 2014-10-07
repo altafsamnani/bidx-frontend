@@ -2269,6 +2269,7 @@
         ,   initiatorId
         ,   mentorId                =   params.mentorId
         ,   isActiveRequest         =   params.isActiveRequest
+        ,   requestId               =   params.requestId
         ,   waitArr                 =   []
         ,   respondArr              =   []
         ,   rejectMentorArr         =   []
@@ -2386,9 +2387,10 @@
 
                 /*************Cancel request*******************/
                 hrefMatch   =   hrefMatch
+                        .replace( /%requestId%/g,    requestId)
                         .replace( /%entityId%/g,    contextBpId )
-                        .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%initiatorId%/g, initiatorId )
+                      //  .replace( /%mentorId%/g,    mentorId )
+                      //  .replace( /%initiatorId%/g, initiatorId )
                         ;
 
                 $matchBtn.attr( "href", hrefMatch );
@@ -2882,6 +2884,7 @@
                                                                     cbParams = {
                                                                                     mentorId:           memberId
                                                                                 ,   isActiveRequest:    true
+                                                                                ,   requestId:          item.requestId
                                                                                 };
 
                                                                     options.cb( $listItem,  cbParams );

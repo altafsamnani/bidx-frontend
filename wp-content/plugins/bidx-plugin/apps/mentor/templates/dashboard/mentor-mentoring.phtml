@@ -337,8 +337,8 @@
 
 <script type="text/html" id="mentor-respond-action">
 <!--
-<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=accepted" class="btn-bidx-accept btn btn-xs btn-success"><?php _e('Accept','bidxplugin');?></a>
-<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected" class="btn-bidx-ignore btn btn-xs btn-danger"><?php _e('Ignore','bidxplugin');?></a>
+<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=accepted" class="btn-bidx-accept btn btn-xs btn-success"><?php _e('Accept','bidxplugin');?></a>
+<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=rejected" class="btn-bidx-ignore btn btn-xs btn-danger"><?php _e('Ignore','bidxplugin');?></a>
 <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info"><?php _e('Contact entrepreneur','bidxplugin');?></a>
 -->
 </script>
@@ -346,20 +346,20 @@
 <!--
 <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" class="btn-bidx-reminder btn btn-xs btn-primary"><?php _e('Send a reminder','bidxplugin');?></a>
 <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info"><?php _e('Contact entrepreneur','bidxplugin');?></a>
-<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/entityId=%entityId%&type=mentor&action=cancel" class="btn-bidx-cancel btn btn-xs btn-danger"><?php _e('Cancel request','bidxplugin');?></a>
+<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=cancel" class="btn-bidx-cancel btn btn-xs btn-danger"><?php _e('Cancel request','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="mentor-ongoing-action">
 <!--
 <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info"><?php _e('Contact entrepreneur','bidxplugin');?></a>
-<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/entityId=%entityId%&type=mentor&action=stop" class="btn-bidx-stop btn btn-xs btn-danger"><?php _e('Stop mentoring','bidxplugin');?></a>
+<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=cancel" class="btn-bidx-stop btn btn-xs btn-danger"><?php _e('Stop mentoring','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="mentor-renew-action">
 <!--
 <a href="#" data-href="<?php echo _l('mail')?>/#mail/compose/recipients=%receipientId%" target="_blank" class="btn-bidx-contact hide btn btn-xs btn-info"><?php _e('Contact entrepreneur','bidxplugin');?></a>
 <a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/" class="btn-bidx-renew btn btn-xs btn-primary"><?php _e('Renew request','bidxplugin');?></a>
-<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/entityId=%entityId%&type=mentor&action=cancel" class="btn-bidx-stop btn btn-xs btn-danger"><?php _e('Stop mentoring','bidxplugin');?></a>
+<a href="#" data-href="<?php echo _l('mentor-dashboard')?>/#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=cancel" class="btn-bidx-stop btn btn-xs btn-danger"><?php _e('Stop mentoring','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="mentor-ended-action">

@@ -1,46 +1,3 @@
-/**
- * TODO Sakis code formatter? (I only added the HTML to avoid my Eclipse formatter from merging all into one line.)
- * 
- * Commenting, including private notes, administrator annotations, and
- * mentor/investor feedback.
- * 
- * This app triggers its own Backbone routing, by taking control over all links
- * that define the following attributes:
- * 
- * <ul>
- * <li>href="#commenting" or href="#commenting/viewComments" to view comments</li>
- * <li>href="#commenting/writeComment" to write new comments</li>
- * <li>entity: data-entityid=123 or href="#commenting/.../entityId=123"</li>
- * <li>scopes for new comments and display:
- * data-scopes="general,bsOverview,bsFinancial"</li>
- * <li>scopes for new comment, but display all:
- * data-scopes="*general,bsOverview,bsFinancial"</li>
- * <li>optional: data-setcount=true to rewrite the link text if comments exist</li>
- * <li>optional: data-setdisplay=true to show/hide the link based on the user's
- * visibilities and the optional value for data-visibilty</li>
- * <li>optional visibilities to include:
- * data-visibilities="private,groupAdmin,mentor,investor" (will be converted
- * into a proper API enum value)</li>
- * <li>or, optional visibilities to exclude:
- * data-visibilities="!private,groupAdmin"</li>
- * </ul>
- * 
- * This approach allows for using multiple links, possibly for the same entity,
- * on a single page. When the app is initialized, it will:
- * 
- * <ul>
- * <li>Search for all data-setcounts links, if needed call the API to
- * determine the current counts and add those numbers to the link texts</li>
- * <li>Search for all href="#commenting/..." links, and bind their onclick to
- * its own routing, to ensure this works nicely within other apps</li>
- * </ul>
- * 
- * As for the server load, calling the API from the client is not more expensive
- * than having WordPress do that on page load. However, it implies the comments
- * cannot be indexed by search engines, and that the user's browser might use
- * some more data traffic.
- * 
- */
 ;( function ( $ )
 {
     "use strict";
@@ -59,8 +16,8 @@
 
     function _oneTimeSetup()
     {
-        _createFeedbackPanelStructure();
-
+        // Starting point, get feedback object to determine if user can view / add / edit or not
+        //
         _getFeedbackComments(
                         { params :
                             {
@@ -68,31 +25,11 @@
                             }
                         });
 
-        _showHideFeedbackPanel( ".btn-feedback" );
-
         _hideAlerts();
-
-        _selectVisibility();
     }
 
-    function _selectVisibility()
-    {
-        $body.delegate( ".feedback-visibilities button" , "click", function( e )
-        {
-            e.preventDefault();
-
-            var $el = $(this)
-            ,   $visibilitiesGroup = $el.closest( ".feedback-visibilities" )
-            ;
-
-            if ( !$el.hasClass( "active" ) )
-            {
-                $visibilitiesGroup.find( "button" ).removeClass( "active" );
-                $el.addClass( "active" );
-            }
-        });
-    }
-
+    // Function to show / hide the feedback panel by clicking in the Feedback / Hide Feedback that appears on the right side of the panel-heading title
+    //
     function _showHideFeedbackPanel( element )
     {
         var $btnFeedback = $( element );
@@ -125,6 +62,9 @@
         });
     }
 
+    // Listen and handle all the buttons within the feedback panel
+    // Buttons: "Add new feedback", "Cancel", "Submit feedback", "Delete" and "Edit"
+    //
     function _handleClicked()
     {
         var $clickedBtn = $( ".btn-add-feedback, .btn-cancel-feedback, .btn-submit-feedback, .btn-delete-feedback, .btn-edit-feedback" );
@@ -183,6 +123,8 @@
         });
     }
 
+    // General function to close alerts by clicking (X)
+    //
     function _hideAlerts()
     {
         $body.delegate( ".feedback-notifications .close" , "click", function( e )
@@ -192,50 +134,11 @@
         });
     }
 
-    function _createVisibilities( roles )
-    {
-        var $el = $( ".feedback-visibilities" )
-        ,   btnText;
-
-        $.each( roles, function( index, role )
-        {
-            switch (role)
-            {
-                case "PRIVATE":
-                        btnText = bidx.i18n.i( "visiblePrivate" );
-                    break;
-
-                case "MENTOR" :
-                        btnText = bidx.i18n.i( "visibleMentor" );
-                    break;
-
-                case "INVESTOR" :
-                        btnText = bidx.i18n.i( "visibleInvestor" );
-                    break;
-
-                case "PUBLIC" :
-                        btnText = bidx.i18n.i( "visiblePublic" );
-                    break;
-
-                case "GROUPADMIN" :
-                        btnText = bidx.i18n.i( "visibleGroupadmin" );
-                    break;
-            }
-
-            $el.append
-                    (
-                        $( "<div />", { "class": "btn-group" } )
-                        .append
-                        (
-                            $( "<button />", { "class": "btn btn-warning btn-xs", text: btnText, "data-visibility": role })
-                        )
-                    );
-        });
-    }
-
+    // Create the wrappers and insert the feedback in each panel that has the "panel-feedback" class 
+    //
     function _createFeedbackPanelStructure()
     {
-        var $btnFeedbackSnippet   = $( "<button />", { "class": "btn btn-warning btn-xs btn-feedback hide" })
+        var $btnFeedbackSnippet   = $( "<button />", { "class": "btn btn-warning btn-xs btn-feedback" })
                                     .prepend
                                     (
                                         $("<i/>", { "class": "fa fa-comments" })
@@ -244,13 +147,12 @@
                                     (
                                         $("<span/>", { text: bidx.i18n.i( "showFeedback" ) })
                                     )
-        ,   $addFeedbackBtn       = $( "<button />", { "class": "btn btn-primary btn-add-feedback btn-sm btn-block", "data-purpose": "addFeedback", html: bidx.i18n.i( "addNewFeedback" ) } )
+        ,   $addFeedbackBtn       = $( "<button />", { "class": "btn btn-primary btn-add-feedback btn-sm btn-block bottom-margin-lineheight", "data-purpose": "addFeedback", html: bidx.i18n.i( "addNewFeedback" ) } )
         ,   $textarea             = $( "<textarea />", { "class": "form-control" } )
         ,   $divCol12             = $( "<div />", { "class": "col-sm-12 feedback-scope" } )
         ,   $divRow               = $( "<div />", { "class": "row" } )
         ,   $cancelFeedbackBtn    = $( "<button />", { "class": "btn btn-link btn-cancel-feedback btn-xs pull-right", "data-purpose": "cancelFeedback", html: bidx.i18n.i( "btnCancel" ) } )
         ,   $submitFeedbackBtn    = $( "<button />", { "class": "btn btn-success btn-submit-feedback btn-xs pull-left", "data-purpose": "submitFeedback", html: bidx.i18n.i( "submitFeedback" ) } )
-        ,   $visibilities         = $( "<div />", { "class": "btn-group btn-group-justified feedback-visibilities" } )
         ,   $feedbackBoxSnippet   = $( "<div />", { "class": "col-sm-4 main-padding feedback-box bg-warning hide" } )
                                     .append
                                     (
@@ -305,10 +207,6 @@
                                         )
                                         .append
                                         (
-                                            $visibilities
-                                        )
-                                        .append
-                                        (
                                             $submitFeedbackBtn
                                         )
                                         .append
@@ -339,8 +237,14 @@
 
             $panelShowView.find( ".feedback-box" ).attr( "data-scope", panelScope );
         });
+
+        // Run this only if there are feedback panels created
+        //
+        _showHideFeedbackPanel( ".btn-feedback" );
     }
 
+    // Create the structure of a post, accepts the feedback object by iteration or new created post
+    //
     function _createFeedbackPost( feedback )
     {
         var $html = $("<div/>", { "class": "feedback-post", "data-feedbackid": feedback.feedbackId })
@@ -407,6 +311,8 @@
         $('*[data-scope="'+feedback.scope+'"]').find( ".feedback-posts" ).prepend( $html.fadeIn( "slow" ) );
     }
 
+    // Regular expression to change "returns" to <breaks> || Used in post listing
+    //
     function _parseComment( comment )
     {
         var $htmlParser = $( "<div/>", { "class": "feedback-temp-parse-comment", html: comment } );
@@ -414,6 +320,8 @@
         return $htmlParser.text().replace( /\n/g, "<br/>" );
     }
 
+    // Regular expression to change <breaks> to "returns" || Used in post editing
+    //
     function _unParseComment( comment )
     {
         var $htmlParser = $( "<div/>", { "class": "feedback-temp-unparse-comment", html: comment } );
@@ -421,6 +329,8 @@
         return $htmlParser.text().replace( /<br\s*[\/]?>/gi, "\n" );
     }
 
+    // Show the textarea to write a feedback
+    //
     function _showFeedbackSubmitionForm( $elem )
     {
         $elem.$feedbackSubmitBox.removeClass( "hide" );
@@ -428,12 +338,16 @@
         $elem.$textarea.focus();
     }
 
+    // Hide the textarea
+    //
     function _hideFeedbackSubmitionForm( $elem )
     {
         $elem.$feedbackSubmitBox.addClass( "hide" );
         $elem.$element.show();
     }
 
+    // Prepare the post for submiting
+    //
     function _submitFeedbackPost( $elem )
     {
         var toRemoveId
@@ -441,7 +355,6 @@
                              commentorId:     currentUserId
                          ,   comment:         $elem.message
                          ,   scope:           $elem.scope
-                         ,   visibility:      $elem.visibility
                          }
         ;
 
@@ -456,6 +369,8 @@
         }
     }
 
+    // Delete the post
+    //
     function _destroyFeedbackPost( feedbackId, $elem )
     {
             var postData  =  {
@@ -465,6 +380,8 @@
             _doDestroyFeedback( postData, $elem );
     }
 
+    // Fake edit the post by copying a new instance in the textarea, creating new post in order to appear at the top and on success delete the one that has the class "feedback-to-remove"
+    //
     function _editFeedbackPost( target )
     {
         if ( target.$feedbackSubmitBox.hasClass( "hide" ) )
@@ -483,13 +400,10 @@
         target.$btnEditFeedback.addClass( "disabled" );
     }
 
+    // The initial state of a textarea
+    //
     function _resetFeedbackSubmitForm ( $elem )
     {
-        if ( !$elem.$feedbackVisibilities.find( "button" ).hasClass( "active" ) )
-        {
-            $elem.$feedbackVisibilities.find( "button" ).first().addClass( "active" );
-        }
-
         $elem.$btnSubmitFeedback.removeClass( "disabled" );
         $elem.$textarea.val( "" ).attr( "disabled" , false);
         $elem.$feedbackSubmitBox.addClass( "hide" );
@@ -499,33 +413,42 @@
         $elem.$btnAddFeedback.show();
     }
 
+    // Show a notification message according the action that was taken
+    //
     function _handleNotificationMessages( $elem, state )
     {
-        $elem.$notifications.find( ".alert" ).removeClass( "hide" ).addClass( "hide" );
-
-        switch (state)
+        if ( $elem )
         {
-            case "added":
+            $elem.$notifications.find( ".alert" ).removeClass( "hide" ).addClass( "hide" );
+    
+            if ( state )
+            {
+                switch ( state )
+                {
+                    case "added":
 
-                $elem.$notiAdded.removeClass( "hide" );
+                        $elem.$notiAdded.removeClass( "hide" );
 
-                break;
+                        break;
 
-            case "deleted" :
+                    case "deleted" :
 
-                $elem.$notiDeleted.removeClass( "hide" );
+                        $elem.$notiDeleted.removeClass( "hide" );
 
-                break;
+                        break;
 
-            case "error" :
+                    case "error" :
 
-                $elem.$notiError.removeClass( "hide" );
+                        $elem.$notiError.removeClass( "hide" );
 
-                break;
+                        break;
+                }
+            }
         }
+
     }
 
-    // actual sending of message to API -> SAKIS
+    // actual sending of message to API || POST
     //
     function _doPostFeedback( postData, $elem, toRemoveId )
     {
@@ -599,7 +522,7 @@
         );
     }
 
-    // actual sending of message to API -> SAKIS
+    // actual sending of message to API || DELETE
     //
     function _doDestroyFeedback( postData, $elem )
     {
@@ -651,8 +574,7 @@
         );
     }
 
-    //Gets the comments from cache, or invokes the API to get them, using
-    //the current user's access rights.
+    // Call to the API || GET
     //
     function _getFeedbackComments( options )
     {
@@ -670,7 +592,12 @@
             ,   groupDomain:       bidx.common.groupDomain
             ,   success: function( response )
                 {
-                    if( response.data.feedbacks )
+                    if ( response.data.canCreate )
+                    {
+                        _createFeedbackPanelStructure();
+                    }
+
+                    if ( response.data.feedbacks )
                     {
                         bidx.utils.log( "[commenting] following comments received", response.data );
 
@@ -681,7 +608,6 @@
 
 
                     }
-                        _createVisibilities( response.data.allowedVisibilities );
                         _handleClicked();
                 }
 
@@ -710,6 +636,8 @@
         return $d.promise();
     }
 
+    // Get the parameters based on the $(this) element. Note that not all the elements or the variables are filled, sometimes they are empty or falsy but that's fine.
+    //
     function _getTargetedParams( elem )
     {
         var $elem = $(elem)
@@ -717,7 +645,6 @@
         ,   $feedbackBox            = $feedbackPanel.find(".feedback-box")
         ,   $feedbackSubmitBox      = $feedbackPanel.find(".feedback-submit")
         ,   $feedbackPost           = $elem.closest( ".feedback-post" )
-        ,   $feedbackVisibilities   = $feedbackBox.find( ".feedback-visibilities" )
         ,   $textarea               = $feedbackPanel.find( ".feedback-submit textarea" )
         ,   $btnAddFeedback         = $feedbackPanel.find( ".btn-add-feedback" )
         ,   $btnSubmitFeedback      = $feedbackPanel.find( ".btn-submit-feedback" )
@@ -730,7 +657,6 @@
         ,   comment                 = $feedbackPost.find( ".feedback-comment" ).html()
         ,   feedbackId              = $feedbackPost.attr( "data-feedbackid" )
         ,   scope                   = $feedbackBox.attr( "data-scope" )
-        ,   visibility              = $feedbackPanel.find( ".feedback-visibilities .active" ).attr( "data-visibility" )
         ,   message                 = $textarea.val()
         ,   params
         ;
@@ -739,7 +665,6 @@
         {
             entityId                : entityId
         ,   scope                   : scope
-        ,   visibility              : visibility
         ,   message                 : message
         ,   feedbackId              : feedbackId
         ,   comment                 : comment
@@ -748,7 +673,6 @@
         ,   $feedbackBox            : $feedbackBox
         ,   $feedbackSubmitBox      : $feedbackSubmitBox
         ,   $feedbackPost           : $feedbackPost
-        ,   $feedbackVisibilities   : $feedbackVisibilities
         ,   $textarea               : $textarea
         ,   $btnAddFeedback         : $btnAddFeedback
         ,   $btnSubmitFeedback      : $btnSubmitFeedback

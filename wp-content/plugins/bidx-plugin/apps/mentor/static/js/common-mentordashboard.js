@@ -147,9 +147,8 @@
         ;
 
         postData =  {
-                        initiatorId:     params.initiatorId
-                    ,   status:     params.action
-                    ,   reason:     params.type
+                        accept:          (params.action === "accepted") ?  "true" :  "false"
+                    ,   reason:          params.type
                     };
          //uriStatus = document.location.href.split( "#" ).shift() + "?smsg=8&sparam=" + window.btoa('action=' + params.action) + '#mentoring/mentor';
          //document.location.href = uriStatus;
@@ -161,7 +160,7 @@
              "mentorRelationships.mutate"
         ,   {
                 groupDomain:            bidx.common.groupDomain
-            ,   entityId:               params.entityId
+            ,   requestId:              params.requestId
             ,   data:                   postData
             ,   success: function( response )
                 {
@@ -219,7 +218,7 @@
              "mentorRelationships.cancel"
         ,   {
                 groupDomain:    bidx.common.groupDomain
-            ,   entityId:       params.entityId
+            ,   requestId:       params.requestId
             ,   success:        function( response )
                                 {
                                     bidx.utils.log("[mentor] mutated a contact",  response );

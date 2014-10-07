@@ -16,7 +16,7 @@ $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 $sessionData    = BidxCommon::$staticSession;
 $entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
 
-$ownerId 		= $businessSummary->bidxMeta->bidxOwnerId;	
+$ownerId 		= $businessSummary->bidxMeta->bidxOwnerId;
 $loggedInUserId = $sessionData->data->id;
 
 // if a user has an investorProfile, he is allowed to request access to a business summary
@@ -74,7 +74,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
     <div class="row">
         <div class="col-sm-8">
-<?php 
+<?php
             if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
             {
 ?>
@@ -91,7 +91,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
                 <h1><?php echo _e( 'Create Business Summary', 'bidxplugin' ); ?></h1>
 <?php
-                
+
             }
 ?>
         </div>
@@ -130,7 +130,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div>
     </div>
 
-<?php 
+<?php
     if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
     {
 ?>
@@ -145,17 +145,17 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             <div class="col-sm-5">
     <?php
-                /* 
-                 * We want ratings to be indexed by Google, so need to include this on page load. It 
+                /*
+                 * We want ratings to be indexed by Google, so need to include this on page load. It
                  * might be updated in JavaScript though, so also check the translations in i18n.xml.
-                 */ 
+                 */
                 $ratingTotals = $this->rating->totals;
 
-                if( $ratingTotals ) 
+                if( $ratingTotals )
                 {
                     $ratingAllowed = $loggedInUserId != $ownerId;
                     $ratingUser = $this->rating->userRating;
-    ?> 
+    ?>
                         <div class="rating-wrapper">
                             <div class="rating-total">
                                 <div class="rating-no-score <?php echo !$ratingTotals->average ? '' : 'hide' ?>">
@@ -168,11 +168,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingTotals->count; ?></span>)</span>
                                 </div>
 <?php
-?>                                
+?>
                             </div>
 <?php
                             if( $ratingAllowed )
-                            { 
+                            {
 ?>
                                 <div class="rating-vote">
                                     <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
@@ -232,7 +232,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             </div>
         </div>
     </div>
-<?php 
+<?php
     }
 ?>
 
@@ -243,7 +243,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <div class="panel panel-default panel-feedback panel-open">
             <div class="panel-heading">
                 <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-GeneralOverview"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
-                <!-- <button class="btn btn-xs btn-success btn-feedback"><i class="fa fa-comments"></i> Feedback</button> -->
             </div>
             <div id="businessSummaryCollapse-GeneralOverview" class="panel-collapse collapse in">
                 <div class="panel-body clearfix" style="overflow: visible;">
@@ -690,7 +689,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div><!-- /About you & your team -->
 
         <!-- Financial details -->
-        <div class="panel panel-default panel-feedback">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-FinancialDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
             </div>
@@ -1360,7 +1359,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 </script>
 <script type="text/html" id="active-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-reject"><?php _e('Ignore request','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=cancel&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-reject"><?php _e('Cancel request','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="send-mentor-action">
@@ -1370,8 +1369,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 </script>
 <script type="text/html" id="respond-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=accepted&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-success pull-right label bidx-label btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=rejected&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmRequest/requestId=%requestId%&type=mentor&action=accepted&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-success pull-right label bidx-label btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
 
 -->
 </script>
@@ -1393,4 +1392,3 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     </div>
 -->
 </script>
-
