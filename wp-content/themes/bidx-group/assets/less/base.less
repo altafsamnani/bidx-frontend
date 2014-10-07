@@ -188,6 +188,11 @@ h1, h2, h3, h4, h5, h6,
     margin-bottom: 40px;
 }
 
+.bidx-edit .actions
+{
+    display: none;
+}
+
 // Icons manipulation
 // -------------------------
 .icons-circle
@@ -934,6 +939,7 @@ header
 
 .label
 {
+    margin-top: floor(@font-size-base * 1.45);
     &.bidx-label
     {
         margin-right: 0.5em;
@@ -954,6 +960,25 @@ header
     &.bidx-mentor
     {
         background-color: @mentor;
+    }
+    &.label-Granted
+    {
+        .label-variant(@label-success-bg);
+    }
+    &.label-Pending
+    {
+        .label-variant(@label-warning-bg);
+    }
+    &.label-Rejected
+    {
+        .label-variant(@label-danger-bg);
+    }
+    &:before
+    {
+        content: "•";
+        margin-right: 0.5em;
+        opacity: 0.4;
+        text-shadow: black 0 0 1px;
     }
 }
 
@@ -1040,7 +1065,11 @@ select
     }
 }
 
-
+.or
+{
+    text-align: center;
+    margin: @line-height-computed 0 0;
+}
 /* ==========================================================================
    2. CHECKBOXES
    ========================================================================== */
@@ -1661,6 +1690,27 @@ select
     padding-bottom: ceil(@font-size-base * 1.2);
     font-weight: 100;
 }
+.fa-block
+{
+    display: block !important;
+    font-size: ceil(@font-size-base * 2.10);
+}
+.btn-member
+{
+    background-color: @member;
+}
+.btn-investor
+{
+    background-color: @investor;
+}
+.btn-mentor
+{
+    background-color: @mentor;
+}
+.btn-entrepreneur
+{
+    background-color: @entrepreneur;
+}
 // carousel.less
 // -------------------------
 .carousel-empty
@@ -1705,11 +1755,24 @@ select
 .radio,
 .checkbox
 {
-  padding-left: 0;
+    padding-left: 0;
+    label
+    {
+        margin-top: 0;
+    }
 }
 
-.has-error > div.error {
+.has-error > div.error
+{
     color: @state-danger-text;
+}
+
+label
+{
+    display: inline-block;
+    margin-bottom: 2px;
+    margin-top: 15px;
+    font-weight: bold;
 }
 
 // glyphicons.less
@@ -1767,8 +1830,170 @@ select
 // progress-bars.less
 // -------------------------
 
+// scaffolding.less
+// -------------------------
+
+hr
+{
+  border-top: 1px solid lighten(@gray-light, 26.5%);
+}
+
 // tables.less
 // -------------------------
+.table
+{
+    font-size: @font-size-base;
+}
+
+/*!
+ * bootstrap-vertical-tabs - v1.1.0
+ * https://dbtek.github.io/bootstrap-vertical-tabs
+ * 2014-07-24
+ * Copyright (c) 2014 İsmail Demirbilek
+ * License: MIT
+ */
+
+.tabs-left,
+.tabs-right
+{
+    border-bottom: none;
+    padding-top: 0;
+    > li
+    {
+        float: none;
+        margin-bottom: 2px;
+        text-transform: uppercase;
+    }
+}
+
+.tabs-left
+{
+    > li
+    {
+        > a
+        {
+            .border-radius(0, 0, 4px, 4px);
+            margin-right: 2px;
+            @media (max-width: @screen-sm-min)
+            {
+                margin-right: 0;
+                .border-radius(4px, 4px, 4px, 4px);
+            }
+            display: block;
+            border: none;
+            background-color: lighten(@brand-primary, 35%);
+            &:focus
+            {
+                background-color: lighten(@brand-primary, 30%);
+            }
+            &:hover
+            {
+                background-color: lighten(@brand-primary, 30%);
+            }
+        }
+        &.active
+        {
+            margin-right: -5px;
+            @media (max-width: @screen-sm-min)
+            {
+                margin-right: 0;
+            }
+            > a
+            {
+                border: none;
+                border-right-color: transparent;
+                &:focus
+                {
+                    border: none;
+                    border-right-color: transparent;
+                }
+                &:hover
+                {
+                    border: none;
+                    border-right-color: transparent;
+                }
+            }
+        }
+    }
+}
+.tabs-right
+{
+    > li
+    {
+        > a
+        {
+            .border-radius(4px, 4px, 0, 0);
+            margin-right: 2px;
+            @media (max-width: @screen-sm-min)
+            {
+                margin-right: 0;
+                .border-radius(4px, 4px, 4px, 4px);
+            }
+            border: none;
+            background-color: lighten(@brand-primary, 35%);
+        }
+        &.active
+        {
+            margin-left: -5px;
+            > a
+            {
+                border: none;
+                border-right-color: transparent;
+                &:focus
+                {
+                    border: none;
+                    border-right-color: transparent;
+                }
+                &:hover
+                {
+                    border: none;
+                    border-right-color: transparent;
+                }
+            }
+        }
+    }
+}
+.tabs-vertical
+{
+    .tabs-nav
+    {
+        @media (min-width: @screen-sm-min)
+        {
+            padding-right: 0;
+        }
+    }
+    .tabs-content
+    {
+        @media (min-width: @screen-sm-min)
+        {
+            padding-left: 0;
+        }
+    }
+    .tabs-region
+    {
+        padding-right: @padding-base-horizontal;
+        @media (min-width: @screen-sm-min)
+        {
+/*             padding-left: 0; */
+        }
+    }
+}
+.tab-pane
+{
+    background-color: @white;
+    .rounded(3px);
+    padding: @padding-base-horizontal;
+}
+.tabs-nav
+{
+    .fa
+    {
+        font-size: floor(@font-size-base * 1.65);
+        width: 30px;
+        text-align: center;
+    }
+}
+
 
 // thumbnails.less
 // -------------------------
@@ -1798,7 +2023,7 @@ select
 
     @media (min-width: @screen-sm-min)
     {
-        font-size: (@font-size-base * 1.6);
+        font-size: floor(@font-size-base * 1.6);
         line-height: floor(@font-size-base * 1.6);
     }
 }

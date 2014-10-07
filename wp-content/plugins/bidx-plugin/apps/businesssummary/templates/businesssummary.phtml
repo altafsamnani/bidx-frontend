@@ -706,6 +706,8 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                 __('Business sales started in','bidxplugin') => $this->exst($businessSummary->yearSalesStarted)
                             );
                             echo $this->pairRows( $rowValues );
+
+                            $this->render('financialsummary.phtml');
 ?>
                         </div>
 
@@ -752,15 +754,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
-
-                        <!-- VIEW and EDIT -->
-                        <div class="view viewShow viewEdit">
 <?php
                             $this->render('financialsummary.phtml');
 ?>
-                        </div><!-- /VIEW and EDIT -->
+
+                        </div>
 
                         <!-- ERROR -->
                         <div class="view viewError alert alert-warning">
