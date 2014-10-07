@@ -3,7 +3,7 @@ $member         = isset($this->data->member->displayName) ?  $this->data->member
 $entities       = $this->sessionData->data->wp->entities;
 $isSuperAdmin   = is_super_admin();
 ?>
-<div class="block-odd member">
+<div class="member">
     <div class="clearfix">
         <h1 class="pull-left bidx-page-heading">
             <span class="default"><?php echo (isset($this->data->isMyProfile) && $this->data->isMyProfile) ? __('My Profile','bidxplugin') : $member; ?></span>
@@ -20,7 +20,25 @@ $isSuperAdmin   = is_super_admin();
             <span class="createMentor hide"><?php _e('Create my mentor profile', 'bidxplugin')?></span>
 
         </h1>
+
         <div class="editControls btn-group pull-right"></div>
+
+        <div class="actions text-right">
+            <div class="btn-group">
+                <a href="#" class="btn btn-sm btn-primary">
+                    <div class="fa fa-dashboard fa-block"></div>
+                    Dashboard
+                </a>
+                <a href="#" class="btn btn-sm btn-primary">
+                    <div class="fa fa-suitcase fa-block"></div>
+                    Create Business
+                </a>
+                <a href="#" class="btn btn-sm btn-primary">
+                    <div class="fa fa-tasks fa-block"></div>
+                    Add Company
+                </a>
+            </div>
+        </div>
     </div>
 
     <div class="row mainState mainStateShow">
@@ -33,169 +51,61 @@ $isSuperAdmin   = is_super_admin();
                 <p class="errorMsg"></p>
             </div>
         </div>
-        <div class="col-sm-8">
-            <div id="myProfile">
+        <div class="col-sm-12">
+        
+<div class="row tabs-vertical">
+
+    <div class="col-sm-3 tabs-nav">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs tabs-left">
+            <li class="active"><a href="#tab-member" data-toggle="tab"><i class="pull-left fa fa-user"></i> Member</a></li>
+            <li><a href="#-tab-entreprenuer" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> Entrepreneur</a></li>
+<?php
+            if ( $this->isLoggedInInvestor || $this->isLoggedInGroupOwner ) :
+?>          
+                <li><a href="#tab-investor" data-toggle="tab"><i class="pull-left fa fa-bank"></i> Investor</a></li>
+<?php
+            endif;
+?>          
+
+            <li><a href="#tab-mentor" data-toggle="tab"><i class="pull-left fa fa-compass"></i> Mentor</a></li>
+        </ul>
+        
+        <?php // $this-> //render('create-grow.phtml'); ?>
+    </div>
+
+    <div class="col-sm-9 tabs-content">
+        <!-- Tab panes -->
+            <div id="myProfile" class="tab-content">
+            <div class="tab-pane active" id="tab-member">
                 <?php $this->render('view-member.phtml');  ?>
+            </div>
+            <div class="tab-pane" id="-tab-entreprenuer">
                 <?php $this->render('view-entrepreneur.phtml'); ?>
-                <?php ($this->isLoggedInInvestor || $this->isLoggedInGroupOwner) ? $this->render('view-investor.phtml') : ''; ?>
+            </div>
+<?php
+            if ( $this->isLoggedInInvestor || $this->isLoggedInGroupOwner ) :
+?>          
+            <div class="tab-pane" id="tab-investor">
+                <?php $this->render('view-investor.phtml'); ?>
+            </div>
+<?php
+            endif;
+?>          
+            <div class="tab-pane" id="tab-mentor">
                 <?php $this->render('view-mentor.phtml'); ?>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="side-bar well">
+    </div> 
 
-<?php
-    if( $isSuperAdmin ) {
-?>
-    <h2><?php _e('Admin functionality', 'bidxplugin')?></h2>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong><?php _e('Wordpress dashboard', 'bidxplugin')?></strong>
+</div>
+
+
         </div>
-        <div class="panel-body">
-            <em><?php _e('Visit wordpress dashboard', 'bidxplugin')?></em>
-            <a href="/wp-admin" class="btn btn-primary pull-right"><i class="fa fa-eye"></i> <?php _e('Visit','bidxplugin')?></a>
-        </div>
-    </div>
-<?php
-    }
-    else if ( isset($this->data->isMyProfile) && $this->data->isMyProfile ) {
-?>
-            <h2><?php _e('Create and grow', 'bidxplugin')?></h2>
-<?php
-        if ( isset( $entities->bidxEntrepreneurProfile ) ) {
-?>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong><?php _e('Create a business summary', 'bidxplugin')?></strong>
-                </div>
-                <div class="panel-body">
-                    <em><?php _e('Create your business', 'bidxplugin')?></em>
-                    <a href="<?php echo _l('businesssummary');?>/#createBusinessSummary" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
-                </div>
-            </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong><?php _e('Do you own or participate in a company?', 'bidxplugin')?></strong>
-                </div>
-                <div class="panel-body">
-                    <em><?php _e('Add a company', 'bidxplugin')?></em>
-                    <a href="<?php echo _l('company');?>/#createCompany" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Add','bidxplugin'); ?></a>
-                </div>
-            </div>
 
-<?php
-        }
 
-        // Create entrepreneur
-        //
-        if ( !isset( $entities->bidxEntrepreneurProfile ) ) {
-?>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong><?php _e('Become an entrepreneur', 'bidxplugin')?></strong>
-                </div>
-                <div class="panel-body">
-                    <em><?php _e('Create your entrepreneur profile', 'bidxplugin')?></em>
-                    <a href="<?php echo _l('member');?>/#createEntrepreneur" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
-                </div>
-            </div>
-<?php
-        } else {
-?>
-            <div class="panel panel-default">
-                <div class="panel-body">
-<?php
-                    printf( __( 'Go to %sEntrepreneur dashboard%s', 'bidxplugin' ), '<a href="'._l('entrepreneur-dashboard').'">', '</a>' );
-?>
-                </div>
-            </div>
 
-<?php
-        }
-
-        // Create investor
-        //
-        if ( !isset( $entities->bidxInvestorProfile )) {
-?>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong><?php _e('Become an investor', 'bidxplugin')?></strong>
-                </div>
-                <div class="panel-body">
-                    <em><?php _e('Create your resources', 'bidxplugin')?></em>
-                    <a href="<?php echo _l('member');?>/#createInvestor" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Invest','bidxplugin')?></a>
-                </div>
-            </div>
-<?php
-        } else {
-?>
-            <div class="panel panel-default">
-                <div class="panel-body">
-<?php
-                    printf( __( 'Go to %sInvestor dashboard%s', 'bidxplugin' ), '<a href="'._l('investor-dashboard').'">', '</a>' );
-?>
-                </div>
-            </div>
-<?php
-        }
-
-        // Create mentor
-        //
-        if ( !isset( $entities->bidxMentorProfile )) {
-?>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong><?php _e('Become a mentor', 'bidxplugin')?></strong>
-                </div>
-                <div class="panel-body">
-                    <em><?php _e('Create your mentor profile', 'bidxplugin')?></em>
-                    <a href="<?php echo _l('member');?>/#createMentor" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> <?php _e('Create','bidxplugin')?></a>
-                </div>
-            </div>
-<?php
-        } else {
-?>
-            <div class="panel panel-default">
-                <div class="panel-body">
-<?php
-                    printf( __( 'Go to %sMentor dashboard%s', 'bidxplugin' ), '<a href="'._l('mentor-dashboard').'">', '</a>' );
-?>
-                </div>
-            </div>
-<?php
-        }
-
-    }
-          //  }
-            $this->render('view-group.phtml');
-?>
-
-            </div>
-<?php 
-            if ( BidxCommon::$staticSession->authenticated == 'true')
-            {
-?>
-                <div class="region-side">
-<?php               
-                    dynamic_sidebar('priv-member-side');
-?>
-                </div>
-<?php                
-            }
-            else
-            {
-?>
-                <div class="region-side">
-<?php               
-                    dynamic_sidebar('pub-member-side');
-?>
-                </div>
-<?php                
-            }
-?>
-        </div>
     </div>
     <?php $this->render('edit-member.phtml'); ?>
     <?php $this->render('edit-entrepreneur.phtml'); ?>
