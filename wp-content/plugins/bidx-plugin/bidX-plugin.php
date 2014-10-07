@@ -47,7 +47,6 @@ if (!BidxCommon :: isWPInternalFunction ()) {
       'auth',
       'account',
       'businesssummary',
-      'commenting',
       'company',
       'group',
       'mail',
