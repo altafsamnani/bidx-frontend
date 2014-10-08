@@ -26,7 +26,7 @@ class businesssummary
     function register_businesssummary_bidx_ui_libs()
     {
         /* Common mentoring functions & mentoring activities functions */
-     ;
+        wp_register_script ('commenting', plugins_url ('../commenting/static/js/commenting.js', __FILE__), $deps, '20140307', TRUE);;
         wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), $deps, '20140307', TRUE);
         $deps = array_merge( self :: $deps, array(  'bp-mentor', 'commenting' ) );
         //$deps = self::$deps;
