@@ -1,5 +1,6 @@
 <div id="mentor-dashboard">
     <?php
+
     // TODO Arjan TODO Altaf typo in $this->isEntrpreneur ?
     if($this->isMentor || $this->isEntrpreneur || $this->isGroupOwner)
     { ?>
@@ -8,6 +9,10 @@
     ?>
 
     <div class="dashboard">
+        <?php
+        if( !$this->isBuisnessSummary )
+        {
+        ?>
         <div class="view viewMainsuccess alert alert-success">
                 <p class="successMsg"></p>
         </div>
@@ -16,7 +21,8 @@
             <h1><?php _e('Error','bidxplugin')?></h1>
             <span class="errorMsg"></span>
         </div>
-
+        <?php
+        } ?>
         <div class="modalView modalConfirmRequest">
             <!-- Modal -->
             <div class="modal fade bidx-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -2269,7 +2269,7 @@
         ,   initiatorId
         ,   mentorId                =   params.mentorId
         ,   isActiveRequest         =   params.isActiveRequest
-        ,   requestId               =   params.requestId
+        ,   requestId
         ,   waitArr                 =   []
         ,   respondArr              =   []
         ,   rejectMentorArr         =   []
@@ -2339,7 +2339,7 @@
                                                     }
                                                 );
                 initiatorId     =   filteredRequest.initiatorId;
-                bidx.utils.log('initiatorId', initiatorId);
+                requestId       =   filteredRequest.requestId;
                 actionData  = $("#respond-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
                 $listItem.find( '.action' ).empty( ).append( actionData );
 
@@ -2351,7 +2351,7 @@
                 hrefMatch   =   hrefMatch
                         .replace( /%entityId%/g,    contextBpId )
                         .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%initiatorId%/g, initiatorId )
+                        .replace( /%requestId%/g,    requestId)
                         ;
 
                 $acceptBtn.attr( "href", hrefMatch );
@@ -2360,11 +2360,11 @@
                 $matchBtn   =   $listItem.find( ".btn-bidx-ignore");
                 hrefMatch   =   $matchBtn.attr( "data-href" );
 
-                /* 1 Accept Link */
+                /* 2 Ignore Link */
                 hrefMatch   =   hrefMatch
                         .replace( /%entityId%/g,    contextBpId )
                         .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%initiatorId%/g, initiatorId )
+                        .replace( /%requestId%/g,    requestId)
                         ;
 
                 $matchBtn.attr( "href", hrefMatch );
@@ -2378,7 +2378,7 @@
                                                     }
                                                 );
                 initiatorId     =   filteredRequest.initiatorId;
-
+                requestId       =   filteredRequest.requestId;
                 actionData  = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
                 $listItem.find( '.action' ).empty( ).append( actionData );
 
