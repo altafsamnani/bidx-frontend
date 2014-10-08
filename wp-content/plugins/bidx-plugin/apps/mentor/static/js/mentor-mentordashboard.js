@@ -509,7 +509,7 @@
                 /* 3 Cancel request */
                 hrefStop = hrefStop
                             .replace( /%requestId%/g,      item.requestId )
-                           // .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%entityId%/g,      item.entityId )
                           //  .replace( /%initiatorId%/g,   item.initiatorId )
 
                             ;
@@ -535,6 +535,7 @@
                 /* 2 Ignore Link */
                 hrefCancel = hrefCancel
                             .replace( /%requestId%/g,      item.requestId )
+                            .replace( /%entityId%/g,       item.entityId )
                             ;
 
                 $cancelBtn.attr( "href", hrefCancel );
@@ -559,8 +560,8 @@
 
                 /* 1 Accept Link */
                 hrefAccept = hrefAccept
-                            .replace( /%requestId%/g,      item.requestId )
-                           // .replace( /%entityId%/g,      item.entityId )
+                            .replace( /%requestId%/g,     item.requestId )
+                            .replace( /%entityId%/g,      item.entityId )
                            // .replace( /%initiatorId%/g,   item.initiatorId )
                            ;
 
@@ -570,7 +571,7 @@
                 /* 2 Ignore Link */
                 hrefIgnore = hrefIgnore
                             .replace( /%requestId%/g,      item.requestId )
-                            //.replace( /%entityId%/g,      item.entityId )
+                            .replace( /%entityId%/g,      item.entityId )
                             //.replace( /%initiatorId%/g,   item.initiatorId )
                             ;
 
@@ -1262,6 +1263,11 @@
     {
         var result  =   options.result
         ;
+
+        wait        =   [];
+        respond     =   [];
+        ongoing     =   [];
+        allRequest  =   [];
 
         $.each( result , function ( idx, item)
             {

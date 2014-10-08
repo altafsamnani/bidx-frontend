@@ -97,16 +97,19 @@
 
     <!-- Modal dialogs status messages -->
      <Item value="modalSend">You are about to send the request. Are you sure?</Item>
-     <Item value="modalSendFrmBp">You are about to send the request. Are you sure?</Item>
+     <Item value="modalBpSend">You are about to send the request. Are you sure?</Item>
      <Item value="modalAccept">You are about to accept the request. Are you sure?</Item>
      <Item value="modalReject">You are about to ignore the request. Are you sure?</Item>
      <Item value="modalCancel">You are about to cancel the request. Are you sure?</Item>
+     <Item value="modalBpCancel">You are about to cancel the request. Are you sure?</Item>
      <Item value="modalStop">You are about to stop the mentoring. Are you sure?</Item>
     <!-- Modal button messages -->
      <Item value="modalBtnSend">Send request</Item>
+     <Item value="modalBtnBpSend">Send request</Item>
      <Item value="modalBtnAccept">Accept request</Item>
      <Item value="modalBtnReject">Ignore request</Item>
      <Item value="modalBtnCancel">Cancel request</Item>
+     <Item value="modalBtnBpCancel">Cancel request</Item>
      <Item value="modalBtnStop">Stop mentoring</Item>
 
       <!-- Facet Entity types -->
