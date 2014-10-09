@@ -44,6 +44,12 @@
 				        </select>
 				        <input disabled = "disabled" type="submit" name="applyMove" class="button action applyMove" value="Apply">
 				    </div>
+				    <div class="tablenav-pages"><span class="displaying-num"></span>
+						<span class="pagination-links">
+							<a class="prev-page bidx-btn-mail-prev" style="display:none;" title="Go to the previous page" href="#">‹ Newer</a>
+							<a class="next-page bidx-btn-mail-next" title="Go to the next page" href="#">Older ›</a>
+						</span>
+					</div>
 				</article>
 
 				 <article class="view viewList">
@@ -147,20 +153,22 @@
 		                        <strong><?php _e('Sender group','bidxplugin'); ?></strong>
 		                    </p>
 							<select class= "chosen-feedback" name="sendergroup" data-placeholder="<?php _e( 'Select Group', 'bidxplugin' ); ?>">></select>
-
-		                    <p>
-		                        <strong><?php _e('Recipient','bidxplugin'); ?></strong>
-		                    </p>
-		                    <select name="contacts" multiple class="hid chosen-recipient" data-placeholder="<?php _e( 'Select a recipient', 'bidxplugin' ); ?>"></select>
-		                    <p>
-		                        <strong><?php _e('Subject','bidxplugin'); ?></strong>
-		                    </p>
-                             <div id="titlediv">
-								<div id="titlewrap">
-									<input type="text" name="subject" size="30" value="" id="title" autocomplete="off">
+							<div class="form-group">
+			                    <p>
+			                        <strong><?php _e('Recipient','bidxplugin'); ?></strong>
+			                    </p>
+			                    <select name="contacts" multiple class="hid chosen-recipient" data-placeholder="<?php _e( 'Select a recipient', 'bidxplugin' ); ?>"></select>
+		                	</div>
+		                	<div class="form-group">
+			                    <p>
+			                        <strong><?php _e('Subject','bidxplugin'); ?></strong>
+			                    </p>
+	                            <div id="titlediv">
+									<div id="titlewrap">
+										<input type="text" name="subject" size="30" value="" id="title" autocomplete="off">
+									</div>
 								</div>
-								</div>
-
+							</div>
 
 		                    <?php
 
