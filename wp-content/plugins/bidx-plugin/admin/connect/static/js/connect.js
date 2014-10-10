@@ -1190,10 +1190,14 @@
 
                     // check if Older button needs to be hidden which has to happen when total message
                     //
+                    bidx.utils.log('mailboxtotal', mailboxTotal);
+                    bidx.utils.log('MAILPAGESIZE', MAILPAGESIZE);
                     if ( mailboxTotal <= MAILPAGESIZE )
                     {
                        buttons.splice( $.inArray( ".bidx-btn-mail-next" , buttons ), 1 );
-                       //$tableNavPages.find( ".bidx-btn-mail-next" ).hide();
+                       $tableNavPages.find( ".bidx-btn-mail-next" ).hide();
+                    } else {
+                        $tableNavPages.find( ".bidx-btn-mail-next" ).show();
                     }
 
                     // API doesnt allow certain actions for sent box, so remove those buttons
@@ -2674,13 +2678,13 @@
 
     // Make sure the i18n translations for this app are available before initing
     //
-    _oneTimeSetup();
+
     bidx.i18n.load( [ "__global", appName ] )
             .done( function()
             {
                 // vámonos!!
                 //
-                //_oneTimeSetup();
+                _oneTimeSetup();
             } );
 
     if ($("body.toplevel_page_bidx_connect_page").length && !bidx.utils.getValue(window, "location.hash").length)
