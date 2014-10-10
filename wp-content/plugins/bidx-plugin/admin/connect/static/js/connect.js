@@ -1190,8 +1190,6 @@
 
                     // check if Older button needs to be hidden which has to happen when total message
                     //
-                    bidx.utils.log('mailboxtotal', mailboxTotal);
-                    bidx.utils.log('MAILPAGESIZE', MAILPAGESIZE);
                     if ( mailboxTotal <= MAILPAGESIZE )
                     {
                        buttons.splice( $.inArray( ".bidx-btn-mail-next" , buttons ), 1 );
@@ -1258,8 +1256,12 @@
             $contactsDropdown.bidx_chosen();
             $btnComposeSubmit.removeClass( "disabled" );
             $btnComposeCancel.removeClass( "disabled" );
+            $frmCompose.find( "[name=content]" ).val('');
+            /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
+            window.parent.tinymce.get('connect_editor_id').setContent('');
 
             $frmCompose.validate().resetForm();
+
 
         }
 
@@ -1342,8 +1344,7 @@
                         lbl     = bidx.i18n.i( "forwardContentHeader", appName );
                         lbl     = "----------" + lbl + "----------";
                         content = "<br><br>" + lbl + "<br>" + content;
-                        bidx.utils.log($frmCompose.find( "[name=content]" ));
-                        bidx.utils.log('content',content);
+
                         $frmCompose.find( "[name=content]" ).val( content );
                         /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
                         window.parent.tinymce.get('connect_editor_id').setContent( content );
