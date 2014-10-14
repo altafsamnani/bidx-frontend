@@ -1193,7 +1193,9 @@
                     if ( mailboxTotal <= MAILPAGESIZE )
                     {
                        buttons.splice( $.inArray( ".bidx-btn-mail-next" , buttons ), 1 );
-                       //$tableNavPages.find( ".bidx-btn-mail-next" ).hide();
+                       $tableNavPages.find( ".bidx-btn-mail-next" ).hide();
+                    } else {
+                        $tableNavPages.find( ".bidx-btn-mail-next" ).show();
                     }
 
                     // API doesnt allow certain actions for sent box, so remove those buttons
@@ -1254,8 +1256,12 @@
             $contactsDropdown.bidx_chosen();
             $btnComposeSubmit.removeClass( "disabled" );
             $btnComposeCancel.removeClass( "disabled" );
+            $frmCompose.find( "[name=content]" ).val('');
+            /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
+            window.parent.tinymce.get('connect_editor_id').setContent('');
 
             $frmCompose.validate().resetForm();
+
 
         }
 
@@ -1338,8 +1344,7 @@
                         lbl     = bidx.i18n.i( "forwardContentHeader", appName );
                         lbl     = "----------" + lbl + "----------";
                         content = "<br><br>" + lbl + "<br>" + content;
-                        bidx.utils.log($frmCompose.find( "[name=content]" ));
-                        bidx.utils.log('content',content);
+
                         $frmCompose.find( "[name=content]" ).val( content );
                         /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
                         window.parent.tinymce.get('connect_editor_id').setContent( content );
@@ -1680,7 +1685,7 @@
                             {
                                 // first add the admins and groupowners
                                 //
-                                /*if ( response.relationshipType.contact.types.groupOwner )
+                                if ( response.relationshipType.contact.types.groupOwner )
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
@@ -1696,7 +1701,7 @@
                                             sortIndex.push( item.name.toLowerCase() );
                                         }
                                     } );
-                                }*/
+                                }
 
 
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
@@ -2674,13 +2679,13 @@
 
     // Make sure the i18n translations for this app are available before initing
     //
-    _oneTimeSetup();
+
     bidx.i18n.load( [ "__global", appName ] )
             .done( function()
             {
                 // vámonos!!
                 //
-                //_oneTimeSetup();
+                _oneTimeSetup();
             } );
 
     if ($("body.toplevel_page_bidx_connect_page").length && !bidx.utils.getValue(window, "location.hash").length)

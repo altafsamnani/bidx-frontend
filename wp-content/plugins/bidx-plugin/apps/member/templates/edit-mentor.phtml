@@ -35,7 +35,7 @@
                             </a>
                         </div>
 
-                        <div id="mentorProfileAbout" class="panel-collapse collapse in" style="overflow: visible;">
+                        <div id="mentorProfileAbout" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <blockquote class="alert-info">
                                     <?php _e('Tell visitors and members of the group how you see yourself as a mentor. Give a brief description of your mentor interests.', 'bidxplugin')?>
@@ -154,7 +154,7 @@
                                     <?php _e('Use this section to define your mentor preferences','bidxplugin');?>
                                 </blockquote>
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label><?php _e('Languages','bidxplugin'); ?></label>
                                             <select name="focusLanguage" multiple></select>
@@ -205,14 +205,19 @@
                                     </div>
                                 </div>
                                 <hr>
+
+                                <div class="industrySectors">
+                                    <label><?php _e('Focus industry','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                                </div>
+                                
                                 <div class="row">
-                                    <div class="form-group col-sm-6">
+                                    <!-- <div class="form-group col-sm-6">
                                         <label><?php _e('Focus industry','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                         <select name="focusIndustry" multiple></select>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Suggested Industry -->
-                                    <div class="form-group col-sm-6">
+                                    <div class="form-group col-sm-12">
                                         <label><?php _e('Focus expertise','bidxplugin'); ?></label>
                                         <select name="focusExpertise" multiple></select>
                                     </div>

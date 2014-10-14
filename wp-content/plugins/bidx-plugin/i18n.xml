@@ -145,4 +145,9 @@
     <Item value="visiblePublic">Everyone</Item>
     <Item value="visibleGroupadmin">Group admin</Item>
 
+    <!-- Industry Sectors -->
+    <Item value="selectMainSector">Select Main Sector</Item>
+    <Item value="selectSubSector">Select Sub Sector</Item>
+    <Item value="selectEndSector">Select End Sector</Item>
+
 </I18N>
