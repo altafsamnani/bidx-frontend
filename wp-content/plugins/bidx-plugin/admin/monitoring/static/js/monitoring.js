@@ -227,7 +227,7 @@
     }
 
     /*var data = google.visualization.arrayToDataTable([
-          ,
+          ['Day', 'New Business Summaries'],
           ['Day 1',  100    ],
           ['Day 2',  117    ],
           ['Day 3',  660    ],
@@ -244,14 +244,17 @@
         ,   eventData   =   response.events
         ,   graphData   =   []
         ,   options     =   {
-                                title: 'Weekly performance',
-                                vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
+                                title: 'Weekly performance'
+                            ,   vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
+                            , width: 600,
+                            height: 400
+
                             }
         ;
 
-        graphData.push( ['Day', 'New Busienss Summaries'] );
+        graphData.push( ['Day', 'New Business Summaries'] );
 
-        if(!$.isEmptyObject(eventData))
+        if(!$.isEmptyObject(eventData) || true)
         {
 
             $.each( eventData, function( date, count )
@@ -259,7 +262,18 @@
                 graphData.push( [date, count] );
             });
 
-            data    = google.visualization.arrayToDataTable(graphData);
+            //data    = google.visualization.arrayToDataTable(graphData);
+            data = google.visualization.arrayToDataTable([
+          ['Day', 'New Business Summaries'],
+          ['Day 1',  100    ],
+          ['Day 2',  117    ],
+          ['Day 3',  660    ],
+          ['Day 4',  103    ],
+          ['Day 5',  103    ],
+          ['Day 6',  103    ],
+          ['Day 7',  103    ]
+
+        ]);
 
             chart   = new google.visualization.BarChart($container);
 
