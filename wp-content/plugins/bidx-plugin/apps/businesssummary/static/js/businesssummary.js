@@ -2722,7 +2722,7 @@
     function _getActiveMentors( options )
     {
             var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
-            ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $listEmpty       = $("#empty-active-mentors").html().replace(/(<!--)*(-->)*/g, "")
             ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
             ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
             ,   $list            = $element.find("." + options.list)
