@@ -590,6 +590,7 @@
         ,   sortQuery       = []
         ,   criteriaFilters = []
         ,   criteriaSort    = []
+        ,   urlParam        = params.urlParam
         ;
 
         // 1. Search paramete
@@ -599,7 +600,7 @@
         //
         q = bidx.utils.getValue( params, 'q' );
 
-        if ( !q )
+        if ( !q && urlParam)
         {
             var url = document.location.href.split( "#" ).shift();
             q = bidx.utils.getQueryParameter( "q", url );
@@ -1552,7 +1553,9 @@
     {
         bidx.utils.log("[group] navigate", options );
 
-
+        var params = ( $.isEmptyObject( options.params ) ) ? {} : options.params
+        ;
+        bidx.utils.log('params', params);
 
         switch ( options.state )
         {
@@ -1565,13 +1568,14 @@
                 _showAllView( "sort" );
                 _toggleListLoading( $element );
 
+                bidx.utils.setValue( params, 'urlParam', true );
 
                 // load businessSummaries
                 //
                 _init();
                 _getSearchList(
                 {
-                    params      : options.params
+                    params      :   params
                 ,   cb          :   function()
                                     {
                                        _hideView( "load" );

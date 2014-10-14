@@ -295,6 +295,8 @@
         ,   ownerId
         ,   i18nItem
         ,   entityOwnerId
+        ,   externalVideoPitch
+        ,   $el
         ,   countHtml
         ,   $d              =  $.Deferred()
         ;
@@ -426,6 +428,13 @@
 
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
+
+                                                                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                                                        if ( externalVideoPitch )
+                                                                        {
+                                                                            $el         = $listItem.find("[data-role='businessImage']");
+                                                                            _addVideoThumb( externalVideoPitch, $el );
+                                                                        }
 
                                                                         if( $.isFunction( options.cb ) )
                                                                         {
@@ -692,6 +701,8 @@
         ,   ownerId
         ,   i18nItem
         ,   entityOwnerId
+        ,   externalVideoPitch
+        ,   $el
         ,   $d              =  $.Deferred()
         ,   incomingLength      = incomingResponse.length
         ;
@@ -756,6 +767,13 @@
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
 
+                                                                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                                                        if ( externalVideoPitch )
+                                                                        {
+                                                                            $el         = $listItem.find("[data-role='businessImage']");
+                                                                            _addVideoThumb( externalVideoPitch, $el );
+                                                                        }
+
                                                                         if( $.isFunction( options.cb ) )
                                                                         {
                                                                             // call Callback with current contact item as this scope and pass the current $listitem
@@ -817,6 +835,8 @@
         ,   ownerId
         ,   i18nItem
         ,   entityOwnerId
+        ,   externalVideoPitch
+        ,   $el
         ,   $d              =  $.Deferred()
         ,   counter         = 1
         ,   waitLength      = waitingResponse.length
@@ -883,6 +903,13 @@
                                                                         // execute cb function                //
                                                                         $listItem = $( listItem );
 
+                                                                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                                                        if ( externalVideoPitch )
+                                                                        {
+                                                                            $el         = $listItem.find("[data-role='businessImage']");
+                                                                            _addVideoThumb( externalVideoPitch, $el );
+                                                                        }
+
                                                                         if( $.isFunction( options.cb ) )
                                                                         {
                                                                             // call Callback with current contact item as this scope and pass the current $listitem
@@ -942,6 +969,8 @@
         ,   ownerId
         ,   i18nItem
         ,   entityOwnerId
+        ,   externalVideoPitch
+        ,   $el
         ,   $d              =  $.Deferred()
         ,   counter         = 1
         ,   ongoingLength   = ongoingResponse.length
@@ -1009,6 +1038,13 @@
                                                                         // execute cb function
                                                                         //
                                                                         $listItem = $( listItem );
+
+                                                                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+                                                                        if ( externalVideoPitch )
+                                                                        {
+                                                                            $el         = $listItem.find("[data-role='businessImage']");
+                                                                            _addVideoThumb( externalVideoPitch, $el );
+                                                                        }
 
                                                                         if( $.isFunction( options.cb ) )
                                                                         {
@@ -1494,6 +1530,42 @@
         /*Empty page title and add currentpage title
         $element.find(".pagetitle").empty().append(pageTitle);*/
 
+    }
+
+    function _addVideoThumb( url, element )
+    {
+        var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
+        ,   provider    = matches[3]
+        ,   id          = matches[6]
+        ,   $el         = element
+        ;
+
+        if ( provider === "vimeo.com" )
+        {
+            var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?";
+            $.getJSON( videoUrl, function(data)
+                {
+                    if ( data )
+                    {
+                        $el.find( ".icons-rounded" ).remove();
+                        $el.append( $( "<div />", { "class": "img-cropper" } ) );
+                        $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
+                        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+                    }
+                }
+            );
+        }
+        else if ( provider === "youtube.com" )
+        {
+            $el.find( ".icons-rounded" ).remove();
+            $el.append( $( "<div />", { "class": "img-cropper" } ) );
+            $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
+            $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        }
+        else
+        {
+            bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
+        }
     }
 
     // ROUTER
