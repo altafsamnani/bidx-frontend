@@ -1931,7 +1931,7 @@
                             {
                                 // first add the admins and groupowners
                                 //
-                                /*if ( response.relationshipType.contact.types.groupOwner )
+                                if ( response.relationshipType.contact.types.groupOwner )
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
@@ -1946,7 +1946,7 @@
                                             sortIndex.push( item.name.toLowerCase() );
                                         }
                                     } );
-                                } */
+                                }
 
 
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
