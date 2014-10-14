@@ -292,6 +292,7 @@ class TemplateLibrary
             case 'language':
             case 'languageRating':
             case 'industry':
+            case 'industrySector':
             case 'mentorExpertise':
             case 'productService':
             case 'reasonForSubmission':
