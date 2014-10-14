@@ -122,6 +122,10 @@
         //
     ,   $editDocument                       = $element.find( ".js-edit-document" )
 
+        // Industy Sectors
+        //
+    ,   $industrySectors                    = $element.find( ".industrySectors" )
+
     ,   businessSummary
     ,   businessSummaryId
 
@@ -332,6 +336,10 @@
         {
             dataKey:            "socialImpact"
         });
+
+        // Run the industry widget on the selector
+        //
+        $industrySectors.industries();
 
         forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
 
@@ -1724,6 +1732,15 @@
             }
         } );
 
+        // Industry Sectors
+        //
+        var data = bidx.utils.getValue( businessSummary, "industrySector", true );
+
+        if ( data )
+        {
+            $industrySectors.industries( "populateInEditScreen",  data );
+        }
+
         // Now the nested objects
         //
         var managementTeam = bidx.utils.getValue( businessSummary, "managementTeam", true );
@@ -1854,6 +1871,32 @@
                 } );
             }
 
+
+            // Industry Sectors
+            var endSectors = $industrySectors.find( "[name*='endSector']" );
+
+            if ( endSectors )
+            {
+                var arr = [];
+                $.each( endSectors, function(i, f)
+                {
+                    var value   = bidx.utils.getElementValue( $(f) );
+
+                    if ( value )
+                    {
+                        arr.push( value );
+                    }
+                });
+
+                arr = $.map( arr, function( n )
+                {
+                    return n;
+                });
+
+                bidx.utils.setValue( businessSummary, "industrySector", arr );
+            }
+
+
             // Collect the nested objects
             //
             $.each( formFields, function( nest )
@@ -1907,9 +1950,9 @@
                             ,   value   = bidx.utils.getElementValue( $input )
                             ;
 
-                            if (value == '')
+                            if ( value === "" )
                             {
-                            	value = 0;
+                                value = 0;
                             }
 
                             item[ year ][ f ] = value;

@@ -34,7 +34,7 @@
                         </a>
                     </div>
 
-                    <div id="investorProfileGeneralInformation" class="panel-collapse collapse in" style="overflow: visible;">
+                    <div id="investorProfileGeneralInformation" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <!-- accordion body -->
 
@@ -148,14 +148,18 @@
                                 <?php _e('Use this section to define your investment preferences, such as countries, products or industries that you would like to invest in. This information will be used to match your profile to businesses that fit these criteria.', 'bidxplugin')?>
                             </blockquote>
 
+                            <div class="industrySectors">
+                                <label><?php _e('Industry','bidxplugin'); ?></label>
+                            </div>
+
                             <div class="row">
-                                <div class="col-sm-6">
+                                <!-- <div class="col-sm-6">
                                     <div class="form-group">
                                         <label><?php _e('Industry','bidxplugin'); ?></label>
                                         <select name="focusIndustry" multiple></select>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <label><?php _e('Language(s) of operation','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
                                         <select name="focusLanguage" multiple></select>
