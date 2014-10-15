@@ -433,7 +433,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             $rowValues = array (
 
                 __('Industry','bidxplugin')
-                    => $this->getMultiValues( $this->exst($businessSummary->industrySector), '<br> ','industrySector'),
+                    => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industrySector'),
+                // __('Industry','bidxplugin')
+                //     => $this->getMultiValues( $this->exst($businessSummary->industrySector), '<br> ','industrySector'),
 
                 // __('Suggested industry','bidxplugin')
                 //     => $this->getMultiValues( $this->exst($businessSummary->suggestedIndustry), ', ' ),
@@ -481,19 +483,19 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         <blockquote class="alert-info"><?php _e('Here we provide you with tools to share more precise information about your business, i.e. what industry it operates in, what it produces and where it operates. This information will be used to match your initiative with other businesses and investors.','bidxplugin')?></blockquote>
                         <form id="frmBusinessSummary-AboutYourBusiness">
 
-                            <div class="industrySectors">
+<!--                             <div class="industrySectors">
                                 <label><?php _e('Industry','bidxplugin'); ?></label>
                             </div>
-
+ -->
                             <div class="row">
                                 <!-- Industry -->
-<!--                                 <div class="form-group col-sm-6">
+                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Industry','bidxplugin'); ?></label>
                                     <select name="industry" multiple></select>
                                 </div>
- -->
+
                                 <!-- Product Service -->
-                                <div class="form-group col-sm-12">
+                                <div class="form-group col-sm-6">
                                     <label><?php _e('Product / service','bidxplugin'); ?></label>
                                     <select name="productService" multiple></select>
                                 </div>
