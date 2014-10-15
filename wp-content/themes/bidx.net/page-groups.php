@@ -36,15 +36,7 @@ get_header();
                         <div class="subpage-title">
                             <h5>Online Portals</h5>
                         </div>
-<!--                         <ul class="portfolio-filter nav nav-pills">
-                            <li class="active"><a href="#" data-filter="*">All</a></li>
-                            <li><a href="#" data-filter=".artwork">Africa</a></li>
-                            <li><a href="#" data-filter=".creative">Asia</a></li>
-                            <li><a href="#" data-filter=".nature">Middle East</a></li>
-                            <li><a href="#" data-filter=".outside">Latin America</a></li>
-                            <li><a href="#" data-filter=".photography">Europe</a></li>
-                        </ul>
- -->                        <!-- /.portfolio-filter -->
+                        <!-- /.portfolio-filter -->
                         <div class="row">
                             <div id="isotope-portfolio-container">
                                 <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
@@ -55,7 +47,6 @@ get_header();
                                             <a href="https://shapeandlead.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>2nd Group name</h5> -->
                                             <p>Shape & Lead</p>
                                         </div>
                                     </div>
@@ -68,7 +59,6 @@ get_header();
                                             <a href="https://ozg.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>2nd Group name</h5> -->
                                             <p>Ondernemen Zonder Grenzen</p>
                                         </div>
                                     </div>
@@ -83,7 +73,6 @@ get_header();
                                             <a href="https://cleancookstoves.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>1st Group name</h5> -->
                                             <p>Clean Cookstoves</p>
                                         </div>
                                     </div>
@@ -98,7 +87,6 @@ get_header();
                                             <a href="https://poslovnicentarzvecan.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>5th Group name</h5> -->
                                             <p>BC Zvecan</p>
                                         </div>
                                     </div>
@@ -113,7 +101,6 @@ get_header();
                                             <a href="https://bscmonrovia.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>6th Group name</h5> -->
                                             <p>BSC Monrovia</p>
                                         </div>
                                     </div>
@@ -128,7 +115,6 @@ get_header();
                                             <a href="https://jcirwanda.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>3rd Group name</h5> -->
                                             <p>JCI Rwanda</p>
                                         </div>
                                     </div>
@@ -143,7 +129,6 @@ get_header();
                                             <a href="http://demogroup.demo.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>4th Group name</h5> -->
                                             <p>Demo Group</p>
                                         </div>
                                     </div>
@@ -158,7 +143,6 @@ get_header();
                                             <a href="https://somaliland-agrifood.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>6th Group name</h5> -->
                                             <p>Somaliland Afrifood</p>
                                         </div>
                                     </div>
@@ -173,7 +157,6 @@ get_header();
                                             <a href="https://puntland-agrifood.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>6th Group name</h5> -->
                                             <p>Puntland Afrifood</p>
                                         </div>
                                     </div>
@@ -188,7 +171,6 @@ get_header();
                                             <a href="https://somalia-agrifood.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>6th Group name</h5> -->
                                             <p>Somalia Afrifood</p>
                                         </div>
                                     </div>
@@ -203,8 +185,21 @@ get_header();
                                             <a href="https://ifdc-catalist-uganda.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
                                         </div>
                                         <div class="portfolio-details">
-                                            <!-- <h5>6th Group name</h5> -->
                                             <p>IFDC Catalist Uganda</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.portfolio-item-wrapper -->
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 portfolio-item-wrapper">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="<?php bloginfo( 'template_url' ); ?>/assets/img/blog/logo18.png" class="img-responsive" alt="1st Portfolio Thumb">
+                                            <div class="image-overlay"></div>
+                                            <a href="https://bti.bidx.net" target="_blank" class="portfolio-zoom"><i class="fa fa-eye"></i> View</a>
+                                        </div>
+                                        <div class="portfolio-details">
+                                            <p>BTI Palestine</p>
                                         </div>
                                     </div>
                                 </div>
