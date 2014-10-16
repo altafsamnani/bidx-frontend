@@ -31,7 +31,7 @@
 
         // Industy Sectors
         //
-    ,   $industrySectors         = $editForm.find( ".industrySectors" )
+    // ,   $industrySectors         = $editForm.find( ".industrySectors" )
 
     ,   member
     ,   memberId
@@ -153,7 +153,7 @@
 
         // Run the industry widget on the selector
         //
-        $industrySectors.industries();
+        // $industrySectors.industries();
 
         // Grab the snippets from the DOM
         //
@@ -409,12 +409,12 @@
 
         // Industry Sectors
         //
-        var data = bidx.utils.getValue( member, "bidxMentorProfile.focusIndustrySector", true );
+        // var data = bidx.utils.getValue( member, "bidxMentorProfile.focusIndustrySector", true );
 
-        if ( data )
-        {
-            $industrySectors.industries( "populateInEditScreen",  data );
-        }
+        // if ( data )
+        // {
+        //     $industrySectors.industries( "populateInEditScreen",  data );
+        // }
 
         $.each( fields.preferredCommunication, function( i, f )
         {
@@ -583,28 +583,28 @@
         } );
 
         // Industry Sectors
-        var endSectors = $industrySectors.find( "[name*='endSector']" );
+        // var endSectors = $industrySectors.find( "[name*='endSector']" );
 
-        if ( endSectors )
-        {
-            var arr = [];
-            $.each( endSectors, function(i, f)
-            {
-                var value   = bidx.utils.getElementValue( $(f) );
+        // if ( endSectors )
+        // {
+        //     var arr = [];
+        //     $.each( endSectors, function(i, f)
+        //     {
+        //         var value   = bidx.utils.getElementValue( $(f) );
 
-                if ( value )
-                {
-                    arr.push( value );
-                }
-            });
+        //         if ( value )
+        //         {
+        //             arr.push( value );
+        //         }
+        //     });
 
-            arr = $.map( arr, function( n )
-            {
-                return n;
-            });
+        //     arr = $.map( arr, function( n )
+        //     {
+        //         return n;
+        //     });
 
-            bidx.utils.setValue( member, "bidxMentorProfile.focusIndustrySector", arr );
-        }
+        //     bidx.utils.setValue( member, "bidxMentorProfile.focusIndustrySector", arr );
+        // }
 
         $.each( fields.preferredCommunication, function( i, f )
         {

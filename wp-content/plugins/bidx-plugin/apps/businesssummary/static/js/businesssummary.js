@@ -124,7 +124,7 @@
 
         // Industy Sectors
         //
-    ,   $industrySectors                    = $element.find( ".industrySectors" )
+    // ,   $industrySectors                    = $element.find( ".industrySectors" )
 
     ,   businessSummary
     ,   businessSummaryId
@@ -339,7 +339,7 @@
 
         // Run the industry widget on the selector
         //
-        $industrySectors.industries();
+        // $industrySectors.industries();
 
         forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
 
@@ -783,11 +783,13 @@
                     {
                         // required:               true
                         monetaryAmount:         true
+                    ,   range :                 [-2147483648, 2147483647]   //PM-393
 
                     ,   messages:
                         {
                             required:               ""
                         ,   monetaryAmount:         "Please enter only numbers"
+                        ,   range:                  "Please enter lower value"
                         }
                     } );
                 } );
@@ -1732,14 +1734,14 @@
             }
         } );
 
-        // Industry Sectors
-        //
-        var data = bidx.utils.getValue( businessSummary, "industrySector", true );
+        // // Industry Sectors
+        // //
+        // var data = bidx.utils.getValue( businessSummary, "industrySector", true );
 
-        if ( data )
-        {
-            $industrySectors.industries( "populateInEditScreen",  data );
-        }
+        // if ( data )
+        // {
+        //     $industrySectors.industries( "populateInEditScreen",  data );
+        // }
 
         // Now the nested objects
         //
@@ -1873,28 +1875,28 @@
 
 
             // Industry Sectors
-            var endSectors = $industrySectors.find( "[name*='endSector']" );
+            // var endSectors = $industrySectors.find( "[name*='endSector']" );
 
-            if ( endSectors )
-            {
-                var arr = [];
-                $.each( endSectors, function(i, f)
-                {
-                    var value   = bidx.utils.getElementValue( $(f) );
+            // if ( endSectors )
+            // {
+            //     var arr = [];
+            //     $.each( endSectors, function(i, f)
+            //     {
+            //         var value   = bidx.utils.getElementValue( $(f) );
 
-                    if ( value )
-                    {
-                        arr.push( value );
-                    }
-                });
+            //         if ( value )
+            //         {
+            //             arr.push( value );
+            //         }
+            //     });
 
-                arr = $.map( arr, function( n )
-                {
-                    return n;
-                });
+            //     arr = $.map( arr, function( n )
+            //     {
+            //         return n;
+            //     });
 
-                bidx.utils.setValue( businessSummary, "industrySector", arr );
-            }
+            //     bidx.utils.setValue( businessSummary, "industrySector", arr );
+            // }
 
 
             // Collect the nested objects
