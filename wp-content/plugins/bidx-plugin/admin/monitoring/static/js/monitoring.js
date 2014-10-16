@@ -246,9 +246,8 @@
         ,   options     =   {
                                 title: 'Weekly performance'
                             ,   vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
-                            , width: 600,
-                            height: 400
-
+                            ,   width: 600
+                            ,   height: 400
                             }
         ;
 
