@@ -1,5 +1,43 @@
 <?php
+/**
+ * Add custom post types
+ */
 
+
+/****** News & Event Type Functionality for WP Start *******************/
+
+add_action ('init', 'bidxgroup_create_post_types');
+
+function bidxgroup_create_post_types ()
+{
+    $groupNews = get_option ('group-news'); // If Group news is set through SuperAdmin Dashboard->Settings->bidX Settings then only display it
+    if($groupNews) {
+        creategroup_post_type (array('post_type' => 'news', 'label' => 'News and Events'));
+    }
+}
+
+function creategroup_post_type ($post_arr)
+{
+    $post_type  = $post_arr[ 'post_type' ];
+    $post_label = $post_arr[ 'label' ];
+    $args = array (
+      'label' => ucwords($post_label),
+      'public' => true,
+      'exclude_from_search' => false,
+      'show_ui' => true,
+      'show_in_menu' => true,
+      'query_var' => true,
+      'rewrite' => false,
+      'capability_type' => 'post',
+      '_builtin' => false,
+      'has_archive' => false,
+      'hierarchical' => false,
+      'supports' => array ('title', 'editor', 'thumbnail', 'excerpt'),
+      'taxonomies' => array()
+    );
+    $newsPostResult = register_post_type ($post_type, $args);
+
+}
 
 function theme_enqueue_styles() {
     wp_enqueue_style('bidx-group', get_stylesheet_directory_uri().'/assets/less/base.less');
@@ -228,6 +266,27 @@ function get_custom_field_value ( $key,  $i = null)
     }
 
     return $value;
+}
+
+function getLangPrefix( $sep = '' )
+{
+  global $sitepress;
+
+  $siteLanguage = NULL;
+
+  if( $sitepress )
+  {
+    $currentLanguage = $sitepress->get_current_language();
+
+    if( $currentLanguage !== 'en')
+    {
+      $siteLanguage = $currentLanguage;
+    } else
+    {
+      $sep = '';
+    }
+  }
+   return $sep.$siteLanguage ;
 }
 
 function _pageuri( $contenPath )
