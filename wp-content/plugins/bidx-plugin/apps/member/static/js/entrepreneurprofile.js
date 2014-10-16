@@ -40,7 +40,7 @@
 
         // Industy Sectors
         //
-    ,   $industrySectors         = $editForm.find( ".industrySectors" )
+    // ,   $industrySectors         = $editForm.find( ".industrySectors" )
 
         // Since the data is coming from the member API, let's call the variable 'member'
         //
@@ -125,7 +125,7 @@
 
         // Run the industry widget on the selector
         //
-        $industrySectors.industries();
+        // $industrySectors.industries();
 
         // Grab the snippets from the DOM
         //
@@ -591,12 +591,12 @@
 
         // Industry Sectors
         //
-        var data = bidx.utils.getValue( member, "bidxEntrepreneurProfile.focusIndustrySector", true );
+        // var data = bidx.utils.getValue( member, "bidxEntrepreneurProfile.focusIndustrySector", true );
 
-        if ( data )
-        {
-            $industrySectors.industries( "populateInEditScreen",  data );
-        }
+        // if ( data )
+        // {
+        //     $industrySectors.industries( "populateInEditScreen",  data );
+        // }
 
         // Update the chosen components with our set values
         //
@@ -617,28 +617,28 @@
         } );
 
         // Industry Sectors
-        var endSectors = $industrySectors.find( "[name*='endSector']" );
+        // var endSectors = $industrySectors.find( "[name*='endSector']" );
 
-        if ( endSectors )
-        {
-            var arr = [];
-            $.each( endSectors, function(i, f)
-            {
-                var value   = bidx.utils.getElementValue( $(f) );
+        // if ( endSectors )
+        // {
+        //     var arr = [];
+        //     $.each( endSectors, function(i, f)
+        //     {
+        //         var value   = bidx.utils.getElementValue( $(f) );
 
-                if ( value )
-                {
-                    arr.push( value );
-                }
-            });
+        //         if ( value )
+        //         {
+        //             arr.push( value );
+        //         }
+        //     });
 
-            arr = $.map( arr, function( n )
-            {
-                return n;
-            });
+        //     arr = $.map( arr, function( n )
+        //     {
+        //         return n;
+        //     });
 
-            bidx.utils.setValue( member, "bidxEntrepreneurProfile.focusIndustrySector", arr );
-        }
+        //     bidx.utils.setValue( member, "bidxEntrepreneurProfile.focusIndustrySector", arr );
+        // }
 
         // Collect the nested objects
         //
