@@ -783,7 +783,7 @@
                     {
                         // required:               true
                         monetaryAmount:         true
-                    ,   range : [-2147483648, 2147483647] //PM-393
+                    ,   range :                 [-2147483648, 2147483647]   //PM-393
 
                     ,   messages:
                         {
