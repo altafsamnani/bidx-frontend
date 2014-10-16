@@ -783,11 +783,13 @@
                     {
                         // required:               true
                         monetaryAmount:         true
+                    ,   range :                 [-2147483648, 2147483647]   //PM-393
 
                     ,   messages:
                         {
                             required:               ""
                         ,   monetaryAmount:         "Please enter only numbers"
+                        ,   range:                  "Please enter lower value"
                         }
                     } );
                 } );

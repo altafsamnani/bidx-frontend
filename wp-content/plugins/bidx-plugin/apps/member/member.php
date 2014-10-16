@@ -18,13 +18,13 @@ class member {
      */
   	function __construct()
   	{
-		add_action('wp_enqueue_scripts', array(&$this, 'register_member_bidx_ui_libs'));
+		//add_action('wp_enqueue_scripts', array(&$this, 'register_member_bidx_ui_libs')); #BIDX-2568
   	}
 
 	/**
 	 * Register scripts and styles
 	 */
-	function register_member_bidx_ui_libs() {
+	static function register_member_bidx_ui_libs() {
 
 		wp_register_script( 'entrepreneurprofile', 	plugins_url( 'static/js/entrepreneurprofile.js', 	__FILE__ ), array(), '20130501', TRUE );
 		wp_register_script( 'investorprofile', 		plugins_url( 'static/js/investorprofile.js', 		__FILE__ ), array(), '20130701', TRUE );
@@ -70,6 +70,7 @@ class member {
 			break;
 
 			default:
+				add_action('wp_enqueue_scripts', self::register_member_bidx_ui_libs());
 			    /* 2. Service MemberProfile*/
 			    require_once( BIDX_PLUGIN_DIR .'/../services/member-service.php' );
 			    $memberObj = new MemberService( );

@@ -246,9 +246,8 @@
         ,   options     =   {
                                 title: 'Weekly performance'
                             ,   vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
-                            , width: 600,
-                            height: 400
-
+                            ,   width: 600
+                            ,   height: 400
                             }
         ;
 
@@ -262,18 +261,7 @@
                 graphData.push( [date, count] );
             });
 
-            //data    = google.visualization.arrayToDataTable(graphData);
-            data = google.visualization.arrayToDataTable([
-          ['Day', 'New Business Summaries'],
-          ['Day 1',  100    ],
-          ['Day 2',  117    ],
-          ['Day 3',  660    ],
-          ['Day 4',  103    ],
-          ['Day 5',  103    ],
-          ['Day 6',  103    ],
-          ['Day 7',  103    ]
-
-        ]);
+            data    = google.visualization.arrayToDataTable(graphData);
 
             chart   = new google.visualization.BarChart($container);
 
