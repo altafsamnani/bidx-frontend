@@ -12,62 +12,38 @@ module.exports = function(grunt) {
       dist: ['dist']
     },
 
-    recess: {
-      options: {
-        compile: true
-      },
-      bidx: {
-        src: ['static/less/bidx.less', 'apps/*/static/less/*.less' ],
-        dest: 'static/css/<%= pkg.name %>.css'
-      },
-      admin: {
-        src: ['static/less/bidx-admin.less' ],
-        dest: 'static/css/<%= pkg.name %>-admin.css'
-      },
-      min: {
+    less: {
+      production: {
         options: {
-          compress: true
+          paths: ["apps/*/static/less/*.less"],
+          cleancss: true,
         },
-        src: ['static/less/bidx.less', 'apps/*/static/less/*.less' ],
-        dest: 'static/css/<%= pkg.name %>.min.css'
-      },
-      groups: {
-        expand: true,
-        ext: ".css",
-        flatten: true,
-        src: [ 'static/less/groups/*.less', '!static/less/groups/groupbase.less' ],
-        dest: 'static/css/groups/'
-      },
-      groups_min: {
-        options: {
-          compress: true
-        },
-        expand: true,
-        ext: ".min.css",
-        flatten: true,
-        src: [ 'static/less/groups/*.less', '!static/less/groups/groupbase.less' ],
-        dest: 'static/css/groups/'
+        files: {
+          "static/css/<%= pkg.name %>.css": "static/less/bidx.less"
+        }
       }
     },
 
     watch: {
-      recess: {
+      less: {
         files: [ 'static/less/**/*.less', 'apps/*/static/less/*.less', '!static/less/bidx_newtheme.less', 'admin/*/static/less/*.less' ],
-        tasks: ['recess']
+        tasks: ['less']
       }
     },
+    
   });
+
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
   // CSS distribution task.
-  grunt.registerTask('dist-css', ['recess']);
+  // grunt.registerTask('dist-css', ['recess']);
 
   // Full distribution task.
-  grunt.registerTask('dist', ['clean', 'dist-css']);
+  grunt.registerTask('dist', ['clean', 'less', 'watch']);
 
   // Default task.
   grunt.registerTask('default', ['dist']);

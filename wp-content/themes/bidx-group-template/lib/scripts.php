@@ -3,19 +3,19 @@
 * Enqueue scripts and stylesheets
 */
 function roots_scripts() {
-    wp_enqueue_style('bootstrap',                   get_template_directory_uri() . '/assets/css/bootstrap.css', false, null);
+    wp_enqueue_style('bootstrap',                   get_template_directory_uri() . '/assets/bootstrap-3.2.0/dist/css/bootstrap.min.css', false, null);
     wp_enqueue_style('bootstrap-datepicker',        get_template_directory_uri() . '/../../plugins/bidx-plugin/static/vendor/bootstrap-datepicker-1.3.0-rc.2/css/datepicker3.css', false, null);
     wp_enqueue_style('bidx-plugin',                 get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/bidx-plugin.css', false, null);
 
-    if(is_page_template('page-cbi.php')) {
+    if ( is_page_template('page-cbi.php') ) {
         wp_enqueue_style('cbi',                     get_template_directory_uri() . '/../../plugins/bidx-plugin/static/css/cbi.css', false, null);
     }
 
-    if (is_single() && comments_open() && get_option('thread_comments')) {
+    if ( is_single() && comments_open() && get_option('thread_comments') ) {
         wp_enqueue_script('comment-reply');
     }
 
-    wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/js/bootstrap.min.js',                       array( 'jquery' ),      '3.0.2',            true );
+    wp_register_script( 'bootstrap',                get_template_directory_uri() . '/assets/bootstrap-3.2.0/dist/js/bootstrap.min.js',  array( 'jquery' ),      '3.2.0',            true );
 
     wp_register_script( 'bidx-checkbox',            get_template_directory_uri() . '/assets/js/bidx-checkbox.js',                       array( 'jquery' ),      '0.0.2',            true );
     wp_register_script( 'bidx-radio',               get_template_directory_uri() . '/assets/js/bidx-radio.js',                          array( 'jquery' ),      '0.0.2',            true );
@@ -55,10 +55,6 @@ function roots_scripts() {
     wp_enqueue_script( 'noty-layout-center' );
     wp_enqueue_script( 'noty-theme-default' );
 
-    // Temporary override
-    //
-    // wp_register_script( 'bootstrap-collapse',       get_template_directory_uri() . '/assets/js/vendor/bootstrap-collapse.js',           array( 'bootstrap' ),      '2.3.2',            true );
-    // wp_enqueue_script( 'bootstrap-collapse' );
 
 }
 add_action('wp_enqueue_scripts', 'roots_scripts', 100);
