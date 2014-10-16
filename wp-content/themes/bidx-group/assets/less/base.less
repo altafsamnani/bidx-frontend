@@ -1,6 +1,6 @@
 // Import
 // -------------------------
-@import "../bootstrap-3.1.1/less/bootstrap.less";
+@import "../bootstrap-3.2.0/less/bootstrap.less";
 @import "elements.less";
 @import "basevars.less";
 
@@ -175,38 +175,6 @@ button:hover
     text-decoration: none;
 }
 
-.industryRowItem
-{
-    .form-group
-    {
-        position: relative;
-    }
-    .sectorArrow:after
-    {
-        color: #000;
-        content: "\f054";
-        font-family: FontAwesome;
-        position: absolute;
-        bottom: 9px;
-        right: 7px;
-    }
-    .industryActions
-    {
-        float: left;
-    }
-    .industryDelete:hover,
-    .industryAdd:hover
-    {
-        cursor: pointer;
-    }
-    .fa-block
-    {
-        line-height: 1.3;
-    }
-    
-}
-
-
 // Headings
 // -------------------------
 
@@ -303,17 +271,6 @@ h1, h2, h3, h4, h5, h6,
         &.open
         {
             background-color: desaturate(darken(@brand-primary, 25%), 25%);
-            // &:after
-            // {
-            //     .triangle(up, 6px, lighten( @brand-primary, 40%) );
-            //     position: absolute;
-            //     bottom: 0;
-            //     left: 50%;
-            //     @media (max-width: @screen-xs-max)
-            //     {
-            //         left: 20%;
-            //     }
-            // }
             .dropdown-menu
             {
                 min-width: 180px;
@@ -400,7 +357,8 @@ h1, h2, h3, h4, h5, h6,
     margin-bottom: 20px;
     float: left;
     clear: both;
-    img {
+    img
+    {
         .rounded(6px);
         max-width: 100%;
         height: auto;
@@ -816,6 +774,11 @@ header
         margin: 20px 0;
     }
 }
+.editControls
+{
+    margin: 20px 0;
+}
+
 
 .total-error-message
 {
@@ -1610,7 +1573,6 @@ select
 .feedback-box
 {
     margin: -15px 0;
-    // min-height: 200px;
     border-left: 1px solid darken(spin(@state-warning-bg, -10), 5%);
     margin-bottom: -1000em !important;
     padding-bottom: 1000em !important;
@@ -1675,6 +1637,37 @@ select
 .panel-open .btn-feedback
 {
     display: block;
+}
+
+/* MULTILEVEL INDUSTRY */
+.industryRowItem
+{
+    .form-group
+    {
+        position: relative;
+    }
+    .sectorArrow:after
+    {
+        color: #000;
+        content: "\f054";
+        font-family: FontAwesome;
+        position: absolute;
+        bottom: 9px;
+        right: 7px;
+    }
+    .industryActions
+    {
+        float: left;
+    }
+    .industryDelete:hover,
+    .industryAdd:hover
+    {
+        cursor: pointer;
+    }
+    .fa-block
+    {
+        line-height: 1.3;
+    }
 }
 
 // --------------------------------------------------
