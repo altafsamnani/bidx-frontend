@@ -155,7 +155,7 @@
             $legalFormBusiness.append( $noValue );
         } );
 
-        bidx.data.getContext( "permitsObtained", function( err, permitsOptained )
+        bidx.data.getContext( "permitsLicencesObtained", function( err, permitsOptained )
         {
             var $countryOperationSpecificsPermitsLicencesObtained   = snippets.$countryOperationSpecifics.find( "[name='permitsLicencesObtained']" )
             ,   $noValue                                            = $( "<option value='' />" )

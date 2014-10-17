@@ -249,7 +249,7 @@ class TemplateLibrary
       [4] => locale
       [5] => exportImport
       [6] => investmentType
-      [7] => permitsObtained
+      [7] => permitsLicencesObtained
       [8] => stageBusiness
       [9] => education
       [10] => legalForm
@@ -278,7 +278,7 @@ class TemplateLibrary
             case 'locale':
             case 'exportImport':
             case 'investmentType':
-            case 'permitsObtained':
+            case 'permitsLicencesObtained':
             case 'stageBusiness':
             case 'education':
             case 'legalForm':
