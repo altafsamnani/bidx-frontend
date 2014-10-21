@@ -60,6 +60,13 @@
                                 }
                             ]
 
+    ,   PIECHARTOPTIONS =   {
+                                chartArea:      {'left': '0'}
+                            ,   legend:         { 'position': 'labeled'}
+                            ,   title:          bidx.i18n.i('userRolesTitle', appName)
+                            ,   is3D:           true
+                            }
+
     ;
 
 
@@ -77,11 +84,15 @@
     {
         // Create the data table.
         var label
-        ,   facets      =   []
-        ,   listItem    =   []
-        ,   facetList   =   {}
-        ,   data        =   new google.visualization.DataTable()
-        ,   userRoles   =   [ 'bidxEntrepreneurProfile', 'bidxMentorProfile', 'bidxInvestorProfile']
+        ,   labelNoCount
+        ,   memberProfileCount  =   0
+        ,   roleProfilecount    =   0
+        ,   noRoleProfileCount
+        ,   facets              =   []
+        ,   listItem            =   []
+        ,   facetList           =   {}
+        ,   data                =   new google.visualization.DataTable()
+        ,   userRoles           =   [ 'bidxEntrepreneurProfile', 'bidxMentorProfile', 'bidxInvestorProfile', 'bidxMemberProfile']
         ;
 
         data.addColumn('string', 'Roles');
@@ -97,26 +108,39 @@
 
                 if( $.inArray( item.name, userRoles ) !== -1 )
                 {
-                    label   =   bidx.i18n.i( item.name );
+                    if ( item.name === 'bidxMemberProfile' )
+                    {
+                        memberProfileCount = item.count;
+                    }
+                    else
+                    {
+                        label   =   bidx.i18n.i( item.name, appName );
 
-                    listItem.push( [ label, item.count] );
+                        listItem.push( [ label, item.count] );
+
+                        roleProfilecount = roleProfilecount + item.count;
+                    }
                 }
             } );
 
+            /* No Profile Count */
+            labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
+            noRoleProfileCount  =   memberProfileCount - roleProfilecount;
+            listItem.push( [ labelNoCount, noRoleProfileCount] );
 
             data.addRows( listItem );
+
+            _showView("approx", true );
         }
 
 
         // Set chart option
-        var options     =   {
-                                title   :   bidx.i18n.i('userRolesTitle', appName)
-                            };
+
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('role_pie_chart'));
 
-        chart.draw(data, options);
+        chart.draw(data, PIECHARTOPTIONS);
     }
 
     function _createRegionsMap( response, type )
@@ -129,8 +153,8 @@
         ,   listItem        =   []
         ,   facetList       =   {}
         ,   data
-        ,   countryLabel    =   bidx.i18n.i('facet_country')
-        ,   growthLabel     =   bidx.i18n.i('chart_growth')
+        ,   countryLabel    =   bidx.i18n.i('facet_country',appName)
+        ,   growthLabel     =   bidx.i18n.i('chart_growth', appName)
         ;
 
         if ( response.facets && response.facets.length )
@@ -198,7 +222,7 @@
         if ( alldateKeys.length )
         {
             graphData.push( ['Day', 'New Users', 'Logins'] );
-            bidx.utils.log('eventLogin',eventLogin);
+
             $.each( alldateKeys, function( idx, date )
             {
                 // newUser    =   ($.isEmptyObject(eventRegister[date])) ? eventRegister[date] : 0;
@@ -253,7 +277,7 @@
 
         graphData.push( ['Day', 'New Business Summaries'] );
 
-        if(!$.isEmptyObject(eventData) || true)
+        if(!$.isEmptyObject(eventData) )
         {
 
             $.each( eventData, function( date, count )
