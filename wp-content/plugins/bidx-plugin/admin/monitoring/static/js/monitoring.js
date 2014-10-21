@@ -60,6 +60,13 @@
                                 }
                             ]
 
+    ,   PIECHARTOPTIONS =   {
+                                chartArea:      {'left': '0'}
+                            ,   legend:         { 'position': 'labeled'}
+                            ,   title:          bidx.i18n.i('userRolesTitle', appName)
+                            ,   is3D:           true
+                            }
+
     ;
 
 
@@ -122,19 +129,18 @@
             listItem.push( [ labelNoCount, noRoleProfileCount] );
 
             data.addRows( listItem );
+
+            _showView("approx", true );
         }
 
 
         // Set chart option
-        var options     =   {
-                                title:          bidx.i18n.i('userRolesTitle', appName)
-                            ,   is3D:           true
-                            };
+
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('role_pie_chart'));
 
-        chart.draw(data, options);
+        chart.draw(data, PIECHARTOPTIONS);
     }
 
     function _createRegionsMap( response, type )
