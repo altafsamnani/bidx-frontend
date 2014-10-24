@@ -1083,8 +1083,13 @@
                     var rs = bidx.utils.getQueryParameter( "rs", url );
                     var redirect_to = bidx.utils.getQueryParameter( "redirect_to", url );
 
+                    if( state === "create")
+                    {
+                        url += '/' + companyId;
+                    }
 
-                    if( redirect_to ) {
+                    if( redirect_to )
+                    {
                         url = '/' + redirect_to;
                     }
 
