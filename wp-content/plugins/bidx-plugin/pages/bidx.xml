@@ -213,6 +213,13 @@
             <mapping>(.*)join</mapping>
             <content>[bidx app="auth" view="join"]</content>
         </post>
+        <post>
+            <post_id>31</post_id>
+            <name>review</name>
+            <title>Rank and Review</title>
+            <mapping>(.*)review</mapping>
+            <content>[bidx app="review" view="reviewSession"]</content>
+        </post>
     </posts>
 
     <widgets>

@@ -469,6 +469,7 @@ class BidxCommon
                 break;
 
             case 'mail' :
+            case 'review' :
                 if ($authenticated == 'false') {
 
                     $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] .'/'.$langUrl. '/auth?redirect_to=' . base64_encode ($current_url) . '/#auth/login';

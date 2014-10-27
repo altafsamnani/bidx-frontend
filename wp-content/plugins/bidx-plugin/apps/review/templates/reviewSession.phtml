@@ -1,0 +1,141 @@
+
+<!--  TODO Arjan just for the demo; to get sortable list -->
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<div id="review" class="block-odd">
+    <div class="row mainState mainStateShow">
+        <div class="col-sm-6 col-sm-offset-3 well">
+
+            <h3>Rank and Review</h3>
+            <div class="view viewShow">
+            </div>
+
+            <!-- LOAD -->
+            <div class="view viewLoad alert alert-info text-center">
+                <i class="fa fa-circle-o-notch fa-spin"></i> <?php _e('Retrieving Rank and Review information...', 'bidxplugin'); ?>
+            </div>
+
+            <!-- ERROR -->
+            <div class="view viewError alert alert-warning">
+                <p class="errorMsg"></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 
+    Yeah, I know bidx doesn't use Underscore templates. 
+    Good luck with that; this is just a demo. ;-) 
+-->
+<script type="text/html" id="review-session-overview">
+    <p>The following plans have been selected for <%= data.reviewerDisplayName %>:</p>
+    <ol class="list-unstyled">
+        <% _.forEach(data.entities, function (e) { %>
+            <li>
+                <!-- Yes, ugly, but I just wanted to make a case for Undescore templates...! -->
+                <i class="glyphicon glyphicon-<%= e.userReviewCompleted ? 'ok' : (data.state !== 'START' && e.id === data.currentReviewEntityId ? 'play' : 'chevron-right') %>"></i>
+
+                <!-- Should probably NOT link to the full plan here. -->
+                <em><a href="/businesssummary/<%= e.id %>" target="_blank"><%= e.title %></a></em> by <%= e.ownerDisplayName %>
+            </li>
+        <% }); %>
+    </ol>
+    <a class="btn btn-primary" id="review-next"><%= data.state == 'START' ? '<?php _e('Start', 'bidxplugin') ?>' : '<?php _e('Continue', 'bidxplugin') ?>' %></a>
+
+    <hr/>
+    <p>Session state: <%= data.state %>
+        <% if(data.currentReviewEntitySeq != null){ %>
+            (next: <%= data.currentReviewEntitySeq %>; <%= data.currentReviewEntityId %>)
+        <% } %>
+        <!-- This is ONLY supported for testing; support in API will be removed, some day. --> 
+        <a class="btn" id="review-debug-reset">Restart session</a>
+    </p>
+    <p>Created: <%= bidx.utils.parseTimestampToDateTime( data.created ) %></p>
+    <p>Started: <%= bidx.utils.parseTimestampToDateTime( data.start ) %></p>
+
+</script>
+
+<!--  The Pokemon card :-) -->
+<!-- 
+TODO
+ . Picture -- currently I think only a still from videos is shown?
+ . Rating score -- I don't think we should show that in review, but we should in other usages
+ . Rank in Group -- not sure if we ca store that data
+ . Small graph (SG):
+     . Sales revenues this year
+     . Profit this year
+     . Employees
+-->
+<script type="text/html" id="review-session-entity">
+    <h4><a href="/businesssummary/<%= data.bidxMeta.bidxEntityId %>" target="_blank"><%= data.name %></a></h4>
+    <p>by <%= data.bidxMeta.bidxOwnerDisplayName %></p>
+    <div class="rating-wrapper">
+        <div class="rating-vote">
+            <span class="rating-vote-text"><span class="rating-user-label"><?php _e('Rate this plan', 'bidxplugin') ?></span></span>
+            <div class="raty"></div>
+        </div>
+    </div>
+    <p><%= data.summary %></p>
+    <p>Countries: <%= _.map( data.countryOperation, function(v){ return bidx.data.i( v, "country" ) }).join(", ") %></p>
+    <!-- TODO Only show top level? -->
+    <p>(Top level?) industry: <%= _.map( data.industry, function(v){ return bidx.data.i( v, "industry" ) }).join(", ") %></p>
+    <p>Finance needed: <%= data.financingNeeded %></p>
+    <p>Sales since: <%= data.yearSalesStarted %></p>
+    <p>Completeness: <%= data.completeness %></p>
+
+    <!-- cv, businessplan, financialplan, certificate, letterintent, agreement, contract, reference, other-->
+    <p>BP documents: <%= _.where(data.attachment, {documentType: "businessplan"}).length > 0 %></p>
+
+    <a class="btn btn-primary disabled" id="review-next">Next</a>
+    <a class="btn" onclick="alert('TODO Allow for regular general feedback, not specific to Rank and Review, bit NOT showing feedback from others?');">Add feedback</a>
+
+</script>
+
+<script type="text/html" id="review-session-ranking">
+    <p>Almost done! Please drag and drop to rank these plans. You can also still change your rating:</p>
+    <ul id="review-ranking-list" class="list-unstyled">
+        <% _.forEach(data.entities, function (e) { %>
+            <li class="panel" data-entity-id="<%= e.id %>">
+                <h4>"<a href="/businesssummary/<%= e.id %>"><%= e.title %></a>" by <%= e.ownerDisplayName %></h4>
+                <div class="raty" data-rating="<%= e.userReviewRating %>"></div>
+
+                <% if(data.hasMentorProfile) {
+                    // If all is well, active mentors cannot review the plans they are mentoring,
+                    // so assume the reviewer is not mentoring any of the plans yet:
+                %>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input type="checkbox" class="review-become-mentor" value="" id="checkbox-mentor-<%= e.id %>" name="mentor" />
+                            <label for="checkbox-mentor-<%= e.id %>"><span></span><?php _e('Mentor this plan','bidxplugin'); ?></label>
+                        </div>
+                    </div>
+                <% } %>
+
+            </li>
+        <% }); %>
+    </ul>
+    <a class="btn btn-primary" id="review-next">Finish</a>
+</script>
+
+<script type="text/html" id="review-session-completed">
+    <h4>Thank you!</h4>
+    <p>This review session was completed on <%= bidx.utils.parseTimestampToDateTime( data.created ) %>.</p>
+    <ul>
+        <% _.forEach(data.entities, function (e) { %>
+            <li>
+                <em><a href="/businesssummary/<%= e.id %>"><%= e.title %></a></em> by <%= e.ownerDisplayName %>
+                (your rating = <%= e.userReviewRating %>; your rank = <%= e.userReviewRank %>)
+            </li>
+        <% }); %>
+    </ul>
+
+    <hr/>
+    <!-- This is ONLY supported for testing; support in API will be removed, some day. --> 
+    <p><a class="btn" id="review-debug-reset">Restart session</a></p>
+</script>
+
+<script type="text/html" id="review-session-expired">
+    <p>This review session has expired on <%= bidx.utils.parseTimestampToDateTime( data.expired ) %>.</p>
+    <!-- We might have a partially completed session; probably not of our interest. -->
+</script>
