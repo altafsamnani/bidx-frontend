@@ -312,13 +312,16 @@
         {
             // Modal popup message
             action      =   action.replace( /ed/g, '');
+
             actionKey   =   'modal' + action.substring(0,1).toUpperCase() + action.substring(1); // ex 'modalAccept, modalCancel, modalIgnore', 'modalStop'
+            actionKey   =   actionKey.replace( /Bp/g, '');
             actionMsg   =   bidx.i18n.i( actionKey ) ;
-            bidx.utils.log("action", actionKey  );
+
             $mainModal.find(".modal-body").empty().append( actionMsg );
 
             //Modal Primary Button Text
             btnKey      =   'modalBtn' + action.substring(0,1).toUpperCase() + action.substring(1); // ex 'modalBtnAccept, modalBtnCancel, modalBtnIgnore', 'modalBtnStop'
+            btnKey      =   btnKey.replace( /Bp/g, '');
             btnTxt      =   bidx.i18n.i( btnKey );
             $mainModal.find(".btn-primary").html(btnTxt);
 

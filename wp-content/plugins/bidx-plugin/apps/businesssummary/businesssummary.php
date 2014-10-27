@@ -82,11 +82,16 @@ class businesssummary
             	$view->completenessColour = 'red';
             }
 
-            /* Fetch the entity rating. */
-            require_once (BIDX_PLUGIN_DIR . '/../services/rating-service.php');
-            $ratingServiceObj = new RatingService ();
-            $ratingData = $ratingServiceObj->getRating ( $businessSummaryId );
-            $view->rating = $ratingData->data;
+            /* Fetch the detailed rating if needed. The count and average are available in
+             * the Entity API as well, but if the current user can rate we need more details,
+             * such as the user's rating, for which we need to make another API call. 
+             */
+            if( $businessSummaryData->data->bidxMeta->bidxCanRate ) {
+                require_once (BIDX_PLUGIN_DIR . '/../services/rating-service.php');
+                $ratingServiceObj = new RatingService ();
+                $ratingData = $ratingServiceObj->getRating ( $businessSummaryId );
+                $view->rating = $ratingData->data;
+            }
         }
 
         $view->render('businesssummary.phtml');

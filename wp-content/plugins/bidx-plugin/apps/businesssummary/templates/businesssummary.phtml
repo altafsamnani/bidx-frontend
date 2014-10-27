@@ -9,6 +9,9 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     : null;
 
 $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
+$canRate        = $this->exst($businessSummaryBidxMeta->bidxCanRate, false);
+$ratingCount    = $this->exst($businessSummaryBidxMeta->bidxRatingCount, 0);
+$ratingAverage  = $this->exst($businessSummaryBidxMeta->bidxRatingAverage, null);
 $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 
 // get the enitities of the current user
@@ -149,42 +152,34 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                  * We want ratings to be indexed by Google, so need to include this on page load. It
                  * might be updated in JavaScript though, so also check the translations in i18n.xml.
                  */
-                $ratingTotals = $this->rating->totals;
 
-                if( $ratingTotals )
-                {
-                    $ratingAllowed = $loggedInUserId != $ownerId;
-                    $ratingUser = $this->rating->userRating;
     ?>
-                        <div class="rating-wrapper">
-                            <div class="rating-total">
-                                <div class="rating-no-score <?php echo !$ratingTotals->average ? '' : 'hide' ?>">
-                                    <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
-                                </div>
-                                <div class="rating-score <?php echo $ratingTotals->average ? '' : 'hide' ?>">
-                                    <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
-                                    <i class="fa fa-star"></i>
-                                    <span class="rating-average"><?php echo $ratingTotals->average ? $ratingTotals->average : "?"; ?></span>
-                                    <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingTotals->count; ?></span>)</span>
-                                </div>
+                <div class="rating-wrapper">
+                    <div class="rating-total">
+                        <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
+                            <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
+                        </div>
+                        <div class="rating-score <?php echo $ratingAverage ? '' : 'hide' ?>">
+                            <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
+                            <i class="fa fa-star"></i>
+                            <span class="rating-average"><?php echo $ratingAverage ? $ratingAverage : "?"; ?></span>
+                            <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingCount; ?></span>)</span>
+                        </div>
+                    </div>
 <?php
+                    // Owners and active mentors cannot rate their plans
+                    if( $canRate )
+                    {
+                        $ratingUser = $this->rating->userRating;
 ?>
-                            </div>
-<?php
-                            if( $ratingAllowed )
-                            {
-?>
-                                <div class="rating-vote">
-                                    <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
-                                    <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
-                                </div>
-    <?php
-                            }
-    ?>
+                        <div class="rating-vote">
+                            <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
+                            <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
                         </div>
     <?php
-                 }
+                    }
     ?>
+                </div>
             </div>
             <div class="col-sm-3 text-right">
 <?php

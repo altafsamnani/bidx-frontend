@@ -4,4 +4,25 @@
     <Item value="loadingDataError">Loading Data Error</Item>
 	 <Item value="loadingData">Loading ...</Item>
 	 <Item value="noData">No data found! How is it possible ?</Item>
+
+	 <!-- Facet Entity types -->
+    <Item value="bidxMemberProfile">Member profile</Item>
+    <Item value="bidxBusinessSummary">Business summary</Item>
+    <Item value="bidxInvestorProfile">Investor</Item>
+    <Item value="bidxEntrepreneurProfile">Entrepreneur</Item>
+    <Item value="bidxBusinessGroup">Group</Item>
+    <Item value="bidxCompany">Company</Item>
+    <Item value="bidxMentorProfile">Mentor</Item>
+
+    <!-- Facet Title -->
+    <Item value="facet_industry">Industry</Item>
+    <Item value="facet_country">Country</Item>
+    <Item value="facet_language">Language</Item>
+    <Item value="facet_entityType">Type</Item>
+
+     <!-- Chart Label -->
+    <Item value="chart_growth">Growth</Item>
+    <Item value="memberOnlyLbl">Member only</Item>
+
+
 </I18N>
