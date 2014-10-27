@@ -1331,7 +1331,7 @@
                 //
                 image       = bidx.utils.getValue( personalDetails, "profilePicture" );
 
-                if (image)
+                if (image.document)
                 {
                     imageWidth  = bidx.utils.getValue( image, "width" );
                     imageLeft   = bidx.utils.getValue( image, "left" );
