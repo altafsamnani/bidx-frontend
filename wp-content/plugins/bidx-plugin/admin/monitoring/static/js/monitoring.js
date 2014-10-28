@@ -207,13 +207,15 @@
         ,   chart
         ,   newUser
         ,   login
+        ,   dateSplit
+        ,   formattedDate
         ,   $container      =   document.getElementById('user_line_chart')
         ,   graphData       =   []
         ,   eventRegister   =   bidx.utils.getValue(params.responseRegister,   'events')
         ,   eventLogin      =   bidx.utils.getValue(params.responseLogin,      'events')
         ,   keysRegister    =   _.keys( eventRegister ) // Keys of registrations ex 2014-02-02
         ,   keysLogin       =   _.keys( eventLogin )     // Keys of Login ex 2014-02-02
-        ,   alldateKeys     =   _.union( keysRegister, keysLogin) // Common keys for iteration
+        ,   alldateKeys     =   _.union( keysRegister, keysLogin).reverse() // Common keys for iteration
         ,   options         =   {
                                     title: 'Weekly users & logins'
                                 }
@@ -228,12 +230,14 @@
                 // newUser    =   ($.isEmptyObject(eventRegister[date])) ? eventRegister[date] : 0;
                 // login      =   ($.isEmptyObject(eventLogin[date])) ? eventLogin[date] : 0;
 
-                 newUser    =   bidx.utils.getValue(eventRegister, date);
-                 login      =   bidx.utils.getValue(eventLogin, date);
-                 login      =   ( login ) ? login : 0;
-                 newUser    =   ( newUser ) ? newUser : 0;
+                 newUser        =   bidx.utils.getValue(eventRegister, date);
+                 login          =   bidx.utils.getValue(eventLogin, date);
+                 login          =   ( login ) ? login : 0;
+                 newUser        =   ( newUser ) ? newUser : 0;
+                 dateSplit      = date.split("-");
+                 formattedDate  = dateSplit.reverse().join('-');
 
-                 graphData.push( [date, newUser, login] );
+                 graphData.push( [formattedDate, newUser, login] );
             } );
 
             data = google.visualization.arrayToDataTable(graphData);

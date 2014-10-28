@@ -106,7 +106,13 @@
             'country'
         ,   'permitsLicencesObtained'
         ,   'companyTradeName'
-        ]   // TODO: companyAddress
+        ,   'companyAddress'
+        ,   'companyAddress.cityTown'
+        ,   'companyAddress.street'
+        ,   'companyAddress.streetNumber'
+        ,   'companyAddress.postalCode'
+        ,   'companyAddress.neighborhood'
+        ]
     };
 
     // Setup function for doing work that should only be done once

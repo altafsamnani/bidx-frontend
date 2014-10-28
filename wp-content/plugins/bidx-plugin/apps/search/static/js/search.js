@@ -443,7 +443,7 @@
                 //
                 if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
                 {
-                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name ) );
+                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
@@ -1331,7 +1331,7 @@
                 //
                 image       = bidx.utils.getValue( personalDetails, "profilePicture" );
 
-                if (image)
+                if (image && image.document)
                 {
                     imageWidth  = bidx.utils.getValue( image, "width" );
                     imageLeft   = bidx.utils.getValue( image, "left" );

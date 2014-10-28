@@ -5,6 +5,7 @@
     $loggedInMemberId           = isset( $this -> sessionData -> data -> id ) ? $this -> sessionData -> data -> id : null;
     $authenticated              = isset( $this -> sessionData -> authenticated ) && $this -> sessionData -> authenticated ==  'true';
     $isLoggedinMemberIsMentor   = isset( $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxMentorProfile : null;
+    $isLoggedinMemberIsInvestor = isset( $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile : null;
     $groupIds                   = array_keys ( (array)$this -> sessionData -> data -> groups );
     $inGroup                    = in_array( $this -> sessionData -> data -> currentGroup, $groupIds);
     $personalDetails            = isset( $data->bidxMemberProfile->personalDetails ) ? $data->bidxMemberProfile->personalDetails : NULL;
@@ -124,7 +125,7 @@
                             if ( $memberId != $loggedInMemberId && $authenticated && $inGroup )
                             {
 ?>
-                                <a class="btn btn-xs btn-warning pull-right" href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
+                                <a class="btn btn-xs btn-warning pull-right label bidx-label btn-contact hide" href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
 <?php
                             }
 
