@@ -3,7 +3,7 @@
   if (post_password_required()) {
     return;
   }
- if (have_comments()) : ?>
+ if (have_comments() && comments_open() ) : ?>
   <div class="well">
     <section id="comments">
       <h3><?php printf(_n('One Response to &ldquo;%2$s&rdquo;', '%1$s Responses to &ldquo;%2$s&rdquo;', get_comments_number(), 'roots'), number_format_i18n(get_comments_number()), get_the_title()); ?></h3>
