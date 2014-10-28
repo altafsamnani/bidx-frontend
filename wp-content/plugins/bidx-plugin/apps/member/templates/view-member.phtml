@@ -113,19 +113,19 @@
                         <div class="col-sm-7">
                             <h2 class="top-0"><?php echo ucwords($firstName . '&nbsp;' . $lastName); ?></h2>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-5 text-right">
 <?php
                             if ( $this->exst( $personalDetailsBidxMeta->bidxCanEdit ) )
                             {
 ?>
-                                <a class="btn btn-sm btn-primary pull-right" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+                                <a class="btn btn-sm btn-primary" href="#editMember/<?php echo $personalDetailsBidxMeta->bidxOwnerId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
 <?php
                             }
 
                             if ( $memberId != $loggedInMemberId && $authenticated && $inGroup )
                             {
 ?>
-                                <a class="btn btn-xs btn-warning pull-right label bidx-label btn-contact hide" href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
+                                <a class="btn btn-xs btn-warning btn-contact hide" href="/mail/#mail/contacts/action=connect&id=<?php echo $memberId ?>"><?php _e('Connect', 'bidxplugin')?></a>
 <?php
                             }
 
@@ -133,7 +133,7 @@
                             if ( $memberId != $loggedInMemberId && $authenticated && $inGroup && $isMentor && !$isLoggedinMemberIsMentor)
                             {
 ?>
-                                <a class="btn btn-xs btn-danger pull-right label bidx-label btn-mentoring hide" href="#mentoringRequest/confirmMentoringRequest/mentorId=<?php echo $memberId ?>"><?php _e('Request mentoring', 'bidxplugin')?></a>
+                                <a class="btn btn-xs btn-mentoring btn-mentor mentor-cl hide" href="#mentoringRequest/confirmMentoringRequest/mentorId=<?php echo $memberId ?>"><?php _e('Request mentoring', 'bidxplugin')?></a>
 <?php
                             }
 
