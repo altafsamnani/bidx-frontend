@@ -56,10 +56,20 @@
     $session = BidxCommon::$staticSession;
     $authenticated  = $session -> authenticated;
 
+        // check for the widget
+        // if ( is_plugin_active( ABSPATH . 'wp-content/plugins/sitepress-multilingual-cms/sitepress.php') )
+        // {
+?>
+            <!-- <div class="btn-group language-switcher">
+                <?php the_widget('ICL_Language_Switcher'); ?>
+            </div> -->
+<?php
+        // } 
+
     if ( $authenticated === "true" )
     {
 
-	// check if the curent user is has joined this group
+    // check if the curent user is has joined this group
     // only when a member has profiles, show the profile dropdown
     $currentGroup   = $this -> sessionData -> data -> currentGroup;
     $groupIds       = array_keys ( (array)$this -> sessionData -> data -> groups );
@@ -116,9 +126,10 @@
  ?>
 
  <?php
+ 
         // only when a has grous, show the group dropdown
         //
-        if ( $hasGroups )
+        if ( $hasGroupssss )
         {
  ?>
             <div class="btn-group groups">
