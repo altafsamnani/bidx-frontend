@@ -16,7 +16,7 @@
     ,   baseUrl                 = "/api/v1/review/session/%id%"
     ,   rateUrl                 = baseUrl + "/rate"
     ,   rankUrl                 = baseUrl + "/rank"
-    ,   startUrl                = baseUrl + "/start"
+    ,   nextUrl                 = baseUrl + "/next"
     ;
 
     reviewSession.fetch = function( params )
@@ -24,9 +24,9 @@
         _call( "GET", baseUrl, params );
     };
 
-    reviewSession.start = function( params )
+    reviewSession.next = function( params )
     {
-        _call( "POST", startUrl, params );
+        _call( "POST", nextUrl, params );
     };
 
     reviewSession.rate = function( params )

@@ -57,12 +57,13 @@
                 // on page load. We could limit this to state START.
                 if( !pageLoad )
                 {
+                    // Tell the server we started the next step. This is mainly
+                    // for reporting; no need to await the response.
+                    _callReviewSessionApi( "next", reviewUserSession.id );
+
                     switch ( reviewUserSession.state )
                     {
                         case "START":
-                            _startReview( reviewUserSession );
-                            return;
-
                         case "REVIEW":
                             _showEntitySummary( reviewUserSession );
                             return;
@@ -85,18 +86,6 @@
         _showTemplate( "#review-session-overview", reviewUserSession );
 
         $( "#review-next" ).click( function( e ) 
-            {
-                _next( reviewUserSession );
-            });
-    }
-
-    // Tells the server that the user session has started, and shows the first
-    // review item when done.
-    //
-    function _startReview( )
-    {
-         _callReviewSessionApi( "start", _getReviewUserSessionId() )
-            .done( function( reviewUserSession ) 
             {
                 _next( reviewUserSession );
             });
@@ -136,7 +125,6 @@
                             _next( response );
                         });
                 });
-
             });
     }
 
@@ -160,7 +148,7 @@
                 // as then the backend would finalize the session and block
                 // further ranking.
                 //
-                // So: nothing to do here?
+                // So: nothing to do here.
             }
         });
 
