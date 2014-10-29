@@ -852,37 +852,44 @@
 
                     case 'bidxInvestorProfile':
                         //response.entityType = 'bidxMemberProfile';
-
-                        showMemberProfile(
+                        if ( options.criteria.facetFilters.length !== 0 )
                         {
-                            response : response
-                        //,   criteria : data.criteria
-                        ,   cb       : options.cb
-                        } );
+                            showMemberProfile(
+                            {
+                                response : response
+                            //,   criteria : data.criteria
+                            ,   cb       : options.cb
+                            } );
+                        }
 
                     break;
 
                     case 'bidxEntrepreneurProfile':
                         //response.entityType = 'bidxMemberProfile';
-
-                        showMemberProfile(
+                        if ( options.criteria.facetFilters.length !== 0 )
                         {
-                            response : response
-                        //,   criteria : data.criteria
-                        ,   cb       : options.cb
-                        } );
+                            showMemberProfile(
+                            {
+                                response : response
+                            //,   criteria : data.criteria
+                            ,   cb       : options.cb
+                            } );
+                        }
 
                     break;
 
                     case 'bidxMentorProfile':
                         //response.entityType = 'bidxMemberProfile';
-
-                        showMemberProfile(
+                        if ( options.criteria.facetFilters.length !== 0 )
                         {
-                            response : response
-                       // ,   criteria : data.criteria
-                        ,   cb       : options.cb
-                        } );
+
+                            showMemberProfile(
+                            {
+                                response : response
+                           // ,   criteria : data.criteria
+                            ,   cb       : options.cb
+                            } );
+                        }
 
                     break;
 
