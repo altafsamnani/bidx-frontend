@@ -45,3 +45,14 @@ function is_element_empty($element) {
   $element = trim($element);
   return empty($element) ? false : true;
 }
+
+# Correct SSL Bug
+function correct_url_ssl($url)
+{
+  if( function_exists('is_ssl') && is_ssl() )
+  {
+    return str_replace('http://', 'https://', $url);
+  }
+  return $url;
+}
+add_filter('wp_get_attachment_url', 'correct_url_ssl');
