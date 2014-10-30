@@ -126,7 +126,10 @@
             /* No Profile Count */
             labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
             noRoleProfileCount  =   memberProfileCount - roleProfilecount;
-            listItem.push( [ labelNoCount, noRoleProfileCount] );
+            if( noRoleProfileCount > 0)
+            {
+                listItem.push( [ labelNoCount, noRoleProfileCount] );
+            }
 
             data.addRows( listItem );
 
