@@ -207,15 +207,15 @@
             {
                 $.each( extraUrlParameters, function( index, item )
                 {
-                    extraUrlParams += "&" + item.label + "=" + item.value;
+                    extraUrlParams += "&" + item.label + "=" + encodeURIComponent( item.value );
                 } );
             }
 
             // Override groupDomain from the URL
             //
             //var forcedGroupDomain = bidx.utils.getQueryParameter( "__bidxGroupDomain" );
-            
-            
+
+
             // the WordPress handler can't handle the extra url variables, so we only use this for direct API calls
             //
             if( !supressBidxUrlParams )
