@@ -72,6 +72,10 @@
                 {
                     required:   true
                 }
+            ,   "content":
+                {
+                    required:   true
+                }
 
             }
         ,   messages:
