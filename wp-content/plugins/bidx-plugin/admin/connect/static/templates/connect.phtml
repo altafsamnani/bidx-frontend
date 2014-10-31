@@ -172,7 +172,12 @@
 
 		                    <?php
 
-		                    $args = array("textarea_name" => "content", "editor_class" => "editor_connect",'quicktags' => false);
+		                    $args = array(	'textarea_name' => 'content'
+		                    	    , 		'editor_class' 	=> 'editor_connect'
+		                    	    ,		'quicktags' 	=> false
+		                    	    ,       'tinymce'       => false
+		                    	    ,       'media_buttons' => false
+		                    	    );
                             wp_editor(__('','bidxplugin'), "connect_editor_id", $args); ?>
 
 		                    <div id="major-publishing-actions">
