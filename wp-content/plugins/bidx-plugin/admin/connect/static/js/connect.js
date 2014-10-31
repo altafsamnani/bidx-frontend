@@ -1258,7 +1258,7 @@
             $btnComposeCancel.removeClass( "disabled" );
             $frmCompose.find( "[name=content]" ).val('');
             /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
-            window.parent.tinymce.get('connect_editor_id').setContent('');
+            //window.parent.tinymce.get('connect_editor_id').setContent('');
 
             $frmCompose.validate().resetForm();
 
