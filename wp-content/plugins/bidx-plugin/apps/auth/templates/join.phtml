@@ -12,28 +12,33 @@
                     <h1><?php echo _e('Join', 'bidxplugin'); ?>&nbsp;<?php echo $groupData->group->name; ?></h1>
                     <blockquote class="alert-info"><?php echo _e('To get started, create your member account here.', 'bidxplugin'); ?></blockquote>
                     <label class="label-center"><?php echo _e('Choose a social network','bidxplugin') ?></label>
-			        <div class="row">
-			            <div class="col-sm-6">
-			                <a href="/bidx-soca/bidxauth?id=googleplus" class="btn btn-google btn-block btn-lg" role="button"><i class="fa fa-google-plus-square"></i> Google</a>
-			            </div>
-			            <div class="col-sm-6">
-			                <a href="/bidx-soca/bidxauth?id=linkedin" class="btn btn-linkedin btn-block btn-lg" role="button"><i class="fa fa-linkedin-square"></i> LinkedIn</a>
-			            </div>    
-			        </div>
-			        <br />
-			        <div class="row">
-			            <div class="col-sm-6">
-			                <a href="/bidx-soca/bidxauth?id=facebook" class="btn btn-facebook btn-block btn-lg" role="button"><i class="fa fa-facebook-square"></i> Facebook</a>
-			            </div>
-			            <div class="col-sm-6">
-			                <a href="/bidx-soca/bidxauth?id=hotmail" class="btn btn-hotmail btn-block btn-lg" role="button"><i class="fa fa-windows"></i> Hotmail</a>
-			            </div>            
-			        </div>
                     <br>
-                    <label class="label-center"><?php echo _e('Or use the login form','bidxplugin') ?></label>
                     <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3">
-                            <a href="/auth" class="btn btn-primary btn-block btn-lg" role="button"><i class="fa fa-lock"></i> Login</a>
+                        <div class="col-sm-6">
+                            <a href="/bidx-soca/bidxauth?id=googleplus" class="btn btn-google btn-block btn-lg" role="button"><i class="fa fa-google-plus-square"></i> Google</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/bidx-soca/bidxauth?id=linkedin" class="btn btn-linkedin btn-block btn-lg" role="button"><i class="fa fa-linkedin-square"></i> LinkedIn</a>
+                        </div>    
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a href="/bidx-soca/bidxauth?id=facebook" class="btn btn-facebook btn-block btn-lg" role="button"><i class="fa fa-facebook-square"></i> Facebook</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/bidx-soca/bidxauth?id=hotmail" class="btn btn-hotmail btn-block btn-lg" role="button"><i class="fa fa-windows"></i> Hotmail</a>
+                        </div>            
+                    </div>
+                    <br>
+                    <label class="label-center"><?php echo _e('Or manually','bidxplugin') ?></label>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-5 col-sm-offset-1">
+                            <a href="#join/register" class="btn btn-secondary btn-block btn-lg" role="button"><i class="fa fa-check"></i> <?php _e('Register','bidxplugin'); ?></a>
+                        </div>
+                        <div class="col-sm-5">
+                            <a href="/auth" class="btn btn-primary btn-block btn-lg" role="button"><i class="fa fa-lock"></i> <?php _e('Login','bidxplugin'); ?></a>
                         </div>
                     </div>
                 </div>
@@ -409,6 +414,55 @@
             </div>
         </div>
     </div>
+    
+    <div class="view viewRegister">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="well">
+                    <form id="frmRegister" action="/">
+                        <h1><?php echo _e('Become a member', 'bidxplugin'); ?></h1>
 
+                        <h1><?php _e($title, 'bidxplugin' ); ?></h1>
+                        <div class="form-group">
+                            <label><?php _e('First name','bidxplugin');?></label>
+                            <input type="text" class="form-control" name="personalDetails.firstName" placeholder="<?php _e('Enter your first name','bidxplugin');?>" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Last name','bidxplugin');?></label>
+                            <input type="text" class="form-control" name="personalDetails.lastName" placeholder="<?php _e('Enter your last name','bidxplugin');?>" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Email address','bidxplugin');?></label>
+                            <input type="text" class="form-control" name="username" placeholder="<?php _e('Enter your email address','bidxplugin');?>" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('What is your country?','bidxplugin');?></label>
+                            <select name="personalDetails.address.country"></select>
+                        </div>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-lg btn-block btn-primary" style="display: block;"><?php _e('Register','bidxplugin');?></button>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="#join/auth" class="btn btn-link btn-block btn-lg" role="button"><?php _e('Cancel','bidxplugin'); ?></a>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="registerSuccess hide">
+                        <h1><?php _e('Registration complete','bidxplugin');?></h1>
+                        <p><?php _e('The registration is complete. An email has been sent to your email address with follow-up instructions','bidxplugin');?></p>
+                        <p><?php printf( __('Click <a href="%s">here</a> to go to the group homepage.', 'bidxplugin'), "/"  ); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
