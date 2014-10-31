@@ -794,7 +794,7 @@
                     } );
                 } );
             }
-
+            //Altaf commit for staging
             // Add a financial year item
             //
             function _addFinancialSummaryYear( direction )
