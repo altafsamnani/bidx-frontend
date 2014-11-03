@@ -31,6 +31,10 @@
     ,   mailOffset                  = 0
     ,   $mailboxToolbar
     ,   $mailboxToolbarButtons
+    ,   $moveToFolderDropdown       = $element.find( ".btngroup-move-to-folder .dropdown-menu" )
+    ,   $moveToFolderApply          = $element.find( ".applyMove" )
+    ,   $bulkDropdown               = $element.find( ".bulkactions .bulk-dropdown-menu" )
+    ,   $bulkApply                  = $element.find( ".applyBulk" )
     ,   state
     ,   section
     ,   listDropdownGroup =  [ "groupEntrepreneurs", "groupInvestors", "groupMentors", "groupMembers" ]
@@ -85,11 +89,10 @@
             }
         ,   submitHandler:  function()
             {
-                bidx.utils.log('i am hereeee in compose');
-                /*if ( $btnComposeSubmit.hasClass( "disabled" ) )
+                if ( $btnComposeSubmit.hasClass( "disabled" ) )
                 {
                     return;
-                }*/
+                }
 
                 $btnComposeSubmit.addClass( "disabled" );
                 $frmCompose.find('.spinner').show();
@@ -123,13 +126,100 @@
         // bind the toolbar buttons to their handlers. Reply and forward use HREF for navigation
         //
         $mailboxToolbarButtons.filter( ".btn-delete" ).bind( "click", "action=delete&confirm=true", _doAction );
+        $mailboxToolbarButtons.filter( ".btn-undelete" ).bind( "click", "action=undelete&confirm=false", _doAction );
          /*$mailboxToolbarButtons.filter( ".bidx-btn-mark-read" ).bind( "click", "action=read&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread" ).bind( "click", "action=unread&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder" ).bind( "click", "action=move&confirm=false", _doAction );*/
         $tableNavPages.find( ".bidx-btn-mail-prev" ).bind( "click", "action=showPrev&confirm=false", _doPaging );
         $tableNavPages.find( ".bidx-btn-mail-next" ).bind( "click", "action=showNext&confirm=false", _doPaging );
 
+        // Enable/Disable Apply button for Move message to folder
+        //
+        $moveToFolderDropdown.on( 'change', function(e)
+        {
+            if( $(this).val() === '-1')
+            {
+                $moveToFolderApply.attr("disabled", "disabled");
+            }
+            else
+            {
+                $moveToFolderApply.removeAttr("disabled");
+            }
+        } );
 
+        $moveToFolderApply.on('click', _doMoveToFolder);
+
+        // Enable/Disable Apply button for Bulk operations
+        //
+        $bulkDropdown.on( 'change', function(e)
+        {
+            if( $(this).val() === '-1')
+            {
+                $bulkApply.attr("disabled", "disabled");
+            }
+            else
+            {
+                $bulkApply.removeAttr("disabled");
+            }
+        } );
+
+        $bulkApply.on('click', _doAction);
+
+        //  set change event which add/removes the checkbox ID in the listElements variable
+        //
+        $element.on("change", "[data-id]", function()
+        {
+            var $this=$(this);
+
+            if( $this.attr( "checked" ) )
+            {
+                if( !itemList[ $this.data( "id" ) ])
+                {
+                    itemList[ $this.data( "id" ) ] = 1 ;
+                }
+            }
+            else
+            {
+                if( itemList[ $this.data( "id" ) ] )
+                {
+                    delete itemList[ $this.data( "id" ) ];
+                }
+            }
+            bidx.utils.log('itemlist',itemList);
+        } );
+
+        // bind event to change all checkboxes from toolbar checkbox
+        //
+        $element.on("change", ".messagesCheckall", function()
+        {
+            // This is a checkbox in THEAD or TFOOT, while the list is in TBODY
+            var masterCheck = $( this ).attr( "checked" );
+
+            $( this ).parents( "table" ).find( "[data-id]" ).each( function()
+            {
+                var $this = $(this);
+                bidx.utils.log( 'mastercheck', $this );
+                if( masterCheck )
+                {
+                    if( itemList )
+                    {
+                        if( !itemList[ $this.data( "id" ) ])
+                        {
+                            itemList[ $this.data( "id" ) ] = 1;
+                        }
+                    }
+                }
+                else
+                {
+                    if( itemList[ $this.data( "id" ) ] )
+                    {
+                        delete itemList[ $this.data( "id" ) ];
+                    }
+                }
+
+                bidx.utils.log('itemlist',itemList);
+            } );
+        } );
 
     }
 
@@ -156,8 +246,6 @@
 
                 if ( data && data.sortIndex )
                 {
-
-
                     // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
                     // which holds the contact info (unordered)
                     //
@@ -303,7 +391,7 @@
                     $button = $( "<a/>",
                     {
                         "class":      "button button-large button-bidx"
-                    ,   "href":       "#connect/mbx-" + el.name.toLowerCase()
+                    ,   "href":       "#connect/mbx-" + encodeURIComponent( el.name.toLowerCase() )
                     } );
 
                     // switch case for different mailbox classes
@@ -330,7 +418,17 @@
                     {
                         "class":    "fa " + iconClass
                     } );
-                    $button.i18nText( folderName, appName );
+
+                    if( folderName )
+                    {
+                        // Inbox, Sent or Trash
+                        $button.i18nText( folderName, appName );
+                    }
+                    else
+                    {
+                        // Custom folder
+                        $button.text( el.name );
+                    }
 
                     // Temp solution to add a space between text and icon
                     $button.prepend( " " );
@@ -425,7 +523,6 @@
         ,   $viewBulk           = $main.find( bidx.utils.getViewName( 'bulk' ) )
         ;
         $toolbarButtons.hide();
-        bidx.utils.log('hideeeeeeee', $viewBulk);
         $viewBulk.hide();
     }
 
@@ -452,19 +549,15 @@
 
     // show provided list of buttons for this view
     //
-    /*function _showToolbarButtons( view, buttons )
+    function _showPublishingButtons( view, buttons )
     {
         var $view               = $views.filter( bidx.utils.getViewName( view ) )
-        ,   $toolbarButtons     = $main.find( ".bulk-dropdown-menu" ).find('option')
-        ,   $viewBulk           = $main.find( bidx.utils.getViewName( 'bulk' ) )
+        ,   $publishingButtons  = $main.find( ".publishing-action" )
         ;
-        $toolbarButtons.hide();
-        $toolbarButtons.filter( buttons.toString() ).show();
 
-        bidx.utils.log('viewsssssssss', buttons);
-        //$toolbarButtons.filter( buttons.toString() ).show();
-        $viewBulk.show();
-    }*/
+        $publishingButtons.hide();
+        $publishingButtons.has( buttons.toString() ).show();
+    }
 
     function _showBulkActions ( view, buttons )
     {
@@ -480,6 +573,11 @@
         $viewBulk.show();
         $viewAction.show();
 
+        // In case we switch from a view with some selected action, to one that
+        // does not have this action, we need to ensure we de-select. So, simply
+        // always select the first option, being "Select action".
+        $toolbarButtons.first().show().parents("select").val(-1);
+        $( ".applyBulk" ).attr("disabled", "disabled");
     }
 
     function _showMoveToFolderActions ( view, buttons )
@@ -656,7 +754,7 @@
                         //
                         else
                         {
-                            connect.navigate( {state: hashElements[0], params: {} } );
+                            connect.navigate( {state: decodeURIComponent( hashElements[0] ), params: {} } );
                         }
                     }
 
@@ -738,8 +836,7 @@
         e.preventDefault();
 
         var $this   = $ ( this )
-        ,   $dropdown   = $( ".btngroup-move-to-folder .dropdown-menu" )
-        ,   href        = $dropdown.val().replace( /^[/]/, "")
+        ,   href        = $moveToFolderDropdown.val().replace( /^[/]/, "")
         ,   params      = {}
         ,   ids
         ,   hash
@@ -805,7 +902,7 @@
                         //
                         else
                         {
-                            connect.navigate( {state: hashElements[0], params: {} } );
+                            connect.navigate( {state: decodeURIComponent( hashElements[0] ), params: {} } );
                         }
 
                     }
@@ -849,7 +946,6 @@
         ,   currentState
         ,   confirmMessage
         ,   alertDeleteMsg
-        ,   $bulkDropdown   = $( ".bulkactions .bulk-dropdown-menu" )
         ;
 
         e.preventDefault();
@@ -947,6 +1043,16 @@
                     actionFn[ params.action ]();
                 }
 
+            break;
+
+            case "undelete":
+
+                _doMark(
+                {
+                    ids:            ids
+                ,   state:          state
+                ,   markAction:     "MARK_UNDELETE"
+                } );
             break;
 
             case "read":
@@ -1146,11 +1252,12 @@
             var buttons
             ,   currentState
             ;
-            // remove the mbx-prefix so we can use the state as a key to match the mailbox
+            // remove the mbx-prefix so we can use the state as a key to match the mailbox,
+            // ensuring to URL decode to support folder names such as "My%20Archive"
             //
             if( state.search( /(^mbx-)/ ) === 0 )
             {
-                currentState = state.replace( /(^mbx-)/, "" );
+                currentState = decodeURIComponent( state.replace( /(^mbx-)/, "" ) );
             }
             bidx.utils.log("[connect] Loading Mailbox" , currentState, " message");
 
@@ -1176,6 +1283,7 @@
                     {
                         buttons = [
                             ".bidx-btn-empty-trash-confirm"
+                        ,   ".bidx-btn-undelete"
                         ,   ".bidx-btn-move-to-folder"
                         ,   ".bidx-btn-mail-next"
                         ];
@@ -1208,12 +1316,12 @@
                     {
                         buttons.splice( $.inArray( ".bidx-btn-mark-unread", buttons ), 1 );
                         buttons.splice( $.inArray( ".bidx-btn-mark-read", buttons ), 1 );
-                        buttons.splice( $.inArray( ".bidx-btn-move-to-folder", buttons ), 1 );
+                        // buttons.splice( $.inArray( ".bidx-btn-move-to-folder", buttons ), 1 );
                     }
 
-                    // init the folder-dropdown of the toolbar
+                    // init the folder-dropdown and the bulk actions of the toolbar
                     //
-                    _initMoveToFolderDropDown( "list" );
+                    _initMoveToFolderAndBulkActionDropdowns( "list" );
 
                     //_showToolbarButtons( "list", buttons );
 
@@ -1232,18 +1340,42 @@
 
         }
 
-        // Show the current state's title ( Inbox | Sent | Trash )
+        // Show the current state's title ( Inbox | Sent | Trash | Custom Folder 1 | Custom Folder 2 | ... )
+        // and set the column header
         //
         function _showState ( state )
         {
             var title
-            ,   $viewList = $element.find( ".viewList" );
+            ,   $viewList = $element.find( ".viewList" )
+            ,   columnToFromHeader = $viewList.find(".email-from-to")
+            ;
+
+            if( $.inArray( state, [ "inbox", "sent", "trash" ] ) === -1 )
+            {
+                // This is a custom folder, which does not need i18n
+                $viewList.find( ".titleCustom" ).text( mailboxes[ state ].name );
+                state = 'custom';
+            }
+            
 
             if( state )
             {
-                title = $viewList.find( ".title").hide().filter( bidx.utils.getViewName( state, "title" ) ).html();
-                $viewList.find( ".title").hide().filter( bidx.utils.getViewName( state, "title" ) ).show();
-                $('.admintitle').html( title);
+                title = $viewList.find( ".title" ).hide().filter( bidx.utils.getViewName( state, "title" ) ).html();
+                $viewList.find( ".title" ).hide().filter( bidx.utils.getViewName( state, "title" ) ).show();
+                $('.admintitle').html( title );
+
+                // A bit of a hack; we'd probably want 2 columns in some views.
+                switch( state )
+                {
+                case "inbox":
+                    columnToFromHeader.text( bidx.i18n.i( "From", appName ) );
+                    break;
+                case "sent":
+                    columnToFromHeader.text( bidx.i18n.i( "To", appName ) );
+                    break;
+                default:
+                    columnToFromHeader.text( bidx.i18n.i( "To", appName ) + " / " +  bidx.i18n.i( "From", appName ));
+                }
             }
         }
 
@@ -1398,19 +1530,16 @@
             $currentView.find( ".mail-message").html( $mailBody );
         }
 
-        // populate the folder dropdown in the toolbar. Required view name and current emailId or a comma separated list of emailIds
+        // populate the folder and bulk action dropdowns in the toolbar. Required view name and current emailId or a comma separated list of emailIds
         //
-        function _initMoveToFolderDropDown( view )
+        function _initMoveToFolderAndBulkActionDropdowns( view )
         {
             if( mailboxes )
             {
                 var $toolbar                = $views.filter( bidx.utils.getViewName( view ) )
-                ,   $dropdown               = $( ".btngroup-move-to-folder .dropdown-menu" )
-                ,   $bulkDropdown           = $( ".bulkactions .bulk-dropdown-menu" )
                 ,   $applyMoveFolder        = $( ".applyMove")
                 ,   $applyBulk              = $( ".applyBulk")
                 ,   params                  = {}
-                ,   $listItem
                 ,   $anchor
                 ,   currentState
                 ,   optionGroup
@@ -1426,26 +1555,34 @@
                     currentState = state.replace( /(^mbx-)/, "" );
                 }
 
-
-                $dropdown.empty();
+                $moveToFolderDropdown.empty();
 
                 optionGroup = $( "<option/>",
                         {
                             value:          "-1"
                         } );
-                 optionGroup.text( bidx.i18n.i( "moveFolderMsg", appName )  );
-                $dropdown.append( optionGroup );
-
-
+                optionGroup.text( bidx.i18n.i( "moveFolderMsg", appName )  );
+                $moveToFolderDropdown.append( optionGroup );
 
                 if(mailboxes)
                 {
                     $.each( mailboxes, function( idx, item )
                     {
+                        // if item is Sent box or the current opened box (the state), then skip those values
+                        //
                         if( /^sent$/i.test( item.name )  || item.name.match( new RegExp( currentState, "i") ) )
                         {
                             return true;
                         }
+
+                        // Skip "Sent to Inbox" for Sent Items. (A user could first delete or move into a
+                        // custom mailbox, and from there move to Inbox, if they really want to...)
+                        //
+                        if( /^inbox$/i.test( item.name )  && currentState === "sent" )
+                        {
+                            return true;
+                        }
+
                         params.folderId = item.id;
 
                         optionGroup = $( "<option/>",
@@ -1454,50 +1591,23 @@
                         ,   'data-href':    "/" + $.param( params )
                         } );
 
-                        optionGroup.text( bidx.i18n.i( item.name, appName )  );
-
-                        $dropdown.append( optionGroup );
-
-                        $dropdown.append( optionGroup );
-
-                    } );
-
-                    /* Enable/Disable Apply button for Move message to folder */
-                    $dropdown.bind( 'change', function(e)
-                    {
-                        valueMoveFolder =  $(this).val();
-
-                        if( valueMoveFolder === '-1')
+                        if( $.inArray( item.name, [ "Inbox", "Sent", "Trash" ] ) === -1 )
                         {
-
-                            $applyMoveFolder.attr("disabled", "disabled");
-                        } else
-                        {
-
-                            $applyMoveFolder.removeAttr("disabled");
+                            // This is a custom folder, which does not need i18n
+                            optionGroup.text( item.name );
                         }
-                    } );
-
-                    /* Enable/Disable Apply button for Bulk operations */
-                    $bulkDropdown.bind( 'change', function(e)
-                    {
-                        valueBulk   =  $(this).val();
-
-                        if( valueBulk === '-1')
+                        else
                         {
-
-                            $applyBulk.attr("disabled", "disabled");
-                        } else
-                        {
-
-                            $applyBulk.removeAttr("disabled");
+                            optionGroup.text( bidx.i18n.i( item.name, appName )  );
                         }
+
+                        $moveToFolderDropdown.append( optionGroup );
+
                     } );
 
-
-                    $applyMoveFolder.on('click', _doMoveToFolder);
-
-                    $applyBulk.on('click', _doAction);
+                    // Disable, in case we switched to a new mailbox;
+                    // $bulkApply is disabled in _showBulkActions
+                    $moveToFolderApply.attr("disabled", "disabled");
                 }
 
             }
@@ -1507,127 +1617,6 @@
             }
         }
 
-
-        // populate the folder dropdown in the toolbar. Required view name and current emailId or a comma separated list of emailIds
-        //
-        function _initMoveToFolderDropDownold( view )
-        {
-            if( mailboxes )
-            {
-                var $toolbar                = $views.filter( bidx.utils.getViewName( view ) )
-                ,   $dropdown               = $( ".btngroup-move-to-folder .dropdown-menu" )
-                ,   $moveFolderDropDown     = $toolbar.find( ".btngroup-move-to-folder .chosen-move-tofolder" )
-                ,   params                  = {}
-                ,   $listItem
-                ,   $anchor
-                ,   $optionsFolderDropDown
-                ,   currentState
-                ,   optionGroup
-                ,   listArrItems            = []
-                ;
-
-                // remove the mbx-prefix so we can use the state as a key to match the mailbox
-                //
-                if( state.search( /(^mbx-)/ ) === 0 )
-                {
-                    currentState = state.replace( /(^mbx-)/, "" );
-                }
-
-
-                /*// cleaer dropdown
-                //
-                $dropdown.empty();
-
-                // add folders to dropdown
-                //
-                $.each( mailboxes, function( idx, item )
-                {
-                    // if item is Send box or the current opened box (the state), then skip those values
-                    //
-                    if( /^sent$/i.test( item.name )  || item.name.match( new RegExp( currentState, "i") ) )
-                    {
-                        return true;
-                    }
-                    params.folderId = item.id;
-
-                    // add listitem with anchortag. Store params in href attribute
-                    //
-                    $listItem   = $( "<li/>" );
-                    $anchor     = $( "<a/>" );
-                    $anchor
-                        .attr( "href", "/" + $.param( params ) )
-                        .i18nText( item.name, appName )
-                    ;
-                    // we can do a bind click because this dropdown will be emptied on every mail read action
-                    //
-                    $anchor.bind( "click", _doMoveToFolder );
-
-                    $listItem.append ( $anchor );
-                    $dropdown.append( $listItem );
-                } );*/
-
-                bidx.utils.log('moveFolderDropDown',$moveFolderDropDown);
-
-                $dropdown.empty();
-
-                optionGroup = $( "<option/>",
-                        {
-                            value:          "-1"
-                        } );
-                 optionGroup.text( bidx.i18n.i( "moveFolderMsg", appName )  );
-                $dropdown.append( optionGroup );
-
-                $optionsFolderDropDown = $moveFolderDropDown.find( "option" );
-
-                if ( $optionsFolderDropDown.length )
-                {
-                    $optionsFolderDropDown.empty();
-                }
-
-                $moveFolderDropDown.bidx_chosen(
-                {
-                    emptyValue:         bidx.i18n.i( "moveFolderMsg", appName )
-                } );
-
-                if(mailboxes)
-                {
-                    $.each( mailboxes, function( idx, item )
-                    {
-                        if( /^sent$/i.test( item.name )  || item.name.match( new RegExp( currentState, "i") ) )
-                        {
-                            return true;
-                        }
-                        params.folderId = item.id;
-
-                        optionGroup = $( "<option/>",
-                        {
-                            value:          "/" + $.param( params )
-                        ,   'data-href':    "/" + $.param( params )
-                        } );
-
-                        optionGroup.text( bidx.i18n.i( item.name, appName )  );
-
-                        $dropdown.append( optionGroup );
-
-                        listArrItems.push( optionGroup );
-                    } );
-                }
-                bidx.utils.log('dropdown', $dropdown);
-                // add the options to the select
-                $moveFolderDropDown.append( listArrItems );
-                $moveFolderDropDown.trigger('chosen:updated');
-
-                    // init bidx_chosen plugin
-
-
-                $moveFolderDropDown.on('change', _doMoveToFolder);
-
-            }
-            else
-            {
-                bidx.utils.error( "Mailboxes not loaded. Cannot initialize MoveToFolder dropdown" );
-            }
-        }
 
     //  ################################## GETTERS #####################################  \\
 
@@ -1958,6 +1947,15 @@
             return $d.promise();
         }
 
+        // Determines if the current user is the Sender of the given message. For Connect, we know that
+        // by design this is a group mailbox, but the current user (being an administrator) might even
+        // have sent a message to their own group, so only look at the groupId.
+        //
+        function _isSenderOfMessage( message )
+        {
+            return message.sender && message.sender.groupId === currentGroupId;
+        }
+
         //  get all emails from selected mailbox
         // NOTE: #mattijs; I think it would be nice to separate the creation of the HTML email itemList in a different function, because now this function can only be used
         //       for one application only
@@ -2005,6 +2003,8 @@
                             ,   recipients
                             ,   $elements           = []
                             ,   senderReceiverName
+                            ,   prefixFrom = bidx.i18n.i( "From", appName ) + ": "
+                            ,   prefixTo = bidx.i18n.i( "To", appName ) + ": "
                             ;
 
                             // clear listing
@@ -2024,21 +2024,27 @@
                                     newListItem = listItem;
                                     recipients = [];
 
-                                    // create a list of recipients ( for mbx-send only )
-                                    //
-                                    if( item.recipients && item.recipients.length )
+                                    if( _isSenderOfMessage( item ) )
                                     {
+                                        // The current user/group is the Sender (for items in mbx-sent, mbx-trash, archives):
+                                        // show the recipient(s).
+                                        //
                                         $.each( item.recipients, function( idx, recipient )
                                         {
                                             recipients.push( recipient.displayName );
                                         } );
-                                        senderReceiverName = recipients.toString().replace( /,/g, ", " );
+
+                                        // For most folders (such as Trash and any archive), prefix with "To:"
+                                        //
+                                        senderReceiverName = ( !item.trashed && item.folderName == "Sent" ? "" : prefixTo ) + recipients.toString().replace( /,/g, ", " );
                                     }
-                                    // else if there is a sender ( for other boxes )
-                                    //
-                                    else if ( item.sender )
+                                    else
                                     {
-                                        senderReceiverName = item.sender.displayName;
+                                        // The current user/group is (one of) the recipient(s): show the Sender. For most folders
+                                        // prefix with "From:" (after moving a Sent item from Trash to Inbox, this will not show
+                                        // such prefix, which may be confusing).
+                                        //
+                                        senderReceiverName = ( !item.trashed && item.folderName == "Inbox" ? "" : prefixFrom ) +  item.sender.displayName;
                                     }
 
                                     // replace placeholders
@@ -2049,12 +2055,13 @@
                                             .replace( /%readEmailHref%/g, document.location.hash +  "/id=" + item.id )
                                             // mailbox sent does not show unread state
                                             //
-                                            .replace( /%emailRead%/g, ( !item.read && state !== "mbx-sent" ) ? "email-new" : "" )
                                             .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? "new" : "" )
+                                            .replace( /%emailRead%/g, ( !item.read && state !== "mbx-sent" ) ? "email-new" : "email-read" )
                                             .replace( /%senderReceiverName%/g, senderReceiverName )
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
                                             .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
                                             .replace( /%subject%/g, subject )
+                                            .replace( /%trashedFrom%/g, item.trashed ? bidx.i18n.i( "trashedFrom", appName ) + " " + item.folderName : "" )
                                     ;
 
                                     $element = $( newListItem );
@@ -2079,71 +2086,71 @@
                                 //
                                 //$checkboxes.checkbox();
 
-                                //  set change event which add/removes the checkbox ID in the listElements variable
-                                //
-                                $checkboxes.bind( 'change', function()
-                                {
-                                    var $this=$(this);
+//                                //  set change event which add/removes the checkbox ID in the listElements variable
+//                                //
+//                                $checkboxes.bind( 'change', function()
+//                                {
+//                                    var $this=$(this);
+//
+//                                    if( $this.attr( "checked" ) )
+//                                    {
+//                                        if( !itemList[ $this.data( "id" ) ])
+//                                        {
+//                                            itemList[ $this.data( "id" ) ] = 1 ;
+//                                        }
+//                                    }
+//                                    else
+//                                    {
+//                                        if( itemList[ $this.data( "id" ) ] )
+//                                        {
+//                                            delete itemList[ $this.data( "id" ) ];
+//                                        }
+//                                    }
+//
+//                                } );
 
-                                    if( $this.attr( "checked" ) )
-                                    {
-                                        if( !itemList[ $this.data( "id" ) ])
-                                        {
-                                            itemList[ $this.data( "id" ) ] = 1 ;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if( itemList[ $this.data( "id" ) ] )
-                                        {
-                                            delete itemList[ $this.data( "id" ) ];
-                                        }
-                                    }
-
-                                } );
-
-                                // bind event to change all checkboxes from toolbar checkbox
-                                //
-                                $view.find( ".messagesCheckall" ).change( function()
-                                {
-                                    var masterCheck = $( this ).attr( "checked" );
-                                    bidx.utils.log( 'mastercheck', $list.find( ":checkbox" ) );
-                                    $list.find( ":checkbox" ).each( function()
-                                    {
-                                        var $this = $(this);
-                                        if( masterCheck )
-                                        {
-                                            //$this.checkbox( 'check' );
-                                            if( itemList )
-                                            {
-
-                                                if( !itemList[ $this.data( "id" ) ])
-                                                {
-                                                    itemList[ $this.data( "id" ) ] = 1;
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            //$this.checkbox( 'uncheck' );
-                                            if( itemList[ $this.data( "id" ) ] )
-                                            {
-                                                delete itemList[ $this.data( "id" ) ];
-                                            }
-                                        }
-
-                                        bidx.utils.log('itemlist',itemList);
-                                    } );
-                                } );
+//                                // bind event to change all checkboxes from toolbar checkbox
+//                                //
+//                                $view.find( ".messagesCheckall" ).change( function()
+//                                {
+//                                    var masterCheck = $( this ).attr( "checked" );
+//                                    bidx.utils.log( 'mastercheck', $list.find( ":checkbox" ) );
+//                                    $list.find( ":checkbox" ).each( function()
+//                                    {
+//                                        var $this = $(this);
+//                                        if( masterCheck )
+//                                        {
+//                                            //$this.checkbox( 'check' );
+//                                            if( itemList )
+//                                            {
+//
+//                                                if( !itemList[ $this.data( "id" ) ])
+//                                                {
+//                                                    itemList[ $this.data( "id" ) ] = 1;
+//                                                }
+//                                            }
+//                                        }
+//                                        else
+//                                        {
+//                                            //$this.checkbox( 'uncheck' );
+//                                            if( itemList[ $this.data( "id" ) ] )
+//                                            {
+//                                                delete itemList[ $this.data( "id" ) ];
+//                                            }
+//                                        }
+//
+//                                        bidx.utils.log('itemlist',itemList);
+//                                    } );
+//                                } );
 
                             } // end of handling emails from response
                             else
                             {
                                 $list.append( $listEmpty );
                             }
-                            // uncheck the Big Kahuna checkbox on each list load
+                            // uncheck the "select all" checkbox on each list load
                             //
-                            //$view.find( ".messagesCheckall" ).checkbox("uncheck");
+                            $view.find( ".messagesCheckall" ).prop('checked', false);
 
                             // execute callback if provided
                             //
@@ -2416,21 +2423,12 @@
                         [
                             ".btn-reply"
                         ,   ".btn-forward"
+                        ,   ".btn-move-to-folder"
+                        ,   state === "mbx-trash" ? ".btn-undelete" : ".btn-delete"
                         ];
 
-                        if ( state !== "mbx-sent" )
-                        {
-                            // if message is not a contact request
-                            // contact request only has delete button
-                            buttons =
-                            [
-                                ".bidx-btn-delete"
-                            ];
-                        }
+                        _showPublishingButtons( action, buttons );
 
-                        //_showToolbarButtons( action, buttons );
-
-                        //_showBulkActions ( action, buttons );
                         _showMoveToFolderActions();
 
                         _setToolbarButtonsTarget( mailId, state, action );
@@ -2449,7 +2447,7 @@
                                 {
                                     // init the folder-dropdown of the toolbar
                                     //
-                                    _initMoveToFolderDropDown( action );
+                                    _initMoveToFolderAndBulkActionDropdowns( action );
                                     // mark the menu that matches this current page
                                     //
                                     _setActiveMenu();
@@ -2460,7 +2458,7 @@
                         {
                             // init the folder-dropdown of the toolbar
                             //
-                            _initMoveToFolderDropDown( action );
+                            _initMoveToFolderAndBulkActionDropdowns( action );
                         }
 
                     } )

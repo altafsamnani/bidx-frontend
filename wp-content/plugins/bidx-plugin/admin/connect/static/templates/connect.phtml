@@ -33,6 +33,7 @@
 				            <option value="read" class="btn bidx-btn-mark-read hide-if-no-js">Mark as read</option>
 				            <option value="unread" class="btn bidx-btn-mark-unread hide-if-no-js">Mark as unread</option>
 				            <option value="delete" class="btn bidx-btn-delete hide-if-no-js">Delete</option>
+				            <option value="undelete" class="btn bidx-btn-undelete hide-if-no-js">Undelete</option>
 				            <option value="trash" class="btn bidx-btn-empty-trash-confirm" data-confirm="true">Empty Trash</option>
 				        </select>
 				        <input disabled = "disabled" type="submit" name="applyBulk" class="button action applyBulk" value="Apply">
@@ -59,7 +60,8 @@
 			                	<h3 class="hndle title titleInbox"><?php _e('Inbox','bidxplugin')?></h3>
 			                    <h3 class="hndle title titleSent"><?php _e('Sent','bidxplugin')?></h3>
 			                    <h3 class="hndle title titleTrash"><?php _e('Trash','bidxplugin')?></h3>
-			                </div>
+			                    <h3 class="hndle title titleCustom"></h3>
+			                    </div>
 			                <div class="panel-body inside">
 								<form action="">
 									<table class="wp-list-table widefat fixed pages">
@@ -69,15 +71,18 @@
 													<input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
 												</th>
 												<th style="" class="manage-column" scope="col">Subject</th>
-												<th style="" class="manage-column" scope="col">From</th>
+												<!-- Will be replaced with To for Sent, or both From/To for Trash and other folders -->
+												<th style="" class="manage-column email-from-to" scope="col">From</th>
 												<th style="" class="manage-column" scope="col">Date</th>
 											</tr>
 										</thead>
 										<tfoot>
 										<tr>
-											<th style="" class="manage-column column-cb check-column" scope="col"><input type="checkbox"></th>
+											<th style="" class="manage-column column-cb check-column" scope="col">
+												<input type="checkbox" data-toggle="checkbox" class="messagesCheckall" value="">
+											</th>
 											<th style="" class="manage-column" scope="col">Subject</th>
-											<th style="" class="manage-column" scope="col">From</th>
+											<th style="" class="manage-column email-from-to" scope="col">From</th>
 
 											<th style="" class="manage-column" scope="col">Date</th>
 										</tr>
@@ -110,26 +115,28 @@
 			                    </div>
 
 			                    <div id="major-publishing-actions">
-								   <div id="delete-action">
-								       <a class="submitdelete deletion" href="#connect/discardConfirm">Discard message</a>
-								    </div>
-
-								    <div id="publishing-action">
+								    <div class="publishing-action">
 								        <span class="spinner"></span>
 								            <a class="button button-primary button-large btn-reply" href="#" data-href="#connect/%state%/action=reply&id=%id%">
 								                <?php _e('Reply','bidxplugin')?>
 											</a>
 								   	</div>
-								   	<div id="publishing-action">
+								   	<div class="publishing-action">
 								        <span class="spinner"></span>
 								            <a class="button button-primary button-large btn-forward" href="#" data-href="#connect/%state%/action=forward&id=%id%">
 								                <?php _e('Forward','bidxplugin')?>
 											</a>
 								   	</div>
-								   	<div id="publishing-action">
+								   	<div class="publishing-action">
 								        <span class="spinner"></span>
 								            <a class="button button-primary button-large btn-delete" href="#" >
 								                <?php _e('Delete','bidxplugin')?>
+											</a>
+								   	</div>
+								   	<div class="publishing-action">
+								        <span class="spinner"></span>
+								            <a class="button button-primary button-large btn-undelete" href="#" >
+								                <?php _e('Undelete','bidxplugin')?>
 											</a>
 								   	</div>
 									<div class="clear"></div>
@@ -157,7 +164,7 @@
 			                    <p>
 			                        <strong><?php _e('Recipient','bidxplugin'); ?></strong>
 			                    </p>
-			                    <select name="contacts" multiple class="hide chosen-recipient" data-placeholder="<?php _e( 'Select a recipient', 'bidxplugin' ); ?>"></select>
+			                    <select name="contacts" multiple class="hid chosen-recipient" data-placeholder="<?php _e( 'Select a recipient', 'bidxplugin' ); ?>"></select>
 		                	</div>
 		                	<div class="form-group">
 			                    <p>
@@ -169,7 +176,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+
 		                    <?php
 
 		                    $args = array(	'textarea_name' => 'content'
@@ -180,12 +187,11 @@
 		                    	    );
                             wp_editor(__('','bidxplugin'), "connect_editor_id", $args); ?>
 
-                           </div>
 		                    <div id="major-publishing-actions">
 							   <div id="delete-action">
 							       <a class="submitdelete deletion compose-cancel" href="#connect/discardConfirm"><?php _e('Discard message','bidxplugin');?></a>
 							    </div>
-							    <div id="publishing-action">
+							    <div class="publishing-action">
 							        <span class="spinner"></span>
 							            <button type="submit" class="button button-primary button-large compose-submit">
 							                <?php _e('Send message','bidxplugin')?>
@@ -281,7 +287,7 @@
 		</th>
 
 		<td class="post-title page-title column-title">
-			<strong><a class="row-title" href="%readEmailHref%" title="Edit “Download business plan templates”">%subject%</a></strong>
+			<a class="row-title %emailRead%" href="%readEmailHref%">%subject%</a>
 		</td>
 
 		<td class="author column-author">
@@ -292,32 +298,6 @@
 			<abbr title="%dateSent% %timeSent%">%dateSent%</abbr>
 		</td>
 	</tr>
--->
-</script>
-
-<script type="text/html" id="mailbox-listitem-old">
-<!--
-<li class="media %emailRead%" >
-    <div class="pull-left check">
-        <div class="checkbox">
-            <input type="checkbox" value="" id="checkbox-mailboxItem" class="mailboxItem" name="mailboxItem" data-toggle="checkbox" data-id="" />
-            <label for="checkbox-mailboxItem"><span></span></label>
-        </div>
-    </div>
-    <div class="media-body">
-        <div class="row">
-            <div class="col-sm-9"><h6 class="media-heading"><a href="%readEmailHref%" class="">%senderReceiverName% %emailNew%</a></h6></div>
-            <div class="col-sm-3">
-                %dateSent%
-                <br>
-                %timeSent%
-            </div>
-        </div>
-        <div class="subject">
-            <span>%subject%</span>
-        </div>
-    </div>
-</li>
 -->
 </script>
 
