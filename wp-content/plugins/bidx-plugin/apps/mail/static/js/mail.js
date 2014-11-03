@@ -113,6 +113,7 @@
         // bind the toolbar buttons to their handlers. Reply and forward use HREF for navigation
         //
         $mailboxToolbarButtons.filter( ".bidx-btn-delete" ).bind( "click", "action=delete&confirm=true", _doAction );
+        $mailboxToolbarButtons.filter( ".bidx-btn-undelete" ).bind( "click", "action=undelete", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-mark-read" ).bind( "click", "action=read&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread" ).bind( "click", "action=unread&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder" ).bind( "click", "action=move&confirm=false", _doAction );
@@ -127,6 +128,36 @@
             .click( _doShowMoreContacts )
         ;
 
+        // bind event to change all checkboxes from toolbar checkbox
+        //
+        $views.on( "change", ".messagesCheckall", function()
+        {
+            var masterCheck = $( this ).attr( "checked" );
+            $( this ).parents( ".mail" ).find( "[data-id]" ).each( function()
+            {
+                var $this = $(this);
+                if( masterCheck )
+                {
+                    $this.checkbox( 'check' );
+                    if( itemList )
+                    {
+                        if( !itemList[ $this.data( "id" ) ])
+                        {
+                            itemList[ $this.data( "id" ) ] = 1;
+                        }
+                    }
+                }
+                else
+                {
+                    $this.checkbox( 'uncheck' );
+                    if( itemList[ $this.data( "id" ) ] )
+                    {
+                        delete itemList[ $this.data( "id" ) ];
+                    }
+                }
+            } );
+            bidx.utils.log( "ItemList", itemList );
+        } );
 
     }
 
@@ -222,7 +253,7 @@
                     $button = $( "<a/>",
                     {
                         "class":      "btn btn-block btn-default"
-                    ,   "href":       "#mail/mbx-" + el.name.toLowerCase()
+                    ,   "href":       "#mail/mbx-" + encodeURIComponent( el.name.toLowerCase() )
                     } );
 
                     // switch case for different mailbox classes
@@ -249,7 +280,17 @@
                     {
                         "class":    "fa " + iconClass
                     } );
-                    $button.i18nText( folderName, appName );
+
+                    if( folderName )
+                    {
+                        // Inbox, Sent or Trash
+                        $button.i18nText( folderName, appName );
+                    }
+                    else
+                    {
+                        // Custom folder
+                        $button.text( el.name );
+                    }
 
                     // Temp solution to add a space between text and icon
                     $button.prepend( " " );
@@ -562,7 +603,7 @@
                         //
                         else
                         {
-                            mail.navigate( {state: hashElements[0], params: {} } );
+                            mail.navigate( {state: decodeURIComponent( hashElements[0] ), params: {} } );
                         }
                     }
 
@@ -708,7 +749,7 @@
                         //
                         else
                         {
-                            mail.navigate( {state: hashElements[0], params: {} } );
+                            mail.navigate( {state: decodeURIComponent( hashElements[0] ), params: {} } );
                         }
 
                     }
@@ -982,11 +1023,12 @@
         }
         params = bidx.utils.bidxDeparam( e.data );
 
-        // remove the mbx-prefix so we can use the state as a key to match the mailbox
+        // remove the mbx-prefix so we can use the state as a key to match the mailbox,
+        // ensuring to URL decode to support folder names such as "My%20Archive"
         //
         if( state.search( /(^mbx-)/ ) === 0 )
         {
-            currentState = state.replace( /(^mbx-)/, "" );
+            currentState = decodeURIComponent( state.replace( /(^mbx-)/, "" ) );
         }
 
         // Definition of action handlers with the actual action (trying to prevent duplicate code)
@@ -1061,6 +1103,16 @@
                     actionFn[ params.action ]();
                 }
 
+            break;
+
+            case "undelete":
+                // This moves the message back to its originating folder
+                _doMark(
+                {
+                    ids:            ids
+                ,   state:          state
+                ,   markAction:     "MARK_UNDELETE"
+                } );
             break;
 
             case "read":
@@ -1290,6 +1342,7 @@
                     {
                         buttons = [
                             ".bidx-btn-empty-trash-confirm"
+                        ,   ".bidx-btn-undelete"
                         ,   ".bidx-btn-move-to-folder"
                         ,   ".bidx-btn-mail-next"
                         ];
@@ -1319,7 +1372,7 @@
                     {
                         buttons.splice( $.inArray( ".bidx-btn-mark-unread", buttons ), 1 );
                         buttons.splice( $.inArray( ".bidx-btn-mark-read", buttons ), 1 );
-                        buttons.splice( $.inArray( ".bidx-btn-move-to-folder", buttons ), 1 );
+//                        buttons.splice( $.inArray( ".bidx-btn-move-to-folder", buttons ), 1 );
                     }
 
                     // init the folder-dropdown of the toolbar
@@ -1339,11 +1392,18 @@
 
         }
 
-        // Show the current state's title ( Inbox | Sent | Trash )
+        // Show the current state's title ( Inbox | Sent | Trash | Custom Folder 1 | Custom Folder 2 | ... )
         //
         function _showState ( state )
         {
             var $viewList = $element.find( ".viewList" );
+
+            if( $.inArray( state, [ "inbox", "sent", "trash" ] ) === -1 )
+            {
+                // This is a custom folder, which does not need i18n
+                $viewList.find( ".titleCustom" ).text( mailboxes[ state ].name );
+                state = 'custom';
+            } 
 
             if( state )
             {
@@ -1798,6 +1858,7 @@
                 //
                 $htmlParser.html( message.content );
                 mailBody = $htmlParser.text().replace( /\n/g, "<br/>" );
+                // if( message.trashed ) then we could somehow show from which folder the item was trashed: message.folderName
                 $mailBody = mailBody;
             }
 
@@ -1841,12 +1902,21 @@
                 //
                 $.each( mailboxes, function( idx, item )
                 {
-                    // if item is Send box or the current opened box (the state), then skip those values
+                    // if item is Sent box or the current opened box (the state), then skip those values
                     //
                     if( /^sent$/i.test( item.name )  || item.name.match( new RegExp( currentState, "i") ) )
                     {
                         return true;
                     }
+
+                    // Skip "Sent to Inbox" for Sent Items. (A user could first delete or move into a
+                    // custom mailbox, and from there move to Inbox, if they really want to...)
+                    //
+                    if( /^inbox$/i.test( item.name )  && currentState === "sent" )
+                    {
+                        return true;
+                    }
+
                     params.folderId = item.id;
 
                     // add listitem with anchortag. Store params in href attribute
@@ -1857,7 +1927,7 @@
                         .attr( "href", "/" + $.param( params ) )
                         .i18nText( item.name, appName )
                     ;
-                    // we can do a bind click because this dropdown will be emptied on every mail read action
+                    // we can safely bind to "click" because this dropdown will be emptied on every mail read action
                     //
                     $anchor.bind( "click", _doMoveToFolder );
 
@@ -2193,6 +2263,14 @@
             return $d.promise();
         }
 
+        // Determines if the current user is the Sender of the given message. For regular mailboxes, we know that
+        // by design this is not a group.
+        //
+        function _isSenderOfMessage( message )
+        {
+            return message.sender && message.sender.id === bidx.common.getCurrentUserId( "id" );
+        }
+
         //  get all emails from selected mailbox
         // NOTE: #mattijs; I think it would be nice to separate the creation of the HTML email itemList in a different function, because now this function can only be used
         //       for one application only
@@ -2240,6 +2318,8 @@
                             ,   recipients
                             ,   $elements           = []
                             ,   senderReceiverName
+                            ,   prefixFrom = bidx.i18n.i( "From", appName ) + ": "
+                            ,   prefixTo = bidx.i18n.i( "To", appName ) + ": "
                             ;
 
                             // clear listing
@@ -2259,21 +2339,26 @@
                                     newListItem = listItem;
                                     recipients = [];
 
-                                    // create a list of recipients ( for mbx-send only )
-                                    //
-                                    if( item.recipients && item.recipients.length )
+                                    if( _isSenderOfMessage( item ) )
                                     {
+                                        // The current user/group is the Sender (for items in mbx-sent, mbx-trash, archives):
+                                        // show the recipient(s).
+                                        //
                                         $.each( item.recipients, function( idx, recipient )
                                         {
                                             recipients.push( recipient.displayName );
                                         } );
-                                        senderReceiverName = recipients.toString().replace( /,/g, ", " );
+
+                                        // For folders with mixed content (such as Trash and any archive), prefix with "To:"
+                                        //
+                                        senderReceiverName = ( !item.trashed && item.folderName == "Sent" ? "" : prefixTo ) + recipients.toString().replace( /,/g, ", " );
                                     }
-                                    // else if there is a sender ( for other boxes )
-                                    //
-                                    else if ( item.sender )
+                                    else
                                     {
-                                        senderReceiverName = item.sender.displayName;
+                                        // The current user/group is (one of) the recipient(s): show the Sender. For folders with
+                                        // mixed content prefix with "From:"
+                                        //
+                                        senderReceiverName = ( !item.trashed && item.folderName == "Inbox" ? "" : prefixFrom ) +  item.sender.displayName;
                                     }
 
                                     // replace placeholders
@@ -2290,6 +2375,7 @@
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
                                             .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
                                             .replace( /%subject%/g, subject )
+                                            .replace( /%trashedFrom%/g, item.trashed ? bidx.i18n.i( "trashedFrom", appName ) + " " + item.folderName : "" )
                                     ;
 
                                     $element = $( newListItem );
@@ -2313,8 +2399,8 @@
                                 //
                                 $checkboxes.checkbox();
 
-                                //  set change event which add/removes the checkbox ID in the listElements variable
-                                //
+                                //  set change event which add/removes the checkbox ID in the listElements variable;
+                                //  we can safely bind to "change" because $checkboxes is newly created
                                 $checkboxes.bind( 'change', function()
                                 {
                                     var $this=$(this);
@@ -2334,37 +2420,6 @@
                                         }
                                     }
 
-                                } );
-
-                                // bind event to change all checkboxes from toolbar checkbox
-                                //
-                                $view.find( ".messagesCheckall" ).change( function()
-                                {
-                                    var masterCheck = $( this ).attr( "checked" );
-                                    $list.find( ":checkbox" ).each( function()
-                                    {
-                                        var $this = $(this);
-                                        if( masterCheck )
-                                        {
-                                            $this.checkbox( 'check' );
-                                            if( itemList )
-                                            {
-
-                                                if( !itemList[ $this.data( "id" ) ])
-                                                {
-                                                    itemList[ $this.data( "id" ) ] = 1;
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            $this.checkbox( 'uncheck' );
-                                            if( itemList[ $this.data( "id" ) ] )
-                                            {
-                                                delete itemList[ $this.data( "id" ) ];
-                                            }
-                                        }
-                                    } );
                                 } );
 
                             } // end of handling emails from response
@@ -2728,18 +2783,13 @@
                         [
                             ".btn-reply"
                         ,   ".btn-forward"
+                        ,   ".btn-move-to-folder"
+                        ,   state === "mbx-trash" ? ".bidx-btn-undelete" : ".bidx-btn-delete"
                         ];
 
                         if ( state !== "mbx-sent" )
                         {
-                            // if message is not a contact request
-                            //
-                            if ( message.type !== "MAIL_CONTACT_REQUEST" )
-                            {
-                                buttons.push( ".bidx-btn-delete" );
-                                buttons.push( ".btn-move-to-folder" );
-                            }
-                            else
+                            if ( message.type === "MAIL_CONTACT_REQUEST" )
                             {
                                 // contact request only has delete button
                                 //
