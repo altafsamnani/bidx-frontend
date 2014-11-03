@@ -122,6 +122,10 @@
         //
     ,   $editDocument                       = $element.find( ".js-edit-document" )
 
+        // Industy Sectors
+        //
+    // ,   $industrySectors                    = $element.find( ".industrySectors" )
+
     ,   businessSummary
     ,   businessSummaryId
 
@@ -332,6 +336,10 @@
         {
             dataKey:            "socialImpact"
         });
+
+        // Run the industry widget on the selector
+        //
+        // $industrySectors.industries();
 
         forms.financialDetails.$el.find( "[name='yearSalesStarted']" ).bidx_chosen();
 
@@ -775,11 +783,13 @@
                     {
                         // required:               true
                         monetaryAmount:         true
+                    ,   range :                 [-2147483648, 2147483647]   //PM-393
 
                     ,   messages:
                         {
                             required:               ""
                         ,   monetaryAmount:         "Please enter only numbers"
+                        ,   range:                  "Please enter lower value"
                         }
                     } );
                 } );
@@ -1724,6 +1734,15 @@
             }
         } );
 
+        // // Industry Sectors
+        // //
+        // var data = bidx.utils.getValue( businessSummary, "industrySector", true );
+
+        // if ( data )
+        // {
+        //     $industrySectors.industries( "populateInEditScreen",  data );
+        // }
+
         // Now the nested objects
         //
         var managementTeam = bidx.utils.getValue( businessSummary, "managementTeam", true );
@@ -1854,6 +1873,32 @@
                 } );
             }
 
+
+            // Industry Sectors
+            // var endSectors = $industrySectors.find( "[name*='endSector']" );
+
+            // if ( endSectors )
+            // {
+            //     var arr = [];
+            //     $.each( endSectors, function(i, f)
+            //     {
+            //         var value   = bidx.utils.getElementValue( $(f) );
+
+            //         if ( value )
+            //         {
+            //             arr.push( value );
+            //         }
+            //     });
+
+            //     arr = $.map( arr, function( n )
+            //     {
+            //         return n;
+            //     });
+
+            //     bidx.utils.setValue( businessSummary, "industrySector", arr );
+            // }
+
+
             // Collect the nested objects
             //
             $.each( formFields, function( nest )
@@ -1907,9 +1952,9 @@
                             ,   value   = bidx.utils.getElementValue( $input )
                             ;
 
-                            if (value == '')
+                            if ( value === "" )
                             {
-                            	value = 0;
+                                value = 0;
                             }
 
                             item[ year ][ f ] = value;
@@ -2269,6 +2314,7 @@
         ,   initiatorId
         ,   mentorId                =   params.mentorId
         ,   isActiveRequest         =   params.isActiveRequest
+        ,   requestId
         ,   waitArr                 =   []
         ,   respondArr              =   []
         ,   rejectMentorArr         =   []
@@ -2338,7 +2384,7 @@
                                                     }
                                                 );
                 initiatorId     =   filteredRequest.initiatorId;
-                bidx.utils.log('initiatorId', initiatorId);
+                requestId       =   filteredRequest.requestId;
                 actionData  = $("#respond-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
                 $listItem.find( '.action' ).empty( ).append( actionData );
 
@@ -2350,7 +2396,7 @@
                 hrefMatch   =   hrefMatch
                         .replace( /%entityId%/g,    contextBpId )
                         .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%initiatorId%/g, initiatorId )
+                        .replace( /%requestId%/g,    requestId)
                         ;
 
                 $acceptBtn.attr( "href", hrefMatch );
@@ -2359,11 +2405,11 @@
                 $matchBtn   =   $listItem.find( ".btn-bidx-ignore");
                 hrefMatch   =   $matchBtn.attr( "data-href" );
 
-                /* 1 Accept Link */
+                /* 2 Ignore Link */
                 hrefMatch   =   hrefMatch
                         .replace( /%entityId%/g,    contextBpId )
                         .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%initiatorId%/g, initiatorId )
+                        .replace( /%requestId%/g,    requestId)
                         ;
 
                 $matchBtn.attr( "href", hrefMatch );
@@ -2377,7 +2423,7 @@
                                                     }
                                                 );
                 initiatorId     =   filteredRequest.initiatorId;
-
+                requestId       =   filteredRequest.requestId;
                 actionData  = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "");
                 $listItem.find( '.action' ).empty( ).append( actionData );
 
@@ -2386,9 +2432,10 @@
 
                 /*************Cancel request*******************/
                 hrefMatch   =   hrefMatch
+                        .replace( /%requestId%/g,    requestId)
                         .replace( /%entityId%/g,    contextBpId )
-                        .replace( /%mentorId%/g,    mentorId )
-                        .replace( /%initiatorId%/g, initiatorId )
+                      //  .replace( /%mentorId%/g,    mentorId )
+                      //  .replace( /%initiatorId%/g, initiatorId )
                         ;
 
                 $matchBtn.attr( "href", hrefMatch );
@@ -2720,7 +2767,7 @@
     function _getActiveMentors( options )
     {
             var snippet          = $("#mentor-snippet").html().replace(/(<!--)*(-->)*/g, "")
-            ,   $listEmpty       = $("#empty-mentors").html().replace(/(<!--)*(-->)*/g, "")
+            ,   $listEmpty       = $("#empty-active-mentors").html().replace(/(<!--)*(-->)*/g, "")
             ,   loaderSnippet    = $("#load-mentor").html().replace(/(<!--)*(-->)*/g, "")
             ,   actionData       = $("#active-mentor-action").html().replace(/(<!--)*(-->)*/g, "")
             ,   $list            = $element.find("." + options.list)
@@ -2882,6 +2929,7 @@
                                                                     cbParams = {
                                                                                     mentorId:           memberId
                                                                                 ,   isActiveRequest:    true
+                                                                                ,   requestId:          item.requestId
                                                                                 };
 
                                                                     options.cb( $listItem,  cbParams );

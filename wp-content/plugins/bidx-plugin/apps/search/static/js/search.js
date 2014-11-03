@@ -381,15 +381,15 @@
             {
 
                 facetValues    = bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel     = bidx.i18n.i( facetItems.name );
+                facetLabel     = bidx.i18n.i( facetItems.name, appName );
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
-                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name ) : emptyVal );
+                    listItem = snippit.replace( /%facets_name%/g, facetItems.name ? bidx.i18n.i( facetItems.name, appName ) : emptyVal );
 
                     $listItem  = listItem;
                     $list.append($listItem );
-                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name ) );
+                    $currentCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
 
                     $.each( facetValues , function ( idx, item )
                     {
@@ -400,7 +400,7 @@
                         }
                         else
                         {
-                            item.name    = bidx.i18n.i( item.name );
+                            item.name    = bidx.i18n.i( item.name, appName );
                         }
 
                         if ( item.name )
@@ -443,7 +443,7 @@
                 //
                 if ( facetItems.valueCount > CONSTANTS.VISIBLE_FILTER_ITEMS + 3 )
                 {
-                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name ) );
+                    $bigCategory = $list.find( ".facet-category-" + bidx.i18n.i( facetItems.name, appName ) );
                     $categoryList = $bigCategory.find( ".list-group" );
 
                     $categoryList.find( "a.filter:gt("+CONSTANTS.VISIBLE_FILTER_ITEMS+")" ).addClass( "hide toggling" );
@@ -590,6 +590,7 @@
         ,   sortQuery       = []
         ,   criteriaFilters = []
         ,   criteriaSort    = []
+        ,   urlParam        = params.urlParam
         ;
 
         // 1. Search paramete
@@ -599,7 +600,7 @@
         //
         q = bidx.utils.getValue( params, 'q' );
 
-        if ( !q )
+        if ( !q && urlParam)
         {
             var url = document.location.href.split( "#" ).shift();
             q = bidx.utils.getQueryParameter( "q", url );
@@ -851,37 +852,44 @@
 
                     case 'bidxInvestorProfile':
                         //response.entityType = 'bidxMemberProfile';
-
-                        showMemberProfile(
+                        if ( options.criteria.facetFilters.length !== 0 )
                         {
-                            response : response
-                        //,   criteria : data.criteria
-                        ,   cb       : options.cb
-                        } );
+                            showMemberProfile(
+                            {
+                                response : response
+                            //,   criteria : data.criteria
+                            ,   cb       : options.cb
+                            } );
+                        }
 
                     break;
 
                     case 'bidxEntrepreneurProfile':
                         //response.entityType = 'bidxMemberProfile';
-
-                        showMemberProfile(
+                        if ( options.criteria.facetFilters.length !== 0 )
                         {
-                            response : response
-                        //,   criteria : data.criteria
-                        ,   cb       : options.cb
-                        } );
+                            showMemberProfile(
+                            {
+                                response : response
+                            //,   criteria : data.criteria
+                            ,   cb       : options.cb
+                            } );
+                        }
 
                     break;
 
                     case 'bidxMentorProfile':
                         //response.entityType = 'bidxMemberProfile';
-
-                        showMemberProfile(
+                        if ( options.criteria.facetFilters.length !== 0 )
                         {
-                            response : response
-                       // ,   criteria : data.criteria
-                        ,   cb       : options.cb
-                        } );
+
+                            showMemberProfile(
+                            {
+                                response : response
+                           // ,   criteria : data.criteria
+                            ,   cb       : options.cb
+                            } );
+                        }
 
                     break;
 
@@ -1330,7 +1338,7 @@
                 //
                 image       = bidx.utils.getValue( personalDetails, "profilePicture" );
 
-                if (image)
+                if (image && image.document)
                 {
                     imageWidth  = bidx.utils.getValue( image, "width" );
                     imageLeft   = bidx.utils.getValue( image, "left" );
@@ -1552,7 +1560,9 @@
     {
         bidx.utils.log("[group] navigate", options );
 
-
+        var params = ( $.isEmptyObject( options.params ) ) ? {} : options.params
+        ;
+        bidx.utils.log('params', params);
 
         switch ( options.state )
         {
@@ -1565,13 +1575,14 @@
                 _showAllView( "sort" );
                 _toggleListLoading( $element );
 
+                bidx.utils.setValue( params, 'urlParam', true );
 
                 // load businessSummaries
                 //
                 _init();
                 _getSearchList(
                 {
-                    params      : options.params
+                    params      :   params
                 ,   cb          :   function()
                                     {
                                        _hideView( "load" );

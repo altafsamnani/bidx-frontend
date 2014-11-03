@@ -249,7 +249,7 @@ class TemplateLibrary
       [4] => locale
       [5] => exportImport
       [6] => investmentType
-      [7] => permitsObtained
+      [7] => permitsLicencesObtained
       [8] => stageBusiness
       [9] => education
       [10] => legalForm
@@ -278,7 +278,7 @@ class TemplateLibrary
             case 'locale':
             case 'exportImport':
             case 'investmentType':
-            case 'permitsObtained':
+            case 'permitsLicencesObtained':
             case 'stageBusiness':
             case 'education':
             case 'legalForm':
@@ -292,6 +292,7 @@ class TemplateLibrary
             case 'language':
             case 'languageRating':
             case 'industry':
+            case 'industrySector':
             case 'mentorExpertise':
             case 'productService':
             case 'reasonForSubmission':
@@ -464,47 +465,53 @@ class TemplateLibrary
      */
     public function addTableRows ($header, $rowsArr, $class, $merge = NULL, $cellClasses = array(), $staticArray = array()  )
     {
-
         $returnHtml = NULL;
         $display    = false;
         $entityType = NULL;
-        if (isset ($rowsArr)) {
+
+        if ( isset( $rowsArr ) )
+        {
             $html = NULL;
             $htmlHeader = "<table class = '$class' > ";
             //Build Header
             $htmlHeader.= "<tr>";
-            foreach ($header as $headerKey => $headerValue) {
-                $cellClass = isset( $cellClasses[ $headerValue ] ) ?  $cellClasses[ $headerValue ] : '';
+            foreach ( $header as $headerKey => $headerValue )
+            {
+                $cellClass = isset( $cellClasses[ $headerValue ] ) ? $cellClasses[ $headerValue ] : '';
                 $htmlHeader .= sprintf( '<th class="%s">', $cellClass );
                 $htmlHeader .= $this->escapeHtml ($headerKey) . "</th>";
             }
             $htmlHeader.= "</tr>";
-            foreach ($rowsArr as $rowValue) {
+            foreach ($rowsArr as $rowValue)
+            {
                 $html.= "<tr>";
-                foreach ($header as $headerKey => $headerValue) {
 
+                foreach ($header as $headerKey => $headerValue)
+                {
                     $cellClass = isset( $cellClasses[ $headerValue ] ) ?  $cellClasses[ $headerValue ] : '';
-
                     $html .= sprintf( '<td class="%s">', $cellClass );
 
-                    if (isset ($merge[$headerValue])) { //If two values needs to be merged ex for Name header first_name/last_name
+                    if ( isset ( $merge[$headerValue] ) )
+                    {
+                        // If two values needs to be merged ex for Name header first_name/last_name
+                        //
                         $sepMerge = "";
-                        foreach ($merge[$headerValue] as $mergeKey => $mergeVal) {
-                            $html.= $sepMerge . $this->escapeHtml ($rowValue->$mergeVal);
+                        foreach ( $merge[$headerValue] as $mergeKey => $mergeVal )
+                        {
+                            $html.= $sepMerge . $this->escapeHtml( $rowValue->$mergeVal );
                             $sepMerge = " ";
                         }
 
                         $display = true;
-                    } else if (isset ($rowValue->$headerValue)) {
-
+                    }
+                    elseif ( isset ( $rowValue->$headerValue ) )
+                    {
                         $entityType = (!empty( $rowValue->$headerValue->bidxMeta->bidxEntityType ) ) ? $rowValue->$headerValue->bidxMeta->bidxEntityType: NULL;
 
                         // If the value is a document, insert an image tag
                         //
-                        if ( !empty( $entityType ) && $entityType == 'bidxDocument' ) {
-
-                            // $documentImage = '/wp-content/plugins/bidx-plugin/static/img/iconViewDocument.png';
-
+                        if ( !empty( $entityType ) && $entityType == 'bidxDocument' )
+                        {
                             $document = $rowValue->$headerValue;
 
                             if ( preg_match ("/^image/i", $document->mimeType) )
@@ -517,8 +524,41 @@ class TemplateLibrary
                                 $html .= '<div class="icons-rounded pull-left"><i class="fa fa-file-text-o text-primary-light"></i></div>';
                             }
 
+                        }
+                        elseif ( !empty( $entityType ) && $entityType == 'bidxAddress' )
+                        {
+                            $rowOutput = $rowValue->$headerValue;
+                            $arr = array();
 
-                        } else {
+                            if ( !empty( $rowOutput->street ) )
+                            {
+                                array_push($arr, $rowOutput->street);
+                            }
+
+                            if ( !empty( $rowOutput->streetNumber ) )
+                            {
+                                array_push($arr, $rowOutput->streetNumber);
+                            }
+
+                            if ( !empty( $rowOutput->postalCode ) )
+                            {
+                                array_push($arr, $rowOutput->postalCode);
+                            }
+
+                            if ( !empty( $rowOutput->cityTown ) )
+                            {
+                                array_push($arr, $rowOutput->cityTown);
+                            }
+
+                            if ( !empty( $rowOutput->neighborhood ) )
+                            {
+                                array_push($arr, $rowOutput->neighborhood);
+                            }
+                            
+                            $html .= implode( ", ", $arr );
+                        }
+                        else
+                        {
 
                             $rowOutput = $rowValue->$headerValue;
                             if ( in_array( $headerValue, $staticArray ) ) {
@@ -530,15 +570,18 @@ class TemplateLibrary
 
                         $display = true;
                     }
+
                     $html.= "</td>";
                 }
+
                 $html.= "</tr>";
+
             }
 
             $htmlFooter = "</table>";
 
-            if ($display) {
-
+            if ( $display )
+            {
                 $returnHtml = $htmlHeader . $html . $htmlFooter;
             }
         }

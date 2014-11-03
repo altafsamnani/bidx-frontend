@@ -97,7 +97,6 @@
 
     <!-- Modal dialogs status messages -->
      <Item value="modalSend">You are about to send the request. Are you sure?</Item>
-     <Item value="modalSendFrmBp">You are about to send the request. Are you sure?</Item>
      <Item value="modalAccept">You are about to accept the request. Are you sure?</Item>
      <Item value="modalReject">You are about to ignore the request. Are you sure?</Item>
      <Item value="modalCancel">You are about to cancel the request. Are you sure?</Item>
@@ -108,24 +107,6 @@
      <Item value="modalBtnReject">Ignore request</Item>
      <Item value="modalBtnCancel">Cancel request</Item>
      <Item value="modalBtnStop">Stop mentoring</Item>
-
-      <!-- Facet Entity types -->
-    <Item value="bidxMemberProfile">Member profile</Item>
-    <Item value="bidxBusinessSummary">Business summary</Item>
-    <Item value="bidxInvestorProfile">Investor</Item>
-    <Item value="bidxEntrepreneurProfile">Entrepreneur</Item>
-    <Item value="bidxBusinessGroup">Group</Item>
-    <Item value="bidxCompany">Company</Item>
-    <Item value="bidxMentorProfile">Mentor</Item>
-
-    <!-- Facet Title -->
-    <Item value="facet_industry">Industry</Item>
-    <Item value="facet_country">Country</Item>
-    <Item value="facet_language">Language</Item>
-    <Item value="facet_entityType">Type</Item>
-
-    <!-- Chart Label -->
-    <Item value="chart_growth">Growth </Item>
 
     <!-- Feedback -->
     <Item value="showFeedback">Feedback</Item>
@@ -141,5 +122,10 @@
     <Item value="visibleInvestor">All investors</Item>
     <Item value="visiblePublic">Everyone</Item>
     <Item value="visibleGroupadmin">Group admin</Item>
+
+    <!-- Industry Sectors -->
+    <Item value="selectMainSector">Select Main Sector</Item>
+    <Item value="selectSubSector">Select Sub Sector</Item>
+    <Item value="selectEndSector">Select End Sector</Item>
 
 </I18N>

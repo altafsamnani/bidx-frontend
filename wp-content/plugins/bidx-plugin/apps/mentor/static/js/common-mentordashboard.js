@@ -108,14 +108,14 @@
                         //bidx.controller.updateHash(uriStatus, true, true);
                        // bidx.controller.doSuccess( uriStatus,false);
 
-
-
-                        window.bidx.controller.updateHash( params.updateHash, true );
-
-                        if (options && options.callback)
+                       if (options && options.callback)
                         {
                             options.callback();
                         }
+
+                        window.bidx.controller.updateHash( params.updateHash, true );
+
+
 
                     }
 
@@ -147,9 +147,8 @@
         ;
 
         postData =  {
-                        initiatorId:     params.initiatorId
-                    ,   status:     params.action
-                    ,   reason:     params.type
+                        accept:          (params.action === "accepted") ?  "true" :  "false"
+                    ,   reason:          params.type
                     };
          //uriStatus = document.location.href.split( "#" ).shift() + "?smsg=8&sparam=" + window.btoa('action=' + params.action) + '#mentoring/mentor';
          //document.location.href = uriStatus;
@@ -161,7 +160,7 @@
              "mentorRelationships.mutate"
         ,   {
                 groupDomain:            bidx.common.groupDomain
-            ,   entityId:               params.entityId
+            ,   requestId:              params.requestId
             ,   data:                   postData
             ,   success: function( response )
                 {
@@ -171,14 +170,15 @@
 
                         //  execute callback if provided
 
-                        updateHash  =   (params.redirect) ? params.redirect : '#mentoring/mentor';
+                  /*      updateHash  =   (params.redirect) ? params.redirect : '#mentoring/mentor';*/
 
-                        window.bidx.controller.updateHash( updateHash, true );
 
                         if (options && options.callback)
                         {
                             options.callback();
                         }
+
+                         window.bidx.controller.updateHash(  params.updateHash, true );
 
                     }
 
@@ -219,7 +219,7 @@
              "mentorRelationships.cancel"
         ,   {
                 groupDomain:    bidx.common.groupDomain
-            ,   entityId:       params.entityId
+            ,   requestId:       params.requestId
             ,   success:        function( response )
                                 {
                                     bidx.utils.log("[mentor] mutated a contact",  response );
@@ -235,12 +235,13 @@
 
                                         _showMainSuccessMsg(bidx.i18n.i(statusMsg));
 
-                                         window.bidx.controller.updateHash("#mentoring/mentor", true);
-
                                         if (options && options.callback)
                                         {
                                             options.callback();
                                         }
+
+                                         window.bidx.controller.updateHash( params.updateHash, true );
+
 
                                     }
 
@@ -311,13 +312,16 @@
         {
             // Modal popup message
             action      =   action.replace( /ed/g, '');
+
             actionKey   =   'modal' + action.substring(0,1).toUpperCase() + action.substring(1); // ex 'modalAccept, modalCancel, modalIgnore', 'modalStop'
+            actionKey   =   actionKey.replace( /Bp/g, '');
             actionMsg   =   bidx.i18n.i( actionKey ) ;
-           // bidx.utils.log("action", bidx.utils.getViewName ( options.view, "modal" )  );
+
             $mainModal.find(".modal-body").empty().append( actionMsg );
 
             //Modal Primary Button Text
             btnKey      =   'modalBtn' + action.substring(0,1).toUpperCase() + action.substring(1); // ex 'modalBtnAccept, modalBtnCancel, modalBtnIgnore', 'modalBtnStop'
+            btnKey      =   btnKey.replace( /Bp/g, '');
             btnTxt      =   bidx.i18n.i( btnKey );
             $mainModal.find(".btn-primary").html(btnTxt);
 
@@ -440,7 +444,7 @@
         }
 
         $mainBpViews.filter( ".viewMainsuccess" ).find( ".successMsg" ).text( msg );
-        _showBpView( "mainsuccess" );
+        _showBpView( "mainsuccess", true );
     }
 
     // ROUTER
@@ -538,6 +542,7 @@
                 ,   params = options.params
                 ,   smsg
                 ,   action = params.action
+                ,   initiate
                 ;
 
                 action = (params.action) ? params.action : 'default';
@@ -551,15 +556,16 @@
                 switch( action )
                 {
 
-                    case 'cancel':
-                    case 'stop':
+                    case 'bpCancel':
+                    params.updateHash = '#loadMentors/' + params.entityId;
 
-                        _doCancelMentoringRequest(
+                    _doCancelMentoringRequest(
                         {
                             params: params
                         ,   callback: function()
                             {
-                                _showMainHideView("respond", "loadrequest");
+                                _showBpSuccessMsg(bidx.i18n.i("statusCancel"));
+                                _showMainHideView("match", "loadrequest");
                                 $mentorButton.removeClass( "disabled" );
                                 $mentorButton.text(btnHtml);
                                 _closeMainModal(
@@ -570,7 +576,32 @@
                             }
                         } );
 
+
                     break;
+
+                    case 'cancel':
+                    case 'stop':
+
+                       params.updateHash = '#mentoring/mentor';
+
+                       _doCancelMentoringRequest(
+                        {
+                            params: params
+                        ,   callback: function()
+                            {
+                                _showMainSuccessMsg(bidx.i18n.i("statusCancel"));
+                                _showMainHideView("respond", "loadrequest");
+                                $mentorButton.removeClass( "disabled" );
+                                $mentorButton.text(btnHtml);
+                                _closeMainModal(
+                                {
+                                    unbindHide: true
+                                } );
+
+                            }
+                        } );
+                    break;
+
 
                     case 'send':
 
@@ -607,8 +638,9 @@
                         } );
                     break;
 
-                    case 'sendFrmBp': // this is initiated from edit businesssummary-->mentor tab
-                        params.updateHash = '#loadMentors';
+                    case 'bpSend': // this is initiated from edit businesssummary-->mentor tab
+                        params.updateHash = '#loadMentors/' + params.entityId;
+
 
                          _doCreateMentorRequest(
                         {
@@ -616,6 +648,7 @@
                         ,   callback: function()
                             {
                                _showBpSuccessMsg(bidx.i18n.i("statusRequest"));
+                                _showMainHideView("match", "loadrequest");
                                 $mentorButton.removeClass( "disabled" );
                                 $mentorButton.text(btnHtml);
                                 _closeMainModal(
@@ -643,13 +676,25 @@
                     break;
 
                     default:
+                        initiate  =  params.initiate;
+
+                        params.updateHash = ( initiate === 'bp') ? '#loadMentors/' + params.entityId : '#mentoring/mentor';
+
                         _doMutateMentoringRequest(
                         {
                             params: params
                         ,   callback: function()
                             {
                                 smsg       = (action === 'accepted') ? 'statusAccept' : 'statusIgnore';
-                                _showMainSuccessMsg(bidx.i18n.i(smsg));
+
+                                if(initiate === 'bp')
+                                {
+                                    _showBpSuccessMsg(bidx.i18n.i(smsg));
+                                }
+                                else
+                                {
+                                     _showMainSuccessMsg(bidx.i18n.i(smsg));
+                                }
 
                                 _showMainHideView("respond", "loadrequest");
                                 $mentorButton.removeClass( "disabled" );

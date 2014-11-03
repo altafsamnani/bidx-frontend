@@ -802,8 +802,8 @@
             ,   m:      months[ d.getMonth()].toLowerCase()
             ,   d:      d.getDate()
             ,   h:      d.getHours()
-            ,   n:      d.getMinutes()
-            ,   s:      d.getSeconds()
+            ,   n:      d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()
+            ,   s:      d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds() 
             }
         ,   result
         ;

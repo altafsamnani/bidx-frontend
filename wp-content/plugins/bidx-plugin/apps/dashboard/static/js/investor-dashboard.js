@@ -11,14 +11,57 @@
     ;
 
 
+
+    function _addVideoThumb( url, element )
+    {
+        var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
+        ,   provider    = matches[3]
+        ,   id          = matches[6]
+        ,   $el         = element
+        ;
+
+        if ( provider === "vimeo.com" )
+        {
+            var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?";
+            $.getJSON( videoUrl, function(data)
+                {
+                    if ( data )
+                    {
+                        $el.find( ".icons-rounded" ).remove();
+                        $el.append( $( "<div />", { "class": "img-cropper" } ) );
+                        $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
+                        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+                    }
+                }
+            );
+        }
+        else if ( provider === "youtube.com" )
+        {
+            $el.find( ".icons-rounded" ).remove();
+            $el.append( $( "<div />", { "class": "img-cropper" } ) );
+            $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
+            $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        }
+        else
+        {
+            bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
+        }
+
+        return $el;
+    }
+
+
     var getContact = function(options)
     {
         var snippit     = $("#investor-contactitem").html().replace(/(<!--)*(-->)*/g, "")
         ,   $listEmpty  = $($("#investor-empty").html().replace(/(<!--)*(-->)*/g, ""))
         ,   $list       = $("." + options.list)
         ,   listItem
+        ,   $listItem
         ,   i18nItem
         ,   emptyVal    = "-"
+        ,   externalVideoPitch
+        ,   $el
         ;
 
         bidx.api.call(
@@ -75,12 +118,19 @@
                                             .replace( /%financingNeeded%/g,      i18nItem.financingNeeded   ? i18nItem.financingNeeded + ' USD'    : emptyVal )
                                             .replace( /%stageBusiness%/g,     i18nItem.stageBusiness  ? i18nItem.stageBusiness    : emptyVal )
                                             .replace( /%envImpact%/g,      i18nItem.envImpact   ? i18nItem.envImpact     : emptyVal )
-                                            .replace( /%document%/g,      ( !$.isEmptyObject( item.businessSummary.company ) && !$.isEmptyObject( item.businessSummary.company.logo ) && !$.isEmptyObject( item.businessSummary.company.logo.document ) )   ? item.businessSummary.company.logo.document     : '/wp-content/themes/bidx-group-template/assets/img/mock/new-business.png' )
                                             ;
+                                    $listItem = $(listItem);
 
+                                    externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+
+                                    if ( externalVideoPitch )
+                                    {
+                                        $el         = $listItem.find("[data-role='businessImage']");
+                                        _addVideoThumb( externalVideoPitch, $el );
+                                    }
 
                                     //  add mail element to list
-                                    $list.append( listItem );
+                                    $list.append( $listItem );
 
 
                             } );
@@ -142,7 +192,10 @@
                 $list.empty();
 
                 // Register var
-                var listItem;
+                var listItem
+                ,   $listItem
+                ,   externalVideoPitch
+                ,   $el;
 
 
                 // now format it into array of objects with value and label
@@ -176,16 +229,24 @@
                             .replace( /%stagebusinesslabel_s%/g,   i18nItem.stagebusinesslabel_s   ? i18nItem.stagebusinesslabel_s   : emptyVal )
                             .replace( /%envimpactlabel_ss%/g,      i18nItem.envimpactlabel_ss      ? i18nItem.envimpactlabel_ss      : emptyVal )
                             .replace( /%productservicelabel_ss%/g, i18nItem.productservicelabel_ss ? i18nItem.productservicelabel_ss : emptyVal)
-                            .replace( /%companylogodoc_url%/g,     i18nItem.companylogodoc_url     ? i18nItem.companylogodoc_url     : addDefaultImage('js-companylogo') )
+                            //.replace( /%companylogodoc_url%/g,     i18nItem.companylogodoc_url     ? i18nItem.companylogodoc_url     : addDefaultImage('js-companylogo') )
                             .replace( /%entityid_l%/g,             i18nItem.entityid_l             ? i18nItem.entityid_l             : emptyVal )
                             ;
 
                         // Remove the js selector
-                        $element.find('.js-companylogo').first().removeClass('js-companylogo');
 
-                        //  add mail element to list
-                        $list.append( listItem );
+                        $listItem = $(listItem);
 
+                        externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch"); // TBD currently match service doesnt add externalVideo
+
+                        if ( externalVideoPitch )
+                        {
+                            $el         = $listItem.find("[data-role='businessImage']");
+                            _addVideoThumb( externalVideoPitch, $el );
+                        }
+
+                        //  add element to list
+                        $list.append( $listItem );
 
                     });
 

@@ -27,6 +27,9 @@
         ,   i18nItem
         ,   investorType
         ,   emptyVal      = "-"
+        ,   externalVideoPitch
+        ,   $el
+        ,   $listItem
         ;
 
         bidx.api.call(
@@ -105,18 +108,25 @@
                                 .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
                                 .replace( /%displayName%/g,      item.investor.displayName   ? item.investor.displayName : emptyVal )
                                 .replace( /%investorId%/g,      investorId   ? investorId    : emptyVal )
-                                .replace( /%document%/g,      (!$.isEmptyObject( item.businessSummary.company ) && !$.isEmptyObject( item.businessSummary.company.logo ) && !$.isEmptyObject( item.businessSummary.company.logo.document ) ) ? item.businessSummary.company.logo.document     :  addDefaultImage('js-document') )
+                               // .replace( /%document%/g,      (!$.isEmptyObject( item.businessSummary.company ) && !$.isEmptyObject( item.businessSummary.company.logo ) && !$.isEmptyObject( item.businessSummary.company.logo.document ) ) ? item.businessSummary.company.logo.document     :  addDefaultImage('js-document') )
                                 ;
 
 
                             // Remove the js selector
-                            $element.find('.js-document').first().removeClass('js-document');
+                            $listItem = $(listItem);
+
+                            externalVideoPitch = bidx.utils.getValue( i18nItem, "externalVideoPitch");
+
+                            if ( externalVideoPitch )
+                            {
+                                $el         = $listItem.find("[data-role='businessImage']");
+                                _addVideoThumb( externalVideoPitch, $el );
+                            }
 
                             //  add mail element to list
                             $list.append( listItem );
 
                             //  load checkbox plugin on element
-
                             if(item.status === 'pending')
                             {
                                 $btn   = $list.find( '[data-summaryid="' + entityId + '"][data-investorid="' + investorId + '"]' );
@@ -248,43 +258,42 @@
         );
     };
 
-    function _addVideoThumb( url )
+    function _addVideoThumb( url, element )
     {
         var matches     = url.match(/(http|https):\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be))\/(video\/|embed\/|watch\?v=)?([A-Za-z0-9._%-]*)(\&\S+)?/)
         ,   provider    = matches[3]
         ,   id          = matches[6]
-        ,   $thumbImage = ""
+        ,   $el         = element
         ;
 
-        switch ( provider )
+        if ( provider === "vimeo.com" )
         {
-            case "youtube.com" :
-
-                $thumbImage = '<img src="http://img.youtube.com/vi/'+ id +'/2.jpg" />';
-
-                break;
-
-            case "vimeo.com" :
-
-                var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?"
-                ,   thumbUrl
-                ;
-
-                $.getJSON( videoUrl, function(data)
+            var videoUrl = "http://vimeo.com/api/v2/video/" + id + ".json?callback=?";
+            $.getJSON( videoUrl, function(data)
+                {
+                    if ( data )
                     {
-                        if ( data )
-                        {
-                            thumbUrl = data[0].thumbnail_small;
-
-                            $thumbImage = '<img src="'+ thumbUrl +'" />';
-                        }
+                        $el.find( ".icons-rounded" ).remove();
+                        $el.append( $( "<div />", { "class": "img-cropper" } ) );
+                        $el.find( ".img-cropper" ).append( $( "<img />", { "src": data[0].thumbnail_large } ) );
+                        $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
                     }
-                );
-
-                break;
+                }
+            );
+        }
+        else if ( provider === "youtube.com" )
+        {
+            $el.find( ".icons-rounded" ).remove();
+            $el.append( $( "<div />", { "class": "img-cropper" } ) );
+            $el.find( ".img-cropper" ).append( $( "<img />", { "src": "http://img.youtube.com/vi/"+ id +"/0.jpg" } ) );
+            $el.find( "img" ).fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+        }
+        else
+        {
+            bidx.utils.log('_addVideoThumb:: ', 'No matches' + matches );
         }
 
-        return $thumbImage;
+        return $el;
     }
 
 
@@ -296,8 +305,11 @@
         ,   $list         = $("." + options.list)
         ,   emptyList     = true
         ,   listItem
+        ,   $listItem
         ,   i18nItem
         ,   emptyVal      = "-"
+        ,   externalVideoPitch
+        ,   $el
         ;
 
         bidx.api.call(
@@ -363,13 +375,19 @@
                                     .replace( /%consumerType%/g,      i18nItem.consumerType   ? i18nItem.consumerType     : emptyVal )
                                     .replace( /%investmentType%/g,      i18nItem.investmentType   ? i18nItem.investmentType     : emptyVal )
                                     .replace( /%summaryFinancingNeeded%/g,      i18nItem.summaryFinancingNeeded   ? i18nItem.summaryFinancingNeeded     : emptyVal )
-                                    .replace( /%documentIcon%/g,      ( !$.isEmptyObject( item.externalVideoPitch ) )
-                                        ? _addVideoThumb( item.externalVideoPitch )
-                                        : '<i class="fa fa-suitcase text-primary-light"></i>' )
                                     ;
 
+                                $listItem = $(listItem);
 
-                                $list.append( listItem );
+                                externalVideoPitch = bidx.utils.getValue( item, "externalVideoPitch");
+
+                                if ( externalVideoPitch )
+                                {
+                                    $el         = $listItem.find("[data-role='businessImage']");
+                                    _addVideoThumb( externalVideoPitch, $el );
+                                }
+
+                                $list.append( $listItem );
 
                                 emptyList = false;
 

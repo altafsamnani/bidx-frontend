@@ -1,6 +1,6 @@
 // Import
 // -------------------------
-@import "../bootstrap-3.1.1/less/bootstrap.less";
+@import "../bootstrap-3.2.0/less/bootstrap.less";
 @import "elements.less";
 @import "basevars.less";
 
@@ -240,6 +240,17 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+#join .btn .fa,
+#auth .btn .fa
+{
+    .opacity(.4);
+    position: absolute;
+    top: 50%;
+    left: floor(@font-size-base * 1.8);
+    margin-top: -0.5em;
+    font-size: floor(@font-size-base * 2.2);
+}
+
 .iconbar
 {
     font-family: @lato;
@@ -271,17 +282,6 @@ h1, h2, h3, h4, h5, h6,
         &.open
         {
             background-color: desaturate(darken(@brand-primary, 25%), 25%);
-            // &:after
-            // {
-            //     .triangle(up, 6px, lighten( @brand-primary, 40%) );
-            //     position: absolute;
-            //     bottom: 0;
-            //     left: 50%;
-            //     @media (max-width: @screen-xs-max)
-            //     {
-            //         left: 20%;
-            //     }
-            // }
             .dropdown-menu
             {
                 min-width: 180px;
@@ -361,6 +361,94 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+// Language Switcher
+.language-switcher
+{
+    .widget
+    {
+        margin-bottom: 0;
+    }
+    #lang_sel_click
+    {
+        height: auto;
+        a
+        {
+            padding: floor(@padding-base-vertical * 1.8) @padding-base-horizontal floor(@padding-base-vertical * 1.8) floor(@padding-base-horizontal * 2.0);
+            height: auto;
+            display: block;
+            font-size: @font-size-base;
+            line-height: ceil(@font-size-base * 1.4);
+            color: @white;
+            border: none;
+            font-family: @lato;
+            &.lang_sel_sel
+            {
+                background: none;
+                color: @white;
+                &:after
+                {
+                    color: @white;
+                    content: "\f0d7";
+                    font-family: FontAwesome;
+                    position: absolute;
+                    bottom: 9px;
+                    left: 10px;
+                }
+                &:hover
+                {
+                    background-color: desaturate(darken(@brand-primary, 25%), 25%);
+                }
+            }
+        }
+        ul ul
+        {
+            top: 40px;
+            right: 0;
+            left: auto;
+            width: auto;
+            height: auto;
+            border: none;
+            background-color: @bg-primary-dark;
+            margin: 0;
+            min-width: 180px;
+            padding: floor(@padding-base-vertical * 1.8) @padding-base-horizontal floor(@padding-base-vertical * 1.8) floor(@padding-base-horizontal * 2.0);
+            .border-radius(0, 4px, 4px, 0);
+            li
+            {
+                padding: 0 3px 3px;
+                position: relative;
+                &:first-child
+                {
+                    padding-top: 3px;
+                }
+            }
+            a
+            {
+                background-color: desaturate(darken(@brand-primary, 25%), 25%);
+                color: @white;
+                border-width: 0;
+                white-space: nowrap;
+                padding: 3px 20px;
+                line-height: 1.42857143;
+                &:hover
+                {
+                    background-color: @white;
+                    color: @text-copy;
+                }
+            }
+        }
+        ul:hover a
+        {
+            background-color: desaturate(darken(@brand-primary, 25%), 25%);
+        }
+        li
+        {
+            width: auto;
+            float: none;
+        }
+    }
+}
+
 // Cropping
 .profilePictureContainer
 {
@@ -368,7 +456,8 @@ h1, h2, h3, h4, h5, h6,
     margin-bottom: 20px;
     float: left;
     clear: both;
-    img {
+    img
+    {
         .rounded(6px);
         max-width: 100%;
         height: auto;
@@ -784,6 +873,11 @@ header
         margin: 20px 0;
     }
 }
+.editControls
+{
+    margin: 20px 0;
+}
+
 
 .total-error-message
 {
@@ -1578,7 +1672,6 @@ select
 .feedback-box
 {
     margin: -15px 0;
-    // min-height: 200px;
     border-left: 1px solid darken(spin(@state-warning-bg, -10), 5%);
     margin-bottom: -1000em !important;
     padding-bottom: 1000em !important;
@@ -1645,6 +1738,37 @@ select
     display: block;
 }
 
+/* MULTILEVEL INDUSTRY */
+.industryRowItem
+{
+    .form-group
+    {
+        position: relative;
+    }
+    .sectorArrow:after
+    {
+        color: #000;
+        content: "\f054";
+        font-family: FontAwesome;
+        position: absolute;
+        bottom: 9px;
+        right: 7px;
+    }
+    .industryActions
+    {
+        float: left;
+    }
+    .industryDelete:hover,
+    .industryAdd:hover
+    {
+        cursor: pointer;
+    }
+    .fa-block
+    {
+        line-height: 1.3;
+    }
+}
+
 // --------------------------------------------------
 // Bootstrap Overides
 // --------------------------------------------------
@@ -1679,7 +1803,7 @@ select
     {
         cursor: not-allowed;
         pointer-events: none; // Future-proof disabling of clicks
-    .opacity(.65);
+        .opacity(.65);
         .box-shadow(none);
     }
 }
@@ -1692,7 +1816,7 @@ select
 }
 .fa-block
 {
-    display: block !important;
+    display: block;
     font-size: ceil(@font-size-base * 2.10);
 }
 .btn-member

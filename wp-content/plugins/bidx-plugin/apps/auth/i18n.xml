@@ -1,5 +1,6 @@
 <I18N>
     <!-- <Item value=""></Item> -->
-    <Item value="selectReasonForSubmission">Select the reason for submission</Item>
+    <Item value="selectReasonForSubmission">Select what best matches your reason for submission</Item>
     <Item value="preferredCommunicationAll">Please check one of the above</Item>
+    <Item value="selectSingleOption">Select an Option</Item>
 </I18N>

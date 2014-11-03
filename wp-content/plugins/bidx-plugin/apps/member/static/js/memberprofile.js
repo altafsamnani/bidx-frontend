@@ -29,6 +29,7 @@
     ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
     ,   $btnAddAttachments                  = $attachmentsControl.find( "a[href$='#addAttachments']")
     ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
+    ,   $connectBtn                         = $( '.btn-contact' )
 
         // Current Address
         //
@@ -47,6 +48,7 @@
     ,   member
     ,   memberId
     ,   memberProfileId
+    ,   visitingMemberPageId                = bidx.utils.getValue( bidxConfig, "context.memberId" )
     ,   state
     ,   currentView
 
@@ -129,6 +131,7 @@
         _snippets();
         _languages();
         _attachments();
+        _getActiveContacts();
 
         // On any changes, how little doesn't matter, notify that we have a pending change
         // But no need to track the changes when doing a member data load
@@ -424,6 +427,109 @@
             ,   itemClass:          "attachmentItem"
             } );
         }
+
+        function _getActiveContacts( options )
+        {
+            bidx.utils.log( "[members] get active contacts" );
+            var status
+            ,   limit
+            ,   offset
+            ;
+
+            bidx.api.call(
+                "memberRelationships.fetch"
+            ,   {
+                    extraUrlParameters:
+                    [
+                        {
+                            label:      "type",
+                            value:      "contact"
+                        }
+                    ,   {
+                            label:      "status",
+                            value:      "active"
+                        }
+                    /*,   {
+                            label:      "limit",
+                            value:      limit
+                        }
+                    ,   {
+                            label:      "offset",
+                            value:      offset
+                        }*/
+                    ]
+                ,   requesterId:              bidx.common.getCurrentUserId( "id" )
+                ,   groupDomain:              bidx.common.groupDomain
+
+                ,   success: function( response )
+                    {
+                        var sortIndex           = []
+                        ,   contacts            = {}
+                        ,   result              = {}
+                        ,   showConnectBtn      = true
+                        ,   currentUserId       = bidx.utils.getValue( bidxConfig, "session.id" )
+                        ;
+
+                        bidx.utils.log("[members] retrieved following active contacts ", response );
+                        if ( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
+                        {
+                            if ( response.relationshipType.contact.types.active )
+                            {
+
+                                // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
+                                //
+                                $.each( response.relationshipType.contact.types.active , function ( idx, item)
+                                {
+                                    // if active contact id is matched with visiting member id then hide the button
+
+                                    if ( showConnectBtn  && (item.id === parseInt(visitingMemberPageId)))
+                                    {
+                                        showConnectBtn =  false;
+
+                                        return false; //break; no more need to iterate the loop break
+                                    }
+                                });
+
+                                if( showConnectBtn )
+                                {
+                                    $connectBtn.removeClass('hide');
+                                }
+
+                            }
+                            else
+                            {
+                                bidx.utils.warn( "No active contacts available ");
+                            }
+
+                        }
+
+                    }
+
+                ,   error: function( jqXhr, textStatus )
+                    {
+
+                        var response = $.parseJSON( jqXhr.responseText);
+
+                        // 400 errors are Client errors
+                        //
+                        if ( jqXhr.status >= 400 && jqXhr.status < 500)
+                        {
+                            bidx.utils.error( "Client  error occured", response );
+                            _showError( "Something went wrong while retrieving the members relationships: " + response.text );
+                        }
+                        // 500 erors are Server errors
+                        //
+                        if ( jqXhr.status >= 500 && jqXhr.status < 600)
+                        {
+                            bidx.utils.error( "Internal Server error occured", response );
+                            _showError( "Something went wrong while retrieving the members relationships: " + response.text );
+                        }
+
+                    }
+                }
+            );
+        }
+
     }
 
     // Try to gecode the address (array)
@@ -834,7 +940,7 @@
         else
         {
             $attachmentImage.remove();
-            
+
             // Check if the file has been removed
             //
             if ( deletedDoc )

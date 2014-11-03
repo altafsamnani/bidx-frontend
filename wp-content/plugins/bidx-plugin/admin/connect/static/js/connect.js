@@ -14,6 +14,7 @@
     ,   $btnComposeCancel           = $frmCompose.find(".compose-cancel")
     ,   $mailFolderNavigation       = $element.find(".bidx-mailFolders")
     ,   $contactsDropdown           = $frmCompose.find( "[name=contacts]" )
+    ,   $tableNavPages              = $element.find(".tablenav-pages")
 
     ,   $groupDropDown              = $frmCompose.find( "[name='sendergroup']" )
     ,   bidx                        = window.bidx
@@ -41,7 +42,7 @@
     //
     var CONTACTSPAGESIZE            = 6
     ,   ACTIVECONTACTSLIMIT         = 1000
-    ,   MAILPAGESIZE                = 10
+    ,   MAILPAGESIZE                = 5
     ;
 
 
@@ -60,21 +61,20 @@
         //
         $frmCompose.validate(
         {
-            ignore: ".chosen-container input"
-
+            ignore: ".chosen-search input, .search-field input"
         ,   rules:
             {
                 "contacts":
                 {
-                    required:      true
+                    required:   true
                 }
             ,   "subject":
                 {
-                    required:               true
+                    required:   true
                 }
             ,   "content":
                 {
-                    required:               true
+                    required:   true
                 }
 
             }
@@ -85,6 +85,7 @@
             }
         ,   submitHandler:  function()
             {
+                bidx.utils.log('i am hereeee in compose');
                 /*if ( $btnComposeSubmit.hasClass( "disabled" ) )
                 {
                     return;
@@ -119,15 +120,14 @@
         $mailboxToolbar         = $views.find( ".mail-toolbar" );
         $mailboxToolbarButtons  = $mailboxToolbar.find( ".button" );
 
-        bidx.utils.log('viewsssssssss',$mailboxToolbarButtons);
         // bind the toolbar buttons to their handlers. Reply and forward use HREF for navigation
         //
-       $mailboxToolbarButtons.filter( ".btn-delete" ).bind( "click", "action=delete&confirm=true", _doAction );
+        $mailboxToolbarButtons.filter( ".btn-delete" ).bind( "click", "action=delete&confirm=true", _doAction );
          /*$mailboxToolbarButtons.filter( ".bidx-btn-mark-read" ).bind( "click", "action=read&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-mark-unread" ).bind( "click", "action=unread&confirm=false", _doAction );
         $mailboxToolbarButtons.filter( ".bidx-btn-move-to-folder" ).bind( "click", "action=move&confirm=false", _doAction );*/
-        $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).bind( "click", "action=showPrev&confirm=false", _doPaging );
-        $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).bind( "click", "action=showNext&confirm=false", _doPaging );
+        $tableNavPages.find( ".bidx-btn-mail-prev" ).bind( "click", "action=showPrev&confirm=false", _doPaging );
+        $tableNavPages.find( ".bidx-btn-mail-next" ).bind( "click", "action=showNext&confirm=false", _doPaging );
 
 
 
@@ -866,8 +866,7 @@
                 action:     $bulkDropdown.val()
             ,   confirm:    $bulkDropdown.data('confirm')
             };
-            bidx.utils.error( "No action defined" );
-            return;
+
         }
         //
 
@@ -1027,11 +1026,11 @@
                         //
                         if ( mailOffset - MAILPAGESIZE < 0 )
                         {
-                            $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).hide();
+                            $tableNavPages.find( ".bidx-btn-mail-prev" ).hide();
                         }
                         if ( mailOffset >= 0 )
                         {
-                            $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).show();
+                            $tableNavPages.find( ".bidx-btn-mail-next" ).show();
                         }
                     }
                 } );
@@ -1058,11 +1057,11 @@
                         //
                         if ( mailOffset + MAILPAGESIZE >= mailboxTotal )
                         {
-                            $mailboxToolbarButtons.filter( ".bidx-btn-mail-next" ).hide();
+                            $tableNavPages.find( ".bidx-btn-mail-next" ).hide();
                         }
                         if ( mailOffset > 0 )
                         {
-                            $mailboxToolbarButtons.filter( ".bidx-btn-mail-prev" ).show();
+                            $tableNavPages.find( ".bidx-btn-mail-prev" ).show();
                         }
                     }
                 } );
@@ -1198,6 +1197,9 @@
                     if ( mailboxTotal <= MAILPAGESIZE )
                     {
                        buttons.splice( $.inArray( ".bidx-btn-mail-next" , buttons ), 1 );
+                       $tableNavPages.find( ".bidx-btn-mail-next" ).hide();
+                    } else {
+                        $tableNavPages.find( ".bidx-btn-mail-next" ).show();
                     }
 
                     // API doesnt allow certain actions for sent box, so remove those buttons
@@ -1258,8 +1260,12 @@
             $contactsDropdown.bidx_chosen();
             $btnComposeSubmit.removeClass( "disabled" );
             $btnComposeCancel.removeClass( "disabled" );
+            $frmCompose.find( "[name=content]" ).val('');
+            /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
+            //window.parent.tinymce.get('connect_editor_id').setContent('');
 
             $frmCompose.validate().resetForm();
+
 
         }
 
@@ -1342,8 +1348,7 @@
                         lbl     = bidx.i18n.i( "forwardContentHeader", appName );
                         lbl     = "----------" + lbl + "----------";
                         content = "<br><br>" + lbl + "<br>" + content;
-                        bidx.utils.log($frmCompose.find( "[name=content]" ));
-                        bidx.utils.log('content',content);
+
                         $frmCompose.find( "[name=content]" ).val( content );
                         /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
                         window.parent.tinymce.get('connect_editor_id').setContent( content );
@@ -1684,7 +1689,7 @@
                             {
                                 // first add the admins and groupowners
                                 //
-                                /*if ( response.relationshipType.contact.types.groupOwner )
+                                if ( response.relationshipType.contact.types.groupOwner )
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
@@ -1700,7 +1705,7 @@
                                             sortIndex.push( item.name.toLowerCase() );
                                         }
                                     } );
-                                }*/
+                                }
 
 
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
@@ -2045,7 +2050,7 @@
                                             // mailbox sent does not show unread state
                                             //
                                             .replace( /%emailRead%/g, ( !item.read && state !== "mbx-sent" ) ? "email-new" : "" )
-                                            .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? " <small>" + bidx.i18n.i( "emailNew", appName ) + "</small>" : "" )
+                                            .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? "new" : "" )
                                             .replace( /%senderReceiverName%/g, senderReceiverName )
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
                                             .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )
@@ -2678,6 +2683,7 @@
 
     // Make sure the i18n translations for this app are available before initing
     //
+
     bidx.i18n.load( [ "__global", appName ] )
             .done( function()
             {
@@ -2686,7 +2692,7 @@
                 _oneTimeSetup();
             } );
 
-    if ($("body.toplevel_page_bidx_mail_page").length && !bidx.utils.getValue(window, "location.hash").length)
+    if ($("body.toplevel_page_bidx_connect_page").length && !bidx.utils.getValue(window, "location.hash").length)
     {
 
         document.location.hash = "#connect";

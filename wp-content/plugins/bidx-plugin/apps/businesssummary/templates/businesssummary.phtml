@@ -9,6 +9,9 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     : null;
 
 $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
+$canRate        = $this->exst($businessSummaryBidxMeta->bidxCanRate, false);
+$ratingCount    = $this->exst($businessSummaryBidxMeta->bidxRatingCount, 0);
+$ratingAverage  = $this->exst($businessSummaryBidxMeta->bidxRatingAverage, null);
 $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 
 // get the enitities of the current user
@@ -16,7 +19,7 @@ $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 $sessionData    = BidxCommon::$staticSession;
 $entities       = isset( $sessionData->data->wp->entities ) ? $sessionData->data->wp->entities : null;
 
-$ownerId 		= $businessSummary->bidxMeta->bidxOwnerId;	
+$ownerId 		= $businessSummary->bidxMeta->bidxOwnerId;
 $loggedInUserId = $sessionData->data->id;
 
 // if a user has an investorProfile, he is allowed to request access to a business summary
@@ -74,7 +77,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
     <div class="row">
         <div class="col-sm-8">
-<?php 
+<?php
             if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
             {
 ?>
@@ -91,7 +94,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
                 <h1><?php echo _e( 'Create Business Summary', 'bidxplugin' ); ?></h1>
 <?php
-                
+
             }
 ?>
         </div>
@@ -130,7 +133,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         </div>
     </div>
 
-<?php 
+<?php
     if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
     {
 ?>
@@ -145,46 +148,38 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
             <div class="col-sm-5">
     <?php
-                /* 
-                 * We want ratings to be indexed by Google, so need to include this on page load. It 
+                /*
+                 * We want ratings to be indexed by Google, so need to include this on page load. It
                  * might be updated in JavaScript though, so also check the translations in i18n.xml.
-                 */ 
-                $ratingTotals = $this->rating->totals;
+                 */
 
-                if( $ratingTotals ) 
-                {
-                    $ratingAllowed = $loggedInUserId != $ownerId;
-                    $ratingUser = $this->rating->userRating;
-    ?> 
-                        <div class="rating-wrapper">
-                            <div class="rating-total">
-                                <div class="rating-no-score <?php echo !$ratingTotals->average ? '' : 'hide' ?>">
-                                    <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
-                                </div>
-                                <div class="rating-score <?php echo $ratingTotals->average ? '' : 'hide' ?>">
-                                    <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
-                                    <i class="fa fa-star"></i>
-                                    <span class="rating-average"><?php echo $ratingTotals->average ? $ratingTotals->average : "?"; ?></span>
-                                    <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingTotals->count; ?></span>)</span>
-                                </div>
-<?php
-?>                                
-                            </div>
-<?php
-                            if( $ratingAllowed )
-                            { 
-?>
-                                <div class="rating-vote">
-                                    <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
-                                    <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
-                                </div>
-    <?php
-                            }
     ?>
+                <div class="rating-wrapper">
+                    <div class="rating-total">
+                        <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
+                            <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
+                        </div>
+                        <div class="rating-score <?php echo $ratingAverage ? '' : 'hide' ?>">
+                            <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
+                            <i class="fa fa-star"></i>
+                            <span class="rating-average"><?php echo $ratingAverage ? $ratingAverage : "?"; ?></span>
+                            <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingCount; ?></span>)</span>
+                        </div>
+                    </div>
+<?php
+                    // Owners and active mentors cannot rate their plans
+                    if( $canRate )
+                    {
+                        $ratingUser = $this->rating->userRating;
+?>
+                        <div class="rating-vote">
+                            <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
+                            <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
                         </div>
     <?php
-                 }
+                    }
     ?>
+                </div>
             </div>
             <div class="col-sm-3 text-right">
 <?php
@@ -232,7 +227,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             </div>
         </div>
     </div>
-<?php 
+<?php
     }
 ?>
 
@@ -245,7 +240,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                 <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-GeneralOverview"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
             </div>
             <div id="businessSummaryCollapse-GeneralOverview" class="panel-collapse collapse in">
-                <div class="panel-body clearfix" style="overflow: visible;">
+                <div class="panel-body clearfix">
 
                     <!-- SHOW -->
                     <div class="view viewShow">
@@ -433,7 +428,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             $rowValues = array (
 
                 __('Industry','bidxplugin')
-                    => $this->getMultiValues( $this->exst($businessSummary->industry), ', ', 'industry' ),
+                    => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industrySector'),
+                // __('Industry','bidxplugin')
+                //     => $this->getMultiValues( $this->exst($businessSummary->industrySector), '<br> ','industrySector'),
 
                 // __('Suggested industry','bidxplugin')
                 //     => $this->getMultiValues( $this->exst($businessSummary->suggestedIndustry), ', ' ),
@@ -481,9 +478,13 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         <blockquote class="alert-info"><?php _e('Here we provide you with tools to share more precise information about your business, i.e. what industry it operates in, what it produces and where it operates. This information will be used to match your initiative with other businesses and investors.','bidxplugin')?></blockquote>
                         <form id="frmBusinessSummary-AboutYourBusiness">
 
+<!--                             <div class="industrySectors">
+                                <label><?php _e('Industry','bidxplugin'); ?></label>
+                            </div>
+ -->
                             <div class="row">
                                 <!-- Industry -->
-                                <div class="form-group col-sm-6">
+                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Industry','bidxplugin'); ?></label>
                                     <select name="industry" multiple></select>
                                 </div>
@@ -1321,7 +1322,9 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     </div>
 
 </div><!-- /businesssummary -->
-<?php $this->render('../../mentor/templates/dashboard/main.phtml'); ?>
+<?php
+$this->isBuisnessSummary = true;
+$this->render('../../mentor/templates/dashboard/main.phtml'); ?>
 <?php // $this->render('../../commenting/templates/commenting.phtml'); ?>
 
 <script type="text/html" id="mentor-snippet">
@@ -1351,7 +1354,18 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     <div class="col-sm-12">
         <div class="well media">
             <div class="media-body">
-            <?php _e('No mentors','bidxplugin')?>
+            <?php _e('No matching mentors','bidxplugin')?>
+            </div>
+        </div>
+    </div>
+-->
+</script>
+<script type="text/html" id="empty-active-mentors">
+<!--
+    <div class="col-sm-12">
+        <div class="well media">
+            <div class="media-body">
+            <?php _e('No current mentor relationship','bidxplugin')?>
             </div>
         </div>
     </div>
@@ -1359,18 +1373,18 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 </script>
 <script type="text/html" id="active-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-reject"><?php _e('Ignore request','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&requestId=%requestId%&type=mentor&action=bpCancel" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-reject"><?php _e('Cancel request','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="send-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=sendFrmBp&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-success pull-right label bidx-label btn-bidx-send" ><?php _e('Request mentoring','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/entityId=%entityId%&mentorId=%mentorId%&initiatorId=%initiatorId%&type=mentor&action=bpSend" class="view viewRequestmentor btn btn-xs btn-success pull-right label bidx-label btn-bidx-send" ><?php _e('Request mentoring','bidxplugin');?></a>
 -->
 </script>
 <script type="text/html" id="respond-mentor-action">
 <!--
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=rejected&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
-<a href="#" data-href="#mentoring/confirmRequest/entityId=%entityId%&initiatorId=%initiatorId%&type=mentor&action=accepted&redirect=#loadMentors/%entityId%" class="view viewRequestmentor btn btn-success pull-right label bidx-label btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/requestId=%requestId%&type=mentor&action=rejected&initiate=bp" class="view viewRequestmentor btn btn-xs btn-danger pull-right label bidx-label btn-bidx-ignore" ><?php _e('Ignore','bidxplugin');?></a>
+<a href="#" data-href="#mentoring/confirmInitiateMentoring/requestId=%requestId%&type=mentor&action=accepted&initiate=bp" class="view viewRequestmentor btn btn-success pull-right label bidx-label btn-bidx-accept" ><?php _e('Accept','bidxplugin');?></a>
 
 -->
 </script>
@@ -1392,4 +1406,3 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
     </div>
 -->
 </script>
-

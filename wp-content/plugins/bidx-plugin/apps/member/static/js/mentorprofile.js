@@ -29,6 +29,10 @@
     ,   $preferredCommunication             = $element.find( ".js-PreferredCommunication" )
     ,   $preferredCommunicationCheckBoxes   = $preferredCommunication.find( "[type='checkbox']" )
 
+        // Industy Sectors
+        //
+    // ,   $industrySectors         = $editForm.find( ".industrySectors" )
+
     ,   member
     ,   memberId
     ,   mentorProfileId
@@ -146,6 +150,10 @@
         {
             dataKey:            "envImpact"
         });
+
+        // Run the industry widget on the selector
+        //
+        // $industrySectors.industries();
 
         // Grab the snippets from the DOM
         //
@@ -399,6 +407,15 @@
             } );
         } );
 
+        // Industry Sectors
+        //
+        // var data = bidx.utils.getValue( member, "bidxMentorProfile.focusIndustrySector", true );
+
+        // if ( data )
+        // {
+        //     $industrySectors.industries( "populateInEditScreen",  data );
+        // }
+
         $.each( fields.preferredCommunication, function( i, f )
         {
             var $input     = $editForm.find( "[type='text'][name='" + f + "']" )
@@ -564,6 +581,30 @@
 
             bidx.utils.setValue( member, "bidxMentorProfile." + f, value );
         } );
+
+        // Industry Sectors
+        // var endSectors = $industrySectors.find( "[name*='endSector']" );
+
+        // if ( endSectors )
+        // {
+        //     var arr = [];
+        //     $.each( endSectors, function(i, f)
+        //     {
+        //         var value   = bidx.utils.getElementValue( $(f) );
+
+        //         if ( value )
+        //         {
+        //             arr.push( value );
+        //         }
+        //     });
+
+        //     arr = $.map( arr, function( n )
+        //     {
+        //         return n;
+        //     });
+
+        //     bidx.utils.setValue( member, "bidxMentorProfile.focusIndustrySector", arr );
+        // }
 
         $.each( fields.preferredCommunication, function( i, f )
         {

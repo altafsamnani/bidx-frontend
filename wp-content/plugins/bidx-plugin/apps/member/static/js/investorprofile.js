@@ -46,6 +46,11 @@
     ,   $institutionAddressStreetNumber = $editForm.find( "[name='institutionAddress.streetNumber']"    )
     ,   $institutionAddressCoordinates  = $editForm.find( "[name='institutionAddress.coordinates']"     )
 
+        // Industy Sectors
+        //
+    // ,   $industrySectors                = $editForm.find( ".industrySectors" )
+
+
     ,   member
     ,   memberId
     ,   investorProfileId
@@ -216,6 +221,9 @@
         ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
         });
 
+        // Run the industry widget on the selector
+        //
+        // $industrySectors.industries();
 
         bidx.data.getContext( "investmentType", function( err, investmentTypes )
         {
@@ -890,6 +898,14 @@
             } );
         }
 
+        // Industry Sectors
+        //
+        // var data = bidx.utils.getValue( member, "bidxInvestorProfile.focusIndustrySector", true );
+
+        // if ( data )
+        // {
+        //     $industrySectors.industries( "populateInEditScreen",  data );
+        // }
 
         // Focuscity, special field because it's a single UI control but a complex structure in the API
         //
@@ -1084,6 +1100,31 @@
 
             bidx.utils.setValue( member, "bidxInvestorProfile." + f, value );
         } );
+
+        // Industry Sectors
+        // var endSectors = $industrySectors.find( "[name*='endSector']" );
+
+        // if ( endSectors )
+        // {
+        //     var arr = [];
+        //     $.each( endSectors, function(i, f)
+        //     {
+        //         var value   = bidx.utils.getElementValue( $(f) );
+
+        //         if ( value )
+        //         {
+        //             arr.push( value );
+        //         }
+        //     });
+
+        //     arr = $.map( arr, function( n )
+        //     {
+        //         return n;
+        //     });
+
+        //     bidx.utils.setValue( member, "bidxInvestorProfile.focusIndustrySector", arr );
+        // }
+
 
         // Collect the nested objects
         //
@@ -1378,10 +1419,10 @@
                     monetaryAmount:         true
                 ,   min:                    function() { return $editForm.find( "[name='minInvestment']" ).val(); }
                 }
-            ,   "focusIndustry":
-                {
-                    required:               true
-                }
+            // ,   "focusIndustry":
+            //     {
+            //         required:               true
+            //     }
             ,   "focusSocialImpact":
                 {
                     required:               true

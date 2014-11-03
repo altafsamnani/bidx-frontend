@@ -1,3 +1,8 @@
+<?php
+    $isLoggedinMemberIsInvestor = isset( $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile : null;
+
+?>
+
 <div id="mentoringRequest" >
 
     <div class="modalView modalConfirmRequest">
@@ -33,7 +38,7 @@
                     </div>
                     <div class="modal-body">
                         <p>
-                            <?php _e ('Currently there are no business summaries, please create one before you ask for mentoring') ?>
+                            <?php _e ('Currently there is no any business summary, please create one before you ask for mentoring') ?>
                         </p>
                     </div>
                     <div class="modal-footer">

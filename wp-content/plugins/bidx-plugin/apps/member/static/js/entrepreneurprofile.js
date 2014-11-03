@@ -25,18 +25,22 @@
 
         // CV
         //
-    ,   $cvControl                          = $editForm.find( ".cvControl" )
-    ,   $cvContainer                        = $cvControl.find( ".cvContainer" )
-    ,   $cvControlGroup                     = $cvContainer.find( ".form-group" )
-    ,   $btnChangeCv                        = $cvControl.find( "a[href$='changeCv']" )
-    ,   $changeCvModal                      = $cvControl.find( ".changeCvModal" )
+    ,   $cvControl                  = $editForm.find( ".cvControl" )
+    ,   $cvContainer                = $cvControl.find( ".cvContainer" )
+    ,   $cvControlGroup             = $cvContainer.find( ".form-group" )
+    ,   $btnChangeCv                = $cvControl.find( "a[href$='changeCv']" )
+    ,   $changeCvModal              = $cvControl.find( ".changeCvModal" )
 
         // Attachnents
         //
-    ,   $attachmentsControl                 = $editForm.find( ".attachmentsControl" )
-    ,   $attachmentsContainer               = $attachmentsControl.find( ".attachmentsContainer" )
-    ,   $btnAddAttachments                  = $attachmentsControl.find( ".js-btn-add-attachments")
-    ,   $addAttachmentsModal                = $attachmentsControl.find( ".addAttachmentsModal" )
+    ,   $attachmentsControl         = $editForm.find( ".attachmentsControl" )
+    ,   $attachmentsContainer       = $attachmentsControl.find( ".attachmentsContainer" )
+    ,   $btnAddAttachments          = $attachmentsControl.find( ".js-btn-add-attachments")
+    ,   $addAttachmentsModal        = $attachmentsControl.find( ".addAttachmentsModal" )
+
+        // Industy Sectors
+        //
+    // ,   $industrySectors         = $editForm.find( ".industrySectors" )
 
         // Since the data is coming from the member API, let's call the variable 'member'
         //
@@ -50,6 +54,7 @@
     ,   snippets                    = {}
 
     ,   appName                     = "member"
+
     ;
 
     // Form fields
@@ -118,12 +123,16 @@
             bidx.utils.populateDropdown( $businessOutcome, businessOutcomes );
         } );
 
+        // Run the industry widget on the selector
+        //
+        // $industrySectors.industries();
+
         // Grab the snippets from the DOM
         //
         function _snippets()
         {
-            snippets.$attachment        = $snippets.children( ".attachmentItem"         ).remove();
-            snippets.$previousBusiness  = $snippets.children( ".previousBusinessItem"   ).remove();
+            snippets.$attachment        = $snippets.children( ".attachmentItem"       ).remove();
+            snippets.$previousBusiness  = $snippets.children( ".previousBusinessItem" ).remove();
         }
 
         // Initialize previous business
@@ -522,6 +531,7 @@
 
         $attachmentsContainer.reflowrower( "addItem", $attachment );
     }
+    
     // Use the retrieved member object to populate the form and other screen elements
     //
     function _populateScreen()
@@ -541,6 +551,7 @@
                 bidx.utils.setElementValue( $( this ), value );
             } );
         } );
+
 
         // Now the nested objects
         //
@@ -578,6 +589,15 @@
             $togglePrevRunBusiness.filter( ":checked" ).radio( "setState" );
         }
 
+        // Industry Sectors
+        //
+        // var data = bidx.utils.getValue( member, "bidxEntrepreneurProfile.focusIndustrySector", true );
+
+        // if ( data )
+        // {
+        //     $industrySectors.industries( "populateInEditScreen",  data );
+        // }
+
         // Update the chosen components with our set values
         //
         $focusIndustry.trigger( "chosen:updated" );
@@ -595,6 +615,30 @@
 
             bidx.utils.setValue( member, "bidxEntrepreneurProfile." + f, value );
         } );
+
+        // Industry Sectors
+        // var endSectors = $industrySectors.find( "[name*='endSector']" );
+
+        // if ( endSectors )
+        // {
+        //     var arr = [];
+        //     $.each( endSectors, function(i, f)
+        //     {
+        //         var value   = bidx.utils.getElementValue( $(f) );
+
+        //         if ( value )
+        //         {
+        //             arr.push( value );
+        //         }
+        //     });
+
+        //     arr = $.map( arr, function( n )
+        //     {
+        //         return n;
+        //     });
+
+        //     bidx.utils.setValue( member, "bidxEntrepreneurProfile.focusIndustrySector", arr );
+        // }
 
         // Collect the nested objects
         //
@@ -755,8 +799,7 @@
                 $cvControlGroup.find( ".noCV" ).addClass( "alert-danger" );
                 $cvControl.prev().addClass( "heading-error" );
             }
-
-
+            
             return valid;
         }
 
@@ -772,7 +815,11 @@
                     required:                   true
                 ,   maxlength:                  900
                 }
-            ,   "focusIndustry":
+            // ,   "focusIndustry":
+            //     {
+            //         required:                   true
+            //     }
+            ,   "industrySectors":
                 {
                     required:                   true
                 }

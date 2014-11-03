@@ -40,6 +40,7 @@ if ($entrepreneurDetails &&
                     $rowValues = array(
                         __('Summary','bidxplugin')          =>  $this->exst ($entrepreneurDetails->summary),
                         __('Focus Industry','bidxplugin')   =>  $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustry), ', ','industry')
+                        // __('Focus industry','bidxplugin')  =>  $this->getMultiValues ($this->exst ($entrepreneurDetails->focusIndustrySector), '<br> ','industrySector')
                         );
                     echo $this->pairRows( $rowValues );
 ?>

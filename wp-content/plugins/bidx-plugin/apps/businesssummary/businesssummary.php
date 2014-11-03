@@ -7,7 +7,7 @@
 class businesssummary
 {
     static $deps = array( 'jquery', 'bootstrap', 'underscore', 'backbone', 'json2',
-        'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
+        'bidx-utils', 'bidx-api-core', 'bidx-common', 'bidx-reflowrower', 'bidx-industries', 'bidx-data', 'bidx-i18n', 'bidx-tagsinput',
         'jquery-validation', 'jquery-validation-additional-methods', 'jquery-validation-bidx-additional-methods',
         'bidx-location', 'bidx-chosen', 'jquery-fitvids', 'jquery-raty'
     );
@@ -26,7 +26,7 @@ class businesssummary
     function register_businesssummary_bidx_ui_libs()
     {
         /* Common mentoring functions & mentoring activities functions */
-     ;
+        wp_register_script ('commenting', plugins_url ('../commenting/static/js/commenting.js', __FILE__), $deps, '20140307', TRUE);;
         wp_register_script ('bp-mentor', plugins_url ('../mentor/static/js/common-mentordashboard.js', __FILE__), $deps, '20140307', TRUE);
         $deps = array_merge( self :: $deps, array(  'bp-mentor', 'commenting' ) );
         //$deps = self::$deps;
@@ -82,11 +82,16 @@ class businesssummary
             	$view->completenessColour = 'red';
             }
 
-            /* Fetch the entity rating. */
-            require_once (BIDX_PLUGIN_DIR . '/../services/rating-service.php');
-            $ratingServiceObj = new RatingService ();
-            $ratingData = $ratingServiceObj->getRating ( $businessSummaryId );
-            $view->rating = $ratingData->data;
+            /* Fetch the detailed rating if needed. The count and average are available in
+             * the Entity API as well, but if the current user can rate we need more details,
+             * such as the user's rating, for which we need to make another API call. 
+             */
+            if( $businessSummaryData->data->bidxMeta->bidxCanRate ) {
+                require_once (BIDX_PLUGIN_DIR . '/../services/rating-service.php');
+                $ratingServiceObj = new RatingService ();
+                $ratingData = $ratingServiceObj->getRating ( $businessSummaryId );
+                $view->rating = $ratingData->data;
+            }
         }
 
         $view->render('businesssummary.phtml');

@@ -26,6 +26,7 @@
     ,   mailOffset                  = 0
     ,   $mailboxToolbar
     ,   $mailboxToolbarButtons
+    ,   groupownerDrpDownDefaultVal = 'groupowner'
     ,   state
     ,   section
     ;
@@ -163,6 +164,7 @@
                     option = $( "<option/>",
                     {
                        'data-groupid': currentGroupId
+                    ,  'value' :       groupownerDrpDownDefaultVal
                     } );
 
                     option.text( bidx.i18n.i( "msgToGroup", appName ) );
@@ -267,10 +269,10 @@
     function _prepareMessage()
     {
         var selectedOptions =   $contactsDropdown.val()
-        ,   groupVal        =   bidx.i18n.i( "msgToGroup", appName )
+        ,   groupVal        =   groupownerDrpDownDefaultVal
         ,   groupId         =   $contactsDropdown.find("option:selected").data("groupid")
         ;
-
+        bidx.utils.log('selectedoptions',selectedOptions);
         selectedOptions     =   _.without(selectedOptions, groupVal );
         /*
             API expected format
@@ -1382,6 +1384,8 @@
                 ,   lbl
                 ,   subject
                 ,   mailbox
+                ,   isSenderId
+                ,   isGroupId
                 ;
 
                 if( state.search( /(^mbx-)/ ) === 0 )
@@ -1399,16 +1403,28 @@
 
                         // get list of recipients for this email
                         //
+                        bidx.utils.log('message',message);
                         if ( mailbox === "sent" )
                         {
                             $.each( message.recipients, function( idx, item )
                             {
+                                bidx.utils.log('item',item.id);
                                 recipients.push( item.id.toString() );
                             } );
                         }
                         else
                         {
-                            recipients.push( message.sender.id.toString() );
+                            isSenderId = message.sender.id;
+                            isGroupId  = message.sender.groupId;
+                            if( isSenderId )
+                            {
+                                recipients.push( message.sender.id.toString() );
+
+                            } else if( isGroupId )
+                            {
+                                bidx.utils.log('dataaaaaaaa',$contactsDropdown.find("option[data-groupid]"));
+                                recipients.push( groupownerDrpDownDefaultVal );
+                            }
                         }
 
 
@@ -1915,7 +1931,7 @@
                             {
                                 // first add the admins and groupowners
                                 //
-                                /*if ( response.relationshipType.contact.types.groupOwner )
+                                if ( response.relationshipType.contact.types.groupOwner )
                                 {
                                    $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
                                     {
@@ -1930,7 +1946,7 @@
                                             sortIndex.push( item.name.toLowerCase() );
                                         }
                                     } );
-                                } */
+                                }
 
 
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )

@@ -138,9 +138,7 @@
         <span class="placeholder bidxCreationDateTime">%bidxCreationDateTime%</span>
     </td>
     <td class="hidden-xs">
-        <a  data-toggle="collapse" data-target="#status-%accordion-id%" class="btn-block">
         <span class="placeholder status">%status%</span>
-        </a>
     </td>
     <td class="hidden-xs">
         <span class="placeholder bidxCreationDateTime">%bidxCreationDateTime%</span>
@@ -154,7 +152,9 @@
         <div class="panel-collapse collapse" id="%accordion-id%">
             <div class="row">
                 <div class="col-sm-2">
-                    <span class="placeholder document js-companylogo"><img src="%document%"/></span>
+                    <a class="pull-left" href="<?php echo _l('businesssummary');?>/%bidxEntityId%" data-role='businessImage'>
+                        <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
+                    </a>
                 </div>
                 <div class="col-sm-10">
                     <div class="row">
@@ -204,25 +204,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td colspan="8" class="detailRow">
-        <div class="panel-collapse collapse" id="status-%accordion-id%">
-            <div class="row detailContent">
-                <div class="col-sm-12">
-                    <h3><?php _e('Access requests','bidxplugin');?></h3>
-                    <div class="alert alert-info">
-                        <?php _e('Subject','bidxplugin');?>: Request to view full details of your plan <BR>
-                        <?php _e('To','bidxplugin');?>: <span class="placeholder contactName">%contactName%</span> <BR>
-                        <?php _e('Date','bidxplugin');?>: <span class="placeholder startDate">%startDate%</span> <BR>
-                    </div>
-                </div>
-                <div class="pull-right">
-                    <a href="#"><?php _e('Send new email','bidxplugin');?></a>
                 </div>
             </div>
         </div>
@@ -324,7 +305,9 @@
       <div class="panel-collapse collapse" id="%accordion-id%">
       <div class="row">
             <div class="col-sm-3">
-                <span class="placeholder js-companylogo companylogodoc_url"><img src="%companylogodoc_url%"/></span>
+                <a class="pull-left" href="<?php echo _l('businesssummary');?>/%entityid_l%" data-role='businessImage'>
+                    <div class="icons-rounded pull-left"><i class="fa fa-suitcase text-primary-light"></i></div>
+                </a>
             </div>
         <div class="col-sm-9">
             <div class="row">
