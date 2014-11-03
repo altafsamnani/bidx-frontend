@@ -282,7 +282,7 @@
 
                         listItems.push( option );
 
-                        //Get Entrpreuenrers for group  mailing
+                        //Get Entrepreneurs for group  mailing
                         if($.inArray( 'entrepreneur' , roles) !== -1 )
                         {
                             entrepreuenrItems.push(data.contacts[ key ] );
@@ -1674,29 +1674,28 @@
                         bidx.utils.log("[members] retrieved following active contacts ", response );
                         if ( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
                         {
+                            // first add the admins and groupowners
+                            //
+                            if ( response.relationshipType.contact.types.groupOwner )
+                            {
+                               $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
+                                {
+                                    //Current logged user is not groupadmin
+                                    if( item.id !== currentUserId)
+                                    {
+                                        contacts[ item.name.toLowerCase() ] =
+                                        {
+                                            value:      item.id
+                                        ,   label:      item.name + " (" + bidx.i18n.i( "groupAdmin", appName ) + ")"
+                                        ,   roles:      item.roles
+                                        };
+                                        sortIndex.push( item.name.toLowerCase() );
+                                    }
+                                } );
+                            }
+
                             if ( response.relationshipType.contact.types.active )
                             {
-                                // first add the admins and groupowners
-                                //
-                                if ( response.relationshipType.contact.types.groupOwner )
-                                {
-                                   $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
-                                    {
-                                        //Current logged user is not groupadmin
-                                        if( item.id !== currentUserId)
-                                        {
-                                            contacts[ item.name.toLowerCase() ] =
-                                            {
-                                                value:      item.id
-                                            ,   label:      item.name + " (" + bidx.i18n.i( "groupAdmin", appName ) + ")"
-                                            ,   roles:      item.roles
-                                            };
-                                            sortIndex.push( item.name.toLowerCase() );
-                                        }
-                                    } );
-                                }
-
-
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
                                 //
                                 $.each( response.relationshipType.contact.types.active , function ( idx, item)

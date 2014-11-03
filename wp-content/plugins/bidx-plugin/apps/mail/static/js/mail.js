@@ -173,34 +173,37 @@
         ,   callback:   function( data )
             {
 
+                // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
+                // which holds the contact info (unordered)
+                //
+                var listItems       = []
+                ,   option
+                ,   $options
+                ;
+
+                $options = $contactsDropdown.find( "option" );
+
+                if ( $options.length )
+                {
+                    $options.empty();
+                }
+
+                // Add a virtual "Send message to group owner" option
+                //
+                option = $( "<option/>",
+                {
+                   'data-groupid': currentGroupId
+                ,  'value' :       groupownerDrpDownDefaultVal
+                } );
+
+                option.text( bidx.i18n.i( "msgToGroup", appName ) );
+
+                listItems.push( option );
+
+                // Add the real contacts
+                //
                 if ( data && data.sortIndex )
                 {
-
-
-                    // data contains a sortIndex array which we can sort and then iterate and use it's key on the contacts array
-                    // which holds the contact info (unordered)
-                    //
-                    var listItems       = []
-                    ,   option
-                    ,   $options
-                    ;
-
-                    $options = $contactsDropdown.find( "option" );
-
-                    if ( $options.length )
-                    {
-                        $options.empty();
-                    }
-
-                    option = $( "<option/>",
-                    {
-                       'data-groupid': currentGroupId
-                    ,  'value' :       groupownerDrpDownDefaultVal
-                    } );
-
-                    option.text( bidx.i18n.i( "msgToGroup", appName ) );
-
-                    listItems.push( option );
 
                     // sort the array, if not empty
                     //
@@ -219,15 +222,15 @@
 
                         listItems.push( option );
                     } );
-
-                    // add the options to the select
-                    //
-                    $contactsDropdown.append( listItems );
-
-                    // init bidx_chosen plugin
-                    //
-                    $contactsDropdown.bidx_chosen();
                 }
+
+                // add the options to the select
+                //
+                $contactsDropdown.append( listItems );
+
+                // init bidx_chosen plugin
+                //
+                $contactsDropdown.bidx_chosen();
             }
         } );
     }
@@ -1997,28 +2000,27 @@
                         bidx.utils.log("[members] retrieved following active contacts ", response );
                         if ( response && response.relationshipType && response.relationshipType.contact && response.relationshipType.contact.types )
                         {
+                            // first add the admins and groupowners
+                            //
+                            if ( response.relationshipType.contact.types.groupOwner )
+                            {
+                               $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
+                                {
+                                    //Current logged user is not groupadmin
+                                    if( item.id !== currentUserId)
+                                    {
+                                        contacts[ item.name.toLowerCase() ] =
+                                        {
+                                            value:      item.id
+                                        ,   label:      item.name + " (" + bidx.i18n.i( "groupAdmin", appName ) + ")"
+                                        };
+                                        sortIndex.push( item.name.toLowerCase() );
+                                    }
+                                } );
+                            }
+
                             if ( response.relationshipType.contact.types.active )
                             {
-                                // first add the admins and groupowners
-                                //
-                                if ( response.relationshipType.contact.types.groupOwner )
-                                {
-                                   $.each( response.relationshipType.contact.types.groupOwner , function ( idx, item)
-                                    {
-                                        //Current logged user is not groupadmin
-                                        if( item.id !== currentUserId)
-                                        {
-                                            contacts[ item.name.toLowerCase() ] =
-                                            {
-                                                value:      item.id
-                                            ,   label:      item.name + " (" + bidx.i18n.i( "groupAdmin", appName ) + ")"
-                                            };
-                                            sortIndex.push( item.name.toLowerCase() );
-                                        }
-                                    } );
-                                }
-
-
                                 // then add the active contactsm but we first check if we are not adding a duplicate member id (member who already acts as an admin or groupowner )
                                 //
                                 $.each( response.relationshipType.contact.types.active , function ( idx, item)
