@@ -72,10 +72,6 @@
                 {
                     required:   true
                 }
-            ,   "content":
-                {
-                    required:   true
-                }
 
             }
         ,   messages:
@@ -1262,7 +1258,7 @@
             $btnComposeCancel.removeClass( "disabled" );
             $frmCompose.find( "[name=content]" ).val('');
             /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
-            //window.parent.tinymce.get('connect_editor_id').setContent('');
+            window.parent.tinymce.get('connect_editor_id').setContent('');
 
             $frmCompose.validate().resetForm();
 
@@ -2050,7 +2046,7 @@
                                             // mailbox sent does not show unread state
                                             //
                                             .replace( /%emailRead%/g, ( !item.read && state !== "mbx-sent" ) ? "email-new" : "" )
-                                            .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? "new" : "" )
+                                            .replace( /%emailNew%/g, ( !item.read && state !== "mbx-sent" ) ? " <small>" + bidx.i18n.i( "emailNew", appName ) + "</small>" : "" )
                                             .replace( /%senderReceiverName%/g, senderReceiverName )
                                             .replace( /%dateSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "date" ) )
                                             .replace( /%timeSent%/g, bidx.utils.parseTimestampToDateTime( item.dateSent, "time" ) )

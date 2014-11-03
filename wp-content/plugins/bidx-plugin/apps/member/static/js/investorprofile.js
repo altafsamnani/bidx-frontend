@@ -48,7 +48,7 @@
 
         // Industy Sectors
         //
-    // ,   $industrySectors                = $editForm.find( ".industrySectors" )
+    ,   $industrySectors                = $editForm.find( ".industrySectors" )
 
 
     ,   member
@@ -223,7 +223,7 @@
 
         // Run the industry widget on the selector
         //
-        // $industrySectors.industries();
+        $industrySectors.industries();
 
         bidx.data.getContext( "investmentType", function( err, investmentTypes )
         {
@@ -900,12 +900,12 @@
 
         // Industry Sectors
         //
-        // var data = bidx.utils.getValue( member, "bidxInvestorProfile.focusIndustrySector", true );
+        var data = bidx.utils.getValue( member, "bidxInvestorProfile.focusIndustrySector", true );
 
-        // if ( data )
-        // {
-        //     $industrySectors.industries( "populateInEditScreen",  data );
-        // }
+        if ( data )
+        {
+            $industrySectors.industries( "populateInEditScreen",  data );
+        }
 
         // Focuscity, special field because it's a single UI control but a complex structure in the API
         //
@@ -1102,28 +1102,28 @@
         } );
 
         // Industry Sectors
-        // var endSectors = $industrySectors.find( "[name*='endSector']" );
+        var endSectors = $industrySectors.find( "[name*='endSector']" );
 
-        // if ( endSectors )
-        // {
-        //     var arr = [];
-        //     $.each( endSectors, function(i, f)
-        //     {
-        //         var value   = bidx.utils.getElementValue( $(f) );
+        if ( endSectors )
+        {
+            var arr = [];
+            $.each( endSectors, function(i, f)
+            {
+                var value   = bidx.utils.getElementValue( $(f) );
 
-        //         if ( value )
-        //         {
-        //             arr.push( value );
-        //         }
-        //     });
+                if ( value )
+                {
+                    arr.push( value );
+                }
+            });
 
-        //     arr = $.map( arr, function( n )
-        //     {
-        //         return n;
-        //     });
+            arr = $.map( arr, function( n )
+            {
+                return n;
+            });
 
-        //     bidx.utils.setValue( member, "bidxInvestorProfile.focusIndustrySector", arr );
-        // }
+            bidx.utils.setValue( member, "bidxInvestorProfile.focusIndustrySector", arr );
+        }
 
 
         // Collect the nested objects

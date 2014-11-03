@@ -59,7 +59,7 @@ $isSuperAdmin   = is_super_admin();
         <!-- Nav tabs -->
         <ul class="nav nav-tabs tabs-left">
             <li class="active"><a href="#tab-member" data-toggle="tab"><i class="pull-left fa fa-user"></i> Member</a></li>
-            <li><a href="#-tab-entreprenuer" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> Entrepreneur</a></li>
+            <li><a href="#tab-entreprenuer" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> Entrepreneur</a></li>
 <?php
             if ( $this->isLoggedInInvestor || $this->isLoggedInGroupOwner ) :
 ?>          
@@ -76,11 +76,11 @@ $isSuperAdmin   = is_super_admin();
 
     <div class="col-sm-9 tabs-content">
         <!-- Tab panes -->
-            <div id="myProfile" class="tab-content">
+        <div id="myProfile" class="tab-content">
             <div class="tab-pane active" id="tab-member">
                 <?php $this->render('view-member.phtml');  ?>
             </div>
-            <div class="tab-pane" id="-tab-entreprenuer">
+            <div class="tab-pane" id="tab-entreprenuer">
                 <?php $this->render('view-entrepreneur.phtml'); ?>
             </div>
 <?php

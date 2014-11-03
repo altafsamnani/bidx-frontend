@@ -9,9 +9,6 @@ $businessSummaryBidxMeta = isset($businessSummary->bidxMeta)
     : null;
 
 $canEdit        = $this->exst($businessSummaryBidxMeta->bidxCanEdit, false);
-$canRate        = $this->exst($businessSummaryBidxMeta->bidxCanRate, false);
-$ratingCount    = $this->exst($businessSummaryBidxMeta->bidxRatingCount, 0);
-$ratingAverage  = $this->exst($businessSummaryBidxMeta->bidxRatingAverage, null);
 $entityStatus   = $this->exst($businessSummaryBidxMeta->bidxEntityStatus, '');
 
 // get the enitities of the current user
@@ -152,34 +149,42 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                  * We want ratings to be indexed by Google, so need to include this on page load. It
                  * might be updated in JavaScript though, so also check the translations in i18n.xml.
                  */
+                $ratingTotals = $this->rating->totals;
 
+                if( $ratingTotals )
+                {
+                    $ratingAllowed = $loggedInUserId != $ownerId;
+                    $ratingUser = $this->rating->userRating;
     ?>
-                <div class="rating-wrapper">
-                    <div class="rating-total">
-                        <div class="rating-no-score <?php echo !$ratingAverage ? '' : 'hide' ?>">
-                            <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
-                        </div>
-                        <div class="rating-score <?php echo $ratingAverage ? '' : 'hide' ?>">
-                            <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
-                            <i class="fa fa-star"></i>
-                            <span class="rating-average"><?php echo $ratingAverage ? $ratingAverage : "?"; ?></span>
-                            <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingCount; ?></span>)</span>
-                        </div>
-                    </div>
+                        <div class="rating-wrapper">
+                            <div class="rating-total">
+                                <div class="rating-no-score <?php echo !$ratingTotals->average ? '' : 'hide' ?>">
+                                    <span class="rating-score-text"><?php echo _e('No Score', 'bidxplugin'); ?></span>
+                                </div>
+                                <div class="rating-score <?php echo $ratingTotals->average ? '' : 'hide' ?>">
+                                    <span class="rating-score-text"><?php echo _e('Score', 'bidxplugin'); ?></span>
+                                    <i class="fa fa-star"></i>
+                                    <span class="rating-average"><?php echo $ratingTotals->average ? $ratingTotals->average : "?"; ?></span>
+                                    <span class="rating-total-voters">(#<span class="rating-total-voters-count"><?php echo $ratingTotals->count; ?></span>)</span>
+                                </div>
 <?php
-                    // Owners and active mentors cannot rate their plans
-                    if( $canRate )
-                    {
-                        $ratingUser = $this->rating->userRating;
 ?>
-                        <div class="rating-vote">
-                            <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
-                            <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
+                            </div>
+<?php
+                            if( $ratingAllowed )
+                            {
+?>
+                                <div class="rating-vote">
+                                    <span class="rating-vote-text"><span class="rating-user-label"><?php $ratingUser->value ? _e('Your rating', 'bidxplugin') : _e('Rate this plan', 'bidxplugin') ?></span></span>
+                                    <div data-rating="<?php echo $this->rating->userRating->value ? $this->rating->userRating->value : 0 ?>" class="raty"></div>
+                                </div>
+    <?php
+                            }
+    ?>
                         </div>
     <?php
-                    }
+                 }
     ?>
-                </div>
             </div>
             <div class="col-sm-3 text-right">
 <?php
@@ -232,15 +237,27 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
 
     <!-- Accordion -->
-    <div id="businessSummaryCollapse">
+<div class="row tabs-vertical">
+
+    <div class="col-sm-3 tabs-nav">
+        <ul class="nav nav-tabs tabs-left">
+            <li class="active"><a href="#tab-bs-overview" data-toggle="tab"><?php _e('General Overview','bidxplugin'); ?></a></li>
+            <li><a href="#tab-bs-about-business" data-toggle="tab"><?php _e('About the business','bidxplugin'); ?></a></li>
+            <li><a href="#tab-bs-about-you" data-toggle="tab"><?php _e('About you and your team','bidxplugin'); ?></a></li>
+            <li><a href="#tab-bs-financial" data-toggle="tab"><?php _e('Financial Details','bidxplugin'); ?></a></li>
+            <li><a href="#tab-bs-company" data-toggle="tab"><?php _e('Company Details','bidxplugin'); ?></a></li>
+            <li><a href="#tab-bs-mentoring" data-toggle="tab"><?php _e('Mentoring Details','bidxplugin'); ?></a></li>
+            <li><a href="#tab-bs-documents" data-toggle="tab"><?php _e('Documents','bidxplugin'); ?></a></li>
+        </ul>
+    </div>
+    <div class="col-sm-9 tabs-content">
+        <div class="tab-content">
+            <div class="tab-pane hide-overflow panel-feedback active" id="tab-bs-overview">
+
+
 
         <!-- General Overview -->
-        <div class="panel panel-default panel-feedback panel-open">
-            <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-GeneralOverview"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('General overview','bidxplugin'); ?></a>
-            </div>
-            <div id="businessSummaryCollapse-GeneralOverview" class="panel-collapse collapse in">
-                <div class="panel-body clearfix">
+            <div class="feedback-tabs" id="businessSummaryCollapse-GeneralOverview">
 
                     <!-- SHOW -->
                     <div class="view viewShow">
@@ -406,21 +423,13 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </form>
                     </div><!-- /EDIT -->
 
-                </div><!-- /panel-body -->
-<!--                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryCollapse-Documents" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Documents', 'bidxplugin')?></a>
-                    <a href="#businessSummaryCollapse-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('About the business','bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
-                </div>
- -->            </div>
         </div><!-- /General Overview -->
+    </div>
+
+    <div class="tab-pane hide-overflow panel-feedback" id="tab-bs-about-business">
 
         <!-- About the business -->
-        <div class="panel panel-default panel-feedback">
-            <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-AboutTheBusiness"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('About the business','bidxplugin'); ?></a>
-            </div>
-            <div id="businessSummaryCollapse-AboutTheBusiness" class="panel-collapse collapse">
-                <div class="panel-body clearfix">
+            <div class="feedback-tabs" id="businessSummaryCollapse-AboutTheBusiness">
 
                     <!-- SHOW -->
                     <div class="view viewShow">
@@ -428,9 +437,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
             $rowValues = array (
 
                 __('Industry','bidxplugin')
-                    => $this->getMultiValues( $this->exst($businessSummary->industry), '<br> ','industrySector'),
-                // __('Industry','bidxplugin')
-                //     => $this->getMultiValues( $this->exst($businessSummary->industrySector), '<br> ','industrySector'),
+                    => $this->getMultiValues( $this->exst($businessSummary->industrySector), '<br> ','industrySector'),
 
                 // __('Suggested industry','bidxplugin')
                 //     => $this->getMultiValues( $this->exst($businessSummary->suggestedIndustry), ', ' ),
@@ -478,19 +485,19 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         <blockquote class="alert-info"><?php _e('Here we provide you with tools to share more precise information about your business, i.e. what industry it operates in, what it produces and where it operates. This information will be used to match your initiative with other businesses and investors.','bidxplugin')?></blockquote>
                         <form id="frmBusinessSummary-AboutYourBusiness">
 
-<!--                             <div class="industrySectors">
+                            <div class="industrySectors">
                                 <label><?php _e('Industry','bidxplugin'); ?></label>
                             </div>
- -->
+
                             <div class="row">
                                 <!-- Industry -->
-                                 <div class="form-group col-sm-6">
+<!--                                 <div class="form-group col-sm-6">
                                     <label><?php _e('Industry','bidxplugin'); ?></label>
                                     <select name="industry" multiple></select>
                                 </div>
-
+ -->
                                 <!-- Product Service -->
-                                <div class="form-group col-sm-6">
+                                <div class="form-group col-sm-12">
                                     <label><?php _e('Product / service','bidxplugin'); ?></label>
                                     <select name="productService" multiple></select>
                                 </div>
@@ -555,23 +562,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </form>
                     </div><!-- /EDIT -->
 
-
-
-                </div><!-- /panel-body -->
-<!--                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryCollapse-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('General Overview', 'bidxplugin')?></a>
-                    <a href="#businessSummaryCollapse-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('About you &amp; your team', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
-                </div>
- -->            </div>
         </div><!-- /About the business -->
+    </div>
 
+    <div class="tab-pane hide-overflow panel-feedback" id="tab-bs-about-you">
         <!-- About you & your team -->
-        <div class="panel panel-default panel-feedback">
-            <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-AboutYouAndYourTeam"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('About you & your team','bidxplugin'); ?></a>
-            </div>
-            <div id="businessSummaryCollapse-AboutYouAndYourTeam" class="panel-collapse collapse">
-                <div class="panel-body clearfix">
+            <div class="feedback-tabs" id="businessSummaryCollapse-AboutYouAndYourTeam">
 
                     <!-- SHOW -->
                     <div class="view viewShow">
@@ -680,22 +676,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 
                     </div><!-- /EDIT -->
 
-
-                </div><!-- /Accordion inner -->
-<!--                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryCollapse-AboutTheBusiness" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('About the business', 'bidxplugin')?></a>
-                    <a href="#businessSummaryCollapse-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('Financial Details', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
-                </div>
- -->            </div>
         </div><!-- /About you & your team -->
-
+    </div>
+    <div class="tab-pane hide-overflow panel-feedback" id="tab-bs-financial">
         <!-- Financial details -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-FinancialDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
-            </div>
-            <div id="businessSummaryCollapse-FinancialDetails" class="panel-collapse collapse">
-                <div class="panel-body clearfix">
+            <div class="feedback-tabs" id="businessSummaryCollapse-FinancialDetails">
 
                     <form id="frmBusinessSummary-FinancialDetails">
 
@@ -768,21 +753,12 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div>
 
                     </form>
-                </div><!-- /panel-body -->
-<!--                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryCollapse-AboutYouAndYourTeam" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('About you &amp; your team', 'bidxplugin')?></a>
-                    <a href="#businessSummaryCollapse-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('Company details', 'bidxplugin')?> <span class="fa fa-chevron-right"></span></a>
-                </div>
- -->            </div>
         </div><!-- /Financial details -->
+    </div>
 
+    <div class="tab-pane hide-overflow panel-feedback" id="tab-bs-company">
         <!-- Company details -->
-        <div class="panel panel-default panel-feedback">
-            <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-CompanyDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Company Details', 'bidxplugin')?></a>
-            </div>
-            <div id="businessSummaryCollapse-CompanyDetails" class="panel-collapse collapse">
-                <div class="panel-body clearfix">
+            <div class="feedback-tabs" id="businessSummaryCollapse-CompanyDetails">
 
 
                     <!-- SHOW -->
@@ -928,21 +904,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div>
                     </div><!-- /Edit -->
 
-                </div><!-- /Accordion inner -->
-<!--                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryCollapse-FinancialDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Financial Details', 'bidxplugin')?></a>
-                    <a href="#businessSummaryCollapse-MentoringDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('Mentoring Details', 'bidxplugin')?> <span class="fa fa-chevron-right"></span> </a>
-                </div>
- -->            </div>
         </div><!-- /Company details -->
-
+    </div>
+    <div class="tab-pane hide-overflow panel-feedback" id="tab-bs-mentoring">
         <!-- Mentoring Details -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-MentoringDetails"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Mentoring Details','bidxplugin'); ?></a>
-            </div>
-            <div id="businessSummaryCollapse-MentoringDetails" class="panel-collapse collapse">
-                <div class="panel-body clearfix">
+            <div class="feedback-tabs" id="businessSummaryCollapse-MentoringDetails">
 
                     <!-- SHOW -->
                     <div class="view viewShow">
@@ -1014,7 +980,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                             </div>
                         </form>
                     </div><!-- /EDIT -->
-                    <!-- ---------------Mentor Matching Start------------------ -->
+                    <!-- Mentor Matching Start -->
                         <div class="toggle toggle-mentorMatches">
                             <div class="view viewMentor">
                                 <!-- ACTIVE REQUESTS -->
@@ -1059,21 +1025,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div>
                             <!-- Mentor Matching End -->
 
-                </div><!-- /Accordion inner -->
-<!--                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryCollapse-CompanyDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Company details', 'bidxplugin')?></a>
-                    <a href="#businessSummaryCollapse-Documents" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('Documents', 'bidxplugin')?> <span class="fa fa-chevron-right"></span> </a>
-                </div>
- -->            </div>
         </div><!-- /Mentoring Details -->
-
+    </div>
+    <div class="tab-pane hide-overflow panel-feedback" id="tab-bs-documents">
         <!-- Documents -->
-        <div class="panel panel-default panel-feedback">
-            <div class="panel-heading">
-                <a class="btn-block" data-toggle="collapse" data-parent="#businessSummaryCollapse" href="#businessSummaryCollapse-Documents"><span class="fa fa-chevron-right accordion-state-icon"></span> <?php _e('Documents', 'bidxplugin')?></a>
-            </div>
-            <div id="businessSummaryCollapse-Documents" class="panel-collapse collapse">
-                <div class="panel-body clearfix">
+            <div class="feedback-tabs" id="businessSummaryCollapse-Documents">
 
                     <!-- SHOW -->
                     <div class="view viewShow">
@@ -1198,16 +1154,11 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                         </div>
                     </div>
 
-                </div><!-- /panel-body -->
-<!--                 <div class="panel-footer hide-overflow">
-                    <a href="#businessSummaryCollapse-MentoringDetails" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php _e('Mentoring Details', 'bidxplugin')?></a>
-                    <a href="#businessSummaryCollapse-GeneralOverview" data-toggle="collapse" data-parent="#businessSummaryCollapse" class="btn btn-default pull-right"><?php _e('General Overview', 'bidxplugin')?> <span class="fa fa-chevron-right"></span> </a>
-                </div>
- -->            </div>
-
         </div><!-- /Documents -->
+    </div>
+    </div>
+</div> <!-- tabs-content myBusinessSummary -->
 
-    </div><!-- /#businessSummaryCollapse -->
 
     <!-- EDIT DOCUMENT MODAL -->
     <div class="js-edit-document modal fade">

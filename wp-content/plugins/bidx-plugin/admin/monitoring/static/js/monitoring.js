@@ -60,13 +60,6 @@
                                 }
                             ]
 
-    ,   PIECHARTOPTIONS =   {
-                                chartArea:      {'left': '0'}
-                            ,   legend:         { 'position': 'labeled'}
-                            ,   title:          bidx.i18n.i('userRolesTitle', appName)
-                            ,   is3D:           true
-                            }
-
     ;
 
 
@@ -84,15 +77,11 @@
     {
         // Create the data table.
         var label
-        ,   labelNoCount
-        ,   memberProfileCount  =   0
-        ,   roleProfilecount    =   0
-        ,   noRoleProfileCount
-        ,   facets              =   []
-        ,   listItem            =   []
-        ,   facetList           =   {}
-        ,   data                =   new google.visualization.DataTable()
-        ,   userRoles           =   [ 'bidxEntrepreneurProfile', 'bidxMentorProfile', 'bidxInvestorProfile', 'bidxMemberProfile']
+        ,   facets      =   []
+        ,   listItem    =   []
+        ,   facetList   =   {}
+        ,   data        =   new google.visualization.DataTable()
+        ,   userRoles   =   [ 'bidxEntrepreneurProfile', 'bidxMentorProfile', 'bidxInvestorProfile']
         ;
 
         data.addColumn('string', 'Roles');
@@ -108,42 +97,26 @@
 
                 if( $.inArray( item.name, userRoles ) !== -1 )
                 {
-                    if ( item.name === 'bidxMemberProfile' )
-                    {
-                        memberProfileCount = item.count;
-                    }
-                    else
-                    {
-                        label   =   bidx.i18n.i( item.name, appName );
+                    label   =   bidx.i18n.i( item.name );
 
-                        listItem.push( [ label, item.count] );
-
-                        roleProfilecount = roleProfilecount + item.count;
-                    }
+                    listItem.push( [ label, item.count] );
                 }
             } );
 
-            /* No Profile Count */
-            labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
-            noRoleProfileCount  =   memberProfileCount - roleProfilecount;
-            if( noRoleProfileCount > 0)
-            {
-                listItem.push( [ labelNoCount, noRoleProfileCount] );
-            }
 
             data.addRows( listItem );
-
-            _showView("approx", true );
         }
 
 
         // Set chart option
-
+        var options     =   {
+                                title   :   bidx.i18n.i('userRolesTitle', appName)
+                            };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('role_pie_chart'));
 
-        chart.draw(data, PIECHARTOPTIONS);
+        chart.draw(data, options);
     }
 
     function _createRegionsMap( response, type )
@@ -156,10 +129,8 @@
         ,   listItem        =   []
         ,   facetList       =   {}
         ,   data
-        ,   countryLabel    =   bidx.i18n.i('facet_country',appName)
-        ,   growthLabel     =   bidx.i18n.i('chart_growth', appName)
-        ,   countryNameLabel =  bidx.i18n.i('country_lbl_name', appName)
-        ,   labelName
+        ,   countryLabel    =   bidx.i18n.i('facet_country')
+        ,   growthLabel     =   bidx.i18n.i('chart_growth')
         ;
 
         if ( response.facets && response.facets.length )
@@ -167,13 +138,13 @@
             facets      =   response.facets;
             facetList   =   _.findWhere( facets, { name :   type });
 
-            listItem.push( [countryLabel, countryNameLabel, growthLabel ] );
+            listItem.push( [countryLabel, growthLabel ] );
 
             $.each( facetList.facetValues, function( idx, item )
             {
-                labelName   =   bidx.data.i( item.name, "country" );
-                label       =   item.name;
-                listItem.push( [ label, labelName, item.count] );
+                label   =   bidx.data.i( item.name, "country" );
+
+                listItem.push( [ label, item.count] );
             } );
 
             data = google.visualization.arrayToDataTable( listItem );
@@ -181,13 +152,9 @@
 
 
         // Set chart option
-
         options     =   {
-                            title   :         bidx.i18n.i('regionTitle', appName)
-                        ,   sizeAxis:         { minValue: 0, maxValue: 100 }
-                        ,   magnifyingGlass:  {enable: true, zoomFactor: 5.0}
-                        ,   displayMode:      'markers'
-                        ,   colorAxis:        {colors: ['#e7711c', '#4374e0']} // orange to blue
+                            title   :       bidx.i18n.i('regionTitle', appName)
+                       // ,   colorAxis:      {colors: ['#e7711c', '#4374e0']} // orange to blue
                         };
 
         chart = new google.visualization.GeoChart(document.getElementById('country_geo_chart'));
@@ -216,15 +183,13 @@
         ,   chart
         ,   newUser
         ,   login
-        ,   dateSplit
-        ,   formattedDate
         ,   $container      =   document.getElementById('user_line_chart')
         ,   graphData       =   []
         ,   eventRegister   =   bidx.utils.getValue(params.responseRegister,   'events')
         ,   eventLogin      =   bidx.utils.getValue(params.responseLogin,      'events')
         ,   keysRegister    =   _.keys( eventRegister ) // Keys of registrations ex 2014-02-02
         ,   keysLogin       =   _.keys( eventLogin )     // Keys of Login ex 2014-02-02
-        ,   alldateKeys     =   _.union( keysRegister, keysLogin).reverse() // Common keys for iteration
+        ,   alldateKeys     =   _.union( keysRegister, keysLogin) // Common keys for iteration
         ,   options         =   {
                                     title: 'Weekly users & logins'
                                 }
@@ -233,20 +198,18 @@
         if ( alldateKeys.length )
         {
             graphData.push( ['Day', 'New Users', 'Logins'] );
-
+            bidx.utils.log('eventLogin',eventLogin);
             $.each( alldateKeys, function( idx, date )
             {
                 // newUser    =   ($.isEmptyObject(eventRegister[date])) ? eventRegister[date] : 0;
                 // login      =   ($.isEmptyObject(eventLogin[date])) ? eventLogin[date] : 0;
 
-                 newUser        =   bidx.utils.getValue(eventRegister, date);
-                 login          =   bidx.utils.getValue(eventLogin, date);
-                 login          =   ( login ) ? login : 0;
-                 newUser        =   ( newUser ) ? newUser : 0;
-                 dateSplit      = date.split("-");
-                 formattedDate  = dateSplit.reverse().join('-');
+                 newUser    =   bidx.utils.getValue(eventRegister, date);
+                 login      =   bidx.utils.getValue(eventLogin, date);
+                 login      =   ( login ) ? login : 0;
+                 newUser    =   ( newUser ) ? newUser : 0;
 
-                 graphData.push( [formattedDate, newUser, login] );
+                 graphData.push( [date, newUser, login] );
             } );
 
             data = google.visualization.arrayToDataTable(graphData);
@@ -283,14 +246,15 @@
         ,   options     =   {
                                 title: 'Weekly performance'
                             ,   vAxis: {title: 'Day',  titleTextStyle: {color: 'red'}}
-                            ,   width: 600
-                            ,   height: 400
+                            , width: 600,
+                            height: 400
+
                             }
         ;
 
         graphData.push( ['Day', 'New Business Summaries'] );
 
-        if(!$.isEmptyObject(eventData) )
+        if(!$.isEmptyObject(eventData) || true)
         {
 
             $.each( eventData, function( date, count )
@@ -298,7 +262,18 @@
                 graphData.push( [date, count] );
             });
 
-            data    = google.visualization.arrayToDataTable(graphData);
+            //data    = google.visualization.arrayToDataTable(graphData);
+            data = google.visualization.arrayToDataTable([
+          ['Day', 'New Business Summaries'],
+          ['Day 1',  100    ],
+          ['Day 2',  117    ],
+          ['Day 3',  660    ],
+          ['Day 4',  103    ],
+          ['Day 5',  103    ],
+          ['Day 6',  103    ],
+          ['Day 7',  103    ]
+
+        ]);
 
             chart   = new google.visualization.BarChart($container);
 

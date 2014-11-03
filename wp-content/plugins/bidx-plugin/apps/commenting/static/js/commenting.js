@@ -222,20 +222,20 @@
 
         $.each( $panelFeedback, function( index, panel )
         {
-            var $panelHeading  = $(panel).find( ".panel-heading" ).first()
-            ,   $panelShowView = $(panel).find( ".panel-body .viewShow" )
-            ,   panelScope     = "bs" + $panelHeading.find( "a" ).attr("href").split("-")[1]
+            var $tabPane  = $(panel).first()
+            ,   $showView = $tabPane.find( ".viewShow" )
+            ,   tabScope  = "bs" + $tabPane.find( ".feedback-tabs" ).attr("id").split("-")[1]
             ;
 
-            $panelHeading.append( $btnFeedbackSnippet.clone() );
+            $tabPane.append( $btnFeedbackSnippet.clone() );
 
-            $panelShowView
+            $showView
                 .wrapInner( $divCol12.clone() )
                 .wrapInner( $divRow.clone() )
                 .children().first()
                 .append( $feedbackBoxSnippet.clone() );
 
-            $panelShowView.find( ".feedback-box" ).attr( "data-scope", panelScope );
+            $showView.find( ".feedback-box" ).attr( "data-scope", tabScope );
         });
 
         // Run this only if there are feedback panels created
