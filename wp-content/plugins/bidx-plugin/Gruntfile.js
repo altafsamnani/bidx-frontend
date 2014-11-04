@@ -22,6 +22,15 @@ module.exports = function(grunt) {
           "static/css/<%= pkg.name %>.css": "static/less/bidx.less"
         }
       }
+    , admin: {
+        options: {
+          paths: ["admin/*/static/less/*.less"],
+          cleancss: true,
+        },
+        files: {
+          "static/css/<%= pkg.name %>-admin.css": "static/less/bidx-admin.less"
+        }
+      }
     },
 
     watch: {

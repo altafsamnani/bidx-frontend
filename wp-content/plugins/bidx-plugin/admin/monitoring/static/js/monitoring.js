@@ -126,7 +126,10 @@
             /* No Profile Count */
             labelNoCount        =   bidx.i18n.i( 'memberOnlyLbl', appName );
             noRoleProfileCount  =   memberProfileCount - roleProfilecount;
-            listItem.push( [ labelNoCount, noRoleProfileCount] );
+            if( noRoleProfileCount > 0)
+            {
+                listItem.push( [ labelNoCount, noRoleProfileCount] );
+            }
 
             data.addRows( listItem );
 
@@ -155,6 +158,8 @@
         ,   data
         ,   countryLabel    =   bidx.i18n.i('facet_country',appName)
         ,   growthLabel     =   bidx.i18n.i('chart_growth', appName)
+        ,   countryNameLabel =  bidx.i18n.i('country_lbl_name', appName)
+        ,   labelName
         ;
 
         if ( response.facets && response.facets.length )
@@ -162,13 +167,13 @@
             facets      =   response.facets;
             facetList   =   _.findWhere( facets, { name :   type });
 
-            listItem.push( [countryLabel, growthLabel ] );
+            listItem.push( [countryLabel, countryNameLabel, growthLabel ] );
 
             $.each( facetList.facetValues, function( idx, item )
             {
-                label   =   bidx.data.i( item.name, "country" );
-
-                listItem.push( [ label, item.count] );
+                labelName   =   bidx.data.i( item.name, "country" );
+                label       =   item.name;
+                listItem.push( [ label, labelName, item.count] );
             } );
 
             data = google.visualization.arrayToDataTable( listItem );
@@ -176,9 +181,13 @@
 
 
         // Set chart option
+
         options     =   {
-                            title   :       bidx.i18n.i('regionTitle', appName)
-                       // ,   colorAxis:      {colors: ['#e7711c', '#4374e0']} // orange to blue
+                            title   :         bidx.i18n.i('regionTitle', appName)
+                        ,   sizeAxis:         { minValue: 0, maxValue: 100 }
+                        ,   magnifyingGlass:  {enable: true, zoomFactor: 5.0}
+                        ,   displayMode:      'markers'
+                        ,   colorAxis:        {colors: ['#e7711c', '#4374e0']} // orange to blue
                         };
 
         chart = new google.visualization.GeoChart(document.getElementById('country_geo_chart'));

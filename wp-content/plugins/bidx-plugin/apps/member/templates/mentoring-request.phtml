@@ -1,5 +1,5 @@
 <?php
-    $isLoggedinMemberIsEntrpreneur = isset( $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile : null;
+    $isLoggedinMemberIsInvestor = isset( $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile ) ? $this -> sessionData -> data -> wp -> entities -> bidxInvestorProfile : null;
 
 ?>
 
@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><?php _e('Which expertise do you need?','bidxplugin'); ?></label>
-                                         <select class= "chosen-industry" name="mentoringIndustry" multiple></select>
+                                         <select class= "chosen-expertise" name="mentoringExpertise" multiple></select>
                                     </div>
                                     <div class="form-group">
                                         <label><?php _e('For which of your businesses?','bidxplugin'); ?></label>

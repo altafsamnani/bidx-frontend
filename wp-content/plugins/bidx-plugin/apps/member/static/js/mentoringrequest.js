@@ -15,7 +15,7 @@
     ,   $viewsMyprofile                     = $elementMyprofile.find( ".view" )
 
 
-    ,   $focusIndustry                      = $element.find( "[name='mentoringIndustry']" )
+    ,   $mentoringExpertise                 = $element.find( "[name='mentoringExpertise']" )
     ,   $businessSummary                    = $element.find( "[name='businessSummary']" )
     ,   $requestMentoringBtn                = $elementMyprofile.find( '.btn-mentoring' )
 
@@ -202,14 +202,14 @@
         } );
 
         // Populate the selects
-        if( $focusIndustry )
+        if( $mentoringExpertise )
         {
-            $focusIndustry.bidx_chosen(
+            $mentoringExpertise.bidx_chosen(
             {
-                dataKey:            "industry"
+                dataKey:            "mentorExpertise"
             });
 
-            $focusIndustry.trigger( "chosen:updated" );
+            $mentoringExpertise.trigger( "chosen:updated" );
         }
        /*******
         Add Dropdown Options for Recipients , Prepare dropdown

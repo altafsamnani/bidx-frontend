@@ -10,6 +10,8 @@
     <Item value="Trash">Trash</Item>
     <Item value="Fwd">Fwd</Item>
     <Item value="Re">Re</Item>
+    <Item value="From">From</Item>
+    <Item value="To">To</Item>
     <Item value="emailNew">new</Item>
     <Item value="groupAdmin">Group admin</Item>
     <Item value="groupEntrepreneurs">All Entrepreneurs</Item>
@@ -22,4 +24,5 @@
     <Item value="alertDeleteMsg">You are about to delete this/these message(s). Are you sure?</Item>
     <Item value="alertDiscardMsg">You are about to discard this message. Are you sure?</Item>
     <Item value="errorNoSelection">You have not selected any message, please click on checkbox to make selection</Item>
+    <Item value="trashedFrom">Deleted from</Item>
 </I18N>

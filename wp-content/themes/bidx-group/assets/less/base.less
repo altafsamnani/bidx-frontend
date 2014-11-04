@@ -240,6 +240,17 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+#join .btn .fa,
+#auth .btn .fa
+{
+    .opacity(.4);
+    position: absolute;
+    top: 50%;
+    left: floor(@font-size-base * 1.8);
+    margin-top: -0.5em;
+    font-size: floor(@font-size-base * 2.2);
+}
+
 .iconbar
 {
     font-family: @lato;
@@ -347,6 +358,94 @@ h1, h2, h3, h4, h5, h6,
         margin: auto;
         min-height: 100%;
         min-width: 100%;
+    }
+}
+
+// Language Switcher
+.language-switcher
+{
+    .widget
+    {
+        margin-bottom: 0;
+    }
+    #lang_sel_click
+    {
+        height: auto;
+        a
+        {
+            padding: floor(@padding-base-vertical * 1.8) @padding-base-horizontal floor(@padding-base-vertical * 1.8) floor(@padding-base-horizontal * 2.0);
+            height: auto;
+            display: block;
+            font-size: @font-size-base;
+            line-height: ceil(@font-size-base * 1.4);
+            color: @white;
+            border: none;
+            font-family: @lato;
+            &.lang_sel_sel
+            {
+                background: none;
+                color: @white;
+                &:after
+                {
+                    color: @white;
+                    content: "\f0d7";
+                    font-family: FontAwesome;
+                    position: absolute;
+                    bottom: 9px;
+                    left: 10px;
+                }
+                &:hover
+                {
+                    background-color: desaturate(darken(@brand-primary, 25%), 25%);
+                }
+            }
+        }
+        ul ul
+        {
+            top: 40px;
+            right: 0;
+            left: auto;
+            width: auto;
+            height: auto;
+            border: none;
+            background-color: @bg-primary-dark;
+            margin: 0;
+            min-width: 180px;
+            padding: floor(@padding-base-vertical * 1.8) @padding-base-horizontal floor(@padding-base-vertical * 1.8) floor(@padding-base-horizontal * 2.0);
+            .border-radius(0, 4px, 4px, 0);
+            li
+            {
+                padding: 0 3px 3px;
+                position: relative;
+                &:first-child
+                {
+                    padding-top: 3px;
+                }
+            }
+            a
+            {
+                background-color: desaturate(darken(@brand-primary, 25%), 25%);
+                color: @white;
+                border-width: 0;
+                white-space: nowrap;
+                padding: 3px 20px;
+                line-height: 1.42857143;
+                &:hover
+                {
+                    background-color: @white;
+                    color: @text-copy;
+                }
+            }
+        }
+        ul:hover a
+        {
+            background-color: desaturate(darken(@brand-primary, 25%), 25%);
+        }
+        li
+        {
+            width: auto;
+            float: none;
+        }
     }
 }
 

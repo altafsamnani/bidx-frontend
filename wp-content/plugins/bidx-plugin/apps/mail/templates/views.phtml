@@ -53,7 +53,8 @@
                             <strong class="title titleInbox"><?php _e('Inbox','bidxplugin')?></strong>
                             <strong class="title titleSent"><?php _e('Sent','bidxplugin')?></strong>
                             <strong class="title titleTrash"><?php _e('Trash','bidxplugin')?></strong>
-                        </div>
+                            <strong class="title titleCustom"></strong>
+                            </div>
                         <div class="panel-body">
 
                         <!-- TOOLBAR -->
@@ -83,6 +84,7 @@
                                     </div>
 
                                     <!-- trash only buttons -->
+                                    <a class="btn btn-small btn-primary bidx-btn-undelete" href="#"><?php _e('Undelete','bidxplugin')?></a>
                                     <a class="btn btn-small btn-primary bidx-btn-empty-trash-confirm" href="/mail/#mail/empty-trash-confirm"><?php _e('Empty trash','bidxplugin')?></a>
                             </div>
                             <div class="pull-right">
@@ -120,6 +122,7 @@
                                     <a class="btn btn-small btn-primary btn-reply" href="#" data-href="/mail/#mail/%state%/action=reply&id=%id%"><?php _e('Reply','bidxplugin')?></a>
                                     <a class="btn btn-small btn-primary btn-forward" href="#" data-href="/mail/#mail/%state%/action=forward&id=%id%"><?php _e('Forward','bidxplugin')?></a>
                                     <a class="btn btn-small btn-primary bidx-btn-delete" href="#"><?php _e('Delete','bidxplugin')?></a>
+                                    <a class="btn btn-small btn-primary bidx-btn-undelete" href="#"><?php _e('Undelete','bidxplugin')?></a>
                                     <div class="btn-group btngroup-move-to-folder">
                                         <a class="btn btn-small btn-primary btn-move-to-folder dropdown-toggle bidx-btn-move-to-folder" data-toggle="dropdown" href="#">
                                             <?php _e('Move message to folder','bidxplugin')?>
@@ -384,7 +387,7 @@
     <div class="media-body">
         <div class="row">
             <div class="col-sm-9"><h6 class="media-heading"><a href="%readEmailHref%" class="">%senderReceiverName% %emailNew%</a></h6></div>
-            <div class="col-sm-3">
+            <div class="col-sm-3" title="%trashedFrom%">
                 %dateSent%
                 <br>
                 %timeSent%

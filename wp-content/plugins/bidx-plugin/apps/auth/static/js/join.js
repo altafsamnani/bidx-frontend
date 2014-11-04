@@ -4,6 +4,7 @@
 
     var $element                     = $( "#join" )
     ,   $views                       = $element.find( ".view" )
+    ,   $frmRegisterMember           = $element.find( ".viewRegister form" )
     ,   $frmBecomeInvestor           = $element.find( ".viewBecomeInvestor form" )
     ,   $frmBecomeMentor             = $element.find( ".viewBecomeMentor form" )
     ,   $frmBecomeEntrepreneur       = $element.find( ".viewBecomeEntrepreneur form" )
@@ -22,6 +23,13 @@
     ,   hasInvestorProfile          = authenticated ? bidx.utils.getValue ( bidxConfig, "session.wp.entities.bidxInvestorProfile" )     : false
     ,   hasMentorProfile            = authenticated ? bidx.utils.getValue ( bidxConfig, "session.wp.entities.bidxMentorProfile" )       : false
     ,   hasProfile                  = ( hasEntrepreneurProfile || hasInvestorProfile || hasMentorProfile ) ? true : false
+
+    // Register
+    ,   $memberCountry              = $frmRegisterMember.find( "[name='personalDetails.address.country']" )
+    ,   $formfields                 = $frmRegisterMember.find( ":input" )
+    ,   $addressCountry             = $formfields.filter( "[name='personalDetails.address.country']" )
+    ,   $btnRegister                = $frmRegisterMember.find( ":submit" )
+    ,   submitBtnLabel
 
     // Investor Form elements
     ,   $investorType               = $frmBecomeInvestor.find( "[name='investorType']" )
@@ -131,28 +139,6 @@
         ]
     };
 
-
-// PM-187: Create call should set the periodStartDate to the first januari of the year the businessummary is created
-//
-// if ( state === "create" )
-// {
-//     businessSummary.periodStartDate = bidx.common.getNow().getFullYear() + "-01-01";
-// }
-
-// financingNeeded
-// ALSO check financialSummaries, it should create one for the current year with every field filled with 0
-// EXAMPLE
-// financialSummaries: Object
-//     2014: Object
-//         financeNeeded: 26000
-//         numberOfEmployees: 0
-//         operationalCosts: 0
-//         salesRevenue: 0
-//         totalIncome: 0
-// financingNeeded: "26000"
-
-
-
     // Setup function for doing work that should only be done once
     //
     function _oneTimeSetup()
@@ -225,6 +211,12 @@
         $countryOperation.bidx_chosen(
         {
             dataKey:            "country"
+        });
+
+        $memberCountry.bidx_chosen(
+        {
+            dataKey:            "country"
+        ,   emptyValue:         bidx.i18n.i( "selectSingleOption", appName )
         });
 
         $yearSalesStarted.bidx_chosen();
@@ -305,6 +297,13 @@
 
             $frmBecomeMentor.submit();
         } );
+
+        $btnRegister.click( function( e )
+        {
+            role = "member";
+
+            $frmRegisterMember.submit();
+        } );
     
         // Show Role Form
         $registerRoleBtns.click( function( e )
@@ -328,6 +327,12 @@
 
         switch ( role )
         {
+            case "member":
+                $form = $frmRegisterMember;
+                fields = fields._member;
+                bidxProfile = "bidxMemberProfile";
+            break;
+
             case "entrepreneur":
                 $form = $frmBecomeEntrepreneur;
                 fields = fields._entrepreneur;
@@ -400,6 +405,26 @@
             } );
 
         }
+        else if ( role === "member" )
+        {
+            var memberProfile =
+            {
+                emailAddress:          $formfields.filter( "[name='username']" ).val()
+            ,   personalDetails:
+                {
+                    firstName:         $formfields.filter( "[name='personalDetails.firstName']" ).val()
+                ,   lastName:          $formfields.filter( "[name='personalDetails.lastName']" ).val()
+                ,   address:
+                    [
+                        {
+                            country:   $addressCountry.val()
+                        }
+                    ]
+                }
+            };
+
+            bidx.utils.setValue( member, bidxProfile, memberProfile );
+        }
         else
         {
             $.each( fields, function( i, f )
@@ -429,7 +454,64 @@
         // Reset any state
         //
         $prefComm.find( "input[type='text']" ).hide();
-        
+
+        // Validate Member Register form
+        //
+        $frmRegisterMember.validate(
+        {
+            ignore: ""
+        ,   debug:  false
+        ,   rules:
+            {
+                "personalDetails.firstName":
+                {
+                    required:               true
+                }
+            ,   "personalDetails.lastName":
+                {
+                    required:               true
+                }
+            ,   "username":
+                {
+                    required:               true
+                ,   email:                  true
+                ,   remoteBidxApi:
+                    {
+                        url:                "validateUsername.fetch"
+                    ,   paramKey:           "username"
+
+                    }
+                }
+            ,   "personalDetails.address.country":
+                {
+                    required:               true
+                }
+
+            }
+        ,   messages:
+            {
+                // Anything that is app specific, the general validations should have been set
+                // in common.js already
+            }
+        ,   submitHandler:  function()
+            {
+                if ( $btnRegister.hasClass( "disabled" ) )
+                {
+                    bidx.utils.log("button disabled");
+                    return;
+                }
+
+                // set button to disabled and set Wait text. We store the current label so we can reset it when an error occurs
+                //
+
+                submitBtnLabel = $btnRegister.text();
+                $btnRegister.i18nText("btnPleaseWait");
+
+                _handleFormSubmition( role );
+            }
+        } );
+
+      
         // Validate Investor form
         //
         $frmBecomeInvestor.validate(
@@ -680,6 +762,10 @@
 
         switch ( role )
         {
+            case "member":
+                $btnSave = $btnRegister;
+            break;
+
             case "entrepreneur":
                 $btnSave = $btnSaveEntrepreneur;
             break;
@@ -753,7 +839,7 @@
 
         bidxAPIParams   =
         {
-            data:           (role === "entrepreneur") ? businessSummary : member[bidxProfile]
+            data:           ( role === "entrepreneur" ) ? businessSummary : member[bidxProfile]
         ,   groupDomain:    bidx.common.groupDomain
         ,   success:        function( response )
             {
@@ -770,9 +856,14 @@
                 // This is used because it handles the redirection to front page
                 // For entrepreneur the group joining is done in the special callback .call function
                 //
-                if ( role !== "entrepreneur" )
+                if ( role === "investor" || role === "mentor" )
                 {
                     $btnJoinGroup.click();
+                }
+                else if ( role === "member" )
+                {
+                    $frmRegisterMember.hide();
+                    $element.find( ".registerSuccess" ).removeClass( "hide" );
                 }
                 else
                 {
@@ -813,9 +904,13 @@
         // Creating an mentor is not possible via the member API, therefore the
         // raw Entity API is used for the creation of the entrepreneur
         //
-        if ( role === "mentor" || role === "investor")
+        if ( role === "mentor" || role === "investor" )
         {
             bidxAPIService          = "entity.save";
+        }
+        else if ( role === "member" )
+        {
+            bidxAPIService          = "member.save";
         }
         else
         {
@@ -897,6 +992,10 @@
     {
         switch ( options.state )
         {
+            case "register":
+                _showView( options.state );
+            break;
+
             case "auth":
             case "role":
             case "portal":

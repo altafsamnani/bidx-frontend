@@ -23,6 +23,8 @@
      <!-- Chart Label -->
     <Item value="chart_growth">Growth</Item>
     <Item value="memberOnlyLbl">Member only</Item>
+    <Item value="country_lbl_name">Name</Item>
+
 
 
 </I18N>
