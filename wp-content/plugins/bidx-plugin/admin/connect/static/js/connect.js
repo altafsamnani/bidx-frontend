@@ -1393,11 +1393,8 @@
             $btnComposeSubmit.removeClass( "disabled" );
             $btnComposeCancel.removeClass( "disabled" );
             $frmCompose.find( "[name=content]" ).val('');
-            /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
-            //window.parent.tinymce.get('connect_editor_id').setContent('');
 
             $frmCompose.validate().resetForm();
-
 
         }
 
@@ -1416,6 +1413,8 @@
                 ,   lbl
                 ,   subject
                 ,   mailbox
+                ,   isSenderId
+                ,   isGroupId
                 ;
 
                 if( state.search( /(^mbx-)/ ) === 0 )
@@ -1435,6 +1434,7 @@
                         //
                         if ( mailbox === "sent" )
                         {
+                            // This is actually kind of a Reply All
                             $.each( message.recipients, function( idx, item )
                             {
                                 recipients.push( item.id.toString() );
@@ -1442,10 +1442,17 @@
                         }
                         else
                         {
-                            recipients.push( message.sender.id.toString() );
+                            isSenderId = message.sender.id;
+                            isGroupId  = message.sender.groupId;
+                            if( isSenderId )
+                            {
+                                recipients.push( message.sender.id.toString() );
+
+                            } else if( isGroupId )
+                            {
+                                bidx.utils.log( "[connect] group admins cannot send message to group" );
+                            }
                         }
-
-
 
                         $contactsDropdown.val( recipients );
                         $contactsDropdown.bidx_chosen();
@@ -1460,11 +1467,9 @@
                                 .replace( "%date%", bidx.utils.parseTimestampToDateTime( message.dateSent, "date" ) )
                                 .replace( "%time%", bidx.utils.parseTimestampToDateTime( message.dateSent, "time" ) )
                                 .replace( "%sender%", message.sender.displayName );
-                        content = "<br><br>" + lbl + "<br>" + content;
+                        content = "\n\n" + lbl + "\n" + content;
 
                         $frmCompose.find( "[name=content]" ).val( content );
-                        /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
-                        window.parent.tinymce.get('connect_editor_id').setContent( content );
                         $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
 
                     break;
@@ -1479,11 +1484,9 @@
                         //
                         lbl     = bidx.i18n.i( "forwardContentHeader", appName );
                         lbl     = "----------" + lbl + "----------";
-                        content = "<br><br>" + lbl + "<br>" + content;
+                        content = "\n\n" + lbl + "\n" + content;
 
                         $frmCompose.find( "[name=content]" ).val( content );
-                        /* http://stackoverflow.com/questions/8828418/manipulating-tinymce-content-with-jquery  */
-                        window.parent.tinymce.get('connect_editor_id').setContent( content );
                         $frmCompose.find( "[name=content]" ).trigger("focus"); // Note: doesnt seem to work right now
 
                     break;

@@ -1469,6 +1469,7 @@
                         bidx.utils.log('message',message);
                         if ( mailbox === "sent" )
                         {
+                            // This is actually kind of a Reply All
                             $.each( message.recipients, function( idx, item )
                             {
                                 bidx.utils.log('item',item.id);
@@ -1485,7 +1486,6 @@
 
                             } else if( isGroupId )
                             {
-                                bidx.utils.log('dataaaaaaaa',$contactsDropdown.find("option[data-groupid]"));
                                 recipients.push( groupownerDrpDownDefaultVal );
                             }
                         }
