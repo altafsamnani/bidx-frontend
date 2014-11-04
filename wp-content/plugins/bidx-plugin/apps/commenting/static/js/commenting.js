@@ -41,7 +41,7 @@
             ,   $feedbackBox    = $feedbackPanel.find(".feedback-box")
             ,   $feedbackScope  = $feedbackPanel.find(".feedback-scope")
             ,   $attachmentItem = $feedbackScope.find(".attachmentItem")
-            ,   $halfs          = $feedbackPanel.find(".row .col-sm-6")
+            ,   $halfs          = $feedbackPanel.find(".feedback-scope .row > div")
             ,   txt             = $feedbackBox.is( ":visible" ) ? bidx.i18n.i( "showFeedback" ) : bidx.i18n.i( "hideFeedback" )
             ;
 
