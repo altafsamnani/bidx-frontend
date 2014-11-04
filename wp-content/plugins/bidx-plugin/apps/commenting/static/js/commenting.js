@@ -41,6 +41,7 @@
             ,   $feedbackBox    = $feedbackPanel.find(".feedback-box")
             ,   $feedbackScope  = $feedbackPanel.find(".feedback-scope")
             ,   $attachmentItem = $feedbackScope.find(".attachmentItem")
+            ,   $halfs          = $feedbackPanel.find(".row .col-sm-6")
             ,   txt             = $feedbackBox.is( ":visible" ) ? bidx.i18n.i( "showFeedback" ) : bidx.i18n.i( "hideFeedback" )
             ;
 
@@ -48,13 +49,15 @@
             {
                 $feedbackBox.removeClass( "hide" );
                 $feedbackScope.removeClass( "col-sm-12" ).addClass( "col-sm-8 hidden-xs" );
-                $attachmentItem.removeClass( "col-md-4" ).addClass( "col-md-6" );
+                $attachmentItem.removeClass( "col-md-6" ).addClass( "col-md-12" );
+                $halfs.removeClass( "col-sm-6" ).addClass( "col-sm-12" );
             }
             else
             {
                 $feedbackBox.addClass( "hide" );
                 $feedbackScope.removeClass( "col-sm-8 hidden-xs" ).addClass( "col-sm-12" );
-                $attachmentItem.removeClass( "col-md-6" ).addClass( "col-md-4" );
+                $attachmentItem.removeClass( "col-md-12" ).addClass( "col-md-6" );
+                $halfs.removeClass( "col-sm-12" ).addClass( "col-sm-6" );
             }
 
             $el.find( "span" ).text( txt );
@@ -223,7 +226,7 @@
         $.each( $panelFeedback, function( index, panel )
         {
             var $tabPane  = $(panel).first()
-            ,   $showView = $tabPane.find( ".viewShow" )
+            ,   $showView = $tabPane.find( ".feedback-tabs" )
             ,   tabScope  = "bs" + $tabPane.find( ".feedback-tabs" ).attr("id").split("-")[1]
             ;
 
