@@ -106,10 +106,12 @@
 
                 case "deleteFeedback" :
 
-                    _handleNotificationMessages( target, "" );
+                    if( confirm( bidx.i18n.i( "deleteFeedbackConfirm" ) ) )
+                    {
+                        _handleNotificationMessages( target, "" );
 
-                    _destroyFeedbackPost( target.feedbackId, target );
-
+                        _destroyFeedbackPost( target.feedbackId, target );
+                    }
                     break;
 
                 case "editFeedback" :
@@ -160,6 +162,18 @@
                                         .append
                                         (
                                             $( "<div />", { "class": "feedback-notification-success-add alert alert-success hide", html: bidx.i18n.i( "successAddingMsgFeedback" ) } )
+                                            .append
+                                            (
+                                                 $( "<button />", { "class": "close", "type": "button" })
+                                                .append
+                                                (
+                                                    $( "<span />", { "aria-hidden": "true", html: "&times;" })
+                                                )
+                                            )
+                                        )
+                                        .append
+                                        (
+                                            $( "<div />", { "class": "feedback-notification-success-update alert alert-success hide", html: bidx.i18n.i( "successUpdatingMsgFeedback" ) } )
                                             .append
                                             (
                                                  $( "<button />", { "class": "close", "type": "button" })
@@ -324,9 +338,7 @@
     //
     function _unParseComment( comment )
     {
-        var $htmlParser = $( "<div/>", { "class": "feedback-temp-unparse-comment", html: comment } );
-
-        return $htmlParser.text().replace( /<br\s*[\/]?>/gi, "\n" );
+        return comment.replace( /<br\s*[\/]?>/gi, "\n" );
     }
 
     // Show the textarea to write a feedback
@@ -350,7 +362,7 @@
     //
     function _submitFeedbackPost( $elem )
     {
-        var toRemoveId
+        var toEditId
         ,   postData   = {
                              commentorId:     currentUserId
                          ,   comment:         $elem.message
@@ -358,14 +370,14 @@
                          }
         ;
 
-        toRemoveId = $elem.$feedbackBox.find( ".feedback-to-remove" ).length ? $elem.$feedbackBox.find( ".feedback-to-remove" ).data( "feedbackid" ) : false;
+        toEditId = $elem.$feedbackBox.find( ".feedback-to-edit" ).length ? $elem.$feedbackBox.find( ".feedback-to-edit" ).data( "feedbackid" ) : false;
 
         if ( $elem.message )
         {
             $elem.$btnSubmitFeedback.addClass( "disabled" );
             $elem.$textarea.attr( "disabled" , true);
 
-            _doPostFeedback( postData, $elem, toRemoveId );
+            _doPostFeedback( postData, $elem, toEditId );
         }
     }
 
@@ -380,7 +392,7 @@
             _doDestroyFeedback( postData, $elem );
     }
 
-    // Fake edit the post by copying a new instance in the textarea, creating new post in order to appear at the top and on success delete the one that has the class "feedback-to-remove"
+    // Edit the post by copying a new instance in the textarea, and edit the one that has the class "feedback-to-edit"
     //
     function _editFeedbackPost( target )
     {
@@ -393,9 +405,9 @@
 
         target.$feedbackBox.find( ".btn-edit-feedback" ).removeClass( "disabled" );
         target.$feedbackBox.find( ".btn-delete-feedback" ).removeClass( "disabled" );
-        target.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-remove" );
+        target.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-edit" );
 
-        target.$feedbackPost.addClass( "feedback-to-remove" );
+        target.$feedbackPost.addClass( "feedback-to-edit" );
         target.$btnDeleteFeedback.addClass( "disabled" );
         target.$btnEditFeedback.addClass( "disabled" );
     }
@@ -409,7 +421,7 @@
         $elem.$feedbackSubmitBox.addClass( "hide" );
         $elem.$feedbackBox.find( ".btn-edit-feedback" ).removeClass( "disabled" );
         $elem.$feedbackBox.find( ".btn-delete-feedback" ).removeClass( "disabled" );
-        $elem.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-remove" );
+        $elem.$feedbackBox.find( ".feedback-post" ).removeClass( "feedback-to-edit" );
         $elem.$btnAddFeedback.show();
     }
 
@@ -431,6 +443,12 @@
 
                         break;
 
+                    case "updated":
+
+                        $elem.$notiUpdated.removeClass( "hide" );
+
+                        break;
+
                     case "deleted" :
 
                         $elem.$notiDeleted.removeClass( "hide" );
@@ -448,9 +466,9 @@
 
     }
 
-    // actual sending of message to API || POST
+    // actual sending of message to API || POST or PUT
     //
-    function _doPostFeedback( postData, $elem, toRemoveId )
+    function _doPostFeedback( postData, $elem, toEditId )
     {
         if ( !postData.comment )
         {
@@ -458,41 +476,48 @@
         }
 
         bidx.api.call(
-            "feedback.create"
+            toEditId ? "feedback.mutate" : "feedback.create"
         ,   {
                 groupDomain:              bidx.common.groupDomain
             ,   id:                       entityId
-            ,   data:                     postData
+            ,   data:                     toEditId ? $.extend( {"feedbackId" : toEditId}, postData ) : postData
 
             ,   success: function( response )
                 {
                     bidx.utils.log( "[commenting] Comment sent", response );
 
-                    if ( toRemoveId )
+                    if( toEditId )
                     {
-                        _destroyFeedbackPost( toRemoveId, false );
+                        $('*[data-feedbackid="'+toEditId+'"]').find(".feedback-comment").html( _parseComment( response.data.comment ) );
+                        _handleNotificationMessages( $elem, "updated" );
                     }
-
-                    _createFeedbackPost( response.data );
-
-                    var $newAddedFeedback  = $( "[data-feedbackid="+ response.data.feedbackId +"]" )
-                    ,   $btnDeleteFeedback = $newAddedFeedback.find( ".btn-delete-feedback" )
-                    ,   $btnEditFeedback   = $newAddedFeedback.find( ".btn-edit-feedback" )
-                    ;
-
-                    $btnDeleteFeedback.on('click', function()
+                    else
                     {
-                        _destroyFeedbackPost( response.data.feedbackId, _getTargetedParams( this ) );
-                    });
+                        _createFeedbackPost( response.data );
 
-                    $btnEditFeedback.on('click', function()
-                    {
-                        _editFeedbackPost( _getTargetedParams( this ) );
-                    });
+                        var $newAddedFeedback  = $( "[data-feedbackid="+ response.data.feedbackId +"]" )
+                        ,   $btnDeleteFeedback = $newAddedFeedback.find( ".btn-delete-feedback" )
+                        ,   $btnEditFeedback   = $newAddedFeedback.find( ".btn-edit-feedback" )
+                        ;
+
+                        $btnDeleteFeedback.on('click', function()
+                        {
+                            if( confirm( bidx.i18n.i( "deleteFeedbackConfirm" ) ) )
+                            {
+                                _destroyFeedbackPost( response.data.feedbackId, _getTargetedParams( this ) );
+                            }
+                        });
+
+                        $btnEditFeedback.on('click', function()
+                        {
+                            _editFeedbackPost( _getTargetedParams( this ) );
+                        });
+
+                        _handleNotificationMessages( $elem, "added" );
+                    }
 
                     _resetFeedbackSubmitForm( $elem );
 
-                    _handleNotificationMessages( $elem, "added" );
                 }
 
             ,   error: function( jqXhr, textStatus )
@@ -652,6 +677,7 @@
         ,   $btnEditFeedback        = $feedbackPost.find( ".btn-edit-feedback" )
         ,   $notifications          = $feedbackBox.find( ".feedback-notifications" )
         ,   $notiAdded              = $notifications.find( ".feedback-notification-success-add" )
+        ,   $notiUpdated            = $notifications.find( ".feedback-notification-success-update" )
         ,   $notiDeleted            = $notifications.find( ".feedback-notification-success-delete" )
         ,   $notiError              = $notifications.find( ".feedback-notification-error" )
         ,   comment                 = $feedbackPost.find( ".feedback-comment" ).html()
@@ -680,6 +706,7 @@
         ,   $btnEditFeedback        : $btnEditFeedback
         ,   $notifications          : $notifications
         ,   $notiAdded              : $notiAdded
+        ,   $notiUpdated            : $notiUpdated
         ,   $notiDeleted            : $notiDeleted
         ,   $notiError              : $notiError
         ,   $element                : $elem
