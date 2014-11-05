@@ -63,7 +63,7 @@
     feedback.mutate = function( params )
     {
         var method  = "PUT"
-        ,   url     = baseUrl.replace( "%id%", params.entityId )
+        ,   url     = baseUrl.replace( "%id%", params.id )
         ;
 
         api._call(
