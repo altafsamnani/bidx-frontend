@@ -552,7 +552,7 @@
     function _showPublishingButtons( view, buttons )
     {
         var $view               = $views.filter( bidx.utils.getViewName( view ) )
-        ,   $publishingButtons  = $main.find( ".publishing-action" )
+        ,   $publishingButtons  = $view.find( ".publishing-action" )
         ;
 
         $publishingButtons.hide();
