@@ -423,7 +423,7 @@
             //
             $attachmentsContainer.reflowrower(
             {
-                itemsPerRow:        2
+                itemsPerRow:        3
             ,   itemClass:          "attachmentItem"
             } );
         }

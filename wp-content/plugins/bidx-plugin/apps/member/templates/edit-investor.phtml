@@ -20,24 +20,25 @@
     <div class="view viewEdit">
 
         <form id="frmeditInvestor">
+            <div class="row tabs-vertical">
 
+                <div class="col-sm-3 tabs-nav">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tabs-left">
+                        <li class="active"><a href="#tab-general-info" data-toggle="tab"><?php _e('General information','bidxplugin');?></a></li>
+                        <li><a href="#tab-investment-preferences" data-toggle="tab"><?php _e('Investment preferences','bidxplugin');?></a></li>
+                        <li><a href="#tab-investment-history" data-toggle="tab"><?php _e('Investment history','bidxplugin');?></a></li>
+                        <li><a href="#tab-investor-references" data-toggle="tab"><?php _e('References','bidxplugin');?></a></li>
+                        <li><a href="#tab-investor-documents" data-toggle="tab"><?php _e('Documents','bidxplugin');?></a></li>
+                    </ul>
+                </div>
 
-            <div id="investorProfileEdit">
+                <div class="col-sm-9 tabs-content">
+                    <div class="tab-content">
 
-                <!-- investorProfileGeneralInformation -->
-                <div class="panel panel-default panel-open">
-
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileGeneralInformation">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('General information','bidxplugin'); ?>
-                        </a>
-                    </div>
-
-                    <div id="investorProfileGeneralInformation" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <!-- accordion body -->
-
+                        <!-- investorProfileGeneralInformation -->
+                        <div class="tab-pane active" id="tab-general-info">
+                            
                             <blockquote class="alert-info">
                                 <?php _e('Tell visitors and members of the group how you see yourself as an investor. Give a brief description of your investment interests.', 'bidxplugin')?>
                             </blockquote>
@@ -128,22 +129,11 @@
                                 </div>
                             </div>
 
-                            <!-- \\ accordion body -->
                         </div>
-                    </div>
-                </div>
 
-                <!-- investorProfileInvestmentPreferences -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileInvestmentPreferences">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('Investment preferences','bidxplugin'); ?>
-                        </a>
-                    </div>
-                    <div id="investorProfileInvestmentPreferences" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <!-- accordion body -->
+                        <!-- investorProfileInvestmentPreferences -->
+                        <div class="tab-pane" id="tab-investment-preferences">
+                            
                             <blockquote class="alert-info">
                                 <?php _e('Use this section to define your investment preferences, such as countries, products or industries that you would like to invest in. This information will be used to match your profile to businesses that fit these criteria.', 'bidxplugin')?>
                             </blockquote>
@@ -153,12 +143,6 @@
                             </div>
 
                             <div class="row">
-                                <!-- <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label><?php _e('Industry','bidxplugin'); ?></label>
-                                        <select name="focusIndustry" multiple></select>
-                                    </div>
-                                </div>-->
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label><?php _e('Language(s) of operation','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
@@ -237,14 +221,9 @@
                                             <input type="radio" value="city" id="radio-focusLocationTypeCity" name="focusLocationType" data-toggle="radio" />
                                             <label for="radio-focusLocationTypeCity"><span></span><?php _e('City / Cities','bidxplugin'); ?></label>
                                         </div>
-<!--                                         <div class="radio">
-                                            <input type="radio" value="reach" id="radio-focusLocationTypeReach" name="focusLocationType" data-toggle="radio" />
-                                            <label for="radio-focusLocationTypeReach"><span></span><?php _e('Region','bidxplugin'); ?></label>
-                                        </div>
- -->                                    </div>
-
-
+                                    </div>
                                 </div>
+
                                 <div class="col-sm-6">
                                     <div class="form-group toggle toggle-focusLocationType toggle-focusLocationType-country">
                                         <label><?php _e('Country','bidxplugin'); ?></label>
@@ -262,15 +241,14 @@
                                         <label><?php _e('Region','bidxplugin'); ?></label>
                                         <input type="text" class="form-control" name="focusReach" data-type="location" />
                                     </div>
-
                                 </div>
+
                             </div>
                             <hr>
 
                             <h4><?php _e('Investment size','bidxplugin'); ?></h4>
 
                             <div class="row">
-
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label><?php _e('Maximum investment','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
@@ -301,21 +279,11 @@
                                 </div>
                             </div>
 
-                            <!-- \\ accordion body -->
                         </div>
-                    </div>
-                </div>
-                <!-- investorProfileInvestmentHistory -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileInvestmentHistory">
-                            <span class="fa fa-chevron-right accordion-state-icon"></span>
-                            <?php _e('Investment history','bidxplugin'); ?>
-                        </a>
-                    </div>
-                    <div id="investorProfileInvestmentHistory" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <!-- accordion body -->
+
+                        <!-- investorProfileInvestmentHistory -->
+                        <div class="tab-pane" id="tab-investment-history">
+                            
                             <blockquote class="alert-info">
                                 <?php _e('Entrepreneurs are interested in the investments you have made in the past. Give a few details about investments made in the last 12 months or earlier (if  any).', 'bidxplugin')?>
                             </blockquote>
@@ -362,22 +330,11 @@
 
                             <div class="previousInvestmentContainer"></div>
 
-                            <!-- \\ accordion body -->
                         </div>
-                    </div>
-                </div>
 
-                <!-- investorProfileReferences -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileReferences">
-                           <span class="fa fa-chevron-right accordion-state-icon"></span>
-                           <?php _e('References','bidxplugin'); ?>
-                        </a>
-                    </div>
-                    <div id="investorProfileReferences" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <!-- accordion body -->
+                        <!-- investorProfileReferences -->
+                        <div class="tab-pane" id="tab-investor-references">
+                            
                             <blockquote class="alert-info">
                                 <?php _e('References from other entrepreneurs or investment partners are important when getting in touch with another member of the platform. Fill in details of those you have worked with  and are willing recommend you.', 'bidxplugin')?>
                             </blockquote>
@@ -389,17 +346,9 @@
                             <div class="referencesContainer"></div>
 
                         </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a class="btn-block" data-toggle="collapse" data-parent="#investorProfileEdit" href="#investorProfileDocuments">
-                           <span class="fa fa-chevron-right accordion-state-icon"></span>
-                           <?php _e('Documents','bidxplugin'); ?>
-                        </a>
-                    </div>
-                    <div id="investorProfileDocuments" class="panel-collapse collapse">
-                        <div class="panel-body attachmentsControl">
+
+                        <div class="tab-pane attachmentsControl" id="tab-investor-documents">
+                            
                             <div class="attachmentsContainer"></div>
 
                             <button data-toggle="modal" class="btn btn-primary js-btn-add-attachments"><span class="fa fa-plus"></span> <?php _e('Add documents','bidxplugin');?></button>
@@ -412,11 +361,11 @@
                                             <h3><?php _e('Check the files you want to attach to your investor profile', 'bidxplugin' ); ?></h3>
                                         </div>
                                         <div class="modal-body">
-<?php
+        <?php
                                             // Media app will only be inserted once, this is by design!
                                             //
                                             echo do_shortcode( '[bidx app="media"]' );
-?>
+        ?>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary btnSelectFile"><?php _e( 'Select file', 'bidxplugin' ); ?></button>
@@ -427,13 +376,10 @@
                             </div>
 
                         </div>
+
                     </div>
-
                 </div>
-
-                <!-- \\ accordion -->
-            </div>
-
+            </div> <!-- tabs-vertical -->
         </form>
     </div>
 
@@ -533,7 +479,7 @@
         </div>
 
         <!-- Attachment -->
-        <div class="attachmentItem col-md-4">
+        <div class="attachmentItem col-md-6">
             <div class="media well">
                 <div class="pull-left icons-rounded attachmentMissing"><i class="fa fa-question-circle text-primary-light"></i></div>
                 <a class="pull-left documentLink img-cropper" href="#">
