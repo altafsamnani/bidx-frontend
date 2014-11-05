@@ -15,20 +15,24 @@
     <div class="view viewEdit">
 
         <form id="frmeditMember">
-        <div class="row">
-            <div class="col-sm-12">
+        <div class="row tabs-vertical">
 
+            <div class="col-sm-3 tabs-nav">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tabs-left">
+                    <li class="active"><a href="#tab-personal-details" data-toggle="tab"><?php _e('Personal details','bidxplugin');?></a></li>
+                    <li><a href="#tab-language" data-toggle="tab"><?php _e('Language','bidxplugin');?></a></li>
+                    <li><a href="#tab-address" data-toggle="tab"><?php _e('Current address','bidxplugin');?></a></li>
+                    <li><a href="#tab-contact-details" data-toggle="tab"><?php _e('Contact details','bidxplugin');?></a></li>
+                    <li><a href="#tab-documents" data-toggle="tab"><?php _e('Documents','bidxplugin');?></a></li>
+                </ul>
+            </div>
 
-            <div id="memberProfileEdit">
-            <div class="panel panel-default panel-open">
-                <div class="panel-heading">
-                    <a class="btn-block" data-toggle="collapse" data-parent="#memberProfileEdit" href="#memberProfilePersonalDetails">
-                        <span class="fa fa-chevron-right accordion-state-icon"></span>
-                        <?php _e('Personal details','bidxplugin');?>
-                    </a>
-                </div>
-                <div id="memberProfilePersonalDetails" class="panel-collapse collapse in">
-                    <div class="panel-body">
+            <div class="col-sm-9 tabs-content">
+
+            <div class="tab-content">
+
+            <div class="tab-pane active" id="tab-personal-details">
                         <div class="row">
                             <div class="col-sm-6">
 
@@ -209,157 +213,113 @@
 
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a class="btn-block" data-toggle="collapse" data-parent="#memberProfileEdit" href="#memberProfileLanguage">
-                        <span class="fa fa-chevron-right accordion-state-icon"></span>
-                        <?php _e('Language','bidxplugin');?>
-                    </a>
-                </div>
-                <div id="memberProfileLanguage" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group addLanguageGroup">
-                                    <label><?php _e('Select the languages you speak:','bidxplugin'); ?></label>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="addLanguage" autocomplete="off" disabled />
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default js-btn-add-language" disabled><?php _e('Add to list','bidxplugin'); ?></button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <strong><?php _e('List of your languages','bidxplugin'); ?></strong>
-                            </div>
-                            <div class="col-sm-4">
-                                <strong><?php _e('Choose your mother tongue','bidxplugin'); ?></strong>
-                            </div>
-                        </div>
-
-                        <div class="languageList clearfix"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a class="btn-block" data-toggle="collapse" data-parent="#memberProfileEdit" href="#memberProfileAddress">
-                        <span class="fa fa-chevron-right accordion-state-icon"></span>
-                        <?php _e('Your current address','bidxplugin');?>
-                    </a>
-                </div>
-                <div id="memberProfileAddress" class="panel-collapse collapse addressItem">
-                    <div class="panel-body">
-
-                        <div class="row">
-                            <div class="col-sm-6">
-
-                                <input type="hidden" name="personalDetails.address[0].coordinates"    />
-
-                                <div class="form-group">
-                                    <label><?php _e('Country','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <select name="personalDetails.address[0].country" ></select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label><?php _e('City','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <input type="text" class="form-control" name="personalDetails.address[0].cityTown" placeholder="<?php _e('Please enter your city','bidxplugin'); ?>" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label><?php _e('Street','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <input type="text" class="form-control" name="personalDetails.address[0].street" placeholder="<?php _e('Please type your street','bidxplugin'); ?>" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label><?php _e('Building number','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <input type="text" class="form-control" name="personalDetails.address[0].streetNumber" placeholder="<?php _e('Please enter your building number','bidxplugin'); ?>" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label><?php _e('Postal code','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <input type="text" class="form-control" name="personalDetails.address[0].postalCode" placeholder="<?php _e('Please enter your postcode','bidxplugin'); ?>" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label><?php _e('Neighborhood','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <input type="text" class="form-control" name="personalDetails.address[0].neighborhood" placeholder="<?php _e('Please enter your neighborhood','bidxplugin'); ?>" />
-                                </div>
-
-
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="currentAddressMap"></div>
+            <div class="tab-pane" id="tab-language">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group addLanguageGroup">
+                            <label><?php _e('Select the languages you speak:','bidxplugin'); ?></label>
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="addLanguage" autocomplete="off" disabled />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default js-btn-add-language" disabled><?php _e('Add to list','bidxplugin'); ?></button>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <strong><?php _e('List of your languages','bidxplugin'); ?></strong>
+                    </div>
+                    <div class="col-sm-6">
+                        <strong><?php _e('Choose your mother tongue','bidxplugin'); ?></strong>
+                    </div>
+                </div>
+
+                <div class="languageList clearfix"></div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a class="btn-block" data-toggle="collapse" data-parent="#memberProfileEdit" href="#memberProfileContact">
-                        <span class="fa fa-chevron-right accordion-state-icon"></span>
-                        <?php _e('Your contact details','bidxplugin');?>
-                    </a>
-                </div>
-                <div id="memberProfileContact" class="panel-collapse collapse contactDetailItem">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-6">
+            <div class="tab-pane addressItem" id="tab-address">
+                <div class="row">
+                    <div class="col-sm-6">
 
-                                <div class="form-group">
-                                    <label><?php _e('Landline','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-                                        <input type="text" class="form-control" name="personalDetails.contactDetail[0].landLine" placeholder="<?php _e('Please enter your landline number','bidxplugin'); ?>" />
-                                    </div>
-                                </div>
+                        <input type="hidden" name="personalDetails.address[0].coordinates"    />
 
-                                <div class="form-group">
-                                    <label><?php _e('Mobile','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
-                                        <input type="text" class="form-control" name="personalDetails.contactDetail[0].mobile" placeholder="<?php _e('Please enter your mobile number','bidxplugin'); ?>" />
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label><?php _e('Fax','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-file-text"></i></span>
-                                        <input type="text" class="form-control" name="personalDetails.contactDetail[0].fax" placeholder="<?php _e('Please enter your fax number','bidxplugin'); ?>" />
-                                    </div>
-                                </div>
-
-                            </div><!-- // col-sm-6 - left form column -->
-
-                            <div class="col-sm-6">
-                            </div>
+                        <div class="form-group">
+                            <label><?php _e('Country','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <select name="personalDetails.address[0].country" ></select>
                         </div>
+
+                        <div class="form-group">
+                            <label><?php _e('City','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <input type="text" class="form-control" name="personalDetails.address[0].cityTown" placeholder="<?php _e('Please enter your city','bidxplugin'); ?>" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Street','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <input type="text" class="form-control" name="personalDetails.address[0].street" placeholder="<?php _e('Please type your street','bidxplugin'); ?>" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Building number','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <input type="text" class="form-control" name="personalDetails.address[0].streetNumber" placeholder="<?php _e('Please enter your building number','bidxplugin'); ?>" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Postal code','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <input type="text" class="form-control" name="personalDetails.address[0].postalCode" placeholder="<?php _e('Please enter your postcode','bidxplugin'); ?>" />
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Neighborhood','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <input type="text" class="form-control" name="personalDetails.address[0].neighborhood" placeholder="<?php _e('Please enter your neighborhood','bidxplugin'); ?>" />
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="currentAddressMap"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a class="btn-block" data-toggle="collapse" data-parent="#memberProfileEdit" href="#memberProfileDocuments">
-                        <span class="fa fa-chevron-right accordion-state-icon"></span>
-                        <?php _e('Documents','bidxplugin');?>
-                    </a>
+            <div class="tab-pane" id="tab-contact-details">
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        <div class="form-group">
+                            <label><?php _e('Landline','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+                                <input type="text" class="form-control" name="personalDetails.contactDetail[0].landLine" placeholder="<?php _e('Please enter your landline number','bidxplugin'); ?>" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Mobile','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-tablet"></i></span>
+                                <input type="text" class="form-control" name="personalDetails.contactDetail[0].mobile" placeholder="<?php _e('Please enter your mobile number','bidxplugin'); ?>" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php _e('Fax','bidxplugin'); ?> <small class="text-muted"><?php _e('Optional','bidxplugin'); ?></small></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-file-text"></i></span>
+                                <input type="text" class="form-control" name="personalDetails.contactDetail[0].fax" placeholder="<?php _e('Please enter your fax number','bidxplugin'); ?>" />
+                            </div>
+                        </div>
+
+                    </div><!-- // col-sm-6 - left form column -->
                 </div>
-                <div id="memberProfileDocuments" class="panel-collapse collapse attachmentsControl">
-                    <div class="panel-body">
+            </div>
+
+            <div class="tab-pane attachmentsControl" id="tab-documents">
                     <div class="attachmentsContainer"></div>
 
                     <a href="#addAttachments" data-toggle="modal" class="btn btn-primary"><?php _e('Add documents', 'bidxplugin')?></a>
@@ -385,12 +345,10 @@
                     </div>
 
 
-                </div>
-                </div>
             </div>
 
-            </div>
 
+            </div>
             </div>
         </div>
         </form>
@@ -400,18 +358,18 @@
 
         <!-- Language item -->
         <div class="row languageItem">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <label class="pull-left languageDescr"></label>
                 <button class="btn btn-sm btn-danger pull-right btnRemoveLanguage"><i class="fa fa-trash-o"></i></button>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <button class="btn btn-sm btn-success btnSetMotherLanguage"><?php _e('This is my mother tongue','bidxplugin'); ?></button>
                 <p class="isCurrentMotherLanguage"><?php _e('My mother tongue','bidxplugin'); ?></p>
             </div>
         </div>
 
         <!-- Attachment -->
-        <div class="attachmentItem col-md-4">
+        <div class="attachmentItem col-md-6">
             <div class="media well">
                 <div class="pull-left icons-rounded attachmentMissing"><i class="fa fa-question-circle text-primary-light"></i></div>
                 <a class="pull-left documentLink img-cropper" href="#">

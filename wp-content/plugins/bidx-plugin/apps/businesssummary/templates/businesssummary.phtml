@@ -141,8 +141,15 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
         <div class="row">
             <div class="col-sm-4">
                 <div class="completeness-score <?php echo $this->completenessColour ?>" >
-                    <div class="percentage"><?php echo $progress ?><span>%</span></div>
-                    <div class=""><?php _e('completed', 'bidxplugin')?></div>
+                    <div class="row row-table">
+                        <div class="col-sm-4 text-center">
+                            <i class="fa fa-line-chart fa-big"></i>
+                        </div>
+                        <div class="col-sm-8">
+                                <div class="percentage"><?php echo $progress ?><span>%</span></div>
+                                <div class=""><?php _e('completed', 'bidxplugin')?></div>
+                            </div>                        
+                        </div>
                 </div>
             </div>
 

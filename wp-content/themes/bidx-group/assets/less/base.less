@@ -272,6 +272,17 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+#join .btn .fa,
+#auth .btn .fa
+{
+    .opacity(.4);
+    position: absolute;
+    top: 50%;
+    left: floor(@font-size-base * 1.8);
+    margin-top: -0.5em;
+    font-size: floor(@font-size-base * 2.2);
+}
+
 .iconbar
 {
     font-family: @lato;
@@ -390,6 +401,22 @@ h1, h2, h3, h4, h5, h6,
         margin: auto;
         min-height: 100%;
         min-width: 100%;
+    }
+}
+
+.row-table
+{
+    display: table;
+    table-layout: fixed;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    >[class*=col-]
+    {
+        display: table-cell;
+        float: none;
+        table-layout: fixed;
+        vertical-align: middle;
     }
 }
 
@@ -1717,11 +1744,16 @@ select
     padding-bottom: ceil(@font-size-base * 1.2);
     font-weight: 100;
 }
-.fa-block
+.fa-big
 {
-    display: block;
+    font-size: ceil(@font-size-base * 2.10) !important;
+}
+.fa-above
+{
+    display: block !important;
     font-size: ceil(@font-size-base * 2.10);
 }
+
 .btn-member
 {
     background-color: @member;

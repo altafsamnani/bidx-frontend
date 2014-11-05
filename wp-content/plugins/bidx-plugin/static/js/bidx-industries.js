@@ -251,15 +251,15 @@
                             $( "<div />", { "class": options.actionsClass } )
                             .append
                             (
-                                $( "<i />", { "class": "fa fa-arrow-circle-right text-muted fa-block industryIndicate hide" })
+                                $( "<i />", { "class": "fa fa-arrow-circle-right text-muted fa-big industryIndicate hide" })
                             )
                             .append
                             (
-                                $( "<i />", { "class": "fa fa-times-circle text-danger fa-block industryDelete hide" })
+                                $( "<i />", { "class": "fa fa-times-circle text-danger fa-big industryDelete hide" })
                             )
                             .append
                             (
-                                $( "<i />", { "class": "fa fa-plus-circle text-success fa-block industryAdd hide" })
+                                $( "<i />", { "class": "fa fa-plus-circle text-success fa-big industryAdd hide" })
                             )
                         )
                         .append
@@ -433,7 +433,7 @@
                                     $( "<div />", { "class": options.actionsClass } )
                                     .append
                                     (
-                                        $( "<i />", { "class": "fa fa-times-circle text-danger fa-block industryDelete" })
+                                        $( "<i />", { "class": "fa fa-times-circle text-danger fa-big industryDelete" })
                                     )
                                 )
                                 .append
