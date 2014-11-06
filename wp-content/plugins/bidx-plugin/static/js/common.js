@@ -1321,12 +1321,12 @@
     if ( window.location.hash )
     {
         var windowHash  = window.location.hash.split('/')
-        ,   panelHash   = windowHash[windowHash.length-1]
+        ,   tabHash   = windowHash[windowHash.length-1]
         ;
 
-        if ( panelHash.match( /^#/ ) )
+        if ( tabHash.match( /^#/ ) )
         {
-            $( 'a[href='+ panelHash +']' ).click();
+            $( 'a[href='+ tabHash +']' ).click();
         }
     }
 
