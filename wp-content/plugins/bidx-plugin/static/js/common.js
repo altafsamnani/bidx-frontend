@@ -902,9 +902,9 @@
 
     function updateAccordionHeadingErrors( element, action )
     {
-        var accordionHeadingSelector    = ".panel-heading"
-        ,   $element                    = $( element )
-        ,   $accordionGroup             = $element.closest( ".panel" )
+        var $element                    = $( element )
+        ,   $accordionGroup             = $element.closest( ".tab-pane" )
+        ,   accordionHeadingSelector    = $accordionGroup.attr( "id" )
         ,   $accordionHeading
         ,   $errorCount
         ,   errorCount
@@ -917,7 +917,7 @@
             return;
         }
 
-        $accordionHeading = $accordionGroup.find( accordionHeadingSelector );
+        $accordionHeading = $accordionGroup.parents( ".tabs-vertical" ).find( ".tabs-nav").find( "a[href=#"+accordionHeadingSelector+"]" );
 
         // get the error count from the data-error attribute
         //
