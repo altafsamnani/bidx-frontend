@@ -1314,8 +1314,8 @@
         $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: cancelHref } );
 
 
-        $btnSave.i18nText( "btnSaveProfile" );
-        $btnCancel.i18nText( "btnCancel" );
+        $btnSave.i18nText( "btnSaveProfile" ).prepend( $( "<div />", { "class": "fa fa-save fa-above fa-big" } ) );
+        $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
         bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );
 

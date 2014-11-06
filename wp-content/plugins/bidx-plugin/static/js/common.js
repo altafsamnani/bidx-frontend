@@ -855,7 +855,7 @@
 
             // update error count in accordion heading (if exists)
             //
-            updateAccordionHeadingErrors( element, "highlight" );
+            updateTabPanesErrors( element, "highlight" );
         }
 
     ,   unhighlight: function( element, errorClass, validClass)
@@ -889,7 +889,7 @@
 
             // update error count in accordion heading (if exists)
             //
-            updateAccordionHeadingErrors( element, "unhighlight" );
+            updateTabPanesErrors( element, "unhighlight" );
         }
 
         // when element receives focus
@@ -900,28 +900,28 @@
         }
     } );
 
-    function updateAccordionHeadingErrors( element, action )
+    function updateTabPanesErrors( element, action )
     {
-        var $element                    = $( element )
-        ,   $accordionGroup             = $element.closest( ".tab-pane" )
-        ,   accordionHeadingSelector    = $accordionGroup.attr( "id" )
-        ,   $accordionHeading
+        var $element           = $( element )
+        ,   $tabPane           = $element.closest( ".tab-pane" )
+        ,   tabPaneId          = $tabPane.attr( "id" )
+        ,   $tabNavItem
         ,   $errorCount
         ,   errorCount
         ;
 
-        // if element is not part of an accordiongroup, we do not need to proceed any further
+        // if element is not part of an tabPane, we do not need to proceed any further
         //
-        if (!$accordionGroup.length )
+        if (!$tabPane.length )
         {
             return;
         }
 
-        $accordionHeading = $accordionGroup.parents( ".tabs-vertical" ).find( ".tabs-nav").find( "a[href=#"+accordionHeadingSelector+"]" );
+        $tabNavItem = $tabPane.parents( ".tabs-vertical" ).find( ".tabs-nav").find( "a[href=#"+tabPaneId+"]" );
 
         // get the error count from the data-error attribute
         //
-        errorCount = $accordionHeading.data( "data-bidx-errorCount" );
+        errorCount = $tabNavItem.data( "data-bidx-errorCount" );
 
         // increase error count
         //
@@ -944,7 +944,7 @@
             if ( !errorCount )
             {
 
-                $accordionHeading.addClass( "heading-error" );
+                $tabNavItem.addClass( "heading-error" );
                 errorCount = 1;
                 _showErrorCount();
 
@@ -978,7 +978,7 @@
         //
         function _showErrorCount()
         {
-            var $errorCount = $accordionHeading.find( ".js-error-count" );
+            var $errorCount = $tabNavItem.find( ".js-error-count" );
 
             // if error count does not yet exist
             //
@@ -989,7 +989,7 @@
                     "class":      "pull-right badge js-error-count"
                 } );
 
-                $accordionHeading.prepend( $errorCount );
+                $tabNavItem.prepend( $errorCount );
             }
 
             if ( errorCount > 0 )
@@ -997,16 +997,16 @@
                 // change the errorCount value
                 //
                 $errorCount.text( errorCount );
-                $accordionHeading.addClass( "heading-error" );
-                $accordionHeading.data( "data-bidx-errorCount", errorCount );
+                $tabNavItem.addClass( "heading-error" );
+                $tabNavItem.data( "data-bidx-errorCount", errorCount );
             }
             else
             {
                 // remove error count and error class from heading
                 //
                 $errorCount.remove();
-                $accordionHeading.removeClass( "heading-error" );
-                $accordionHeading.removeData( "data-bidx-errorCount" );
+                $tabNavItem.removeClass( "heading-error" );
+                $tabNavItem.removeData( "data-bidx-errorCount" );
             }
             updateValidationToasts();
         }
@@ -1017,6 +1017,7 @@
         {
             var $editControls               = $( ".editControls" ).parent()
             ,   $toast                      = $editControls.find( ".total-error-message" )
+            ,   errorElements              = $( ".tabs-content .has-error" ).length
             ,   message                     = bidx.i18n.i( "frmInvalidMsg" )
             ;
 
@@ -1029,7 +1030,7 @@
                     .hide()
                 ;
             }
-            if ( errorCount > 0 )
+            if ( errorElements > 0 )
             {
                 $toast.fadeIn();
             }
@@ -1043,7 +1044,7 @@
 
 
     // General function to remove validation errors, meant to be used before we show the forms in various edit states
-    // TODO: check for any remainings in the $accordionHeading.data( "data-bidx-errorCount" )
+    // TODO: check for any remainings in the $tabNavItem.data( "data-bidx-errorCount" )
     var removeValidationErrors = function ()
     {
         var $panels          = $( ".panel" )
