@@ -3128,7 +3128,7 @@
             _doSave();
         } );
 
-        $btnSave.i18nText( ( state === "create" ? "btnAddAndView" : "btnSaveAndView" ) ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );;
+        $btnSave.i18nText( ( state === "create" ? "btnAddAndView" : "btnSaveAndView" ) ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
         $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
         $controlsForEdit.empty();
