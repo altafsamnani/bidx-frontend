@@ -1308,13 +1308,13 @@
 
         // Inject the save and button into the controls
         //
-        $btnSave    = $( "<a />", { "class": "btn btn-primary disabled", href: "#save" } );
+        $btnSave    = $( "<a />", { "class": "btn btn-primary btn-sm disabled", href: "#save" } );
 
         cancelHref  = redirect.cancel ? "#cancel/redirect=" + encodeURIComponent( redirect.cancel ) : "#cancel";
-        $btnCancel  = $( "<a />", { "class": "btn btn-primary disabled", href: cancelHref } );
+        $btnCancel  = $( "<a />", { "class": "btn btn-primary btn-sm disabled", href: cancelHref } );
 
 
-        $btnSave.i18nText( "btnSaveProfile" ).prepend( $( "<div />", { "class": "fa fa-save fa-above fa-big" } ) );
+        $btnSave.i18nText( "btnSaveProfile" ).prepend( $( "<div />", { "class": "fa fa-check fa-above fa-big" } ) );
         $btnCancel.i18nText( "btnCancel" ).prepend( $( "<div />", { "class": "fa fa-times fa-above fa-big" } ) );
 
         bidx.controller.addControlButtons( [ $btnSave, $btnCancel ] );

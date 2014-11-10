@@ -24,7 +24,7 @@
     <Item value="btnCancel">Cancel</Item>
     <Item value="btnSave">Save</Item>
     <Item value="btnSaveAndView">Save &amp; view</Item>
-    <Item value="btnSaveProfile">Save profile</Item>
+    <Item value="btnSaveProfile">Save Profile</Item>
     <Item value="btnAddAndView">Create &amp; view</Item>
     <Item value="btnConfirm">Are you sure?</Item>
     <Item value="btnPleaseWait">Please wait</Item>

@@ -18,10 +18,7 @@ $isSuperAdmin   = is_super_admin();
 
             <span class="editMentor hide"><?php _e('Edit my mentor profile', 'bidxplugin')?></span>
             <span class="createMentor hide"><?php _e('Create my mentor profile', 'bidxplugin')?></span>
-
         </h1>
-
-
     </div>
 
     <div class="actions well hide-overflow">
@@ -38,6 +35,12 @@ $isSuperAdmin   = is_super_admin();
                 <div class="fa fa-tasks fa-above fa-big"></div>
                 Add Company
             </a>
+        </div>
+        <div class="btn-group pull-right">
+            <button class="btn btn-sm btn-primary editProfile">
+                <div class="fa fa-pencil fa-above fa-big"></div>
+                <?php _e('Edit Profile', 'bidxplugin')?>
+            </button>
         </div>
         <div class="editControls btn-group pull-right"></div>
     </div>

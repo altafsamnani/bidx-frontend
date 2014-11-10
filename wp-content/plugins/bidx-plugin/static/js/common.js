@@ -1042,7 +1042,6 @@
     }
 
 
-
     // General function to remove validation errors, meant to be used before we show the forms in various edit states
     // TODO: check for any remainings in the $tabNavItem.data( "data-bidx-errorCount" )
     var removeValidationErrors = function ()
@@ -1155,6 +1154,7 @@
     {
         $.fn.bootstrapPaginator.defaults.bootstrapMajorVersion = 3;
     }
+
     // Expose
     //
     if ( !window.bidx )
@@ -1221,21 +1221,6 @@
     ,   modalLogin:                     modalLogin
     };
 
-    // Control Bootstraps' tab control from outside of the tab header
-    //
-    $( ".tabControl" ).click(function(e)
-    {
-        e.preventDefault();
-
-        var $btn    = $( this )
-        ,   btnhref = $btn.attr( "href" )
-        ,   tab     = $btn.data( "tab" )
-        ,   $tab    = $( tab )
-        ;
-
-        $tab.find( "[href$='" + btnhref + "']" ).tab( "show" );
-    });
-
     // Instantiate bidx tagsinputs
     // The ones with a class 'defer' on them are left alone in case there is a dependency
     // with the app that otherwise can't be fixed
@@ -1261,12 +1246,22 @@
         ,   language:               currentLanguage
         } );
     }
+
     // Disable disabled links
     //
     $body.delegate( "a.disabled", "click", function( e )
     {
         e.preventDefault();
     } );
+
+    // Edit Profile
+    //
+    $( ".member" ).on( "click", "button.editProfile", function()
+    {
+        var editHref = $(".tab-pane.active a[href*='#edit']").first().attr( "href" );
+
+        window.location.href = window.location.pathname + editHref;
+    });
 
     // Administer the toggle state of an accordion by putting a .accordion-open class on the group when the accordion group is open
     // Usefull for setting icons / colors etc
