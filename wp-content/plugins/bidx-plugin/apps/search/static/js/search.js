@@ -81,7 +81,7 @@
 
         if ( $fakecrop )
         {
-            $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
+           // $fakecrop.fakecrop( {fill: true, wrapperWidth: 90, wrapperHeight: 90} );
         }
 
         $frmSearch.validate(
@@ -837,6 +837,7 @@
             //
             $.each( data.docs, function( idx, response )
             {
+
                 switch( response.entityType )
                 {
                     case 'bidxMemberProfile':
@@ -852,36 +853,36 @@
 
                     case 'bidxInvestorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
-                        {
+                       // if ( options.criteria.facetFilters.length !== 0 )
+                       // {
                             showMemberProfile(
                             {
                                 response : response
                             //,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                        }
+                       // }
 
                     break;
 
                     case 'bidxEntrepreneurProfile':
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
-                        {
+                       // if ( options.criteria.facetFilters.length !== 0 )
+                       // {
                             showMemberProfile(
                             {
                                 response : response
                             //,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                        }
+                       // }
 
                     break;
 
                     case 'bidxMentorProfile':
                         //response.entityType = 'bidxMemberProfile';
-                        if ( options.criteria.facetFilters.length !== 0 )
-                        {
+                       // if ( options.criteria.facetFilters.length !== 0 )
+                       // {
 
                             showMemberProfile(
                             {
@@ -889,7 +890,7 @@
                            // ,   criteria : data.criteria
                             ,   cb       : options.cb
                             } );
-                        }
+                       // }
 
                     break;
 
@@ -930,6 +931,7 @@
                     break;
 
                     default:
+                    bidx.utils.log('Not Loaded Plz Check',response.entityType);
 
                     break;
                 }
@@ -1217,7 +1219,7 @@
                 ,   imageWidth
                 ,   imageLeft
                 ,   imageTop
-                ,    personalDetails
+                ,   personalDetails
                 ,   highestEducation
                 ,   gender
                 ,   isEntrepreneur
@@ -1423,7 +1425,6 @@
 
                                                         if(CONSTANTS.LOAD_COUNTER % tempLimit === 0)
                                                         {
-
                                                             if( $.isFunction( options.cb ) )
                                                             {
                                                                 options.cb();
