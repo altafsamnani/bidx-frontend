@@ -1073,7 +1073,7 @@
                          .replace( /%focusCountry%/g,           i18nMentor.focusCountry   ? i18nMentor.focusCountry     : emptyValMentor )
                          .replace( /%focusIndustry%/g,          i18nMentor.focusIndustry    ? i18nMentor.focusIndustry      : emptyValMentor )
                          .replace( /%focusExpertise%/g,         i18nMentor.focusExpertise    ? i18nMentor.focusExpertise      : emptyValMentor )
-                         .replace( /%additionalPreferences%/g,  i18nMentor.focusPreferences[0]    ? i18nMentor.focusPreferences[0]      : emptyValInvestor )
+                         .replace( /%additionalPreferences%/g,  i18nMentor.focusPreferences.length    ? i18nMentor.focusPreferences[0]      : emptyValInvestor )
                     ;
 
 
@@ -1111,6 +1111,7 @@
             ,   mentorInfo      = ''
             ,   investorInfo
             ,   allInfo
+            ,   isMember
             ,   isEntrepreneur
             ,   isInvestor
             ,   isMentor
@@ -1128,11 +1129,15 @@
             }
             else {
                 // Open this row
+                isMember            =   bidx.utils.getValue( item, "bidxMemberProfile" );
                 isEntrepreneur      =   bidx.utils.getValue( item, "bidxEntrepreneurProfile" );
                 isInvestor          =   bidx.utils.getValue( item, "bidxInvestorProfile" );
                 isMentor            =   bidx.utils.getValue( item, "bidxMentorProfile" );
 
-                personalInfo        =    _addDetailedInfo('Personal', data );
+                if ( isMember )
+                {
+                    personalInfo        =    _addDetailedInfo('Personal', data );
+                }
 
                 if ( isEntrepreneur )
                 {
