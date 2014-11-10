@@ -239,7 +239,7 @@
 
                 // Make sure the media app is within our modal
                 //
-                $( "#media" ).appendTo( $addAttachmentsModal.find( ".modal-body" ) );
+                $( "#media" ).appendTo( $( "#otherDocumentsModal .modal-body" ) );
 
                 var $selectBtn = $addAttachmentsModal.find( ".btnSelectFile" );
                 var $cancelBtn = $addAttachmentsModal.find( ".btnCancelSelectFile" );
