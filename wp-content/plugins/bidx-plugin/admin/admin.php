@@ -70,7 +70,11 @@ class Bidx_Admin_Admin
 
 	        wp_register_script ('jquery-validation-bidx-additional-methods', $bidxJsDir . '/additional-methods.js', array ('jquery-validation'), '20130812', true);
 
+            wp_register_script ('jquery-fakecrop', $bidxJsDir . '/vendor/jquery.fakecrop.js', array ('jquery'), '20140327', TRUE);
+
             wp_register_script ('admin-chosen', $vendorDir . '/chosen_v1.0.0/chosen.jquery.js', array ('jquery'), '20131111', TRUE);
+
+
 
 	        wp_register_script ('bidx-admin-api-core', $bidxJsDir . '/bidxAPI/api-core.js', array ('jquery' ), '20130501', TRUE);
 

@@ -25,6 +25,15 @@
     <Item value="memberOnlyLbl">Member only</Item>
     <Item value="country_lbl_name">Name</Item>
 
-
-
+    <!-- User Table Labels -->
+    <Item value="name">Name</Item>
+    <Item value="dob">Date of birth</Item>
+    <Item value="email">Email</Item>
+    <Item value="mobile">Mobile</Item>
+    <Item value="landline">Landline</Item>
+    <Item value="languagesSpoken">Languages Spoken</Item>
+    <Item value="mothertongue">Mothertongue</Item>
+    <Item value="summary">Summary</Item>
+    <Item value="interestedIn">Interested in</Item>
+    <Item value="investorType">Investor Type</Item>
 </I18N>

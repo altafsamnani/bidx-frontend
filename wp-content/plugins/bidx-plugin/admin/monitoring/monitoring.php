@@ -12,9 +12,12 @@ class Bidx_Admin_Monitoring
 	,		$view
 	,		$className
 	, 		$deps 	= 	array (	'underscore'
+							  ,	'jquery-fakecrop'
 							  ,	'bidx-admin-api-core'
 							  , 'bidx-admin-common'
 							  , 'google-jsapi'
+							  , 'data-table'
+
 							  );
 	/**
 	 * Constructor class for the Simple Admin Metabox
@@ -94,8 +97,15 @@ class Bidx_Admin_Monitoring
 	 */
 	public function register_monitoring_bidx_ui_libs()
 	{
+		$vendorDir = sprintf ('%s/../static/vendor', BIDX_PLUGIN_URI);
 		//1. Load Js Libraries
-		wp_register_script ($this->className, plugins_url("static/js/{$this->className}.js", __FILE__), $this->deps, '20140620', TRUE);
+		wp_register_script ('data-table', $vendorDir . '/DataTables-1.10.3/media/js/jquery.dataTables.js', array ('jquery'), '1.10.3', TRUE);
+
+		wp_register_script ($this->className, plugins_url("static/js/{$this->className}.js", __FILE__), $this->deps, '20141031', TRUE);
+
+        //2. Load Data Table Css for this page
+		wp_register_style( 'data-table-css', $vendorDir . '/DataTables-1.10.3/media/css/jquery.dataTables.css', array(), '20141031', 'all' );
+        wp_enqueue_style( 'data-table-css' );
 	}
 
 
