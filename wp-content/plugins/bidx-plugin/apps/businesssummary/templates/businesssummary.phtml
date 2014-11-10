@@ -76,7 +76,7 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 <div class="businessSummary" id="businessSummary" data-bsid=<?php echo $businessSummaryId; ?>>
 
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
 <?php
             if ( $this->exst($businessSummaryBidxMeta->bidxEntityId) )
             {
@@ -99,38 +99,6 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
 ?>
         </div>
 
-
-        <div class="col-sm-4 editControlsContainer">
-            <div class="editControls pull-right">
-
-                <!-- SHOW -->
-                <div class="view viewShow">
-<?php
-                // does a user have rights to edit ( is the owner )
-                //
-                if ( $canEdit ) {
-?>
-                    <a class="btn btn-primary" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
-<?php
-                    if ( $entityStatus == 'DRAFT' ) {
-?>
-                        <a class="btn btn-default" href="#publish"><?php _e( 'Publish', 'bidxplugin' ); ?></a>
-<?php
-                    }
-                }
-?>
-                </div>
-
-                <!-- EDIT, conditionally filled by the app -->
-                <div class="view viewEdit btn-group"></div>
-
-                <!-- sucess msg, used as a placeholder for showing msgs -->
-
-                <div class="view viewMainsuccess alert alert-success">
-                    <p class="successMsg"></p>
-                </div>
-            </div>
-        </div>
     </div>
 
 <?php
@@ -225,12 +193,40 @@ $dlurl = !empty( $dlpage ) ? $dlpage -> guid : false;
                     }
 ?>
                     <a class="btn btn-primary disabled bidxAccessRequestPending <?php echo $accessRequestProgress; ?>" href="#"><?php echo _e( 'Access request pending', 'bidxplugin' ); ?></a>
-                    <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
+                    <a class="btn btn-primary bidxRequestFullAccess <?php echo $accessRequestSend; ?>" href="#"><i class="fa fa-eye fa-big fa-above"></i><?php echo _e( 'Request full access', 'bidxplugin' ); ?></a>
                     <a class="btn btn-primary disabled <?php echo $accessGranted; ?>" href="#"><?php echo _e( 'Full Access granted', 'bidxplugin' ); ?></a>
 
 <?php
                 }
 ?>
+<?php
+                // does a user have rights to edit ( is the owner )
+                //
+                    if ( $canEdit )
+                    {
+?>
+                        <a class="btn btn-primary editBS" href="#editBusinessSummary/<?php echo $businessSummaryId; ?>"><i class="fa fa-pencil fa-big fa-above"></i> <?php _e( 'Edit', 'bidxplugin' ); ?></a>
+<?php
+                    }
+?>
+                <div class="editControlsContainer">
+                    <div class="editControls pull-right">
+
+                        <!-- SHOW -->
+                        <div class="view viewShow">
+                        </div>
+
+                        <!-- EDIT, conditionally filled by the app -->
+                        <div class="view viewEdit btn-group"></div>
+
+                        <!-- sucess msg, used as a placeholder for showing msgs -->
+
+                        <div class="view viewMainsuccess alert alert-success">
+                            <p class="successMsg"></p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
