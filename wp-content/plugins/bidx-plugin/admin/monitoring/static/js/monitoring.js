@@ -495,9 +495,9 @@
                         ,   "dom":                  'l<"toolbar">frtip'
                         ,   "order":                [[4, 'desc']] // Default Sorting
                         ,   "columnDefs":           [
-                                                        { "targets": 1, "orderable": false }
-                                                    ,   { "targets": 2, "orderable": false }
-                                                    ,   { "targets": 3, "orderable": false }
+                                                       // { "targets": 1, "orderable": false }
+                                                    //,   { "targets": 2, "orderable": false }
+                                                       { "targets": 3, "orderable": false }
                                                     ] // Disable sorting
                         ,   "columns":              $.merge ( [
                                                     {
