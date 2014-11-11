@@ -493,6 +493,19 @@
                         ,   "pagingType":           "full_numbers"
                         //, "iDeferLoading":        20
                         ,   "dom":                  'l<"toolbar">frtip'
+                        ,   "order":                [[4, 'desc']] // Default Sorting
+                        ,   "columnDefs":           [
+                                                        { "targets": 1, "orderable": false }
+                                                    ,   { "targets": 2, "orderable": false }
+                                                    ,   { "targets": 3, "orderable": false }
+                                                    ] // Disable sorting
+                        ,   "columns":              $.merge ( [
+                                                    {
+                                                        "class":          'details-control',
+                                                        "orderable":      false,
+                                                        "data":           null,
+                                                        "defaultContent": ''
+                                                    }], tableHeader)
                         ,   "fnPreDrawCallback" :   function(oSettings)
                                                     {
                                                         //To enable next/last button its needed
@@ -582,17 +595,6 @@
                                                             } );
                                                         }
                                                     }
-
-                        ,   "order": [[4, 'desc']] // Default Sorting
-                        ,   "columnDefs": [ { "targets": 3, "orderable": false } ] // Disable sorting
-                        ,   "columns": $.merge ( [
-                                                {
-                                                    "class":          'details-control',
-                                                    "orderable":      false,
-                                                    "data":           null,
-                                                    "defaultContent": ''
-                                                }], tableHeader)
-
                         ,   "ajax":
                             {
                                  "url":             bidx.api.getUrl("/api/v1/nsearch",false,bidx.common.groupDomain)
