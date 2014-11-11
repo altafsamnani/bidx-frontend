@@ -950,6 +950,7 @@
                     ,   externalVideoPitch
                     ,   $el
                     ,   $listAllBp                  = $('<div>')
+                    ,   showBpTitle                 = false
                     ;
 
                     summary                         =   bidx.utils.getValue(bidxEntrepreneurProfile, 'summary');
@@ -980,7 +981,6 @@
 
                             if( bidxMeta && bidxMeta.bidxEntityType === 'bidxBusinessSummary' )
                             {
-
                                 var dataArr = {  'industry'         : 'industry'
                                                , 'countryOperation' : 'country'
                                                , 'stageBusiness'    : 'stageBusiness'
@@ -1029,9 +1029,17 @@
                                 }
 
                                 $listAllBp.append( $listItemBp );
+
+                                showBpTitle = true;
                             }
 
                         });
+
+                        //Show Bp title if it exists through flag
+                        if( showBpTitle )
+                        {
+                            $listItemEntrepreneur.find('.bpTitle').show( );
+                        }
 
                         $listItemEntrepreneur.find ( '.entrepreneur-businessitem' ).replaceWith( $listAllBp );
 
