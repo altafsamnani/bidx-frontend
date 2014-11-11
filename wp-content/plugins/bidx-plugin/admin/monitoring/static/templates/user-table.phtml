@@ -7,3 +7,336 @@
 <div class="view viewUserTableError alert alert-warning">
    <p class="errorMsg"></p>
 </div>
+
+<div>
+	<table class="order-column hover stripe user-table" width="100%">
+    <thead>
+            <tr>
+                <th></th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Roles</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Roles</th>
+                <th>Created</th>
+            </tr>
+        </tfoot>
+</table>
+</div>
+<script type="text/html" id="member-profile-listitem">
+    <!--
+    <table class="detailedInfo" cellpadding="5" cellspacing="0" border="0">
+        <tbody>
+            <tr>
+                <th>
+                    <h2 class="pull-left"><a class="btn btn-primary btn-sm" target = "_blank" href="<?php echo _l('member');?>/%memberId%">%firstName% %lastName%</a></h2>
+                </th>
+                <th colspan=4>
+                <div class="renderLabel"><span class="label bidx-label bidx-entrepreneur" style="display:none;">%role_entrepreneur%</span>
+                     <span class="label bidx-label bidx-mentor" style="display:none;">%role_mentor%</span>
+                     <span class="label bidx-label bidx-investor" style="display:none;">%role_investor%</span>
+                </div>
+                </th>
+            </tr>
+            <tr class="top-border" >
+                <td rowspan=7 class="vtop memberImgWrapper">
+                    <div class="col-sm-3">
+                        <a class="pull-left" href="<?php echo _l('member');?>/%memberId%" data-role='memberImage'>
+                            <div class="icons-rounded pull-left"><i class="dashicons-before dashicons-businessman text-primary-light"></i></div>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="top-border">
+                <td><?php _e('Gender','bidxplugin')?></td>
+                <td>%gender%</td>
+                <td><?php _e('Date of birth','bidxplugin')?></td>
+                <td>%dateOfBirth%</td>
+            </tr>
+            <tr class="top-border">
+                <td><?php _e('Highest education','bidxplugin')?></td>
+                <td>%highestEducation%</td>
+                <td><?php _e('Professional title','bidxplugin')?></td>
+                <td>%professionalTitle%</td>
+            </tr>
+            <tr>
+                <td><?php _e('Mothertongue','bidxplugin');?></td>
+                <td>%motherLanguage%</td>
+                <td><?php _e('Languages spoken','bidxplugin');?></td>
+                <td>%language%</td>
+            </tr>
+            <tr>
+                <td><?php _e('Location','bidxplugin');?></td>
+                <td>%city%%country%</td>
+                <td><?php _e('E-mail','bidxplugin')?></td>
+                <td>%emailAddress%</td>
+            </tr>
+            <tr>
+                <td><?php _e('Mobile','bidxplugin');?></td>
+                <td>%mobile%</td>
+                <td><?php _e('Landline','bidxplugin');?></td>
+                <td>%landLine%</td>
+            </tr>
+            <tr>
+                <td><?php _e('Facebook','bidxplugin');?></td>
+                <td>
+                    <div class="facebook">
+                        <a title="View my Facebook Profile" target="_blank" href="http://www.facebook.com/%facebook%"><i class="fa fa-facebook-square"></i></a>
+                    </div>
+                </td>
+                <td><?php _e('Twitter','bidxplugin');?></td>
+                <td>
+                    <div class="twitter">
+                        <a title="View my Twitter Profile" target="_blank" href="https://twitter.com/%twitter%"><i class="fa fa-twitter-square"></i></a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=5>
+                    <div class="pull-right"><a class="btn btn-primary btn-sm" target = "_blank" href="<?php echo _l('member');?>/%memberId%"><?php _e('View profile','bidxplugin')?></a> </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    -->
+</script>
+
+<script type="text/html" id="mentor-listitem">
+<!--
+<table class="detailedInfo" cellpadding="5" cellspacing="0" border="0">
+    <tr>
+        <th colspan="4">
+            <h2 class="pull-left"><?php _e('Mentor details','bidxplugin');?></h2>
+        </th>
+    </tr>
+    <tr>
+        <td><?php _e('Summary','bidxplugin');?></td>
+        <td colspan=3>%summary%</td>
+    </tr>
+    <tr>
+         <td><?php _e('Institution name','bidxplugin');?></td>
+        <td>%institutionName%</td>
+        <td><?php _e('Institution website','bidxplugin');?></td>
+        <td>%institutionWebsite%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Focus gender','bidxplugin');?></td>
+        <td>%focusGender%</td>
+        <td><?php _e('Stage of business','bidxplugin');?></td>
+        <td>%focusStageBusiness%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Focus Industry','bidxplugin');?></td>
+        <td>%focusIndustry%</td>
+        <td><?php _e('Focus Expertise','bidxplugin');?></td>
+        <td>%focusExpertise%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Languages','bidxplugin');?></td>
+        <td>%focusLanguage%</td>
+        <td><?php _e('Social impact','bidxplugin');?></td>
+        <td>%focusSocialImpact%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Environmental impact','bidxplugin');?></td>
+        <td>%focusEnvImpact%</td>
+        <td><?php _e('Focus countries','bidxplugin');?></td>
+        <td>%focusCountry%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Other preferences','bidxplugin');?></td>
+        <td colspan=3>%additionalPreferences%</td>
+    </tr>
+</table>
+    -->
+</script>
+
+<script type="text/html" id="investor-listitem">
+<!--
+<table class="detailedInfo" cellpadding="5" cellspacing="0" border="0">
+    <tr>
+        <th colspan="4">
+            <h2 class="pull-left"><?php _e('Investor details','bidxplugin');?></h2>
+        </th>
+    </tr>
+    <tr>
+        <td><?php _e('Summary','bidxplugin');?></td>
+        <td>%summary%</td>
+        <td><?php _e('Investor Type','bidxplugin');?></td>
+        <td>%investorType%</td>
+    </tr>
+    <tr>
+        <td><?php _e('Industry','bidxplugin');?></td>
+        <td>%focusIndustry%</td>
+        <td><?php _e('Social impact','bidxplugin');?></td>
+        <td>%focusSocialImpact%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Environmental impact','bidxplugin');?></td>
+        <td>%focusEnvImpact%</td>
+        <td><?php _e('Languages','bidxplugin');?></td>
+        <td>%focusLanguage%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Country','bidxplugin');?></td>
+        <td>%focusCountry%</td>
+        <td><?php _e('Consumer type','bidxplugin');?></td>
+        <td>%focusConsumerType%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Stage of business','bidxplugin');?></td>
+        <td>%focusStageBusiness%</td>
+        <td><?php _e('Gender','bidxplugin');?></td>
+        <td>%focusGender%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Investment type','bidxplugin');?></td>
+        <td>%investmentType%</td>
+        <td><?php _e('Minimum investment','bidxplugin');?></td>
+        <td>%minInvestment%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Maximum investment','bidxplugin');?></td>
+        <td>%maxInvestment%</td>
+        <td><?php _e('Total investment in the previous year','bidxplugin');?></td>
+        <td>%totalInvestment%</td>
+
+    </tr>
+    <tr>
+        <td><?php _e('Other preferences','bidxplugin');?></td>
+        <td>%additionalPreferences%</td>
+    </tr>
+</table>
+    -->
+</script>
+<script type="text/html" id="entrepreneur-listitem">
+<!--
+<table class="detailedInfo" cellpadding="5" cellspacing="0" border="0">
+    <tr>
+        <th colspan=4>
+            <h2 class="pull-left"><?php _e('Entrepreneur details','bidxplugin');?></h2>
+        </th>
+    </tr>
+    <tr>
+        <td><?php _e('Summary','bidxplugin');?></td>
+        <td>%summary%</td>
+        <td><?php _e('Interested In','bidxplugin');?></td>
+        <td>%interestedIn%</td>
+    </tr>
+    <tr>
+        <td colspan=4>
+            <div class="entrepreneur-businessitem"></div>
+        </td>
+    </tr>
+</table>
+    -->
+</script>
+
+<script type="text/html" id="entrepreneur-businessitem">
+    <!--
+    <div>
+    <table class="bpSummary" cellpadding="5" cellspacing="0" border="0">
+        <tbody>
+            <tr>
+                <th colspan=5>
+                    <h2 class="pull-left"><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%entityId%">%name%</a></h2>
+                </th>
+            </tr>
+            <tr class="top-border" >
+                <td rowspan=8 class="vtop">
+                    <div class="col-sm-3">
+                        <a class="pull-left" href="<?php echo _l('businesssummary');?>/%entityId%" data-role='businessImage'>
+                        <div class="icons-rounded pull-left"><i class="dashicons-before dashicons-products text-primary-light"></i></div>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="top-border">
+                <td><?php _e('Business proposal','bidxplugin')?></td>
+                <td><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%entityId%">%name%</a></td>
+                <td><?php _e('Slogan','bidxplugin')?></td>
+                <td>%slogan%</td>
+            </tr>
+            <tr>
+                <td><?php _e('Summary','bidxplugin');?></td>
+                <td>%summary%</td>
+                <td><?php _e('Reason for submission','bidxplugin');?></td>
+                <td>%reasonForSubmission%</td>
+
+            </tr>
+            <tr>
+                <td><?php _e('Industry','bidxplugin');?></td>
+                <td>%industry%</td>
+                <td><?php _e('Environmental Impact','bidxplugin')?></td>
+                <td>%envImpact%</td>
+            </tr>
+            <tr>
+                <td><?php _e('Business stage','bidxplugin');?></td>
+                <td>%stageBusiness%</td>
+                <td><?php _e('Consumer type','bidxplugin');?></td>
+                <td>%consumerType%</td>
+            </tr>
+            <tr>
+                <td><?php _e('Finance needed','bidxplugin');?></td>
+                <td>%financingNeeded%</td>
+                <td><?php _e('Summary of finance needed','bidxplugin');?></td>
+                <td>%summaryFinancingNeeded%</td>
+            </tr>
+
+            <tr>
+                <td><?php _e('Country','bidxplugin');?></td>
+                <td>%countryOperation% </td>
+                <td><?php _e('Investment type','bidxplugin');?></td>
+                <td>%investmentType%</td>
+
+            </tr>
+            <tr>
+                <td><?php _e('Year sales started','bidxplugin');?></td>
+                <td>%yearSalesStarted% </td>
+                <td><?php _e('Last Updated','bidxplugin');?></td>
+                <td>%bidxLastUpdateDateTime%</td>
+
+            </tr>
+            <tr>
+                <td colspan=5>
+                    <div class="pull-right"><a class="btn btn-primary btn-sm" target = "_blank" href="/businesssummary/%entityId%"><?php _e('View Proposal','bidxplugin')?></a> </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    -->
+</script>
+
+<script type="text/html" id="entity-listitem">
+<!--
+<div class="entityClass">
+    <label>Entity Type
+    <select class="entity_type">
+        <option value="bidxMemberProfile">All</option>
+        <option value="bidxEntrepreneurProfile">Entrepreneur</option>
+        <option value="bidxMentorProfile">Mentor</option>
+        <option value="bidxInvestorProfile">Investor</option>
+    </select>
+    </label>
+</div>
+ -->
+</script>

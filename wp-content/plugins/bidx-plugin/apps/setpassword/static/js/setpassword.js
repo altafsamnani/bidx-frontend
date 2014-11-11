@@ -92,12 +92,8 @@
         _showView( "error" );
     }
 
-
-
     function _doSave()
     {
-
-
         var extraUrlParameters =
         [
             {
@@ -115,10 +111,7 @@
                 {
                     bidx.utils.log( "member.passwordset ", response );
 
-
-                    document.location.href= "/setpassword/#setpassword/done";
-
-
+                    _getSession();
 
                 }
             ,   error:          function( jqXhr )
@@ -130,7 +123,40 @@
                     reset();
                     document.location.href= "/setpassword/#setpassword/error";
                     _showError( "Something went wrong changing the password: (" + status + ") " + response.code );
+                }
+            }
+        );
+    }
 
+    function _getSession()
+    {
+        var session;
+
+        bidx.api.call(
+            "session.fetch"
+        ,   {
+                groupDomain:            bidx.common.groupDomain
+            ,   success:        function( response )
+                {
+                    bidx.utils.log( "session.fetch ", response );
+
+                    if ( $.isEmptyObject(response.entities ) )
+                    {
+                        document.location.href= "/setpassword/#setpassword/role";
+                    }
+                    else
+                    {
+                        document.location.href= "/setpassword/#setpassword/done";
+                    }
+                }
+            ,   error:          function( jqXhr )
+                {
+                    var response = $.parseJSON( jqXhr.responseText )
+                    ,   status = bidx.utils.getValue( jqXhr, "status" ) || textStatus
+                    ;
+
+                    document.location.href= "/setpassword/#setpassword/error";
+                    _showError( "Something went wrong changing the password: (" + status + ") " + response.code );
                 }
             }
         );
@@ -156,8 +182,6 @@
     {
         bidx.utils.log("routing of setPassword", options );
 
-
-
         switch ( options.state )
         {
             case "expired":
@@ -166,9 +190,11 @@
             case "done":
                 _showView( "done" );
             break;
+            case "role":
+                _showView( "role" );
+            break;
             default:
                 _showView( "error" );
-
         }
     };
 

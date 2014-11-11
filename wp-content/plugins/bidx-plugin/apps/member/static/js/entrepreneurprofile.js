@@ -36,7 +36,7 @@
     ,   $attachmentsControl         = $editForm.find( ".attachmentsControl" )
     ,   $attachmentsContainer       = $attachmentsControl.find( ".attachmentsContainer" )
     ,   $btnAddAttachments          = $attachmentsControl.find( ".js-btn-add-attachments")
-    ,   $addAttachmentsModal        = $attachmentsControl.find( ".addAttachmentsModal" )
+    ,   $addAttachmentsModal        = $( "#otherDocumentsModal" )
 
         // Industy Sectors
         //
@@ -239,10 +239,10 @@
 
                 // Make sure the media app is within our modal
                 //
-                $( "#media" ).appendTo( $addAttachmentsModal.find( ".modal-body" ) );
+                $( "#media" ).appendTo( $( "#otherDocumentsModal .modal-body" ) );
 
-                var $selectBtn = $addAttachmentsModal.find( ".btnSelectFile" );
-                var $cancelBtn = $addAttachmentsModal.find( ".btnCancelSelectFile" );
+                var $selectBtn = $( "#otherDocumentsModal" ).find( ".btnSelectFile" );
+                var $cancelBtn = $( "#otherDocumentsModal" ).find( ".btnCancelSelectFile" );
 
                 // Navigate the media app into list mode for selecting files
                 //
@@ -295,12 +295,10 @@
                                 } );
                             }
 
-                            $addAttachmentsModal.modal('hide');
+                            $( "#otherDocumentsModal" ).modal('hide');
                         }
                     }
                 } );
-
-                $addAttachmentsModal.modal();
             } );
 
             // Instantiate reflowrower on the attachments container
