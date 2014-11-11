@@ -529,9 +529,7 @@
                                                         {
                                                             jsonEnd = totalRow;
                                                         }
-                                                        bidx.utils.log('iMax', iMax);
-                                                        bidx.utils.log('iTotal', iTotal);
-                                                         bidx.utils.log('oSettings', oSettings);
+
                                                         oSettings._iDisplayStart    =   jsonStart - 1;
                                                         //oSettings._iDisplayLength   =   CONSTANTS.SEARCH_LIMIT;
 
@@ -541,12 +539,11 @@
                                                     {
                                                         var ownerId             =   $( row ).data( 'ownerId' )
                                                         ,   existedItemMember   =   bidx.utils.getValue( listMember, ownerId); // Check if it was already fetched then render it directly
-                                                        bidx.utils.log('ownerId',ownerId);
-                                                        bidx.utils.log('data',data);
-                                                        bidx.utils.log('dataIndex',dataIndex);
 
                                                         if( existedItemMember )
                                                         {
+                                                            data.item   = existedItemMember; // itemmember-->row Data to get values when click on + through td.details-control
+
                                                             data.result =   _addMemberDataToTable(
                                                                                                     {
                                                                                                         item:   existedItemMember
@@ -676,6 +673,72 @@
             e.preventDefault();
             userTable.draw();
         } );
+
+        $userTableSelector.find('tbody').on('click', 'td.details-control', function ( )
+        {
+            var personalInfo    = ''
+            ,   entrepeneurInfo = ''
+            ,   mentorInfo      = ''
+            ,   investorInfo
+            ,   allInfo
+            ,   isMember
+            ,   isEntrepreneur
+            ,   isInvestor
+            ,   isMentor
+            ,   tr                  =   $(this).closest('tr')
+            ,   row                 =   userTable.row( tr )
+            ,   data                =   row.data()
+            ,   item                =   data.item
+            ,   $allInfo            =   $('<div>')
+            ;
+
+            if ( row.child.isShown() )
+            {
+                // This row is already open - close it
+                row.child.hide();
+
+                tr.removeClass('shown');
+            }
+            else
+            {
+                // Open this row
+                isMember            =   bidx.utils.getValue( item, "bidxMemberProfile" );
+                isEntrepreneur      =   bidx.utils.getValue( item, "bidxEntrepreneurProfile" );
+                isInvestor          =   bidx.utils.getValue( item, "bidxInvestorProfile" );
+                isMentor            =   bidx.utils.getValue( item, "bidxMentorProfile" );
+
+                if ( isMember )
+                {
+                    personalInfo    =    _addDetailedInfo('Personal', data );
+                }
+
+                if ( isEntrepreneur )
+                {
+                   entrepeneurInfo  =  _addDetailedInfo('Entrepreneur', data );
+                }
+
+                if( isMentor )
+                {
+                    mentorInfo      =   _addDetailedInfo('Mentor', data );
+                }
+
+                if( isInvestor )
+                {
+                    investorInfo    =   _addDetailedInfo('Investor', data );
+                }
+
+                $allInfo.append (   personalInfo
+                                ,   entrepeneurInfo
+                                ,   mentorInfo
+                                ,   investorInfo
+                                );
+
+                row.child(  $allInfo ).show();
+
+                tr.addClass('shown');
+            }
+        } );
+
         // Convenience function for translating a language key to it's description
         //
         function _getLanguageLabelByValue( value )
@@ -700,6 +763,8 @@
 
             return label;
         }
+
+
 
         function _addDetailedInfo ( type, data )
         {
@@ -852,7 +917,7 @@
                     imageLeft   = bidx.utils.getValue( image, "left" );
                     imageTop    = bidx.utils.getValue( image, "top" );
                     $listItemPersonal.find( "[data-role = 'memberImage']" ).html( '<div class="img-cropper"><img src="' + image.document + '" style="width:'+ imageWidth +'px; left:-'+ imageLeft +'px; top:-'+ imageTop +'px;" alt="" /></div>' );
-                    bidx.utils.log('in profile imageeeeeeeee',$listItemPersonal.find( "[data-role = 'memberImage']" ));
+
                 }
 
                 $listItem = $listItemPersonal;
@@ -1037,7 +1102,8 @@
                     ,   bidxMentorProfile   =   bidx.utils.getValue(item, 'bidxMentorProfile')
                     ,   institutionName     =   bidx.utils.getValue( bidxMentorProfile, "institutionName")
                     ,   institutionWebsite  =   bidx.utils.getValue( bidxMentorProfile, "institutionWebsite")
-                    ,   summaryMentor       =   bidx.utils.getValue(bidxMentorProfile, 'summary')
+                    ,   summaryMentor       =   bidx.utils.getValue( bidxMentorProfile, 'summary')
+                    ,   addPreferences      =   bidx.utils.getValue( bidxMentorProfile, "focusPreferences.0")
                     ,   dataArrMentor       =   {
                                                     'focusIndustry':'industry'   ,
                                                     'focusSocialImpact': 'socialImpact',
@@ -1050,7 +1116,7 @@
                                                     'focusExpertise':'mentorExpertise'
                                               }
                     ;
-
+                    bidx.utils.log('addPreferences', addPreferences);
                     bidx.data.getStaticDataVal(
                      {
                          dataArr    : dataArrMentor
@@ -1073,7 +1139,7 @@
                          .replace( /%focusCountry%/g,           i18nMentor.focusCountry   ? i18nMentor.focusCountry     : emptyValMentor )
                          .replace( /%focusIndustry%/g,          i18nMentor.focusIndustry    ? i18nMentor.focusIndustry      : emptyValMentor )
                          .replace( /%focusExpertise%/g,         i18nMentor.focusExpertise    ? i18nMentor.focusExpertise      : emptyValMentor )
-                         .replace( /%additionalPreferences%/g,  i18nMentor.focusPreferences.length    ? i18nMentor.focusPreferences[0]      : emptyValInvestor )
+                         .replace( /%additionalPreferences%/g,  (addPreferences)     ? addPreferences      : emptyValMentor )
                     ;
 
 
@@ -1104,67 +1170,7 @@
 
 
 
-        $userTableSelector.find('tbody').on('click', 'td.details-control', function ( )
-        {
-            var personalInfo    = ''
-            ,   entrepeneurInfo = ''
-            ,   mentorInfo      = ''
-            ,   investorInfo
-            ,   allInfo
-            ,   isMember
-            ,   isEntrepreneur
-            ,   isInvestor
-            ,   isMentor
-            ,   tr                  =   $(this).closest('tr')
-            ,   row                 =   userTable.row( tr )
-            ,   data                =   row.data()
-            ,   item                =   data.item
-            ,   $allInfo            =   $('<div>')
-            ;
 
-            if ( row.child.isShown() ) {
-                // This row is already open - close it
-                row.child.hide();
-                tr.removeClass('shown');
-            }
-            else {
-                // Open this row
-                isMember            =   bidx.utils.getValue( item, "bidxMemberProfile" );
-                isEntrepreneur      =   bidx.utils.getValue( item, "bidxEntrepreneurProfile" );
-                isInvestor          =   bidx.utils.getValue( item, "bidxInvestorProfile" );
-                isMentor            =   bidx.utils.getValue( item, "bidxMentorProfile" );
-
-                if ( isMember )
-                {
-                    personalInfo        =    _addDetailedInfo('Personal', data );
-                }
-
-                if ( isEntrepreneur )
-                {
-                   entrepeneurInfo  =  _addDetailedInfo('Entrepreneur', data );
-                }
-
-                if( isMentor )
-                {
-                    mentorInfo      =   _addDetailedInfo('Mentor', data );
-                }
-
-                if( isInvestor )
-                {
-                    investorInfo    =   _addDetailedInfo('Investor', data );
-                }
-
-                $allInfo.append (   personalInfo
-                                ,   entrepeneurInfo
-                                ,   mentorInfo
-                                ,   investorInfo
-                                );
-
-                row.child(  $allInfo ).show();
-
-                tr.addClass('shown');
-            }
-        } );
 
         function _buildUserListingSearchCriteria ( data, criteria )
         {
@@ -1421,7 +1427,7 @@
         var options
         ;
         // 1. Load Country Geo Chart & Load User Role Pie Chart
-        /*_showView("loadcountrygeochart", true );
+        _showView("loadcountrygeochart", true );
 
         _showView("loaduserrolepiechart", true );
 
@@ -1498,7 +1504,7 @@
                                 _showError( 'lineChartError', "Something went wrong while retrieving the search data: " + responseText );
 
                             }
-        }); */
+        });
 
         // 4. Load Latest uers  in Table
         _showView("loadusertablechart", true );
