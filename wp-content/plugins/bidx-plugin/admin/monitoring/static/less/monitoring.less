@@ -25,6 +25,7 @@
 }
 
 .monitoring tr.error
+, .monitoring tr.error > td[class^="sorting_"]
 {
 	background-color: #f9e2e2 !important;
 }
@@ -90,6 +91,12 @@
 	background-color: #8a51b1;
 }
 
-.fa-user {
-	content: "\f007";
+.monitoring .dashicons-admin-users:before
+{
+	font-size:66px;
+}
+
+.monitoring .dashicons-products:before
+{
+	font-size:45px;
 }
