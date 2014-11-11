@@ -150,14 +150,30 @@ class ContentLoader
                     // $content = ob_get_clean();
                 }
 
-                if ( $post_id ) {
-                	$this->logger->trace( 'Post updating : ' . $post->name . ' : ' . $post_id);
-                	wp_update_post( array(
-                			'ID'           => $post_id,
-                			'post_content' => $content,
-                            'post_author'  => ($userID) ? $userID : 1
-                		) );
-                } else {
+                if ( $post_id )
+                {
+                    $isRevision         =   wp_get_post_revisions($post_id, array( 'check_enabled' => false ));
+
+                    if(!count($isRevision))
+                    {
+                        $force_delete   =   true;
+                        $post_id        =   false;
+                        wp_delete_post( $post_id, $force_delete );
+                        $this->logger->trace( 'Post deleting : ' . $post->name . ' : ' . $post_id);
+                        /* Old code
+                        $this->logger->trace( 'Post : ' . $post->name . ' is revision: ' . $isRevision);
+                    	$this->logger->trace( 'Post updating : ' . $post->name . ' : ' . $post_id);
+                    	wp_update_post( array(
+                    			'ID'           => $post_id,
+                    			'post_content' => $content,
+                                'post_author'  => ($userID) ? $userID : 1
+                    		) );*/
+
+                    }
+                }
+                //Insert New post 1) Never Existed 2) Existed and never modified then Deleted above and now adding it again
+                if( !$post_id )
+                {
                 	$this->logger->trace( 'Inserting new post : ' . $post->name );
                 	$insertPostArr = array (
                 				'post_content'  => $content
