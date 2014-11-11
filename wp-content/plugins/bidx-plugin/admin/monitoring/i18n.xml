@@ -36,4 +36,5 @@
     <Item value="summary">Summary</Item>
     <Item value="interestedIn">Interested in</Item>
     <Item value="investorType">Investor Type</Item>
+    <Item value="paginationSnippit">Showing records %from% to %to% of total %total%</Item>
 </I18N>

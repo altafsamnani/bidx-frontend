@@ -534,8 +534,10 @@
                                                     }*/
                         ,   "fnInfoCallback":       function( oSettings, iStart, iEnd, iMax, iTotal, sPre )
                                                     {
-                                                        var jsonStart   =   iStart
-                                                        ,   jsonEnd     =   iStart + oSettings._iDisplayLength - 1
+                                                        var jsonStart       =   iStart
+                                                        ,   jsonEnd         =   iStart + oSettings._iDisplayLength - 1
+                                                        ,   bottomMsg
+                                                        ,   snippitBottom   =   bidx.i18n.i('paginationSnippit', appName)
                                                         ;
 
                                                         if( jsonEnd > totalRow)
@@ -545,8 +547,13 @@
 
                                                         oSettings._iDisplayStart    =   jsonStart - 1;
                                                         //oSettings._iDisplayLength   =   CONSTANTS.SEARCH_LIMIT;
+                                                        bottomMsg = snippitBottom
+                                                                    .replace( /%from%/g,    iStart )
+                                                                    .replace( /%to%/g,      jsonEnd )
+                                                                    .replace( /%total%/g,   totalRow )
+                                                                    ;
 
-                                                        return 'Showing records ' + iStart +" to "+ jsonEnd + " of total " + totalRow;
+                                                        return bottomMsg;
                                                     }
                         ,   "createdRow":           function( row, data, dataIndex )
                                                     {
