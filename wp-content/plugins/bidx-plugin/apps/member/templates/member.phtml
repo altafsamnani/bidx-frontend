@@ -63,7 +63,13 @@ $isSuperAdmin   = is_super_admin();
         <!-- Nav tabs -->
         <ul class="nav nav-tabs tabs-left">
             <li class="active"><a href="#tab-member" data-toggle="tab"><i class="pull-left fa fa-user"></i> Member</a></li>
+<?php
+            if ( !empty($this->data->bidxEntrepreneurProfile ) ):
+?>          
             <li><a href="#tab-entreprenuer" data-toggle="tab"><i class="pull-left fa fa-lightbulb-o"></i> Entrepreneur</a></li>
+<?php
+            endif;
+?>          
 <?php
             if ( $this->isLoggedInInvestor || $this->isLoggedInGroupOwner ) :
 ?>          
@@ -71,8 +77,14 @@ $isSuperAdmin   = is_super_admin();
 <?php
             endif;
 ?>          
+<?php
+            if ( !empty($this->data->bidxMentorProfile ) ):
+?>          
 
             <li><a href="#tab-mentor" data-toggle="tab"><i class="pull-left fa fa-compass"></i> Mentor</a></li>
+<?php
+            endif;
+?>          
         </ul>
         
         <?php // $this-> //render('create-grow.phtml'); ?>
@@ -84,9 +96,15 @@ $isSuperAdmin   = is_super_admin();
             <div class="tab-pane active" id="tab-member">
                 <?php $this->render('view-member.phtml');  ?>
             </div>
+<?php
+            if ( !empty($this->data->bidxEntrepreneurProfile ) ):
+?>          
             <div class="tab-pane" id="tab-entreprenuer">
                 <?php $this->render('view-entrepreneur.phtml'); ?>
             </div>
+<?php
+            endif;
+?>          
 <?php
             if ( $this->isLoggedInInvestor || $this->isLoggedInGroupOwner ) :
 ?>          
@@ -96,9 +114,15 @@ $isSuperAdmin   = is_super_admin();
 <?php
             endif;
 ?>          
+<?php
+            if ( !empty($this->data->bidxMentorProfile ) ):
+?>          
             <div class="tab-pane" id="tab-mentor">
                 <?php $this->render('view-mentor.phtml'); ?>
             </div>
+<?php
+            endif;
+?>          
         </div>
     </div> 
 
