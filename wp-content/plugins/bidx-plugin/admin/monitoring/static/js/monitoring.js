@@ -676,8 +676,8 @@
         /********** Filter Handling *************/
         $entityDiv      =   $element.find( "#entity-listitem" );
         snippitEntity   =   $entityDiv.html().replace(/(<!--)*(-->)*/g, "");
-        $("div.toolbar").html(snippitEntity);
-        $('.entity_type').on('click', function( e )
+        $element.find("div.toolbar").html(snippitEntity);
+        $element.find('.entity_type').on('click', function( e )
         {
             e.preventDefault();
             userTable.draw();
@@ -1146,8 +1146,8 @@
                      //search for placeholders in snippit
                      listItemMentor = snippitMentor
                          .replace( /%summary%/g,                summaryMentor   ? summaryMentor     : emptyValMentor )
-                         .replace( /%institutionName%/g,        investorType   ? investorType     : emptyValMentor )
-                         .replace( /%institutionWebsite%/g,     i18nMentor.focusIndustry   ? i18nMentor.focusIndustry     : emptyValMentor )
+                         .replace( /%institutionName%/g,        bidxMentorProfile.institutionName   ? bidxMentorProfile.institutionName     : emptyValMentor )
+                         .replace( /%institutionWebsite%/g,     bidxMentorProfile.institutionWebsite   ? bidxMentorProfile.institutionWebsite     : emptyValMentor )
                          .replace( /%focusGender%/g,            i18nMentor.focusGender    ? i18nMentor.focusGender      : emptyValMentor )
                          .replace( /%focusStageBusiness%/g,     i18nMentor.focusStageBusiness  ? i18nMentor.focusStageBusiness    : emptyValMentor )
                          .replace( /%focusLanguage%/g,          i18nMentor.focusLanguage  ? i18nMentor.focusLanguage    : emptyValMentor )
@@ -1566,6 +1566,18 @@
         google.load("visualization", "1.0", {packages:["corechart","table"]});
 
         google.setOnLoadCallback(_getData);
+
+        /*Commented because currently there is no functinality to fetch stats on date and nsearch
+        $element.find('.monitoring-date').datepicker({
+            dateFormat : 'dd-mm-yy'
+        });
+
+        $element('.monitoring-submit').on('click', function( e )
+        {
+            e.preventDefault();
+            _getData( );
+        } ); */
+
 
     }
 

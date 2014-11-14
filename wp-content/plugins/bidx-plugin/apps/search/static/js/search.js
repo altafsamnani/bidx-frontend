@@ -381,7 +381,8 @@
             {
 
                 facetValues    = bidx.utils.getValue( facetItems, "facetValues" );
-                facetLabel     = bidx.i18n.i( facetItems.name, appName );
+
+                facetLabel     = facetItems.name.replace(/facet_/g,'').toLowerCase(); //removing fact_industry
 
                 if ( !$.isEmptyObject(facetValues) )
                 {
@@ -394,9 +395,9 @@
                     $.each( facetValues , function ( idx, item )
                     {
 
-                        if ( facetItems.name !== 'facet_entityType' )
+                        if ( facetLabel !== 'entitytype' ) //facet_entityType to entitytype through facetLabel
                         {
-                            item.name    = bidx.data.i( item.name, facetLabel.toLowerCase() );  // ict.services in industry
+                            item.name    = bidx.data.i( item.name, facetLabel );  // ict.services in industry
                         }
                         else
                         {

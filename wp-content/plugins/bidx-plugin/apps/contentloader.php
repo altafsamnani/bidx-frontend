@@ -81,6 +81,9 @@ class ContentLoader
         $rewrite_rules = array();
 
         $this->logger->trace( 'Start loading default data from location : ' . $this->location );
+        // Include WPML API
+        include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+ 
         foreach ( glob( BIDX_PLUGIN_DIR . '/../' . $this->location . '/*.xml' ) as $filename ) {
             //try /catch / log ignore
             $document = simplexml_load_file( $filename );
@@ -105,25 +108,25 @@ class ContentLoader
 
                     if ( $page -> ID ) {
                         wp_update_post( array(
-                			'ID'           => $page -> ID,
+                            'ID'           => $page -> ID,
                             'post_author'   => ($userID) ? $userID : 1
-                		) );
+                        ) );
 
                         $this->logger->trace( 'Post exist, skipping : ' . $post->name );
                         continue;
                     } else {
-                    	$post_id = false;
+                        $post_id = false;
                     }
 
                 } else {
 
-                	if ( $page ) {
+                    if ( $page ) {
                         $this->logger->trace( 'Post exist, for update : ' . $page->post_title . ' : '. $page->ID );
                         $post_id = $page -> ID;
                     }
                     else {
-                    	$this->logger->trace( 'Post not found : ' . (string) $post->name );
-                    	$post_id = false;
+                        $this->logger->trace( 'Post not found : ' . (string) $post->name );
+                        $post_id = false;
                     }
                 }
 
@@ -133,21 +136,19 @@ class ContentLoader
 
                 // $msp: if htmpTemplate is available, replace the content with the source from the template file
                 //
-                if ( isset( $post->htmlTemplate ) && $post->htmlTemplate != '' ) {
+                if ( isset( $post->htmlTemplate ) && $post->htmlTemplate != '' ) 
+                {
                     $this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . '.phtml' );
                     // open template file and get content
                     //
                     try {
-                    	$stream = fopen( BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml' , "r" );
-                    	$fileContent = stream_get_contents( $stream );
+                        $stream = fopen( BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml' , "r" );
+                        $fileContent = stream_get_contents( $stream );
                         $content = $this->replacePlaceHolders($fileContent);
-                    	fclose( $stream );
+                        fclose( $stream );
                     } catch (Exception $e) {
-                    	$this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . ' FAILED' );
+                        $this->logger->trace( 'Getting content from htmlTemplate ' . $post->htmlTemplate . ' FAILED' );
                     }
-                    // ob_start();
-                    // include BIDX_PLUGIN_DIR . '/../'. $this->location . '/templates/'  . $post->htmlTemplate . '.phtml';
-                    // $content = ob_get_clean();
                 }
 
                 if ( $post_id )
@@ -156,54 +157,57 @@ class ContentLoader
 
                     if(!count($isRevision))
                     {
-                        $force_delete   =   true;
-                        $post_id        =   false;
-                        wp_delete_post( $post_id, $force_delete );
-                        $this->logger->trace( 'Post deleting : ' . $post->name . ' : ' . $post_id);
-                        /* Old code
-                        $this->logger->trace( 'Post : ' . $post->name . ' is revision: ' . $isRevision);
-                    	$this->logger->trace( 'Post updating : ' . $post->name . ' : ' . $post_id);
-                    	wp_update_post( array(
-                    			'ID'           => $post_id,
-                    			'post_content' => $content,
-                                'post_author'  => ($userID) ? $userID : 1
-                    		) );*/
+                        //If Multilanguage is enabled then delete all translated pages too
+                        if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+                        {
+                            $modifiedTranslatedPage =   $this->delete_static_translations_on_deactivation($post_id, $page->post_type );
+                        }
 
+                        $this->logger->trace( 'Deleting Main Page: ' . $post->name . ' : ' . $post_id);
+                        $force_delete   =   true;
+                        $isDeleted      =   wp_delete_post( $post_id, $force_delete );
+                        $post_id        =   false;
                     }
                 }
+
                 //Insert New post 1) Never Existed 2) Existed and never modified then Deleted above and now adding it again
                 if( !$post_id )
                 {
-                	$this->logger->trace( 'Inserting new post : ' . $post->name );
-                	$insertPostArr = array (
-                				'post_content'  => $content
-                			,   'post_name'     => $post->name
-                			,   'post_status'   => 'publish'
-                			,   'post_title'    => $post->title
-                			,   'post_type'     => $document->posttype
-                			,   'post_author'   => ($userID) ? $userID : 1
-                	);
+                    $this->logger->trace( 'Inserting new post : ' . $post->name );
+                    $insertPostArr = array (
+                                'post_content'  => $content
+                            ,   'post_name'     => $post->name
+                            ,   'post_status'   => 'publish'
+                            ,   'post_title'    => $post->title
+                            ,   'post_type'     => $document->posttype
+                            ,   'post_author'   => ($userID) ? $userID : 1
+                    );
 
-                	//$enPostArr = $insertPostArr;
-                	//$enPostArr['post_name'] = $insertPostArr['post_name'].'_en';
-                	//$post_id = wp_insert_post($enPostArr);
+                    $post_id = wp_insert_post( $insertPostArr );
 
-	                $post_id = wp_insert_post( $insertPostArr );
-	                if (!$post_id) {
-	                    wp_die ('Error creating page');
-	                }
+                    if (!$post_id) 
+                    {
+                        wp_die ('Error creating page');
+                    } 
+                    else
+                    {   //If Multilanguage is enabled then add or link all translated pages
+                        if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php') )
+                        {
+                            $this->add_static_translations_on_deactivation ( $post_id, $insertPostArr );
+                        }
+                    }
                 }
 
                 // set page as Home page
                 //
                 if ( isset ( $post->setHomePage ) && $post->setHomePage == 'true' ) {
-	                update_option( 'show_on_front', 'page' );
-	                update_option( 'page_on_front', $post_id );
+                    update_option( 'show_on_front', 'page' );
+                    update_option( 'page_on_front', $post_id );
                 }
 
                 if ( isset( $post->template ) ) {
-                	$this->logger->trace ('Adding template on post ' . $post_id . ' named : ' . $post->template);
-                	update_post_meta ($post_id, '_wp_page_template', (string) $post->template);
+                    $this->logger->trace ('Adding template on post ' . $post_id . ' named : ' . $post->template);
+                    update_post_meta ($post_id, '_wp_page_template', (string) $post->template);
                 }
                 // $post_translated_id = $this->mwm_wpml_translate_post($post_id,$insertPostArr,'es' );
 
@@ -223,7 +227,7 @@ class ContentLoader
                         add_rewrite_rule ($mappingOrig, $target, 'top');
                         $rewrite_rules[$mappingOrig] = $target;
                     } else {
-                    	$this->logger->trace ("Skipping rewrite");
+                        $this->logger->trace ("Skipping rewrite");
                     }
 
                     //$enMapping = str_replace('^','^/en/',$mappingOrig);
@@ -366,6 +370,137 @@ class ContentLoader
         delete_option( 'BIDX_REWRITE_RULES' );
     }
 
+    public function add_static_translations_on_deactivation( $post_id, $insertPostArr )
+    {
+        // Associate original post and translated post
+        global $wpdb;
+        $postTranslateArr   =   array();
+        $post_type          =   $insertPostArr['post_type'];
+        $trid               =   wpml_get_content_trid ('post_' . $post_type, $post_id); // Get trid of original post
+        $langArr            =   wpml_get_active_languages( );
+
+        unset($langArr['en']);
+
+        $this->logger->trace( 'Wpml Active Languages : ' . var_export($langArr,true) );
+
+        foreach($langArr as $lang => $langVal)
+        {
+            // Define title of translated post
+            $insertPostArr['post_title']    = $insertPostArr['post_title'] . ' (' . $lang . ')';
+            $insertPostArr['post_name']     = $insertPostArr['post_name'] . '-' . $lang;
+
+            // Insert translated post
+            $post_translated_id             = wp_insert_post ($insertPostArr);
+
+            // Get default language
+            $default_lang                   = wpml_get_default_language ( );
+
+            $wpdb->update   ( $wpdb->prefix . 'icl_translations'
+                            , array ( 'trid' => $trid
+                                    , 'language_code' => $lang
+                                    , 'source_language_code' => $default_lang)
+                                    , array ('element_id' => $post_translated_id
+                                    )
+                            );
+
+            $this->logger->trace( sprintf('Language %s - %s %s: ' , $lang, $post_translated_id, $page['post_name'] ) );
+
+            $postTranslateArr[] =   $post_translated_id;
+
+        }
+
+        // Return translated post ID Arr
+        return $postTranslateArr;
+    }
+
+    public function delete_static_translations_on_deactivation( $post_id, $postType )
+    {
+        $modifiedTranslatedPage = array();
+        $pageTranslations       = wpml_get_content_translations( 'post_'.$postType, $post_id);
+
+        foreach( $pageTranslations as $language => $translatedPageId)
+        {
+            $isRevision         =   wp_get_post_revisions($translatedPageId, array( 'check_enabled' => false ));
+            if(!count($isRevision))
+            {
+                $this->logger->trace( 'Deleting Translated Page: ' .  $translatedPageId);
+                $force_delete   =   true;
+                $isDeleted      =   wp_delete_post( $translatedPageId, $force_delete );
+            } 
+            else 
+            {
+                $modifiedTranslatedPage[$post_id][$language]   =   $translatedPageId;
+            }
+        }
+
+        return $modifiedTranslatedPage; // Store it and use it in add_static_translations_on_deactivatin to link exisiting modified translations to the english pages
+    }
+
+    public function add_static_page_translations( $langs  )
+    {
+        // Include WPML API
+        //include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+
+        // Include WPML API
+        include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+
+        $this->logger->trace (sprintf ('POST data export: %s' , var_export ($_POST, true)));
+
+        $langArr  = explode(',',$langs);
+
+
+        $filename = BIDX_PLUGIN_DIR . '/../pages/page.xml';
+
+        $document = simplexml_load_file( $filename );
+
+        $this->logger->trace( 'Start processing file : ' . $filename );
+
+        $posts    = $document->xpath ( '//post' );
+
+        $this->logger->trace( 'Found posts : ' . sizeof( $posts ) );
+
+        foreach ( $posts as $post )
+        {
+            if ( $post->setTranslate == 'true' )
+            {
+                $page               = (array) get_page_by_title( (string) $post->title, 'OBJECT', $document->posttype );
+                $postID             = $page['ID'];
+                $type               = $page['post_type'];
+
+                //$trid               = wpml_get_content_trid ( 'post_'.$type, $postID );
+
+                unset($page['ID']);
+
+                $pageTranslations = wpml_get_content_translations( 'post_'.$type, $postID);
+
+                $this->logger->trace( sprintf('translations %s' , var_export($pageTranslations, true) ) );
+
+                foreach( $langArr as $langVal)
+                {
+                    if( !array_key_exists( $langVal, $pageTranslations ) )
+                    {
+                        /*$page['post_title'] = $page['post_title']."-".$langVal;
+                        $page['post_name']  = $page['post_name']."_".$langVal;*/
+
+                        $this->logger->trace( sprintf('Inserting new post : Language %s, %s' , $langVal , var_export($page, true) ) );
+
+                       /* $contentId = wp_insert_post( $page );
+
+                        wpml_add_translatable_content ( $type, $contentId, $langVal, $trid ); */
+
+                        $this->mwm_wpml_translate_post ($postID, $page, $langVal);
+                    }
+                    else
+                    {
+                        $this->logger->trace( sprintf('Language already there %s - %s %s: ' , $lang, $post_translated_id, $page['post_name'] ) );
+                    }
+
+                }
+
+            }
+        }
+    }
+
     /**
      * Initialize post type
      * @param $post_type type that needs to created custom
@@ -401,67 +536,7 @@ class ContentLoader
 
         if ( isset( $_POST [ 'icl_ajx_action' ] ) && $_POST [ 'icl_ajx_action' ] && !empty ( $_POST[ 'langs' ] ) ) {
 
-            // Include WPML API
-            //include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
-
-            // Include WPML API
-            include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
-
-            $this->logger->trace (sprintf ('POST data export: %s' , var_export ($_POST, true)));
-
-            $langArr  = explode(',',$_POST['langs']);
-
-
-            $filename = BIDX_PLUGIN_DIR . '/../pages/page.xml';
-
-            $document = simplexml_load_file( $filename );
-
-            $this->logger->trace( 'Start processing file : ' . $filename );
-
-            $posts    = $document->xpath ( '//post' );
-
-            $this->logger->trace( 'Found posts : ' . sizeof( $posts ) );
-
-            foreach ( $posts as $post )
-            {
-                if ( $post->setTranslate == 'true' )
-                {
-                    $page               = (array) get_page_by_title( (string) $post->title, 'OBJECT', $document->posttype );
-                    $postID             = $page['ID'];
-                    $type               = $page['post_type'];
-
-                    //$trid               = wpml_get_content_trid ( 'post_'.$type, $postID );
-
-                    unset($page['ID']);
-
-                    $pageTranslations = wpml_get_content_translations( 'post_'.$type, $postID);
-
-                    $this->logger->trace( sprintf('translations %s' , var_export($pageTranslations, true) ) );
-
-                    foreach( $langArr as $langVal)
-                    {
-                        if( !array_key_exists( $langVal, $pageTranslations ) )
-                        {
-                            /*$page['post_title'] = $page['post_title']."-".$langVal;
-                            $page['post_name']  = $page['post_name']."_".$langVal;*/
-
-                            $this->logger->trace( sprintf('Inserting new post : Language %s, %s' , $langVal , var_export($page, true) ) );
-
-                           /* $contentId = wp_insert_post( $page );
-
-                            wpml_add_translatable_content ( $type, $contentId, $langVal, $trid ); */
-
-                            $this->mwm_wpml_translate_post ($postID, $page, $langVal);
-                        }
-                        else
-                        {
-                            $this->logger->trace( sprintf('Language already there %s - %s %s: ' , $lang, $post_translated_id, $page['post_name'] ) );
-                        }
-
-                    }
-
-                }
-            }
+            $this->add_static_page_translations( $_POST[ 'langs' ] );
 
         }
     }

@@ -19,7 +19,12 @@ echo delete_user_option( $this->userId, "meta-box-order_".$screen->id, true );
 	<form name="my_form" method="post">
 		<input type="hidden" name="action" value="some-action">
 		<?php wp_nonce_field( 'some-action-nonce' ); ?>
-
+		<?php
+			if ( $this->topContent )
+			{
+				echo  $this->topContent ;
+			}
+		?>
 		<div id="poststuff">
 			<div id="post-body" class="metabox-holder<?php echo $columns_css; ?>">
 

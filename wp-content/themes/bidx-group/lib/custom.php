@@ -358,6 +358,67 @@ function _wl( $url = NULL )
   return $returnUrl;
 
 }
+
+function languages_list_header( )
+{
+  global $sitepress;
+
+  if( $sitepress )
+  {
+    $currentLanguage  = $sitepress->get_current_language();
+
+    $baseUrl          = str_replace( '/'.$currentLanguage.'/', "/", $_SERVER['REQUEST_URI'] );
+
+    $languages        = icl_get_languages("skip_missing=0&orderby=code&link_empty_to=/{%lang}{$baseUrl}");
+
+    if(!empty($languages))
+    {
+        $htmlInactive = NULL;
+
+        $htmlActive   = NULL;
+
+        $html         = "<div class='widget widget_icl_lang_sel_widget'>
+                          <div id='lang_sel'>
+                            <ul>
+                              <li>";
+
+        foreach($languages as $l)
+        {
+            $nameHtml     =   icl_disp_language($l['native_name'], $l['translated_name']);
+
+            if($l['active'])
+            {
+                $htmlActive   =  "<a href='#' class='lang_sel_sel icl-".$l['language_code']."'>
+                                    <span class='icl_lang_sel_current'>".$nameHtml."</span>
+                                  </a>";
+            }
+            else
+            {
+                $htmlInactive .=  "<li class='icl-".$l['language_code']."'>
+                                      <a href='".$l['url']."' class='lang_sel icl-".$l['language_code']."'>
+                                        <span class='icl_lang_sel_native'>".$nameHtml."</span>                                        
+                                      </a>
+                                  </li>";
+            }
+        }
+
+        $html   .= $htmlActive;
+
+        if( $htmlInactive )
+        {
+          $html   .= "<ul>". $htmlInactive. "</ul>";
+        }
+
+        $html   .=    '</li>
+                    </ul>
+                  </div>
+                  </div>';
+
+        return $html;
+    }
+  }
+}
+
 function languages_list_footer()
 {
 
