@@ -210,11 +210,14 @@
 
             listItem.push( [countryLabel, countryNameLabel, growthLabel ] );
 
+
             $.each( facetList.facetValues, function( idx, item )
             {
                 labelName   =   bidx.data.i( item.name, "country" );
                 label       =   item.name;
+
                 listItem.push( [ label, labelName, item.count] );
+
             } );
 
             data = google.visualization.arrayToDataTable( listItem );
@@ -224,12 +227,17 @@
         // Set chart option
 
         options     =   {
-                            title   :         bidx.i18n.i('regionTitle', appName)
-                        ,   sizeAxis:         { minValue: 0, maxValue: 100 }
-                        ,   magnifyingGlass:  {enable: true, zoomFactor: 5.0}
-                        ,   displayMode:      'markers'
-                        ,   colorAxis:        {colors: ['#e7711c', '#4374e0']} // orange to blue
+                            title   :               bidx.i18n.i('regionTitle', appName)
                         };
+                        //,   sizeAxis:             { minValue: 0, maxValue: 100 }
+                        //,   magnifyingGlass:        {enable: true, zoomFactor: 5.0}
+                        //,   displayMode:          'markers'
+                        //,   colorAxis:            {colors: ['#e7711c', '#4374e0']} // orange to blue
+                        //,   colorAxis:              {colors: ['#00853f', '#000000', '#e31b23']}
+                        //,   colorAxis:              {minValue: 0,  colors: ['#FF0000', '#00FF00']}
+                        //,   backgroundColor:        '#FFFFF'
+                        //,   datalessRegionColor:    '#ecf1ee'
+
 
         chart = new google.visualization.GeoChart(document.getElementById('country_geo_chart'));
 
