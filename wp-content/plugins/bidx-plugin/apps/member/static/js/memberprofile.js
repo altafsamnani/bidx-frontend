@@ -9,7 +9,6 @@
     ,   $snippets                   = $element.find( ".snippets" )
 
     ,   $languageList               = $editForm.find( ".languageList" )
-    ,   $btnAddLanguage             = $editForm.find( ".js-btn-add-language" )
     ,   $inputAddLanguage           = $editForm.find( "input[name='addLanguage']" )
 
     ,   $personalDetailsNationality         = $editForm.find( "[name='personalDetails.nationality']" )
@@ -59,6 +58,7 @@
 
         // Languages
         //
+    ,   $languageSelect             = $editForm.find( "[name='languages']"     )
     ,   languages
 
         // Object for maintaining a list of currently selected languages, for optimizations only
@@ -246,28 +246,15 @@
         //
         function _languages()
         {
-            // Retrieve the list of languages from the data api
-            //
-            bidx.data.getContext( "language", function( err, data )
+            $languageSelect.bidx_chosen(
             {
-                languages = data;
+                dataKey:            "language"
+            ,   emptyValue:         bidx.i18n.i( "frmSelectFieldRequired" )
+            });
 
-                // Initialize the autocompletes
-                //
-                $inputAddLanguage.typeahead(
-                {
-                    name:       "languages"
-                ,   local:      _.map( languages, function( language ) { return language.label; } )
-                } ).removeClass( "disabled" ).removeAttr( "disabled" );
-            } );
-
-            // Figure out the key of the to be added language
-            //
-            $btnAddLanguage.click( function( e )
-            {
-                // Determine if the value is in the list of languages, and if, add it to the list of added languages
-                //
-                var language        = $inputAddLanguage.val()
+            $languageSelect.on('change', function(event) {
+                
+                var language        = $(this).find( "option:selected" ).text()
                 ,   value
                 ;
 
@@ -275,17 +262,22 @@
 
                 if ( value && !addedLanguages[ language ] )
                 {
-                    $inputAddLanguage.val( "" );
-
                     addedLanguages[ language ] = true;
 
                     _addLanguageDetailToList( { language: value, motherLanguage: false } );
                 }
-            } );
 
-            $btnAddLanguage
-                .removeClass( "disabled" )
-                .removeAttr( "disabled" );
+                $(this).find( "option:selected" ).prop("selected", false);
+                $languageSelect.trigger( "chosen:updated" );
+
+            });
+
+            // Retrieve the list of languages from the data api
+            //
+            bidx.data.getContext( "language", function( err, data )
+            {
+                languages = data;
+            } );
 
             // Remove the language from the list
             //
