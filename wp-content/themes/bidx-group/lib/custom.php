@@ -378,7 +378,7 @@ function languages_list_header( )
         $htmlActive   = NULL;
 
         $html         = "<div class='widget widget_icl_lang_sel_widget'>
-                          <div id='lang_sel'>
+                          <div id='lang_sel_click'>
                             <ul>
                               <li>";
 
