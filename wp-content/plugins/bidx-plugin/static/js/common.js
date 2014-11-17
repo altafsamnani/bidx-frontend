@@ -1263,6 +1263,18 @@
         window.location.href = window.location.pathname + editHref;
     });
 
+    $( "a[data-toggle='tab']" ).click( function( e )
+    {
+        var pane = $(this).parents( ".tabs-vertical" ).find( ".tabs-content .tab-pane.active" )
+        ;
+
+        if ( pane.hasClass( 'addressItem' ) )
+        {
+            bidx.member._updateCurrentAddressMap();
+        }
+        
+    });
+
     // Administer the toggle state of an accordion by putting a .accordion-open class on the group when the accordion group is open
     // Usefull for setting icons / colors etc
     //
@@ -1304,7 +1316,6 @@
             // Trigger the _updateCurrentAddressMap function when the panel is shown
             if ($accordionBody.hasClass( 'addressItem' ))
             {
-                bidx.member._updateCurrentAddressMap();
             }
 
             $('html,body').delay( 300 ).animate( {scrollTop:targetOffset}, 200 );

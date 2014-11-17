@@ -60,9 +60,10 @@
         // if ( is_plugin_active( ABSPATH . 'wp-content/plugins/sitepress-multilingual-cms/sitepress.php') )
         // {
 ?>
-            <!-- <div class="btn-group language-switcher">
-                <?php the_widget('ICL_Language_Switcher'); ?>
-            </div> -->
+            <div class="btn-group language-switcher">
+                <?php //the_widget('ICL_Language_Switcher'); ?>
+                <?php echo languages_list_header();?>
+            </div>
 <?php
         // } 
 
